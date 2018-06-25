@@ -389,6 +389,15 @@ public interface LayoutService extends BaseService {
 	public List<Layout> getAncestorLayouts(long plid) throws PortalException;
 
 	/**
+	* Returns the control panel layout's plid.
+	*
+	* @return the control panel layout's plid
+	* @throws PortalException if a portal exception is occured
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getControlPanelLayoutPlid() throws PortalException;
+
+	/**
 	* Returns primary key of the matching default layout for the group.
 	*
 	* @param groupId the primary key of the group

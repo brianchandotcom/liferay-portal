@@ -462,6 +462,18 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
+	* Returns the control panel layout's plid.
+	*
+	* @return the control panel layout's plid
+	* @throws PortalException if a portal exception is occured
+	*/
+	@Override
+	public long getControlPanelLayoutPlid()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutService.getControlPanelLayoutPlid();
+	}
+
+	/**
 	* Returns primary key of the matching default layout for the group.
 	*
 	* @param groupId the primary key of the group

@@ -62,7 +62,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #encodeFieldName(String,
+	 * @deprecated As of Judson, replaced by {@link #encodeFieldName(String,
 	 *             int)}
 	 */
 	@Deprecated

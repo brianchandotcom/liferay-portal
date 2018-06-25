@@ -24,7 +24,7 @@ import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 /**
  * @author Jorge Ferrer
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 @OSGiBeanProperties(property = "resource.name=" + DLConstants.RESOURCE_NAME)

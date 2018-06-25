@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender
 
 /**
  * @author Michael C. Han
- * @deprecated As of 4.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class DefaultSingleDestinationMessageSender

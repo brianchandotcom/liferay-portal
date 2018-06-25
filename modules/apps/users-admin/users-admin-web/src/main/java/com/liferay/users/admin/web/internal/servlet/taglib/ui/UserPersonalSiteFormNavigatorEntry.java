@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author Pei-Jung Lan
- * @deprecated As of 2.1.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class UserPersonalSiteFormNavigatorEntry

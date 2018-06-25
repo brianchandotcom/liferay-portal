@@ -53,7 +53,7 @@ public interface JournalWebConfiguration {
 	public boolean journalArticleForceAutogenerateId();
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Meta.AD(

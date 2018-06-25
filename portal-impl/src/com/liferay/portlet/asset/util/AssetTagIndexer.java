@@ -41,7 +41,7 @@ import javax.portlet.PortletResponse;
 
 /**
  * @author     Pavel Savinov
- * @deprecated As of 7.0.0, moved to {@link
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.asset.tags.internal.search.AssetTagIndexer}
  */
 @Deprecated

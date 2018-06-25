@@ -136,7 +136,7 @@ public class GroupFinderImpl
 		GroupFinder.class.getName() + ".joinByRoleResourcePermissions";
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public static final String JOIN_BY_ROLE_RESOURCE_TYPE_PERMISSIONS =
@@ -624,7 +624,7 @@ public class GroupFinderImpl
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

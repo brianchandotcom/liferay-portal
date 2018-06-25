@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public abstract class BaseProxyBean {
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct link
+	 * @deprecated As of Judson, with no direct link
 	 */
 	@Deprecated
 	public void afterPropertiesSet() {

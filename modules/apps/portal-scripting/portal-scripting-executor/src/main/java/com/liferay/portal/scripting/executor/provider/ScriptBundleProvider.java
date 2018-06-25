@@ -20,7 +20,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * @author Michael C. Han
- * @deprecated As of 3.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
  *             com.liferay.portal.scripting.ScriptBundleProvider}
  */
 @Deprecated

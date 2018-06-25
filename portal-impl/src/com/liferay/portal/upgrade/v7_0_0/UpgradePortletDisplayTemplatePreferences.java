@@ -99,7 +99,7 @@ public class UpgradePortletDisplayTemplatePreferences
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getTemplateGroupAndKey(
+	 * @deprecated As of Judson, replaced by {@link #getTemplateGroupAndKey(
 	 *             long, String)}
 	 */
 	@Deprecated

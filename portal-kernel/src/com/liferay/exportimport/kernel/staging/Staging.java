@@ -471,7 +471,7 @@ public interface Staging {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 4.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.staging.configuration.web.internal.portlet.StagingConfigurationPortlet#editStagingConfiguration(
 	 *             javax.portlet.ActionRequest, javax.portlet.ActionResponse)}
 	 */
@@ -480,7 +480,7 @@ public interface Staging {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 5.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.portal.kernel.service.GroupLocalService#validateRemote(
 	 *             long, String, int, String, boolean, long)}
 	 */

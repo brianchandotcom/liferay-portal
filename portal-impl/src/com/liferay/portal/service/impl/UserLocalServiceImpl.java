@@ -2307,7 +2307,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * Returns all the users who do not have any contacts.
 	 *
 	 * @return the users who do not have any contacts
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -3074,7 +3074,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param      user the user
 	 * @return     <code>true</code> if the user's password is expiring soon;
 	 *             <code>false</code> otherwise
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	@Override

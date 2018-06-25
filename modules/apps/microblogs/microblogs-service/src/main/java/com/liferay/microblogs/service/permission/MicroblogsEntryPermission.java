@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
- * @deprecated As of 2.1.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Component(immediate = true)
 @Deprecated

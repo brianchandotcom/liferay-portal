@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
  *             com.liferay.petra.executor.PortalExecutorConfig}
  */
 @Deprecated

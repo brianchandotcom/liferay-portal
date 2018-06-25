@@ -306,7 +306,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied
 	 * @return the file rank
 	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#addFileRank}
 	 */
 	@Deprecated
@@ -431,7 +431,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *
 	 * @param fileEntryId the primary key of the file entry
 	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByFileEntryId}
 	 */
 	@Deprecated
@@ -449,7 +449,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByUserId}
 	 */
 	@Deprecated
@@ -628,7 +628,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @return the file ranks from the user
 	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#getFileRanks}
 	 */
 	@Deprecated
@@ -1104,7 +1104,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied
 	 * @return the file rank
 	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#updateFileRank}
 	 */
 	@Deprecated

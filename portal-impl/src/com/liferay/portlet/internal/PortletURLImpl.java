@@ -100,7 +100,7 @@ public class PortletURLImpl
 	implements LiferayPortletURL, PortletURL, ResourceURL, Serializable {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #PortletURLImpl(
+	 * @deprecated As of Judson, replaced by {@link #PortletURLImpl(
 	 * 		   HttpServletRequest, Portlet, Layout, String,
 	 * 		   MimeResponse.Copy)}
 	 */
@@ -120,7 +120,7 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #PortletURLImpl(
+	 * @deprecated As of Judson, replaced by {@link #PortletURLImpl(
 	 * 		   PortletRequest, Portlet, Layout, String, MimeResponse.Copy)}
 	 */
 	@Deprecated

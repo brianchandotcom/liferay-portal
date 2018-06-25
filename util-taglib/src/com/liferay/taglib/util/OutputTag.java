@@ -31,7 +31,7 @@ import javax.servlet.jsp.JspWriter;
 public class OutputTag extends PositionTagSupport {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getDataSB(ServletRequest, String)}
+	 * @deprecated As of Judson, replaced by {@link #getDataSB(ServletRequest, String)}
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.util.StringBundler getData(

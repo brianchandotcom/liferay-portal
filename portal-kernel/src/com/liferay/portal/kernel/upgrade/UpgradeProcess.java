@@ -110,7 +110,7 @@ public abstract class UpgradeProcess
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #upgrade(UpgradeProcess)}
+	 * @deprecated As of Judson, replaced by {@link #upgrade(UpgradeProcess)}
 	 */
 	@Deprecated
 	public void upgrade(Class<?> upgradeProcessClass) throws UpgradeException {
@@ -152,7 +152,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, with no direct replacement
+		 * @deprecated As of Judson, with no direct replacement
 		 */
 		@Deprecated
 		public String getIndexedColumnName();
@@ -183,7 +183,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, with no direct replacement
+		 * @deprecated As of Judson, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -229,7 +229,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, with no direct replacement
+		 * @deprecated As of Judson, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -273,7 +273,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, with no direct replacement
+		 * @deprecated As of Judson, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -314,7 +314,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, with no direct replacement
+		 * @deprecated As of Judson, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -597,7 +597,7 @@ public abstract class UpgradeProcess
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             DBInspector#normalizeName(String, DatabaseMetaData)}
 	 */
 	@Deprecated

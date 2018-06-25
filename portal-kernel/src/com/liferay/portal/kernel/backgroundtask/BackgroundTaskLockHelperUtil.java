@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.lock.LockManagerUtil;
 
 /**
  * @author Daniel Kocsis
- * @deprecated As of 7.0.0, moved to {@link
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.background.task.internal.lock.BackgroundTaskLockHelper}
  */
 @Deprecated

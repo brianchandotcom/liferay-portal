@@ -186,7 +186,7 @@ public class IndexWriterHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.portal.search.index.IndexStatusManager#
 	 *             isIndexReadOnly(String)}
 	 */
@@ -242,7 +242,7 @@ public class IndexWriterHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.portal.search.index.IndexStatusManager#
 	 *             setIndexReadOnly(String, boolean)}
 	 */

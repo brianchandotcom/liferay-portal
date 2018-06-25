@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 
 /**
  * @author Cristina González
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class UpgradeOptimizedConnectionProviderRegistryUtil {

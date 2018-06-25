@@ -403,7 +403,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	}
 
 	/**
-	 * @deprecated As of 3.3.0, replaced by {@link IndexStatusManager#
+	 * @deprecated As of Judson, replaced by {@link IndexStatusManager#
 	 *             isIndexReadWrite(String)}
 	 */
 	@Deprecated
@@ -547,7 +547,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	}
 
 	/**
-	 * @deprecated As of 3.3.0, replaced by {@link IndexStatusManager.
+	 * @deprecated As of Judson, replaced by {@link IndexStatusManager.
 	 *             setIndexReadOnly(String, boolean)}
 	 */
 	@Deprecated

@@ -876,7 +876,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * Returns the Facebook integration method of the portlet.
 	 *
 	 * @return     the Facebook integration method of the portlet
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -3164,7 +3164,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param      facebookIntegration the Facebook integration method of the
 	 *             portlet
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -4440,7 +4440,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The Facebook integration method of the portlet.
 	 *
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	private String _facebookIntegration =

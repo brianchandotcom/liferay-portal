@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  * @author Adolfo Pérez
- * @deprecated As of 1.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Component(
 	immediate = true,

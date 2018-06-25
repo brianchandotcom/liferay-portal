@@ -409,7 +409,7 @@ public interface TrashHandler {
 	 * @return     the range of trash renderers of model entities (excluding
 	 *             container models) that are children of the parent container
 	 *             model identified by the primary key
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
@@ -468,7 +468,7 @@ public interface TrashHandler {
 	 * @param      start the lower bound of the range of results
 	 * @param      end the upper bound of the range of results (not inclusive)
 	 * @return     the range of matching trash renderers of model entities
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
@@ -499,7 +499,7 @@ public interface TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #getTrashModelTrashedModels(long, int, int,
 	 *             OrderByComparator)}
 	 */

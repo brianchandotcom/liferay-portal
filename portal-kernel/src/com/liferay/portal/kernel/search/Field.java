@@ -137,7 +137,7 @@ public class Field implements Serializable {
 	public static final String PUBLISH_DATE = "publishDate";
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public static final String RATINGS = "ratings";
@@ -195,7 +195,7 @@ public class Field implements Serializable {
 	public static final String VIEW_ACTION_ID = "viewActionId";
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public static final String VIEW_COUNT = "viewCount";

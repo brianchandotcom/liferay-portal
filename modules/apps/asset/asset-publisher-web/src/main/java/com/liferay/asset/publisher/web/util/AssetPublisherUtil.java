@@ -129,7 +129,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  *
  * @author Raymond Augé
  * @author Julio Camarero
- * @deprecated As of 1.2.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
  *             com.liferay.asset.publisher.util.AssetPublisherHelper}
  */
 @Component(
@@ -378,7 +378,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public static List<AssetEntry> getAssetEntries(
@@ -1263,7 +1263,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 1.2.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public static void notifySubscriber(
@@ -1272,7 +1272,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 1.2.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	public static void notifySubscribers(
@@ -1381,7 +1381,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public void checkAssetEntries() throws Exception {
@@ -1692,7 +1692,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	protected void setSubscriptionLocalService(
@@ -1708,7 +1708,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	protected void setUserLocalService(UserLocalService userLocalService) {

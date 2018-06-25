@@ -82,13 +82,13 @@ public interface Http {
 	public String encodePath(String path);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link URLCodec#encodeURL(String)}
+	 * @deprecated As of Judson, replaced by {@link URLCodec#encodeURL(String)}
 	 */
 	@Deprecated
 	public String encodeURL(String url);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link URLCodec#encodeURL(String,
+	 * @deprecated As of Judson, replaced by {@link URLCodec#encodeURL(String,
 	 *             boolean)}
 	 */
 	@Deprecated
@@ -184,7 +184,7 @@ public interface Http {
 	public String shortenURL(String url);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #shortenURL(String)}
+	 * @deprecated As of Judson, replaced by {@link #shortenURL(String)}
 	 */
 	@Deprecated
 	public String shortenURL(String url, int count);

@@ -31,7 +31,7 @@ import org.jdom.IllegalDataException;
  * @author Brian Wing Shun Chan
  * @author Eduardo Garcia
  * @see    com.liferay.rss.util.RSSUtil
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class RSSUtil extends com.liferay.portal.kernel.util.RSSUtil {

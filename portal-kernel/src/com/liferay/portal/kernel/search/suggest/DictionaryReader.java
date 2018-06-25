@@ -27,7 +27,7 @@ import java.util.Iterator;
 
 /**
  * @author Michael C. Han
- * @deprecated As of 7.0.0, moved to {@link
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.search.suggest.DictionaryReader}
  */
 @Deprecated

@@ -31,7 +31,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfigurationTemporarySwapper implements AutoCloseable {
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #ConfigurationTemporarySwapper(String,
 	 *             Dictionary<String, Object>)}
 	 */

@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Garcia
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.rss.util.RSSUtil}
+ * @deprecated As of Judson, replaced by {@link com.liferay.rss.util.RSSUtil}
  */
 @Deprecated
 public class RSSUtil {

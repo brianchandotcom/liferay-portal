@@ -200,7 +200,7 @@ public @interface OSGiBeanProperties {
 		 * introspection. If the bean is not assignable to a specified service
 		 * type, a {@link ClassCastException} is thrown.
 		 *
-		 * @deprecated As of 7.0.0, replaced by {@link
+		 * @deprecated As of Judson, replaced by {@link
 		 *             #interfaces(Object, OSGiBeanProperties, String[])}
 		 * @param object the object (bean)
 		 * @return the service types

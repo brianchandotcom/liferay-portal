@@ -50,7 +50,7 @@ public class AnnouncementsDeliveryServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #updateDelivery(long, String, boolean, boolean)}
 	 */
 	@Deprecated

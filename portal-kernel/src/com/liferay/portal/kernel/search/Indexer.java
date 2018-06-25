@@ -67,14 +67,14 @@ public interface Indexer<T> {
 	public String getSearchEngineId();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.portal.sort.SortFieldBuilder}
 	 */
 	@Deprecated
 	public String getSortField(String orderByCol);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.portal.sort.SortFieldBuilder}
 	 */
 	@Deprecated
@@ -132,7 +132,7 @@ public interface Indexer<T> {
 	 * @param      status
 	 * @return
 	 * @throws     Exception
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             RelatedEntryIndexer.isVisibleRelatedEntry(long, int)}
 	 */
 	@Deprecated

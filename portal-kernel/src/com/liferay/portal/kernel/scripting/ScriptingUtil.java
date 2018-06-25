@@ -87,7 +87,7 @@ public class ScriptingUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #_getScripting()}
+	 * @deprecated As of Judson, replaced by {@link #_getScripting()}
 	 */
 	@Deprecated
 	public static Scripting getScripting() {

@@ -134,7 +134,7 @@ public interface PortletDataContext extends Serializable {
 	public void addLocks(String className, String key, Lock lock);
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #addPermissions(Class,
+	 * @deprecated As of Judson, replaced by {@link #addPermissions(Class,
 	 *             Serializable)}
 	 */
 	@Deprecated
@@ -229,7 +229,7 @@ public interface PortletDataContext extends Serializable {
 	public Object fromXML(String xml);
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #getAssetCategoryIds(Class,
+	 * @deprecated As of Judson, replaced by {@link #getAssetCategoryIds(Class,
 	 *             Serializable)}
 	 */
 	@Deprecated
@@ -258,7 +258,7 @@ public interface PortletDataContext extends Serializable {
 	public Map<String, List<AssetLink>> getAssetLinksMap();
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #getAssetTagNames(Class,
+	 * @deprecated As of Judson, replaced by {@link #getAssetTagNames(Class,
 	 *             Serializable)}
 	 */
 	@Deprecated
@@ -267,7 +267,7 @@ public interface PortletDataContext extends Serializable {
 	public String[] getAssetTagNames(Class<?> clazz, Serializable classPK);
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #getAssetTagNames(String,
+	 * @deprecated As of Judson, replaced by {@link #getAssetTagNames(String,
 	 *             Serializable)}
 	 */
 	@Deprecated
@@ -417,7 +417,7 @@ public interface PortletDataContext extends Serializable {
 		StagedModel parentStagedModel, Class<?> clazz, String referenceType);
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #getReferenceElement(Class,
+	 * @deprecated As of Judson, replaced by {@link #getReferenceElement(Class,
 	 *             Serializable)}
 	 */
 	@Deprecated
@@ -430,7 +430,7 @@ public interface PortletDataContext extends Serializable {
 		String referenceType);
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #getReferenceElement(StagedModel, Class, Serializable)}
 	 */
 	@Deprecated
@@ -441,7 +441,7 @@ public interface PortletDataContext extends Serializable {
 		StagedModel parentStagedModel, Class<?> clazz, Serializable classPK);
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #getReferenceElement(StagedModel, String, Serializable)}
 	 */
 	@Deprecated
@@ -452,7 +452,7 @@ public interface PortletDataContext extends Serializable {
 		StagedModel parentStagedModel, String className, Serializable classPK);
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #getReferenceElement(String,
+	 * @deprecated As of Judson, replaced by {@link #getReferenceElement(String,
 	 *             Serializable)}
 	 */
 	@Deprecated
@@ -554,7 +554,7 @@ public interface PortletDataContext extends Serializable {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #importPermissions(Class,
+	 * @deprecated As of Judson, replaced by {@link #importPermissions(Class,
 	 *             Serializable, Serializable)}
 	 */
 	@Deprecated
@@ -596,7 +596,7 @@ public interface PortletDataContext extends Serializable {
 	public boolean isMissingReference(Element referenceElement);
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #isModelCounted(String,
+	 * @deprecated As of Judson, replaced by {@link #isModelCounted(String,
 	 *             Serializable)}
 	 */
 	@Deprecated

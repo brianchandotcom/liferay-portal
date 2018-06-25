@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 @FunctionalInterface

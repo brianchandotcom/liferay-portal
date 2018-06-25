@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 3.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Component(
 	immediate = true,

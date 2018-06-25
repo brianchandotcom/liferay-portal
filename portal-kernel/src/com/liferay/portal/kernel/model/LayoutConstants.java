@@ -51,7 +51,7 @@ public class LayoutConstants {
 	public static final String TYPE_PORTLET = "portlet";
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public static final String TYPE_SHARED_PORTLET = "shared_portlet";

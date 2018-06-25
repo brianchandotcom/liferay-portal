@@ -63,7 +63,7 @@ public interface AssetRenderer<T> extends Renderer {
 	public String getDiscussionPath();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public Date getDisplayDate();

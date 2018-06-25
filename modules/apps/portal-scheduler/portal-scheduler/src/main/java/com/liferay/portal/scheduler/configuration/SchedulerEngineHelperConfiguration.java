@@ -20,7 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 /**
  * @author Michael C. Han
- * @deprecated As of 3.1.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
  *              com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration}
  */
 @Deprecated

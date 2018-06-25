@@ -32,7 +32,7 @@ import java.util.function.BiConsumer;
 public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             CollectorOutputProcessor#INSTANCE}
 	 */
 	@Deprecated
@@ -40,7 +40,7 @@ public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
 		new LoggingOutputProcessor();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             CollectorOutputProcessor#INSTANCE}
 	 */
 	@Deprecated

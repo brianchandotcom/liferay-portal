@@ -54,7 +54,7 @@ public class SiteNavigationBreadcrumbEntryViewPortletProvider
 	}
 
 	/**
-	 * @deprecated As of 2.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	@Override

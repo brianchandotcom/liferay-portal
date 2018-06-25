@@ -55,7 +55,7 @@ public class PortletSharedSearchResponseImpl
 	}
 
 	/**
-	 * @deprecated As of 1.3.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	@Override

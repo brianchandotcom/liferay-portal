@@ -110,7 +110,7 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 
 	/**
 	 * @return
-	 * @deprecated As of 3.8.0, used solely to provide backwards compatibility
+	 * @deprecated As of Judson, used solely to provide backwards compatibility
 	 *             support for {@link Indexer#getSortField(String)}
 	 */
 	@Deprecated

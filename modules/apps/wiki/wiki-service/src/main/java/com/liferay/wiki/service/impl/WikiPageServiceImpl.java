@@ -386,7 +386,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by {@link #getOrphans(WikiNode)}
+	 * @deprecated As of Judson, replaced by {@link #getOrphans(WikiNode)}
 	 */
 	@Deprecated
 	@Override

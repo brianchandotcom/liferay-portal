@@ -55,7 +55,7 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 	}
 
 	/**
-	 * @deprecated As of 1.3.0, replaced by {@link #AdminSubscriptionSender(
+	 * @deprecated As of Judson, replaced by {@link #AdminSubscriptionSender(
 	 *             KBArticle, ModelResourcePermission, ServiceContext)}
 	 */
 	@Deprecated
@@ -108,7 +108,7 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	protected String getEmailKBArticleAttachments(Locale locale)

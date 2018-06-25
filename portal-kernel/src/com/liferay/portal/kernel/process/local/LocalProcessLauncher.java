@@ -189,7 +189,7 @@ public class LocalProcessLauncher {
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, replaced by {@link #writeProcessCallable(
+		 * @deprecated As of Judson, replaced by {@link #writeProcessCallable(
 		 *             ProcessCallable) }
 		 */
 		@Deprecated

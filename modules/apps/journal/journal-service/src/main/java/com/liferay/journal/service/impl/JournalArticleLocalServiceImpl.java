@@ -3529,7 +3529,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public com.liferay.portal.kernel.service.SubscriptionLocalService
@@ -5182,7 +5182,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public void setSubscriptionLocalService(
@@ -7132,7 +7132,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 3.4.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #createFieldsValuesMap(Element, Locale)}
 	 */
 	@Deprecated
@@ -7291,7 +7291,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void formatDocumentLibrary(
@@ -7300,7 +7300,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void formatDocumentLibraryDynamicContent(
@@ -7309,7 +7309,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void formatImage(JournalArticle article, Element el)
@@ -7317,7 +7317,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void formatImageDynamicContent(
@@ -7987,7 +7987,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, replaced by {@link #notifySubscribers(long,
+	 * @deprecated As of Judson, replaced by {@link #notifySubscribers(long,
 	 *             JournalArticle, String, ServiceContext)}
 	 */
 	@Deprecated
@@ -8055,7 +8055,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #sendEmail(JournalArticle,
+	 * @deprecated As of Judson, replaced by {@link #sendEmail(JournalArticle,
 	 *             String, String, ServiceContext)}
 	 */
 	@Deprecated
@@ -8488,7 +8488,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, replaced by {@link #validateReferences(long,
+	 * @deprecated As of Judson, replaced by {@link #validateReferences(long,
 	 *             String, String, String, boolean, String, byte[], long,
 	 *             String)}
 	 */
@@ -8523,7 +8523,7 @@ public class JournalArticleLocalServiceImpl
 	protected FriendlyURLEntryLocalService friendlyURLEntryLocalService;
 
 	/**
-	 * @deprecated As of 4.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@ServiceReference(

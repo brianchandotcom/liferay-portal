@@ -32,7 +32,7 @@ import java.io.Serializable;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.resiliency.service.ServiceMethodProcessCallable}
+ * @deprecated As of Judson, moved to {@link com.liferay.portal.internal.resiliency.service.ServiceMethodProcessCallable}
  */
 @Deprecated
 public class ServiceMethodProcessCallable

@@ -18,7 +18,7 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.messaging.async.AsyncInvokeThreadLocal}
+ * @deprecated As of Judson, moved to {@link com.liferay.portal.internal.messaging.async.AsyncInvokeThreadLocal}
  */
 @Deprecated
 public class AsyncInvokeThreadLocal {

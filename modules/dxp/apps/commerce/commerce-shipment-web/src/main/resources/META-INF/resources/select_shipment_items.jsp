@@ -24,6 +24,7 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceShipment();
 long commerceShipmentId = commerceShipmentDisplayContext.getCommerceShipmentId();
 List<CommerceOrderItem> commerceOrderItems = commerceShipmentDisplayContext.getCommerceOrderItems(commerceOrderId);
+List<CommerceWarehouse> commerceWarehouses = commerceShipmentDisplayContext.getCommerceWarehouses();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(shipmentsURL);
@@ -31,64 +32,105 @@ portletDisplay.setURLBack(shipmentsURL);
 
 <portlet:actionURL name="editCommerceShipment" var="editCommerceShipmentActionURL" />
 
-<aui:form action="<%= editCommerceShipmentActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="selectCommerceShipmentItems" />
-	<aui:input name="redirect" type="hidden" value="<%= shipmentsURL %>" />
-	<aui:input name="commerceOrderId" type="hidden" value="<%= String.valueOf(commerceOrderId) %>" />
-	<aui:input name="commerceShipmentId" type="hidden" value="<%= String.valueOf(commerceShipmentId) %>" />
+<div class="container-fluid-1280 sheet">
+	<h1 class="p-3"><liferay-ui:message key="select-shipment-items" /></h1>
 
-	<aui:model-context bean="<%= commerceShipment %>" model="<%= CommerceShipment.class %>" />
+	<aui:form action="<%= editCommerceShipmentActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="selectCommerceShipmentItems" />
+		<aui:input name="redirect" type="hidden" value="<%= shipmentsURL %>" />
+		<aui:input name="commerceOrderId" type="hidden" value="<%= String.valueOf(commerceOrderId) %>" />
+		<aui:input name="commerceShipmentId" type="hidden" value="<%= String.valueOf(commerceShipmentId) %>" />
 
-	<c:choose>
-		<c:when test="<%= commerceOrderItems.isEmpty() %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-are-no-available-items-to-ship-in-the-selected-order" />
-			</div>
-		</c:when>
-		<c:otherwise>
-			<table class="table table-autofit table-sm">
-				<thead>
-					<tr>
-						<th><liferay-ui:message key="order-quantity" /></th>
-						<th class="table-cell-content"><liferay-ui:message key="name" /></th>
-						<th><liferay-ui:message key="warehouse" /></th>
-						<th><liferay-ui:message key="shipment-quantity" /></th>
-						<th><liferay-ui:message key="available-quantity" /></th>
-					</tr>
-				</thead>
+		<liferay-ui:error exception="<%= CommerceShipmentItemQuantityException.class %>" message="please-enter-a-valid-quantity" />
 
-				<tbody>
+		<aui:model-context bean="<%= commerceShipment %>" model="<%= CommerceShipment.class %>" />
 
-					<%
-					for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-						int remainedQuantity = commerceOrderItem.getQuantity() - commerceOrderItem.getShippedQuantity();
-					%>
-
+		<c:choose>
+			<c:when test="<%= commerceOrderItems.isEmpty() %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="there-are-no-available-items-to-ship-in-the-selected-order" />
+				</div>
+			</c:when>
+			<c:otherwise>
+				<table class="table table-autofit table-sm">
+					<thead>
 						<tr>
-							<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />
+							<th class="table-cell-content"><liferay-ui:message key="product" /></th>
+							<th class="text-center"><liferay-ui:message key="ordered-quantity" /></th>
 
-							<td>
-								<%= remainedQuantity %>
-							</td>
-							<td>
-								<%= HtmlUtil.escape(commerceOrderItem.getName(languageId)) %>
-							</td>
+							<%
+							for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
+							%>
 
-							<%@ include file="/order_item_warehouse_quantities.jspf" %>
+								<th><%= HtmlUtil.escape(commerceWarehouse.getName()) %></th>
+
+							<%
+							}
+							%>
+
 						</tr>
+					</thead>
 
-					<%
-					}
-					%>
+					<tbody>
 
-				</tbody>
-			</table>
-		</c:otherwise>
-	</c:choose>
+						<%
+						for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+							int remainedQuantity = commerceOrderItem.getQuantity() - commerceOrderItem.getShippedQuantity();
+						%>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" disabled="<%= commerceOrderItems.isEmpty() %>" name="saveButton" type="submit" value="save" />
+							<tr>
+								<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+								<td>
+									<%= HtmlUtil.escape(commerceOrderItem.getName(languageId)) %>
+								</td>
+								<td class="text-center">
+									<%= remainedQuantity %>
+								</td>
+
+								<%
+								for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
+									int maxQuantityAllowed;
+
+									int commerceWarehouseItemQuantity = commerceShipmentDisplayContext.getCommerceWarehouseItemQuantity(commerceOrderItem.getCommerceOrderItemId(), commerceWarehouse.getCommerceWarehouseId());
+
+									if (remainedQuantity > commerceWarehouseItemQuantity) {
+										maxQuantityAllowed = commerceWarehouseItemQuantity;
+									}
+									else {
+										maxQuantityAllowed = remainedQuantity;
+									}
+								%>
+
+									<td>
+										<aui:input name='<%= commerceOrderItem.getCommerceOrderItemId() + "_warehouse" %>' type="hidden" value="<%= commerceWarehouse.getCommerceWarehouseId() %>" />
+
+										<aui:input label="" name='<%= commerceOrderItem.getCommerceOrderItemId() + "_" + commerceWarehouse.getCommerceWarehouseId() + "_quantity" %>' placeholder='<%= LanguageUtil.format(request, "x-available", commerceWarehouseItemQuantity, false) %>' title="" type="number" wrapperCssClass="m-0">
+											<aui:validator name="max"><%= maxQuantityAllowed %></aui:validator>
+											<aui:validator name="min">0</aui:validator>
+											<aui:validator name="number" />
+										</aui:input>
+									</td>
+
+								<%
+								}
+								%>
+
+							</tr>
+
+						<%
+						}
+						%>
+
+					</tbody>
+				</table>
+			</c:otherwise>
+		</c:choose>
+
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" disabled="<%= commerceOrderItems.isEmpty() %>" name="saveButton" type="submit" value="save" />
+
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>

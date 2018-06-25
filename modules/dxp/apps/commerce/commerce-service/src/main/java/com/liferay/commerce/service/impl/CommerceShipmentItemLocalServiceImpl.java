@@ -61,6 +61,12 @@ public class CommerceShipmentItemLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		validate(commerceOrderItem, commerceWarehouseId, quantity, quantity);
+
 		long commerceShipmentItemId = counterLocalService.increment();
 
 		CommerceShipmentItem commerceShipmentItem =
@@ -80,7 +86,7 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		// Commerce order item
 
-		CommerceOrderItem commerceOrderItem =
+		commerceOrderItem =
 			commerceOrderItemLocalService.incrementShippedQuantity(
 				commerceOrderItemId, quantity);
 
@@ -98,10 +104,6 @@ public class CommerceShipmentItemLocalServiceImpl
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceShipmentItem deleteCommerceShipmentItem(
 		CommerceShipmentItem commerceShipmentItem) {
-
-		// Commerce shipment item
-
-		commerceShipmentItemPersistence.remove(commerceShipmentItem);
 
 		// Commerce order item
 
@@ -130,6 +132,10 @@ public class CommerceShipmentItemLocalServiceImpl
 		catch (PortalException pe) {
 			_log.error(pe, pe);
 		}
+
+		// Commerce shipment item
+
+		commerceShipmentItemPersistence.remove(commerceShipmentItem);
 
 		return commerceShipmentItem;
 	}
@@ -210,7 +216,8 @@ public class CommerceShipmentItemLocalServiceImpl
 				commerceShipmentItem.getCommerceOrderItemId());
 
 		validate(
-			commerceShipmentItem, commerceOrderItem, quantity, newQuantity);
+			commerceOrderItem, commerceShipmentItem.getCommerceWarehouseId(),
+			quantity, newQuantity);
 
 		commerceOrderItemLocalService.incrementShippedQuantity(
 			commerceOrderItem.getCommerceOrderItemId(), newQuantity);
@@ -225,8 +232,8 @@ public class CommerceShipmentItemLocalServiceImpl
 	}
 
 	protected void validate(
-			CommerceShipmentItem commerceShipmentItem,
-			CommerceOrderItem commerceOrderItem, int quantity, int newQuantity)
+			CommerceOrderItem commerceOrderItem, long commerceWarehouseId,
+			int quantity, int newQuantity)
 		throws PortalException {
 
 		int availableQuantity =
@@ -236,7 +243,7 @@ public class CommerceShipmentItemLocalServiceImpl
 		int commerceWarehouseQuantity =
 			commerceOrderItemLocalService.getCommerceWarehouseItemQuantity(
 				commerceOrderItem.getCommerceOrderItemId(),
-				commerceShipmentItem.getCommerceWarehouseId());
+				commerceWarehouseId);
 
 		if ((quantity <= 0) || (newQuantity > availableQuantity) ||
 			(newQuantity > commerceWarehouseQuantity)) {

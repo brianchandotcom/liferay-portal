@@ -15,6 +15,7 @@
 package com.liferay.commerce.shipment.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
 import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.model.CommerceShipment;
@@ -137,19 +138,24 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof CommerceShipmentStatusException) {
+			if (e instanceof CommerceShipmentItemQuantityException) {
 				hideDefaultErrorMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName", "selectCommerceShipmentItems");
 			}
+			else if (e instanceof CommerceShipmentStatusException) {
+				hideDefaultErrorMessage(actionRequest);
 
-			if (e instanceof NoSuchShipmentException ||
-				e instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName", "viewCommerceShipmentDetail");
+			}
+			else if (e instanceof NoSuchShipmentException ||
+					 e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 

@@ -19,7 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @deprecated As of 1.1.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
  *             com.liferay.saml.opensaml.integration.internal.transport.
  *             configuration.HttpClientFactoryConfiguration}
  * @author Carlos Sierra Andrés

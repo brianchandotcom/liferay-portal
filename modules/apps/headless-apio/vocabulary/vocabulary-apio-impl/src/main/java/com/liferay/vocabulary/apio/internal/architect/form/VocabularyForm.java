@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taxonomy.apio.internal.architect.form;
+package com.liferay.vocabulary.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
 
@@ -21,42 +21,42 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Instances of this class represent the values extracted from a taxonomy form.
+ * Instances of this class represent the values extracted from a vocabulary form.
  *
  * @author Eduardo Perez
  * @author Javier Gamarra
  * @review
  */
-public class TaxonomyForm {
+public class VocabularyForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code TaxonomyForm} depending on
+	 * Builds a {@code Form} that generates {@code VocabularyForm} depending on
 	 * the HTTP body.
 	 *
 	 * @param  builder the {@code Form} builder
-	 * @return a taxonomy form
+	 * @return a vocabulary form
 	 * @review
 	 */
-	public static Form<TaxonomyForm> buildForm(
-		Form.Builder<TaxonomyForm> builder) {
+	public static Form<VocabularyForm> buildForm(
+		Form.Builder<VocabularyForm> builder) {
 
 		return builder.title(
-			__ -> "Taxonomy form"
+			__ -> "Vocabulary form"
 		).description(
-			__ -> "This form can be used to create or update a taxonomy"
+			__ -> "This form can be used to create or update a vocabulary"
 		).constructor(
-			TaxonomyForm::new
+			VocabularyForm::new
 		).addOptionalString(
-			"description", TaxonomyForm::_setDescription
+			"description", VocabularyForm::_setDescription
 		).addRequiredString(
-			"name", TaxonomyForm::_setName
+			"name", VocabularyForm::_setName
 		).build();
 	}
 
 	/**
-	 * Returns the taxonomy's description map.
+	 * Returns the vocabulary's description map.
 	 *
-	 * @return the taxonomy's description map
+	 * @return the vocabulary's description map
 	 * @review
 	 */
 	public Map<Locale, String> getDescriptions(Locale locale) {
@@ -64,9 +64,9 @@ public class TaxonomyForm {
 	}
 
 	/**
-	 * Returns the taxonomy's description map.
+	 * Returns the vocabulary's title map.
 	 *
-	 * @return the taxonomy's description map
+	 * @return the vocabulary's title map
 	 * @review
 	 */
 	public Map<Locale, String> getTitles(Locale locale) {

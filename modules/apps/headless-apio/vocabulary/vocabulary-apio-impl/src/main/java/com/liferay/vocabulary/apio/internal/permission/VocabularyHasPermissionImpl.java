@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taxonomy.apio.internal.permission;
+package com.liferay.vocabulary.apio.internal.permission;
 
 import com.liferay.apio.architect.alias.routes.permission.HasNestedAddingPermissionFunction;
 import com.liferay.apio.architect.credentials.Credentials;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetVocabulary"
 )
-public class TaxonomyHasPermissionImpl implements HasPermission<Long> {
+public class VocabularyHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
 	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(

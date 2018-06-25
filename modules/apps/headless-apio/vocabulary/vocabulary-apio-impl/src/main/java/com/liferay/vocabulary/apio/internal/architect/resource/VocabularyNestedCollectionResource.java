@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taxonomy.apio.internal.architect.resource;
+package com.liferay.vocabulary.apio.internal.architect.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import com.liferay.taxonomy.apio.architect.identifier.TaxonomyIdentifier;
-import com.liferay.taxonomy.apio.internal.architect.form.TaxonomyForm;
+import com.liferay.vocabulary.apio.architect.identifier.VocabularyIdentifier;
+import com.liferay.vocabulary.apio.internal.architect.form.VocabularyForm;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose {@code Taxonomy} resources
+ * Provides the information necessary to expose {@code Vocabulary} resources
  * through a web API. The resources are mapped from the internal model {@code
  * AssetVocabulary}.
  *
@@ -51,9 +51,9 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class TaxonomyNestedCollectionResource
+public class VocabularyNestedCollectionResource
 	implements NestedCollectionResource<AssetVocabulary, Long,
-		TaxonomyIdentifier, Long, WebSiteIdentifier> {
+		VocabularyIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<AssetVocabulary, Long, Long> collectionRoutes(
@@ -64,13 +64,13 @@ public class TaxonomyNestedCollectionResource
 		).addCreator(
 			this::_addAssetVocabulary,
 			_hasPermission.forAddingIn(WebSiteIdentifier.class),
-			TaxonomyForm::buildForm
+			VocabularyForm::buildForm
 		).build();
 	}
 
 	@Override
 	public String getName() {
-		return "taxonomies";
+		return "vocabularies";
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class TaxonomyNestedCollectionResource
 			_assetVocabularyService::getVocabulary
 		).addUpdater(
 			this::_updateAssetVocabulary, _hasPermission::forUpdating,
-			TaxonomyForm::buildForm
+			VocabularyForm::buildForm
 		).addRemover(
 			idempotent(_assetVocabularyService::deleteVocabulary),
 			_hasPermission::forDeleting
@@ -93,11 +93,11 @@ public class TaxonomyNestedCollectionResource
 		Representor.Builder<AssetVocabulary, Long> builder) {
 
 		return builder.types(
-			"Taxonomy"
+			"Vocabulary"
 		).identifier(
 			AssetVocabulary::getVocabularyId
 		).addBidirectionalModel(
-			"interactionService", "taxonomies", WebSiteIdentifier.class,
+			"interactionService", "vocabularies", WebSiteIdentifier.class,
 			AssetVocabulary::getGroupId
 		).addDate(
 			"dateCreated", AssetVocabulary::getCreateDate
@@ -119,7 +119,7 @@ public class TaxonomyNestedCollectionResource
 	}
 
 	private AssetVocabulary _addAssetVocabulary(
-			long groupId, TaxonomyForm taxonomyForm)
+			long groupId, VocabularyForm vocabularyForm)
 		throws PortalException {
 
 		Group group = _groupLocalService.getGroup(groupId);
@@ -129,8 +129,8 @@ public class TaxonomyNestedCollectionResource
 		ServiceContext serviceContext = new ServiceContext();
 
 		return _assetVocabularyService.addVocabulary(
-			groupId, null, taxonomyForm.getTitles(locale),
-			taxonomyForm.getDescriptions(locale), null, serviceContext);
+			groupId, null, vocabularyForm.getTitles(locale),
+			vocabularyForm.getDescriptions(locale), null, serviceContext);
 	}
 
 	private PageItems<AssetVocabulary> _getPageItems(
@@ -146,7 +146,7 @@ public class TaxonomyNestedCollectionResource
 	}
 
 	private AssetVocabulary _updateAssetVocabulary(
-			long vocabularyId, TaxonomyForm taxonomyForm)
+			long vocabularyId, VocabularyForm vocabularyForm)
 		throws PortalException {
 
 		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
@@ -157,8 +157,8 @@ public class TaxonomyNestedCollectionResource
 		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
 		return _assetVocabularyService.updateVocabulary(
-			vocabularyId, null, taxonomyForm.getTitles(locale),
-			taxonomyForm.getDescriptions(locale), null, new ServiceContext());
+			vocabularyId, null, vocabularyForm.getTitles(locale),
+			vocabularyForm.getDescriptions(locale), null, new ServiceContext());
 	}
 
 	@Reference

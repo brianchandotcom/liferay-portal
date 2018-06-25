@@ -1,8 +1,7 @@
 .layouts-selector {
 	.card {
-		&:focus {
-			box-shadow: inset 0 0 0 2px #ABBCC3;
-			outline: none;
+		&:hover {
+			box-shadow: inset 0 0 0 2px #65B6F0;
 		}
 
 		margin-bottom: 0;
@@ -12,8 +11,10 @@
 		padding: 5px;
 	}
 
-	.selected .card {
-		box-shadow: inset 0 0 0 2px #65B6F0;
+	.selected {
+		.card {
+			background-color: #F0F5FF;
+		}
 	}
 
 	.disabled {

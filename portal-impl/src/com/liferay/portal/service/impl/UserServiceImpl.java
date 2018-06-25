@@ -820,6 +820,25 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the users belonging to the user group with the status.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @param  start the lower bound of the range of users
+	 * @param  end the upper bound of the range of users (not inclusive)
+	 * @return the matching users
+	 */
+	@Override
+	public List<User> getUserGroupUsers(
+			long userGroupId, int start, int end)
+		throws PortalException {
+
+		UserGroupPermissionUtil.check(
+			getPermissionChecker(), userGroupId, ActionKeys.VIEW_MEMBERS);
+
+		return userLocalService.getUserGroupUsers(userGroupId, start, end);
+	}
+
+	/**
 	 * Returns the users belonging to the organization with the status.
 	 *
 	 * @param  organizationId the primary key of the organization

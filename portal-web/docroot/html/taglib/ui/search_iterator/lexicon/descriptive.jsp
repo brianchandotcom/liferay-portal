@@ -19,6 +19,10 @@
 <%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jspf" %>
 
 <%
+if (containerCssClass == null) {
+	containerCssClass = "list-group list-group-notification show-quick-actions-on-hover";
+}
+
 List<ResultRowSplitterEntry> resultRowSplitterEntries = new ArrayList<ResultRowSplitterEntry>();
 
 if (resultRowSplitter != null) {
@@ -40,7 +44,7 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 		</div>
 	</c:if>
 
-	<ul class="list-group list-group-notification show-quick-actions-on-hover">
+	<ul class="<%= containerCssClass %>">
 		<c:if test="<%= (headerNames != null) && Validator.isNotNull(headerNames.get(0)) %>">
 			<li class="list-group-heading"><liferay-ui:message key="<%= headerNames.get(0) %>" /></li>
 		</c:if>

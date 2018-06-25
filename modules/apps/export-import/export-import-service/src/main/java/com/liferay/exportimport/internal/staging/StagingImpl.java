@@ -3846,15 +3846,8 @@ public class StagingImpl implements Staging {
 			if (stagingGroup.isStagedRemotely()) {
 				targetGroupId = stagingGroup.getRemoteLiveGroupId();
 
-				HttpPrincipal httpPrincipal = new HttpPrincipal(
-					buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
-					user.getLogin(), user.getPassword(),
-					user.isPasswordEncrypted());
-
-				targetLayoutPlid = LayoutServiceHttp.getLayoutPlid(
-					httpPrincipal, sourceLayout.getUuid(),
-					stagingGroup.getRemoteLiveGroupId(),
-					sourceLayout.isPrivateLayout());
+				targetLayoutPlid = getRemoteLayoutPlid(
+					userId, stagingGroup.getGroupId(), sourceLayout.getPlid());
 			}
 			else {
 				liveGroup = stagingGroup.getLiveGroup();

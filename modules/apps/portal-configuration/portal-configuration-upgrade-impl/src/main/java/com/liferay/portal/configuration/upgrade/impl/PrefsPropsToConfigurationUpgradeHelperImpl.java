@@ -113,7 +113,7 @@ public class PrefsPropsToConfigurationUpgradeHelperImpl
 				value = StringUtil.split(valueString);
 
 				if (!Arrays.equals(
-						(String[])value, (String[])defaultValueObject)) {
+						(Object[])value, (Object[])defaultValueObject)) {
 
 					_writeProperty(
 						properties, portletPreferences, keyValuePair, value);

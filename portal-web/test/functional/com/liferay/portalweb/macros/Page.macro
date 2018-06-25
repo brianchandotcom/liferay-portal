@@ -186,8 +186,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Logo" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Advanced" />
 		</execute>
 
 		<execute macro="Page#uploadFileForLogo">

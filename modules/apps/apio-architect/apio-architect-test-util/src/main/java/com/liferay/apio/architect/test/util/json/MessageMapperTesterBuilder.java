@@ -359,7 +359,7 @@ public class MessageMapperTesterBuilder {
 			String stringPath = _path.toString();
 
 			String folder = stringPath.substring(
-				stringPath.lastIndexOf('/') + 1);
+				stringPath.lastIndexOf(File.separator) + 1);
 
 			String expected = Try.success(
 				stringPath
@@ -373,7 +373,8 @@ public class MessageMapperTesterBuilder {
 				).map(
 					Class::getClassLoader
 				).map(
-					classLoader -> classLoader.getResource(folder + "/" + file)
+					classLoader -> classLoader.getResource(
+						folder + File.separator + file)
 				).map(
 					URL::getPath
 				).map(

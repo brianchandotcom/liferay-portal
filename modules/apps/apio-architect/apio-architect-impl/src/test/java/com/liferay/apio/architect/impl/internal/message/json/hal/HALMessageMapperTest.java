@@ -60,7 +60,7 @@ public class HALMessageMapperTest implements RepresentableManager {
 		pageMessageMapper.representableManager = this;
 
 		MessageMapperTesterBuilder.path(
-			Paths.get("apio-architect-impl/src/test/resources/hal")
+			Paths.get("src", "test", "resources", "hal")
 		).httpHeaders(
 			Mockito.mock(HttpHeaders.class)
 		).mediaType(

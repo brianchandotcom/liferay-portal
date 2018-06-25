@@ -103,8 +103,7 @@ public class DocumentationWriter {
 				_documentationMessageMapper::mapResource,
 				this::_writeItemOperations,
 				resourceJsonObjectBuilder -> _writeAllFields(
-					representors.get(name), resourceJsonObjectBuilder,
-					itemRoutes.getFormOptional())));
+					representors.get(name), resourceJsonObjectBuilder)));
 
 		Map<String, NestedCollectionRoutes> nestedCollectionRoutesMap =
 			_documentation.getNestedCollectionRoutes();
@@ -317,8 +316,7 @@ public class DocumentationWriter {
 	}
 
 	private void _writeAllFields(
-		Representor representor, JSONObjectBuilder resourceJsonObjectBuilder,
-		Optional<Form<FormField>> formOptional) {
+		Representor representor, JSONObjectBuilder resourceJsonObjectBuilder) {
 
 		Stream<String> fieldNamesStream = _calculateNestableFieldNames(
 			representor);
@@ -332,7 +330,7 @@ public class DocumentationWriter {
 		fieldNamesStream = Stream.concat(
 			fieldNamesStream, relatedCollectionsNamesStream);
 
-		_writeFields(fieldNamesStream, resourceJsonObjectBuilder, formOptional);
+		_writeFields(fieldNamesStream, resourceJsonObjectBuilder);
 	}
 
 	private void _writeDocumentationMetadata(
@@ -354,36 +352,21 @@ public class DocumentationWriter {
 	}
 
 	private void _writeFields(
-		Stream<String> fields, JSONObjectBuilder resourceJsonObjectBuilder,
-		Optional<Form<FormField>> formOptional) {
+		Stream<String> fields, JSONObjectBuilder resourceJsonObjectBuilder) {
 
 		fields.distinct().forEach(
-			field -> {
-				Optional<FormField> formFieldOptional = formOptional.flatMap(
-					formFieldForm -> _getFormField(field, formFieldForm));
-
-				_writeFormField(
-					resourceJsonObjectBuilder, field, formFieldOptional);
-			});
+			field -> _writeFormField(resourceJsonObjectBuilder, field));
 	}
 
 	private void _writeFormField(
-		JSONObjectBuilder resourceJsonObjectBuilder, String fieldName,
-		Optional<FormField> formField) {
+		JSONObjectBuilder resourceJsonObjectBuilder, String fieldName) {
 
 		JSONObjectBuilder jsonObjectBuilder = new JSONObjectBuilder();
 
 		_documentationMessageMapper.onStartProperty(
 			resourceJsonObjectBuilder, jsonObjectBuilder, fieldName);
 
-		boolean required = formField.map(
-			FormField::isRequired
-		).orElse(
-			false
-		);
-
-		_documentationMessageMapper.mapProperty(
-			jsonObjectBuilder, fieldName, required);
+		_documentationMessageMapper.mapProperty(jsonObjectBuilder, fieldName);
 
 		_documentationMessageMapper.onFinishProperty(
 			resourceJsonObjectBuilder, jsonObjectBuilder, fieldName);

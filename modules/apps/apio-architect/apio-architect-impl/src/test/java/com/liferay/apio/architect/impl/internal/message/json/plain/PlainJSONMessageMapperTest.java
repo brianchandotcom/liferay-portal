@@ -35,7 +35,7 @@ public class PlainJSONMessageMapperTest {
 	@Test
 	public void testPlainJSONMessageMappers() {
 		MessageMapperTesterBuilder.path(
-			Paths.get("apio-architect-impl/src/test/resources/plain")
+			Paths.get("src", "test", "resources", "plain")
 		).httpHeaders(
 			Mockito.mock(HttpHeaders.class)
 		).mediaType(

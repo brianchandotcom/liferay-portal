@@ -161,19 +161,13 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 		jsonObjectBuilder.field(
 			FIELD_NAME_CONTEXT
 		).arrayValue(
-		).add(
-			builder -> builder.field(
-				FIELD_NAME_VOCAB
-			).stringValue(
-				URL_SCHEMA_ORG
-			)
-		);
-
-		jsonObjectBuilder.field(
-			FIELD_NAME_CONTEXT
-		).arrayValue(
-		).addString(
-			URL_HYDRA_PROFILE
+			arrayBuilder -> arrayBuilder.add(
+				builder -> builder.field(
+					FIELD_NAME_VOCAB
+				).stringValue(
+					URL_SCHEMA_ORG
+				)),
+			arrayBuilder -> arrayBuilder.addString(URL_HYDRA_PROFILE)
 		);
 
 		jsonObjectBuilder.nestedField(

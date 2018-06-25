@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Lets resources provide the requested {@link AcceptLanguage} as a parameter in the
- * methods of any of the routes builders.
+ * Lets resources provide the requested {@link AcceptLanguage} as a parameter in
+ * the methods of any of the routes builders.
  *
  * <p>
  * This provider is mandatory in order to use {@code

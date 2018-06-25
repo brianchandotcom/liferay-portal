@@ -32,7 +32,7 @@ public class ProblemJSONErrorMessageMapperTest {
 	@Test
 	public void testProblemJSONErrorMessageMapper() {
 		MessageMapperTesterBuilder.path(
-			Paths.get("apio-architect-impl/src/test/resources/problem")
+			Paths.get("src", "test", "resources", "problem")
 		).httpHeaders(
 			Mockito.mock(HttpHeaders.class)
 		).mediaType(

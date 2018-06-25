@@ -33,7 +33,7 @@ public class JSONLDMessageMapperTest {
 	@Test
 	public void testJSONLDMessageMappers() {
 		MessageMapperTesterBuilder.path(
-			Paths.get("apio-architect-impl/src/test/resources/ld")
+			Paths.get("src", "test", "resources", "ld")
 		).httpHeaders(
 			Mockito.mock(HttpHeaders.class)
 		).mediaType(

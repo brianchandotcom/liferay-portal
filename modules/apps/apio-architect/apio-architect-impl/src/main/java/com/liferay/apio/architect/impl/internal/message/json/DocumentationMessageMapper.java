@@ -52,8 +52,7 @@ public interface DocumentationMessageMapper
 	}
 
 	public default void mapProperty(
-		JSONObjectBuilder jsonObjectBuilder, String fieldName,
-		boolean required) {
+		JSONObjectBuilder jsonObjectBuilder, String fieldName) {
 	}
 
 	public default void mapResource(

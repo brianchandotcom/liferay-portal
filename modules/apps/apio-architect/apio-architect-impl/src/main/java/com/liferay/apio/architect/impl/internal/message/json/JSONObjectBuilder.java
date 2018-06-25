@@ -250,6 +250,28 @@ public class JSONObjectBuilder {
 		}
 
 		/**
+		 * Adds several JSON object, created by the provided consumers, to the
+		 * JSON array.
+		 *
+		 * @param  consumer the consumer that creates the new JSON object
+		 * @param  consumers the list of consumers that creates new JSON objects
+		 * @review
+		 */
+		@SafeVarargs
+		public final void add(
+			Consumer<JSONObjectBuilder> consumer,
+			Consumer<JSONObjectBuilder>... consumers) {
+
+			add(consumer);
+
+			for (Consumer<JSONObjectBuilder> jsonObjectBuilderConsumer :
+					consumers) {
+
+				add(jsonObjectBuilderConsumer);
+			}
+		}
+
+		/**
 		 * Adds the JSON object, created by the provided JSON object builder, to
 		 * the JSON array.
 		 *
@@ -370,6 +392,29 @@ public class JSONObjectBuilder {
 		}
 
 		/**
+		 * Creates a JSON array inside the field and populates it with the
+		 * provided consumers.
+		 *
+		 * @param consumer the consumer that creates the first JSON object of
+		 *        the array
+		 * @param consumers the list of consumers that creates the rest of JSON
+		 *        objects of the array
+		 */
+		@SafeVarargs
+		public final void arrayValue(
+			Consumer<ArrayValueStep> consumer,
+			Consumer<ArrayValueStep>... consumers) {
+
+			ArrayValueStep arrayValueStep = arrayValue();
+
+			consumer.accept(arrayValueStep);
+
+			for (Consumer<ArrayValueStep> arrayValueStepConsumer : consumers) {
+				arrayValueStepConsumer.accept(arrayValueStep);
+			}
+		}
+
+		/**
 		 * Adds a new boolean value to the JSON array.
 		 *
 		 * @param value the boolean value to add to the JSON array
@@ -398,6 +443,25 @@ public class JSONObjectBuilder {
 			_jsonObject.add(_name, jsonObject);
 
 			return new FieldStep(name, jsonObject);
+		}
+
+		/**
+		 * Creates a new JSON object inside the field and populates it with the
+		 * provided consumers.
+		 *
+		 * @param consumer the consumer that first populates the JSON Object
+		 * @param consumers the rest of the list of consumers that populates the
+		 *        JSON Object
+		 */
+		@SafeVarargs
+		public final void fields(
+			Consumer<FieldStep> consumer, Consumer<FieldStep>... consumers) {
+
+			consumer.accept(this);
+
+			for (Consumer<FieldStep> fieldStepConsumer : consumers) {
+				fieldStepConsumer.accept(this);
+			}
 		}
 
 		/**

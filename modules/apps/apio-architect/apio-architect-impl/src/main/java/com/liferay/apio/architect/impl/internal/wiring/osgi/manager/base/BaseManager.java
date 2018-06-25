@@ -57,8 +57,6 @@ public abstract class BaseManager<T, U> {
 			new SingleValueServiceTrackerBucketFactory<>(),
 			new ClearCacheServiceTrackerMapListener<>());
 
-		serviceTrackerMap.open();
-
 		INSTANCE.clear();
 	}
 

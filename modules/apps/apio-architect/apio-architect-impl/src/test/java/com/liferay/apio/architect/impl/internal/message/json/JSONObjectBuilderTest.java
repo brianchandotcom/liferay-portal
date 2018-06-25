@@ -18,17 +18,20 @@ import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonArrayT
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonBoolean;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonInt;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWhere;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWith;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonString;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import com.liferay.apio.architect.test.util.json.Conditions;
 
 import java.util.Arrays;
 import java.util.List;
@@ -86,7 +89,6 @@ public class JSONObjectBuilderTest {
 			)
 		);
 
-		@SuppressWarnings("unchecked")
 		Matcher<JsonElement> isAJsonArrayWithElements = is(
 			aJsonArrayThat(contains(_aJsonObjectWithTheSolution)));
 
@@ -113,7 +115,6 @@ public class JSONObjectBuilderTest {
 			jsonObjectBuilder
 		);
 
-		@SuppressWarnings("unchecked")
 		Matcher<JsonElement> isAJsonArrayWithElements = is(
 			aJsonArrayThat(contains(_aJsonObjectWithTheSolution)));
 
@@ -148,6 +149,36 @@ public class JSONObjectBuilderTest {
 	}
 
 	@Test
+	public void testInvokingAddVarargConsumersCreatesAValidJsonArray() {
+		_jsonObjectBuilder.field(
+			"array"
+		).arrayValue(
+		).add(
+			jsonObjectBuilder -> jsonObjectBuilder.field(
+				"solution"
+			).numberValue(
+				42
+			),
+			jsonObjectBuilder -> jsonObjectBuilder.field(
+				"solution"
+			).numberValue(
+				42
+			)
+		);
+
+		@SuppressWarnings("unchecked")
+		Matcher<JsonElement> isAJsonArrayWithElements = is(
+			aJsonArrayThat(
+				contains(
+					_aJsonObjectWithTheSolution, _aJsonObjectWithTheSolution)));
+
+		Matcher<JsonElement> isAJsonObjectWithAnArray = is(
+			aJsonObjectWhere("array", isAJsonArrayWithElements));
+
+		assertThat(getJsonObject(), isAJsonObjectWithAnArray);
+	}
+
+	@Test
 	public void testInvokingArrayValueCreatesAJsonArray() {
 		_jsonObjectBuilder.field(
 			"array"
@@ -156,6 +187,29 @@ public class JSONObjectBuilderTest {
 		Matcher<JsonElement> isAJsonObjectWithAnArray = is(
 			aJsonObjectWhere(
 				"array", is(aJsonArrayThat(not(contains(anything()))))));
+
+		assertThat(getJsonObject(), isAJsonObjectWithAnArray);
+	}
+
+	@Test
+	public void testInvokingArrayValueWithConsumersCreatesAValidJsonArray() {
+		_jsonObjectBuilder.field(
+			"array"
+		).arrayValue(
+			arrayBuilder -> arrayBuilder.addString("first"),
+			arrayBuilder -> arrayBuilder.addString("second")
+		);
+
+		@SuppressWarnings("unchecked")
+		Matcher<Iterable<? extends JsonElement>> containsFirstAndSecond =
+			contains(
+				aJsonString(equalTo("first")), aJsonString(equalTo("second")));
+
+		Matcher<JsonElement> isAJsonArrayWithElements = is(
+			aJsonArrayThat(containsFirstAndSecond));
+
+		Matcher<JsonElement> isAJsonObjectWithAnArray = is(
+			aJsonObjectWhere("array", isAJsonArrayWithElements));
 
 		assertThat(getJsonObject(), isAJsonObjectWithAnArray);
 	}
@@ -292,6 +346,36 @@ public class JSONObjectBuilderTest {
 		);
 
 		assertThat(getJsonObject(), is(_aJsonObjectWithTheSolution));
+	}
+
+	@Test
+	public void testInvokingFieldsWithConsumersCreatesAValidJsonObject() {
+		_jsonObjectBuilder.field(
+			"object"
+		).fields(
+			builder -> builder.field(
+				"first"
+			).numberValue(
+				42
+			),
+			builder -> builder.field(
+				"second"
+			).numberValue(
+				2018
+			)
+		);
+
+		Conditions.Builder builder = new Conditions.Builder();
+
+		Conditions conditions = builder.where(
+			"first", is(aJsonInt(equalTo(42)))
+		).where(
+			"second", is(aJsonInt(equalTo(2018)))
+		).build();
+
+		assertThat(
+			getJsonObject(),
+			is(aJsonObjectWhere("object", is(aJsonObjectWith(conditions)))));
 	}
 
 	@Test

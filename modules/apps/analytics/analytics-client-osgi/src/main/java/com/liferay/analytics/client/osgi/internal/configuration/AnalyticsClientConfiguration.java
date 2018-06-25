@@ -30,7 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AnalyticsClientConfiguration {
 
 	@Meta.AD(
-		deflt = "ec-dev.liferay.com", name = "analytics-gateway-host",
+		deflt = "analytics-gw.liferay.com", name = "analytics-gateway-host",
 		required = false
 	)
 	public String analyticsGatewayHost();
@@ -41,7 +41,7 @@ public interface AnalyticsClientConfiguration {
 	)
 	public String analyticsGatewayPath();
 
-	@Meta.AD(deflt = "8095", name = "analytics-gateway-port", required = false)
+	@Meta.AD(deflt = "80", name = "analytics-gateway-port", required = false)
 	public String analyticsGatewayPort();
 
 	@Meta.AD(

@@ -944,13 +944,14 @@ public class LayoutsAdminDisplayContext {
 
 		if (isShowConfigureAction(layout)) {
 			jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
-		}
 
-		if (layout.getParentLayoutId() ==
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+			if (layout.getParentLayoutId() ==
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 
-			jsonObject.put(
-				"markAsHomePageLayoutURL", getMarkAsHomePageLayoutURL(layout));
+				jsonObject.put(
+					"markAsHomePageLayoutURL",
+					getMarkAsHomePageLayoutURL(layout));
+			}
 		}
 
 		if (isShowOrphanPortletsAction(layout)) {

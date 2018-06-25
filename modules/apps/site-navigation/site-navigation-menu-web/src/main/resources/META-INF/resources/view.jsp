@@ -43,7 +43,7 @@ int siteNavigationMenusCount = SiteNavigationMenuLocalServiceUtil.getSiteNavigat
 			rootItemId="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>"
 			rootItemLevel="<%= siteNavigationMenuDisplayContext.getRootMenuItemLevel() %>"
 			rootItemType="<%= siteNavigationMenuDisplayContext.getRootMenuItemType() %>"
-			siteNavigationMenuId="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>"
+			siteNavigationMenuId="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuId() %>"
 		/>
 	</c:otherwise>
 </c:choose>

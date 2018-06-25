@@ -4,4 +4,45 @@
 			max-width: 100%;
 		}
 	}
+
+	.portlet .portlet-header {
+		flex-wrap: nowrap;
+	}
+
+	.portlet .portlet-header .visible-interaction {
+		display: block;
+		visibility: hidden;
+
+		.lfr-icon-menu {
+			background-color: #FFFFFF;
+			border: solid 2px;
+			border-radius: 4px;
+			color: #0B5FFF;
+		}
+
+		.lfr-icon-menu > a {
+			color: inherit;
+		}
+	}
+
+	@media only screen and (min-width: 768px) {
+		.portlet .portlet-header .visible-interaction {
+			display: block;
+			visibility: hidden;
+		}
+	}
+
+	&:hover .portlet,
+	&:focus .portlet,
+	& .portlet.open {
+		.portlet-header .visible-interaction {
+			visibility: visible;
+		}
+	}
+
+	&.portlet-barebone .portlet .portlet-header {
+		margin-bottom: 0;
+		position: absolute;
+		right: 1px;
+	}
 }

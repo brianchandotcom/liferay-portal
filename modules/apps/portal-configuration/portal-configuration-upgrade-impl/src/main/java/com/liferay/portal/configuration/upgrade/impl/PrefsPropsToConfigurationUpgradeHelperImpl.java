@@ -86,7 +86,7 @@ public class PrefsPropsToConfigurationUpgradeHelperImpl
 
 			Class<?> returnType = method.getReturnType();
 
-			Object value;
+			Object value = null;
 
 			if (returnType == boolean.class) {
 				value = GetterUtil.getBoolean(valueString);
@@ -123,7 +123,7 @@ public class PrefsPropsToConfigurationUpgradeHelperImpl
 			}
 			else {
 				throw new IllegalArgumentException(
-					"No valid return type found: " + returnType.getName());
+					"No valid return type found: " + method);
 			}
 
 			if (!Objects.equals(value, defaultValueObject)) {

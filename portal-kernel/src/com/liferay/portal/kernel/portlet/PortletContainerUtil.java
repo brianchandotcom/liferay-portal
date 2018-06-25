@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -60,8 +60,8 @@ public class PortletContainerUtil {
 					layout.getGroupId(), layout.isPrivateLayout(),
 					LayoutConstants.TYPE_PORTLET);
 			}
-			catch (SystemException se) {
-				throw new PortletContainerException(se);
+			catch (PortalException pe) {
+				throw new PortletContainerException(pe);
 			}
 
 			List<LayoutTypePortlet> layoutTypePortlets = new ArrayList<>(

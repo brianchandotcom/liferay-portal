@@ -29,7 +29,7 @@ List<Facet> facets = cpOptionFacetsDisplayContext.getFacets();
 %>
 
 <c:choose>
-	<c:when test="<%= facets.size() > 0 %>">
+	<c:when test="<%= !facets.isEmpty() %>">
 
 		<%
 		for (Facet facet : facets) {

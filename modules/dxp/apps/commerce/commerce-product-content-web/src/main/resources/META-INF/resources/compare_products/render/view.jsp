@@ -28,7 +28,7 @@ Set<CPSpecificationOption> categorizedCPSpecificationOptions = cpCompareContentH
 List<CPOptionCategory> cpOptionCategories = cpCompareContentHelper.getCPOptionCategories(scopeGroupId);
 %>
 
-<c:if test="<%= cpCatalogEntries.size() > 0 %>">
+<c:if test="<%= !cpCatalogEntries.isEmpty() %>">
 	<div class="commerce-compare-table">
 		<table class="table table-sm">
 			<tr class="product-table-row">

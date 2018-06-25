@@ -23,7 +23,7 @@ List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries()
 %>
 
 <c:choose>
-	<c:when test="<%= cpCatalogEntries.size() > 0 %>">
+	<c:when test="<%= !cpCatalogEntries.isEmpty() %>">
 		<div class="row">
 
 			<%

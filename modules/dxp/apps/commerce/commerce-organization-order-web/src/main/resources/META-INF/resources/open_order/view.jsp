@@ -36,7 +36,7 @@ List<CommerceOrder> results = searchContainer.getResults();
 	entries="<%= results %>"
 >
 	<c:choose>
-		<c:when test="<%= (commerceOrganizationOrderDisplayContext.getOrganization() != null) && (results.size() > 0) %>">
+		<c:when test="<%= (commerceOrganizationOrderDisplayContext.getOrganization() != null) && !results.isEmpty() %>">
 			<div class="order-cards-row" id="<portlet:namespace />openOrdersContainer">
 
 				<%

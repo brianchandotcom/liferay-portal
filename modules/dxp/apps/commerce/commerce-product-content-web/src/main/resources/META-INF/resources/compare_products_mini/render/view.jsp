@@ -23,7 +23,7 @@ CPDataSourceResult cpDataSourceResult = (CPDataSourceResult)request.getAttribute
 List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries();
 %>
 
-<c:if test="<%= cpCatalogEntries.size() > 0 %>">
+<c:if test="<%= !cpCatalogEntries.isEmpty() %>">
 	<div id="<portlet:namespace />compareProductsMiniContainer">
 		<div class="compare-products-mini-header">
 			<a class="collapse-icon lfr-compare-products-mini-header" href="javascript:;">

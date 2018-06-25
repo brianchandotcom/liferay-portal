@@ -21,7 +21,7 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceBlockPermissionLocalService
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  * @generated
  */
 @Deprecated
@@ -204,7 +204,7 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	#getAvailableResourceBlockPermissionActionIds(String, long,
 	List)}
 	*/

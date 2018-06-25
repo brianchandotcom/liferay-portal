@@ -381,7 +381,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public int getExtraSettingsFileEntriesCount();
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
+	* @deprecated As of Wilberforce, replaced by {@link #getFile(long, String,
 	boolean)}
 	*/
 	@Deprecated
@@ -390,7 +390,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		boolean incrementCounter) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
+	* @deprecated As of Wilberforce, replaced by {@link #getFile(long, String,
 	boolean, int)}
 	*/
 	@Deprecated
@@ -407,7 +407,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		boolean incrementCounter, int increment) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	* @deprecated As of Wilberforce, replaced by {@link #getFileAsStream(long,
 	String)}
 	*/
 	@Deprecated
@@ -416,7 +416,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		String version) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	* @deprecated As of Wilberforce, replaced by {@link #getFileAsStream(long,
 	String, boolean)}
 	*/
 	@Deprecated
@@ -425,7 +425,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		String version, boolean incrementCounter) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	* @deprecated As of Wilberforce, replaced by {@link #getFileAsStream(long,
 	String, boolean, int)}
 	*/
 	@Deprecated
@@ -477,7 +477,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public int getFileEntriesCount();
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Wilberforce, with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -551,7 +551,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -561,7 +561,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public List<DLFileEntry> getNoAssetFileEntries();
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -610,8 +610,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long,
-	boolean, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#isKeepFileVersionLabel(long, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

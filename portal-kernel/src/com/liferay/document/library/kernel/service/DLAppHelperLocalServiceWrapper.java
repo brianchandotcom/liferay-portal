@@ -127,7 +127,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	#moveDependentsToTrash(DLFolder)}
 	*/
 	@Deprecated
@@ -224,7 +224,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	#restoreDependentsFromTrash(DLFolder)}
 	*/
 	@Deprecated
@@ -236,7 +236,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	#restoreDependentsFromTrash(List)}
 	*/
 	@Deprecated

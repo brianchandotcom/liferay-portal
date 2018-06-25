@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see KaleoDefinitionService
- * @deprecated As of 2.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  * @generated
  */
 @Deprecated
@@ -36,7 +36,7 @@ public class KaleoDefinitionServiceWrapper implements KaleoDefinitionService,
 	}
 
 	/**
-	* @deprecated As of 2.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -46,7 +46,7 @@ public class KaleoDefinitionServiceWrapper implements KaleoDefinitionService,
 	}
 
 	/**
-	* @deprecated As of 2.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Override

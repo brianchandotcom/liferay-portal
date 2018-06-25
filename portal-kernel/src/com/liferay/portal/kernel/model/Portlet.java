@@ -344,7 +344,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* Returns the Facebook integration method of the portlet.
 	*
 	* @return the Facebook integration method of the portlet
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated()
 	public String getFacebookIntegration();
@@ -1768,7 +1768,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @param facebookIntegration the Facebook integration method of the
 	portlet
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated()
 	public void setFacebookIntegration(String facebookIntegration);
@@ -2092,13 +2092,8 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	* String, String, String)} are to be referenced in the page's header.
 	*
-	* @param portletDependencyCssEnabled whether the CSS
-	resource dependencies that are specified in <code>portlet.xml</code>,
-	* @{@link javax.portlet.annotations.Dependency},
-	{@link javax.portlet.HeaderResponse#addDependency(String, String,
-	String)}, or {@link javax.portlet.HeaderResponse#addDependency(
-	String, String, String, String)} are to be referenced in the
-	page's header
+	* @param portletDependencyCssEnabled whether the CSS resource dependencies
+	that are specified in <code>portlet.xml</code>,
 	*/
 	public void setPortletDependencyCssEnabled(
 		boolean portletDependencyCssEnabled);
@@ -2110,13 +2105,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	* String, String, String)} are to be referenced in the page's header.
 	*
-	* @param portletDependencyJavaScriptEnabled whether the
-	JavaScript resource dependencies specified in
-	<code>portlet.xml</code>, @{@link javax.portlet.annotations.Dependency},
-	{@link javax.portlet.HeaderResponse#addDependency(String, String,
-	String)}, or {@link javax.portlet.HeaderResponse#addDependency(
-	String, String, String, String)} are to be referenced in the
-	page's header
+	* @param portletDependencyJavaScriptEnabled whether the JavaScript resource
+	dependencies specified in <code>portlet.xml</code>, @{@link
+	javax.portlet.annotations.Dependency}, {@link
+	javax.portlet.HeaderResponse#addDependency(String, String,
+	String)}, or {@link
+	javax.portlet.HeaderResponse#addDependency(String, String, String,
+	String)} are to be referenced in the page's header
 	*/
 	public void setPortletDependencyJavaScriptEnabled(
 		boolean portletDependencyJavaScriptEnabled);

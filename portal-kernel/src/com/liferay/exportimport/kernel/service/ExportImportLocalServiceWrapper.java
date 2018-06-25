@@ -41,7 +41,7 @@ public class ExportImportLocalServiceWrapper implements ExportImportLocalService
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of Judson
 	*/
 	@Deprecated
 	@Override
@@ -119,7 +119,7 @@ public class ExportImportLocalServiceWrapper implements ExportImportLocalService
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of Judson
 	*/
 	@Deprecated
 	@Override

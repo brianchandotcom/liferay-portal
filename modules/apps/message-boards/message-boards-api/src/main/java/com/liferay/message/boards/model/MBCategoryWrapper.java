@@ -489,7 +489,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* Returns the trash handler for this message boards category.
 	*
 	* @return the trash handler for this message boards category
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Override

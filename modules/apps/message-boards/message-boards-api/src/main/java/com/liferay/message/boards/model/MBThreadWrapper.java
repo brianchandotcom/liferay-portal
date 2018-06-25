@@ -559,7 +559,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	* Returns the trash handler for this message boards thread.
 	*
 	* @return the trash handler for this message boards thread
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Override

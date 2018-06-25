@@ -97,7 +97,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#deleteAllByGroup(long)}
 	*/
 	@Deprecated
 	public static void deleteAll(long groupId)
@@ -475,8 +476,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getGroupFolderIds(long,
-	long)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#getGroupFolderIds(long, long)}
 	*/
 	@Deprecated
 	public static java.util.List<Long> getFolderIds(long groupId,
@@ -624,8 +625,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
-	long, long)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#getGroupSubfolderIds(List, long, long)}
 	*/
 	@Deprecated
 	public static void getSubfolderIds(java.util.List<Long> folderIds,
@@ -712,8 +713,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #updateFolder(long,
+	long, String, String, long, List, int, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFolder updateFolder(
@@ -741,7 +742,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
+	* @deprecated As of Wilberforce, replaced {@link #updateFolder(long, long,
 	String, String, long, List, int, ServiceContext)}
 	*/
 	@Deprecated
@@ -770,7 +771,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #
+	* @deprecated As of Wilberforce, replaced by {@link #
 	updateFolderAndFileEntryTypes(long, long, long, String,
 	String, long, List, int, ServiceContext)}
 	*/

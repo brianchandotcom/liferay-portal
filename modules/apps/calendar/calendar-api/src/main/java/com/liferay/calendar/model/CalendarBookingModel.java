@@ -743,7 +743,7 @@ public interface CalendarBookingModel extends BaseModel<CalendarBooking>,
 	 * Returns the trash handler for this calendar booking.
 	 *
 	 * @return the trash handler for this calendar booking
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

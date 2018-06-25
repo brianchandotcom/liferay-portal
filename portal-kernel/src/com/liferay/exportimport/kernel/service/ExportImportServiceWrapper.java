@@ -40,7 +40,7 @@ public class ExportImportServiceWrapper implements ExportImportService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of Judson
 	*/
 	@Deprecated
 	@Override
@@ -107,7 +107,7 @@ public class ExportImportServiceWrapper implements ExportImportService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of Judson
 	*/
 	@Deprecated
 	@Override

@@ -303,7 +303,8 @@ public class MBMessageServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 2.0.0, replaced by {@link #updateMessage(long, String, String, List, double, boolean, ServiceContext)}
+	* @deprecated As of Judson, replaced by {@link #updateMessage(long, String,
+	String, List, double, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.message.boards.model.MBMessage updateMessage(

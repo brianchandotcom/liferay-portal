@@ -61,7 +61,7 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionServiceImpl
  * @see com.liferay.portal.workflow.kaleo.service.KaleoDefinitionServiceUtil
- * @deprecated As of 2.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  * @generated
  */
 @Deprecated

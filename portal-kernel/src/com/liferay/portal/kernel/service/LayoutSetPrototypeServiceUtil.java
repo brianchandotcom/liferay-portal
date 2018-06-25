@@ -51,8 +51,9 @@ public class LayoutSetPrototypeServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(Map,
-	Map, boolean, boolean, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#addLayoutSetPrototype(Map, Map, boolean, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype addLayoutSetPrototype(
@@ -109,7 +110,7 @@ public class LayoutSetPrototypeServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	#updateLayoutSetPrototype(long, Map, Map, boolean, boolean,
 	ServiceContext)}
 	*/

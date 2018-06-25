@@ -488,7 +488,7 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	 * Returns the trash handler for this document library folder.
 	 *
 	 * @return the trash handler for this document library folder
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

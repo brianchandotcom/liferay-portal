@@ -35,7 +35,7 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see TrashEntry
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
 com.liferay.trash.model.impl.TrashEntryImpl}
  * @generated
  */

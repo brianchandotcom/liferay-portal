@@ -49,7 +49,7 @@ import java.util.List;
  * @see TrashVersionLocalServiceUtil
  * @see com.liferay.portlet.trash.service.base.TrashVersionLocalServiceBaseImpl
  * @see com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
            com.liferay.trash.service.impl.TrashVersionLocalServiceImpl}
  * @generated
  */
@@ -135,7 +135,7 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	public TrashVersion fetchVersion(java.lang.String className, long classPK);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #fetchVersion(String, long)}
+	* @deprecated As of Judson, replaced by {@link #fetchVersion(String, long)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

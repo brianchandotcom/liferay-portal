@@ -37,7 +37,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @see TrashEntryPersistence
  * @see com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
 com.liferay.trash.model.impl.TrashEntryImpl}
  * @generated
  */

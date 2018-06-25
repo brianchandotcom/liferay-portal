@@ -131,6 +131,13 @@ public class LayoutPageTemplateEntryStagedModelRepository
 	}
 
 	@Override
+	public LayoutPageTemplateEntry getStagedModel(long classPK) {
+		return
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				classPK);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry saveStagedModel(
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {

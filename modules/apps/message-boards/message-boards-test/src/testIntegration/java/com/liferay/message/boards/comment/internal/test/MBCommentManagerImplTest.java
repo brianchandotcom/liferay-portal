@@ -18,10 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionCommentIterator;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -35,12 +37,16 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -89,6 +95,42 @@ public class MBCommentManagerImplTest {
 	}
 
 	@Test
+	public void testGetChildComments() throws Exception {
+		List<Comment> childComments = _commentManager.getChildComments(
+			_parentCommentId, WorkflowConstants.STATUS_APPROVED,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(childComments.toString(), 3, childComments.size());
+	}
+
+	@Test
+	public void testGetChildCommentsCount() throws Exception {
+		int childCommentsCount = _commentManager.getChildCommentsCount(
+			_parentCommentId, WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(3, childCommentsCount);
+	}
+
+	@Test
+	public void testGetRootComments() throws Exception {
+		List<Comment> rootComments = _commentManager.getRootComments(
+			DLFileEntryConstants.getClassName(), _fileEntry.getFileEntryId(),
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		Assert.assertEquals(rootComments.toString(), 2, rootComments.size());
+	}
+
+	@Test
+	public void testGetRootCommentsCount() throws Exception {
+		int rootCommentsCount = _commentManager.getRootCommentsCount(
+			DLFileEntryConstants.getClassName(), _fileEntry.getFileEntryId(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(2, rootCommentsCount);
+	}
+
+	@Test
 	public void testSecondLevelThreadCommentsCount() throws Exception {
 		Discussion discussion = _commentManager.getDiscussion(
 			_user.getUserId(), _group.getGroupId(),
@@ -107,7 +149,20 @@ public class MBCommentManagerImplTest {
 		int descendantCommentsCount =
 			discussionComment.getDescendantCommentsCount();
 
-		Assert.assertEquals(2, descendantCommentsCount);
+		Assert.assertEquals(3, descendantCommentsCount);
+	}
+
+	@Test
+	public void testSubscribeDiscussion() throws Exception {
+		_commentManager.subscribeDiscussion(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFileEntryConstants.getClassName(), _fileEntry.getFileEntryId());
+
+		Assert.assertNotNull(
+			_subscriptionLocalService.fetchSubscription(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				DLFileEntryConstants.getClassName(),
+				_fileEntry.getFileEntryId()));
 	}
 
 	@Test
@@ -124,6 +179,23 @@ public class MBCommentManagerImplTest {
 			rootDiscussionComment.getDescendantCommentsCount();
 
 		Assert.assertEquals(2, descendantCommentsCount);
+	}
+
+	@Test
+	public void testUnsubscribeDiscussion() throws Exception {
+		_commentManager.subscribeDiscussion(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFileEntryConstants.getClassName(), _fileEntry.getFileEntryId());
+
+		_commentManager.unsubscribeDiscussion(
+			TestPropsValues.getUserId(), DLFileEntryConstants.getClassName(),
+			_fileEntry.getFileEntryId());
+
+		Assert.assertNull(
+			_subscriptionLocalService.fetchSubscription(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				DLFileEntryConstants.getClassName(),
+				_fileEntry.getFileEntryId()));
 	}
 
 	private long _addComment() throws Exception {
@@ -162,6 +234,7 @@ public class MBCommentManagerImplTest {
 		_addComment();
 		_addComment(_parentCommentId);
 		_addComment(_parentCommentId);
+		_addComment(_parentCommentId);
 	}
 
 	private Function<String, ServiceContext> _createServiceContextFunction() {
@@ -196,6 +269,10 @@ public class MBCommentManagerImplTest {
 	private Group _group;
 
 	private long _parentCommentId;
+
+	@Inject
+	private SubscriptionLocalService _subscriptionLocalService;
+
 	private User _user;
 
 }

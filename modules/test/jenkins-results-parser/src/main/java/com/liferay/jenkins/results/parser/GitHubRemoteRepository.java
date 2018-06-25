@@ -184,6 +184,70 @@ public class GitHubRemoteRepository extends RemoteRepository {
 		}
 	}
 
+	public static class Label {
+
+		public Label(JSONObject jsonObject, GitHubRemoteRepository repository) {
+			_jsonObject = jsonObject;
+			_repository = repository;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (o == null) {
+				return false;
+			}
+
+			if (!(o instanceof Label)) {
+				return false;
+			}
+
+			Label label = (Label)o;
+
+			String color = getColor();
+			String name = getName();
+
+			if (color.equals(label.getColor()) &&
+				name.equals(label.getName())) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		public String getColor() {
+			return _jsonObject.getString("color");
+		}
+
+		public String getDescription() {
+			return _jsonObject.optString("description");
+		}
+
+		public String getName() {
+			return _jsonObject.getString("name");
+		}
+
+		public GitHubRemoteRepository getRepository() {
+			return _repository;
+		}
+
+		@Override
+		public int hashCode() {
+			String name = getName();
+
+			return name.hashCode();
+		}
+
+		@Override
+		public String toString() {
+			return _jsonObject.toString(4);
+		}
+
+		private final JSONObject _jsonObject;
+		private final GitHubRemoteRepository _repository;
+
+	}
+
 	protected GitHubRemoteRepository(Remote remote) {
 		super(remote);
 

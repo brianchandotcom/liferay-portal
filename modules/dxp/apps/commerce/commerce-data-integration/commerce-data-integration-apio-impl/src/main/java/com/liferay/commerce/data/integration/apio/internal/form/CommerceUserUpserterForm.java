@@ -17,7 +17,6 @@ package com.liferay.commerce.data.integration.apio.internal.form;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -26,45 +25,46 @@ import java.util.List;
 /**
  * @author Rodrigo Guedes de Souza
  */
-public class CommerceUserCreatorForm {
+public class CommerceUserUpserterForm {
 
-	public static Form<CommerceUserCreatorForm> buildForm(
-		Form.Builder<CommerceUserCreatorForm> formBuilder) {
+	public static Form<CommerceUserUpserterForm> buildForm(
+		Form.Builder<CommerceUserUpserterForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The user creator form"
 		).description(
 			__ -> "This form can be used to create a user"
 		).constructor(
-			CommerceUserCreatorForm::new
+			CommerceUserUpserterForm::new
 		).addRequiredString(
-			"gender", CommerceUserCreatorForm::_setGender
-		).addOptionalString(
-			"alternateName", CommerceUserCreatorForm::_setAlternateName
+			"externalReferenceCode",
+			CommerceUserUpserterForm::_setExternalReferenceCode
+		).addRequiredString(
+			"gender", CommerceUserUpserterForm::_setGender
+		).addRequiredString(
+			"screenName", CommerceUserUpserterForm::_setScreenName
 		).addRequiredDate(
-			"birthDate", CommerceUserCreatorForm::_setBirthDate
+			"birthDate", CommerceUserUpserterForm::_setBirthDate
 		).addRequiredString(
-			"email", CommerceUserCreatorForm::_setEmail
+			"email", CommerceUserUpserterForm::_setEmail
+		).addOptionalString(
+			"firstName", CommerceUserUpserterForm::_setFirstName
+		).addOptionalString(
+			"middleName", CommerceUserUpserterForm::_setMiddleName
+		).addOptionalString(
+			"lastName", CommerceUserUpserterForm::_setLastName
 		).addRequiredString(
-			"familyName", CommerceUserCreatorForm::_setFamilyName
-		).addRequiredString(
-			"givenName", CommerceUserCreatorForm::_setGivenName
-		).addRequiredString(
-			"jobTitle", CommerceUserCreatorForm::_setJobTitle
-		).addRequiredString(
-			"password1", CommerceUserCreatorForm::_setPassword1
-		).addRequiredString(
-			"password2", CommerceUserCreatorForm::_setPassword2
+			"jobTitle", CommerceUserUpserterForm::_setJobTitle
+		).addOptionalString(
+			"password1", CommerceUserUpserterForm::_setPassword1
+		).addOptionalString(
+			"password2", CommerceUserUpserterForm::_setPassword2
 		).addOptionalLongList(
 			"commerceAccountIds",
-			CommerceUserCreatorForm::_setCommerceAccountIds
+			CommerceUserUpserterForm::_setCommerceAccountIds
 		).addOptionalLongList(
-			"roleIds", CommerceUserCreatorForm::_setRoleIds
+			"roleIds", CommerceUserUpserterForm::_setRoleIds
 		).build();
-	}
-
-	public String getAlternateName() {
-		return _alternateName;
 	}
 
 	public int getBirthdayDay() {
@@ -91,16 +91,24 @@ public class CommerceUserCreatorForm {
 		return _email;
 	}
 
-	public String getFamilyName() {
-		return _familyName;
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
 	}
 
-	public String getGivenName() {
-		return _givenName;
+	public String getFirstName() {
+		return _firstName;
 	}
 
 	public String getJobTitle() {
 		return _jobTitle;
+	}
+
+	public String getLastName() {
+		return _lastName;
+	}
+
+	public String getMiddleName() {
+		return _middleName;
 	}
 
 	public String getPassword1() {
@@ -119,16 +127,12 @@ public class CommerceUserCreatorForm {
 		return ArrayUtil.toLongArray(_roleIds);
 	}
 
-	public boolean hasAlternateName() {
-		return Validator.isNull(_alternateName);
+	public String getScreenName() {
+		return _screenName;
 	}
 
 	public boolean isMale() {
 		return _male;
-	}
-
-	private void _setAlternateName(String alternateName) {
-		_alternateName = alternateName;
 	}
 
 	private void _setBirthDate(Date birthDate) {
@@ -149,20 +153,28 @@ public class CommerceUserCreatorForm {
 		_email = emailAddress;
 	}
 
-	private void _setFamilyName(String lastName) {
-		_familyName = lastName;
+	private void _setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	private void _setFirstName(String firstName) {
+		_firstName = firstName;
 	}
 
 	private void _setGender(String gender) {
 		_male = "male".equals(gender);
 	}
 
-	private void _setGivenName(String givenName) {
-		_givenName = givenName;
-	}
-
 	private void _setJobTitle(String jobTitle) {
 		_jobTitle = jobTitle;
+	}
+
+	private void _setLastName(String lastName) {
+		_lastName = lastName;
+	}
+
+	private void _setMiddleName(String middleName) {
+		_middleName = middleName;
 	}
 
 	private void _setPassword1(String password1) {
@@ -177,18 +189,24 @@ public class CommerceUserCreatorForm {
 		_roleIds = roleIds;
 	}
 
-	private String _alternateName;
+	private void _setScreenName(String screenName) {
+		_screenName = screenName;
+	}
+
 	private int _birthdayDay;
 	private int _birthdayMonth;
 	private int _birthdayYear;
 	private List<Long> _commerceAccountIds;
 	private String _email;
-	private String _familyName;
-	private String _givenName;
+	private String _externalReferenceCode;
+	private String _firstName;
 	private String _jobTitle;
+	private String _lastName;
 	private Boolean _male;
+	private String _middleName;
 	private String _password1;
 	private String _password2;
 	private List<Long> _roleIds;
+	private String _screenName;
 
 }

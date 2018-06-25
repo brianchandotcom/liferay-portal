@@ -37,13 +37,33 @@ List<CPCatalogEntry> results = cpCatalogEntrySearchContainer.getResults();
 			displayStyleGroupId="<%= cpSearchResultsDisplayContext.getDisplayStyleGroupId() %>"
 			entries="<%= results %>"
 		/>
+
+		<c:if test="<%= cpSearchResultsDisplayContext.isPaginate() %>">
+			<aui:form useNamespace="<%= false %>">
+				<liferay-ui:search-paginator
+					markupView="lexicon"
+					searchContainer="<%= cpCatalogEntrySearchContainer %>"
+					type="<%= cpSearchResultsDisplayContext.getPaginationType() %>"
+				/>
+			</aui:form>
+		</c:if>
 	</c:when>
 	<c:when test="<%= cpSearchResultsDisplayContext.isSelectionStyleCustomRenderer() %>">
+		<liferay-commerce-product:product-list-renderer
+			CPDataSourceResult = "<%= cpSearchResultsDisplayContext.getCPDataSourceResult() %>"
+			entryKeys = "<%= cpSearchResultsDisplayContext.getCPContentListEntryRendererKeys() %>"
+			key = "<%= cpSearchResultsDisplayContext.getCPContentListRendererKey() %>"
+		/>
 
-		<%
-		cpSearchResultsDisplayContext.renderCPContentList();
-		%>
-
+		<c:if test="<%= cpSearchResultsDisplayContext.isPaginate() %>">
+			<aui:form useNamespace="<%= false %>">
+				<liferay-ui:search-paginator
+					markupView="lexicon"
+					searchContainer="<%= cpCatalogEntrySearchContainer %>"
+					type="<%= cpSearchResultsDisplayContext.getPaginationType() %>"
+				/>
+			</aui:form>
+		</c:if>
 	</c:when>
 	<c:otherwise>
 	</c:otherwise>

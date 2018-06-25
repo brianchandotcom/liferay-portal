@@ -17,13 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPCompareContentDisplayContext cpCompareContentDisplayContext = (CPCompareContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPCompareContentHelper cpCompareContentHelper = (CPCompareContentHelper)request.getAttribute(CPContentWebKeys.CP_COMPARE_CONTENT_HELPER);
+CPDataSourceResult cpDataSourceResult = (CPDataSourceResult)request.getAttribute(CPWebKeys.CP_DATA_SOURCE_RESULT);
 
-List<CPCatalogEntry> cpCatalogEntries = cpCompareContentDisplayContext.getCPCatalogEntries();
-Set<String> cpDefinitionOptionRelTitles = cpCompareContentDisplayContext.getCPDefinitionOptionRelNames(cpCatalogEntries);
-Set<CPSpecificationOption> cpSpecificationOptions = cpCompareContentDisplayContext.getCPSpecificationOptions(cpCatalogEntries);
-Set<CPSpecificationOption> categorizedCPSpecificationOptions = cpCompareContentDisplayContext.getCategorizedCPSpecificationOptions(cpCatalogEntries);
-List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCPOptionCategories();
+List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries();
+
+Set<String> cpDefinitionOptionRelTitles = cpCompareContentHelper.getCPDefinitionOptionRelNames(cpDataSourceResult, locale);
+Set<CPSpecificationOption> cpSpecificationOptions = cpCompareContentHelper.getCPSpecificationOptions(cpDataSourceResult);
+Set<CPSpecificationOption> categorizedCPSpecificationOptions = cpCompareContentHelper.getCategorizedCPSpecificationOptions(cpDataSourceResult);
+List<CPOptionCategory> cpOptionCategories = cpCompareContentHelper.getCPOptionCategories(scopeGroupId);
 %>
 
 <c:if test="<%= cpCatalogEntries.size() > 0 %>">
@@ -34,19 +36,12 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 
 				<%
 				for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
-					CPInstance cpInstance = cpCompareContentDisplayContext.getDefaultCPInstance(cpCatalogEntry);
-
-					request.setAttribute("cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
-					request.setAttribute("cpContentListRenderer-cpInstance", cpInstance);
-					request.setAttribute("cpContentListRenderer-deleteCompareProductURL", cpCompareContentDisplayContext.getDeleteCompareProductURL(cpCatalogEntry.getCPDefinitionId()));
 				%>
 
 					<td>
-
-						<%
-						cpCompareContentDisplayContext.renderCPContentListEntry(cpCatalogEntry);
-						%>
-
+						<liferay-commerce-product:product-list-entry-renderer
+							CPCatalogEntry = "<%= cpCatalogEntry %>"
+						/>
 					</td>
 
 				<%
@@ -71,7 +66,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 						for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
 						%>
 
-							<td><%= HtmlUtil.escape(cpCompareContentDisplayContext.getCPDefinitionOptionValueRels(cpCatalogEntry, cpDefinitionOptionRelTitle)) %></td>
+							<td><%= HtmlUtil.escape(cpCompareContentHelper.getCPDefinitionOptionValueRels(cpCatalogEntry, cpDefinitionOptionRelTitle, locale)) %></td>
 
 						<%
 						}
@@ -90,7 +85,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 			</tr>
 
 			<%
-			String dimensionCPMeasurementUnitName = cpCompareContentDisplayContext.getDimensionCPMeasurementUnitName();
+			String dimensionCPMeasurementUnitName = cpCompareContentHelper.getDimensionCPMeasurementUnitName(scopeGroupId, locale);
 
 			if (Validator.isNotNull(dimensionCPMeasurementUnitName)) {
 				dimensionCPMeasurementUnitName = StringPool.OPEN_PARENTHESIS + dimensionCPMeasurementUnitName + StringPool.CLOSE_PARENTHESIS;
@@ -142,7 +137,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 						for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
 						%>
 
-							<td><%= HtmlUtil.escape(cpCompareContentDisplayContext.getCPDefinitionSpecificationOptionValue(cpCatalogEntry.getCPDefinitionId(), cpSpecificationOption.getCPSpecificationOptionId())) %></td>
+							<td><%= HtmlUtil.escape(cpCompareContentHelper.getCPDefinitionSpecificationOptionValue(cpCatalogEntry.getCPDefinitionId(), cpSpecificationOption.getCPSpecificationOptionId(), locale)) %></td>
 
 						<%
 						}
@@ -160,7 +155,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 			for (CPOptionCategory cpOptionCategory : cpOptionCategories) {
 			%>
 
-				<c:if test="<%= cpCompareContentDisplayContext.hasCategorizedCPDefinitionSpecificationOptionValues(cpOptionCategory.getCPOptionCategoryId()) %>">
+				<c:if test="<%= cpCompareContentHelper.hasCategorizedCPDefinitionSpecificationOptionValues(cpDataSourceResult, cpOptionCategory.getCPOptionCategoryId()) %>">
 					<tr class="table-divider">
 						<td colspan="<%= cpCatalogEntries.size() + 1 %>"><h4 class="table-title"><%= HtmlUtil.escape(cpOptionCategory.getTitle(languageId)) %></h4></td>
 					</tr>
@@ -179,7 +174,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 							for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
 							%>
 
-								<td><%= HtmlUtil.escape(cpCompareContentDisplayContext.getCPDefinitionSpecificationOptionValue(cpCatalogEntry.getCPDefinitionId(), cpSpecificationOption.getCPSpecificationOptionId())) %></td>
+								<td><%= HtmlUtil.escape(cpCompareContentHelper.getCPDefinitionSpecificationOptionValue(cpCatalogEntry.getCPDefinitionId(), cpSpecificationOption.getCPSpecificationOptionId(), locale)) %></td>
 
 							<%
 							}

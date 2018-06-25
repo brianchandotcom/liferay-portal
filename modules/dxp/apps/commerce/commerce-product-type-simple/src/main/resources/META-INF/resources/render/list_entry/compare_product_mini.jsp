@@ -17,8 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("cpContentListRenderer-cpCatalogEntry");
-String deleteCompareProductURL = (String)request.getAttribute("cpContentListRenderer-deleteCompareProductURL");
+CPCompareContentHelper cpCompareContentHelper = (CPCompareContentHelper)request.getAttribute(CPContentWebKeys.CP_COMPARE_CONTENT_HELPER);
+CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
+
+CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 %>
 
 <div class="autofit-row autofit-row-end">
@@ -29,11 +31,11 @@ String deleteCompareProductURL = (String)request.getAttribute("cpContentListRend
 					icon="times"
 					markupView="lexicon"
 					message="remove"
-					url="<%= deleteCompareProductURL %>"
+					url="<%= cpCompareContentHelper.getDeleteCompareProductURL(cpCatalogEntry.getCPDefinitionId(), renderRequest, renderResponse) %>"
 				/>
 			</div>
 
-			<a class="aspect-ratio" href="<%= CPDefinitionFriendlyURLUtil.getFriendlyURL(cpCatalogEntry, themeDisplay) %>">
+			<a class="aspect-ratio" href="<%= cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay) %>">
 
 				<%
 				String img = cpCatalogEntry.getDefaultImageFileUrl();
@@ -47,7 +49,7 @@ String deleteCompareProductURL = (String)request.getAttribute("cpContentListRend
 	</div>
 
 	<div class="autofit-col autofit-col-expand">
-		<a class="compare-link" href="<%= CPDefinitionFriendlyURLUtil.getFriendlyURL(cpCatalogEntry, themeDisplay) %>">
+		<a class="compare-link" href="<%= cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay) %>">
 			<%= cpCatalogEntry.getName() %>
 		</a>
 	</div>

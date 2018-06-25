@@ -27,6 +27,8 @@ public class CPWebKeys {
 
 	public static final String CP_CATALOG_ENTRY = "CP_CATALOG_ENTRY";
 
+	public static final String CP_DATA_SOURCE_RESULT = "CP_DATA_SOURCE_RESULT";
+
 	public static final String CP_DEFINITION = "CP_DEFINITION";
 
 	public static final String CP_DEFINITION_LINK = "CP_DEFINITION_LINK";

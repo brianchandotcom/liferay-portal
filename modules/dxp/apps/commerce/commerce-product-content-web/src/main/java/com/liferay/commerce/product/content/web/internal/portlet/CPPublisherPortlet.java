@@ -21,7 +21,11 @@ import com.liferay.commerce.product.content.web.internal.display.context.CPPubli
 import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -71,20 +75,29 @@ public class CPPublisherPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
+		try {
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
 
-		CPPublisherDisplayContext cpPublisherDisplayContext =
-			new CPPublisherDisplayContext(
-				_cpContentListEntryRendererRegistry,
-				_cpContentListRendererRegistry, _cpDataSourceRegistry,
-				_cpDefinitionHelper, _cpPublisherWebHelper, httpServletRequest);
+			CPPublisherDisplayContext cpPublisherDisplayContext =
+				new CPPublisherDisplayContext(
+					_cpContentListEntryRendererRegistry,
+					_cpContentListRendererRegistry, _cpDataSourceRegistry,
+					_cpDefinitionHelper, _cpPublisherWebHelper,
+					_cpTypeServicesTracker, httpServletRequest);
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, cpPublisherDisplayContext);
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpPublisherDisplayContext);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPPublisherPortlet.class);
 
 	@Reference
 	private CPContentListEntryRendererRegistry
@@ -104,6 +117,9 @@ public class CPPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	private CPPublisherWebHelper _cpPublisherWebHelper;
+
+	@Reference
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	@Reference
 	private Portal _portal;

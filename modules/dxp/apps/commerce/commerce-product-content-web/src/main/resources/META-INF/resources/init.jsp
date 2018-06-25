@@ -21,6 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/commerce" prefix="liferay-commerce" %><%@
 taglib uri="http://liferay.com/tld/commerce-cart" prefix="liferay-commerce-cart" %><%@
+taglib uri="http://liferay.com/tld/commerce-product" prefix="liferay-commerce-product" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
@@ -32,10 +33,12 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.asset.kernel.exception.DuplicateQueryRuleException" %><%@
 page import="com.liferay.commerce.product.catalog.CPCatalogEntry" %><%@
 page import="com.liferay.commerce.product.catalog.CPSku" %><%@
+page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
 page import="com.liferay.commerce.product.content.constants.CPContentWebKeys" %><%@
 page import="com.liferay.commerce.product.content.render.CPContentRenderer" %><%@
 page import="com.liferay.commerce.product.content.render.list.CPContentListRenderer" %><%@
 page import="com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer" %><%@
+page import="com.liferay.commerce.product.content.util.CPCompareContentHelper" %><%@
 page import="com.liferay.commerce.product.content.util.CPContentHelper" %><%@
 page import="com.liferay.commerce.product.content.web.internal.constants.CPCompareContentConstants" %><%@
 page import="com.liferay.commerce.product.content.web.internal.constants.CPCompareContentMiniConstants" %><%@
@@ -52,6 +55,7 @@ page import="com.liferay.commerce.product.content.web.internal.portlet.CPCompare
 page import="com.liferay.commerce.product.content.web.internal.portlet.CPContentPortlet" %><%@
 page import="com.liferay.commerce.product.content.web.internal.portlet.CPPublisherPortlet" %><%@
 page import="com.liferay.commerce.product.data.source.CPDataSource" %><%@
+page import="com.liferay.commerce.product.data.source.CPDataSourceResult" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionRel" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" %><%@

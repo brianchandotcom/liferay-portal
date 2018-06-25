@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.product.content.render.list;
 
-import com.liferay.commerce.product.catalog.CPCatalogEntry;
-
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +29,6 @@ public interface CPContentListRenderer {
 	public String getLabel(Locale locale);
 
 	public void render(
-			List<CPCatalogEntry> cpCatalogEntries,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception;

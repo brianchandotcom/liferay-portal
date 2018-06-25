@@ -14,14 +14,12 @@
 
 package com.liferay.commerce.product.content.search.web.internal.render.list;
 
-import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -60,7 +58,6 @@ public class SearchResultsCPContentListRenderer
 
 	@Override
 	public void render(
-			List<CPCatalogEntry> cpCatalogEntries,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {

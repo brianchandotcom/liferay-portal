@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.ServletContext;
@@ -52,8 +51,7 @@ public class CPCompareContentMiniConfigurationAction
 					new CPCompareContentMiniDisplayContext(
 						_cpContentListEntryRendererRegistry,
 						_cpContentListRendererRegistry, _cpDefinitionHelper,
-						_cpTypeServicesTracker, _layoutLocalService,
-						httpServletRequest);
+						_cpTypeServicesTracker, httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -90,8 +88,5 @@ public class CPCompareContentMiniConfigurationAction
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 }

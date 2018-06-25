@@ -19,6 +19,8 @@ package com.liferay.commerce.product.content.search.web.internal.constants;
  */
 public class CPSearchResultsConstants {
 
+	public static final String CATEGORY_KEY_PAGINATION = "pagination";
+
 	public static final String CATEGORY_KEY_RENDER_SELECTION =
 		"render-selection";
 

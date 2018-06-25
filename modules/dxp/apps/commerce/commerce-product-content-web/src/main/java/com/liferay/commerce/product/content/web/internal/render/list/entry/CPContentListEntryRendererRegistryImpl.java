@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -48,9 +49,7 @@ public class CPContentListEntryRendererRegistryImpl
 	public CPContentListEntryRenderer getCPContentListEntryRenderer(
 		String key, String portletName, String cpType) {
 
-		if (Validator.isNull(key) || Validator.isNull(portletName) ||
-			Validator.isNull(cpType)) {
-
+		if (Validator.isNull(key) || Validator.isNull(portletName)) {
 			return null;
 		}
 
@@ -92,15 +91,18 @@ public class CPContentListEntryRendererRegistryImpl
 			cpContentListEntryRendererServiceWrapperProperties.get(
 				"commerce.product.content.list.entry.renderer.type");
 
-		if (typeObject instanceof String[]) {
+		if (typeObject == null) {
+			return cpContentListEntryRendererServiceWrapper.getService();
+		}
+		else if (typeObject instanceof String[]) {
 			String[] types = GetterUtil.getStringValues(typeObject);
 
-			if (ArrayUtil.contains(types, cpType)) {
+			if ((cpType != null) && ArrayUtil.contains(types, cpType)) {
 				return cpContentListEntryRendererServiceWrapper.getService();
 			}
 		}
 		else if (typeObject instanceof String &&
-				 cpType.equals(GetterUtil.getString(typeObject))) {
+				 Objects.equals(cpType, GetterUtil.getString(typeObject))) {
 
 			return cpContentListEntryRendererServiceWrapper.getService();
 		}
@@ -123,7 +125,7 @@ public class CPContentListEntryRendererRegistryImpl
 				cpContentListEntryRendererServiceWrapper :
 					cpContentListEntryRendererServiceWrappers) {
 
-			if (Validator.isNull(portletName) || Validator.isNull(cpType)) {
+			if (Validator.isNull(portletName)) {
 				continue;
 			}
 
@@ -155,16 +157,21 @@ public class CPContentListEntryRendererRegistryImpl
 				cpContentListEntryRendererServiceWrapperProperties.get(
 					"commerce.product.content.list.entry.renderer.type");
 
+			if (typeObject == null) {
+				cpContentListEntryRenderers.add(
+					cpContentListEntryRendererServiceWrapper.getService());
+			}
+
 			if (typeObject instanceof String[]) {
 				String[] types = GetterUtil.getStringValues(typeObject);
 
-				if (ArrayUtil.contains(types, cpType)) {
+				if ((cpType != null) && ArrayUtil.contains(types, cpType)) {
 					cpContentListEntryRenderers.add(
 						cpContentListEntryRendererServiceWrapper.getService());
 				}
 			}
 			else if (typeObject instanceof String &&
-					 cpType.equals(GetterUtil.getString(typeObject))) {
+					 Objects.equals(cpType, GetterUtil.getString(typeObject))) {
 
 				cpContentListEntryRenderers.add(
 					cpContentListEntryRendererServiceWrapper.getService());

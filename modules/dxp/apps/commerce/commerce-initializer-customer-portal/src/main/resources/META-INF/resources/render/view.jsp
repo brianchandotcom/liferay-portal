@@ -20,7 +20,7 @@
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 
 CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
-CPInstance cpInstance = cpContentHelper.getDefaultCPInstance(request);
+CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 
 long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 %>
@@ -32,25 +32,25 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 		<div class="autofit-float autofit-row product-detail-secondary-info">
 			<div class="autofit-col">
 				<div class="commerce-sku">
-					<span class='<%= (cpInstance == null) ? "hide" : StringPool.BLANK %>' data-text-cp-instance-sku-show><%= LanguageUtil.format(request, "sku-x", StringPool.BLANK) %></span>
+					<span class='<%= (cpSku == null) ? "hide" : StringPool.BLANK %>' data-text-cp-instance-sku-show><%= LanguageUtil.format(request, "sku-x", StringPool.BLANK) %></span>
 
-					<span data-text-cp-instance-sku><%= (cpInstance == null) ? StringPool.BLANK : cpInstance.getSku() %></span>
+					<span data-text-cp-instance-sku><%= (cpSku == null) ? StringPool.BLANK : cpSku.getSku() %></span>
 				</div>
 			</div>
 
 			<div class="autofit-col">
 				<div class="commerce-manufacturer-part-number">
-					<span class='<%= (cpInstance == null) ? "hide" : StringPool.BLANK %>' data-text-cp-instance-manufacturer-part-number-show><%= LanguageUtil.format(request, "manufacturer-part-number-x", StringPool.BLANK) %></span>
+					<span class='<%= (cpSku == null) ? "hide" : StringPool.BLANK %>' data-text-cp-instance-manufacturer-part-number-show><%= LanguageUtil.format(request, "manufacturer-part-number-x", StringPool.BLANK) %></span>
 
-					<span data-text-cp-instance-manufacturer-part-number><%= (cpInstance == null) ? StringPool.BLANK : cpInstance.getManufacturerPartNumber() %></span>
+					<span data-text-cp-instance-manufacturer-part-number><%= (cpSku == null) ? StringPool.BLANK : cpSku.getManufacturerPartNumber() %></span>
 				</div>
 			</div>
 
 			<div class="autofit-col">
 				<div class="commerce-gtin">
-					<span class='<%= (cpInstance == null) ? "hide" : StringPool.BLANK %>' data-text-cp-instance-gtin-show><%= LanguageUtil.format(request, "gtin-x", StringPool.BLANK) %></span>
+					<span class='<%= (cpSku == null) ? "hide" : StringPool.BLANK %>' data-text-cp-instance-gtin-show><%= LanguageUtil.format(request, "gtin-x", StringPool.BLANK) %></span>
 
-					<span data-text-cp-instance-gtin><%= (cpInstance == null) ? StringPool.BLANK : cpInstance.getGtin() %></span>
+					<span data-text-cp-instance-gtin><%= (cpSku == null) ? StringPool.BLANK : cpSku.getGtin() %></span>
 				</div>
 			</div>
 		</div>
@@ -111,85 +111,52 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					</div>
 				</c:if>
 			</div>
-
-			<div class="product-detail-social-navigation">
-				<ul class="nav">
-					<li class="nav-item">
-						<a href="#1">
-							<aui:icon image="social-facebook" markupView="lexicon" />
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="#1">
-							<aui:icon image="twitter" markupView="lexicon" />
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="#1">
-							<aui:icon image="social-linkedin" markupView="lexicon" />
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="#1">
-							<span class="icon-instagram"></span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="#1">
-							<span class="icon-youtube-play"></span>
-						</a>
-					</li>
-				</ul>
-			</div>
 		</div>
 
 		<div class="product-detail-info">
 			<div class="autofit-float autofit-row product-detail-info-header">
 				<div class="autofit-col autofit-col-expand">
 					<h2 class="commerce-price" data-text-cp-instance-price>
-						<c:if test="<%= cpInstance != null %>">
-							<liferay-commerce:price CPDefinitionId="<%= cpDefinitionId %>" CPInstanceId="<%= cpInstance.getCPInstanceId() %>" />
+						<c:if test="<%= cpSku != null %>">
+							<liferay-commerce:price CPDefinitionId="<%= cpDefinitionId %>" CPInstanceId="<%= cpSku.getCPInstanceId() %>" />
 						</c:if>
 					</h2>
 				</div>
 
-				<c:if test="<%= cpInstance != null %>">
+				<c:if test="<%= cpSku != null %>">
 					<div class="autofit-col autofit-col-expand">
 						<div class="autofit-section">
-							was
 							<strong data-text-cp-instance-price>
 								<liferay-commerce:price
 									CPDefinitionId="<%= cpDefinitionId %>"
-									CPInstanceId="<%= cpInstance.getCPInstanceId() %>"
+									CPInstanceId="<%= cpSku.getCPInstanceId() %>"
 								/>
 							</strong>
 						</div>
 					</div>
 				</c:if>
-
-				<c:if test="<%= cpInstance != null %>">
-					<div class="autofit-col autofit-col-expand">
-						<div class="autofit-section">
-							<strong>You save <span data-text-placeholder>0%</span></strong>
-						</div>
-					</div>
-				</c:if>
-
-				<c:if test="<%= cpInstance != null %>">
-					<div class="autofit-col">
-						<div class="autofit-section">
-							<a href="#placeholder">
-								more discount info
-								<aui:icon image="info-circle" markupView="lexicon" />
-							</a>
-						</div>
-					</div>
-				</c:if>
 			</div>
 
-			<c:if test="<%= cpInstance != null %>">
+			<c:choose>
+				<c:when test="<%= cpSku != null %>">
+					<div class="availability"><%= cpContentHelper.getAvailabilityLabel(request) %></div>
+
+					<div class="availabilityEstimate"><%= cpContentHelper.getAvailabilityEstimateLabel(request) %></div>
+
+					<div class="stockQuantity"><%= cpContentHelper.getStockQuantityLabel(request) %></div>
+				</c:when>
+				<c:otherwise>
+					<div class="availability" data-text-cp-instance-availability=""></div>
+
+					<div class="availabilityEstimate" data-text-cp-instance-availability-estimate=""></div>
+
+					<div class="stockQuantity" data-text-cp-instance-stock-quantity=""></div>
+				</c:otherwise>
+			</c:choose>
+
+			<c:if test="<%= cpSku != null %>">
 				<liferay-commerce:tier-price
-					CPInstanceId="<%= cpInstance.getCPInstanceId() %>"
+					CPInstanceId="<%= cpSku.getCPInstanceId() %>"
 					taglibQuantityInputId='<%= renderResponse.getNamespace() + cpDefinitionId + "Quantity" %>'
 				/>
 			</c:if>
@@ -211,7 +178,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				<div class="autofit-col">
 					<liferay-commerce-cart:add-to-cart
 						CPDefinitionId="<%= cpDefinitionId %>"
-						CPInstanceId="<%= (cpInstance == null) ? 0 : cpInstance.getCPInstanceId() %>"
+						CPInstanceId="<%= (cpSku == null) ? 0 : cpSku.getCPInstanceId() %>"
 						elementClasses="btn-primary text-truncate"
 						productContentId='<%= renderResponse.getNamespace() + cpDefinitionId + "ProductContent" %>'
 						taglibQuantityInputId='<%= renderResponse.getNamespace() + cpDefinitionId + "Quantity" %>'
@@ -295,11 +262,13 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 	<div class="product-detail-description">
 		<ul class="nav nav-underline nav-underline-light" role="tablist">
-			<li class="nav-item" role="presentation">
-				<a aria-controls="<portlet:namespace />description" aria-expanded="true" class="active nav-link" data-toggle="tab" href="#<portlet:namespace />description" role="tab">
-					<%= LanguageUtil.get(resourceBundle, "description") %>
-				</a>
-			</li>
+			<c:if test="<%= Validator.isNotNull(cpCatalogEntry.getDescription()) %>">
+				<li class="nav-item" role="presentation">
+					<a aria-controls="<portlet:namespace />description" aria-expanded="true" class="active nav-link" data-toggle="tab" href="#<portlet:namespace />description" role="tab">
+						<%= LanguageUtil.get(resourceBundle, "description") %>
+					</a>
+				</li>
+			</c:if>
 
 			<c:if test="<%= cpContentHelper.hasCPDefinitionSpecificationOptionValues(cpDefinitionId) %>">
 				<li class="nav-item" role="presentation">
@@ -319,9 +288,11 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 		</ul>
 
 		<div class="tab-content">
-			<div class="active fade show tab-pane" id="<portlet:namespace />description">
-				<p><%= cpCatalogEntry.getDescription() %></p>
-			</div>
+			<c:if test="<%= Validator.isNotNull(cpCatalogEntry.getDescription()) %>">
+				<div class="active fade show tab-pane" id="<portlet:namespace />description">
+					<p><%= cpCatalogEntry.getDescription() %></p>
+				</div>
+			</c:if>
 
 			<c:if test="<%= cpContentHelper.hasCPDefinitionSpecificationOptionValues(cpDefinitionId) %>">
 				<div class="fade tab-pane" id="<portlet:namespace />specification">

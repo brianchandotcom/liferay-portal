@@ -14,10 +14,8 @@
 
 package com.liferay.commerce.product.type.simple.internal;
 
-import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
-import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -40,8 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"commerce.product.content.list.entry.renderer.key=" + DefaultSimpleCPContentListEntryRenderer.KEY,
 		"commerce.product.content.list.entry.renderer.portlet.name=" + CPPortletKeys.CP_PUBLISHER_WEB,
-		"commerce.product.content.list.entry.renderer.portlet.name=" + CPPortletKeys.CP_SEARCH_RESULTS,
-		"commerce.product.content.list.entry.renderer.type=" + SimpleCPTypeConstants.NAME
+		"commerce.product.content.list.entry.renderer.portlet.name=" + CPPortletKeys.CP_SEARCH_RESULTS
 	},
 	service = CPContentListEntryRenderer.class
 )
@@ -65,7 +62,6 @@ public class DefaultSimpleCPContentListEntryRenderer
 
 	@Override
 	public void render(
-			CPCatalogEntry cpCatalogEntry,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {

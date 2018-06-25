@@ -17,9 +17,9 @@
 <%@ include file="/render/init.jsp" %>
 
 <%
-CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("cpContentListRenderer-cpCatalogEntry");
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 
+CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 
 long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
@@ -40,7 +40,7 @@ String quantityInputId = renderResponse.getNamespace() + cpDefinitionId + "Quant
 			<div class="autofit-row product-description">
 				<div class="autofit-col autofit-col-expand">
 					<div class="card-title">
-						<a href="<%= CPDefinitionFriendlyURLUtil.getFriendlyURL(cpCatalogEntry, themeDisplay) %>"> <%= cpCatalogEntry.getName() %> </a>
+						<a href="<%= cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay) %>"> <%= cpCatalogEntry.getName() %> </a>
 					</div>
 				</div>
 
@@ -85,7 +85,7 @@ String quantityInputId = renderResponse.getNamespace() + cpDefinitionId + "Quant
 				</c:if>
 
 				<c:if test="<%= !cpCatalogEntry.isIgnoreSKUCombinations() %>">
-					<a class="btn btn-block btn-outline-primary text-truncate" href="<%= CPDefinitionFriendlyURLUtil.getFriendlyURL(cpCatalogEntry, themeDisplay) %>"><liferay-ui:message key="view-all-variants" /> </a>
+					<a class="btn btn-block btn-outline-primary text-truncate" href="<%= cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay) %>"><liferay-ui:message key="view-all-variants" /> </a>
 				</c:if>
 			</div>
 

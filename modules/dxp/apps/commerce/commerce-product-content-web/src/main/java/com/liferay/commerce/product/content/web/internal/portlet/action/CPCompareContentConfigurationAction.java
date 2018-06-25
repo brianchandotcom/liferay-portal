@@ -18,14 +18,8 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
-import com.liferay.commerce.product.service.CPMeasurementUnitService;
-import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -56,11 +50,7 @@ public class CPCompareContentConfigurationAction
 				new CPCompareContentDisplayContext(
 					_cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDefinitionHelper,
-					_cpDefinitionLocalService,
-					_cpDefinitionSpecificationOptionValueLocalService,
-					_cpInstanceHelper, _cpMeasurementUnitService,
-					_cpOptionCategoryLocalService, _cpTypeServicesTracker,
-					_ddmFormFieldTypeServicesTracker, httpServletRequest);
+					_cpTypeServicesTracker, httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -96,25 +86,6 @@ public class CPCompareContentConfigurationAction
 	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private CPDefinitionSpecificationOptionValueLocalService
-		_cpDefinitionSpecificationOptionValueLocalService;
-
-	@Reference
-	private CPInstanceHelper _cpInstanceHelper;
-
-	@Reference
-	private CPMeasurementUnitService _cpMeasurementUnitService;
-
-	@Reference
-	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
-
-	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;
-
-	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 }

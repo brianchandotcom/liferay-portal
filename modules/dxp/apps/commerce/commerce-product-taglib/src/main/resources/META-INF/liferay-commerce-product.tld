@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+	<description>Provides the Liferay Commerce Product tags, prefixed with <![CDATA[<code>liferay-commerce-product:</code>]]>.</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-commerce-product</short-name>
+	<uri>http://liferay.com/tld/commerce-product</uri>
+	<tag>
+		<name>product-list-entry-renderer</name>
+		<tag-class>com.liferay.commerce.product.taglib.servlet.taglib.ProductListEntryRendererTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>CPCatalogEntry</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.commerce.product.catalog.CPCatalogEntry</type>
+		</attribute>
+		<attribute>
+			<name>key</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>product-list-renderer</name>
+		<tag-class>com.liferay.commerce.product.taglib.servlet.taglib.ProductListRendererTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>CPDataSourceResult</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.commerce.product.data.source.CPDataSourceResult</type>
+		</attribute>
+		<attribute>
+			<name>entryKeys</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Map</type>
+		</attribute>
+		<attribute>
+			<name>key</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

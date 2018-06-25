@@ -16,7 +16,6 @@ package com.liferay.commerce.product.content.util;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.content.render.CPContentRenderer;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -46,9 +44,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @ProviderType
 public interface CPContentHelper {
-
-	public List<AssetCategory> getAssetCategories(long cpDefinitionId)
-		throws PortalException;
 
 	public String getAvailabilityEstimateLabel(
 			HttpServletRequest httpServletRequest)
@@ -97,15 +92,14 @@ public interface CPContentHelper {
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws PortalException;
 
+	public String getFriendlyURL(
+			CPCatalogEntry cpCatalogEntry, ThemeDisplay themeDisplay)
+		throws PortalException;
+
 	public List<CPAttachmentFileEntry> getImages(long cpDefinitionId)
 		throws PortalException;
 
 	public String getImageURL(FileEntry fileEntry, ThemeDisplay themeDisplay)
-		throws Exception;
-
-	public String getLabel(Locale locale, String key);
-
-	public String getPrice(HttpServletRequest httpServletRequest)
 		throws Exception;
 
 	public String getStockQuantityLabel(HttpServletRequest httpServletRequest)

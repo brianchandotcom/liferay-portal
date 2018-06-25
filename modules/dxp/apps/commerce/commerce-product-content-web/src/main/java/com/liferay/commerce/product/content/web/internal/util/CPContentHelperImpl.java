@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.content.web.internal.util;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
@@ -37,13 +35,13 @@ import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -54,7 +52,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -72,14 +69,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = CPContentHelper.class)
 public class CPContentHelperImpl implements CPContentHelper {
-
-	@Override
-	public List<AssetCategory> getAssetCategories(long cpDefinitionId)
-		throws PortalException {
-
-		return _assetCategoryService.getCategories(
-			CPDefinition.class.getName(), cpDefinitionId);
-	}
 
 	@Override
 	public String getAvailabilityEstimateLabel(
@@ -260,6 +249,15 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
+	public String getFriendlyURL(
+			CPCatalogEntry cpCatalogEntry, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _cpDefinitionHelper.getFriendlyURL(
+			cpCatalogEntry.getCPDefinitionId(), themeDisplay);
+	}
+
+	@Override
 	public List<CPAttachmentFileEntry> getImages(long cpDefinitionId)
 		throws PortalException {
 
@@ -279,25 +277,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 		return DLUtil.getDownloadURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay,
 			StringPool.BLANK);
-	}
-
-	@Override
-	public String getLabel(Locale locale, String key) {
-		return LanguageUtil.get(locale, key);
-	}
-
-	@Override
-	public String getPrice(HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		JSONObject price = (JSONObject)getCPContentContributorValue(
-			CPContentContributorConstants.PRICE, httpServletRequest);
-
-		if (price == null) {
-			return StringPool.BLANK;
-		}
-
-		return price.getString(CPContentContributorConstants.PRICE);
 	}
 
 	@Override
@@ -395,9 +374,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Reference
-	private AssetCategoryService _assetCategoryService;
-
-	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
 	@Reference
@@ -409,6 +385,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private CPContentRendererRegistry _cpContentRendererRegistry;
+
+	@Reference
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

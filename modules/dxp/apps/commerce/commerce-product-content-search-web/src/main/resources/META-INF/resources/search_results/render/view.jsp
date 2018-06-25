@@ -17,22 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDataSourceResult cpDataSourceResult = (CPDataSourceResult)request.getAttribute(CPWebKeys.CP_DATA_SOURCE_RESULT);
 
-SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsDisplayContext.getSearchContainer();
-
-List<CPCatalogEntry> results = cpCatalogEntrySearchContainer.getResults();
+List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries();
 %>
 
 <c:choose>
-	<c:when test="<%= results.size() > 0 %>">
+	<c:when test="<%= cpCatalogEntries.size() > 0 %>">
 		<div class="row">
 
 			<%
-			for (CPCatalogEntry cpCatalogEntry : results) {
-				request.setAttribute("cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
+			for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
+			%>
 
-				cpSearchResultsDisplayContext.renderCPContentListEntry(cpCatalogEntry);
+				<liferay-commerce-product:product-list-entry-renderer
+					CPCatalogEntry = "<%= cpCatalogEntry %>"
+
+/>
+
+			<%
 			}
 			%>
 
@@ -44,11 +47,3 @@ List<CPCatalogEntry> results = cpCatalogEntrySearchContainer.getResults();
 		</div>
 	</c:otherwise>
 </c:choose>
-
-<aui:form useNamespace="<%= false %>">
-	<liferay-ui:search-paginator
-		markupView="lexicon"
-		searchContainer="<%= cpCatalogEntrySearchContainer %>"
-		type="more"
-	/>
-</aui:form>

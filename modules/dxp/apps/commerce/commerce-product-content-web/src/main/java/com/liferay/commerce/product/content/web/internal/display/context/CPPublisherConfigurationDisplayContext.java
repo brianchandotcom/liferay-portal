@@ -28,12 +28,12 @@ import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelp
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
-import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -69,25 +69,25 @@ public class CPPublisherConfigurationDisplayContext
 	extends BaseCPPublisherDisplayContext {
 
 	public CPPublisherConfigurationDisplayContext(
-		AssetCategoryLocalService assetCategoryLocalService,
-		AssetTagLocalService assetTagLocalService,
-		CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
-		CPContentListRendererRegistry cpContentListRendererRegistry,
-		CPDataSourceRegistry cpDataSourceRegistry,
-		CPInstanceHelper cpInstanceHelper,
-		CPPublisherWebHelper cpPublisherWebHelper,
-		CPTypeServicesTracker cpTypeServicesTracker,
-		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
+			AssetCategoryLocalService assetCategoryLocalService,
+			AssetTagLocalService assetTagLocalService,
+			CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
+			CPContentListRendererRegistry cpContentListRendererRegistry,
+			CPDataSourceRegistry cpDataSourceRegistry,
+			CPInstanceHelper cpInstanceHelper,
+			CPPublisherWebHelper cpPublisherWebHelper,
+			CPTypeServicesTracker cpTypeServicesTracker,
+			HttpServletRequest httpServletRequest, ItemSelector itemSelector)
+		throws PortalException {
 
 		super(
 			contentListEntryRendererRegistry, cpContentListRendererRegistry,
-			cpPublisherWebHelper, httpServletRequest);
+			cpPublisherWebHelper, cpTypeServicesTracker, httpServletRequest);
 
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetTagLocalService = assetTagLocalService;
 		_cpDataSourceRegistry = cpDataSourceRegistry;
 		_cpInstanceHelper = cpInstanceHelper;
-		_cpTypeServicesTracker = cpTypeServicesTracker;
 		_itemSelector = itemSelector;
 	}
 
@@ -244,10 +244,6 @@ public class CPPublisherConfigurationDisplayContext
 		return _cpDataSourceRegistry.getCPDataSources();
 	}
 
-	public List<CPType> getCPTypes() {
-		return _cpTypeServicesTracker.getCPTypes();
-	}
-
 	public CPSku getDefaultCPSku(CPCatalogEntry cpCatalogEntry)
 		throws Exception {
 
@@ -392,7 +388,6 @@ public class CPPublisherConfigurationDisplayContext
 	private final AssetTagLocalService _assetTagLocalService;
 	private final CPDataSourceRegistry _cpDataSourceRegistry;
 	private final CPInstanceHelper _cpInstanceHelper;
-	private final CPTypeServicesTracker _cpTypeServicesTracker;
 	private final ItemSelector _itemSelector;
 	private String _orderByColumn1;
 	private String _orderByColumn2;

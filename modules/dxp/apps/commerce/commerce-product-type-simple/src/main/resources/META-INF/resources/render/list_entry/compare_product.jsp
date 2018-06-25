@@ -17,9 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("cpContentListRenderer-cpCatalogEntry");
-CPInstance cpInstance = (CPInstance)request.getAttribute("cpContentListRenderer-cpInstance");
-String deleteCompareProductURL = (String)request.getAttribute("cpContentListRenderer-deleteCompareProductURL");
+CPCompareContentHelper cpCompareContentHelper = (CPCompareContentHelper)request.getAttribute(CPContentWebKeys.CP_COMPARE_CONTENT_HELPER);
+CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
+
+CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
+CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 %>
 
 <div class="card">
@@ -29,12 +31,12 @@ String deleteCompareProductURL = (String)request.getAttribute("cpContentListRend
 				cssClass="compare-remove-item link-monospaced"
 				icon="times"
 				markupView="lexicon"
-				url="<%= deleteCompareProductURL %>"
+				url="<%= cpCompareContentHelper.getDeleteCompareProductURL(cpCatalogEntry.getCPDefinitionId(), renderRequest, renderResponse) %>"
 			/>
 		</div>
 	</div>
 
-	<a class="product-image-container" href="<%= CPDefinitionFriendlyURLUtil.getFriendlyURL(cpCatalogEntry, themeDisplay) %>">
+	<a class="product-image-container" href="<%= cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay) %>">
 
 		<%
 		String img = cpCatalogEntry.getDefaultImageFileUrl();
@@ -47,14 +49,14 @@ String deleteCompareProductURL = (String)request.getAttribute("cpContentListRend
 
 	<div class="card-section-expand">
 		<div class="card-title">
-			<a href="<%= CPDefinitionFriendlyURLUtil.getFriendlyURL(cpCatalogEntry, themeDisplay) %>">
+			<a href="<%= cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay) %>">
 				<%= cpCatalogEntry.getName() %>
 			</a>
 		</div>
 
-		<c:if test="<%= cpInstance != null %>">
+		<c:if test="<%= cpSku != null %>">
 			<div class="card-subtitle">
-				<liferay-ui:message arguments="<%= cpInstance.getSku() %>" key="sku-x" />
+				<liferay-ui:message arguments="<%= cpSku.getSku() %>" key="sku-x" />
 			</div>
 		</c:if>
 	</div>
@@ -74,7 +76,7 @@ String deleteCompareProductURL = (String)request.getAttribute("cpContentListRend
 	%>
 
 	<div class="product-footer">
-		<c:if test="<%= cpInstance != null %>">
+		<c:if test="<%= cpSku != null %>">
 			<div class="autofit-row product-actions">
 				<div class="autofit-col autofit-col-expand">
 					<liferay-commerce:quantity-input CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>" name="<%= quantityInputId %>" useSelect="<%= false %>" />
@@ -83,7 +85,7 @@ String deleteCompareProductURL = (String)request.getAttribute("cpContentListRend
 				<div class="autofit-col">
 					<liferay-commerce-cart:add-to-cart
 						CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
-						CPInstanceId="<%= cpInstance.getCPInstanceId() %>"
+						CPInstanceId="<%= cpSku.getCPInstanceId() %>"
 						elementClasses="btn-block btn-primary text-truncate"
 						taglibQuantityInputId='<%= renderResponse.getNamespace() + quantityInputId %>'
 					/>

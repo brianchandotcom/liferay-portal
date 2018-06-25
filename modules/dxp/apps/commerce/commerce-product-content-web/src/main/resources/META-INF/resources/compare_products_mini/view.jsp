@@ -19,15 +19,20 @@
 <%
 CPCompareContentMiniDisplayContext cpCompareContentMiniDisplayContext = (CPCompareContentMiniDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("cpCompareContentMiniDisplayContext", cpCompareContentMiniDisplayContext);
-
-List<CPCatalogEntry> cpCatalogEntries = cpCompareContentMiniDisplayContext.getCPCatalogEntries();
+CPDataSourceResult cpDataSourceResult = cpCompareContentMiniDisplayContext.getCPDataSourceResult();
 %>
 
 <c:choose>
 	<c:when test="<%= cpCompareContentMiniDisplayContext.isSelectionStyleADT() %>">
+
+		<%
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		contextObjects.put("cpCompareContentMiniDisplayContext", cpCompareContentMiniDisplayContext);
+
+		List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries();
+		%>
+
 		<liferay-ddm:template-renderer
 			className="<%= CPCompareContentMiniPortlet.class.getName() %>"
 			contextObjects="<%= contextObjects %>"
@@ -37,11 +42,11 @@ List<CPCatalogEntry> cpCatalogEntries = cpCompareContentMiniDisplayContext.getCP
 		/>
 	</c:when>
 	<c:when test="<%= cpCompareContentMiniDisplayContext.isSelectionStyleCustomRenderer() %>">
-
-		<%
-		cpCompareContentMiniDisplayContext.renderCPContentList();
-		%>
-
+		<liferay-commerce-product:product-list-renderer
+			CPDataSourceResult = "<%= cpCompareContentMiniDisplayContext.getCPDataSourceResult() %>"
+			entryKeys = "<%= cpCompareContentMiniDisplayContext.getCPContentListEntryRendererKeys() %>"
+			key = "<%= cpCompareContentMiniDisplayContext.getCPContentListRendererKey() %>"
+		/>
 	</c:when>
 	<c:otherwise>
 	</c:otherwise>

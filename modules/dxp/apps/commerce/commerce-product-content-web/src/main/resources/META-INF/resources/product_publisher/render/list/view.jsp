@@ -17,29 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPPublisherDisplayContext cpPublisherDisplayContext = (CPPublisherDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-SearchContainer searchContainer = cpPublisherDisplayContext.getSearchContainer();
-
-List<CPCatalogEntry> results = searchContainer.getResults();
+CPDataSourceResult cpDataSourceResult = (CPDataSourceResult)request.getAttribute(CPWebKeys.CP_DATA_SOURCE_RESULT);
 %>
 
 <div class="row">
 
 	<%
-	for (CPCatalogEntry cpCatalogEntry : results) {
-		request.setAttribute("cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
+	for (CPCatalogEntry cpCatalogEntry : cpDataSourceResult.getCPCatalogEntries()) {
+	%>
 
-		cpPublisherDisplayContext.renderCPContentListEntry(cpCatalogEntry);
+		<liferay-commerce-product:product-list-entry-renderer
+			CPCatalogEntry = "<%= cpCatalogEntry %>"
+		/>
+
+	<%
 	}
 	%>
 
 </div>
-
-<aui:form useNamespace="<%= false %>">
-	<liferay-ui:search-paginator
-		markupView="lexicon"
-		searchContainer="<%= searchContainer %>"
-		type="more"
-	/>
-</aui:form>

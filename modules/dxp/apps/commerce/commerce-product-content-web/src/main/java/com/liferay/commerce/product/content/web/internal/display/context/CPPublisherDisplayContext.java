@@ -16,23 +16,22 @@ package com.liferay.commerce.product.content.web.internal.display.context;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
-import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
-import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -55,48 +54,37 @@ import javax.servlet.http.HttpServletRequest;
 public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 	public CPPublisherDisplayContext(
-		CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
-		CPContentListRendererRegistry cpContentListRendererRegistry,
-		CPDataSourceRegistry cpDataSourceRegistry,
-		CPDefinitionHelper cpDefinitionHelper,
-		CPPublisherWebHelper cpPublisherWebHelper,
-		HttpServletRequest httpServletRequest) {
+			CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
+			CPContentListRendererRegistry cpContentListRendererRegistry,
+			CPDataSourceRegistry cpDataSourceRegistry,
+			CPDefinitionHelper cpDefinitionHelper,
+			CPPublisherWebHelper cpPublisherWebHelper,
+			CPTypeServicesTracker cpTypeServicesTracker,
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
 
 		super(
 			contentListEntryRendererRegistry, cpContentListRendererRegistry,
-			cpPublisherWebHelper, httpServletRequest);
+			cpPublisherWebHelper, cpTypeServicesTracker, httpServletRequest);
 
 		_cpDataSourceRegistry = cpDataSourceRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
 	}
 
-	public PortletURL getPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			cpContentRequestHelper.getLiferayPortletResponse();
+	public Map<String, String> getCPContentListEntryRendererKeys() {
+		Map<String, String> cpContentListEntryRendererKeys = new HashMap<>();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		for (CPType cpType : getCPTypes()) {
+			String cpTypeName = cpType.getName();
 
-		String delta = ParamUtil.getString(
-			cpContentRequestHelper.getRequest(), "delta");
-
-		if (Validator.isNotNull(delta)) {
-			portletURL.setParameter("delta", delta);
+			cpContentListEntryRendererKeys.put(
+				cpTypeName, getCPTypeListEntryRendererKey(cpTypeName));
 		}
 
-		return portletURL;
+		return cpContentListEntryRendererKeys;
 	}
 
-	public SearchContainer<CPCatalogEntry> getSearchContainer()
-		throws Exception {
-
-		if (_searchContainer != null) {
-			return _searchContainer;
-		}
-
-		_searchContainer = new SearchContainer<>(
-			cpContentRequestHelper.getLiferayPortletRequest(), getPortletURL(),
-			null, "there-are-no-products");
-
+	public CPDataSourceResult getCPDataSourceResult() throws Exception {
 		CPDataSourceResult cpDataSourceResult = null;
 
 		if (isSelectionStyleDynamic()) {
@@ -136,51 +124,45 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 				results, catalogEntries.size());
 		}
 
-		_searchContainer.setTotal(cpDataSourceResult.getLength());
-		_searchContainer.setResults(cpDataSourceResult.getCPCatalogEntries());
-
-		return _searchContainer;
+		return cpDataSourceResult;
 	}
 
-	public void renderCPContentList() throws Exception {
-		CPContentListRenderer cpContentListRenderer =
-			cpContentListRendererRegistry.getCPContentListRenderer(
-				getCPContentListRendererKey());
+	public PortletURL getPortletURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			cpContentRequestHelper.getLiferayPortletResponse();
 
-		if (cpContentListRenderer != null) {
-			SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer =
-				getSearchContainer();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-			cpContentListRenderer.render(
-				cpCatalogEntrySearchContainer.getResults(),
-				cpContentRequestHelper.getRequest(),
-				PortalUtil.getHttpServletResponse(
-					cpContentRequestHelper.getLiferayPortletResponse()));
+		String delta = ParamUtil.getString(
+			cpContentRequestHelper.getRequest(), "delta");
+
+		if (Validator.isNotNull(delta)) {
+			portletURL.setParameter("delta", delta);
 		}
+
+		return portletURL;
 	}
 
-	public void renderCPContentListEntry(CPCatalogEntry cpCatalogEntry)
+	public SearchContainer<CPCatalogEntry> getSearchContainer()
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			cpContentRequestHelper.getRequest();
-
-		httpServletRequest.setAttribute(
-			"cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
-
-		String cpType = cpCatalogEntry.getProductTypeName();
-
-		CPContentListEntryRenderer cpContentListEntryRenderer =
-			contentListEntryRendererRegistry.getCPContentListEntryRenderer(
-				getCPTypeListEntryRendererKey(cpType),
-				CPPortletKeys.CP_PUBLISHER_WEB, cpType);
-
-		if (cpContentListEntryRenderer != null) {
-			cpContentListEntryRenderer.render(
-				cpCatalogEntry, httpServletRequest,
-				PortalUtil.getHttpServletResponse(
-					cpContentRequestHelper.getLiferayPortletResponse()));
+		if (_searchContainer != null) {
+			return _searchContainer;
 		}
+
+		_searchContainer = new SearchContainer<>(
+			cpContentRequestHelper.getLiferayPortletRequest(), getPortletURL(),
+			null, "there-are-no-products");
+
+		CPDataSourceResult cpDataSourceResult = getCPDataSourceResult();
+
+		if (cpDataSourceResult != null) {
+			_searchContainer.setTotal(cpDataSourceResult.getLength());
+			_searchContainer.setResults(
+				cpDataSourceResult.getCPCatalogEntries());
+		}
+
+		return _searchContainer;
 	}
 
 	private CPDataSourceResult _getDynamicCPDataSourceResult(

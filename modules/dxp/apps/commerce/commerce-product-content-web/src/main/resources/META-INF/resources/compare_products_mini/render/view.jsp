@@ -17,20 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPCompareContentMiniDisplayContext cpCompareContentMiniDisplayContext = (CPCompareContentMiniDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPCompareContentHelper cpCompareContentHelper = (CPCompareContentHelper)request.getAttribute(CPContentWebKeys.CP_COMPARE_CONTENT_HELPER);
+CPDataSourceResult cpDataSourceResult = (CPDataSourceResult)request.getAttribute(CPWebKeys.CP_DATA_SOURCE_RESULT);
 
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("cpCompareContentMiniDisplayContext", cpCompareContentMiniDisplayContext);
-
-List<CPCatalogEntry> cpCatalogEntries = cpCompareContentMiniDisplayContext.getCPCatalogEntries();
+List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries();
 %>
 
 <c:if test="<%= cpCatalogEntries.size() > 0 %>">
 	<div id="<portlet:namespace />compareProductsMiniContainer">
 		<div class="compare-products-mini-header">
 			<a class="collapse-icon lfr-compare-products-mini-header" href="javascript:;">
-				<span class="component-title"><liferay-ui:message arguments="<%= new Object[] {cpCatalogEntries.size(), cpCompareContentMiniDisplayContext.getProductsLimit()} %>" key="x-of-x-products-selected" translateArguments="<%= false %>" /></span>
+				<span class="component-title"><liferay-ui:message arguments="<%= new Object[] {cpCatalogEntries.size(), cpCompareContentHelper.getProductsLimit(portletDisplay)} %>" key="x-of-x-products-selected" translateArguments="<%= false %>" /></span>
 
 				<span class="collapse-icon-open">
 					<liferay-ui:icon
@@ -52,16 +49,13 @@ List<CPCatalogEntry> cpCatalogEntries = cpCompareContentMiniDisplayContext.getCP
 
 				<%
 				for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
-					request.setAttribute("cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
-					request.setAttribute("cpContentListRenderer-deleteCompareProductURL", cpCompareContentMiniDisplayContext.getDeleteCompareProductURL(cpCatalogEntry.getCPDefinitionId()));
+					request.setAttribute("cpContentListRenderer-deleteCompareProductURL", cpCompareContentHelper.getDeleteCompareProductURL(cpCatalogEntry.getCPDefinitionId(), renderRequest, renderResponse));
 				%>
 
 					<li class="card-page-item">
-
-						<%
-						cpCompareContentMiniDisplayContext.renderCPContentListEntry(cpCatalogEntry);
-						%>
-
+						<liferay-commerce-product:product-list-entry-renderer
+							CPCatalogEntry = "<%= cpCatalogEntry %>"
+						/>
 					</li>
 
 				<%
@@ -69,10 +63,10 @@ List<CPCatalogEntry> cpCatalogEntries = cpCompareContentMiniDisplayContext.getCP
 				%>
 
 				<li class="card-page-item card-page-item-shrink">
-					<a class="btn btn-link" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getClearCompareProductsURL()) %>"><liferay-ui:message key="clear-all" /></a>
+					<a class="btn btn-link" href="<%= HtmlUtil.escape(cpCompareContentHelper.getClearCompareProductsURL(renderRequest, renderResponse)) %>"><liferay-ui:message key="clear-all" /></a>
 				</li>
 				<li class="card-page-item card-page-item-shrink">
-					<aui:button cssClass="btn-primary" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getCompareProductsURL()) %>" value="compare" />
+					<aui:button cssClass="btn-primary" href="<%= HtmlUtil.escape(cpCompareContentHelper.getCompareProductsURL(themeDisplay)) %>" value="compare" />
 				</li>
 			</ul>
 		</div>

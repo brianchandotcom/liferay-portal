@@ -19,15 +19,20 @@
 <%
 CPCompareContentDisplayContext cpCompareContentDisplayContext = (CPCompareContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("cpCompareContentDisplayContext", cpCompareContentDisplayContext);
-
-List<CPCatalogEntry> cpCatalogEntries = cpCompareContentDisplayContext.getCPCatalogEntries();
+CPDataSourceResult cpDataSourceResult = cpCompareContentDisplayContext.getCPDataSourceResult();
 %>
 
 <c:choose>
 	<c:when test="<%= cpCompareContentDisplayContext.isSelectionStyleADT() %>">
+
+		<%
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		contextObjects.put("cpCompareContentDisplayContext", cpCompareContentDisplayContext);
+
+		List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries();
+		%>
+
 		<liferay-ddm:template-renderer
 			className="<%= CPCompareContentPortlet.class.getName() %>"
 			contextObjects="<%= contextObjects %>"
@@ -37,11 +42,11 @@ List<CPCatalogEntry> cpCatalogEntries = cpCompareContentDisplayContext.getCPCata
 		/>
 	</c:when>
 	<c:when test="<%= cpCompareContentDisplayContext.isSelectionStyleCustomRenderer() %>">
-
-		<%
-		cpCompareContentDisplayContext.renderCPContentList();
-		%>
-
+		<liferay-commerce-product:product-list-renderer
+			CPDataSourceResult = "<%= cpCompareContentDisplayContext.getCPDataSourceResult() %>"
+			entryKeys = "<%= cpCompareContentDisplayContext.getCPContentListEntryRendererKeys() %>"
+			key = "<%= cpCompareContentDisplayContext.getCPContentListRendererKey() %>"
+		/>
 	</c:when>
 	<c:otherwise>
 	</c:otherwise>

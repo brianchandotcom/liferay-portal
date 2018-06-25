@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.initializer.customer.portal.internal.product.renderer.list.entry;
 
-import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -66,7 +65,6 @@ public class BerylSearchResultCPContentListEntryRenderer
 
 	@Override
 	public void render(
-			CPCatalogEntry cpCatalogEntry,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {

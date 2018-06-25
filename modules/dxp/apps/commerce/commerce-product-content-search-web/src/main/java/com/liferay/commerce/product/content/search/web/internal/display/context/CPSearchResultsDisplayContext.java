@@ -21,17 +21,14 @@ import com.liferay.commerce.product.content.render.list.CPContentListRendererReg
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
+import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
-import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -43,7 +40,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -63,8 +62,6 @@ public class CPSearchResultsDisplayContext {
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPDefinitionHelper cpDefinitionHelper,
-			CPDefinitionLinkTypeRegistry cpDefinitionLinkTypeRegistry,
-			CPInstanceHelper cpInstanceHelper,
 			CPTypeServicesTracker cpTypeServicesTracker,
 			HttpServletRequest httpServletRequest,
 			PortletSharedSearchResponse portletSharedSearchResponse)
@@ -74,23 +71,30 @@ public class CPSearchResultsDisplayContext {
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
-		_cpDefinitionLinkTypeRegistry = cpDefinitionLinkTypeRegistry;
-		_cpInstanceHelper = cpInstanceHelper;
 		_cpTypeServicesTracker = cpTypeServicesTracker;
 		_httpServletRequest = httpServletRequest;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = _cpRequestHelper.getPortletDisplay();
 
 		_cpSearchResultsPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				CPSearchResultsPortletInstanceConfiguration.class);
+	}
+
+	public Map<String, String> getCPContentListEntryRendererKeys() {
+		Map<String, String> cpContentListEntryRendererKeys = new HashMap<>();
+
+		for (CPType cpType : getCPTypes()) {
+			String cpTypeName = cpType.getName();
+
+			cpContentListEntryRendererKeys.put(
+				cpTypeName, getCPTypeListEntryRendererKey(cpTypeName));
+		}
+
+		return cpContentListEntryRendererKeys;
 	}
 
 	public List<CPContentListEntryRenderer> getCPContentListEntryRenderers(
@@ -135,8 +139,12 @@ public class CPSearchResultsDisplayContext {
 			CPPortletKeys.CP_SEARCH_RESULTS);
 	}
 
-	public List<String> getCPDefinitionLinkTypes() {
-		return _cpDefinitionLinkTypeRegistry.getTypes();
+	public CPDataSourceResult getCPDataSourceResult() {
+		List<CPCatalogEntry> cpCatalogEntries = getCPCatalogEntries(
+			_portletSharedSearchResponse.getDocuments());
+
+		return new CPDataSourceResult(
+			cpCatalogEntries, cpCatalogEntries.size());
 	}
 
 	public String getCPTypeListEntryRendererKey(String cpType) {
@@ -172,13 +180,6 @@ public class CPSearchResultsDisplayContext {
 		return _cpTypeServicesTracker.getCPTypes();
 	}
 
-	public CPInstance getDefaultCPInstance(CPCatalogEntry cpCatalogEntry)
-		throws Exception {
-
-		return _cpInstanceHelper.getCPInstance(
-			cpCatalogEntry.getCPDefinitionId(), null);
-	}
-
 	public String getDisplayStyle() {
 		return _cpSearchResultsPortletInstanceConfiguration.displayStyle();
 	}
@@ -202,16 +203,21 @@ public class CPSearchResultsDisplayContext {
 		return _displayStyleGroupId;
 	}
 
-	public SearchContainer<CPCatalogEntry> getSearchContainer()
-		throws PortalException {
+	public int getPaginationDelta() {
+		return _cpSearchResultsPortletInstanceConfiguration.paginationDelta();
+	}
 
+	public String getPaginationType() {
+		return _cpSearchResultsPortletInstanceConfiguration.paginationType();
+	}
+
+	public SearchContainer<CPCatalogEntry> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
 
 		_searchContainer = buildSearchContainer(
-			_portletSharedSearchResponse.getDocuments(),
-			_portletSharedSearchResponse.getTotalHits(),
+			getCPDataSourceResult(),
 			_portletSharedSearchResponse.getPaginationStart(), "start",
 			_portletSharedSearchResponse.getPaginationDelta(), "delta");
 
@@ -220,6 +226,10 @@ public class CPSearchResultsDisplayContext {
 
 	public String getSelectionStyle() {
 		return _cpSearchResultsPortletInstanceConfiguration.selectionStyle();
+	}
+
+	public boolean isPaginate() {
+		return _cpSearchResultsPortletInstanceConfiguration.paginate();
 	}
 
 	public boolean isSelectionStyleADT() {
@@ -242,46 +252,10 @@ public class CPSearchResultsDisplayContext {
 		return false;
 	}
 
-	public void renderCPContentList() throws Exception {
-		CPContentListRenderer cpContentListRenderer =
-			_cpContentListRendererRegistry.getCPContentListRenderer(
-				getCPContentListRendererKey());
-
-		if (cpContentListRenderer != null) {
-			SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer =
-				getSearchContainer();
-
-			cpContentListRenderer.render(
-				cpCatalogEntrySearchContainer.getResults(),
-				_cpRequestHelper.getRequest(),
-				PortalUtil.getHttpServletResponse(
-					_cpRequestHelper.getLiferayPortletResponse()));
-		}
-	}
-
-	public void renderCPContentListEntry(CPCatalogEntry cpCatalogEntry)
-		throws Exception {
-
-		String cpType = cpCatalogEntry.getProductTypeName();
-
-		CPContentListEntryRenderer cpContentListEntryRenderer =
-			_cpContentListEntryRendererRegistry.getCPContentListEntryRenderer(
-				getCPTypeListEntryRendererKey(cpType),
-				CPPortletKeys.CP_SEARCH_RESULTS, cpType);
-
-		if (cpContentListEntryRenderer != null) {
-			cpContentListEntryRenderer.render(
-				cpCatalogEntry, _cpRequestHelper.getRequest(),
-				PortalUtil.getHttpServletResponse(
-					_cpRequestHelper.getLiferayPortletResponse()));
-		}
-	}
-
 	protected SearchContainer<CPCatalogEntry> buildSearchContainer(
-			List<Document> documents, int totalHits, int paginationStart,
-			String paginationStartParameterName, int paginationDelta,
-			String paginationDeltaParameterName)
-		throws PortalException {
+		CPDataSourceResult cpDataSourceResult, int paginationStart,
+		String paginationStartParameterName, int paginationDelta,
+		String paginationDeltaParameterName) {
 
 		PortletRequest portletRequest =
 			_cpRequestHelper.getLiferayPortletRequest();
@@ -290,8 +264,7 @@ public class CPSearchResultsDisplayContext {
 		String curParam = paginationStartParameterName;
 		int cur = paginationStart;
 		int delta = paginationDelta;
-		PortletURL portletURL = getPortletURL(
-			paginationStartParameterName, paginationDeltaParameterName);
+		PortletURL portletURL = getPortletURL();
 		List<String> headerNames = null;
 		String emptyResultsMessage = null;
 		String cssClass = null;
@@ -301,30 +274,13 @@ public class CPSearchResultsDisplayContext {
 			portletURL, headerNames, emptyResultsMessage, cssClass);
 
 		searchContainer.setDeltaParam(paginationDeltaParameterName);
-		searchContainer.setResults(getSearchContainerResults(documents));
-		searchContainer.setTotal(totalHits);
+		searchContainer.setResults(cpDataSourceResult.getCPCatalogEntries());
+		searchContainer.setTotal(cpDataSourceResult.getLength());
 
 		return searchContainer;
 	}
 
-	protected PortletURL getPortletURL(
-		String paginationStartParameterName,
-		String paginationDeltaParameterName) {
-
-		final String urlString = getURLString(
-			paginationStartParameterName, paginationDeltaParameterName);
-
-		return new NullPortletURL() {
-
-			@Override
-			public String toString() {
-				return urlString;
-			}
-
-		};
-	}
-
-	protected List<CPCatalogEntry> getSearchContainerResults(
+	protected List<CPCatalogEntry> getCPCatalogEntries(
 		List<Document> documents) {
 
 		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
@@ -338,14 +294,24 @@ public class CPSearchResultsDisplayContext {
 		return cpCatalogEntries;
 	}
 
+	protected PortletURL getPortletURL() {
+		final String urlString = getURLString();
+
+		return new NullPortletURL() {
+
+			@Override
+			public String toString() {
+				return urlString;
+			}
+
+		};
+	}
+
 	protected HttpServletRequest getSharedRequest() {
 		return PortalUtil.getOriginalServletRequest(_httpServletRequest);
 	}
 
-	protected String getURLString(
-		String paginationStartParameterName,
-		String paginationDeltaParameterName) {
-
+	protected String getURLString() {
 		String urlString = HttpUtil.getCompleteURL(getSharedRequest());
 
 		return urlString;
@@ -355,8 +321,6 @@ public class CPSearchResultsDisplayContext {
 		_cpContentListEntryRendererRegistry;
 	private final CPContentListRendererRegistry _cpContentListRendererRegistry;
 	private final CPDefinitionHelper _cpDefinitionHelper;
-	private final CPDefinitionLinkTypeRegistry _cpDefinitionLinkTypeRegistry;
-	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPRequestHelper _cpRequestHelper;
 	private final CPSearchResultsPortletInstanceConfiguration
 		_cpSearchResultsPortletInstanceConfiguration;

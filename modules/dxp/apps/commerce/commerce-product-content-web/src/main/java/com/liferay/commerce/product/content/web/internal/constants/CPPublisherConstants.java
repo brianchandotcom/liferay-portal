@@ -19,6 +19,8 @@ package com.liferay.commerce.product.content.web.internal.constants;
  */
 public class CPPublisherConstants {
 
+	public static final String CATEGORY_KEY_PAGINATION = "pagination";
+
 	public static final String CATEGORY_KEY_PRODUCT_SELECTION =
 		"product-selection";
 

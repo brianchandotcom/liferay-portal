@@ -20,9 +20,14 @@ import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
+import com.liferay.commerce.product.content.web.internal.configuration.CPPublisherPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.web.internal.display.context.util.CPContentRequestHelper;
 import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -35,21 +40,32 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class BaseCPPublisherDisplayContext {
 
 	public BaseCPPublisherDisplayContext(
-		CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
-		CPContentListRendererRegistry cpContentListRendererRegistry,
-		CPPublisherWebHelper cpPublisherWebHelper,
-		HttpServletRequest httpServletRequest) {
+			CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
+			CPContentListRendererRegistry cpContentListRendererRegistry,
+			CPPublisherWebHelper cpPublisherWebHelper,
+			CPTypeServicesTracker cpTypeServicesTracker,
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
 
 		this.contentListEntryRendererRegistry =
 			contentListEntryRendererRegistry;
 		this.cpContentListRendererRegistry = cpContentListRendererRegistry;
 		this.cpPublisherWebHelper = cpPublisherWebHelper;
+		this.cpTypeServicesTracker = cpTypeServicesTracker;
 
 		cpContentRequestHelper = new CPContentRequestHelper(httpServletRequest);
+
+		PortletDisplay portletDisplay =
+			cpContentRequestHelper.getPortletDisplay();
+
+		cpPublisherPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				CPPublisherPortletInstanceConfiguration.class);
 	}
 
 	public List<CPCatalogEntry> getCPCatalogEntries() throws Exception {
@@ -128,6 +144,10 @@ public class BaseCPPublisherDisplayContext {
 		return cpContentListEntryRenderer.getKey();
 	}
 
+	public List<CPType> getCPTypes() {
+		return cpTypeServicesTracker.getCPTypes();
+	}
+
 	public String getDataSource() {
 		if (dataSource != null) {
 			return dataSource;
@@ -143,25 +163,19 @@ public class BaseCPPublisherDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		if (displayStyle != null) {
-			return displayStyle;
-		}
-
-		PortletPreferences portletPreferences =
-			cpContentRequestHelper.getPortletPreferences();
-
-		renderSelection = GetterUtil.getString(
-			portletPreferences.getValue("displayStyle", null));
-
-		return renderSelection;
+		return cpPublisherPortletInstanceConfiguration.displayStyle();
 	}
 
 	public long getDisplayStyleGroupId() {
-		PortletPreferences portletPreferences =
-			cpContentRequestHelper.getPortletPreferences();
+		return cpPublisherPortletInstanceConfiguration.displayStyleGroupId();
+	}
 
-		return GetterUtil.getLong(
-			portletPreferences.getValue("renderSelection", null));
+	public int getPaginationDelta() {
+		return cpPublisherPortletInstanceConfiguration.paginationDelta();
+	}
+
+	public String getPaginationType() {
+		return cpPublisherPortletInstanceConfiguration.paginationType();
 	}
 
 	public String getRenderSelection() {
@@ -190,6 +204,10 @@ public class BaseCPPublisherDisplayContext {
 			portletPreferences.getValue("selectionStyle", null), "dynamic");
 
 		return selectionStyle;
+	}
+
+	public boolean isPaginate() {
+		return cpPublisherPortletInstanceConfiguration.paginate();
 	}
 
 	public boolean isRenderSelectionADT() {
@@ -226,9 +244,11 @@ public class BaseCPPublisherDisplayContext {
 		contentListEntryRendererRegistry;
 	protected final CPContentListRendererRegistry cpContentListRendererRegistry;
 	protected final CPContentRequestHelper cpContentRequestHelper;
+	protected final CPPublisherPortletInstanceConfiguration
+		cpPublisherPortletInstanceConfiguration;
 	protected final CPPublisherWebHelper cpPublisherWebHelper;
+	protected final CPTypeServicesTracker cpTypeServicesTracker;
 	protected String dataSource;
-	protected String displayStyle;
 	protected String renderSelection;
 	protected String selectionStyle;
 

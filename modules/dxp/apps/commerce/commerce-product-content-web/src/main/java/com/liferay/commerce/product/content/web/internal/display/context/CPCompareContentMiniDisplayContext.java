@@ -21,6 +21,7 @@ import com.liferay.commerce.product.content.render.list.CPContentListRendererReg
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.configuration.CPCompareContentMiniPortletInstanceConfiguration;
+import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -28,21 +29,17 @@ import com.liferay.commerce.product.util.CPCompareUtil;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,7 +54,6 @@ public class CPCompareContentMiniDisplayContext {
 			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPTypeServicesTracker cpTypeServicesTracker,
-			LayoutLocalService layoutLocalService,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -66,7 +62,6 @@ public class CPCompareContentMiniDisplayContext {
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
 		_cpTypeServicesTracker = cpTypeServicesTracker;
-		_layoutLocalService = layoutLocalService;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
@@ -81,52 +76,17 @@ public class CPCompareContentMiniDisplayContext {
 		_cpDefinitionIds = CPCompareUtil.getCPDefinitionIds(httpServletRequest);
 	}
 
-	public String getClearCompareProductsURL() {
-		RenderResponse renderResponse = _cpRequestHelper.getRenderResponse();
+	public Map<String, String> getCPContentListEntryRendererKeys() {
+		Map<String, String> cpContentListEntryRendererKeys = new HashMap<>();
 
-		PortletURL portletURL = renderResponse.createActionURL();
+		for (CPType cpType : getCPTypes()) {
+			String cpTypeName = cpType.getName();
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "clearCompareProducts");
-
-		String redirect = _cpRequestHelper.getCurrentURL();
-
-		portletURL.setParameter("redirect", redirect);
-
-		return portletURL.toString();
-	}
-
-	public String getCompareProductsURL() throws PortalException {
-		Layout curLayout = _cpRequestHelper.getLayout();
-
-		long plid = PortalUtil.getPlidFromPortletId(
-			_cpRequestHelper.getScopeGroupId(), curLayout.isPrivateLayout(),
-			CPPortletKeys.CP_COMPARE_CONTENT_WEB);
-
-		Layout layout = _layoutLocalService.fetchLayout(plid);
-
-		if (layout == null) {
-			return StringPool.BLANK;
+			cpContentListEntryRendererKeys.put(
+				cpTypeName, getCPTypeListEntryRendererKey(cpTypeName));
 		}
 
-		return PortalUtil.getLayoutURL(
-			layout, _cpRequestHelper.getThemeDisplay());
-	}
-
-	public List<CPCatalogEntry> getCPCatalogEntries() throws PortalException {
-		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
-
-		for (Long cpDefinitionId : _cpDefinitionIds) {
-			cpCatalogEntries.add(
-				_cpDefinitionHelper.getCPCatalogEntry(
-					cpDefinitionId, _cpRequestHelper.getLocale()));
-		}
-
-		if (cpCatalogEntries.size() > getProductsLimit()) {
-			return cpCatalogEntries.subList(0, getProductsLimit());
-		}
-
-		return cpCatalogEntries;
+		return cpContentListEntryRendererKeys;
 	}
 
 	public List<CPContentListEntryRenderer> getCPContentListEntryRenderers(
@@ -171,6 +131,23 @@ public class CPCompareContentMiniDisplayContext {
 			CPPortletKeys.CP_COMPARE_CONTENT_MINI_WEB);
 	}
 
+	public CPDataSourceResult getCPDataSourceResult() throws PortalException {
+		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
+
+		for (Long cpDefinitionId : _cpDefinitionIds) {
+			cpCatalogEntries.add(
+				_cpDefinitionHelper.getCPCatalogEntry(
+					cpDefinitionId, _cpRequestHelper.getLocale()));
+		}
+
+		if (cpCatalogEntries.size() > getProductsLimit()) {
+			cpCatalogEntries = cpCatalogEntries.subList(0, getProductsLimit());
+		}
+
+		return new CPDataSourceResult(
+			cpCatalogEntries, cpCatalogEntries.size());
+	}
+
 	public String getCPTypeListEntryRendererKey(String cpType) {
 		RenderRequest renderRequest = _cpRequestHelper.getRenderRequest();
 
@@ -202,24 +179,6 @@ public class CPCompareContentMiniDisplayContext {
 
 	public List<CPType> getCPTypes() {
 		return _cpTypeServicesTracker.getCPTypes();
-	}
-
-	public String getDeleteCompareProductURL(long cpDefinitionId) {
-		RenderResponse renderResponse = _cpRequestHelper.getRenderResponse();
-
-		PortletURL portletURL = renderResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "deleteCompareProduct");
-
-		String redirect = _cpRequestHelper.getCurrentURL();
-
-		portletURL.setParameter("redirect", redirect);
-
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(cpDefinitionId));
-
-		return portletURL.toString();
 	}
 
 	public String getDisplayStyle() {
@@ -261,37 +220,6 @@ public class CPCompareContentMiniDisplayContext {
 		return false;
 	}
 
-	public void renderCPContentList() throws Exception {
-		CPContentListRenderer cpContentListRenderer =
-			_cpContentListRendererRegistry.getCPContentListRenderer(
-				getCPContentListRendererKey());
-
-		if (cpContentListRenderer != null) {
-			cpContentListRenderer.render(
-				getCPCatalogEntries(), _cpRequestHelper.getRequest(),
-				PortalUtil.getHttpServletResponse(
-					_cpRequestHelper.getLiferayPortletResponse()));
-		}
-	}
-
-	public void renderCPContentListEntry(CPCatalogEntry cpCatalogEntry)
-		throws Exception {
-
-		String cpType = cpCatalogEntry.getProductTypeName();
-
-		CPContentListEntryRenderer cpContentListEntryRenderer =
-			_cpContentListEntryRendererRegistry.getCPContentListEntryRenderer(
-				getCPTypeListEntryRendererKey(cpType),
-				CPPortletKeys.CP_COMPARE_CONTENT_MINI_WEB, cpType);
-
-		if (cpContentListEntryRenderer != null) {
-			cpContentListEntryRenderer.render(
-				cpCatalogEntry, _cpRequestHelper.getRequest(),
-				PortalUtil.getHttpServletResponse(
-					_cpRequestHelper.getLiferayPortletResponse()));
-		}
-	}
-
 	private final CPCompareContentMiniPortletInstanceConfiguration
 		_cpCompareContentMiniPortletInstanceConfiguration;
 	private final CPContentListEntryRendererRegistry
@@ -301,6 +229,5 @@ public class CPCompareContentMiniDisplayContext {
 	private final List<Long> _cpDefinitionIds;
 	private final CPRequestHelper _cpRequestHelper;
 	private final CPTypeServicesTracker _cpTypeServicesTracker;
-	private final LayoutLocalService _layoutLocalService;
 
 }

@@ -15,11 +15,13 @@
 package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.portlet.data.handler.helper.PortletDataHandlerHelper;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -48,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "page-template";
+	public static final String NAMESPACE = "page-templates";
 
 	public static final String SCHEMA_VERSION = "1.0.0";
 
@@ -85,9 +87,13 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(LayoutPageTemplateEntry.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
+				NAMESPACE, "page-template-collections", true, true, null,
+				LayoutPageTemplateCollection.class.getName()),
+			new PortletDataHandlerBoolean(
 				NAMESPACE, "page-templates", true, false, null,
 				LayoutPageTemplateEntry.class.getName(),
 				StagedModelType.REFERRER_CLASS_NAME_ALL));
+		setPublishToLiveByDefault(true);
 		setStagingControls(getExportControls());
 	}
 
@@ -193,6 +199,20 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new StagedModelType[] {
+					new StagedModelType(
+						LayoutPageTemplateCollection.class.getName()),
+					new StagedModelType(LayoutPageTemplateEntry.class.getName())
+				});
+
+			return;
+		}
+
 		ActionableDynamicQuery
 			layoutPageTemplateCollectionExportActionableDynamicQuery =
 				_layoutPageTemplateCollectionStagedModelRepository.
@@ -229,5 +249,8 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private PortletDataHandlerHelper _portletDataHandlerHelper;
+
+	@Reference
+	private Staging _staging;
 
 }

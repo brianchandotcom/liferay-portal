@@ -20,14 +20,12 @@ import java.util.List;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRunner implements BuildRunner {
+public abstract class BaseBuildRunner {
 
-	@Override
 	public Job getJob() {
 		return job;
 	}
 
-	@Override
 	public void setupWorkspace() {
 		primaryWorkspace.setupWorkspace();
 

@@ -3608,29 +3608,35 @@ public class ServiceBuilder {
 			List<EntityFinder> entityFinders = entity.getEntityFinders();
 
 			for (EntityFinder entityFinder : entityFinders) {
-				if (entityFinder.isDBIndex()) {
-					List<String> dbNames = new ArrayList<>();
-
-					List<EntityColumn> entityColumns =
-						entityFinder.getEntityColumns();
-
-					for (EntityColumn entityColumn : entityColumns) {
-						dbNames.add(entityColumn.getDBName());
-					}
-
-					if (dbNames.isEmpty()) {
-						continue;
-					}
-
-					IndexMetadata indexMetadata =
-						IndexMetadataFactoryUtil.createIndexMetadata(
-							entityFinder.isUnique(), entity.getTable(),
-							dbNames.toArray(new String[dbNames.size()]));
-
-					_addIndexMetadata(
-						indexMetadatasMap, indexMetadata.getTableName(),
-						indexMetadata);
+				if (!entityFinder.isDBIndex()) {
+					continue;
 				}
+
+				List<EntityColumn> entityColumns =
+					entityFinder.getEntityColumns();
+
+				if (entityColumns.equals(entity.getPKEntityColumns())) {
+					continue;
+				}
+
+				List<String> dbNames = new ArrayList<>();
+
+				for (EntityColumn entityColumn : entityColumns) {
+					dbNames.add(entityColumn.getDBName());
+				}
+
+				if (dbNames.isEmpty()) {
+					continue;
+				}
+
+				IndexMetadata indexMetadata =
+					IndexMetadataFactoryUtil.createIndexMetadata(
+						entityFinder.isUnique(), entity.getTable(),
+						dbNames.toArray(new String[dbNames.size()]));
+
+				_addIndexMetadata(
+					indexMetadatasMap, indexMetadata.getTableName(),
+					indexMetadata);
 			}
 		}
 

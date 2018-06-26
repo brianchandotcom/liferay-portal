@@ -71,7 +71,7 @@ public class ProductNavigationControlMenuUtil {
 		}
 
 		if (!(_hasUpdateLayoutPermission(themeDisplay) ||
-			_hasCustomizePermission(themeDisplay))) {
+			  _hasCustomizePermission(themeDisplay))) {
 
 			return false;
 		}

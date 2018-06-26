@@ -1035,7 +1035,7 @@ public abstract class BaseBuild implements Build {
 		Build topLevelBuild = this;
 
 		while ((topLevelBuild != null) &&
-		 !(topLevelBuild instanceof TopLevelBuild)) {
+			   !(topLevelBuild instanceof TopLevelBuild)) {
 
 			topLevelBuild = topLevelBuild.getParentBuild();
 		}

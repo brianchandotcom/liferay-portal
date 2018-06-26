@@ -5409,7 +5409,7 @@ public class PortalImpl implements Portal {
 		// Timestamp
 
 		if (((parameterMap == null) || !parameterMap.containsKey("t")) &&
-			 !(timestamp < 0)) {
+			!(timestamp < 0)) {
 
 			if (timestamp == 0) {
 				String portalURL = getPortalURL(request);

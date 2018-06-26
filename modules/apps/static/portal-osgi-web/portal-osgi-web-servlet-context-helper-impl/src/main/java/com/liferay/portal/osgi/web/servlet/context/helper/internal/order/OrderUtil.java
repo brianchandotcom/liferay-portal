@@ -303,16 +303,14 @@ public class OrderUtil {
 
 		if (order1.isAfterOthers() &&
 			!order1.isBefore(webXMLDefinition2.getFragmentName()) &&
-			!(order1.isAfterOthers() &&
-			order2.isAfterOthers())) {
+			!(order1.isAfterOthers() && order2.isAfterOthers())) {
 
 			return true;
 		}
 
 		if (order2.isBeforeOthers() &&
 			!order2.isAfter(webXMLDefinition1.getFragmentName()) &&
-			!(order1.isBeforeOthers() &&
-			order2.isBeforeOthers())) {
+			!(order1.isBeforeOthers() && order2.isBeforeOthers())) {
 
 			return true;
 		}

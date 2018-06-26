@@ -427,10 +427,9 @@ public class SiteAdminDisplayContext {
 
 		User user = themeDisplay.getUser();
 
-		if (!group.isCompany() &&
-			!(organizationUser || userGroupUser) &&
+		if (!group.isCompany() && !(organizationUser || userGroupUser) &&
 			((group.getType() == GroupConstants.TYPE_SITE_OPEN) ||
-				(group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) &&
+			 (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) &&
 			GroupLocalServiceUtil.hasUserGroup(
 				user.getUserId(), group.getGroupId()) &&
 			!SiteMembershipPolicyUtil.isMembershipRequired(

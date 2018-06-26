@@ -121,7 +121,7 @@ public class CalculateDDMFormRuleActionSerializer
 		String compareStr, Set<String> ddmFormFields) {
 
 		for (String ddmFormField : ddmFormFields) {
-			if (ddmFormField.contains(compareStr)) {
+			if (ddmFormField.startsWith(compareStr)) {
 				return true;
 			}
 		}

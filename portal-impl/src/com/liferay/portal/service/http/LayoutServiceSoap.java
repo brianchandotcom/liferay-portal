@@ -323,6 +323,25 @@ public class LayoutServiceSoap {
 	}
 
 	/**
+	* Returns the control panel layout's plid.
+	*
+	* @return the control panel layout's plid
+	* @throws PortalException if a portal exception is occured
+	*/
+	public static long getControlPanelLayoutPlid() throws RemoteException {
+		try {
+			long returnValue = LayoutServiceUtil.getControlPanelLayoutPlid();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns primary key of the matching default layout for the group.
 	*
 	* @param groupId the primary key of the group

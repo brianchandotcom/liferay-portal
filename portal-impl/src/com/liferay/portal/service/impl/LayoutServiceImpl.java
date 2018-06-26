@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutReference;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -677,6 +680,33 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		List<Layout> ancestors = layout.getAncestors();
 
 		return filterLayouts(ancestors);
+	}
+
+	/**
+	 * Returns the control panel layout's plid.
+	 *
+	 * @return the control panel layout's plid
+	 * @throws PortalException if a portal exception is occured
+	 */
+	@Override
+	public long getControlPanelLayoutPlid() throws PortalException {
+		Group group = groupLocalService.fetchGroup(
+			CompanyThreadLocal.getCompanyId(), GroupConstants.CONTROL_PANEL);
+
+		List<Layout> layouts = layoutLocalService.getLayouts(
+			group.getGroupId(), true);
+
+		if (ListUtil.isEmpty(layouts)) {
+			throw new NoSuchLayoutException(
+				"Could not find control panel layout");
+		}
+
+		Layout layout = layouts.get(0);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.VIEW);
+
+		return layout.getPlid();
 	}
 
 	/**

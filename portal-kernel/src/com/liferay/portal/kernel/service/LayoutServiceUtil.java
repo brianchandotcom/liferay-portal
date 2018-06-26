@@ -466,6 +466,17 @@ public class LayoutServiceUtil {
 	}
 
 	/**
+	* Returns the control panel layout's plid.
+	*
+	* @return the control panel layout's plid
+	* @throws PortalException if a portal exception is occured
+	*/
+	public static long getControlPanelLayoutPlid()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getControlPanelLayoutPlid();
+	}
+
+	/**
 	* Returns primary key of the matching default layout for the group.
 	*
 	* @param groupId the primary key of the group

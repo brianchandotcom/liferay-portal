@@ -159,6 +159,7 @@
 							<condition function="IsElementPresent" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED">
 								<var name="key_matchCount" value="${count}" />
 							</condition>
+
 							<then>
 								<execute function="Uncheck" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED">
 									<var name="key_matchCount" value="${count}" />

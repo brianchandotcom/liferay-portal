@@ -170,7 +170,8 @@
 
 		<execute macro="OAuth2#editScopes">
 			<var name="applicationName" value="OAuth Application" />
-			<var name="resourcePanels" value="Portal Services" />
+			<var name="resourcePanels" value="Portal Services,Sample QA app" />
+			<var name="uncheckAllResourceScopes" value="true" />
 			<var name="uncheckGlobalScope" value="Everything" />
 		</execute>
 
@@ -179,9 +180,9 @@
 		</execute>
 
 		<execute macro="OAuth2#viewScopes">
+			<var name="allResourceScopesUnchecked" value="true" />
 			<var name="applicationName" value="OAuth Application" />
 			<var name="resourcePanels" value="Portal Services,Sample QA app" />
-			<var name="resourceUncheckedList" value="example-scope-1,example-scope-2,everything.read,everything.write,everything.read.userprofile" />
 			<var name="uncheckedGlobalScope" value="Everything" />
 		</execute>
 	</command>

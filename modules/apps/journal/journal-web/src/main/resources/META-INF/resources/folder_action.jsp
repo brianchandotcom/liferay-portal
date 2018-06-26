@@ -201,7 +201,7 @@ else {
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message="publish"
+			message="publish-to-live"
 			url="<%= publishFolderURL %>"
 		/>
 	</c:if>

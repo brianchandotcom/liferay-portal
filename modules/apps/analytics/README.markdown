@@ -2,15 +2,29 @@
 
 ## Application Ids
 
-An ``applicationId`` identifies a group of events related to a specific application. For example: A Blog app might send events like ``blogClicked``, ``blogViewed``, ``blogDepthReached`` and so on. What makes the Analytics server know that all those events relate to the same type of application (Blog in this example) is the ``applicationId``. As a convention, all application ids should start with an uppercase letter.
+An ``applicationId`` identifies a group of events related to a specific
+application. For example: A Blog app might send events like ``blogClicked``,
+``blogViewed``, ``blogDepthReached`` and so on. What makes the Analytics server
+know that all those events relate to the same type of application (Blog in this
+example) is the ``applicationId``. As a convention, all application ids should
+start with an uppercase letter.
 
 ## Events and Properties
 
-Events are representations of actions performed by users. Events are composed by an ``id`` and their ``properties``.
+Events are representations of actions performed by users. Events are composed by
+an ``id`` and their ``properties``.
 
-Every ``event`` is uniquely identified by its ``id``, which should be a string of characters following the [camel-case](https://en.wikipedia.org/wiki/Camel_case) convention. The contents of an ``id``, should follow the ``objectAction`` pattern. Where ``object`` refers what you are tracking (Form, Blog, Scroll) and ``Action`` refers to what action the user just performed (Focused, Viewed, Reached) on that ``object``. ``Action`` should be written in the past tense.
+Every ``event`` is uniquely identified by its ``id``, which should be a string
+of characters following the
+[camel-case](https://en.wikipedia.org/wiki/Camel_case) convention. The contents
+of an ``id``, should follow the ``objectAction`` pattern. Where ``object``
+refers what you are tracking (Form, Blog, Scroll) and ``Action`` refers to what
+action the user just performed (Focused, Viewed, Reached) on that ``object``.
+``Action`` should be written in the past tense.
 
-Properties of an ``event`` are a map containing information about that particular ``event``. Keys of that map should also follow the [camel-case](https://en.wikipedia.org/wiki/Camel_case) convention.
+Properties of an ``event`` are a map containing information about that
+particular ``event``. Keys of that map should also follow the
+[camel-case](https://en.wikipedia.org/wiki/Camel_case) convention.
 
 ### Blog Events
 
@@ -46,7 +60,8 @@ A number representing how far did the user scroll into the blog contents.
 
 #### title: String
 
-This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
+This attribute can be used to describe any kind of asset. This information will
+be presented in the analytics reports.
 
 ### Document Events
 
@@ -69,7 +84,8 @@ The version of the document.
 
 #### title: String
 
-This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
+This attribute can be used to describe any kind of asset. This information will
+be presented in the analytics reports.
 
 ### Form Events
 
@@ -98,7 +114,8 @@ Time elapsed since the field received focus.
 
 #### title: String
 
-This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
+This attribute can be used to describe any kind of asset. This information will
+be presented in the analytics reports.
 
 ### Page Events
 
@@ -157,8 +174,10 @@ public void sendAnalytics(String analyticsKey, String userId) throws Exception {
 }
 ```
 
-The `analyticsKey` is an identifier associated to your Liferay account.
-The `userId` is a unique identifier of the user generating the event. You can use the identity service to retrieve a `userId` based on some user context information:
+The `analyticsKey` is an identifier associated to your Liferay account. The
+`userId` is a unique identifier of the user generating the event. You can use
+the identity service to retrieve a `userId` based on some user context
+information:
 
 ```java
 public void sendAnalytics(String analyticsKey) throws Exception {
@@ -219,12 +238,17 @@ public void sendAnalytics(String analyticsKey) throws Exception {
 private static AnalyticsClient _analyticsClient;
 ```
 
-The `analyticsKey` is an identifier associated to your Liferay account.
-If the `userId` is not passed in the message, the analytics client will internally resolve the user's identity through the identity service with the default Liferay user context.
-In this case, if you want the guest user and the authenticated user to have the same `userId` after login and the Portal property `session.enable.phishing.protection` is set to `true` (default),
-then you need to include the `ANALYTICS_USER_ID` value in the `session.phishing.protected.attributes` Portal property.
+The `analyticsKey` is an identifier associated to your Liferay account. If the
+`userId` is not passed in the message, the analytics client will internally
+resolve the user's identity through the identity service with the default
+Liferay user context. In this case, if you want the guest user and the
+authenticated user to have the same `userId` after login and the Portal property
+`session.enable.phishing.protection` is set to `true` (default), then you need
+to include the `ANALYTICS_USER_ID` value in the
+`session.phishing.protected.attributes` Portal property.
 
-Alternatively, you can obtain the `userId` with a custom user context by explicitly invoking the identity client service:
+Alternatively, you can obtain the `userId` with a custom user context by
+explicitly invoking the identity client service:
 
 ```java
 public void sendAnalytics(String analyticsKey) throws Exception {
@@ -270,9 +294,10 @@ m.parentNode.insertBefore(a,m)})('https://analytics.liferay.com/analytics-all-mi
 </script>
 ```
 
-The `analyticsKey` is an identifier associated to your Liferay account.
-The identity of the user generating the events will be automatically determined by the Analytics Client and the Identify Service.
-However, you can manually provide its identity by calling the `setIdentity` method of the Analytics object:
+The `analyticsKey` is an identifier associated to your Liferay account. The
+identity of the user generating the events will be automatically determined by
+the Analytics Client and the Identify Service. However, you can manually provide
+its identity by calling the `setIdentity` method of the Analytics object:
 
 ```html
     Analytics.create({ analyticsKey: 'MyAnalyticsKey' });
@@ -287,12 +312,15 @@ You can track custom events by invoking the `send` method of the Analytics objec
     });
 ```
 
-The first argument of the `send` method identifies the event (e.g. `share`) and the second identifies the application associated to it (e.g. `Blog`).
-Through the third optional argument you can pass some extra information.
+The first argument of the `send` method identifies the event (e.g. `share`) and
+the second identifies the application associated to it (e.g. `Blog`). Through
+the third optional argument you can pass some extra information.
 
 ### Asset Information
 
-To help the client gather more information about the assets on a page, it's helpful to annotate the asset markup with some [data attributes](https://www.w3.org/TR/2011/WD-html5-20110525/elements.html#embedding-custom-non-visible-data-with-the-data-attributes).
+To help the client gather more information about the assets on a page, it's
+helpful to annotate the asset markup with some [data
+attributes](https://www.w3.org/TR/2011/WD-html5-20110525/elements.html#embedding-custom-non-visible-data-with-the-data-attributes).
 
 #### Supported data attributes
 

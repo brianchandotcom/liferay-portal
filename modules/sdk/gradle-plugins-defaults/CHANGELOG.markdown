@@ -3890,7 +3890,7 @@ of a module includes transitive dependencies.
 - [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.53.
 
-## 5.4.52 - 2018-06-21
+## 5.4.53 - 2018-06-22
 
 ### Added
 - [LPS-82568]: Set the `npmRunBuild` task's `environment` property to

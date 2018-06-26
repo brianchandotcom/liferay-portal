@@ -23,7 +23,9 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -116,6 +118,8 @@ public class WebPageElementNestedCollectionResource
 			"author", PersonIdentifier.class, JournalArticle::getUserId
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, JournalArticle::getUserId
+		).addLocalizedStringByLocale(
+			"renderedContent", this::_getJournalArticleHtml
 		).addString(
 			"description", JournalArticle::getDescription
 		).addString(
@@ -162,6 +166,17 @@ public class WebPageElementNestedCollectionResource
 		_journalArticleService.deleteArticle(
 			article.getGroupId(), article.getArticleId(),
 			article.getArticleResourceUuid(), new ServiceContext());
+	}
+
+	private String _getJournalArticleHtml(
+		JournalArticleWrapper journalArticleWrapper, Locale locale) {
+
+		JournalArticleDisplay display = _journalContent.getDisplay(
+			journalArticleWrapper.getGroupId(),
+			journalArticleWrapper.getArticleId(), Constants.VIEW,
+			locale.getLanguage(), journalArticleWrapper.getThemeDisplay());
+
+		return display.getContent();
 	}
 
 	private JournalArticleWrapper _getJournalArticleWrapper(
@@ -224,5 +239,8 @@ public class WebPageElementNestedCollectionResource
 
 	@Reference
 	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private JournalContent _journalContent;
 
 }

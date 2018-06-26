@@ -59,13 +59,14 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(getAllowedContentText());
 		sb.append(" a[*](*); div[*](*); img[*](*){*}; ");
 		sb.append(getAllowedContentLists());
 		sb.append(" p {text-align}; ");
 		sb.append(getAllowedContentTable());
+		sb.append(" span[*](*){*}; ");
 
 		jsonObject.put("allowedContent", sb.toString());
 

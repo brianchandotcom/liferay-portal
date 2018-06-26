@@ -2,33 +2,33 @@
 
 ## Application Ids
 
-An ``applicationId`` identifies a group of events related to a specific
-application. For example: A Blog app might send events like ``blogClicked``,
-``blogViewed``, ``blogDepthReached`` and so on. What makes the Analytics server
+An `applicationId` identifies a group of events related to a specific
+application. For example: A Blog app might send events like `blogClicked`,
+`blogViewed`, `blogDepthReached` and so on. What makes the Analytics server
 know that all those events relate to the same type of application (Blog in this
-example) is the ``applicationId``. As a convention, all application ids should
+example) is the `applicationId`. As a convention, all application ids should
 start with an uppercase letter.
 
 ## Events and Properties
 
 Events are representations of actions performed by users. Events are composed by
-an ``id`` and their ``properties``.
+an `id` and their `properties`.
 
-Every ``event`` is uniquely identified by its ``id``, which should be a string
+Every `event` is uniquely identified by its `id`, which should be a string
 of characters following the
 [camel-case](https://en.wikipedia.org/wiki/Camel_case) convention. The contents
-of an ``id``, should follow the ``objectAction`` pattern. Where ``object``
-refers what you are tracking (Form, Blog, Scroll) and ``Action`` refers to what
-action the user just performed (Focused, Viewed, Reached) on that ``object``.
-``Action`` should be written in the past tense.
+of an `id`, should follow the `objectAction` pattern. Where `object`
+refers what you are tracking (Form, Blog, Scroll) and `Action` refers to what
+action the user just performed (Focused, Viewed, Reached) on that `object`.
+`Action` should be written in the past tense.
 
-Properties of an ``event`` are a map containing information about that
-particular ``event``. Keys of that map should also follow the
+Properties of an `event` are a map containing information about that
+particular `event`. Keys of that map should also follow the
 [camel-case](https://en.wikipedia.org/wiki/Camel_case) convention.
 
 ### Blog Events
 
-#### Application Id: ``Blog``
+#### Application Id: `Blog`
 
 | Object  | Action       | Event Id          | Event Properties                 |
 | ------- | ---------    | -------------     | -------------------------------- |
@@ -65,7 +65,7 @@ be presented in the analytics reports.
 
 ### Document Events
 
-#### Application Id: ``Document``
+#### Application Id: `Document`
 
 | Object   | Action     | Event Id           | Event Properties                     |
 | -------  | ---------  | -------------      | ------------------------------------ |
@@ -89,7 +89,7 @@ be presented in the analytics reports.
 
 ### Form Events
 
-#### Application Id: ``Form``
+#### Application Id: `Form`
 
 | Object  | Action    | Event Id      | Event Properties                 |
 | ------- | --------- | ------------- | -------------------------------- |
@@ -119,7 +119,7 @@ be presented in the analytics reports.
 
 ### Page Events
 
-#### Application Id: ``Page``
+#### Application Id: `Page`
 
 | Object  | Action       | Event Id         | Event Properties  |
 | ------- | ------------ | ---------------- | ----------------- |

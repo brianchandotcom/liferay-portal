@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.net.URI;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.apache.avro.Schema;
 
@@ -94,14 +95,15 @@ public class LiferayResourceProperties
 					URI resourceURI = URIUtils.setPaginationLimitOnURL(
 						resourceURL.getValue(), 1);
 
-					resource.setValue(
-						liferaySourceOrSinkRuntime.
-							getInputResourceCollectionType(
-								resourceURI.toString()));
+					String resourceCollectionType =
+						liferaySourceOrSinkRuntime.getResourceCollectionType(
+							resourceURI.toString());
+
+					resource.setValue(resourceCollectionType);
 
 					Schema schema =
-						liferaySourceOrSinkRuntime.getEndpointSchema(
-							null, resourceURI.toString());
+						liferaySourceOrSinkRuntime.getResourceSchemaByType(
+							resourceCollectionType);
 
 					main.schema.setValue(schema);
 				}
@@ -113,6 +115,12 @@ public class LiferayResourceProperties
 						validationResult.getMessage());
 					validationResultMutable.setStatus(
 						validationResult.getStatus());
+				}
+				catch (NoSuchElementException nsee) {
+					validationResultMutable.setMessage(
+						i18nMessages.getMessage(
+							"error.validation.resourceType"));
+					validationResultMutable.setStatus(Result.ERROR);
 				}
 			}
 		}

@@ -28,6 +28,7 @@ import com.liferay.talend.runtime.apio.ApioResult;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 import com.liferay.talend.runtime.apio.constants.SchemaOrgConstants;
 import com.liferay.talend.runtime.apio.constants.SchemaOrgConstants.Vocabulary;
+import com.liferay.talend.runtime.apio.jsonld.ApioApiDocumentation;
 import com.liferay.talend.runtime.apio.jsonld.ApioForm;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.runtime.apio.jsonld.ApioSingleModel;
@@ -370,6 +371,11 @@ public class LiferaySourceOrSink
 		return liferayConnectionProperties;
 	}
 
+	/**
+	 * @deprecated In favor of determining the schema based on the resource type
+	 * {@link #getInputResourceCollectionSchema(String)}
+	 */
+	@Deprecated
 	@Override
 	public Schema getEndpointSchema(
 			RuntimeContainer runtimeContainer, String resourceURL)
@@ -394,6 +400,11 @@ public class LiferaySourceOrSink
 			operation, apioForm);
 	}
 
+	/**
+	 * @deprecated In favor of determining the schema based on the resource type
+	 * {@inheritDoc}
+	 */
+	@Deprecated
 	@Override
 	public Schema getInputResourceCollectionSchema(String resourceURL)
 		throws IOException {
@@ -402,7 +413,7 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
-	public String getInputResourceCollectionType(String resourceURL)
+	public String getResourceCollectionType(String resourceURL)
 		throws IOException {
 
 		JsonNode jsonNode = doApioGetRequest(resourceURL);
@@ -438,6 +449,42 @@ public class LiferaySourceOrSink
 		}
 
 		return resourceNames;
+	}
+
+	@Override
+	public Schema getResourceSchemaByType(String resourceType)
+		throws IOException {
+
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveConnection(null);
+
+		String endpointURL = liferayConnectionProperties.endpoint.getValue();
+
+		JsonNode apiDocumentationJsonNode = doApioGetRequest(
+			endpointURL.concat("/doc"));
+
+		ApioApiDocumentation apioApiDocumentation = new ApioApiDocumentation(
+			apiDocumentationJsonNode);
+
+		List<ApioApiDocumentation.SupportedClass> supportedClasses =
+			apioApiDocumentation.getSupportedClasses();
+
+		Stream<ApioApiDocumentation.SupportedClass> supportedClassStream =
+			supportedClasses.stream();
+
+		ApioApiDocumentation.SupportedClass resourceSupportedClass =
+			supportedClassStream.filter(
+				supportedClass -> resourceType.equals(supportedClass.getName())
+			).findFirst(
+			).orElseThrow(
+				() -> new IOException(
+					String.format(
+						"Unable to find '%s' type in the API Documentation",
+						resourceType))
+			);
+
+		return ResourceCollectionSchemaInferrer.inferSchemaByResourceType(
+			resourceSupportedClass);
 	}
 
 	@Override

@@ -159,6 +159,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryModel;
+import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.model.VirtualHostModel;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -277,6 +278,8 @@ public class DataFactory {
 
 		List<String> models = ModelHintsUtil.getModels();
 
+		models.add(UserPersonalSite.class.getName());
+
 		for (String model : models) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();
 
@@ -299,6 +302,7 @@ public class DataFactory {
 		_defaultUserId = _counter.get();
 		_globalGroupId = _counter.get();
 		_guestGroupId = _counter.get();
+		_userPersonalSiteGroupId = _counter.get();
 		_sampleUserId = _counter.get();
 
 		List<String> lines = new ArrayList<>();
@@ -752,6 +756,10 @@ public class DataFactory {
 		return sequence;
 	}
 
+	public GroupModel getUserPersonalSiteGroupModel() {
+		return _userPersonalSiteGroupModel;
+	}
+
 	public RoleModel getUserRoleModel() {
 		return _userRoleModel;
 	}
@@ -1110,6 +1118,10 @@ public class DataFactory {
 		_guestGroupModel = newGroupModel(
 			_guestGroupId, groupClassNameId, _guestGroupId,
 			GroupConstants.GUEST, true);
+
+		_userPersonalSiteGroupModel = newGroupModel(
+			_userPersonalSiteGroupId, getClassNameId(UserPersonalSite.class),
+			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false);
 
 		_groupModels = new ArrayList<>(_maxGroupsCount);
 
@@ -3930,6 +3942,8 @@ public class DataFactory {
 	private RoleModel _siteMemberRoleModel;
 	private final SimpleCounter _socialActivityCounter;
 	private final SimpleCounter _timeCounter;
+	private final long _userPersonalSiteGroupId;
+	private GroupModel _userPersonalSiteGroupModel;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
 	private VirtualHostModel _virtualHostModel;

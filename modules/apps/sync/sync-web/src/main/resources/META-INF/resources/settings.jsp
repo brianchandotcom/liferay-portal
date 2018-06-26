@@ -59,55 +59,81 @@ if (deployed && oAuthEnabled) {
 
 <liferay-portlet:actionURL var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updatePreferences();" %>'>
+<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updatePreferences();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<liferay-ui:error exception="<%= OAuthPortletUndeployedException.class %>" message="oauth-publisher-is-not-deployed" />
+	<div class="sheet sheet-lg">
+		<liferay-ui:error exception="<%= OAuthPortletUndeployedException.class %>" message="oauth-publisher-is-not-deployed" />
 
-	<h4><liferay-ui:message key="general" /></h4>
-
-	<aui:fieldset>
-		<aui:input label="allow-the-use-of-sync" name="enabled" type="toggle-switch" value="<%= enabled %>" />
-		<aui:input label="allow-users-to-sync-their-personal-sites" name="allowUserPersonalSites" type="toggle-switch" value="<%= allowUserPersonalSites %>" />
-	</aui:fieldset>
-
-	<c:if test="<%= deployed %>">
 		<aui:fieldset>
-			<aui:input helpMessage="oauth-enabled-help" label="oauth-enabled" name="oAuthEnabled" type="toggle-switch" value="<%= oAuthEnabled %>" />
+			<div class="sheet-section">
+				<h4 class="sheet-subtitle"><liferay-ui:message key="general" /></h4>
+
+				<aui:input label="allow-the-use-of-sync" name="enabled" type="toggle-switch" value="<%= enabled %>" />
+				<aui:input label="allow-users-to-sync-their-personal-sites" name="allowUserPersonalSites" type="toggle-switch" value="<%= allowUserPersonalSites %>" />
+
+				<c:if test="<%= deployed %>">
+					<aui:input helpMessage="oauth-enabled-help" label="oauth-enabled" name="oAuthEnabled" type="toggle-switch" value="<%= oAuthEnabled %>" />
+				</c:if>
+			</div>
 		</aui:fieldset>
-	</c:if>
 
-	<h4><liferay-ui:message key="desktop" /></h4>
+		<div class="sheet-section">
+			<h4 class="sheet-subtitle"><liferay-ui:message key="desktop" /></h4>
 
-	<aui:input helpMessage="allow-lan-syncing-help" label="allow-lan-syncing" name="lanEnabled" type="toggle-switch" value="<%= lanEnabled %>" />
+			<aui:input helpMessage="allow-lan-syncing-help" label="allow-lan-syncing" name="lanEnabled" type="toggle-switch" value="<%= lanEnabled %>" />
 
-	<aui:input helpMessage="max-connections-help" label="max-connections" name="maxConnections" type="text" value="<%= maxConnections %>" wrapperCssClass="lfr-input-text-container">
-		<aui:validator name="digits" />
-		<aui:validator name="min">1</aui:validator>
-	</aui:input>
+			<div class="form-group-autofit">
+				<div class="form-group-item">
+					<aui:input helpMessage="max-connections-help" label="max-connections" name="maxConnections" type="text" value="<%= maxConnections %>" wrapperCssClass="lfr-input-text-container">
+						<aui:validator name="digits" />
+						<aui:validator name="min">1</aui:validator>
+					</aui:input>
+				</div>
 
-	<aui:input helpMessage="poll-interval-help" label="poll-interval" name="pollInterval" type="text" value="<%= pollInterval %>" wrapperCssClass="lfr-input-text-container">
-		<aui:validator name="digits" />
-		<aui:validator name="min">1</aui:validator>
-	</aui:input>
+				<div class="form-group-item">
+					<aui:input helpMessage="poll-interval-help" label="poll-interval" name="pollInterval" type="text" value="<%= pollInterval %>" wrapperCssClass="lfr-input-text-container">
+						<aui:validator name="digits" />
+						<aui:validator name="min">1</aui:validator>
+					</aui:input>
+				</div>
+			</div>
 
-	<aui:input helpMessage="max-download-rate-help" label="max-download-rate" name="maxDownloadRate" type="text" value="<%= maxDownloadRate %>" wrapperCssClass="lfr-input-text-container">
-		<aui:validator name="digits" />
-	</aui:input>
+			<div class="form-group-autofit">
+				<div class="form-group-item">
+					<aui:input helpMessage="max-download-rate-help" label="max-download-rate" name="maxDownloadRate" type="text" value="<%= maxDownloadRate %>" wrapperCssClass="lfr-input-text-container">
+						<aui:validator name="digits" />
+					</aui:input>
+				</div>
 
-	<aui:input helpMessage="max-upload-rate-help" label="max-upload-rate" name="maxUploadRate" type="text" value="<%= maxUploadRate %>" wrapperCssClass="lfr-input-text-container">
-		<aui:validator name="digits" />
-	</aui:input>
+				<div class="form-group-item">
+					<aui:input helpMessage="max-upload-rate-help" label="max-upload-rate" name="maxUploadRate" type="text" value="<%= maxUploadRate %>" wrapperCssClass="lfr-input-text-container">
+						<aui:validator name="digits" />
+					</aui:input>
+				</div>
+			</div>
+		</div>
 
-	<h4><liferay-ui:message key="mobile" /></h4>
+		<aui:fieldset>
+			<div class="sheet-section">
+				<h4 class="sheet-subtitle"><liferay-ui:message key="mobile" /></h4>
 
-	<aui:fieldset>
-		<aui:input helpMessage="force-security-mode-help" label="force-security-mode" name="forceSecurityMode" type="toggle-switch" value="<%= forceSecurityMode %>" />
-	</aui:fieldset>
+				<aui:input helpMessage="force-security-mode-help" label="force-security-mode" name="forceSecurityMode" type="toggle-switch" value="<%= forceSecurityMode %>" />
+			</div>
+		</aui:fieldset>
 
-	<aui:button-row>
-		<aui:button type="submit" />
-	</aui:button-row>
+		<div class="sheet-footer">
+			<div class="btn-group">
+				<div class="btn-group-item">
+					<clay:button
+						label='<%= LanguageUtil.get(request, "save") %>'
+						style="primary"
+						type="submit"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
 </aui:form>
 
 <aui:script>

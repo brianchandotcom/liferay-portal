@@ -159,6 +159,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryModel;
+import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.model.VirtualHostModel;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -277,7 +278,7 @@ public class DataFactory {
 
 		List<String> models = ModelHintsUtil.getModels();
 
-		models.add("com.liferay.portal.kernel.model.UserPersonalSite");
+		models.add(UserPersonalSite.class.getName());
 
 		for (String model : models) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();
@@ -1118,11 +1119,8 @@ public class DataFactory {
 			_guestGroupId, groupClassNameId, _guestGroupId,
 			GroupConstants.GUEST, true);
 
-		ClassNameModel classNameModel = _classNameModels.get(
-			"com.liferay.portal.kernel.model.UserPersonalSite");
-
 		_userPersonalSiteGroupModel = newGroupModel(
-			_userPersonalSiteGroupId, classNameModel.getClassNameId(),
+			_userPersonalSiteGroupId, getClassNameId(UserPersonalSite.class),
 			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false);
 
 		_groupModels = new ArrayList<>(_maxGroupsCount);

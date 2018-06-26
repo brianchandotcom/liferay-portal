@@ -42,10 +42,12 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose a WorkflowTask resources through a web API.
- * The resources are mapped from the internal model {@link WorkflowTask}.
+ * Provides the information necessary to expose a WorkflowTask resources through
+ * a web API. The resources are mapped from the internal model {@link
+ * WorkflowTask}.
  *
  * @author Sarai Díaz
+ * @review
  */
 @Component
 public class WorkflowTaskNestedCollectionResource

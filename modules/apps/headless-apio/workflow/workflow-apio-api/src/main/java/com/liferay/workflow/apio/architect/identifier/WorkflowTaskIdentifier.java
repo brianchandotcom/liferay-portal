@@ -17,8 +17,8 @@ package com.liferay.workflow.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code WorkflowTask} identifier. It's identified by the
- * internal {@code WorkflowTask#getWorkflowTaskId()}.
+ * Holds information about a {@code WorkflowTask} identifier. It's identified by
+ * the internal {@code WorkflowTask#getWorkflowTaskId()}.
  *
  * @author Sarai Díaz
  * @review

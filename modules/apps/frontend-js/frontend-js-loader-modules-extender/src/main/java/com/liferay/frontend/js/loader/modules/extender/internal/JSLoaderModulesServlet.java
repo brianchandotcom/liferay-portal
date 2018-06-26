@@ -23,9 +23,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.minifier.MinifierUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -94,11 +96,9 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		response.setContentType(Details.CONTENT_TYPE);
+		StringWriter stringWriter = new StringWriter();
 
-		ServletOutputStream servletOutputStream = response.getOutputStream();
-
-		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
+		PrintWriter printWriter = new PrintWriter(stringWriter);
 
 		printWriter.println("(function() {");
 		printWriter.println("Liferay.PATHS = {");
@@ -366,6 +366,8 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		printWriter.println("}());");
 
 		printWriter.close();
+
+		_writeResponse(response, stringWriter.toString());
 	}
 
 	protected void setDetails(Details details) {
@@ -382,6 +384,21 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	@Reference(unbind = "-")
 	protected void setNPMRegistry(NPMRegistry npmRegistry) {
 		_npmRegistry = npmRegistry;
+	}
+
+	private void _writeResponse(HttpServletResponse response, String content)
+		throws IOException {
+
+		response.setContentType(Details.CONTENT_TYPE);
+
+		ServletOutputStream servletOutputStream = response.getOutputStream();
+
+		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
+
+		printWriter.write(
+			MinifierUtil.minifyJavaScript("/o/js_loader_modules", content));
+
+		printWriter.close();
 	}
 
 	private ComponentContext _componentContext;

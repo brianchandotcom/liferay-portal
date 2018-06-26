@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.theme.westeros.bank.site.initializer.internal;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -42,6 +40,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
@@ -51,6 +50,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -172,8 +172,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
 				personalLayout.getPlid(),
 				carouselFragmentEntry.getFragmentEntryId(),
-				carouselJournalArticle.getArticleId(),
-				carouselJournalArticle.getResourcePrimKey());
+				carouselJournalArticle.getArticleId());
 
 			List<Layout> personalLayoutChildren = _addLayouts(
 				personalLayout, _LAYOUT_CHILDREN_PERSONAL, fragmentEntriesMap,
@@ -454,7 +453,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 	private void _configureFragmentEntryLink(
 			long companyId, long groupId, long plid, long fragmentEntryId,
-			String articleId, long articleResourcePrimKey)
+			String articleId)
 		throws Exception {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
@@ -466,29 +465,21 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			String portletId = PortletIdCodec.encode(
-				JournalContentPortletKeys.JOURNAL_CONTENT,
-				fragmentEntryLink.getNamespace());
-
 			PortletPreferences portletPreferences =
 				new PortletPreferencesImpl();
 
 			portletPreferences.setValue("articleId", articleId);
 
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				_portal.getClassNameId(JournalArticle.class),
-				articleResourcePrimKey);
-
-			portletPreferences.setValue(
-				"assetEntryId", String.valueOf(assetEntry.getEntryId()));
-
-			portletPreferences.setValue("groupId", String.valueOf(groupId));
 			portletPreferences.setValue(
 				"portletSetupPortletDecoratorId", "barebone");
 
+			String portletId = PortletIdCodec.encode(
+				JournalContentPortletKeys.JOURNAL_CONTENT,
+				fragmentEntryLink.getNamespace());
+
 			_portletPreferencesLocalService.addPortletPreferences(
-				companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
-				portletId, null,
+				companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				_portal.getControlPanelPlid(companyId), portletId, null,
 				PortletPreferencesFactoryUtil.toXML(portletPreferences));
 		}
 	}
@@ -500,6 +491,10 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		serviceContext.setCompanyId(group.getCompanyId());
 
 		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
 
@@ -648,9 +643,6 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WesterosBankSiteInitializer.class);
 
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
 	private Bundle _bundle;
 
 	@Reference
@@ -667,6 +659,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

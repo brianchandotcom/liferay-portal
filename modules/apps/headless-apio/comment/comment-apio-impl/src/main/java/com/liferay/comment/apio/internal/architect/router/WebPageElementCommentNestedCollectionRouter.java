@@ -14,8 +14,6 @@
 
 package com.liferay.comment.apio.internal.architect.router;
 
-import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.comment.apio.internal.architect.router.base.BaseCommentNestedCollectionRouter;
@@ -25,12 +23,7 @@ import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
-
-import java.util.Collections;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,37 +45,6 @@ public class WebPageElementCommentNestedCollectionRouter extends
 		<Comment, Long, CommentIdentifier, Long, WebPageElementIdentifier> {
 
 	@Override
-	protected PageItems<Comment> getPageItems(
-			Pagination pagination, long journalArticleId,
-			PermissionChecker permissionChecker)
-		throws PortalException {
-
-		GroupedModel groupedModel = getGroupedModel(journalArticleId);
-
-		long resourcePrimKey =
-			((JournalArticle)groupedModel).getResourcePrimKey();
-
-		int count = _commentManager.getRootCommentsCount(
-			groupedModel.getModelClassName(), resourcePrimKey,
-			WorkflowConstants.STATUS_APPROVED);
-
-		if (count == 0) {
-			return new PageItems<>(Collections.emptyList(), 0);
-		}
-
-		checkViewPermission(
-			permissionChecker, groupedModel.getGroupId(),
-			groupedModel.getModelClassName(), journalArticleId);
-
-		List<Comment> comments = _commentManager.getRootComments(
-			groupedModel.getModelClassName(), resourcePrimKey,
-			WorkflowConstants.STATUS_APPROVED, pagination.getStartPosition(),
-			pagination.getEndPosition());
-
-		return new PageItems<>(comments, count);
-	}
-
-	@Override
 	protected CommentManager getCommentManager() {
 		return _commentManager;
 	}
@@ -92,6 +54,14 @@ public class WebPageElementCommentNestedCollectionRouter extends
 		throws PortalException {
 
 		return _journalArticleService.getArticle(journalArticleId);
+	}
+
+	@Override
+	protected long getResourcePrimKey(long classPK) throws PortalException {
+		JournalArticle journalArticle = _journalArticleService.getArticle(
+			classPK);
+
+		return journalArticle.getResourcePrimKey();
 	}
 
 	@Reference

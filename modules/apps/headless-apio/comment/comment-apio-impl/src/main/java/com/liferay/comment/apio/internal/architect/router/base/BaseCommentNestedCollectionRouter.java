@@ -87,9 +87,10 @@ public abstract class BaseCommentNestedCollectionRouter
 		throws PortalException {
 
 		GroupedModel groupedModel = getGroupedModel(classPK);
+		long resourcePrimKey = getResourcePrimKey(classPK);
 
 		int count = getCommentManager().getRootCommentsCount(
-			groupedModel.getModelClassName(), classPK,
+			groupedModel.getModelClassName(), resourcePrimKey,
 			WorkflowConstants.STATUS_APPROVED);
 
 		if (count == 0) {
@@ -101,11 +102,15 @@ public abstract class BaseCommentNestedCollectionRouter
 			groupedModel.getModelClassName(), classPK);
 
 		List<Comment> comments = getCommentManager().getRootComments(
-			groupedModel.getModelClassName(), classPK,
+			groupedModel.getModelClassName(), resourcePrimKey,
 			WorkflowConstants.STATUS_APPROVED, pagination.getStartPosition(),
 			pagination.getEndPosition());
 
 		return new PageItems<>(comments, count);
+	}
+
+	protected long getResourcePrimKey(long classPK) throws PortalException {
+		return classPK;
 	}
 
 }

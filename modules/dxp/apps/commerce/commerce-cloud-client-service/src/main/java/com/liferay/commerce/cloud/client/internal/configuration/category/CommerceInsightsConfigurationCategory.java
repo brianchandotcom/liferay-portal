@@ -22,7 +22,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component
-public class CloudConfigurationCategory implements ConfigurationCategory {
+public class CommerceInsightsConfigurationCategory
+	implements ConfigurationCategory {
 
 	@Override
 	public String getBundleSymbolicName() {
@@ -44,7 +45,7 @@ public class CloudConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "cloud";
+	private static final String _CATEGORY_KEY = "commerce-insights";
 
 	private static final String _CATEGORY_SECTION = "commerce";
 

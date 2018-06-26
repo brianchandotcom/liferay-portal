@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component
-public class WishListConfigurationCategory implements ConfigurationCategory {
+public class WishListsConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getBundleSymbolicName() {
@@ -39,7 +39,7 @@ public class WishListConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "wish-list";
+	private static final String _CATEGORY_KEY = "wish-lists";
 
 	private static final String _CATEGORY_SECTION = "commerce";
 

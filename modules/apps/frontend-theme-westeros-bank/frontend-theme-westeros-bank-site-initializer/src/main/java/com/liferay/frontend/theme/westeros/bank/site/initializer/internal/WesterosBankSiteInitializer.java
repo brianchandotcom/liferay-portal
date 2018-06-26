@@ -19,8 +19,14 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,10 +40,13 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -110,6 +119,32 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 			Map<String, FragmentEntry> fragmentEntriesMap =
 				_getFragmentEntriesMap(fragmentEntries);
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				_addLayoutPageTemplateCollection(serviceContext);
+
+			List<FragmentEntry> personalFragmentEntries = new ArrayList<>();
+
+			personalFragmentEntries.add(fragmentEntriesMap.get("carousel"));
+			personalFragmentEntries.add(fragmentEntriesMap.get("features"));
+			personalFragmentEntries.add(fragmentEntriesMap.get("news"));
+			personalFragmentEntries.add(fragmentEntriesMap.get("offerings"));
+			personalFragmentEntries.add(fragmentEntriesMap.get("links"));
+
+			_addLayoutPageTemplateEntry(
+				layoutPageTemplateCollection, "For You",
+				personalFragmentEntries, _PATH + "/page_templates",
+				"personal.jpg", serviceContext);
+
+			List<FragmentEntry> businessFragmentEntries = new ArrayList<>();
+
+			businessFragmentEntries.add(fragmentEntriesMap.get("video"));
+			businessFragmentEntries.add(fragmentEntriesMap.get("links"));
+
+			_addLayoutPageTemplateEntry(
+				layoutPageTemplateCollection, "For Your Business",
+				businessFragmentEntries, _PATH + "/page_templates",
+				"business.jpg", serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -212,6 +247,46 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 		}
 
 		return fragmentEntries;
+	}
+
+	private LayoutPageTemplateCollection _addLayoutPageTemplateCollection(
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_THEME_NAME, _THEME_NAME, serviceContext);
+	}
+
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
+			LayoutPageTemplateCollection layoutPageTemplateCollection,
+			String name, List<FragmentEntry> fragmentEntries,
+			String thumbnailPath, String thumbnailFileName,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		long previewFileEntryId = _getPreviewFileEntryId(
+			thumbnailPath, thumbnailFileName, serviceContext);
+
+		long layoutPageTemplateCollectionId =
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				layoutPageTemplateCollectionId, name,
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+				previewFileEntryId, WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
+
+		long[] fragmentEntryIds = ListUtil.toLongArray(
+			fragmentEntries, FragmentEntryModel::getFragmentEntryId);
+
+		return _layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), name,
+				fragmentEntryIds, StringPool.BLANK, serviceContext);
 	}
 
 	private ServiceContext _createServiceContext(long groupId)
@@ -357,10 +432,24 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
+	private PortletPreferencesLocalService _porPortletPreferencesLocalService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.frontend.theme.westeros.bank.site.initializer)"

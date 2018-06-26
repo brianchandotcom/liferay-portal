@@ -66,6 +66,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		sb.append(getAllowedContentLists());
 		sb.append(" p {text-align}; ");
 		sb.append(getAllowedContentTable());
+		sb.append(" span[*](*){*}; ");
 
 		jsonObject.put("allowedContent", sb.toString());
 

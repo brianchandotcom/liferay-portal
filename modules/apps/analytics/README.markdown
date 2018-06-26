@@ -40,7 +40,7 @@ When clicking on a link inside a blog, the text of the clicked link.
 
 When clicking an image inside a blog, the source of the clicked image.
 
-#### depth: String
+#### depth: Long
 
 A number representing how far did the user scroll into the blog contents.
 

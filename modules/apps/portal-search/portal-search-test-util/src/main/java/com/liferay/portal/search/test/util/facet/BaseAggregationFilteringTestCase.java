@@ -38,7 +38,6 @@ import com.liferay.portal.search.internal.filter.FilterBuildersImpl;
 import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
-import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.io.Serializable;
 
@@ -318,7 +317,6 @@ public abstract class BaseAggregationFilteringTestCase
 	protected ModifiedFacetFactoryImpl createModifiedFacetFactory() {
 		return new ModifiedFacetFactoryImpl() {
 			{
-				dateFormatFactory = new DateFormatFactoryImpl();
 				filterBuilders = new FilterBuildersImpl();
 			}
 		};

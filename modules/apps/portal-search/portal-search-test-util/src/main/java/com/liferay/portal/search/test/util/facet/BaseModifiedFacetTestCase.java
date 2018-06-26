@@ -28,7 +28,6 @@ import com.liferay.portal.search.internal.facet.modified.ModifiedFacetFactoryImp
 import com.liferay.portal.search.internal.filter.FilterBuildersImpl;
 import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
-import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -109,7 +108,6 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 		ModifiedFacetFactory modifiedFacetFactory =
 			new ModifiedFacetFactoryImpl() {
 				{
-					dateFormatFactory = new DateFormatFactoryImpl();
 					filterBuilders = new FilterBuildersImpl();
 				}
 			};

@@ -16,13 +16,15 @@ package com.liferay.commerce.dashboard.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.commerce.dashboard.web.internal.configuration.category.DashboardConfigurationCategory;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Andrea Di Giorgi
  */
 @ExtendedObjectClassDefinition(
-	category = "cloud", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = DashboardConfigurationCategory.CATEGORY_KEY,
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardCompanyConfiguration",

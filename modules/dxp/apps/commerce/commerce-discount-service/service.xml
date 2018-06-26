@@ -36,7 +36,6 @@
 		<column name="limitationType" type="String" />
 		<column name="limitationTimes" type="int" />
 		<column name="numberOfUse" type="int" />
-		<column name="cumulative" type="boolean" />
 		<column name="active" type="boolean" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
@@ -56,6 +55,10 @@
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="couponCode" />
 		</finder>
 		<finder name="LtD_S" return-type="Collection">
 			<finder-column comparator="&lt;" name="displayDate" />
@@ -151,6 +154,43 @@
 			<finder-column name="commerceDiscountId" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CommerceDiscountUsageEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="commerceDiscountUsageEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="discountUserId" type="long" />
+		<column name="discountOrganizationId" type="long" />
+		<column name="commerceOrderId" type="long" />
+		<column name="commerceDiscountId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceDiscountUserSegmentRel" remote-service="true">
 
 		<!-- PK fields -->
@@ -190,6 +230,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>CommerceDiscountCouponCode</exception>
 		<exception>CommerceDiscountDisplayDate</exception>
 		<exception>CommerceDiscountExpirationDate</exception>
 		<exception>CommerceDiscountLimitationType</exception>

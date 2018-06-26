@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
@@ -43,6 +44,9 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -121,9 +125,26 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 				UpgradeDDMStorageLink());
 
 		registry.register(
-			"1.1.3", "2.0.0",
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0.
+			"1.1.3", "1.2.0",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_0.
 				UpgradeSchema());
+
+		registry.register(
+			"1.2.0", "1.2.1",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_1.
+				UpgradeDDLRecordSet(
+					_classNameLocalService, _counterLocalService,
+					_portletPreferencesLocalService,
+					_resourcePermissionLocalService),
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_1.
+				UpgradeDDLRecordVersion(),
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_1.
+				UpgradeResourceAction(_resourceActionLocalService));
+
+		registry.register(
+			"1.2.1", "2.0.0",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0.
+				UpgradeDDLRecord(_assetEntryLocalService));
 
 		registry.register(
 			"2.0.0", "2.0.1",
@@ -149,6 +170,12 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private DDM _ddm;
@@ -197,6 +224,12 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ResourceActions _resourceActions;

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.discount.service.impl;
 
+import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException;
 import com.liferay.commerce.discount.exception.CommerceDiscountDisplayDateException;
 import com.liferay.commerce.discount.exception.CommerceDiscountExpirationDateException;
 import com.liferay.commerce.discount.exception.CommerceDiscountTargetException;
@@ -76,9 +77,9 @@ public class CommerceDiscountLocalServiceImpl
 			String couponCode, boolean usePercentage,
 			BigDecimal maximumDiscountAmount, BigDecimal level1,
 			BigDecimal level2, BigDecimal level3, String limitationType,
-			int limitationTimes, boolean cumulative, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int limitationTimes, boolean active, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -89,7 +90,8 @@ public class CommerceDiscountLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
-		validate(title, target, limitationType);
+		validate(
+			groupId, title, target, useCouponCode, couponCode, limitationType);
 
 		Date now = new Date();
 
@@ -128,7 +130,6 @@ public class CommerceDiscountLocalServiceImpl
 		commerceDiscount.setLevel3(level3);
 		commerceDiscount.setLimitationType(limitationType);
 		commerceDiscount.setLimitationTimes(limitationTimes);
-		commerceDiscount.setCumulative(cumulative);
 		commerceDiscount.setActive(active);
 		commerceDiscount.setDisplayDate(displayDate);
 		commerceDiscount.setExpirationDate(expirationDate);
@@ -244,6 +245,13 @@ public class CommerceDiscountLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceDiscount> getCommerceDiscounts(
+		long groupId, String couponCode) {
+
+		return commerceDiscountPersistence.findByG_C(groupId, couponCode);
+	}
+
+	@Override
 	public int getCommerceDiscountsCount(long groupId) {
 		return commerceDiscountPersistence.countByGroupId(groupId);
 	}
@@ -307,9 +315,9 @@ public class CommerceDiscountLocalServiceImpl
 			boolean useCouponCode, String couponCode, boolean usePercentage,
 			BigDecimal maximumDiscountAmount, BigDecimal level1,
 			BigDecimal level2, BigDecimal level3, String limitationType,
-			int limitationTimes, boolean cumulative, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int limitationTimes, boolean active, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -319,7 +327,9 @@ public class CommerceDiscountLocalServiceImpl
 		CommerceDiscount commerceDiscount =
 			commerceDiscountPersistence.findByPrimaryKey(commerceDiscountId);
 
-		validate(title, target, limitationType);
+		validate(
+			commerceDiscount.getGroupId(), title, target, useCouponCode,
+			couponCode, limitationType);
 
 		Date now = new Date();
 
@@ -348,7 +358,6 @@ public class CommerceDiscountLocalServiceImpl
 		commerceDiscount.setLevel3(level3);
 		commerceDiscount.setLimitationType(limitationType);
 		commerceDiscount.setLimitationTimes(limitationTimes);
-		commerceDiscount.setCumulative(cumulative);
 		commerceDiscount.setActive(active);
 		commerceDiscount.setDisplayDate(displayDate);
 		commerceDiscount.setExpirationDate(expirationDate);
@@ -559,7 +568,9 @@ public class CommerceDiscountLocalServiceImpl
 			serviceContext, workflowContext);
 	}
 
-	protected void validate(String title, String target, String limitationType)
+	protected void validate(
+			long groupId, String title, String target, boolean useCouponCode,
+			String couponCode, String limitationType)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
@@ -571,6 +582,19 @@ public class CommerceDiscountLocalServiceImpl
 
 		if (commerceDiscountTarget == null) {
 			throw new CommerceDiscountTargetException();
+		}
+
+		if (useCouponCode) {
+			if (Validator.isNull(couponCode)) {
+				throw new CommerceDiscountCouponCodeException();
+			}
+
+			List<CommerceDiscount> commerceDiscounts =
+				commerceDiscountPersistence.findByG_C(groupId, couponCode);
+
+			if (!commerceDiscounts.isEmpty()) {
+				throw new CommerceDiscountCouponCodeException();
+			}
 		}
 
 		if (Validator.isNull(limitationType)) {

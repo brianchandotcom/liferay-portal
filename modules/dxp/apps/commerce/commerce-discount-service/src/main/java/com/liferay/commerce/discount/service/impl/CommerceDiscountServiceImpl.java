@@ -46,9 +46,9 @@ public class CommerceDiscountServiceImpl
 			String couponCode, boolean usePercentage,
 			BigDecimal maximumDiscountAmount, BigDecimal level1,
 			BigDecimal level2, BigDecimal level3, String limitationType,
-			int limitationTimes, boolean cumulative, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int limitationTimes, boolean active, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -61,8 +61,8 @@ public class CommerceDiscountServiceImpl
 		return commerceDiscountLocalService.addCommerceDiscount(
 			title, target, useCouponCode, couponCode, usePercentage,
 			maximumDiscountAmount, level1, level2, level3, limitationType,
-			limitationTimes, cumulative, active, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			limitationTimes, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
@@ -104,6 +104,19 @@ public class CommerceDiscountServiceImpl
 	}
 
 	@Override
+	public List<CommerceDiscount> getCommerceDiscounts(
+			long groupId, String couponCode)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceDiscountActionKeys.VIEW_COMMERCE_DISCOUNTS);
+
+		return commerceDiscountLocalService.getCommerceDiscounts(
+			groupId, couponCode);
+	}
+
+	@Override
 	public int getCommerceDiscountsCount(long groupId) throws PortalException {
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
@@ -132,9 +145,9 @@ public class CommerceDiscountServiceImpl
 			boolean useCouponCode, String couponCode, boolean usePercentage,
 			BigDecimal maximumDiscountAmount, BigDecimal level1,
 			BigDecimal level2, BigDecimal level3, String limitationType,
-			int limitationTimes, boolean cumulative, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int limitationTimes, boolean active, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -146,11 +159,11 @@ public class CommerceDiscountServiceImpl
 		return commerceDiscountLocalService.updateCommerceDiscount(
 			commerceDiscountId, title, target, useCouponCode, couponCode,
 			usePercentage, maximumDiscountAmount, level1, level2, level3,
-			limitationType, limitationTimes, cumulative, active,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			limitationType, limitationTimes, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<CommerceDiscount>

@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.defaults;
 
+import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -74,25 +75,6 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);
 		}
-	}
-
-	private String[] _getBuildProfileFileNames(Settings settings) {
-		String buildProfile = System.getProperty("build.profile");
-
-		if (Validator.isNull(buildProfile)) {
-			return null;
-		}
-
-		String suffix = "private";
-
-		if (GradleUtil.getProperty(settings, "liferay.releng.public", true)) {
-			suffix = "public";
-		}
-
-		return new String[] {
-			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile + "-" + suffix,
-			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile
-		};
 	}
 
 	private Set<Path> _getDirPaths(String key, Path rootDirPath) {
@@ -181,8 +163,8 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 			final Path projectPathRootDirPath, final String projectPathPrefix)
 		throws IOException {
 
-		final String[] buildProfileFileNames = _getBuildProfileFileNames(
-			settings);
+		final String[] buildProfileFileNames =
+			GradlePluginsDefaultsUtil.getBuildProfileFileNames(settings);
 		final Set<Path> excludedDirPaths = _getDirPaths(
 			"build.exclude.dirs", rootDirPath);
 		final Set<Path> includedDirPaths = _getDirPaths(
@@ -265,8 +247,6 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 
 		return false;
 	}
-
-	private static final String _BUILD_PROFILE_FILE_NAME_PREFIX = ".lfrbuild-";
 
 	private static enum ProjectDirType {
 

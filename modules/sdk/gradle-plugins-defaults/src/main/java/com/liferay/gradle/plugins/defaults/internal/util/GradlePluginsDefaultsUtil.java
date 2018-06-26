@@ -29,6 +29,7 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.AuthenticationContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
+import org.gradle.api.initialization.Settings;
 import org.gradle.internal.authentication.DefaultBasicAuthentication;
 
 /**
@@ -134,6 +135,25 @@ public class GradlePluginsDefaultsUtil {
 		}
 	}
 
+	public static String[] getBuildProfileFileNames(Settings settings) {
+		String buildProfile = System.getProperty("build.profile");
+
+		if (Validator.isNull(buildProfile)) {
+			return null;
+		}
+
+		String suffix = "private";
+
+		if (GradleUtil.getProperty(settings, "liferay.releng.public", true)) {
+			suffix = "public";
+		}
+
+		return new String[] {
+			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile + "-" + suffix,
+			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile
+		};
+	}
+
 	public static String getBundleInstruction(Project project, String key) {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
@@ -222,6 +242,8 @@ public class GradlePluginsDefaultsUtil {
 			project.setVersion(version + SNAPSHOT_VERSION_SUFFIX);
 		}
 	}
+
+	private static final String _BUILD_PROFILE_FILE_NAME_PREFIX = ".lfrbuild-";
 
 	private static final String _TEST_PROJECT_SUFFIX = "-test";
 

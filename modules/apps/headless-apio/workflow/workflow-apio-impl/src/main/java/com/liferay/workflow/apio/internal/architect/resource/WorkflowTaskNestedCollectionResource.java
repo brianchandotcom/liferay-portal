@@ -21,16 +21,22 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
+import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,6 +94,10 @@ public class WorkflowTaskNestedCollectionResource
 			"dateCreated", WorkflowTask::getCreateDate
 		).addDate(
 			"expires", WorkflowTask::getDueDate
+		).addLinkedModel(
+			"blogPost", BlogPostingIdentifier.class, this::_getBlogsEntryId
+		).addLinkedModel(
+			"comment", CommentIdentifier.class, this::_getCommentId
 		).addString(
 			"definitionName", WorkflowTask::getWorkflowDefinitionName
 		).addString(
@@ -97,6 +107,21 @@ public class WorkflowTaskNestedCollectionResource
 		).addStringList(
 			"transitions", this::_getTaskTransitionsNames
 		).build();
+	}
+
+	private Long _getBlogsEntryId(WorkflowTask workflowTask) {
+		return GetterUtil.getLong(_getEntryClassPK(workflowTask));
+	}
+
+	private Long _getCommentId(WorkflowTask workflowTask) {
+		return GetterUtil.getLong(_getEntryClassPK(workflowTask));
+	}
+
+	private Serializable _getEntryClassPK(WorkflowTask workflowTask) {
+		Map<String, Serializable> optionalAttributes =
+			workflowTask.getOptionalAttributes();
+
+		return optionalAttributes.get("entryClassPK");
 	}
 
 	private PageItems<WorkflowTask> _getPageItems(

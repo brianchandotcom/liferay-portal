@@ -76,6 +76,47 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 		return content;
 	}
 
+	private String _adjustMissingSpaceForNegativeMultiLineGroups(
+		String ifClause) {
+
+		int x = -1;
+
+		while (true) {
+			x = ifClause.indexOf("!(", x + 1);
+
+			if (ToolsUtil.isInsideQuotes(ifClause, x)) {
+				continue;
+			}
+
+			if (x == -1) {
+				return ifClause;
+			}
+
+			int y = _getMatchingCloseParenthesesPos(ifClause, x);
+
+			for (int i = y; i > x; i--) {
+				char c1 = ifClause.charAt(i);
+
+				if (c1 != CharPool.TAB) {
+					continue;
+				}
+
+				char c2 = ifClause.charAt(i + 1);
+
+				if (c2 != CharPool.TAB) {
+					String s = ifClause.substring(x, i);
+
+					if (s.contains("|\n") || s.contains("&\n") ||
+						s.contains("^\n")) {
+
+						ifClause = StringUtil.replaceFirst(
+							ifClause, "\t", "\t ", i);
+					}
+				}
+			}
+		}
+	}
+
 	private String _fixIfClause(String ifClause, String line, int delta) {
 		if (StringUtil.count(ifClause, line) > 1) {
 			return ifClause;
@@ -122,9 +163,7 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 	private String _formatIfClause(String ifClause) throws Exception {
 		String strippedQuotesIfClause = stripQuotes(ifClause);
 
-		if (strippedQuotesIfClause.contains("!(") ||
-			strippedQuotesIfClause.contains("//")) {
-
+		if (strippedQuotesIfClause.contains("//")) {
 			return ifClause;
 		}
 
@@ -310,7 +349,17 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 
 		checkIfClauseParentheses(ifClauseSingleLine, fileName, lineNumber);
 
-		return _formatIfClause(ifClause);
+		while (true) {
+			String newIfClause = _formatIfClause(ifClause);
+
+			if (newIfClause.equals(ifClause)) {
+				break;
+			}
+
+			ifClause = newIfClause;
+		}
+
+		return _adjustMissingSpaceForNegativeMultiLineGroups(ifClause);
 	}
 
 	private int _getIncorrectLineBreakPos(String line, String previousLine) {
@@ -341,6 +390,18 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 
 			if (getLevel(line.substring(x)) > 0) {
 				return x + 3;
+			}
+		}
+	}
+
+	private int _getMatchingCloseParenthesesPos(String s, int x) {
+		int y = x;
+
+		while (true) {
+			y = s.indexOf(StringPool.CLOSE_PARENTHESIS, y + 1);
+
+			if (getLevel(s.substring(x, y + 1)) == 0) {
+				return y;
 			}
 		}
 	}

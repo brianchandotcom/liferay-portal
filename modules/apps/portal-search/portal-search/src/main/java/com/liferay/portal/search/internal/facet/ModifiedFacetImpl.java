@@ -15,27 +15,18 @@
 package com.liferay.portal.search.internal.facet;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
-import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.DateFormatFactory;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.filter.DateRangeFilterBuilder;
 import com.liferay.portal.search.filter.FilterBuilders;
-
-import java.text.DateFormat;
-
-import java.util.Calendar;
 
 /**
  * @author Bryan Engler
@@ -44,14 +35,13 @@ public class ModifiedFacetImpl extends RangeFacet implements Facet {
 
 	public ModifiedFacetImpl(
 		String fieldName, SearchContext searchContext,
-		FilterBuilders filterBuilders, DateFormatFactory dateFormatFactory) {
+		FilterBuilders filterBuilders) {
 
 		super(searchContext);
 
 		setFieldName(fieldName);
 
 		_filterBuilders = filterBuilders;
-		_dateFormatFactory = dateFormatFactory;
 	}
 
 	@Override
@@ -80,8 +70,6 @@ public class ModifiedFacetImpl extends RangeFacet implements Facet {
 
 	@Override
 	protected BooleanClause<Filter> doGetFacetFilterBooleanClause() {
-		normalizeDates(getFacetConfiguration());
-
 		if (ArrayUtil.isEmpty(_selections)) {
 			return null;
 		}
@@ -122,72 +110,7 @@ public class ModifiedFacetImpl extends RangeFacet implements Facet {
 			dateRangeFilterBuilder.build(), BooleanClauseOccur.MUST);
 	}
 
-	protected void normalizeDates(FacetConfiguration facetConfiguration) {
-		Calendar now = Calendar.getInstance();
-
-		now.set(Calendar.SECOND, 0);
-		now.set(Calendar.MINUTE, 0);
-
-		Calendar pastHour = (Calendar)now.clone();
-
-		pastHour.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY) - 1);
-
-		Calendar past24Hours = (Calendar)now.clone();
-
-		past24Hours.set(
-			Calendar.DAY_OF_YEAR, now.get(Calendar.DAY_OF_YEAR) - 1);
-
-		Calendar pastWeek = (Calendar)now.clone();
-
-		pastWeek.set(Calendar.DAY_OF_YEAR, now.get(Calendar.DAY_OF_YEAR) - 7);
-
-		Calendar pastMonth = (Calendar)now.clone();
-
-		pastMonth.set(Calendar.MONTH, now.get(Calendar.MONTH) - 1);
-
-		Calendar pastYear = (Calendar)now.clone();
-
-		pastYear.set(Calendar.YEAR, now.get(Calendar.YEAR) - 1);
-
-		now.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY) + 1);
-
-		DateFormat dateFormat = _dateFormatFactory.getSimpleDateFormat(
-			"yyyyMMddHHmmss");
-
-		JSONObject dataJSONObject = facetConfiguration.getData();
-
-		if (!dataJSONObject.has("ranges")) {
-			return;
-		}
-
-		JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
-
-		for (int i = 0; i < rangesJSONArray.length(); i++) {
-			JSONObject rangeObject = rangesJSONArray.getJSONObject(i);
-
-			String rangeString = rangeObject.getString("range");
-
-			rangeString = StringUtil.replace(
-				rangeString,
-				new String[] {
-					"past-hour", "past-24-hours", "past-week", "past-month",
-					"past-year", "*"
-				},
-				new String[] {
-					dateFormat.format(pastHour.getTime()),
-					dateFormat.format(past24Hours.getTime()),
-					dateFormat.format(pastWeek.getTime()),
-					dateFormat.format(pastMonth.getTime()),
-					dateFormat.format(pastYear.getTime()),
-					dateFormat.format(now.getTime())
-				});
-
-			rangeObject.put("range", rangeString);
-		}
-	}
-
 	private String _aggregationName;
-	private final DateFormatFactory _dateFormatFactory;
 	private final FilterBuilders _filterBuilders;
 	private String[] _selections = {};
 

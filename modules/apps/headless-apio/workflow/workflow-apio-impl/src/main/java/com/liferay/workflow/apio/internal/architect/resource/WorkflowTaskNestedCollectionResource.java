@@ -111,15 +111,15 @@ public class WorkflowTaskNestedCollectionResource
 		).build();
 	}
 
-	private Long _getLinkedModelId(WorkflowTask workflowTask) {
-		return GetterUtil.getLong(_getEntryClassPK(workflowTask));
-	}
-
 	private Serializable _getEntryClassPK(WorkflowTask workflowTask) {
 		Map<String, Serializable> optionalAttributes =
 			workflowTask.getOptionalAttributes();
 
 		return optionalAttributes.get("entryClassPK");
+	}
+
+	private Long _getLinkedModelId(WorkflowTask workflowTask) {
+		return GetterUtil.getLong(_getEntryClassPK(workflowTask));
 	}
 
 	private PageItems<WorkflowTask> _getPageItems(

@@ -155,11 +155,9 @@
 			<var name="checkGlobalScope" value="Everything" />
 		</execute>
 
-		<!-- OAUTH2-151 -->
-
-		<!-- 		<execute function="AssertTextEquals#assertPartialText" locator1="OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT" value1="3">
+		<execute function="AssertTextEquals#assertPartialText" locator1="OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT" value1="7">
 			<var name="key_tableName" value="OAuth Application" />
-		</execute> -->
+		</execute>
 
 		<execute macro="OAuth2#viewScopes">
 			<var name="applicationName" value="OAuth Application" />

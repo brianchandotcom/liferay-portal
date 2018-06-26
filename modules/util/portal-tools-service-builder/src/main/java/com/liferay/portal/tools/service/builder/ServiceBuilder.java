@@ -3612,20 +3612,20 @@ public class ServiceBuilder {
 					continue;
 				}
 
-				List<String> dbNames = new ArrayList<>();
-
 				List<EntityColumn> entityColumns =
 					entityFinder.getEntityColumns();
+
+				if (entityColumns.equals(entity.getPKEntityColumns())) {
+					continue;
+				}
+
+				List<String> dbNames = new ArrayList<>();
 
 				for (EntityColumn entityColumn : entityColumns) {
 					dbNames.add(entityColumn.getDBName());
 				}
 
 				if (dbNames.isEmpty()) {
-					continue;
-				}
-
-				if (entityColumns.equals(entity.getPKEntityColumns())) {
 					continue;
 				}
 

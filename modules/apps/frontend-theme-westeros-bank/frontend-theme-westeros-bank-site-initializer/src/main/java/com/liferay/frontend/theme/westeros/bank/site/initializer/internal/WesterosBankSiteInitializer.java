@@ -14,15 +14,22 @@
 
 package com.liferay.frontend.theme.westeros.bank.site.initializer.internal;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.journal.constants.JournalContentPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -31,6 +38,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,12 +46,15 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -51,9 +62,11 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -62,12 +75,15 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
 
@@ -146,6 +162,19 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				personalLayoutPageTemplate.getLayoutPageTemplateEntryId(),
 				serviceContext);
 
+			FragmentEntry carouselFragmentEntry = fragmentEntriesMap.get(
+				"carousel");
+
+			JournalArticle carouselJournalArticle = _addCarouselJournalArticle(
+				fileEntries, serviceContext);
+
+			_configureFragmentEntryLink(
+				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+				personalLayout.getPlid(),
+				carouselFragmentEntry.getFragmentEntryId(),
+				carouselJournalArticle.getArticleId(),
+				carouselJournalArticle.getResourcePrimKey());
+
 			List<Layout> personalLayoutChildren = _addLayouts(
 				personalLayout, _LAYOUT_CHILDREN_PERSONAL, fragmentEntriesMap,
 				serviceContext);
@@ -201,6 +230,39 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = bundleContext.getBundle();
+	}
+
+	private JournalArticle _addCarouselJournalArticle(
+			List<FileEntry> fileEntries, ServiceContext serviceContext)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		_defaultDDMStructureHelper.addDDMStructures(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			_portal.getClassNameId(JournalArticle.class),
+			clazz.getClassLoader(), _PATH + "/ddm/carousel.xml",
+			serviceContext);
+
+		URL carouselContentURL = _bundle.getEntry(
+			_PATH + "/ddm/content/carousel.xml");
+
+		Map<String, String> fileEntriesMap = new HashMap<>();
+
+		for (FileEntry fileEntry : fileEntries) {
+			fileEntriesMap.put(
+				fileEntry.getFileName(),
+				JSONFactoryUtil.looseSerialize(fileEntry));
+		}
+
+		String content = StringUtil.replace(
+			StringUtil.read(carouselContentURL.openStream()), StringPool.DOLLAR,
+			StringPool.DOLLAR, fileEntriesMap);
+
+		return _journalArticleLocalService.addArticle(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
+			Collections.singletonMap(LocaleUtil.US, "Carousel"), null, content,
+			"CAROUSEL", "CAROUSEL", serviceContext);
 	}
 
 	private List<FileEntry> _addFileEntries(ServiceContext serviceContext)
@@ -390,6 +452,47 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			serviceContext);
 	}
 
+	private void _configureFragmentEntryLink(
+			long companyId, long groupId, long plid, long fragmentEntryId,
+			String articleId, long articleResourcePrimKey)
+		throws Exception {
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				groupId, _portal.getClassNameId(Layout.class), plid);
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			if (fragmentEntryLink.getFragmentEntryId() != fragmentEntryId) {
+				continue;
+			}
+
+			String portletId = PortletIdCodec.encode(
+				JournalContentPortletKeys.JOURNAL_CONTENT,
+				fragmentEntryLink.getNamespace());
+
+			PortletPreferences portletPreferences =
+				new PortletPreferencesImpl();
+
+			portletPreferences.setValue("articleId", articleId);
+
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				_portal.getClassNameId(JournalArticle.class),
+				articleResourcePrimKey);
+
+			portletPreferences.setValue(
+				"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+
+			portletPreferences.setValue("groupId", String.valueOf(groupId));
+			portletPreferences.setValue(
+				"portletSetupPortletDecoratorId", "barebone");
+
+			_portletPreferencesLocalService.addPortletPreferences(
+				companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
+				portletId, null,
+				PortletPreferencesFactoryUtil.toXML(portletPreferences));
+		}
+	}
+
 	private ServiceContext _createServiceContext(long groupId)
 		throws PortalException {
 
@@ -545,7 +648,13 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WesterosBankSiteInitializer.class);
 
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
 	private Bundle _bundle;
+
+	@Reference
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
@@ -558,6 +667,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
@@ -578,6 +690,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.frontend.theme.westeros.bank.site.initializer)"

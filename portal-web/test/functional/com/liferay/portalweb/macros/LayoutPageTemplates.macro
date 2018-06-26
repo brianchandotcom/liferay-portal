@@ -70,6 +70,11 @@
 			<var name="key_id" value="${id}" />
 		</execute>
 
+		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT">
+			<var name="key_fragmentName" value="${fragmentName}" />
+			<var name="key_id" value="${id}" />
+		</execute>
+
 		<if>
 			<condition function="IsElementPresent" locator1="Button#EDIT" />
 			<then>
@@ -77,7 +82,7 @@
 			</then>
 		</if>
 
-		<execute function="Type#typeEditor" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT_CK_EDITOR" value1="${text}">
+		<execute function="Type" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT_CK_EDITOR" value1="${text}">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>

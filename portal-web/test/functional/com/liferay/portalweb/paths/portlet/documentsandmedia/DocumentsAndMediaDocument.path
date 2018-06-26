@@ -276,7 +276,7 @@
 <!--DETAILS_PANEL-->
 <tr>
 	<td>DETAILS_URL</td>
-	<td>//a[@class='show-url-file']</td>
+	<td>//div[label[contains(.,'Latest Version URL')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_CONTENT_IMAGE_ON_LIVE</td>
-	<td>//div[@class='journal-content-article']/p/img</td>
+	<td>//div[contains(@class,'journal-content-article')]/p/img</td>
 	<td></td>
 </tr>
 <tr>

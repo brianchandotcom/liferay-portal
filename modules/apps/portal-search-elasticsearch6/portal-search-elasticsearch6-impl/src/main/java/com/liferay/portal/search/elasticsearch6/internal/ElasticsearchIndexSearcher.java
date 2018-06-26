@@ -266,6 +266,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				continue;
 			}
 
+			addFilterQuery(queryBuilders, facet, searchContext);
+
 			Optional<AggregationBuilder> optional = facetProcessor.processFacet(
 				facet);
 
@@ -275,8 +277,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			).ifPresent(
 				searchRequestBuilder::addAggregation
 			);
-
-			addFilterQuery(queryBuilders, facet, searchContext);
 		}
 	}
 

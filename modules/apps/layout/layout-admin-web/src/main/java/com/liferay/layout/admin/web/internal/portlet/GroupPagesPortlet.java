@@ -220,14 +220,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		int siteNavigationMenusCount =
-			_siteNavigationMenuLocalService.getSiteNavigationMenusCount(
-				themeDisplay.getScopeGroupId());
-
-		if (siteNavigationMenusCount > 0) {
-			return;
-		}
-
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				renderRequest);

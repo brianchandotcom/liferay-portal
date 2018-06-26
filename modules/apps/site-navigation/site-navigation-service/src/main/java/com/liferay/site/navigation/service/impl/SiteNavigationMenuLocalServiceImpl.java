@@ -66,13 +66,17 @@ public class SiteNavigationMenuLocalServiceImpl
 			return publicSiteNavigationMenu;
 		}
 
-		if (layoutLocalService.hasLayouts(group, true)) {
+		if ((privateSiteNavigationMenu == null) &&
+			layoutLocalService.hasLayouts(group, true)) {
+
 			privateSiteNavigationMenu = addSiteNavigationMenu(
 				userId, groupId, "Default Private",
 				SiteNavigationConstants.TYPE_PRIVATE, false, serviceContext);
 		}
 
-		if (layoutLocalService.hasLayouts(group, false)) {
+		if ((publicSiteNavigationMenu == null) &&
+			layoutLocalService.hasLayouts(group, false)) {
+
 			publicSiteNavigationMenu = addSiteNavigationMenu(
 				userId, groupId, "Default",
 				SiteNavigationConstants.TYPE_PRIMARY, true, serviceContext);

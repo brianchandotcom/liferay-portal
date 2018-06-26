@@ -60,7 +60,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		}
 
 		if (!(themeDisplay.isShowLayoutTemplatesIcon() ||
-			themeDisplay.isShowPageSettingsIcon())) {
+			  themeDisplay.isShowPageSettingsIcon())) {
 
 			return false;
 		}

@@ -4499,7 +4499,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 							friendlyURL.substring(end + 1));
 
 						if (!(friendlyURL.contains("group") &&
-						 (groupId == suffix))) {
+							  (groupId == suffix))) {
 
 							friendlyURL = friendlyURL.substring(0, end);
 						}

@@ -327,8 +327,8 @@ public class OpenSSOImpl implements OpenSSO {
 			int responseCode = httpURLConnection.getResponseCode();
 
 			if (!((responseCode == HttpURLConnection.HTTP_OK) ||
-				 ((responseCode >= HttpURLConnection.HTTP_MULT_CHOICE) &&
-				  (responseCode <= HttpURLConnection.HTTP_NOT_MODIFIED)))) {
+				  ((responseCode >= HttpURLConnection.HTTP_MULT_CHOICE) &&
+				   (responseCode <= HttpURLConnection.HTTP_NOT_MODIFIED)))) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(

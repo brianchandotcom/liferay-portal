@@ -90,15 +90,7 @@ public class SiteNavigationMenuLocalServiceImpl
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
 		}
 
-		if (publicSiteNavigationMenu != null) {
-			return publicSiteNavigationMenu;
-		}
-
-		if (privateSiteNavigationMenu != null) {
-			return privateSiteNavigationMenu;
-		}
-
-		return null;
+		return publicSiteNavigationMenu;
 	}
 
 	@Override

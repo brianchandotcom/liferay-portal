@@ -14,10 +14,13 @@
 
 package com.liferay.commerce.discount.service.impl;
 
+import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.service.base.CommerceDiscountRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -37,6 +40,8 @@ public class CommerceDiscountRelLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		// Commerce discount rel
+
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -55,15 +60,54 @@ public class CommerceDiscountRelLocalServiceImpl
 
 		commerceDiscountRelPersistence.update(commerceDiscountRel);
 
+		// Commerce discount
+
+		reindexCommerceDiscount(commerceDiscountId);
+
 		return commerceDiscountRel;
+	}
+
+	@Override
+	public CommerceDiscountRel deleteCommerceDiscountRel(
+			CommerceDiscountRel commerceDiscountRel)
+		throws PortalException {
+
+		// Commerce discount rel
+
+		commerceDiscountRelPersistence.remove(commerceDiscountRel);
+
+		// Commerce discount
+
+		reindexCommerceDiscount(commerceDiscountRel.getCommerceDiscountId());
+
+		return commerceDiscountRel;
+	}
+
+	@Override
+	public CommerceDiscountRel deleteCommerceDiscountRel(
+			long commerceDiscountRelId)
+		throws PortalException {
+
+		CommerceDiscountRel commerceDiscountRel =
+			commerceDiscountRelPersistence.findByPrimaryKey(
+				commerceDiscountRelId);
+
+		return commerceDiscountRelLocalService.deleteCommerceDiscountRel(
+			commerceDiscountRel);
 	}
 
 	@Override
 	public void deleteCommerceDiscountRels(long commerceDiscountId)
 		throws PortalException {
 
-		commerceDiscountRelPersistence.removeByCommerceDiscountId(
-			commerceDiscountId);
+		List<CommerceDiscountRel> commerceDiscountRels =
+			commerceDiscountRelPersistence.findByCommerceDiscountId(
+				commerceDiscountId);
+
+		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
+			commerceDiscountRelLocalService.deleteCommerceDiscountRel(
+				commerceDiscountRel);
+		}
 	}
 
 	@Override
@@ -72,7 +116,13 @@ public class CommerceDiscountRelLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		commerceDiscountRelPersistence.removeByCN_CPK(classNameId, classPK);
+		List<CommerceDiscountRel> commerceDiscountRels =
+			commerceDiscountRelPersistence.findByCN_CPK(classNameId, classPK);
+
+		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
+			commerceDiscountRelLocalService.deleteCommerceDiscountRel(
+				commerceDiscountRel);
+		}
 	}
 
 	@Override
@@ -114,6 +164,19 @@ public class CommerceDiscountRelLocalServiceImpl
 
 		return commerceDiscountRelPersistence.countByCD_CN(
 			commerceDiscountId, classNameId);
+	}
+
+	protected void reindexCommerceDiscount(long commerceDiscountId)
+		throws PortalException {
+
+		CommerceDiscount commerceDiscount =
+			commerceDiscountLocalService.getCommerceDiscount(
+				commerceDiscountId);
+
+		Indexer<CommerceDiscount> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceDiscount.class);
+
+		indexer.reindex(commerceDiscount);
 	}
 
 }

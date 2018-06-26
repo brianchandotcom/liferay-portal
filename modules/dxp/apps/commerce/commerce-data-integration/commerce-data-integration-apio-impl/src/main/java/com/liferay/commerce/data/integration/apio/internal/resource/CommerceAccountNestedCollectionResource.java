@@ -24,7 +24,7 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.CommerceAccountIdentifier;
-import com.liferay.commerce.data.integration.apio.internal.form.CommerceAccountCreatorForm;
+import com.liferay.commerce.data.integration.apio.internal.form.CommerceAccountUpserterForm;
 import com.liferay.commerce.data.integration.apio.internal.util.CommerceAccountHelper;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
@@ -65,7 +65,7 @@ public class CommerceAccountNestedCollectionResource
 		).addCreator(
 			this::_addAccount,
 			_hasPermission.forAddingIn(CommerceAccountIdentifier.class),
-			CommerceAccountCreatorForm::buildForm
+			CommerceAccountUpserterForm::buildForm
 		).build();
 	}
 
@@ -81,11 +81,8 @@ public class CommerceAccountNestedCollectionResource
 		return builder.addGetter(
 			_commerceOrganizationService::getOrganization
 		).addRemover(
-			idempotent(_commerceOrganizationService::deleteOrganization),
+			idempotent(_commerceAccountHelper::deleteOrganization),
 			_hasPermission::forDeleting
-		).addUpdater(
-			this::_updateAccount, Company.class, _hasPermission::forUpdating,
-			CommerceAccountCreatorForm::buildForm
 		).build();
 	}
 
@@ -105,22 +102,27 @@ public class CommerceAccountNestedCollectionResource
 		).addNumberList(
 			"members", this::_getUserIds
 		).addString(
+			"externalReferenceCode", Organization::getExternalReferenceCode
+		).addString(
 			"name", Organization::getName
 		).build();
 	}
 
 	private Organization _addAccount(
 			Long webSiteId,
-			CommerceAccountCreatorForm commerceAccountCreatorForm)
+			CommerceAccountUpserterForm commerceAccountUpserterForm)
 		throws Exception {
 
 		Group group = _groupLocalService.getGroup(webSiteId);
 
 		Long parentOrganizationId = group.getClassPK();
 
-		return _commerceAccountHelper.createAccount(
-			commerceAccountCreatorForm.getName(), parentOrganizationId,
-			commerceAccountCreatorForm.getCommerceUserIds());
+		return _commerceAccountHelper.upsert(
+			commerceAccountUpserterForm.getExternalReferenceCode(),
+			parentOrganizationId, commerceAccountUpserterForm.getName(),
+			commerceAccountUpserterForm.getRegionId(),
+			commerceAccountUpserterForm.getCountryId(),
+			commerceAccountUpserterForm.getCommerceUserIds());
 	}
 
 	private PageItems<Organization> _getPageItems(
@@ -166,17 +168,6 @@ public class CommerceAccountNestedCollectionResource
 		}
 
 		return userIds;
-	}
-
-	private Organization _updateAccount(
-			Long accountId,
-			CommerceAccountCreatorForm commerceAccountCreatorForm,
-			Company company)
-		throws PortalException {
-
-		return _commerceAccountHelper.updateAccount(
-			accountId, commerceAccountCreatorForm.getName(),
-			commerceAccountCreatorForm.getCommerceUserIds());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

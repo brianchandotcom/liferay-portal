@@ -22,21 +22,28 @@ import java.util.List;
 /**
  * @author Rodrigo Guedes de Souza
  */
-public class CommerceAccountCreatorForm {
+public class CommerceAccountUpserterForm {
 
-	public static Form<CommerceAccountCreatorForm> buildForm(
-		Builder<CommerceAccountCreatorForm> formBuilder) {
+	public static Form<CommerceAccountUpserterForm> buildForm(
+		Builder<CommerceAccountUpserterForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The account creator form"
 		).description(
 			__ -> "This form can be used to create an account"
 		).constructor(
-			CommerceAccountCreatorForm::new
+			CommerceAccountUpserterForm::new
 		).addRequiredString(
-			"name", CommerceAccountCreatorForm::_setName
+			"externalReferenceCode",
+			CommerceAccountUpserterForm::_setExternalReferenceCode
+		).addOptionalLong(
+			"countryId", CommerceAccountUpserterForm::_setCountryId
+		).addOptionalLong(
+			"regionId", CommerceAccountUpserterForm::_setRegionId
+		).addRequiredString(
+			"name", CommerceAccountUpserterForm::_setName
 		).addOptionalLongList(
-			"commerceUserIds", CommerceAccountCreatorForm::_setCommerceUserIds
+			"commerceUserIds", CommerceAccountUpserterForm::_setCommerceUserIds
 		).build();
 	}
 
@@ -44,19 +51,46 @@ public class CommerceAccountCreatorForm {
 		return _commerceUserIds;
 	}
 
+	public long getCountryId() {
+		return _countryId;
+	}
+
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
 	public String getName() {
 		return _name;
+	}
+
+	public long getRegionId() {
+		return _regionId;
 	}
 
 	private void _setCommerceUserIds(List<Long> commerceUserIds) {
 		_commerceUserIds = commerceUserIds;
 	}
 
+	private void _setCountryId(long countryId) {
+		_countryId = countryId;
+	}
+
+	private void _setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	private void _setName(String name) {
 		_name = name;
 	}
 
+	private void _setRegionId(long regionId) {
+		_regionId = regionId;
+	}
+
 	private List<Long> _commerceUserIds;
+	private long _countryId;
+	private String _externalReferenceCode;
 	private String _name;
+	private long _regionId;
 
 }

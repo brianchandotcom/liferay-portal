@@ -15,14 +15,16 @@
 package com.liferay.commerce.data.integration.apio.internal.util;
 
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
-import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.external.reference.service.EROrganizationLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -37,46 +39,34 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CommerceAccountHelper.class)
 public class CommerceAccountHelper {
 
-	public Organization createAccount(
-			String name, Long parentOrganizationId, List<Long> userIds)
+	public void deleteOrganization(long organizationId) throws PortalException {
+		_removeAllMembers(organizationId);
+		_commerceOrganizationService.deleteOrganization(organizationId);
+	}
+
+	public Organization upsert(
+			String externalReferenceCode, long parentOrganizationId,
+			String name, long regionId, long countryId, List<Long> userIds)
 		throws PortalException {
 
 		ServiceContext serviceContext = _getServiceContext();
 
 		Organization organization =
-			_commerceOrganizationLocalService.addOrganization(
+			_erOrganizationLocalService.addOrUpdateOrganization(
+				externalReferenceCode, serviceContext.getUserId(),
 				parentOrganizationId, name,
-				CommerceOrganizationConstants.TYPE_ACCOUNT, serviceContext);
+				CommerceOrganizationConstants.TYPE_ACCOUNT, regionId, countryId,
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+				false, false, null, serviceContext);
 
-		_addMembers(userIds, organization);
-
-		return organization;
-	}
-
-	public Organization updateAccount(
-			Long organizationId, String name, List<Long> userIds)
-		throws PortalException {
-
-		ServiceContext serviceContext = _getServiceContext();
-
-		Organization organization = _organizationLocalService.getOrganization(
-			organizationId);
-
-		organization = _commerceOrganizationLocalService.updateOrganization(
-			organization.getOrganizationId(),
-			organization.getParentOrganizationId(), name,
-			organization.getType(), organization.getRegionId(),
-			organization.getCountryId(), organization.getStatusId(),
-			organization.getComments(), serviceContext);
-
-		_addMembers(userIds, organization);
+		_addMembers(organization, userIds);
 
 		return organization;
 	}
 
-	private void _addMembers(List<Long> userIds, Organization organization) {
+	private void _addMembers(Organization organization, List<Long> userIds) {
 		if (userIds != null) {
-			_removeAllMembers(organization);
+			_removeAllMembers(organization.getOrganizationId());
 
 			for (Long userId : userIds) {
 				try {
@@ -88,7 +78,7 @@ public class CommerceAccountHelper {
 					}
 				}
 				catch (PortalException pe) {
-					_log.error("Unable to add member", pe);
+					_log.error("Error on add member", pe);
 				}
 			}
 		}
@@ -109,19 +99,18 @@ public class CommerceAccountHelper {
 		return serviceContext;
 	}
 
-	private void _removeAllMembers(Organization organization) {
-		_userLocalService.clearOrganizationUsers(
-			organization.getOrganizationId());
+	private void _removeAllMembers(long organizationId) {
+		_userLocalService.clearOrganizationUsers(organizationId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceAccountHelper.class);
 
 	@Reference
-	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
+	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
-	private OrganizationLocalService _organizationLocalService;
+	private EROrganizationLocalService _erOrganizationLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

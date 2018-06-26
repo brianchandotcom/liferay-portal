@@ -42,6 +42,19 @@ public class JobFactory {
 			return job;
 		}
 
+		if (jobName.equals("git-bisect-tool")) {
+			_jobs.put(jobName, new GitBisectToolJob(jobName, portalBranchName));
+
+			return _jobs.get(jobName);
+		}
+
+		if (jobName.equals("git-bisect-tool-batch")) {
+			_jobs.put(
+				jobName, new GitBisectToolBatchJob(jobName, portalBranchName));
+
+			return _jobs.get(jobName);
+		}
+
 		if (jobName.contains("test-plugins-acceptance-pullrequest(")) {
 			PluginsRepositoryJob pluginsRepositoryJob =
 				new PluginsRepositoryJob(jobName);

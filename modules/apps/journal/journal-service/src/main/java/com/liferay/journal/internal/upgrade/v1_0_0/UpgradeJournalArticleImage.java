@@ -16,8 +16,6 @@ package com.liferay.journal.internal.upgrade.v1_0_0;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -32,6 +30,20 @@ import java.sql.ResultSet;
  */
 public class UpgradeJournalArticleImage extends UpgradeProcess {
 
+	protected void deleteOrphanJournalArticleImages() throws Exception {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("delete from JournalArticleImage where not exists");
+		sb.append("(select 1 from Image where");
+		sb.append("(JournalArticleImage.articleImageId = Image.imageId))");
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(sb.toString())) {
+
+			ps.executeUpdate();
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		deleteOrphanJournalArticleImages();
@@ -39,29 +51,6 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 		updateJournalArticleImagesInstanceId();
 
 		updateJournalArticleImagesName();
-	}
-
-	protected void deleteOrphanJournalArticleImages() throws Exception {
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("delete from JournalArticleImage where not exists");
-		sb.append("(select 1 from Image where");
-		sb.append("(JournalArticleImage.articleImageId = Image.imageId))");
-
-		PreparedStatement ps = null;
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			ps = connection.prepareStatement(
-				sb.toString());
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
-		}
-		finally{
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void updateJournalArticleImagesInstanceId() throws Exception {

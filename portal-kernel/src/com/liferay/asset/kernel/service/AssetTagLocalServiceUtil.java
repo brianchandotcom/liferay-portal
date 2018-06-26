@@ -579,6 +579,30 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of tags associated to the asset from the given
+	* classNameId-classPK pair value.
+	*
+	* @param classNameId the classNameId.
+	* @param classPK the primary key.
+	* @return the number of tags.
+	*/
+	public static int getTagCount(long classNameId, long classPK) {
+		return getService().getTagCount(classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of tags associated to the asset from the given
+	* className-classPK pair value.
+	*
+	* @param className the name of the class.
+	* @param classPK the primary key.
+	* @return the number of tags.
+	*/
+	public static int getTagCount(String className, long classPK) {
+		return getService().getTagCount(className, classPK);
+	}
+
+	/**
 	* Returns the primary keys of the asset tags with the names in the group.
 	*
 	* @param groupId the primary key of the group
@@ -673,6 +697,21 @@ public class AssetTagLocalServiceUtil {
 		return getService().getTags(classNameId, classPK);
 	}
 
+	/**
+	* Returns a range of asset tags of the entity.
+	*
+	* @param classNameId the class name ID of the entity
+	* @param classPK the primary key of the entity
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the asset tags of the entity
+	*/
+	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
+		return getService().getTags(classNameId, classPK, start, end, obc);
+	}
+
 	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
 		long groupId, long classNameId, String name) {
 		return getService().getTags(groupId, classNameId, name);
@@ -693,6 +732,21 @@ public class AssetTagLocalServiceUtil {
 	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
 		String className, long classPK) {
 		return getService().getTags(className, classPK);
+	}
+
+	/**
+	* Returns a range of asset tags of the entity.
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the asset tags of the entity
+	*/
+	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
+		String className, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
+		return getService().getTags(className, classPK, start, end, obc);
 	}
 
 	public static int getTagsSize(long groupId, long classNameId, String name) {

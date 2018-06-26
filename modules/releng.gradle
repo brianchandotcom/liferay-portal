@@ -49,6 +49,7 @@ apply plugin: "org.ajoberstar.grgit"
 
 task cherryPickArtifacts
 task lockDependencyVersion
+task lockPrivateDependencyVersions
 task prepareMajorIncrement
 task syncGitRepoReleases
 task tagAppReleases
@@ -159,6 +160,83 @@ lockDependencyVersion {
 
 		if (commitChanges) {
 			grgit.commit message: "${dependencyProjectName} ${dependencyVersion} apply"
+		}
+	}
+}
+
+lockPrivateDependencyVersions {
+	description = "Replaces project dependencies in private modules with the first compatible module dependency."
+
+	doLast {
+		FileTree buildGradleFileTree = fileTree(dir: new File(projectDir, "private"), includes: ["apps/**/build.gradle", "core/**/build.gradle"])
+
+		buildGradleFileTree.each {
+			File buildGradleFile ->
+
+			File moduleDir = buildGradleFile.parentFile
+
+			if (_isGitRepoReadOnly(moduleDir)) {
+				return
+			}
+
+			String buildGradle = buildGradleFile.text
+
+			List<String[]> buildGradleDependencies = buildGradle.findAll(/project\(":(.+)"\)/, {
+					String all, String dependencyPath ->
+
+					[all, dependencyPath]
+				})
+
+			for (String[] buildGradleDependency in buildGradleDependencies) {
+				String dependencyPath = buildGradleDependency[1]
+
+				if (dependencyPath.startsWith("private:")) {
+					continue
+				}
+
+				File dependencyDir = new File(projectDir, dependencyPath.replace(':' as char, File.separatorChar))
+
+				File dependencyBndBndFile = new File(dependencyDir, "bnd.bnd")
+
+				if (!dependencyBndBndFile.exists()) {
+					println "Unable to lock dependency ':${dependencyPath}' in ${buildGradleFile}: ${dependencyBndBndFile} does not exist"
+
+					continue
+				}
+
+				Properties dependencyBndBndProperties = GUtil.loadProperties(dependencyBndBndFile)
+
+				String dependencyVersion = dependencyBndBndProperties.getProperty("Bundle-Version")
+
+				VersionNumber versionNumber = VersionNumber.parse(dependencyVersion)
+
+				if (versionNumber.micro == 0) {
+					println "Unable to lock dependency ':${dependencyPath}' in ${buildGradleFile}: ${dependencyDir} has not been published"
+
+					continue
+				}
+
+				String dependencyName = dependencyBndBndProperties.getProperty("Bundle-SymbolicName")
+
+				for (int i = 0; i <= versionNumber.minor; i++) {
+					VersionNumber dependencyVersionNumber = new VersionNumber(versionNumber.major, i, 0, null)
+
+					String newBuildGradle = buildGradle.replace(buildGradleDependency[0], "group: \"com.liferay\", name: \"${dependencyName}\", version: \"${dependencyVersionNumber}\"")
+
+					buildGradleFile.text = newBuildGradle
+
+					if (!_executeGradle(moduleDir, ["classes", "testClasses", "testIntegrationClasses", "compileJSP", "formatSource"], [:], false)) {
+						println "Unable to lock dependency '${dependencyName}' version to ${dependencyVersion} in ${relativePath(moduleDir)}"
+
+						buildGradleFile.text = buildGradle
+					}
+					else {
+						buildGradle = newBuildGradle
+
+						break
+					}
+				}
+			}
 		}
 	}
 }

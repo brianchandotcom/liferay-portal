@@ -22,6 +22,9 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetTagModel;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
@@ -121,11 +124,13 @@ public class WebPageElementNestedCollectionResource
 		).addLocalizedStringByLocale(
 			"renderedContent", this::_getJournalArticleHtml
 		).addString(
-			"description", JournalArticle::getDescription
+			"description", JournalArticleWrapper::getDescription
 		).addString(
 			"text", JournalArticle::getContent
 		).addString(
 			"title", JournalArticle::getTitle
+		).addStringList(
+			"keywords", this::_getJournalArticleTags
 		).build();
 	}
 
@@ -177,6 +182,14 @@ public class WebPageElementNestedCollectionResource
 			locale.getLanguage(), journalArticleWrapper.getThemeDisplay());
 
 		return display.getContent();
+	}
+
+	private List<String> _getJournalArticleTags(JournalArticle journalArticle) {
+		List<AssetTag> tags = _assetTagLocalService.getTags(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		return ListUtil.toList(tags, AssetTagModel::getName);
 	}
 
 	private JournalArticleWrapper _getJournalArticleWrapper(
@@ -231,6 +244,9 @@ public class WebPageElementNestedCollectionResource
 
 		return new JournalArticleWrapper(article, themeDisplay);
 	}
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"

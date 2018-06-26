@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.internal.upgrade.v1_2_0;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_1;
 
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;

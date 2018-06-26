@@ -38,7 +38,6 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
@@ -195,12 +194,19 @@ public class WebPageElementNestedCollectionResource
 	private String _getJournalArticleHtml(
 		JournalArticleWrapper journalArticleWrapper, Locale locale) {
 
-		JournalArticleDisplay display = _journalContent.getDisplay(
-			journalArticleWrapper.getGroupId(),
-			journalArticleWrapper.getArticleId(), Constants.VIEW,
-			locale.getLanguage(), journalArticleWrapper.getThemeDisplay());
+		JournalArticleDisplay journalArticleDisplay =
+			_journalContent.getDisplay(
+				journalArticleWrapper.getGroupId(),
+				journalArticleWrapper.getArticleId(), null,
+				locale.getLanguage(), journalArticleWrapper.getThemeDisplay());
 
-		return display.getContent();
+		String content = journalArticleDisplay.getContent();
+
+		if (content == null) {
+			return null;
+		}
+
+		return content.replaceAll("\\s+", "");
 	}
 
 	private List<String> _getJournalArticleTags(JournalArticle journalArticle) {

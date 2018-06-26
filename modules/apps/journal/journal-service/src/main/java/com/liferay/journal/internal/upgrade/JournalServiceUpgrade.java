@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.journal.internal.exportimport.data.handler.JournalArticleStagedModelDataHandler;
 import com.liferay.journal.internal.upgrade.v0_0_2.UpgradeClassNames;
 import com.liferay.journal.internal.upgrade.v0_0_3.UpgradeJournalArticleType;
 import com.liferay.journal.internal.upgrade.v0_0_4.UpgradeSchema;
@@ -256,15 +255,6 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	@Reference(unbind = "-")
 	protected void setImageLocalService(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleStagedModelDataHandler(
-		JournalArticleStagedModelDataHandler
-			journalArticleStagedModelDataHandler) {
-
-		// See LPS-82746
-
 	}
 
 	@Reference(unbind = "-")

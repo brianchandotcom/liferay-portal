@@ -22,6 +22,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly project(":private:apps:commerce:commerce-api")
 	compileOnly project(":private:apps:commerce:commerce-discount-api")
+	compileOnly project(":private:apps:commerce:commerce-organization-api")
 	compileOnly project(":private:apps:commerce:commerce-product-api")
 	compileOnly project(":private:apps:commerce:commerce-user-segment-api")
 }

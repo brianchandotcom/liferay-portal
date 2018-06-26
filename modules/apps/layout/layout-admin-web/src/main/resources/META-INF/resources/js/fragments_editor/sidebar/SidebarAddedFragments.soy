@@ -17,15 +17,15 @@
 				<div class="card" key="{$fragmentEntryLink.fragmentEntryLinkId}">
 					<div class="card-body">
 						<div class="card-row">
-							<div class="flex-col flex-col-expand">
+							<div class="autofit-col autofit-col-expand autofit-row-center">
 								<div class="card-title text-truncate" title="{$fragmentEntryLink.name}">
 									{$fragmentEntryLink.name}
 								</div>
 							</div>
 
-							<div class="flex-col">
+							<div class="autofit-col">
 								<button
-									class="btn btn-small btn-unstyled"
+									class="btn btn-link"
 									data-fragment-entry-link-id="{$fragmentEntryLink.fragmentEntryLinkId}"
 									data-onclick="{$_handleFragmentRemoveButtonClick}"
 								>

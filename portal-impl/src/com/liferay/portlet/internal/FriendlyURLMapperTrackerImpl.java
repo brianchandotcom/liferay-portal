@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -53,14 +52,27 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Filter filter = registry.getFilter(
-			StringBundler.concat(
-				"(&(|(javax.portlet.name=", portlet.getPortletId(),
-				")(javax.portlet.name=", portlet.getPortletName(),
-				"))(objectClass=", FriendlyURLMapper.class.getName(), "))"));
+		String filterString = null;
+
+		String portletId = portlet.getPortletId();
+
+		String portletName = portlet.getPortletName();
+
+		if (portletId.equals(portletName)) {
+			filterString = StringBundler.concat(
+				"(&(javax.portlet.name=", portletId, ")(objectClass=",
+				FriendlyURLMapper.class.getName(), "))");
+		}
+		else {
+			filterString = StringBundler.concat(
+				"(&(|(javax.portlet.name=", portletId, ")(javax.portlet.name=",
+				portletName, "))(objectClass=",
+				FriendlyURLMapper.class.getName(), "))");
+		}
 
 		_serviceTracker = registry.trackServices(
-			filter, new FriendlyURLMapperServiceTrackerCustomizer());
+			registry.getFilter(filterString),
+			new FriendlyURLMapperServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}

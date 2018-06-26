@@ -78,15 +78,17 @@ public abstract class BaseCategoryNestedCollectionRouter
 			nestedCategoryForm.getDescriptions(locale),
 			assetVocabulary.getVocabularyId(), null, new ServiceContext());
 
+		long resporcePrimKey = getResourcePrimKey(classPK);
+
 		AssetEntry assetEntry = assetEntryLocalService.getEntry(
-			getClassName(), classPK);
+			getClassName(), resporcePrimKey);
 
 		long[] categoryIds = ArrayUtil.append(
 			assetEntry.getCategoryIds(), assetCategory.getCategoryId());
 
 		assetEntryService.updateEntry(
 			assetEntry.getGroupId(), assetEntry.getCreateDate(), null,
-			assetEntry.getClassName(), assetEntry.getClassPK(),
+			assetEntry.getClassName(), resporcePrimKey,
 			assetEntry.getClassUuid(), assetEntry.getClassTypeId(), categoryIds,
 			assetEntry.getTagNames(), assetEntry.isListable(),
 			assetEntry.isVisible(), assetEntry.getStartDate(),
@@ -103,18 +105,25 @@ public abstract class BaseCategoryNestedCollectionRouter
 	protected abstract String getClassName();
 
 	protected PageItems<AssetCategory> getPageItems(
-		Pagination pagination, long classPK) {
+			Pagination pagination, long classPK)
+		throws PortalException {
+
+		long resporcePrimKey = getResourcePrimKey(classPK);
 
 		long classNameId = classNameLocalService.getClassNameId(getClassName());
 
 		List<AssetCategory> assetCategories =
 			assetCategoryService.getCategories(
-				classNameId, classPK, pagination.getStartPosition(),
+				classNameId, resporcePrimKey, pagination.getStartPosition(),
 				pagination.getEndPosition());
 		int count = assetCategoryService.getCategoriesCount(
-			classNameId, classPK);
+			classNameId, resporcePrimKey);
 
 		return new PageItems<>(assetCategories, count);
+	}
+
+	protected long getResourcePrimKey(long classPK) throws PortalException {
+		return classPK;
 	}
 
 	@Reference

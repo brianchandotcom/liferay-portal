@@ -1151,22 +1151,6 @@ public class GitWorkingDirectory {
 		return true;
 	}
 
-	public boolean isSHAAvailable(String sha) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("git log -n 1 ");
-		sb.append(sha);
-
-		ExecutionResult result = executeBashCommands(
-			5, 1000, 30 * 1000, sb.toString());
-
-		if (result.getExitValue() != 0) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public boolean localSHAExists(String sha) {
 		String command = "git cat-file -t " + sha;
 

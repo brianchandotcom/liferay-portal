@@ -115,6 +115,12 @@ class CPOptionsEditor extends Component {
 			() => {
 				new Liferay.Notification(
 					{
+						closeable: true,
+						delay: {
+							hide: 5000,
+							show: 0
+						},
+						duration: 500,
 						message: message,
 						render: true,
 						title: '',

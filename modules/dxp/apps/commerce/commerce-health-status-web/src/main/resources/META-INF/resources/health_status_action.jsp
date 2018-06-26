@@ -66,6 +66,12 @@ String fixIssueButton = "fixIssueButton" + row.getRowId();
 
 								new Liferay.Notification(
 									{
+										closeable: true,
+										delay: {
+										hide: 5000,
+										show: 0
+										},
+										duration: 500,
 										message: '<liferay-ui:message key="an-unexpected-error-occurred" />',
 										render: true,
 										title: '<liferay-ui:message key="danger" />',

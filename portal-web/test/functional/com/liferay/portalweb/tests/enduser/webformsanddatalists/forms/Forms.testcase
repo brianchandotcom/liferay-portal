@@ -2310,7 +2310,7 @@
 		<execute macro="Form#closeSidebar" />
 
 		<for list="Japanese (Japan):日本語,Portuguese (Brazil):Português" param="locale">
-			<var method="StringUtil#extractFirst('${locale}', ':'')" name="locale" />
+			<var method="StringUtil#extractFirst('${locale}', ':')" name="locale" />
 			<var method="StringUtil#extractLast('${locale}', ':')" name="translated" />
 
 			<execute macro="Form#addTranslation">
@@ -2381,7 +2381,7 @@
 		<execute macro="Form#save" />
 
 		<for list="Japanese (Japan):日本語,Portuguese (Brazil):Português" param="locale">
-			<var method="StringUtil#extractFirst('${locale}', ':'')" name="locale" />
+			<var method="StringUtil#extractFirst('${locale}', ':')" name="locale" />
 			<var method="StringUtil#extractLast('${locale}', ':')" name="translated" />
 
 			<execute macro="Form#selectTranslation">
@@ -2394,7 +2394,7 @@
 
 			<for list="1:4,2:1,3:3" param="optionNumber">
 				<var method="StringUtil#extractLast('${optionNumber}', ':')" name="fieldOptionNumber" />
-				<var method="StringUtil#extractFirst('${optionNumber}', ':'')" name="rowNumber" />
+				<var method="StringUtil#extractFirst('${optionNumber}', ':')" name="rowNumber" />
 
 				<execute macro="FormFields#viewGridOptionsFieldValue">
 					<var name="fieldValue" value="${translated} Row ${fieldOptionNumber}" />
@@ -2405,7 +2405,7 @@
 
 			<for list="1:4,2:2,3:3" param="optionNumber">
 				<var method="StringUtil#extractLast('${optionNumber}', ':')" name="fieldOptionNumber" />
-				<var method="StringUtil#extractFirst('${optionNumber}', ':'')" name="rowNumber" />
+				<var method="StringUtil#extractFirst('${optionNumber}', ':')" name="rowNumber" />
 
 				<execute macro="FormFields#viewGridOptionsFieldValue">
 					<var name="fieldValue" value="${translated} Column ${fieldOptionNumber}" />

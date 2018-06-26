@@ -1,32 +1,32 @@
-# Emporio Developer Preview
+# Emporio
 
-Emporio is an open source digital commerce platform written in Java.
+Emporio is an open source digital commerce platform written in Java. It was
+built from the ground up to work with Liferay Portal so that Liferay developers
+can leverage fully integrated web content management systems and best-in-breed
+portal capabilities in their commerce projects.
 
-It was built from the ground up to work with Liferay Portal, which provides web
-experience management and best-in-breed portal capabilities.
+Liferay designed Emporio for commerce projects that are very large or complex;
+it can support millions of products in challenging B2B industries.
 
-> **Attention:** This project is currently in a Developer Preview phase and
-> should only be used for test purposes. A stable version that is ready for
-> production will be released in the second half of 2018.
+## Key Features
 
-## Why Commerce?
-
-While Liferay enthusiasts can use the platform to build marketing sites,
-customer portals, and intranets, they do not have an integrated Liferay product
-that helps them build modern digital commerce sites.
-
-Emporio is here not only to bridge that gap, but also to provide vendors the
-most complete platform to attract, convert and retain customers.
+* Catalog Management and Product Browsing
+* Checkout, Discounts and Pricing
+* Payments and Tax Management
+* Shipping Management
+* Order Management
+* Customer Account Management
+* Multicurrency and Multilanguage
 
 ## Quick Start
 
-Requirements: [Liferay Portal 7.1 M1](https://github.com/liferay/liferay-portal)
+Requirements: [Liferay Portal 7.1 B3](https://github.com/liferay/liferay-portal)
 
-Clone the Emporio repository (this [repository](https://github.com/liferay/com-liferay-commerce-private))
+1. Clone the Emporio repository (this [repository](https://github.com/liferay/com-liferay-commerce-private))
 to the same level of your directory tree as your Liferay Home folder (Liferay
 Home is the folder that contains the Tomcat folder for Liferay 7.1).
 
-Then start Liferay Portal 7.1.
+2. Start Liferay Portal 7.1.
 
 In the terminal, navigate to the source code folder
 (`com-liferay-commerce-private`).
@@ -65,7 +65,7 @@ Read details on announcements, engage in discussions and learn more by following
 ### Forum
 
 Do you have questions? Ask them on our
-[forums](http://www.liferay.com/community/forums)!
+[forums](http://www.liferay.com/community/forums).
 
 ### Chat
 

@@ -132,17 +132,33 @@ public class CPSpecificationOptionDisplayContext
 			facetable = true;
 		}
 
-		BaseModelSearchResult<CPSpecificationOption>
-			cpSpecificationOptionBaseModelSearchResult =
-				_cpSpecificationOptionService.searchCPSpecificationOptions(
-					cpRequestHelper.getCompanyId(), getScopeGroupId(),
-					facetable, getKeywords(), searchContainer.getStart(),
-					searchContainer.getEnd(), sort);
+		int total;
+		List<CPSpecificationOption> results;
 
-		searchContainer.setTotal(
-			cpSpecificationOptionBaseModelSearchResult.getLength());
-		searchContainer.setResults(
-			cpSpecificationOptionBaseModelSearchResult.getBaseModels());
+		if (!isSearch() && (facetable == null) && (orderByComparator != null)) {
+			total =
+				_cpSpecificationOptionService.getCPSpecificationOptionsCount(
+					getScopeGroupId());
+
+			results = _cpSpecificationOptionService.getCPSpecificationOptions(
+				getScopeGroupId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
+		}
+		else {
+			BaseModelSearchResult<CPSpecificationOption>
+				cpSpecificationOptionBaseModelSearchResult =
+					_cpSpecificationOptionService.searchCPSpecificationOptions(
+						cpRequestHelper.getCompanyId(), getScopeGroupId(),
+						facetable, getKeywords(), searchContainer.getStart(),
+						searchContainer.getEnd(), sort);
+
+			total = cpSpecificationOptionBaseModelSearchResult.getLength();
+			results =
+				cpSpecificationOptionBaseModelSearchResult.getBaseModels();
+		}
+
+		searchContainer.setTotal(total);
+		searchContainer.setResults(results);
 
 		return searchContainer;
 	}

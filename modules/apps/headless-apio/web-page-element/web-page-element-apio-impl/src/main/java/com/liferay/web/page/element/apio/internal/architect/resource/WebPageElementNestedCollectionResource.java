@@ -16,6 +16,7 @@ package com.liferay.web.page.element.apio.internal.architect.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
+import com.liferay.aggregate.rating.apio.architect.identifier.AggregateRatingIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -30,6 +31,7 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -118,6 +120,9 @@ public class WebPageElementNestedCollectionResource
 		).addDate(
 			"lastReviewed", JournalArticle::getReviewDate
 		).addLinkedModel(
+			"aggregateRating", AggregateRatingIdentifier.class,
+			this::_createClassNameClassPK
+		).addLinkedModel(
 			"author", PersonIdentifier.class, JournalArticle::getUserId
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, JournalArticle::getUserId
@@ -160,6 +165,14 @@ public class WebPageElementNestedCollectionResource
 			true, 0, 0, 0, 0, 0, true, true, null, serviceContext);
 
 		return new JournalArticleWrapper(journalArticle, themeDisplay);
+	}
+
+	private ClassNameClassPK _createClassNameClassPK(
+		JournalArticle journalArticle) {
+
+		return ClassNameClassPK.create(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
 	}
 
 	private void _deleteJournalArticle(long journalArticleId)

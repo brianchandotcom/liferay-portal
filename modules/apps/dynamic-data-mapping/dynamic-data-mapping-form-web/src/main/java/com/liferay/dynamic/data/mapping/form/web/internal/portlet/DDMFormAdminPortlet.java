@@ -34,6 +34,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -203,6 +204,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormWebConfigurationActivator.
 						getDDMFormWebConfiguration(),
 					_ddmFormInstanceRecordLocalService, _ddmFormInstanceService,
+					_ddmFormInstanceVersionLocalService,
 					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
 					_ddmFormValuesFactory, _ddmFormValuesMerger,
@@ -245,6 +247,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormWebConfigurationActivator.
 						getDDMFormWebConfiguration(),
 					_ddmFormInstanceRecordLocalService, _ddmFormInstanceService,
+					_ddmFormInstanceVersionLocalService,
 					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
 					_ddmFormValuesFactory, _ddmFormValuesMerger,
@@ -284,6 +287,10 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
+	private DDMFormInstanceVersionLocalService
+		_ddmFormInstanceVersionLocalService;
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;

@@ -18,7 +18,11 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidat
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.type.numeric.internal.util.NumericDDMFormFieldUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 import java.util.Locale;
 
@@ -41,7 +45,9 @@ public class NumericDDMFormFieldValueValidator
 		for (Locale availableLocale : value.getAvailableLocales()) {
 			String valueString = value.getString(availableLocale);
 
-			if (Validator.isNotNull(valueString) && !isNumber(valueString)) {
+			if (Validator.isNotNull(valueString) &&
+				!isNumber(valueString, availableLocale)) {
+
 				throw new DDMFormFieldValueValidationException(
 					String.format(
 						"\"%s\" is not a %s", valueString,
@@ -50,11 +56,14 @@ public class NumericDDMFormFieldValueValidator
 		}
 	}
 
-	protected boolean isNumber(String valueString) {
+	protected boolean isNumber(String valueString, Locale locale) {
 		try {
-			Double.parseDouble(valueString);
+			NumberFormat numberFormat = NumericDDMFormFieldUtil.getNumberFormat(
+				locale);
+
+			numberFormat.parse(valueString);
 		}
-		catch (NumberFormatException nfe) {
+		catch (ParseException pe) {
 			return false;
 		}
 

@@ -395,7 +395,7 @@
 		</execute>
 
 		<execute macro="Portlet#viewTitle">
-			<var name="portletName" value="Polls Display" />
+			<var name="portletName" value="Election Poll" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please sign in to vote." />

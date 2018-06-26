@@ -7,7 +7,7 @@ dependencies {
 	compileInclude group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.2.4"
 	compileInclude group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
 
-	compileOnly group: "com.liferay", name: "org.apache.aries.jax.rs.whiteboard", version: "0.0.1-20180618.095947-90-LIFERAY-CACHED"
+	compileOnly group: "com.liferay", name: "org.apache.aries.jax.rs.whiteboard", version: "0.0.1-20180626.192612-91"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.json", name: "javax.json-api", version: "1.0"
 	compileOnly group: "org.apache.aries.spec", name: "org.apache.aries.javax.annotation-api", version: "0.0.2-20180505.023515-4"

@@ -45,12 +45,12 @@ import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.sites.kernel.util.SitesUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -563,16 +563,22 @@ public class LayoutPermissionImpl
 			try {
 				UserBag userBag = permissionChecker.getUserBag();
 
-				if (userBag != null) {
-					return ArrayUtil.contains(
-						userBag.getUserUserGroupsIds(), group.getClassPK());
+				if (userBag == null) {
+					return UserGroupLocalServiceUtil.hasUserUserGroup(
+						permissionChecker.getUserId(), group.getClassPK());
 				}
 
-				return UserGroupLocalServiceUtil.hasUserUserGroup(
-					permissionChecker.getUserId(), group.getClassPK());
+				if (Arrays.binarySearch(
+						userBag.getUserUserGroupsIds(),
+						group.getClassPK()) >= 0) {
+
+					return true;
+				}
+
+				return false;
 			}
-			catch (PortalException pe) {
-				throw pe;
+			catch (PortalException | RuntimeException e) {
+				throw e;
 			}
 			catch (Exception e) {
 				throw new PortalException(e);

@@ -2021,7 +2021,8 @@
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Potato&amp;scopeparameter=this-site" />
 	</command>
 
-	<command name="ViewUserSearchResult" priority="4">
+	<command name="ViewUserSearchResult" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="SearchUsecase#ViewUserSearchResult" />
 
 		<execute macro="ProductMenu#gotoPortlet">

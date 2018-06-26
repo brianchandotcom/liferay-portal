@@ -25,8 +25,6 @@ public class GitBisectToolJob extends PortalRepositoryJob {
 	public GitBisectToolJob(String jobName, String portalBranchName) {
 		super(jobName);
 
-		_portalBranchName = portalBranchName;
-
 		try {
 			_jenkinsGitWorkingDirectory =
 				JenkinsResultsParserUtil.getJenkinsGitWorkingDirectory();
@@ -63,7 +61,6 @@ public class GitBisectToolJob extends PortalRepositoryJob {
 	}
 
 	private final GitWorkingDirectory _jenkinsGitWorkingDirectory;
-	private final String _portalBranchName;
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
 
 }

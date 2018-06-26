@@ -15,16 +15,24 @@
 package com.liferay.portal.search.web.internal.facet;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
+import com.liferay.portal.kernel.util.CalendarFactory;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactory;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
+import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
+import com.liferay.portal.search.web.internal.modified.facet.builder.ModifiedFacetConfiguration;
+import com.liferay.portal.search.web.internal.modified.facet.builder.ModifiedFacetConfigurationImpl;
 
 import javax.portlet.ActionRequest;
 
@@ -80,6 +88,19 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 	@Override
 	public String getDisplayJspPath() {
 		return "/facets/view/modified.jsp";
+	}
+
+	@Override
+	public Facet getFacet() {
+		Facet facet = super.getFacet();
+
+		ModifiedFacetConfiguration modifiedFacetConfiguration =
+			new ModifiedFacetConfigurationImpl(facet.getFacetConfiguration());
+
+		modifiedFacetConfiguration.setRangesJSONArray(
+			replaceAliases(modifiedFacetConfiguration.getRangesJSONArray()));
+
+		return facet;
 	}
 
 	@Override
@@ -147,10 +168,57 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		super.setServletContext(servletContext);
 	}
 
+	protected CalendarFactory getCalendarFactory() {
+
+		// See LPS-72507 and LPS-76500
+
+		if (calendarFactory != null) {
+			return calendarFactory;
+		}
+
+		return CalendarFactoryUtil.getCalendarFactory();
+	}
+
+	protected DateFormatFactory getDateFormatFactory() {
+
+		// See LPS-72507 and LPS-76500
+
+		if (dateFormatFactory != null) {
+			return dateFormatFactory;
+		}
+
+		return DateFormatFactoryUtil.getDateFormatFactory();
+	}
+
 	@Override
 	protected FacetFactory getFacetFactory() {
 		return modifiedFacetFactory;
 	}
+
+	protected JSONFactory getJSONFactory() {
+
+		// See LPS-72507 and LPS-76500
+
+		if (jsonFactory != null) {
+			return jsonFactory;
+		}
+
+		return JSONFactoryUtil.getJSONFactory();
+	}
+
+	protected JSONArray replaceAliases(JSONArray rangesJSONArray) {
+		DateRangeFactory dateRangeFactory = new DateRangeFactory(
+			getDateFormatFactory());
+
+		CalendarFactory calendarFactory = getCalendarFactory();
+
+		return dateRangeFactory.replaceAliases(
+			rangesJSONArray, calendarFactory.getCalendar(), getJSONFactory());
+	}
+
+	protected CalendarFactory calendarFactory;
+	protected DateFormatFactory dateFormatFactory;
+	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected ModifiedFacetFactory modifiedFacetFactory;

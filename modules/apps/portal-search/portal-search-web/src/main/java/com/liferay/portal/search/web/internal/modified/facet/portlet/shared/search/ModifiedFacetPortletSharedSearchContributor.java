@@ -17,7 +17,6 @@ package com.liferay.portal.search.web.internal.modified.facet.portlet.shared.sea
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -32,8 +31,6 @@ import com.liferay.portal.search.web.internal.modified.facet.portlet.ModifiedFac
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
-
-import java.util.Calendar;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,10 +66,12 @@ public class ModifiedFacetPortletSharedSearchContributor
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		ModifiedFacetBuilder modifiedFacetBuilder = new ModifiedFacetBuilder(
-			modifiedFacetFactory, getCalendarFactory(), getDateFormatFactory());
+			modifiedFacetFactory, getCalendarFactory(), getDateFormatFactory(),
+			getJSONFactory());
 
 		modifiedFacetBuilder.setRangesJSONArray(
-			getRangesJSONArray(modifiedFacetPortletPreferences));
+			replaceAliases(
+				modifiedFacetPortletPreferences.getRangesJSONArray()));
 
 		modifiedFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
@@ -138,38 +137,13 @@ public class ModifiedFacetPortletSharedSearchContributor
 		return JSONFactoryUtil.getJSONFactory();
 	}
 
-	protected JSONArray getRangesJSONArray(
-		ModifiedFacetPortletPreferences modifiedFacetPortletPreferences) {
-
+	protected JSONArray replaceAliases(JSONArray rangesJSONArray) {
 		DateRangeFactory dateRangeFactory = getDateRangeFactory();
-
-		JSONArray rangesJSONArray =
-			modifiedFacetPortletPreferences.getRangesJSONArray();
-
-		JSONFactory jsonFactory = getJSONFactory();
-
-		JSONArray normalizedRangesJSONArray = jsonFactory.createJSONArray();
 
 		CalendarFactory calendarFactory = getCalendarFactory();
 
-		Calendar calendar = calendarFactory.getCalendar();
-
-		for (int i = 0; i < rangesJSONArray.length(); i++) {
-			JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
-			JSONObject normalizedJSONObject = jsonFactory.createJSONObject();
-
-			normalizedJSONObject.put(
-				"label", rangeJSONObject.getString("label"));
-
-			String range = dateRangeFactory.replaceAliases(
-				rangeJSONObject.getString("range"), calendar);
-
-			normalizedJSONObject.put("range", range);
-
-			normalizedRangesJSONArray.put(normalizedJSONObject);
-		}
-
-		return normalizedRangesJSONArray;
+		return dateRangeFactory.replaceAliases(
+			rangesJSONArray, calendarFactory.getCalendar(), getJSONFactory());
 	}
 
 	protected CalendarFactory calendarFactory;

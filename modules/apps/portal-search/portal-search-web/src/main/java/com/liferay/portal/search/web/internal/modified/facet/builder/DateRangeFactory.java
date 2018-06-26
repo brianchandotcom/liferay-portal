@@ -15,6 +15,9 @@
 package com.liferay.portal.search.web.internal.modified.facet.builder;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -58,6 +61,28 @@ public class DateRangeFactory {
 		}
 
 		return map;
+	}
+
+	public JSONArray replaceAliases(
+		JSONArray rangesJSONArray, Calendar calendar, JSONFactory jsonFactory) {
+
+		JSONArray normalizedRangesJSONArray = jsonFactory.createJSONArray();
+
+		for (int i = 0; i < rangesJSONArray.length(); i++) {
+			JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
+
+			JSONObject normalizedJSONObject = jsonFactory.createJSONObject();
+
+			normalizedJSONObject.put(
+				"label", rangeJSONObject.getString("label"));
+			normalizedJSONObject.put(
+				"range",
+				replaceAliases(rangeJSONObject.getString("range"), calendar));
+
+			normalizedRangesJSONArray.put(normalizedJSONObject);
+		}
+
+		return normalizedRangesJSONArray;
 	}
 
 	public String replaceAliases(String rangeString, Calendar calendar) {

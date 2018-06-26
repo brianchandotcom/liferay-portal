@@ -16,8 +16,6 @@ package com.liferay.portal.search.internal.facet.modified;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.DateFormatFactory;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.FacetFactory;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
@@ -43,22 +41,8 @@ public class ModifiedFacetFactoryImpl implements ModifiedFacetFactory {
 	@Override
 	public Facet newInstance(SearchContext searchContext) {
 		return new ModifiedFacetImpl(
-			Field.MODIFIED_DATE, searchContext, filterBuilders,
-			getDateFormatFactory());
+			Field.MODIFIED_DATE, searchContext, filterBuilders);
 	}
-
-	protected DateFormatFactory getDateFormatFactory() {
-
-		// See LPS-72507 and LPS-76500
-
-		if (dateFormatFactory != null) {
-			return dateFormatFactory;
-		}
-
-		return DateFormatFactoryUtil.getDateFormatFactory();
-	}
-
-	protected DateFormatFactory dateFormatFactory;
 
 	@Reference
 	protected FilterBuilders filterBuilders;

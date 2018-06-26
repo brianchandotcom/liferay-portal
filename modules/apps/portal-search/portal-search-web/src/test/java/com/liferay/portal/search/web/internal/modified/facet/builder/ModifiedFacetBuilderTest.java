@@ -16,9 +16,8 @@ package com.liferay.portal.search.web.internal.modified.facet.builder;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
@@ -28,7 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.filter.FilterBuilders;
-import com.liferay.portal.search.internal.facet.ModifiedFacetImpl;
+import com.liferay.portal.search.internal.facet.modified.ModifiedFacetFactoryImpl;
 import com.liferay.portal.search.internal.filter.FilterBuildersImpl;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 
@@ -54,8 +53,6 @@ public class ModifiedFacetBuilderTest {
 		dateFormatFactory = new DateFormatFactoryImpl();
 		filterBuilders = new FilterBuildersImpl();
 		jsonFactory = new JSONFactoryImpl();
-
-		setUpJSONFactoryUtil();
 	}
 
 	@Test
@@ -185,7 +182,8 @@ public class ModifiedFacetBuilderTest {
 			searchContext);
 
 		ModifiedFacetBuilder modifiedFacetBuilder = new ModifiedFacetBuilder(
-			modifiedFacetFactory, calendarFactory, dateFormatFactory);
+			modifiedFacetFactory, calendarFactory, dateFormatFactory,
+			jsonFactory);
 
 		modifiedFacetBuilder.setSearchContext(searchContext);
 
@@ -195,20 +193,13 @@ public class ModifiedFacetBuilderTest {
 	protected ModifiedFacetFactory createModifiedFacetFactory(
 		SearchContext searchContext) {
 
-		ModifiedFacetFactory modifiedFacetFactory = Mockito.mock(
-			ModifiedFacetFactory.class);
+		FilterBuilders filterBuilders1 = filterBuilders;
 
-		Mockito.doReturn(
-			new ModifiedFacetImpl(
-				Field.MODIFIED_DATE, searchContext, filterBuilders,
-				dateFormatFactory)
-		).when(
-			modifiedFacetFactory
-		).newInstance(
-			Mockito.anyObject()
-		);
-
-		return modifiedFacetFactory;
+		return new ModifiedFacetFactoryImpl() {
+			{
+				filterBuilders = filterBuilders1;
+			}
+		};
 	}
 
 	protected JSONArray createRangesJSONArray(String... labelsAndRanges) {
@@ -232,15 +223,9 @@ public class ModifiedFacetBuilderTest {
 		return Arrays.asList(dateStrings);
 	}
 
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
-
 	protected CalendarFactory calendarFactory;
 	protected DateFormatFactory dateFormatFactory;
 	protected FilterBuilders filterBuilders;
-	protected JSONFactoryImpl jsonFactory;
+	protected JSONFactory jsonFactory;
 
 }

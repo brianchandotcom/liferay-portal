@@ -15,7 +15,7 @@
 package com.liferay.portal.search.web.internal.modified.facet.builder;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
@@ -37,10 +37,12 @@ public class ModifiedFacetBuilder {
 
 	public ModifiedFacetBuilder(
 		ModifiedFacetFactory modifiedFacetFactory,
-		CalendarFactory calendarFactory, DateFormatFactory dateFormatFactory) {
+		CalendarFactory calendarFactory, DateFormatFactory dateFormatFactory,
+		JSONFactory jsonFactory) {
 
 		_modifiedFacetFactory = modifiedFacetFactory;
 		_calendarFactory = calendarFactory;
+		_jsonFactory = jsonFactory;
 
 		_dateRangeFactory = new DateRangeFactory(dateFormatFactory);
 	}
@@ -82,6 +84,8 @@ public class ModifiedFacetBuilder {
 	protected FacetConfiguration buildFacetConfiguration(Facet facet) {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
+		facetConfiguration.setDataJSONObject(_jsonFactory.createJSONObject());
+
 		facetConfiguration.setFieldName(facet.getFieldName());
 		facetConfiguration.setLabel("any-time");
 		facetConfiguration.setOrder("OrderHitsDesc");
@@ -98,13 +102,13 @@ public class ModifiedFacetBuilder {
 	}
 
 	protected JSONArray getDefaultRangesJSONArray(Calendar calendar) {
-		JSONArray rangesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray rangesJSONArray = _jsonFactory.createJSONArray();
 
 		Map<String, String> map = _dateRangeFactory.getRangeStrings(calendar);
 
 		map.forEach(
 			(key, value) -> {
-				JSONObject range = JSONFactoryUtil.createJSONObject();
+				JSONObject range = _jsonFactory.createJSONObject();
 
 				range.put("label", key);
 				range.put("range", value);
@@ -166,6 +170,7 @@ public class ModifiedFacetBuilder {
 	private String _customRangeFrom;
 	private String _customRangeTo;
 	private final DateRangeFactory _dateRangeFactory;
+	private final JSONFactory _jsonFactory;
 	private final ModifiedFacetFactory _modifiedFacetFactory;
 	private JSONArray _rangesJSONArray;
 	private SearchContext _searchContext;

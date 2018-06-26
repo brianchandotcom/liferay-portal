@@ -44,12 +44,11 @@
 	background: #FFF;
 	overflow: hidden;
 	z-index: 100;
-	
+
 	.easyzoom.product-detail-image:not(:hover) & {
 		display: none;
 	}
 }
-
 
 // EasyZoom layout variations
 

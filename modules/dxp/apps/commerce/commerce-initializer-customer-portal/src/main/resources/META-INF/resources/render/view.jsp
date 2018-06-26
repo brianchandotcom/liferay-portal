@@ -106,6 +106,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 								<a href="<%= cpCatalogEntry.getDefaultImageFileUrl() %>" tabindex="-1">
 									<img class="img-fluid" id="<portlet:namespace />full-image" src="<%= cpCatalogEntry.getDefaultImageFileUrl() %>">
 								</a>
+
 								<div class="easyzoom-flyout">
 									<img src="<%= cpCatalogEntry.getDefaultImageFileUrl() %>" style="position: absolute; top: 0px; left: 0px;">
 								</div>

@@ -56,16 +56,18 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 		String portletId = portlet.getPortletId();
 
-		if (portletId.equals(portlet.getPortletName())) {
+		String portletName = portlet.getPortletName();
+
+		if (portletId.equals(portletName)) {
 			filterString = StringBundler.concat(
 				"(&(javax.portlet.name=", portletId, ")(objectClass=",
 				FriendlyURLMapper.class.getName(), "))");
 		}
 		else {
 			filterString = StringBundler.concat(
-				"(&(|(javax.portlet.name=", portlet.getPortletId(),
-				")(javax.portlet.name=", portlet.getPortletName(),
-				"))(objectClass=", FriendlyURLMapper.class.getName(), "))");
+				"(&(|(javax.portlet.name=", portletId, ")(javax.portlet.name=",
+				portletName, "))(objectClass=",
+				FriendlyURLMapper.class.getName(), "))");
 		}
 
 		_serviceTracker = registry.trackServices(

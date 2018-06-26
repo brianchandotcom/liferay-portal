@@ -212,6 +212,8 @@ public class CPSearchResultsPortlet
 
 		searchContext.setAttribute(
 			CPDefinitionIndexer.ATTRIBUTE_FILTER_BY_CP_RULES, Boolean.TRUE);
+		searchContext.setAttribute(
+			CPDefinitionIndexer.FIELD_PUBLISHED, Boolean.TRUE);
 
 		QueryConfig queryConfig = portletSharedSearchSettings.getQueryConfig();
 

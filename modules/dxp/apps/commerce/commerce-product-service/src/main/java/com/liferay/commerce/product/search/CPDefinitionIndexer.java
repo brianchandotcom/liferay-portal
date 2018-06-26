@@ -65,6 +65,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -110,6 +112,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	public static final String FIELD_OPTION_NAMES = "optionsNames";
 
 	public static final String FIELD_PRODUCT_TYPE_NAME = "productTypeName";
+
+	public static final String FIELD_PUBLISHED = "published";
 
 	public static final String FIELD_SHORT_DESCRIPTION = "shortDescription";
 
@@ -163,11 +167,20 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 				BooleanClauseOccur.MUST_NOT);
 		}
 
+		Map<String, Serializable> attributes = searchContext.getAttributes();
+
+		if (attributes.containsKey(FIELD_PUBLISHED)) {
+			boolean published = GetterUtil.getBoolean(
+				attributes.get(FIELD_PUBLISHED));
+
+			contextBooleanFilter.addRequiredTerm(FIELD_PUBLISHED, published);
+		}
+
 		String definitionLinkType = GetterUtil.getString(
-			searchContext.getAttribute("definitionLinkType"));
+			attributes.get("definitionLinkType"));
 
 		long definitionLinkCPDefinitionId = GetterUtil.getLong(
-			searchContext.getAttribute("definitionLinkCPDefinitionId"));
+			attributes.get("definitionLinkCPDefinitionId"));
 
 		if (Validator.isNotNull(definitionLinkType) &&
 			(definitionLinkCPDefinitionId > 0)) {
@@ -180,7 +193,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		}
 
 		if (GetterUtil.getBoolean(
-				searchContext.getAttribute(ATTRIBUTE_FILTER_BY_CP_RULES))) {
+				attributes.get(ATTRIBUTE_FILTER_BY_CP_RULES))) {
 
 			long[] groupIds = searchContext.getGroupIds();
 
@@ -385,6 +398,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		document.addKeyword(
 			FIELD_PRODUCT_TYPE_NAME, cpDefinition.getProductTypeName());
+		document.addKeyword(FIELD_PUBLISHED, cpDefinition.getPublished());
 		document.addDateSortable(
 			FIELD_DISPLAY_DATE, cpDefinition.getDisplayDate());
 

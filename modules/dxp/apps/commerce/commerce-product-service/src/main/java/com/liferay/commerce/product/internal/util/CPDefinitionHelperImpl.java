@@ -75,6 +75,10 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
 
+		if (!cpDefinition.isApproved() || !cpDefinition.isPublished()) {
+			return null;
+		}
+
 		return new DatabaseCPCatalogEntryImpl(cpDefinition, locale);
 	}
 
@@ -189,6 +193,8 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		searchContext.setAttribute(
 			CPDefinitionIndexer.ATTRIBUTE_FILTER_BY_CP_RULES, Boolean.TRUE);
+		searchContext.setAttribute(
+			CPDefinitionIndexer.FIELD_PUBLISHED, Boolean.TRUE);
 
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {groupId});

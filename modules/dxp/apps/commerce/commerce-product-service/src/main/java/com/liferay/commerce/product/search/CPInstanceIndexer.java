@@ -69,6 +69,8 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 	public static final String FIELD_EXTERNAL_REFERENCE_CODE =
 		"externalReferenceCode";
 
+	public static final String FIELD_PUBLISHED = "published";
+
 	public static final String FIELD_PURCHASABLE = "purchasable";
 
 	public static final String FIELD_SKU = "sku";
@@ -107,6 +109,13 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		}
 
 		Map<String, Serializable> attributes = searchContext.getAttributes();
+
+		if (attributes.containsKey(FIELD_PUBLISHED)) {
+			boolean published = GetterUtil.getBoolean(
+				attributes.get(FIELD_PUBLISHED));
+
+			contextBooleanFilter.addRequiredTerm(FIELD_PUBLISHED, published);
+		}
 
 		if (attributes.containsKey(FIELD_PURCHASABLE)) {
 			boolean purchasable = GetterUtil.getBoolean(
@@ -204,6 +213,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		document.addText(FIELD_SKU, cpInstance.getSku());
 		document.addKeyword(
 			FIELD_CP_DEFINITION_ID, cpInstance.getCPDefinitionId());
+		document.addKeyword(FIELD_PUBLISHED, cpInstance.getPublished());
 		document.addKeyword(FIELD_PURCHASABLE, cpInstance.getPurchasable());
 		document.addKeyword(
 			FIELD_EXTERNAL_REFERENCE_CODE,

@@ -67,7 +67,7 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -109,8 +109,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		sb.append(limitationTimes);
 		sb.append(", numberOfUse=");
 		sb.append(numberOfUse);
-		sb.append(", cumulative=");
-		sb.append(cumulative);
 		sb.append(", active=");
 		sb.append(active);
 		sb.append(", displayDate=");
@@ -207,7 +205,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 
 		commerceDiscountImpl.setLimitationTimes(limitationTimes);
 		commerceDiscountImpl.setNumberOfUse(numberOfUse);
-		commerceDiscountImpl.setCumulative(cumulative);
 		commerceDiscountImpl.setActive(active);
 
 		if (displayDate == Long.MIN_VALUE) {
@@ -284,8 +281,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		limitationTimes = objectInput.readInt();
 
 		numberOfUse = objectInput.readInt();
-
-		cumulative = objectInput.readBoolean();
 
 		active = objectInput.readBoolean();
 		displayDate = objectInput.readLong();
@@ -367,8 +362,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 
 		objectOutput.writeInt(numberOfUse);
 
-		objectOutput.writeBoolean(cumulative);
-
 		objectOutput.writeBoolean(active);
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
@@ -408,7 +401,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 	public String limitationType;
 	public int limitationTimes;
 	public int numberOfUse;
-	public boolean cumulative;
 	public boolean active;
 	public long displayDate;
 	public long expirationDate;

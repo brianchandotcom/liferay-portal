@@ -82,7 +82,6 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 		attributes.put("limitationType", getLimitationType());
 		attributes.put("limitationTimes", getLimitationTimes());
 		attributes.put("numberOfUse", getNumberOfUse());
-		attributes.put("cumulative", isCumulative());
 		attributes.put("active", isActive());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -218,12 +217,6 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 			setNumberOfUse(numberOfUse);
 		}
 
-		Boolean cumulative = (Boolean)attributes.get("cumulative");
-
-		if (cumulative != null) {
-			setCumulative(cumulative);
-		}
-
 		Boolean active = (Boolean)attributes.get("active");
 
 		if (active != null) {
@@ -331,16 +324,6 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	@Override
 	public Date getCreateDate() {
 		return _commerceDiscount.getCreateDate();
-	}
-
-	/**
-	* Returns the cumulative of this commerce discount.
-	*
-	* @return the cumulative of this commerce discount
-	*/
-	@Override
-	public boolean getCumulative() {
-		return _commerceDiscount.getCumulative();
 	}
 
 	/**
@@ -644,16 +627,6 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	}
 
 	/**
-	* Returns <code>true</code> if this commerce discount is cumulative.
-	*
-	* @return <code>true</code> if this commerce discount is cumulative; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isCumulative() {
-		return _commerceDiscount.isCumulative();
-	}
-
-	/**
 	* Returns <code>true</code> if this commerce discount is denied.
 	*
 	* @return <code>true</code> if this commerce discount is denied; <code>false</code> otherwise
@@ -811,16 +784,6 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	@Override
 	public void setCreateDate(Date createDate) {
 		_commerceDiscount.setCreateDate(createDate);
-	}
-
-	/**
-	* Sets whether this commerce discount is cumulative.
-	*
-	* @param cumulative the cumulative of this commerce discount
-	*/
-	@Override
-	public void setCumulative(boolean cumulative) {
-		_commerceDiscount.setCumulative(cumulative);
 	}
 
 	/**

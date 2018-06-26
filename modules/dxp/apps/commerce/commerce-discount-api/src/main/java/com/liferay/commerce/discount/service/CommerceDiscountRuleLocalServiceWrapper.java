@@ -72,10 +72,12 @@ public class CommerceDiscountRuleLocalServiceWrapper
 	*
 	* @param commerceDiscountRule the commerce discount rule
 	* @return the commerce discount rule that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscountRule deleteCommerceDiscountRule(
-		com.liferay.commerce.discount.model.CommerceDiscountRule commerceDiscountRule) {
+		com.liferay.commerce.discount.model.CommerceDiscountRule commerceDiscountRule)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceDiscountRuleLocalService.deleteCommerceDiscountRule(commerceDiscountRule);
 	}
 
@@ -94,7 +96,8 @@ public class CommerceDiscountRuleLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceDiscountRules(long commerceDiscountId) {
+	public void deleteCommerceDiscountRules(long commerceDiscountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceDiscountRuleLocalService.deleteCommerceDiscountRules(commerceDiscountId);
 	}
 

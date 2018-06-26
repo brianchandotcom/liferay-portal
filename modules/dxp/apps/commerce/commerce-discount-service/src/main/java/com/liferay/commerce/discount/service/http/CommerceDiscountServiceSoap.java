@@ -70,10 +70,10 @@ public class CommerceDiscountServiceSoap {
 		boolean usePercentage, java.math.BigDecimal maximumDiscountAmount,
 		java.math.BigDecimal level1, java.math.BigDecimal level2,
 		java.math.BigDecimal level3, String limitationType,
-		int limitationTimes, boolean cumulative, boolean active,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int limitationTimes, boolean active, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -81,10 +81,10 @@ public class CommerceDiscountServiceSoap {
 			com.liferay.commerce.discount.model.CommerceDiscount returnValue = CommerceDiscountServiceUtil.addCommerceDiscount(title,
 					target, useCouponCode, couponCode, usePercentage,
 					maximumDiscountAmount, level1, level2, level3,
-					limitationType, limitationTimes, cumulative, active,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
+					limitationType, limitationTimes, active, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.discount.model.CommerceDiscountSoap.toSoapModel(returnValue);
@@ -100,6 +100,22 @@ public class CommerceDiscountServiceSoap {
 		throws RemoteException {
 		try {
 			CommerceDiscountServiceUtil.deleteCommerceDiscount(commerceDiscountId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscountSoap[] getCommerceDiscounts(
+		long groupId, String couponCode) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.discount.model.CommerceDiscount> returnValue =
+				CommerceDiscountServiceUtil.getCommerceDiscounts(groupId,
+					couponCode);
+
+			return com.liferay.commerce.discount.model.CommerceDiscountSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -160,10 +176,10 @@ public class CommerceDiscountServiceSoap {
 		java.math.BigDecimal maximumDiscountAmount,
 		java.math.BigDecimal level1, java.math.BigDecimal level2,
 		java.math.BigDecimal level3, String limitationType,
-		int limitationTimes, boolean cumulative, boolean active,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int limitationTimes, boolean active, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -171,10 +187,10 @@ public class CommerceDiscountServiceSoap {
 			com.liferay.commerce.discount.model.CommerceDiscount returnValue = CommerceDiscountServiceUtil.updateCommerceDiscount(commerceDiscountId,
 					title, target, useCouponCode, couponCode, usePercentage,
 					maximumDiscountAmount, level1, level2, level3,
-					limitationType, limitationTimes, cumulative, active,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
+					limitationType, limitationTimes, active, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.discount.model.CommerceDiscountSoap.toSoapModel(returnValue);

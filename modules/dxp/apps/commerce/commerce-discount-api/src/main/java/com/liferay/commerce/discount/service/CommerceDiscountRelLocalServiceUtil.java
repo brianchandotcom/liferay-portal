@@ -79,9 +79,11 @@ public class CommerceDiscountRelLocalServiceUtil {
 	*
 	* @param commerceDiscountRel the commerce discount rel
 	* @return the commerce discount rel that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.discount.model.CommerceDiscountRel deleteCommerceDiscountRel(
-		com.liferay.commerce.discount.model.CommerceDiscountRel commerceDiscountRel) {
+		com.liferay.commerce.discount.model.CommerceDiscountRel commerceDiscountRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceDiscountRel(commerceDiscountRel);
 	}
 

@@ -168,8 +168,6 @@ public class CommerceDiscountPersistenceTest {
 
 		newCommerceDiscount.setNumberOfUse(RandomTestUtil.nextInt());
 
-		newCommerceDiscount.setCumulative(RandomTestUtil.randomBoolean());
-
 		newCommerceDiscount.setActive(RandomTestUtil.randomBoolean());
 
 		newCommerceDiscount.setDisplayDate(RandomTestUtil.nextDate());
@@ -232,8 +230,6 @@ public class CommerceDiscountPersistenceTest {
 			newCommerceDiscount.getLimitationTimes());
 		Assert.assertEquals(existingCommerceDiscount.getNumberOfUse(),
 			newCommerceDiscount.getNumberOfUse());
-		Assert.assertEquals(existingCommerceDiscount.isCumulative(),
-			newCommerceDiscount.isCumulative());
 		Assert.assertEquals(existingCommerceDiscount.isActive(),
 			newCommerceDiscount.isActive());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -291,6 +287,15 @@ public class CommerceDiscountPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C() throws Exception {
+		_persistence.countByG_C(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_C(0L, "null");
+
+		_persistence.countByG_C(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByLtD_S() throws Exception {
 		_persistence.countByLtD_S(RandomTestUtil.nextDate(),
 			RandomTestUtil.nextInt());
@@ -342,10 +347,9 @@ public class CommerceDiscountPersistenceTest {
 			"useCouponCode", true, "couponCode", true, "usePercentage", true,
 			"maximumDiscountAmount", true, "level1", true, "level2", true,
 			"level3", true, "limitationType", true, "limitationTimes", true,
-			"numberOfUse", true, "cumulative", true, "active", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"numberOfUse", true, "active", true, "displayDate", true,
+			"expirationDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -601,8 +605,6 @@ public class CommerceDiscountPersistenceTest {
 		commerceDiscount.setLimitationTimes(RandomTestUtil.nextInt());
 
 		commerceDiscount.setNumberOfUse(RandomTestUtil.nextInt());
-
-		commerceDiscount.setCumulative(RandomTestUtil.randomBoolean());
 
 		commerceDiscount.setActive(RandomTestUtil.randomBoolean());
 

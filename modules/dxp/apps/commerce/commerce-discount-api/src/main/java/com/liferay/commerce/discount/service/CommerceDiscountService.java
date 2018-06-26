@@ -64,11 +64,10 @@ public interface CommerceDiscountService extends BaseService {
 		boolean useCouponCode, String couponCode, boolean usePercentage,
 		BigDecimal maximumDiscountAmount, BigDecimal level1, BigDecimal level2,
 		BigDecimal level3, String limitationType, int limitationTimes,
-		boolean cumulative, boolean active, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		boolean active, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceDiscount(long commerceDiscountId)
@@ -82,6 +81,10 @@ public interface CommerceDiscountService extends BaseService {
 	public List<CommerceDiscount> getCommerceDiscounts(long groupId, int start,
 		int end, OrderByComparator<CommerceDiscount> orderByComparator)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscount> getCommerceDiscounts(long groupId,
+		String couponCode) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceDiscountsCount(long groupId)
@@ -103,10 +106,10 @@ public interface CommerceDiscountService extends BaseService {
 		String title, String target, boolean useCouponCode, String couponCode,
 		boolean usePercentage, BigDecimal maximumDiscountAmount,
 		BigDecimal level1, BigDecimal level2, BigDecimal level3,
-		String limitationType, int limitationTimes, boolean cumulative,
-		boolean active, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		String limitationType, int limitationTimes, boolean active,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 }

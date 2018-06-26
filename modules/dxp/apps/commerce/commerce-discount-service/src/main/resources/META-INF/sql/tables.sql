@@ -19,7 +19,6 @@ create table CommerceDiscount (
 	limitationType VARCHAR(75) null,
 	limitationTimes INTEGER,
 	numberOfUse INTEGER,
-	cumulative BOOLEAN,
 	active_ BOOLEAN,
 	displayDate DATE null,
 	expirationDate DATE null,
@@ -54,6 +53,20 @@ create table CommerceDiscountRule (
 	commerceDiscountId LONG,
 	type_ VARCHAR(75) null,
 	typeSettings TEXT null
+);
+
+create table CommerceDiscountUsageEntry (
+	commerceDiscountUsageEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	discountUserId LONG,
+	discountOrganizationId LONG,
+	commerceOrderId LONG,
+	commerceDiscountId LONG
 );
 
 create table CommerceDiscountUserSegmentRel (

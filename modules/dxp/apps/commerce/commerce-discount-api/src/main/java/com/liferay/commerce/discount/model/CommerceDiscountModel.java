@@ -399,27 +399,6 @@ public interface CommerceDiscountModel extends BaseModel<CommerceDiscount>,
 	public void setNumberOfUse(int numberOfUse);
 
 	/**
-	 * Returns the cumulative of this commerce discount.
-	 *
-	 * @return the cumulative of this commerce discount
-	 */
-	public boolean getCumulative();
-
-	/**
-	 * Returns <code>true</code> if this commerce discount is cumulative.
-	 *
-	 * @return <code>true</code> if this commerce discount is cumulative; <code>false</code> otherwise
-	 */
-	public boolean isCumulative();
-
-	/**
-	 * Sets whether this commerce discount is cumulative.
-	 *
-	 * @param cumulative the cumulative of this commerce discount
-	 */
-	public void setCumulative(boolean cumulative);
-
-	/**
 	 * Returns the active of this commerce discount.
 	 *
 	 * @return the active of this commerce discount

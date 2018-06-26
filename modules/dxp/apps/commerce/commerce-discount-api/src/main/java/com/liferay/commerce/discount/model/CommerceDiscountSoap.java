@@ -56,7 +56,6 @@ public class CommerceDiscountSoap implements Serializable {
 		soapModel.setLimitationType(model.getLimitationType());
 		soapModel.setLimitationTimes(model.getLimitationTimes());
 		soapModel.setNumberOfUse(model.getNumberOfUse());
-		soapModel.setCumulative(model.isCumulative());
 		soapModel.setActive(model.isActive());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -287,18 +286,6 @@ public class CommerceDiscountSoap implements Serializable {
 		_numberOfUse = numberOfUse;
 	}
 
-	public boolean getCumulative() {
-		return _cumulative;
-	}
-
-	public boolean isCumulative() {
-		return _cumulative;
-	}
-
-	public void setCumulative(boolean cumulative) {
-		_cumulative = cumulative;
-	}
-
 	public boolean getActive() {
 		return _active;
 	}
@@ -387,7 +374,6 @@ public class CommerceDiscountSoap implements Serializable {
 	private String _limitationType;
 	private int _limitationTimes;
 	private int _numberOfUse;
-	private boolean _cumulative;
 	private boolean _active;
 	private Date _displayDate;
 	private Date _expirationDate;

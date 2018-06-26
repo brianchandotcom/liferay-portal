@@ -21,6 +21,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence;
+import com.liferay.commerce.discount.service.persistence.CommerceDiscountUsageEntryPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountUserSegmentRelPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -124,11 +125,12 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 	 *
 	 * @param commerceDiscountRule the commerce discount rule
 	 * @return the commerce discount rule that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceDiscountRule deleteCommerceDiscountRule(
-		CommerceDiscountRule commerceDiscountRule) {
+		CommerceDiscountRule commerceDiscountRule) throws PortalException {
 		return commerceDiscountRulePersistence.remove(commerceDiscountRule);
 	}
 
@@ -442,6 +444,44 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce discount usage entry local service.
+	 *
+	 * @return the commerce discount usage entry local service
+	 */
+	public com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService getCommerceDiscountUsageEntryLocalService() {
+		return commerceDiscountUsageEntryLocalService;
+	}
+
+	/**
+	 * Sets the commerce discount usage entry local service.
+	 *
+	 * @param commerceDiscountUsageEntryLocalService the commerce discount usage entry local service
+	 */
+	public void setCommerceDiscountUsageEntryLocalService(
+		com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService commerceDiscountUsageEntryLocalService) {
+		this.commerceDiscountUsageEntryLocalService = commerceDiscountUsageEntryLocalService;
+	}
+
+	/**
+	 * Returns the commerce discount usage entry persistence.
+	 *
+	 * @return the commerce discount usage entry persistence
+	 */
+	public CommerceDiscountUsageEntryPersistence getCommerceDiscountUsageEntryPersistence() {
+		return commerceDiscountUsageEntryPersistence;
+	}
+
+	/**
+	 * Sets the commerce discount usage entry persistence.
+	 *
+	 * @param commerceDiscountUsageEntryPersistence the commerce discount usage entry persistence
+	 */
+	public void setCommerceDiscountUsageEntryPersistence(
+		CommerceDiscountUsageEntryPersistence commerceDiscountUsageEntryPersistence) {
+		this.commerceDiscountUsageEntryPersistence = commerceDiscountUsageEntryPersistence;
+	}
+
+	/**
 	 * Returns the commerce discount user segment rel local service.
 	 *
 	 * @return the commerce discount user segment rel local service
@@ -656,6 +696,10 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 	protected CommerceDiscountRuleLocalService commerceDiscountRuleLocalService;
 	@BeanReference(type = CommerceDiscountRulePersistence.class)
 	protected CommerceDiscountRulePersistence commerceDiscountRulePersistence;
+	@BeanReference(type = com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService.class)
+	protected com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService commerceDiscountUsageEntryLocalService;
+	@BeanReference(type = CommerceDiscountUsageEntryPersistence.class)
+	protected CommerceDiscountUsageEntryPersistence commerceDiscountUsageEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelLocalService.class)
 	protected com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelLocalService commerceDiscountUserSegmentRelLocalService;
 	@BeanReference(type = CommerceDiscountUserSegmentRelPersistence.class)

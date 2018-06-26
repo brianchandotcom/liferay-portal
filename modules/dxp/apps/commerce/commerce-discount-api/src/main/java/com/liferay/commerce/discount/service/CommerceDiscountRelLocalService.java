@@ -91,10 +91,11 @@ public interface CommerceDiscountRelLocalService extends BaseLocalService,
 	*
 	* @param commerceDiscountRel the commerce discount rel
 	* @return the commerce discount rel that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceDiscountRel deleteCommerceDiscountRel(
-		CommerceDiscountRel commerceDiscountRel);
+		CommerceDiscountRel commerceDiscountRel) throws PortalException;
 
 	/**
 	* Deletes the commerce discount rel with the primary key from the database. Also notifies the appropriate model listeners.

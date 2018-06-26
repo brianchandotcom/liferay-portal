@@ -91,10 +91,11 @@ public interface CommerceDiscountRuleLocalService extends BaseLocalService,
 	*
 	* @param commerceDiscountRule the commerce discount rule
 	* @return the commerce discount rule that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceDiscountRule deleteCommerceDiscountRule(
-		CommerceDiscountRule commerceDiscountRule);
+		CommerceDiscountRule commerceDiscountRule) throws PortalException;
 
 	/**
 	* Deletes the commerce discount rule with the primary key from the database. Also notifies the appropriate model listeners.
@@ -107,7 +108,8 @@ public interface CommerceDiscountRuleLocalService extends BaseLocalService,
 	public CommerceDiscountRule deleteCommerceDiscountRule(
 		long commerceDiscountRuleId) throws PortalException;
 
-	public void deleteCommerceDiscountRules(long commerceDiscountId);
+	public void deleteCommerceDiscountRules(long commerceDiscountId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException

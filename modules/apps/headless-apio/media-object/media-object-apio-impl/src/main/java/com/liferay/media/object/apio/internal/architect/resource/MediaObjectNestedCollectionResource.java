@@ -40,7 +40,6 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.tag.apio.architect.identifier.TagIdentifier;
 
 import java.util.List;
 

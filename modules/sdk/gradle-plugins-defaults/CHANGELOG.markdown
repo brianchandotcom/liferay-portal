@@ -3913,6 +3913,8 @@ about tracking data.
 ## 5.4.55 - 2018-06-25
 
 ### Changed
+- [LPS-82828]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.56.
 - [LPS-82857]: Update the [Liferay Gradle Plugins Change Log Builder] dependency
 to version 1.1.0.
 

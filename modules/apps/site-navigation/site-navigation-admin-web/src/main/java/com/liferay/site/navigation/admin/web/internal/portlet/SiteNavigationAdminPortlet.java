@@ -74,23 +74,16 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		int siteNavigationMenusCount =
-			_siteNavigationMenuLocalService.getSiteNavigationMenusCount(
-				themeDisplay.getScopeGroupId());
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				renderRequest);
 
-		if (siteNavigationMenusCount <= 0) {
-			try {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(renderRequest);
-
-				_siteNavigationMenuLocalService.addDefaultSiteNavigationMenu(
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					serviceContext);
-			}
-			catch (PortalException pe) {
-				_log.error(
-					"Unable to create default primary navigation menu", pe);
-			}
+			_siteNavigationMenuLocalService.addDefaultSiteNavigationMenu(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				serviceContext);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to create default primary navigation menu", pe);
 		}
 
 		renderRequest.setAttribute(

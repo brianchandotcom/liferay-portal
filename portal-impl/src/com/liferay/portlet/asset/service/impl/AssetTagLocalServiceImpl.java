@@ -578,7 +578,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetTag> getTags(
-		long classNameId,  long classPK, int start, int end,
+		long classNameId, long classPK, int start, int end,
 		OrderByComparator<AssetTag> obc) {
 
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(

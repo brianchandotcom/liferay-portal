@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.impl;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagDisplay;
 import com.liferay.petra.string.StringPool;
@@ -238,8 +237,8 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		String className, long classPK, int start, int end,
 		OrderByComparator<AssetTag> obc) {
 
-		return sanitize(assetTagLocalService.getTags(
-			className, classPK, start, end, obc));
+		return sanitize(
+			assetTagLocalService.getTags(className, classPK, start, end, obc));
 	}
 
 	@Override

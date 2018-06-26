@@ -118,7 +118,7 @@ public class WebPageElementNestedCollectionResource
 		).addDate(
 			"dateModified", JournalArticle::getModifiedDate
 		).addDate(
-			"datePublished", JournalArticle::getLastPublishDate
+			"datePublished", JournalArticle::getDisplayDate
 		).addDate(
 			"lastReviewed", JournalArticle::getReviewDate
 		).addLinkedModel(

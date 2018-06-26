@@ -8,6 +8,8 @@
 			<condition function="IsTextNotEqual" locator1="Portlet#HEADER" value1="Data Definitions" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Portlet#H3_MODAL_TITLE" value1="Data Definitions" />
+
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 			</then>
 		</if>
 

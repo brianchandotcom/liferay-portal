@@ -60,7 +60,7 @@
 	<command name="AddPagesFullPageApplication" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
-		<for list="Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Dynamic Data Mapping Form,Hello Soy Portlet,RSS" param="portlet">
+		<for list="Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Form,Hello Soy Portlet,RSS Publisher,OAuth2 Authorize Portlet" param="portlet">
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Build" />
 				<var name="panel" value="Site Administration" />

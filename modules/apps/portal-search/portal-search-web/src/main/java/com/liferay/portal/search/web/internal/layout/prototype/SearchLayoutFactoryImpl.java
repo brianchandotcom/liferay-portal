@@ -227,6 +227,17 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		return getLocalizationMap("layout-prototype-search-title");
 	}
 
+	protected boolean hasSearchLayout(Group group) {
+		Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
+			group.getGroupId(), false, "/search");
+
+		if (layout != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean isSearchLayoutPrototype(
 		LayoutPrototype layoutPrototype, long companyId,
 		Map<Locale, String> searchTitleLocalizationMap) {
@@ -241,6 +252,10 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	}
 
 	protected boolean shouldCreateSearchLayout(Group group) {
+		if (hasSearchLayout(group)) {
+			return false;
+		}
+
 		UnicodeProperties properties = group.getTypeSettingsProperties();
 
 		if (properties.get("searchLayoutCreated") != null) {

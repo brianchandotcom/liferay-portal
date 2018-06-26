@@ -73,7 +73,7 @@ function trackDocumentPreviewed(analytics) {
 					payload = {title, ...payload};
 				}
 
-				analytics.send('documentViewed', applicationId, payload);
+				analytics.send('documentPreviewed', applicationId, payload);
 			});
 	});
 	return () => stopTrackingOnReady();

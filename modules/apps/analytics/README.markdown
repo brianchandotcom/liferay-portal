@@ -1,5 +1,129 @@
 # Analytics Clients
 
+## Application Ids
+
+An ``applicationId`` identifies a group of events related to a specific application. For example: A Blog app might send events like ``blogClicked``, ``blogViewed``, ``blogDepthReached`` and so on. What makes the Analytics server know that all those events relate to the same type of application (Blog in this example) is the ``applicationId``. As a convention, all application ids should start with an uppercase letter.
+
+## Events and Properties
+
+Events are representations of actions performed by users. Events are composed by an ``id`` and their ``properties``.
+
+Every ``event`` is uniquely identified by its ``id``, which should be a string of characters following the [camel-case](https://en.wikipedia.org/wiki/Camel_case) convention. The contents of an ``id``, should follow the ``objectAction`` pattern. Where ``object`` refers what you are tracking (Form, Blog, Scroll) and ``Action`` refers to what action the user just performed (Focused, Viewed, Reached) on that ``object``. ``Action`` should be written in the past tense.
+
+Properties of an ``event`` are a map containing information about that particular ``event``. Keys of that map should also follow the [camel-case](https://en.wikipedia.org/wiki/Camel_case) convention.
+
+### Blog Events
+
+#### Application Id: ``Blog``
+
+| Object  | Action       | Event Id          | Event Properties                 |
+| ------- | ---------    | -------------     | -------------------------------- |
+| Blog    | Clicked      | blogClicked       | entryId, href, text, src         |
+| Blog    | DepthReached | blogDepthReached  | entryId, depth                   |
+| Blog    | Viewed       | blogViewed        | entryId, title                   |
+
+### Blog Event Properties
+
+#### entryId: Long
+
+The unique id for that specific blog.
+
+#### href: String
+
+When clicking on a link inside a blog, the href of the clicked link.
+
+#### text: String
+
+When clicking on a link inside a blog, the text of the clicked link.
+
+#### src: String
+
+When clicking an image inside a blog, the source of the clicked image.
+
+#### depth: String
+
+A number representing how far did the user scroll into the blog contents.
+
+#### title: String
+
+This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
+
+### Document Events
+
+#### Application Id: ``Document``
+
+| Object   | Action     | Event Id           | Event Properties                     |
+| -------  | ---------  | -------------      | ------------------------------------ |
+| Document | Downloaded | documentDownloaded | fileEntryId, fileEntryVersion, title |
+| Document | Previewed  | documentPreviewed  | fileEntryId, fileEntryVersion        |
+
+### Document Event Properties
+
+#### fileEntryId: Long
+
+The unique id for that specific document.
+
+#### fileEntryVersion: Long
+
+The version of the document.
+
+#### title: String
+
+This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
+
+### Form Events
+
+#### Application Id: ``Form``
+
+| Object  | Action    | Event Id      | Event Properties                 |
+| ------- | --------- | ------------- | -------------------------------- |
+| Field   | Blurred   | fieldBlurred  | fieldName, formId, focusDuration |
+| Field   | Focused   | fieldFocused  | fieldName, formId                |
+| Form    | Submitted | formSubmitted | formId                           |
+| Form    | Viewed    | formViewed    | formId, title                    |
+
+### Form Event Properties
+
+#### fieldName: String
+
+The name attribute of the HTML field.
+
+#### formId: String
+
+The identifier for the Form.
+
+#### focusDuration: Long
+
+Time elapsed since the field received focus.
+
+#### title: String
+
+This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
+
+### Page Events
+
+#### Application Id: ``Page``
+
+| Object  | Action       | Event Id         | Event Properties  |
+| ------- | ------------ | ---------------- | ----------------- |
+| Page    | DepthReached | pageDepthReached | depth             |
+| Page    | Loaded       | pageLoaded       | pageLoadTime      |
+| Page    | Unloaded     | pageUnloaded     | viewDuration      |
+
+### Page Event Properties
+
+#### depth: Long
+
+A number representing how far did the user scroll into the page.
+
+#### pageLoadTime: Long
+
+A performance indicator about how long a page took load.
+
+#### viewDuration: Long
+
+Time elapsed from when the page was loaded until the page was unloaded.
+
 ## Generic Java Client
 
 Dependencies:
@@ -141,7 +265,7 @@ Paste this code inside the HTML head:
 m.parentNode.insertBefore(a,m)})('https://analytics.liferay.com/analytics-all-min.js', function(){
 
     Analytics.create({ analyticsKey: 'MyAnalyticsKey' });
-    Analytics.send('view', 'Layout');
+    Analytics.send('pageViewed', 'Page');
 });
 </script>
 ```
@@ -159,47 +283,12 @@ You can track custom events by invoking the `send` method of the Analytics objec
 
 ```html
     element.addEventListener('click', function(evt) {
-        Analytics.send('share', 'Blogs', { socialNetwork: 'twitter'});
+        Analytics.send('share', 'Blog', { socialNetwork: 'twitter'});
     });
 ```
 
-The first argument of the `send` method identifies the event (e.g. `share`) and the second identifies the application associated to it (e.g. `Blogs`).
+The first argument of the `send` method identifies the event (e.g. `share`) and the second identifies the application associated to it (e.g. `Blog`).
 Through the third optional argument you can pass some extra information.
-
-## Events and Properties
-
-Events are representations of actions performed by users. Events are composed by an ``id`` and their ``properties``.
-
-Every ``event`` is uniquely identified by its ``id``, which should be a string of characters following the [camel-case](https://en.wikipedia.org/wiki/Camel_case) convention. The contents of an ``id``, should follow the ``objectAction`` pattern. Where ``object`` refers what you are tracking (Form, Blog, Scroll) and ``Action`` refers to what action the user just performed (Focused, Viewed, Reached) on that ``object``. ``Action`` should be written in the past tense.
-
-Properties of an ``event`` are a map contaning information about that particular ``event``. Keys of that map should also follow the [camel-case](https://en.wikipedia.org/wiki/Camel_case) convention.
-
-### Form Events
-
-| Object  | Action    | Event Id      | Event Properties                 |
-| ------- | --------- | ------------- | -------------------------------- |
-| Field   | Blurred   | fieldBlurred  | fieldName, formId, focusDuration |
-| Field   | Focused   | fieldFocused  | fieldName, formId                |
-| Form    | Submitted | formSubmitted | formId                           |
-| Form    | Viewed    | formViewed    | formId, title                    |
-
-### Form Event Properties
-
-#### fieldName: String
-
-The name attribute of the HTML field.
-
-#### formId: String
-
-The identifier for the Form.
-
-#### focusDuration: Long
-
-Time elapsed since the field received focus.
-
-#### title: String
-
-This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
 
 ### Asset Information
 

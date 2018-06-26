@@ -102,8 +102,8 @@
 		</if>
 
 		<execute macro="JSONUser#getUserEmailAddress">
-			<var name="userId" value="${userId}" />
 			<return name="userEmailAddress" />
+			<var name="userId" value="${userId}" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
@@ -179,8 +179,8 @@
 		</if>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<return name="userId" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="JSONUser#_deleteUser">
@@ -327,8 +327,8 @@
 
 		<for list="${userIds}" param="userId">
 			<execute macro="JSONUser#getUserFirstName">
-				<var name="userId" value="${userId}" />
 				<return name="currentUserFirstName" />
+				<var name="userId" value="${userId}" />
 			</execute>
 
 			<if>

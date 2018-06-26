@@ -5,8 +5,8 @@
 		</execute>
 
 		<execute macro="JSONRole#getRoleIdByName">
-			<var name="roleTitle" value="${roleTitle}" />
 			<return name="roleId" />
+			<var name="roleTitle" value="${roleTitle}" />
 		</execute>
 
 		<execute macro="JSONCompany#getCompanyId">
@@ -35,8 +35,8 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupIdByName">
-			<var name="groupName" value="${groupName}" />
 			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
 		</execute>
 
 		<var name="curl"><![CDATA[

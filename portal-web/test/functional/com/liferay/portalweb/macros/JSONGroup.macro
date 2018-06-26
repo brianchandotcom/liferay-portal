@@ -99,18 +99,18 @@
 		]]></var>
 
 		<execute macro="JSONGroup#getGroupName">
-			<var name="groupId" value="${groupId}" />
 			<return name="groupName" />
+			<var name="groupId" value="${groupId}" />
 		</execute>
 
 		<execute macro="JSONRole#getRoleName">
-			<var name="roleId" value="${roleId}" />
 			<return name="roleTitle" />
+			<var name="roleId" value="${roleId}" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
-			<var name="userId" value="${userId}" />
 			<return name="userEmailAddress" />
+			<var name="userId" value="${userId}" />
 		</execute>
 
 		<echo message="## Assign a 'Group Role' to a 'User' with the following info using JSONWS:" />
@@ -155,13 +155,13 @@
 		]]></var>
 
 		<execute macro="JSONGroup#getGroupName">
-			<var name="groupId" value="${groupId}" />
 			<return name="groupName" />
+			<var name="groupId" value="${groupId}" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
-			<var name="userId" value="${userId}" />
 			<return name="userEmailAddress" />
+			<var name="userId" value="${userId}" />
 		</execute>
 
 		<echo message="## Assigning a 'User' to an 'Group' with the following info using JSONWS:" />
@@ -184,8 +184,8 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupName">
-			<var name="groupId" value="${groupId}" />
 			<return name="groupName" />
+			<var name="groupId" value="${groupId}" />
 		</execute>
 
 		<echo message="## Deleting a 'Group' with the following info using JSONWS:" />
@@ -250,18 +250,18 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupIdByName">
-			<var name="groupName" value="${groupName}" />
 			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
 		</execute>
 
 		<execute macro="JSONRole#getRoleIdByName">
-			<var name="roleTitle" value="${roleTitle}" />
 			<return name="roleId" />
+			<var name="roleTitle" value="${roleTitle}" />
 		</execute>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<return name="userId" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="JSONGroup#_assignGroupRoleToUser">
@@ -291,13 +291,13 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupIdByName">
-			<var name="groupName" value="${groupName}" />
 			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
 		</execute>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<return name="userId" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="JSONGroup#_assignUserToGroup">
@@ -317,8 +317,8 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupIdByName">
-			<var name="groupName" value="${groupName}" />
 			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
 		</execute>
 
 		<execute macro="JSONGroup#_deleteGroup">

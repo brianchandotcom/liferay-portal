@@ -126,13 +126,13 @@
 		]]></var>
 
 		<execute macro="JSONRole#getRoleName">
-			<var name="roleId" value="${roleId}" />
 			<return name="roleTitle" />
+			<var name="roleId" value="${roleId}" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
-			<var name="userId" value="${userId}" />
 			<return name="userEmailAddress" />
+			<var name="userId" value="${userId}" />
 		</execute>
 
 		<echo message="## Assigning a 'User' to a 'Role' with the following info using JSONWS:" />
@@ -218,13 +218,13 @@
 		</if>
 
 		<execute macro="JSONRole#getRoleIdByName">
-			<var name="roleTitle" value="${roleTitle}" />
 			<return name="roleId" />
+			<var name="roleTitle" value="${roleTitle}" />
 		</execute>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<return name="userId" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="JSONRole#_assignRoleToUser">

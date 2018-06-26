@@ -38,8 +38,8 @@
 		]]></var>
 
 		<execute macro="JSONGroup#getGroupName">
-			<var name="groupId" value="${groupId}" />
 			<return name="groupName" />
+			<var name="groupId" value="${groupId}" />
 		</execute>
 
 		<echo message="## Adding a 'Layout' with the following info using JSONWS:" />
@@ -71,8 +71,8 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupIdByName">
-			<var name="groupName" value="${groupName}" />
 			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
 		</execute>
 
 		<execute macro="JSONLayout#_addLayout">

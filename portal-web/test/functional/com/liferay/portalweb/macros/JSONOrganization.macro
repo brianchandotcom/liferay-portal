@@ -77,13 +77,13 @@
 		]]></var>
 
 		<execute macro="JSONOrganization#getOrganizationName">
-			<var name="organizationId" value="${organizationId}" />
 			<return name="organizationName" />
+			<var name="organizationId" value="${organizationId}" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
-			<var name="userId" value="${userId}" />
 			<return name="userEmailAddress" />
+			<var name="userId" value="${userId}" />
 		</execute>
 
 		<echo message="## Assigning a 'User' to an 'Organization' with the following info using JSONWS:" />
@@ -116,8 +116,8 @@
 		]]></var>
 
 		<execute macro="JSONOrganization#getOrganizationName">
-			<var name="organizationId" value="${organizationId}" />
 			<return name="organizationName" />
+			<var name="organizationId" value="${organizationId}" />
 		</execute>
 
 		<echo message="## Deleting an 'Organization' with the following info using JSONWS:" />
@@ -163,13 +163,13 @@
 		</if>
 
 		<execute macro="JSONOrganization#getOrganizationIdByName">
-			<var name="organizationName" value="${organizationName}" />
 			<return name="organizationId" />
+			<var name="organizationName" value="${organizationName}" />
 		</execute>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<return name="userId" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="JSONOrganization#_assignUserToOrganization">
@@ -189,8 +189,8 @@
 		</if>
 
 		<execute macro="JSONOrganization#getOrganizationIdByName">
-			<var name="organizationName" value="${organizationName}" />
 			<return name="organizationId" />
+			<var name="organizationName" value="${organizationName}" />
 		</execute>
 
 		<execute macro="JSONOrganization#_deleteOrganization">

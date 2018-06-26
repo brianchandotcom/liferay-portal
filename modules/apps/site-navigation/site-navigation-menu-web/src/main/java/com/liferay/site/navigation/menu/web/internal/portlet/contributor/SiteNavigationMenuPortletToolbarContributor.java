@@ -107,7 +107,7 @@ public class SiteNavigationMenuPortletToolbarContributor
 				_portal.getHttpServletRequest(portletRequest));
 
 		long siteNavigationMenuId =
-			siteNavigationMenuDisplayContext.getSiteNavigationMenuId();
+			siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuId();
 
 		if (siteNavigationMenuId <= 0) {
 			return null;

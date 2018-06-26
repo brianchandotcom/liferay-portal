@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;

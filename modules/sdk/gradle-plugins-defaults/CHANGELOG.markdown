@@ -3904,6 +3904,12 @@ about tracking data.
 - [LPS-82815]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.54.
 
+## 5.4.54 - 2018-06-25
+
+### Changed
+- [LPS-82828]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.55.
+
 ## 5.4.55 - 2018-06-25
 
 ### Changed
@@ -4341,6 +4347,7 @@ to version 1.1.0.
 [LPS-82534]: https://issues.liferay.com/browse/LPS-82534
 [LPS-82568]: https://issues.liferay.com/browse/LPS-82568
 [LPS-82815]: https://issues.liferay.com/browse/LPS-82815
+[LPS-82828]: https://issues.liferay.com/browse/LPS-82828
 [LPS-82857]: https://issues.liferay.com/browse/LPS-82857
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

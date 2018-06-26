@@ -58,7 +58,7 @@ public class JunitPortalBatchBuildRunner extends PortalBatchBuildRunner {
 					"Invalid portal branch name " + portalBranchName);
 			}
 
-			Workspace otherPortalWorkspace = WorkspaceFactory.newWorkspace(
+			BaseWorkspace otherPortalWorkspace = WorkspaceFactory.newWorkspace(
 				"liferay-portal", otherPortalBranchName);
 
 			File otherPortalRepositoryDir =

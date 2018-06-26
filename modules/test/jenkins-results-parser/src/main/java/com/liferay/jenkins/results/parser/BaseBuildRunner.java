@@ -31,7 +31,7 @@ public abstract class BaseBuildRunner implements BuildRunner {
 	public void setupWorkspace() {
 		primaryWorkspace.setupWorkspace();
 
-		for (Workspace workspace : _workspaces) {
+		for (BaseWorkspace workspace : _workspaces) {
 			workspace.setupWorkspace();
 		}
 	}
@@ -41,8 +41,8 @@ public abstract class BaseBuildRunner implements BuildRunner {
 	}
 
 	protected final Job job;
-	protected Workspace primaryWorkspace;
+	protected BaseWorkspace primaryWorkspace;
 
-	private final List<Workspace> _workspaces = new ArrayList<>();
+	private final List<BaseWorkspace> _workspaces = new ArrayList<>();
 
 }

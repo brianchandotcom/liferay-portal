@@ -23,29 +23,24 @@ import java.util.Properties;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseWorkspace implements Workspace {
+public abstract class BaseWorkspace {
 
-	@Override
 	public GitWorkingDirectory getGitWorkingDirectory() {
 		return _gitWorkingDirectory;
 	}
 
-	@Override
 	public File getRepositoryDir() {
 		return _repositoryDir;
 	}
 
-	@Override
 	public String getUpstreamBranchName() {
 		return _upstreamBranchName;
 	}
 
-	@Override
 	public String getUpstreamRepositoryName() {
 		return _upstreamRepositoryName;
 	}
 
-	@Override
 	public void setupWorkspace() {
 		System.out.println("##");
 		System.out.println("## " + _repositoryDir);

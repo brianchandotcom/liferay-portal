@@ -26,11 +26,11 @@ import java.util.Properties;
  */
 public class WorkspaceFactory {
 
-	public static Workspace newWorkspace(String repositoryType) {
+	public static BaseWorkspace newWorkspace(String repositoryType) {
 		return newWorkspace(repositoryType, "master");
 	}
 
-	public static Workspace newWorkspace(
+	public static BaseWorkspace newWorkspace(
 		String repositoryType, String upstreamBranchName) {
 
 		String workspaceId = repositoryType + "/" + upstreamBranchName;
@@ -182,7 +182,8 @@ public class WorkspaceFactory {
 
 	private static final File _workspaceHomeDir;
 	private static Properties _workspaceProperties;
-	private static final Map<String, Workspace> _workspaces = new HashMap<>();
+	private static final Map<String, BaseWorkspace> _workspaces =
+		new HashMap<>();
 
 	static {
 		try {

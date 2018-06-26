@@ -54,12 +54,6 @@ public class DeleteRecordMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected long[] getRecordIds(ActionRequest actionRequest) {
-		long recordId = ParamUtil.getLong(actionRequest, "recordId");
-
-		if (recordId > 0) {
-			return new long[] {recordId};
-		}
-
 		return StringUtil.split(
 			ParamUtil.getString(actionRequest, "recordIds"), 0L);
 	}

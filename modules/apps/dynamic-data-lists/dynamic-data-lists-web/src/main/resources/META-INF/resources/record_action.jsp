@@ -78,7 +78,7 @@ if (hasUpdatePermission) {
 	<c:if test="<%= hasDeletePermission %>">
 		<portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="deleteRecord" var="deleteRecordURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
+			<portlet:param name="recordIds" value="<%= String.valueOf(record.getRecordId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

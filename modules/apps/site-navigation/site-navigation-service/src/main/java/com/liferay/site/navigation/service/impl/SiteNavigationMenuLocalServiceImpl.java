@@ -54,15 +54,23 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		Group group = groupLocalService.fetchGroup(groupId);
 
-		SiteNavigationMenu privateSiteNavigationMenu = null;
+		SiteNavigationMenu privateSiteNavigationMenu = fetchSiteNavigationMenu(
+			groupId, SiteNavigationConstants.TYPE_PRIVATE);
+
+		SiteNavigationMenu publicSiteNavigationMenu = fetchSiteNavigationMenu(
+			groupId, SiteNavigationConstants.TYPE_PRIMARY);
+
+		if ((privateSiteNavigationMenu != null) &&
+			(publicSiteNavigationMenu != null)) {
+
+			return publicSiteNavigationMenu;
+		}
 
 		if (layoutLocalService.hasLayouts(group, true)) {
 			privateSiteNavigationMenu = addSiteNavigationMenu(
 				userId, groupId, "Default Private",
 				SiteNavigationConstants.TYPE_PRIVATE, false, serviceContext);
 		}
-
-		SiteNavigationMenu publicSiteNavigationMenu = null;
 
 		if (layoutLocalService.hasLayouts(group, false)) {
 			publicSiteNavigationMenu = addSiteNavigationMenu(

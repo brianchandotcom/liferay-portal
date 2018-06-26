@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -33,6 +34,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -41,7 +44,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
@@ -64,6 +67,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.ServletContext;
 
@@ -131,20 +135,56 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			personalFragmentEntries.add(fragmentEntriesMap.get("offerings"));
 			personalFragmentEntries.add(fragmentEntriesMap.get("links"));
 
-			_addLayoutPageTemplateEntry(
-				layoutPageTemplateCollection, "For You",
-				personalFragmentEntries, _PATH + "/page_templates",
-				"personal.jpg", serviceContext);
+			LayoutPageTemplateEntry personalLayoutPageTemplate =
+				_addLayoutPageTemplateEntry(
+					layoutPageTemplateCollection, "For You",
+					personalFragmentEntries, _PATH + "/page_templates",
+					"personal.jpg", serviceContext);
+
+			Layout personalLayout = _addParentLayout(
+				"For You",
+				personalLayoutPageTemplate.getLayoutPageTemplateEntryId(),
+				serviceContext);
+
+			List<Layout> personalLayoutChildren = _addLayouts(
+				personalLayout, _LAYOUT_CHILDREN_PERSONAL, fragmentEntriesMap,
+				serviceContext);
+
+			_addLayouts(
+				personalLayoutChildren.get(0), _LAYOUT_CHILDREN_CHECKING,
+				fragmentEntriesMap, serviceContext);
+
+			_addLayouts(
+				personalLayoutChildren.get(1), _LAYOUT_CHILDREN_SAVINGS,
+				fragmentEntriesMap, serviceContext);
+
+			_addLayouts(
+				personalLayoutChildren.get(2), _LAYOUT_CHILDREN_LOANS,
+				fragmentEntriesMap, serviceContext);
+
+			_addLayouts(
+				personalLayoutChildren.get(3), _LAYOUT_CHILDREN_ASSURANCE,
+				fragmentEntriesMap, serviceContext);
 
 			List<FragmentEntry> businessFragmentEntries = new ArrayList<>();
 
 			businessFragmentEntries.add(fragmentEntriesMap.get("video"));
 			businessFragmentEntries.add(fragmentEntriesMap.get("links"));
 
-			_addLayoutPageTemplateEntry(
-				layoutPageTemplateCollection, "For Your Business",
-				businessFragmentEntries, _PATH + "/page_templates",
-				"business.jpg", serviceContext);
+			LayoutPageTemplateEntry businessLayoutPageTemplate =
+				_addLayoutPageTemplateEntry(
+					layoutPageTemplateCollection, "For Your Business",
+					businessFragmentEntries, _PATH + "/page_templates",
+					"business.jpg", serviceContext);
+
+			Layout businessLayout = _addParentLayout(
+				"For Your Business",
+				businessLayoutPageTemplate.getLayoutPageTemplateEntryId(),
+				serviceContext);
+
+			_addLayouts(
+				businessLayout, _LAYOUT_CHILDREN_BUSINESS, fragmentEntriesMap,
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -289,6 +329,67 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				fragmentEntryIds, StringPool.BLANK, serviceContext);
 	}
 
+	private List<Layout> _addLayouts(
+			Layout parentLayout, String[] layoutNames,
+			Map<String, FragmentEntry> fragmentEntriesMap,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		List<Layout> layouts = new ArrayList<>();
+
+		Random random = new Random();
+
+		for (String layoutName : layoutNames) {
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(LocaleUtil.getSiteDefault(), layoutName);
+
+			Layout layout = _layoutLocalService.addLayout(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				false, parentLayout.getLayoutId(), nameMap, new HashMap<>(),
+				new HashMap<>(), new HashMap<>(), new HashMap<>(), "content",
+				StringPool.BLANK, false, new HashMap<>(), serviceContext);
+
+			int fragmentKeyId = random.nextInt(_LAYOUT_FRAGMENT_KEYS.length);
+
+			FragmentEntry fragmentEntry = fragmentEntriesMap.get(
+				_LAYOUT_FRAGMENT_KEYS[fragmentKeyId]);
+
+			_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(Layout.class), layout.getPlid(),
+				new long[] {fragmentEntry.getFragmentEntryId()},
+				StringPool.BLANK, serviceContext);
+
+			layouts.add(layout);
+		}
+
+		return layouts;
+	}
+
+	private Layout _addParentLayout(
+			String name, long layoutPageTemplateEntryId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getSiteDefault(), name);
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put(
+			"layoutPageTemplateEntryId",
+			String.valueOf(layoutPageTemplateEntryId));
+
+		return _layoutLocalService.addLayout(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, new HashMap<>(),
+			new HashMap<>(), new HashMap<>(), new HashMap<>(), "content",
+			typeSettingsProperties.toString(), false, new HashMap<>(),
+			serviceContext);
+	}
+
 	private ServiceContext _createServiceContext(long groupId)
 		throws PortalException {
 
@@ -405,6 +506,33 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			StringPool.BLANK, StringPool.BLANK);
 	}
 
+	private static final String[] _LAYOUT_CHILDREN_ASSURANCE =
+		{"Travel Insurance", "Home insurance", "Life insurance"};
+
+	private static final String[] _LAYOUT_CHILDREN_BUSINESS =
+		{"Credit Cards for Business", "Assurance for Business"};
+
+	private static final String[] _LAYOUT_CHILDREN_CHECKING = {
+		"All credit cards", "Check your eligibility",
+		"Balance-transfer credit cards", "Purchase credit card"
+	};
+
+	private static final String[] _LAYOUT_CHILDREN_LOANS =
+		{"Mortgages", "All mortgage products", "Mortgate rates and charges"};
+
+	private static final String[] _LAYOUT_CHILDREN_PERSONAL = {
+		"Checking and Credit Cards", "Savings and Investments",
+		"Loans and Mortgages", "Assurance"
+	};
+
+	private static final String[] _LAYOUT_CHILDREN_SAVINGS = {
+		"Compare Savings accounts", "Everyday Saver",
+		"Children's Instant Saver", "All interest rates"
+	};
+
+	private static final String[] _LAYOUT_FRAGMENT_KEYS =
+		{"features", "links", "news", "offerings", "video"};
+
 	private static final String _PATH =
 		"com/liferay/frontend/theme/westeros/bank/site/initializer/internal" +
 			"/dependencies";
@@ -426,6 +554,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
@@ -441,9 +572,6 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
-
-	@Reference
-	private PortletPreferencesLocalService _porPortletPreferencesLocalService;
 
 	@Reference
 	private Portal _portal;

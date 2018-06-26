@@ -1,128 +1,146 @@
 # Analytics Clients
 
-## Application Ids
+## Application IDs
 
-An ``applicationId`` identifies a group of events related to a specific application. For example: A Blog app might send events like ``blogClicked``, ``blogViewed``, ``blogDepthReached`` and so on. What makes the Analytics server know that all those events relate to the same type of application (Blog in this example) is the ``applicationId``. As a convention, all application ids should start with an uppercase letter.
+An `applicationId` identifies a group of events related to a specific
+application. For example, a Blog app might send events like `blogClicked`,
+`blogViewed`, `blogDepthReached`, etc. The Analytics server uses the
+`applicationId` to find all those Blog-related events and associate them with
+the Blog application. As a convention, all application IDs should start with an
+uppercase letter.
 
 ## Events and Properties
 
-Events are representations of actions performed by users. Events are composed by an ``id`` and their ``properties``.
+Events are representations of actions performed by users. Events are composed by
+an ID and their properties.
 
-Every ``event`` is uniquely identified by its ``id``, which should be a string of characters following the [camel-case](https://en.wikipedia.org/wiki/Camel_case) convention. The contents of an ``id``, should follow the ``objectAction`` pattern. Where ``object`` refers what you are tracking (Form, Blog, Scroll) and ``Action`` refers to what action the user just performed (Focused, Viewed, Reached) on that ``object``. ``Action`` should be written in the past tense.
+Every event is uniquely identified by its ID, which should be a string of
+characters following the
+[camel case](https://en.wikipedia.org/wiki/Camel_case) convention. The contents
+of an ID should follow the *objectAction* pattern:
 
-Properties of an ``event`` are a map containing information about that particular ``event``. Keys of that map should also follow the [camel-case](https://en.wikipedia.org/wiki/Camel_case) convention.
+- *object* refers to what you are tracking (e.g., Form, Blog, Scroll).
+- *Action* refers to the action the user performed (e.g., Focused, Viewed,
+  Reached) on the *object*. The *Action* should be written in past tense.
+
+Properties of an event are a map containing information about that particular
+event. Keys of that map should also follow the
+[camel case](https://en.wikipedia.org/wiki/Camel_case) convention.
 
 ### Blog Events
 
-#### Application Id: ``Blog``
+#### Application ID: `Blog`
 
-| Object  | Action       | Event Id          | Event Properties                 |
-| ------- | ---------    | -------------     | -------------------------------- |
-| Blog    | Clicked      | blogClicked       | entryId, href, text, src         |
-| Blog    | DepthReached | blogDepthReached  | entryId, depth                   |
-| Blog    | Viewed       | blogViewed        | entryId, title                   |
+| Object    | Action        | Event Id           | Event Properties                 |
+| --------- | ------------- | ------------------ | -------------------------------- |
+| `Blog`    | Clicked       | `blogClicked`      | `entryId`, `href`, `text`, `src` |
+| `Blog`    | Depth Reached | `blogDepthReached` | `entryId`, `depth`               |
+| `Blog`    | Viewed        | `blogViewed`       | `entryId`, `title`               |
 
 ### Blog Event Properties
 
 #### entryId: Long
 
-The unique id for that specific blog.
+The blog's unique ID.
 
 #### href: String
 
-When clicking on a link inside a blog, the href of the clicked link.
+The href of the blog's clicked link.
 
 #### text: String
 
-When clicking on a link inside a blog, the text of the clicked link.
+The text of the blog's clicked link.
 
 #### src: String
 
-When clicking an image inside a blog, the source of the clicked image.
+The source of the blog's clicked image.
 
 #### depth: Long
 
-A number representing how far did the user scroll into the blog contents.
+A number representing how far the user scrolled into the blog's contents.
 
 #### title: String
 
-This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
+An attribute to describe any kind of asset. This information is presented in the
+analytics reports.
 
 ### Document Events
 
-#### Application Id: ``Document``
+#### Application ID: `Document`
 
-| Object   | Action     | Event Id           | Event Properties                     |
-| -------  | ---------  | -------------      | ------------------------------------ |
-| Document | Downloaded | documentDownloaded | fileEntryId, fileEntryVersion, title |
-| Document | Previewed  | documentPreviewed  | fileEntryId, fileEntryVersion        |
+| Object     | Action     | Event Id             | Event Properties                           |
+| ---------  | ---------  | -------------------  | ------------------------------------------ |
+| `Document` | Downloaded | `documentDownloaded` | `fileEntryId`, `fileEntryVersion`, `title` |
+| `Document` | Previewed  | `documentPreviewed`  | `fileEntryId`, `fileEntryVersion`          |
 
 ### Document Event Properties
 
 #### fileEntryId: Long
 
-The unique id for that specific document.
+The unique ID for the document.
 
 #### fileEntryVersion: Long
 
-The version of the document.
+The document's version.
 
 #### title: String
 
-This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
+An attribute to describe any kind of asset. This information is presented in the
+analytics reports.
 
 ### Form Events
 
-#### Application Id: ``Form``
+#### Application ID: `Form`
 
-| Object  | Action    | Event Id      | Event Properties                 |
-| ------- | --------- | ------------- | -------------------------------- |
-| Field   | Blurred   | fieldBlurred  | fieldName, formId, focusDuration |
-| Field   | Focused   | fieldFocused  | fieldName, formId                |
-| Form    | Submitted | formSubmitted | formId                           |
-| Form    | Viewed    | formViewed    | formId, title                    |
+| Object    | Action    | Event Id        | Event Properties                       |
+| --------- | --------- | --------------- | -------------------------------------- |
+| `Field`   | Blurred   | `fieldBlurred`  | `fieldName`, `formId`, `focusDuration` |
+| `Field`   | Focused   | `fieldFocused`  | `fieldName`, `formId`                  |
+| `Form`    | Submitted | `formSubmitted` | `formId`                               |
+| `Form`    | Viewed    | `formViewed`    | `formId`, `title`                      |
 
 ### Form Event Properties
 
 #### fieldName: String
 
-The name attribute of the HTML field.
+The HTML field's name attribute.
 
 #### formId: String
 
-The identifier for the Form.
+The form's identifier.
 
 #### focusDuration: Long
 
-Time elapsed since the field received focus.
+The time elapsed since the field received focus.
 
 #### title: String
 
-This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
+An attribute to describe any kind of asset. This information is presented in the
+analytics reports.
 
 ### Page Events
 
-#### Application Id: ``Page``
+#### Application ID: `Page`
 
-| Object  | Action       | Event Id         | Event Properties  |
-| ------- | ------------ | ---------------- | ----------------- |
-| Page    | DepthReached | pageDepthReached | depth             |
-| Page    | Loaded       | pageLoaded       | pageLoadTime      |
-| Page    | Unloaded     | pageUnloaded     | viewDuration      |
+| Object  | Action        | Event Id           | Event Properties |
+| ------- | ------------- | ------------------ | ---------------- |
+| `Page`  | Depth Reached | `pageDepthReached` | `depth`          |
+| `Page`  | Loaded        | `pageLoaded`       | `pageLoadTime`   |
+| `Page`  | Unloaded      | `pageUnloaded`     | `viewDuration`   |
 
 ### Page Event Properties
 
 #### depth: Long
 
-A number representing how far did the user scroll into the page.
+A number representing how far the user scrolled into the page.
 
 #### pageLoadTime: Long
 
-A performance indicator about how long a page took load.
+A performance indicator for how long a page took to load.
 
 #### viewDuration: Long
 
-Time elapsed from when the page was loaded until the page was unloaded.
+The time elapsed from when the page was loaded until the page was unloaded.
 
 ## Generic Java Client
 
@@ -157,8 +175,10 @@ public void sendAnalytics(String analyticsKey, String userId) throws Exception {
 }
 ```
 
-The `analyticsKey` is an identifier associated to your Liferay account.
-The `userId` is a unique identifier of the user generating the event. You can use the identity service to retrieve a `userId` based on some user context information:
+The `analyticsKey` is an identifier associated to your Liferay Portal account.
+The `userId` is a unique identifier of the user generating the event. You can
+use the identity service to retrieve a `userId` based on some user context
+information:
 
 ```java
 public void sendAnalytics(String analyticsKey) throws Exception {
@@ -219,12 +239,17 @@ public void sendAnalytics(String analyticsKey) throws Exception {
 private static AnalyticsClient _analyticsClient;
 ```
 
-The `analyticsKey` is an identifier associated to your Liferay account.
-If the `userId` is not passed in the message, the analytics client will internally resolve the user's identity through the identity service with the default Liferay user context.
-In this case, if you want the guest user and the authenticated user to have the same `userId` after login and the Portal property `session.enable.phishing.protection` is set to `true` (default),
-then you need to include the `ANALYTICS_USER_ID` value in the `session.phishing.protected.attributes` Portal property.
+The `analyticsKey` is an identifier associated to your Liferay Portal account.
+If the `userId` is not passed in the message, the analytics client internally
+resolves the user's identity through the identity service with the default
+Liferay user context. In this case, if you want the guest user and the
+authenticated user to have the same `userId` after login, and the Portal
+property `session.enable.phishing.protection` is set to `true` (default), then
+you must include the `ANALYTICS_USER_ID` value in the
+`session.phishing.protected.attributes` Portal property.
 
-Alternatively, you can obtain the `userId` with a custom user context by explicitly invoking the identity client service:
+Alternatively, you can obtain the `userId` with a custom user context by
+explicitly invoking the identity client service:
 
 ```java
 public void sendAnalytics(String analyticsKey) throws Exception {
@@ -270,16 +295,18 @@ m.parentNode.insertBefore(a,m)})('https://analytics.liferay.com/analytics-all-mi
 </script>
 ```
 
-The `analyticsKey` is an identifier associated to your Liferay account.
-The identity of the user generating the events will be automatically determined by the Analytics Client and the Identify Service.
-However, you can manually provide its identity by calling the `setIdentity` method of the Analytics object:
+The `analyticsKey` is an identifier associated to your Liferay Portal account. The
+identity of the user generating the events is automatically determined by the
+Analytics Client and the Identify Service. You can manually provide its
+identity, however, by calling the `Analytics` object's `setIdentity` method:
 
 ```html
     Analytics.create({ analyticsKey: 'MyAnalyticsKey' });
     Analytics.setIdentity({ email: 'foo@bar.com', name: 'Foo' });
 ```
 
-You can track custom events by invoking the `send` method of the Analytics object. For example:
+You can track custom events by invoking the `Analytics` object's `send` method.
+For example,
 
 ```html
     element.addEventListener('click', function(evt) {
@@ -287,17 +314,20 @@ You can track custom events by invoking the `send` method of the Analytics objec
     });
 ```
 
-The first argument of the `send` method identifies the event (e.g. `share`) and the second identifies the application associated to it (e.g. `Blog`).
-Through the third optional argument you can pass some extra information.
+The first argument of the `send` method identifies the event (e.g., `share`) and
+the second argument identifies the application associated to it (e.g., `Blog`).
+You can pass extra information through the third argument (optional).
 
 ### Asset Information
 
-To help the client gather more information about the assets on a page, it's helpful to annotate the asset markup with some [data attributes](https://www.w3.org/TR/2011/WD-html5-20110525/elements.html#embedding-custom-non-visible-data-with-the-data-attributes).
+To help the client gather more information about the assets on a page, it's helpful
+to annotate the asset markup with some
+[data attributes](https://www.w3.org/TR/2011/WD-html5-20110525/elements.html#embedding-custom-non-visible-data-with-the-data-attributes).
 
 #### Supported data attributes
 
-| Attribute                  | Data  | Description                                     |
-| -------------------------- | ----- | ----------------------------------------------- |
-| data-analytics-asset-id    | id    | An unique identifier for your asset.            |
-| data-analytics-asset-title | title | A descriptitve tittle about your asset.         |
-| data-analytics-asset-type  | type  | The type (File, Blog, Form, etc) of your asset. |
+| Attribute                    | Data    | Description                              |
+| ---------------------------- | ------- | ---------------------------------------- |
+| `data-analytics-asset-id`    | `id`    | A unique identifier for the asset.       |
+| `data-analytics-asset-title` | `title` | A descriptive title for the asset.       |
+| `data-analytics-asset-type`  | `type`  | The asset type (File, Blog, Form, etc.). |

@@ -32,6 +32,11 @@ public class DashboardConfigurationCategory implements ConfigurationCategory {
 	}
 
 	@Override
+	public String getCategoryIcon() {
+		return "analytics";
+	}
+
+	@Override
 	public String getCategoryKey() {
 		return CATEGORY_KEY;
 	}

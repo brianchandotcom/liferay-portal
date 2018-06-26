@@ -17,6 +17,24 @@
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Test Site Name" />
 		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AddNavigationMenuEntriesAllTypes" priority="5">
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
@@ -37,24 +55,6 @@
 		<execute macro="SiteNavigationMenu#addMenu">
 			<var name="menuName" value="Primary Menu Name 1" />
 		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddNavigationMenuEntriesAllTypes" priority="5">
-		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
@@ -114,6 +114,16 @@
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
 		<execute macro="LexiconEntry#gotoEntry">
 			<var name="rowEntry" value="Primary Menu Name 1" />
 		</execute>
@@ -165,6 +175,16 @@
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
 		<execute macro="LexiconEntry#gotoEntry">
 			<var name="rowEntry" value="Primary Menu Name 1" />
 		</execute>
@@ -203,6 +223,26 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
@@ -229,8 +269,18 @@
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
 		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Default" />
+			<var name="rowEntry" value="Primary Menu Name 1" />
 		</execute>
 
 		<execute macro="SiteNavigationMenu#addItem">
@@ -282,6 +332,16 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
@@ -317,19 +377,39 @@
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 2" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Primary Navigation" />
-			<var name="rowEntry" value="Primary Menu Name 1" />
+			<var name="rowEntry" value="Primary Menu Name 2" />
 		</execute>
 
 		<execute macro="SiteNavigationMenu#configureMenuType">
 			<var name="menuType" value="Primary Navigation" />
-			<var name="navigationMenu" value="Primary Menu Name 1" />
+			<var name="navigationMenu" value="Primary Menu Name 2" />
 		</execute>
 
 		<execute macro="SiteNavigationMenu#viewMenuType">
 			<var name="menuType" value="Primary Navigation" />
-			<var name="rowEntry" value="Primary Menu Name 1" />
+			<var name="rowEntry" value="Primary Menu Name 2" />
 		</execute>
 	</command>
 
@@ -340,14 +420,34 @@
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 2" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
 		<execute macro="SiteNavigationMenu#configureMenuType">
 			<var name="menuType" value="Secondary Navigation" />
-			<var name="navigationMenu" value="Primary Menu Name 1" />
+			<var name="navigationMenu" value="Primary Menu Name 2" />
 		</execute>
 
 		<execute macro="SiteNavigationMenu#viewMenuType">
 			<var name="menuType" value="Secondary Navigation" />
-			<var name="rowEntry" value="Primary Menu Name 1" />
+			<var name="rowEntry" value="Primary Menu Name 2" />
 		</execute>
 	</command>
 
@@ -358,19 +458,49 @@
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 2" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
 		<execute macro="SiteNavigationMenu#configureMenuType">
 			<var name="menuType" value="Social Navigation" />
-			<var name="navigationMenu" value="Primary Menu Name 1" />
+			<var name="navigationMenu" value="Primary Menu Name 2" />
 		</execute>
 
 		<execute macro="SiteNavigationMenu#viewMenuType">
 			<var name="menuType" value="Social Navigation" />
-			<var name="rowEntry" value="Primary Menu Name 1" />
+			<var name="rowEntry" value="Primary Menu Name 2" />
 		</execute>
 	</command>
 
 	<command name="DeleteNavigationMenu" priority="5">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
@@ -446,6 +576,16 @@
 			<var name="portlet" value="Navigation Menus" />
 		</execute>
 
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Rename" />
 			<var name="rowEntry" value="Primary Menu Name 1" />
@@ -464,6 +604,16 @@
 
 	<command name="ViewNavigationMenuPropertiesSidebar" priority="5">
 		<description message="This is a use case for LPS-67191." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
@@ -493,6 +643,26 @@
 	<command name="ViewSuccessMessageAfterAddingMenuItem" priority="4">
 		<description message="This is a test case for LPS-77912." />
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />

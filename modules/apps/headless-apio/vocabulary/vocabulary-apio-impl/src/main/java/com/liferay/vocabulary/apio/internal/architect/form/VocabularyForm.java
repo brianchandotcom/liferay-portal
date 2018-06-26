@@ -21,7 +21,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Instances of this class represent the values extracted from a vocabulary form.
+ * Instances of this class represent the values extracted from a vocabulary
+ * form.
  *
  * @author Eduardo Perez
  * @author Javier Gamarra

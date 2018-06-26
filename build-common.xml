@@ -1694,6 +1694,8 @@ rerun your task.
 				<istrue value="${jsp.precompile.modules}" />
 			</condition>
 
+			<property file="${project.dir}/ci.properties" />
+
 			<echoproperties destfile="${gradle.properties.file}">
 				<propertyset>
 					<propertyref name="app.server.type" />
@@ -1704,6 +1706,7 @@ rerun your task.
 					<propertyref name="git.working.branch.name" />
 					<propertyref name="jacoco.agent.configuration" />
 					<propertyref name="jacoco.agent.jar" />
+					<propertyref name="jira.project.keys" />
 					<propertyref name="jsp.precompile.enabled" />
 					<propertyref name="jsp.precompile.from.source" />
 					<propertyref name="junit.code.coverage" />

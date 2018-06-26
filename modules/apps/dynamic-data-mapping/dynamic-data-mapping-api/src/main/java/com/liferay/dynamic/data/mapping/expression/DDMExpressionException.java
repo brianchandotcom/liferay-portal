@@ -40,7 +40,7 @@ public class DDMExpressionException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of 5.0.0, As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public static class FunctionNotAllowed extends DDMExpressionException {

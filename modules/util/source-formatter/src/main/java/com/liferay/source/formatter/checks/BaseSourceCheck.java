@@ -479,6 +479,60 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return null;
 	}
 
+	protected synchronized String getPortalVersion() throws Exception {
+		if (_portalVersion != null) {
+			return _portalVersion;
+		}
+
+		_portalVersion = StringPool.BLANK;
+
+		if (!isPortalSource()) {
+			return _portalVersion;
+		}
+
+		File workingDirPropertiesFile = new File(
+			getPortalDir(), "working.dir.properties");
+
+		if (workingDirPropertiesFile.exists()) {
+			String content = FileUtil.read(workingDirPropertiesFile);
+
+			Matcher matcher = _privateBranchNamePattern.matcher(content);
+
+			if (matcher.find()) {
+				String privateBranchName = StringUtil.trim(matcher.group(1));
+
+				if (Validator.isNotNull(privateBranchName)) {
+					String s = Pattern.quote(
+						"lp.version[" + privateBranchName + "]=");
+
+					Pattern pattern = Pattern.compile(s + "(.*)");
+
+					matcher = pattern.matcher(content);
+
+					if (matcher.find()) {
+						_portalVersion = StringUtil.trim(matcher.group(1));
+					}
+				}
+			}
+		}
+		else {
+			File releaseInfoJavaFile = new File(
+				getPortalDir(), _PORTAL_KERNEL_RELEASE_INFO_JAVA_FILE_NAME);
+
+			if (releaseInfoJavaFile.exists()) {
+				String content = FileUtil.read(releaseInfoJavaFile);
+
+				Matcher matcher = _liferayVersionPattern.matcher(content);
+
+				if (matcher.find()) {
+					_portalVersion = StringUtil.trim(matcher.group(1));
+				}
+			}
+		}
+
+		return _portalVersion;
+	}
+
 	protected String getProjectName() {
 		if (_projectName != null) {
 			return _projectName;
@@ -755,6 +809,12 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private static final String _GIT_LIFERAY_PORTAL_URL =
 		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
+	private static final String _PORTAL_KERNEL_RELEASE_INFO_JAVA_FILE_NAME =
+		"portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java";
+
+	private final Pattern _liferayVersionPattern = Pattern.compile(
+		"private static final String _VERSION = \"(.*)\";");
+
 	private String _baseDirName;
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
@@ -764,6 +824,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private Document _portalCustomSQLDocument;
 	private boolean _portalSource;
+	private String _portalVersion;
+	private final Pattern _privateBranchNamePattern = Pattern.compile(
+		"private.branch.name=(.*)\n");
 	private String _projectName;
 	private String _projectPathPrefix;
 	private Map<String, Properties> _propertiesMap;

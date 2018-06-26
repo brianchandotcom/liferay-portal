@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:input name="enabled" type="toggle-switch" />
+<aui:input checked="<%= (commerceNotificationTemplate == null) ? false : commerceNotificationTemplate.getEnabled() %>" name="enabled" type="toggle-switch" />
 
 <aui:field-wrapper label="subject">
 	<liferay-ui:input-localized

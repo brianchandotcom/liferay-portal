@@ -105,7 +105,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="priority" />
 
-				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="active" type="toggle-switch" />
+				<aui:input bean="<%= commerceCurrency %>" checked="<%= (commerceCurrency == null) ? false : commerceCurrency.getActive() %>" model="<%= CommerceCurrency.class %>" name="active" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

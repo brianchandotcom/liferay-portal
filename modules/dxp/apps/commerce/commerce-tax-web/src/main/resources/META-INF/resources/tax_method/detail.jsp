@@ -45,9 +45,9 @@ long commerceTaxMethodId = commerceTaxMethod.getCommerceTaxMethodId();
 
 				<aui:input name="description" />
 
-				<aui:input name="percentage" type="toggle-switch" />
+				<aui:input checked="<%= (commerceTaxMethod == null) ? false : commerceTaxMethod.getPercentage() %>" name="percentage" type="toggle-switch" />
 
-				<aui:input name="active" type="toggle-switch" />
+				<aui:input checked="<%= (commerceTaxMethod == null) ? false : commerceTaxMethod.getActive() %>" name="active" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

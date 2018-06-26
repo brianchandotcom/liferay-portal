@@ -88,9 +88,9 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 
 				</aui:select>
 
-				<aui:input name="displayAvailability" type="toggle-switch" />
+				<aui:input checked="<%= (cpDefinitionInventory == null) ? false : cpDefinitionInventory.getDisplayAvailability() %>" name="displayAvailability" type="toggle-switch" />
 
-				<aui:input name="displayStockQuantity" type="toggle-switch" />
+				<aui:input checked="<%= (cpDefinitionInventory == null) ? false : cpDefinitionInventory.getDisplayStockQuantity() %>" name="displayStockQuantity" type="toggle-switch" />
 
 				<liferay-ui:error exception="<%= NumberFormatException.class %>" message="there-was-an-error-processing-one-or-more-of-the-quantities-entered" />
 
@@ -98,7 +98,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 					<aui:validator name="digits" />
 				</aui:input>
 
-				<aui:input label="allow-back-orders" name="backOrders" type="toggle-switch" />
+				<aui:input checked="<%= (cpDefinitionInventory == null) ? true : cpDefinitionInventory.getAllowBackOrders() %>" label="allow-back-orders" name="backOrders" type="toggle-switch" />
 
 				<aui:input name="minOrderQuantity">
 					<aui:validator name="digits" />

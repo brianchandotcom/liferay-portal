@@ -67,7 +67,7 @@ long commercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId(
 
 			<aui:input name="priority" />
 
-			<aui:input name="active" type="toggle-switch" />
+			<aui:input checked="<%= (commercePaymentMethod == null) ? false : commercePaymentMethod.getActive() %>" name="active" type="toggle-switch" />
 		</aui:fieldset>
 
 		<aui:fieldset>

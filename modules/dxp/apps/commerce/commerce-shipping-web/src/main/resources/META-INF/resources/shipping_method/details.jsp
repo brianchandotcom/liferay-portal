@@ -64,7 +64,7 @@ long commerceShippingMethodId = commerceShippingMethod.getCommerceShippingMethod
 
 			<aui:input name="priority" />
 
-			<aui:input name="active" type="toggle-switch" />
+			<aui:input checked="<%= (commerceShippingMethod == null) ? false : commerceShippingMethod.getActive() %>" name="active" type="toggle-switch" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

@@ -62,11 +62,11 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 
 			</aui:select>
 
-			<aui:input label="use-in-faceted-navigation" name="facetable" type="toggle-switch" />
+			<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : cpDefinitionOptionRel.getFacetable() %>" label="use-in-faceted-navigation" name="facetable" type="toggle-switch" />
 
-			<aui:input name="required" type="toggle-switch" />
+			<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : cpDefinitionOptionRel.getRequired() %>" name="required" type="toggle-switch" />
 
-			<aui:input name="skuContributor" type="toggle-switch" />
+			<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : cpDefinitionOptionRel.getSkuContributor() %>" name="skuContributor" type="toggle-switch" />
 
 			<aui:input name="priority" />
 

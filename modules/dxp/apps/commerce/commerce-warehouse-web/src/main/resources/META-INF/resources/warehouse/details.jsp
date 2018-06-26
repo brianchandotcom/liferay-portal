@@ -37,5 +37,5 @@ CommerceWarehouse commerceWarehouse = commerceWarehousesDisplayContext.getCommer
 
 	<aui:input name="description" />
 
-	<aui:input name="active" type="toggle-switch" />
+	<aui:input checked="<%= (commerceWarehouse == null) ? false : commerceWarehouse.getActive() %>" name="active" type="toggle-switch" />
 </aui:fieldset>

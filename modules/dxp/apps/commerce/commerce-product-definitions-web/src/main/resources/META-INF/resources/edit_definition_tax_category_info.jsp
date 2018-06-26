@@ -50,9 +50,9 @@ List<CPTaxCategory> cpTaxCategories = cpDefinitionTaxCategoryDisplayContext.getC
 
 				</aui:select>
 
-				<aui:input name="taxExempt" type="toggle-switch" />
+				<aui:input checked="<%= (cpDefinition == null) ? false : cpDefinition.getTaxExempt() %>" name="taxExempt" type="toggle-switch" />
 
-				<aui:input label="telecommunication-broadcasting-or-electronic-services" name="telcoOrElectronics" type="toggle-switch" />
+				<aui:input checked="<%= (cpDefinition == null) ? false : cpDefinition.getTelcoOrElectronics() %>" label="telecommunication-broadcasting-or-electronic-services" name="telcoOrElectronics" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

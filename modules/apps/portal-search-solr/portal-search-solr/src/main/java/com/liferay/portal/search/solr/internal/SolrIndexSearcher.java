@@ -256,17 +256,17 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 				continue;
 			}
 
-			Map<String, JSONObject> facetParameters = getFacetParameters(facet);
-
 			String tag = FacetUtil.getAggregationName(facet);
+
+			addFilterQuery(postFilterQueries, facet, tag, searchContext);
+
+			Map<String, JSONObject> facetParameters = getFacetParameters(facet);
 
 			excludeTags(
 				facetParameters,
 				getExcludeTagsString(tag, facetProcessorContext));
 
 			jsonObjects.putAll(facetParameters);
-
-			addFilterQuery(postFilterQueries, facet, tag, searchContext);
 		}
 
 		if (!jsonObjects.isEmpty()) {

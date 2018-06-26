@@ -22,7 +22,9 @@ AddressCommerceShippingOriginLocatorDisplayContext addressCommerceShippingOrigin
 
 <div class="row">
 	<div class="col-md-6">
-		<aui:input id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--name--" %>' name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--name--" %>' value="<%= addressCommerceShippingOriginLocatorDisplayContext.getName() %>" />
+		<aui:input id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--name--" %>' name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--name--" %>' value="<%= addressCommerceShippingOriginLocatorDisplayContext.getName() %>">
+			<aui:validator name="required" />
+		</aui:input>
 
 		<aui:select id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--commerceCountryId--" %>' label="country" name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--commerceCountryId--" %>' />
 

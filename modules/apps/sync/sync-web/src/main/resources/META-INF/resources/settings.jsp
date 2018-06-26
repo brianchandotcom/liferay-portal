@@ -90,6 +90,7 @@ if (deployed && oAuthEnabled) {
 						<aui:validator name="min">1</aui:validator>
 					</aui:input>
 				</div>
+
 				<div class="form-group-item">
 					<aui:input helpMessage="poll-interval-help" label="poll-interval" name="pollInterval" type="text" value="<%= pollInterval %>" wrapperCssClass="lfr-input-text-container">
 						<aui:validator name="digits" />
@@ -104,6 +105,7 @@ if (deployed && oAuthEnabled) {
 						<aui:validator name="digits" />
 					</aui:input>
 				</div>
+
 				<div class="form-group-item">
 					<aui:input helpMessage="max-upload-rate-help" label="max-upload-rate" name="maxUploadRate" type="text" value="<%= maxUploadRate %>" wrapperCssClass="lfr-input-text-container">
 						<aui:validator name="digits" />

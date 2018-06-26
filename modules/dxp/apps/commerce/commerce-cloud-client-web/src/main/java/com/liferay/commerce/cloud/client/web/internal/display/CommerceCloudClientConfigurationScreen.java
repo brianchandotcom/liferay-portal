@@ -49,7 +49,7 @@ public class CommerceCloudClientConfigurationScreen
 
 	@Override
 	public String getCategoryKey() {
-		return "commerce";
+		return "cloud";
 	}
 
 	@Override

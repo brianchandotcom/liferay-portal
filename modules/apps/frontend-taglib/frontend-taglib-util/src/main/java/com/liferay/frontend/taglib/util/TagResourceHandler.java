@@ -180,7 +180,7 @@ public class TagResourceHandler {
 
 	static {
 		_webKeysEnumMap.put(Position.BOTTOM, WebKeys.PAGE_BODY_BOTTOM);
-		_webKeysEnumMap.put(Position.TOP, WebKeys.PAGE_BODY_TOP);
+		_webKeysEnumMap.put(Position.TOP, WebKeys.PAGE_TOP);
 	}
 
 	private final Bundle _bundle;

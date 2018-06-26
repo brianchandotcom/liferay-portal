@@ -97,9 +97,9 @@ public class WorkflowTaskNestedCollectionResource
 		).addDate(
 			"expires", WorkflowTask::getDueDate
 		).addLinkedModel(
-			"blogPost", BlogPostingIdentifier.class, this::_getBlogsEntryId
+			"blogPost", BlogPostingIdentifier.class, this::_getLinkedModelId
 		).addLinkedModel(
-			"comment", CommentIdentifier.class, this::_getCommentId
+			"comment", CommentIdentifier.class, this::_getLinkedModelId
 		).addString(
 			"definitionName", WorkflowTask::getWorkflowDefinitionName
 		).addString(
@@ -111,11 +111,7 @@ public class WorkflowTaskNestedCollectionResource
 		).build();
 	}
 
-	private Long _getBlogsEntryId(WorkflowTask workflowTask) {
-		return GetterUtil.getLong(_getEntryClassPK(workflowTask));
-	}
-
-	private Long _getCommentId(WorkflowTask workflowTask) {
+	private Long _getLinkedModelId(WorkflowTask workflowTask) {
 		return GetterUtil.getLong(_getEntryClassPK(workflowTask));
 	}
 

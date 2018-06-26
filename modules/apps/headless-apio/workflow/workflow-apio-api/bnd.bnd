@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Workflow Apio API
+Bundle-SymbolicName: com.liferay.workflow.apio.api
+Bundle-Version: 2.0.0
+Export-Package: com.liferay.workflow.apio.architect.identifier

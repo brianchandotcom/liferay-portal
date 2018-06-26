@@ -3,10 +3,7 @@
 		<var method="TestPropsUtil#get('test.base.dir.name')" name="baseDir" />
 		<var method="TestPropsUtil#get('test.dependencies.dir.name')" name="dependenciesDir" />
 
-		<execute class="com.liferay.poshi.runner.util.FileUtil" method="read">
-			<arg value="${baseDir}${dependenciesDir}/${fileName}" />
-			<return name="fileContent" />
-		</execute>
+		<var method="FileUtil#read('${baseDir}${dependenciesDir}/${fileName}')" name="fileContent" />
 
 		<return value="${fileContent}" />
 	</command>
@@ -66,9 +63,7 @@
 	<command name="getTestName">
 		<var method="TestPropsUtil#get('test.name')" name="namespacedTestName" />
 
-		<execute class="com.liferay.poshi.runner.PoshiRunnerStackTraceUtil" method="getCurrentNamespace">
-			<return name="namespace" />
-		</execute>
+		<var method="PoshiRunnerStackTraceUtil#getCurrentNamespace()" name="namespace" />
 
 		<var method="StringUtil#replace('${namespacedTestName}', '${namespace}.', '')" name="testName" />
 

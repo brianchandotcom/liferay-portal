@@ -3,11 +3,7 @@
 		<if>
 			<isset var="groupDescription" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${groupDescription}" />
-					<arg value="UTF-8" />
-					<return name="groupDescriptionEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${groupDescription}')" name="groupDescriptionEncoded" />
 
 				<var name="groupDescriptionMap"><![CDATA[{"en_US":"${groupDescriptionEncoded}"}]]></var>
 			</then>
@@ -19,11 +15,7 @@
 		<if>
 			<isset var="groupName" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${groupName}" />
-					<arg value="UTF-8" />
-					<return name="groupNameEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${groupName}')" name="groupNameEncoded" />
 
 				<var name="groupNameMap"><![CDATA[{"en_US":"${groupNameEncoded}"}]]></var>
 			</then>
@@ -63,11 +55,7 @@
 
 		<echo message="## * Group Name: ${groupName}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$['groupId']" />
-			<return name="groupId" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$[\'groupId\']')" name="groupId" />
 	</command>
 
 	<command name="_assignGroupRoleToUser">
@@ -133,11 +121,7 @@
 
 		<echo message="## * User Email Address: ${userEmailAddress}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="temp" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
 	<command name="_assignUserToGroup">
@@ -186,11 +170,7 @@
 
 		<echo message="## * User Email Address: ${userEmailAddress}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="temp" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
 	<command name="_deleteGroup">
@@ -222,11 +202,7 @@
 				-d groupId=${groupId}
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="temp" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
 	<command name="addGroup">
@@ -373,25 +349,11 @@
 				-u test@liferay.com:test
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']" />
-			<return name="groupId" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$.[?(@[\'nameCurrentValue\'] == \'${groupName}\')][\'groupId\']')" name="groupId" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${groupId}" />
-			<arg value="[&quot;" />
-			<arg value="" />
-			<return name="groupId" />
-		</execute>
+		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${groupId}" />
-			<arg value="&quot;]" />
-			<arg value="" />
-			<return name="groupId" />
-		</execute>
+		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
 
 		<return value="${groupId}" />
 	</command>
@@ -419,11 +381,7 @@
 				-u test@liferay.com:test
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['nameCurrentValue']" />
-			<return name="groupName" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'nameCurrentValue\']')" name="groupName" />
 
 		<return value="${groupName}" />
 	</command>

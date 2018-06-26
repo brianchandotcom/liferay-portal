@@ -9,11 +9,7 @@
 				-u test@liferay.com:test
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['companyId']" />
-			<return name="companyId" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'companyId\']')" name="companyId" />
 
 		<return value="${companyId}" />
 	</command>

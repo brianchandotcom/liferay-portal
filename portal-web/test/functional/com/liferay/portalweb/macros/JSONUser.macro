@@ -12,11 +12,7 @@
 		<if>
 			<isset var="userFirstName" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${userFirstName}" />
-					<arg value="UTF-8" />
-					<return name="userFirstNameEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${userFirstName}')" name="userFirstNameEncoded" />
 			</then>
 			<else>
 				<fail message="Please set 'userFirstName'." />
@@ -26,11 +22,7 @@
 		<if>
 			<isset var="userLastName" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${userLastName}" />
-					<arg value="UTF-8" />
-					<return name="userLastNameEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${userLastName}')" name="userLastNameEncoded" />
 			</then>
 			<else>
 				<fail message="Please set 'userLastName'." />
@@ -96,11 +88,7 @@
 
 		<echo message="## * Screen Name: ${userScreenName}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$['userId']" />
-			<return name="userId" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$[\'userId\']')" name="userId" />
 	</command>
 
 	<command name="_deleteUser">
@@ -132,11 +120,7 @@
 
 		<echo message="## * Email Address: ${userEmailAddress}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="" />
-			<return name="temporary" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '')" name="temporary" />
 	</command>
 
 	<command name="addUser">
@@ -242,11 +226,7 @@
 				-u test@liferay.com:test
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['emailAddress']" />
-			<return name="userEmailAddress" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'emailAddress\']')" name="userEmailAddress" />
 
 		<return value="${userEmailAddress}" />
 	</command>
@@ -274,11 +254,7 @@
 				-u test@liferay.com:test
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['firstName']" />
-			<return name="userFirstName" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'firstName\']')" name="userFirstName" />
 
 		<return value="${userFirstName}" />
 	</command>
@@ -306,11 +282,7 @@
 				-u test@liferay.com:test
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['userId']" />
-			<return name="userId" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'userId\']')" name="userId" />
 
 		<return value="${userId}" />
 	</command>
@@ -338,43 +310,20 @@
 				-u test@liferay.com:test
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="userCount" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$')" name="userCount" />
 
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-company-users/company-id/${companyId}/start/0/end/${userCount} \
 				-u test@liferay.com:test \
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$..['userId']" />
-			<return name="userIds" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$..[\'userId\']')" name="userIds" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${userIds}" />
-			<arg value="[" />
-			<arg value="" />
-			<return name="userIds" />
-		</execute>
+		<var method="StringUtil#replace('${userIds}', '[', '')" name="userIds" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${userIds}" />
-			<arg value="]" />
-			<arg value="" />
-			<return name="userIds" />
-		</execute>
+		<var method="StringUtil#replace('${userIds}', ']', '')" name="userIds" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${userIds}" />
-			<arg value="&quot;" />
-			<arg value="" />
-			<return name="userIds" />
-		</execute>
+		<var method="StringUtil#replace('${userIds}', '&quot;', '')" name="userIds" />
 
 		<for list="${userIds}" param="userId">
 			<execute macro="JSONUser#getUserFirstName">

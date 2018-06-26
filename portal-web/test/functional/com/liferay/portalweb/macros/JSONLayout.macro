@@ -12,11 +12,7 @@
 		<if>
 			<isset var="layoutName" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${layoutName}" />
-					<arg value="UTF-8" />
-					<return name="layoutNameEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${layoutName}')" name="layoutNameEncoded" />
 			</then>
 			<else>
 				<fail message="Please set 'layoutName'." />
@@ -52,11 +48,7 @@
 
 		<echo message="## * Layout Name: ${layoutName}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$['layoutId']" />
-			<return name="layoutId" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$[\'layoutId\']')" name="layoutId" />
 	</command>
 
 	<command name="addLayoutByGroupName">

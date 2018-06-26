@@ -4,11 +4,7 @@
 		<if>
 			<isset var="organizationName" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${organizationName}" />
-					<arg value="UTF-8" />
-					<return name="organizationNameEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${organizationName}')" name="organizationNameEncoded" />
 			</then>
 			<else>
 				<fail message="Please set 'organizationName'." />
@@ -47,11 +43,7 @@
 
 		<echo message="## * Organization Site: ${organizationSite}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$['organizationId']" />
-			<return name="organizationId" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$[\'organizationId\']')" name="organizationId" />
 	</command>
 
 	<command name="_assignUserToOrganization">
@@ -100,11 +92,7 @@
 
 		<echo message="## * User Email Address: ${userEmailAddress}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="temp" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
 	<command name="_deleteOrganization">
@@ -136,11 +124,7 @@
 
 		<echo message="## * Organization Name: ${organizationName}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$['organizationId']" />
-			<return name="organizationId" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$['organizationId']')" name="organizationId" />
 	</command>
 
 	<command name="addOrganization">
@@ -237,25 +221,11 @@
 				-u test@liferay.com:test
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$.[?(@['name'] == '${organizationName}')]['organizationId']" />
-			<return name="organizationId" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$.[?(@[\'name\'] == \'${organizationName}\')][\'organizationId\']')" name="organizationId" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${organizationId}" />
-			<arg value="[&quot;" />
-			<arg value="" />
-			<return name="organizationId" />
-		</execute>
+		<var method="StringUtil#replace('${organizationId}', '[&quot;', '')" name="organizationId" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${organizationId}" />
-			<arg value="&quot;]" />
-			<arg value="" />
-			<return name="organizationId" />
-		</execute>
+		<var method="StringUtil#replace('${organizationId}', '&quot;]', '')" name="organizationId" />
 
 		<return value="${organizationId}" />
 	</command>
@@ -279,11 +249,7 @@
 				-u test@liferay.com:test
 		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['name']" />
-			<return name="organizationName" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'name\']')" name="organizationName" />
 
 		<return value="${organizationName}" />
 	</command>

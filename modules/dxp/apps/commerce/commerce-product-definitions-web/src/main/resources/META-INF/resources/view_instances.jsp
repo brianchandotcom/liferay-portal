@@ -194,7 +194,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<liferay-ui:search-iterator
 							displayStyle="<%= displayStyle %>"
 							markupView="lexicon"
-							searchContainer="<%= cpInstanceSearchContainer %>"
 						/>
 					</liferay-ui:search-container>
 				</div>

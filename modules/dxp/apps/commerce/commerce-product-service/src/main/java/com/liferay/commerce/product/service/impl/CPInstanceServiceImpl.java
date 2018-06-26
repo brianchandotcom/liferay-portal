@@ -168,8 +168,14 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			int status, int start, int end, Sort sort)
 		throws PortalException {
 
-		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+		if (cpDefinitionId > 0) {
+			_cpDefinitionModelResourcePermission.check(
+				getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+		}
+		else {
+			_portletResourcePermission.check(
+				getPermissionChecker(), groupId, CPActionKeys.MANAGE_CATALOG);
+		}
 
 		return cpInstanceLocalService.searchCPDefinitionInstances(
 			companyId, groupId, cpDefinitionId, keywords, status, start, end,

@@ -60,7 +60,7 @@ public class InventoryDataJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 			PrintWriter printWriter = response.getWriter();
 
-			printWriter.println("<p>" + cpInstanceQuantity + "</p>");
+			printWriter.println(cpInstanceQuantity);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

@@ -72,6 +72,10 @@ public class SiteNavigationMenuLocalServiceImpl
 			privateSiteNavigationMenu = addSiteNavigationMenu(
 				userId, groupId, "Default Private",
 				SiteNavigationConstants.TYPE_PRIVATE, false, serviceContext);
+
+			_addSiteNavigationMenuItems(
+				privateSiteNavigationMenu, 0, true,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
 		}
 
 		if ((publicSiteNavigationMenu == null) &&
@@ -80,17 +84,7 @@ public class SiteNavigationMenuLocalServiceImpl
 			publicSiteNavigationMenu = addSiteNavigationMenu(
 				userId, groupId, "Default",
 				SiteNavigationConstants.TYPE_PRIMARY, true, serviceContext);
-		}
 
-		// Site navigation menu items
-
-		if (privateSiteNavigationMenu != null) {
-			_addSiteNavigationMenuItems(
-				privateSiteNavigationMenu, 0, true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
-		}
-
-		if (publicSiteNavigationMenu != null) {
 			_addSiteNavigationMenuItems(
 				publicSiteNavigationMenu, 0, false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);

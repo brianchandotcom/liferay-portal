@@ -15,8 +15,9 @@
 package com.liferay.portal.search.web.internal.upgrade.v2_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.web.constants.SearchPortletKeys;
+
+import java.sql.PreparedStatement;
 
 /**
  * @author Bryan Engler
@@ -29,12 +30,17 @@ public class UpgradeSearchPortlet extends UpgradeProcess {
 	}
 
 	protected void upgradePortletPreferencesPortletId() throws Exception {
-		runSQL(
-			StringBundler.concat(
-				"update PortletPreferences set portletId ='",
-				SearchPortletKeys.SEARCH,
-				"_INSTANCE_templateSearch' where portletId='",
-				SearchPortletKeys.SEARCH, "' and plid='0'"));
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update PortletPreferences set portletId = ? where " +
+					"portletId= ? and plid = ?")) {
+
+			ps.setString(
+				1, SearchPortletKeys.SEARCH + "_INSTANCE_templateSearch");
+			ps.setString(2, SearchPortletKeys.SEARCH);
+			ps.setLong(3, 0);
+
+			ps.executeUpdate();
+		}
 	}
 
 }

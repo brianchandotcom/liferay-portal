@@ -26,6 +26,8 @@ if ((commerceDiscount != null) && !commerceDiscount.getUsePercentage()) {
 %>
 
 <div id="<portlet:namespace />couponCodeContainer">
+	<liferay-ui:error exception="<%= CommerceDiscountCouponCodeException.class %>" message="please-enter-a-valid-coupon-code" />
+
 	<div class="use-coupon-code-header">
 		<aui:input bean="<%= commerceDiscount %>" checked="<%= useCouponCode %>" model="<%= CommerceDiscount.class %>" name="useCouponCode" type="toggle-switch" value="<%= useCouponCode %>" />
 	</div>
@@ -149,8 +151,6 @@ if ((commerceDiscount != null) && !Objects.equals(commerceDiscount.getLimitation
 %>
 
 <aui:input bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="limitationTimes" wrapperCssClass="<%= limitationTimesWrapperCssClass %>" />
-
-<aui:input bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="cumulative" type="toggle-switch" />
 
 <aui:input bean="<%= commerceDiscount %>" checked="<%= (commerceDiscount == null) ? false : commerceDiscount.getActive() %>" model="<%= CommerceDiscount.class %>" name="active" type="toggle-switch" />
 

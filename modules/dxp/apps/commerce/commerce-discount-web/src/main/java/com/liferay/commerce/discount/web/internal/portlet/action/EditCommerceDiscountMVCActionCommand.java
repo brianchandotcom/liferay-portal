@@ -15,6 +15,7 @@
 package com.liferay.commerce.discount.web.internal.portlet.action;
 
 import com.liferay.commerce.discount.constants.CommerceDiscountPortletKeys;
+import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException;
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel;
@@ -102,8 +103,16 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchDiscountException ||
-				e instanceof PrincipalException) {
+			if (e instanceof CommerceDiscountCouponCodeException) {
+				hideDefaultErrorMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName", "editCommerceDiscount");
+			}
+			else if (e instanceof NoSuchDiscountException ||
+					 e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
@@ -163,7 +172,6 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "limitationType");
 		int limitationTimes = ParamUtil.getInteger(
 			actionRequest, "limitationTimes");
-		boolean cumulative = ParamUtil.getBoolean(actionRequest, "cumulative");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		int displayDateMonth = ParamUtil.getInteger(
@@ -212,21 +220,21 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			commerceDiscount = _commerceDiscountService.addCommerceDiscount(
 				title, target, useCouponCode, couponCode, usePercentage,
 				maximumDiscountAmount, level1, level2, level3, limitationType,
-				limitationTimes, cumulative, active, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				limitationTimes, active, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 		}
 		else {
 			commerceDiscount = _commerceDiscountService.updateCommerceDiscount(
 				commerceDiscountId, title, target, useCouponCode, couponCode,
 				usePercentage, maximumDiscountAmount, level1, level2, level3,
-				limitationType, limitationTimes, cumulative, active,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				limitationType, limitationTimes, active, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 
 		if (commerceDiscount != null) {

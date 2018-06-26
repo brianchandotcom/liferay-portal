@@ -18,7 +18,7 @@ import java.io.Serializable;
 
 /**
  * @author     Leonardo Barros
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of 5.0.0, As of Judson, with no direct replacement
  */
 @Deprecated
 public enum DDMFormFieldRuleType implements Serializable {

@@ -24,7 +24,7 @@ import java.util.List;
 public interface DDMDataProvider {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of 5.0.0, As of Judson, replaced by {@link
 	 *             #getData(DDMDataProviderRequest)}
 	 */
 	@Deprecated

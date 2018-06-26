@@ -106,6 +106,9 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 								<a href="<%= cpCatalogEntry.getDefaultImageFileUrl() %>" tabindex="-1">
 									<img class="img-fluid" id="<portlet:namespace />full-image" src="<%= cpCatalogEntry.getDefaultImageFileUrl() %>">
 								</a>
+								<div class="easyzoom-flyout">
+									<img src="<%= cpCatalogEntry.getDefaultImageFileUrl() %>" style="position: absolute; top: 0px; left: 0px;">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -406,22 +409,6 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 		</c:if>
 	</div>
 </div>
-
-<aui:script>
-	var easyzoom = $('.easyzoom').easyZoom();
-	var easyzoomApi = easyzoom.filter('.easyzoom').data('easyZoom');
-
-	$('.product-detail-image-widget .thumb-image').on(
-		'click',
-		function(event) {
-			var $this = $(this);
-
-			event.preventDefault();
-
-			easyzoomApi.swap($this.data('standard'), $this.attr('href'));
-		}
-	);
-</aui:script>
 
 <aui:script use="liferay-commerce-product-content">
 	var productContent = new Liferay.Portlet.ProductContent(

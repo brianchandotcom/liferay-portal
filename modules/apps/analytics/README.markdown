@@ -175,9 +175,9 @@ public void sendAnalytics(String analyticsKey, String userId) throws Exception {
 }
 ```
 
-The `analyticsKey` is an identifier associated to your Liferay account. The
-`userId` is a unique identifier of the user generating the event. You can use
-the identity service to retrieve a `userId` based on some user context
+The `analyticsKey` is an identifier associated to your Liferay Portal account.
+The `userId` is a unique identifier of the user generating the event. You can
+use the identity service to retrieve a `userId` based on some user context
 information:
 
 ```java
@@ -239,13 +239,13 @@ public void sendAnalytics(String analyticsKey) throws Exception {
 private static AnalyticsClient _analyticsClient;
 ```
 
-The `analyticsKey` is an identifier associated to your Liferay account. If the
-`userId` is not passed in the message, the analytics client internally resolves
-the user's identity through the identity service with the default Liferay user
-context. In this case, if you want the guest user and the authenticated user to
-have the same `userId` after login, and the Portal property
-`session.enable.phishing.protection` is set to `true` (default), then you need
-to include the `ANALYTICS_USER_ID` value in the
+The `analyticsKey` is an identifier associated to your Liferay Portal account.
+If the `userId` is not passed in the message, the analytics client internally
+resolves the user's identity through the identity service with the default
+Liferay user context. In this case, if you want the guest user and the
+authenticated user to have the same `userId` after login, and the Portal
+property `session.enable.phishing.protection` is set to `true` (default), then
+you must include the `ANALYTICS_USER_ID` value in the
 `session.phishing.protected.attributes` Portal property.
 
 Alternatively, you can obtain the `userId` with a custom user context by
@@ -295,18 +295,18 @@ m.parentNode.insertBefore(a,m)})('https://analytics.liferay.com/analytics-all-mi
 </script>
 ```
 
-The `analyticsKey` is an identifier associated to your Liferay account. The
+The `analyticsKey` is an identifier associated to your Liferay Portal account. The
 identity of the user generating the events is automatically determined by the
 Analytics Client and the Identify Service. You can manually provide its
-identity, however, by calling the `setIdentity` method of the Analytics object:
+identity, however, by calling the `Analytics` object's `setIdentity` method:
 
 ```html
     Analytics.create({ analyticsKey: 'MyAnalyticsKey' });
     Analytics.setIdentity({ email: 'foo@bar.com', name: 'Foo' });
 ```
 
-You can track custom events by invoking the `send` method of the Analytics
-object. For example,
+You can track custom events by invoking the `Analytics` object's `send` method.
+For example,
 
 ```html
     element.addEventListener('click', function(evt) {
@@ -314,9 +314,9 @@ object. For example,
     });
 ```
 
-The first argument of the `send` method identifies the event (e.g. `share`) and
-the second identifies the application associated to it (e.g. `Blog`). Through
-the third optional argument you can pass some extra information.
+The first argument of the `send` method identifies the event (e.g., `share`) and
+the second argument identifies the application associated to it (e.g., `Blog`).
+You can pass extra information through the third argument (optional).
 
 ### Asset Information
 

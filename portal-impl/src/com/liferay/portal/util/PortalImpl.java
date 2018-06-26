@@ -7592,9 +7592,12 @@ public class PortalImpl implements Portal {
 			return getPlidFromPortletId(layouts, portletId, scopeGroupId);
 		}
 		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
 
-		return -1;
+		return LayoutConstants.DEFAULT_PLID;
 	}
 
 	protected List<Portlet> filterControlPanelPortlets(

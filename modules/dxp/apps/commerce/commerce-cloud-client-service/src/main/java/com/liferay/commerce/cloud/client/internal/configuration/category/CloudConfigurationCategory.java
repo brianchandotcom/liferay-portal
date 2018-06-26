@@ -30,6 +30,11 @@ public class CloudConfigurationCategory implements ConfigurationCategory {
 	}
 
 	@Override
+	public String getCategoryIcon() {
+		return "api-web";
+	}
+
+	@Override
 	public String getCategoryKey() {
 		return _CATEGORY_KEY;
 	}

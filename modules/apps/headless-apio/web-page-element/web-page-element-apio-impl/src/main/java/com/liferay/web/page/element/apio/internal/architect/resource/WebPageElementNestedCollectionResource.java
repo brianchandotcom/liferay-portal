@@ -26,6 +26,7 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
@@ -128,6 +129,8 @@ public class WebPageElementNestedCollectionResource
 			"creator", PersonIdentifier.class, JournalArticle::getUserId
 		).addLocalizedStringByLocale(
 			"renderedContent", this::_getJournalArticleHtml
+		).addRelatedCollection(
+			"comments", CommentIdentifier.class
 		).addString(
 			"description", JournalArticleWrapper::getDescription
 		).addString(

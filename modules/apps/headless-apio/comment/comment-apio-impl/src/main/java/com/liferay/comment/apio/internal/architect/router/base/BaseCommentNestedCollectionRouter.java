@@ -46,8 +46,20 @@ public abstract class BaseCommentNestedCollectionRouter
 		NestedCollectionRoutes.Builder<Comment, Long, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, PermissionChecker.class
+			this::getPageItems, PermissionChecker.class
 		).build();
+	}
+
+	protected void checkViewPermission(
+			PermissionChecker permissionChecker, long groupId, String className,
+			long classPK)
+		throws PortalException {
+
+		DiscussionPermission discussionPermission =
+			getCommentManager().getDiscussionPermission(permissionChecker);
+
+		discussionPermission.checkViewPermission(
+			permissionChecker.getCompanyId(), groupId, className, classPK);
 	}
 
 	/**
@@ -69,19 +81,7 @@ public abstract class BaseCommentNestedCollectionRouter
 	protected abstract GroupedModel getGroupedModel(long classPK)
 		throws PortalException;
 
-	private void _checkViewPermission(
-			PermissionChecker permissionChecker, long groupId, String className,
-			long classPK)
-		throws PortalException {
-
-		DiscussionPermission discussionPermission =
-			getCommentManager().getDiscussionPermission(permissionChecker);
-
-		discussionPermission.checkViewPermission(
-			permissionChecker.getCompanyId(), groupId, className, classPK);
-	}
-
-	private PageItems<Comment> _getPageItems(
+	protected PageItems<Comment> getPageItems(
 			Pagination pagination, long classPK,
 			PermissionChecker permissionChecker)
 		throws PortalException {
@@ -96,7 +96,7 @@ public abstract class BaseCommentNestedCollectionRouter
 			return new PageItems<>(Collections.emptyList(), 0);
 		}
 
-		_checkViewPermission(
+		checkViewPermission(
 			permissionChecker, groupedModel.getGroupId(),
 			groupedModel.getModelClassName(), classPK);
 

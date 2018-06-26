@@ -16,7 +16,7 @@ package com.liferay.talend.runtime.reader;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.talend.avro.ResourceEntityConverter;
+import com.liferay.talend.avro.ResourceNodeConverter;
 import com.liferay.talend.runtime.LiferaySource;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
@@ -127,7 +127,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		try {
 			AvroConverter<Object, IndexedRecord> avroConverter = getConverter();
 
-			return avroConverter.convertToAvro(getCurrentObject());
+			return avroConverter.convertToAvro(getCurrentJsonNode());
 		}
 		catch (IOException ioe) {
 			throw new ComponentException(ioe);
@@ -218,7 +218,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		throws IOException {
 
 		if (_resourceEntityAvroConverter == null) {
-			_resourceEntityAvroConverter = new ResourceEntityConverter(
+			_resourceEntityAvroConverter = new ResourceNodeConverter(
 				getSchema());
 		}
 

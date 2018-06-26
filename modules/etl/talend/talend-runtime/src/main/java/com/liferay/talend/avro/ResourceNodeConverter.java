@@ -18,7 +18,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -66,7 +65,9 @@ public class ResourceNodeConverter
 
 			normalizedJsonFiledNames.add(fieldName);
 
-			for (Field schemaField : _schemaFields) {
+			i++;
+
+			for (Field schemaField : schemaFields) {
 				if (fieldName.equals(schemaField.name())) {
 					pos = schemaField.pos();
 
@@ -81,12 +82,13 @@ public class ResourceNodeConverter
 					resourceJsonNode.asText());
 
 				record.put(pos, value);
+				pos = -1;
 			}
 			else {
-				if ("_type".equals(fieldName)) {
+				if ("_type".equals(fieldName) || "_context".equals(fieldName)) {
 
-					// It is not needed for the schema fields as we already
-					// generated the schema based on it
+					// These fields are not needed for the schema as we already
+					// generated the schema based on them
 
 				}
 				else {
@@ -110,7 +112,5 @@ public class ResourceNodeConverter
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		ResourceNodeConverter.class);
-
-	private List<Field> _schemaFields;
 
 }

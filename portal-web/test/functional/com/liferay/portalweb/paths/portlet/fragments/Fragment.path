@@ -133,7 +133,7 @@
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_CONTENT</td>
-	<td>//lfr-editable[contains(.,'${key_text}')]</td>
+	<td>//div[contains(.,'${key_text}') and contains(@id,'fragment-')]</td>
 	<td></td>
 </tr>
 </tbody>

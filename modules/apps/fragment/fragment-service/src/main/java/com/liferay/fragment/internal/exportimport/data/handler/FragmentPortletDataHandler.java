@@ -84,6 +84,7 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "entries", true, false, null,
 				FragmentEntry.class.getName()));
 		setPublishToLiveByDefault(true);
+		setStagingControls(getExportControls());
 	}
 
 	@Override

@@ -18,7 +18,9 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.dm.gradle.plugins.bundle.BundleExtension;
@@ -29,7 +31,6 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.AuthenticationContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
-import org.gradle.api.initialization.Settings;
 import org.gradle.internal.authentication.DefaultBasicAuthentication;
 
 /**
@@ -135,8 +136,8 @@ public class GradlePluginsDefaultsUtil {
 		}
 	}
 
-	public static String[] getBuildProfileFileNames(Settings settings) {
-		String buildProfile = System.getProperty("build.profile");
+	public static Set<String> getBuildProfileFileNames(
+		String buildProfile, boolean publicBranch) {
 
 		if (Validator.isNull(buildProfile)) {
 			return null;
@@ -144,14 +145,22 @@ public class GradlePluginsDefaultsUtil {
 
 		String suffix = "private";
 
-		if (GradleUtil.getProperty(settings, "liferay.releng.public", true)) {
+		if (publicBranch) {
 			suffix = "public";
 		}
 
-		return new String[] {
-			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile + "-" + suffix,
-			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile
-		};
+		Set<String> fileNames = new HashSet<>();
+
+		fileNames.add(
+			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile + "-" + suffix);
+		fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile);
+
+		if (buildProfile.equals("portal-all")) {
+			fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + "portal-" + suffix);
+			fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + "portal");
+		}
+
+		return fileNames;
 	}
 
 	public static String getBundleInstruction(Project project, String key) {

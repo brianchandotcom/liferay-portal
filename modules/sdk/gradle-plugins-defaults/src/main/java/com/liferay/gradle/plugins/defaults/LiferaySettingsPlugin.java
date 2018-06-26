@@ -163,8 +163,11 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 			final Path projectPathRootDirPath, final String projectPathPrefix)
 		throws IOException {
 
-		final String[] buildProfileFileNames =
-			GradlePluginsDefaultsUtil.getBuildProfileFileNames(settings);
+		final Set<String> buildProfileFileNames =
+			GradlePluginsDefaultsUtil.getBuildProfileFileNames(
+				System.getProperty("build.profile"),
+				GradleUtil.getProperty(
+					settings, "liferay.releng.public", true));
 		final Set<Path> excludedDirPaths = _getDirPaths(
 			"build.exclude.dirs", rootDirPath);
 		final Set<Path> includedDirPaths = _getDirPaths(

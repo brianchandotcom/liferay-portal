@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagDisplay;
 import com.liferay.petra.string.StringPool;
@@ -139,6 +140,30 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		return sanitize(assetTagLocalService.getTag(tagId));
 	}
 
+	/**
+	 * Returns the number of tags associated to the asset from the given
+	 * classNameId-classPK pair value.
+	 * @param classNameId the classNameId.
+	 * @param classPK the primary key.
+	 * @return the number of tags.
+	 */
+	@Override
+	public int getTagCount(long classNameId, long classPK) {
+		return assetTagLocalService.getTagCount(classNameId, classPK);
+	}
+
+	/**
+	 ** Returns the number of tags associated to the asset from the given
+	 * className-classPK pair value.
+	 * @param className the name of the class.
+	 * @param classPK the primary key.
+	 * @return the number of tags.
+	 */
+	@Override
+	public int getTagCount(String className, long classPK) {
+		return assetTagLocalService.getTagCount(className, classPK);
+	}
+
 	@Override
 	public List<AssetTag> getTags(long groupId, long classNameId, String name) {
 		return sanitize(
@@ -197,6 +222,24 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	@Override
 	public List<AssetTag> getTags(String className, long classPK) {
 		return sanitize(assetTagLocalService.getTags(className, classPK));
+	}
+
+	/**
+	 * Returns a range of asset tags of the entity.
+	 *
+	 * @param  className the class name of the entity
+	 * @param  classPK the primary key of the entity
+	 * @param  start the lower bound of the range of asset tags
+	 * @param  end the upper bound of the range of asset tags (not inclusive)
+	 * @return the asset tags of the entity
+	 */
+	@Override
+	public List<AssetTag> getTags(
+		String className, long classPK, int start, int end,
+		OrderByComparator<AssetTag> obc) {
+
+		return sanitize(assetTagLocalService.getTags(
+			className, classPK, start, end, obc));
 	}
 
 	@Override

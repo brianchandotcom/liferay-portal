@@ -3890,7 +3890,7 @@ of a module includes transitive dependencies.
 - [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.53.
 
-## 5.4.52 - 2018-06-21
+## 5.4.53 - 2018-06-22
 
 ### Added
 - [LPS-82568]: Set the `npmRunBuild` task's `environment` property to
@@ -3904,11 +3904,25 @@ about tracking data.
 - [LPS-82815]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.54.
 
+## 5.4.54 - 2018-06-25
+
+### Changed
+- [LPS-82828]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.55.
+
 ## 5.4.55 - 2018-06-25
 
 ### Changed
+- [LPS-82828]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.56.
 - [LPS-82857]: Update the [Liferay Gradle Plugins Change Log Builder] dependency
 to version 1.1.0.
+
+## 5.4.56 - 2018-06-25
+
+### Changed
+- [LPS-74608]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.57.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4157,6 +4171,7 @@ to version 1.1.0.
 [LPS-74526]: https://issues.liferay.com/browse/LPS-74526
 [LPS-74538]: https://issues.liferay.com/browse/LPS-74538
 [LPS-74544]: https://issues.liferay.com/browse/LPS-74544
+[LPS-74608]: https://issues.liferay.com/browse/LPS-74608
 [LPS-74614]: https://issues.liferay.com/browse/LPS-74614
 [LPS-74637]: https://issues.liferay.com/browse/LPS-74637
 [LPS-74657]: https://issues.liferay.com/browse/LPS-74657
@@ -4341,6 +4356,7 @@ to version 1.1.0.
 [LPS-82534]: https://issues.liferay.com/browse/LPS-82534
 [LPS-82568]: https://issues.liferay.com/browse/LPS-82568
 [LPS-82815]: https://issues.liferay.com/browse/LPS-82815
+[LPS-82828]: https://issues.liferay.com/browse/LPS-82828
 [LPS-82857]: https://issues.liferay.com/browse/LPS-82857
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

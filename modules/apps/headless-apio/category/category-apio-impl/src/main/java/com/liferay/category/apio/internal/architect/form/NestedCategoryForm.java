@@ -53,7 +53,7 @@ public class NestedCategoryForm {
 		).addOptionalString(
 			"description", NestedCategoryForm::_setDescription
 		).addRequiredLong(
-			"taxonomy", NestedCategoryForm::_setVocabularyId
+			"vocabulary", NestedCategoryForm::_setVocabularyId
 		).addRequiredString(
 			"name", NestedCategoryForm::_setName
 		).build();

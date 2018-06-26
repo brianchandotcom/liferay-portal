@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
-import com.liferay.taxonomy.apio.architect.identifier.TaxonomyIdentifier;
+import com.liferay.vocabulary.apio.architect.identifier.VocabularyIdentifier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,7 +49,7 @@ public class CategoryHasPermissionImpl implements HasPermission<Long> {
 	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
-		if (identifierClass.equals(TaxonomyIdentifier.class)) {
+		if (identifierClass.equals(VocabularyIdentifier.class)) {
 			return (credentials, vocabularyId) -> {
 				AssetVocabulary assetVocabulary =
 					_assetVocabularyService.getVocabulary((Long)vocabularyId);

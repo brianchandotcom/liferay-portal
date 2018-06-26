@@ -19,6 +19,7 @@ import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.organization.apio.architect.identifier.OrganizationIdentifier;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.person.apio.internal.model.UserWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserService;
@@ -44,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class OrganizationPersonNestedCollectionRouter implements
-	NestedCollectionRouter<UserWrapper, Long, OrganizationIdentifier, Long,
+	NestedCollectionRouter<UserWrapper, Long, PersonIdentifier, Long,
 		OrganizationIdentifier> {
 
 	@Override

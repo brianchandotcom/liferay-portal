@@ -3698,26 +3698,41 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
 						<then>
 							<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
-								<not>
-									<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
-								</not>
+								<and>
+									<not>
+										<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
+									</not>
+									<not>
+										<http url="http://localhost:${test.app.server.leading.port.number}099" />
+									</not>
+								</and>
 							</waitfor>
 						</then>
 						<elseif>
 							<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
 							<then>
 								<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
-									<not>
-										<http url="http://localhost:${test.app.server.leading.port.number}080" />
-									</not>
+									<and>
+										<not>
+											<http url="http://localhost:${test.app.server.leading.port.number}080" />
+										</not>
+										<not>
+											<http url="http://localhost:${test.app.server.leading.port.number}099" />
+										</not>
+									</and>
 								</waitfor>
 							</then>
 						</elseif>
 						<else>
 							<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
-								<not>
-									<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
-								</not>
+								<and>
+									<not>
+										<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+									</not>
+									<not>
+										<http url="http://localhost:${test.app.server.leading.port.number}099" />
+									</not>
+								</and>
 							</waitfor>
 
 							<if>

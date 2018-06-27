@@ -22,13 +22,17 @@ import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.utils.DebugUtils;
 import com.liferay.talend.utils.SchemaUtils;
+import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
+
+import java.net.URI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -335,10 +339,72 @@ public class TLiferayOutputProperties
 				_log.debug("Resource URL: " + resourceURL.getValue());
 			}
 
+			ValidationResultMutable validationResultMutable =
+				new ValidationResultMutable();
+
+			validationResultMutable.setStatus(Result.OK);
+
+			try (SandboxedInstance sandboxedInstance =
+					LiferayBaseComponentDefinition.getSandboxedInstance(
+						LiferayBaseComponentDefinition.
+							RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+
+				LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+					(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+
+				liferaySourceOrSinkRuntime.initialize(
+					null, getEffectiveConnectionProperties());
+
+				ValidationResult validationResult =
+					liferaySourceOrSinkRuntime.validate(null);
+
+				validationResultMutable.setMessage(
+					validationResult.getMessage());
+				validationResultMutable.setStatus(validationResult.getStatus());
+
+				if (validationResultMutable.getStatus() ==
+						ValidationResult.Result.OK) {
+
+					try {
+						URI resourceURI = URIUtils.setPaginationLimitOnURL(
+							resourceURL.getValue(), 1);
+
+						String resourceCollectionType =
+							liferaySourceOrSinkRuntime.
+								getResourceCollectionType(
+									resourceURI.toString());
+
+						resource.setValue(resourceCollectionType);
+					}
+					catch (IOException ioe) {
+						validationResult =
+							ExceptionUtils.exceptionToValidationResult(ioe);
+
+						validationResultMutable.setMessage(
+							validationResult.getMessage());
+						validationResultMutable.setStatus(
+							validationResult.getStatus());
+					}
+					catch (NoSuchElementException nsee) {
+						validationResultMutable.setMessage(
+							i18nMessages.getMessage(
+								"error.validation.resourceType"));
+						validationResultMutable.setStatus(Result.ERROR);
+					}
+				}
+			}
+
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.ERROR) {
+
+				resource.setValue("");
+				resourceURL.setValue("");
+			}
+
 			refreshLayout(getForm(Form.MAIN));
 			refreshLayout(getForm(Form.REFERENCE));
 
-			return ValidationResult.OK;
+			return validationResultMutable;
 		}
 
 	}

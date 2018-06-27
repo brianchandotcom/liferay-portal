@@ -2439,8 +2439,13 @@
 			<var name="ddlRecordFieldData" value="Text English" />
 		</execute>
 
-		<execute macro="DDLRecord#removeTranslation">
-			<var name="localizedLanguage" value="English (United States)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="locale" value="en-US" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="PortletEntry#changeLocale">
@@ -2455,7 +2460,7 @@
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="DDLRecord#viewFieldCP">
-			<var name="ddlRecordFieldData" value="Text Spanish" />
+			<var name="ddlRecordFieldData" value="" />
 			<var name="fieldFieldLabel" value="Text" />
 		</execute>
 
@@ -2529,17 +2534,19 @@
 
 		<execute macro="DDLRecord#editPG" />
 
-		<execute macro="DDLRecord#removeTranslation">
-			<var name="localizedLanguage" value="English (United States)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="locale" value="en-US" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="remove" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="PortletEntry#changeLocale">
 			<var name="locale" value="iw-IL" />
 		</execute>
 
-		<execute macro="PortletEntry#changeLocale">
-			<var name="locale" value="iw-IL" />
-		</execute>
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Text Hebrew" />
 			<var name="fieldName" value="Text" />
@@ -2549,7 +2556,7 @@
 
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="List Name Display" />
-			<var name="ddlRecordFieldData" value="Text Spanish" />
+			<var name="ddlRecordFieldData" value="remove" />
 			<var name="fieldFieldLabel" value="Text" />
 		</execute>
 	</command>

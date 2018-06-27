@@ -17,7 +17,6 @@ package com.liferay.portal.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -29,10 +28,6 @@ public class BrowserLauncher implements Runnable {
 
 	@Override
 	public void run() {
-		if (Validator.isNull(PropsValues.BROWSER_LAUNCHER_URL)) {
-			return;
-		}
-
 		try {
 			URL url = new URL(PropsValues.BROWSER_LAUNCHER_URL);
 

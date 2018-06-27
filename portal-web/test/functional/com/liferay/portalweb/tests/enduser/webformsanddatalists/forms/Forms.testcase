@@ -168,7 +168,7 @@
 			<var name="rowEntry" value="Element Set 1" />
 		</execute>
 
-		<execute macro="DDLRecord#addTranslation">
+		<execute macro="Form#addTranslation">
 			<var name="localizedLanguage" value="Chinese (China)" />
 		</execute>
 
@@ -220,7 +220,7 @@
 
 		<execute macro="Form#closeSidebar" />
 
-		<execute macro="DDLRecord#addTranslation">
+		<execute macro="Form#addTranslation">
 			<var name="localizedLanguage" value="Chinese (China)" />
 		</execute>
 
@@ -260,7 +260,7 @@
 
 		<execute function="AssertNotVisible" locator1="Form#ADD_FIELD" />
 
-		<execute macro="DDLRecord#selectTranslation">
+		<execute macro="Form#selectTranslation">
 			<var name="localizedLanguage" value="English (United States)" />
 		</execute>
 
@@ -356,7 +356,7 @@
 			<var name="elementSetTitle" value="Element Set 1" />
 		</execute>
 
-		<execute macro="DDLRecord#addTranslation">
+		<execute macro="Form#addTranslation">
 			<var name="localizedLanguage" value="Chinese (China)" />
 		</execute>
 
@@ -384,7 +384,7 @@
 
 		<execute macro="Form#closeSidebar" />
 
-		<execute macro="DDLRecord#selectTranslation">
+		<execute macro="Form#selectTranslation">
 			<var name="localizedLanguage" value="English (United States)" />
 		</execute>
 
@@ -2313,7 +2313,7 @@
 			<var method="StringUtil#extractFirst('${locale}', ':'')" name="locale" />
 			<var method="StringUtil#extractLast('${locale}', ':')" name="translated" />
 
-			<execute macro="DDLRecord#addTranslation">
+			<execute macro="Form#addTranslation">
 				<var name="localizedLanguage" value="${locale}" />
 			</execute>
 
@@ -2384,7 +2384,7 @@
 			<var method="StringUtil#extractFirst('${locale}', ':'')" name="locale" />
 			<var method="StringUtil#extractLast('${locale}', ':')" name="translated" />
 
-			<execute macro="DDLRecord#selectTranslation">
+			<execute macro="Form#selectTranslation">
 				<var name="localizedLanguage" value="${locale}" />
 			</execute>
 

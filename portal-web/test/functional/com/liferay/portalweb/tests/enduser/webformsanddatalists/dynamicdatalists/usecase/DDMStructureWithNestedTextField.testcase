@@ -88,9 +88,9 @@
 			<var name="fieldName" value="textChild" />
 		</execute>
 
-		<for list="Spanish (Spain),Portuguese (Brazil)" param="language">
-			<execute macro="DDLRecord#addTranslation">
-				<var name="localizedLanguage" value="${language}" />
+		<for list="es-ES,pt-BR" param="language">
+			<execute macro="PortletEntry#changeLocale">
+				<var name="locale" value="${language}" />
 			</execute>
 
 			<execute macro="DDLRecord#populateFieldText">
@@ -104,9 +104,9 @@
 			</execute>
 		</for>
 
-		<for list="English (United States),Spanish (Spain),Portuguese (Brazil)" param="language">
-			<execute macro="DDLRecord#selectTranslation">
-				<var name="localizedLanguage" value="${language}" />
+		<for list="en-US,es-ES,pt-BR" param="language">
+			<execute macro="PortletEntry#changeLocale">
+				<var name="locale" value="${language}" />
 			</execute>
 
 			<execute macro="FormFields#viewTextValue">

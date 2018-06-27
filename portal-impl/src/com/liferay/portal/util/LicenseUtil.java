@@ -485,7 +485,7 @@ public class LicenseUtil {
 
 		jsonObject.put("content", Base64.objectToString(bytes));
 
-		jsonObject.put("key", _encryptedSymmetricKey);
+		jsonObject.put("key", _ENCRYPTED_SYMMETRIC_KEY);
 
 		String jsonObjectString = jsonObject.toString();
 
@@ -669,6 +669,8 @@ public class LicenseUtil {
 		}
 	}
 
+	private static final String _ENCRYPTED_SYMMETRIC_KEY;
+
 	private static final int _PROCESSOR_CORES;
 
 	private static final String _PROXY_PASSWORD = GetterUtil.getString(
@@ -684,7 +686,6 @@ public class LicenseUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(LicenseUtil.class);
 
-	private static final String _encryptedSymmetricKey;
 	private static final MethodHandler _getServerInfoMethodHandler =
 		new MethodHandler(new MethodKey(LicenseUtil.class, "getServerInfo"));
 	private static final Set<String> _ipAddresses;
@@ -718,7 +719,7 @@ public class LicenseUtil {
 			byte[] encryptedSymmetricKey = Encryptor.encryptUnencoded(
 				publicKey, _symmetricKey.getEncoded());
 
-			_encryptedSymmetricKey = Base64.objectToString(
+			_ENCRYPTED_SYMMETRIC_KEY = Base64.objectToString(
 				encryptedSymmetricKey);
 		}
 		catch (Exception e) {

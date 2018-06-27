@@ -27,6 +27,7 @@
 		font-weight: 300;
 		margin-top: 16px;
 		padding-bottom: 10px;
+		text-align: center;
 		text-transform: uppercase;
 
 		@include sm {
@@ -52,9 +53,5 @@
 		color: #FFF;
 		margin: -74px auto 0;
 		position: relative;
-
-		@include sm {
-			margin-top: -84px;
-		}
 	}
 }

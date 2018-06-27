@@ -10,7 +10,7 @@
 		}
 	);
 
-	require(
+	Liferay.Loader.require(
 		'porygon-theme/js/top_search.es',
 		function(TopSearch) {
 			new TopSearch.default();

@@ -696,10 +696,6 @@ public class LicenseUtil {
 	private static Key _symmetricKey;
 
 	static {
-		if (_encryptedSymmetricKey != null) {
-			return;
-		}
-
 		try {
 			URL url = LicenseUtil.class.getResource(
 				"/com/liferay/portal/license/public.key");

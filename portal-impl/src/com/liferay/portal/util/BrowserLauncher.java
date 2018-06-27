@@ -14,7 +14,8 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.process.ConsumerOutputProcessor;
+import com.liferay.petra.process.ProcessUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -52,24 +53,24 @@ public class BrowserLauncher implements Runnable {
 	}
 
 	protected void launchBrowser() throws Exception {
-		Runtime runtime = Runtime.getRuntime();
-
 		if (OSDetector.isApple()) {
-			launchBrowserApple(runtime);
+			launchBrowserApple();
 		}
 		else if (OSDetector.isWindows()) {
-			launchBrowserWindows(runtime);
+			launchBrowserWindows();
 		}
 		else {
-			launchBrowserUnix(runtime);
+			launchBrowserUnix();
 		}
 	}
 
-	protected void launchBrowserApple(Runtime runtime) throws Exception {
-		runtime.exec("open " + PropsValues.BROWSER_LAUNCHER_URL);
+	protected void launchBrowserApple() throws Exception {
+		ProcessUtil.execute(
+			ConsumerOutputProcessor.INSTANCE, "open",
+			PropsValues.BROWSER_LAUNCHER_URL);
 	}
 
-	protected void launchBrowserUnix(Runtime runtime) throws Exception {
+	protected void launchBrowserUnix() throws Exception {
 		StringBundler sb = new StringBundler(_BROWSERS.length * 5 - 1);
 
 		for (int i = 0; i < _BROWSERS.length; i++) {
@@ -83,11 +84,14 @@ public class BrowserLauncher implements Runnable {
 			sb.append("\" ");
 		}
 
-		runtime.exec(new String[] {"sh", "-c", sb.toString()});
+		ProcessUtil.execute(
+			ConsumerOutputProcessor.INSTANCE, "sh", "-c", sb.toString());
 	}
 
-	protected void launchBrowserWindows(Runtime runtime) throws Exception {
-		runtime.exec("cmd.exe /c start " + PropsValues.BROWSER_LAUNCHER_URL);
+	protected void launchBrowserWindows() throws Exception {
+		ProcessUtil.execute(
+			ConsumerOutputProcessor.INSTANCE, "cmd.exe", "/c", "start",
+			PropsValues.BROWSER_LAUNCHER_URL);
 	}
 
 	/**

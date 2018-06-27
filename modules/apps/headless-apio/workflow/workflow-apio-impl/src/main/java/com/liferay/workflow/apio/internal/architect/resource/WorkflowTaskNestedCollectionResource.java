@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.workflow.apio.architect.identifier.WorkflowLogIdentifier;
 import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 
 import java.io.Serializable;
@@ -103,6 +104,8 @@ public class WorkflowTaskNestedCollectionResource
 			"comment", CommentIdentifier.class, this::_getLinkedModelId
 		).addLinkedModel(
 			"mediaObject", MediaObjectIdentifier.class, this::_getLinkedModelId
+		).addRelatedCollection(
+			"logs", WorkflowLogIdentifier.class
 		).addString(
 			"definitionName", WorkflowTask::getWorkflowDefinitionName
 		).addString(

@@ -54,6 +54,7 @@ import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.URI;
 import java.net.URL;
 
@@ -660,6 +661,8 @@ public class LicenseUtil {
 
 		Set<String> ipAddresses = new HashSet<>();
 
+		Set<String> macAddresses = new HashSet<>();
+
 		try {
 			Enumeration<NetworkInterface> networkInterfaceEnumeration =
 				NetworkInterface.getNetworkInterfaces();
@@ -684,23 +687,6 @@ public class LicenseUtil {
 
 					ipAddresses.add(inetAddress.getHostAddress());
 				}
-			}
-		}
-		catch (Exception e) {
-			_log.error("Unable to read local server's IP addresses", e);
-		}
-
-		_ipAddresses = Collections.unmodifiableSet(ipAddresses);
-
-		Set<String> macAddresses = new HashSet<>();
-
-		try {
-			Enumeration<NetworkInterface> networkInterfaceEnumeration =
-				NetworkInterface.getNetworkInterfaces();
-
-			while (networkInterfaceEnumeration.hasMoreElements()) {
-				NetworkInterface networkInterface =
-					networkInterfaceEnumeration.nextElement();
 
 				byte[] hardwareAddress = networkInterface.getHardwareAddress();
 
@@ -725,9 +711,11 @@ public class LicenseUtil {
 				macAddresses.add(sb.toString());
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to read local server's MAC addresses", e);
+		catch (SocketException se) {
+			_log.error("Unable to read local server network interfaces", se);
 		}
+
+		_ipAddresses = Collections.unmodifiableSet(ipAddresses);
 
 		_macAddresses = Collections.unmodifiableSet(macAddresses);
 

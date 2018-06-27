@@ -16,7 +16,12 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.process.CollectorOutputProcessor;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessChannel;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.process.ProcessUtil;
+import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONObjectImpl;
@@ -49,6 +54,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.license.sigar.SigarNativeLoader;
+import com.liferay.portal.log.Log4jLogFactoryImpl;
 
 import java.io.File;
 import java.io.InputStream;
@@ -543,33 +549,20 @@ public class LicenseUtil {
 			return runtime.availableProcessors();
 		}
 
-		Sigar sigar = null;
+		ProcessExecutor processExecutor = new LocalProcessExecutor();
 
 		try {
-			SigarNativeLoader.load();
+			ProcessChannel<Integer> processChannel = processExecutor.execute(
+				PortalClassPathUtil.getPortalProcessConfig(),
+				new SigarGetCPUCoresProcessCallable());
 
-			sigar = new Sigar();
+			Future<Integer> future =
+				processChannel.getProcessNoticeableFuture();
 
-			CpuInfo[] cpuInfos = sigar.getCpuInfoList();
-
-			CpuInfo cpuInfo = cpuInfos[0];
-
-			return cpuInfo.getTotalCores();
+			return future.get();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-		finally {
-			if (sigar != null) {
-				sigar.close();
-			}
-
-			try {
-				SigarNativeLoader.unload();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
 		}
 
 		return 0;
@@ -725,6 +718,53 @@ public class LicenseUtil {
 		_macAddresses = Collections.unmodifiableSet(macAddresses);
 
 		_PROCESSOR_CORES = _getProcessorCores();
+	}
+
+	private static class SigarGetCPUCoresProcessCallable
+		implements ProcessCallable<Integer> {
+
+		@Override
+		public Integer call() throws ProcessException {
+			LogFactoryUtil.setLogFactory(new Log4jLogFactoryImpl());
+
+			PropsUtil.setProps(new PropsImpl());
+
+			FileUtil fileUtil = new FileUtil();
+
+			fileUtil.setFile(new FileImpl());
+
+			Sigar sigar = null;
+
+			try {
+				SigarNativeLoader.load();
+
+				sigar = new Sigar();
+
+				CpuInfo[] cpuInfos = sigar.getCpuInfoList();
+
+				CpuInfo cpuInfo = cpuInfos[0];
+
+				return cpuInfo.getTotalCores();
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+			finally {
+				if (sigar != null) {
+					sigar.close();
+				}
+
+				try {
+					SigarNativeLoader.unload();
+				}
+				catch (Exception e) {
+					throw new ProcessException(e);
+				}
+			}
+		}
+
+		private static final long serialVersionUID = 1L;
+
 	}
 
 }

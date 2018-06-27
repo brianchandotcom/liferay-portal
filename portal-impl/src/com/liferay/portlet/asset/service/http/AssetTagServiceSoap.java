@@ -192,6 +192,51 @@ public class AssetTagServiceSoap {
 		}
 	}
 
+	/**
+	* Returns the number of tags associated to the asset from the given
+	* classNameId-classPK pair value.
+	*
+	* @param classNameId the classNameId.
+	* @param classPK the primary key.
+	* @return the number of tags.
+	*/
+	public static int getTagCount(long classNameId, long classPK)
+		throws RemoteException {
+		try {
+			int returnValue = AssetTagServiceUtil.getTagCount(classNameId,
+					classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the number of tags associated to the asset from the given
+	* className-classPK pair value.
+	*
+	* @param className the name of the class.
+	* @param classPK the primary key.
+	* @return the number of tags.
+	*/
+	public static int getTagCount(String className, long classPK)
+		throws RemoteException {
+		try {
+			int returnValue = AssetTagServiceUtil.getTagCount(className, classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.asset.kernel.model.AssetTagSoap[] getTags(
 		long groupId, long classNameId, String name) throws RemoteException {
 		try {
@@ -295,6 +340,32 @@ public class AssetTagServiceSoap {
 		try {
 			java.util.List<com.liferay.asset.kernel.model.AssetTag> returnValue = AssetTagServiceUtil.getTags(className,
 					classPK);
+
+			return com.liferay.asset.kernel.model.AssetTagSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns a range of asset tags of the entity.
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the asset tags of the entity
+	*/
+	public static com.liferay.asset.kernel.model.AssetTagSoap[] getTags(
+		String className, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.asset.kernel.model.AssetTag> returnValue = AssetTagServiceUtil.getTags(className,
+					classPK, start, end, obc);
 
 			return com.liferay.asset.kernel.model.AssetTagSoap.toSoapModels(returnValue);
 		}

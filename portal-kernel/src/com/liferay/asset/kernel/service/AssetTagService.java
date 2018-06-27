@@ -89,6 +89,28 @@ public interface AssetTagService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetTag getTag(long tagId) throws PortalException;
 
+	/**
+	* Returns the number of tags associated to the asset from the given
+	* classNameId-classPK pair value.
+	*
+	* @param classNameId the classNameId.
+	* @param classPK the primary key.
+	* @return the number of tags.
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTagCount(long classNameId, long classPK);
+
+	/**
+	* Returns the number of tags associated to the asset from the given
+	* className-classPK pair value.
+	*
+	* @param className the name of the class.
+	* @param classPK the primary key.
+	* @return the number of tags.
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTagCount(String className, long classPK);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTag> getTags(long groupId, long classNameId, String name);
 
@@ -113,6 +135,19 @@ public interface AssetTagService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTag> getTags(String className, long classPK);
+
+	/**
+	* Returns a range of asset tags of the entity.
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the asset tags of the entity
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTag> getTags(String className, long classPK, int start,
+		int end, OrderByComparator<AssetTag> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTagsCount(long groupId, String name);

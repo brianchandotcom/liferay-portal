@@ -623,6 +623,32 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	/**
+	* Returns the number of tags associated to the asset from the given
+	* classNameId-classPK pair value.
+	*
+	* @param classNameId the classNameId.
+	* @param classPK the primary key.
+	* @return the number of tags.
+	*/
+	@Override
+	public int getTagCount(long classNameId, long classPK) {
+		return _assetTagLocalService.getTagCount(classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of tags associated to the asset from the given
+	* className-classPK pair value.
+	*
+	* @param className the name of the class.
+	* @param classPK the primary key.
+	* @return the number of tags.
+	*/
+	@Override
+	public int getTagCount(String className, long classPK) {
+		return _assetTagLocalService.getTagCount(className, classPK);
+	}
+
+	/**
 	* Returns the primary keys of the asset tags with the names in the group.
 	*
 	* @param groupId the primary key of the group
@@ -726,6 +752,23 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		return _assetTagLocalService.getTags(classNameId, classPK);
 	}
 
+	/**
+	* Returns a range of asset tags of the entity.
+	*
+	* @param classNameId the class name ID of the entity
+	* @param classPK the primary key of the entity
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the asset tags of the entity
+	*/
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
+		return _assetTagLocalService.getTags(classNameId, classPK, start, end,
+			obc);
+	}
+
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
 		long groupId, long classNameId, String name) {
@@ -750,6 +793,22 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
 		String className, long classPK) {
 		return _assetTagLocalService.getTags(className, classPK);
+	}
+
+	/**
+	* Returns a range of asset tags of the entity.
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the asset tags of the entity
+	*/
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
+		String className, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
+		return _assetTagLocalService.getTags(className, classPK, start, end, obc);
 	}
 
 	@Override

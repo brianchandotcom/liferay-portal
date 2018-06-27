@@ -371,17 +371,18 @@ public class LiferaySourceOrSink
 		return liferayConnectionProperties;
 	}
 
-	/**
-	 * @deprecated In favor of determining the schema based on the resource type
-	 * {@link #getInputResourceCollectionSchema(String)}
-	 */
-	@Deprecated
 	@Override
 	public Schema getEndpointSchema(
 			RuntimeContainer runtimeContainer, String resourceURL)
 		throws IOException {
 
-		return getInputResourceCollectionSchema(resourceURL);
+		JsonNode jsonNode = doApioGetRequest(resourceURL);
+
+		ApioResourceCollection apioResourceCollection =
+			new ApioResourceCollection(jsonNode);
+
+		return getResourceSchemaByType(
+			apioResourceCollection.getResourceCollectionType());
 	}
 
 	@Override
@@ -398,18 +399,6 @@ public class LiferaySourceOrSink
 
 		return ExpectedFormSchemaInferrer.inferSchemaByFormOperation(
 			operation, apioForm);
-	}
-
-	/**
-	 * @deprecated In favor of determining the schema based on the resource type
-	 * {@inheritDoc}
-	 */
-	@Deprecated
-	@Override
-	public Schema getInputResourceCollectionSchema(String resourceURL)
-		throws IOException {
-
-		return _getResourceCollectionSchema(resourceURL);
 	}
 
 	@Override
@@ -750,26 +739,6 @@ public class LiferaySourceOrSink
 		liferayConnectionPropertiesProvider;
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 	protected RESTClient restClient;
-
-	private Schema _getResourceCollectionSchema(String resourceURL)
-		throws IOException {
-
-		JsonNode jsonNode = doApioGetRequest(resourceURL);
-
-		ApioResourceCollection apioResourceCollection =
-			new ApioResourceCollection(jsonNode);
-
-		try {
-			return ResourceCollectionSchemaInferrer.inferSchemaByResourceFields(
-				apioResourceCollection);
-		}
-		catch (IOException ioe) {
-			throw new IOException(
-				String.format(
-					"%s\nResource collection URL: %s",
-					ioe.getLocalizedMessage(), resourceURL));
-		}
-	}
 
 	private Map<String, String> _getResourceCollectionsDescriptor(
 		JsonNode jsonNode) {

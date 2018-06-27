@@ -117,9 +117,8 @@ public class TLiferayInputProperties
 			if (validationResult.getStatus() == ValidationResult.Result.OK) {
 				try {
 					Schema runtimeSchema =
-						liferaySourceOrSinkRuntime.
-							getInputResourceCollectionSchema(
-								resource.resourceURL.getValue());
+						liferaySourceOrSinkRuntime.getResourceSchemaByType(
+							resource.resource.getValue());
 
 					resource.main.schema.setValue(runtimeSchema);
 				}

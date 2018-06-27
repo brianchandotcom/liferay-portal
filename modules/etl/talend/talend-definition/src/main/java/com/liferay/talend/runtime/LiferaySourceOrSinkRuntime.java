@@ -38,15 +38,6 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
 	public Schema getExpectedFormSchema(Operation operation) throws IOException;
 
-	/**
-	 * @deprecated In favor of determining the schema based on the resource type
-	 *
-	 * Use {@link #getResourceSchemaByType(String)} for inferring schema
-	 */
-	@Deprecated
-	public Schema getInputResourceCollectionSchema(String resourceURL)
-		throws IOException;
-
 	public String getResourceCollectionType(String resourceURL)
 		throws IOException;
 

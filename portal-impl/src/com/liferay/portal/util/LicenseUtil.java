@@ -170,7 +170,7 @@ public class LicenseUtil {
 	}
 
 	public static int getProcessorCores() {
-		return _processorCores;
+		return _PROCESSOR_CORES;
 	}
 
 	public static byte[] getServerIdBytes() throws Exception {
@@ -201,12 +201,11 @@ public class LicenseUtil {
 		return serverInfo;
 	}
 
+	/**
+	 * @deprecated As of Judson, As of Wilberforce, with no direct replacement
+	 */
+	@Deprecated
 	public static void init() {
-		_initKeys();
-
-		_ipAddresses = _getIPAddresses();
-		_macAddresses = _getMACAddresses();
-		_processorCores = _getProcessorCores();
 	}
 
 	public static void registerOrder(HttpServletRequest request) {
@@ -708,6 +707,8 @@ public class LicenseUtil {
 		}
 	}
 
+	private static final int _PROCESSOR_CORES;
+
 	private static final String _PROXY_PASSWORD = GetterUtil.getString(
 		PropsUtil.get("license.proxy.password"));
 
@@ -724,13 +725,20 @@ public class LicenseUtil {
 	private static String _encryptedSymmetricKey;
 	private static final MethodHandler _getServerInfoMethodHandler =
 		new MethodHandler(new MethodKey(LicenseUtil.class, "getServerInfo"));
-	private static Set<String> _ipAddresses;
-	private static Set<String> _macAddresses;
-	private static int _processorCores;
+	private static final Set<String> _ipAddresses;
+	private static final Set<String> _macAddresses;
 	private static final MethodKey _registerOrderMethodKey = new MethodKey(
 		LicenseUtil.class, "registerOrder", String.class, String.class,
 		int.class);
 	private static byte[] _serverIdBytes;
 	private static Key _symmetricKey;
+
+	static {
+		_initKeys();
+
+		_ipAddresses = _getIPAddresses();
+		_macAddresses = _getMACAddresses();
+		_PROCESSOR_CORES = _getProcessorCores();
+	}
 
 }

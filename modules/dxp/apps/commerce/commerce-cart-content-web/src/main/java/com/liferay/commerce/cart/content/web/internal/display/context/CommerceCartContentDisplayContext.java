@@ -154,7 +154,8 @@ public class CommerceCartContentDisplayContext {
 		}
 
 		CommerceMoney commerceMoney =
-			_commerceOrderPriceCalculation.getSubtotal(getCommerceOrderId());
+			_commerceOrderPriceCalculation.getSubtotal(
+				getCommerceOrderId(), commerceContext);
 
 		return commerceMoney.format(
 			commerceCartContentRequestHelper.getLocale());

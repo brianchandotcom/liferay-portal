@@ -317,7 +317,7 @@ public class CommerceOrderLocalServiceImpl
 
 		CommerceMoney subtotalCommerceMoney =
 			_commerceOrderPriceCalculation.getSubtotal(
-				commerceOrder.getCommerceOrderId());
+				commerceOrder.getCommerceOrderId(), commerceContext);
 
 		BigDecimal subtotal = subtotalCommerceMoney.getPrice();
 

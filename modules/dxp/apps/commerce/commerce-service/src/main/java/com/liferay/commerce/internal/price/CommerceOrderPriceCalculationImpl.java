@@ -14,11 +14,16 @@
 
 package com.liferay.commerce.internal.price;
 
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.math.BigDecimal;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendins
@@ -28,29 +33,42 @@ public class CommerceOrderPriceCalculationImpl
 	implements CommerceOrderPriceCalculation {
 
 	@Override
-	public CommerceMoney getShippingValue(long commerceOrderId)
+	public CommerceMoney getShippingValue(
+			long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException {
 
-		return null;
+		return _commerceMoneyFactory.create(
+			commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
 	}
 
 	@Override
-	public CommerceMoney getSubtotal(long commerceOrderId)
+	public CommerceMoney getSubtotal(
+			long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException {
 
-		return null;
+		return _commerceMoneyFactory.create(
+			commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
 	}
 
 	@Override
-	public CommerceMoney getTaxValue(long commerceOrderId)
+	public CommerceMoney getTaxValue(
+			long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException {
 
-		return null;
+		return _commerceMoneyFactory.create(
+			commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
 	}
 
 	@Override
-	public CommerceMoney getTotal(long commerceOrderId) throws PortalException {
-		return null;
+	public CommerceMoney getTotal(
+			long commerceOrderId, CommerceContext commerceContext)
+		throws PortalException {
+
+		return _commerceMoneyFactory.create(
+			commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
 	}
+
+	@Reference
+	private CommerceMoneyFactory _commerceMoneyFactory;
 
 }

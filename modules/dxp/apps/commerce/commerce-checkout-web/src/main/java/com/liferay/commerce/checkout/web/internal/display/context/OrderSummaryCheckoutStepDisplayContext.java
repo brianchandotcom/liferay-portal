@@ -116,7 +116,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		CommerceMoney subtotal = _commerceOrderPriceCalculation.getSubtotal(
-			commerceOrder.getCommerceOrderId());
+			commerceOrder.getCommerceOrderId(), _commerceContext);
 
 		return subtotal.format(PortalUtil.getLocale(_httpServletRequest));
 	}

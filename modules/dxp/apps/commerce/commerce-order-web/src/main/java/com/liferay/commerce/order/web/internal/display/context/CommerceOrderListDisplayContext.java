@@ -189,7 +189,8 @@ public class CommerceOrderListDisplayContext {
 
 		if (commerceOrder.isOpen()) {
 			commerceMoney = _commerceOrderPriceCalculation.getSubtotal(
-				commerceOrder.getCommerceOrderId());
+				commerceOrder.getCommerceOrderId(),
+				_commerceOrderRequestHelper.getCommerceContext());
 		}
 
 		return commerceMoney.format(_commerceOrderRequestHelper.getLocale());

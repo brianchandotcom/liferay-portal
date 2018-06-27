@@ -380,7 +380,8 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		if (commerceOrder.isOpen()) {
 			commerceMoney = _commerceOrderPriceCalculation.getSubtotal(
-				commerceOrder.getCommerceOrderId());
+				commerceOrder.getCommerceOrderId(),
+				_commerceOrganizationOrderRequestHelper.getCommerceContext());
 		}
 
 		return commerceMoney.format(

@@ -16,6 +16,7 @@ package com.liferay.commerce.price;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -25,15 +26,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 @ProviderType
 public interface CommerceOrderPriceCalculation {
 
-	public CommerceMoney getShippingValue(long commerceOrderId)
+	public CommerceMoney getShippingValue(
+			long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException;
 
-	public CommerceMoney getSubtotal(long commerceOrderId)
+	public CommerceMoney getSubtotal(
+			long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException;
 
-	public CommerceMoney getTaxValue(long commerceOrderId)
+	public CommerceMoney getTaxValue(
+			long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException;
 
-	public CommerceMoney getTotal(long commerceOrderId) throws PortalException;
+	public CommerceMoney getTotal(
+			long commerceOrderId, CommerceContext commerceContext)
+		throws PortalException;
 
 }

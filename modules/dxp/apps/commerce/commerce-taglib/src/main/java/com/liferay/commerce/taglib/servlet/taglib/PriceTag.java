@@ -188,8 +188,10 @@ public class PriceTag extends IncludeTag {
 		}
 		else {
 			CommerceMoney priceCommerceMoney =
-				commerceProductPriceCalculation.getFinalPrice(
-					_cpInstance.getCPInstanceId(), _quantity, commerceContext);
+				commerceProductPriceCalculation.getUnitPrice(
+					_cpInstance.getCPInstanceId(), _quantity,
+					commerceContext.getCommercePriceList(),
+					commerceContext.getCommerceCurrency());
 			CommerceMoney promoPriceCommerceMoney =
 				commerceProductPriceCalculation.getPromoPrice(
 					_cpInstance.getCPInstanceId(), _quantity,
@@ -199,9 +201,8 @@ public class PriceTag extends IncludeTag {
 			BigDecimal promoPrice = promoPriceCommerceMoney.getPrice();
 
 			if ((promoPrice.compareTo(BigDecimal.ZERO) <= 0) ||
-				(promoPrice.compareTo(priceCommerceMoney.getPrice()) >= 0)) {
+				(promoPrice.compareTo(priceCommerceMoney.getPrice()) < 0)) {
 
-				_showPromoPrice = false;
 				_formattedPromoPrice = promoPriceCommerceMoney.format(locale);
 			}
 

@@ -78,7 +78,6 @@ import javax.crypto.KeyGenerator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -459,7 +458,7 @@ public class LicenseUtil {
 			return StringUtil.read(inputStream);
 		}
 
-		byte[] bytes = IOUtils.toByteArray(inputStream);
+		byte[] bytes = FileUtil.getBytes(inputStream);
 
 		if ((bytes == null) || (bytes.length <= 0)) {
 			return null;
@@ -701,7 +700,7 @@ public class LicenseUtil {
 			URL url = LicenseUtil.class.getResource(
 				"/com/liferay/portal/license/public.key");
 
-			byte[] bytes = IOUtils.toByteArray(url.openStream());
+			byte[] bytes = FileUtil.getBytes(url.openStream());
 
 			X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(
 				bytes);

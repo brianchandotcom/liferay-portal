@@ -858,6 +858,10 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
+		<execute macro="PortletEntry#changeLocale">
+			<var name="locale" value="es-ES" />
+		</execute>
+
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#openURL" />

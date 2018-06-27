@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.discount.rule.spent.amount.internal;
 
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.discount.model.CommerceDiscountRuleConstants;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -40,7 +40,9 @@ public class SpentAmountCommerceDiscountRuleTypeImpl
 	implements CommerceDiscountRuleType {
 
 	@Override
-	public boolean evaluate(CommerceOrder commerceOrder) {
+	public boolean evaluate(
+		long groupId, long userId, CommerceContext commerceContext) {
+
 		return false;
 	}
 

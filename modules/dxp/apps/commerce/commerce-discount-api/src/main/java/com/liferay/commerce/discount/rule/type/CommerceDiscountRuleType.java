@@ -16,17 +16,19 @@ package com.liferay.commerce.discount.rule.type;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.context.CommerceContext;
 
 import java.util.Locale;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @ProviderType
 public interface CommerceDiscountRuleType {
 
-	public boolean evaluate(CommerceOrder commerceOrder);
+	public boolean evaluate(
+		long groupId, long userId, CommerceContext commerceContext);
 
 	public String getKey();
 

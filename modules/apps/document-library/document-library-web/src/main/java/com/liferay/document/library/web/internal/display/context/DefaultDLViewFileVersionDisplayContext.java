@@ -319,7 +319,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			_uiItemsBuilder.addDeleteMenuItem(menuItems);
 
-			_uiItemsBuilder.addPublishMenuItem(menuItems);
+			_uiItemsBuilder.addPublishMenuItem(menuItems, true);
 		}
 
 		return menuItems;

@@ -23,6 +23,8 @@ import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -52,6 +54,7 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -786,8 +789,13 @@ public class UIItemsBuilder {
 			LanguageUtil.get(_resourceBundle, "permissions"), sb.toString());
 	}
 
-	public void addPublishMenuItem(List<MenuItem> menuItems)
+	public void addPublishMenuItem(
+			List<MenuItem> menuItems, boolean latestVersion)
 		throws PortalException {
+
+		if (!_isFileVersionExportable(latestVersion)) {
+			return;
+		}
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
@@ -1216,6 +1224,40 @@ public class UIItemsBuilder {
 		}
 
 		return false;
+	}
+
+	private boolean _isFileVersionExportable(boolean latestVersion) {
+		try {
+			FileVersion fileVersion = _fileVersion;
+
+			if (latestVersion) {
+				if (_fileEntry == null) {
+					return false;
+				}
+
+				fileVersion = _fileEntry.getLatestFileVersion();
+			}
+
+			StagedModelDataHandler stagedModelDataHandler =
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					FileEntry.class.getName());
+
+			if (fileVersion == null) {
+				return false;
+			}
+
+			if (ArrayUtil.contains(
+					stagedModelDataHandler.getExportableStatuses(),
+					fileVersion.getStatus())) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	private boolean _isIEOnWin32() {

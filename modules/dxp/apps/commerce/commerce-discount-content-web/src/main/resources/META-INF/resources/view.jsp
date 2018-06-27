@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceDiscountCouponCode commerceDiscountCouponCode = (CommerceDiscountCouponCode)request.getAttribute(CommerceDiscountWebKeys.COMMERCE_DISCOUNT_COUPON_CODE);
+CommerceDiscountCouponCodeHelper commerceDiscountCouponCodeHelper = (CommerceDiscountCouponCodeHelper)request.getAttribute(CommerceDiscountWebKeys.COMMERCE_DISCOUNT_COUPON_CODE_HELPER);
 
-String couponCode = commerceDiscountCouponCode.getCommerceDiscountCouponCode(request);
+String couponCode = commerceDiscountCouponCodeHelper.getCommerceDiscountCouponCode(request);
 %>
 
 <portlet:actionURL name="applyCommerceDiscountCouponCode" var="applyCommerceDiscountCouponCodeActionURL" />

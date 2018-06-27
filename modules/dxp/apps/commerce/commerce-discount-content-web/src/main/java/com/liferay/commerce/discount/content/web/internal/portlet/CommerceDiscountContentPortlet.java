@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.discount.content.web.internal.portlet;
 
-import com.liferay.commerce.discount.CommerceDiscountCouponCode;
+import com.liferay.commerce.discount.CommerceDiscountCouponCodeHelper;
 import com.liferay.commerce.discount.constants.CommerceDiscountPortletKeys;
 import com.liferay.commerce.discount.constants.CommerceDiscountWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -63,13 +63,13 @@ public class CommerceDiscountContentPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			CommerceDiscountWebKeys.COMMERCE_DISCOUNT_COUPON_CODE,
-			_commerceDiscountCouponCode);
+			CommerceDiscountWebKeys.COMMERCE_DISCOUNT_COUPON_CODE_HELPER,
+			_commerceDiscountCouponCodeHelper);
 
 		super.render(renderRequest, renderResponse);
 	}
 
 	@Reference
-	private CommerceDiscountCouponCode _commerceDiscountCouponCode;
+	private CommerceDiscountCouponCodeHelper _commerceDiscountCouponCodeHelper;
 
 }

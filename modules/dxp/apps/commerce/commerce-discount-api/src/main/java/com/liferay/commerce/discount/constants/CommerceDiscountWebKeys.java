@@ -19,7 +19,7 @@ package com.liferay.commerce.discount.constants;
  */
 public class CommerceDiscountWebKeys {
 
-	public static final String COMMERCE_DISCOUNT_COUPON_CODE =
-		"COMMERCE_DISCOUNT_COUPON_CODE";
+	public static final String COMMERCE_DISCOUNT_COUPON_CODE_HELPER =
+		"COMMERCE_DISCOUNT_COUPON_CODE_HELPER";
 
 }

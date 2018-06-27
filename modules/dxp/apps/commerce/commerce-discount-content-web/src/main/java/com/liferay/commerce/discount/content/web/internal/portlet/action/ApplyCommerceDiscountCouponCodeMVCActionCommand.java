@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.discount.content.web.internal.portlet.action;
 
-import com.liferay.commerce.discount.CommerceDiscountCouponCode;
+import com.liferay.commerce.discount.CommerceDiscountCouponCodeHelper;
 import com.liferay.commerce.discount.constants.CommerceDiscountPortletKeys;
 import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
@@ -78,11 +78,11 @@ public class ApplyCommerceDiscountCouponCodeMVCActionCommand
 				return;
 			}
 
-			_commerceDiscountCouponCode.addCommerceDiscountCouponCode(
+			_commerceDiscountCouponCodeHelper.addCommerceDiscountCouponCode(
 				httpServletRequest, couponCode);
 		}
 		else if (cmd.equals(Constants.REMOVE)) {
-			_commerceDiscountCouponCode.removeCommerceDiscountCouponCode(
+			_commerceDiscountCouponCodeHelper.removeCommerceDiscountCouponCode(
 				httpServletRequest);
 		}
 
@@ -111,7 +111,7 @@ public class ApplyCommerceDiscountCouponCodeMVCActionCommand
 	}
 
 	@Reference
-	private CommerceDiscountCouponCode _commerceDiscountCouponCode;
+	private CommerceDiscountCouponCodeHelper _commerceDiscountCouponCodeHelper;
 
 	@Reference
 	private CommerceDiscountService _commerceDiscountService;

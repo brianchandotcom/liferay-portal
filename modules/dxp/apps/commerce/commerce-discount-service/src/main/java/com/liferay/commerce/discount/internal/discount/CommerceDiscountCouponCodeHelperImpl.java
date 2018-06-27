@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.discount.internal.discount;
 
-import com.liferay.commerce.discount.CommerceDiscountCouponCode;
+import com.liferay.commerce.discount.CommerceDiscountCouponCodeHelper;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommerceDiscountCouponCode.class)
-public class CommerceDiscountCouponCodeImpl
-	implements CommerceDiscountCouponCode {
+@Component(immediate = true, service = CommerceDiscountCouponCodeHelper.class)
+public class CommerceDiscountCouponCodeHelperImpl
+	implements CommerceDiscountCouponCodeHelper {
 
 	@Override
 	public void addCommerceDiscountCouponCode(

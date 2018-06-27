@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public interface CommerceDiscountCouponCode {
+public interface CommerceDiscountCouponCodeHelper {
 
 	public void addCommerceDiscountCouponCode(
 			HttpServletRequest httpServletRequest, String couponCode)

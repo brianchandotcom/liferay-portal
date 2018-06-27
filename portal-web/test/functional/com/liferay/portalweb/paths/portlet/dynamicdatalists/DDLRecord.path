@@ -15,27 +15,27 @@
 </tr>
 <tr>
 	<td>FIELD</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td>//div[@class='lfr-ddm-container']/div[not(contains(@class,'hide')) and contains(.,'${key_ddlRecordFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_NESTED</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_ddlRecordFieldData}')]/div[contains(.,'${key_fieldFieldLabel}')]</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_ddlRecordFieldData}')]/div[not(contains(@class,'hide')) and contains(.,'${key_fieldFieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_1</td>
-	<td>//div[@class='lfr-ddm-container']/div[1]</td>
+	<td>//div[@class='lfr-ddm-container']/div[not(contains(@class,'hide'))][1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_2</td>
-	<td>//div[@class='lfr-ddm-container']/div[2]</td>
+	<td>//div[@class='lfr-ddm-container']/div[not(contains(@class,'hide'))][2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_3</td>
-	<td>//div[@class='lfr-ddm-container']/div[3]</td>
+	<td>//div[@class='lfr-ddm-container']/div[not(contains(@class,'hide'))][3]</td>
 	<td></td>
 </tr>
 <!--NESTED_FIELDS-->

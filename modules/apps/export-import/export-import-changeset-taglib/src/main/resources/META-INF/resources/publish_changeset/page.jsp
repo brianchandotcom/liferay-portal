@@ -21,8 +21,8 @@
 	<%
 	PortletURL portletURL = PortletURLFactoryUtil.create(request, ChangesetPortletKeys.CHANGESET, PortletRequest.ACTION_PHASE);
 
-	portletURL.setParameter(ActionRequest.ACTION_NAME, "exportImportEntity");
-	portletURL.setParameter("mvcRenderCommandName", "exportImportEntity");
+	portletURL.setParameter(ActionRequest.ACTION_NAME, "exportImportChangeset");
+	portletURL.setParameter("mvcRenderCommandName", "exportImportChangeset");
 	portletURL.setParameter("cmd", ChangesetConstants.PUBLISH_CHANGESET);
 	portletURL.setParameter("backURL", currentURL);
 	portletURL.setParameter("groupId", String.valueOf(changesetGroupId));
@@ -31,7 +31,7 @@
 	%>
 
 	<liferay-ui:icon
-		message="publish"
+		message="publish-to-live"
 		url="<%= portletURL.toString() %>"
 	/>
 </c:if>

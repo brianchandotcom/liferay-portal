@@ -16,6 +16,7 @@ package com.liferay.exportimport.changeset.web.internal.portlet.action;
 
 import com.liferay.exportimport.changeset.Changeset;
 import com.liferay.exportimport.changeset.ChangesetManager;
+import com.liferay.exportimport.changeset.constants.ChangesetConstants;
 import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.changeset.exception.ExportImportEntityException;
 import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommand;
@@ -119,7 +120,9 @@ public class ExportImportChangesetMVCActionCommandImpl
 
 		String cmd = ParamUtil.getString(actionRequest, "cmd");
 
-		if (cmd.equals(Constants.EXPORT) || cmd.equals(Constants.PUBLISH)) {
+		if (cmd.equals(Constants.EXPORT) || cmd.equals(Constants.PUBLISH) ||
+			cmd.equals(ChangesetConstants.PUBLISH_CHANGESET)) {
+
 			_processExportAndPublishAction(
 				actionRequest, actionResponse, cmd, null);
 		}
@@ -213,7 +216,9 @@ public class ExportImportChangesetMVCActionCommandImpl
 				_exportImportLocalService.exportPortletInfoAsFileInBackground(
 					themeDisplay.getUserId(), exportImportConfiguration);
 		}
-		else if (cmd.equals(Constants.PUBLISH)) {
+		else if (cmd.equals(Constants.PUBLISH) ||
+				 cmd.equals(ChangesetConstants.PUBLISH_CHANGESET)) {
+
 			Group scopeGroup = _groupLocalService.fetchGroup(
 				ParamUtil.getLong(actionRequest, "groupId"));
 

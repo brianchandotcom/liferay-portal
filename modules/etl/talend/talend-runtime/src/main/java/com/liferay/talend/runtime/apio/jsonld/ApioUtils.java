@@ -45,8 +45,8 @@ public class ApioUtils {
 	}
 
 	/**
-	 * Determines the supported properties of the Hydra Class and
-	 * returns them in a List
+	 * Determines the supported properties of the Hydra Class and returns them
+	 * in a List
 	 *
 	 * @return <code>List</code> of <code>Operation</code>, empty List otherwise
 	 */

@@ -276,6 +276,30 @@ public class CommerceDiscountLocalServiceImpl
 		return searchCommerceDiscounts(searchContext);
 	}
 
+	@Override
+	public BaseModelSearchResult<CommerceDiscount> searchCommerceDiscounts(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceDiscount> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceDiscount.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommerceDiscount> commerceDiscounts = getCommerceDiscounts(
+				hits);
+
+			if (commerceDiscounts != null) {
+				return new BaseModelSearchResult<>(
+					commerceDiscounts, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceDiscount updateCommerceDiscount(
@@ -519,29 +543,6 @@ public class CommerceDiscountLocalServiceImpl
 		}
 
 		return commerceDiscounts;
-	}
-
-	protected BaseModelSearchResult<CommerceDiscount> searchCommerceDiscounts(
-			SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CommerceDiscount> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceDiscount.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
-
-			List<CommerceDiscount> commerceDiscounts = getCommerceDiscounts(
-				hits);
-
-			if (commerceDiscounts != null) {
-				return new BaseModelSearchResult<>(
-					commerceDiscounts, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
 	}
 
 	protected CommerceDiscount startWorkflowInstance(

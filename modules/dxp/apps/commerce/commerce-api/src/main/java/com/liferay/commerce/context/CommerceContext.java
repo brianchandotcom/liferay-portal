@@ -42,6 +42,10 @@ public interface CommerceContext extends Serializable {
 
 	public List<CPRule> getCPRules() throws PortalException;
 
+	public String getCuponCode();
+
 	public Organization getOrganization() throws PortalException;
+
+	public long getUserId();
 
 }

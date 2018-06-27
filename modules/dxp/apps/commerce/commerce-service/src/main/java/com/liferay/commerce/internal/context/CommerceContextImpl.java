@@ -129,6 +129,11 @@ public class CommerceContextImpl implements CommerceContext {
 	}
 
 	@Override
+	public String getCuponCode() {
+		return null;
+	}
+
+	@Override
 	public Organization getOrganization() throws PortalException {
 		if (_organization != null) {
 			return _organization;
@@ -138,6 +143,11 @@ public class CommerceContextImpl implements CommerceContext {
 			_httpServletRequest);
 
 		return _organization;
+	}
+
+	@Override
+	public long getUserId() {
+		return _portal.getUserId(_httpServletRequest);
 	}
 
 	private CommerceCurrency _commerceCurrency;

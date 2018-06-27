@@ -50,8 +50,8 @@ create unique index IX_2D8BEE31 on CommerceRegion (commerceCountryId, code_[$COL
 create index IX_3BC85C89 on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_DBA0714B on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_E829A2CF on CommerceShipment (groupId);
-create index IX_DD7059C8 on CommerceShipment (siteGroupId);
+create index IX_68FBA2B5 on CommerceShipment (groupId, status);
+create index IX_95BC50AE on CommerceShipment (siteGroupId, status);
 
 create index IX_9FE20732 on CommerceShipmentItem (commerceShipmentId);
 create index IX_DB0BB83C on CommerceShipmentItem (groupId);

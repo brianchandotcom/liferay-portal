@@ -108,6 +108,24 @@ public class CommerceShipmentServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceShipmentSoap[] getCommerceShipmentsByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceShipment> returnValue =
+				CommerceShipmentServiceUtil.getCommerceShipmentsByG_S(groupId,
+					status, start, end, orderByComparator);
+
+			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceShipmentSoap[] getCommerceShipmentsByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
@@ -116,6 +134,24 @@ public class CommerceShipmentServiceSoap {
 			java.util.List<com.liferay.commerce.model.CommerceShipment> returnValue =
 				CommerceShipmentServiceUtil.getCommerceShipmentsByGroupId(groupId,
 					start, end, orderByComparator);
+
+			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceShipmentSoap[] getCommerceShipmentsByS_S(
+		long siteGroupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceShipment> returnValue =
+				CommerceShipmentServiceUtil.getCommerceShipmentsByS_S(siteGroupId,
+					status, start, end, orderByComparator);
 
 			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModels(returnValue);
 		}
@@ -144,10 +180,40 @@ public class CommerceShipmentServiceSoap {
 		}
 	}
 
+	public static int getCommerceShipmentsCountByG_S(long groupId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceShipmentServiceUtil.getCommerceShipmentsCountByG_S(groupId,
+					status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getCommerceShipmentsCountByGroupId(long groupId)
 		throws RemoteException {
 		try {
 			int returnValue = CommerceShipmentServiceUtil.getCommerceShipmentsCountByGroupId(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceShipmentsCountByS_S(long siteGroupId,
+		int status) throws RemoteException {
+		try {
+			int returnValue = CommerceShipmentServiceUtil.getCommerceShipmentsCountByS_S(siteGroupId,
+					status);
 
 			return returnValue;
 		}

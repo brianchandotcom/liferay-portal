@@ -60,27 +60,59 @@ public class CommerceShipmentServiceUtil {
 		return getService().getCommerceShipment(commerceShipmentId);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceShipmentsByG_S(groupId, status, start, end,
+			orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCommerceShipmentsByGroupId(groupId, start, end,
 			orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByS_S(
+		long siteGroupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceShipmentsByS_S(siteGroupId, status, start, end,
+			orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsBySiteGroupId(
 		long siteGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCommerceShipmentsBySiteGroupId(siteGroupId, start, end,
 			orderByComparator);
 	}
 
-	public static int getCommerceShipmentsCountByGroupId(long groupId) {
+	public static int getCommerceShipmentsCountByG_S(long groupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceShipmentsCountByG_S(groupId, status);
+	}
+
+	public static int getCommerceShipmentsCountByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceShipmentsCountByGroupId(groupId);
 	}
 
-	public static int getCommerceShipmentsCountBySiteGroupId(long siteGroupId) {
+	public static int getCommerceShipmentsCountByS_S(long siteGroupId,
+		int status) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceShipmentsCountByS_S(siteGroupId, status);
+	}
+
+	public static int getCommerceShipmentsCountBySiteGroupId(long siteGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceShipmentsCountBySiteGroupId(siteGroupId);
 	}
 

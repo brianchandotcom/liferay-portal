@@ -131,7 +131,8 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 	public static final long SITEGROUPID_COLUMN_BITMASK = 2L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
+	public static final long STATUS_COLUMN_BITMASK = 4L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -624,7 +625,19 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 
 	@Override
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -770,6 +783,10 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 		commerceShipmentModelImpl._originalSiteGroupId = commerceShipmentModelImpl._siteGroupId;
 
 		commerceShipmentModelImpl._setOriginalSiteGroupId = false;
+
+		commerceShipmentModelImpl._originalStatus = commerceShipmentModelImpl._status;
+
+		commerceShipmentModelImpl._setOriginalStatus = false;
 
 		commerceShipmentModelImpl._columnBitmask = 0;
 	}
@@ -1025,6 +1042,8 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 	private String _carrier;
 	private String _trackingNumber;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private Date _shippingDate;
 	private Date _expectedDate;
 	private long _columnBitmask;

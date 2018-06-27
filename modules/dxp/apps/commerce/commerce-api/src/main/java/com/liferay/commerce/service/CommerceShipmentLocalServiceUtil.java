@@ -221,11 +221,27 @@ public class CommerceShipmentLocalServiceUtil {
 		return getService().getCommerceShipments(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
+		return getService()
+				   .getCommerceShipmentsByG_S(groupId, status, start, end,
+			orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
 		return getService()
 				   .getCommerceShipmentsByGroupId(groupId, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByS_S(
+		long siteGroupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
+		return getService()
+				   .getCommerceShipmentsByS_S(siteGroupId, status, start, end,
 			orderByComparator);
 	}
 
@@ -246,8 +262,17 @@ public class CommerceShipmentLocalServiceUtil {
 		return getService().getCommerceShipmentsCount();
 	}
 
+	public static int getCommerceShipmentsCountByG_S(long groupId, int status) {
+		return getService().getCommerceShipmentsCountByG_S(groupId, status);
+	}
+
 	public static int getCommerceShipmentsCountByGroupId(long groupId) {
 		return getService().getCommerceShipmentsCountByGroupId(groupId);
+	}
+
+	public static int getCommerceShipmentsCountByS_S(long siteGroupId,
+		int status) {
+		return getService().getCommerceShipmentsCountByS_S(siteGroupId, status);
 	}
 
 	public static int getCommerceShipmentsCountBySiteGroupId(long siteGroupId) {

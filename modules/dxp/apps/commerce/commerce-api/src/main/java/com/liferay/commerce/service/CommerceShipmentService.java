@@ -67,20 +67,44 @@ public interface CommerceShipmentService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShipment> getCommerceShipmentsByG_S(long groupId,
+		int status, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShipment> getCommerceShipmentsByGroupId(long groupId,
 		int start, int end,
-		OrderByComparator<CommerceShipment> orderByComparator);
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShipment> getCommerceShipmentsByS_S(long siteGroupId,
+		int status, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShipment> getCommerceShipmentsBySiteGroupId(
 		long siteGroupId, int start, int end,
-		OrderByComparator<CommerceShipment> orderByComparator);
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceShipmentsCountByGroupId(long groupId);
+	public int getCommerceShipmentsCountByG_S(long groupId, int status)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceShipmentsCountBySiteGroupId(long siteGroupId);
+	public int getCommerceShipmentsCountByGroupId(long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShipmentsCountByS_S(long siteGroupId, int status)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShipmentsCountBySiteGroupId(long siteGroupId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

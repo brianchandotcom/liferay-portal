@@ -433,6 +433,354 @@ public class CommerceShipmentUtil {
 	}
 
 	/**
+	* Returns all the commerce shipments where groupId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @return the matching commerce shipments
+	*/
+	public static List<CommerceShipment> findByG_S(long groupId, int status) {
+		return getPersistence().findByG_S(groupId, status);
+	}
+
+	/**
+	* Returns a range of all the commerce shipments where groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceShipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of commerce shipments
+	* @param end the upper bound of the range of commerce shipments (not inclusive)
+	* @return the range of matching commerce shipments
+	*/
+	public static List<CommerceShipment> findByG_S(long groupId, int status,
+		int start, int end) {
+		return getPersistence().findByG_S(groupId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce shipments where groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceShipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of commerce shipments
+	* @param end the upper bound of the range of commerce shipments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce shipments
+	*/
+	public static List<CommerceShipment> findByG_S(long groupId, int status,
+		int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+		return getPersistence()
+				   .findByG_S(groupId, status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce shipments where groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceShipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of commerce shipments
+	* @param end the upper bound of the range of commerce shipments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce shipments
+	*/
+	public static List<CommerceShipment> findByG_S(long groupId, int status,
+		int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_S(groupId, status, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce shipment in the ordered set where groupId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce shipment
+	* @throws NoSuchShipmentException if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment findByG_S_First(long groupId, int status,
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+		return getPersistence()
+				   .findByG_S_First(groupId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce shipment in the ordered set where groupId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment fetchByG_S_First(long groupId, int status,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_S_First(groupId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce shipment in the ordered set where groupId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce shipment
+	* @throws NoSuchShipmentException if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment findByG_S_Last(long groupId, int status,
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+		return getPersistence()
+				   .findByG_S_Last(groupId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce shipment in the ordered set where groupId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment fetchByG_S_Last(long groupId, int status,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_S_Last(groupId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the commerce shipments before and after the current commerce shipment in the ordered set where groupId = &#63; and status = &#63;.
+	*
+	* @param commerceShipmentId the primary key of the current commerce shipment
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce shipment
+	* @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
+	*/
+	public static CommerceShipment[] findByG_S_PrevAndNext(
+		long commerceShipmentId, long groupId, int status,
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+		return getPersistence()
+				   .findByG_S_PrevAndNext(commerceShipmentId, groupId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce shipments where groupId = &#63; and status = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	*/
+	public static void removeByG_S(long groupId, int status) {
+		getPersistence().removeByG_S(groupId, status);
+	}
+
+	/**
+	* Returns the number of commerce shipments where groupId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @return the number of matching commerce shipments
+	*/
+	public static int countByG_S(long groupId, int status) {
+		return getPersistence().countByG_S(groupId, status);
+	}
+
+	/**
+	* Returns all the commerce shipments where siteGroupId = &#63; and status = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @param status the status
+	* @return the matching commerce shipments
+	*/
+	public static List<CommerceShipment> findByS_S(long siteGroupId, int status) {
+		return getPersistence().findByS_S(siteGroupId, status);
+	}
+
+	/**
+	* Returns a range of all the commerce shipments where siteGroupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceShipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param siteGroupId the site group ID
+	* @param status the status
+	* @param start the lower bound of the range of commerce shipments
+	* @param end the upper bound of the range of commerce shipments (not inclusive)
+	* @return the range of matching commerce shipments
+	*/
+	public static List<CommerceShipment> findByS_S(long siteGroupId,
+		int status, int start, int end) {
+		return getPersistence().findByS_S(siteGroupId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce shipments where siteGroupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceShipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param siteGroupId the site group ID
+	* @param status the status
+	* @param start the lower bound of the range of commerce shipments
+	* @param end the upper bound of the range of commerce shipments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce shipments
+	*/
+	public static List<CommerceShipment> findByS_S(long siteGroupId,
+		int status, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+		return getPersistence()
+				   .findByS_S(siteGroupId, status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce shipments where siteGroupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceShipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param siteGroupId the site group ID
+	* @param status the status
+	* @param start the lower bound of the range of commerce shipments
+	* @param end the upper bound of the range of commerce shipments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce shipments
+	*/
+	public static List<CommerceShipment> findByS_S(long siteGroupId,
+		int status, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByS_S(siteGroupId, status, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce shipment in the ordered set where siteGroupId = &#63; and status = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce shipment
+	* @throws NoSuchShipmentException if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment findByS_S_First(long siteGroupId,
+		int status, OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+		return getPersistence()
+				   .findByS_S_First(siteGroupId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce shipment in the ordered set where siteGroupId = &#63; and status = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment fetchByS_S_First(long siteGroupId,
+		int status, OrderByComparator<CommerceShipment> orderByComparator) {
+		return getPersistence()
+				   .fetchByS_S_First(siteGroupId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce shipment in the ordered set where siteGroupId = &#63; and status = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce shipment
+	* @throws NoSuchShipmentException if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment findByS_S_Last(long siteGroupId, int status,
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+		return getPersistence()
+				   .findByS_S_Last(siteGroupId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce shipment in the ordered set where siteGroupId = &#63; and status = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment fetchByS_S_Last(long siteGroupId,
+		int status, OrderByComparator<CommerceShipment> orderByComparator) {
+		return getPersistence()
+				   .fetchByS_S_Last(siteGroupId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the commerce shipments before and after the current commerce shipment in the ordered set where siteGroupId = &#63; and status = &#63;.
+	*
+	* @param commerceShipmentId the primary key of the current commerce shipment
+	* @param siteGroupId the site group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce shipment
+	* @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
+	*/
+	public static CommerceShipment[] findByS_S_PrevAndNext(
+		long commerceShipmentId, long siteGroupId, int status,
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+		return getPersistence()
+				   .findByS_S_PrevAndNext(commerceShipmentId, siteGroupId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce shipments where siteGroupId = &#63; and status = &#63; from the database.
+	*
+	* @param siteGroupId the site group ID
+	* @param status the status
+	*/
+	public static void removeByS_S(long siteGroupId, int status) {
+		getPersistence().removeByS_S(siteGroupId, status);
+	}
+
+	/**
+	* Returns the number of commerce shipments where siteGroupId = &#63; and status = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @param status the status
+	* @return the number of matching commerce shipments
+	*/
+	public static int countByS_S(long siteGroupId, int status) {
+		return getPersistence().countByS_S(siteGroupId, status);
+	}
+
+	/**
 	* Caches the commerce shipment in the entity cache if it is enabled.
 	*
 	* @param commerceShipment the commerce shipment

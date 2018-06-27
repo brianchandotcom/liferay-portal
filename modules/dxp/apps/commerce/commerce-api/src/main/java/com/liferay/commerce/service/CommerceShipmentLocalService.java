@@ -207,8 +207,18 @@ public interface CommerceShipmentLocalService extends BaseLocalService,
 	public List<CommerceShipment> getCommerceShipments(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShipment> getCommerceShipmentsByG_S(long groupId,
+		int status, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShipment> getCommerceShipmentsByGroupId(long groupId,
 		int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShipment> getCommerceShipmentsByS_S(long siteGroupId,
+		int status, int start, int end,
 		OrderByComparator<CommerceShipment> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -225,7 +235,13 @@ public interface CommerceShipmentLocalService extends BaseLocalService,
 	public int getCommerceShipmentsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShipmentsCountByG_S(long groupId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceShipmentsCountByGroupId(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShipmentsCountByS_S(long siteGroupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceShipmentsCountBySiteGroupId(long siteGroupId);

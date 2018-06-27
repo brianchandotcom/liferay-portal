@@ -149,13 +149,49 @@ public class CommerceShipmentServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByG_S(
+		HttpPrincipal httpPrincipal, long groupId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
+					"getCommerceShipmentsByG_S",
+					_getCommerceShipmentsByG_SParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					status, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.model.CommerceShipment>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByGroupId(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
 					"getCommerceShipmentsByGroupId",
-					_getCommerceShipmentsByGroupIdParameterTypes3);
+					_getCommerceShipmentsByGroupIdParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -166,6 +202,45 @@ public class CommerceShipmentServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.model.CommerceShipment>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByS_S(
+		HttpPrincipal httpPrincipal, long siteGroupId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
+					"getCommerceShipmentsByS_S",
+					_getCommerceShipmentsByS_SParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					siteGroupId, status, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -180,11 +255,12 @@ public class CommerceShipmentServiceHttp {
 
 	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsBySiteGroupId(
 		HttpPrincipal httpPrincipal, long siteGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
 					"getCommerceShipmentsBySiteGroupId",
-					_getCommerceShipmentsBySiteGroupIdParameterTypes4);
+					_getCommerceShipmentsBySiteGroupIdParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					siteGroupId, start, end, orderByComparator);
@@ -195,6 +271,10 @@ public class CommerceShipmentServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -207,12 +287,46 @@ public class CommerceShipmentServiceHttp {
 		}
 	}
 
+	public static int getCommerceShipmentsCountByG_S(
+		HttpPrincipal httpPrincipal, long groupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
+					"getCommerceShipmentsCountByG_S",
+					_getCommerceShipmentsCountByG_SParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static int getCommerceShipmentsCountByGroupId(
-		HttpPrincipal httpPrincipal, long groupId) {
+		HttpPrincipal httpPrincipal, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
 					"getCommerceShipmentsCountByGroupId",
-					_getCommerceShipmentsCountByGroupIdParameterTypes5);
+					_getCommerceShipmentsCountByGroupIdParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -222,6 +336,43 @@ public class CommerceShipmentServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getCommerceShipmentsCountByS_S(
+		HttpPrincipal httpPrincipal, long siteGroupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
+					"getCommerceShipmentsCountByS_S",
+					_getCommerceShipmentsCountByS_SParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					siteGroupId, status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -235,11 +386,12 @@ public class CommerceShipmentServiceHttp {
 	}
 
 	public static int getCommerceShipmentsCountBySiteGroupId(
-		HttpPrincipal httpPrincipal, long siteGroupId) {
+		HttpPrincipal httpPrincipal, long siteGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
 					"getCommerceShipmentsCountBySiteGroupId",
-					_getCommerceShipmentsCountBySiteGroupIdParameterTypes6);
+					_getCommerceShipmentsCountBySiteGroupIdParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					siteGroupId);
@@ -250,6 +402,10 @@ public class CommerceShipmentServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -272,7 +428,7 @@ public class CommerceShipmentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
 					"updateCommerceShipment",
-					_updateCommerceShipmentParameterTypes7);
+					_updateCommerceShipmentParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceShipmentId, carrier, trackingNumber, status,
@@ -313,21 +469,33 @@ public class CommerceShipmentServiceHttp {
 	private static final Class<?>[] _getCommerceShipmentParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceShipmentsByGroupIdParameterTypes3 =
+	private static final Class<?>[] _getCommerceShipmentsByG_SParameterTypes3 = new Class[] {
+			long.class, int.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCommerceShipmentsByGroupIdParameterTypes4 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceShipmentsBySiteGroupIdParameterTypes4 =
+	private static final Class<?>[] _getCommerceShipmentsByS_SParameterTypes5 = new Class[] {
+			long.class, int.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCommerceShipmentsBySiteGroupIdParameterTypes6 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceShipmentsCountByGroupIdParameterTypes5 =
+	private static final Class<?>[] _getCommerceShipmentsCountByG_SParameterTypes7 =
+		new Class[] { long.class, int.class };
+	private static final Class<?>[] _getCommerceShipmentsCountByGroupIdParameterTypes8 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getCommerceShipmentsCountBySiteGroupIdParameterTypes6 =
+	private static final Class<?>[] _getCommerceShipmentsCountByS_SParameterTypes9 =
+		new Class[] { long.class, int.class };
+	private static final Class<?>[] _getCommerceShipmentsCountBySiteGroupIdParameterTypes10 =
 		new Class[] { long.class };
-	private static final Class<?>[] _updateCommerceShipmentParameterTypes7 = new Class[] {
+	private static final Class<?>[] _updateCommerceShipmentParameterTypes11 = new Class[] {
 			long.class, String.class, String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class

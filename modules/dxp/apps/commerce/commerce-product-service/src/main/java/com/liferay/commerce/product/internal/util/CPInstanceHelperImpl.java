@@ -152,9 +152,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
 
-		Sort prioitySort = SortFactoryUtil.create(Field.PRIORITY, true);
+		Sort prioritySort = SortFactoryUtil.create(Field.PRIORITY, true);
 
-		searchContext.setSorts(prioitySort);
+		searchContext.setSorts(prioritySort);
 
 		queryConfig.addSelectedFieldNames(Field.ENTRY_CLASS_PK);
 
@@ -258,6 +258,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		attributes.put(
 			CPInstanceIndexer.FIELD_CP_DEFINITION_ID, cpDefinitionId);
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		attributes.put(CPInstanceIndexer.FIELD_PUBLISHED, Boolean.TRUE);
 
 		List<String> optionsKeys = new ArrayList<>();
 
@@ -328,6 +329,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		attributes.put(
 			CPInstanceIndexer.FIELD_CP_DEFINITION_ID, cpDefinitionId);
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		attributes.put(CPInstanceIndexer.FIELD_PUBLISHED, Boolean.TRUE);
 
 		List<String> optionsKeys = new ArrayList<>();
 

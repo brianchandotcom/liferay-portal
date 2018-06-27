@@ -61,7 +61,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		if (!cpDefinition.isApproved() || !cpInstance.isApproved() ||
-			!cpInstance.getPublished()) {
+			!cpInstance.getPublished() || !cpInstance.isPurchasable()) {
 
 			return new CommerceOrderValidatorResult(
 				commerceOrderItem.getCommerceOrderItemId(), false,
@@ -111,7 +111,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		if (!cpDefinition.isApproved() || !cpInstance.isApproved() ||
-			!cpInstance.getPublished()) {
+			!cpInstance.getPublished() || !cpInstance.isPurchasable()) {
 
 			return new CommerceOrderValidatorResult(
 				false, "product-is-no-longer-available");

@@ -14,6 +14,9 @@
 
 package com.liferay.exportimport.changeset.web.internal.portlet.data.handler;
 
+import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.TypedModel;
+import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -160,31 +164,34 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 
 			_exportChangesetCollection(portletDataContext, changesetCollection);
 		}
+		else {
+			Optional<Changeset> changesetOptional =
+				_changesetManager.popChangeset(changesetUuid);
 
-		Optional<Changeset> changesetOptional = _changesetManager.popChangeset(
-			changesetUuid);
+			if (!changesetOptional.isPresent()) {
+				return getExportDataRootElementString(rootElement);
+			}
 
-		if (!changesetOptional.isPresent()) {
-			return getExportDataRootElementString(rootElement);
+			Changeset changeset = changesetOptional.get();
+
+			Stream<StagedModel> stream = changeset.stream();
+
+			stream.filter(
+				Objects::nonNull
+			).forEach(
+				stagedModel -> {
+					try {
+						StagedModelDataHandlerUtil.exportStagedModel(
+							portletDataContext, stagedModel);
+					}
+					catch (PortletDataException pde) {
+						throw new ExportImportRuntimeException(pde);
+					}
+				}
+			);
 		}
 
-		Changeset changeset = changesetOptional.get();
-
-		Stream<StagedModel> stream = changeset.stream();
-
-		stream.filter(
-			Objects::nonNull
-		).forEach(
-			stagedModel -> {
-				try {
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, stagedModel);
-				}
-				catch (PortletDataException pde) {
-					throw new ExportImportRuntimeException(pde);
-				}
-			}
-		);
+		_exportAssetLinks(portletDataContext);
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -210,6 +217,24 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return portletPreferences;
+	}
+
+	private void _exportAssetLinks(PortletDataContext portletDataContext)
+		throws PortletDataException {
+
+		for (Long linkId : portletDataContext.getAssetLinkIds()) {
+			AssetLink assetLink = _assetLinkLocalService.fetchAssetLink(linkId);
+
+			if (assetLink == null) {
+				continue;
+			}
+
+			StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
+				assetLink, AssetLink.class, StagedAssetLink.class);
+
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, stagedAssetLink);
+		}
 	}
 
 	private void _exportChangesetCollection(
@@ -309,6 +334,9 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChangesetPortletDataHandler.class);
+
+	@Reference
+	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Reference
 	private ChangesetCollectionLocalService _changesetCollectionLocalService;

@@ -205,12 +205,12 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemClick(event) {
-		SiteNavigationMenuItem.setSelected(
-			SiteNavigationMenuItem.getFromContentElement(
-				event.delegateTarget
-			),
-			true
+		const menuItem = SiteNavigationMenuItem.getFromContentElement(
+			event.delegateTarget
 		);
+
+		SiteNavigationMenuItem.setSelected(menuItem, true);
+		this.emit('menuItemSelected', menuItem);
 	}
 
 	/**
@@ -233,7 +233,8 @@ class SiteNavigationMenuEditor extends State {
 		let layoutModified = false;
 
 		if ((event.key === KEYS.ENTER) || (event.key === KEYS.SPACEBAR)) {
-			menuItem.click();
+			SiteNavigationMenuItem.setSelected(menuItem, true);
+			this.emit('menuItemSelected', menuItem);
 		}
 		else if (event.key === KEYS.ARROW_LEFT) {
 			const menuItemParentIndex = SiteNavigationMenuItem

@@ -1884,7 +1884,7 @@
 
 		<execute macro="DDLRecord#populateFieldBoolean">
 			<var name="ddlRecordFieldData" value="Yes" />
-			<var name="fieldFieldLabel" value="Boolean Required" />
+			<var name="fieldFieldLabel" value="Boolean asterisk Required" />
 			<var name="fieldName" value="Boolean" />
 		</execute>
 

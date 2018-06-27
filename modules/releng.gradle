@@ -262,7 +262,7 @@ prepareMajorIncrement {
 
 		projectDir.traverse(
 			preDir: {
-				if (it.name in [".gradle", ".github", "build", "classes", "node_modules", "project-templates", "sdk", "third-party"]) {
+				if (it.name in [".gradle", ".github", "aspectj", "build", "classes", "node_modules", "project-templates", "sdk", "third-party"]) {
 					return FileVisitResult.SKIP_SUBTREE
 				}
 
@@ -653,7 +653,7 @@ private void _cherryPickApply(Commit commit) {
 	File moduleDir = _getModuleDir(moduleName)
 
 	if (moduleDir == null) {
-		println "Commit ${commit.id} NOT cherry-picked: module '${moduleName}' does not exist"
+		println "Commit ${commit.id} NOT cherry-picked: module '${moduleName}' is ignored or does not exist"
 
 		return
 	}
@@ -953,7 +953,7 @@ private File _getModuleDir(String name) {
 
 	projectDir.traverse(
 		preDir: {
-			if (it.name in [".gradle", ".github", "build", "classes", "node_modules"]) {
+			if (it.name in [".gradle", ".github", "aspectj", "build", "classes", "node_modules"]) {
 				return FileVisitResult.SKIP_SUBTREE
 			}
 

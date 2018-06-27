@@ -63,6 +63,11 @@ AUI.add(
 						value: []
 					},
 
+					showPlaceholderEnabled: {
+						lazyAdd: false,
+						value: true
+					},
+
 					strings: {
 						value: {
 							chooseAnOption: Liferay.Language.get('choose-an-option'),
@@ -536,7 +541,7 @@ AUI.add(
 
 						var showPlaceholderOption = false;
 
-						if ((instance.get('fixedOptions') || instance.get('options')) && !instance.get('multiple')) {
+						if ((instance.get('fixedOptions') || instance.get('options')) && !instance.get('multiple') && instance.get('showPlaceholderEnabled')) {
 							showPlaceholderOption = true;
 						}
 

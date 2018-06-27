@@ -82,13 +82,13 @@ public class TestCommerceContext implements CommerceContext {
 	}
 
 	@Override
-	public List<CPRule> getCPRules() {
-		return Collections.emptyList();
+	public String getCouponCode() {
+		return null;
 	}
 
 	@Override
-	public String getCuponCode() {
-		return null;
+	public List<CPRule> getCPRules() {
+		return Collections.emptyList();
 	}
 
 	@Override

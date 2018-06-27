@@ -40,9 +40,9 @@ public interface CommerceContext extends Serializable {
 
 	public long[] getCommerceUserSegmentEntryIds() throws PortalException;
 
-	public List<CPRule> getCPRules() throws PortalException;
+	public String getCouponCode() throws PortalException;
 
-	public String getCuponCode();
+	public List<CPRule> getCPRules() throws PortalException;
 
 	public Organization getOrganization() throws PortalException;
 

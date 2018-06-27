@@ -17,6 +17,7 @@ package com.liferay.commerce.internal.context;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.discount.CommerceDiscountCouponCodeHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
@@ -42,6 +43,7 @@ public class CommerceContextImpl implements CommerceContext {
 	public CommerceContextImpl(
 		HttpServletRequest httpServletRequest,
 		CommerceCurrencyService commerceCurrencyService,
+		CommerceDiscountCouponCodeHelper commerceDiscountCouponCodeHelper,
 		CommerceOrderHttpHelper commerceOrderHttpHelper,
 		CommerceOrganizationHelper commerceOrganizationHelper,
 		CommercePriceListLocalService commercePriceListLocalService,
@@ -50,6 +52,7 @@ public class CommerceContextImpl implements CommerceContext {
 
 		_httpServletRequest = httpServletRequest;
 		_commerceCurrencyService = commerceCurrencyService;
+		_commerceDiscountCouponCodeHelper = commerceDiscountCouponCodeHelper;
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_commerceOrganizationHelper = commerceOrganizationHelper;
 		_commercePriceListLocalService = commercePriceListLocalService;
@@ -115,6 +118,12 @@ public class CommerceContextImpl implements CommerceContext {
 	}
 
 	@Override
+	public String getCouponCode() throws PortalException {
+		return _commerceDiscountCouponCodeHelper.getCommerceDiscountCouponCode(
+			_httpServletRequest);
+	}
+
+	@Override
 	public List<CPRule> getCPRules() throws PortalException {
 		if (_cpRules != null) {
 			return _cpRules;
@@ -125,11 +134,6 @@ public class CommerceContextImpl implements CommerceContext {
 		_cpRules = _cpRuleLocalService.getCPRules(
 			groupId, getCommerceUserSegmentEntryIds());
 
-		return null;
-	}
-
-	@Override
-	public String getCuponCode() {
 		return null;
 	}
 
@@ -152,6 +156,8 @@ public class CommerceContextImpl implements CommerceContext {
 
 	private CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyService _commerceCurrencyService;
+	private final CommerceDiscountCouponCodeHelper
+		_commerceDiscountCouponCodeHelper;
 	private CommerceOrder _commerceOrder;
 	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private final CommerceOrganizationHelper _commerceOrganizationHelper;

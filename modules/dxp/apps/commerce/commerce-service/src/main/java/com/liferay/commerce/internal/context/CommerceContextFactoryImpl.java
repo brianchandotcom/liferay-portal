@@ -17,6 +17,7 @@ package com.liferay.commerce.internal.context;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.discount.CommerceDiscountCouponCodeHelper;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
@@ -39,13 +40,16 @@ public class CommerceContextFactoryImpl implements CommerceContextFactory {
 	public CommerceContext create(HttpServletRequest httpServletRequest) {
 		return new CommerceContextImpl(
 			httpServletRequest, _commerceCurrencyService,
-			_commerceOrderHttpHelper, _commerceOrganizationHelper,
-			_commercePriceListLocalService, _commerceUserSegmentHelper,
-			_cpRuleLocalService, _portal);
+			_commerceDiscountCouponCodeHelper, _commerceOrderHttpHelper,
+			_commerceOrganizationHelper, _commercePriceListLocalService,
+			_commerceUserSegmentHelper, _cpRuleLocalService, _portal);
 	}
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
+	private CommerceDiscountCouponCodeHelper _commerceDiscountCouponCodeHelper;
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;

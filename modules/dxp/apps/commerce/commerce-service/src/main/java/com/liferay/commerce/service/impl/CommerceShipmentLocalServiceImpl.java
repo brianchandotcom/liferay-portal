@@ -110,12 +110,30 @@ public class CommerceShipmentLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceShipment> getCommerceShipmentsByG_S(
+		long groupId, int status, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+
+		return commerceShipmentPersistence.findByG_S(
+			groupId, status, start, end, orderByComparator);
+	}
+
+	@Override
 	public List<CommerceShipment> getCommerceShipmentsByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<CommerceShipment> orderByComparator) {
 
 		return commerceShipmentPersistence.findByGroupId(
 			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceShipment> getCommerceShipmentsByS_S(
+		long siteGroupId, int status, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+
+		return commerceShipmentPersistence.findByS_S(
+			siteGroupId, status, start, end, orderByComparator);
 	}
 
 	@Override
@@ -128,8 +146,18 @@ public class CommerceShipmentLocalServiceImpl
 	}
 
 	@Override
+	public int getCommerceShipmentsCountByG_S(long groupId, int status) {
+		return commerceShipmentPersistence.countByG_S(groupId, status);
+	}
+
+	@Override
 	public int getCommerceShipmentsCountByGroupId(long groupId) {
 		return commerceShipmentPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getCommerceShipmentsCountByS_S(long siteGroupId, int status) {
+		return commerceShipmentPersistence.countByS_S(siteGroupId, status);
 	}
 
 	@Override

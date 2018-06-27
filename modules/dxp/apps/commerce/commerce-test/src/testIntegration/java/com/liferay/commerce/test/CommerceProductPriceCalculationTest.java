@@ -20,7 +20,7 @@ import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil;
-import com.liferay.commerce.price.CommerceProductPriceHelper;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
@@ -67,7 +67,7 @@ import org.junit.runner.RunWith;
  * @author Luca Pellizzon
  */
 @RunWith(Arquillian.class)
-public class CommerceProductPriceHelperTest {
+public class CommerceProductPriceCalculationTest {
 
 	@ClassRule
 	@Rule
@@ -170,8 +170,11 @@ public class CommerceProductPriceHelperTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1, _organization, null);
 
-		CommerceMoney commerceMoney = _commerceProductPriceHelper.getFinalPrice(
-			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
+		CommerceMoney commerceMoney =
+			_commerceProductPriceCalculation.getUnitPrice(
+				cpInstance.getCPInstanceId(), 1,
+				commerceContext.getCommercePriceList(),
+				commerceContext.getCommerceCurrency());
 
 		Assert.assertEquals(
 			commercePriceEntry2.getPrice(), commerceMoney.getPrice());
@@ -273,8 +276,11 @@ public class CommerceProductPriceHelperTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1, _organization, null);
 
-		CommerceMoney commerceMoney = _commerceProductPriceHelper.getFinalPrice(
-			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
+		CommerceMoney commerceMoney =
+			_commerceProductPriceCalculation.getUnitPrice(
+				cpInstance.getCPInstanceId(), 1,
+				commerceContext.getCommercePriceList(),
+				commerceContext.getCommerceCurrency());
 
 		Assert.assertEquals(
 			commercePriceEntry1.getPrice(), commerceMoney.getPrice());
@@ -347,8 +353,11 @@ public class CommerceProductPriceHelperTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1, _organization, null);
 
-		CommerceMoney commerceMoney = _commerceProductPriceHelper.getFinalPrice(
-			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
+		CommerceMoney commerceMoney =
+			_commerceProductPriceCalculation.getUnitPrice(
+				cpInstance.getCPInstanceId(), 1,
+				commerceContext.getCommercePriceList(),
+				commerceContext.getCommerceCurrency());
 
 		Assert.assertEquals(
 			commercePriceEntry.getPrice(), commerceMoney.getPrice());
@@ -440,8 +449,11 @@ public class CommerceProductPriceHelperTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1, _organization, null);
 
-		CommerceMoney commerceMoney = _commerceProductPriceHelper.getFinalPrice(
-			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
+		CommerceMoney commerceMoney =
+			_commerceProductPriceCalculation.getUnitPrice(
+				cpInstance.getCPInstanceId(), 1,
+				commerceContext.getCommercePriceList(),
+				commerceContext.getCommerceCurrency());
 
 		BigDecimal commercePrice = commercePriceEntry.getPrice();
 
@@ -526,9 +538,11 @@ public class CommerceProductPriceHelperTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1, _organization, null);
 
-		CommerceMoney commerceMoney = _commerceProductPriceHelper.getFinalPrice(
-			cpInstance.getCPInstanceId(), quantity, false, false,
-			commerceContext);
+		CommerceMoney commerceMoney =
+			_commerceProductPriceCalculation.getUnitPrice(
+				cpInstance.getCPInstanceId(), quantity,
+				commerceContext.getCommercePriceList(),
+				commerceContext.getCommerceCurrency());
 
 		BigDecimal commercePrice = commercePriceEntry.getPrice();
 
@@ -557,9 +571,6 @@ public class CommerceProductPriceHelperTest {
 	private CommerceContextFactory _commerceContextFactory;
 
 	@Inject
-	private CommerceProductPriceHelper _commerceProductPriceHelper;
-
-	@Inject
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
 	@Inject
@@ -568,6 +579,9 @@ public class CommerceProductPriceHelperTest {
 	@Inject
 	private CommercePriceListUserSegmentEntryRelLocalService
 		_commercePriceListUserSegmentEntryRelLocalService;
+
+	@Inject
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@Inject
 	private CommerceTierPriceEntryLocalService

@@ -15,9 +15,12 @@
 package com.liferay.commerce.product.constants;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CPRuleConstants {
+
+	public static final String TYPE_ALL_PRODUCTS = "all-products";
 
 	public static final String TYPE_ASSET_CATEGORY = "category";
 

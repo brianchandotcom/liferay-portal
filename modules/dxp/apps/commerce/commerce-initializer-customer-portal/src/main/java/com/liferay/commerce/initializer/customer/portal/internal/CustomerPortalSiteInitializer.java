@@ -168,16 +168,9 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 
 			createRoles(serviceContext);
 
-			AssetVocabulary assetVocabulary = _getAssetVocabulary(
-				_COMMERCE_VISIBILITY_VOCABULARY, serviceContext);
+			importProducts(serviceContext);
 
-			AssetCategory visibleToUserAssetCategory = _getAssetCategory(
-				assetVocabulary.getVocabularyId(), "Visible to User",
-				serviceContext);
-
-			importProducts(visibleToUserAssetCategory, serviceContext);
-
-			createCPRule(visibleToUserAssetCategory, serviceContext);
+			createCPRule(serviceContext);
 
 			_customerPortalThemePortletSettingsInitializer.initialize(
 				serviceContext);
@@ -447,17 +440,11 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 			StringPool.BLANK, serviceContext);
 	}
 
-	protected void createCPRule(
-			AssetCategory visibleToUserAssetCategory,
-			ServiceContext serviceContext)
+	protected void createCPRule(ServiceContext serviceContext)
 		throws PortalException {
 
 		CPRule cpRule = _cpRuleLocalService.addCPRule(
-			"all", true, CPRuleConstants.TYPE_ASSET_CATEGORY, serviceContext);
-
-		_cpRuleAssetCategoryRelLocalService.addCPRuleAssetCategoryRel(
-			cpRule.getCPRuleId(), visibleToUserAssetCategory.getCategoryId(),
-			serviceContext);
+			"all", true, CPRuleConstants.TYPE_ALL_PRODUCTS, serviceContext);
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
 			_commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntry(
@@ -504,9 +491,7 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 		return serviceContext;
 	}
 
-	protected void importProducts(
-			AssetCategory visibleToUserAssetCategory,
-			ServiceContext serviceContext)
+	protected void importProducts(ServiceContext serviceContext)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -545,8 +530,6 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 
 			List<Long> assetCategoryIds = addAssetCategories(
 				assetVocabulary.getVocabularyId(), categories, serviceContext);
-
-			assetCategoryIds.add(visibleToUserAssetCategory.getCategoryId());
 
 			// Commerce product definition
 
@@ -812,9 +795,6 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 	private static final String _COMMERCE_ROLE_CONFIGURATION_PID =
 		"com.liferay.commerce.user.web.internal.configuration." +
 			"CommerceRoleGroupServiceConfiguration";
-
-	private static final String _COMMERCE_VISIBILITY_VOCABULARY =
-		"Commerce Visibility";
 
 	private static final String _COMMERCE_VOCABULARY = "Commerce";
 

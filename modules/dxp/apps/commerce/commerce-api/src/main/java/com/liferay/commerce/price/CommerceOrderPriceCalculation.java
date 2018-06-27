@@ -25,13 +25,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 @ProviderType
 public interface CommerceOrderPriceCalculation {
 
-	public CommerceMoney getShippingValue(long cpOrderId)
+	public CommerceMoney getShippingValue(long commerceOrderId)
 		throws PortalException;
 
-	public CommerceMoney getSubtotal(long cpOrderId) throws PortalException;
+	public CommerceMoney getSubtotal(long commerceOrderId)
+		throws PortalException;
 
-	public CommerceMoney getTaxValue(long cpOrderId) throws PortalException;
+	public CommerceMoney getTaxValue(long commerceOrderId)
+		throws PortalException;
 
-	public CommerceMoney getTotal(long cpOrderId) throws PortalException;
+	public CommerceMoney getTotal(long commerceOrderId) throws PortalException;
 
 }

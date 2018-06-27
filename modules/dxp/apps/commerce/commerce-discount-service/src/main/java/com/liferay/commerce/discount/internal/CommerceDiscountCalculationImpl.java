@@ -67,7 +67,7 @@ public class CommerceDiscountCalculationImpl
 			commerceOrder.getCompanyId(), commerceOrder.getGroupId(), 0, 0,
 			commerceOrder.getCommerceOrderId(),
 			commerceContext.getCommerceUserSegmentEntryIds(),
-			commerceContext.getCuponCode(), Type.APPLY_TO_SHIPPING);
+			commerceContext.getCouponCode(), Type.APPLY_TO_SHIPPING);
 
 		return _getCommerceDiscountValue(
 			commerceOrder.getGroupId(), commerceContext.getUserId(),
@@ -85,7 +85,7 @@ public class CommerceDiscountCalculationImpl
 			commerceOrder.getCompanyId(), commerceOrder.getGroupId(), 0, 0,
 			commerceOrder.getCommerceOrderId(),
 			commerceContext.getCommerceUserSegmentEntryIds(),
-			commerceContext.getCuponCode(), Type.APPLY_TO_SUBTOTAL);
+			commerceContext.getCouponCode(), Type.APPLY_TO_SUBTOTAL);
 
 		return _getCommerceDiscountValue(
 			commerceOrder.getGroupId(), commerceContext.getUserId(),
@@ -103,7 +103,7 @@ public class CommerceDiscountCalculationImpl
 			commerceOrder.getCompanyId(), commerceOrder.getGroupId(), 0, 0,
 			commerceOrder.getCommerceOrderId(),
 			commerceContext.getCommerceUserSegmentEntryIds(),
-			commerceContext.getCuponCode(), Type.APPLY_TO_TOTAL);
+			commerceContext.getCouponCode(), Type.APPLY_TO_TOTAL);
 
 		return _getCommerceDiscountValue(
 			commerceOrder.getGroupId(), commerceContext.getUserId(), orderTotal,
@@ -123,7 +123,7 @@ public class CommerceDiscountCalculationImpl
 			cpInstance.getCompanyId(), cpInstance.getGroupId(),
 			cpInstance.getCPDefinitionId(), cpInstanceId, 0,
 			commerceContext.getCommerceUserSegmentEntryIds(),
-			commerceContext.getCuponCode(), Type.APPLY_TO_PRODUCT);
+			commerceContext.getCouponCode(), Type.APPLY_TO_PRODUCT);
 
 		return _getCommerceDiscountValue(
 			cpInstance.getGroupId(), commerceContext.getUserId(),
@@ -133,7 +133,7 @@ public class CommerceDiscountCalculationImpl
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, long cpDefinitionId, long cpInstanceId,
 		long commerceOrderId, long[] commerceUserSegmentEntryIds,
-		String cuponCode, Type commerceDiscountTargetType) {
+		String couponCode, Type commerceDiscountTargetType) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -141,7 +141,7 @@ public class CommerceDiscountCalculationImpl
 
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 		attributes.put(CommerceDiscountIndexer.FIELD_ACTIVE, true);
-		attributes.put(CommerceDiscountIndexer.FIELD_COUPON_CODE, cuponCode);
+		attributes.put(CommerceDiscountIndexer.FIELD_COUPON_CODE, couponCode);
 		attributes.put(
 			CommerceDiscountIndexer.FIELD_TARGET_TYPE,
 			commerceDiscountTargetType);

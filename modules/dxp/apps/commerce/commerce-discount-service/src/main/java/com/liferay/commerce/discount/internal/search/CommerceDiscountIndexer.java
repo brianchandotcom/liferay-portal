@@ -169,11 +169,11 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 			contextBooleanFilter.addRequiredTerm(FIELD_TARGET_TYPE, targetType);
 		}
 
-		String cuponCode = GetterUtil.getString(
+		String couponCode = GetterUtil.getString(
 			searchContext.getAttribute(FIELD_COUPON_CODE), null);
 
-		if (Validator.isNotNull(cuponCode)) {
-			contextBooleanFilter.addRequiredTerm(FIELD_COUPON_CODE, cuponCode);
+		if (Validator.isNotNull(couponCode)) {
+			contextBooleanFilter.addRequiredTerm(FIELD_COUPON_CODE, couponCode);
 			contextBooleanFilter.addRequiredTerm(
 				FIELD_USE_COUPON_CODE, Boolean.TRUE.toString());
 		}

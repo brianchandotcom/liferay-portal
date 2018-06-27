@@ -17,7 +17,7 @@ package com.liferay.commerce.cart.content.web.internal.portlet.action;
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentDisplayContext;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
-import com.liferay.commerce.price.CommerceProductPriceHelper;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -65,7 +65,7 @@ public class CommerceCartContentConfigurationAction
 					new CommerceCartContentDisplayContext(
 						httpServletRequest, _commerceOrderItemService,
 						_commerceOrderValidatorRegistry,
-						_commerceProductPriceHelper, _cpDefinitionHelper,
+						_commerceProductPriceCalculation, _cpDefinitionHelper,
 						_cpInstanceHelper);
 
 			httpServletRequest.setAttribute(
@@ -98,7 +98,7 @@ public class CommerceCartContentConfigurationAction
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@Reference
-	private CommerceProductPriceHelper _commerceProductPriceHelper;
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

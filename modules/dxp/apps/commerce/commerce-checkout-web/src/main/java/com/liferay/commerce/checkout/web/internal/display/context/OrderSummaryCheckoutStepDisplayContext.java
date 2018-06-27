@@ -23,7 +23,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
-import com.liferay.commerce.price.CommerceProductPriceHelper;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -49,14 +49,14 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	public OrderSummaryCheckoutStepDisplayContext(
 			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
-			CommerceProductPriceHelper commerceProductPriceHelper,
+			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CPInstanceHelper cpInstanceHelper,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
-		_commerceProductPriceHelper = commerceProductPriceHelper;
+		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_cpInstanceHelper = cpInstanceHelper;
 		_httpServletRequest = httpServletRequest;
 
@@ -110,8 +110,9 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	}
 
 	public String getCommerceOrderSubtotal() throws PortalException {
-		CommerceMoney subtotal = _commerceProductPriceHelper.getOrderSubtotal(
-			getCommerceOrder(), _commerceContext);
+		CommerceMoney subtotal =
+			_commerceProductPriceCalculation.getOrderSubtotal(
+				getCommerceOrder(), _commerceContext);
 
 		return subtotal.format(PortalUtil.getLocale(_httpServletRequest));
 	}
@@ -127,9 +128,10 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	public String getFormattedPrice(CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		CommerceMoney commerceMoney = _commerceProductPriceHelper.getFinalPrice(
-			commerceOrderItem.getCPInstanceId(),
-			commerceOrderItem.getQuantity(), true, true, _commerceContext);
+		CommerceMoney commerceMoney =
+			_commerceProductPriceCalculation.getFinalPrice(
+				commerceOrderItem.getCPInstanceId(),
+				commerceOrderItem.getQuantity(), true, true, _commerceContext);
 
 		return commerceMoney.format(PortalUtil.getLocale(_httpServletRequest));
 	}
@@ -145,7 +147,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
-	private final CommerceProductPriceHelper _commerceProductPriceHelper;
+	private final CommerceProductPriceCalculation
+		_commerceProductPriceCalculation;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final HttpServletRequest _httpServletRequest;
 

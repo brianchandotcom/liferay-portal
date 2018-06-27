@@ -23,7 +23,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
-import com.liferay.commerce.price.CommerceProductPriceHelper;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -61,14 +61,14 @@ public class CommerceCartContentDisplayContext {
 			HttpServletRequest httpServletRequest,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
-			CommerceProductPriceHelper commerceProductPriceHelper,
+			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper)
 		throws PortalException {
 
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
-		_commerceProductPriceHelper = commerceProductPriceHelper;
+		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 
 		this.cpDefinitionHelper = cpDefinitionHelper;
 		this.cpInstanceHelper = cpInstanceHelper;
@@ -151,7 +151,7 @@ public class CommerceCartContentDisplayContext {
 		}
 
 		CommerceMoney commerceMoney =
-			_commerceProductPriceHelper.getOrderSubtotal(
+			_commerceProductPriceCalculation.getOrderSubtotal(
 				getCommerceOrder(), commerceContext);
 
 		return commerceMoney.format(
@@ -215,9 +215,10 @@ public class CommerceCartContentDisplayContext {
 	public String getFormattedFinalPrice(CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		CommerceMoney commerceMoney = _commerceProductPriceHelper.getFinalPrice(
-			commerceOrderItem.getCPInstanceId(),
-			commerceOrderItem.getQuantity(), true, true, commerceContext);
+		CommerceMoney commerceMoney =
+			_commerceProductPriceCalculation.getFinalPrice(
+				commerceOrderItem.getCPInstanceId(),
+				commerceOrderItem.getQuantity(), true, true, commerceContext);
 
 		return commerceMoney.format(
 			commerceCartContentRequestHelper.getLocale());
@@ -226,9 +227,10 @@ public class CommerceCartContentDisplayContext {
 	public String getFormattedUnitPrice(CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		CommerceMoney commerceMoney = _commerceProductPriceHelper.getUnitPrice(
-			commerceOrderItem.getCPInstanceId(),
-			commerceOrderItem.getQuantity(), commerceContext);
+		CommerceMoney commerceMoney =
+			_commerceProductPriceCalculation.getUnitPrice(
+				commerceOrderItem.getCPInstanceId(),
+				commerceOrderItem.getQuantity(), commerceContext);
 
 		return commerceMoney.format(
 			commerceCartContentRequestHelper.getLocale());
@@ -337,7 +339,8 @@ public class CommerceCartContentDisplayContext {
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
-	private final CommerceProductPriceHelper _commerceProductPriceHelper;
+	private final CommerceProductPriceCalculation
+		_commerceProductPriceCalculation;
 	private long _displayStyleGroupId;
 	private SearchContainer<CommerceOrderItem> _searchContainer;
 

@@ -26,7 +26,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
-import com.liferay.commerce.price.CommerceProductPriceHelper;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -91,7 +91,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		if (price == null) {
 			CommerceMoney commerceMoney =
-				_commerceProductPriceHelper.getFinalPrice(
+				_commerceProductPriceCalculation.getFinalPrice(
 					cpInstanceId, quantity, true, true, commerceContext);
 
 			price = commerceMoney.getPrice();
@@ -461,8 +461,8 @@ public class CommerceOrderItemLocalServiceImpl
 	@ServiceReference(type = CommerceOrderValidatorRegistry.class)
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
-	@ServiceReference(type = CommerceProductPriceHelper.class)
-	private CommerceProductPriceHelper _commerceProductPriceHelper;
+	@ServiceReference(type = CommerceProductPriceCalculation.class)
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;

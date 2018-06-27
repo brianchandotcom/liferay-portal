@@ -32,7 +32,7 @@ import com.liferay.commerce.organization.order.web.internal.configuration.Commer
 import com.liferay.commerce.organization.order.web.internal.display.context.util.CommerceOrganizationOrderRequestHelper;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderSearch;
-import com.liferay.commerce.price.CommerceProductPriceHelper;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -113,7 +113,7 @@ public class CommerceOrganizationOrderDisplayContext {
 			CommerceOrderLocalService commerceOrderLocalService,
 			CommerceOrderNoteService commerceOrderNoteService,
 			CommerceOrderService commerceOrderService,
-			CommerceProductPriceHelper commerceProductPriceHelper,
+			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CommerceShipmentItemService commerceShipmentItemService,
 			CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 			CPInstanceHelper cpInstanceHelper, JSONFactory jsonFactory,
@@ -126,7 +126,7 @@ public class CommerceOrganizationOrderDisplayContext {
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrderService = commerceOrderService;
-		_commerceProductPriceHelper = commerceProductPriceHelper;
+		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_commerceShipmentItemService = commerceShipmentItemService;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -379,7 +379,7 @@ public class CommerceOrganizationOrderDisplayContext {
 		CommerceMoney commerceMoney = commerceOrder.getTotalMoney();
 
 		if (commerceOrder.isOpen()) {
-			commerceMoney = _commerceProductPriceHelper.getOrderSubtotal(
+			commerceMoney = _commerceProductPriceCalculation.getOrderSubtotal(
 				commerceOrder,
 				_commerceOrganizationOrderRequestHelper.getCommerceContext());
 		}
@@ -865,7 +865,8 @@ public class CommerceOrganizationOrderDisplayContext {
 		_commerceOrganizationOpenOrderPortletInstanceConfiguration;
 	private final CommerceOrganizationOrderRequestHelper
 		_commerceOrganizationOrderRequestHelper;
-	private final CommerceProductPriceHelper _commerceProductPriceHelper;
+	private final CommerceProductPriceCalculation
+		_commerceProductPriceCalculation;
 	private final CommerceShipmentItemService _commerceShipmentItemService;
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;

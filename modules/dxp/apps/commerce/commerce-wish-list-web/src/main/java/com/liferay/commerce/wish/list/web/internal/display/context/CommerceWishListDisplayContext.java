@@ -15,7 +15,7 @@
 package com.liferay.commerce.wish.list.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.price.CommerceProductPriceHelper;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -56,7 +56,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceWishListDisplayContext {
 
 	public CommerceWishListDisplayContext(
-		CommerceProductPriceHelper commerceProductPriceHelper,
+		CommerceProductPriceCalculation commerceProductPriceCalculation,
 		CommerceWishListHttpHelper commerceWishListHttpHelper,
 		CommerceWishListItemService commerceWishListItemService,
 		CommerceWishListService commerceWishListService,
@@ -64,7 +64,7 @@ public class CommerceWishListDisplayContext {
 		CPInstanceHelper cpInstanceHelper,
 		HttpServletRequest httpServletRequest) {
 
-		_commerceProductPriceHelper = commerceProductPriceHelper;
+		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_commerceWishListHttpHelper = commerceWishListHttpHelper;
 		_commerceWishListItemService = commerceWishListItemService;
 		_commerceWishListService = commerceWishListService;
@@ -146,7 +146,7 @@ public class CommerceWishListDisplayContext {
 
 		if (cpInstance != null) {
 			CommerceMoney commerceMoney =
-				_commerceProductPriceHelper.getFinalPrice(
+				_commerceProductPriceCalculation.getFinalPrice(
 					cpInstance.getCPInstanceId(), 1, true, true,
 					_commerceWishListRequestHelper.getCommerceContext());
 
@@ -343,7 +343,8 @@ public class CommerceWishListDisplayContext {
 		searchContainer.setOrderByType(orderByType);
 	}
 
-	private final CommerceProductPriceHelper _commerceProductPriceHelper;
+	private final CommerceProductPriceCalculation
+		_commerceProductPriceCalculation;
 	private CommerceWishList _commerceWishList;
 	private final CommerceWishListHttpHelper _commerceWishListHttpHelper;
 	private final CommerceWishListItemService _commerceWishListItemService;

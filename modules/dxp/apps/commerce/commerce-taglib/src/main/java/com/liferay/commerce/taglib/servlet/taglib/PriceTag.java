@@ -19,7 +19,7 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.price.CommerceProductPriceHelper;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -118,7 +118,7 @@ public class PriceTag extends IncludeTag {
 			}
 			else {
 				CommerceMoney commerceMoney =
-					commerceProductPriceHelper.getFinalPrice(
+					commerceProductPriceCalculation.getFinalPrice(
 						_cpInstance.getCPInstanceId(), _quantity, true, true,
 						commerceContext);
 
@@ -149,7 +149,7 @@ public class PriceTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		commerceProductPriceHelper =
+		commerceProductPriceCalculation =
 			ServletContextUtil.getCommercePriceCalculation();
 
 		servletContext = ServletContextUtil.getServletContext();
@@ -178,7 +178,7 @@ public class PriceTag extends IncludeTag {
 		throws PortalException {
 
 		CommerceMoney minPriceCommerceMoney =
-			commerceProductPriceHelper.getUnitMinPrice(
+			commerceProductPriceCalculation.getUnitMinPrice(
 				_cpDefinitionId, quantity, commerceContext);
 
 		if (!_showPriceRange) {
@@ -186,7 +186,7 @@ public class PriceTag extends IncludeTag {
 		}
 
 		CommerceMoney maxPriceCommerceMoney =
-			commerceProductPriceHelper.getUnitMaxPrice(
+			commerceProductPriceCalculation.getUnitMaxPrice(
 				_cpDefinitionId, quantity, commerceContext);
 
 		return minPriceCommerceMoney.format(locale) + " - " +
@@ -207,7 +207,7 @@ public class PriceTag extends IncludeTag {
 			"liferay-commerce:price:showPriceRange", _showPriceRange);
 	}
 
-	protected CommerceProductPriceHelper commerceProductPriceHelper;
+	protected CommerceProductPriceCalculation commerceProductPriceCalculation;
 
 	private static final String _PAGE = "/price/page.jsp";
 

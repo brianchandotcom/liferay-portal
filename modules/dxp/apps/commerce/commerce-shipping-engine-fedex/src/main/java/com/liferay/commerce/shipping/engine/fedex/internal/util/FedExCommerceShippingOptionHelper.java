@@ -60,7 +60,7 @@ import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
 import com.liferay.commerce.model.Dimensions;
-import com.liferay.commerce.price.CommerceProductPriceHelper;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
@@ -114,7 +114,7 @@ public class FedExCommerceShippingOptionHelper {
 	public FedExCommerceShippingOptionHelper(
 			CommerceContext commerceContext, CommerceOrder commerceOrder,
 			CommerceCurrencyLocalService commerceCurrencyLocalService,
-			CommerceProductPriceHelper commerceProductPriceHelper,
+			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CommerceShippingHelper commerceShippingHelper,
 			CommerceShippingOriginLocatorRegistry
 				commerceShippingOriginLocatorRegistry,
@@ -126,7 +126,7 @@ public class FedExCommerceShippingOptionHelper {
 		_commerceContext = commerceContext;
 		_commerceOrder = commerceOrder;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
-		_commerceProductPriceHelper = commerceProductPriceHelper;
+		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_commerceShippingHelper = commerceShippingHelper;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_resourceBundle = resourceBundle;
@@ -531,7 +531,7 @@ public class FedExCommerceShippingOptionHelper {
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CommerceMoney commerceMoney =
-				_commerceProductPriceHelper.getFinalPrice(
+				_commerceProductPriceCalculation.getFinalPrice(
 					commerceOrderItem.getCPInstanceId(),
 					commerceOrderItem.getQuantity(), true, true,
 					_commerceContext);
@@ -694,7 +694,7 @@ public class FedExCommerceShippingOptionHelper {
 				_commerceShippingHelper.getWeight(cpInstance));
 
 			CommerceMoney commerceMoney =
-				_commerceProductPriceHelper.getFinalPrice(
+				_commerceProductPriceCalculation.getFinalPrice(
 					commerceOrderItem.getCPInstanceId(), 1, true, true,
 					_commerceContext);
 
@@ -824,7 +824,8 @@ public class FedExCommerceShippingOptionHelper {
 	private final CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private final CommerceOrder _commerceOrder;
-	private final CommerceProductPriceHelper _commerceProductPriceHelper;
+	private final CommerceProductPriceCalculation
+		_commerceProductPriceCalculation;
 	private final CommerceShippingHelper _commerceShippingHelper;
 	private final CommerceShippingOriginLocator _commerceShippingOriginLocator;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

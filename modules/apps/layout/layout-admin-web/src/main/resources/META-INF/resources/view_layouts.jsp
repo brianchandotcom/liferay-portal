@@ -72,7 +72,7 @@
 		</c:when>
 		<c:otherwise>
 			<liferay-frontend:empty-result-message
-				actionDropdownItems="<%= layoutsAdminDisplayContext.getAddLayoutDropdownItems() %>"
+				actionDropdownItems="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() ? layoutsAdminDisplayContext.getAddLayoutDropdownItems() : null %>"
 				description='<%= LanguageUtil.get(request, "fortunately-it-is-very-easy-to-add-new-ones") %>'
 				elementType="pages"
 			/>

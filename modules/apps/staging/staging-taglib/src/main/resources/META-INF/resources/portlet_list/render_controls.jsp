@@ -106,7 +106,8 @@ for (int i = 0; i < controls.length; i++) {
 				</c:if>
 			</c:when>
 			<c:when test="<%= controls[i] instanceof PortletDataHandlerChoice %>">
-				<aui:field-wrapper label='<%= "&#9632" + LanguageUtil.get(request, resourceBundle, controls[i].getControlLabel()) %>'>
+				<label>
+					<%= LanguageUtil.get(request, resourceBundle, controls[i].getControlLabel()) %>
 
 					<%
 					PortletDataHandlerChoice control = (PortletDataHandlerChoice)controls[i];
@@ -133,7 +134,7 @@ for (int i = 0; i < controls.length; i++) {
 					}
 					%>
 
-				</aui:field-wrapper>
+				</label>
 			</c:when>
 		</c:choose>
 	</li>

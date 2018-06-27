@@ -1780,9 +1780,8 @@ public class JenkinsResultsParserUtil {
 			return;
 		}
 
-		try {
-			FileOutputStream fileOutputStream = new FileOutputStream(
-				propertiesFile);
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				propertiesFile)) {
 
 			properties.store(
 				fileOutputStream,

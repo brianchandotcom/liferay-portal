@@ -65,6 +65,7 @@ import java.security.spec.X509EncodedKeySpec;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -495,14 +496,20 @@ public class LicenseUtil {
 		Set<String> ipAddresses = new HashSet<>();
 
 		try {
-			List<NetworkInterface> networkInterfaces = Collections.list(
-				NetworkInterface.getNetworkInterfaces());
+			Enumeration<NetworkInterface> networkInterfaceEnumeration =
+				NetworkInterface.getNetworkInterfaces();
 
-			for (NetworkInterface networkInterface : networkInterfaces) {
-				List<InetAddress> inetAddresses = Collections.list(
-					networkInterface.getInetAddresses());
+			while (networkInterfaceEnumeration.hasMoreElements()) {
+				NetworkInterface networkInterface =
+					networkInterfaceEnumeration.nextElement();
 
-				for (InetAddress inetAddress : inetAddresses) {
+				Enumeration<InetAddress> inetAddressEnumeration =
+					networkInterface.getInetAddresses();
+
+				while (inetAddressEnumeration.hasMoreElements()) {
+					InetAddress inetAddress =
+						inetAddressEnumeration.nextElement();
+
 					if (inetAddress.isLinkLocalAddress() ||
 						inetAddress.isLoopbackAddress() ||
 						!(inetAddress instanceof Inet4Address)) {
@@ -525,10 +532,13 @@ public class LicenseUtil {
 		Set<String> macAddresses = new HashSet<>();
 
 		try {
-			List<NetworkInterface> networkInterfaces = Collections.list(
-				NetworkInterface.getNetworkInterfaces());
+			Enumeration<NetworkInterface> networkInterfaceEnumeration =
+				NetworkInterface.getNetworkInterfaces();
 
-			for (NetworkInterface networkInterface : networkInterfaces) {
+			while (networkInterfaceEnumeration.hasMoreElements()) {
+				NetworkInterface networkInterface =
+					networkInterfaceEnumeration.nextElement();
+
 				byte[] hardwareAddress = networkInterface.getHardwareAddress();
 
 				if (ArrayUtil.isEmpty(hardwareAddress)) {

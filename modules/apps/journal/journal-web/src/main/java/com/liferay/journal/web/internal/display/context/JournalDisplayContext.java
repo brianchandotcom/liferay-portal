@@ -1433,6 +1433,10 @@ public class JournalDisplayContext {
 
 		Group group = themeDisplay.getScopeGroup();
 
+		if (group.isLayout()) {
+			group = group.getParentGroup();
+		}
+
 		if (group.isStaged() && !group.isStagingGroup() &&
 			!group.isStagedRemotely() &&
 			group.isStagedPortlet(JournalPortletKeys.JOURNAL)) {

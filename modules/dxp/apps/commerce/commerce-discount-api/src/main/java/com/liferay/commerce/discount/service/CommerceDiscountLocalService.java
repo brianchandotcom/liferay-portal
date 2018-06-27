@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -318,6 +319,10 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	public BaseModelSearchResult<CommerceDiscount> searchCommerceDiscounts(
 		long companyId, long groupId, String keywords, int status, int start,
 		int end, Sort sort) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceDiscount> searchCommerceDiscounts(
+		SearchContext searchContext) throws PortalException;
 
 	/**
 	* Updates the commerce discount in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

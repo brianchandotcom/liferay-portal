@@ -388,6 +388,13 @@ public class CommerceDiscountLocalServiceWrapper
 			groupId, keywords, status, start, end, sort);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.discount.model.CommerceDiscount> searchCommerceDiscounts(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceDiscountLocalService.searchCommerceDiscounts(searchContext);
+	}
+
 	/**
 	* Updates the commerce discount in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

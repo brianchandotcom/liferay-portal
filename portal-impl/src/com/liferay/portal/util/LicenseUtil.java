@@ -15,6 +15,8 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.encryptor.Encryptor;
+import com.liferay.petra.process.CollectorOutputProcessor;
+import com.liferay.petra.process.ProcessUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONObjectImpl;
@@ -72,8 +74,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.crypto.KeyGenerator;
@@ -520,12 +524,13 @@ public class LicenseUtil {
 	private static int _getProcessorCores() {
 		if (OSDetector.isAIX() || OSDetector.isLinux()) {
 			try {
-				Runtime runtime = Runtime.getRuntime();
+				Future<Entry<byte[], byte[]>> future = ProcessUtil.execute(
+					CollectorOutputProcessor.INSTANCE, "nproc");
 
-				Process process = runtime.exec("nproc");
+				Entry<byte[], byte[]> entry = future.get();
 
 				return GetterUtil.getInteger(
-					StringUtil.read(process.getInputStream()));
+					new String(entry.getKey(), StringPool.UTF8));
 			}
 			catch (Exception e) {
 				_log.error(e, e);

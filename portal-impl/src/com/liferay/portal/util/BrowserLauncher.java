@@ -33,33 +33,26 @@ public class BrowserLauncher implements Runnable {
 			return;
 		}
 
-		for (int i = 0; i < 5; i++) {
-			try {
-				Thread.sleep(3000);
-			}
-			catch (InterruptedException ie) {
-			}
+		try {
+			URL url = new URL(PropsValues.BROWSER_LAUNCHER_URL);
 
-			try {
-				URL url = new URL(PropsValues.BROWSER_LAUNCHER_URL);
+			HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
 
-				HttpURLConnection urlc =
-					(HttpURLConnection)url.openConnection();
+			urlc.setConnectTimeout(0);
+			urlc.setReadTimeout(0);
+			urlc.setRequestMethod("HEAD");
 
-				int responseCode = urlc.getResponseCode();
+			int responseCode = urlc.getResponseCode();
 
-				if (responseCode == HttpURLConnection.HTTP_OK) {
-					try {
-						launchBrowser();
-					}
-					catch (Exception e2) {
-					}
-
-					break;
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				try {
+					launchBrowser();
+				}
+				catch (Exception e2) {
 				}
 			}
-			catch (Exception e1) {
-			}
+		}
+		catch (Exception e1) {
 		}
 	}
 

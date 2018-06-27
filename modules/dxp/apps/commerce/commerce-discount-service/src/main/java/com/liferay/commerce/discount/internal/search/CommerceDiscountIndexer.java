@@ -15,9 +15,21 @@
 package com.liferay.commerce.discount.internal.search;
 
 import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
+import com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelLocalService;
+import com.liferay.commerce.discount.target.CommerceDiscountOrderTarget;
+import com.liferay.commerce.discount.target.CommerceDiscountProductTarget;
+import com.liferay.commerce.discount.target.CommerceDiscountTarget;
+import com.liferay.commerce.discount.target.CommerceDiscountTarget.Type;
+import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,23 +49,41 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.filter.FilterBuilders;
+import com.liferay.portal.search.filter.TermsSetFilterBuilder;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(immediate = true, service = Indexer.class)
 public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 
 	public static final String CLASS_NAME = CommerceDiscount.class.getName();
+
+	public static final String FIELD_ACTIVE = "active";
+
+	public static final String FIELD_COUPON_CODE = "couponCode";
+
+	public static final String FIELD_TARGET_TYPE = "targetType";
+
+	public static final String FIELD_USE_COUPON_CODE = "useCouponCode";
 
 	public CommerceDiscountIndexer() {
 		setDefaultSelectedFieldNames(
@@ -97,6 +127,90 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 				Field.STATUS, String.valueOf(WorkflowConstants.STATUS_IN_TRASH),
 				BooleanClauseOccur.MUST_NOT);
 		}
+
+		long[] commerceUserSegmentEntryIds = GetterUtil.getLongValues(
+			searchContext.getAttribute("commerceUserSegmentEntryIds"), null);
+
+		if (commerceUserSegmentEntryIds != null) {
+			TermsSetFilterBuilder termsSetFilterBuilder =
+				_filterBuilders.termsSetFilterBuilder();
+
+			termsSetFilterBuilder.setFieldName("commerceUserSegmentEntryIds");
+			termsSetFilterBuilder.setMinimumShouldMatchField(
+				"commerceUserSegmentEntryIds_required_matches");
+
+			List<String> values = new ArrayList<>(
+				commerceUserSegmentEntryIds.length);
+
+			for (long commerceUserSegmentEntryId :
+					commerceUserSegmentEntryIds) {
+
+				values.add(String.valueOf(commerceUserSegmentEntryId));
+			}
+
+			termsSetFilterBuilder.setValues(values);
+
+			contextBooleanFilter.add(
+				termsSetFilterBuilder.build(), BooleanClauseOccur.MUST);
+		}
+
+		boolean active = GetterUtil.getBoolean(
+			searchContext.getAttribute(FIELD_ACTIVE));
+
+		if (active) {
+			contextBooleanFilter.addRequiredTerm(
+				FIELD_ACTIVE, String.valueOf(active));
+		}
+
+		String targetType = GetterUtil.getString(
+			searchContext.getAttribute("targetType"), null);
+
+		if (Validator.isNotNull(targetType)) {
+			contextBooleanFilter.addRequiredTerm(FIELD_TARGET_TYPE, targetType);
+		}
+
+		String cuponCode = GetterUtil.getString(
+			searchContext.getAttribute(FIELD_COUPON_CODE), null);
+
+		if (Validator.isNotNull(cuponCode)) {
+			contextBooleanFilter.addRequiredTerm(FIELD_COUPON_CODE, cuponCode);
+			contextBooleanFilter.addRequiredTerm(
+				FIELD_USE_COUPON_CODE, Boolean.TRUE.toString());
+		}
+		else {
+			contextBooleanFilter.addRequiredTerm(
+				FIELD_USE_COUPON_CODE, Boolean.FALSE.toString());
+		}
+
+		long cpDefinitionId = GetterUtil.getLong(
+			searchContext.getAttribute("cpDefinitionId"));
+
+		if (cpDefinitionId > 0) {
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
+
+			for (CommerceDiscountProductTarget commerceDiscountProductTarget :
+					_commerceDiscountProductTargets) {
+
+				commerceDiscountProductTarget.postProcessContextBooleanFilter(
+					contextBooleanFilter, cpDefinition);
+			}
+		}
+
+		long commerceOrderId = GetterUtil.getLong(
+			searchContext.getAttribute("commerceOrderId"));
+
+		if (commerceOrderId > 0) {
+			CommerceOrder commerceOrder =
+				_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
+			for (CommerceDiscountOrderTarget commerceDiscountOrderTarget :
+					_commerceDiscountOrderTargets) {
+
+				commerceDiscountOrderTarget.postProcessContextBooleanFilter(
+					contextBooleanFilter, commerceOrder);
+			}
+		}
 	}
 
 	@Override
@@ -138,14 +252,57 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 			_log.debug("Indexing discount " + commerceDiscount);
 		}
 
+		CommerceDiscountTarget commerceDiscountTarget =
+			_commerceDiscountTargetRegistry.getCommerceDiscountTarget(
+				commerceDiscount.getTarget());
+
+		Type commerceDiscountTargetType = commerceDiscountTarget.getType();
+
 		Document document = getBaseModelDocument(CLASS_NAME, commerceDiscount);
 
 		document.addText(Field.TITLE, commerceDiscount.getTitle());
+
+		document.addText(
+			FIELD_TARGET_TYPE, commerceDiscountTargetType.toString());
 		document.addText(Field.USER_NAME, commerceDiscount.getUserName());
+		document.addKeyword(FIELD_ACTIVE, commerceDiscount.getActive());
+		document.addKeyword(
+			FIELD_COUPON_CODE, commerceDiscount.getCouponCode());
+		document.addKeyword(
+			FIELD_USE_COUPON_CODE, commerceDiscount.getUseCouponCode());
+
+		List<CommerceDiscountUserSegmentRel> commerceDiscountUserSegmentRels =
+			_commerceDiscountUserSegmentRelLocalService.
+				getCommerceDiscountUserSegmentRels(
+					commerceDiscount.getCommerceDiscountId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+		Stream<CommerceDiscountUserSegmentRel> stream =
+			commerceDiscountUserSegmentRels.stream();
+
+		long[] commerceUserSegmentEntryIds = stream.mapToLong(
+			CommerceDiscountUserSegmentRel::getCommerceUserSegmentEntryId).
+				toArray();
+
+		document.addNumber(
+			"commerceUserSegmentEntryIds", commerceUserSegmentEntryIds);
+		document.addNumber(
+			"commerceUserSegmentEntryIds_required_matches",
+			commerceUserSegmentEntryIds.length);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Document " + commerceDiscount + " indexed successfully");
+		}
+
+		if (commerceDiscountTarget instanceof CommerceDiscountProductTarget) {
+			((CommerceDiscountProductTarget)commerceDiscountTarget).
+				contributeDocument(document, commerceDiscount);
+		}
+
+		if (commerceDiscountTarget instanceof CommerceDiscountOrderTarget) {
+			((CommerceDiscountOrderTarget)commerceDiscountTarget).
+				contributeDocument(document, commerceDiscount);
 		}
 
 		return document;
@@ -190,6 +347,30 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		reindexCommerceDiscounts(companyId);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		service = CommerceDiscountOrderTarget.class
+	)
+	protected void registerCommerceDiscountOrderTarget(
+		CommerceDiscountOrderTarget commerceDiscountOrderTarget) {
+
+		_commerceDiscountOrderTargets.add(commerceDiscountOrderTarget);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		service = CommerceDiscountProductTarget.class
+	)
+	protected void registerCommerceDiscountProductTarget(
+		CommerceDiscountProductTarget commerceDiscountProductTarget) {
+
+		_commerceDiscountProductTargets.add(commerceDiscountProductTarget);
+	}
+
 	protected void reindexCommerceDiscounts(long companyId)
 		throws PortalException {
 
@@ -223,6 +404,18 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
+	protected void unregisterCommerceDiscountOrderTarget(
+		CommerceDiscountOrderTarget commerceDiscountOrderTarget) {
+
+		_commerceDiscountOrderTargets.remove(commerceDiscountOrderTarget);
+	}
+
+	protected void unregisterCommerceDiscountProductTarget(
+		CommerceDiscountProductTarget commerceDiscountProductTarget) {
+
+		_commerceDiscountProductTargets.remove(commerceDiscountProductTarget);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDiscountIndexer.class);
 
@@ -231,6 +424,27 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 
 	@Reference
 	private CommerceDiscountLocalService _commerceDiscountLocalService;
+
+	private final List<CommerceDiscountOrderTarget>
+		_commerceDiscountOrderTargets = new CopyOnWriteArrayList<>();
+	private final List<CommerceDiscountProductTarget>
+		_commerceDiscountProductTargets = new CopyOnWriteArrayList<>();
+
+	@Reference
+	private CommerceDiscountTargetRegistry _commerceDiscountTargetRegistry;
+
+	@Reference
+	private CommerceDiscountUserSegmentRelLocalService
+		_commerceDiscountUserSegmentRelLocalService;
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private FilterBuilders _filterBuilders;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

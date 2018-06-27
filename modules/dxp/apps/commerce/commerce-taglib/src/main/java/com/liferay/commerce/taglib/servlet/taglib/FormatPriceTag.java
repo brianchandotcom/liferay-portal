@@ -107,7 +107,7 @@ public class FormatPriceTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		request.setAttribute(
-			"liferay-commerce:price:formattedPrice", _formattedPrice);
+			"liferay-commerce:format-price:formattedPrice", _formattedPrice);
 	}
 
 	protected CommercePriceFormatter commercePriceFormatter;

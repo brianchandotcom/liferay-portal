@@ -17,7 +17,7 @@
 <%@ include file="/price/init.jsp" %>
 
 <%
-String formattedPrice = (String)request.getAttribute("liferay-commerce:price:formattedPrice");
+String formattedPrice = (String)request.getAttribute("liferay-commerce:format-price:formattedPrice");
 %>
 
 <c:if test="<%= Validator.isNotNull(formattedPrice) %>">

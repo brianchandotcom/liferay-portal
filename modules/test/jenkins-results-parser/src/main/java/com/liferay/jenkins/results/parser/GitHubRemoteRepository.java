@@ -46,13 +46,13 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			jsonObject.put("description", description);
 		}
 
-		String labelRequestURL = _getLabelRequestURL();
+		String labelsRequestURL = _getLabelRequestURL();
 
 		try {
 			JenkinsResultsParserUtil.toString(
-				labelRequestURL, jsonObject.toString());
+				labelsRequestURL, jsonObject.toString());
 
-			_repositoryLabels.remove(labelRequestURL);
+			_labelsCacheMap.remove(labelsRequestURL);
 		}
 		catch (IOException ioe) {
 			System.out.println("Unable to add label " + name);
@@ -82,8 +82,8 @@ public class GitHubRemoteRepository extends RemoteRepository {
 	public List<Label> getLabels() {
 		String labelRequestURL = _getLabelRequestURL();
 
-		if (_repositoryLabels.containsKey(labelRequestURL)) {
-			return _repositoryLabels.get(labelRequestURL);
+		if (_labelsCacheMap.containsKey(labelRequestURL)) {
+			return _labelsCacheMap.get(labelRequestURL);
 		}
 
 		JSONArray labelsJSONArray;
@@ -117,7 +117,7 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			page++;
 		}
 
-		_repositoryLabels.put(labelRequestURL, labels);
+		_labelsCacheMap.put(labelRequestURL, labels);
 
 		return labels;
 	}
@@ -168,7 +168,7 @@ public class GitHubRemoteRepository extends RemoteRepository {
 					jsonObject.toString());
 			}
 
-			_repositoryLabels.remove(_getLabelRequestURL());
+			_labelsCacheMap.remove(_getLabelRequestURL());
 		}
 		catch (IOException ioe) {
 			if (jsonObject == null) {
@@ -186,9 +186,12 @@ public class GitHubRemoteRepository extends RemoteRepository {
 
 	public static class Label {
 
-		public Label(JSONObject jsonObject, GitHubRemoteRepository repository) {
+		public Label(
+			JSONObject jsonObject,
+			GitHubRemoteRepository gitHubRemoteRepository) {
+
 			_jsonObject = jsonObject;
-			_repository = repository;
+			_gitHubRemoteRepository = gitHubRemoteRepository;
 		}
 
 		@Override
@@ -223,12 +226,12 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			return _jsonObject.optString("description");
 		}
 
-		public String getName() {
-			return _jsonObject.getString("name");
+		public GitHubRemoteRepository getGitHubRemoteRepository() {
+			return _gitHubRemoteRepository;
 		}
 
-		public GitHubRemoteRepository getRepository() {
-			return _repository;
+		public String getName() {
+			return _jsonObject.getString("name");
 		}
 
 		@Override
@@ -243,8 +246,8 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			return _jsonObject.toString(4);
 		}
 
+		private final GitHubRemoteRepository _gitHubRemoteRepository;
 		private final JSONObject _jsonObject;
-		private final GitHubRemoteRepository _repository;
 
 	}
 
@@ -257,8 +260,10 @@ public class GitHubRemoteRepository extends RemoteRepository {
 		}
 	}
 
-	protected GitHubRemoteRepository(String repositoryName, String username) {
-		super("github.com", repositoryName, username);
+	protected GitHubRemoteRepository(
+		String gitHubRemoteRepositoryName, String username) {
+
+		super("github.com", gitHubRemoteRepositoryName, username);
 	}
 
 	private String _getLabelRequestURL() {
@@ -266,7 +271,7 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			getName(), getUsername(), "/labels");
 	}
 
-	private static final Map<String, List<Label>> _repositoryLabels =
+	private static final Map<String, List<Label>> _labelsCacheMap =
 		new ConcurrentHashMap<>();
 
 }

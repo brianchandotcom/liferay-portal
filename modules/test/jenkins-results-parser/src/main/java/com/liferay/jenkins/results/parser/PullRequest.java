@@ -57,7 +57,8 @@ public class PullRequest {
 		}
 
 		_number = Integer.parseInt(matcher.group("number"));
-		_gitHubRemoteRepositoryName = matcher.group("repository");
+		_gitHubRemoteRepositoryName = matcher.group(
+			"gitHubRemoteRepositoryName");
 		_ownerUsername = matcher.group("owner");
 
 		refresh();
@@ -139,11 +140,9 @@ public class PullRequest {
 	}
 
 	public Commit getCommit() {
-		String gitHubUserName = getOwnerUsername();
-		String repositoryName = getGitHubRemoteRepositoryName();
-		String sha = getSenderSHA();
-
-		return CommitFactory.newCommit(gitHubUserName, repositoryName, sha);
+		return CommitFactory.newCommit(
+			getOwnerUsername(), getGitHubRemoteRepositoryName(),
+			getSenderSHA());
 	}
 
 	public GitHubRemoteRepository getGitHubRemoteRepository() {
@@ -501,8 +500,9 @@ public class PullRequest {
 	private static final String _TEST_SUITE_NAME_DEFAULT = "default";
 
 	private static final Pattern _htmlURLPattern = Pattern.compile(
-		"https://github.com/(?<owner>[^/]+)/(?<repository>[^/]+)/pull/" +
-			"(?<number>\\d+)");
+		JenkinsResultsParserUtil.combine(
+			"https://github.com/(?<owner>[^/]+)/",
+			"(?<gitHubRemoteRepositoryName>[^/]+)/pull/(?<number>\\d+)"));
 
 	private GitHubRemoteRepository _gitHubRemoteRepository;
 	private String _gitHubRemoteRepositoryName;

@@ -492,83 +492,6 @@ public class LicenseUtil {
 		return jsonObjectString.getBytes(StringPool.UTF8);
 	}
 
-	private static Set<String> _getIPAddresses() {
-		Set<String> ipAddresses = new HashSet<>();
-
-		try {
-			Enumeration<NetworkInterface> networkInterfaceEnumeration =
-				NetworkInterface.getNetworkInterfaces();
-
-			while (networkInterfaceEnumeration.hasMoreElements()) {
-				NetworkInterface networkInterface =
-					networkInterfaceEnumeration.nextElement();
-
-				Enumeration<InetAddress> inetAddressEnumeration =
-					networkInterface.getInetAddresses();
-
-				while (inetAddressEnumeration.hasMoreElements()) {
-					InetAddress inetAddress =
-						inetAddressEnumeration.nextElement();
-
-					if (inetAddress.isLinkLocalAddress() ||
-						inetAddress.isLoopbackAddress() ||
-						!(inetAddress instanceof Inet4Address)) {
-
-						continue;
-					}
-
-					ipAddresses.add(inetAddress.getHostAddress());
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error("Unable to read local server's IP addresses", e);
-		}
-
-		return Collections.unmodifiableSet(ipAddresses);
-	}
-
-	private static Set<String> _getMACAddresses() {
-		Set<String> macAddresses = new HashSet<>();
-
-		try {
-			Enumeration<NetworkInterface> networkInterfaceEnumeration =
-				NetworkInterface.getNetworkInterfaces();
-
-			while (networkInterfaceEnumeration.hasMoreElements()) {
-				NetworkInterface networkInterface =
-					networkInterfaceEnumeration.nextElement();
-
-				byte[] hardwareAddress = networkInterface.getHardwareAddress();
-
-				if (ArrayUtil.isEmpty(hardwareAddress)) {
-					continue;
-				}
-
-				StringBuilder sb = new StringBuilder(
-					(hardwareAddress.length * 3) - 1);
-
-				String hexString = StringUtil.bytesToHexString(hardwareAddress);
-
-				for (int i = 0; i < hexString.length(); i += 2) {
-					if (i != 0) {
-						sb.append(CharPool.COLON);
-					}
-
-					sb.append(Character.toLowerCase(hexString.charAt(i)));
-					sb.append(Character.toLowerCase(hexString.charAt(i + 1)));
-				}
-
-				macAddresses.add(sb.toString());
-			}
-		}
-		catch (Exception e) {
-			_log.error("Unable to read local server's MAC addresses", e);
-		}
-
-		return Collections.unmodifiableSet(macAddresses);
-	}
-
 	private static Map<String, String> _getOrderProducts(
 		JSONObject jsonObject) {
 
@@ -735,8 +658,79 @@ public class LicenseUtil {
 			throw new ExceptionInInitializerError(e);
 		}
 
-		_ipAddresses = _getIPAddresses();
-		_macAddresses = _getMACAddresses();
+		Set<String> ipAddresses = new HashSet<>();
+
+		try {
+			Enumeration<NetworkInterface> networkInterfaceEnumeration =
+				NetworkInterface.getNetworkInterfaces();
+
+			while (networkInterfaceEnumeration.hasMoreElements()) {
+				NetworkInterface networkInterface =
+					networkInterfaceEnumeration.nextElement();
+
+				Enumeration<InetAddress> inetAddressEnumeration =
+					networkInterface.getInetAddresses();
+
+				while (inetAddressEnumeration.hasMoreElements()) {
+					InetAddress inetAddress =
+						inetAddressEnumeration.nextElement();
+
+					if (inetAddress.isLinkLocalAddress() ||
+						inetAddress.isLoopbackAddress() ||
+						!(inetAddress instanceof Inet4Address)) {
+
+						continue;
+					}
+
+					ipAddresses.add(inetAddress.getHostAddress());
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to read local server's IP addresses", e);
+		}
+
+		_ipAddresses = Collections.unmodifiableSet(ipAddresses);
+
+		Set<String> macAddresses = new HashSet<>();
+
+		try {
+			Enumeration<NetworkInterface> networkInterfaceEnumeration =
+				NetworkInterface.getNetworkInterfaces();
+
+			while (networkInterfaceEnumeration.hasMoreElements()) {
+				NetworkInterface networkInterface =
+					networkInterfaceEnumeration.nextElement();
+
+				byte[] hardwareAddress = networkInterface.getHardwareAddress();
+
+				if (ArrayUtil.isEmpty(hardwareAddress)) {
+					continue;
+				}
+
+				StringBuilder sb = new StringBuilder(
+					(hardwareAddress.length * 3) - 1);
+
+				String hexString = StringUtil.bytesToHexString(hardwareAddress);
+
+				for (int i = 0; i < hexString.length(); i += 2) {
+					if (i != 0) {
+						sb.append(CharPool.COLON);
+					}
+
+					sb.append(Character.toLowerCase(hexString.charAt(i)));
+					sb.append(Character.toLowerCase(hexString.charAt(i + 1)));
+				}
+
+				macAddresses.add(sb.toString());
+			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to read local server's MAC addresses", e);
+		}
+
+		_macAddresses = Collections.unmodifiableSet(macAddresses);
+
 		_PROCESSOR_CORES = _getProcessorCores();
 	}
 

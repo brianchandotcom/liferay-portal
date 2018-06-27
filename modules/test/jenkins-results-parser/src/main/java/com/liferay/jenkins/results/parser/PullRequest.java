@@ -165,6 +165,10 @@ public class PullRequest {
 		return _jsonObject.getString("html_url");
 	}
 
+	public String getJSON() {
+		return _jsonObject.toString(4);
+	}
+
 	public List<Label> getLabels() {
 		return _labels;
 	}
@@ -206,6 +210,10 @@ public class PullRequest {
 		JSONObject userJSONObject = headJSONObject.getJSONObject("user");
 
 		return userJSONObject.getString("login");
+	}
+
+	public String getState() {
+		return _jsonObject.getString("state");
 	}
 
 	public TestSuiteStatus getTestSuiteStatus() {

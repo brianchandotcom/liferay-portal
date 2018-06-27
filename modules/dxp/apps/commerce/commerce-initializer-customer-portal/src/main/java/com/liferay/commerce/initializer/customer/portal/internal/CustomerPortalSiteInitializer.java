@@ -37,7 +37,6 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.product.service.CPRuleAssetCategoryRelLocalService;
 import com.liferay.commerce.product.service.CPRuleLocalService;
 import com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
@@ -934,10 +933,6 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
-
-	@Reference
-	private CPRuleAssetCategoryRelLocalService
-		_cpRuleAssetCategoryRelLocalService;
 
 	@Reference
 	private CPRuleLocalService _cpRuleLocalService;

@@ -28,7 +28,6 @@ import com.liferay.commerce.discount.target.CommerceDiscountTarget.Type;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -214,7 +213,7 @@ public class CommerceDiscountCalculationImpl
 
 		BigDecimal discountPercentage = discountedAmount.divide(amount);
 
-		discountPercentage.multiply(_ONE_HUNDRED);
+		discountPercentage = discountPercentage.multiply(_ONE_HUNDRED);
 
 		return new CommerceDiscountValue(
 			commerceDiscount.getCommerceDiscountId(), curentDiscountAmount,
@@ -310,9 +309,6 @@ public class CommerceDiscountCalculationImpl
 
 	@Reference
 	private CommerceDiscountRuleTypeRegistry _commerceDiscountRuleTypeRegistry;
-
-	@Reference
-	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

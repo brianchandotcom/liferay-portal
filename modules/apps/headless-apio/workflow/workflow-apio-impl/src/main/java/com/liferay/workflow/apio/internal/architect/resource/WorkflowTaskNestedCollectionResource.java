@@ -23,6 +23,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.workflow.apio.architect.identifier.WorkflowLogIdentifier;
 import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 
 import java.io.Serializable;
@@ -100,6 +102,10 @@ public class WorkflowTaskNestedCollectionResource
 			"blogPost", BlogPostingIdentifier.class, this::_getLinkedModelId
 		).addLinkedModel(
 			"comment", CommentIdentifier.class, this::_getLinkedModelId
+		).addLinkedModel(
+			"mediaObject", MediaObjectIdentifier.class, this::_getLinkedModelId
+		).addRelatedCollection(
+			"logs", WorkflowLogIdentifier.class
 		).addString(
 			"definitionName", WorkflowTask::getWorkflowDefinitionName
 		).addString(

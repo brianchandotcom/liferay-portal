@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -639,15 +638,13 @@ public class LicenseUtil {
 	}
 
 	private static void _initKeys() {
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		if ((classLoader == null) || (_encryptedSymmetricKey != null)) {
+		if (_encryptedSymmetricKey != null) {
 			return;
 		}
 
 		try {
-			URL url = classLoader.getResource(
-				"com/liferay/portal/license/public.key");
+			URL url = LicenseUtil.class.getResource(
+				"/com/liferay/portal/license/public.key");
 
 			byte[] bytes = IOUtils.toByteArray(url.openStream());
 

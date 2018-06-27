@@ -32,7 +32,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) %>">
+	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) && siteNavigationAdminDisplayContext.hasEditPermission() %>">
 		<portlet:renderURL var="editSiteNavigationMenuURL">
 			<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
 			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
@@ -45,7 +45,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		/>
 	</c:if>
 
-	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) %>">
+	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) && siteNavigationAdminDisplayContext.hasEditPermission() %>">
 		<portlet:actionURL name="/navigation_menu/update_site_navigation_menu" var="updateSiteNavigationMenuURL">
 			<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
 		</portlet:actionURL>
@@ -66,7 +66,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		/>
 	</c:if>
 
-	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.PERMISSIONS) && siteNavigationAdminDisplayContext.hasEditPermission() %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= SiteNavigationMenu.class.getName() %>"
 			modelResourceDescription="<%= siteNavigationMenu.getName() %>"
@@ -83,7 +83,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		/>
 	</c:if>
 
-	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) %>">
+	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) && siteNavigationAdminDisplayContext.hasEditPermission() %>">
 		<div class="border-top dropdown-subheader">
 			<liferay-ui:message key="mark-as" />
 		</div>

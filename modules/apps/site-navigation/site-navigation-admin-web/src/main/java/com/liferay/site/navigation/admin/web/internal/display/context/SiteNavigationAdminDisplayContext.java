@@ -344,7 +344,7 @@ public class SiteNavigationAdminDisplayContext {
 		};
 	}
 
-	public boolean isShowAddButton() {
+	public boolean hasEditPermission() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -355,6 +355,17 @@ public class SiteNavigationAdminDisplayContext {
 			group.isStagedPortlet(
 				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN)) {
 
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isShowAddButton() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!hasEditPermission()) {
 			return false;
 		}
 

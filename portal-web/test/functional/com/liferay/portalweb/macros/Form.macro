@@ -35,6 +35,14 @@
 		<execute function="AssertClick" locator1="Form#PAGE_CONTROLS_ADD_SUCCESS_PAGE" value1="Add Success Page" />
 	</command>
 
+	<command name="addTranslation">
+		<execute function="Click" locator1="Translation#ADD" />
+
+		<var name="key_localizedLanguage" value="${localizedLanguage}" />
+
+		<execute function="AssertClick" locator1="Translation#ADD_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
+	</command>
+
 	<command name="clickPublishSwitcher">
 		<execute function="Click" locator1="Form#PUBLISH_FORM_SWITCHER" />
 	</command>
@@ -337,6 +345,12 @@
 		<execute function="AssertClick" locator1="Form#SAVE_FORM_BUTTON_LOCALIZED" value1="${saveButton}" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="selectTranslation">
+		<var name="key_localizedLanguage" value="${localizedLanguage}" />
+
+		<execute function="Click" locator1="Translation#UNSELECTED_LOCALE_ICON" />
 	</command>
 
 	<command name="submitFormPublish">

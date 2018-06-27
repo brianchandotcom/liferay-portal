@@ -34,14 +34,6 @@
 		<execute function="Click" locator1="DDLEditRecord#FIELD_ADD" />
 	</command>
 
-	<command name="addTranslation">
-		<execute function="Click" locator1="DDLRecord#ADD_TRANSLATION" />
-
-		<var name="key_localizedLanguage" value="${localizedLanguage}" />
-
-		<execute function="AssertClick" locator1="Translation#ADD_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
-	</command>
-
 	<command name="addViaDDLDisplayPG">
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
@@ -119,14 +111,6 @@
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
 			<var name="key_menuItem" value="Edit" />
 		</execute>
-	</command>
-
-	<command name="editTranslation">
-		<execute function="Click" locator1="DDLRecord#ADD_TRANSLATION" />
-
-		<var name="key_localizedLanguage" value="${localizedLanguage}" />
-
-		<execute function="AssertClick" locator1="Translation#ADD_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
 	</command>
 
 	<command name="editViaRecordViewCP">
@@ -481,20 +465,10 @@
 		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
 	</command>
 
-	<command name="selectTranslation">
-		<var name="key_localizedLanguage" value="${localizedLanguage}" />
-
-		<execute function="Click" locator1="Translation#UNSELECTED_LOCALE_ICON" />
-	</command>
-
 	<command name="submitForPublication">
 		<execute macro="Button#clickSubmitForPublication" />
 
 		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="viewDefaultLanguage">
-		<execute function="AssertTextEquals" locator1="Translation#DEFAULT_LANGUAGE" value1="${defaultLanguage}" />
 	</command>
 
 	<command name="viewEditPreview">

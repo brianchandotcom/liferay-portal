@@ -471,10 +471,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="viewDefaultLanguage">
-		<execute function="AssertTextEquals" locator1="Translation#DEFAULT_LANGUAGE" value1="${defaultLanguage}" />
-	</command>
-
 	<command name="viewEditPreview">
 		<var name="key_fieldName" value="${fieldName}" />
 

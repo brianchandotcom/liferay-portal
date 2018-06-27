@@ -124,11 +124,13 @@ public class DynamicQueryTest {
 
 		values.add(className1.getClassNameId());
 
-		for (long i = 0; i < values.size() - 1; i++) {
+		for (long i = 1; i < databaseInMaxParameters; i++) {
 			values.add(-i);
 		}
 
 		values.add(className2.getClassNameId());
+
+		Assert.assertEquals(databaseInMaxParameters + 1, values.size());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("classNameId", values));
 

@@ -73,7 +73,7 @@ public class JenkinsUtil {
 			_getSimpleWorkspaceProperties(repositoryDirs));
 
 		JenkinsResultsParserUtil.writePropertiesFile(
-			workspacePropertiesFile, workspaceProperties);
+			workspacePropertiesFile, workspaceProperties, false);
 	}
 
 	private static Properties _getPluginsWorkspaceProperties(

@@ -1770,7 +1770,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void writePropertiesFile(
-		File propertiesFile, Properties properties) {
+		File propertiesFile, Properties properties, boolean verbose) {
 
 		if (propertiesFile.exists()) {
 			propertiesFile.delete();
@@ -1795,16 +1795,18 @@ public class JenkinsResultsParserUtil {
 			ioe.printStackTrace();
 		}
 
-		System.out.println("#");
-		System.out.println("# " + propertiesFile);
-		System.out.println("#\n");
+		if (verbose) {
+			System.out.println("#");
+			System.out.println("# " + propertiesFile);
+			System.out.println("#\n");
 
-		try {
-			System.out.println(read(propertiesFile));
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to read properties file " + propertiesFile, ioe);
+			try {
+				System.out.println(read(propertiesFile));
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to read properties file " + propertiesFile, ioe);
+			}
 		}
 	}
 

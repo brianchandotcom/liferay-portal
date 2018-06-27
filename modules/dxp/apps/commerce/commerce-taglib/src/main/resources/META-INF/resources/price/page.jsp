@@ -19,7 +19,9 @@
 <%
 CPInstance cpInstance = (CPInstance)request.getAttribute("liferay-commerce:price:cpInstance");
 String formattedPrice = (String)request.getAttribute("liferay-commerce:price:formattedPrice");
+String formattedPromoPrice = (String)request.getAttribute("liferay-commerce:price:formattedPromoPrice");
 boolean showPriceRange = (boolean)request.getAttribute("liferay-commerce:price:showPriceRange");
+boolean showPromoPrice = (boolean)request.getAttribute("liferay-commerce:price:showPromoPrice");
 %>
 
 <c:choose>
@@ -37,6 +39,15 @@ boolean showPriceRange = (boolean)request.getAttribute("liferay-commerce:price:s
 		</span>
 	</c:when>
 	<c:otherwise>
-		<span class="product-price"><%= formattedPrice %></span>
+		<c:choose>
+			<c:when test="<%= showPromoPrice %>">
+				<span class="product-price"><del><%= formattedPrice %></del></span>
+
+				<span class="product-promo-price"><%= formattedPromoPrice %></span>
+			</c:when>
+			<c:otherwise>
+				<span class="product-price"><%= formattedPrice %></span>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

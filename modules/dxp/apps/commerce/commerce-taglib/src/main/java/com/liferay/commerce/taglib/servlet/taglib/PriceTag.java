@@ -28,6 +28,7 @@ import com.liferay.commerce.product.service.CPInstanceServiceUtil;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,6 +37,8 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.math.BigDecimal;
 
 import java.util.Locale;
 
@@ -79,52 +82,9 @@ public class PriceTag extends IncludeTag {
 				return super.doStartTag();
 			}
 
-			CPDefinition cpDefinition = CPDefinitionServiceUtil.getCPDefinition(
-				_cpDefinitionId);
+			setProductInfo();
 
-			if (_quantity == 0) {
-				CPDefinitionInventory cpDefinitionInventory =
-					CPDefinitionInventoryServiceUtil.
-						fetchCPDefinitionInventoryByCPDefinitionId(
-							_cpDefinitionId);
-
-				if (cpDefinitionInventory != null) {
-					_quantity = cpDefinitionInventory.getMinOrderQuantity();
-				}
-				else {
-					_quantity =
-						CPDefinitionInventoryConstants.
-							DEFAULT_MULTIPLE_ORDER_QUANTITY;
-				}
-			}
-
-			if (_cpInstanceId > 0) {
-				_cpInstance = CPInstanceServiceUtil.getCPInstance(
-					_cpInstanceId);
-			}
-			else {
-				if (cpDefinition.isIgnoreSKUCombinations()) {
-					CPInstanceHelper cpInstanceHelper =
-						ServletContextUtil.getCPInstanceHelper();
-
-					_cpInstance = cpInstanceHelper.getCPInstance(
-						_cpDefinitionId, null);
-				}
-			}
-
-			if (_cpInstance == null) {
-				_formattedPrice = getFormattedPrice(
-					_quantity, commerceContext, themeDisplay.getLocale());
-			}
-			else {
-				CommerceMoney commerceMoney =
-					commerceProductPriceCalculation.getFinalPrice(
-						_cpInstance.getCPInstanceId(), _quantity, true, true,
-						commerceContext);
-
-				_formattedPrice = commerceMoney.format(
-					themeDisplay.getLocale());
-			}
+			setPriceInfo(commerceContext, themeDisplay.getLocale());
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -163,6 +123,10 @@ public class PriceTag extends IncludeTag {
 		_showPriceRange = showPriceRange;
 	}
 
+	public void setShowPromoPrice(boolean showPromoPrice) {
+		_showPromoPrice = showPromoPrice;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -171,6 +135,7 @@ public class PriceTag extends IncludeTag {
 		_cpInstanceId = 0;
 		_quantity = 0;
 		_showPriceRange = false;
+		_showPromoPrice = true;
 	}
 
 	protected String getFormattedPrice(
@@ -204,7 +169,77 @@ public class PriceTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-commerce:price:formattedPrice", _formattedPrice);
 		request.setAttribute(
+			"liferay-commerce:price:formattedPromoPrice", _formattedPromoPrice);
+		request.setAttribute(
 			"liferay-commerce:price:showPriceRange", _showPriceRange);
+		request.setAttribute(
+			"liferay-commerce:price:showPromoPrice", _showPromoPrice);
+	}
+
+	protected void setPriceInfo(CommerceContext commerceContext, Locale locale)
+		throws PortalException {
+
+		_formattedPromoPrice = StringPool.BLANK;
+
+		if (_cpInstance == null) {
+			_formattedPrice = getFormattedPrice(
+				_quantity, commerceContext, locale);
+			_showPromoPrice = false;
+		}
+		else {
+			CommerceMoney priceCommerceMoney =
+				commerceProductPriceCalculation.getFinalPrice(
+					_cpInstance.getCPInstanceId(), _quantity, commerceContext);
+			CommerceMoney promoPriceCommerceMoney =
+				commerceProductPriceCalculation.getPromoPrice(
+					_cpInstance.getCPInstanceId(), _quantity,
+					commerceContext.getCommercePriceList(),
+					commerceContext.getCommerceCurrency());
+
+			BigDecimal promoPrice = promoPriceCommerceMoney.getPrice();
+
+			if ((promoPrice.compareTo(BigDecimal.ZERO) <= 0) ||
+				(promoPrice.compareTo(priceCommerceMoney.getPrice()) >= 0)) {
+
+				_showPromoPrice = false;
+				_formattedPromoPrice = promoPriceCommerceMoney.format(locale);
+			}
+
+			_formattedPrice = priceCommerceMoney.format(locale);
+		}
+	}
+
+	protected void setProductInfo() throws Exception {
+		CPDefinition cpDefinition = CPDefinitionServiceUtil.getCPDefinition(
+			_cpDefinitionId);
+
+		if (_quantity == 0) {
+			CPDefinitionInventory cpDefinitionInventory =
+				CPDefinitionInventoryServiceUtil.
+					fetchCPDefinitionInventoryByCPDefinitionId(_cpDefinitionId);
+
+			if (cpDefinitionInventory != null) {
+				_quantity = cpDefinitionInventory.getMinOrderQuantity();
+			}
+			else {
+				_quantity =
+					CPDefinitionInventoryConstants.
+						DEFAULT_MULTIPLE_ORDER_QUANTITY;
+			}
+		}
+
+		if (_cpInstanceId > 0) {
+			_cpInstance = CPInstanceServiceUtil.getCPInstance(_cpInstanceId);
+		}
+		else {
+			if (cpDefinition.isIgnoreSKUCombinations()) {
+				CPInstanceHelper cpInstanceHelper =
+					ServletContextUtil.getCPInstanceHelper();
+
+				_cpInstance = cpInstanceHelper.getCPInstance(
+					_cpDefinitionId, null);
+			}
+		}
 	}
 
 	protected CommerceProductPriceCalculation commerceProductPriceCalculation;
@@ -217,7 +252,9 @@ public class PriceTag extends IncludeTag {
 	private CPInstance _cpInstance;
 	private long _cpInstanceId;
 	private String _formattedPrice;
+	private String _formattedPromoPrice;
 	private int _quantity;
 	private boolean _showPriceRange;
+	private boolean _showPromoPrice = true;
 
 }

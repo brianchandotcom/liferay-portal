@@ -108,7 +108,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 								</a>
 
 								<div class="easyzoom-flyout">
-									<img src="<%= cpCatalogEntry.getDefaultImageFileUrl() %>" id="<portlet:namespace />zoom-image" style="position: absolute">
+									<img id="<portlet:namespace />zoom-image" src="<%= cpCatalogEntry.getDefaultImageFileUrl() %>" style="position: absolute">
 								</div>
 							</div>
 						</div>
@@ -411,7 +411,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 	</div>
 </div>
 
-<script>
+<aui:script>
 	const zoomImage = document.getElementById('<portlet:namespace />zoom-image');
 	function detectMousePosition(event) {
 		const cursorPos = {
@@ -425,7 +425,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 		zoomImage.style.transform = 'translate(' + translate.x + 'px, ' + translate.y + 'px)';
 	}
 	document.getElementById('<portlet:namespace />full-image').addEventListener('mousemove', detectMousePosition);
-</script>
+</aui:script>
 
 <aui:script use="liferay-commerce-product-content">
 	var productContent = new Liferay.Portlet.ProductContent(

@@ -244,6 +244,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TIMES</td>
+	<td>//*[*[name()='svg'][contains(@class,'icon-times')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLTIP</td>
 	<td>//span[*[name()='svg'][contains(@class,'icon-question')]]</td>
 	<td></td>

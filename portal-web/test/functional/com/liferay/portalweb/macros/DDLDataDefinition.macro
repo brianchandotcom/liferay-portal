@@ -8,6 +8,8 @@
 			<condition function="IsTextNotEqual" locator1="Portlet#HEADER" value1="Data Definitions" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Portlet#H3_MODAL_TITLE" value1="Data Definitions" />
+
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 			</then>
 		</if>
 
@@ -271,7 +273,7 @@
 			<then>
 				<execute macro="PortletEntry#selectAll" />
 
-				<execute function="ClickNoError" locator1="Icon#DELETE" />
+				<execute function="ClickNoError" locator1="Icon#TIMES" />
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 

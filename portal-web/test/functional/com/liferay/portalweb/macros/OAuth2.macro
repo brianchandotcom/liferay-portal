@@ -75,8 +75,39 @@
 
 		<if>
 			<or>
+				<isset var="checkGlobalScope" />
+				<isset var="uncheckGlobalScope" />
+			</or>
+			<then>
+				<execute macro="Navigator#gotoNavUnderline">
+					<var name="navUnderline" value="Global scopes" />
+				</execute>
+
+				<if>
+					<isset var="checkGlobalScope" />
+					<then>
+						<execute function="Check" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
+							<var name="key_scopeName" value="${checkGlobalScope}" />
+						</execute>
+					</then>
+				</if>
+
+				<if>
+					<isset var="uncheckGlobalScope" />
+					<then>
+						<execute function="Uncheck" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
+							<var name="key_scopeName" value="${uncheckGlobalScope}" />
+						</execute>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<or>
 				<isset var="resourceCheckList" />
 				<isset var="resourceUncheckList" />
+				<isset var="uncheckAllResourceScopes" />
 			</or>
 			<then>
 				<if>
@@ -118,34 +149,25 @@
 						</for>
 					</then>
 				</if>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<isset var="checkGlobalScope" />
-				<isset var="uncheckGlobalScope" />
-			</or>
-			<then>
-				<execute macro="Navigator#gotoNavUnderline">
-					<var name="navUnderline" value="Global scopes" />
-				</execute>
 
 				<if>
-					<isset var="checkGlobalScope" />
+					<equals arg1="${uncheckAllResourceScopes}" arg2="true" />
 					<then>
-						<execute function="Check" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-							<var name="key_scopeName" value="${checkGlobalScope}" />
-						</execute>
-					</then>
-				</if>
+						<var name="count" value="1" />
 
-				<if>
-					<isset var="uncheckGlobalScope" />
-					<then>
-						<execute function="Uncheck" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-							<var name="key_scopeName" value="${uncheckGlobalScope}" />
-						</execute>
+						<while>
+							<condition function="IsElementPresent" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED">
+								<var name="key_matchCount" value="${count}" />
+							</condition>
+
+							<then>
+								<execute function="Uncheck" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED">
+									<var name="key_matchCount" value="${count}" />
+								</execute>
+
+								<var method="MathUtil#sum('${count}', '1')" name="count" />
+							</then>
+						</while>
 					</then>
 				</if>
 			</then>
@@ -528,6 +550,7 @@
 
 		<if>
 			<or>
+				<isset var="allResourceScopesUnchecked" />
 				<isset var="resourceCheckedList" />
 				<isset var="resourceUncheckedList" />
 			</or>
@@ -569,6 +592,15 @@
 								<var name="key_scopeName" value="${scopeName}" />
 							</execute>
 						</for>
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${allResourceScopesUnchecked}" arg2="true" />
+					<then>
+						<execute function="AssertElementNotPresent" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED">
+							<var name="key_matchCount" value="1" />
+						</execute>
 					</then>
 				</if>
 			</then>

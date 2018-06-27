@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = CommerceDiscountTarget.class
 )
-public class ApplyToShipmentCommerceDiscountTargetImpl
+public class ApplyToShippingCommerceDiscountTargetImpl
 	implements CommerceDiscountTarget {
 
 	@Override
@@ -50,6 +50,11 @@ public class ApplyToShipmentCommerceDiscountTargetImpl
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, "apply-to-shipment");
+	}
+
+	@Override
+	public Type getType() {
+		return Type.APPLY_TO_SHIPPING;
 	}
 
 }

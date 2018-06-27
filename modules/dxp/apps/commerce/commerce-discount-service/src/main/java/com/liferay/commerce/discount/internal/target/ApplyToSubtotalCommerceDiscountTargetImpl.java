@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
@@ -32,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_SUBTOTAL,
 		"commerce.discount.target.order:Integer=40"
-	}
+	},
+	service = CommerceDiscountTarget.class
 )
 public class ApplyToSubtotalCommerceDiscountTargetImpl
 	implements CommerceDiscountTarget {
@@ -48,6 +50,11 @@ public class ApplyToSubtotalCommerceDiscountTargetImpl
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, "apply-to-subtotal");
+	}
+
+	@Override
+	public Type getType() {
+		return Type.APPLY_TO_SUBTOTAL;
 	}
 
 }

@@ -14,17 +14,40 @@
 
 package com.liferay.commerce.discount.internal.target;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountConstants;
+import com.liferay.commerce.discount.model.CommerceDiscountRel;
+import com.liferay.commerce.discount.service.CommerceDiscountRelLocalService;
+import com.liferay.commerce.discount.target.CommerceDiscountProductTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
@@ -32,10 +55,29 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_CATEGORIES,
 		"commerce.discount.target.order:Integer=10"
-	}
+	},
+	service =
+		{CommerceDiscountProductTarget.class, CommerceDiscountTarget.class}
 )
 public class ApplyToCategoriesCommerceDiscountTargetImpl
-	implements CommerceDiscountTarget {
+	implements CommerceDiscountTarget, CommerceDiscountProductTarget {
+
+	@Override
+	public void contributeDocument(
+		Document document, CommerceDiscount commerceDiscount) {
+
+		List<CommerceDiscountRel> commerceDiscountRels =
+			_commerceDiscountRelLocalService.getCommerceDiscountRels(
+				commerceDiscount.getCommerceDiscountId(),
+				AssetCategory.class.getName());
+
+		Stream<CommerceDiscountRel> stream = commerceDiscountRels.stream();
+
+		long[] assetCategoryIds = stream.mapToLong(
+			CommerceDiscountRel::getClassPK).toArray();
+
+		document.addKeyword("target_asset_category_ids", assetCategoryIds);
+	}
 
 	@Override
 	public String getKey() {
@@ -49,5 +91,58 @@ public class ApplyToCategoriesCommerceDiscountTargetImpl
 
 		return LanguageUtil.get(resourceBundle, "apply-to-categories");
 	}
+
+	@Override
+	public Type getType() {
+		return Type.APPLY_TO_PRODUCT;
+	}
+
+	@Override
+	public void postProcessContextBooleanFilter(
+		BooleanFilter contextBooleanFilter, CPDefinition cpDefinition) {
+
+		TermsFilter termsFilter = new TermsFilter("target_asset_category_ids");
+
+		long[] assetCategoryIds = _getAssetCategoryIds(cpDefinition);
+
+		termsFilter.addValues(ArrayUtil.toStringArray(assetCategoryIds));
+
+		contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+	}
+
+	private long[] _getAssetCategoryIds(CPDefinition cpDefinition) {
+		try {
+			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
+			Set<AssetCategory> assetCategories = new HashSet<>();
+
+			for (AssetCategory assetCategory : assetEntry.getCategories()) {
+				assetCategories.add(assetCategory);
+				assetCategories.addAll(assetCategory.getAncestors());
+			}
+
+			Stream<AssetCategory> stream = assetCategories.stream();
+
+			return stream.mapToLong(AssetCategory::getCategoryId).toArray();
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return new long[0];
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ApplyToCategoriesCommerceDiscountTargetImpl.class);
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private CommerceDiscountRelLocalService _commerceDiscountRelLocalService;
 
 }

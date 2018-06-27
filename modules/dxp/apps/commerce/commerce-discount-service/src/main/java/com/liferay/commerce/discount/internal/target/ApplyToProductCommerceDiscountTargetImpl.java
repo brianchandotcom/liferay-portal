@@ -14,17 +14,28 @@
 
 package com.liferay.commerce.discount.internal.target;
 
+import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountConstants;
+import com.liferay.commerce.discount.model.CommerceDiscountRel;
+import com.liferay.commerce.discount.service.CommerceDiscountRelLocalService;
+import com.liferay.commerce.discount.target.CommerceDiscountProductTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
@@ -32,10 +43,29 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_PRODUCT,
 		"commerce.discount.target.order:Integer=20"
-	}
+	},
+	service =
+		{CommerceDiscountProductTarget.class, CommerceDiscountTarget.class}
 )
 public class ApplyToProductCommerceDiscountTargetImpl
-	implements CommerceDiscountTarget {
+	implements CommerceDiscountTarget, CommerceDiscountProductTarget {
+
+	@Override
+	public void contributeDocument(
+		Document document, CommerceDiscount commerceDiscount) {
+
+		List<CommerceDiscountRel> commerceDiscountRels =
+			_commerceDiscountRelLocalService.getCommerceDiscountRels(
+				commerceDiscount.getCommerceDiscountId(),
+				CPDefinition.class.getName());
+
+		Stream<CommerceDiscountRel> stream = commerceDiscountRels.stream();
+
+		long[] assetCategoryIds = stream.mapToLong(
+			CommerceDiscountRel::getClassPK).toArray();
+
+		document.addKeyword("target_product_ids", assetCategoryIds);
+	}
 
 	@Override
 	public String getKey() {
@@ -49,5 +79,22 @@ public class ApplyToProductCommerceDiscountTargetImpl
 
 		return LanguageUtil.get(resourceBundle, "apply-to-product");
 	}
+
+	@Override
+	public Type getType() {
+		return Type.APPLY_TO_PRODUCT;
+	}
+
+	@Override
+	public void postProcessContextBooleanFilter(
+		BooleanFilter contextBooleanFilter, CPDefinition cpDefinition) {
+
+		contextBooleanFilter.addRequiredTerm(
+			"target_product_ids",
+			String.valueOf(cpDefinition.getCPDefinitionId()));
+	}
+
+	@Reference
+	private CommerceDiscountRelLocalService _commerceDiscountRelLocalService;
 
 }

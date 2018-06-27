@@ -42,17 +42,15 @@ public class CommerceUserUpserterForm {
 		).addRequiredString(
 			"gender", CommerceUserUpserterForm::_setGender
 		).addRequiredString(
-			"screenName", CommerceUserUpserterForm::_setScreenName
+			"alternateName", CommerceUserUpserterForm::_setAlternateName
 		).addRequiredDate(
 			"birthDate", CommerceUserUpserterForm::_setBirthDate
 		).addRequiredString(
 			"email", CommerceUserUpserterForm::_setEmail
 		).addOptionalString(
-			"firstName", CommerceUserUpserterForm::_setFirstName
+			"familyName", CommerceUserUpserterForm::_setFamilyName
 		).addOptionalString(
-			"middleName", CommerceUserUpserterForm::_setMiddleName
-		).addOptionalString(
-			"lastName", CommerceUserUpserterForm::_setLastName
+			"givenName", CommerceUserUpserterForm::_setGivenName
 		).addRequiredString(
 			"jobTitle", CommerceUserUpserterForm::_setJobTitle
 		).addOptionalString(
@@ -95,20 +93,16 @@ public class CommerceUserUpserterForm {
 		return _externalReferenceCode;
 	}
 
-	public String getFirstName() {
-		return _firstName;
+	public String getGivenName() {
+		return _givenName;
 	}
 
 	public String getJobTitle() {
 		return _jobTitle;
 	}
 
-	public String getLastName() {
-		return _lastName;
-	}
-
-	public String getMiddleName() {
-		return _middleName;
+	public String getFamilyName() {
+		return _familyName;
 	}
 
 	public String getPassword1() {
@@ -127,8 +121,8 @@ public class CommerceUserUpserterForm {
 		return ArrayUtil.toLongArray(_roleIds);
 	}
 
-	public String getScreenName() {
-		return _screenName;
+	public String getAlternateName() {
+		return _alternateName;
 	}
 
 	public boolean isMale() {
@@ -157,8 +151,8 @@ public class CommerceUserUpserterForm {
 		_externalReferenceCode = externalReferenceCode;
 	}
 
-	private void _setFirstName(String firstName) {
-		_firstName = firstName;
+	private void _setGivenName(String givenName) {
+		_givenName = givenName;
 	}
 
 	private void _setGender(String gender) {
@@ -169,12 +163,8 @@ public class CommerceUserUpserterForm {
 		_jobTitle = jobTitle;
 	}
 
-	private void _setLastName(String lastName) {
-		_lastName = lastName;
-	}
-
-	private void _setMiddleName(String middleName) {
-		_middleName = middleName;
+	private void _setFamilyName(String familyName) {
+		_familyName = familyName;
 	}
 
 	private void _setPassword1(String password1) {
@@ -189,8 +179,8 @@ public class CommerceUserUpserterForm {
 		_roleIds = roleIds;
 	}
 
-	private void _setScreenName(String screenName) {
-		_screenName = screenName;
+	private void _setAlternateName(String alternateName) {
+		_alternateName = alternateName;
 	}
 
 	private int _birthdayDay;
@@ -199,14 +189,13 @@ public class CommerceUserUpserterForm {
 	private List<Long> _commerceAccountIds;
 	private String _email;
 	private String _externalReferenceCode;
-	private String _firstName;
+	private String _givenName;
 	private String _jobTitle;
-	private String _lastName;
+	private String _familyName;
 	private Boolean _male;
-	private String _middleName;
 	private String _password1;
 	private String _password2;
 	private List<Long> _roleIds;
-	private String _screenName;
+	private String _alternateName;
 
 }

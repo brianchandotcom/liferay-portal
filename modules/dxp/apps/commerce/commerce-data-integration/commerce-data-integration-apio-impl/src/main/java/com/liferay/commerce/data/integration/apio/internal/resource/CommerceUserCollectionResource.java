@@ -23,15 +23,14 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
-import com.liferay.commerce.data.integration.apio.identifiers.CommerceUserIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.CommerceUserUpserterForm;
 import com.liferay.external.reference.service.ERUserLocalService;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
@@ -42,8 +41,12 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
+import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,31 +54,28 @@ import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rodrigo Guedes de Souza
  */
-@Component(immediate = true)
+@Component(immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE)
 public class CommerceUserCollectionResource
-	implements CollectionResource<UserWrapper, Long, CommerceUserIdentifier> {
+	implements CollectionResource<UserWrapper, Long, PersonIdentifier> {
 
 	@Override
 	public CollectionRoutes<UserWrapper, Long> collectionRoutes(
 		CollectionRoutes.Builder<UserWrapper, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Company.class
+			this::_getPageItems, ThemeDisplay.class
 		).addCreator(
-			this::_addUser, Company.class, _hasPermission::forAdding,
+			this::_addUser, ThemeDisplay.class, _hasPermission::forAdding,
 			CommerceUserUpserterForm::buildForm
 		).build();
 	}
 
 	@Override
 	public String getName() {
-		return "commerce-user";
+		return "person";
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class CommerceUserCollectionResource
 		ItemRoutes.Builder<UserWrapper, Long> builder) {
 
 		return builder.addGetter(
-			this::_getUserWrapper
+			this::_getUserWrapper, ThemeDisplay.class
 		).addRemover(
 			idempotent(_userService::deleteUser), _hasPermission::forDeleting
 		).build();
@@ -93,37 +93,52 @@ public class CommerceUserCollectionResource
 	public Representor<UserWrapper> representor(
 		Representor.Builder<UserWrapper, Long> builder) {
 
-		return builder.types(
-			"CommerceUser"
+		Representor.FirstStep<UserWrapper> person = builder.types(
+			"Person"
 		).identifier(
 			User::getUserId
-		).addString(
-			"externalReferenceCode", User::getExternalReferenceCode
-		).addDate(
-			"birthDate", CommerceUserCollectionResource::_getBirthday
-		).addLocalizedStringByLocale(
-			"honorificPrefix", _getContactField(Contact::getPrefixId)
-		).addLocalizedStringByLocale(
-			"honorificSuffix", _getContactField(Contact::getSuffixId)
-		).addString(
-			"screenName", User::getScreenName
-		).addString(
-			"email", User::getEmailAddress
-		).addString(
-			"firstName", User::getFirstName
-		).addString(
-			"middleName", User::getMiddleName
-		).addString(
-			"lastName", User::getLastName
-		).addString(
-			"gender", CommerceUserCollectionResource::_getGender
-		).addString(
-			"name", User::getFullName
-		).addNumberList(
-			"commerceAccountIds", this::_getCommerceAccountIds
-		).addNumberList(
-			"roleIds", this::_getRoleIds
-		).build();
+		);
+
+		person = _originalPersonResource(person);
+		person = _commerceResource(person);
+		
+		return person.build();
+	}
+
+	private Representor.FirstStep<UserWrapper> _originalPersonResource(Representor.FirstStep<UserWrapper> builder) {
+		return builder.
+			addDate(
+				"birthDate", CommerceUserCollectionResource::_getBirthday
+			).addLocalizedStringByLocale(
+				"honorificPrefix", _getContactField(Contact::getPrefixId)
+			).addLocalizedStringByLocale(
+				"honorificSuffix", _getContactField(Contact::getSuffixId)
+			).addString(
+				"additionalName", User::getMiddleName
+			).addString(
+				"alternateName", User::getScreenName
+			).addString(
+				"email", User::getEmailAddress
+			).addString(
+				"familyName", User::getLastName
+			).addString(
+				"gender", CommerceUserCollectionResource::_getGender
+			).addString(
+				"givenName", User::getFirstName
+			).addString(
+				"jobTitle", User::getJobTitle
+			).addString(
+				"name", User::getFullName
+			);
+	}
+
+	private Representor.FirstStep<UserWrapper> _commerceResource(Representor.FirstStep<UserWrapper> builder) {
+		return builder
+			.addNumberList(
+				"commerceAccountIds", this::_getCommerceAccountIds
+			).addNumberList(
+				"roleIds", this::_getRoleIds
+			);
 	}
 
 	private static Date _getBirthday(UserWrapper userWrapper) {
@@ -145,7 +160,7 @@ public class CommerceUserCollectionResource
 	}
 
 	private UserWrapper _addUser(
-			CommerceUserUpserterForm commerceUserUpserterForm, Company company)
+			CommerceUserUpserterForm commerceUserUpserterForm, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		User user = _userLocalService.getUserById(
@@ -153,14 +168,14 @@ public class CommerceUserCollectionResource
 
 		user = _erUserLocalService.addOrUpdateUser(
 			commerceUserUpserterForm.getExternalReferenceCode(),
-			user.getUserId(), company.getCompanyId(), false,
+			user.getUserId(), themeDisplay.getCompany().getCompanyId(), false,
 			commerceUserUpserterForm.getPassword1(),
 			commerceUserUpserterForm.getPassword2(), false,
-			commerceUserUpserterForm.getScreenName(),
+			commerceUserUpserterForm.getAlternateName(),
 			commerceUserUpserterForm.getEmail(), LocaleUtil.getDefault(),
-			commerceUserUpserterForm.getFirstName(),
-			commerceUserUpserterForm.getMiddleName(),
-			commerceUserUpserterForm.getLastName(), 0, 0,
+			commerceUserUpserterForm.getGivenName(),
+			null,
+			commerceUserUpserterForm.getFamilyName(), 0, 0,
 			commerceUserUpserterForm.isMale(),
 			commerceUserUpserterForm.getBirthdayMonth(),
 			commerceUserUpserterForm.getBirthdayDay(),
@@ -207,11 +222,11 @@ public class CommerceUserCollectionResource
 	}
 
 	private PageItems<UserWrapper> _getPageItems(
-			Pagination pagination, Company company)
+			Pagination pagination, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<User> users = _userService.getCompanyUsers(
-			company.getCompanyId(), pagination.getStartPosition(),
+			themeDisplay.getCompanyId(), pagination.getStartPosition(),
 			pagination.getEndPosition());
 
 		List<UserWrapper> userWrappers = new ArrayList<>(users.size());
@@ -220,7 +235,7 @@ public class CommerceUserCollectionResource
 			userWrappers.add(new UserWrapper(user));
 		}
 
-		int total = _userService.getCompanyUsersCount(company.getCompanyId());
+		int total = _userService.getCompanyUsersCount(themeDisplay.getCompanyId());
 
 		return new PageItems<>(userWrappers, total);
 	}
@@ -235,7 +250,13 @@ public class CommerceUserCollectionResource
 		return roleIds;
 	}
 
-	private UserWrapper _getUserWrapper(long userId) throws PortalException {
+	private UserWrapper _getUserWrapper(long userId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (themeDisplay.getDefaultUserId() == userId) {
+			throw new NotFoundException();
+		}
+
 		User user = _userService.getUserById(userId);
 
 		return new UserWrapper(user);

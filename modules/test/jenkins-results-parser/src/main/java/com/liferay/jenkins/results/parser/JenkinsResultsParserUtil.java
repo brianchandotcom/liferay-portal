@@ -1789,8 +1789,10 @@ public class JenkinsResultsParserUtil {
 
 		}
 		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to write properties file " + propertiesFile, ioe);
+			System.out.println(
+				"Unable to write properties file " + propertiesFile);
+
+			ioe.printStackTrace();
 		}
 
 		System.out.println("#");

@@ -1959,6 +1959,19 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			List<Node> nodes = dynamicContentXPath.selectNodes(
 				dynamicElementElement);
 
+			if (nodes.isEmpty()) {
+				dynamicContentXPath = SAXReaderUtil.createXPath(
+					"dynamic-content");
+
+				nodes = dynamicContentXPath.selectNodes(dynamicElementElement);
+
+				Element element = (Element)nodes.get(index);
+
+				element.addAttribute("language-id", languageId);
+
+				return element;
+			}
+
 			return (Element)nodes.get(index);
 		}
 

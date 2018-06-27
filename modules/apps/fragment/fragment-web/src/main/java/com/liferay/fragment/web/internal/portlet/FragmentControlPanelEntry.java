@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.staging.StagingGroupHelper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -38,7 +40,9 @@ public class FragmentControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (group.isStaged() && !group.isStagingGroup()) {
+		if (_stagingGroupHelper.isLocalLiveGroup(group) ||
+			_stagingGroupHelper.isRemoteLiveGroup(group)) {
+
 			return false;
 		}
 
@@ -49,5 +53,8 @@ public class FragmentControlPanelEntry extends BaseControlPanelEntry {
 		return super.hasAccessPermissionDenied(
 			permissionChecker, group, portlet);
 	}
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

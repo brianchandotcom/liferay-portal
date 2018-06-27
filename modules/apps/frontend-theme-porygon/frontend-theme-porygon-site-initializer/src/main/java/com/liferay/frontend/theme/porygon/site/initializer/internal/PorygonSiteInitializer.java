@@ -14,6 +14,9 @@
 
 package com.liferay.frontend.theme.porygon.site.initializer.internal;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -22,6 +25,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -38,7 +43,12 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -86,6 +96,11 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 			_updateLogo(serviceContext);
 			_updateLookAndFeel(serviceContext);
+
+			List<FileEntry> fileEntries = _addFileEntries(serviceContext);
+
+			Map<String, String> fileEntriesMap = _getFileEntriesMap(
+				fileEntries);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -102,6 +117,41 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = bundleContext.getBundle();
+	}
+
+	private List<FileEntry> _addFileEntries(ServiceContext serviceContext)
+		throws Exception {
+
+		List<FileEntry> fileEntries = new ArrayList<>();
+
+		Folder folder = _dlAppLocalService.addFolder(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _THEME_NAME,
+			StringPool.BLANK, serviceContext);
+
+		Enumeration<URL> urls = _bundle.findEntries(
+			_PATH + "/images", StringPool.STAR, false);
+
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+
+			byte[] bytes = null;
+
+			try (InputStream is = url.openStream()) {
+				bytes = FileUtil.getBytes(is);
+			}
+
+			String fileName = FileUtil.getShortFileName(url.getPath());
+
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				folder.getFolderId(), fileName, null, fileName,
+				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
+
+			fileEntries.add(fileEntry);
+		}
+
+		return fileEntries;
 	}
 
 	private ServiceContext _createServiceContext(long groupId)
@@ -127,6 +177,22 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		serviceContext.setTimeZone(user.getTimeZone());
 
 		return serviceContext;
+	}
+
+	private Map<String, String> _getFileEntriesMap(List<FileEntry> fileEntries)
+		throws PortalException {
+
+		Map<String, String> fileEntriesMap = new HashMap<>();
+
+		for (FileEntry fileEntry : fileEntries) {
+			String fileEntryURL = DLUtil.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+				false, false);
+
+			fileEntriesMap.put(fileEntry.getFileName(), fileEntryURL);
+		}
+
+		return fileEntriesMap;
 	}
 
 	private void _updateLogo(ServiceContext serviceContext) throws Exception {
@@ -173,6 +239,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		PorygonSiteInitializer.class);
 
 	private Bundle _bundle;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

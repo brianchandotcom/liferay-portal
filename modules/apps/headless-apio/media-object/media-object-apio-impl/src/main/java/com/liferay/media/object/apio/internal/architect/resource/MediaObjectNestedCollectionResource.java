@@ -122,7 +122,7 @@ public class MediaObjectNestedCollectionResource
 		).addString(
 			"text", FileEntry::getDescription
 		).addStringList(
-			"keywords", this::_getMediaObjectTags
+			"keywords", this::_getMediaObjectAssetTags
 		).build();
 	}
 
@@ -144,11 +144,11 @@ public class MediaObjectNestedCollectionResource
 			groupId, 0L, mediaObjectCreatorForm);
 	}
 
-	private List<String> _getMediaObjectTags(FileEntry fileEntry) {
-		List<AssetTag> tags = _assetTagLocalService.getTags(
+	private List<String> _getMediaObjectAssetTags(FileEntry fileEntry) {
+		List<AssetTag> assetTags = _assetTagLocalService.getTags(
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
-		return ListUtil.toList(tags, AssetTagModel::getName);
+		return ListUtil.toList(assetTags, AssetTagModel::getName);
 	}
 
 	private PageItems<FileEntry> _getPageItems(

@@ -127,12 +127,12 @@ public class KeywordNestedCollectionResource
 	private PageItems<AssetTag> _getPageItems(
 		Pagination pagination, Long groupId) {
 
-		List<AssetTag> tags = _assetTagService.getGroupTags(
+		List<AssetTag> assetTags = _assetTagService.getGroupTags(
 			groupId, pagination.getStartPosition(), pagination.getEndPosition(),
 			new AssetTagNameComparator());
 		int count = _assetTagService.getGroupTagsCount(groupId);
 
-		return new PageItems<>(tags, count);
+		return new PageItems<>(assetTags, count);
 	}
 
 	private AssetTag _updateTag(Long assetTagId, KeywordForm keywordForm)

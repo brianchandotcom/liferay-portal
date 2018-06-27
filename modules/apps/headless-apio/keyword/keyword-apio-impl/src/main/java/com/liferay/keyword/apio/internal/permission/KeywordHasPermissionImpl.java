@@ -57,10 +57,10 @@ public class KeywordHasPermissionImpl implements HasPermission<Long> {
 	public Boolean forDeleting(Credentials credentials, Long assetTagId)
 		throws PortalException {
 
-		AssetTag tag = _assetTagService.getTag(assetTagId);
+		AssetTag assetTag = _assetTagService.getTag(assetTagId);
 
 		return AssetTagsPermission.contains(
-			(PermissionChecker)credentials.get(), tag.getGroupId(),
+			(PermissionChecker)credentials.get(), assetTag.getGroupId(),
 			ActionKeys.MANAGE_TAG);
 	}
 
@@ -68,10 +68,10 @@ public class KeywordHasPermissionImpl implements HasPermission<Long> {
 	public Boolean forUpdating(Credentials credentials, Long assetTagId)
 		throws PortalException {
 
-		AssetTag tag = _assetTagService.getTag(assetTagId);
+		AssetTag assetTag = _assetTagService.getTag(assetTagId);
 
 		return AssetTagsPermission.contains(
-			(PermissionChecker)credentials.get(), tag.getGroupId(),
+			(PermissionChecker)credentials.get(), assetTag.getGroupId(),
 			ActionKeys.MANAGE_TAG);
 	}
 

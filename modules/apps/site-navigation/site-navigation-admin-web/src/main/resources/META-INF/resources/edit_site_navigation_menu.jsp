@@ -136,82 +136,151 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 </aui:script>
 
 <aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule">
-	var siteNavigationMenuEditor = new siteNavigationMenuEditorModule.default(
-		{
-			editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
-			namespace: '<portlet:namespace />'
-		}
-	);
+	var changed = false;
+	var sidebar = null;
+	var sidebarBodyChangeHandler = null;
+	var siteNavigationMenuEditor = null;
 
-	function destroySiteNavigationMenuEditor() {
+	function closeSidebar () {
+		var saveChanges = !changed ? false : confirm(
+			'<liferay-ui:message key="you-have-unsaved-changes.-do-you-want-to-save-them" />'
+		);
+
+		if (!changed || !saveChanges) {
+			if (sidebarBodyChangeHandler) {
+				sidebarBodyChangeHandler.detach();
+
+				sidebarBodyChangeHandler = null;
+			}
+
+			sidebar.body = '';
+			sidebar.visible = false;
+
+			changed = false;
+
+			return true;
+		}
+		else if (saveChanges) {
+			AUI().use(
+				['aui-base'],
+				function(A) {
+					var form = A.one('#<portlet:namespace />sidebarBody form');
+
+					if (form) {
+						form.submit();
+					}
+				}
+			);
+
+			return false;
+		}
+
+		return false;
+	}
+
+	function handleMenuItemSelected(siteNavigationMenuItem) {
+		if (!closeSidebar()) {
+			return;
+		}
+
+		var data = Liferay.Util.ns(
+			'<portlet:namespace />',
+			{
+				redirect: '<%= currentURL %>',
+				siteNavigationMenuItemId: siteNavigationMenuItem.dataset.siteNavigationMenuItemId
+			}
+		);
+
+		openSidebar(siteNavigationMenuItem.dataset.title);
+
+		AUI().use(
+			['aui-base'],
+			function(A) {
+				A.io.request(
+					'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_site_navigation_menu_item.jsp" /></portlet:renderURL>',
+					{
+						data: data,
+						on: {
+							success: function(event, id, obj) {
+								var responseData = this.get('responseData');
+
+								setSidebarBody(responseData);
+							}
+						}
+					}
+				);
+			}
+		);
+	}
+
+	function handlePortletDestroy() {
 		if (siteNavigationMenuEditor) {
 			siteNavigationMenuEditor.dispose();
 
 			siteNavigationMenuEditor = null;
 		}
 
-		Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', destroySiteNavigationMenuEditor);
-		Liferay.detach('destroyPortlet', destroySiteNavigationMenuEditor);
+		if (sidebar) {
+			sidebar.dispose();
+
+			sidebar = null;
+		}
+
+		Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', handlePortletDestroy);
+		Liferay.detach('destroyPortlet', handlePortletDestroy);
 	}
 
-	Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', destroySiteNavigationMenuEditor);
-	Liferay.on('destroyPortlet', destroySiteNavigationMenuEditor);
-</aui:script>
+	function handleShowSiteNavigationMenuSettingsButtonClick(event) {
+		if (!closeSidebar()) {
+			event.stopPropagation();
 
-<aui:script use="aui-base,aui-parse-content">
-	Liferay.componentReady(
-		'<portlet:namespace/>sidebar'
-	)
-	.then(
-		function(sidebar) {
-			var changed = false;
-			var sidebarBodyChangeHandler = null;
+			return;
+		}
 
-			function openSidebar(title) {
-				sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
-				sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><span class="icon-monospaced" id="<portlet:namespace />sidebarHeaderButton"><aui:icon image="times" markupView="lexicon" /></span></div></div>'
-				sidebar.visible = true;
+		var data = Liferay.Util.ns(
+			'<portlet:namespace />',
+			{
+				redirect: '<%= currentURL %>',
+				siteNavigationMenuId: <%= siteNavigationAdminDisplayContext.getSiteNavigationMenuId() %>
 			}
+		);
 
-			function closeSidebar () {
-				var saveChanges = !changed ? false : confirm(
-					'<liferay-ui:message key="you-have-unsaved-changes.-do-you-want-to-save-them" />'
+		openSidebar('<%= HtmlUtil.escape(siteNavigationAdminDisplayContext.getSiteNavigationMenuName()) %>');
+
+		AUI().use(
+			['aui-base'],
+			function(A) {
+				A.io.request(
+					'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/site_navigation_menu_settings.jsp" /></portlet:renderURL>',
+					{
+						data: data,
+						on: {
+							success: function(event, id, obj) {
+								var responseData = this.get('responseData');
+
+								setSidebarBody(responseData);
+							}
+						}
+					}
 				);
-
-				if (!changed || !saveChanges) {
-					if (sidebarBodyChangeHandler) {
-						sidebarBodyChangeHandler.detach();
-
-						sidebarBodyChangeHandler = null;
-					}
-
-					sidebar.body = '';
-					sidebar.visible = false;
-
-					changed = false;
-
-					return true;
-				}
-				else if (saveChanges) {
-					var form = A.one('#<portlet:namespace />sidebarBody form');
-
-					if (form) {
-						form.submit();
-					}
-
-					return false;
-				}
-
-				return false;
 			}
+		);
+	}
 
-			sidebar.on('hide', closeSidebar);
+	function handleSidebarBodyChange() {
+		changed = true;
+	}
 
-			function handleSidebarBodyChange() {
-				changed = true;
-			}
+	function openSidebar(title) {
+		sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
+		sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><span class="icon-monospaced" id="<portlet:namespace />sidebarHeaderButton"><aui:icon image="times" markupView="lexicon" /></span></div></div>'
+		sidebar.visible = true;
+	}
 
-			function setSidebarBody(content) {
+	function setSidebarBody(content) {
+		AUI().use(
+			['aui-base', 'aui-parse-content'],
+			function (A) {
 				var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
 				var sidebarHeaderButton = A.one('#<portlet:namespace />sidebarHeaderButton');
 
@@ -226,95 +295,39 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 					sidebarHeaderButton.on('click', closeSidebar);
 				}
 			}
+		);
+	}
 
-			A.one('.site-navigation-menu-container').delegate(
-				'click',
-				function(event) {
-					if (!closeSidebar()) {
-						event.stopPropagation();
+	Liferay.componentReady(
+		'<portlet:namespace />sidebar'
+	)
+	.then(
+		function (_sidebar) {
+			sidebar = _sidebar;
 
-						return;
-					}
-
-					var currentTarget = event.currentTarget;
-
-					var siteNavigationMenuItem = currentTarget.ancestor('.site-navigation-menu-item');
-
-					var data = Liferay.Util.ns(
-						'<portlet:namespace />',
-						{
-							redirect: '<%= currentURL %>',
-							siteNavigationMenuItemId: siteNavigationMenuItem.attr('data-site-navigation-menu-item-id')
-						}
-					);
-
-					openSidebar(siteNavigationMenuItem.attr('data-title'));
-
-					A.io.request(
-						'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_site_navigation_menu_item.jsp" /></portlet:renderURL>',
-						{
-							data: data,
-							on: {
-								success: function(event, id, obj) {
-									var responseData = this.get('responseData');
-
-									setSidebarBody(responseData);
-								}
-							}
-						}
-					);
-				},
-				'.site-navigation-menu-item .lfr-card-title-text a'
-			);
-
-			A.one('#<portlet:namespace />showSiteNavigationMenuSettings').on(
-				'click',
-				function() {
-					if (!closeSidebar()) {
-						event.stopPropagation();
-
-						return;
-					}
-
-					var data = Liferay.Util.ns(
-						'<portlet:namespace />',
-						{
-							redirect: '<%= currentURL %>',
-							siteNavigationMenuId: <%= siteNavigationAdminDisplayContext.getSiteNavigationMenuId() %>
-						}
-					);
-
-					openSidebar('<%= HtmlUtil.escape(siteNavigationAdminDisplayContext.getSiteNavigationMenuName()) %>');
-
-					A.io.request(
-						'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/site_navigation_menu_settings.jsp" /></portlet:renderURL>',
-						{
-							data: data,
-							on: {
-								success: function(event, id, obj) {
-									var responseData = this.get('responseData');
-
-									setSidebarBody(responseData);
-								}
-							}
-						}
-					);
-				}
-			);
-
-			function destroySidebar() {
-				if (sidebar) {
-					sidebar.dispose();
-
-					sidebar = null;
-				}
-
-				Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', destroySidebar);
-				Liferay.detach('destroyPortlet', destroySidebar);
-			}
-
-			Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', destroySidebar);
-			Liferay.on('destroyPortlet', destroySidebar);
+			sidebar.on('hide', closeSidebar);
 		}
 	);
+
+	siteNavigationMenuEditor = new siteNavigationMenuEditorModule.default(
+		{
+			editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
+			namespace: '<portlet:namespace />'
+		}
+	);
+
+	siteNavigationMenuEditor.on('menuItemSelected', handleMenuItemSelected);
+
+	AUI().use(
+		['aui-base'],
+		function(A) {
+			A.one('#<portlet:namespace />showSiteNavigationMenuSettings').on(
+				'click',
+				handleShowSiteNavigationMenuSettingsButtonClick
+			);
+		}
+	);
+
+	Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', handlePortletDestroy);
+	Liferay.on('destroyPortlet', handlePortletDestroy);
 </aui:script>

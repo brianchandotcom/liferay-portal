@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_ENTER_A_VALID_URL</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter a valid URL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_ENTER_A_UNIQUE_FOLDER</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter a unique folder name')]</td>
 	<td></td>

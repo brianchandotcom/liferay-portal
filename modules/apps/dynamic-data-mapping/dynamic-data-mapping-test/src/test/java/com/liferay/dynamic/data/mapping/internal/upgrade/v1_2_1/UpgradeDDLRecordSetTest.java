@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.internal.upgrade.v1_2_0;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_1;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,8 +49,7 @@ public class UpgradeDDLRecordSetTest {
 	}
 
 	protected void setUpUpgradeDDLRecordSetSettings() {
-		_upgradeDDLRecordSet = new UpgradeDDLRecordSet(
-			null, null, null, null, null);
+		_upgradeDDLRecordSet = new UpgradeDDLRecordSet(null, null, null, null);
 	}
 
 	private UpgradeDDLRecordSet _upgradeDDLRecordSet;

@@ -87,8 +87,18 @@ public class TestCommerceContext implements CommerceContext {
 	}
 
 	@Override
+	public String getCuponCode() {
+		return null;
+	}
+
+	@Override
 	public Organization getOrganization() {
 		return _organization;
+	}
+
+	@Override
+	public long getUserId() {
+		return _contextUser.getUserId();
 	}
 
 	private final CommerceCurrency _commerceCurrency;

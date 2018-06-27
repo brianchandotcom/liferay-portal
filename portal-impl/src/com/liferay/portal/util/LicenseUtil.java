@@ -637,41 +637,6 @@ public class LicenseUtil {
 		return 0;
 	}
 
-	private static void _initKeys() {
-		if (_encryptedSymmetricKey != null) {
-			return;
-		}
-
-		try {
-			URL url = LicenseUtil.class.getResource(
-				"/com/liferay/portal/license/public.key");
-
-			byte[] bytes = IOUtils.toByteArray(url.openStream());
-
-			X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(
-				bytes);
-
-			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-
-			PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
-
-			KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-
-			keyGenerator.init(128, new SecureRandom());
-
-			_symmetricKey = keyGenerator.generateKey();
-
-			byte[] encryptedSymmetricKey = Encryptor.encryptUnencoded(
-				publicKey, _symmetricKey.getEncoded());
-
-			_encryptedSymmetricKey = Base64.objectToString(
-				encryptedSymmetricKey);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
 	private static void _registerClusterOrder(
 			HttpServletRequest request, ClusterNode clusterNode,
 			String orderUuid, String productEntryName, int maxServers)
@@ -731,7 +696,38 @@ public class LicenseUtil {
 	private static Key _symmetricKey;
 
 	static {
-		_initKeys();
+		if (_encryptedSymmetricKey != null) {
+			return;
+		}
+
+		try {
+			URL url = LicenseUtil.class.getResource(
+				"/com/liferay/portal/license/public.key");
+
+			byte[] bytes = IOUtils.toByteArray(url.openStream());
+
+			X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(
+				bytes);
+
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+
+			PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
+
+			KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+
+			keyGenerator.init(128, new SecureRandom());
+
+			_symmetricKey = keyGenerator.generateKey();
+
+			byte[] encryptedSymmetricKey = Encryptor.encryptUnencoded(
+				publicKey, _symmetricKey.getEncoded());
+
+			_encryptedSymmetricKey = Base64.objectToString(
+				encryptedSymmetricKey);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 
 		_ipAddresses = _getIPAddresses();
 		_macAddresses = _getMACAddresses();

@@ -59,10 +59,32 @@ public class ResourceBundleUtil {
 	}
 
 	public static ResourceBundle getBundle(
+		String baseName, Class<?> clazz, boolean includePortalResourceBundle) {
+
+		return getBundle(
+			baseName, clazz.getClassLoader(), includePortalResourceBundle);
+	}
+
+	public static ResourceBundle getBundle(
 		String baseName, ClassLoader classLoader) {
 
 		return ResourceBundle.getBundle(
 			baseName, Locale.getDefault(), classLoader, UTF8Control.INSTANCE);
+	}
+
+	public static ResourceBundle getBundle(
+		String baseName, ClassLoader classLoader,
+		boolean includePortalResourceBundle) {
+
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			baseName, Locale.getDefault(), classLoader, UTF8Control.INSTANCE);
+
+		if (!includePortalResourceBundle) {
+			return resourceBundle;
+		}
+
+		return new AggregateResourceBundle(
+			resourceBundle, PortalUtil.getResourceBundle(Locale.getDefault()));
 	}
 
 	public static ResourceBundle getBundle(
@@ -72,10 +94,34 @@ public class ResourceBundleUtil {
 	}
 
 	public static ResourceBundle getBundle(
+		String baseName, Locale locale, Class<?> clazz,
+		boolean includePortalResourceBundle) {
+
+		return getBundle(
+			baseName, locale, clazz.getClassLoader(),
+			includePortalResourceBundle);
+	}
+
+	public static ResourceBundle getBundle(
 		String baseName, Locale locale, ClassLoader classLoader) {
 
 		return ResourceBundle.getBundle(
 			baseName, locale, classLoader, UTF8Control.INSTANCE);
+	}
+
+	public static ResourceBundle getBundle(
+		String baseName, Locale locale, ClassLoader classLoader,
+		boolean includePortalResourceBundle) {
+
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			baseName, locale, classLoader, UTF8Control.INSTANCE);
+
+		if (!includePortalResourceBundle) {
+			return resourceBundle;
+		}
+
+		return new AggregateResourceBundle(
+			resourceBundle, PortalUtil.getResourceBundle(locale));
 	}
 
 	public static Map<Locale, String> getLocalizationMap(

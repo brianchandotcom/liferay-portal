@@ -1002,7 +1002,8 @@ public class LayoutLocalServiceUtil {
 	found
 	*/
 	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, String type) {
+		long groupId, boolean privateLayout, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLayouts(groupId, privateLayout, type);
 	}
 

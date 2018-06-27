@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
@@ -48,6 +50,7 @@ import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.sites.kernel.util.SitesUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -244,11 +247,15 @@ public class LayoutPermissionImpl
 			// action
 
 			long parentLayoutId = layout.getParentLayoutId();
+			long layoutGroupId = layout.getGroupId();
+
+			if (layout instanceof VirtualLayout) {
+				layoutGroupId = ((VirtualLayout)layout).getSourceGroupId();
+			}
 
 			while (parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 				Layout parentLayout = LayoutLocalServiceUtil.getLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					parentLayoutId);
+					layoutGroupId, layout.isPrivateLayout(), parentLayoutId);
 
 				if (contains(permissionChecker, parentLayout, actionId)) {
 					return true;
@@ -548,6 +555,33 @@ public class LayoutPermissionImpl
 
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
+			}
+		}
+		else if (!checkViewableGroup && group.isUserGroup() &&
+				 actionId.equals(ActionKeys.VIEW)) {
+
+			try {
+				UserBag userBag = permissionChecker.getUserBag();
+
+				if (userBag == null) {
+					return UserGroupLocalServiceUtil.hasUserUserGroup(
+						permissionChecker.getUserId(), group.getClassPK());
+				}
+
+				if (Arrays.binarySearch(
+						userBag.getUserUserGroupsIds(),
+						group.getClassPK()) >= 0) {
+
+					return true;
+				}
+
+				return false;
+			}
+			catch (PortalException | RuntimeException e) {
+				throw e;
+			}
+			catch (Exception e) {
+				throw new PortalException(e);
 			}
 		}
 

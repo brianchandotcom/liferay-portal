@@ -848,7 +848,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayouts(long groupId, boolean privateLayout,
-		String type);
+		String type) throws PortalException;
 
 	/**
 	* Returns the layout references for all the layouts that belong to the

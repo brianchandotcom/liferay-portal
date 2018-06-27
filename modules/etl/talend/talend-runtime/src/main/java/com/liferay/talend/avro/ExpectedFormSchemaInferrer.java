@@ -19,11 +19,13 @@ import com.liferay.talend.runtime.apio.form.Property;
 import com.liferay.talend.runtime.apio.jsonld.ApioForm;
 import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.tliferayoutput.Action;
+import com.liferay.talend.utils.SchemaUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -80,10 +82,31 @@ public class ExpectedFormSchemaInferrer {
 			properties.add(_ID_PROPERTY);
 		}
 
+		Predicate<Property> optionalPredicate = property -> {
+			return property.isWriteable() && !property.isRequired();
+		};
+		Predicate<Property> requiredPredicate = property -> {
+			return property.isWriteable() && property.isRequired();
+		};
+
+		Schema optionalSchema = _getSchemaFromProperties(
+			properties, optionalPredicate, true);
+		Schema requiredSchema = _getSchemaFromProperties(
+			properties, requiredPredicate, false);
+
+		List<Field> optionalSchemaFields = optionalSchema.getFields();
+
+		return SchemaUtils.appendFields(requiredSchema, optionalSchemaFields);
+	}
+
+	private static Schema _getSchemaFromProperties(
+		List<Property> properties, Predicate<Property> propertyPredicate,
+		boolean modifiable) {
+
 		Stream<Property> stream = properties.stream();
 
 		List<String> fieldNames = stream.filter(
-			Property::isWriteable
+			propertyPredicate
 		).map(
 			property -> {
 				String name = property.getName();
@@ -114,15 +137,14 @@ public class ExpectedFormSchemaInferrer {
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 				(Object)null);
 
-			designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+			if (!modifiable) {
+				designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+			}
 
 			schemaFields.add(i, designField);
 		}
 
-		Schema schema = Schema.createRecord(
-			"Runtime", null, null, false, schemaFields);
-
-		return schema;
+		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
 	private static final Property _ID_PROPERTY = new Property(

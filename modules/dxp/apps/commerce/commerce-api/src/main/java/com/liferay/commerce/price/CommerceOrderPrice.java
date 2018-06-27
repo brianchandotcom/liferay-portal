@@ -12,36 +12,35 @@
  * details.
  */
 
-package com.liferay.commerce.discount;
+package com.liferay.commerce.price;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.portal.kernel.exception.PortalException;
-
-import java.math.BigDecimal;
 
 /**
  * @author Marco Leo
  */
 @ProviderType
-public interface CommerceDiscountCalculation {
+public interface CommerceOrderPrice {
 
-	public CommerceDiscountValue getOrderShippingCommerceDiscountValue(
-			BigDecimal orderShippingCost, CommerceContext commerceContext)
+	public CommerceMoney getFinalPrice(
+			long cpInstanceId, int quantity, boolean includeDiscounts,
+			boolean includeTaxes, CommerceContext commerceContext)
 		throws PortalException;
 
-	public CommerceDiscountValue getOrderSubtotalCommerceDiscountValue(
-			BigDecimal orderSubtotal, CommerceContext commerceContext)
+	public CommerceMoney getUnitMaxPrice(
+			long cpDefinitionId, int quantity, CommerceContext commerceContext)
 		throws PortalException;
 
-	public CommerceDiscountValue getOrderTotalCommerceDiscountValue(
-			BigDecimal orderTotal, CommerceContext commerceContext)
+	public CommerceMoney getUnitMinPrice(
+			long cpDefinitionId, int quantity, CommerceContext commerceContext)
 		throws PortalException;
 
-	public CommerceDiscountValue getProductCommerceDiscountValue(
-			long cpInstanceId, int quantity, BigDecimal productUnitPrice,
-			CommerceContext commerceContext)
+	public CommerceMoney getUnitPrice(
+			long cpInstanceId, int quantity, CommerceContext commerceContext)
 		throws PortalException;
 
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ChainingCheck" files="modules/etl/talend/talend-definition/src/main/java/com/liferay/talend/utils/SchemaUtils\.java" />
+	</checkstyle>
+</suppressions>

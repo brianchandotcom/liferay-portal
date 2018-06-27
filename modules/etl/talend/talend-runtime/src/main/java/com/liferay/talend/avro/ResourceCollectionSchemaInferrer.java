@@ -104,23 +104,22 @@ public class ResourceCollectionSchemaInferrer {
 		List<Property> supportedProperties =
 			resourceSupportedClass.getSupportedProperties();
 
-		int size = supportedProperties.size() + 1;
-
-		List<Field> schemaFields = new ArrayList<>(size);
+		List<Field> schemaFields = new ArrayList<>(
+			supportedProperties.size() + 1);
 
 		// Already used names for the fields
 
-		Set<String> filedNames = new HashSet<>();
+		Set<String> fieldNames = new HashSet<>();
 
-		_addIdSchemaField(schemaFields, filedNames);
+		_addIdSchemaField(schemaFields, fieldNames);
 
 		int i = 1;
 
 		for (Property supportedProperty : supportedProperties) {
 			String fieldName = NameUtil.correct(
-				supportedProperty.getName(), i, filedNames);
+				supportedProperty.getName(), i, fieldNames);
 
-			filedNames.add(fieldName);
+			fieldNames.add(fieldName);
 
 			Field designField = new Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,

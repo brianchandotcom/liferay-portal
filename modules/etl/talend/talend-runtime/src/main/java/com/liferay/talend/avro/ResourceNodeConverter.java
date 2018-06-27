@@ -16,8 +16,10 @@ package com.liferay.talend.avro;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -53,7 +55,7 @@ public class ResourceNodeConverter
 
 		// Already used names for the fields
 
-		Set<String> normalizedJsonFiledNames = new HashSet<>();
+		Set<String> normalizedJsonFieldNames = new HashSet<>();
 		int i = 0;
 		int pos = -1;
 
@@ -61,9 +63,9 @@ public class ResourceNodeConverter
 			Map.Entry<String, JsonNode> field = jsonFields.next();
 
 			String fieldName = NameUtil.correct(
-				field.getKey(), i, normalizedJsonFiledNames);
+				field.getKey(), i, normalizedJsonFieldNames);
 
-			normalizedJsonFiledNames.add(fieldName);
+			normalizedJsonFieldNames.add(fieldName);
 
 			i++;
 
@@ -82,23 +84,16 @@ public class ResourceNodeConverter
 					resourceJsonNode.asText());
 
 				record.put(pos, value);
+
 				pos = -1;
 			}
-			else {
-				if ("_type".equals(fieldName) || "_context".equals(fieldName)) {
+			else if (!_blacklistedJsonLDKeywords.contains(fieldName) &&
+					 _log.isDebugEnabled()) {
 
-					// These fields are not needed for the schema as we already
-					// generated the schema based on them
-
-				}
-				else {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"{} is not present in the runtime schema. It " +
-								"will be ignored.",
-							fieldName);
-					}
-				}
+				_log.debug(
+					"{} is not present in the runtime schema. It will be " +
+						"ignored.",
+					fieldName);
 			}
 		}
 
@@ -112,5 +107,8 @@ public class ResourceNodeConverter
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		ResourceNodeConverter.class);
+
+	private static final List<String> _blacklistedJsonLDKeywords =
+		Arrays.asList("_context", "_type");
 
 }

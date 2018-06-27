@@ -19,7 +19,7 @@
 	],
 	"@id": "/doc",
 	"@type": "ApiDocumentation",
-	"description": "This API allows developers try a Hypermedia API without creating one",
+	"description": "This API allows developers to try a Hypermedia API without creating one",
 	"supportedClass": [
 		{
 			"@id": "Comment",

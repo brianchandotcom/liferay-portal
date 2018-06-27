@@ -65,12 +65,10 @@ public class URIUtils {
 	}
 
 	public static URI setPaginationLimitOnURL(String resourceURL, int limit) {
-		URI decoratedURI = updateWithQueryParameters(
+		return updateWithQueryParameters(
 			resourceURL,
 			Collections.singletonMap(
 				ApioConstants.QUERY_PARAM_PER_PAGE, String.valueOf(limit)));
-
-		return decoratedURI;
 	}
 
 	public static URI updateWithQueryParameters(

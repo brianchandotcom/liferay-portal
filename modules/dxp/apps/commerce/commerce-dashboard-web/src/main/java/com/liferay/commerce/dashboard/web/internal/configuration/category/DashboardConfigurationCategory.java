@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 @Component
 public class DashboardConfigurationCategory implements ConfigurationCategory {
 
-	public static final String CATEGORY_KEY = "commerce-insights";
+	public static final String CATEGORY_KEY = "dashboard";
 
 	@Override
 	public String getBundleSymbolicName() {

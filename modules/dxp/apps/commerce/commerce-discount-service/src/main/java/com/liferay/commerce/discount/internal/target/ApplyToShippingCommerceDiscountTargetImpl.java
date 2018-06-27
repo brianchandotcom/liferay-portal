@@ -25,21 +25,23 @@ import java.util.ResourceBundle;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
 	property = {
-		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_SHIPMENT,
+		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_SHIPPING,
 		"commerce.discount.target.order:Integer=30"
-	}
+	},
+	service = CommerceDiscountTarget.class
 )
 public class ApplyToShipmentCommerceDiscountTargetImpl
 	implements CommerceDiscountTarget {
 
 	@Override
 	public String getKey() {
-		return CommerceDiscountConstants.TARGET_SHIPMENT;
+		return CommerceDiscountConstants.TARGET_SHIPPING;
 	}
 
 	@Override

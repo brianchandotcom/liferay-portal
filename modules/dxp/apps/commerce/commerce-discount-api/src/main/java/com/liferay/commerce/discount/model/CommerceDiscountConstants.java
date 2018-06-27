@@ -35,7 +35,7 @@ public class CommerceDiscountConstants {
 
 	public static final String TARGET_PRODUCT = "product";
 
-	public static final String TARGET_SHIPMENT = "shipment";
+	public static final String TARGET_SHIPPING = "shipping";
 
 	public static final String TARGET_SUBTOTAL = "subtotal";
 

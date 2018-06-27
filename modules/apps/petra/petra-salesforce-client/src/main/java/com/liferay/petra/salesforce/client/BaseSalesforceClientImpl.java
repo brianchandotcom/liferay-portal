@@ -223,7 +223,28 @@ public abstract class BaseSalesforceClientImpl implements SalesforceClient {
 		throws ConnectionException {
 
 		if (!newConnection && (_partnerConnection != null)) {
-			return _partnerConnection;
+			try {
+				GetUserInfoResult userInfoResult =
+					_partnerConnection.getUserInfo();
+
+				int sessionSecondsValid =
+					userInfoResult.getSessionSecondsValid();
+
+				if (sessionSecondsValid > 120) {
+					return _partnerConnection;
+				}
+
+				if (_logger.isInfoEnabled()) {
+					_logger.info(
+						"Renewing session expiring in {} seconds",
+						sessionSecondsValid);
+				}
+			}
+			catch (ConnectionException ce) {
+				if (_logger.isInfoEnabled()) {
+					_logger.info("Session has expired and will be renewed now");
+				}
+			}
 		}
 
 		ConnectorConfig connectorConfig = getConnectorConfig();

@@ -75,10 +75,6 @@ public class BrowserLauncher implements Runnable {
 	}
 
 	protected void launchBrowserUnix(Runtime runtime) throws Exception {
-		if (_BROWSERS.length == 0) {
-			runtime.exec(new String[] {"sh", "-c", StringPool.BLANK});
-		}
-
 		StringBundler sb = new StringBundler(_BROWSERS.length * 5 - 1);
 
 		for (int i = 0; i < _BROWSERS.length; i++) {

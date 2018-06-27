@@ -28,6 +28,10 @@ public class ChangesetTaglibDisplayContext {
 
 	public static boolean isShowExportMenuItem(Group group, String portletId) {
 		try {
+			if (group.isLayout()) {
+				return false;
+			}
+
 			if ((group.isStagingGroup() || group.isStagedRemotely()) &&
 				group.isStagedPortlet(portletId)) {
 
@@ -43,6 +47,10 @@ public class ChangesetTaglibDisplayContext {
 
 	public static boolean isShowPublishMenuItem(Group group, String portletId) {
 		try {
+			if (group.isLayout()) {
+				return false;
+			}
+
 			if ((group.isStagingGroup() || group.isStagedRemotely()) &&
 				group.isStagedPortlet(portletId)) {
 

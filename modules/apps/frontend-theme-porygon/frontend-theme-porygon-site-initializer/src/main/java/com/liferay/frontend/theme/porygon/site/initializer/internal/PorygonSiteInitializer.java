@@ -17,6 +17,11 @@ package com.liferay.frontend.theme.porygon.site.initializer.internal;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -28,6 +33,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -36,6 +42,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -101,6 +109,12 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 			Map<String, String> fileEntriesMap = _getFileEntriesMap(
 				fileEntries);
+
+			List<FragmentEntry> fragmentEntries = _addFragmentEntries(
+				fileEntries, serviceContext);
+
+			Map<String, FragmentEntry> fragmentEntriesMap =
+				_getFragmentEntriesMap(fragmentEntries);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -154,6 +168,70 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		return fileEntries;
 	}
 
+	private List<FragmentEntry> _addFragmentEntries(
+			List<FileEntry> fileEntries, ServiceContext serviceContext)
+		throws Exception {
+
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_THEME_NAME, null, serviceContext);
+
+		Map<String, String> fileEntriesMap = _getFileEntriesMap(fileEntries);
+
+		Enumeration<URL> urls = _bundle.findEntries(
+			_PATH + "/fragments", "*.html", false);
+
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+
+			String fileName = FileUtil.getShortFileName(url.getPath());
+			String filePath = FileUtil.getPath(url.getPath());
+
+			url = _bundle.getEntry(filePath + "/" + fileName);
+
+			String html = StringUtil.replace(
+				StringUtil.read(url.openStream()), StringPool.DOLLAR,
+				StringPool.DOLLAR, fileEntriesMap);
+
+			String shortFileName = FileUtil.getShortFileName(url.getPath());
+
+			String fragmentEntryId = FileUtil.stripExtension(shortFileName);
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(filePath);
+			sb.append(StringPool.SLASH);
+			sb.append(fragmentEntryId);
+			sb.append(".css");
+
+			URL cssURL = _bundle.getEntry(sb.toString());
+
+			String css = StringUtil.replace(
+				StringUtil.read(cssURL.openStream()), StringPool.DOLLAR,
+				StringPool.DOLLAR, fileEntriesMap);
+
+			String fragmentEntryName = StringUtil.upperCaseFirstLetter(
+				fragmentEntryId);
+
+			FragmentEntry fragmentEntry =
+				_fragmentEntryLocalService.addFragmentEntry(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(),
+					fragmentCollection.getFragmentCollectionId(),
+					fragmentEntryName, css, html, StringPool.BLANK,
+					_getPreviewFileEntryId(
+						filePath, fragmentEntryId + ".jpg", serviceContext),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			fragmentEntries.add(fragmentEntry);
+		}
+
+		return fragmentEntries;
+	}
+
 	private ServiceContext _createServiceContext(long groupId)
 		throws PortalException {
 
@@ -193,6 +271,53 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		}
 
 		return fileEntriesMap;
+	}
+
+	private Map<String, FragmentEntry> _getFragmentEntriesMap(
+		List<FragmentEntry> fragmentEntries) {
+
+		Map<String, FragmentEntry> fragmentEntriesMap = new HashMap<>();
+
+		for (FragmentEntry fragmentEntry : fragmentEntries) {
+			fragmentEntriesMap.put(
+				StringUtil.toLowerCase(fragmentEntry.getName()), fragmentEntry);
+		}
+
+		return fragmentEntriesMap;
+	}
+
+	private long _getPreviewFileEntryId(
+			String filePath, String fileName, ServiceContext serviceContext)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(filePath);
+		sb.append(StringPool.SLASH);
+		sb.append(fileName);
+
+		URL url = _bundle.getEntry(sb.toString());
+
+		if (url == null) {
+			return 0;
+		}
+
+		Folder folder = _dlAppLocalService.getFolder(
+			serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _THEME_NAME);
+
+		byte[] bytes = null;
+
+		try (InputStream is = url.openStream()) {
+			bytes = FileUtil.getBytes(is);
+		}
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			folder.getFolderId(), fileName, null, fileName, StringPool.BLANK,
+			StringPool.BLANK, bytes, serviceContext);
+
+		return fileEntry.getFileEntryId();
 	}
 
 	private void _updateLogo(ServiceContext serviceContext) throws Exception {
@@ -244,7 +369,16 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

@@ -722,7 +722,7 @@ public class LicenseUtil {
 				encryptedSymmetricKey);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new ExceptionInInitializerError(e);
 		}
 
 		_ipAddresses = _getIPAddresses();

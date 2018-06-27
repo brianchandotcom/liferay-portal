@@ -46,8 +46,20 @@ public abstract class BaseCommentNestedCollectionRouter
 		NestedCollectionRoutes.Builder<Comment, Long, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, PermissionChecker.class
+			this::getPageItems, PermissionChecker.class
 		).build();
+	}
+
+	protected void checkViewPermission(
+			PermissionChecker permissionChecker, long groupId, String className,
+			long classPK)
+		throws PortalException {
+
+		DiscussionPermission discussionPermission =
+			getCommentManager().getDiscussionPermission(permissionChecker);
+
+		discussionPermission.checkViewPermission(
+			permissionChecker.getCompanyId(), groupId, className, classPK);
 	}
 
 	/**
@@ -69,43 +81,36 @@ public abstract class BaseCommentNestedCollectionRouter
 	protected abstract GroupedModel getGroupedModel(long classPK)
 		throws PortalException;
 
-	private void _checkViewPermission(
-			PermissionChecker permissionChecker, long groupId, String className,
-			long classPK)
-		throws PortalException {
-
-		DiscussionPermission discussionPermission =
-			getCommentManager().getDiscussionPermission(permissionChecker);
-
-		discussionPermission.checkViewPermission(
-			permissionChecker.getCompanyId(), groupId, className, classPK);
-	}
-
-	private PageItems<Comment> _getPageItems(
+	protected PageItems<Comment> getPageItems(
 			Pagination pagination, long classPK,
 			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		GroupedModel groupedModel = getGroupedModel(classPK);
+		long resourcePrimKey = getResourcePrimKey(classPK);
 
 		int count = getCommentManager().getRootCommentsCount(
-			groupedModel.getModelClassName(), classPK,
+			groupedModel.getModelClassName(), resourcePrimKey,
 			WorkflowConstants.STATUS_APPROVED);
 
 		if (count == 0) {
 			return new PageItems<>(Collections.emptyList(), 0);
 		}
 
-		_checkViewPermission(
+		checkViewPermission(
 			permissionChecker, groupedModel.getGroupId(),
 			groupedModel.getModelClassName(), classPK);
 
 		List<Comment> comments = getCommentManager().getRootComments(
-			groupedModel.getModelClassName(), classPK,
+			groupedModel.getModelClassName(), resourcePrimKey,
 			WorkflowConstants.STATUS_APPROVED, pagination.getStartPosition(),
 			pagination.getEndPosition());
 
 		return new PageItems<>(comments, count);
+	}
+
+	protected long getResourcePrimKey(long classPK) throws PortalException {
+		return classPK;
 	}
 
 }

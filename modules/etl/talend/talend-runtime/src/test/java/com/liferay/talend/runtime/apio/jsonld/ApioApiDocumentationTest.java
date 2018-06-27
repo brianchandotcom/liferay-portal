@@ -62,7 +62,7 @@ public class ApioApiDocumentationTest {
 		Assert.assertThat(
 			description,
 			equalTo(
-				"This API allows developers try a Hypermedia API without " +
+				"This API allows developers to try a Hypermedia API without " +
 					"creating one"));
 	}
 

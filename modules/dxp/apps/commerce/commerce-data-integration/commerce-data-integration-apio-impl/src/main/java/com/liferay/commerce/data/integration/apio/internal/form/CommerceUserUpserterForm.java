@@ -65,6 +65,10 @@ public class CommerceUserUpserterForm {
 		).build();
 	}
 
+	public String getAlternateName() {
+		return _alternateName;
+	}
+
 	public int getBirthdayDay() {
 		return _birthdayDay;
 	}
@@ -93,16 +97,16 @@ public class CommerceUserUpserterForm {
 		return _externalReferenceCode;
 	}
 
+	public String getFamilyName() {
+		return _familyName;
+	}
+
 	public String getGivenName() {
 		return _givenName;
 	}
 
 	public String getJobTitle() {
 		return _jobTitle;
-	}
-
-	public String getFamilyName() {
-		return _familyName;
 	}
 
 	public String getPassword1() {
@@ -121,12 +125,12 @@ public class CommerceUserUpserterForm {
 		return ArrayUtil.toLongArray(_roleIds);
 	}
 
-	public String getAlternateName() {
-		return _alternateName;
-	}
-
 	public boolean isMale() {
 		return _male;
+	}
+
+	private void _setAlternateName(String alternateName) {
+		_alternateName = alternateName;
 	}
 
 	private void _setBirthDate(Date birthDate) {
@@ -151,20 +155,20 @@ public class CommerceUserUpserterForm {
 		_externalReferenceCode = externalReferenceCode;
 	}
 
-	private void _setGivenName(String givenName) {
-		_givenName = givenName;
+	private void _setFamilyName(String familyName) {
+		_familyName = familyName;
 	}
 
 	private void _setGender(String gender) {
 		_male = "male".equals(gender);
 	}
 
-	private void _setJobTitle(String jobTitle) {
-		_jobTitle = jobTitle;
+	private void _setGivenName(String givenName) {
+		_givenName = givenName;
 	}
 
-	private void _setFamilyName(String familyName) {
-		_familyName = familyName;
+	private void _setJobTitle(String jobTitle) {
+		_jobTitle = jobTitle;
 	}
 
 	private void _setPassword1(String password1) {
@@ -179,23 +183,19 @@ public class CommerceUserUpserterForm {
 		_roleIds = roleIds;
 	}
 
-	private void _setAlternateName(String alternateName) {
-		_alternateName = alternateName;
-	}
-
+	private String _alternateName;
 	private int _birthdayDay;
 	private int _birthdayMonth;
 	private int _birthdayYear;
 	private List<Long> _commerceAccountIds;
 	private String _email;
 	private String _externalReferenceCode;
+	private String _familyName;
 	private String _givenName;
 	private String _jobTitle;
-	private String _familyName;
 	private Boolean _male;
 	private String _password1;
 	private String _password2;
 	private List<Long> _roleIds;
-	private String _alternateName;
 
 }

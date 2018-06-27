@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.io.InputStream;
 
@@ -213,6 +214,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			_addLayouts(
 				businessLayout, _LAYOUT_CHILDREN_BUSINESS, fragmentEntriesMap,
 				serviceContext);
+
+			_siteNavigationMenuLocalService.addDefaultSiteNavigationMenu(
+				serviceContext.getUserId(), groupId, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -693,6 +697,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 		target = "(osgi.web.symbolicname=com.liferay.frontend.theme.westeros.bank.site.initializer)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

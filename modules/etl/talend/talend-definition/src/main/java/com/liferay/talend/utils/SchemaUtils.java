@@ -28,6 +28,7 @@ import org.talend.components.api.component.Connector;
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.daikon.avro.SchemaConstants;
 import org.talend.daikon.exception.TalendRuntimeException;
+import org.talend.daikon.exception.TalendRuntimeException.TalendRuntimeExceptionBuilder;
 import org.talend.daikon.exception.error.CommonErrorCodes;
 
 /**
@@ -37,9 +38,11 @@ public class SchemaUtils {
 
 	public static Schema appendFields(Schema schema, List<Field> fields) {
 		if (schema.getType() != Schema.Type.RECORD) {
-			TalendRuntimeException.build(
-				CommonErrorCodes.UNEXPECTED_EXCEPTION
-			).setAndThrow(
+			TalendRuntimeExceptionBuilder talendRuntimeExceptionBuilder =
+				TalendRuntimeException.build(
+					CommonErrorCodes.UNEXPECTED_EXCEPTION);
+
+			talendRuntimeExceptionBuilder.setAndThrow(
 				"Schema type is not supported:  " + schema.getType()
 			);
 		}

@@ -25,5 +25,17 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 
 	<aui:input label="pagination-delta" name="preferences--paginationDelta--" type="number" value="<%= cpPublisherConfigurationDisplayContext.getPaginationDelta() %>" />
 
-	<aui:input label="pagination-type" name="preferences--paginationType--" type="text" value="<%= cpPublisherConfigurationDisplayContext.getPaginationType() %>" />
+	<aui:select label="pagination-type" name="preferences--paginationType--" value="<%= cpPublisherConfigurationDisplayContext.getPaginationType() %>">
+
+		<%
+		for (String paginationType : CPContentConstants.PAGINATION_TYPES) {
+		%>
+
+			<aui:option label="<%= paginationType %>" />
+
+		<%
+		}
+		%>
+
+	</aui:select>
 </aui:fieldset>

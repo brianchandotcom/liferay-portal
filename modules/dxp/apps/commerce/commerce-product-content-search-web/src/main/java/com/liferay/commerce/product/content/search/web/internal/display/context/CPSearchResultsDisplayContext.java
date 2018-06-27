@@ -144,7 +144,7 @@ public class CPSearchResultsDisplayContext {
 			_portletSharedSearchResponse.getDocuments());
 
 		return new CPDataSourceResult(
-			cpCatalogEntries, cpCatalogEntries.size());
+			cpCatalogEntries, _portletSharedSearchResponse.getTotalHits());
 	}
 
 	public String getCPTypeListEntryRendererKey(String cpType) {

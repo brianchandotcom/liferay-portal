@@ -25,5 +25,17 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 
 	<aui:input label="pagination-delta" name="preferences--paginationDelta--" type="number" value="<%= cpSearchResultsDisplayContext.getPaginationDelta() %>" />
 
-	<aui:input label="pagination-type" name="preferences--paginationType--" type="text" value="<%= cpSearchResultsDisplayContext.getPaginationType() %>" />
+	<aui:select label="pagination-type" name="preferences--paginationType--" value="<%= cpSearchResultsDisplayContext.getPaginationType() %>">
+
+		<%
+		for (String paginationType : CPContentConstants.PAGINATION_TYPES) {
+		%>
+
+			<aui:option label="<%= paginationType %>" />
+
+		<%
+		}
+		%>
+
+	</aui:select>
 </aui:fieldset>

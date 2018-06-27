@@ -39,7 +39,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:form-navigator
-			id="<%= CPContentConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
+			id="<%= CPContentPortletConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
 			showButtons="<%= false %>"
 		/>
 	</liferay-frontend:edit-form-body>

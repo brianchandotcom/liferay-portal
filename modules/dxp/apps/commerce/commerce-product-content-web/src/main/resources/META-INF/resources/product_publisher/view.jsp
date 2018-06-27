@@ -39,7 +39,7 @@ List<CPCatalogEntry> results = searchContainer.getResults();
 		/>
 
 		<c:if test="<%= cpPublisherDisplayContext.isPaginate() %>">
-			<aui:form useNamespace="<%= false %>">
+			<aui:form>
 				<liferay-ui:search-paginator
 					markupView="lexicon"
 					searchContainer="<%= searchContainer %>"
@@ -56,7 +56,7 @@ List<CPCatalogEntry> results = searchContainer.getResults();
 		/>
 
 		<c:if test="<%= cpPublisherDisplayContext.isPaginate() %>">
-			<aui:form useNamespace="<%= false %>">
+			<aui:form>
 				<liferay-ui:search-paginator
 					markupView="lexicon"
 					searchContainer="<%= searchContainer %>"

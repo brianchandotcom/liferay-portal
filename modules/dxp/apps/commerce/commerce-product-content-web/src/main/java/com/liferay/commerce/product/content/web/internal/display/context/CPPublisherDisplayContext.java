@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -134,11 +133,10 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		String delta = ParamUtil.getString(
-			cpContentRequestHelper.getRequest(), "delta");
+			cpContentRequestHelper.getRequest(), "delta",
+			String.valueOf(getPaginationDelta()));
 
-		if (Validator.isNotNull(delta)) {
-			portletURL.setParameter("delta", delta);
-		}
+		portletURL.setParameter("delta", delta);
 
 		return portletURL;
 	}

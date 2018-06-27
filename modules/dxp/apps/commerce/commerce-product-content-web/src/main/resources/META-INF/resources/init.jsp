@@ -34,6 +34,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.product.catalog.CPCatalogEntry" %><%@
 page import="com.liferay.commerce.product.catalog.CPSku" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
+page import="com.liferay.commerce.product.content.constants.CPContentConstants" %><%@
 page import="com.liferay.commerce.product.content.constants.CPContentWebKeys" %><%@
 page import="com.liferay.commerce.product.content.render.CPContentRenderer" %><%@
 page import="com.liferay.commerce.product.content.render.list.CPContentListRenderer" %><%@
@@ -42,7 +43,7 @@ page import="com.liferay.commerce.product.content.util.CPCompareContentHelper" %
 page import="com.liferay.commerce.product.content.util.CPContentHelper" %><%@
 page import="com.liferay.commerce.product.content.web.internal.constants.CPCompareContentConstants" %><%@
 page import="com.liferay.commerce.product.content.web.internal.constants.CPCompareContentMiniConstants" %><%@
-page import="com.liferay.commerce.product.content.web.internal.constants.CPContentConstants" %><%@
+page import="com.liferay.commerce.product.content.web.internal.constants.CPContentPortletConstants" %><%@
 page import="com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants" %><%@
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentMiniDisplayContext" %><%@

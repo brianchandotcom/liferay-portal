@@ -12,17 +12,23 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.constants;
+package com.liferay.commerce.product.content.web.internal.configuration.definition;
+
+import com.liferay.commerce.product.content.web.internal.configuration.CPPublisherPortletInstanceConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPContentConstants {
+@Component
+public class CPPublisherPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static final String CATEGORY_KEY_RENDER_SELECTION =
-		"render-selection";
-
-	public static final String FORM_NAVIGATOR_ID_CONFIGURATION =
-		"product.content.configuration";
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return CPPublisherPortletInstanceConfiguration.class;
+	}
 
 }

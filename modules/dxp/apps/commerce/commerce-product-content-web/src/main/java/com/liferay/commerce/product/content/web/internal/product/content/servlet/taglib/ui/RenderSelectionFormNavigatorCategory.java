@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.product.content.servlet.taglib.ui;
 
-import com.liferay.commerce.product.content.web.internal.constants.CPContentConstants;
+import com.liferay.commerce.product.content.web.internal.constants.CPContentPortletConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -36,12 +36,12 @@ public class RenderSelectionFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return CPContentConstants.FORM_NAVIGATOR_ID_CONFIGURATION;
+		return CPContentPortletConstants.FORM_NAVIGATOR_ID_CONFIGURATION;
 	}
 
 	@Override
 	public String getKey() {
-		return CPContentConstants.CATEGORY_KEY_RENDER_SELECTION;
+		return CPContentPortletConstants.CATEGORY_KEY_RENDER_SELECTION;
 	}
 
 	@Override

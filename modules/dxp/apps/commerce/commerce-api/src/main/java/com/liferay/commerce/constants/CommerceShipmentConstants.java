@@ -38,6 +38,24 @@ public class CommerceShipmentConstants {
 		SHIPMENT_STATUS_SHIPPED, SHIPMENT_STATUS_DELIVERED
 	};
 
+	public static Integer getShipmentStatus(String label) {
+		if (label.equals("delivered")) {
+			return SHIPMENT_STATUS_DELIVERED;
+		}
+		else if (label.equals("processing")) {
+			return SHIPMENT_STATUS_PROCESSING;
+		}
+		else if (label.equals("ready-to-be-shipped")) {
+			return SHIPMENT_STATUS_READY_TO_BE_SHIPPED;
+		}
+		else if (label.equals("shipped")) {
+			return SHIPMENT_STATUS_SHIPPED;
+		}
+		else {
+			return null;
+		}
+	}
+
 	public static String getShipmentStatusLabel(int shipmentStatus) {
 		if (shipmentStatus == SHIPMENT_STATUS_DELIVERED) {
 			return "delivered";

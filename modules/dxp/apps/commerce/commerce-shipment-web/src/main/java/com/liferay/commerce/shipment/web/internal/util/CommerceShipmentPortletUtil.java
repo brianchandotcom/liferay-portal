@@ -17,7 +17,10 @@ package com.liferay.commerce.shipment.web.internal.util;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.util.comparator.CommerceShipmentCreateDateComparator;
+import com.liferay.commerce.util.comparator.CommerceShipmentExpectedDateComparator;
+import com.liferay.commerce.util.comparator.CommerceShipmentIdComparator;
 import com.liferay.commerce.util.comparator.CommerceShipmentItemCreateDateComparator;
+import com.liferay.commerce.util.comparator.CommerceShipmentShippingDateComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
@@ -59,6 +62,17 @@ public class CommerceShipmentPortletUtil {
 
 		if (orderByCol.equals("create-date")) {
 			orderByComparator = new CommerceShipmentCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("expected-delivery-date")) {
+			orderByComparator = new CommerceShipmentExpectedDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("shipment-number")) {
+			orderByComparator = new CommerceShipmentIdComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("shipping-date")) {
+			orderByComparator = new CommerceShipmentShippingDateComparator(
 				orderByAsc);
 		}
 

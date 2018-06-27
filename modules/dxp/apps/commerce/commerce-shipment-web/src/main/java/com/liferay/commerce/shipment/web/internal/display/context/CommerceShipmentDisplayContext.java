@@ -35,10 +35,14 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Collections;
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -142,6 +146,37 @@ public class CommerceShipmentDisplayContext
 		return _commerceWarehouses;
 	}
 
+	public String getNavigation() {
+		return ParamUtil.getString(
+			cpRequestHelper.getRequest(), "navigation", "all");
+	}
+
+	public String[] getNavigationKeys() {
+		int[] shipmentStatuses = CommerceShipmentConstants.SHIPMENT_STATUSES;
+
+		String[] navigationKeys = new String[0];
+
+		navigationKeys = ArrayUtil.append(navigationKeys, "all");
+
+		for (int shipmentStatus : shipmentStatuses) {
+			navigationKeys = ArrayUtil.append(
+				navigationKeys,
+				CommerceShipmentConstants.getShipmentStatusLabel(
+					shipmentStatus));
+		}
+
+		return navigationKeys;
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		portletURL.setParameter("navigation", getNavigation());
+
+		return portletURL;
+	}
+
 	@Override
 	public SearchContainer<CommerceShipment> getSearchContainer()
 		throws PortalException {
@@ -157,23 +192,48 @@ public class CommerceShipmentDisplayContext
 			CommerceShipmentPortletUtil.getCommerceShipmentOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
-		searchContainer.setEmptyResultsMessage("no-shipments-were-found");
+		String emptyResultsMessage = "no-shipments-were-found";
+
+		String navigation = getNavigation();
+
+		if (!navigation.equals("all")) {
+			emptyResultsMessage = LanguageUtil.format(
+				cpRequestHelper.getRequest(), "no-x-shipments-were-found",
+				navigation, true);
+		}
+
+		searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total =
-			_commerceShipmentService.getCommerceShipmentsCountBySiteGroupId(
-				cpRequestHelper.getScopeGroupId());
+		int total;
+		List<CommerceShipment> results;
+
+		Integer shipmentStatus = CommerceShipmentConstants.getShipmentStatus(
+			navigation);
+
+		if (!navigation.equals("all") && (shipmentStatus != null)) {
+			total = _commerceShipmentService.getCommerceShipmentsCountByS_S(
+				cpRequestHelper.getScopeGroupId(), shipmentStatus);
+			results = _commerceShipmentService.getCommerceShipmentsByS_S(
+				cpRequestHelper.getScopeGroupId(), shipmentStatus,
+				searchContainer.getStart(), searchContainer.getEnd(),
+				orderByComparator);
+		}
+		else {
+			total =
+				_commerceShipmentService.getCommerceShipmentsCountBySiteGroupId(
+					cpRequestHelper.getScopeGroupId());
+			results =
+				_commerceShipmentService.getCommerceShipmentsBySiteGroupId(
+					cpRequestHelper.getScopeGroupId(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					orderByComparator);
+		}
 
 		searchContainer.setTotal(total);
-
-		List<CommerceShipment> results =
-			_commerceShipmentService.getCommerceShipmentsBySiteGroupId(
-				cpRequestHelper.getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
-
 		searchContainer.setResults(results);
 
 		return searchContainer;

@@ -30,10 +30,6 @@ CommerceShipmentContentDisplayContext commerceShipmentContentDisplayContext = (C
 		keyProperty="commerceShipmentId"
 		modelVar="commerceShipment"
 	>
-		<liferay-ui:search-container-column-text
-			name="status"
-			value="<%= commerceShipmentContentDisplayContext.getCommerceShipmentStatusLabel(commerceShipment.getStatus()) %>"
-		/>
 
 		<%
 		PortletURL rowURL = renderResponse.createRenderURL();
@@ -66,8 +62,13 @@ CommerceShipmentContentDisplayContext commerceShipmentContentDisplayContext = (C
 		/>
 
 		<liferay-ui:search-container-column-date
-			name="expected-delivery"
+			name="expected-delivery-date"
 			property="expectedDate"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="status"
+			value="<%= commerceShipmentContentDisplayContext.getCommerceShipmentStatusLabel(commerceShipment.getStatus()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text>

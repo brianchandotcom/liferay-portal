@@ -35,7 +35,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= portletURL %>"
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				selectedDisplayStyle="list"
 			/>
 
@@ -58,8 +58,15 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= portletURL %>"
+				navigationKeys="<%= commerceShipmentDisplayContext.getNavigationKeys() %>"
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= commerceShipmentDisplayContext.getOrderByCol() %>"
+				orderByType="<%= commerceShipmentDisplayContext.getOrderByType() %>"
+				orderColumns='<%= new String[] {"create-date", "expected-delivery-date", "shipment-number", "shipping-date"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			/>
 		</liferay-frontend:management-bar-filters>
 	</liferay-frontend:management-bar>
@@ -82,13 +89,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						keyProperty="commerceShipmentId"
 						modelVar="commerceShipment"
 					>
-						<liferay-ui:search-container-column-text
-							name="status"
-							value="<%= commerceShipmentDisplayContext.getCommerceShipmentStatusLabel(commerceShipment.getStatus()) %>"
-						/>
+
+						<%
+						PortletURL rowURL = renderResponse.createRenderURL();
+
+						rowURL.setParameter("mvcRenderCommandName", "viewCommerceShipmentDetail");
+						rowURL.setParameter("commerceShipmentId", String.valueOf(commerceShipment.getCommerceShipmentId()));
+						%>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="important table-cell-content"
+							href="<%= rowURL %>"
 							name="shipment-number"
 							property="commerceShipmentId"
 						/>
@@ -135,8 +146,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 						<liferay-ui:search-container-column-date
 							cssClass="table-cell-content"
-							name="expected-delivery"
+							name="expected-delivery-date"
 							property="expectedDate"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="status"
+							value="<%= commerceShipmentDisplayContext.getCommerceShipmentStatusLabel(commerceShipment.getStatus()) %>"
 						/>
 
 						<liferay-ui:search-container-column-jsp

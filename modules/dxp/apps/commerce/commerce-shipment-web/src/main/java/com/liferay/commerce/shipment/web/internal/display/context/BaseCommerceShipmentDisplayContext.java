@@ -93,6 +93,10 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 		return _displayStyle;
 	}
 
+	public String getKeywords() {
+		return ParamUtil.getString(httpServletRequest, "keywords");
+	}
+
 	public String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -178,7 +182,7 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
 		}
 
-		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
+		String keywords = getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
@@ -215,6 +219,14 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 			cpRequestHelper.getPermissionChecker(),
 			cpRequestHelper.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+	}
+
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public void setDefaultOrderByCol(String defaultOrderByCol) {

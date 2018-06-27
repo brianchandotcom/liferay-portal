@@ -56,7 +56,7 @@ long commerceShipmentId = commerceShipmentItemDisplayContext.getCommerceShipment
 
 			<aui:input name="shippingDate" />
 
-			<aui:input name="expectedDate" />
+			<aui:input label="expected-delivery-date" name="expectedDate" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

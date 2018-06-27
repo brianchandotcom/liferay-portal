@@ -43,10 +43,14 @@ public class PortalWorkspace extends BaseWorkspace {
 	public void setupWorkspace() {
 		super.setupWorkspace();
 
-		writePropertiesFile(_appServerPropertiesFile, _appServerProperties);
-		writePropertiesFile(_buildPropertiesFile, _buildProperties);
-		writePropertiesFile(_sqlPropertiesFile, _sqlProperties);
-		writePropertiesFile(_testPropertiesFile, _testProperties);
+		JenkinsResultsParserUtil.writePropertiesFile(
+			_appServerPropertiesFile, _appServerProperties);
+		JenkinsResultsParserUtil.writePropertiesFile(
+			_buildPropertiesFile, _buildProperties);
+		JenkinsResultsParserUtil.writePropertiesFile(
+			_sqlPropertiesFile, _sqlProperties);
+		JenkinsResultsParserUtil.writePropertiesFile(
+			_testPropertiesFile, _testProperties);
 	}
 
 	protected PortalWorkspace(

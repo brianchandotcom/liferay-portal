@@ -43,15 +43,11 @@
 		@include site-navigation-menu-item-focus;
 	}
 
-	&:focus-within {
+	&__content:focus-within {
 		@include site-navigation-menu-item-focus;
 	}
 
-	&__content:focus > .card {
-		@include site-navigation-menu-item-card-focus;
-	}
-
-	&__content:focus-within > .card {
+	&:focus > &__content > .card {
 		@include site-navigation-menu-item-card-focus;
 	}
 

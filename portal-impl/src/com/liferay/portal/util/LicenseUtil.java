@@ -684,7 +684,7 @@ public class LicenseUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(LicenseUtil.class);
 
-	private static String _encryptedSymmetricKey;
+	private static final String _encryptedSymmetricKey;
 	private static final MethodHandler _getServerInfoMethodHandler =
 		new MethodHandler(new MethodKey(LicenseUtil.class, "getServerInfo"));
 	private static final Set<String> _ipAddresses;
@@ -693,7 +693,7 @@ public class LicenseUtil {
 		LicenseUtil.class, "registerOrder", String.class, String.class,
 		int.class);
 	private static byte[] _serverIdBytes;
-	private static Key _symmetricKey;
+	private static final Key _symmetricKey;
 
 	static {
 		try {

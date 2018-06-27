@@ -433,6 +433,17 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 			new JSLoaderModulesServlet();
 
 		ReflectionTestUtil.setFieldValue(
+			jsLoaderModulesServlet, "_minifier",
+			new Minifier() {
+
+				@Override
+				public String minify(String resourceName, String content) {
+					return content;
+				}
+
+			});
+
+		ReflectionTestUtil.setFieldValue(
 			jsLoaderModulesServlet, "_portal", PortalUtil.getPortal());
 
 		jsLoaderModulesServlet.activate(

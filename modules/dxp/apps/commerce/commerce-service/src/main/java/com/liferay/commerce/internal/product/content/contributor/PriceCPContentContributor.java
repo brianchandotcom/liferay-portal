@@ -79,7 +79,7 @@ public class PriceCPContentContributor implements CPContentContributor {
 			_commerceProductPriceCalculation.getFinalPrice(
 				cpInstance.getCPInstanceId(),
 				cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance),
-				true, true, commerceContext);
+				commerceContext);
 
 		jsonObject.put(
 			"price",

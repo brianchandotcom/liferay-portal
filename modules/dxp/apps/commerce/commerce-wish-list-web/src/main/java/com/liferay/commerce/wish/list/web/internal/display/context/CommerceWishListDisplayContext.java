@@ -147,7 +147,7 @@ public class CommerceWishListDisplayContext {
 		if (cpInstance != null) {
 			CommerceMoney commerceMoney =
 				_commerceProductPriceCalculation.getFinalPrice(
-					cpInstance.getCPInstanceId(), 1, true, true,
+					cpInstance.getCPInstanceId(), 1,
 					_commerceWishListRequestHelper.getCommerceContext());
 
 			return commerceMoney.format(

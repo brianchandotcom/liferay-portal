@@ -23,6 +23,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
@@ -60,6 +61,7 @@ public class CommerceCartContentDisplayContext {
 	public CommerceCartContentDisplayContext(
 			HttpServletRequest httpServletRequest,
 			CommerceOrderItemService commerceOrderItemService,
+			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CPDefinitionHelper cpDefinitionHelper,
@@ -67,6 +69,7 @@ public class CommerceCartContentDisplayContext {
 		throws PortalException {
 
 		_commerceOrderItemService = commerceOrderItemService;
+		_commerceOrderPriceCalculation = commerceOrderPriceCalculation;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 
@@ -151,8 +154,7 @@ public class CommerceCartContentDisplayContext {
 		}
 
 		CommerceMoney commerceMoney =
-			_commerceProductPriceCalculation.getOrderSubtotal(
-				getCommerceOrder(), commerceContext);
+			_commerceOrderPriceCalculation.getSubtotal(getCommerceOrderId());
 
 		return commerceMoney.format(
 			commerceCartContentRequestHelper.getLocale());
@@ -218,7 +220,7 @@ public class CommerceCartContentDisplayContext {
 		CommerceMoney commerceMoney =
 			_commerceProductPriceCalculation.getFinalPrice(
 				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getQuantity(), true, true, commerceContext);
+				commerceOrderItem.getQuantity(), commerceContext);
 
 		return commerceMoney.format(
 			commerceCartContentRequestHelper.getLocale());
@@ -230,7 +232,9 @@ public class CommerceCartContentDisplayContext {
 		CommerceMoney commerceMoney =
 			_commerceProductPriceCalculation.getUnitPrice(
 				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getQuantity(), commerceContext);
+				commerceOrderItem.getQuantity(),
+				commerceContext.getCommercePriceList(),
+				commerceContext.getCommerceCurrency());
 
 		return commerceMoney.format(
 			commerceCartContentRequestHelper.getLocale());
@@ -337,6 +341,7 @@ public class CommerceCartContentDisplayContext {
 		_commerceCartContentPortletInstanceConfiguration;
 	private CommerceOrder _commerceOrder;
 	private final CommerceOrderItemService _commerceOrderItemService;
+	private final CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
 	private final CommerceProductPriceCalculation

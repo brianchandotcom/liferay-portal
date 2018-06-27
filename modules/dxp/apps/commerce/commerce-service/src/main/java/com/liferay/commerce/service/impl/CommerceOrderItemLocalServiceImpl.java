@@ -92,7 +92,7 @@ public class CommerceOrderItemLocalServiceImpl
 		if (price == null) {
 			CommerceMoney commerceMoney =
 				_commerceProductPriceCalculation.getFinalPrice(
-					cpInstanceId, quantity, true, true, commerceContext);
+					cpInstanceId, quantity, commerceContext);
 
 			price = commerceMoney.getPrice();
 		}

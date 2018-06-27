@@ -32,7 +32,7 @@ import com.liferay.commerce.organization.order.web.internal.configuration.Commer
 import com.liferay.commerce.organization.order.web.internal.display.context.util.CommerceOrganizationOrderRequestHelper;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderSearch;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -112,8 +112,8 @@ public class CommerceOrganizationOrderDisplayContext {
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderLocalService commerceOrderLocalService,
 			CommerceOrderNoteService commerceOrderNoteService,
+			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 			CommerceOrderService commerceOrderService,
-			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CommerceShipmentItemService commerceShipmentItemService,
 			CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 			CPInstanceHelper cpInstanceHelper, JSONFactory jsonFactory,
@@ -125,8 +125,8 @@ public class CommerceOrganizationOrderDisplayContext {
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
+		_commerceOrderPriceCalculation = commerceOrderPriceCalculation;
 		_commerceOrderService = commerceOrderService;
-		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_commerceShipmentItemService = commerceShipmentItemService;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -379,9 +379,8 @@ public class CommerceOrganizationOrderDisplayContext {
 		CommerceMoney commerceMoney = commerceOrder.getTotalMoney();
 
 		if (commerceOrder.isOpen()) {
-			commerceMoney = _commerceProductPriceCalculation.getOrderSubtotal(
-				commerceOrder,
-				_commerceOrganizationOrderRequestHelper.getCommerceContext());
+			commerceMoney = _commerceOrderPriceCalculation.getSubtotal(
+				commerceOrder.getCommerceOrderId());
 		}
 
 		return commerceMoney.format(
@@ -860,13 +859,12 @@ public class CommerceOrganizationOrderDisplayContext {
 	private CommerceOrderNote _commerceOrderNote;
 	private final long _commerceOrderNoteId;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
+	private final CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 	private final CommerceOrderService _commerceOrderService;
 	private final CommerceOrganizationOpenOrderPortletInstanceConfiguration
 		_commerceOrganizationOpenOrderPortletInstanceConfiguration;
 	private final CommerceOrganizationOrderRequestHelper
 		_commerceOrganizationOrderRequestHelper;
-	private final CommerceProductPriceCalculation
-		_commerceProductPriceCalculation;
 	private final CommerceShipmentItemService _commerceShipmentItemService;
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;

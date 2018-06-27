@@ -40,7 +40,7 @@ import com.liferay.commerce.model.CommercePaymentEngineResult;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
@@ -316,8 +316,8 @@ public class CommerceOrderLocalServiceImpl
 		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
 
 		CommerceMoney subtotalCommerceMoney =
-			_commerceProductPriceCalculation.getOrderSubtotal(
-				commerceOrder, commerceContext);
+			_commerceOrderPriceCalculation.getSubtotal(
+				commerceOrder.getCommerceOrderId());
 
 		BigDecimal subtotal = subtotalCommerceMoney.getPrice();
 
@@ -1335,14 +1335,14 @@ public class CommerceOrderLocalServiceImpl
 	@ServiceReference(type = CommerceOrderConfiguration.class)
 	private CommerceOrderConfiguration _commerceOrderConfiguration;
 
+	@ServiceReference(type = CommerceOrderPriceCalculation.class)
+	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
+
 	@ServiceReference(type = CommerceOrganizationLocalService.class)
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
 
 	@ServiceReference(type = CommercePaymentEngineRegistry.class)
 	private CommercePaymentEngineRegistry _commercePaymentEngineRegistry;
-
-	@ServiceReference(type = CommerceProductPriceCalculation.class)
-	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@ServiceReference(type = CommerceShippingHelper.class)
 	private CommerceShippingHelper _commerceShippingHelper;

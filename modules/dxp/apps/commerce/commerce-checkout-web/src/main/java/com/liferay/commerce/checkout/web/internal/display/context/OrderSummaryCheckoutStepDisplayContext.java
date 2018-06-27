@@ -23,6 +23,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
@@ -48,6 +49,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	public OrderSummaryCheckoutStepDisplayContext(
 			CommerceOrderHttpHelper commerceOrderHttpHelper,
+			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CPInstanceHelper cpInstanceHelper,
@@ -55,6 +57,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		throws PortalException {
 
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
+		_commerceOrderPriceCalculation = commerceOrderPriceCalculation;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -110,9 +113,10 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	}
 
 	public String getCommerceOrderSubtotal() throws PortalException {
-		CommerceMoney subtotal =
-			_commerceProductPriceCalculation.getOrderSubtotal(
-				getCommerceOrder(), _commerceContext);
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		CommerceMoney subtotal = _commerceOrderPriceCalculation.getSubtotal(
+			commerceOrder.getCommerceOrderId());
 
 		return subtotal.format(PortalUtil.getLocale(_httpServletRequest));
 	}
@@ -131,7 +135,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		CommerceMoney commerceMoney =
 			_commerceProductPriceCalculation.getFinalPrice(
 				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getQuantity(), true, true, _commerceContext);
+				commerceOrderItem.getQuantity(), _commerceContext);
 
 		return commerceMoney.format(PortalUtil.getLocale(_httpServletRequest));
 	}
@@ -145,6 +149,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	private final CommerceContext _commerceContext;
 	private final CommerceOrder _commerceOrder;
 	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private final CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
 	private final CommerceProductPriceCalculation

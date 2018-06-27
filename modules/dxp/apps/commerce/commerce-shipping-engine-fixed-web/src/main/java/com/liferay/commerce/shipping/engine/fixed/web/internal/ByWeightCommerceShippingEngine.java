@@ -23,7 +23,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
@@ -131,8 +131,8 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 			commerceOrder.getCommerceOrderItems();
 
 		CommerceMoney commerceMoney =
-			_commerceProductPriceCalculation.getOrderSubtotal(
-				commerceOrder, commerceContext);
+			_commerceOrderPriceCalculation.getSubtotal(
+				commerceOrder.getCommerceOrderId());
 
 		BigDecimal orderPrice = commerceMoney.getPrice();
 
@@ -226,7 +226,7 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		_commerceAddressRestrictionService;
 
 	@Reference
-	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
+	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
 	@Reference
 	private CommerceShippingFixedOptionRelService

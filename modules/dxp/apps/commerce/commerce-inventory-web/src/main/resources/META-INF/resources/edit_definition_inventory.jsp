@@ -98,7 +98,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 					<aui:validator name="digits" />
 				</aui:input>
 
-				<aui:input checked="<%= (cpDefinitionInventory == null) ? true : cpDefinitionInventory.getAllowBackOrders() %>" label="allow-back-orders" name="backOrders" type="toggle-switch" />
+				<aui:input checked="<%= (cpDefinitionInventory == null) ? true : cpDefinitionInventory.getBackOrders() %>" label="allow-back-orders" name="backOrders" type="toggle-switch" />
 
 				<aui:input name="minOrderQuantity">
 					<aui:validator name="digits" />

@@ -23,7 +23,7 @@ import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
 import com.liferay.commerce.order.web.internal.search.facet.NegatableMultiValueFacet;
 import com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.search.facet.NegatableSimpleFacet;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
@@ -90,15 +90,15 @@ public class CommerceOrderListDisplayContext {
 	public CommerceOrderListDisplayContext(
 		CommerceOrderLocalService commerceOrderLocalService,
 		CommerceOrderNoteService commerceOrderNoteService,
+		CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 		CommerceOrganizationService commerceOrganizationService,
-		CommerceProductPriceCalculation commerceProductPriceCalculation,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		RenderRequest renderRequest) {
 
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
+		_commerceOrderPriceCalculation = commerceOrderPriceCalculation;
 		_commerceOrganizationService = commerceOrganizationService;
-		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
 
@@ -188,9 +188,8 @@ public class CommerceOrderListDisplayContext {
 		CommerceMoney commerceMoney = commerceOrder.getTotalMoney();
 
 		if (commerceOrder.isOpen()) {
-			commerceMoney = _commerceProductPriceCalculation.getOrderSubtotal(
-				commerceOrder,
-				_commerceOrderRequestHelper.getCommerceContext());
+			commerceMoney = _commerceOrderPriceCalculation.getSubtotal(
+				commerceOrder.getCommerceOrderId());
 		}
 
 		return commerceMoney.format(_commerceOrderRequestHelper.getLocale());
@@ -686,10 +685,9 @@ public class CommerceOrderListDisplayContext {
 	private final Format _commerceOrderDateFormatDateTime;
 	private final CommerceOrderLocalService _commerceOrderLocalService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
+	private final CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
 	private final CommerceOrganizationService _commerceOrganizationService;
-	private final CommerceProductPriceCalculation
-		_commerceProductPriceCalculation;
 	private final GroupLocalService _groupLocalService;
 	private final JSONFactory _jsonFactory;
 	private final String _keywords;

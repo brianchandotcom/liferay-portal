@@ -100,6 +100,17 @@ public class CommerceProductPriceCalculationImpl
 	}
 
 	@Override
+	public CommerceMoney getFinalPrice(
+			long cpInstanceId, int quantity, CommerceContext commerceContext)
+		throws PortalException {
+
+		CommerceProductPrice commerceProductPrice = getCommerceProductPrice(
+			cpInstanceId, quantity, commerceContext);
+
+		return commerceProductPrice.getFinalPrice();
+	}
+
+	@Override
 	public CommerceMoney getPromoPrice(
 			long cpInstanceId, int quantity,
 			Optional<CommercePriceList> commercePriceList,

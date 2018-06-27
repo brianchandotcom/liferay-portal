@@ -54,23 +54,23 @@ public class BrowserLauncher implements Runnable {
 
 	protected void launchBrowser() throws Exception {
 		if (OSDetector.isApple()) {
-			launchBrowserApple();
+			launchBrowserApple(null);
 		}
 		else if (OSDetector.isWindows()) {
-			launchBrowserWindows();
+			launchBrowserWindows(null);
 		}
 		else {
-			launchBrowserUnix();
+			launchBrowserUnix(null);
 		}
 	}
 
-	protected void launchBrowserApple() throws Exception {
+	protected void launchBrowserApple(Runtime runtime) throws Exception {
 		ProcessUtil.execute(
 			ConsumerOutputProcessor.INSTANCE, "open",
 			PropsValues.BROWSER_LAUNCHER_URL);
 	}
 
-	protected void launchBrowserUnix() throws Exception {
+	protected void launchBrowserUnix(Runtime runtime) throws Exception {
 		StringBundler sb = new StringBundler(_BROWSERS.length * 5 - 1);
 
 		for (int i = 0; i < _BROWSERS.length; i++) {
@@ -88,7 +88,7 @@ public class BrowserLauncher implements Runnable {
 			ConsumerOutputProcessor.INSTANCE, "sh", "-c", sb.toString());
 	}
 
-	protected void launchBrowserWindows() throws Exception {
+	protected void launchBrowserWindows(Runtime runtime) throws Exception {
 		ProcessUtil.execute(
 			ConsumerOutputProcessor.INSTANCE, "cmd.exe", "/c", "start",
 			PropsValues.BROWSER_LAUNCHER_URL);

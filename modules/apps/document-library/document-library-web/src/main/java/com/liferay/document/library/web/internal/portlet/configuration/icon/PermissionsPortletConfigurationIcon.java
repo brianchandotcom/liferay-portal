@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
@@ -60,11 +59,8 @@ public class PermissionsPortletConfigurationIcon
 
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle bundleResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			bundleResourceBundle, super.getResourceBundle(locale));
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass(), true);
 	}
 
 	@Override

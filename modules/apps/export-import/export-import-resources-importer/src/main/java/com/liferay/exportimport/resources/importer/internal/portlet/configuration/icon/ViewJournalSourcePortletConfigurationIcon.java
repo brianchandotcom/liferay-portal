@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -86,11 +85,8 @@ public class ViewJournalSourcePortletConfigurationIcon
 
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle classResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			classResourceBundle, _portal.getResourceBundle(locale));
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass(), true);
 	}
 
 	@Override

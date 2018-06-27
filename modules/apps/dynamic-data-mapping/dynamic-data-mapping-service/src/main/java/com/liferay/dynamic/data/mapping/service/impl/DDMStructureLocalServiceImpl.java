@@ -1729,19 +1729,33 @@ public class DDMStructureLocalServiceImpl
 		return dataProviderInstanceIds;
 	}
 
+	protected long[] getDDMDataProviderInstanceIds(JSONArray jsonArray) {
+		long[] ddmDataProviderInstanceIds = new long[jsonArray.length()];
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			ddmDataProviderInstanceIds[i] = jsonArray.getLong(i);
+		}
+
+		return ddmDataProviderInstanceIds;
+	}
+
 	protected long[] getDDMDataProviderInstanceIds(
 		Object ddmDataProviderInstanceId) {
 
 		if (ddmDataProviderInstanceId instanceof JSONArray) {
 			JSONArray jsonArray = (JSONArray)ddmDataProviderInstanceId;
 
-			long[] ddmDataProviderInstanceIds = new long[jsonArray.length()];
+			return getDDMDataProviderInstanceIds(jsonArray);
+		}
+		else if (ddmDataProviderInstanceId instanceof String) {
+			try {
+				JSONArray jsonArray = jsonFactory.createJSONArray(
+					(String)ddmDataProviderInstanceId);
 
-			for (int i = 0; i < jsonArray.length(); i++) {
-				ddmDataProviderInstanceIds[i] = jsonArray.getLong(i);
+				return getDDMDataProviderInstanceIds(jsonArray);
 			}
-
-			return ddmDataProviderInstanceIds;
+			catch (Exception e) {
+			}
 		}
 
 		long ddmDataProviderInstanceIdLong = GetterUtil.getLong(

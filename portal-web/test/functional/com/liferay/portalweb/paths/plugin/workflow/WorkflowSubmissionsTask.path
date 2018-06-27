@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_USER</td>
-	<td>//div[@class='user-information']//div[@class='details']</td>
+	<td>//div[contains(@class,'contacts-container')]//div[@class='lfr-contact-extra']</td>
 	<td></td>
 </tr>
 <tr>

@@ -26,16 +26,8 @@ import java.util.Properties;
  */
 public class JenkinsUtil {
 
-	public static boolean isRunningJenkins() {
-		if (System.getenv("JENKINS_HOME") == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public static void writeWorkspaceProperties() {
-		if (!isRunningJenkins()) {
+		if (!JenkinsResultsParserUtil.isRunningJenkins()) {
 			return;
 		}
 

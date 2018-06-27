@@ -151,7 +151,8 @@ public class ApioApiDocumentationTest {
 	public void testWrongType() throws Exception {
 		expectedException.expect(IOException.class);
 		expectedException.expectMessage(
-			"The type of the given resource is not an ApiDocumentation");
+			"The type of the given resource is not an instance of " +
+				"ApiDocumentation");
 
 		String json = read("SampleResource.json");
 

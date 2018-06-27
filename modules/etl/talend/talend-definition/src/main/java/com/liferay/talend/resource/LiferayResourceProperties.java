@@ -80,7 +80,7 @@ public class LiferayResourceProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, _getEffectiveConnectionProperties());
+				null, getEffectiveConnectionProperties());
 
 			ValidationResult validationResult =
 				liferaySourceOrSinkRuntime.validate(null);
@@ -168,7 +168,7 @@ public class LiferayResourceProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, _getEffectiveConnectionProperties());
+				null, getEffectiveConnectionProperties());
 
 			ValidationResult validationResult =
 				liferaySourceOrSinkRuntime.validate(null);
@@ -219,7 +219,7 @@ public class LiferayResourceProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, _getEffectiveConnectionProperties());
+				null, getEffectiveConnectionProperties());
 
 			ValidationResultMutable validationResultMutable =
 				new ValidationResultMutable();
@@ -271,7 +271,7 @@ public class LiferayResourceProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, _getEffectiveConnectionProperties());
+				null, getEffectiveConnectionProperties());
 
 			ValidationResultMutable validationResultMutable =
 				new ValidationResultMutable();
@@ -395,11 +395,7 @@ public class LiferayResourceProperties
 	public Property<String> webSite = PropertyFactory.newString("webSite");
 	public StringProperty webSiteURL = PropertyFactory.newString("webSiteURL");
 
-	protected static final I18nMessages i18nMessages =
-		GlobalI18N.getI18nMessageProvider().getI18nMessages(
-			LiferayResourceProperties.class);
-
-	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
+	protected LiferayConnectionProperties getEffectiveConnectionProperties() {
 		LiferayConnectionProperties liferayConnectionProperties =
 			getLiferayConnectionProperties();
 
@@ -435,6 +431,10 @@ public class LiferayResourceProperties
 
 		return liferayConnectionProperties;
 	}
+
+	protected static final I18nMessages i18nMessages =
+		GlobalI18N.getI18nMessageProvider().getI18nMessages(
+			LiferayResourceProperties.class);
 
 	private void _setupMainForm() {
 		Form resourceSelectionForm = Form.create(this, Form.MAIN);

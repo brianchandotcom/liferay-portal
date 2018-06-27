@@ -20,17 +20,48 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.daikon.avro.SchemaConstants;
+import org.talend.daikon.exception.TalendRuntimeException;
+import org.talend.daikon.exception.TalendRuntimeException.TalendRuntimeExceptionBuilder;
+import org.talend.daikon.exception.error.CommonErrorCodes;
 
 /**
  * @author Zoltán Takács
  */
 public class SchemaUtils {
+
+	public static Schema appendFields(Schema schema, List<Field> fields) {
+		if (schema.getType() != Schema.Type.RECORD) {
+			TalendRuntimeExceptionBuilder talendRuntimeExceptionBuilder =
+				TalendRuntimeException.build(
+					CommonErrorCodes.UNEXPECTED_EXCEPTION);
+
+			talendRuntimeExceptionBuilder.setAndThrow(
+				"Schema type is not supported: " + schema.getType()
+			);
+		}
+
+		Schema newSchema = Schema.createRecord(
+			schema.getName(), schema.getDoc(), schema.getNamespace(),
+			schema.isError());
+
+		List<Field> copiedFieldList = new ArrayList<>();
+
+		_copyFields(schema.getFields(), copiedFieldList);
+		_copyFields(fields, copiedFieldList);
+
+		newSchema.setFields(copiedFieldList);
+
+		_copyFieldProperties(schema.getObjectProps(), newSchema);
+
+		return newSchema;
+	}
 
 	/**
 	 * Gets the main schema from the input connector of output components.
@@ -218,6 +249,26 @@ public class SchemaUtils {
 		}
 
 		return copyFieldList;
+	}
+
+	private static <T extends JsonProperties> void _copyFieldProperties(
+		Map<String, Object> objectProperties, T avroDataType) {
+
+		for (Map.Entry<String, Object> entry : objectProperties.entrySet()) {
+			avroDataType.addProp(entry.getKey(), entry.getValue());
+		}
+	}
+
+	private static void _copyFields(
+		List<Field> fields, List<Field> copiedFieldList) {
+
+		for (Schema.Field field : fields) {
+			Field newField = new Field(
+				field.name(), field.schema(), field.doc(), field.defaultVal());
+
+			_copyFieldProperties(field.getObjectProps(), newField);
+			copiedFieldList.add(newField);
+		}
 	}
 
 	private SchemaUtils() {

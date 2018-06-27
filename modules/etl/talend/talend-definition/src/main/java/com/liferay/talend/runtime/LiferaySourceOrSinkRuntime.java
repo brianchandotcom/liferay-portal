@@ -32,14 +32,19 @@ import org.talend.daikon.properties.ValidationResult;
  */
 public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
+	public String getActualWebSiteName(String webSiteURL) throws IOException;
+
 	public List<NamedThing> getAvailableWebSites() throws IOException;
 
 	public Schema getExpectedFormSchema(Operation operation) throws IOException;
 
-	public Schema getInputResourceCollectionSchema(String resourceURL)
+	public String getResourceCollectionType(String resourceURL)
 		throws IOException;
 
 	public List<NamedThing> getResourceList(String webSiteURL)
+		throws IOException;
+
+	public Schema getResourceSchemaByType(String resourceType)
 		throws IOException;
 
 	public List<Operation> getResourceSupportedOperations(String resourceURL)

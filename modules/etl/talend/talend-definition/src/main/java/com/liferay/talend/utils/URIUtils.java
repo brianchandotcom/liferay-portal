@@ -64,6 +64,13 @@ public class URIUtils {
 		}
 	}
 
+	public static URI setPaginationLimitOnURL(String resourceURL, int limit) {
+		return updateWithQueryParameters(
+			resourceURL,
+			Collections.singletonMap(
+				ApioConstants.QUERY_PARAM_PER_PAGE, String.valueOf(limit)));
+	}
+
 	public static URI updateWithQueryParameters(
 		String url, Map<String, String> queryParameters) {
 

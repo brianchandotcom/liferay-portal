@@ -14,6 +14,8 @@
 
 package com.liferay.talend.avro;
 
+import com.liferay.talend.runtime.apio.form.Property;
+import com.liferay.talend.runtime.apio.jsonld.ApioApiDocumentation;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 
 import java.io.IOException;
@@ -59,11 +61,11 @@ public class ResourceCollectionSchemaInferrer {
 	 * @return Runtime AVRO schema
 	 */
 	public static Schema inferSchemaByResourceFields(
-			ApioResourceCollection apioJsonLDResource)
+			ApioResourceCollection apioResourceCollection)
 		throws IOException {
 
 		List<String> fieldNames =
-			apioJsonLDResource.getResourceElementFieldNames();
+			apioResourceCollection.getResourceElementFieldNames();
 
 		int size = fieldNames.size();
 
@@ -94,6 +96,60 @@ public class ResourceCollectionSchemaInferrer {
 			"Runtime", null, null, false, schemaFields);
 
 		return schema;
+	}
+
+	public static Schema inferSchemaByResourceType(
+		ApioApiDocumentation.SupportedClass resourceSupportedClass) {
+
+		List<Property> supportedProperties =
+			resourceSupportedClass.getSupportedProperties();
+
+		List<Field> schemaFields = new ArrayList<>(
+			supportedProperties.size() + 1);
+
+		// Already used names for the fields
+
+		Set<String> fieldNames = new HashSet<>();
+
+		_addIdSchemaField(schemaFields, fieldNames);
+
+		int i = 1;
+
+		for (Property supportedProperty : supportedProperties) {
+			String fieldName = NameUtil.correct(
+				supportedProperty.getName(), i, fieldNames);
+
+			fieldNames.add(fieldName);
+
+			Field designField = new Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
+				(Object)null);
+
+			schemaFields.add(i, designField);
+
+			i++;
+		}
+
+		Schema schema = Schema.createRecord(
+			"Runtime", null, null, false, schemaFields);
+
+		return schema;
+	}
+
+	private static void _addIdSchemaField(
+		List<Field> fields, Set<String> names) {
+
+		String safeIdFieldName = "_id";
+
+		names.add(safeIdFieldName);
+
+		Field designField = new Field(
+			safeIdFieldName, AvroUtils.wrapAsNullable(AvroUtils._string()),
+			null, (Object)null);
+
+		// This is the first column in the schema
+
+		fields.add(0, designField);
 	}
 
 }

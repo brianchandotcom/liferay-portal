@@ -55,7 +55,7 @@ public class TLiferayInputProperties
 	public void afterGuessSchema() {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Selected resource URL: " + resource.resource.getValue());
+				"Selected resource URL: " + resource.resourceURL.getValue());
 		}
 
 		refreshLayout(getForm(Form.MAIN));
@@ -117,9 +117,8 @@ public class TLiferayInputProperties
 			if (validationResult.getStatus() == ValidationResult.Result.OK) {
 				try {
 					Schema runtimeSchema =
-						liferaySourceOrSinkRuntime.
-							getInputResourceCollectionSchema(
-								resource.resource.getValue());
+						liferaySourceOrSinkRuntime.getResourceSchemaByType(
+							resource.resource.getValue());
 
 					resource.main.schema.setValue(runtimeSchema);
 				}

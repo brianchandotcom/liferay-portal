@@ -16,7 +16,7 @@ package com.liferay.talend.runtime.reader;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.talend.avro.ResourceEntityConverter;
+import com.liferay.talend.avro.ResourceNodeConverter;
 import com.liferay.talend.runtime.LiferaySource;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.exception.ComponentException;
+import org.talend.daikon.avro.converter.AvroConverter;
 
 /**
  * @author Zoltán Takács
@@ -124,9 +125,9 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		}
 
 		try {
-			ResourceEntityConverter resourceEntityConverter = getConverter();
+			AvroConverter<Object, IndexedRecord> avroConverter = getConverter();
 
-			return resourceEntityConverter.convertToAvro(getCurrentObject());
+			return avroConverter.convertToAvro(getCurrentJsonNode());
 		}
 		catch (IOException ioe) {
 			throw new ComponentException(ioe);
@@ -172,7 +173,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
 		String resourceURL =
-			liferayConnectionResourceBaseProperties.resource.resource.
+			liferayConnectionResourceBaseProperties.resource.resourceURL.
 				getValue();
 
 		URI decoratedResourceURI = URIUtils.addQueryConditionToURL(
@@ -213,12 +214,15 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	 * @return converter
 	 * @throws IOException
 	 */
-	protected ResourceEntityConverter getConverter() throws IOException {
-		if (_resourceEntityConverter == null) {
-			_resourceEntityConverter = new ResourceEntityConverter(getSchema());
+	protected AvroConverter<Object, IndexedRecord> getConverter()
+		throws IOException {
+
+		if (_resourceEntityAvroConverter == null) {
+			_resourceEntityAvroConverter = new ResourceNodeConverter(
+				getSchema());
 		}
 
-		return _resourceEntityConverter;
+		return _resourceEntityAvroConverter;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(
@@ -244,7 +248,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	 * Converts row retrieved from data source to Avro format {@link
 	 * IndexedRecord}
 	 */
-	private ResourceEntityConverter _resourceEntityConverter;
+	private AvroConverter _resourceEntityAvroConverter;
 
 	/**
 	 * Represents state of this Reader: whether it was started or not

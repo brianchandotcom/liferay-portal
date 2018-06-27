@@ -23,7 +23,11 @@ public interface ApioResponse {
 
 	public JsonNode getContextJsonNode();
 
+	public String getDescription();
+
 	public JsonNode getIdJsonNode();
+
+	public String getTitle();
 
 	public JsonNode getTypeJsonNode();
 

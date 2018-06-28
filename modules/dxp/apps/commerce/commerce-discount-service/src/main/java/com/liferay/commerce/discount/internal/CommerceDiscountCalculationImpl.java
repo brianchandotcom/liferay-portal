@@ -249,11 +249,11 @@ public class CommerceDiscountCalculationImpl
 		for (CommerceDiscountValue commerceDiscountValue :
 				commerceDiscountValues) {
 
-			if (curentDiscountAmount.compareTo(
-					commerceDiscountValue.getDiscountAmount()) > 0) {
+			BigDecimal discountAmount =
+				commerceDiscountValue.getDiscountAmount();
 
-				curentDiscountAmount =
-					commerceDiscountValue.getDiscountAmount();
+			if (discountAmount.compareTo(curentDiscountAmount) > 0) {
+				curentDiscountAmount = discountAmount;
 				selectedDiscount = commerceDiscountValue;
 			}
 		}

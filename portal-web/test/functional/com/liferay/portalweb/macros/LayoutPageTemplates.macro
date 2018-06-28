@@ -196,6 +196,13 @@
 		</execute>
 	</command>
 
+	<command name="viewFragmentEditableText">
+		<execute function="AssertTextEquals" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT" value1="${editableText}">
+			<var name="key_fragmentName" value="${fragmentName}" />
+			<var name="key_id" value="${id}" />
+		</execute>
+	</command>
+
 	<command name="viewFragmentOrder">
 		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER_POSITION">
 			<var name="key_fragmentName" value="${fragmentName}" />

@@ -87,9 +87,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 					"Invalid version property value", nfe);
 			}
 
-			repositoryVersion = sb.toString();
-
-			repositoryVersion = _fixBadVersionNumbers(repositoryVersion);
+			repositoryVersion = _fixBadVersionNumbers(sb.toString());
 		}
 		else {
 			repositoryVersion = targetPlatformVersion;

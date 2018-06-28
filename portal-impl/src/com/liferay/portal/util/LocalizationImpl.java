@@ -1334,7 +1334,7 @@ public class LocalizationImpl implements Localization {
 		String defaultValue) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			bundleName, locale, classLoader);
+			bundleName, locale, classLoader, false);
 
 		String value = null;
 

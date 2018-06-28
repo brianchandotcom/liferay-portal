@@ -33,7 +33,8 @@ public class ClassResourceBundleLoader implements ResourceBundleLoader {
 
 	@Override
 	public ResourceBundle loadResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(_baseName, locale, _classLoader);
+		return ResourceBundleUtil.getBundle(
+			_baseName, locale, _classLoader, false);
 	}
 
 	/**

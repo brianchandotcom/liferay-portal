@@ -42,7 +42,7 @@ public class FrontendEditorLangResourceBundleLoader
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, classLoader);
+			"content.Language", locale, classLoader, false);
 	}
 
 	/**

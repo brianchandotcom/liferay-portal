@@ -381,7 +381,7 @@ public class DDMRESTDataProviderSettingsTest {
 		PowerMockito.when(
 			ResourceBundleUtil.getBundle(
 				Matchers.anyString(), Matchers.any(Locale.class),
-				Matchers.any(ClassLoader.class))
+				Matchers.any(ClassLoader.class), false)
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);

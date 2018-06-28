@@ -15,6 +15,7 @@
 package com.liferay.commerce.discount.internal;
 
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.discount.internal.search.CommerceDiscountIndexer;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -166,7 +168,8 @@ public class CommerceDiscountCalculationImpl
 	}
 
 	private CommerceDiscountValue _getCommerceDiscountValue(
-		CommerceDiscount commerceDiscount, BigDecimal amount) {
+		CommerceDiscount commerceDiscount, BigDecimal amount,
+		CommerceCurrency commerceCurrency) {
 
 		BigDecimal[] values = new BigDecimal[3];
 
@@ -211,7 +214,8 @@ public class CommerceDiscountCalculationImpl
 			discountedAmount = discountedAmount.subtract(curentDiscountAmount);
 		}
 
-		BigDecimal discountPercentage = discountedAmount.divide(amount);
+		BigDecimal discountPercentage = discountedAmount.divide(
+			amount, RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
 
 		discountPercentage = discountPercentage.multiply(_ONE_HUNDRED);
 
@@ -231,6 +235,9 @@ public class CommerceDiscountCalculationImpl
 
 		List<CommerceDiscountValue> commerceDiscountValues = new ArrayList<>();
 
+		CommerceCurrency commerceCurrency =
+			commerceContext.getCommerceCurrency();
+
 		for (CommerceDiscount commerceDiscount :
 				baseModelSearchResult.getBaseModels()) {
 
@@ -238,11 +245,12 @@ public class CommerceDiscountCalculationImpl
 					groupId, userId, commerceContext, commerceDiscount)) {
 
 				commerceDiscountValues.add(
-					_getCommerceDiscountValue(commerceDiscount, amount));
+					_getCommerceDiscountValue(
+						commerceDiscount, amount, commerceCurrency));
 			}
 		}
 
-		BigDecimal curentDiscountAmount = BigDecimal.ZERO;
+		BigDecimal currentDiscountAmount = BigDecimal.ZERO;
 
 		CommerceDiscountValue selectedDiscount = null;
 
@@ -252,8 +260,8 @@ public class CommerceDiscountCalculationImpl
 			BigDecimal discountAmount =
 				commerceDiscountValue.getDiscountAmount();
 
-			if (discountAmount.compareTo(curentDiscountAmount) > 0) {
-				curentDiscountAmount = discountAmount;
+			if (discountAmount.compareTo(currentDiscountAmount) > 0) {
+				currentDiscountAmount = discountAmount;
 				selectedDiscount = commerceDiscountValue;
 			}
 		}

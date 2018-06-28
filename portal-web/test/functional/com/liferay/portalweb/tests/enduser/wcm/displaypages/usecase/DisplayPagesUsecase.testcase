@@ -210,8 +210,10 @@
 			<var name="text" value="Editing Finished" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#viewFragment">
-			<var name="fragmentName" value="Editing Finished" />
+		<execute macro="LayoutPageTemplates#viewFragmentEditableText">
+			<var name="editableText" value="Editing Finished" />
+			<var name="fragmentName" value="Fragment Name" />
+			<var name="id" value="title" />
 		</execute>
 	</command>
 

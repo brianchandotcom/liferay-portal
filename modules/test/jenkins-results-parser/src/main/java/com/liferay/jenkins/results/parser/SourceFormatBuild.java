@@ -28,7 +28,7 @@ public class SourceFormatBuild extends TopLevelBuild {
 
 	@Override
 	public String getBaseRepositoryName() {
-		return _pullRequest.getRepositoryName();
+		return _pullRequest.getGitHubRemoteRepositoryName();
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class SourceFormatBuild extends TopLevelBuild {
 	}
 
 	protected Element getSenderBranchDetailsElement() {
-		String repositoryName = _pullRequest.getRepositoryName();
+		String repositoryName = _pullRequest.getGitHubRemoteRepositoryName();
 		String senderBranchName = _pullRequest.getSenderBranchName();
 		String senderUsername = _pullRequest.getSenderUsername();
 

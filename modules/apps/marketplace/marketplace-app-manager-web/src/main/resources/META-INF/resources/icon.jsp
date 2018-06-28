@@ -28,7 +28,7 @@ String iconURL = ParamUtil.getString(request, "iconURL");
 			</svg>
 		</c:when>
 		<c:when test="<%= Validator.isUrl(iconURL) %>">
-			<img alt="thumbnail" src="<%= iconURL %>" />
+			<img alt="thumbnail" class="img-fluid" src="<%= iconURL %>" />
 		</c:when>
 	</c:choose>
 </div>

@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>carousel</name>
+		<description>carousel</description>
+		<definition>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"availableLanguageIds": ["[$LOCALE_DEFAULT$]"],
+					"fields": [
+						{
+							"label": {
+								"en_US": "Item Heading"
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"style": {
+								"en_US": ""
+							},
+							"tip": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "ItemHeading",
+							"readOnly": false,
+							"repeatable": true,
+							"required": true,
+							"showLabel": true,
+							"type": "text",
+							"nestedFields": [
+								{
+									"label": {
+										"en_US": "Opening Short Text"
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"style": {
+										"en_US": ""
+									},
+									"tip": {
+										"en_US": ""
+									},
+									"dataType": "string",
+									"indexType": "keyword",
+									"localizable": true,
+									"name": "OpeningShortText",
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"type": "text"
+								},
+								{
+									"label": {
+										"en_US": "Item image"
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"style": {
+										"en_US": ""
+									},
+									"tip": {
+										"en_US": ""
+									},
+									"dataType": "image",
+									"fieldNamespace": "ddm",
+									"indexType": "keyword",
+									"localizable": true,
+									"name": "ItemImage",
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"type": "ddm-image"
+								},
+								{
+									"label": {
+										"en_US": "Item Paragraph"
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"style": {
+										"en_US": ""
+									},
+									"tip": {
+										"en_US": ""
+									},
+									"dataType": "string",
+									"indexType": "keyword",
+									"localizable": true,
+									"name": "ItemParagraph",
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"type": "text"
+								},
+								{
+									"label": {
+										"en_US": "Item Link Text"
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"style": {
+										"en_US": ""
+									},
+									"tip": {
+										"en_US": ""
+									},
+									"dataType": "string",
+									"indexType": "keyword",
+									"localizable": true,
+									"name": "ItemLinkText",
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"type": "text",
+									"nestedFields": [
+										{
+											"label": {
+												"en_US": "Item Link URL"
+											},
+											"predefinedValue": {
+												"en_US": ""
+											},
+											"style": {
+												"en_US": ""
+											},
+											"tip": {
+												"en_US": ""
+											},
+											"dataType": "string",
+											"indexType": "keyword",
+											"localizable": true,
+											"name": "ItemLinkURL",
+											"readOnly": false,
+											"repeatable": false,
+											"required": false,
+											"showLabel": true,
+											"type": "text"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": ["content"],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Carousel"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+		<template>
+			<cacheable>true</cacheable>
+			<file-name>carousel.ftl</file-name>
+		</template>
+	</structure>
+</root>

@@ -19,7 +19,7 @@
 	</nav>
 
 	<nav class="navbar-nav site-navigation" id="navigation" role="navigation">
-		<#assign secondaryNavigationPreferencesMap = {"displayStyle": "ddmTemplate_NAVBAR-BLANK-JUSTIFIED-FTL", "portletSetupPortletDecoratorId": "barebone", "rootLayoutType": "relative", "siteNavigationMenuId": "0", "siteNavigationMenuType": "0"} />
+		<#assign secondaryNavigationPreferencesMap = {"displayStyle": "ddmTemplate_NAVBAR-BLANK-JUSTIFIED-FTL", "portletSetupPortletDecoratorId": "barebone", "rootLayoutType": "relative", "siteNavigationMenuId": "0", "siteNavigationMenuType": "1"} />
 
 		<@liferay.navigation_menu
 			default_preferences=freeMarkerPortletPreferences.getPreferences(secondaryNavigationPreferencesMap)

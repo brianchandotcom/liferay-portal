@@ -3,11 +3,11 @@
 	"config": {
 		"imports": {
 			"frontend-js-node-shims": {
-				"path": "^0.0.0",
-				"url": "^0.11.0"
+				"path": ">=0.0.0",
+				"url": ">=0.11.0"
 			},
 			"frontend-js-spa-web": {
-				"senna": "^2.0.0"
+				"senna": ">=2.5.6"
 			}
 		}
 	},

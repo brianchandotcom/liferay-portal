@@ -16,6 +16,7 @@ package com.liferay.petra.salesforce.client;
 
 import com.sforce.async.AsyncApiException;
 import com.sforce.soap.partner.Connector;
+import com.sforce.soap.partner.GetUserInfoResult;
 import com.sforce.soap.partner.PartnerConnection;
 import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
@@ -28,6 +29,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Objects;
+
 import javax.xml.namespace.QName;
 
 import org.slf4j.Logger;
@@ -36,6 +39,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Brian Wing Shun Chan
  * @author Peter Shin
+ * @author Rachael Koestartyo
  */
 public abstract class BaseSalesforceClientImpl implements SalesforceClient {
 
@@ -66,6 +70,16 @@ public abstract class BaseSalesforceClientImpl implements SalesforceClient {
 	@Override
 	public int getReadTimeout() {
 		return _readTimeout;
+	}
+
+	@Override
+	public String getServiceEndpoint() {
+		return _serviceEndpoint;
+	}
+
+	@Override
+	public String getSessionId() {
+		return _sessionId;
 	}
 
 	@Override
@@ -104,6 +118,16 @@ public abstract class BaseSalesforceClientImpl implements SalesforceClient {
 	}
 
 	@Override
+	public void setServiceEndpoint(String serviceEndpoint) {
+		_serviceEndpoint = serviceEndpoint;
+	}
+
+	@Override
+	public void setSessionId(String sessionId) {
+		_sessionId = sessionId;
+	}
+
+	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
 	}
@@ -113,10 +137,17 @@ public abstract class BaseSalesforceClientImpl implements SalesforceClient {
 
 		_connectorConfig.setAuthEndpoint(_authEndpoint);
 		_connectorConfig.setConnectionTimeout(_connectionTimeout * 60000);
-		_connectorConfig.setPassword(_password);
 		_connectorConfig.setReadTimeout(_readTimeout * 60000);
 		_connectorConfig.setSessionRenewer(new SalesforceSessionRenewer());
-		_connectorConfig.setUsername(_userName);
+
+		if (!Objects.isNull(_sessionId)) {
+			_connectorConfig.setServiceEndpoint(_serviceEndpoint);
+			_connectorConfig.setSessionId(_sessionId);
+		}
+		else {
+			_connectorConfig.setPassword(_password);
+			_connectorConfig.setUsername(_userName);
+		}
 
 		if (_debugEnabled) {
 			_connectorConfig.setPrettyPrintXml(true);
@@ -192,7 +223,28 @@ public abstract class BaseSalesforceClientImpl implements SalesforceClient {
 		throws ConnectionException {
 
 		if (!newConnection && (_partnerConnection != null)) {
-			return _partnerConnection;
+			try {
+				GetUserInfoResult userInfoResult =
+					_partnerConnection.getUserInfo();
+
+				int sessionSecondsValid =
+					userInfoResult.getSessionSecondsValid();
+
+				if (sessionSecondsValid > 120) {
+					return _partnerConnection;
+				}
+
+				if (_logger.isInfoEnabled()) {
+					_logger.info(
+						"Renewing session expiring in {} seconds",
+						sessionSecondsValid);
+				}
+			}
+			catch (ConnectionException ce) {
+				if (_logger.isInfoEnabled()) {
+					_logger.info("Session has expired and will be renewed now");
+				}
+			}
 		}
 
 		ConnectorConfig connectorConfig = getConnectorConfig();
@@ -253,6 +305,8 @@ public abstract class BaseSalesforceClientImpl implements SalesforceClient {
 	private PartnerConnection _partnerConnection;
 	private String _password;
 	private int _readTimeout = 1;
+	private String _serviceEndpoint;
+	private String _sessionId;
 	private String _userName;
 
 	private class SalesforceSessionRenewer implements SessionRenewer {

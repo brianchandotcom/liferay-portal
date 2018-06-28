@@ -137,9 +137,11 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 <aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule">
 	var changed = false;
+	var showSiteNavigationMenuSettingsButtonClickHandler = null;
 	var sidebar = null;
 	var sidebarBodyChangeHandler = null;
 	var siteNavigationMenuEditor = null;
+	var siteNavigationMenuItemRemoveButtonClickHandler = null;
 
 	function closeSidebar () {
 		var saveChanges = !changed ? false : confirm(
@@ -214,6 +216,18 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	}
 
 	function handlePortletDestroy() {
+		if (showSiteNavigationMenuSettingsButtonClickHandler) {
+			showSiteNavigationMenuSettingsButtonClickHandler.detach();
+
+			showSiteNavigationMenuSettingsButtonClickHandler = null;
+		}
+
+		if (siteNavigationMenuItemRemoveButtonClickHandler) {
+			siteNavigationMenuItemRemoveButtonClickHandler.detach();
+
+			siteNavigationMenuItemRemoveButtonClickHandler = null;
+		}
+
 		if (siteNavigationMenuEditor) {
 			siteNavigationMenuEditor.dispose();
 
@@ -271,6 +285,10 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		changed = true;
 	}
 
+	function handleSiteNavigationMenuItemRemoveIconClick(event) {
+		event.stopPropagation();
+	}
+
 	function openSidebar(title) {
 		sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
 		sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><span class="icon-monospaced" id="<portlet:namespace />sidebarHeaderButton"><aui:icon image="times" markupView="lexicon" /></span></div></div>'
@@ -321,10 +339,13 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	AUI().use(
 		['aui-base'],
 		function(A) {
-			A.one('#<portlet:namespace />showSiteNavigationMenuSettings').on(
-				'click',
-				handleShowSiteNavigationMenuSettingsButtonClick
-			);
+			siteNavigationMenuItemRemoveButtonClickHandler = A
+				.all('.site-navigation-menu-item__remove-icon')
+				.on('click', handleSiteNavigationMenuItemRemoveIconClick);
+
+			showSiteNavigationMenuSettingsButtonClickHandler = A
+				.one('#<portlet:namespace />showSiteNavigationMenuSettings')
+				.on('click', handleShowSiteNavigationMenuSettingsButtonClick);
 		}
 	);
 

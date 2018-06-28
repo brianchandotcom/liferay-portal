@@ -349,10 +349,6 @@
 	<bean class="com.liferay.portal.kernel.security.auth.LiberalScreenNameValidator" id="com.liferay.portal.kernel.security.auth.LiberalScreenNameValidator" />
 	<bean class="com.liferay.portal.security.auth.http.HttpAuthManagerImpl" id="com.liferay.portal.kernel.security.auth.http.HttpAuthManager" />
 	<bean class="com.liferay.portal.security.auth.session.AuthenticatedSessionManagerImpl" id="com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager" />
-	<bean class="com.liferay.portal.security.permission.InlineSQLHelperImpl" id="com.liferay.portal.kernel.security.permission.InlineSQLHelper" />
-	<bean class="com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil" id="com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil">
-		<property name="inlineSQLHelper" ref="com.liferay.portal.kernel.security.permission.InlineSQLHelper" />
-	</bean>
 	<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub" id="com.liferay.portal.kernel.security.permission.ResourceActions">
 		<constructor-arg type="java.lang.Class" value="com.liferay.portal.kernel.security.permission.ResourceActions" />
 	</bean>

@@ -61,10 +61,6 @@
 	<bean class="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil" id="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil">
 		<property name="userGroupMembershipPolicyFactory" ref="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory" />
 	</bean>
-	<bean class="com.liferay.portal.security.permission.InlineSQLHelperImpl" id="com.liferay.portal.kernel.security.permission.InlineSQLHelper" />
-	<bean class="com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil" id="com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil">
-		<property name="inlineSQLHelper" ref="com.liferay.portal.kernel.security.permission.InlineSQLHelper" />
-	</bean>
 	<bean class="com.liferay.portal.security.permission.PermissionCheckerFactoryImpl" id="com.liferay.portal.kernel.security.permission.PermissionCheckerFactory" />
 	<bean class="com.liferay.portal.kernel.security.permission.PermissionConverterUtil" id="com.liferay.portal.kernel.security.permission.PermissionConverterUtil">
 		<property name="permissionConverter">

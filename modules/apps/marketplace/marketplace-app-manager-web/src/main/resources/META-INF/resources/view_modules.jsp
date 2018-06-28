@@ -41,7 +41,7 @@ else {
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
-renderResponse.setTitle((moduleGroupDisplay != null) ? moduleGroupDisplay.getTitle() : appDisplay.getTitle());
+renderResponse.setTitle((moduleGroupDisplay != null) ? moduleGroupDisplay.getDisplayTitle() : appDisplay.getTitle());
 
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, request, renderResponse);
 %>

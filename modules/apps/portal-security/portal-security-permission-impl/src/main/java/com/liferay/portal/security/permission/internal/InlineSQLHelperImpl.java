@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.security.permission.internal;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,24 +29,27 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Raymond Augé
  * @author Connor McKay
  */
+@Component(immediate = true, service = InlineSQLHelper.class)
 @DoPrivileged
 public class InlineSQLHelperImpl implements InlineSQLHelper {
 
@@ -419,7 +423,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		if (groupIds.length == 1) {
 			long groupId = groupIds[0];
 
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+			Group group = _groupLocalService.fetchGroup(groupId);
 
 			if (group != null) {
 				companyId = group.getCompanyId();
@@ -427,19 +431,16 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				long[] roleIds = getRoleIds(groupId);
 
 				try {
-					if (ResourcePermissionLocalServiceUtil.
-							hasResourcePermission(
-								companyId, className,
-								ResourceConstants.SCOPE_GROUP,
-								String.valueOf(groupId), roleIds,
-								ActionKeys.VIEW) ||
-						ResourcePermissionLocalServiceUtil.
-							hasResourcePermission(
-								companyId, className,
-								ResourceConstants.SCOPE_GROUP_TEMPLATE,
-								String.valueOf(
-									GroupConstants.DEFAULT_PARENT_GROUP_ID),
-								roleIds, ActionKeys.VIEW)) {
+					if (_resourcePermissionLocalService.hasResourcePermission(
+							companyId, className, ResourceConstants.SCOPE_GROUP,
+							String.valueOf(groupId), roleIds,
+							ActionKeys.VIEW) ||
+						_resourcePermissionLocalService.hasResourcePermission(
+							companyId, className,
+							ResourceConstants.SCOPE_GROUP_TEMPLATE,
+							String.valueOf(
+								GroupConstants.DEFAULT_PARENT_GROUP_ID),
+							roleIds, ActionKeys.VIEW)) {
 
 						return sql;
 					}
@@ -458,7 +459,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 		else {
 			for (long groupId : groupIds) {
-				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+				Group group = _groupLocalService.fetchGroup(groupId);
 
 				if (group == null) {
 					continue;
@@ -483,7 +484,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		try {
-			if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
+			if (_resourcePermissionLocalService.hasResourcePermission(
 					companyId, className, ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(companyId), getRoleIds(0),
 					ActionKeys.VIEW)) {
@@ -501,7 +502,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			}
 		}
 
-		String permissionSQL = CustomSQLUtil.get(FIND_BY_RESOURCE_PERMISSION);
+		String permissionSQL = _customSQL.get(
+			getClass(), FIND_BY_RESOURCE_PERMISSION);
 
 		if (Validator.isNotNull(bridgeJoin)) {
 			permissionSQL = bridgeJoin.concat(permissionSQL);
@@ -614,5 +616,14 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InlineSQLHelperImpl.class);
+
+	@Reference
+	private CustomSQL _customSQL;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

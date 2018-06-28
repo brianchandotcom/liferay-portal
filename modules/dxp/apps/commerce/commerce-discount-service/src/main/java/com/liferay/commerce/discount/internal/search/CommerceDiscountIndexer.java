@@ -131,7 +131,9 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		long[] commerceUserSegmentEntryIds = GetterUtil.getLongValues(
 			searchContext.getAttribute("commerceUserSegmentEntryIds"), null);
 
-		if (commerceUserSegmentEntryIds != null) {
+		if ((commerceUserSegmentEntryIds != null) &&
+			(commerceUserSegmentEntryIds.length > 0)) {
+
 			TermsSetFilterBuilder termsSetFilterBuilder =
 				_filterBuilders.termsSetFilterBuilder();
 

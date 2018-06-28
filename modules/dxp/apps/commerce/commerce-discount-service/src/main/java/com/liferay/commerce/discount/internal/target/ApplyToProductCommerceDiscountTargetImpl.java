@@ -22,8 +22,12 @@ import com.liferay.commerce.discount.target.CommerceDiscountProductTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
@@ -89,9 +93,22 @@ public class ApplyToProductCommerceDiscountTargetImpl
 	public void postProcessContextBooleanFilter(
 		BooleanFilter contextBooleanFilter, CPDefinition cpDefinition) {
 
-		contextBooleanFilter.addRequiredTerm(
+		TermFilter termFilter = new TermFilter(
 			"target_product_ids",
 			String.valueOf(cpDefinition.getCPDefinitionId()));
+
+		Filter existFilter = new ExistsFilter("target_product_ids");
+
+		BooleanFilter existBooleanFilter = new BooleanFilter();
+
+		existBooleanFilter.add(existFilter, BooleanClauseOccur.MUST_NOT);
+
+		BooleanFilter fieldBooleanFilter = new BooleanFilter();
+
+		fieldBooleanFilter.add(existBooleanFilter, BooleanClauseOccur.SHOULD);
+		fieldBooleanFilter.add(termFilter, BooleanClauseOccur.SHOULD);
+
+		contextBooleanFilter.add(fieldBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
 	@Reference

@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -101,13 +103,24 @@ public class ApplyToCategoriesCommerceDiscountTargetImpl
 	public void postProcessContextBooleanFilter(
 		BooleanFilter contextBooleanFilter, CPDefinition cpDefinition) {
 
-		TermsFilter termsFilter = new TermsFilter("target_asset_category_ids");
-
 		long[] assetCategoryIds = _getAssetCategoryIds(cpDefinition);
+
+		TermsFilter termsFilter = new TermsFilter("target_asset_category_ids");
 
 		termsFilter.addValues(ArrayUtil.toStringArray(assetCategoryIds));
 
-		contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+		Filter existFilter = new ExistsFilter("target_asset_category_ids");
+
+		BooleanFilter existBooleanFilter = new BooleanFilter();
+
+		existBooleanFilter.add(existFilter, BooleanClauseOccur.MUST_NOT);
+
+		BooleanFilter fieldBooleanFilter = new BooleanFilter();
+
+		fieldBooleanFilter.add(existBooleanFilter, BooleanClauseOccur.SHOULD);
+		fieldBooleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
+
+		contextBooleanFilter.add(fieldBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
 	private long[] _getAssetCategoryIds(CPDefinition cpDefinition) {

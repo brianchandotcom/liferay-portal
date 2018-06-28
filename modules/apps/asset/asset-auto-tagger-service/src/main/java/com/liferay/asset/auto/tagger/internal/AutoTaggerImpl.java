@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -45,6 +46,10 @@ public class AutoTaggerImpl implements AutoTagger {
 	@Override
 	public void tag(AssetEntry assetEntry, GroupedModel groupedModel)
 		throws PortalException {
+
+		if (!ListUtil.isEmpty(assetEntry.getTags())) {
+			return;
+		}
 
 		List<AutoTagProvider> autoTagProviders = _serviceTrackerMap.getService(
 			assetEntry.getClassName());

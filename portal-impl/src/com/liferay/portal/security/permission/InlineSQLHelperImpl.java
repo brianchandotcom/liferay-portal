@@ -45,7 +45,10 @@ import java.util.Set;
 /**
  * @author Raymond Augé
  * @author Connor McKay
+ *
+ * @deprecated As of Judson, with no direct replacement
  */
+@Deprecated
 @DoPrivileged
 public class InlineSQLHelperImpl implements InlineSQLHelper {
 

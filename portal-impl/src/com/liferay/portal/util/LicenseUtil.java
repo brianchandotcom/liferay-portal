@@ -15,6 +15,13 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.encryptor.Encryptor;
+import com.liferay.petra.process.CollectorOutputProcessor;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessChannel;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.process.ProcessExecutor;
+import com.liferay.petra.process.ProcessUtil;
+import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONObjectImpl;
@@ -30,7 +37,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -48,6 +54,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.license.sigar.SigarNativeLoader;
+import com.liferay.portal.log.Log4jLogFactoryImpl;
 
 import java.io.File;
 import java.io.InputStream;
@@ -55,6 +62,7 @@ import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.URI;
 import java.net.URL;
 
@@ -66,20 +74,22 @@ import java.security.spec.X509EncodedKeySpec;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.crypto.KeyGenerator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -170,7 +180,7 @@ public class LicenseUtil {
 	}
 
 	public static int getProcessorCores() {
-		return _processorCores;
+		return _PROCESSOR_CORES;
 	}
 
 	public static byte[] getServerIdBytes() throws Exception {
@@ -201,12 +211,11 @@ public class LicenseUtil {
 		return serverInfo;
 	}
 
+	/**
+	 * @deprecated As of Judson, As of Wilberforce, with no direct replacement
+	 */
+	@Deprecated
 	public static void init() {
-		_initKeys();
-
-		_ipAddresses = _getIPAddresses();
-		_macAddresses = _getMACAddresses();
-		_processorCores = _getProcessorCores();
 	}
 
 	public static void registerOrder(HttpServletRequest request) {
@@ -461,7 +470,7 @@ public class LicenseUtil {
 			return StringUtil.read(inputStream);
 		}
 
-		byte[] bytes = IOUtils.toByteArray(inputStream);
+		byte[] bytes = FileUtil.getBytes(inputStream);
 
 		if ((bytes == null) || (bytes.length <= 0)) {
 			return null;
@@ -487,79 +496,11 @@ public class LicenseUtil {
 
 		jsonObject.put("content", Base64.objectToString(bytes));
 
-		jsonObject.put("key", _encryptedSymmetricKey);
+		jsonObject.put("key", _ENCRYPTED_SYMMETRIC_KEY);
 
 		String jsonObjectString = jsonObject.toString();
 
 		return jsonObjectString.getBytes(StringPool.UTF8);
-	}
-
-	private static Set<String> _getIPAddresses() {
-		Set<String> ipAddresses = new HashSet<>();
-
-		try {
-			List<NetworkInterface> networkInterfaces = Collections.list(
-				NetworkInterface.getNetworkInterfaces());
-
-			for (NetworkInterface networkInterface : networkInterfaces) {
-				List<InetAddress> inetAddresses = Collections.list(
-					networkInterface.getInetAddresses());
-
-				for (InetAddress inetAddress : inetAddresses) {
-					if (inetAddress.isLinkLocalAddress() ||
-						inetAddress.isLoopbackAddress() ||
-						!(inetAddress instanceof Inet4Address)) {
-
-						continue;
-					}
-
-					ipAddresses.add(inetAddress.getHostAddress());
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error("Unable to read local server's IP addresses", e);
-		}
-
-		return Collections.unmodifiableSet(ipAddresses);
-	}
-
-	private static Set<String> _getMACAddresses() {
-		Set<String> macAddresses = new HashSet<>();
-
-		try {
-			List<NetworkInterface> networkInterfaces = Collections.list(
-				NetworkInterface.getNetworkInterfaces());
-
-			for (NetworkInterface networkInterface : networkInterfaces) {
-				byte[] hardwareAddress = networkInterface.getHardwareAddress();
-
-				if (ArrayUtil.isEmpty(hardwareAddress)) {
-					continue;
-				}
-
-				StringBuilder sb = new StringBuilder(
-					(hardwareAddress.length * 3) - 1);
-
-				String hexString = StringUtil.bytesToHexString(hardwareAddress);
-
-				for (int i = 0; i < hexString.length(); i += 2) {
-					if (i != 0) {
-						sb.append(CharPool.COLON);
-					}
-
-					sb.append(Character.toLowerCase(hexString.charAt(i)));
-					sb.append(Character.toLowerCase(hexString.charAt(i + 1)));
-				}
-
-				macAddresses.add(sb.toString());
-			}
-		}
-		catch (Exception e) {
-			_log.error("Unable to read local server's MAC addresses", e);
-		}
-
-		return Collections.unmodifiableSet(macAddresses);
 	}
 
 	private static Map<String, String> _getOrderProducts(
@@ -589,12 +530,13 @@ public class LicenseUtil {
 	private static int _getProcessorCores() {
 		if (OSDetector.isAIX() || OSDetector.isLinux()) {
 			try {
-				Runtime runtime = Runtime.getRuntime();
+				Future<Entry<byte[], byte[]>> future = ProcessUtil.execute(
+					CollectorOutputProcessor.INSTANCE, "nproc");
 
-				Process process = runtime.exec("nproc");
+				Entry<byte[], byte[]> entry = future.get();
 
 				return GetterUtil.getInteger(
-					StringUtil.read(process.getInputStream()));
+					new String(entry.getKey(), StringPool.UTF8));
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -607,73 +549,23 @@ public class LicenseUtil {
 			return runtime.availableProcessors();
 		}
 
-		Sigar sigar = null;
+		ProcessExecutor processExecutor = new LocalProcessExecutor();
 
 		try {
-			SigarNativeLoader.load();
+			ProcessChannel<Integer> processChannel = processExecutor.execute(
+				PortalClassPathUtil.getPortalProcessConfig(),
+				new SigarGetCPUCoresProcessCallable());
 
-			sigar = new Sigar();
+			Future<Integer> future =
+				processChannel.getProcessNoticeableFuture();
 
-			CpuInfo[] cpuInfos = sigar.getCpuInfoList();
-
-			CpuInfo cpuInfo = cpuInfos[0];
-
-			return cpuInfo.getTotalCores();
+			return future.get();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-		finally {
-			if (sigar != null) {
-				sigar.close();
-			}
-
-			try {
-				SigarNativeLoader.unload();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
 		}
 
 		return 0;
-	}
-
-	private static void _initKeys() {
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		if ((classLoader == null) || (_encryptedSymmetricKey != null)) {
-			return;
-		}
-
-		try {
-			URL url = classLoader.getResource(
-				"com/liferay/portal/license/public.key");
-
-			byte[] bytes = IOUtils.toByteArray(url.openStream());
-
-			X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(
-				bytes);
-
-			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-
-			PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
-
-			KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-
-			keyGenerator.init(128, new SecureRandom());
-
-			_symmetricKey = keyGenerator.generateKey();
-
-			byte[] encryptedSymmetricKey = Encryptor.encryptUnencoded(
-				publicKey, _symmetricKey.getEncoded());
-
-			_encryptedSymmetricKey = Base64.objectToString(
-				encryptedSymmetricKey);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	private static void _registerClusterOrder(
@@ -708,6 +600,10 @@ public class LicenseUtil {
 		}
 	}
 
+	private static final String _ENCRYPTED_SYMMETRIC_KEY;
+
+	private static final int _PROCESSOR_CORES;
+
 	private static final String _PROXY_PASSWORD = GetterUtil.getString(
 		PropsUtil.get("license.proxy.password"));
 
@@ -721,16 +617,154 @@ public class LicenseUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(LicenseUtil.class);
 
-	private static String _encryptedSymmetricKey;
 	private static final MethodHandler _getServerInfoMethodHandler =
 		new MethodHandler(new MethodKey(LicenseUtil.class, "getServerInfo"));
-	private static Set<String> _ipAddresses;
-	private static Set<String> _macAddresses;
-	private static int _processorCores;
+	private static final Set<String> _ipAddresses;
+	private static final Set<String> _macAddresses;
 	private static final MethodKey _registerOrderMethodKey = new MethodKey(
 		LicenseUtil.class, "registerOrder", String.class, String.class,
 		int.class);
 	private static byte[] _serverIdBytes;
-	private static Key _symmetricKey;
+	private static final Key _symmetricKey;
+
+	static {
+		try {
+			URL url = LicenseUtil.class.getResource(
+				"/com/liferay/portal/license/public.key");
+
+			byte[] bytes = FileUtil.getBytes(url.openStream());
+
+			X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(
+				bytes);
+
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+
+			PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
+
+			KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+
+			keyGenerator.init(128, new SecureRandom());
+
+			_symmetricKey = keyGenerator.generateKey();
+
+			byte[] encryptedSymmetricKey = Encryptor.encryptUnencoded(
+				publicKey, _symmetricKey.getEncoded());
+
+			_ENCRYPTED_SYMMETRIC_KEY = Base64.objectToString(
+				encryptedSymmetricKey);
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+
+		Set<String> ipAddresses = new HashSet<>();
+
+		Set<String> macAddresses = new HashSet<>();
+
+		try {
+			Enumeration<NetworkInterface> networkInterfaceEnumeration =
+				NetworkInterface.getNetworkInterfaces();
+
+			while (networkInterfaceEnumeration.hasMoreElements()) {
+				NetworkInterface networkInterface =
+					networkInterfaceEnumeration.nextElement();
+
+				Enumeration<InetAddress> inetAddressEnumeration =
+					networkInterface.getInetAddresses();
+
+				while (inetAddressEnumeration.hasMoreElements()) {
+					InetAddress inetAddress =
+						inetAddressEnumeration.nextElement();
+
+					if (inetAddress.isLinkLocalAddress() ||
+						inetAddress.isLoopbackAddress() ||
+						!(inetAddress instanceof Inet4Address)) {
+
+						continue;
+					}
+
+					ipAddresses.add(inetAddress.getHostAddress());
+				}
+
+				byte[] hardwareAddress = networkInterface.getHardwareAddress();
+
+				if (ArrayUtil.isEmpty(hardwareAddress)) {
+					continue;
+				}
+
+				StringBuilder sb = new StringBuilder(
+					(hardwareAddress.length * 3) - 1);
+
+				String hexString = StringUtil.bytesToHexString(hardwareAddress);
+
+				for (int i = 0; i < hexString.length(); i += 2) {
+					if (i != 0) {
+						sb.append(CharPool.COLON);
+					}
+
+					sb.append(Character.toLowerCase(hexString.charAt(i)));
+					sb.append(Character.toLowerCase(hexString.charAt(i + 1)));
+				}
+
+				macAddresses.add(sb.toString());
+			}
+		}
+		catch (SocketException se) {
+			_log.error("Unable to read local server network interfaces", se);
+		}
+
+		_ipAddresses = Collections.unmodifiableSet(ipAddresses);
+
+		_macAddresses = Collections.unmodifiableSet(macAddresses);
+
+		_PROCESSOR_CORES = _getProcessorCores();
+	}
+
+	private static class SigarGetCPUCoresProcessCallable
+		implements ProcessCallable<Integer> {
+
+		@Override
+		public Integer call() throws ProcessException {
+			LogFactoryUtil.setLogFactory(new Log4jLogFactoryImpl());
+
+			PropsUtil.setProps(new PropsImpl());
+
+			FileUtil fileUtil = new FileUtil();
+
+			fileUtil.setFile(new FileImpl());
+
+			Sigar sigar = null;
+
+			try {
+				SigarNativeLoader.load();
+
+				sigar = new Sigar();
+
+				CpuInfo[] cpuInfos = sigar.getCpuInfoList();
+
+				CpuInfo cpuInfo = cpuInfos[0];
+
+				return cpuInfo.getTotalCores();
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+			finally {
+				if (sigar != null) {
+					sigar.close();
+				}
+
+				try {
+					SigarNativeLoader.unload();
+				}
+				catch (Exception e) {
+					throw new ProcessException(e);
+				}
+			}
+		}
+
+		private static final long serialVersionUID = 1L;
+
+	}
 
 }

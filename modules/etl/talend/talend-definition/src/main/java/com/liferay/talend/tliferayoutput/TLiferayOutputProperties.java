@@ -116,7 +116,7 @@ public class TLiferayOutputProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, getEffectiveConnectionProperties());
+				null, getEffectiveLiferayConnectionProperties());
 
 			setValidationResult(
 				liferaySourceOrSinkRuntime.validate(null),
@@ -278,7 +278,7 @@ public class TLiferayOutputProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, getEffectiveConnectionProperties());
+				null, getEffectiveLiferayConnectionProperties());
 
 			setValidationResult(
 				liferaySourceOrSinkRuntime.validate(null),
@@ -353,7 +353,7 @@ public class TLiferayOutputProperties
 					(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 				liferaySourceOrSinkRuntime.initialize(
-					null, getEffectiveConnectionProperties());
+					null, getEffectiveLiferayConnectionProperties());
 
 				ValidationResult validationResult =
 					liferaySourceOrSinkRuntime.validate(null);

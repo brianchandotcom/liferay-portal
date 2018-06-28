@@ -80,7 +80,7 @@ public class LiferayResourceProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, getEffectiveConnectionProperties());
+				null, getEffectiveLiferayConnectionProperties());
 
 			ValidationResult validationResult =
 				liferaySourceOrSinkRuntime.validate(null);
@@ -168,7 +168,7 @@ public class LiferayResourceProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, getEffectiveConnectionProperties());
+				null, getEffectiveLiferayConnectionProperties());
 
 			ValidationResult validationResult =
 				liferaySourceOrSinkRuntime.validate(null);
@@ -219,7 +219,7 @@ public class LiferayResourceProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, getEffectiveConnectionProperties());
+				null, getEffectiveLiferayConnectionProperties());
 
 			ValidationResultMutable validationResultMutable =
 				new ValidationResultMutable();
@@ -271,7 +271,7 @@ public class LiferayResourceProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, getEffectiveConnectionProperties());
+				null, getEffectiveLiferayConnectionProperties());
 
 			ValidationResultMutable validationResultMutable =
 				new ValidationResultMutable();
@@ -395,7 +395,9 @@ public class LiferayResourceProperties
 	public Property<String> webSite = PropertyFactory.newString("webSite");
 	public StringProperty webSiteURL = PropertyFactory.newString("webSiteURL");
 
-	protected LiferayConnectionProperties getEffectiveConnectionProperties() {
+	protected LiferayConnectionProperties
+		getEffectiveLiferayConnectionProperties() {
+
 		LiferayConnectionProperties liferayConnectionProperties =
 			getLiferayConnectionProperties();
 

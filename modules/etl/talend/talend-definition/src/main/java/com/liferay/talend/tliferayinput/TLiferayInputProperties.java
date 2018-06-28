@@ -106,7 +106,7 @@ public class TLiferayInputProperties
 
 			ValidationResult validationResult =
 				liferaySourceOrSinkRuntime.initialize(
-					null, getEffectiveConnectionProperties());
+					null, getEffectiveLiferayConnectionProperties());
 
 			if (validationResult.getStatus() == Result.ERROR) {
 				return validationResult;

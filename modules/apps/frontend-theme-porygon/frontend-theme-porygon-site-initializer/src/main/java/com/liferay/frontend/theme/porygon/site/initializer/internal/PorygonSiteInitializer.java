@@ -19,8 +19,12 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,13 +37,14 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -115,6 +120,14 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 			Map<String, FragmentEntry> fragmentEntriesMap =
 				_getFragmentEntriesMap(fragmentEntries);
+
+			List<FragmentEntry> entryFragmentEntries = new ArrayList<>();
+
+			entryFragmentEntries.add(fragmentEntriesMap.get("entry"));
+
+			_addDisplayPageEntry(
+				"Entry", entryFragmentEntries, _PATH + "/page_templates",
+				"entry.jpg", serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -131,6 +144,31 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = bundleContext.getBundle();
+	}
+
+	private LayoutPageTemplateEntry _addDisplayPageEntry(
+			String name, List<FragmentEntry> fragmentEntries,
+			String thumbnailPath, String thumbnailFileName,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		long previewFileEntryId = _getPreviewFileEntryId(
+			thumbnailPath, thumbnailFileName, serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
+				name, LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
+				previewFileEntryId, WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
+
+		long[] fragmentEntryIds = ListUtil.toLongArray(
+			fragmentEntries, FragmentEntryModel::getFragmentEntryId);
+
+		return _layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), name,
+				fragmentEntryIds, StringPool.BLANK, serviceContext);
 	}
 
 	private List<FileEntry> _addFileEntries(ServiceContext serviceContext)
@@ -379,6 +417,10 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

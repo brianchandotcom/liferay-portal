@@ -55,7 +55,7 @@ public class ResourceBundleUtil {
 		};
 
 	public static ResourceBundle getBundle(String baseName, Class<?> clazz) {
-		return getBundle(baseName, clazz.getClassLoader());
+		return getBundle(baseName, clazz, true);
 	}
 
 	public static ResourceBundle getBundle(
@@ -68,8 +68,7 @@ public class ResourceBundleUtil {
 	public static ResourceBundle getBundle(
 		String baseName, ClassLoader classLoader) {
 
-		return ResourceBundle.getBundle(
-			baseName, Locale.getDefault(), classLoader, UTF8Control.INSTANCE);
+		return getBundle(baseName, classLoader, true);
 	}
 
 	public static ResourceBundle getBundle(
@@ -90,7 +89,7 @@ public class ResourceBundleUtil {
 	public static ResourceBundle getBundle(
 		String baseName, Locale locale, Class<?> clazz) {
 
-		return getBundle(baseName, locale, clazz.getClassLoader());
+		return getBundle(baseName, locale, clazz, true);
 	}
 
 	public static ResourceBundle getBundle(
@@ -105,8 +104,7 @@ public class ResourceBundleUtil {
 	public static ResourceBundle getBundle(
 		String baseName, Locale locale, ClassLoader classLoader) {
 
-		return ResourceBundle.getBundle(
-			baseName, locale, classLoader, UTF8Control.INSTANCE);
+		return getBundle(baseName, locale, classLoader, true);
 	}
 
 	public static ResourceBundle getBundle(

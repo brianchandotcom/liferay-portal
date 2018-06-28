@@ -30,7 +30,14 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.kernel.util.comparator.DLFileVersionVersionComparator;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -58,6 +65,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -125,6 +133,14 @@ public class DLAppHelperLocalServiceImpl
 		if (draftAssetEntry != null) {
 			assetEntryLocalService.deleteEntry(draftAssetEntry);
 		}
+	}
+
+	@Override
+	public void cancelCheckOuts(long groupId) throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			getCancelCheckOutsActionableDynamicQuery(groupId);
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
@@ -238,6 +254,16 @@ public class DLAppHelperLocalServiceImpl
 		for (FileEntry fileEntry : fileEntries) {
 			deleteFileEntry(fileEntry);
 		}
+	}
+
+	@Override
+	public long getCheckedOutFileEntriesCount(long groupId)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getCancelCheckOutsActionableDynamicQuery(groupId);
+
+		return actionableDynamicQuery.performCount();
 	}
 
 	@Override
@@ -1524,6 +1550,50 @@ public class DLAppHelperLocalServiceImpl
 		indexer.reindex(dlFolder);
 
 		return new LiferayFolder(dlFolder);
+	}
+
+	protected ActionableDynamicQuery getCancelCheckOutsActionableDynamicQuery(
+		long groupId) {
+
+		ActionableDynamicQuery fileEntryActionableDynamicQuery =
+			dlFileEntryLocalService.getActionableDynamicQuery();
+
+		fileEntryActionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				DynamicQuery fileVersionDynamicQuery =
+					DynamicQueryFactoryUtil.forClass(
+						DLFileVersion.class, "dlFileVersion",
+						PortalClassLoaderUtil.getClassLoader());
+
+				fileVersionDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("fileEntryId"));
+
+				fileVersionDynamicQuery.add(
+					RestrictionsFactoryUtil.eqProperty(
+						"dlFileVersion.fileEntryId", "this.fileEntryId"));
+
+				Property versionProperty = PropertyFactoryUtil.forName(
+					"version");
+
+				fileVersionDynamicQuery.add(
+					versionProperty.eq(
+						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION));
+
+				Property fileEntryIdProperty = PropertyFactoryUtil.forName(
+					"fileEntryId");
+
+				dynamicQuery.add(
+					fileEntryIdProperty.in(fileVersionDynamicQuery));
+			});
+
+		fileEntryActionableDynamicQuery.setGroupId(groupId);
+
+		fileEntryActionableDynamicQuery.setPerformActionMethod(
+			(ActionableDynamicQuery.PerformActionMethod<DLFileEntry>)
+				dlFileEntry -> dlAppService.cancelCheckOut(
+					dlFileEntry.getFileEntryId()));
+
+		return fileEntryActionableDynamicQuery;
 	}
 
 	protected List<ObjectValuePair<Long, Integer>> getDlFileVersionStatuses(

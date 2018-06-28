@@ -86,6 +86,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 					</div>
 
 					<aui:script sandbox="<%= true %>">
+						var pwcWarning = $('#<portlet:namespace />pwcWarning');
 						var remoteStagingOptions = $('#<portlet:namespace />remoteStagingOptions');
 						var stagedPortlets = $('#<portlet:namespace />stagedPortlets');
 						var trashWarning = $('#<portlet:namespace />trashWarning');
@@ -97,6 +98,8 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 							'input',
 							function(event) {
 								var value = $(event.currentTarget).val();
+
+								pwcWarning.toggleClass('hide', value != '<%= StagingConstants.TYPE_LOCAL_STAGING %>');
 
 								stagedPortlets.toggleClass('hide', value == '<%= StagingConstants.TYPE_NOT_STAGED %>');
 

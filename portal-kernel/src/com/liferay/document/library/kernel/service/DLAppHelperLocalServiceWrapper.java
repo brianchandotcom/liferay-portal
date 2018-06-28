@@ -55,6 +55,12 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	@Override
+	public void cancelCheckOuts(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppHelperLocalService.cancelCheckOuts(groupId);
+	}
+
+	@Override
 	public void checkAssetEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion)
@@ -80,6 +86,12 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	public void deleteRepositoryFileEntries(long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.deleteRepositoryFileEntries(repositoryId);
+	}
+
+	@Override
+	public long getCheckedOutFileEntriesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppHelperLocalService.getCheckedOutFileEntriesCount(groupId);
 	}
 
 	@Override

@@ -59,6 +59,11 @@ public class DLAppHelperLocalServiceUtil {
 			destinationFileVersion, draftFileVersion, serviceContext);
 	}
 
+	public static void cancelCheckOuts(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().cancelCheckOuts(groupId);
+	}
+
 	public static void checkAssetEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion)
@@ -81,6 +86,11 @@ public class DLAppHelperLocalServiceUtil {
 	public static void deleteRepositoryFileEntries(long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteRepositoryFileEntries(repositoryId);
+	}
+
+	public static long getCheckedOutFileEntriesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCheckedOutFileEntriesCount(groupId);
 	}
 
 	public static void getFileAsStream(long userId,

@@ -59,6 +59,16 @@
 			/>
 		</div>
 
+		<div id="<portlet:namespace />pwcWarning">
+			<c:if test="<%= DLAppHelperLocalServiceUtil.getCheckedOutFileEntriesCount(liveGroup.getGroupId()) > 0 %>">
+				<liferay-staging:alert
+					type="WARNING"
+				>
+					<liferay-ui:message key="local-staging-pwc-warning" />
+				</liferay-staging:alert>
+			</c:if>
+		</div>
+
 		<div id="<portlet:namespace />trashWarning">
 			<c:if test="<%= TrashEntryLocalServiceUtil.getEntriesCount(liveGroup.getGroupId()) > 0 %>">
 				<liferay-staging:alert

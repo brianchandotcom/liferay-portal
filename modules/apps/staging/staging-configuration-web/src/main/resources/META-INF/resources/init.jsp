@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.background.task.kernel.util.comparator.BackgroundTaskCreateDateComparator" %><%@
+page import="com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil" %><%@
 page import="com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.exportimport.kernel.exception.RemoteExportException" %><%@
 page import="com.liferay.exportimport.kernel.lar.ExportImportHelperUtil" %><%@

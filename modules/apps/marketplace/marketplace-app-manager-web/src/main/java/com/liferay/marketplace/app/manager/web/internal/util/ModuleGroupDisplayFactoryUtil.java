@@ -51,7 +51,7 @@ public class ModuleGroupDisplayFactoryUtil {
 				StringPool.BLANK);
 
 			String curModuleGroupTitle = GetterUtil.getString(
-				headers.get(BundleConstants.LIFERAY_RELENG_MODULE_GROUP_TITLE));
+				headers.get(BundleConstants.LIFERAY_RELENG_SUITE_TITLE));
 
 			if (!moduleGroupTitle.equals(curModuleGroupTitle)) {
 				continue;
@@ -60,8 +60,7 @@ public class ModuleGroupDisplayFactoryUtil {
 			if (moduleGroupDisplay == null) {
 				String moduleGroupDescription = GetterUtil.getString(
 					headers.get(
-						BundleConstants.
-							LIFERAY_RELENG_MODULE_GROUP_DESCRIPTION));
+						BundleConstants.LIFERAY_RELENG_SUITE_DESCRIPTION));
 				Version appVersion = bundle.getVersion();
 
 				moduleGroupDisplay = new SimpleModuleGroupDisplay(
@@ -88,7 +87,7 @@ public class ModuleGroupDisplayFactoryUtil {
 				StringPool.BLANK);
 
 			String moduleGroupTitle = headers.get(
-				BundleConstants.LIFERAY_RELENG_MODULE_GROUP_TITLE);
+				BundleConstants.LIFERAY_RELENG_SUITE_TITLE);
 
 			if (moduleGroupTitle == null) {
 				moduleGroupTitle =
@@ -100,7 +99,7 @@ public class ModuleGroupDisplayFactoryUtil {
 
 			if (moduleGroupDisplay == null) {
 				String moduleGroupDescription = headers.get(
-					BundleConstants.LIFERAY_RELENG_MODULE_GROUP_DESCRIPTION);
+					BundleConstants.LIFERAY_RELENG_SUITE_DESCRIPTION);
 				Version moduleGroupVersion = bundle.getVersion();
 
 				moduleGroupDisplay = new SimpleModuleGroupDisplay(

@@ -168,7 +168,11 @@
 	</command>
 
 	<command name="editValidation">
-		<execute function="Select" locator1="FormFields#VALIDATION_ARGUMENT" value1="${validationArgument}" />
+		<execute function="Click" locator1="FormFields#VALIDATION_ARGUMENT" />
+
+		<execute function="AssertClick" locator1="FormFields#VALIDATION_ARGUMENT_OPTION" value1="${validationArgument}">
+			<var name="key_validationArgument" value="${validationArgument}" />
+		</execute>
 
 		<execute function="Type" locator1="FormFields#VALIDATION_INPUT" value1="${validationInput}" />
 		<execute function="Type" locator1="FormFields#VALIDATION_ERROR_MESSAGE" value1="${validationErrorMessage}" />

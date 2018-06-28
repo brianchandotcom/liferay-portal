@@ -99,6 +99,7 @@ Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 <a name="bndfile"></a>`bndFile` | `File` | `null` | The BND file of the project. If provided, the task will automatically update the [`Bundle-Version`](http://bnd.bndtools.org/heads/bundle_version.html) header.
 `forceCalculatedVersion` | `boolean` | `false` | Whether to fail the baseline check if the `Bundle-Version` has been excessively increased.
+<a name="ignoreexcessiveversionincreases"></a>`ignoreExcessiveVersionIncreases` | `boolean` | `false` | Whether to ignore excessive package version increase warnings.
 <a name="ignorefailures"></a>`ignoreFailures` | `boolean` | `false` | Whether the build should not break when semantic versioning errors are found.
 `logFile` | `File` | `null` | The file to which the results of the baseline check are written. *(Read-only)*
 `logFileName` | `String` | `"baseline/${task.name}.log"` | The name of the file to which the results of the baseline check are written. If the `reporting-base` plugin is applied, the file name is relative to [`reporting.baseDir`](https://docs.gradle.org/current/dsl/org.gradle.api.reporting.ReportingExtension.html#org.gradle.api.reporting.ReportingExtension:baseDir); otherwise, it's relative to the project directory.
@@ -137,6 +138,10 @@ The `baseline` task is also configured to use the version range
 `baseline${L + 1}`. This means that running the `baseline` task runs the
 baseline check against multiple versions, starting from the most recent `M` and
 going back to `L`.
+
+Moreover, all tasks except `baseline${M}` have the property
+[`ignoreExcessiveVersionIncreases`](#ignoreexcessiveversionincreases) set to
+`true`.
 
 ## Additional Configuration
 

@@ -39,145 +39,23 @@ public class WorkspaceFactory {
 			return _workspaces.get(workspaceId);
 		}
 
-		_validateRepositoryType(repositoryType);
-
-		File repositoryDir = _getRepositoryDir(
-			repositoryType, upstreamBranchName);
-
-		String upstreamRepositoryName = _getUpstreamRepositoryName(
-			repositoryType, upstreamBranchName);
-
 		if (repositoryType.startsWith("com-liferay-")) {
 			_workspaces.put(
 				workspaceId,
-				new SubrepositoryWorkspace(
-					repositoryDir, upstreamBranchName, upstreamRepositoryName));
+				new SubrepositoryWorkspace(repositoryType, upstreamBranchName));
 		}
-		else if (repositoryType.equals("liferay-portal")) {
+		else if (repositoryType.startsWith("liferay-portal")) {
 			_workspaces.put(
 				workspaceId,
-				new PortalWorkspace(
-					repositoryDir, upstreamBranchName, upstreamRepositoryName));
+				new PortalWorkspace(repositoryType, upstreamBranchName));
+		}
+		else {
+			_workspaces.put(
+				workspaceId,
+				new BaseWorkspace(repositoryType, upstreamBranchName));
 		}
 
-		if (_workspaces.containsKey(workspaceId)) {
-			return _workspaces.get(workspaceId);
-		}
-
-		throw new RuntimeException("Invalid repository type " + repositoryType);
-	}
-
-	private static File _getRepositoryDir(
-		String repositoryType, String upstreamBranchName) {
-
-		String repositoryDirPath = _getRepositoryDirPath(
-			repositoryType, upstreamBranchName);
-
-		File repositoryDir = new File(repositoryDirPath);
-
-		if (!repositoryDir.exists()) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to find ", repositoryDirPath));
-		}
-
-		return repositoryDir;
-	}
-
-	private static String _getRepositoryDirPath(
-		String repositoryType, String upstreamBranchName) {
-
-		Properties workspaceProperties = _getWorkspaceProperties();
-
-		String repositoryDirKey = JenkinsResultsParserUtil.combine(
-			"repository.dir[", repositoryType, "/", upstreamBranchName, "]");
-
-		if (workspaceProperties.containsKey(repositoryDirKey)) {
-			return workspaceProperties.getProperty(repositoryDirKey);
-		}
-
-		if (upstreamBranchName.equals("master")) {
-			repositoryDirKey = JenkinsResultsParserUtil.combine(
-				"repository.dir[", repositoryType, "]");
-
-			if (workspaceProperties.containsKey(repositoryDirKey)) {
-				return workspaceProperties.getProperty(repositoryDirKey);
-			}
-		}
-
-		throw new RuntimeException(
-			JenkinsResultsParserUtil.combine(
-				"Unable to find '", repositoryDirKey, "' in ",
-				_workspaceHomeDir.toString(), "/workspace.properties"));
-	}
-
-	private static String _getUpstreamRepositoryName(
-		String repositoryType, String upstreamBranchName) {
-
-		if (repositoryType.equals("liferay-portal")) {
-			if (!upstreamBranchName.equals("master")) {
-				return "liferay-portal-ee";
-			}
-		}
-		else if (repositoryType.startsWith("com-liferay")) {
-			if (upstreamBranchName.endsWith("-private")) {
-				return repositoryType + "-private";
-			}
-		}
-
-		return repositoryType;
-	}
-
-	private static Properties _getWorkspaceProperties() {
-		if (_workspaceProperties != null) {
-			return _workspaceProperties;
-		}
-
-		File[] workspacePropertiesFiles = {
-			new File(_workspaceHomeDir, "workspace.generated.properties"),
-			new File(_workspaceHomeDir, "workspace.properties"),
-			new File(
-				_workspaceHomeDir,
-				JenkinsResultsParserUtil.combine(
-					"workspace.", System.getenv("HOSTNAME"), "properties")),
-			new File(
-				_workspaceHomeDir,
-				JenkinsResultsParserUtil.combine(
-					"workspace.", System.getenv("HOST"), "properties")),
-			new File(
-				_workspaceHomeDir,
-				JenkinsResultsParserUtil.combine(
-					"workspace.", System.getenv("COMPUTERNAME"), "properties")),
-			new File(
-				_workspaceHomeDir,
-				JenkinsResultsParserUtil.combine(
-					"workspace.", System.getProperty("user.name"),
-					"properties"))
-		};
-
-		_workspaceProperties = new Properties();
-
-		_workspaceProperties = JenkinsResultsParserUtil.getProperties(
-			workspacePropertiesFiles);
-
-		return _workspaceProperties;
-	}
-
-	private static void _validateRepositoryType(String repositoryType) {
-		if (repositoryType.startsWith("com-liferay") &&
-			repositoryType.endsWith("-private")) {
-
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Please use '", repositoryType.replace("-private", ""),
-					"' instead of '", repositoryType, "'"));
-		}
-		else if (repositoryType.equals("liferay-portal-ee")) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Please use '", repositoryType.replace("-ee", ""),
-					"' instead of '", repositoryType, "'"));
-		}
+		return _workspaces.get(workspaceId);
 	}
 
 	private static final File _workspaceHomeDir;

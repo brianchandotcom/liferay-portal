@@ -31,10 +31,8 @@ JournalArticle article = journalDisplayContext.getArticle();
 		<%
 		JournalHistoryDisplayContext journalHistoryDisplayContext = new JournalHistoryDisplayContext(renderRequest, renderResponse, journalDisplayContext.getArticle());
 
-		String backURL = ParamUtil.getString(request, "backURL");
-
 		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(backURL);
+		portletDisplay.setURLBack(journalHistoryDisplayContext.getBackURL());
 
 		renderResponse.setTitle(article.getTitle(locale));
 		%>

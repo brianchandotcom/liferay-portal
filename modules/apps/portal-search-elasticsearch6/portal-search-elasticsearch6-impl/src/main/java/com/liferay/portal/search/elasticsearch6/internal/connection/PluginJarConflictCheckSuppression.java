@@ -31,19 +31,15 @@ public class PluginJarConflictCheckSuppression {
 	}
 
 	public static <T> T execute(Supplier<T> supplier) {
-		String old = System.getProperty("java.class.path");
+		String javaClassPath = System.getProperty("java.class.path");
 
-		System.setProperty("java.class.path", ".");
-
-		String replaced = System.getProperty("java.class.path");
+		System.setProperty("java.class.path", System.getProperty("java.home"));
 
 		try {
 			return supplier.get();
 		}
 		finally {
-			System.setProperty("java.class.path", replaced);
-
-			System.setProperty("java.class.path", old);
+			System.setProperty("java.class.path", javaClassPath);
 		}
 	}
 

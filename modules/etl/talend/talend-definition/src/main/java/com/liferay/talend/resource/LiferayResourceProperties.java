@@ -38,6 +38,7 @@ import org.talend.components.api.component.ISchemaListener;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.i18n.GlobalI18N;
+import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.PropertiesImpl;
@@ -434,9 +435,15 @@ public class LiferayResourceProperties
 		return liferayConnectionProperties;
 	}
 
-	protected static final I18nMessages i18nMessages =
-		GlobalI18N.getI18nMessageProvider().getI18nMessages(
+	protected static final I18nMessages i18nMessages;
+
+	static {
+		I18nMessageProvider i18nMessageProvider =
+			GlobalI18N.getI18nMessageProvider();
+
+		i18nMessages = i18nMessageProvider.getI18nMessages(
 			LiferayResourceProperties.class);
+	}
 
 	private void _setupMainForm() {
 		Form resourceSelectionForm = Form.create(this, Form.MAIN);

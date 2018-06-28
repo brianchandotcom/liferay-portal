@@ -22,6 +22,7 @@ import org.talend.components.api.component.runtime.WriteOperation;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.exception.ComponentException;
 import org.talend.daikon.i18n.GlobalI18N;
+import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
@@ -73,7 +74,13 @@ public class LiferaySink extends LiferaySourceOrSink implements Sink {
 		return validate;
 	}
 
-	protected static final I18nMessages i18nMessages =
-		GlobalI18N.getI18nMessageProvider().getI18nMessages(LiferaySink.class);
+	protected static final I18nMessages i18nMessages;
+
+	static {
+		I18nMessageProvider i18nMessageProvider =
+			GlobalI18N.getI18nMessageProvider();
+
+		i18nMessages = i18nMessageProvider.getI18nMessages(LiferaySink.class);
+	}
 
 }

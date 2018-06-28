@@ -25,7 +25,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		direction="left-side"
 		icon="<%= StringPool.BLANK %>"
 		markupView="lexicon"
-		message='<%= "content-options" %>'
+		message="content-options"
 		showWhenSingleIcon="<%= true %>"
 	>
 		<c:if test="<%= journalContentDisplayContext.isShowEditArticleIcon() %>">

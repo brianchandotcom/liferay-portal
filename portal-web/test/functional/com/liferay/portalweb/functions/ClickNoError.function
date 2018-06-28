@@ -9,6 +9,14 @@
 		<execute selenium="click" />
 	</command>
 
+	<command name="clickNoMouseOver">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="click" />
+	</command>
+
 	<command name="pauseClick">
 		<execute function="WaitForSPARefresh" />
 

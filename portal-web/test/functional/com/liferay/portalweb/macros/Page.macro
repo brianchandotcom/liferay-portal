@@ -625,7 +625,7 @@
 	</command>
 
 	<command name="viewChildPageDropdown">
-		<execute function="ClickNoError" locator1="Home#${viewChildPageDropdown}" />
+		<execute function="ClickNoError#clickNoMouseOver" locator1="Home#${viewChildPageDropdown}" />
 
 		<if>
 			<isset var="javaScriptPage" />

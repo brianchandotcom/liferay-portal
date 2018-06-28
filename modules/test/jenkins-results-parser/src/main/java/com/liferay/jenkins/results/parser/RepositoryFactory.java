@@ -27,21 +27,20 @@ public class RepositoryFactory {
 		/*
 		if (repositoryName.startsWith("com-liferay-")) {
 			return new SubrepositoryLocalRepository(
-				repositoryName, upstreamBranchName));
+				repositoryName, upstreamBranchName);
 		}
-		else if (repositoryName.startsWith("liferay-portal")) {
-			return new PortalLocalRepository(
-				repositoryName, upstreamBranchName));
-		}
-		else if (repositoryName.startsWith("liferay-plugins")) {
+
+		if (repositoryName.startsWith("liferay-plugins")) {
 			return new PluginsLocalRepository(
-				repositoryName, upstreamBranchName));
-		}
-		else {
-			return new LocalRepository(repositoryName, upstreamBranchName));
+				repositoryName, upstreamBranchName);
 		}
 		*/
-		
+
+		if (repositoryName.startsWith("liferay-portal")) {
+			return new PortalLocalRepository(
+				repositoryName, upstreamBranchName);
+		}
+
 		return new LocalRepository(repositoryName, upstreamBranchName);
 	}
 

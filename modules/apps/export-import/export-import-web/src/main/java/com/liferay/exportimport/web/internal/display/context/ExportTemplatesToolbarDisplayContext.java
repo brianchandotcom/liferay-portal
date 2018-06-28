@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
 import java.util.List;
@@ -78,7 +77,7 @@ public class ExportTemplatesToolbarDisplayContext
 							getRenderURL(), "mvcRenderCommandName",
 							"editExportConfiguration", Constants.CMD,
 							Constants.ADD, "groupId",
-							ParamUtil.getLong(request, "groupId"),
+							groupDisplayContextHelper.getGroupId(),
 							"liveGroupId",
 							groupDisplayContextHelper.getLiveGroupId(),
 							"privateLayout", Boolean.FALSE.toString());

@@ -400,7 +400,8 @@ public class PingbackMethodImpl implements Method {
 
 			InetAddress inetAddress = InetAddress.getByName(uri.getHost());
 
-			if (inetAddress.isLinkLocalAddress() ||
+			if (inetAddress.isAnyLocalAddress() ||
+				inetAddress.isLinkLocalAddress() ||
 				inetAddress.isLoopbackAddress() ||
 				inetAddress.isSiteLocalAddress()) {
 

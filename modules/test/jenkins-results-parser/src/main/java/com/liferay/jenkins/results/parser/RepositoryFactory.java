@@ -16,17 +16,33 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory.Remote;
 
-import java.io.File;
-
 /**
  * @author Peter Yoo
  */
 public class RepositoryFactory {
 
 	public static LocalRepository getLocalRepository(
-		File repositoryDirectory, String repositoryName) {
+		String repositoryName, String upstreamBranchName) {
 
-		return new LocalRepository(repositoryDirectory, repositoryName);
+		/*
+		if (repositoryName.startsWith("com-liferay-")) {
+			return new SubrepositoryLocalRepository(
+				repositoryName, upstreamBranchName));
+		}
+		else if (repositoryName.startsWith("liferay-portal")) {
+			return new PortalLocalRepository(
+				repositoryName, upstreamBranchName));
+		}
+		else if (repositoryName.startsWith("liferay-plugins")) {
+			return new PluginsLocalRepository(
+				repositoryName, upstreamBranchName));
+		}
+		else {
+			return new LocalRepository(repositoryName, upstreamBranchName));
+		}
+		*/
+		
+		return new LocalRepository(repositoryName, upstreamBranchName);
 	}
 
 	public static RemoteRepository getRemoteRepository(Remote remote) {

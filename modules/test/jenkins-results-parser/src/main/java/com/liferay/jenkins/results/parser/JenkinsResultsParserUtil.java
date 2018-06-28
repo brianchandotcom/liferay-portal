@@ -601,6 +601,19 @@ public class JenkinsResultsParserUtil {
 		return "";
 	}
 
+	public static File getBaseRepositoryDir() {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		return new File(buildProperties.getProperty("base.repository.dir"));
+	}
+
 	public static Properties getBuildProperties() throws IOException {
 		Properties properties = new Properties();
 

@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.Properties;
+
 /**
  * @author Peter Yoo
  */
@@ -25,11 +27,57 @@ public class LocalRepository extends BaseRepository {
 		return directory;
 	}
 
-	protected LocalRepository(File directory, String name) {
+	public GitWorkingDirectory getGitWorkingDirectory() {
+		return _gitWorkingDirectory;
+	}
+
+	public String getUpstreamBranchName() {
+		return _upstreamBranchName;
+	}
+
+	public RemoteRepository getUpstreamRemoteRepository() {
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		return RepositoryFactory.getRemoteRepository(
+			gitWorkingDirectory.getRemote("upstream"));
+	}
+
+	public void setup() {
+		System.out.println("##");
+		System.out.println("## " + getDirectory());
+		System.out.println("##");
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		gitWorkingDirectory.reset("--hard HEAD");
+
+		gitWorkingDirectory.clean();
+	}
+
+	protected LocalRepository(String name, String upstreamBranchName) {
 		super(name);
 
-		if ((directory == null) || !directory.exists()) {
-			throw new IllegalArgumentException("Unable to find repository");
+		_upstreamBranchName = upstreamBranchName;
+
+		Properties repositoryProperties = _getRepositoryProperties();
+
+		String repositoryPropertyKey = getRepositoryPropertyKey();
+
+		if (repositoryProperties.containsKey(repositoryPropertyKey)) {
+			directory = new File(
+				repositoryProperties.getProperty(repositoryPropertyKey));
+		}
+		else {
+			directory = new File(
+				JenkinsResultsParserUtil.getBaseRepositoryDir(),
+				getDefaultRelativeRepositoryDirPath());
+		}
+
+		if (!directory.exists()) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to find repository directory for ", getName(),
+					" at ", directory.toString()));
 		}
 
 		File dotGit = new File(directory, ".git");
@@ -39,9 +87,38 @@ public class LocalRepository extends BaseRepository {
 				directory + " is not a valid repository");
 		}
 
-		this.directory = directory;
+		_gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				upstreamBranchName, getName());
+	}
+
+	protected String getDefaultRelativeRepositoryDirPath() {
+		return getName();
+	}
+
+	protected String getRepositoryPropertyKey() {
+		return JenkinsResultsParserUtil.combine(
+			"repository.dir[", name, "/" + getUpstreamBranchName(), "]");
 	}
 
 	protected final File directory;
+
+	private static Properties _getRepositoryProperties() {
+		if (_repositoryProperties != null) {
+			return _repositoryProperties;
+		}
+
+		File repositoryPropertiesFile = new File("repository.properties");
+
+		_repositoryProperties = JenkinsResultsParserUtil.getProperties(
+			repositoryPropertiesFile);
+
+		return _repositoryProperties;
+	}
+
+	private static Properties _repositoryProperties;
+
+	private final GitWorkingDirectory _gitWorkingDirectory;
+	private final String _upstreamBranchName;
 
 }

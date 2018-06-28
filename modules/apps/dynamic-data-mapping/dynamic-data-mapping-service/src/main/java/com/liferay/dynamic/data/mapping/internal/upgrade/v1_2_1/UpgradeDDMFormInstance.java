@@ -44,9 +44,9 @@ import java.util.Objects;
 /**
  * @author Leonardo Barros
  */
-public class UpgradeDDLRecordSet extends UpgradeProcess {
+public class UpgradeDDMFormInstance extends UpgradeProcess {
 
-	public UpgradeDDLRecordSet(
+	public UpgradeDDMFormInstance(
 		ClassNameLocalService classNameLocalService,
 		CounterLocalService counterLocalService,
 		PortletPreferencesLocalService portletPreferencesLocalService,

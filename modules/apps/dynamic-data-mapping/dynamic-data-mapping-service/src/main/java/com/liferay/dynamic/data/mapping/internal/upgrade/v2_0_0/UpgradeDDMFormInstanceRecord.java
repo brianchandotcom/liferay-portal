@@ -39,9 +39,11 @@ import java.util.ResourceBundle;
 /**
  * @author Pedro Queiroz
  */
-public class UpgradeDDLRecord extends UpgradeProcess {
+public class UpgradeDDMFormInstanceRecord extends UpgradeProcess {
 
-	public UpgradeDDLRecord(AssetEntryLocalService assetEntryLocalService) {
+	public UpgradeDDMFormInstanceRecord(
+		AssetEntryLocalService assetEntryLocalService) {
+
 		_assetEntryLocalService = assetEntryLocalService;
 	}
 

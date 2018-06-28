@@ -21,37 +21,38 @@ import org.junit.Test;
 /**
  * @author Pedro Queiroz
  */
-public class UpgradeDDLRecordSetTest {
+public class UpgradeDDMFormInstanceTest {
 
 	@Before
 	public void setUp() {
-		setUpUpgradeDDLRecordSetSettings();
+		setUpUpgradeDDMFormInstanceSettings();
 	}
 
 	@Test
 	public void testActionIdsConversion1() {
-		Assert.assertEquals(31L, _upgradeDDLRecordSet.getNewActionIds(31L));
+		Assert.assertEquals(31L, _upgradeDDMFormInstance.getNewActionIds(31L));
 	}
 
 	@Test
 	public void testActionIdsConversion2() {
-		Assert.assertEquals(8L, _upgradeDDLRecordSet.getNewActionIds(16L));
+		Assert.assertEquals(8L, _upgradeDDMFormInstance.getNewActionIds(16L));
 	}
 
 	@Test
 	public void testActionIdsConversion3() {
-		Assert.assertEquals(16L, _upgradeDDLRecordSet.getNewActionIds(8L));
+		Assert.assertEquals(16L, _upgradeDDMFormInstance.getNewActionIds(8L));
 	}
 
 	@Test
 	public void testActionIdsConversion4() {
-		Assert.assertEquals(15L, _upgradeDDLRecordSet.getNewActionIds(23L));
+		Assert.assertEquals(15L, _upgradeDDMFormInstance.getNewActionIds(23L));
 	}
 
-	protected void setUpUpgradeDDLRecordSetSettings() {
-		_upgradeDDLRecordSet = new UpgradeDDLRecordSet(null, null, null, null);
+	protected void setUpUpgradeDDMFormInstanceSettings() {
+		_upgradeDDMFormInstance = new UpgradeDDMFormInstance(
+			null, null, null, null);
 	}
 
-	private UpgradeDDLRecordSet _upgradeDDLRecordSet;
+	private UpgradeDDMFormInstance _upgradeDDMFormInstance;
 
 }

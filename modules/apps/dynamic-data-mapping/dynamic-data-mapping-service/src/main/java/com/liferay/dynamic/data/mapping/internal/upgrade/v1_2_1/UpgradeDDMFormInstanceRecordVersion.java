@@ -24,7 +24,7 @@ import java.sql.ResultSet;
 /**
  * @author Pedro Queiroz
  */
-public class UpgradeDDLRecordVersion extends UpgradeProcess {
+public class UpgradeDDMFormInstanceRecordVersion extends UpgradeProcess {
 
 	protected void deleteDDLRecordVersion(long recordVersionId)
 		throws Exception {

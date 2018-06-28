@@ -132,19 +132,19 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.2.0", "1.2.1",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_1.
-				UpgradeDDLRecordSet(
+				UpgradeDDMFormInstance(
 					_classNameLocalService, _counterLocalService,
 					_portletPreferencesLocalService,
 					_resourcePermissionLocalService),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_1.
-				UpgradeDDLRecordVersion(),
+				UpgradeDDMFormInstanceRecordVersion(),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_1.
 				UpgradeResourceAction(_resourceActionLocalService));
 
 		registry.register(
 			"1.2.1", "2.0.0",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0.
-				UpgradeDDLRecord(_assetEntryLocalService));
+				UpgradeDDMFormInstanceRecord(_assetEntryLocalService));
 
 		registry.register(
 			"2.0.0", "2.0.1",

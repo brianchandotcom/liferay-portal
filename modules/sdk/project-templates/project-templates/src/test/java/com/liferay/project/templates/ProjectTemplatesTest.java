@@ -191,6 +191,33 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateActivatorWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"activator", "activator-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\", " +
+				"version: \"6.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\"");
+	}
+
+	@Test
+	public void testBuildTemplateActivatorWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"activator", "activator-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\", " +
+				"version: \"6.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateApi() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle("api", "foo");
 
@@ -236,6 +263,33 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateApiInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"api", "foo", "build/libs/foo-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateApiWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"api", "api-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\", " +
+				"version: \"6.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\"");
+	}
+
+	@Test
+	public void testBuildTemplateApiWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"api", "api-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\", " +
+				"version: \"6.0.0\"");
 	}
 
 	@Test
@@ -288,6 +342,34 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateContentTargetingReportWithBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"content-targeting-report", "report-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateContentTargetingReportWithoutBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"content-targeting-report", "report-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateContentTargetingRule() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"content-targeting-rule", "foo-bar");
@@ -332,6 +414,34 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-rule", "foo-bar",
 			"build/libs/foo.bar-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateContentTargetingRuleWithBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"content-targeting-rule", "rule-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateContentTargetingRuleWithoutBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"content-targeting-rule", "rule-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
 	}
 
 	@Test
@@ -388,6 +498,36 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateContentTargetingTrackingActionWithBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"content-targeting-tracking-action",
+			"tracking-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateContentTargetingTrackingActionWithoutBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"content-targeting-tracking-action",
+			"tracking-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateControlMenuEntry() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"control-menu-entry", "foo-bar");
@@ -434,6 +574,54 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"control-menu-entry", "foo-bar", "build/libs/foo.bar-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateControlMenuEntryWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"control-menu-entry", "entry-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateControlMenuEntryWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"control-menu-entry", "entry-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
+	public void testBuildTemplateFMPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"freemarker-portlet", "freemarker-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateFMPortletWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"freemarker-portlet", "freemarker-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -498,6 +686,30 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"form-field", "foobar", "build/libs/foobar-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateFormFieldWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"form-field", "field-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateFormFieldWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"form-field", "field-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -670,6 +882,30 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateMVCPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"mvc-portlet", "mvc-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateMVCPortletWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"mvc-portlet", "mvc-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateMVCPortletWithPackage() throws Exception {
 		_testBuildTemplatePortletWithPackage(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
@@ -690,6 +926,44 @@ public class ProjectTemplatesTest {
 		_testBuildTemplatePortletWithPortletSuffix(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
 			"META-INF/resources/view.jsp");
+	}
+
+	@Test
+	public void testBuildTemplateNAPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-angular-portlet", "angular-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateNAPortletWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-angular-portlet", "angular-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
+	public void testBuildTemplateNBPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-billboardjs-portlet", "billboardjs-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -757,6 +1031,18 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateNpmBillboardjsPortletWithoutBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-billboardjs-portlet", "billboardjs-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateNpmIsomorphicPortlet() throws Exception {
 		_testBuildTemplateNpm(
 			"npm-isomorphic-portlet", "foo", "foo", "Foo",
@@ -768,6 +1054,22 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateNpm71(
 			"npm-isomorphic-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default(");
+	}
+
+	@Test
+	public void testBuildTemplateNpmIsomorphicPortletWithBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-isomorphic-portlet", "isomorphic-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -789,6 +1091,18 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateNpmIsomorphicPortletWithoutBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-isomorphic-portlet", "isomorphic-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateNpmJQueryPortlet() throws Exception {
 		_testBuildTemplateNpm(
 			"npm-jquery-portlet", "foo", "foo", "Foo",
@@ -800,6 +1114,20 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateNpm71(
 			"npm-jquery-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmJQueryPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-jquery-portlet", "jquery-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -819,6 +1147,16 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateNpmJQueryPortletWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-jquery-portlet", "jquery-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateNpmMetaljsPortlet() throws Exception {
 		_testBuildTemplateNpm(
 			"npm-metaljs-portlet", "foo", "foo", "Foo",
@@ -830,6 +1168,20 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateNpm71(
 			"npm-metaljs-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmMetaljsPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-metaljs-portlet", "metaljs-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -851,6 +1203,18 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateNpmMetaljsPortletWithoutBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-metaljs-portlet", "metaljs-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateNpmPortlet() throws Exception {
 		_testBuildTemplateNpm(
 			"npm-portlet", "foo", "foo", "Foo",
@@ -862,6 +1226,20 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateNpm71(
 			"npm-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-portlet", "npm-portlet-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -879,6 +1257,16 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateNpmPortletWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-portlet", "npm-portlet-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateNpmReactPortlet() throws Exception {
 		_testBuildTemplateNpm(
 			"npm-react-portlet", "foo", "foo", "Foo",
@@ -890,6 +1278,20 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateNpm71(
 			"npm-react-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmReactPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-react-portlet", "react-portlet-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -909,6 +1311,16 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateNpmReactPortletWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-react-portlet", "react-portlet-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateNpmVuejsPortlet() throws Exception {
 		_testBuildTemplateNpm(
 			"npm-vuejs-portlet", "foo", "foo", "Foo",
@@ -920,6 +1332,20 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateNpm71(
 			"npm-vuejs-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmVuejsPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-vuejs-portlet", "vuejs-portlet-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -936,6 +1362,16 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateNpm71(
 			"npm-vuejs-portlet", "foo-bar", "foo.bar", "FooBar",
 			"bootstrapRequire.default('<portlet:namespace />');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmVuejsPortletWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"npm-vuejs-portlet", "vuejs-portlet-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -1001,6 +1437,30 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplatePanelAppInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"panel-app", "gradle.test", "build/libs/gradle.test-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplatePanelAppWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"panel-app", "panel-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplatePanelAppWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"panel-app", "panel-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1114,6 +1574,34 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplatePortletConfigurationIconWithBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"portlet-configuration-icon", "icon-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplatePortletConfigurationIconWithoutBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"portlet-configuration-icon", "icon-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplatePortletInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"portlet", "foo.test", "build/libs/foo.test-1.0.0.jar");
@@ -1160,6 +1648,30 @@ public class ProjectTemplatesTest {
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test
+	public void testBuildTemplatePortletProviderWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"portlet-provider", "provider-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplatePortletProviderWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"portlet-provider", "provider-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1217,6 +1729,58 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateWithWorkspace(
 			"portlet-toolbar-contributor", "blade.test",
 			"build/libs/blade.test-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplatePortletToolbarContributorWithBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"portlet-toolbar-contributor", "contributor-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplatePortletToolbarContributorWithoutBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"portlet-toolbar-contributor", "contributor-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
+	public void testBuildTemplatePortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"portlet", "portlet-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplatePortletWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"portlet", "portlet-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1289,6 +1853,33 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateRestInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateRestWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"rest", "rest-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api\", " +
+				"version: \"2.0.1\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api\"");
+	}
+
+	@Test
+	public void testBuildTemplateRestWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"rest", "rest-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api\", " +
+				"version: \"2.0.1\"");
 	}
 
 	@Test
@@ -1526,6 +2117,32 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateServiceWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service", "service-dependency-management", "--service",
+			"com.liferay.portal.kernel.events.LifecycleAction",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateServiceWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service", "service-dependency-management", "--service",
+			"com.liferay.portal.kernel.events.LifecycleAction");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateServiceWrapper() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
@@ -1607,6 +2224,32 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateServiceWrapperWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-wrapper", "wrapper-dependency-management", "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateServiceWrapperWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-wrapper", "wrapper-dependency-management", "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateSimulationPanelEntry() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
@@ -1659,6 +2302,34 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateWithWorkspace(
 			"simulation-panel-entry", "test.simulator",
 			"build/libs/test.simulator-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateSimulationPanelEntryWithBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"simulation-panel-entry", "simulator-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateSimulationPanelEntryWithoutBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"simulation-panel-entry", "simulator-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
 	}
 
 	@Test
@@ -1863,6 +2534,30 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateSoyPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"soy-portlet", "soy-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateSoyPortletWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"soy-portlet", "soy-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateSpringMVCPortlet() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"spring-mvc-portlet", "foo");
@@ -1928,6 +2623,30 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateProjectWarInWorkspace(
 			"spring-mvc-portlet", "foo", "foo");
+	}
+
+	@Test
+	public void testBuildTemplateSpringMvcPortletWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"spring-mvc-portlet", "spring-mvc-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateSpringMvcPortletWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"spring-mvc-portlet", "spring-mvc-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0\"");
 	}
 
 	@Test
@@ -2053,6 +2772,36 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateWithWorkspace(
 			"template-context-contributor", "blade-test",
 			"build/libs/blade.test-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateTemplateContextContributorWithBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"template-context-contributor",
+			"context-contributor-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateTemplateContextContributorWithoutBOM()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"template-context-contributor",
+			"context-contributor-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -2209,6 +2958,30 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateWarHookWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"war-hook", "war-hook-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateWarHookWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"war-hook", "war-hook-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+	}
+
+	@Test
 	public void testBuildTemplateWarMVCPortlet() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-mvc-portlet", "WarMVCPortlet");
@@ -2334,6 +3107,30 @@ public class ProjectTemplatesTest {
 			"-DclassName=WarMVCPortlet", "-Dpackage=WarMVC.portlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test
+	public void testBuildTemplateWarMvcWithBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"war-mvc-portlet", "war-mvc-dependency-management",
+			"--dependency-management-enabled");
+
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
+	}
+
+	@Test
+	public void testBuildTemplateWarMvcWithoutBOM() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"war-mvc-portlet", "war-mvc-dependency-management");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -4207,6 +5004,10 @@ public class ProjectTemplatesTest {
 			"Archiver-Version", "Build-Jdk", "Built-By", "Javac-Debug",
 			"Javac-Deprecation", "Javac-Encoding"),
 		',');
+
+	private static final String _DEPENDENCY_PORTAL_KERNEL =
+		"compileOnly group: \"com.liferay.portal\", name: " +
+			"\"com.liferay.portal.kernel\"";
 
 	private static final String _FREEMARKER_PORTLET_VIEW_FTL_PREFIX =
 		"<#include \"init.ftl\">";

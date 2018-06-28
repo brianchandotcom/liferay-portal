@@ -1,12 +1,18 @@
 #if (${projectType} != "workspace")apply plugin: "com.liferay.portal.tools.service.builder"
 #end
 dependencies {
+#if (${dependencyManagementEnabled} == "true")
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+#else
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.5.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
 #elseif (${liferayVersion.startsWith("7.1")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
+#end
 #end
 	compileOnly project("${apiPath}")
 }

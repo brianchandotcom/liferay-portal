@@ -83,6 +83,10 @@ public class ProjectTemplatesArgs {
 		return _template;
 	}
 
+	public boolean isDependencyManagementEnabled() {
+		return _dependencyManagementEnabled;
+	}
+
 	public boolean isForce() {
 		return _force;
 	}
@@ -109,6 +113,12 @@ public class ProjectTemplatesArgs {
 
 	public void setContributorType(String contributorType) {
 		_contributorType = contributorType;
+	}
+
+	public void setDependencyManagementEnabled(
+		boolean dependencyManagementEnabled) {
+
+		_dependencyManagementEnabled = dependencyManagementEnabled;
 	}
 
 	public void setDestinationDir(File destinationDir) {
@@ -187,6 +197,12 @@ public class ProjectTemplatesArgs {
 		names = "--contributor-type"
 	)
 	private String _contributorType;
+
+	@Parameter(
+		description = "If workspace support target platform, no version number is required for the module.",
+		names = "--dependency-management-enabled"
+	)
+	private boolean _dependencyManagementEnabled;
 
 	@Parameter(
 		description = "The directory where to create the new project.",

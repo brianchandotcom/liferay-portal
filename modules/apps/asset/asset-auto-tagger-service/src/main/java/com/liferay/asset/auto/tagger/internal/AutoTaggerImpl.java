@@ -24,6 +24,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -70,6 +72,11 @@ public class AutoTaggerImpl implements AutoTagger {
 					assetEntry.getEntryId(), assetTag);
 			}
 		}
+
+		Indexer<Object> indexer = _indexerRegistry.getIndexer(
+			assetEntry.getClassName());
+
+		indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
 	}
 
 	@Activate
@@ -98,6 +105,9 @@ public class AutoTaggerImpl implements AutoTagger {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	private ServiceTrackerMap<String, List<AutoTagProvider>> _serviceTrackerMap;
 

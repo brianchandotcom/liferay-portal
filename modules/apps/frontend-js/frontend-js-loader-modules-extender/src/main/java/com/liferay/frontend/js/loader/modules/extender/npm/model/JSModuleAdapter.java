@@ -57,8 +57,11 @@ public abstract class JSModuleAdapter implements JSModule {
 		_id = ModuleNameUtil.getModuleId(jsPackage, name);
 
 		for (String dependency : dependencies) {
-			_dependencyPackageNames.add(
-				ModuleNameUtil.getPackageName(dependency));
+			String packageName = ModuleNameUtil.getPackageName(dependency);
+
+			if (packageName != null) {
+				_dependencyPackageNames.add(packageName);
+			}
 		}
 	}
 

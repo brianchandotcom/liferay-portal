@@ -3936,6 +3936,12 @@ to version 1.1.0.
 - [LPS-82960]: Set the project property `jira.project.keys` to add new ticket ID
 prefixes to the `buildChangeLog` task.
 
+## 5.4.59 - 2018-06-27
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.59.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

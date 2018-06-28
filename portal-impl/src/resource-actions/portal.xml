@@ -134,30 +134,6 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource portal="true">
-		<model-name>com.liferay.portal.kernel.model.LayoutPrototype</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet</portlet-name>
-		</portlet-ref>
-		<weight>1</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.portal.kernel.model.LayoutSetBranch</model-name>
 		<portlet-ref>

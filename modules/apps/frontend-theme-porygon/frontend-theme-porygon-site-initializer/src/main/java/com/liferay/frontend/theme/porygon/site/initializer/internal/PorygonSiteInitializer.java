@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -128,6 +130,8 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			_addDisplayPageEntry(
 				"Entry", entryFragmentEntries, _PATH + "/page_templates",
 				"entry.jpg", serviceContext);
+
+			_addLayouts(_LAYOUT_NAMES, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -270,6 +274,30 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		return fragmentEntries;
 	}
 
+	private List<Layout> _addLayouts(
+			String[] layoutNames, ServiceContext serviceContext)
+		throws Exception {
+
+		List<Layout> layouts = new ArrayList<>();
+
+		for (String layoutName : layoutNames) {
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(LocaleUtil.getSiteDefault(), layoutName);
+
+			Layout layout = _layoutLocalService.addLayout(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap,
+				new HashMap<>(), new HashMap<>(), new HashMap<>(),
+				new HashMap<>(), "portlet", StringPool.BLANK, false,
+				new HashMap<>(), serviceContext);
+
+			layouts.add(layout);
+		}
+
+		return layouts;
+	}
+
 	private ServiceContext _createServiceContext(long groupId)
 		throws PortalException {
 
@@ -389,6 +417,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			serviceContext.getScopeGroupId(), false, _THEME_ID,
 			StringPool.BLANK, StringPool.BLANK);
 	}
+
+	private static final String[] _LAYOUT_NAMES =
+		{"Home", "Photography", "Science", "Reviews"};
 
 	private static final String _PATH =
 		"com/liferay/frontend/theme/porygon/site/initializer/internal" +

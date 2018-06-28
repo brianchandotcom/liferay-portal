@@ -181,7 +181,7 @@ public class SelectDDMFormFieldTemplateContextContributor
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass(), true);
+			"content.Language", locale, getClass());
 	}
 
 	protected List<String> getValue(String valueString) {

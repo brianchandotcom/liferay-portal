@@ -523,7 +523,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 		ResourceBundle baseDDMDisplayResourceBundle =
 			ResourceBundleUtil.getBundle(
-				"content.Language", locale, BaseDDMDisplay.class, true);
+				"content.Language", locale, BaseDDMDisplay.class);
 
 		if (ddmDisplayResourceBundle != null) {
 			return new AggregateResourceBundle(

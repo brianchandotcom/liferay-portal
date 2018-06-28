@@ -80,7 +80,7 @@ public abstract class BaseUserScreenNavigationEntry
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass(), true);
+			"content.Language", locale, getClass());
 	}
 
 	@Reference

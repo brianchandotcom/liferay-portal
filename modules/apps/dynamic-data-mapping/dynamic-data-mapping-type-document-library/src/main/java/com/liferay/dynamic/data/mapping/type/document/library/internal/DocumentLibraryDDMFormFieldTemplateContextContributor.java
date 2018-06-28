@@ -198,7 +198,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass(), true);
+			"content.Language", locale, getClass());
 	}
 
 	protected JSONObject getValueJSONObject(String value) {

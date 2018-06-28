@@ -116,7 +116,7 @@ public class CopyFormInstanceMVCActionCommand
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass(), true);
+			"content.Language", locale, getClass());
 	}
 
 	protected void setDefaultPublishedDDMFormFieldValue(

@@ -168,8 +168,7 @@ public class MailTemplatesHelper {
 
 	protected ResourceBundle getResourceBundle() {
 		return ResourceBundleUtil.getBundle(
-			"content.Language", _wikiRequestHelper.getLocale(), getClass(),
-			true);
+			"content.Language", _wikiRequestHelper.getLocale(), getClass());
 	}
 
 	private final WikiGroupServiceOverriddenConfiguration

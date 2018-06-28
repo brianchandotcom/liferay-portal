@@ -232,7 +232,7 @@ public class DDMFormEvaluatorHelper {
 
 	protected ResourceBundle createResourceBundle() {
 		return ResourceBundleUtil.getBundle(
-			"content.Language", _locale, getClass(), true);
+			"content.Language", _locale, getClass());
 	}
 
 	protected void evaluateDDMFormRule(DDMFormRule ddmFormRule)

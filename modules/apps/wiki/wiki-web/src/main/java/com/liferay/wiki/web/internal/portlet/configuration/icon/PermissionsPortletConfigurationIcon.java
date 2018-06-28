@@ -59,7 +59,7 @@ public class PermissionsPortletConfigurationIcon
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass(), true);
+			"content.Language", locale, getClass());
 	}
 
 	@Override

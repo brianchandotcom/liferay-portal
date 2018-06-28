@@ -122,8 +122,12 @@ public class CommerceProductPriceCalculationImpl
 		BigDecimal price = cpInstance.getPromoPrice();
 
 		if (commercePriceList.isPresent()) {
-			price = _getPriceListPrice(
+			BigDecimal priceListPrice = _getPriceListPrice(
 				cpInstanceId, quantity, commercePriceList.get(), true);
+
+			if (priceListPrice != null) {
+				price = priceListPrice;
+			}
 		}
 
 		if ((commerceCurrency != null) && !commerceCurrency.isPrimary()) {
@@ -205,8 +209,12 @@ public class CommerceProductPriceCalculationImpl
 		BigDecimal price = cpInstance.getPrice();
 
 		if (commercePriceList.isPresent()) {
-			price = _getPriceListPrice(
+			BigDecimal priceListPrice = _getPriceListPrice(
 				cpInstanceId, quantity, commercePriceList.get(), false);
+
+			if (priceListPrice != null) {
+				price = priceListPrice;
+			}
 		}
 
 		if ((commerceCurrency != null) && !commerceCurrency.isPrimary()) {
@@ -221,7 +229,7 @@ public class CommerceProductPriceCalculationImpl
 			CommercePriceList commercePriceList, boolean promo)
 		throws PortalException {
 
-		BigDecimal price = BigDecimal.ZERO;
+		BigDecimal price = null;
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(

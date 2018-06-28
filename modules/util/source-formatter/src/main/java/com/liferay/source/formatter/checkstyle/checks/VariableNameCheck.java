@@ -60,13 +60,27 @@ public class VariableNameCheck extends BaseCheck {
 
 	private void _checkCaps(DetailAST detailAST, String name) {
 		for (String[] array : _ALL_CAPS_STRINGS) {
-			Pattern pattern = Pattern.compile(
-				"(.*)" + array[1] + "([A-Z].*|$)");
+			String s = array[1];
 
-			Matcher matcher = pattern.matcher(name);
+			int x = -1;
 
-			if (matcher.find()) {
-				String newName = matcher.group(1) + array[0] + matcher.group(2);
+			while (true) {
+				x = name.indexOf(s, x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				int y = x + s.length();
+
+				if ((y != name.length()) &&
+					!Character.isUpperCase(name.charAt(y))) {
+
+					continue;
+				}
+
+				String newName =
+					name.substring(0, x) + array[0] + name.substring(y);
 
 				log(detailAST.getLineNo(), _MSG_RENAME_VARIABLE, name, newName);
 			}

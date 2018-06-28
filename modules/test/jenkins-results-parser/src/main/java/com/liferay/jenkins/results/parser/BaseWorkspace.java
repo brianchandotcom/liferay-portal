@@ -79,6 +79,8 @@ public class BaseWorkspace {
 		_repositoryType = repositoryType;
 		_upstreamBranchName = upstreamBranchName;
 
+		validateRepositoryType(repositoryType);
+
 		File repositoryDir = _getRepositoryDir();
 
 		try {
@@ -101,6 +103,12 @@ public class BaseWorkspace {
 
 	protected File getDefaultRepositoryDir() {
 		return new File(getBaseRepositoryDir(), getUpstreamRepositoryName());
+	}
+
+	protected void validateRepositoryType(String repositoryType) {
+		if (repositoryType == null) {
+			throw new RuntimeException("The repositoryType cannot be null");
+		}
 	}
 
 	private static Properties _getWorkspaceProperties() {

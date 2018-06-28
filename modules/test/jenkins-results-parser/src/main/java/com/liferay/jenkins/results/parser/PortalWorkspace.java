@@ -105,6 +105,18 @@ public class PortalWorkspace extends BaseWorkspace {
 			getBaseRepositoryDir(), repositoryType + "-" + upstreamBranchName);
 	}
 
+	@Override
+	protected void validateRepositoryType(String repositoryType) {
+		super.validateRepositoryType(repositoryType);
+
+		if (!repositoryType.equals("liferay-portal")) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"The repositoryType should be liferay-portal instead of ",
+					repositoryType));
+		}
+	}
+
 	private final Properties _appServerProperties = new Properties();
 	private final File _appServerPropertiesFile;
 	private final Properties _buildProperties = new Properties();

@@ -45,4 +45,22 @@ public class SubrepositoryWorkspace extends BaseWorkspace {
 			getBaseRepositoryDir(), getRepositoryType() + "-private");
 	}
 
+	@Override
+	protected void validateRepositoryType(String repositoryType) {
+		super.validateRepositoryType(repositoryType);
+
+		if (!repositoryType.startsWith("com-liferay")) {
+			throw new RuntimeException(
+				"Invalid repository type " + repositoryType);
+		}
+
+		if (repositoryType.endsWith("-private")) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"The repositoryType should be ",
+					repositoryType.replace("-private", ""), " instead of ",
+					repositoryType));
+		}
+	}
+
 }

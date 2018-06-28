@@ -332,6 +332,7 @@
 			<property name="enabled" value="false" />
 		</check>
 		<check name="PropertiesLiferayPluginPackageFileCheck" />
+		<check name="PropertiesLiferayPluginPackageLiferayVersionsCheck" />
 		<check name="PropertiesLongLinesCheck" />
 		<check name="PropertiesPortalFileCheck" />
 		<check name="PropertiesPortletFileCheck" />
@@ -374,6 +375,7 @@
 		<check name="XMLHBMFileCheck" />
 		<check name="XMLIndentationCheck" />
 		<check name="XMLLog4jFileCheck" />
+		<check name="XMLLookAndFeelCompatibilityVersionCheck" />
 		<check name="XMLLookAndFeelFileCheck" />
 		<check name="XMLModelHintsFileCheck" />
 		<check name="XMLPortletFileCheck" />

@@ -22,6 +22,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -68,6 +69,13 @@ public class LPKGDeployerRegistrar {
 	@Deactivate
 	public void deactivate(BundleContext bundleContext) {
 		bundleContext.removeBundleListener(_bundleListener);
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.marketplace.service)(release.schema.version=2.0.2))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private void _doRegister(Bundle lpkgBundle, List<Bundle> bundles)

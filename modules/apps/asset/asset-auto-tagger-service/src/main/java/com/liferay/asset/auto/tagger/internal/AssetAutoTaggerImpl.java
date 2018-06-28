@@ -14,16 +14,16 @@
 
 package com.liferay.asset.auto.tagger.internal;
 
+import com.liferay.asset.auto.tagger.AssetAutoTagger;
 import com.liferay.asset.auto.tagger.AutoTagProvider;
-import com.liferay.asset.auto.tagger.AutoTagger;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -40,13 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = AutoTagger.class)
-public class AutoTaggerImpl implements AutoTagger {
+@Component(service = AssetAutoTagger.class)
+public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Override
-	public void tag(AssetEntry assetEntry, GroupedModel groupedModel)
-		throws PortalException {
-
+	public void tag(AssetEntry assetEntry) throws PortalException {
 		if (!ListUtil.isEmpty(assetEntry.getTags())) {
 			return;
 		}
@@ -60,8 +58,11 @@ public class AutoTaggerImpl implements AutoTagger {
 
 		ServiceContext serviceContext = _createServiceContext(assetEntry);
 
+		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+
 		for (AutoTagProvider autoTagProvider : autoTagProviders) {
-			List<String> tags = autoTagProvider.getTags(groupedModel);
+			List<String> tags = autoTagProvider.getTags(
+				assetRenderer.getAssetObject());
 
 			for (String tag : tags) {
 				AssetTag assetTag = _assetTagLocalService.fetchTag(

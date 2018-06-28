@@ -12,18 +12,13 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger;
-
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.GroupedModel;
+package com.liferay.asset.auto.tagger.internal.constants;
 
 /**
  * @author Alejandro Tardín
  */
-public interface AutoTagger {
+public final class AssetAutoTaggerDestinationNames {
 
-	public void tag(AssetEntry assetEntry, GroupedModel groupedModel)
-		throws PortalException;
+	public static final String ASSET_AUTO_TAGGER = "liferay/asset_auto_tagger";
 
 }

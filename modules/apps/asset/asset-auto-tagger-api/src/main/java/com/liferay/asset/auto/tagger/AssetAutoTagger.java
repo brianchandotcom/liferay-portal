@@ -14,13 +14,14 @@
 
 package com.liferay.asset.auto.tagger;
 
-import java.util.List;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alejandro Tardín
  */
-public interface AutoTagProvider<T> {
+public interface AssetAutoTagger {
 
-	public List<String> getTags(T model);
+	public void tag(AssetEntry assetEntry) throws PortalException;
 
 }

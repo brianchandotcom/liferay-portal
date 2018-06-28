@@ -529,10 +529,25 @@ message.
 				<if>
 					<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
 					<then>
+						<loadfile
+							property="app.server.websphere.javahome"
+							srcFile="${app.server.websphere.log.dir}/SystemOut.log"
+						>
+							<filterchain>
+								<tokenfilter>
+									<containsregex
+										pattern="Java\s*Home\s*=\s*(.*)"
+										replace="\1"
+									/>
+								</tokenfilter>
+								<striplinebreaks/>
+							</filterchain>
+						</loadfile>
+
 						<move
 							file="${app.server.lib.global.dir}/portlet.jar"
 							force="true"
-							toDir="${app.server.websphere.dir}/java_1.8_64/jre/lib/ext"
+							toDir="${app.server.websphere.javahome}/lib/ext"
 						/>
 					</then>
 					<else>

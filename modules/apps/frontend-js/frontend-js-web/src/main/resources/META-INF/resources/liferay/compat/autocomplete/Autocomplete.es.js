@@ -6,7 +6,7 @@ import {Align} from 'metal-position';
 import AutocompleteBase from './AutocompleteBase.es';
 import Soy from 'metal-soy';
 
-import 'frontend-js-web/liferay/compat/list/List.es';
+import '../list/List.es';
 import templates from './Autocomplete.soy';
 
 const DOWN = 40;

@@ -64,6 +64,7 @@ import org.talend.components.api.properties.ComponentProperties;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.SimpleNamedThing;
 import org.talend.daikon.i18n.GlobalI18N;
+import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.i18n.TranslatableImpl;
 import org.talend.daikon.properties.ValidationResult;
@@ -731,9 +732,15 @@ public class LiferaySourceOrSink
 
 	protected static final String KEY_CONNECTION_PROPERTIES = "Connection";
 
-	protected static final I18nMessages i18nMessages =
-		GlobalI18N.getI18nMessageProvider().getI18nMessages(
+	protected static final I18nMessages i18nMessages;
+
+	static {
+		I18nMessageProvider i18nMessageProvider =
+			GlobalI18N.getI18nMessageProvider();
+
+		i18nMessages = i18nMessageProvider.getI18nMessages(
 			LiferaySourceOrSink.class);
+	}
 
 	protected volatile LiferayConnectionPropertiesProvider
 		liferayConnectionPropertiesProvider;

@@ -476,15 +476,7 @@ body .ddm-user-view-content {
 	line-height: 24px;
 }
 
-.form-group {
-	.custom-control {
-		padding-bottom: 9px;
-	}
-
-	.form-check-inline {
-		margin-right: 11px;
-	}
-
+.liferay-ddm-form-field-radio {
 	.custom-control-inline {
 		&.custom-control {
 			padding-bottom: 0;
@@ -493,5 +485,15 @@ body .ddm-user-view-content {
 		+ .custom-control-inline {
 			margin-left: 11px;
 		}
+	}
+}
+
+.liferay-ddm-form-field-checkbox-multiple {
+	.custom-control {
+		padding-bottom: 9px;
+	}
+
+	.form-check-inline {
+		margin-right: 11px;
 	}
 }

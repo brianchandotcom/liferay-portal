@@ -49,6 +49,11 @@ public class WorkspaceFactory {
 				workspaceId,
 				new PortalWorkspace(repositoryType, upstreamBranchName));
 		}
+		else if (repositoryType.startsWith("liferay-plugins")) {
+			_workspaces.put(
+				workspaceId,
+				new PluginsWorkspace(repositoryType, upstreamBranchName));
+		}
 		else {
 			_workspaces.put(
 				workspaceId,

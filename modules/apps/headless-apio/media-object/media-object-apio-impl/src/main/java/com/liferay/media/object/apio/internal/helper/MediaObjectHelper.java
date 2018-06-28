@@ -51,12 +51,15 @@ public class MediaObjectHelper {
 
 		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
 
+		ServiceContext serviceContext =
+			mediaObjectCreatorForm.getServiceContext(repositoryId);
+
 		return _dlAppService.addFileEntry(
 			repositoryId, folderId, mediaObjectCreatorForm.getName(),
 			binaryFile.getMimeType(), mediaObjectCreatorForm.getTitle(),
 			mediaObjectCreatorForm.getDescription(),
 			mediaObjectCreatorForm.getChangelog(), binaryFile.getInputStream(),
-			binaryFile.getSize(), new ServiceContext());
+			binaryFile.getSize(), serviceContext);
 	}
 
 	@Reference

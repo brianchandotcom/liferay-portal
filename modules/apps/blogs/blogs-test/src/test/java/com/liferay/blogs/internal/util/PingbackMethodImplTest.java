@@ -50,6 +50,9 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.IOException;
 
+import java.net.InetAddress;
+import java.net.URI;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -76,9 +79,10 @@ import org.powermock.reflect.Whitebox;
 @PrepareForTest(
 	{
 		BlogsEntryLocalServiceUtil.class, BlogsUtil.class,
-		PortalSocketPermission.class, PortletLocalServiceUtil.class,
-		PortletProviderUtil.class, PropsValues.class,
-		ServiceTrackerCollections.class, UserLocalServiceUtil.class
+		PingbackMethodImpl.class, PortalSocketPermission.class,
+		PortletLocalServiceUtil.class, PortletProviderUtil.class,
+		PropsValues.class, ServiceTrackerCollections.class,
+		UserLocalServiceUtil.class
 	}
 )
 @RunWith(PowerMockRunner.class)
@@ -91,6 +95,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		setUpBlogsEntryLocalServiceUtil();
 		setUpBlogsUtil();
 		setUpHttpUtil();
+		setUpInetAddress();
 		setUpLanguageUtil();
 		setUpPortalUtil();
 		setUpPortletLocalServiceUtil();
@@ -431,6 +436,21 @@ public class PingbackMethodImplTest extends PowerMockito {
 		httpUtil.setHttp(_http);
 	}
 
+	protected void setUpInetAddress() throws Exception {
+		InetAddress publicIpAddress = InetAddress.getByAddress(
+			new byte[] {1, 2, 3, 4});
+
+		mockStatic(InetAddress.class);
+
+		URI sourceUri = new URI(_SOURCE_URI);
+
+		when(
+			InetAddress.getByName(Mockito.eq(sourceUri.getHost()))
+		).thenReturn(
+			publicIpAddress
+		);
+	}
+
 	protected void setUpLanguageUtil() {
 		whenLanguageGet("pingback", _PINGBACK_USER_NAME);
 		whenLanguageGet("read-more", _READ_MORE);
@@ -666,7 +686,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 	private static final String _READ_MORE = RandomTestUtil.randomString();
 
-	private static final String _SOURCE_URI = RandomTestUtil.randomString();
+	private static final String _SOURCE_URI =
+		"http://" + RandomTestUtil.randomString();
 
 	private static final String _TARGET_URI = RandomTestUtil.randomString();
 

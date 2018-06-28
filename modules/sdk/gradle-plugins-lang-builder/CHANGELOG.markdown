@@ -79,6 +79,14 @@ http://titlecapitalization.com.
 ### Changed
 - [LPS-82209]: Update the [Liferay Lang Builder] dependency to version 1.0.25.
 
+### Removed
+- [LPS-82343]: The properties `plugin` and `portalLanguagePropertiesFile` of
+`BuildLangTask` are no longer available.
+
+## 3.0.0 - 2018-06-28
+
+*No changes.*
+
 [Liferay Lang Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/lang-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-71375]: https://issues.liferay.com/browse/LPS-71375
@@ -88,3 +96,4 @@ http://titlecapitalization.com.
 [LPS-78493]: https://issues.liferay.com/browse/LPS-78493
 [LPS-78845]: https://issues.liferay.com/browse/LPS-78845
 [LPS-82209]: https://issues.liferay.com/browse/LPS-82209
+[LPS-82343]: https://issues.liferay.com/browse/LPS-82343

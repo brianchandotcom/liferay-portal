@@ -3942,6 +3942,12 @@ prefixes to the `buildChangeLog` task.
 - [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.59.
 
+## 5.4.60 - 2018-06-28
+
+### Changed
+- [LPS-82343]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.60.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

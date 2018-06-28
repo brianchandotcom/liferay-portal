@@ -28,14 +28,14 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import java.net.URI;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
@@ -160,12 +160,17 @@ public class OAuthAuthorizationDataMessageBodyWriter
 				authorizeScreenURL, OAuthConstants.SCOPE);
 		}
 
-		throw new WebApplicationException(
-			Response.status(
-				Response.Status.FOUND
-			).location(
-				URI.create(authorizeScreenURL)
-			).build());
+		_messageContext.put("http.request.redirected", Boolean.TRUE);
+
+		HttpServletResponse httpServletResponse =
+			_messageContext.getHttpServletResponse();
+
+		try {
+			httpServletResponse.sendRedirect(authorizeScreenURL);
+		}
+		catch (IOException ioe) {
+			throw new WebApplicationException(ioe);
+		}
 	}
 
 	@Activate

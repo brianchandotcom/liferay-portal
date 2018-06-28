@@ -5,8 +5,6 @@ AUI.add(
 
 		var LString = Lang.String;
 
-		var NODE_ID_SELECTOR_TPL = '[id^="{treeId}_{layoutId}"]';
-
 		var NODE_ID_TPL = '{treeId}_layout_{layoutId}_plid_{plid}_groupId_{groupId}';
 
 		var NODE_LINK_TPL = '<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="{title}">{label}</a>';
@@ -155,7 +153,6 @@ AUI.add(
 				instance._eventHandles = instance._eventHandles || [];
 
 				instance._eventHandles.push(
-					Liferay.on('navigation', instance._onNavigation, instance),
 					instance.after('render', instance._afterRenderTree, instance),
 					instance.on('dropAppend', instance._onDropAppend, instance),
 					instance.on('dropInsert', instance._onDropInsert, instance)
@@ -457,26 +454,6 @@ AUI.add(
 					instance.extractPlid(tree.dropNode.get(STR_PARENT_NODE)),
 					index
 				);
-			},
-
-			_onNavigation: function(event) {
-				var instance = this;
-
-				if (event.type === 'delete') {
-					var deletedLayoutSelector = Lang.sub(
-						NODE_ID_SELECTOR_TPL,
-						{
-							layoutId: event.item.getAttribute('id'),
-							treeId: instance._treeId
-						}
-					);
-
-					var deletedLayoutDOMNode = A.one(deletedLayoutSelector);
-
-					var deletedLayout = deletedLayoutDOMNode.getData('tree-node');
-
-					instance.removeChild(deletedLayout);
-				}
 			},
 
 			_parseLayouts: function(value) {

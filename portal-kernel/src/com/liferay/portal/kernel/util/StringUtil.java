@@ -2277,7 +2277,9 @@ public class StringUtil {
 		try (InputStream is = classLoader.getResourceAsStream(name)) {
 			if (is == null) {
 				throw new IOException(
-					"Unable to open resource in class loader " + name);
+					StringBundler.concat(
+						"Unable to open resource: ", name, " in class loader ",
+						String.valueOf(classLoader)));
 			}
 
 			String s = read(is);

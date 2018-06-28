@@ -3924,7 +3924,7 @@ to version 1.1.0.
 - [LPS-74608]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.57.
 
-## 5.4.57 - 2018-06-26
+## 5.4.58 - 2018-06-26
 
 ### Added
 - [LPS-82960]: Set the project property `jira.project.keys` to add new ticket ID

@@ -35,10 +35,27 @@ public class PluginsWorkspace extends BaseWorkspace {
 		return repositoryType + "-ee";
 	}
 
+	public void setBuildProperties(Properties properties) {
+		_buildProperties.putAll(properties);
+	}
+
+	@Override
+	public void setupWorkspace() {
+		super.setupWorkspace();
+
+		JenkinsResultsParserUtil.writePropertiesFile(
+			_buildPropertiesFile, _buildProperties, true);
+	}
+
 	protected PluginsWorkspace(
 		String repositoryType, String upstreamBranchName) {
 
 		super(repositoryType, upstreamBranchName);
+
+		_buildPropertiesFile = new File(
+			getRepositoryDir(),
+			JenkinsResultsParserUtil.combine(
+				"build.", System.getenv("HOSTNAME"), ".properties"));
 	}
 
 	@Override
@@ -65,5 +82,8 @@ public class PluginsWorkspace extends BaseWorkspace {
 					repositoryType));
 		}
 	}
+
+	private final Properties _buildProperties = new Properties();
+	private final File _buildPropertiesFile;
 
 }

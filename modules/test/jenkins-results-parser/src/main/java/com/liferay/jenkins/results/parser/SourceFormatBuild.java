@@ -123,19 +123,20 @@ public class SourceFormatBuild extends TopLevelBuild {
 	}
 
 	protected Element getSenderBranchDetailsElement() {
-		String repositoryName = _pullRequest.getGitHubRemoteRepositoryName();
+		String gitHubRemoteRepositoryName =
+			_pullRequest.getGitHubRemoteRepositoryName();
 		String senderBranchName = _pullRequest.getSenderBranchName();
 		String senderUsername = _pullRequest.getSenderUsername();
 
 		String senderBranchURL = JenkinsResultsParserUtil.combine(
-			"https://github.com/", senderUsername, "/", repositoryName,
-			"/tree/", senderBranchName);
+			"https://github.com/", senderUsername, "/",
+			gitHubRemoteRepositoryName, "/tree/", senderBranchName);
 
 		String senderSHA = _pullRequest.getSenderSHA();
 
 		String senderCommitURL = JenkinsResultsParserUtil.combine(
-			"https://github.com/", senderUsername, "/", repositoryName,
-			"/commit/", senderSHA);
+			"https://github.com/", senderUsername, "/",
+			gitHubRemoteRepositoryName, "/commit/", senderSHA);
 
 		Element senderBranchDetailsElement = Dom4JUtil.getNewElement(
 			"p", null, "Branch Name: ",

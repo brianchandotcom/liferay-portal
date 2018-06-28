@@ -180,7 +180,11 @@ public class ModuleNameUtil {
 	}
 
 	public static boolean isLocalModuleName(String moduleName) {
-		return moduleName.startsWith("./");
+		if (moduleName.startsWith("./") || moduleName.startsWith("../")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isReservedModuleName(String moduleName) {

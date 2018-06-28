@@ -2,13 +2,13 @@
 	"config": {
 		"imports": {
 			"map-common": {
-				"/": "^4.0.0"
+				"/": ">=3.0.2"
 			},
 			"frontend-js-metal-web": {
-				"metal": "^2.0.0",
-				"metal-dom": "^2.0.0",
-				"metal-events": "^2.0.0",
-				"metal-state": "^2.0.0"
+				"metal": ">=2.16.5",
+				"metal-dom": ">=2.16.5",
+				"metal-events": ">=2.16.5",
+				"metal-state": ">=2.16.5"
 			}
 		}
 	},

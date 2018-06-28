@@ -2,8 +2,8 @@
     "config": {
 		"imports": {
 			"frontend-js-node-shims": {
-				"buffer": "^5.0.0",
-				"string_decoder": "^1.0.0"
+				"buffer": ">=5.0.7",
+				"string_decoder": ">=1.0.3"
 			}
 		}
     },

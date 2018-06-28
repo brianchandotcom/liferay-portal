@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Alejandro Tardín
  */
-public interface AutoTagProvider<T> {
+public interface AssetAutoTagProvider<T> {
 
 	public List<String> getTags(T model);
 

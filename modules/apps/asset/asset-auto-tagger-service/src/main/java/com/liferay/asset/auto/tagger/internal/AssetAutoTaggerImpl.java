@@ -14,8 +14,8 @@
 
 package com.liferay.asset.auto.tagger.internal;
 
+import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.AssetAutoTagger;
-import com.liferay.asset.auto.tagger.AutoTagProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -49,10 +49,10 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			return;
 		}
 
-		List<AutoTagProvider> autoTagProviders = _serviceTrackerMap.getService(
-			assetEntry.getClassName());
+		List<AssetAutoTagProvider> assetAutoTagProviders =
+			_serviceTrackerMap.getService(assetEntry.getClassName());
 
-		if (autoTagProviders == null) {
+		if (assetAutoTagProviders == null) {
 			return;
 		}
 
@@ -60,8 +60,10 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
-		for (AutoTagProvider autoTagProvider : autoTagProviders) {
-			List<String> tags = autoTagProvider.getTags(
+		for (AssetAutoTagProvider assetAutoTagProvider :
+				assetAutoTagProviders) {
+
+			List<String> tags = assetAutoTagProvider.getTags(
 				assetRenderer.getAssetObject());
 
 			for (String tag : tags) {
@@ -88,7 +90,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, AutoTagProvider.class, "model.class.name");
+			bundleContext, AssetAutoTagProvider.class, "model.class.name");
 	}
 
 	@Deactivate
@@ -115,6 +117,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 	@Reference
 	private IndexerRegistry _indexerRegistry;
 
-	private ServiceTrackerMap<String, List<AutoTagProvider>> _serviceTrackerMap;
+	private ServiceTrackerMap<String, List<AssetAutoTagProvider>>
+		_serviceTrackerMap;
 
 }

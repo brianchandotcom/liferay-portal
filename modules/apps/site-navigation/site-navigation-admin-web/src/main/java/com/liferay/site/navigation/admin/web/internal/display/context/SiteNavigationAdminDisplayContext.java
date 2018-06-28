@@ -43,6 +43,8 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -350,8 +352,11 @@ public class SiteNavigationAdminDisplayContext {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (group.isStaged() && !group.isStagingGroup() &&
-			!group.isStagedRemotely() &&
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if ((stagingGroupHelper.isLocalLiveGroup(group) ||
+			 stagingGroupHelper.isRemoteLiveGroup(group)) &&
 			group.isStagedPortlet(
 				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN)) {
 

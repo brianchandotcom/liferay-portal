@@ -1503,7 +1503,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		DateTime upperBoundDateTime = dateTime.plus(new Duration(clockSkew));
 
 		if (!(nowDateTime.isEqual(upperBoundDateTime) ||
-			nowDateTime.isAfter(upperBoundDateTime))) {
+			  nowDateTime.isAfter(upperBoundDateTime))) {
 
 			return;
 		}

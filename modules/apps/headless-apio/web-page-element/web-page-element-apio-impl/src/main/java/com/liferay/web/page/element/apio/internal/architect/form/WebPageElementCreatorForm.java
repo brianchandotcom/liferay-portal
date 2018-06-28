@@ -16,10 +16,14 @@ package com.liferay.web.page.element.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -49,6 +53,8 @@ public class WebPageElementCreatorForm {
 			__ -> "This form can be used to create a web page element"
 		).constructor(
 			WebPageElementCreatorForm::new
+		).addOptionalStringList(
+			"keywords", WebPageElementCreatorForm::_setKeywords
 		).addRequiredDate(
 			"displayDate", WebPageElementCreatorForm::_setDisplayDate
 		).addRequiredString(
@@ -70,8 +76,12 @@ public class WebPageElementCreatorForm {
 	 * @return the web page element's description map
 	 * @review
 	 */
-	public Map<Locale, String> getDescriptionMap() {
-		return Collections.singletonMap(Locale.getDefault(), _description);
+	public Map<Locale, String> getDescriptionMap(Locale locale) {
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(locale, _description);
+
+		return descriptionMap;
 	}
 
 	/**
@@ -125,6 +135,27 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
+	 * Returns the service context related with this form
+	 *
+	 * @param  groupId the group ID
+	 * @return the service context
+	 * @review
+	 */
+	public ServiceContext getServiceContext(long groupId) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(groupId);
+
+		if (ListUtil.isNotEmpty(_keywords)) {
+			serviceContext.setAssetTagNames(ArrayUtil.toStringArray(_keywords));
+		}
+
+		return serviceContext;
+	}
+
+	/**
 	 * Returns the web page element's structure ID.
 	 *
 	 * @return the web page element's structure ID
@@ -160,8 +191,12 @@ public class WebPageElementCreatorForm {
 	 * @return the web page element's title map
 	 * @review
 	 */
-	public Map<Locale, String> getTitleMap() {
-		return Collections.singletonMap(Locale.getDefault(), _title);
+	public Map<Locale, String> getTitleMap(Locale locale) {
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(locale, _title);
+
+		return titleMap;
 	}
 
 	private void _setDescription(String description) {
@@ -178,6 +213,10 @@ public class WebPageElementCreatorForm {
 		_displayDateYear = calendar.get(Calendar.YEAR);
 		_displayDateHour = calendar.get(Calendar.HOUR);
 		_displayDateMinute = calendar.get(Calendar.MINUTE);
+	}
+
+	private void _setKeywords(List<String> keywords) {
+		_keywords = keywords;
 	}
 
 	private void _setStructure(String structure) {
@@ -202,6 +241,7 @@ public class WebPageElementCreatorForm {
 	private Integer _displayDateMinute;
 	private Integer _displayDateMonth;
 	private Integer _displayDateYear;
+	private List<String> _keywords;
 	private String _structure;
 	private String _template;
 	private String _text;

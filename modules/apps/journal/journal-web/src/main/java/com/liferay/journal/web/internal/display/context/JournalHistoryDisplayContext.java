@@ -212,6 +212,7 @@ public class JournalHistoryDisplayContext {
 
 		portletURL.setParameter("mvcPath", "/view_article_history.jsp");
 		portletURL.setParameter("redirect", _getRedirect());
+		portletURL.setParameter("backURL", getBackURL());
 		portletURL.setParameter(
 			"referringPortletResource", getReferringPortletResource());
 		portletURL.setParameter(

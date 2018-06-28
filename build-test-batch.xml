@@ -4507,6 +4507,11 @@ ${output.content}</echo>
 					</then>
 				</if>
 
+				<exec executable="git">
+					<arg value="add" />
+					<arg value="--all" />
+				</exec>
+
 				<record action="start" name="${project.dir}/build.services.output.txt" />
 
 				<ant dir="portal-impl" target="build-services" />

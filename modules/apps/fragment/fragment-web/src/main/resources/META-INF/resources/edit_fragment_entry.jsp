@@ -112,13 +112,6 @@ renderResponse.setTitle(title);
 
 	var fragmentEditor = new FragmentEditor.default(
 		{
-			events: {
-				contentChanged: function(event) {
-					cssInput.value = event.css;
-					htmlInput.value = event.html;
-					jsInput.value = event.js;
-				}
-			},
 			initialCSS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getCssContent()) %>',
 			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
 			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',
@@ -137,8 +130,6 @@ renderResponse.setTitle(title);
 		function(event) {
 			event.preventDefault();
 
-			dom.toElement('#<portlet:namespace />status').value = '<%= WorkflowConstants.STATUS_APPROVED %>';
-
 			if (!fragmentEditor.isHtmlValid()) {
 				toastCommands.openToast(
 					{
@@ -150,6 +141,14 @@ renderResponse.setTitle(title);
 
 				return;
 			}
+
+			dom.toElement('#<portlet:namespace />status').value = '<%= WorkflowConstants.STATUS_APPROVED %>';
+
+			var content = fragmentEditor.getContent();
+
+			cssInput.value = content.css;
+			htmlInput.value = content.html;
+			jsInput.value = content.js;
 
 			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}

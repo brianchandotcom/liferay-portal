@@ -25,6 +25,25 @@ class FragmentEditor extends Component {
 	}
 
 	/**
+	 * Returns content
+	 * @public
+	 * @return {{
+	 *   css: string,
+	 *   html: string,
+	 *   js: string,
+	 * }}
+	 * @review
+	 */
+
+	getContent() {
+		return ({
+			css: this._css,
+			html: this._html,
+			js: this._js
+		});
+	};
+
+	/**
 	 * Returns true when HTML content is valid, false otherwise.
 	 * @public
 	 * @review
@@ -43,11 +62,7 @@ class FragmentEditor extends Component {
 	_handleContentChanged() {
 		this.emit(
 			'contentChanged',
-			{
-				css: this._css,
-				html: this._html,
-				js: this._js
-			}
+			this.getContent()
 		);
 	}
 

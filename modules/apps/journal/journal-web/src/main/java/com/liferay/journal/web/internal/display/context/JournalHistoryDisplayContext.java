@@ -128,6 +128,16 @@ public class JournalHistoryDisplayContext {
 		return articleSearchContainer;
 	}
 
+	public String getBackURL() {
+		if (_backURL != null) {
+			return _backURL;
+		}
+
+		_backURL = ParamUtil.getString(_renderRequest, "backURL");
+
+		return _backURL;
+	}
+
 	public String getDisplayStyle() {
 		if (_displayStyle != null) {
 			return _displayStyle;
@@ -202,6 +212,7 @@ public class JournalHistoryDisplayContext {
 
 		portletURL.setParameter("mvcPath", "/view_article_history.jsp");
 		portletURL.setParameter("redirect", _getRedirect());
+		portletURL.setParameter("backURL", getBackURL());
 		portletURL.setParameter(
 			"referringPortletResource", getReferringPortletResource());
 		portletURL.setParameter(
@@ -313,6 +324,7 @@ public class JournalHistoryDisplayContext {
 	}
 
 	private final JournalArticle _article;
+	private String _backURL;
 	private String _displayStyle;
 	private String _orderByCol;
 	private String _orderByType;

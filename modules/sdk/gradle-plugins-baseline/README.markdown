@@ -132,7 +132,7 @@ version range `[(M - 1).0.0, M.0.0)` as baseline.
 5. Task `baseline${M}`, which uses the version range `[M.0.0, M.x.y)` as
 baseline.
 
-The baseline task is also configured to use the version range
+The `baseline` task is also configured to use the version range
 `[L.0.0, (L + 1).0.0)` as baseline, and to depend on the task
 `baseline${L + 1}`. This means that running the `baseline` task runs the
 baseline check against multiple versions, starting from the most recent `M` and

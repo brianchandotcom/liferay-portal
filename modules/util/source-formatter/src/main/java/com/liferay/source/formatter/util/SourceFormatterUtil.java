@@ -593,7 +593,7 @@ public class SourceFormatterUtil {
 									String content = FileUtil.read(
 										gitRepoPath.toFile());
 
-									if (content.contains("mode = pull")) {
+									if (content.contains("autopull = true")) {
 										return FileVisitResult.SKIP_SUBTREE;
 									}
 								}

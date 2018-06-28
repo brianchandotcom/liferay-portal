@@ -25,7 +25,7 @@
 >
 	<h2 class="list-group-title">
 		<a href="<%= HtmlUtil.escapeHREF(moduleGroupDisplay.getDisplayURL(renderResponse)) %>">
-			<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(moduleGroupDisplay.getTitle()) %>
+			<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(moduleGroupDisplay.getDisplayTitle()) %>
 		</a>
 	</h2>
 

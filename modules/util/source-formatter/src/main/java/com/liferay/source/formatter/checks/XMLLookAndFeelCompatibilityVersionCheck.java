@@ -90,11 +90,23 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 	}
 
 	private String _getPortalVersion(boolean privateApp) throws Exception {
+		String portalVersion = _getPublicPortalVersion();
+
 		if (privateApp) {
-			return _getPrivatePortalVersion();
+			portalVersion = _getPrivatePortalVersion();
 		}
 
-		return _getPublicPortalVersion();
+		if (Validator.isNull(portalVersion)) {
+			return portalVersion;
+		}
+
+		Matcher matcher = _portalVersionPattern.matcher(portalVersion);
+
+		if (matcher.find()) {
+			portalVersion = matcher.group(1) + ".0";
+		}
+
+		return portalVersion;
 	}
 
 	private synchronized String _getPrivatePortalVersion() throws Exception {
@@ -228,6 +240,8 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 	private final Pattern _portalKernelReleaseInfoVersionPattern =
 		Pattern.compile("private static final String _VERSION = \"(.*)\";");
 
+	private final Pattern _portalVersionPattern = Pattern.compile(
+		"(\\w+\\.\\w+)\\.\\w+");
 	private final Pattern _privateBranchNamePattern = Pattern.compile(
 		"private.branch.name=(.*)\n");
 	private String _privatePortalVersion;

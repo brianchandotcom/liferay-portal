@@ -356,6 +356,35 @@ public class PingbackMethodImplTest extends PowerMockito {
 			"Error accessing source URI");
 	}
 
+	@Test
+	public void testLocalNetworkSSRF() throws Exception {
+		for (int i = 0; i < _localAddresses.length; i++) {
+			InetAddress inetAddress = _localAddresses[i];
+
+			String sourceURL = "http://" + inetAddress.getHostAddress();
+
+			when(
+				_http.URLtoString(sourceURL)
+			).thenReturn(
+				"<body><a href='http://" + _TARGET_URI + "'>" + _EXCERPT_BODY +
+					"</a></body>"
+			);
+
+			PingbackMethodImpl pingbackMethodImpl = getPingbackMethodImpl();
+
+			pingbackMethodImpl.setArguments(
+				new Object[] {sourceURL, "http://" + _TARGET_URI});
+
+			pingbackMethodImpl.execute(_COMPANY_ID);
+
+			Mockito.verify(
+				_xmlRpc, Mockito.times(i + 1)
+			).createFault(
+				PingbackMethodImpl.ACCESS_DENIED, "Access Denied"
+			);
+		}
+	}
+
 	protected void execute() {
 		execute("http://" + _TARGET_URI);
 	}
@@ -437,6 +466,14 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	protected void setUpInetAddress() throws Exception {
+		_localAddresses = new InetAddress[] {
+			InetAddress.getByAddress(new byte[] {0, 0, 0, 0}),
+			InetAddress.getByAddress(new byte[] {10, 0, 0, 1}),
+			InetAddress.getByAddress(new byte[] {127, 0, 0, 1}),
+			InetAddress.getByAddress(new byte[] {(byte)172, 16, 0, 1}),
+			InetAddress.getByAddress(new byte[] {(byte)192, (byte)168, 0, 1})
+		};
+
 		InetAddress publicIpAddress = InetAddress.getByAddress(
 			new byte[] {1, 2, 3, 4});
 
@@ -449,6 +486,12 @@ public class PingbackMethodImplTest extends PowerMockito {
 		).thenReturn(
 			publicIpAddress
 		);
+
+		for (InetAddress localAddress : _localAddresses) {
+			when(
+				InetAddress.getByName(Mockito.eq(localAddress.getHostAddress()))
+			).thenCallRealMethod();
+		}
 	}
 
 	protected void setUpLanguageUtil() {
@@ -712,6 +755,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 	@Mock
 	private Language _language;
+
+	private InetAddress[] _localAddresses;
 
 	@Mock
 	private Portal _portal;

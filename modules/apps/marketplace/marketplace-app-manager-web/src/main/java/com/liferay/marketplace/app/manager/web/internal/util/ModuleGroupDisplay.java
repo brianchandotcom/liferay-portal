@@ -34,6 +34,8 @@ public interface ModuleGroupDisplay extends Comparable<ModuleGroupDisplay> {
 
 	public String getDescription();
 
+	public String getDisplayTitle();
+
 	public String getDisplayURL(MimeResponse mimeResponse);
 
 	public int getState();

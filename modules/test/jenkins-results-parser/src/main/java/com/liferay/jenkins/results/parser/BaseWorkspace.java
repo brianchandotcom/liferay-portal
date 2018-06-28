@@ -46,12 +46,33 @@ public class BaseWorkspace {
 
 	public void setupWorkspace() {
 		System.out.println("##");
-		System.out.println("## " + _repositoryDir);
+		System.out.println("## " + getRepositoryDir());
 		System.out.println("##");
 
 		_gitWorkingDirectory.reset("--hard HEAD");
 
 		_gitWorkingDirectory.clean();
+	}
+
+	protected static File getBaseRepositoryDir() {
+		if (_baseRepositoryDir != null) {
+			return _baseRepositoryDir;
+		}
+
+		Properties buildProperties = new Properties();
+
+		try {
+			buildProperties.putAll(
+				JenkinsResultsParserUtil.getBuildProperties());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		_baseRepositoryDir = new File(
+			buildProperties.getProperty("base.repository.dir"));
+
+		return _baseRepositoryDir;
 	}
 
 	protected BaseWorkspace(String repositoryType, String upstreamBranchName) {
@@ -76,6 +97,10 @@ public class BaseWorkspace {
 					_workspacePropertiesFile.toString()),
 				e);
 		}
+	}
+
+	protected File getDefaultRepositoryDir() {
+		return new File(getBaseRepositoryDir(), getUpstreamRepositoryName());
 	}
 
 	private static Properties _getWorkspaceProperties() {
@@ -109,7 +134,7 @@ public class BaseWorkspace {
 			return new File(workspaceProperties.getProperty(repositoryDirKey));
 		}
 
-		return null;
+		return getDefaultRepositoryDir();
 	}
 
 	private String _getRepositoryDirKey() {

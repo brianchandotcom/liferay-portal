@@ -92,6 +92,19 @@ public class PortalWorkspace extends BaseWorkspace {
 			JenkinsResultsParserUtil.combine("test.", hostname, ".properties"));
 	}
 
+	@Override
+	protected File getDefaultRepositoryDir() {
+		String repositoryType = getRepositoryType();
+		String upstreamBranchName = getUpstreamBranchName();
+
+		if (upstreamBranchName.equals("master")) {
+			return new File(getBaseRepositoryDir(), repositoryType);
+		}
+
+		return new File(
+			getBaseRepositoryDir(), repositoryType + "-" + upstreamBranchName);
+	}
+
 	private final Properties _appServerProperties = new Properties();
 	private final File _appServerPropertiesFile;
 	private final Properties _buildProperties = new Properties();

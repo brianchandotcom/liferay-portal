@@ -39,4 +39,10 @@ public class SubrepositoryWorkspace extends BaseWorkspace {
 		super(repositoryType, upstreamBranchName);
 	}
 
+	@Override
+	protected File getDefaultRepositoryDir() {
+		return new File(
+			getBaseRepositoryDir(), getRepositoryType() + "-private");
+	}
+
 }

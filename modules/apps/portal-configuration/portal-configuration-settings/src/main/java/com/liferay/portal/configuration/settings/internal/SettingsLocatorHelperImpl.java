@@ -425,8 +425,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			_configurationBeanLocationVariableResolvers.remove(
 				configurationBeanClass);
 
-			_configurationBeanSettings.remove(
-				configurationBeanManagedService.getConfigurationPid());
+			_configurationBeanSettings.remove(configurationBeanClass);
 		}
 
 		private ConfigurationBeanDeclarationServiceTracker(

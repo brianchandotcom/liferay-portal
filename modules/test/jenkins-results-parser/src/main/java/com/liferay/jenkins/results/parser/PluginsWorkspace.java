@@ -41,4 +41,29 @@ public class PluginsWorkspace extends BaseWorkspace {
 		super(repositoryType, upstreamBranchName);
 	}
 
+	@Override
+	protected File getDefaultRepositoryDir() {
+		String repositoryType = getRepositoryType();
+		String upstreamBranchName = getUpstreamBranchName();
+
+		if (upstreamBranchName.equals("master")) {
+			return new File(getBaseRepositoryDir(), repositoryType);
+		}
+
+		return new File(
+			getBaseRepositoryDir(), repositoryType + "-" + upstreamBranchName);
+	}
+
+	@Override
+	protected void validateRepositoryType(String repositoryType) {
+		super.validateRepositoryType(repositoryType);
+
+		if (!repositoryType.equals("liferay-plugins")) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"The repositoryType should be liferay-plugins instead of ",
+					repositoryType));
+		}
+	}
+
 }

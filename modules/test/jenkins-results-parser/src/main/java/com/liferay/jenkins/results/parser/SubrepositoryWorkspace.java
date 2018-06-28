@@ -21,11 +21,22 @@ import java.io.File;
  */
 public class SubrepositoryWorkspace extends BaseWorkspace {
 
-	protected SubrepositoryWorkspace(
-		File repositoryDir, String upstreamBranchName,
-		String upstreamRepositoryName) {
+	@Override
+	public String getUpstreamRepositoryName() {
+		String repositoryType = getRepositoryType();
+		String upstreamBranchName = getUpstreamBranchName();
 
-		super(repositoryDir, upstreamBranchName, upstreamRepositoryName);
+		if (upstreamBranchName.contains("-private")) {
+			return repositoryType + "-private";
+		}
+
+		return repositoryType;
+	}
+
+	protected SubrepositoryWorkspace(
+		String repositoryType, String upstreamBranchName) {
+
+		super(repositoryType, upstreamBranchName);
 	}
 
 }

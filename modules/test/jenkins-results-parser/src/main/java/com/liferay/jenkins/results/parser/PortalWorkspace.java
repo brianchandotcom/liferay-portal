@@ -23,6 +23,18 @@ import java.util.Properties;
  */
 public class PortalWorkspace extends BaseWorkspace {
 
+	@Override
+	public String getUpstreamRepositoryName() {
+		String repositoryType = getRepositoryType();
+		String upstreamBranchName = getUpstreamBranchName();
+
+		if (upstreamBranchName.equals("master")) {
+			return repositoryType;
+		}
+
+		return repositoryType + "-ee";
+	}
+
 	public void setAppServerProperties(Properties properties) {
 		_appServerProperties.putAll(properties);
 	}
@@ -54,10 +66,9 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	protected PortalWorkspace(
-		File repositoryDir, String upstreamBranchName,
-		String upstreamRepositoryName) {
+		String repositoryType, String upstreamBranchName) {
 
-		super(repositoryDir, upstreamBranchName, upstreamRepositoryName);
+		super(repositoryType, upstreamBranchName);
 
 		String hostname = System.getenv("HOSTNAME");
 

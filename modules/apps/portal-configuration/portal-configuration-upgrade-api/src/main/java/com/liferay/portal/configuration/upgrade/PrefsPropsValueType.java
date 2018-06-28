@@ -16,7 +16,9 @@ package com.liferay.portal.configuration.upgrade;
 
 /**
  * @author Drew Brokke
+ * @deprecated As of 2.0.0, with no direct replacement
  */
+@Deprecated
 public enum PrefsPropsValueType {
 
 	BOOLEAN, DOUBLE, INT, LONG, SHORT, STRING, STRING_ARRAY

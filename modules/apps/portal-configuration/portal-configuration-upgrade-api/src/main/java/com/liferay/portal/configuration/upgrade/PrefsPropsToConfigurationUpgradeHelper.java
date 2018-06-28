@@ -14,24 +14,15 @@
 
 package com.liferay.portal.configuration.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeException;
-
-import javax.portlet.PortletPreferences;
-
-import org.osgi.service.cm.Configuration;
+import com.liferay.portal.kernel.util.KeyValuePair;
 
 /**
  * @author Drew Brokke
- * @deprecated As of 2.0.0, replaced by {@link
- *            PrefsPropsToConfigurationUpgradeHelper}
  */
-@Deprecated
-public interface PrefsPropsToConfigurationUpgrade {
+public interface PrefsPropsToConfigurationUpgradeHelper {
 
-	public void upgradePrefsPropsToConfiguration(
-			PortletPreferences portletPreferences, Configuration configuration,
-			PrefsPropsToConfigurationUpgradeItem...
-				prefsPropsToConfigurationUpgradeItems)
-		throws UpgradeException;
+	public void mapConfigurations(
+			Class<?> configurationClass, KeyValuePair... keyValuePairs)
+		throws Exception;
 
 }

@@ -15,18 +15,9 @@
 package com.liferay.journal.internal.upgrade.v1_1_1;
 
 import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.PrefsProps;
-
-import java.util.Dictionary;
-
-import javax.portlet.PortletPreferences;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
+import com.liferay.portal.kernel.util.KeyValuePair;
 
 /**
  * @author Drew Brokke
@@ -34,10 +25,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class UpgradeFileUploadsConfiguration extends UpgradeProcess {
 
 	public UpgradeFileUploadsConfiguration(
-		ConfigurationAdmin configurationAdmin, PrefsProps prefsProps) {
+		PrefsPropsToConfigurationUpgradeHelper
+			prefsPropsToConfigurationUpgradeHelper) {
 
-		_configurationAdmin = configurationAdmin;
-		_prefsProps = prefsProps;
+		_prefsPropsToConfigurationUpgradeHelper =
+			prefsPropsToConfigurationUpgradeHelper;
 	}
 
 	@Override
@@ -46,34 +38,12 @@ public class UpgradeFileUploadsConfiguration extends UpgradeProcess {
 	}
 
 	protected void upgradeFileUploadsConfiguration() throws Exception {
-		JournalFileUploadsConfiguration defaultConfig =
-			ConfigurableUtil.createConfigurable(
-				JournalFileUploadsConfiguration.class,
-				new HashMapDictionary<>());
-
-		Dictionary properties = new HashMapDictionary();
-
-		properties.put(
-			"imageExtensions",
-			_prefsProps.getStringArray(
-				_OLD_KEY_JOURNAL_IMAGE_EXTENSIONS, StringPool.COMMA,
-				defaultConfig.imageExtensions()));
-		properties.put(
-			"largeImageMaxSize",
-			_prefsProps.getLong(
-				_OLD_KEY_JOURNAL_IMAGE_SMALL_MAX_SIZE,
-				defaultConfig.smallImageMaxSize()));
-
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			JournalFileUploadsConfiguration.class.getName(),
-			StringPool.QUESTION);
-
-		configuration.update(properties);
-
-		PortletPreferences portletPreferences = _prefsProps.getPreferences();
-
-		portletPreferences.reset(_OLD_KEY_JOURNAL_IMAGE_EXTENSIONS);
-		portletPreferences.reset(_OLD_KEY_JOURNAL_IMAGE_SMALL_MAX_SIZE);
+		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
+			JournalFileUploadsConfiguration.class,
+			new KeyValuePair(
+				_OLD_KEY_JOURNAL_IMAGE_EXTENSIONS, "imageExtensions"),
+			new KeyValuePair(
+				_OLD_KEY_JOURNAL_IMAGE_SMALL_MAX_SIZE, "smallImageMaxSize"));
 	}
 
 	private static final String _OLD_KEY_JOURNAL_IMAGE_EXTENSIONS =
@@ -82,7 +52,7 @@ public class UpgradeFileUploadsConfiguration extends UpgradeProcess {
 	private static final String _OLD_KEY_JOURNAL_IMAGE_SMALL_MAX_SIZE =
 		"journal.image.small.max.size";
 
-	private final ConfigurationAdmin _configurationAdmin;
-	private final PrefsProps _prefsProps;
+	private final PrefsPropsToConfigurationUpgradeHelper
+		_prefsPropsToConfigurationUpgradeHelper;
 
 }

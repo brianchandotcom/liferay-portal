@@ -15,13 +15,14 @@
 package com.liferay.journal.internal.upgrade.v1_1_2;
 
 import com.liferay.journal.configuration.JournalServiceConfiguration;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Dictionary;
 
+import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -42,8 +43,18 @@ public class UpgradeCheckIntervalConfiguration extends UpgradeProcess {
 	}
 
 	protected void upgradeCheckIntervalConfiguration() throws Exception {
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			JournalServiceConfiguration.class.getName(), StringPool.QUESTION);
+		String filterString = StringBundler.concat(
+			"(", Constants.SERVICE_PID, "=",
+			JournalServiceConfiguration.class.getName(), ")");
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filterString);
+
+		if (configurations == null) {
+			return;
+		}
+
+		Configuration configuration = configurations[0];
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 

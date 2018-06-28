@@ -14,16 +14,15 @@
 
 package com.liferay.users.admin.web.internal.upgrade;
 
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.internal.upgrade.v1_0_0.UpgradeFileUploadsConfiguration;
 
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -49,7 +48,7 @@ public class UsersAdminWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"0.0.1", "1.0.0",
 			new UpgradeFileUploadsConfiguration(
-				_configurationAdmin, _prefsProps));
+				_prefsPropsToConfigurationUpgradeHelper));
 
 		registry.register(
 			"1.0.0", "1.0.1",
@@ -68,10 +67,8 @@ public class UsersAdminWebUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference
-	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private PrefsProps _prefsProps;
+	private PrefsPropsToConfigurationUpgradeHelper
+		_prefsPropsToConfigurationUpgradeHelper;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

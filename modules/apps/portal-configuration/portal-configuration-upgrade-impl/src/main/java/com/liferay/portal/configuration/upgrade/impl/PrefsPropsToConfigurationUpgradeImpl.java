@@ -33,12 +33,12 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Drew Brokke
+ * @deprecated As of 2.0.0, with no direct replacement
  */
-@Component(immediate = true, service = PrefsPropsToConfigurationUpgrade.class)
+@Deprecated
 public class PrefsPropsToConfigurationUpgradeImpl
 	implements PrefsPropsToConfigurationUpgrade {
 

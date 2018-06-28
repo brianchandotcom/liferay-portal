@@ -14,19 +14,10 @@
 
 package com.liferay.users.admin.web.internal.upgrade.v1_0_0;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.PrefsProps;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
-
-import java.util.Dictionary;
-
-import javax.portlet.PortletPreferences;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Drew Brokke
@@ -34,10 +25,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class UpgradeFileUploadsConfiguration extends UpgradeProcess {
 
 	public UpgradeFileUploadsConfiguration(
-		ConfigurationAdmin configurationAdmin, PrefsProps prefsProps) {
+		PrefsPropsToConfigurationUpgradeHelper
+			prefsPropsToConfigurationUpgradeHelper) {
 
-		_configurationAdmin = configurationAdmin;
-		_prefsProps = prefsProps;
+		_prefsPropsToConfigurationUpgradeHelper =
+			prefsPropsToConfigurationUpgradeHelper;
 	}
 
 	@Override
@@ -46,42 +38,13 @@ public class UpgradeFileUploadsConfiguration extends UpgradeProcess {
 	}
 
 	protected void upgradeFileUploadsConfiguration() throws Exception {
-		UserFileUploadsConfiguration defaultConfig =
-			ConfigurableUtil.createConfigurable(
-				UserFileUploadsConfiguration.class, new HashMapDictionary<>());
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			"imageCheckToken",
-			_prefsProps.getBoolean(
-				_OLD_KEY_USERS_IMAGE_CHECK_TOKEN,
-				defaultConfig.imageCheckToken()));
-		properties.put(
-			"imageMaxHeight",
-			_prefsProps.getInteger(
-				_OLD_KEY_USERS_IMAGE_MAX_HEIGHT,
-				defaultConfig.imageMaxHeight()));
-		properties.put(
-			"imageMaxSize",
-			_prefsProps.getLong(
-				_OLD_KEY_USERS_IMAGE_MAX_SIZE, defaultConfig.imageMaxSize()));
-		properties.put(
-			"imageMaxWidth",
-			_prefsProps.getInteger(
-				_OLD_KEY_USERS_IMAGE_MAX_WIDTH, defaultConfig.imageMaxWidth()));
-
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			UserFileUploadsConfiguration.class.getName(), StringPool.QUESTION);
-
-		configuration.update(properties);
-
-		PortletPreferences portletPreferences = _prefsProps.getPreferences();
-
-		portletPreferences.reset(_OLD_KEY_USERS_IMAGE_CHECK_TOKEN);
-		portletPreferences.reset(_OLD_KEY_USERS_IMAGE_MAX_HEIGHT);
-		portletPreferences.reset(_OLD_KEY_USERS_IMAGE_MAX_SIZE);
-		portletPreferences.reset(_OLD_KEY_USERS_IMAGE_MAX_WIDTH);
+		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
+			UserFileUploadsConfiguration.class,
+			new KeyValuePair(
+				_OLD_KEY_USERS_IMAGE_CHECK_TOKEN, "imageCheckToken"),
+			new KeyValuePair(_OLD_KEY_USERS_IMAGE_MAX_HEIGHT, "imageMaxHeight"),
+			new KeyValuePair(_OLD_KEY_USERS_IMAGE_MAX_SIZE, "imageMaxSize"),
+			new KeyValuePair(_OLD_KEY_USERS_IMAGE_MAX_WIDTH, "imageMaxWidth"));
 	}
 
 	private static final String _OLD_KEY_USERS_IMAGE_CHECK_TOKEN =
@@ -96,7 +59,7 @@ public class UpgradeFileUploadsConfiguration extends UpgradeProcess {
 	private static final String _OLD_KEY_USERS_IMAGE_MAX_WIDTH =
 		"users.image.max.width";
 
-	private final ConfigurationAdmin _configurationAdmin;
-	private final PrefsProps _prefsProps;
+	private final PrefsPropsToConfigurationUpgradeHelper
+		_prefsPropsToConfigurationUpgradeHelper;
 
 }

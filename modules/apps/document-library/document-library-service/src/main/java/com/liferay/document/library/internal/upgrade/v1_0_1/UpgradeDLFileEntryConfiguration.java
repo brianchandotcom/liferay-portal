@@ -16,17 +16,9 @@ package com.liferay.document.library.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.document.library.internal.constants.LegacyDLKeys;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade;
-import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeItem;
-import com.liferay.portal.configuration.upgrade.PrefsPropsValueType;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.PrefsProps;
-
-import javax.portlet.PortletPreferences;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
+import com.liferay.portal.kernel.util.KeyValuePair;
 
 /**
  * @author Drew Brokke
@@ -34,12 +26,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class UpgradeDLFileEntryConfiguration extends UpgradeProcess {
 
 	public UpgradeDLFileEntryConfiguration(
-		ConfigurationAdmin configurationAdmin, PrefsProps prefsProps,
-		PrefsPropsToConfigurationUpgrade prefsPropsToConfigurationUpgrade) {
+		PrefsPropsToConfigurationUpgradeHelper
+			prefsPropsToConfigurationUpgradeHelper) {
 
-		_configurationAdmin = configurationAdmin;
-		_prefsProps = prefsProps;
-		_prefsPropsToConfigurationUpgrade = prefsPropsToConfigurationUpgrade;
+		_prefsPropsToConfigurationUpgradeHelper =
+			prefsPropsToConfigurationUpgradeHelper;
 	}
 
 	@Override
@@ -48,20 +39,14 @@ public class UpgradeDLFileEntryConfiguration extends UpgradeProcess {
 	}
 
 	private void _upgradeConfiguration() throws Exception {
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			DLFileEntryConfiguration.class.getName(), StringPool.QUESTION);
-		PortletPreferences portletPreferences = _prefsProps.getPreferences();
-
-		_prefsPropsToConfigurationUpgrade.upgradePrefsPropsToConfiguration(
-			portletPreferences, configuration,
-			new PrefsPropsToConfigurationUpgradeItem(
+		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
+			DLFileEntryConfiguration.class,
+			new KeyValuePair(
 				LegacyDLKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
-				PrefsPropsValueType.LONG, "previewableProcessorMaxSize"));
+				"previewableProcessorMaxSize"));
 	}
 
-	private final ConfigurationAdmin _configurationAdmin;
-	private final PrefsProps _prefsProps;
-	private final PrefsPropsToConfigurationUpgrade
-		_prefsPropsToConfigurationUpgrade;
+	private final PrefsPropsToConfigurationUpgradeHelper
+		_prefsPropsToConfigurationUpgradeHelper;
 
 }

@@ -16,18 +16,9 @@ package com.liferay.document.library.document.conversion.internal.upgrade.v1_0_0
 
 import com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration;
 import com.liferay.document.library.document.conversion.internal.constants.LegacyOpenOfficePropsKeys;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Dictionary;
-
-import javax.portlet.PortletPreferences;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
+import com.liferay.portal.kernel.util.KeyValuePair;
 
 /**
  * @author Pei-Jung Lan
@@ -35,73 +26,31 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class UpgradeOpenOfficeConfiguration extends UpgradeProcess {
 
 	public UpgradeOpenOfficeConfiguration(
-		ConfigurationAdmin configurationAdmin, PrefsProps prefsProps) {
+		PrefsPropsToConfigurationUpgradeHelper
+			prefsPropsToConfigurationUpgradeHelper) {
 
-		_configurationAdmin = configurationAdmin;
-		_prefsProps = prefsProps;
+		_prefsPropsToConfigurationUpgradeHelper =
+			prefsPropsToConfigurationUpgradeHelper;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			OpenOfficeConfiguration.class.getName(), StringPool.QUESTION);
-
-		Dictionary properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new HashMapDictionary();
-		}
-
-		if (Validator.isNotNull(
-				_prefsProps.getString(
-					LegacyOpenOfficePropsKeys.OPENOFFICE_CACHE_ENABLED))) {
-
-			properties.put(
-				"cacheEnabled",
-				_prefsProps.getBoolean(
-					LegacyOpenOfficePropsKeys.OPENOFFICE_CACHE_ENABLED));
-		}
-
-		if (Validator.isNotNull(
-				_prefsProps.getString(
-					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_ENABLED))) {
-
-			properties.put(
-				"serverEnabled",
-				_prefsProps.getBoolean(
-					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_ENABLED));
-		}
-
-		if (Validator.isNotNull(
-				_prefsProps.getString(
-					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_HOST))) {
-
-			properties.put(
-				"serverHost",
-				_prefsProps.getString(
-					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_HOST));
-		}
-
-		if (Validator.isNotNull(
-				_prefsProps.getString(
-					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_PORT))) {
-
-			properties.put(
-				"serverPort",
-				_prefsProps.getInteger(
-					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_PORT));
-		}
-
-		configuration.update(properties);
-
-		PortletPreferences portletPreferences = _prefsProps.getPreferences();
-
-		for (String key : LegacyOpenOfficePropsKeys.OPENOFFICE_KEYS) {
-			portletPreferences.reset(key);
-		}
+		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
+			OpenOfficeConfiguration.class,
+			new KeyValuePair(
+				LegacyOpenOfficePropsKeys.OPENOFFICE_CACHE_ENABLED,
+				"cacheEnabled"),
+			new KeyValuePair(
+				LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_ENABLED,
+				"serverEnabled"),
+			new KeyValuePair(
+				LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_HOST, "serverHost"),
+			new KeyValuePair(
+				LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_PORT,
+				"serverPort"));
 	}
 
-	private final ConfigurationAdmin _configurationAdmin;
-	private final PrefsProps _prefsProps;
+	private final PrefsPropsToConfigurationUpgradeHelper
+		_prefsPropsToConfigurationUpgradeHelper;
 
 }

@@ -59,24 +59,6 @@ public class MarketplaceAppManagerSearchUtil {
 			}
 		}
 
-		// Module group display
-
-		List<ModuleGroupDisplay> moduleGroupDisplays = new ArrayList<>();
-
-		for (AppDisplay appDisplay : appDisplays) {
-			if (appDisplay.hasModuleGroups()) {
-				moduleGroupDisplays.addAll(appDisplay.getModuleGroupDisplays());
-			}
-		}
-
-		for (ModuleGroupDisplay moduleGroupDisplay : moduleGroupDisplays) {
-			if (hasModuleGroupDisplayKeywordsMatch(
-					moduleGroupDisplay, keywordsRegex)) {
-
-				results.add(moduleGroupDisplay);
-			}
-		}
-
 		return results;
 	}
 
@@ -141,20 +123,6 @@ public class MarketplaceAppManagerSearchUtil {
 		}
 
 		return false;
-	}
-
-	protected static boolean hasModuleGroupDisplayKeywordsMatch(
-		ModuleGroupDisplay moduleGroupDisplay, String keywordsRegex) {
-
-		if (containsMatches(keywordsRegex, moduleGroupDisplay.getTitle()) ||
-			containsMatches(
-				keywordsRegex, moduleGroupDisplay.getDescription())) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 }

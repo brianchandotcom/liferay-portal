@@ -115,6 +115,9 @@ public class WabBuildAutoUpgradeTest extends BaseBuildAutoUpgradeTestCase {
 				createSQL);
 
 			addResource(
+				"dependencies/portlet.xml", "WEB-INF/portlet.xml",
+				jarOutputStream);
+			addResource(
 				"dependencies/service/META-INF/portlet-model-hints.xml",
 				"WEB-INF/classes/META-INF/portlet-model-hints.xml",
 				jarOutputStream);

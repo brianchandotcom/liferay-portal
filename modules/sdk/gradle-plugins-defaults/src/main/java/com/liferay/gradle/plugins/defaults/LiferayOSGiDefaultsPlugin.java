@@ -3369,11 +3369,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Map<String, Object> args = new HashMap<>();
 
-		if (portalRootDir == null) {
-			portalRootDir = project.getRootDir();
+		File dir = project.getRootDir();
+
+		if (portalRootDir != null) {
+			dir = new File(portalRootDir, "modules");
 		}
 
-		args.put("dir", new File(portalRootDir, "modules"));
+		args.put("dir", dir);
 		args.put(
 			"excludes",
 			Arrays.asList(

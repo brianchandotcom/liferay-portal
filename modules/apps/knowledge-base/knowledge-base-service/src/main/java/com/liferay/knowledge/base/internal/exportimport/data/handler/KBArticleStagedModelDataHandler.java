@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
@@ -438,6 +439,54 @@ public class KBArticleStagedModelDataHandler
 				if (_log.isDebugEnabled()) {
 					_log.debug(dfee, dfee);
 				}
+			}
+		}
+	}
+
+	@Override
+	protected void importReferenceStagedModels(
+			PortletDataContext portletDataContext, KBArticle stagedModel)
+		throws PortletDataException {
+
+		super.importReferenceStagedModels(portletDataContext, stagedModel);
+
+		Element stagedModelElement =
+			portletDataContext.getImportDataStagedModelElement(stagedModel);
+
+		Element referencesElement = stagedModelElement.element("references");
+
+		long kbArticleClassNameId = _portal.getClassNameId(
+			KBArticleConstants.getClassName());
+		long kbFolderClassNameId = _portal.getClassNameId(
+			KBFolderConstants.getClassName());
+
+		if (referencesElement == null) {
+			stagedModel.setParentResourceClassNameId(kbFolderClassNameId);
+
+			return;
+		}
+
+		List<Element> referenceElements = referencesElement.elements();
+
+		for (Element referenceElement : referenceElements) {
+			String referenceType = referenceElement.attributeValue("type");
+
+			if (referenceType.equals(
+					PortletDataContext.REFERENCE_TYPE_PARENT)) {
+
+				String className = referenceElement.attributeValue(
+					"class-name");
+
+				if (className.equals(KBArticle.class.getName())) {
+					stagedModel.setParentResourceClassNameId(
+						kbArticleClassNameId);
+				}
+				else {
+					stagedModel.setParentResourceClassNameId(
+						kbFolderClassNameId);
+				}
+
+				break;
 			}
 		}
 	}

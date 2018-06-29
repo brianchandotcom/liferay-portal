@@ -54,12 +54,7 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 	public String getDisplayURL(MimeResponse mimeResponse) {
 		PortletURL portletURL = mimeResponse.createRenderURL();
 
-		if (hasModuleGroups()) {
-			portletURL.setParameter("mvcPath", "/view_module_groups.jsp");
-		}
-		else {
-			portletURL.setParameter("mvcPath", "/view_modules.jsp");
-		}
+		portletURL.setParameter("mvcPath", "/view_modules.jsp");
 
 		portletURL.setParameter("app", String.valueOf(_app.getAppId()));
 

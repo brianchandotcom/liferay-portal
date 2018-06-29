@@ -17,8 +17,6 @@ package com.liferay.marketplace.app.manager.web.internal.display.context;
 import com.liferay.marketplace.app.manager.web.internal.util.AppDisplay;
 import com.liferay.marketplace.app.manager.web.internal.util.AppDisplayFactoryUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.BundleManagerUtil;
-import com.liferay.marketplace.app.manager.web.internal.util.ModuleGroupDisplay;
-import com.liferay.marketplace.app.manager.web.internal.util.ModuleGroupDisplayFactoryUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.comparator.ModuleServiceReferenceComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -86,21 +84,6 @@ public class ViewModuleManagementToolbarDisplayContext
 		return BundleManagerUtil.getBundle(symbolicName, version);
 	}
 
-	public String getModuleGroup() {
-		return ParamUtil.getString(request, "moduleGroup");
-	}
-
-	public ModuleGroupDisplay getModuleGroupDisplay() {
-		String moduleGroup = getModuleGroup();
-
-		if (Validator.isNotNull(moduleGroup)) {
-			return ModuleGroupDisplayFactoryUtil.getModuleGroupDisplay(
-				getAppDisplay(), moduleGroup);
-		}
-
-		return null;
-	}
-
 	public String getPluginType() {
 		return ParamUtil.getString(request, "pluginType", "components");
 	}
@@ -111,7 +94,6 @@ public class ViewModuleManagementToolbarDisplayContext
 
 		portletURL.setParameter("mvcPath", "/view_module.jsp");
 		portletURL.setParameter("app", getApp());
-		portletURL.setParameter("moduleGroup", getModuleGroup());
 
 		Bundle bundle = getBundle();
 

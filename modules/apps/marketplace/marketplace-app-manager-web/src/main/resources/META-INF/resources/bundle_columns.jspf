@@ -37,7 +37,6 @@
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="mvcPath" value="/view_module.jsp" />
 					<portlet:param name="app" value="<%= app %>" />
-					<portlet:param name="moduleGroup" value="<%= moduleGroup %>" />
 					<portlet:param name="symbolicName" value="<%= bundle.getSymbolicName() %>" />
 					<portlet:param name="version" value="<%= String.valueOf(bundle.getVersion()) %>" />
 				</portlet:renderURL>

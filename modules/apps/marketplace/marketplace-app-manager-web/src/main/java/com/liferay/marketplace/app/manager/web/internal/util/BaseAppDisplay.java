@@ -14,7 +14,13 @@
 
 package com.liferay.marketplace.app.manager.web.internal.util;
 
+import com.liferay.marketplace.app.manager.web.internal.constants.BundleConstants;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -26,8 +32,6 @@ public abstract class BaseAppDisplay implements AppDisplay {
 
 	@Override
 	public void addBundle(Bundle bundle) {
-		_moduleGroupDisplays = null;
-
 		_bundles.add(bundle);
 	}
 
@@ -48,13 +52,25 @@ public abstract class BaseAppDisplay implements AppDisplay {
 	}
 
 	@Override
-	public List<ModuleGroupDisplay> getModuleGroupDisplays() {
-		if (_moduleGroupDisplays == null) {
-			_moduleGroupDisplays =
-				ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(this);
+	public String getDisplaySuiteTitle() {
+		if (_suiteTitle != null) {
+			return _suiteTitle;
 		}
 
-		return _moduleGroupDisplays;
+		Bundle bundle = _bundles.get(0);
+
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		_suiteTitle = getDisplayTitle(
+			headers.get(BundleConstants.LIFERAY_RELENG_SUITE_TITLE));
+
+		return _suiteTitle;
+	}
+
+	@Override
+	public String getDisplayTitle() {
+		return getDisplayTitle(getTitle());
 	}
 
 	@Override
@@ -82,32 +98,23 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		return state;
 	}
 
-	@Override
-	public boolean hasModuleGroups() {
-		List<ModuleGroupDisplay> moduleGroupDisplays = getModuleGroupDisplays();
-
-		if (moduleGroupDisplays.isEmpty()) {
-			return false;
-		}
-		else if (moduleGroupDisplays.size() > 1) {
-			return true;
+	protected static String getDisplayTitle(String title) {
+		if (title == null) {
+			return StringPool.BLANK;
 		}
 
-		ModuleGroupDisplay moduleGroupDisplay = moduleGroupDisplays.get(0);
+		if (!StringUtil.equals(
+				ReleaseInfo.getName(), "Liferay Community Edition Portal")) {
 
-		String title = moduleGroupDisplay.getTitle();
+			// See SubsystemLPKGPackagerImpl#_getSuiteTitle
 
-		if (title.equals(
-				ModuleGroupDisplay.MODULE_GROUP_TITLE_INDEPENDENT_MODULES)) {
-
-			return false;
+			return title.replaceFirst("^Liferay CE ", "Liferay ");
 		}
-		else {
-			return true;
-		}
+
+		return title;
 	}
 
 	private final List<Bundle> _bundles = new ArrayList<>();
-	private List<ModuleGroupDisplay> _moduleGroupDisplays;
+	private String _suiteTitle;
 
 }

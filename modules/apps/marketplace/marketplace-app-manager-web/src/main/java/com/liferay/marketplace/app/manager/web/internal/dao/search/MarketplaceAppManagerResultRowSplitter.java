@@ -15,7 +15,6 @@
 package com.liferay.marketplace.app.manager.web.internal.dao.search;
 
 import com.liferay.marketplace.app.manager.web.internal.util.AppDisplay;
-import com.liferay.marketplace.app.manager.web.internal.util.ModuleGroupDisplay;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
@@ -34,7 +33,6 @@ public class MarketplaceAppManagerResultRowSplitter
 		List<ResultRowSplitterEntry> resultRowSplitterEntries =
 			new ArrayList<>();
 
-		List<ResultRow> appSuiteResultRows = new ArrayList<>();
 		List<ResultRow> appResultRows = new ArrayList<>();
 		List<ResultRow> moduleResultRows = new ArrayList<>();
 
@@ -42,26 +40,11 @@ public class MarketplaceAppManagerResultRowSplitter
 			Object object = resultRow.getObject();
 
 			if (object instanceof AppDisplay) {
-				AppDisplay appDisplay = (AppDisplay)object;
-
-				if (appDisplay.hasModuleGroups()) {
-					appSuiteResultRows.add(resultRow);
-				}
-				else {
-					appResultRows.add(resultRow);
-				}
-			}
-			else if (object instanceof ModuleGroupDisplay) {
 				appResultRows.add(resultRow);
 			}
 			else {
 				moduleResultRows.add(resultRow);
 			}
-		}
-
-		if (!appSuiteResultRows.isEmpty()) {
-			resultRowSplitterEntries.add(
-				new ResultRowSplitterEntry("app-suites", appSuiteResultRows));
 		}
 
 		if (!appResultRows.isEmpty()) {

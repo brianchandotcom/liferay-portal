@@ -18,32 +18,23 @@
 
 <%
 String app = ParamUtil.getString(request, "app");
-String moduleGroup = ParamUtil.getString(request, "moduleGroup");
 
 ViewModulesManagementToolbarDisplayContext viewModulesManagementToolbarDisplayContext = new ViewModulesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
 
 AppDisplay appDisplay = viewModulesManagementToolbarDisplayContext.getAppDisplay();
 
-ModuleGroupDisplay moduleGroupDisplay = viewModulesManagementToolbarDisplayContext.getModuleGroupDisplay();
-
 SearchContainer searchContainer = viewModulesManagementToolbarDisplayContext.getSearchContainer();
 
 PortletURL backURL = renderResponse.createRenderURL();
 
-if (Validator.isNotNull(moduleGroup)) {
-	backURL.setParameter("mvcPath", "/view_module_groups.jsp");
-	backURL.setParameter("app", app);
-}
-else {
-	backURL.setParameter("mvcPath", "/view.jsp");
-}
+backURL.setParameter("mvcPath", "/view.jsp");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
-renderResponse.setTitle((moduleGroupDisplay != null) ? moduleGroupDisplay.getTitle() : appDisplay.getTitle());
+renderResponse.setTitle(appDisplay.getDisplayTitle());
 
-MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, request, renderResponse);
+MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
 %>
 
 <portlet:renderURL var="viewURL">

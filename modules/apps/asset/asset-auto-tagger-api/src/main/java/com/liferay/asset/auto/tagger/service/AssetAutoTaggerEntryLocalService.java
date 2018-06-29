@@ -17,6 +17,8 @@ package com.liferay.asset.auto.tagger.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
@@ -73,6 +75,14 @@ public interface AssetAutoTaggerEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetAutoTaggerEntry addAssetAutoTaggerEntry(
 		AssetAutoTaggerEntry assetAutoTaggerEntry);
+
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link AssetAutoTaggerEntryLocalServiceUtil} to access the asset auto tagger entry local service.
+	*/
+	public AssetAutoTaggerEntry addAssetAutoTaggerEntry(AssetEntry assetEntry,
+		AssetTag assetTag);
 
 	/**
 	* Creates a new asset auto tagger entry with the primary key. Does not add the asset auto tagger entry to the database.
@@ -175,6 +185,10 @@ public interface AssetAutoTaggerEntryLocalService extends BaseLocalService,
 	public AssetAutoTaggerEntry fetchAssetAutoTaggerEntry(
 		long assetAutoTaggerEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetAutoTaggerEntry fetchAssetAutoTaggerEntry(long assetEntryId,
+		long assetTagId);
+
 	/**
 	* Returns the asset auto tagger entry matching the UUID and group.
 	*
@@ -188,6 +202,14 @@ public interface AssetAutoTaggerEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
+		AssetEntry assetEntry);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
+		AssetTag assetTag);
 
 	/**
 	* Returns a range of all the asset auto tagger entries.

@@ -55,6 +55,17 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link AssetAutoTaggerEntryLocalServiceUtil} to access the asset auto tagger entry local service.
+	*/
+	public static com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry addAssetAutoTaggerEntry(
+		com.liferay.asset.kernel.model.AssetEntry assetEntry,
+		com.liferay.asset.kernel.model.AssetTag assetTag) {
+		return getService().addAssetAutoTaggerEntry(assetEntry, assetTag);
+	}
+
+	/**
 	* Creates a new asset auto tagger entry with the primary key. Does not add the asset auto tagger entry to the database.
 	*
 	* @param assetAutoTaggerEntryId the primary key for the new asset auto tagger entry
@@ -181,6 +192,11 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 		return getService().fetchAssetAutoTaggerEntry(assetAutoTaggerEntryId);
 	}
 
+	public static com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry fetchAssetAutoTaggerEntry(
+		long assetEntryId, long assetTagId) {
+		return getService().fetchAssetAutoTaggerEntry(assetEntryId, assetTagId);
+	}
+
 	/**
 	* Returns the asset auto tagger entry matching the UUID and group.
 	*
@@ -196,6 +212,16 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static java.util.List<com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
+		com.liferay.asset.kernel.model.AssetEntry assetEntry) {
+		return getService().getAssetAutoTaggerEntries(assetEntry);
+	}
+
+	public static java.util.List<com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
+		com.liferay.asset.kernel.model.AssetTag assetTag) {
+		return getService().getAssetAutoTaggerEntries(assetTag);
 	}
 
 	/**

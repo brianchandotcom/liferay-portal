@@ -190,6 +190,20 @@ public class AssetAutoTaggerEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByAssetEntryId() throws Exception {
+		_persistence.countByAssetEntryId(RandomTestUtil.nextLong());
+
+		_persistence.countByAssetEntryId(0L);
+	}
+
+	@Test
+	public void testCountByAssetTagId() throws Exception {
+		_persistence.countByAssetTagId(RandomTestUtil.nextLong());
+
+		_persistence.countByAssetTagId(0L);
+	}
+
+	@Test
 	public void testCountByA_A() throws Exception {
 		_persistence.countByA_A(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());

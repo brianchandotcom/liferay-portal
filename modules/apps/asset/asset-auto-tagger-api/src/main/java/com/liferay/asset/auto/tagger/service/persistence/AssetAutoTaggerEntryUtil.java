@@ -509,6 +509,339 @@ public class AssetAutoTaggerEntryUtil {
 	}
 
 	/**
+	* Returns all the asset auto tagger entries where assetEntryId = &#63;.
+	*
+	* @param assetEntryId the asset entry ID
+	* @return the matching asset auto tagger entries
+	*/
+	public static List<AssetAutoTaggerEntry> findByAssetEntryId(
+		long assetEntryId) {
+		return getPersistence().findByAssetEntryId(assetEntryId);
+	}
+
+	/**
+	* Returns a range of all the asset auto tagger entries where assetEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetEntryId the asset entry ID
+	* @param start the lower bound of the range of asset auto tagger entries
+	* @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	* @return the range of matching asset auto tagger entries
+	*/
+	public static List<AssetAutoTaggerEntry> findByAssetEntryId(
+		long assetEntryId, int start, int end) {
+		return getPersistence().findByAssetEntryId(assetEntryId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the asset auto tagger entries where assetEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetEntryId the asset entry ID
+	* @param start the lower bound of the range of asset auto tagger entries
+	* @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching asset auto tagger entries
+	*/
+	public static List<AssetAutoTaggerEntry> findByAssetEntryId(
+		long assetEntryId, int start, int end,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		return getPersistence()
+				   .findByAssetEntryId(assetEntryId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the asset auto tagger entries where assetEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetEntryId the asset entry ID
+	* @param start the lower bound of the range of asset auto tagger entries
+	* @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching asset auto tagger entries
+	*/
+	public static List<AssetAutoTaggerEntry> findByAssetEntryId(
+		long assetEntryId, int start, int end,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByAssetEntryId(assetEntryId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first asset auto tagger entry in the ordered set where assetEntryId = &#63;.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset auto tagger entry
+	* @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
+	*/
+	public static AssetAutoTaggerEntry findByAssetEntryId_First(
+		long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws com.liferay.asset.auto.tagger.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByAssetEntryId_First(assetEntryId, orderByComparator);
+	}
+
+	/**
+	* Returns the first asset auto tagger entry in the ordered set where assetEntryId = &#63;.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
+	*/
+	public static AssetAutoTaggerEntry fetchByAssetEntryId_First(
+		long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByAssetEntryId_First(assetEntryId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset auto tagger entry in the ordered set where assetEntryId = &#63;.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset auto tagger entry
+	* @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
+	*/
+	public static AssetAutoTaggerEntry findByAssetEntryId_Last(
+		long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws com.liferay.asset.auto.tagger.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByAssetEntryId_Last(assetEntryId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset auto tagger entry in the ordered set where assetEntryId = &#63;.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
+	*/
+	public static AssetAutoTaggerEntry fetchByAssetEntryId_Last(
+		long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByAssetEntryId_Last(assetEntryId, orderByComparator);
+	}
+
+	/**
+	* Returns the asset auto tagger entries before and after the current asset auto tagger entry in the ordered set where assetEntryId = &#63;.
+	*
+	* @param assetAutoTaggerEntryId the primary key of the current asset auto tagger entry
+	* @param assetEntryId the asset entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next asset auto tagger entry
+	* @throws NoSuchEntryException if a asset auto tagger entry with the primary key could not be found
+	*/
+	public static AssetAutoTaggerEntry[] findByAssetEntryId_PrevAndNext(
+		long assetAutoTaggerEntryId, long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws com.liferay.asset.auto.tagger.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByAssetEntryId_PrevAndNext(assetAutoTaggerEntryId,
+			assetEntryId, orderByComparator);
+	}
+
+	/**
+	* Removes all the asset auto tagger entries where assetEntryId = &#63; from the database.
+	*
+	* @param assetEntryId the asset entry ID
+	*/
+	public static void removeByAssetEntryId(long assetEntryId) {
+		getPersistence().removeByAssetEntryId(assetEntryId);
+	}
+
+	/**
+	* Returns the number of asset auto tagger entries where assetEntryId = &#63;.
+	*
+	* @param assetEntryId the asset entry ID
+	* @return the number of matching asset auto tagger entries
+	*/
+	public static int countByAssetEntryId(long assetEntryId) {
+		return getPersistence().countByAssetEntryId(assetEntryId);
+	}
+
+	/**
+	* Returns all the asset auto tagger entries where assetTagId = &#63;.
+	*
+	* @param assetTagId the asset tag ID
+	* @return the matching asset auto tagger entries
+	*/
+	public static List<AssetAutoTaggerEntry> findByAssetTagId(long assetTagId) {
+		return getPersistence().findByAssetTagId(assetTagId);
+	}
+
+	/**
+	* Returns a range of all the asset auto tagger entries where assetTagId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetTagId the asset tag ID
+	* @param start the lower bound of the range of asset auto tagger entries
+	* @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	* @return the range of matching asset auto tagger entries
+	*/
+	public static List<AssetAutoTaggerEntry> findByAssetTagId(long assetTagId,
+		int start, int end) {
+		return getPersistence().findByAssetTagId(assetTagId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the asset auto tagger entries where assetTagId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetTagId the asset tag ID
+	* @param start the lower bound of the range of asset auto tagger entries
+	* @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching asset auto tagger entries
+	*/
+	public static List<AssetAutoTaggerEntry> findByAssetTagId(long assetTagId,
+		int start, int end,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		return getPersistence()
+				   .findByAssetTagId(assetTagId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the asset auto tagger entries where assetTagId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetTagId the asset tag ID
+	* @param start the lower bound of the range of asset auto tagger entries
+	* @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching asset auto tagger entries
+	*/
+	public static List<AssetAutoTaggerEntry> findByAssetTagId(long assetTagId,
+		int start, int end,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByAssetTagId(assetTagId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first asset auto tagger entry in the ordered set where assetTagId = &#63;.
+	*
+	* @param assetTagId the asset tag ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset auto tagger entry
+	* @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
+	*/
+	public static AssetAutoTaggerEntry findByAssetTagId_First(long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws com.liferay.asset.auto.tagger.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByAssetTagId_First(assetTagId, orderByComparator);
+	}
+
+	/**
+	* Returns the first asset auto tagger entry in the ordered set where assetTagId = &#63;.
+	*
+	* @param assetTagId the asset tag ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
+	*/
+	public static AssetAutoTaggerEntry fetchByAssetTagId_First(
+		long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByAssetTagId_First(assetTagId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset auto tagger entry in the ordered set where assetTagId = &#63;.
+	*
+	* @param assetTagId the asset tag ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset auto tagger entry
+	* @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
+	*/
+	public static AssetAutoTaggerEntry findByAssetTagId_Last(long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws com.liferay.asset.auto.tagger.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByAssetTagId_Last(assetTagId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset auto tagger entry in the ordered set where assetTagId = &#63;.
+	*
+	* @param assetTagId the asset tag ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
+	*/
+	public static AssetAutoTaggerEntry fetchByAssetTagId_Last(long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByAssetTagId_Last(assetTagId, orderByComparator);
+	}
+
+	/**
+	* Returns the asset auto tagger entries before and after the current asset auto tagger entry in the ordered set where assetTagId = &#63;.
+	*
+	* @param assetAutoTaggerEntryId the primary key of the current asset auto tagger entry
+	* @param assetTagId the asset tag ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next asset auto tagger entry
+	* @throws NoSuchEntryException if a asset auto tagger entry with the primary key could not be found
+	*/
+	public static AssetAutoTaggerEntry[] findByAssetTagId_PrevAndNext(
+		long assetAutoTaggerEntryId, long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws com.liferay.asset.auto.tagger.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByAssetTagId_PrevAndNext(assetAutoTaggerEntryId,
+			assetTagId, orderByComparator);
+	}
+
+	/**
+	* Removes all the asset auto tagger entries where assetTagId = &#63; from the database.
+	*
+	* @param assetTagId the asset tag ID
+	*/
+	public static void removeByAssetTagId(long assetTagId) {
+		getPersistence().removeByAssetTagId(assetTagId);
+	}
+
+	/**
+	* Returns the number of asset auto tagger entries where assetTagId = &#63;.
+	*
+	* @param assetTagId the asset tag ID
+	* @return the number of matching asset auto tagger entries
+	*/
+	public static int countByAssetTagId(long assetTagId) {
+		return getPersistence().countByAssetTagId(assetTagId);
+	}
+
+	/**
 	* Returns the asset auto tagger entry where assetEntryId = &#63; and assetTagId = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param assetEntryId the asset entry ID

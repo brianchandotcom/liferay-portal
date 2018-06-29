@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -1487,6 +1488,1039 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "assetAutoTaggerEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(assetAutoTaggerEntry.uuid IS NULL OR assetAutoTaggerEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "assetAutoTaggerEntry.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ASSETENTRYID =
+		new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
+			AssetAutoTaggerEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetEntryId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID =
+		new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
+			AssetAutoTaggerEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetEntryId",
+			new String[] { Long.class.getName() },
+			AssetAutoTaggerEntryModelImpl.ASSETENTRYID_COLUMN_BITMASK |
+			AssetAutoTaggerEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETENTRYID = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetEntryId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the asset auto tagger entries where assetEntryId = &#63;.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @return the matching asset auto tagger entries
+	 */
+	@Override
+	public List<AssetAutoTaggerEntry> findByAssetEntryId(long assetEntryId) {
+		return findByAssetEntryId(assetEntryId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset auto tagger entries where assetEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param start the lower bound of the range of asset auto tagger entries
+	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	 * @return the range of matching asset auto tagger entries
+	 */
+	@Override
+	public List<AssetAutoTaggerEntry> findByAssetEntryId(long assetEntryId,
+		int start, int end) {
+		return findByAssetEntryId(assetEntryId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset auto tagger entries where assetEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param start the lower bound of the range of asset auto tagger entries
+	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset auto tagger entries
+	 */
+	@Override
+	public List<AssetAutoTaggerEntry> findByAssetEntryId(long assetEntryId,
+		int start, int end,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		return findByAssetEntryId(assetEntryId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset auto tagger entries where assetEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param start the lower bound of the range of asset auto tagger entries
+	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset auto tagger entries
+	 */
+	@Override
+	public List<AssetAutoTaggerEntry> findByAssetEntryId(long assetEntryId,
+		int start, int end,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID;
+			finderArgs = new Object[] { assetEntryId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ASSETENTRYID;
+			finderArgs = new Object[] {
+					assetEntryId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<AssetAutoTaggerEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AssetAutoTaggerEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetAutoTaggerEntry assetAutoTaggerEntry : list) {
+					if ((assetEntryId != assetAutoTaggerEntry.getAssetEntryId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetEntryId);
+
+				if (!pagination) {
+					list = (List<AssetAutoTaggerEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetAutoTaggerEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset auto tagger entry in the ordered set where assetEntryId = &#63;.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset auto tagger entry
+	 * @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry findByAssetEntryId_First(long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByAssetEntryId_First(assetEntryId,
+				orderByComparator);
+
+		if (assetAutoTaggerEntry != null) {
+			return assetAutoTaggerEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("assetEntryId=");
+		msg.append(assetEntryId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset auto tagger entry in the ordered set where assetEntryId = &#63;.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry fetchByAssetEntryId_First(long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		List<AssetAutoTaggerEntry> list = findByAssetEntryId(assetEntryId, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset auto tagger entry in the ordered set where assetEntryId = &#63;.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset auto tagger entry
+	 * @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry findByAssetEntryId_Last(long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByAssetEntryId_Last(assetEntryId,
+				orderByComparator);
+
+		if (assetAutoTaggerEntry != null) {
+			return assetAutoTaggerEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("assetEntryId=");
+		msg.append(assetEntryId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset auto tagger entry in the ordered set where assetEntryId = &#63;.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry fetchByAssetEntryId_Last(long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		int count = countByAssetEntryId(assetEntryId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AssetAutoTaggerEntry> list = findByAssetEntryId(assetEntryId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset auto tagger entries before and after the current asset auto tagger entry in the ordered set where assetEntryId = &#63;.
+	 *
+	 * @param assetAutoTaggerEntryId the primary key of the current asset auto tagger entry
+	 * @param assetEntryId the asset entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset auto tagger entry
+	 * @throws NoSuchEntryException if a asset auto tagger entry with the primary key could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry[] findByAssetEntryId_PrevAndNext(
+		long assetAutoTaggerEntryId, long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetAutoTaggerEntry assetAutoTaggerEntry = findByPrimaryKey(assetAutoTaggerEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetAutoTaggerEntry[] array = new AssetAutoTaggerEntryImpl[3];
+
+			array[0] = getByAssetEntryId_PrevAndNext(session,
+					assetAutoTaggerEntry, assetEntryId, orderByComparator, true);
+
+			array[1] = assetAutoTaggerEntry;
+
+			array[2] = getByAssetEntryId_PrevAndNext(session,
+					assetAutoTaggerEntry, assetEntryId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetAutoTaggerEntry getByAssetEntryId_PrevAndNext(
+		Session session, AssetAutoTaggerEntry assetAutoTaggerEntry,
+		long assetEntryId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(assetEntryId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(assetAutoTaggerEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AssetAutoTaggerEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the asset auto tagger entries where assetEntryId = &#63; from the database.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 */
+	@Override
+	public void removeByAssetEntryId(long assetEntryId) {
+		for (AssetAutoTaggerEntry assetAutoTaggerEntry : findByAssetEntryId(
+				assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(assetAutoTaggerEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of asset auto tagger entries where assetEntryId = &#63;.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @return the number of matching asset auto tagger entries
+	 */
+	@Override
+	public int countByAssetEntryId(long assetEntryId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ASSETENTRYID;
+
+		Object[] finderArgs = new Object[] { assetEntryId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ASSETAUTOTAGGERENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetEntryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2 = "assetAutoTaggerEntry.assetEntryId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ASSETTAGID =
+		new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
+			AssetAutoTaggerEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetTagId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETTAGID =
+		new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
+			AssetAutoTaggerEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetTagId",
+			new String[] { Long.class.getName() },
+			AssetAutoTaggerEntryModelImpl.ASSETTAGID_COLUMN_BITMASK |
+			AssetAutoTaggerEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETTAGID = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetTagId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the asset auto tagger entries where assetTagId = &#63;.
+	 *
+	 * @param assetTagId the asset tag ID
+	 * @return the matching asset auto tagger entries
+	 */
+	@Override
+	public List<AssetAutoTaggerEntry> findByAssetTagId(long assetTagId) {
+		return findByAssetTagId(assetTagId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset auto tagger entries where assetTagId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetTagId the asset tag ID
+	 * @param start the lower bound of the range of asset auto tagger entries
+	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	 * @return the range of matching asset auto tagger entries
+	 */
+	@Override
+	public List<AssetAutoTaggerEntry> findByAssetTagId(long assetTagId,
+		int start, int end) {
+		return findByAssetTagId(assetTagId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset auto tagger entries where assetTagId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetTagId the asset tag ID
+	 * @param start the lower bound of the range of asset auto tagger entries
+	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset auto tagger entries
+	 */
+	@Override
+	public List<AssetAutoTaggerEntry> findByAssetTagId(long assetTagId,
+		int start, int end,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		return findByAssetTagId(assetTagId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset auto tagger entries where assetTagId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetAutoTaggerEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetTagId the asset tag ID
+	 * @param start the lower bound of the range of asset auto tagger entries
+	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset auto tagger entries
+	 */
+	@Override
+	public List<AssetAutoTaggerEntry> findByAssetTagId(long assetTagId,
+		int start, int end,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETTAGID;
+			finderArgs = new Object[] { assetTagId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ASSETTAGID;
+			finderArgs = new Object[] { assetTagId, start, end, orderByComparator };
+		}
+
+		List<AssetAutoTaggerEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AssetAutoTaggerEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetAutoTaggerEntry assetAutoTaggerEntry : list) {
+					if ((assetTagId != assetAutoTaggerEntry.getAssetTagId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_ASSETTAGID_ASSETTAGID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetTagId);
+
+				if (!pagination) {
+					list = (List<AssetAutoTaggerEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetAutoTaggerEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset auto tagger entry in the ordered set where assetTagId = &#63;.
+	 *
+	 * @param assetTagId the asset tag ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset auto tagger entry
+	 * @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry findByAssetTagId_First(long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByAssetTagId_First(assetTagId,
+				orderByComparator);
+
+		if (assetAutoTaggerEntry != null) {
+			return assetAutoTaggerEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("assetTagId=");
+		msg.append(assetTagId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset auto tagger entry in the ordered set where assetTagId = &#63;.
+	 *
+	 * @param assetTagId the asset tag ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry fetchByAssetTagId_First(long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		List<AssetAutoTaggerEntry> list = findByAssetTagId(assetTagId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset auto tagger entry in the ordered set where assetTagId = &#63;.
+	 *
+	 * @param assetTagId the asset tag ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset auto tagger entry
+	 * @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry findByAssetTagId_Last(long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByAssetTagId_Last(assetTagId,
+				orderByComparator);
+
+		if (assetAutoTaggerEntry != null) {
+			return assetAutoTaggerEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("assetTagId=");
+		msg.append(assetTagId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset auto tagger entry in the ordered set where assetTagId = &#63;.
+	 *
+	 * @param assetTagId the asset tag ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry fetchByAssetTagId_Last(long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		int count = countByAssetTagId(assetTagId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AssetAutoTaggerEntry> list = findByAssetTagId(assetTagId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset auto tagger entries before and after the current asset auto tagger entry in the ordered set where assetTagId = &#63;.
+	 *
+	 * @param assetAutoTaggerEntryId the primary key of the current asset auto tagger entry
+	 * @param assetTagId the asset tag ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset auto tagger entry
+	 * @throws NoSuchEntryException if a asset auto tagger entry with the primary key could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry[] findByAssetTagId_PrevAndNext(
+		long assetAutoTaggerEntryId, long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetAutoTaggerEntry assetAutoTaggerEntry = findByPrimaryKey(assetAutoTaggerEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetAutoTaggerEntry[] array = new AssetAutoTaggerEntryImpl[3];
+
+			array[0] = getByAssetTagId_PrevAndNext(session,
+					assetAutoTaggerEntry, assetTagId, orderByComparator, true);
+
+			array[1] = assetAutoTaggerEntry;
+
+			array[2] = getByAssetTagId_PrevAndNext(session,
+					assetAutoTaggerEntry, assetTagId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetAutoTaggerEntry getByAssetTagId_PrevAndNext(
+		Session session, AssetAutoTaggerEntry assetAutoTaggerEntry,
+		long assetTagId,
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_ASSETTAGID_ASSETTAGID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(assetTagId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(assetAutoTaggerEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AssetAutoTaggerEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the asset auto tagger entries where assetTagId = &#63; from the database.
+	 *
+	 * @param assetTagId the asset tag ID
+	 */
+	@Override
+	public void removeByAssetTagId(long assetTagId) {
+		for (AssetAutoTaggerEntry assetAutoTaggerEntry : findByAssetTagId(
+				assetTagId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(assetAutoTaggerEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of asset auto tagger entries where assetTagId = &#63;.
+	 *
+	 * @param assetTagId the asset tag ID
+	 * @return the number of matching asset auto tagger entries
+	 */
+	@Override
+	public int countByAssetTagId(long assetTagId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ASSETTAGID;
+
+		Object[] finderArgs = new Object[] { assetTagId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ASSETAUTOTAGGERENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_ASSETTAGID_ASSETTAGID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetTagId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ASSETTAGID_ASSETTAGID_2 = "assetAutoTaggerEntry.assetTagId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_A_A = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
 			AssetAutoTaggerEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -1608,6 +2642,17 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 						list);
 				}
 				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"AssetAutoTaggerEntryPersistenceImpl.fetchByA_A(long, long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
 					AssetAutoTaggerEntry assetAutoTaggerEntry = list.get(0);
 
 					result = assetAutoTaggerEntry;
@@ -2097,6 +3142,18 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 				args);
 
+			args = new Object[] { assetAutoTaggerEntryModelImpl.getAssetEntryId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID,
+				args);
+
+			args = new Object[] { assetAutoTaggerEntryModelImpl.getAssetTagId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETTAGID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETTAGID,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -2138,6 +3195,44 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+					args);
+			}
+
+			if ((assetAutoTaggerEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						assetAutoTaggerEntryModelImpl.getOriginalAssetEntryId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID,
+					args);
+
+				args = new Object[] {
+						assetAutoTaggerEntryModelImpl.getAssetEntryId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID,
+					args);
+			}
+
+			if ((assetAutoTaggerEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETTAGID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						assetAutoTaggerEntryModelImpl.getOriginalAssetTagId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETTAGID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETTAGID,
+					args);
+
+				args = new Object[] {
+						assetAutoTaggerEntryModelImpl.getAssetTagId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETTAGID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETTAGID,
 					args);
 			}
 		}

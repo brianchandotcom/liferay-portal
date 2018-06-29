@@ -55,7 +55,7 @@ public class MarketplaceAppManagerUtil {
 			portletURL.toString());
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, appDisplay.getTitle(),
+			request, appDisplay.getDisplayTitle(),
 			appDisplay.getDisplayURL(renderResponse));
 
 		Dictionary<String, String> headers = bundle.getHeaders(
@@ -80,7 +80,7 @@ public class MarketplaceAppManagerUtil {
 			portletURL.toString());
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, appDisplay.getTitle(), null);
+			request, appDisplay.getDisplayTitle(), null);
 	}
 
 	public static String[] getCategories(List<App> apps, List<Bundle> bundles) {

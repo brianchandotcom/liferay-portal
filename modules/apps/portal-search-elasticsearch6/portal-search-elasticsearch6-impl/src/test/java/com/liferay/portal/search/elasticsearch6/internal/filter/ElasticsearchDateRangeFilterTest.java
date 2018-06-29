@@ -14,13 +14,14 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.filter;
 
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.LiferayIndexCreator;
 import com.liferay.portal.search.test.util.filter.BaseDateRangeFilterTestCase;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+
+import org.elasticsearch.action.search.SearchPhaseExecutionException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class ElasticsearchDateRangeFilterTest
 
 	@Test
 	public void testMalformed() throws Exception {
-		expectedException.expect(SearchException.class);
+		expectedException.expect(SearchPhaseExecutionException.class);
 		expectedException.expectMessage("all shards failed");
 
 		addDocument(getDate(2000, 11, 22));
@@ -69,7 +70,7 @@ public class ElasticsearchDateRangeFilterTest
 
 	@Test
 	public void testMalformedMultiple() throws Exception {
-		expectedException.expect(SearchException.class);
+		expectedException.expect(SearchPhaseExecutionException.class);
 		expectedException.expectMessage("all shards failed");
 
 		addDocument(getDate(2000, 11, 22));

@@ -76,6 +76,8 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		baseline.setBndFile(getBndFile());
 		baseline.setForceCalculatedVersion(isForceCalculatedVersion());
 		baseline.setForcePackageInfo(true);
+		baseline.setIgnoreExcessiveVersionIncreases(
+			isIgnoreExcessiveVersionIncreases());
 		baseline.setLogFile(getLogFile());
 		baseline.setNewJarFile(getNewJarFile());
 		baseline.setOldJarFile(getOldJarFile());
@@ -153,6 +155,11 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 	}
 
 	@Input
+	public boolean isIgnoreExcessiveVersionIncreases() {
+		return _ignoreExcessiveVersionIncreases;
+	}
+
+	@Input
 	public boolean isReportDiff() {
 		return _reportDiff;
 	}
@@ -168,6 +175,12 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 
 	public void setForceCalculatedVersion(boolean forceCalculatedVersion) {
 		_forceCalculatedVersion = forceCalculatedVersion;
+	}
+
+	public void setIgnoreExcessiveVersionIncreases(
+		boolean ignoreExcessiveVersionIncreases) {
+
+		_ignoreExcessiveVersionIncreases = ignoreExcessiveVersionIncreases;
 	}
 
 	@Override
@@ -201,6 +214,7 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 
 	private Object _bndFile;
 	private boolean _forceCalculatedVersion;
+	private boolean _ignoreExcessiveVersionIncreases;
 	private boolean _ignoreFailures;
 	private String _logFileName;
 	private Object _newJarFile;

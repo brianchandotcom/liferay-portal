@@ -299,11 +299,20 @@ public class BaselinePlugin implements Plugin<Project> {
 				maxMajorVersion--;
 			}
 
+			if (maxMajorVersion >= (lowestMajorVersion + 1)) {
+				baselineTask.setIgnoreExcessiveVersionIncreases(true);
+			}
+
 			for (int majorVersion = lowestMajorVersion + 1;
 					majorVersion <= maxMajorVersion; majorVersion++) {
 
 				BaselineTask majorVersionBaselineTask = _addTaskBaseline(
 					newJarTask, majorVersion);
+
+				if (majorVersion < maxMajorVersion) {
+					majorVersionBaselineTask.setIgnoreExcessiveVersionIncreases(
+						true);
+				}
 
 				previousVersionBaselineTask.dependsOn(majorVersionBaselineTask);
 

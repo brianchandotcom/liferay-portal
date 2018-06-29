@@ -1019,6 +1019,8 @@
 			<var name="entryTitle" value="Blogs Title" />
 		</execute>
 
+		<execute function="AssertClick#assertTextClickAt" locator1="Button#PUBLISH" value1="Publish" />
+
 		<execute macro="Alert#viewRequiredField" />
 	</command>
 </definition>

@@ -187,26 +187,6 @@ public class KBArticleStagedModelDataHandler
 			kbArticleResourcePrimKeys, kbArticle.getParentResourcePrimKey(),
 			kbArticle.getParentResourcePrimKey());
 
-		long kbFolderClassNameId = _portal.getClassNameId(
-			KBFolderConstants.getClassName());
-
-		if ((kbArticle.getParentResourceClassNameId() !=
-				kbArticle.getClassNameId()) &&
-			(kbArticle.getParentResourceClassNameId() != kbFolderClassNameId)) {
-
-			KBArticle parentKBArticle =
-				_kbArticleLocalService.fetchLatestKBArticle(
-					parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
-
-			if (parentKBArticle != null) {
-				kbArticle.setParentResourceClassNameId(
-					kbArticle.getClassNameId());
-			}
-			else {
-				kbArticle.setParentResourceClassNameId(kbFolderClassNameId);
-			}
-		}
-
 		if (kbArticle.getParentResourcePrimKey() !=
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 

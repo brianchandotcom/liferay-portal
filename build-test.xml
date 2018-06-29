@@ -5225,6 +5225,7 @@ go]]></replacevalue>
 
 										<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
 											<property name="app.name" value="${osgi.app.name}" />
+											<property name="output.dir" value="${liferay.home}/osgi/marketplace" />
 											<property name="osgi.dir" value="${liferay.home}/osgi" />
 										</ant>
 

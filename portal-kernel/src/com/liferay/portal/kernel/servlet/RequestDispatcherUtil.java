@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Enumeration;
 
@@ -126,6 +127,70 @@ public class RequestDispatcherUtil {
 		return GetterUtil.getLong(
 			metaInfoCacheServletResponse.getHeader(HttpHeaders.LAST_MODIFIED),
 			-1);
+	}
+
+	private static class LastModifiedTimeServletResponse
+		extends BufferCacheServletResponse {
+
+		public LastModifiedTimeServletResponse(HttpServletResponse response) {
+			super(response);
+		}
+
+		@Override
+		public void addDateHeader(String name, long value) {
+			if (StringUtil.equalsIgnoreCase(name, HttpHeaders.LAST_MODIFIED)) {
+				_lastModified = String.valueOf(value);
+
+				return;
+			}
+
+			super.addDateHeader(name, value);
+		}
+
+		@Override
+		public void addHeader(String name, String value) {
+			if (StringUtil.equalsIgnoreCase(name, HttpHeaders.LAST_MODIFIED)) {
+				_lastModified = value;
+
+				return;
+			}
+
+			super.addHeader(name, value);
+		}
+
+		@Override
+		public String getHeader(String name) {
+			if (StringUtil.equalsIgnoreCase(name, HttpHeaders.LAST_MODIFIED)) {
+				return _lastModified;
+			}
+
+			return super.getHeader(name);
+		}
+
+		@Override
+		public void setDateHeader(String name, long value) {
+			if (StringUtil.equalsIgnoreCase(name, HttpHeaders.LAST_MODIFIED)) {
+				_lastModified = String.valueOf(value);
+
+				return;
+			}
+
+			super.setDateHeader(name, value);
+		}
+
+		@Override
+		public void setHeader(String name, String value) {
+			if (StringUtil.equalsIgnoreCase(name, HttpHeaders.LAST_MODIFIED)) {
+				_lastModified = value;
+
+				return;
+			}
+
+			super.setHeader(name, value);
+		}
+
+		private String _lastModified;
+
 	}
 
 }

@@ -377,6 +377,20 @@
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName}" />
 	</command>
 
+	<command name="getGroupIdFromHtmlSource" returns="groupId">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<var method="selenium#getAttribute('//li[@class=\'control-menu-nav-item\']/a[contains(@data-qa-id,\'editLayout\')]@href')" name="pageURL" />
+
+		<var method="StringUtil#stripBetween('${pageURL}', '${portalURL}', 'GroupPagesPortlet_groupId=')" name="partialPageURL" />
+
+		<var method="StringUtil#extractFirst('${partialPageURL}', '&amp;')" name="groupId" />
+
+		<echo>## * Group ID: ${groupId}</echo>
+
+		<return name="groupId" value="${groupId}" />
+	</command>
+
 	<command name="gotoChildPagePG">
 		<execute function="MouseOver" locator1="Home#PAGE">
 			<var name="key_pageName" value="${pageName}" />

@@ -86,6 +86,8 @@
 	</command>
 
 	<command name="ViewBookmarkNoXSS" priority="4">
+		<property name="portal.release" value="false" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

@@ -1123,6 +1123,7 @@
 		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
 		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
 		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.release" value="false" />
 
 		<var name="searchPage" value="Search Page" />
 

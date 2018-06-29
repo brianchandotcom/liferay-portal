@@ -851,6 +851,7 @@
 	</command>
 
 	<command name="AddWCWithOptionalVocabularyAssetType" priority="3">
+		<property name="portal.release" value="false" />
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
 		<execute macro="Navigator#openURL" />

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
@@ -129,18 +128,11 @@ public abstract class BasePaginationTestCase extends BaseIndexingTestCase {
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
-	private void _assertBadRange(int start, int end, String message)
-		throws Exception {
-
+	private void _assertBadRange(int start, int end, String message) {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(message);
 
-		try {
-			search(_createSearchContext(start, end));
-		}
-		catch (SearchException se) {
-			throw (Exception)se.getCause();
-		}
+		search(_createSearchContext(start, end));
 	}
 
 	private void _assertPagination(int start, int end, int expectedSize)

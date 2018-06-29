@@ -16,7 +16,6 @@ package com.liferay.marketplace.app.manager.web.internal.util.comparator;
 
 import com.liferay.marketplace.app.manager.web.internal.constants.BundleConstants;
 import com.liferay.marketplace.app.manager.web.internal.util.AppDisplay;
-import com.liferay.marketplace.app.manager.web.internal.util.ModuleGroupDisplay;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -84,14 +83,6 @@ public class MarketplaceAppManagerComparator implements Comparator {
 		if (object instanceof AppDisplay) {
 			AppDisplay appDisplay = (AppDisplay)object;
 
-			if (appDisplay.hasModuleGroups()) {
-				return 1;
-			}
-			else {
-				return 2;
-			}
-		}
-		else if (object instanceof ModuleGroupDisplay) {
 			return 2;
 		}
 		else if (object instanceof Bundle) {
@@ -115,11 +106,6 @@ public class MarketplaceAppManagerComparator implements Comparator {
 
 			return GetterUtil.getString(
 				headers.get(BundleConstants.BUNDLE_NAME));
-		}
-		else if (object instanceof ModuleGroupDisplay) {
-			ModuleGroupDisplay moduleGroupDisplay = (ModuleGroupDisplay)object;
-
-			return moduleGroupDisplay.getTitle();
 		}
 
 		return StringPool.BLANK;

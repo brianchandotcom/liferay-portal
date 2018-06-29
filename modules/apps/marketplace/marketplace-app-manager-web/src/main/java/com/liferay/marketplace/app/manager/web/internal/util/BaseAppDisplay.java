@@ -26,7 +26,6 @@ public abstract class BaseAppDisplay implements AppDisplay {
 
 	@Override
 	public void addBundle(Bundle bundle) {
-		_moduleGroupDisplays = null;
 
 		_bundles.add(bundle);
 	}
@@ -45,16 +44,6 @@ public abstract class BaseAppDisplay implements AppDisplay {
 	@Override
 	public List<Bundle> getBundles() {
 		return _bundles;
-	}
-
-	@Override
-	public List<ModuleGroupDisplay> getModuleGroupDisplays() {
-		if (_moduleGroupDisplays == null) {
-			_moduleGroupDisplays =
-				ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(this);
-		}
-
-		return _moduleGroupDisplays;
 	}
 
 	@Override
@@ -82,32 +71,6 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		return state;
 	}
 
-	@Override
-	public boolean hasModuleGroups() {
-		List<ModuleGroupDisplay> moduleGroupDisplays = getModuleGroupDisplays();
-
-		if (moduleGroupDisplays.isEmpty()) {
-			return false;
-		}
-		else if (moduleGroupDisplays.size() > 1) {
-			return true;
-		}
-
-		ModuleGroupDisplay moduleGroupDisplay = moduleGroupDisplays.get(0);
-
-		String title = moduleGroupDisplay.getTitle();
-
-		if (title.equals(
-				ModuleGroupDisplay.MODULE_GROUP_TITLE_INDEPENDENT_MODULES)) {
-
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-
 	private final List<Bundle> _bundles = new ArrayList<>();
-	private List<ModuleGroupDisplay> _moduleGroupDisplays;
 
 }

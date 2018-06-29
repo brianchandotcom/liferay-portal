@@ -39,8 +39,6 @@ public interface AppDisplay extends Comparable<AppDisplay> {
 
 	public String getIconURL(HttpServletRequest request);
 
-	public List<ModuleGroupDisplay> getModuleGroupDisplays();
-
 	public int getState();
 
 	public String getStoreURL(HttpServletRequest request);
@@ -48,8 +46,6 @@ public interface AppDisplay extends Comparable<AppDisplay> {
 	public String getTitle();
 
 	public String getVersion();
-
-	public boolean hasModuleGroups();
 
 	public boolean isRequired();
 

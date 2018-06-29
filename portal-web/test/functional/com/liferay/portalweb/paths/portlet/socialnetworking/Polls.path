@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ADD_NEW_POLL</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add')]</td>
+	<td>//span[contains(@class,'btn-link')]//span[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>

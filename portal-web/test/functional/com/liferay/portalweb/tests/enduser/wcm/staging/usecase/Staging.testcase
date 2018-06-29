@@ -2321,6 +2321,8 @@
 	</command>
 
 	<command name="ViewPublishedContentAfterStagingUndo" priority="4">
+		<property name="portal.release" value="false" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>

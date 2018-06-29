@@ -585,6 +585,8 @@
 	</command>
 
 	<command name="AddVocabularyAssetTypeBookmarksEntry" priority="3">
+		<property name="portal.release" value="false" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

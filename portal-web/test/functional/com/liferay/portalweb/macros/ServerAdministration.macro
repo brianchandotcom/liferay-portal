@@ -39,8 +39,6 @@
 					<var name="panel" value="Enabling Xuggler provides video conversion functionality." />
 				</execute>
 
-				<execute function="Select" locator1="ServerAdministrationExternalServices#XUGGLER_JAR_FILE_SELECT" value1="${xugglerJarFile}" />
-
 				<execute function="AssertClick" locator1="ServerAdministrationExternalServices#XUGGLER_INSTALL_BUTTON" value1="Install" />
 
 				<execute macro="Panel#expandPanel">

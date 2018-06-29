@@ -21,8 +21,6 @@ import com.liferay.marketplace.app.manager.web.internal.util.AppDisplay;
 import com.liferay.marketplace.app.manager.web.internal.util.AppDisplayFactoryUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.BundleManagerUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.BundleUtil;
-import com.liferay.marketplace.app.manager.web.internal.util.ModuleGroupDisplay;
-import com.liferay.marketplace.app.manager.web.internal.util.ModuleGroupDisplayFactoryUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.comparator.BundleComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -100,27 +98,11 @@ public class ViewModulesManagementToolbarDisplayContext
 		};
 	}
 
-	public String getModuleGroup() {
-		return ParamUtil.getString(request, "moduleGroup");
-	}
-
-	public ModuleGroupDisplay getModuleGroupDisplay() {
-		String moduleGroup = getModuleGroup();
-
-		if (Validator.isNotNull(moduleGroup)) {
-			return ModuleGroupDisplayFactoryUtil.getModuleGroupDisplay(
-				getAppDisplay(), moduleGroup);
-		}
-
-		return null;
-	}
-
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view_modules.jsp");
 		portletURL.setParameter("app", getApp());
-		portletURL.setParameter("moduleGroup", getModuleGroup());
 		portletURL.setParameter("state", getState());
 		portletURL.setParameter("orderByType", getOrderByType());
 
@@ -151,14 +133,8 @@ public class ViewModulesManagementToolbarDisplayContext
 		List<Bundle> bundles = null;
 
 		AppDisplay appDisplay = getAppDisplay();
-		ModuleGroupDisplay moduleGroupDisplay = getModuleGroupDisplay();
 
-		if (moduleGroupDisplay != null) {
-			bundles = moduleGroupDisplay.getBundles();
-		}
-		else {
-			bundles = appDisplay.getBundles();
-		}
+		bundles = appDisplay.getBundles();
 
 		BundleUtil.filterBundles(
 			bundles, BundleStateConstants.getState(getState()));

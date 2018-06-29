@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewAppsManagerManagementToolbarDisplayContext
-	viewAppsManagerManagementToolbarDisplayContext = new ViewAppsManagerManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
+ViewAppsManagerManagementToolbarDisplayContext viewAppsManagerManagementToolbarDisplayContext = new ViewAppsManagerManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
 
 SearchContainer searchContainer = viewAppsManagerManagementToolbarDisplayContext.getSearchContainer();
 

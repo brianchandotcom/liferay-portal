@@ -408,7 +408,17 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 
 		Project rootProject = project.getRootProject();
 
-		return rootProject.relativePath(file);
+		String relativePath = rootProject.relativePath(file);
+
+		if (File.separatorChar != '/') {
+			relativePath = relativePath.replace(File.separatorChar, '/');
+		}
+
+		if (relativePath.charAt(0) != '.') {
+			relativePath = "./" + relativePath;
+		}
+
+		return relativePath;
 	}
 
 	private Task _getTask(String name) {

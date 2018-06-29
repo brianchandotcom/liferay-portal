@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.process.CollectorOutputProcessor;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
@@ -36,12 +35,10 @@ import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -57,20 +54,12 @@ import com.liferay.portal.license.sigar.SigarNativeLoader;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URI;
-import java.net.URL;
-
-import java.security.Key;
-import java.security.KeyFactory;
-import java.security.PublicKey;
-import java.security.SecureRandom;
-import java.security.spec.X509EncodedKeySpec;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -85,8 +74,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-
-import javax.crypto.KeyGenerator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -376,7 +363,7 @@ public class LicenseUtil {
 			httpClient = httpClientBuilder.build();
 
 			ByteArrayEntity byteArrayEntity = new ByteArrayEntity(
-				_encryptRequest(serverURL, request));
+				request.getBytes(StringPool.UTF8));
 
 			byteArrayEntity.setContentType(ContentTypes.APPLICATION_JSON);
 
@@ -386,8 +373,7 @@ public class LicenseUtil {
 
 			HttpEntity httpEntity = httpResponse.getEntity();
 
-			String response = _decryptResponse(
-				serverURL, httpEntity.getContent());
+			String response = StringUtil.read(httpEntity.getContent());
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Server response: " + response);
@@ -460,47 +446,6 @@ public class LicenseUtil {
 		}
 
 		return jsonObject;
-	}
-
-	private static String _decryptResponse(
-			String serverURL, InputStream inputStream)
-		throws Exception {
-
-		if (serverURL.startsWith(Http.HTTPS)) {
-			return StringUtil.read(inputStream);
-		}
-
-		byte[] bytes = FileUtil.getBytes(inputStream);
-
-		if ((bytes == null) || (bytes.length <= 0)) {
-			return null;
-		}
-
-		bytes = Encryptor.decryptUnencodedAsBytes(_symmetricKey, bytes);
-
-		return new String(bytes, StringPool.UTF8);
-	}
-
-	private static byte[] _encryptRequest(String serverURL, String request)
-		throws Exception {
-
-		byte[] bytes = request.getBytes(StringPool.UTF8);
-
-		if (serverURL.startsWith(Http.HTTPS)) {
-			return bytes;
-		}
-
-		JSONObject jsonObject = new JSONObjectImpl();
-
-		bytes = Encryptor.encryptUnencoded(_symmetricKey, bytes);
-
-		jsonObject.put("content", Base64.objectToString(bytes));
-
-		jsonObject.put("key", _ENCRYPTED_SYMMETRIC_KEY);
-
-		String jsonObjectString = jsonObject.toString();
-
-		return jsonObjectString.getBytes(StringPool.UTF8);
 	}
 
 	private static Map<String, String> _getOrderProducts(
@@ -600,8 +545,6 @@ public class LicenseUtil {
 		}
 	}
 
-	private static final String _ENCRYPTED_SYMMETRIC_KEY;
-
 	private static final int _PROCESSOR_CORES;
 
 	private static final String _PROXY_PASSWORD = GetterUtil.getString(
@@ -625,38 +568,8 @@ public class LicenseUtil {
 		LicenseUtil.class, "registerOrder", String.class, String.class,
 		int.class);
 	private static byte[] _serverIdBytes;
-	private static final Key _symmetricKey;
 
 	static {
-		try {
-			URL url = LicenseUtil.class.getResource(
-				"/com/liferay/portal/license/public.key");
-
-			byte[] bytes = FileUtil.getBytes(url.openStream());
-
-			X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(
-				bytes);
-
-			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-
-			PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
-
-			KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-
-			keyGenerator.init(128, new SecureRandom());
-
-			_symmetricKey = keyGenerator.generateKey();
-
-			byte[] encryptedSymmetricKey = Encryptor.encryptUnencoded(
-				publicKey, _symmetricKey.getEncoded());
-
-			_ENCRYPTED_SYMMETRIC_KEY = Base64.objectToString(
-				encryptedSymmetricKey);
-		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
-		}
-
 		Set<String> ipAddresses = new HashSet<>();
 
 		Set<String> macAddresses = new HashSet<>();

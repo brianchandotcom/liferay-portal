@@ -17,6 +17,7 @@ package com.liferay.asset.auto.tagger.internal;
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.AssetAutoTagger;
 import com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerConfiguration;
+import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -89,6 +90,9 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 				_assetTagLocalService.addAssetEntryAssetTag(
 					assetEntry.getEntryId(), assetTag);
+
+				_assetAutoTaggerEntryLocalService.addAssetAutoTaggerEntry(
+					assetEntry, assetTag);
 			}
 		}
 
@@ -130,6 +134,9 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 	}
 
 	private volatile AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
+
+	@Reference
+	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

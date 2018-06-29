@@ -63,7 +63,7 @@ AUI.add(
 						value: []
 					},
 
-					showPlaceholderEnabled: {
+					showPlaceholder: {
 						lazyAdd: false,
 						value: true
 					},
@@ -549,13 +549,15 @@ AUI.add(
 					_showPlaceholderOption: function() {
 						var instance = this;
 
-						var showPlaceholderOption = false;
-
-						if ((instance.get('fixedOptions') || instance.get('options')) && !instance.get('multiple') && instance.get('showPlaceholderEnabled')) {
-							showPlaceholderOption = true;
+						if (!instance.get('showPlaceholder')) {
+							return false;
 						}
 
-						return showPlaceholderOption;
+						if ((instance.get('fixedOptions') || instance.get('options')) && !instance.get('multiple')) {
+							return true;
+						}
+
+						return false;
 					},
 
 					_showSearch: function() {

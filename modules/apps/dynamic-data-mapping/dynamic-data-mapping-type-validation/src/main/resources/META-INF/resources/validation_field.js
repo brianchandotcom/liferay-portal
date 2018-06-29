@@ -113,7 +113,7 @@ AUI.add(
 									valueChange: A.bind(instance._syncValidationUI, instance)
 								},
 								context: A.clone(context),
-								showPlaceholderEnabled: false
+								showPlaceholder: false
 							}
 						);
 

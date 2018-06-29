@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Utilities Java Compat
-Bundle-SymbolicName: com.liferay.util.java.compat
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.util.mail

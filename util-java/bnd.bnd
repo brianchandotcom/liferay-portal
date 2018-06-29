@@ -6,6 +6,4 @@ Import-Package:\
 	com.liferay.*,\
 	\
 	*;resolution:=optional
-Include-Resource:\
-	classes,\
-	@../tmp/lib-pre/com.liferay.util.java.compat.jar
+Include-Resource: classes

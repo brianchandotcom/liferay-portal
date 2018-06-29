@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Kernel NIO Compat
-Bundle-SymbolicName: com.liferay.portal.kernel.nio.compat
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.kernel.nio.charset

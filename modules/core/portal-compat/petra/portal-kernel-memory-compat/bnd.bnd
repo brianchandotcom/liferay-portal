@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Kernel Memory Compat
-Bundle-SymbolicName: com.liferay.portal.kernel.memory.compat
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.kernel.memory

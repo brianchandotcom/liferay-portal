@@ -137,12 +137,12 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 				if (e instanceof RemoteAuthException) {
 					SessionErrors.add(actionRequest, AuthException.class, e);
+
+					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
-
-				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (e instanceof IllegalArgumentException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);

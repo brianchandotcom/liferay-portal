@@ -52,7 +52,7 @@ public class HeaderFilter extends BasePortalFilter {
 			return -1;
 		}
 
-		return GetterUtil.getLong(value);
+		return GetterUtil.getLong(value) / 1000 * 1000;
 	}
 
 	@Override

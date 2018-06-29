@@ -31,36 +31,6 @@ if (WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus()) {
 renderResponse.setTitle(title);
 %>
 
-<div class="nav-bar-container">
-	<div class="navbar navbar-default">
-		<div class="container">
-			<div class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<aui:a cssClass="active nav-link" href="<%= currentURL %>" label="code" />
-					</li>
-				</ul>
-			</div>
-
-			<div class="mt-1 pull-right">
-				<c:if test="<%= WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus() %>">
-					<button class="btn btn-default" onclick="<%= "submitForm(document.querySelector('#" + renderResponse.getNamespace() + "fm'));" %>">
-						<span class="lfr-btn-label">
-							<liferay-ui:message key="save-as-draft" />
-						</span>
-					</button>
-				</c:if>
-
-				<button class="btn btn-primary" id="<portlet:namespace />publishButton">
-					<span class="lfr-btn-label">
-						<liferay-ui:message key="publish" />
-					</span>
-				</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 <liferay-ui:error exception="<%= FragmentEntryContentException.class %>">
 
 	<%
@@ -112,6 +82,12 @@ renderResponse.setTitle(title);
 
 	var fragmentEditor = new FragmentEditor.default(
 		{
+			currentURL: '<%= currentURL %>',
+			draft: <%= WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus() %>,
+			fragmentDisplayContextFragmentCollectionId: '<%= fragmentDisplayContext.getFragmentCollectionId() %>',
+			fragmentDisplayContextFragmentEntryId: '<%= fragmentDisplayContext.getFragmentEntryId() %>',
+			fragmentDisplayContextRedirect: '<%= fragmentDisplayContext.getRedirect() %>',
+			fragmentEntryStatus: '<%= fragmentEntry.getStatus() %>',
 			initialCSS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getCssContent()) %>',
 			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
 			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',

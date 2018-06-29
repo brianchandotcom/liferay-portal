@@ -4,11 +4,13 @@
  * FragmentEditor
  */
 {template .render}
+	{@param currentURL: string}
+	{@param draft: bool}
 	{@param initialCSS: string}
 	{@param initialHTML: string}
 	{@param initialJS: string}
-	{@param previewFragmentEntryURL: string}
 	{@param namespace: string}
+	{@param previewFragmentEntryURL: string}
 	{@param renderFragmentEntryURL: string}
 	{@param spritemap: string}
 	{@param? _css: string}
@@ -18,45 +20,83 @@
 	{@param? _html: string}
 	{@param? _js: string}
 
-	<div class="fragment-editor">
-		{call com.liferay.fragment.web.SourceEditor.render}
-			{param events: ['contentChanged': $_handleHTMLChanged] /}
-			{param initialContent: $initialHTML /}
-			{param spritemap: $spritemap /}
-			{param syntax: 'html' /}
-		{/call}
+	<div class="fragment-editor-container">
+		<div class="nav-bar-container">
+			<div class="navbar navbar-default">
+				<div class="container">
+					<div class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+						<ul class="navbar-nav">
+							<li class="nav-item">
+								<a class="active nav-link" href="{$currentURL}">
+									{msg desc=""}code{/msg}
+								</a>
+							</li>
+						</ul>
+					</div>
 
-		{call com.liferay.fragment.web.SourceEditor.render}
-			{param events: ['contentChanged': $_handleCSSChanged] /}
-			{param initialContent: $initialCSS /}
-			{param spritemap: $spritemap /}
-			{param syntax: 'css' /}
-		{/call}
+					<div class="btn-group btn-group-nowrap mt-1 pull-right">
+						{if $draft}
+							<div class="btn-group-item">
+								<button class="btn btn-default" onclick="submitForm(document.querySelector('#{$namespace}fm'));">
+									<span class="lfr-btn-label">
+										{msg desc=""}save-as-draft{/msg}
+									</span>
+								</button>
+							</div>
+						{/if}
 
-		{let $element kind="text"}
-			fragmentElement
-		{/let}
+						<div class="btn-group-item">
+							<button class="btn btn-primary" id="{$namespace}publishButton">
+								<span class="lfr-btn-label">
+									{msg desc=""}publish{/msg}
+								</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-		{call com.liferay.fragment.web.SourceEditor.render}
-			{param codeHeader: 'function(fragmentElement) {' /}
-			{param codeHeaderHelp kind="html"}
-				{msg desc=""}parameter-{$element}-provides-access-to-the-current-fragment-node-use-it-to-manipulate-fragment-components{/msg}
-			{/param}
-			{param codeFooter: '}' /}
-			{param events: ['contentChanged': $_handleJSChanged] /}
-			{param initialContent: $initialJS /}
-			{param spritemap: $spritemap /}
-			{param syntax: 'javascript' /}
-		{/call}
+		<div class="fragment-editor">
+			{call com.liferay.fragment.web.SourceEditor.render}
+				{param events: ['contentChanged': $_handleHTMLChanged] /}
+				{param initialContent: $initialHTML /}
+				{param spritemap: $spritemap /}
+				{param syntax: 'html' /}
+			{/call}
 
-		{call com.liferay.fragment.web.FragmentPreview.render}
-			{param css: $_css /}
-			{param html: $_html /}
-			{param js: $_js /}
-			{param namespace: $namespace /}
-			{param previewFragmentEntryURL: $previewFragmentEntryURL /}
-			{param renderFragmentEntryURL: $renderFragmentEntryURL /}
-			{param spritemap: $spritemap /}
-		{/call}
+			{call com.liferay.fragment.web.SourceEditor.render}
+				{param events: ['contentChanged': $_handleCSSChanged] /}
+				{param initialContent: $initialCSS /}
+				{param spritemap: $spritemap /}
+				{param syntax: 'css' /}
+			{/call}
+
+			{let $element kind="text"}
+				fragmentElement
+			{/let}
+
+			{call com.liferay.fragment.web.SourceEditor.render}
+				{param codeHeader: 'function(fragmentElement) {' /}
+				{param codeHeaderHelp kind="html"}
+					{msg desc=""}parameter-{$element}-provides-access-to-the-current-fragment-node-use-it-to-manipulate-fragment-components{/msg}
+				{/param}
+				{param codeFooter: '}' /}
+				{param events: ['contentChanged': $_handleJSChanged] /}
+				{param initialContent: $initialJS /}
+				{param spritemap: $spritemap /}
+				{param syntax: 'javascript' /}
+			{/call}
+
+			{call com.liferay.fragment.web.FragmentPreview.render}
+				{param css: $_css /}
+				{param html: $_html /}
+				{param js: $_js /}
+				{param namespace: $namespace /}
+				{param previewFragmentEntryURL: $previewFragmentEntryURL /}
+				{param renderFragmentEntryURL: $renderFragmentEntryURL /}
+				{param spritemap: $spritemap /}
+			{/call}
+		</div>
 	</div>
 {/template}

@@ -18,7 +18,6 @@
 
 <%
 String app = ParamUtil.getString(request, "app");
-String moduleGroup = ParamUtil.getString(request, "moduleGroup");
 
 PortletURL backURL = renderResponse.createRenderURL();
 
@@ -28,14 +27,12 @@ if (Validator.isNull(app)) {
 else {
 	backURL.setParameter("mvcPath", "/view_modules.jsp");
 	backURL.setParameter("app", app);
-	backURL.setParameter("moduleGroup", moduleGroup);
 }
 
 ViewModuleManagementToolbarDisplayContext viewModuleManagementToolbarDisplayContext = new ViewModuleManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
 
 AppDisplay appDisplay = viewModuleManagementToolbarDisplayContext.getAppDisplay();
 Bundle bundle = viewModuleManagementToolbarDisplayContext.getBundle();
-ModuleGroupDisplay moduleGroupDisplay = viewModuleManagementToolbarDisplayContext.getModuleGroupDisplay();
 String pluginType = viewModuleManagementToolbarDisplayContext.getPluginType();
 SearchContainer searchContainer = viewModuleManagementToolbarDisplayContext.getSearchContainer();
 
@@ -58,7 +55,7 @@ if (Validator.isNull(app)) {
 	PortalUtil.addPortletBreadcrumbEntry(request, bundleName, null);
 }
 else {
-	MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, bundle, request, renderResponse);
+	MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, bundle, request, renderResponse);
 }
 %>
 

@@ -49,7 +49,7 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 
 		String customRange = "[20170101000000 TO 20170105000000]";
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
@@ -79,7 +79,7 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 			"[11110101010101 TO 22220202020202]=1",
 			"[19990202020202 TO 22220202020202]=1");
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 

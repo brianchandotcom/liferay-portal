@@ -40,7 +40,7 @@ public abstract class BaseAssetTagNamesFacetTestCase extends BaseFacetTestCase {
 		addDocument("TAG");
 		addDocument(RandomTestUtil.randomString());
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
@@ -57,7 +57,7 @@ public abstract class BaseAssetTagNamesFacetTestCase extends BaseFacetTestCase {
 		addDocument("Green-Blue Tag", "Red Tag");
 		addDocument("Tag");
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 

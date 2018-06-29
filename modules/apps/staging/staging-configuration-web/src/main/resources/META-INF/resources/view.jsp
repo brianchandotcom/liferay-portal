@@ -45,6 +45,10 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 		<div class="custom-sheet sheet sheet-lg">
 			<liferay-ui:success key="stagingDisabled" message="staging-is-successfully-disabled" />
 
+			<liferay-ui:success key="localStagingModified" message="local-staging-configuration-is-successfully-modified" />
+
+			<liferay-ui:success key="remoteStagingModified" message="remote-staging-configuration-is-successfully-modified" />
+
 			<portlet:actionURL name="editStagingConfiguration" var="editStagingConfigurationURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
 			</portlet:actionURL>

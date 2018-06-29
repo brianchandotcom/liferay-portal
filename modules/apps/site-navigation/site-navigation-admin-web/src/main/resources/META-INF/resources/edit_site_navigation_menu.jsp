@@ -142,6 +142,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	var sidebarBodyChangeHandler = null;
 	var siteNavigationMenuEditor = null;
 	var siteNavigationMenuItemRemoveButtonClickHandler = null;
+	var siteNavigationMenuItemRemoveButtonKeyupHandler = null;
 
 	function closeSidebar () {
 		var saveChanges = !changed ? false : confirm(
@@ -228,6 +229,12 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			siteNavigationMenuItemRemoveButtonClickHandler = null;
 		}
 
+		if (siteNavigationMenuItemRemoveButtonKeyupHandler) {
+			siteNavigationMenuItemRemoveButtonKeyupHandler.detach();
+
+			siteNavigationMenuItemRemoveButtonKeyupHandler = null;
+		}
+
 		if (siteNavigationMenuEditor) {
 			siteNavigationMenuEditor.dispose();
 
@@ -289,6 +296,14 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		event.stopPropagation();
 	}
 
+	function handleSiteNavigationMenuItemRemoveIconKeyup(event) {
+		if (event.which === 32) {
+			event.preventDefault();
+			event.stopPropagation();
+			event.target.getDOMNode().click();
+		}
+	}
+
 	function openSidebar(title) {
 		sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
 		sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><span class="icon-monospaced" id="<portlet:namespace />sidebarHeaderButton"><aui:icon image="times" markupView="lexicon" /></span></div></div>'
@@ -342,6 +357,10 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			siteNavigationMenuItemRemoveButtonClickHandler = A
 				.all('.site-navigation-menu-item__remove-icon')
 				.on('click', handleSiteNavigationMenuItemRemoveIconClick);
+
+			siteNavigationMenuItemRemoveButtonKeyupHandler = A
+				.all('.site-navigation-menu-item__remove-icon')
+				.on('keyup', handleSiteNavigationMenuItemRemoveIconKeyup);
 
 			showSiteNavigationMenuSettingsButtonClickHandler = A
 				.one('#<portlet:namespace />showSiteNavigationMenuSettings')

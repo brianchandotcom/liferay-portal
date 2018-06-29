@@ -15,6 +15,8 @@
 package com.liferay.staging.processes.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.util.TrashWebKeys;
@@ -63,6 +65,19 @@ public class StagingProcessesPortlet extends MVCPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		boolean localStagingEnabled = ParamUtil.getBoolean(
+			renderRequest, "localStagingEnabled", false);
+		boolean remoteStagingEnabled = ParamUtil.getBoolean(
+			renderRequest, "remoteStagingEnabled", false);
+
+		if (localStagingEnabled) {
+			SessionMessages.add(renderRequest, "localStagingEnabled");
+		}
+
+		if (remoteStagingEnabled) {
+			SessionMessages.add(renderRequest, "remoteStagingEnabled");
+		}
 
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 

@@ -26,6 +26,10 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
+<liferay-ui:success key="localStagingEnabled" message="local-staging-is-successfully-enabled" />
+
+<liferay-ui:success key="remoteStagingEnabled" message="remote-staging-is-successfully-enabled" />
+
 <div id="<portlet:namespace />publishProcessesSearchContainer">
 	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="mvcRenderCommandName" value="viewPublishLayouts" />

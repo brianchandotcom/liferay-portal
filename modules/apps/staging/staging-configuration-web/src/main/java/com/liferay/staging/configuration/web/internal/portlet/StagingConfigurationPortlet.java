@@ -104,6 +104,8 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortalException, PortletException {
 
+		hideDefaultSuccessMessage(actionRequest);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -176,12 +178,18 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 					actionRequest, liveGroup.getStagingGroup(),
 					StagingProcessesPortletKeys.STAGING_PROCESSES, 0, 0,
 					PortletRequest.RENDER_PHASE);
+
+				portletURL.setParameter(
+					"localStagingEnabled", Boolean.TRUE.toString());
 			}
 			else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 				portletURL = _portal.getControlPanelPortletURL(
 					actionRequest, liveGroup,
 					StagingProcessesPortletKeys.STAGING_PROCESSES, 0, 0,
 					PortletRequest.RENDER_PHASE);
+
+				portletURL.setParameter(
+					"remoteStagingEnabled", Boolean.TRUE.toString());
 			}
 
 			if (portletURL != null) {
@@ -209,6 +217,9 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 			if (stagingType == StagingConstants.TYPE_NOT_STAGED) {
 				SessionMessages.add(actionRequest, "stagingDisabled");
 			}
+			else {
+				SessionMessages.add(actionRequest, "remoteStagingModified");
+			}
 		}
 		else {
 
@@ -225,6 +236,8 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 			if (portletURL != null) {
 				redirect = portletURL.toString();
 			}
+
+			SessionMessages.add(actionRequest, "localStagingModified");
 		}
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);

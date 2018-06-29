@@ -149,16 +149,15 @@ public class WebPageElementNestedCollectionResource
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
+		Locale locale = themeDisplay.getLocale();
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(webSiteId);
+		ServiceContext serviceContext =
+			webPageElementCreatorForm.getServiceContext(webSiteId);
 
 		JournalArticle journalArticle = _journalArticleService.addArticle(
 			webSiteId, 0, 0, 0, null, true,
-			webPageElementCreatorForm.getTitleMap(),
-			webPageElementCreatorForm.getDescriptionMap(),
+			webPageElementCreatorForm.getTitleMap(locale),
+			webPageElementCreatorForm.getDescriptionMap(locale),
 			webPageElementCreatorForm.getText(),
 			webPageElementCreatorForm.getStructure(),
 			webPageElementCreatorForm.getTemplate(), null,
@@ -216,7 +215,7 @@ public class WebPageElementNestedCollectionResource
 			return null;
 		}
 
-		return content.replaceAll("\\s+", "");
+		return content.replaceAll("[\\t\\n]", "");
 	}
 
 	private JournalArticleWrapper _getJournalArticleWrapper(

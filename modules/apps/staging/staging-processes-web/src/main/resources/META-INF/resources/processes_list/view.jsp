@@ -24,17 +24,6 @@ String navigation = ParamUtil.getString(request, "navigation", "all");
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
-
-Boolean localStagingEnabled = ParamUtil.getBoolean(request, "localStagingEnabled", false);
-Boolean remoteStagingEnabled = ParamUtil.getBoolean(request, "remoteStagingEnabled", false);
-
-if (localStagingEnabled) {
-	SessionMessages.add(request, "localStagingEnabled");
-}
-
-if (remoteStagingEnabled) {
-	SessionMessages.add(request, "remoteStagingEnabled");
-}
 %>
 
 <liferay-ui:success key="localStagingEnabled" message="local-staging-is-successfully-enabled" />

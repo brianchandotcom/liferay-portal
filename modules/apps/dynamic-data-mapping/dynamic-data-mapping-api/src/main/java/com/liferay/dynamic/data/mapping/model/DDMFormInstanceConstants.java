@@ -12,26 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0;
-
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringUtil;
+package com.liferay.dynamic.data.mapping.model;
 
 /**
  * @author Pedro Queiroz
  */
-public class UpgradeSchema extends UpgradeProcess {
+public class DDMFormInstanceConstants {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String template = StringUtil.read(
-				UpgradeSchema.class.getResourceAsStream(
-					"dependencies/update.sql"));
-
-			runSQLTemplateString(template, false, false);
-		}
-	}
+	public static final String VERSION_DEFAULT = "1.0";
 
 }

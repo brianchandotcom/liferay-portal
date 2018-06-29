@@ -25,7 +25,10 @@ import com.liferay.portal.kernel.util.Validator;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Objects;
+
 /**
+ * @author Adam Brandizzi
  * @author Pedro Queiroz
  */
 public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
@@ -34,30 +37,42 @@ public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
 		_jsonFactory = jsonFactory;
 	}
 
-	protected String addAutosaveEnabledSetting(JSONObject settingsJSONObject) {
+	protected String addNewSetting(
+		JSONObject settingsJSONObject, String propertyName, String value) {
+
 		JSONArray fieldValuesJSONArray = settingsJSONObject.getJSONArray(
 			"fieldValues");
 
-		JSONObject autosaveEnabledSettingJSONObject =
-			createAutosaveEnabledSetting();
+		JSONObject settingJSONObject = createSettingJSONObject(
+			propertyName, value);
 
-		fieldValuesJSONArray.put(autosaveEnabledSettingJSONObject);
+		fieldValuesJSONArray.put(settingJSONObject);
 
 		settingsJSONObject.put("fieldValues", fieldValuesJSONArray);
 
 		return settingsJSONObject.toJSONString();
 	}
 
-	protected JSONObject createAutosaveEnabledSetting() {
-		JSONObject autosaveEnabledSettingJSONObject =
-			_jsonFactory.createJSONObject();
+	protected void convertToJSONArrayValue(
+		JSONObject fieldJSONObject, String defaultValue) {
 
-		autosaveEnabledSettingJSONObject.put(
-			"instanceId", StringUtil.randomString());
-		autosaveEnabledSettingJSONObject.put("name", "autosaveEnabled");
-		autosaveEnabledSettingJSONObject.put("value", "true");
+		JSONArray jsonArrayValue = _jsonFactory.createJSONArray();
 
-		return autosaveEnabledSettingJSONObject;
+		jsonArrayValue.put(fieldJSONObject.getString("value", defaultValue));
+
+		fieldJSONObject.put("value", jsonArrayValue);
+	}
+
+	protected JSONObject createSettingJSONObject(
+		String propertyName, String value) {
+
+		JSONObject settingJSONObject = _jsonFactory.createJSONObject();
+
+		settingJSONObject.put("instanceId", StringUtil.randomString());
+		settingJSONObject.put("name", propertyName);
+		settingJSONObject.put("value", value);
+
+		return settingJSONObject;
 	}
 
 	@Override
@@ -81,9 +96,14 @@ public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
 					JSONObject settingsJSONObject =
 						_jsonFactory.createJSONObject(settings);
 
-					settings = addAutosaveEnabledSetting(settingsJSONObject);
+					addNewSetting(
+						settingsJSONObject, "autosaveEnabled", "true");
+					addNewSetting(
+						settingsJSONObject, "requireAuthentication", "false");
 
-					ps2.setString(1, settings);
+					updateSettings(settingsJSONObject);
+
+					ps2.setString(1, settingsJSONObject.toJSONString());
 
 					ps2.setLong(2, formInstanceId);
 
@@ -93,6 +113,29 @@ public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
 
 			ps2.executeBatch();
 		}
+	}
+
+	protected JSONObject getFieldValue(
+		String fieldName, JSONArray fieldValues) {
+
+		for (int i = 0; i < fieldValues.length(); i++) {
+			JSONObject jsonObject = fieldValues.getJSONObject(i);
+
+			if (Objects.equals(jsonObject.getString("name"), fieldName)) {
+				return jsonObject;
+			}
+		}
+
+		return null;
+	}
+
+	protected void updateSettings(JSONObject settingsJSONObject) {
+		JSONArray fieldValues = settingsJSONObject.getJSONArray("fieldValues");
+
+		convertToJSONArrayValue(
+			getFieldValue("storageType", fieldValues), "json");
+		convertToJSONArrayValue(
+			getFieldValue("workflowDefinition", fieldValues), "no-workflow");
 	}
 
 	private final JSONFactory _jsonFactory;

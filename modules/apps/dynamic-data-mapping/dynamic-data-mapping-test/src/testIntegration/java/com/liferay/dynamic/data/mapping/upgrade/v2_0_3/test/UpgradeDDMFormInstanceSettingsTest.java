@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.internal.upgrade.v1_0_2.test;
+package com.liferay.dynamic.data.mapping.upgrade.v2_0_3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.helper.DDMFormInstanceTestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -50,7 +49,7 @@ import org.junit.runner.RunWith;
  * @author Adam Brandizzi
  */
 @RunWith(Arquillian.class)
-public class UpgradeDDLRecordSetSettingsTest {
+public class UpgradeDDMFormInstanceSettingsTest {
 
 	@ClassRule
 	@Rule
@@ -63,46 +62,47 @@ public class UpgradeDDLRecordSetSettingsTest {
 
 		_jsonFactory = new JSONFactoryImpl();
 
-		_ddlRecordSetTestHelper = new DDLRecordSetTestHelper(_group);
+		_ddmFormInstanceTestHelper = new DDMFormInstanceTestHelper(_group);
 
-		setUpUpgradeDDLRecordSetSettings();
+		setUpUpgradeDDMFormInstanceSettings();
 	}
 
 	@Test
 	public void testAddRequireAuthenticationSetting() throws Exception {
 		String settings = createSettings(false);
 
-		DDLRecordSet recordSet = createRecordSet(settings);
+		DDMFormInstance formInstance = createFormInstance(settings);
 
-		JSONArray fieldValues = getFieldValues(recordSet.getSettings());
+		JSONArray fieldValues = getFieldValues(formInstance.getSettings());
 
 		Assert.assertFalse(containsField(fieldValues, "requireAuthentication"));
 
-		_upgradeDDLRecordSetSettings.upgrade();
+		_upgradeDDMFormInstanceSettings.upgrade();
 
-		recordSet = getRecordSet(recordSet);
+		formInstance = getRecordSet(formInstance);
 
-		fieldValues = getFieldValues(recordSet.getSettings());
+		fieldValues = getFieldValues(formInstance.getSettings());
 
 		Assert.assertTrue(containsField(fieldValues, "requireAuthentication"));
 	}
 
 	@Test
-	public void testDoNotUpdateRecordSetsOfOtherScopes() throws Exception {
-		String originalSettings = createSettings(false);
+	public void testEnableAutosaveSetting() throws Exception {
+		String settings = createSettings(false);
 
-		DDLRecordSet recordSet = createRecordSet(
-			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, originalSettings);
+		DDMFormInstance formInstance = createFormInstance(settings);
 
-		JSONArray fieldValues = getFieldValues(recordSet.getSettings());
+		JSONArray fieldValues = getFieldValues(formInstance.getSettings());
 
-		Assert.assertFalse(containsField(fieldValues, "requireAuthentication"));
+		Assert.assertFalse(containsField(fieldValues, "autosaveEnabled"));
 
-		_upgradeDDLRecordSetSettings.upgrade();
+		_upgradeDDMFormInstanceSettings.upgrade();
 
-		recordSet = getRecordSet(recordSet);
+		formInstance = getRecordSet(formInstance);
 
-		Assert.assertEquals(originalSettings, recordSet.getSettings());
+		fieldValues = getFieldValues(formInstance.getSettings());
+
+		Assert.assertTrue(containsField(fieldValues, "autosaveEnabled"));
 	}
 
 	protected boolean containsField(JSONArray fieldValues, String field) {
@@ -134,36 +134,29 @@ public class UpgradeDDLRecordSetSettingsTest {
 		jsonArray.put(getFieldValue("published", "false"));
 
 		if (hasSetting) {
-			JSONObject fieldValue = getFieldValue(
-				"requireAuthentication", "false");
-
-			jsonArray.put(fieldValue);
+			jsonArray.put(getFieldValue("autosaveEnabled", "false"));
+			jsonArray.put(getFieldValue("requireAuthentication", "false"));
 		}
 
 		return jsonArray;
 	}
 
-	protected DDLRecordSet createRecordSet(int scope, String settings)
+	protected DDMFormInstance createFormInstance(String settings)
 		throws Exception {
 
 		DDMForm form = DDMFormTestUtil.createDDMForm("field");
 
-		DDLRecordSet recordSet = _ddlRecordSetTestHelper.addRecordSet(form);
+		DDMFormInstance formInstance =
+			_ddmFormInstanceTestHelper.addDDMFormInstance(form);
 
-		recordSet.setScope(scope);
+		formInstance.setSettings(settings);
 
-		recordSet.setSettings(settings);
+		DDMFormInstanceLocalServiceUtil.updateDDMFormInstance(formInstance);
 
-		DDLRecordSetLocalServiceUtil.updateDDLRecordSet(recordSet);
+		formInstance = DDMFormInstanceLocalServiceUtil.getFormInstance(
+			formInstance.getFormInstanceId());
 
-		recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
-			recordSet.getRecordSetId());
-
-		return recordSet;
-	}
-
-	protected DDLRecordSet createRecordSet(String settings) throws Exception {
-		return createRecordSet(DDLRecordSetConstants.SCOPE_FORMS, settings);
+		return formInstance;
 	}
 
 	protected String createSettings(boolean hasSetting) {
@@ -207,18 +200,18 @@ public class UpgradeDDLRecordSetSettingsTest {
 		return settingsJSONObject.getJSONArray("fieldValues");
 	}
 
-	protected DDLRecordSet getRecordSet(DDLRecordSet recordSet)
+	protected DDMFormInstance getRecordSet(DDMFormInstance formInstance)
 		throws PortalException {
 
 		EntityCacheUtil.clearCache();
 
-		recordSet = DDLRecordSetLocalServiceUtil.getDDLRecordSet(
-			recordSet.getRecordSetId());
+		formInstance = DDMFormInstanceLocalServiceUtil.getDDMFormInstance(
+			formInstance.getFormInstanceId());
 
-		return recordSet;
+		return formInstance;
 	}
 
-	protected void setUpUpgradeDDLRecordSetSettings() {
+	protected void setUpUpgradeDDMFormInstanceSettings() {
 		_upgradeStepRegistrator.register(
 			new UpgradeStepRegistrator.Registry() {
 
@@ -243,7 +236,7 @@ public class UpgradeDDLRecordSetSettingsTest {
 						String className = clazz.getName();
 
 						if (className.contains(_CLASS_NAME)) {
-							_upgradeDDLRecordSetSettings =
+							_upgradeDDMFormInstanceSettings =
 								(UpgradeProcess)upgradeStep;
 						}
 					}
@@ -253,20 +246,20 @@ public class UpgradeDDLRecordSetSettingsTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.dynamic.data.lists.internal.upgrade.v1_0_2." +
-			"UpgradeDDLRecordSetSettings";
+		"com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_3." +
+			"UpgradeDDMFormInstanceSettings";
 
 	@Inject(
-		filter = "(&(objectClass=com.liferay.dynamic.data.lists.internal.upgrade.DDLServiceUpgrade))"
+		filter = "(&(objectClass=com.liferay.dynamic.data.mapping.internal.upgrade.DDMServiceUpgrade))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
-	private DDLRecordSetTestHelper _ddlRecordSetTestHelper;
+	private DDMFormInstanceTestHelper _ddmFormInstanceTestHelper;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private JSONFactory _jsonFactory;
-	private UpgradeProcess _upgradeDDLRecordSetSettings;
+	private UpgradeProcess _upgradeDDMFormInstanceSettings;
 
 }

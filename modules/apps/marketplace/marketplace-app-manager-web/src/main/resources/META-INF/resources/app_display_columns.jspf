@@ -25,7 +25,7 @@
 >
 	<h2 class="list-group-title">
 		<a href="<%= HtmlUtil.escapeHREF(appDisplay.getDisplayURL(renderResponse)) %>">
-			<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(appDisplay.getTitle()) %>
+			<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(appDisplay.getDisplayTitle()) %>
 		</a>
 	</h2>
 
@@ -34,6 +34,16 @@
 	</p>
 
 	<div class="additional-info list-group-subtext">
+		<c:if test="<%= Validator.isNotNull(appDisplay.getDisplaySuiteTitle()) %>">
+			<div class="additional-info-item">
+				<strong>
+					<liferay-ui:message key="suite" />:
+				</strong>
+
+				<%= appDisplay.getDisplaySuiteTitle() %>
+			</div>
+		</c:if>
+
 		<div class="additional-info-item">
 			<strong>
 				<liferay-ui:message key="version" />:

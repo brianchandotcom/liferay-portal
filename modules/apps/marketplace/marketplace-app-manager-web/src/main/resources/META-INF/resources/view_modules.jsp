@@ -32,7 +32,7 @@ backURL.setParameter("mvcPath", "/view.jsp");
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
-renderResponse.setTitle(appDisplay.getTitle());
+renderResponse.setTitle(appDisplay.getDisplayTitle());
 
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
 %>

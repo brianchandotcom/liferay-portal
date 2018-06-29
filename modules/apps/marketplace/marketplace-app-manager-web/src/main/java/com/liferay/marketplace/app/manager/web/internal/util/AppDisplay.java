@@ -35,6 +35,10 @@ public interface AppDisplay extends Comparable<AppDisplay> {
 
 	public String getDescription();
 
+	public String getDisplaySuiteTitle();
+
+	public String getDisplayTitle();
+
 	public String getDisplayURL(MimeResponse mimeResponse);
 
 	public String getIconURL(HttpServletRequest request);

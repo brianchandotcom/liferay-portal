@@ -89,7 +89,7 @@ public class MarketplaceAppManagerSearchUtil {
 	protected static boolean hasAppDisplayKeywordsMatch(
 		AppDisplay appDisplay, String keywordsRegex) {
 
-		if (containsMatches(keywordsRegex, appDisplay.getTitle()) ||
+		if (containsMatches(keywordsRegex, appDisplay.getDisplayTitle()) ||
 			containsMatches(keywordsRegex, appDisplay.getDescription())) {
 
 			return true;

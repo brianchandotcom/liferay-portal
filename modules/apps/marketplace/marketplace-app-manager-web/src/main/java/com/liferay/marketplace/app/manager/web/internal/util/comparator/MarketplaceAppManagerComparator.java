@@ -94,7 +94,7 @@ public class MarketplaceAppManagerComparator implements Comparator {
 		if (object instanceof AppDisplay) {
 			AppDisplay appDisplay = (AppDisplay)object;
 
-			return appDisplay.getTitle();
+			return appDisplay.getDisplayTitle();
 		}
 		else if (object instanceof Bundle) {
 			Bundle bundle = (Bundle)object;

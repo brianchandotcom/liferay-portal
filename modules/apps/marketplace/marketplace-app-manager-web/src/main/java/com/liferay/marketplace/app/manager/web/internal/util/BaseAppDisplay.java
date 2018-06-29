@@ -14,7 +14,13 @@
 
 package com.liferay.marketplace.app.manager.web.internal.util;
 
+import com.liferay.marketplace.app.manager.web.internal.constants.BundleConstants;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -46,6 +52,28 @@ public abstract class BaseAppDisplay implements AppDisplay {
 	}
 
 	@Override
+	public String getDisplaySuiteTitle() {
+		if (_suiteTitle != null) {
+			return _suiteTitle;
+		}
+
+		Bundle bundle = _bundles.get(0);
+
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		_suiteTitle = getDisplayTitle(
+			headers.get(BundleConstants.LIFERAY_RELENG_SUITE_TITLE));
+
+		return _suiteTitle;
+	}
+
+	@Override
+	public String getDisplayTitle() {
+		return getDisplayTitle(getTitle());
+	}
+
+	@Override
 	public int getState() {
 		List<Bundle> bundles = getBundles();
 
@@ -70,6 +98,23 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		return state;
 	}
 
+	protected static String getDisplayTitle(String title) {
+		if (title == null) {
+			return StringPool.BLANK;
+		}
+
+		if (!StringUtil.equals(
+				ReleaseInfo.getName(), "Liferay Community Edition Portal")) {
+
+			// See SubsystemLPKGPackagerImpl#_getSuiteTitle
+
+			return title.replaceFirst("^Liferay CE ", "Liferay ");
+		}
+
+		return title;
+	}
+
 	private final List<Bundle> _bundles = new ArrayList<>();
+	private String _suiteTitle;
 
 }

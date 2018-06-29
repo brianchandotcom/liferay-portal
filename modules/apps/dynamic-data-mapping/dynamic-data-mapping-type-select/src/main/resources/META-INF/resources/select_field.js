@@ -63,6 +63,11 @@ AUI.add(
 						value: []
 					},
 
+					showPlaceholder: {
+						lazyAdd: false,
+						value: true
+					},
+
 					strings: {
 						value: {
 							chooseAnOption: Liferay.Language.get('choose-an-option'),
@@ -217,13 +222,23 @@ AUI.add(
 					hasFocus: function(node) {
 						var instance = this;
 
-						var hasFocus = SelectField.superclass.hasFocus.apply(instance, arguments);
+						if (node) {
+							var title = node.get('title');
 
-						if (node && node.hasClass('trigger-label-item-close')) {
-							hasFocus = true;
+							var container = instance.get('container');
+
+							var dropChosen = container.one('.drop-chosen');
+
+							if (dropChosen.one('a[title="' + title + '"]')) {
+								return true;
+							}
+
+							if (node.hasClass('trigger-label-item-close')) {
+								return true;
+							}
 						}
 
-						return hasFocus;
+						return SelectField.superclass.hasFocus.apply(instance, arguments);
 					},
 
 					openList: function() {
@@ -534,13 +549,15 @@ AUI.add(
 					_showPlaceholderOption: function() {
 						var instance = this;
 
-						var showPlaceholderOption = false;
-
-						if ((instance.get('fixedOptions') || instance.get('options')) && !instance.get('multiple')) {
-							showPlaceholderOption = true;
+						if (!instance.get('showPlaceholder')) {
+							return false;
 						}
 
-						return showPlaceholderOption;
+						if ((instance.get('fixedOptions') || instance.get('options')) && !instance.get('multiple')) {
+							return true;
+						}
+
+						return false;
 					},
 
 					_showSearch: function() {

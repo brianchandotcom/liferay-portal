@@ -382,7 +382,12 @@
 <!--VALIDATION-->
 <tr>
 	<td>VALIDATION_ARGUMENT</td>
-	<td>//div[contains(@data-fieldname,'validation')]//select</td>
+	<td>//div[contains(@data-fieldname,'validation')]//div[contains(@class,'select-field-trigger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_ARGUMENT_OPTION</td>
+	<td>//div[contains(@data-fieldname,'validation')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_validationArgument}')]</td>
 	<td></td>
 </tr>
 <tr>

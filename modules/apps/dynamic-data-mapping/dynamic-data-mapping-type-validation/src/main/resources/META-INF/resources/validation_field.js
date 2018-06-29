@@ -67,8 +67,7 @@ AUI.add(
 							instance.after('validationChange', A.bind('_loadValidationFieldType', instance)),
 							instance.after('valueChange', A.bind('_afterValueChange', instance)),
 							instance.bindContainerEvent('change', A.bind('_setErrorMessage', instance), '.message-input'),
-							instance.bindContainerEvent('change', A.bind('_syncValidationUI', instance), '.enable-validation'),
-							instance.bindContainerEvent('change', A.bind('_syncValidationUI', instance), 'select')
+							instance.bindContainerEvent('change', A.bind('_syncValidationUI', instance), '.enable-validation')
 						);
 					},
 
@@ -102,6 +101,23 @@ AUI.add(
 						);
 
 						return new Liferay.DDM.Field.Numeric(config);
+					},
+
+					createSelectField: function(context) {
+						var instance = this;
+
+						var config = A.merge(
+							context,
+							{
+								after: {
+									valueChange: A.bind(instance._syncValidationUI, instance)
+								},
+								context: A.clone(context),
+								showPlaceholder: false
+							}
+						);
+
+						return new Liferay.DDM.Field.Select(config);
 					},
 
 					createTextField: function(context) {
@@ -188,6 +204,12 @@ AUI.add(
 							errorMessage: instance._getMessageValue(),
 							expression: expression
 						};
+					},
+
+					hasFocus: function(node) {
+						var instance = this;
+
+						return instance._validationOptions.hasFocus(node);
 					},
 
 					_afterValueChange: function() {
@@ -331,7 +353,22 @@ AUI.add(
 
 						var dataType = validation.dataType;
 
+						var value = [];
+
+						if (instance.get('selectedValidation')) {
+							value.push(instance.get('selectedValidation').name);
+						}
+
+						instance._validationOptions = instance.createSelectField(
+							{
+								options: instance._getValidationsOptions(),
+								value: value
+							}
+						);
+
 						instance._validationField = instance._createField(dataType);
+
+						instance._validationOptions.render(validationContainer.one('.validation-options'));
 
 						instance._validationField.render(validationContainer.one('.validation-input'));
 					},
@@ -388,9 +425,21 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						var newVal = currentTarget.val();
+						var newVal = '';
 
-						var selectedValidation = newVal;
+						if (currentTarget.get('type') == 'select') {
+							newVal = currentTarget.get('value')[0];
+							currentTarget = currentTarget.get('container');
+						}
+						else {
+							newVal = currentTarget.val();
+						}
+
+						var selectedValidation = '';
+
+						if (newVal) {
+							selectedValidation = newVal;
+						}
 
 						if (currentTarget.hasClass('types-select')) {
 							var validations = instance.get('validations');

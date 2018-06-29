@@ -167,7 +167,7 @@ AUI.add(
 				var alert = instance._alert;
 
 				if (alert) {
-					alert.destroy();
+					alert._alertsContainer._node.innerHTML = "";
 				}
 
 				alert = new Liferay.Alert(

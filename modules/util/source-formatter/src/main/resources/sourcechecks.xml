@@ -5,6 +5,7 @@
 		<check name="CDNCheck" />
 		<check name="IncorrectFileLocationCheck" />
 		<check name="ReturnCharacterCheck" />
+		<check name="SlantedQuotesCheck" />
 	</source-processor>
 	<source-processor name="BNDSourceProcessor">
 		<check name="BNDBundleCheck" />

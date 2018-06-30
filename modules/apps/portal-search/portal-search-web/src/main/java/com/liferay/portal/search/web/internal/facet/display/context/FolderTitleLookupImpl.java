@@ -17,7 +17,6 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.FolderSearcher;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
@@ -54,6 +53,7 @@ public class FolderTitleLookupImpl implements FolderTitleLookup {
 			_request);
 
 		searchContext.setFolderIds(new long[] {curFolderId});
+		searchContext.setGroupIds(new long[0]);
 		searchContext.setKeywords(StringPool.BLANK);
 
 		return searchContext;

@@ -206,7 +206,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to process " + imageURL);
+					_log.warn("Unable to process " + imageURL, e);
 				}
 
 				if (_log.isDebugEnabled()) {

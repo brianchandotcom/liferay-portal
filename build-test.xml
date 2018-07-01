@@ -1651,7 +1651,7 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 				<sequential>
 					<if>
 						<not>
-							<available file="${app.server.portal.dir}/lib/ext/${petra.jar.file}" />
+							<available file="${app.server.lib.global.dir}/@{petra.jar.file}" />
 						</not>
 						<then>
 							<local name="regex" />
@@ -8318,8 +8318,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 				<delete dir="dist" />
 
-				<prepare-jboss-module-configuration />
-
 				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts" />
 
 				<mirrors-get
@@ -8375,6 +8373,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</unzip>
 
 				<delete file="liferay-portal-tools.zip" />
+
+				<prepare-jboss-module-configuration />
 			</else>
 		</if>
 

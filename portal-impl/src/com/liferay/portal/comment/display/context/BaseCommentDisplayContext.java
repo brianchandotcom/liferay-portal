@@ -31,7 +31,7 @@ public abstract class BaseCommentDisplayContext
 
 		Group group = themeDisplay.getSiteGroup();
 
-		if (group.isStagingGroup()) {
+		if (group.isStagingGroup() || group.isStagedRemotely()) {
 			return false;
 		}
 

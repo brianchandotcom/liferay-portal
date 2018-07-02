@@ -45,7 +45,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	protected void deleteOrphanedSocialRequests() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"delete from SocialRequest where classNameId = ? and classPk " +
+				"delete from SocialRequest where classNameId = ? and classPK " +
 					"not in (select groupId from Group_)")) {
 
 			ps.setLong(

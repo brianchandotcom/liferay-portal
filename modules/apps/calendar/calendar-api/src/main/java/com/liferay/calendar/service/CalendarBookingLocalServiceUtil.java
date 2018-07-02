@@ -73,9 +73,10 @@ public class CalendarBookingLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #addCalendarBooking(long,
-	long, long[], long, long, Map, Map, String, long, long,
-	boolean, String, long, String, long, String, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addCalendarBooking(long, long, long[], long, long, Map, Map,
+	String, long, long, boolean, String, long, String, long,
+	String, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.calendar.model.CalendarBooking addCalendarBooking(
@@ -155,7 +156,7 @@ public class CalendarBookingLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#deleteCalendarBookingInstance(long, CalendarBooking, int,
 	boolean)}
 	*/
@@ -170,7 +171,7 @@ public class CalendarBookingLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#deleteCalendarBookingInstance(long, CalendarBooking, int,
 	boolean, boolean)}
 	*/
@@ -186,7 +187,7 @@ public class CalendarBookingLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#deleteCalendarBookingInstance(long, CalendarBooking, long,
 	boolean)}
 	*/
@@ -201,7 +202,7 @@ public class CalendarBookingLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#deleteCalendarBookingInstance(long, CalendarBooking, long,
 	boolean, boolean)}
 	*/
@@ -255,7 +256,7 @@ public class CalendarBookingLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#deleteCalendarBookingInstance(long, long, long, boolean)}
 	*/
 	@Deprecated

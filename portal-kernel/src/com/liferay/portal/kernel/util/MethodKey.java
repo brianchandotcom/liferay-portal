@@ -69,8 +69,8 @@ public class MethodKey implements Externalizable {
 	}
 
 	/**
-	 * @deprecated As of Newton, replaced by {@link #MethodKey(Class, String,
-	 *             Class...)}
+	 * @deprecated As of Newton (6.2.x), replaced by {@link #MethodKey(Class,
+	 *             String, Class...)}
 	 */
 	@Deprecated
 	public MethodKey(

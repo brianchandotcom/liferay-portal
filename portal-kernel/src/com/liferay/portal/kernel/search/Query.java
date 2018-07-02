@@ -38,7 +38,7 @@ public interface Query extends Serializable {
 	public QueryConfig getQueryConfig();
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public Object getWrappedQuery();

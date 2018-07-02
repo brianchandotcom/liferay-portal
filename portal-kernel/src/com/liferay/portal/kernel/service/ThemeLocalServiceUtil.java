@@ -97,7 +97,7 @@ public class ThemeLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getPageThemes}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPageThemes}
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.portal.kernel.model.Theme> getThemes(

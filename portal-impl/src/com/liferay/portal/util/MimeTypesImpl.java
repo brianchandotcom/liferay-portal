@@ -244,7 +244,8 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #read(InputStream, Map)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #read(InputStream,
+	 *             Map)}
 	 */
 	@Deprecated
 	protected void read(InputStream stream) throws Exception {
@@ -287,7 +288,8 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #readMimeType(Element, Map)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #readMimeType(Element, Map)}
 	 */
 	@Deprecated
 	protected void readMimeType(Element element) {

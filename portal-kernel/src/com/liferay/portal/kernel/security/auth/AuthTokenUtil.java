@@ -50,7 +50,7 @@ public class AuthTokenUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #checkCSRFToken(HttpServletRequest, String)}
 	 */
 	@Deprecated
@@ -110,7 +110,7 @@ public class AuthTokenUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #isValidPortletInvocationToken(HttpServletRequest, Layout,
 	 *             Portlet)}
 	 */

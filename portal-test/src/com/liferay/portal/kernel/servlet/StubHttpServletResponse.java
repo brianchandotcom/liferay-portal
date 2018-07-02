@@ -55,7 +55,7 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -69,7 +69,7 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -217,7 +217,7 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override

@@ -196,7 +196,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public void setRejectedExecutionHandler(
@@ -224,7 +224,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected RejectedExecutionHandler createRejectionExecutionHandler() {
@@ -235,7 +235,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		Set<MessageListener> messageListeners, Message message);
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected ThreadPoolExecutor getThreadPoolExecutor() {

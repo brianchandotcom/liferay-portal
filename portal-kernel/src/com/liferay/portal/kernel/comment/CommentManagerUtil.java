@@ -88,7 +88,8 @@ public class CommentManagerUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #_getCommentManager()}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #_getCommentManager()}
 	 */
 	@Deprecated
 	public static CommentManager getCommentManager() {

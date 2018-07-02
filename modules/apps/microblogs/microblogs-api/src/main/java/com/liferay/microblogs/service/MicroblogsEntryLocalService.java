@@ -213,7 +213,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	public List<MicroblogsEntry> getMicroblogsEntries(int start, int end);
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -221,7 +221,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		int type, int start, int end, OrderByComparator obc);
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -229,7 +229,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		long creatorClassPK, int start, int end);
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -256,7 +256,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		boolean andOperator, int start, int end);
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -269,7 +269,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		long creatorClassNameId, String assetTagName, int start, int end);
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -285,7 +285,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	public int getMicroblogsEntriesCount();
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -293,7 +293,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		long creatorClassPK);
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -318,7 +318,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		long creatorClassNameId, String assetTagName);
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -326,7 +326,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		long creatorClassPK, String assetTagName, boolean andOperator);
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

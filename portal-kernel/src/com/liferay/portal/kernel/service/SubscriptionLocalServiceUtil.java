@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see SubscriptionLocalService
  * @see com.liferay.portal.service.base.SubscriptionLocalServiceBaseImpl
  * @see com.liferay.portal.service.impl.SubscriptionLocalServiceImpl
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
 com.liferay.subscription.service.impl.SubscriptionLocalServiceImpl}
  * @generated
  */

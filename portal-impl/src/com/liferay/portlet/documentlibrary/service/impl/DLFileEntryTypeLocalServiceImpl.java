@@ -723,8 +723,9 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #_updateDDMStructure(long,
-	 *             String, long, long, Map, Map, long[], ServiceContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #_updateDDMStructure(long, String, long, long, Map, Map,
+	 *             long[], ServiceContext)}
 	 */
 	@Deprecated
 	protected long updateDDMStructure(

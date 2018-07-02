@@ -60,7 +60,7 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl
  * @see com.liferay.portal.kernel.service.ResourceBlockPermissionLocalServiceUtil
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  * @generated
  */
 @Deprecated

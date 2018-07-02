@@ -62,7 +62,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, Replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), Replaced by {@link
 	#deleteCategories(long[])}
 	*/
 	@Deprecated

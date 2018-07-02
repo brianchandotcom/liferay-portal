@@ -16,7 +16,7 @@ package com.liferay.portlet.asset.util;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Wilberforce, replaced by {@link
+ * @deprecated As of Wilberforce (7.0.x), replaced by {@link
  *             com.liferay.asset.tags.validator.AtLeastOneTagAssetEntryValidator}
  */
 @Deprecated

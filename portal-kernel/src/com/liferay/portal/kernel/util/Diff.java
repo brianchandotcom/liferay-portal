@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author     Bruno Farache
- * @deprecated As of Wilberforce, moved to {@link
+ * @deprecated As of Wilberforce (7.0.x), moved to {@link
  *             com.liferay.portal.kernel.diff.Diff}
  */
 @Deprecated

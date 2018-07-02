@@ -438,8 +438,8 @@ public class MBMessageServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #updateMessage(long, String,
-	String, List, double, boolean, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateMessage(long,
+	String, String, List, double, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.message.boards.model.MBMessageSoap updateMessage(

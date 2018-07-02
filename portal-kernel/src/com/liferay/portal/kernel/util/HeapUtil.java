@@ -48,8 +48,8 @@ public class HeapUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #heapDump(boolean, boolean,
-	 *             String, OutputProcessor)
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #heapDump(boolean,
+	 *             boolean, String, OutputProcessor)
 	 */
 	@Deprecated
 	public static <O, E> Future<ObjectValuePair<O, E>> heapDump(
@@ -68,8 +68,8 @@ public class HeapUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #heapDump(int, boolean,
-	 *             boolean, String, OutputProcessor)
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #heapDump(int,
+	 *             boolean, boolean, String, OutputProcessor)
 	 */
 	@Deprecated
 	public static <O, E> Future<ObjectValuePair<O, E>> heapDump(

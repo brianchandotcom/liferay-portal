@@ -81,7 +81,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of Bunyan
+	 * @deprecated As of Bunyan (6.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -90,7 +90,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -99,7 +99,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -120,7 +120,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -134,7 +134,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override

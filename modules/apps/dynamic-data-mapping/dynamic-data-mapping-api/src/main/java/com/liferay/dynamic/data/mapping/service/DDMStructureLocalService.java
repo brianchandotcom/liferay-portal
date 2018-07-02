@@ -111,9 +111,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	UUID, creation date, modification date, guest permissions,
 	and group permissions for the structure.
 	* @return the structure
-	* @deprecated As of Wilberforce, replaced by {@link #addStructure(long,
-	long, long, long, String, Map, Map, DDMForm, DDMFormLayout,
-	String, int, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#addStructure(long, long, long, long, String, Map, Map,
+	DDMForm, DDMFormLayout, String, int, ServiceContext)}
 	*/
 	@Deprecated
 	public DDMStructure addStructure(long userId, long groupId,
@@ -145,9 +145,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	UUID, creation date, modification date, guest permissions,
 	and group permissions for the structure.
 	* @return the structure
-	* @deprecated As of Wilberforce, replaced by {@link #addStructure(long,
-	long, long, Map, Map, DDMForm, DDMFormLayout,
-	ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#addStructure(long, long, long, Map, Map, DDMForm,
+	DDMFormLayout, ServiceContext)}
 	*/
 	@Deprecated
 	public DDMStructure addStructure(long userId, long groupId,
@@ -185,9 +185,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	UUID, creation date, modification date, guest permissions and
 	group permissions for the structure.
 	* @return the structure
-	* @deprecated As of Wilberforce, replaced by {@link #addStructure(long,
-	long, String, long, String, Map, Map, DDMForm, DDMFormLayout,
-	String, int, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#addStructure(long, long, String, long, String, Map, Map,
+	DDMForm, DDMFormLayout, String, int, ServiceContext)}
 	*/
 	@Deprecated
 	public DDMStructure addStructure(long userId, long groupId,
@@ -1048,9 +1048,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param serviceContext the service context to be applied. Can set the
 	structure's modification date.
 	* @return the updated structure
-	* @deprecated As of Wilberforce, replaced by {@link #updateStructure(long,
-	long, long, long, String, Map, Map, DDMForm, DDMFormLayout,
-	ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateStructure(long, long, long, long, String, Map, Map,
+	DDMForm, DDMFormLayout, ServiceContext)}
 	*/
 	@Deprecated
 	public DDMStructure updateStructure(long groupId, long parentStructureId,
@@ -1071,9 +1071,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param serviceContext the service context to be applied. Can set the
 	structure's modification date.
 	* @return the updated structure
-	* @deprecated As of Wilberforce, replaced by {@link #updateStructure(long,
-	long, long, Map, Map, DDMForm, DDMFormLayout,
-	ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateStructure(long, long, long, Map, Map, DDMForm,
+	DDMFormLayout, ServiceContext)}
 	*/
 	@Deprecated
 	public DDMStructure updateStructure(long structureId,
@@ -1090,8 +1090,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param serviceContext the service context to be applied. Can set the
 	structure's modification date.
 	* @return the updated structure
-	* @deprecated As of Wilberforce, replaced by {@link #updateStructure(long,
-	DDMForm, DDMFormLayout, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateStructure(long, DDMForm, DDMFormLayout,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public DDMStructure updateXSD(long structureId, String definition,

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.search.TermRangeQueryFactory;
 
 /**
  * @author     Raymond Augé
- * @deprecated As of Wilberforce
+ * @deprecated As of Wilberforce (7.0.x)
  */
 @Deprecated
 public class TermRangeQueryFactoryImpl implements TermRangeQueryFactory {

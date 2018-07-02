@@ -25,7 +25,7 @@ import java.util.List;
  * asset tag statistics.
  *
  * @author     Jorge Ferrer
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.asset.tag.stats.service.impl.AssetTagStatsLocalServiceImpl}
  */
 @Deprecated

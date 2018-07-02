@@ -179,8 +179,9 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #updateKBFolder(long, long,
-	 *             long, String, String, ServiceContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #updateKBFolder(long, long, long, String, String,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

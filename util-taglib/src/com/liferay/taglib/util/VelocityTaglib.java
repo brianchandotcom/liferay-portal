@@ -88,8 +88,8 @@ public interface VelocityTaglib {
 		throws Exception;
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #breadcrumb(long, String,
-	 *             boolean, boolean, boolean, boolean)}}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #breadcrumb(long,
+	 *             String, boolean, boolean, boolean, boolean)}}
 	 */
 	@Deprecated
 	public void breadcrumb(
@@ -116,7 +116,7 @@ public interface VelocityTaglib {
 	public BreadcrumbTag getBreadcrumbTag() throws Exception;
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public DiscussionTag getDiscussionTag() throws Exception;
@@ -126,7 +126,7 @@ public interface VelocityTaglib {
 	public JournalArticleTag getJournalArticleTag() throws Exception;
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public MySitesTag getMySitesTag() throws Exception;
@@ -134,7 +134,7 @@ public interface VelocityTaglib {
 	public PageContext getPageContext();
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public PngImageTag getPngImageTag() throws Exception;
@@ -273,7 +273,7 @@ public interface VelocityTaglib {
 		throws Exception;
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public void staging() throws Exception;

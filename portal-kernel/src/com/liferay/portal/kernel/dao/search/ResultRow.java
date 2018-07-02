@@ -52,8 +52,8 @@ public interface ResultRow {
 	public void addDate(int index, Date date, String href);
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addJSP(String, String, int,
-	 *             String, ServletContext, HttpServletRequest ,
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #addJSP(String,
+	 *             String, int, String, ServletContext, HttpServletRequest ,
 	 *             HttpServletResponse)}
 	 */
 	@Deprecated
@@ -64,7 +64,7 @@ public interface ResultRow {
 		HttpServletRequest request, HttpServletResponse response);
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public void addJSP(
@@ -76,8 +76,9 @@ public interface ResultRow {
 		HttpServletResponse response);
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addJSP(String, String,
-	 *             ServletContext, HttpServletRequest , HttpServletResponse)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #addJSP(String,
+	 *             String, ServletContext, HttpServletRequest ,
+	 *             HttpServletResponse)}
 	 */
 	@Deprecated
 	public void addJSP(String path);
@@ -87,15 +88,16 @@ public interface ResultRow {
 		HttpServletResponse response);
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addJSP(String, String,
-	 *             ServletContext, HttpServletRequest , HttpServletResponse)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #addJSP(String,
+	 *             String, ServletContext, HttpServletRequest ,
+	 *             HttpServletResponse)}
 	 */
 	@Deprecated
 	public void addJSP(String path, String cssClass);
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addJSP(String, String, int,
-	 *             String, ServletContext, HttpServletRequest ,
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #addJSP(String,
+	 *             String, int, String, ServletContext, HttpServletRequest ,
 	 *             HttpServletResponse)}
 	 */
 	@Deprecated
@@ -111,8 +113,9 @@ public interface ResultRow {
 		HttpServletRequest request, HttpServletResponse response);
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addJSP(String, String,
-	 *             ServletContext, HttpServletRequest , HttpServletResponse)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #addJSP(String,
+	 *             String, ServletContext, HttpServletRequest ,
+	 *             HttpServletResponse)}
 	 */
 	@Deprecated
 	public void addJSP(String align, String valign, String path);

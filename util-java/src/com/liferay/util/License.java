@@ -16,7 +16,7 @@ package com.liferay.util;
 
 /**
  * @author     Jorge Ferrer
- * @deprecated As of Bunyan, replaced by {@link
+ * @deprecated As of Bunyan (6.0.x), replaced by {@link
  *             com.liferay.portal.kernel.plugin.License}
  */
 @Deprecated

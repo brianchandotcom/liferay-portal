@@ -1717,8 +1717,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param      userId the primary key of the user
 	 * @param      status the user's new workflow status
 	 * @return     the user
-	 * @deprecated As of Wilberforce, replaced by {@link #updateStatus(long,
-	 *             int, ServiceContext)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #updateStatus(long, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -2167,13 +2167,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *             <code>uuid</code> attribute), asset category IDs, asset tag
 	 *             names, and expando bridge attributes for the user.
 	 * @return     the user
-	 * @deprecated As of Wilberforce, replaced by {@link #updateUser(long,
-	 *             String, String, String, boolean, String, String, String,
-	 *             String, long, String, boolean, byte[], String, String,
-	 *             String, String, String, String, String, long, long, boolean,
-	 *             int, int, int, String, String, String, String, String,
-	 *             String, long[], long[], long[], List, long[], List, List,
-	 *             List, List, List, ServiceContext)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #updateUser(long, String, String, String, boolean, String,
+	 *             String, String, String, long, String, boolean, byte[],
+	 *             String, String, String, String, String, String, String, long,
+	 *             long, boolean, int, int, int, String, String, String, String,
+	 *             String, String, long[], long[], long[], List, long[], List,
+	 *             List, List, List, List, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

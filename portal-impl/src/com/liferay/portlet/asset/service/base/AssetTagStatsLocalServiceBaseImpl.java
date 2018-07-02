@@ -59,7 +59,7 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.asset.service.impl.AssetTagStatsLocalServiceImpl
  * @see com.liferay.asset.kernel.service.AssetTagStatsLocalServiceUtil
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
             com.liferay.asset.tag.stats.service.impl.AssetTagStatsLocalServiceImpl}
  * @generated
  */

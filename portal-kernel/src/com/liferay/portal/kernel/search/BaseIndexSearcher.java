@@ -33,8 +33,8 @@ public abstract class BaseIndexSearcher
 	implements IndexSearcher, QuerySuggester {
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #search(SearchContext,
-	 *             Query)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #search(SearchContext, Query)}
 	 */
 	@Deprecated
 	@Override

@@ -132,7 +132,7 @@ public class DataAccess {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getConnection()}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getConnection()}
 	 */
 	@Deprecated
 	public static Connection getUpgradeOptimizedConnection()

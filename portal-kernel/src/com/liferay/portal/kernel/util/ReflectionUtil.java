@@ -31,7 +31,7 @@ import java.util.function.Consumer;
  * @author     Brian Wing Shun Chan
  * @author     Miguel Pastor
  * @author     Shuyang Zhou
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.petra.reflect.ReflectionUtil}
  */
 @Deprecated
@@ -87,7 +87,7 @@ public class ReflectionUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static Type getGenericInterface(
@@ -117,7 +117,7 @@ public class ReflectionUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static Class<?> getGenericSuperType(Class<?> clazz) {
@@ -181,7 +181,7 @@ public class ReflectionUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static Class<?>[] getParameterTypes(Object[] arguments) {
@@ -228,7 +228,7 @@ public class ReflectionUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static Set<Method> getVisibleMethods(Class<?> clazz) {

@@ -51,7 +51,8 @@ public interface MessagingConfigurator {
 
 	/**
 	 * @param      replacementDestinations
-	 * @deprecated As of Wilberforce, replaced by {@link #setDestinations(List)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #setDestinations(List)}
 	 */
 	@Deprecated
 	public void setReplacementDestinations(

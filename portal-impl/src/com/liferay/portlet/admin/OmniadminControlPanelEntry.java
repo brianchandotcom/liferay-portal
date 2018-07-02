@@ -16,7 +16,7 @@ package com.liferay.portlet.admin;
 
 /**
  * @author     Jorge Ferrer
- * @deprecated As of Newton, replaced by {@link
+ * @deprecated As of Newton (6.2.x), replaced by {@link
  *             com.liferay.portal.kernel.portlet.OmniadminControlPanelEntry}
  */
 @Deprecated

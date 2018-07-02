@@ -17,7 +17,8 @@ package com.liferay.portal.kernel.portlet;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Julio Camarero
- * @deprecated As of Paton, replaced by {@link DefaultConfigurationAction}
+ * @deprecated As of Paton (6.1.x), replaced by {@link
+ *             DefaultConfigurationAction}
  */
 @Deprecated
 public class BaseConfigurationAction extends DefaultConfigurationAction {

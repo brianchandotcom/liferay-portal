@@ -275,7 +275,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getPageThemes}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPageThemes}
 	 */
 	@Deprecated
 	@Override

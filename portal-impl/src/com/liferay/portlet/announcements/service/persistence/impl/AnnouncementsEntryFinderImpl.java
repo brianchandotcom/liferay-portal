@@ -138,9 +138,9 @@ public class AnnouncementsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #countByScope(long, long,
-	 *             long, long[], int, int, int, int, int, int, int, int, int,
-	 *             int, boolean, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #countByScope(long,
+	 *             long, long, long[], int, int, int, int, int, int, int, int,
+	 *             int, int, boolean, int)}
 	 */
 	@Deprecated
 	@Override
@@ -160,9 +160,9 @@ public class AnnouncementsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #countByScopes(long, long,
-	 *             LinkedHashMap, int, int, int, int, int, int, int, int, int,
-	 *             int, boolean, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #countByScopes(long,
+	 *             long, LinkedHashMap, int, int, int, int, int, int, int, int,
+	 *             int, int, boolean, int)}
 	 */
 	@Deprecated
 	@Override
@@ -347,9 +347,9 @@ public class AnnouncementsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #findByScope(long, long,
-	 *             long, long[], int, int, int, int, int, int, int, int, int,
-	 *             int, boolean, int, int, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #findByScope(long,
+	 *             long, long, long[], int, int, int, int, int, int, int, int,
+	 *             int, int, boolean, int, int, int)}
 	 */
 	@Deprecated
 	@Override
@@ -370,9 +370,9 @@ public class AnnouncementsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #findByScopes(long, long,
-	 *             LinkedHashMap, int, int, int, int, int, int, int, int, int,
-	 *             int, boolean, int, int, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #findByScopes(long,
+	 *             long, LinkedHashMap, int, int, int, int, int, int, int, int,
+	 *             int, int, boolean, int, int, int)}
 	 */
 	@Deprecated
 	@Override

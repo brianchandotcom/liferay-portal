@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author     Alberto Montero
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Component(
 	immediate = true,

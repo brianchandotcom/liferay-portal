@@ -16,7 +16,7 @@ package com.liferay.exportimport.kernel.lar;
 
 /**
  * @author     Raymond Augé
- * @deprecated As of Wilberforce, see {@link
+ * @deprecated As of Wilberforce (7.0.x), see {@link
  *             com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent}
  */
 @Deprecated

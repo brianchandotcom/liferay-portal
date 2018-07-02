@@ -34,8 +34,8 @@ import java.util.Set;
 public class OutputData implements Mergeable<OutputData>, Serializable {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addDataSB(String, String,
-	 *             StringBundler)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #addDataSB(String,
+	 *             String, StringBundler)}
 	 */
 	@Deprecated
 	public void addData(
@@ -63,7 +63,8 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getDataSB(String, String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getDataSB(String,
+	 *             String)}
 	 */
 	@Deprecated
 	public com.liferay.portal.kernel.util.StringBundler getData(
@@ -79,7 +80,8 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getMergedDataSB(String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getMergedDataSB(String)}
 	 */
 	@Deprecated
 	public com.liferay.portal.kernel.util.StringBundler getMergedData(
@@ -146,8 +148,8 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #setDataSB(String, String,
-	 *             StringBundler)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #setDataSB(String,
+	 *             String, StringBundler)}
 	 */
 	@Deprecated
 	public void setData(

@@ -97,8 +97,8 @@ public class BaseRelatedEntryIndexer implements RelatedEntryIndexer {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, added strictly to support backwards
-	 *             compatibility of {@link
+	 * @deprecated As of Wilberforce (7.0.x), added strictly to support
+	 *             backwards compatibility of {@link
 	 *             Indexer#postProcessContextQuery(BooleanQuery, SearchContext)}
 	 */
 	@Deprecated

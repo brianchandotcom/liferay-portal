@@ -195,8 +195,8 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getSubfolderIds(List,
-	 *             long, long, boolean)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getSubfolderIds(List, long, long, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -328,9 +328,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #updateFolder(long,
-	 *             long, String, String, ServiceContext)} and {@link
-	 *             #mergeFolders(long, long)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #updateFolder(long, long, String, String, ServiceContext)}
+	 *             and {@link #mergeFolders(long, long)}
 	 */
 	@Deprecated
 	@Override

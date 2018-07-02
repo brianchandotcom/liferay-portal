@@ -33,7 +33,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @see KaleoDefinitionService
  * @see com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionServiceBaseImpl
  * @see com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionServiceImpl
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  * @generated
  */
 @Deprecated
@@ -46,7 +46,7 @@ public class KaleoDefinitionServiceUtil {
 	 */
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> getKaleoDefinitions(
@@ -55,7 +55,7 @@ public class KaleoDefinitionServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> getKaleoDefinitions(

@@ -19,7 +19,7 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Raymond Augé
- * @deprecated As of Newton
+ * @deprecated As of Newton (6.2.x)
  */
 @Deprecated
 public class PortalSecurityManagerThreadLocal {

@@ -389,7 +389,7 @@ public class SearchContext implements Serializable {
 
 	/**
 	 * @param      queryConfig
-	 * @deprecated As of Judson, replaced by {@link #getQueryConfig()}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getQueryConfig()}
 	 */
 	@Deprecated
 	public void setQueryConfig(QueryConfig queryConfig) {

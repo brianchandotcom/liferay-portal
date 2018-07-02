@@ -188,7 +188,7 @@ public class IconTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected Map<String, Object> getData() {
@@ -196,7 +196,7 @@ public class IconTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected String getDetails() {
@@ -319,7 +319,7 @@ public class IconTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected String getSrc() {
@@ -330,7 +330,7 @@ public class IconTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected String getSrcHover() {

@@ -31,7 +31,7 @@ public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #postProcessContextBooleanFilter(BooleanFilter,
 	 *             SearchContext)}
 	 */
@@ -61,7 +61,7 @@ public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
 	 *             SearchContext)}
 	 */

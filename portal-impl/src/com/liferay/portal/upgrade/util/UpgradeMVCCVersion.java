@@ -32,7 +32,7 @@ import java.util.List;
 
 /**
  * @author     Shuyang Zhou
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion}
  */
 @Deprecated

@@ -38,7 +38,7 @@ public interface IndexWriterHelperConfiguration {
 	public boolean indexCommitImmediately();
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             IndexStatusManagerConfiguration#indexReadOnly}
 	 */
 	@Deprecated

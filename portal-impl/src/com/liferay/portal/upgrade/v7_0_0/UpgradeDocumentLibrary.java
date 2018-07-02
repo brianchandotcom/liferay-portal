@@ -148,8 +148,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #hasFileEntry(long,
-	 *             long, long, String, String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #hasFileEntry(long, long, long, String, String)}
 	 */
 	@Deprecated
 	protected boolean hasFileEntry(long groupId, long folderId, String fileName)

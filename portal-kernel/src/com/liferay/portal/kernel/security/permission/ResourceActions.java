@@ -49,14 +49,14 @@ public interface ResourceActions {
 	public String getActionNamePrefix();
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public List<String> getActionsNames(
 		HttpServletRequest request, List<String> actions);
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public List<String> getActionsNames(
@@ -145,7 +145,7 @@ public interface ResourceActions {
 		throws Exception;
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public void read(String servletContextName, InputStream inputStream)

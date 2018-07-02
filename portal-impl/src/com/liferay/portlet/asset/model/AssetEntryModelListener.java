@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 
 /**
  * @author     Bryan Engler
- * @deprecated As of Judson, moved to {@link
+ * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.asset.internal.model.listener.AssetEntryModelListener}
  */
 @Deprecated

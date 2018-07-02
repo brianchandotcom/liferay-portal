@@ -50,9 +50,9 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addEntry(String, String,
-	 *             String, String, int, int, int, int, int, boolean, boolean,
-	 *             String[], String, ImageSelector, ImageSelector,
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(String,
+	 *             String, String, String, int, int, int, int, int, boolean,
+	 *             boolean, String[], String, ImageSelector, ImageSelector,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -321,10 +321,10 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #updateEntry(long, String,
-	 *             String, String, String, int, int, int, int, int, boolean,
-	 *             boolean, String[], String, ImageSelector, ImageSelector,
-	 *             ServiceContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
+	 *             String, String, String, String, int, int, int, int, int,
+	 *             boolean, boolean, String[], String, ImageSelector,
+	 *             ImageSelector, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

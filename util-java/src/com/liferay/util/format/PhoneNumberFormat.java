@@ -17,7 +17,7 @@ package com.liferay.util.format;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Manuel de la Peña
- * @deprecated As of Newton, moved to {@link
+ * @deprecated As of Newton (6.2.x), moved to {@link
  *             com.liferay.portal.kernel.format.PhoneNumberFormat}
  */
 @Deprecated

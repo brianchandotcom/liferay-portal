@@ -35,7 +35,7 @@ import org.xml.sax.XMLReader;
  * @author     Brian Wing Shun Chan
  * @author     Alan Zimmerman
  * @see        com.liferay.petra.xml.Dom4jUtil
- * @deprecated As of Judson
+ * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
 public class Dom4jUtil {

@@ -35,7 +35,7 @@ import javax.portlet.PortletURL;
  * This class is injected in the context of Asset Publisher display templates.
  *
  * @author     Juan Fernández
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.asset.publisher.util.AssetPublisherHelper}
  */
 @Deprecated

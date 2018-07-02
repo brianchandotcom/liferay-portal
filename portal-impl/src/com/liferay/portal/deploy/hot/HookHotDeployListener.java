@@ -1827,7 +1827,7 @@ public class HookHotDeployListener
 	}
 
 	/**
-	 * @deprecated As of Judson, as of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), as of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	protected void initServices(

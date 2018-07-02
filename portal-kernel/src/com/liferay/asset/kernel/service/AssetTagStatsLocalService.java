@@ -48,7 +48,7 @@ import java.util.List;
  * @see AssetTagStatsLocalServiceUtil
  * @see com.liferay.portlet.asset.service.base.AssetTagStatsLocalServiceBaseImpl
  * @see com.liferay.portlet.asset.service.impl.AssetTagStatsLocalServiceImpl
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
             com.liferay.asset.tag.stats.service.impl.AssetTagStatsLocalServiceImpl}
  * @generated
  */

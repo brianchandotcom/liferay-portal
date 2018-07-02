@@ -62,7 +62,7 @@ public class MethodHandler implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #invoke}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #invoke}
 	 */
 	@Deprecated
 	public Object invoke(boolean newInstance) throws Exception {

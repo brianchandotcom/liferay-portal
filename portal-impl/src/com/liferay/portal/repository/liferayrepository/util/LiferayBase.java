@@ -27,7 +27,8 @@ import java.util.List;
 
 /**
  * @author     Alexander Chow
- * @deprecated As of Wilberforce, replaced by {@link RepositoryModelUtil}
+ * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+ *             RepositoryModelUtil}
  */
 @Deprecated
 public abstract class LiferayBase {

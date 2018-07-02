@@ -21,7 +21,7 @@ import java.io.File;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Judson
+ * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
 public class ExtAutoDeployListener extends BaseAutoDeployListener {

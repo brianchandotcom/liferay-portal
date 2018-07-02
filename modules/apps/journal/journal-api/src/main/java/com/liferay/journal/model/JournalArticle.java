@@ -142,13 +142,13 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public com.liferay.portal.kernel.model.Layout getLayout();
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated()
 	public String getLegacyDescription();
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated()
 	public String getLegacyTitle();
@@ -157,13 +157,15 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getDDMStructureKey()}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getDDMStructureKey()}
 	*/
 	@Deprecated()
 	public String getStructureId();
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getDDMTemplateKey()}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getDDMTemplateKey()}
 	*/
 	@Deprecated()
 	public String getTemplateId();
@@ -192,13 +194,13 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public boolean hasApprovedVersion();
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated()
 	public boolean isTemplateDriven();
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated()
 	public void setDescription(String description);
@@ -213,21 +215,21 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public void setSmallImageType(String smallImageType);
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#setDDMStructureKey(String)}
 	*/
 	@Deprecated()
 	public void setStructureId(String ddmStructureKey);
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#setDDMTemplateKey(String)}
 	*/
 	@Deprecated()
 	public void setTemplateId(String ddmTemplateKey);
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated()
 	public void setTitle(String title);

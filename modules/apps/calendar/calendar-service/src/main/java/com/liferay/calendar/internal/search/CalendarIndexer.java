@@ -49,7 +49,7 @@ import javax.portlet.PortletResponse;
 
 /**
  * @author     Adam Brandizzi
- * @deprecated As of Judson, since 7.1.0
+ * @deprecated As of Judson (7.1.x), since 7.1.0
  */
 @Deprecated
 public class CalendarIndexer extends BaseIndexer<Calendar> {

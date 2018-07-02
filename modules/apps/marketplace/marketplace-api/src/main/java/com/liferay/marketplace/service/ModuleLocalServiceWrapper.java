@@ -33,8 +33,8 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #addModule(long, String,
-	String, String)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #addModule(long,
+	String, String, String)}
 	*/
 	@Deprecated
 	@Override

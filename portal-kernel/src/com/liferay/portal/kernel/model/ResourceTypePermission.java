@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see ResourceTypePermissionModel
  * @see com.liferay.portal.model.impl.ResourceTypePermissionImpl
  * @see com.liferay.portal.model.impl.ResourceTypePermissionModelImpl
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  * @generated
  */
 @Deprecated

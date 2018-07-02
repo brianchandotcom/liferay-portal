@@ -55,7 +55,7 @@ public class PermissionCacheUtil {
 		PermissionCacheUtil.class.getName() + "_PERMISSION_CHECKER_BAG";
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String RESOURCE_BLOCK_IDS_BAG_CACHE_NAME =
@@ -110,7 +110,7 @@ public class PermissionCacheUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static void clearResourceBlockCache(
@@ -163,7 +163,7 @@ public class PermissionCacheUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static ResourceBlockIdsBag getResourceBlockIdsBag(
@@ -286,7 +286,7 @@ public class PermissionCacheUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static void removeResourceBlockIdsBag(

@@ -98,9 +98,9 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	names for the group, and whether the group is for staging.
 	* @return the group
 	* @throws PortalException if a portal exception occured
-	* @deprecated As of Wilberforce, replaced by {@link #addGroup(long, long,
-	String, long, long, Map, Map, int, boolean, int, String,
-	boolean, boolean, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #addGroup(long,
+	long, String, long, long, Map, Map, int, boolean, int,
+	String, boolean, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -707,7 +707,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	Group#getDescriptiveName(Locale)}
 	*/
 	@Deprecated
@@ -719,7 +719,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	Group#getDescriptiveName(Locale)}
 	*/
 	@Deprecated
@@ -1066,7 +1066,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @return the non-system groups having <code>null</code> or empty
 	friendly URLs
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -2654,9 +2654,9 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	names for the group.
 	* @return the group
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #updateGroup(long,
-	long, Map, Map, int, boolean, int, String, boolean, boolean,
-	ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateGroup(long, long, Map, Map, int, boolean, int, String,
+	boolean, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	@Override

@@ -101,7 +101,7 @@ public class InvokerPortletImpl
 	implements InvokerFilterContainer, InvokerPortlet {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #InvokerPortletImpl(com.liferay.portal.kernel.model.Portlet,
 	 *             Portlet, PortletConfig, PortletContext,
 	 *             InvokerFilterContainer, boolean, boolean, boolean, boolean,

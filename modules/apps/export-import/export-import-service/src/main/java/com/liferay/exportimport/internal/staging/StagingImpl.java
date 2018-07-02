@@ -313,8 +313,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getRemoteSiteURL(Group,
-	 *             boolean)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getRemoteSiteURL(Group, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -342,7 +342,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             _stagingLocalService#checkDefaultLayoutSetBranches(long,
 	 *             Group, boolean, boolean, boolean, ServiceContext)}
 	 */
@@ -441,8 +441,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #publishPortlet(long, long,
-	 *             long, long, long, String, Map)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #publishPortlet(long, long, long, long, long, String, Map)}
 	 */
 	@Deprecated
 	@Override
@@ -519,9 +519,9 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #copyRemoteLayouts(long,
-	 *             boolean, Map, Map, String, int, String, boolean, long,
-	 *             boolean)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #copyRemoteLayouts(long, boolean, Map, Map, String, int,
+	 *             String, boolean, long, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -648,7 +648,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #deleteRecentLayoutRevisionId(long, long, long)}
 	 */
 	@Deprecated
@@ -747,7 +747,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getErrorMessagesJSONArray(Locale, Map<String,
 	 *             MissingReference>)}
 	 */
@@ -1711,7 +1711,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getExceptionMessagesJSONObject(Locale, Exception,
 	 *             ExportImportConfiguration)}
 	 */
@@ -1767,7 +1767,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, moved to {@link
+	 * @deprecated As of Judson (7.1.x), moved to {@link
 	 *             ExportImportHelperUtil#getMissingParentLayouts(Layout, long)}
 	 */
 	@Deprecated
@@ -1987,7 +1987,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             )}
 	 */
@@ -1999,7 +1999,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             PortletRequest)}
 	 */
@@ -2052,7 +2052,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getWarningMessagesJSONArray(Locale, Map<String,
 	 *             MissingReference>)}
 	 */
@@ -2193,7 +2193,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, see {@link
+	 * @deprecated As of Judson (7.1.x), see {@link
 	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
 	 *             )}
 	 */
@@ -2402,8 +2402,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, long[], Map)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #publishLayouts(long, long, long, boolean, long[], Map)}
 	 */
 	@Deprecated
 	@Override
@@ -2462,8 +2462,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, long[], Map)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #publishLayouts(long, long, long, boolean, long[], Map)}
 	 */
 	@Deprecated
 	@Override
@@ -2494,8 +2494,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, Map)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #publishLayouts(long, long, long, boolean, Map)}
 	 */
 	@Deprecated
 	@Override
@@ -3224,7 +3224,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, see {@link
+	 * @deprecated As of Judson (7.1.x), see {@link
 	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
 	 *             )}
 	 */
@@ -3350,7 +3350,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             ExportImportDateUtil#updateLastPublishDate(long, boolean,
 	 *             DateRange, Date)}
 	 */
@@ -3365,7 +3365,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             ExportImportDateUtil#updateLastPublishDate(String,
 	 *             PortletPreferences, DateRange, Date)}
 	 */
@@ -3380,7 +3380,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.staging.configuration.web.internal.portlet.StagingConfigurationPortlet#editStagingConfiguration(
 	 *             javax.portlet.ActionRequest, javax.portlet.ActionResponse)}
 	 */
@@ -3451,7 +3451,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             GroupLocalService#validateRemote(long, String, int, String,
 	 *             boolean, long)}
 	 */
@@ -3469,8 +3469,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #validateRemote(long,
-	 *             String, int, String, boolean, long)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #validateRemote(long, String, int, String, boolean, long)}
 	 */
 	@Deprecated
 	@Override
@@ -3775,7 +3775,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected long publishLayouts(
@@ -3875,7 +3875,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected long publishToRemote(
@@ -3886,7 +3886,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setExportImportConfigurationLocalService(
@@ -3895,14 +3895,14 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setLayoutBranchLocalService(
@@ -3910,7 +3910,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setLayoutLocalService(
@@ -3918,7 +3918,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setLayoutRevisionLocalService(
@@ -3926,14 +3926,14 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setLayoutService(LayoutService layoutService) {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setLayoutSetBranchLocalService(
@@ -3941,7 +3941,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setLockManager(LockManager lockManager) {
@@ -3985,7 +3985,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setRecentLayoutBranchLocalService(
@@ -4052,7 +4052,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setRecentLayoutRevisionLocalService(
@@ -4098,7 +4098,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setRecentLayoutSetBranchLocalService(
@@ -4106,7 +4106,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setStagingLocalService(
@@ -4114,14 +4114,14 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setUserLocalService(UserLocalService userLocalService) {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setWorkflowInstanceLinkLocalService(

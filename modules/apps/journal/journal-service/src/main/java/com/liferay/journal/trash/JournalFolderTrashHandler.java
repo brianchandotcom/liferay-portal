@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * Implements trash handling for the journal folder entity.
  *
  * @author     Eudaldo Alonso
- * @deprecated As of Judson, moved to {@link
+ * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.journal.internal.trash.JournalFolderTrashHandler}
  */
 @Deprecated

@@ -16,7 +16,7 @@ package com.liferay.util;
 
 /**
  * @author     Neil Griffin
- * @deprecated As of Paton, replaced by {@link
+ * @deprecated As of Paton (6.1.x), replaced by {@link
  *             com.liferay.portal.kernel.util.ResourceBundleUtil}
  */
 @Deprecated

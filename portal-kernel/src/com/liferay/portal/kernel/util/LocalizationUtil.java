@@ -262,7 +262,7 @@ public class LocalizationUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getLocalizedName(String, String)}
 	 */
 	@Deprecated

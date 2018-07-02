@@ -353,7 +353,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override

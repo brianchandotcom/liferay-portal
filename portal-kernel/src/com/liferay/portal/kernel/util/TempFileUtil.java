@@ -25,7 +25,7 @@ import java.io.InputStream;
  * @author     Matthew Kong
  * @author     Alexander Chow
  * @author     Iván Zaera
- * @deprecated As of Wilberforce, replaced by {@link TempFileEntryUtil}
+ * @deprecated As of Wilberforce (7.0.x), replaced by {@link TempFileEntryUtil}
  */
 @Deprecated
 public class TempFileUtil {

@@ -56,7 +56,7 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -65,7 +65,7 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override

@@ -46,7 +46,7 @@ public class TestMultipleEntityIndexerPostProcessor
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -74,7 +74,7 @@ public class TestMultipleEntityIndexerPostProcessor
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override

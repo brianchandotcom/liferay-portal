@@ -16,7 +16,7 @@ package com.liferay.portal.struts;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Bunyan, moved to {@link
+ * @deprecated As of Bunyan (6.0.x), moved to {@link
  *             com.liferay.portal.kernel.events.SimpleAction}
  */
 @Deprecated

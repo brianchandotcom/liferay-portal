@@ -70,7 +70,7 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	 *
 	 * @return     <code>true</code> if the item selector view should show the
 	 *             search field
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public default boolean isShowSearch() {

@@ -26,7 +26,7 @@ import javax.servlet.ServletContext;
 public class PortletClassInvoker {
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #invoke(String,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #invoke(String,
 	 *             MethodKey, Object...)}
 	 */
 	@Deprecated

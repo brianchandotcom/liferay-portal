@@ -71,8 +71,8 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #addRecord(long, long,
-	int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#addRecord(long, long, int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -99,8 +99,8 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #addRecord(long, long,
-	int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#addRecord(long, long, int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -134,8 +134,9 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	set the record modified date.
 	* @return the affected record
 	* @throws PortalException
-	* @deprecated As of Wilberforce, replaced by {@link #updateRecord(long,
-	boolean, int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateRecord(long, boolean, int, DDMFormValues,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -202,8 +203,8 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #revertRecord(long,
-	String, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#revertRecord(long, String, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -254,8 +255,9 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #updateRecord(long,
-	boolean, int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateRecord(long, boolean, int, DDMFormValues,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -283,8 +285,9 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #updateRecord(long,
-	boolean, int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateRecord(long, boolean, int, DDMFormValues,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override

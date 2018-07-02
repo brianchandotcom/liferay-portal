@@ -72,7 +72,8 @@ public class PortletLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #clearPortletsMap)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#clearPortletsMap)}
 	*/
 	@Deprecated
 	public static void clearCompanyPortletsPool() {
@@ -412,7 +413,7 @@ public class PortletLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#loadGetPortletsMap(long))}
 	*/
 	@Deprecated

@@ -53,7 +53,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author     Adolfo Pérez
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.comment.taglib.internal.action.
  *             EditDiscussionStrutsAction}
  */

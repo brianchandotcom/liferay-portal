@@ -381,8 +381,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public int getExtraSettingsFileEntriesCount();
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getFile(long, String,
-	boolean)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
+	String, boolean)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -390,8 +390,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		boolean incrementCounter) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getFile(long, String,
-	boolean, int)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
+	String, boolean, int)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -407,8 +407,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		boolean incrementCounter, int increment) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getFileAsStream(long,
-	String)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getFileAsStream(long, String)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -416,8 +416,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		String version) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getFileAsStream(long,
-	String, boolean)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getFileAsStream(long, String, boolean)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -425,8 +425,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		String version, boolean incrementCounter) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getFileAsStream(long,
-	String, boolean, int)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getFileAsStream(long, String, boolean, int)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -477,7 +477,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public int getFileEntriesCount();
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -551,7 +551,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -561,7 +561,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public List<DLFileEntry> getNoAssetFileEntries();
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -610,7 +610,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#isKeepFileVersionLabel(long, boolean, ServiceContext)}
 	*/
 	@Deprecated

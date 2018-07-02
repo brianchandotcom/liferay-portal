@@ -65,7 +65,7 @@ public class LanguageResources {
 			}
 
 			/**
-			 * @deprecated As of Judson, replaced by {@link #loadResourceBundle(
+			 * @deprecated As of Judson (7.1.x), replaced by {@link #loadResourceBundle(
 			 *             Locale)}
 			 */
 			@Deprecated

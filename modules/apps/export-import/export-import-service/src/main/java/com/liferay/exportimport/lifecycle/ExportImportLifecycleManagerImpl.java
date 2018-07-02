@@ -49,7 +49,7 @@ public class ExportImportLifecycleManagerImpl
 	implements ExportImportLifecycleManager {
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override

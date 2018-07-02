@@ -50,7 +50,7 @@ public class DDLRecordSetStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {DDLRecordSet.class.getName()};
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -61,7 +61,7 @@ public class DDLRecordSetStagedModelDataHandler
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -73,7 +73,7 @@ public class DDLRecordSetStagedModelDataHandler
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -84,7 +84,7 @@ public class DDLRecordSetStagedModelDataHandler
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override

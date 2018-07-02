@@ -992,7 +992,7 @@ public interface UserLocalService extends BaseLocalService,
 	* Returns all the users who do not have any contacts.
 	*
 	* @return the users who do not have any contacts
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1159,8 +1159,9 @@ public interface UserLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @return the ordered range of users with a social relation of the type
 	with the user
-	* @deprecated As of Wilberforce, replaced by {@link #getSocialUsers(long,
-	int, String, int, int, OrderByComparator)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getSocialUsers(long, int, String, int, int,
+	OrderByComparator)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1188,8 +1189,9 @@ public interface UserLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @return the ordered range of users with a social relation with the
 	user
-	* @deprecated As of Wilberforce, replaced by {@link #getSocialUsers(long,
-	int, String, int, int, OrderByComparator)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getSocialUsers(long, int, String, int, int,
+	OrderByComparator)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1261,7 +1263,7 @@ public interface UserLocalService extends BaseLocalService,
 	*
 	* @param userId the primary key of the user
 	* @return the number of users with a social relation with the user
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getSocialUsersCount(long, int, String)}
 	*/
 	@Deprecated
@@ -1277,7 +1279,7 @@ public interface UserLocalService extends BaseLocalService,
 	types can be found in {@link SocialRelationConstants}.
 	* @return the number of users with a social relation of the type with
 	the user
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getSocialUsersCount(long, int, String)}
 	*/
 	@Deprecated
@@ -1622,7 +1624,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param user the user
 	* @return <code>true</code> if the user's password is expiring soon;
 	<code>false</code> otherwise
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -2410,8 +2412,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param status the user's new workflow status
 	* @return the user
-	* @deprecated As of Wilberforce, replaced by {@link #updateStatus(long,
-	int, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateStatus(long, int, ServiceContext)}
 	*/
 	@Deprecated
 	public User updateStatus(long userId, int status) throws PortalException;
@@ -2540,12 +2542,12 @@ public interface UserLocalService extends BaseLocalService,
 	<code>uuid</code> attribute), asset category IDs, asset tag
 	names, and expando bridge attributes for the user.
 	* @return the user
-	* @deprecated As of Wilberforce, replaced by {@link #updateUser(long,
-	String, String, String, boolean, String, String, String,
-	String, long, String, boolean, byte[], String, String,
-	String, String, String, String, String, long, long, boolean,
-	int, int, int, String, String, String, String, String,
-	String, long[], long[], long[], List, long[],
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateUser(long, String, String, String, boolean, String,
+	String, String, String, long, String, boolean, byte[],
+	String, String, String, String, String, String, String, long,
+	long, boolean, int, int, int, String, String, String, String,
+	String, String, long[], long[], long[], List, long[],
 	ServiceContext)}
 	*/
 	@Deprecated

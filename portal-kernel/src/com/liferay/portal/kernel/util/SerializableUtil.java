@@ -25,7 +25,8 @@ import java.io.ObjectOutputStream;
 /**
  * @author     Alexander Chow
  * @author     Igor Spasic
- * @deprecated As of Paton, moved to {@link com.liferay.util.SerializableUtil}
+ * @deprecated As of Paton (6.1.x), moved to {@link
+ *             com.liferay.util.SerializableUtil}
  */
 @Deprecated
 public class SerializableUtil {

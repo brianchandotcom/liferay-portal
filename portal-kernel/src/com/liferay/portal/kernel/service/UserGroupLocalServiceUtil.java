@@ -91,8 +91,8 @@ public class UserGroupLocalServiceUtil {
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @deprecated As of Newton, replaced by {@link #addUserGroup(long, long,
-	String, String, ServiceContext)}
+	* @deprecated As of Newton (6.2.x), replaced by {@link #addUserGroup(long,
+	long, String, String, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.UserGroup addUserGroup(
@@ -175,7 +175,7 @@ public class UserGroupLocalServiceUtil {
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
-	* @deprecated As of Paton
+	* @deprecated As of Paton (6.1.x)
 	*/
 	@Deprecated
 	public static void copyUserGroupLayouts(long userGroupId, long userId)
@@ -189,7 +189,7 @@ public class UserGroupLocalServiceUtil {
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userIds the primary keys of the users
-	* @deprecated As of Newton
+	* @deprecated As of Newton (6.2.x)
 	*/
 	@Deprecated
 	public static void copyUserGroupLayouts(long userGroupId, long[] userIds)
@@ -202,7 +202,7 @@ public class UserGroupLocalServiceUtil {
 	*
 	* @param userGroupIds the primary keys of the user groups
 	* @param userId the primary key of the user
-	* @deprecated As of Newton
+	* @deprecated As of Newton (6.2.x)
 	*/
 	@Deprecated
 	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
@@ -919,8 +919,8 @@ public class UserGroupLocalServiceUtil {
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @deprecated As of Newton, replaced by {@link #updateUserGroup(long, long,
-	String, String, ServiceContext)}
+	* @deprecated As of Newton (6.2.x), replaced by {@link
+	#updateUserGroup(long, long, String, String, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.UserGroup updateUserGroup(

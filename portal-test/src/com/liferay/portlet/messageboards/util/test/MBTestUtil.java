@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * @author     Eudaldo Alonso
  * @author     Daniel Kocsis
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.message.boards.test.util.MBTestUtil}
  */
 @Deprecated

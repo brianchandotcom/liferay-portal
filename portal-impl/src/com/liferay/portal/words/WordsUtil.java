@@ -16,7 +16,7 @@ package com.liferay.portal.words;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Wilberforce, moved to {@link
+ * @deprecated As of Wilberforce (7.0.x), moved to {@link
  *             com.liferay.portal.kernel.words.WordsUtil}
  */
 @Deprecated

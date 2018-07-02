@@ -60,7 +60,7 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.asset.service.impl.AssetCategoryPropertyLocalServiceImpl
  * @see com.liferay.asset.kernel.service.AssetCategoryPropertyLocalServiceUtil
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
             com.liferay.asset.category.property.service.impl.AssetCategoryPropertyLocalServiceImpl}
  * @generated
  */

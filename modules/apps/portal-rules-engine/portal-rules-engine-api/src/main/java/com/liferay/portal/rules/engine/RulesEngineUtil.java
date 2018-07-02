@@ -24,7 +24,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author     Michael C. Han
  * @author     Raymond Augé
- * @deprecated As of Wilberforce
+ * @deprecated As of Wilberforce (7.0.x)
  */
 @Deprecated
 public class RulesEngineUtil {

@@ -81,7 +81,7 @@ public class TemplatePortletPreferences {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public void reset() {
@@ -92,7 +92,7 @@ public class TemplatePortletPreferences {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public void setValue(String key, String value) throws ReadOnlyException {
@@ -103,7 +103,7 @@ public class TemplatePortletPreferences {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public void setValues(String key, String[] values)

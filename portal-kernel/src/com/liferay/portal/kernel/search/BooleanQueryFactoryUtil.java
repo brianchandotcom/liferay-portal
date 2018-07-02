@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.search;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Raymond Augé
- * @deprecated As of Wilberforce, , replaced by {@link
+ * @deprecated As of Wilberforce (7.0.x), , replaced by {@link
  *             com.liferay.portal.kernel.search.generic.BooleanQueryImpl}
  */
 @Deprecated

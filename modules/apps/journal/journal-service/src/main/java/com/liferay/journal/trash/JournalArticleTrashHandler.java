@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author     Levente Hudák
  * @author     Sergio González
  * @author     Zsolt Berentey
- * @deprecated As of Judson, moved to {@link
+ * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.journal.internal.trash.JournalArticleTrashHandler}
  */
 @Deprecated

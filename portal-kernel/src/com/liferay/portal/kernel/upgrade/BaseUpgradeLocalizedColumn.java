@@ -77,7 +77,7 @@ public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of Judson, use {@link
+	 * @deprecated As of Judson (7.1.x), use {@link
 	 *             BaseUpgradeLocalizedColumn#upgradeLocalizedColumn(
 	 *             ResourceBundleLoader, Class, String, String, String, String,
 	 *             long[])}

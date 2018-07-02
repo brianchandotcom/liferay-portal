@@ -94,7 +94,7 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public static Map<Locale, String> getLocalizationMap(
@@ -118,8 +118,8 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getString(ResourceBundle,
-	 *             String, Object...)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getString(ResourceBundle, String, Object...)}
 	 */
 	@Deprecated
 	public static String getString(
@@ -166,7 +166,7 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static void loadResourceBundles(
@@ -179,7 +179,7 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static void loadResourceBundles(

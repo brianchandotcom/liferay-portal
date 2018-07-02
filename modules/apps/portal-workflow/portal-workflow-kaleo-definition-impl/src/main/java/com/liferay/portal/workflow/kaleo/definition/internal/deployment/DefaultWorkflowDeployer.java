@@ -51,8 +51,8 @@ import org.osgi.service.component.annotations.Reference;
 public class DefaultWorkflowDeployer implements WorkflowDeployer {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #deploy(String, String,
-	 *             Definition, ServiceContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #deploy(String,
+	 *             String, Definition, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

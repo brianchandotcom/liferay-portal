@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see AssetCategoryPropertyLocalService
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
 com.liferay.asset.category.property.service.impl.AssetCategoryPropertyLocalServiceImpl}
  * @generated
  */

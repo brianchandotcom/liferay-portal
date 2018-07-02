@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public abstract class BaseProxyBean {
 
 	/**
-	 * @deprecated As of Judson, with no direct link
+	 * @deprecated As of Judson (7.1.x), with no direct link
 	 */
 	@Deprecated
 	public void afterPropertiesSet() {
@@ -46,7 +46,8 @@ public abstract class BaseProxyBean {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #setDestinationName)
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #setDestinationName)
 	 */
 	@Deprecated
 	public void setSingleDestinationMessageSender(
@@ -54,7 +55,7 @@ public abstract class BaseProxyBean {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #setSynchronousMessageSenderMode} and {@link
 	 *             #setSynchronousDestinationName}
 	 */

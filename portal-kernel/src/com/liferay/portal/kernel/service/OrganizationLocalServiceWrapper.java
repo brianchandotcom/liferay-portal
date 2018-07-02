@@ -1566,7 +1566,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	names for the organization, and merge expando bridge
 	attributes for the organization.
 	* @return the organization
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#updateOrganization(long, long, long, String, String, long,
 	long, long, String, boolean, byte[], boolean,
 	ServiceContext)}

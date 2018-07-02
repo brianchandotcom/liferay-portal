@@ -166,21 +166,27 @@ const SiteNavigationMenuItem = {
 	 * to selected/unselected. Only a single menuItem can be
 	 * selected, so if selected is changed to true,
 	 * any other selected menuItem will be unselected.
-	 * @param {HTMLElement} menuItem
+	 *
+	 * If no menuItem is specified it will get and unselect
+	 * an existing one.
+	 *
+	 * @param {HTMLElement} [menuItem=selectedMenuItem]
 	 * @param {boolean} [selected=false]
 	 */
 
 	setSelected: function(menuItem, selected = false) {
-		if (selected) {
+		if (!menuItem || selected) {
 			const selectedMenuItem = toElement(`.${MENU_ITEM_SELECTED_CLASSNAME}`);
 
 			if (selectedMenuItem) {
 				SiteNavigationMenuItem.setSelected(selectedMenuItem, false);
 			}
+		}
 
+		if (selected) {
 			addClasses(menuItem, MENU_ITEM_SELECTED_CLASSNAME);
 		}
-		else {
+		else if (menuItem) {
 			removeClasses(menuItem, MENU_ITEM_SELECTED_CLASSNAME);
 		}
 	}

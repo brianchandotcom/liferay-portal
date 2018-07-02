@@ -16,7 +16,9 @@
 	</command>
 
 	<command name="clickApply">
-		<execute function="AssertClick" locator1="Button#APPLY" value1="Apply" />
+		<execute macro="Button#click">
+			<var name="button" value="Apply" />
+		</execute>
 	</command>
 
 	<command name="clickCancel">

@@ -1,5 +1,18 @@
 @import "mixins/site_navigation_menu_item_states";
 
+$controlBarDesktopHeight: 120px;
+
+body.has-control-menu .contextual-sidebar {
+	margin-top: 1px;
+}
+
+@media (min-width: 768px) {
+	body.has-control-menu .contextual-sidebar {
+		height: calc(100vh - #{$controlBarDesktopHeight});
+		top: $controlBarDesktopHeight;
+	}
+}
+
 .site-navigation-menu-item {
 	box-sizing: border-box;
 	max-width: 100%;

@@ -20,13 +20,18 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.exportimport.changeset.Changeset;
 import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommand;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -111,6 +116,25 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 					stagedModels.addAll(
 						_getFoldersAndFileEntriesAndFileShortcuts(childFolder));
 				}
+				else if (childObject instanceof FileEntry) {
+					FileVersion fileVersion =
+						((FileEntry)childObject).getFileVersion();
+
+					if (_fileEntryStagedModelDataHandler == null) {
+						_fileEntryStagedModelDataHandler =
+							StagedModelDataHandlerRegistryUtil.
+								getStagedModelDataHandler(
+									FileEntry.class.getName());
+					}
+
+					if (ArrayUtil.contains(
+							_fileEntryStagedModelDataHandler.
+								getExportableStatuses(),
+							fileVersion.getStatus())) {
+
+						stagedModels.add((StagedModel)childObject);
+					}
+				}
 				else {
 					stagedModels.add((StagedModel)childObject);
 				}
@@ -144,5 +168,7 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private ExportImportChangesetMVCActionCommand
 		_exportImportChangesetMVCActionCommand;
+
+	private StagedModelDataHandler _fileEntryStagedModelDataHandler;
 
 }

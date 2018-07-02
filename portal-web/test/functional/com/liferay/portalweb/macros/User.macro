@@ -1565,10 +1565,6 @@
 
 		<execute function="Click" locator1="Button#SIGN_IN" />
 
-		<execute macro="Alert#viewErrorMessage">
-			<var name="errorMessage" value="Authentication failed. Please try again." />
-		</execute>
-
 		<if>
 			<equals arg1="${loginAttempts}" arg2="${maximumFailure}" />
 			<then>

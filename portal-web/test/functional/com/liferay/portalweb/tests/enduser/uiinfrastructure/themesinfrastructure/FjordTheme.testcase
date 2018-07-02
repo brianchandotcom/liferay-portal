@@ -62,12 +62,8 @@
 					<var name="portlet" value="App Manager" />
 				</execute>
 
-				<execute function="Type" locator1="TextInput#SEARCH" value1="${appName}" />
-
-				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-
-				<execute function="AssertVisible" locator1="ListGroupItem#ITEM_NAME_LINK">
-					<var name="key_itemName" value="fjord-theme" />
+				<execute macro="AppManager#viewAppCP">
+					<var name="appName" value="fjord-theme" />
 				</execute>
 			</else>
 		</if>

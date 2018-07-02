@@ -1083,6 +1083,7 @@
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="locale" value="zh-cn" />
 			<var name="portletName" value="JournalContentPortlet" />
+			<var name="textIcon" value="中文-中国" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">

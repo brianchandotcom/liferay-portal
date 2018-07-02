@@ -29,6 +29,8 @@ public class SlantedQuotesCheck extends BaseFileCheck {
 
 		content = _fixSlantedQuotes(
 			content, _SLANTED_DOUBLE_QUOTE_CHARS, StringPool.QUOTE);
+		content = _fixSlantedQuotes(
+			content, _SLANTED_SINGLE_QUOTE_CHARS, StringPool.APOSTROPHE);
 
 		return content;
 	}
@@ -61,5 +63,8 @@ public class SlantedQuotesCheck extends BaseFileCheck {
 
 	private static final char[] _SLANTED_DOUBLE_QUOTE_CHARS =
 		{'\u201c', '\u201d', '\u201e', '\u201f'};
+
+	private static final char[] _SLANTED_SINGLE_QUOTE_CHARS =
+		{'\u2018', '\u2019', '\u201a', '\u201b'};
 
 }

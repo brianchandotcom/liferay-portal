@@ -81,7 +81,7 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 			portalVersion = _getPrivatePortalVersion();
 		}
 
-		if (Validator.isNull(portalVersion)) {
+		if (Validator.isNull(portalVersion) || privateApp) {
 			return portalVersion;
 		}
 

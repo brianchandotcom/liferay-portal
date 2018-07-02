@@ -96,7 +96,7 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 			portalVersion = _getPrivatePortalVersion();
 		}
 
-		if (Validator.isNull(portalVersion)) {
+		if (Validator.isNull(portalVersion) || privateApp) {
 			return portalVersion;
 		}
 

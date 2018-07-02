@@ -1025,7 +1025,7 @@ AUI.add(
 						var alert = instance.get('alert');
 
 						if (alert) {
-							alert.destroy();
+							alert._alertsContainer._node.innerHTML = "";
 						}
 
 						var icon = 'exclamation-full';

@@ -70,7 +70,7 @@
 	</command>
 
 	<command name="clickNoError">
-		<execute function="ClickNoError" locator1="Button#ANY">
+		<execute function="ClickNoError#mouseDownMouseUp" locator1="Button#ANY">
 			<var name="key_text" value="${button}" />
 		</execute>
 	</command>

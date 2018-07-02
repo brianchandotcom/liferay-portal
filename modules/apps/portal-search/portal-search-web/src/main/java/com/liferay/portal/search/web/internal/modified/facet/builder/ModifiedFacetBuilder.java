@@ -52,12 +52,10 @@ public class ModifiedFacetBuilder {
 
 		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
-		String rangeString = _getSelectedRangeString();
+		String rangeString = _getSelectedRangeString(facet);
 
 		if (!Validator.isBlank(rangeString)) {
 			facet.select(rangeString);
-
-			_searchContext.setAttribute(facet.getFieldName(), rangeString);
 		}
 
 		return facet;
@@ -143,12 +141,16 @@ public class ModifiedFacetBuilder {
 		return rangesMap;
 	}
 
-	private String _getSelectedRangeString() {
+	private String _getSelectedRangeString(Facet facet) {
 		if (!Validator.isBlank(_customRangeFrom) &&
 			!Validator.isBlank(_customRangeTo)) {
 
-			return _dateRangeFactory.getRangeString(
+			String rangeString = _dateRangeFactory.getRangeString(
 				_customRangeFrom, _customRangeTo);
+
+			_searchContext.setAttribute(facet.getFieldId(), rangeString);
+
+			return rangeString;
 		}
 
 		if (!ArrayUtil.isEmpty(_selectedRanges)) {

@@ -37,7 +37,6 @@
 						<clay:dropdown-menu
 							componentId="<%= componentId %>"
 							dropdownItems="<%= actionDropdownItems %>"
-							itemsIconAlignment="left"
 							label='<%= LanguageUtil.get(request, "new") %>'
 							style="secondary"
 							triggerCssClasses="btn-secondary"

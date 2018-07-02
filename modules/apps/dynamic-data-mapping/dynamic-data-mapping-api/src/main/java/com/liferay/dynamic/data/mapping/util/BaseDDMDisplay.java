@@ -461,11 +461,9 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	protected ResourceBundle getBaseDDMDisplayResourceBundle(
 		String languageId) {
 
-		Class<?> baseDDMDisplayClazz = BaseDDMDisplay.class;
-
 		return ResourceBundleUtil.getBundle(
 			"content.Language", LocaleUtil.fromLanguageId(languageId),
-			baseDDMDisplayClazz.getClassLoader());
+			BaseDDMDisplay.class);
 	}
 
 	/**
@@ -525,8 +523,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 		ResourceBundle baseDDMDisplayResourceBundle =
 			ResourceBundleUtil.getBundle(
-				"content.Language", locale,
-				BaseDDMDisplay.class.getClassLoader(), true);
+				"content.Language", locale, BaseDDMDisplay.class, true);
 
 		if (ddmDisplayResourceBundle != null) {
 			return new AggregateResourceBundle(

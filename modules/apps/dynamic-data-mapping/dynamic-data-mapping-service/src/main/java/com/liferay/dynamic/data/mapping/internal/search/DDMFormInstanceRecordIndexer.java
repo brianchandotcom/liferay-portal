@@ -315,8 +315,7 @@ public class DDMFormInstanceRecordIndexer
 	protected String getTitle(long ddmFormInstanceId, Locale locale) {
 		try {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", locale,
-				DDMFormInstanceRecordIndexer.class.getClassLoader());
+				"content.Language", locale, DDMFormInstanceRecordIndexer.class);
 
 			DDMFormInstance ddmFormInstance =
 				ddmFormInstanceLocalService.getFormInstance(ddmFormInstanceId);

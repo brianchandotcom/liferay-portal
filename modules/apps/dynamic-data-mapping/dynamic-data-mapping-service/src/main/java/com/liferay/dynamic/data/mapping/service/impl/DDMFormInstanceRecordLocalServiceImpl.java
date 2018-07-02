@@ -602,10 +602,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		Class<?> clazz = getClass();
-
 		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+			"content.Language", locale, getClass());
 	}
 
 	protected boolean isKeepFormInstanceRecordVersionLabel(

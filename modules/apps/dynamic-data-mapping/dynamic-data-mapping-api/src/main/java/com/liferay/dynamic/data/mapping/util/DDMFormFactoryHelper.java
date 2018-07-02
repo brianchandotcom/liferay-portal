@@ -96,7 +96,7 @@ public class DDMFormFactoryHelper {
 
 		try {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				resourceBundleBaseName, locale, clazz.getClassLoader());
+				resourceBundleBaseName, locale, clazz);
 
 			if (resourceBundle != null) {
 				resourceBundles.add(resourceBundle);

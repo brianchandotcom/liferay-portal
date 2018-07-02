@@ -105,7 +105,7 @@ public class DDMFormTemplateContextFactoryImpl
 		}
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+			"content.Language", locale, clazz);
 
 		if (resourceBundle != null) {
 			resourceBundles.add(resourceBundle);

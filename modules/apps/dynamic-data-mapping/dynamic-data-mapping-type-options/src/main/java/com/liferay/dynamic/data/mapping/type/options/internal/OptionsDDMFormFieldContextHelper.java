@@ -124,10 +124,8 @@ public class OptionsDDMFormFieldContextHelper {
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		Class<?> clazz = getClass();
-
 		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+			"content.Language", locale, getClass());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

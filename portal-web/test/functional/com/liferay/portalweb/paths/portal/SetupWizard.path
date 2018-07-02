@@ -26,7 +26,7 @@
 <!--DATABASE-->
 <tr>
 	<td>DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL</td>
-	<td>//div[@id='defaultDatabaseOptions']/p/strong</td>
+	<td>//div[@id='defaultDatabaseOptions']/*[normalize-space(text())='Configured Database']</td>
 	<td></td>
 </tr>
 <tr>

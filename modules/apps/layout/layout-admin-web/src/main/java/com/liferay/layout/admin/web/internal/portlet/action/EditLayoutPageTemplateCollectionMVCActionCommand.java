@@ -97,7 +97,6 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcRenderCommandName", "/layout/view");
 		portletURL.setParameter("tabs1", "page-templates");
 		portletURL.setParameter(
 			"layoutPageTemplateCollectionId",

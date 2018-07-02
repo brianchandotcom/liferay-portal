@@ -63,7 +63,6 @@ LayoutPageTemplateCollection layoutPageTemplateCollection = layoutPageTemplateDi
 
 	<c:if test="<%= LayoutPageTemplateCollectionPermission.contains(permissionChecker, layoutPageTemplateCollection, ActionKeys.DELETE) %>">
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="mvcRenderCommandName" value="/layout/view" />
 			<portlet:param name="tabs1" value="page-templates" />
 		</portlet:renderURL>
 

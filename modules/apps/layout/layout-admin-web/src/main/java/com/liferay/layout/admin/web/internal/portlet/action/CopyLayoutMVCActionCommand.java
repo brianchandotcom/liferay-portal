@@ -169,7 +169,12 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			jsonObject.put("redirectURL", getRedirectURL(actionResponse));
+			LiferayPortletResponse liferayPortletResponse =
+				_portal.getLiferayPortletResponse(actionResponse);
+
+			PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+			jsonObject.put("redirectURL", redirectURL.toString());
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -187,17 +192,6 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 		}
-	}
-
-	protected String getRedirectURL(ActionResponse actionResponse) {
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/layout/view");
-
-		return portletURL.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

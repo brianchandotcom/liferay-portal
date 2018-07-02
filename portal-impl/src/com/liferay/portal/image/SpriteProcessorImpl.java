@@ -181,6 +181,8 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 					renderedImage = TranslateDescriptor.create(
 						renderedImage, x, y, null, null);
 
+					y += renderedImage.getHeight();
+
 					renderedImages.add(renderedImage);
 
 					String key = ServletContextUtil.getResourcePath(imageURL);
@@ -200,8 +202,6 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 						",", String.valueOf(width));
 
 					spriteProperties.setProperty(key, value);
-
-					y += renderedImage.getHeight();
 				}
 			}
 			catch (Exception e) {

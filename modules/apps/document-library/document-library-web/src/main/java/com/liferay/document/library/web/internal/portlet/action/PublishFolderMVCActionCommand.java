@@ -122,10 +122,7 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 					FileVersion fileVersion = fileEntry.getFileVersion();
 
 					StagedModelDataHandler<FileEntry> stagedModelDataHandler =
-						(StagedModelDataHandler<FileEntry>)
-							StagedModelDataHandlerRegistryUtil.
-								getStagedModelDataHandler(
-									FileEntry.class.getName());
+						_getStagedModelDataHandler();
 
 					if (ArrayUtil.contains(
 							stagedModelDataHandler.getExportableStatuses(),
@@ -150,6 +147,12 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return stagedModels;
+	}
+
+	private StagedModelDataHandler<FileEntry> _getStagedModelDataHandler() {
+		return (StagedModelDataHandler<FileEntry>)
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				FileEntry.class.getName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

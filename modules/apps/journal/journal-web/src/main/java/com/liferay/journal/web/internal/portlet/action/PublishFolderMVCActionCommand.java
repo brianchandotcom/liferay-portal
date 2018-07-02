@@ -119,12 +119,8 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 						_log.error(e, e);
 					}
 
-					if (_journalArticleStagedModelDataHandler == null) {
-						_journalArticleStagedModelDataHandler =
-							StagedModelDataHandlerRegistryUtil.
-								getStagedModelDataHandler(
-									JournalArticle.class.getName());
-					}
+					StagedModelDataHandler<JournalArticle>
+						stagedModelDataHandler = _getStagedModelDataHandler();
 
 					List<JournalArticle> journalArticles = new ArrayList<>();
 
@@ -143,8 +139,7 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 
 					for (JournalArticle article : journalArticles) {
 						if (ArrayUtil.contains(
-								_journalArticleStagedModelDataHandler.
-									getExportableStatuses(),
+								stagedModelDataHandler.getExportableStatuses(),
 								article.getStatus())) {
 
 							stagedModels.add(article);
@@ -169,6 +164,14 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 		return stagedModels;
 	}
 
+	private StagedModelDataHandler<JournalArticle>
+		_getStagedModelDataHandler() {
+
+		return (StagedModelDataHandler<JournalArticle>)
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				JournalArticle.class.getName());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PublishFolderMVCActionCommand.class);
 
@@ -178,8 +181,6 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
-
-	private StagedModelDataHandler _journalArticleStagedModelDataHandler;
 
 	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;

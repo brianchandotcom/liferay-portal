@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -56,6 +55,7 @@ public class MVCCommandCache {
 		String mvcCommandPostFix) {
 
 		_emptyMVCCommand = emptyMVCCommand;
+		_mvcCommandClass = mvcCommandClass;
 		_mvcComandPostFix = mvcCommandPostFix;
 
 		if (Validator.isNotNull(packagePrefix) &&
@@ -66,36 +66,15 @@ public class MVCCommandCache {
 
 		_packagePrefix = packagePrefix;
 
-		String filterString = null;
-
 		if (portletId.equals(portletName)) {
-			filterString = StringBundler.concat(
+			_filterString = StringBundler.concat(
 				"(&(mvc.command.name=*)(javax.portlet.name=", portletId, "))");
 		}
 		else {
-			filterString = StringBundler.concat(
+			_filterString = StringBundler.concat(
 				"(&(mvc.command.name=*)(|(javax.portlet.name=", portletName,
 				")(javax.portlet.name=", portletId, ")))");
 		}
-
-		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			mvcCommandClass, filterString,
-			new ServiceReferenceMapper<String, MVCCommand>() {
-
-				@Override
-				public void map(
-					ServiceReference<MVCCommand> serviceReference,
-					Emitter<String> emitter) {
-
-					List<String> mvcCommandNames = StringPlus.asList(
-						serviceReference.getProperty("mvc.command.name"));
-
-					for (String mvcCommandName : mvcCommandNames) {
-						emitter.emit(mvcCommandName);
-					}
-				}
-
-			});
 	}
 
 	/**
@@ -113,11 +92,15 @@ public class MVCCommandCache {
 	}
 
 	public void close() {
-		_serviceTrackerMap.close();
+		if (_serviceTrackerMap != null) {
+			_serviceTrackerMap.close();
+		}
 	}
 
 	public MVCCommand getMVCCommand(String mvcCommandName) {
 		String className = null;
+
+		_initServiceTrackerMap();
 
 		MVCCommand mvcCommand = _serviceTrackerMap.getService(mvcCommandName);
 
@@ -163,6 +146,8 @@ public class MVCCommandCache {
 	}
 
 	public Set<String> getMVCCommandNames() {
+		_initServiceTrackerMap();
+
 		return _serviceTrackerMap.keySet();
 	}
 
@@ -237,6 +222,29 @@ public class MVCCommandCache {
 		return mvcCommandClass;
 	}
 
+	private void _initServiceTrackerMap() {
+		if (_serviceTrackerMap == null) {
+			synchronized (this) {
+				if (_serviceTrackerMap == null) {
+					_serviceTrackerMap =
+						ServiceTrackerCollections.openSingleValueMap(
+							_mvcCommandClass, _filterString,
+							_SERVICE_REFERENCE_MAPPER);
+				}
+			}
+		}
+	}
+
+	private static final ServiceReferenceMapper<String, MVCCommand>
+		_SERVICE_REFERENCE_MAPPER = (serviceReference, emitter) -> {
+			List<String> mvcCommandNames = StringPlus.asList(
+				serviceReference.getProperty("mvc.command.name"));
+
+			for (String mvcCommandName : mvcCommandNames) {
+				emitter.emit(mvcCommandName);
+			}
+		};
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MVCCommandCache.class);
 
@@ -246,15 +254,17 @@ public class MVCCommandCache {
 			MVCResourceCommand.class);
 
 	private final MVCCommand _emptyMVCCommand;
+	private final String _filterString;
 	private final String _mvcComandPostFix;
 	private final Map<String, MVCCommand> _mvcCommandCache =
 		new ConcurrentHashMap<>();
+	private final Class<? extends MVCCommand> _mvcCommandClass;
 	private final Map<String, List<String>> _mvcCommandKeys =
 		new ConcurrentHashMap<>();
 	private final Map<String, List<MVCCommand>> _mvcCommands =
 		new ConcurrentHashMap<>();
 	private final String _packagePrefix;
-	private final ServiceTrackerMap<String, ? extends MVCCommand>
+	private volatile ServiceTrackerMap<String, ? extends MVCCommand>
 		_serviceTrackerMap;
 
 }

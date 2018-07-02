@@ -97,7 +97,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#deleteAllByGroup(long)}
 	*/
 	@Deprecated
@@ -476,7 +476,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getGroupFolderIds(long, long)}
 	*/
 	@Deprecated
@@ -625,7 +625,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getGroupSubfolderIds(List, long, long)}
 	*/
 	@Deprecated
@@ -713,8 +713,9 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #updateFolder(long,
-	long, String, String, long, List, int, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateFolder(long, long, String, String, long, List, int,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFolder updateFolder(
@@ -742,8 +743,9 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced {@link
+	#updateFolder(long, long, String, String, long, List, int,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFolder updateFolder(
@@ -771,7 +773,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #
 	updateFolderAndFileEntryTypes(long, long, long, String,
 	String, long, List, int, ServiceContext)}
 	*/

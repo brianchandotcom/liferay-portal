@@ -53,8 +53,9 @@ public interface AnnouncementsEntryService extends BaseService {
 	 */
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #addEntry(long, long,
-	String, String, String, String, Date, Date, int, boolean)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(long,
+	long, String, String, String, String, Date, Date, int,
+	boolean)}
 	*/
 	@Deprecated
 	public AnnouncementsEntry addEntry(long plid, long classNameId,
@@ -87,8 +88,8 @@ public interface AnnouncementsEntryService extends BaseService {
 		Date expirationDate, int priority) throws PortalException;
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #updateEntry(long, String,
-	String, String, String, Date, Date, int)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
+	String, String, String, String, Date, Date, int)}
 	*/
 	@Deprecated
 	public AnnouncementsEntry updateEntry(long entryId, String title,

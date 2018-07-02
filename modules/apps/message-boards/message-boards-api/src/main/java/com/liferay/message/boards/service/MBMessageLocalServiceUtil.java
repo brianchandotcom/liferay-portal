@@ -625,7 +625,7 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getNoAssetMessages() {
@@ -854,8 +854,8 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #updateMessage(long, long,
-	String, String, List, double, boolean, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateMessage(long,
+	long, String, String, List, double, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.message.boards.model.MBMessage updateMessage(

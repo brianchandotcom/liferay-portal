@@ -927,7 +927,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the web content from the matching web content article
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(JournalArticle, String, String, String,
 	PortletRequestModel,ThemeDisplay)}
 	*/
@@ -974,7 +974,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the web content from the matching web content article
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(long, String, double, String, String,
 	String, PortletRequestModel, ThemeDisplay)}
 	*/
@@ -995,7 +995,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the web content from the matching web content article
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(long, String, double, String, String,
 	String, PortletRequestModel, ThemeDisplay)}
 	*/
@@ -1038,7 +1038,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the latest web content from the matching web content article
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(long, String, String, String, String,
 	PortletRequestModel, ThemeDisplay)}
 	*/
@@ -1058,7 +1058,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the latest web content from the matching web content article
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(long, String, String, String, String,
 	PortletRequestModel, ThemeDisplay)}
 	*/
@@ -1985,7 +1985,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public int getStructureArticlesCount(long groupId, String ddmStructureKey);
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -2115,8 +2115,8 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	folder
 	* @return the updated web content article, which was moved to a new
 	folder
-	* @deprecated As of Wilberforce, replaced by {@link #moveArticle(long,
-	String, long, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#moveArticle(long, String, long, ServiceContext)}
 	*/
 	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
@@ -2631,9 +2631,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		boolean andSearch, int start, int end, Sort sort);
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #search(long, long,
-	List, long, String, String, String, String, int, String,
-	String, LinkedHashMap, boolean, int, int, Sort)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #search(long,
+	long, List, long, String, String, String, String, int,
+	String, String, LinkedHashMap, boolean, int, int, Sort)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -3035,7 +3035,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		int end) throws PortalException;
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	public void setSubscriptionLocalService(
@@ -3402,8 +3402,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param assetTagNames the new asset tag names
 	* @param assetLinkEntryIds the primary keys of the new asset link
 	entries
-	* @deprecated As of Wilberforce, replaced by {@link #updateAsset(long,
-	JournalArticle, long[], String[], long[], Double)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateAsset(long, JournalArticle, long[], String[], long[],
+	Double)}
 	*/
 	@Deprecated
 	public void updateAsset(long userId, JournalArticle article,
@@ -3557,7 +3558,8 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	article's old DDM template
 	* @param newDDMTemplateKey the primary key of the web content
 	article's new DDM template
-	* @deprecated As of Wilberforce, replaced by {@link #updateDDMTemplateKey}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateDDMTemplateKey}
 	*/
 	@Deprecated
 	public void updateTemplateId(long groupId, long classNameId,

@@ -42,8 +42,8 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #addPageResource(long,
-	long, String)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#addPageResource(long, long, String)}
 	*/
 	@Deprecated
 	@Override
@@ -277,7 +277,7 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getPageResourcePrimKey(long, long, String)}
 	*/
 	@Deprecated

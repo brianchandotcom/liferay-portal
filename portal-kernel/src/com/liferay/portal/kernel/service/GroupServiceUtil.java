@@ -92,8 +92,8 @@ public class GroupServiceUtil {
 	staging
 	* @return the group
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #addGroup(long, long,
-	Map, Map, int, boolean, int, String, boolean, boolean,
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #addGroup(long,
+	long, Map, Map, int, boolean, int, String, boolean, boolean,
 	ServiceContext)}
 	*/
 	@Deprecated
@@ -648,9 +648,9 @@ public class GroupServiceUtil {
 	tag names for the group.
 	* @return the group
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #updateGroup(long,
-	long, Map, Map, int, boolean, int, String, boolean, boolean,
-	ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateGroup(long, long, Map, Map, int, boolean, int, String,
+	boolean, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.Group updateGroup(

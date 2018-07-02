@@ -138,9 +138,10 @@ public class CalendarBookingServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #addCalendarBooking(long,
-	long[], long, long, Map, Map, String, long, long, boolean,
-	String, long, String, long, String, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addCalendarBooking(long, long[], long, long, Map, Map,
+	String, long, long, boolean, String, long, String, long,
+	String, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.calendar.model.CalendarBookingSoap addCalendarBooking(
@@ -180,7 +181,7 @@ public class CalendarBookingServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public static com.liferay.calendar.model.CalendarBookingSoap addCalendarBooking(
@@ -503,8 +504,9 @@ public class CalendarBookingServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #invokeTransition(long, int,
-	long, boolean, boolean, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#invokeTransition(long, int, long, boolean, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static void invokeTransition(long calendarBookingId, int status,
@@ -949,7 +951,7 @@ public class CalendarBookingServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#updateRecurringCalendarBooking(long, long, long[], Map, Map,
 	String, long, long, boolean, long, String, long, String,
 	ServiceContext)

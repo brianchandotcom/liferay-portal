@@ -87,10 +87,10 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #addEntry(long, String,
-	String, String, String, int, int, int, int, int, boolean,
-	boolean, String[], String, ImageSelector, ImageSelector,
-	ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(long,
+	String, String, String, String, int, int, int, int, int,
+	boolean, boolean, String[], String, ImageSelector,
+	ImageSelector, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -601,7 +601,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -740,9 +740,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #updateEntry(long, long,
-	String, String, String, String, int, int, int, int, int,
-	boolean, boolean, String[], String, ImageSelector,
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
+	long, String, String, String, String, int, int, int, int,
+	int, boolean, boolean, String[], String, ImageSelector,
 	ImageSelector, ServiceContext)}
 	*/
 	@Deprecated
@@ -848,8 +848,8 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #updateStatus(long, long,
-	int, ServiceContext, Map)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateStatus(long,
+	long, int, ServiceContext, Map)}
 	*/
 	@Deprecated
 	@Override

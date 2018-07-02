@@ -111,8 +111,8 @@ public class UserGroupServiceSoap {
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @deprecated As of Newton, replaced by {@link #addUserGroup(String,
-	String, ServiceContext)}
+	* @deprecated As of Newton (6.2.x), replaced by {@link
+	#addUserGroup(String, String, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.UserGroupSoap addUserGroup(
@@ -318,8 +318,8 @@ public class UserGroupServiceSoap {
 	* @param name the user group's name
 	* @param description the the user group's description
 	* @return the user group
-	* @deprecated As of Newton, replaced by {@link #updateUserGroup(long,
-	String, String, ServiceContext)}
+	* @deprecated As of Newton (6.2.x), replaced by {@link
+	#updateUserGroup(long, String, String, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.UserGroupSoap updateUserGroup(

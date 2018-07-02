@@ -249,7 +249,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
@@ -261,7 +261,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
@@ -272,7 +272,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
@@ -316,7 +316,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
@@ -336,7 +336,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
@@ -356,7 +356,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
@@ -366,7 +366,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
@@ -406,7 +406,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
@@ -417,7 +417,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,

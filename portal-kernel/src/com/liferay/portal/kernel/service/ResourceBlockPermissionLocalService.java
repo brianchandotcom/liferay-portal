@@ -48,7 +48,7 @@ import java.util.Set;
  * @see ResourceBlockPermissionLocalServiceUtil
  * @see com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl
  * @see com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  * @generated
  */
 @Deprecated
@@ -183,7 +183,7 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getAvailableResourceBlockPermissionActionIds(String, long,
 	List)}
 	*/

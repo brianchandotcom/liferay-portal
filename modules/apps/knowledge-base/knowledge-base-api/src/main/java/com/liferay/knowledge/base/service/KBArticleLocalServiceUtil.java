@@ -404,7 +404,7 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#getKBArticleAndAllDescendantKBArticles(long, int,
 	OrderByComparator)}
 	*/
@@ -599,8 +599,8 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #getKBArticles(long, long,
-	int, int, int, OrderByComparator)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
+	long, int, int, int, OrderByComparator)}
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getSiblingKBArticles(
@@ -613,8 +613,8 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #getKBArticlesCount(long,
-	long, int)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getKBArticlesCount(long, long, int)}
 	*/
 	@Deprecated
 	public static int getSiblingKBArticlesCount(long groupId,

@@ -103,7 +103,7 @@ public interface KBArticleService extends BaseService {
 		long kbFolderId, String urlTitle, int status) throws PortalException;
 
 	/**
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#getAllDescendantKBArticles(long, long, int,
 	OrderByComparator)}
 	*/
@@ -142,7 +142,7 @@ public interface KBArticleService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#getKBArticleAndAllDescendantKBArticles(long, int,
 	OrderByComparator)}
 	*/
@@ -220,8 +220,8 @@ public interface KBArticleService extends BaseService {
 		int status);
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #getKBArticles(long, long,
-	int, int, int, OrderByComparator)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
+	long, int, int, int, OrderByComparator)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -230,8 +230,8 @@ public interface KBArticleService extends BaseService {
 		OrderByComparator<KBArticle> orderByComparator);
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #getKBArticlesCount(long,
-	long, int)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getKBArticlesCount(long, long, int)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

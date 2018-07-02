@@ -59,7 +59,7 @@ public interface ExportImportService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public File exportLayoutsAsFile(long userId, long groupId,
@@ -97,7 +97,7 @@ public interface ExportImportService extends BaseService {
 		InputStream inputStream) throws PortalException;
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public void importLayouts(long userId, long groupId, boolean privateLayout,

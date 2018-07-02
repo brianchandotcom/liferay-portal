@@ -78,8 +78,9 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, {@link #addUserNotificationEvent(long,
-	String, long, int, long, String, boolean, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), {@link
+	#addUserNotificationEvent(long, String, long, int, long,
+	String, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public UserNotificationEvent addUserNotificationEvent(long userId,

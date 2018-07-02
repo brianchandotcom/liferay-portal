@@ -109,7 +109,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#moveDependentsToTrash(DLFolder)}
 	*/
 	@Deprecated
@@ -162,7 +162,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#restoreDependentsFromTrash(DLFolder)}
 	*/
 	@Deprecated
@@ -170,7 +170,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		List<Object> dlFileEntriesAndDLFolders) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#restoreDependentsFromTrash(List)}
 	*/
 	@Deprecated

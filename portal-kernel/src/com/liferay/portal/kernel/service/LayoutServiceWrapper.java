@@ -195,7 +195,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param endDate the export's end date
 	* @return the layouts as a byte array
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -220,7 +220,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param endDate the export's end date
 	* @return the layout as a byte array
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -233,7 +233,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFile(
 	ExportImportConfiguration)}
 	*/
@@ -260,7 +260,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param endDate the export's end date
 	* @return the layouts as a File
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -274,7 +274,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
 	ExportImportConfiguration)}
 	*/
@@ -287,7 +287,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
 	long)}
 	*/
@@ -300,7 +300,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -314,7 +314,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -343,7 +343,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param endDate the export's end date
 	* @return the portlet information as a byte array
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -356,7 +356,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -369,7 +369,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportPortletInfoAsFile(
 	ExportImportConfiguration)}
 	*/
@@ -396,7 +396,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param endDate the export's end date
 	* @return the portlet information as a file
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -409,7 +409,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -422,7 +422,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -436,7 +436,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -679,7 +679,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
 	ExportImportConfiguration, File)}
 	*/
@@ -693,7 +693,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -718,7 +718,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param bytes the byte array with the data
 	* @throws PortalException if a portal exception occurred
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -740,7 +740,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param file the LAR file with the data
 	* @throws PortalException if a portal exception occurred
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -762,7 +762,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param is the input stream
 	* @throws PortalException if a portal exception occurred
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -773,7 +773,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -786,7 +786,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -799,7 +799,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importPortletInfo(
 	ExportImportConfiguration, File)} (
 	*/
@@ -813,7 +813,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importPortletInfo(
 	ExportImportConfiguration, InputStream)} (
 	*/
@@ -839,7 +839,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -863,7 +863,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -875,7 +875,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -886,7 +886,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -897,7 +897,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -910,7 +910,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -923,7 +923,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -936,7 +936,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -973,7 +973,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param schedulerEndDate the scheduler end date
 	* @param description the scheduler description
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#schedulePublishToLive(long, long, boolean, long[], Map,
 	String, String, Date, Date, String)}
 	*/
@@ -1050,7 +1050,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param schedulerEndDate the scheduler end date
 	* @param description the scheduler description
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#schedulePublishToLive(long, long, boolean, long[], Map,
 	String, Date, Date, String, String, Date, Date, String)}
 	*/
@@ -1411,7 +1411,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportLayoutsFile(
 	ExportImportConfiguration, File)}
 	*/
@@ -1426,7 +1426,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportLayoutsFile(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -1441,7 +1441,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -1454,7 +1454,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -1468,7 +1468,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportPortletInfo(
 	ExportImportConfiguration, File)}
 	*/
@@ -1483,7 +1483,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportPortletInfo(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -1498,7 +1498,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -1511,7 +1511,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override

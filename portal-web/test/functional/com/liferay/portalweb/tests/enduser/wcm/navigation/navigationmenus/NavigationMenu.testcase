@@ -403,6 +403,7 @@
 		</execute>
 
 		<execute macro="SiteNavigationMenu#configureMenuType">
+			<var name="defaultPrimaryNavigationMenu" value="Primary Menu Name 1" />
 			<var name="menuType" value="Primary Navigation" />
 			<var name="navigationMenu" value="Primary Menu Name 2" />
 		</execute>

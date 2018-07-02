@@ -28,7 +28,8 @@ body.has-control-menu .contextual-sidebar {
 		outline: 2px dashed #65B6F0;
 	}
 
-	&--selected > &__content .card {
+	&--selected > &__content .card,
+	&.dragging > &__content .card {
 		background-color: #F0F5FF;
 	}
 
@@ -53,7 +54,8 @@ body.has-control-menu .contextual-sidebar {
 		visibility: visible;
 	}
 
-	&:focus {
+	&:focus,
+	&.dragging {
 		@include site-navigation-menu-item-focus;
 	}
 
@@ -61,7 +63,8 @@ body.has-control-menu .contextual-sidebar {
 		@include site-navigation-menu-item-focus;
 	}
 
-	&:focus > &__content > .card {
+	&:focus > &__content > .card,
+	&.dragging > &__content > .card {
 		@include site-navigation-menu-item-card-focus;
 	}
 

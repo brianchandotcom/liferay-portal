@@ -161,6 +161,7 @@ class SiteNavigationMenuEditor extends State {
 	_handleDragStart(data, event) {
 		const menuItem = event.target.getActiveDrag();
 
+		SiteNavigationMenuItem.setSelected(menuItem, true);
 		SiteNavigationMenuItem.setDragging(menuItem, true);
 	}
 

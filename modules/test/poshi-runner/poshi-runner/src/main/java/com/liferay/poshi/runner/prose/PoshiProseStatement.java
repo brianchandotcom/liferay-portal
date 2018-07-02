@@ -42,7 +42,9 @@ public class PoshiProseStatement extends BasePoshiProse {
 			}
 		}
 
-		_proseStatement = formatProseStatement(proseStatement);
+		_proseStatement = proseStatement;
+
+		proseStatement = formatProseStatement(proseStatement);
 
 		String proseStatementMatchingString = getProseStatementMatchingString();
 
@@ -63,7 +65,7 @@ public class PoshiProseStatement extends BasePoshiProse {
 
 		List<String> varValues = new ArrayList<>();
 
-		Matcher varValueMatcher = _varValuePattern.matcher(_proseStatement);
+		Matcher varValueMatcher = _varValuePattern.matcher(proseStatement);
 
 		while (varValueMatcher.find()) {
 			varValues.add(varValueMatcher.group(1));
@@ -91,8 +93,8 @@ public class PoshiProseStatement extends BasePoshiProse {
 
 			if ((i + 1) == varNames.size()) {
 				Matcher multiLineStringMatcher =
-					_multiLineStringPattern.matcher(_proseStatement);
-				Matcher tableMatcher = _tablePattern.matcher(_proseStatement);
+					_multiLineStringPattern.matcher(proseStatement);
+				Matcher tableMatcher = _tablePattern.matcher(proseStatement);
 
 				if (multiLineStringMatcher.find()) {
 					varValue = multiLineStringMatcher.group(1);
@@ -119,6 +121,10 @@ public class PoshiProseStatement extends BasePoshiProse {
 			new DefaultAttribute(
 				"macro",
 				_poshiProseMatcher.getMacroNamespacedClassCommandName()));
+
+		Element proseElement = Dom4JUtil.getNewElement("prose", element);
+
+		proseElement.addCDATA(_proseStatement);
 
 		for (Map.Entry<String, String> varMapEntry : _varMap.entrySet()) {
 			Element varElement = Dom4JUtil.getNewElement(
@@ -155,7 +161,9 @@ public class PoshiProseStatement extends BasePoshiProse {
 	}
 
 	protected String getProseStatementMatchingString() {
-		String proseStatementMatchingString = _proseStatement.replaceAll(
+		String proseStatement = formatProseStatement(_proseStatement);
+
+		String proseStatementMatchingString = proseStatement.replaceAll(
 			_multiLineStringPattern.pattern(), " \"\"");
 
 		proseStatementMatchingString = proseStatementMatchingString.replaceAll(

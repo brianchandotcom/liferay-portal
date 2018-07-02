@@ -1,6 +1,6 @@
-import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 import templates from './FragmentEditor.soy';
 import './FragmentPreview.es';
@@ -13,7 +13,7 @@ import './SourceEditor.es';
  * @review
  */
 
-class FragmentEditor extends Component {
+class FragmentEditor extends PortletBase {
 
 	/**
 	 * @inheritDoc
@@ -103,6 +103,31 @@ class FragmentEditor extends Component {
 		this._js = event.content;
 		this._handleContentChanged();
 	}
+
+	/**
+	 * Save the fragment content
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+
+	_handleSaveButtonClick(event) {
+		const status = event.delegateTarget.value;
+		const content = this.getContent();
+
+		this.fetch(
+			this.editFragmentEntryURL, 
+			Object.assign(
+				this.fragmentEntryData, 
+				{
+					status,
+					cssContent: content.css,
+					htmlContent: content.html,
+					jsContent: content.js
+				}
+			)
+		);
+	}
 }
 
 /**
@@ -113,6 +138,36 @@ class FragmentEditor extends Component {
  */
 
 FragmentEditor.STATE = {
+
+	/**
+	 * Url for save draft or publish
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+
+	editFragmentEntryURL: Config.string().required(),
+
+	/**
+	 * Default FragmentEditor params for save draft or publish
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @review
+	 * @type {{
+	 *  fragmentEntryId: !string,
+	 *  fragmentCollectionId: !string,
+	 *  fragmentEntryId: !string,
+	 *  redirect: !string,
+	 *  name: !string
+	 * }}
+	 */
+
+	fragmentEntryData: Config.shapeOf({
+		fragmentCollectionId: Config.string().required(),
+		fragmentEntryId: Config.string().required(),
+		redirect: Config.string().required(),
+		name: Config.string().required()
+	}).required(),
 
 	/**
 	 * Initial HTML sent to the editor
@@ -140,18 +195,6 @@ FragmentEditor.STATE = {
 	 */
 
 	initialJS: Config.string().required(),
-
-	/**
-	 * Namespace of the portlet being used.
-	 * Necesary for getting the real inputs which interact with the server.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	namespace: Config.string().required(),
 
 	/**
 	 * Preview fragment entry URL

@@ -49,21 +49,7 @@ renderResponse.setTitle(title);
 
 <portlet:actionURL name="/fragment/edit_fragment_entry" var="editFragmentEntryURL" />
 
-<aui:form action="<%= editFragmentEntryURL %>" enctype="multipart/form-data" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= fragmentDisplayContext.getRedirect() %>" />
-	<aui:input name="fragmentEntryId" type="hidden" value="<%= fragmentDisplayContext.getFragmentEntryId() %>" />
-	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentDisplayContext.getFragmentCollectionId() %>" />
-	<aui:input name="cssContent" type="hidden" value="" />
-	<aui:input name="htmlContent" type="hidden" value="" />
-	<aui:input name="jsContent" type="hidden" value="" />
-	<aui:input name="status" type="hidden" value="<%= fragmentEntry.getStatus() %>" />
-
-	<aui:model-context bean="<%= fragmentEntry %>" model="<%= FragmentEntry.class %>" />
-
-	<aui:input autoFocus="<%= false %>" name="name" placeholder="name" type="hidden" />
-
-	<div id="<portlet:namespace />fragmentEditor"></div>
-</aui:form>
+<div id="<portlet:namespace />fragmentEditor"></div>
 
 <liferay-portlet:renderURL plid="<%= fragmentDisplayContext.getRenderLayoutPlid() %>" var="renderFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/fragment/render_fragment_entry" />
@@ -74,7 +60,7 @@ renderResponse.setTitle(title);
 	<portlet:param name="mvcRenderCommandName" value="/fragment/preview_fragment_entry" />
 </liferay-portlet:renderURL>
 
-<aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor, metal-dom/src/all/dom as dom, frontend-js-web/liferay/toast/commands/OpenToast.es as toastCommands">
+<aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');
 	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
 	var jsInput = document.getElementById('<portlet:namespace />jsContent');
@@ -82,52 +68,32 @@ renderResponse.setTitle(title);
 
 	var fragmentEditor = new FragmentEditor.default(
 		{
+			allowedStatus: {
+				approved: '<%= WorkflowConstants.STATUS_APPROVED %>',
+				draft: '<%= WorkflowConstants.STATUS_DRAFT %>'
+			},
 			currentURL: '<%= currentURL %>',
-			draft: <%= WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus() %>,
+			editFragmentEntryURL: '<%= editFragmentEntryURL %>',
 			fragmentDisplayContextFragmentCollectionId: '<%= fragmentDisplayContext.getFragmentCollectionId() %>',
 			fragmentDisplayContextFragmentEntryId: '<%= fragmentDisplayContext.getFragmentEntryId() %>',
 			fragmentDisplayContextRedirect: '<%= fragmentDisplayContext.getRedirect() %>',
 			fragmentEntryStatus: '<%= fragmentEntry.getStatus() %>',
+			fragmentEntryData: {
+				fragmentCollectionId: '<%= fragmentDisplayContext.getFragmentCollectionId() %>',
+				fragmentEntryId: '<%= fragmentDisplayContext.getFragmentEntryId() %>',
+				redirect: '<%= fragmentDisplayContext.getRedirect() %>',
+				name: ''
+			},
 			initialCSS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getCssContent()) %>',
 			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
 			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',
 			namespace: '<portlet:namespace />',
 			previewFragmentEntryURL: '<%= previewFragmentEntryURL %>',
 			renderFragmentEntryURL: '<%= renderFragmentEntryURL %>',
-			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+			status: '<%= fragmentEntry.getStatus() %>'
 		},
 		wrapper
-	);
-
-	var publishButtonClickHandler = dom.delegate(
-		document.body,
-		'click',
-		'#<portlet:namespace />publishButton',
-		function(event) {
-			event.preventDefault();
-
-			if (!fragmentEditor.isHtmlValid()) {
-				toastCommands.openToast(
-					{
-						message: '<liferay-ui:message key="fragment-html-is-invalid" />',
-						title: '<liferay-ui:message key="error" />',
-						type: 'danger'
-					}
-				);
-
-				return;
-			}
-
-			dom.toElement('#<portlet:namespace />status').value = '<%= WorkflowConstants.STATUS_APPROVED %>';
-
-			var content = fragmentEditor.getContent();
-
-			cssInput.value = content.css;
-			htmlInput.value = content.html;
-			jsInput.value = content.js;
-
-			submitForm(document.querySelector('#<portlet:namespace />fm'));
-		}
 	);
 
 	function destroyFragmentEditor () {

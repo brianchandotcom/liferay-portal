@@ -4,8 +4,11 @@
  * FragmentEditor
  */
 {template .render}
+	{@param allowedStatus: [
+		approved: string,
+		draft: string
+	]}
 	{@param currentURL: string}
-	{@param draft: bool}
 	{@param initialCSS: string}
 	{@param initialHTML: string}
 	{@param initialJS: string}
@@ -13,10 +16,12 @@
 	{@param previewFragmentEntryURL: string}
 	{@param renderFragmentEntryURL: string}
 	{@param spritemap: string}
+	{@param status: string}
 	{@param? _css: string}
 	{@param? _handleCSSChanged: any}
 	{@param? _handleHTMLChanged: any}
 	{@param? _handleJSChanged: any}
+	{@param? _handleSaveButtonClick: any}
 	{@param? _html: string}
 	{@param? _js: string}
 
@@ -35,9 +40,14 @@
 					</div>
 
 					<div class="btn-group btn-group-nowrap mt-1 pull-right">
-						{if $draft}
+						{if $status == $allowedStatus.draft}
 							<div class="btn-group-item">
-								<button class="btn btn-default" onclick="submitForm(document.querySelector('#{$namespace}fm'));">
+								<button 
+									class="btn btn-default"
+									type="button"
+									value="{$allowedStatus.draft}"
+									data-onclick="{$_handleSaveButtonClick}"
+								>
 									<span class="lfr-btn-label">
 										{msg desc=""}save-as-draft{/msg}
 									</span>
@@ -46,7 +56,12 @@
 						{/if}
 
 						<div class="btn-group-item">
-							<button class="btn btn-primary" id="{$namespace}publishButton">
+							<button 
+								class="btn btn-primary"
+								type="button"
+								value="{$allowedStatus.approved}"
+								data-onclick="{$_handleSaveButtonClick}"
+							>
 								<span class="lfr-btn-label">
 									{msg desc=""}publish{/msg}
 								</span>

@@ -65,7 +65,7 @@ public class UpgradeArticleAssets extends UpgradeProcess {
 		try (PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
 					"select resourcePrimKey, indexable from JournalArticle ",
-					"where companyid = ", String.valueOf(companyId), " and ",
+					"where companyId = ", String.valueOf(companyId), " and ",
 					"version = ",
 					String.valueOf(JournalArticleConstants.VERSION_DEFAULT),
 					" and status = ",

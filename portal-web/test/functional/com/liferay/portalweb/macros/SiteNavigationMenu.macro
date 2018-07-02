@@ -169,7 +169,7 @@
 		<if>
 			<equals arg1="${menuType}" arg2="Primary Navigation" />
 			<then>
-				<execute function="Confirm" value1="Do you want to replace ${navigationMenu} for Default as primary navigation? This will affect all the pages using primary navigation." />
+				<execute function="Confirm" value1="Do you want to replace ${navigationMenu} for ${defaultPrimaryNavigationMenu} as primary navigation? This action will affect all the pages using primary navigation." />
 			</then>
 		</if>
 	</command>

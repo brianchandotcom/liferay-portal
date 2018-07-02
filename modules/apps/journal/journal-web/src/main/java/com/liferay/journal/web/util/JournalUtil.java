@@ -16,6 +16,7 @@ package com.liferay.journal.web.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
@@ -28,9 +29,14 @@ import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -228,6 +234,26 @@ public class JournalUtil {
 		return themeDisplay.getPlid();
 	}
 
+	public static boolean isIncludeVersionHistory() {
+		try {
+			JournalServiceConfiguration journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+			return journalServiceConfiguration.
+				singleAssetPublishIncludeVersionHistory();
+		}
+		catch (ConfigurationException ce) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to retrieve journal service configuration", ce);
+			}
+
+			return false;
+		}
+	}
+
 	public static boolean isSubscribedToArticle(
 		long companyId, long groupId, long userId, long articleId) {
 
@@ -340,5 +366,7 @@ public class JournalUtil {
 
 		return recentArticles;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(JournalUtil.class);
 
 }

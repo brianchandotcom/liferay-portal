@@ -18,20 +18,18 @@ import com.liferay.exportimport.changeset.Changeset;
 import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommand;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
-import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.web.util.JournalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -101,23 +99,8 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 				else if (childObject instanceof JournalArticle) {
 					JournalArticle journalArticle = (JournalArticle)childObject;
 
-					boolean includeVersionHistory = false;
-
-					try {
-						JournalServiceConfiguration
-							journalServiceConfiguration =
-								ConfigurationProviderUtil.
-									getCompanyConfiguration(
-										JournalServiceConfiguration.class,
-										CompanyThreadLocal.getCompanyId());
-
-						includeVersionHistory =
-							journalServiceConfiguration.
-								singleAssetPublishIncludeVersionHistory();
-					}
-					catch (Exception e) {
-						_log.error(e, e);
-					}
+					boolean includeVersionHistory =
+						JournalUtil.isIncludeVersionHistory();
 
 					StagedModelDataHandler<JournalArticle>
 						stagedModelDataHandler = _getStagedModelDataHandler();
@@ -154,9 +137,8 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get folders, file entries, file shortcuts for " +
-						"folder " +
-							folder.getFolderId(),
+					"Unable to get folders, articles for folder " +
+						folder.getFolderId(),
 					pe);
 			}
 		}

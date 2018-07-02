@@ -189,7 +189,7 @@ public class LoggerElement {
 	}
 
 	public void removeClassName(String className) {
-		String cleanedClassName = className.replaceFirst(
+		String cleanedClassName = _className.replaceFirst(
 			"(.*?)\\s*" + Matcher.quoteReplacement(className) + "\\s*(.*)",
 			"$1 $2");
 

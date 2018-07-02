@@ -88,6 +88,10 @@ public class ElseIfPoshiElement extends IfPoshiElement {
 			return false;
 		}
 
+		if (!(parentPoshiElement instanceof IfPoshiElement)) {
+			return false;
+		}
+
 		return isValidPoshiScriptBlock(blockNamePattern, poshiScript);
 	}
 

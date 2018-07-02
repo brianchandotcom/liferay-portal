@@ -44,7 +44,7 @@ public class ForPoshiElement extends PoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String poshiScript) {
 
-		if (_isElementType(poshiScript)) {
+		if (_isElementType(parentPoshiElement, poshiScript)) {
 			return new ForPoshiElement(parentPoshiElement, poshiScript);
 		}
 
@@ -139,7 +139,17 @@ public class ForPoshiElement extends PoshiElement {
 
 	protected String typeAttributeName;
 
-	private boolean _isElementType(String poshiScript) {
+	private boolean _isElementType(
+		PoshiElement parentPoshiElement, String poshiScript) {
+
+		if (!(parentPoshiElement instanceof CommandPoshiElement) &&
+			!(parentPoshiElement instanceof ForPoshiElement) &&
+			!(parentPoshiElement instanceof TaskPoshiElement) &&
+			!(parentPoshiElement instanceof ThenPoshiElement)) {
+
+			return false;
+		}
+
 		return isValidPoshiScriptBlock(_blockNamePattern, poshiScript);
 	}
 

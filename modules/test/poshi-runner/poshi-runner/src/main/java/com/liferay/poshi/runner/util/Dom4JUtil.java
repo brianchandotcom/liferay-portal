@@ -134,6 +134,24 @@ public class Dom4JUtil {
 		return saxReader.read(new StringReader(xml));
 	}
 
+	public static void removeWhiteSpaceTextNodes(Element element) {
+		for (Node node : toNodeList(element.content())) {
+			if (node instanceof Text) {
+				String nodeText = node.getText();
+
+				nodeText = nodeText.trim();
+
+				if (nodeText.length() == 0) {
+					node.detach();
+				}
+			}
+		}
+
+		for (Element childElement : toElementList(element.elements())) {
+			removeWhiteSpaceTextNodes(childElement);
+		}
+	}
+
 	public static void replace(
 		Element element, boolean cascade, String replacementText,
 		String targetText) {

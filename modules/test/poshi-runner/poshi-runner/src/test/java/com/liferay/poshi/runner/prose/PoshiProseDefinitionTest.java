@@ -15,12 +15,13 @@
 package com.liferay.poshi.runner.prose;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
-import com.liferay.poshi.runner.elements.PoshiElement;
-import com.liferay.poshi.runner.elements.PoshiNodeFactory;
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.Dom4JUtil;
 
 import java.io.File;
 import java.io.IOException;
+
+import java.net.URI;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -69,7 +70,14 @@ public class PoshiProseDefinitionTest extends TestCase {
 	public void testProseToXMLTranslation() throws Exception {
 		Element actual = _poshiProseDefinition.toElement();
 
-		Element expected = _getPoshiElement(_POSHI_TESTCASE_FILE_NAME);
+		File file = new File(_TEST_BASE_DIR_NAME + _POSHI_TESTCASE_FILE_NAME);
+
+		URI uri = file.toURI();
+
+		Element expected = PoshiRunnerGetterUtil.getRootElementFromURL(
+			uri.toURL(), false);
+
+		Dom4JUtil.removeWhiteSpaceTextNodes(expected);
 
 		_assertEqualElements(
 			actual, expected,
@@ -114,11 +122,6 @@ public class PoshiProseDefinitionTest extends TestCase {
 		sb.append(actual);
 
 		return sb.toString();
-	}
-
-	private PoshiElement _getPoshiElement(String fileName) {
-		return (PoshiElement)PoshiNodeFactory.newPoshiNodeFromFile(
-			_TEST_BASE_DIR_NAME + fileName);
 	}
 
 	private static final String _POSHI_PROSE_FILE_NAME =

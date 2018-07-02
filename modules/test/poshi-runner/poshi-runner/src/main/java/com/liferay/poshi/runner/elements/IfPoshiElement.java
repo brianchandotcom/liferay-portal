@@ -164,6 +164,14 @@ public class IfPoshiElement extends PoshiElement {
 			return false;
 		}
 
+		if (!(parentPoshiElement instanceof CommandPoshiElement) &&
+			!(parentPoshiElement instanceof ForPoshiElement) &&
+			!(parentPoshiElement instanceof TaskPoshiElement) &&
+			!(parentPoshiElement instanceof ThenPoshiElement)) {
+
+			return false;
+		}
+
 		return isValidPoshiScriptBlock(blockNamePattern, poshiScript);
 	}
 

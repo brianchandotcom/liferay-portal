@@ -53,9 +53,16 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			String releaseCodeName = matcher.group(4);
 
 			if (!_releaseInfoMap.containsKey(releaseCodeName)) {
-				return StringUtil.replaceFirst(
-					content, releaseCodeName, _getNextReleaseCodeName(),
-					matcher.start());
+				String nextReleaseCodeName = _getNextReleaseCodeName();
+
+				if (!releaseCodeName.equals(nextReleaseCodeName)) {
+					return StringUtil.replaceFirst(
+						content, releaseCodeName, nextReleaseCodeName,
+						matcher.start());
+				}
+
+				_releaseInfoMap.put(
+					nextReleaseCodeName, _getNextReleaseVersion());
 			}
 
 			String expectedReleaseVersion = _releaseInfoMap.get(
@@ -113,11 +120,25 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		return _nextReleaseCodeName;
 	}
 
+	private synchronized String _getNextReleaseVersion() throws Exception {
+		if (_nextReleaseVersion != null) {
+			return _nextReleaseVersion;
+		}
+
+		Field versionField = ReleaseInfo.class.getDeclaredField("_VERSION");
+
+		versionField.setAccessible(true);
+
+		_nextReleaseVersion = String.valueOf(versionField.get(null));
+
+		return _nextReleaseVersion;
+	}
+
 	private static final Map<String, String> _releaseInfoMap = new HashMap<>();
 
 	static {
 		_releaseInfoMap.put("Bunyan", "6.0.x");
-		_releaseInfoMap.put("Judson", "7.1.x");
+		//_releaseInfoMap.put("Judson", "7.1.x");
 		_releaseInfoMap.put("Newton", "6.2.x");
 		_releaseInfoMap.put("Paton", "6.1.x");
 		_releaseInfoMap.put("Wilberforce", "7.0.x");
@@ -128,5 +149,6 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			"(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
 	private String _nextReleaseCodeName;
+	private String _nextReleaseVersion;
 
 }

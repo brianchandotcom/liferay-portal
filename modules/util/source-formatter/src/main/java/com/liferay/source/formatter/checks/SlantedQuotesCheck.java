@@ -27,25 +27,39 @@ public class SlantedQuotesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		content = _fixSlantedQuotes(
+			content, _SLANTED_DOUBLE_QUOTE_CHARS, StringPool.QUOTE);
+
+		return content;
+	}
+
+	private String _fixSlantedQuotes(
+		String content, char[] chars, String replacement) {
+
 		int x = content.length() + 1;
 
 		while (true) {
-			x = Math.max(
-				content.lastIndexOf('\u201c', x - 1),
-				content.lastIndexOf('\u201d', x - 1));
+			int y = -1;
 
-			if (x == -1) {
+			for (char c : chars) {
+				y = Math.max(y, content.lastIndexOf(c, x - 1));
+			}
+
+			if (y == -1) {
 				return content;
 			}
 
-			if (ToolsUtil.isInsideQuotes(content, x)) {
-				continue;
+			if (!ToolsUtil.isInsideQuotes(content, y)) {
+				content = StringBundler.concat(
+					content.substring(0, y), replacement,
+					content.substring(y + 1));
 			}
 
-			content = StringBundler.concat(
-				content.substring(0, x), StringPool.QUOTE,
-				content.substring(x + 1));
+			x = y;
 		}
 	}
+
+	private static final char[] _SLANTED_DOUBLE_QUOTE_CHARS =
+		{'\u201c', '\u201d', '\u201e', '\u201f'};
 
 }

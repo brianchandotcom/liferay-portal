@@ -26,15 +26,6 @@
 	</div>
 
 	<div class="wiki-content">
-		<@liferay_social_bookmarks["bookmarks"]
-			className=wikiPageClassName
-			classPK=entry.getResourcePrimKey()
-			displayStyle="normal"
-			target="_blank"
-			title=entry.getTitle()
-			url=viewURL
-		/>
-
 		${formattedContent}
 	</div>
 

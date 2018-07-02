@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  * <li>
  * Generate a valid Liferay Portal user screen name based on the OpenID
  * and search for an existing Liferay Portal user with a matching screen name.
- * If found, then update the Liferay Portal user’s OpenID to match and redirect
+ * If found, then update the Liferay Portal user's OpenID to match and redirect
  * the browser to the OpenID authentication request URL. Otherwise, ...
  * </li>
  * <li>
@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  * redirect the browser to the enriched OpenID authentication request URL.
  * </li>
  * <li>
- * Upon returning from the OpenID provider’s authentication process, the
+ * Upon returning from the OpenID provider's authentication process, the
  * MVCActionCommand finds the URL parameter <code>cmd</code> set to
  * <code>read</code> (see step 2).
  * </li>

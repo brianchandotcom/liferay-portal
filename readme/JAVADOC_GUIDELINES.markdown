@@ -179,7 +179,7 @@ public String[] getPreferencesValues(
     [@return](ADVANCED_JAVADOC_GUIDELINES.markdown#return-tags), etc.) for
     each method; without them, the method Javadoc is incomplete.
 6.  Start a method description with *Returns*, if the method returns a value.
-7.  Don’t explicitly refer to collections in descriptions (e.g.,
+7.  Don't explicitly refer to collections in descriptions (e.g.,
     *list of articles*). Use, instead, the plural (e.g., *the articles*) or *all
     the* (e.g., *all the articles*).
 8.  When referring to another class, try to either link using *{@link entity}*

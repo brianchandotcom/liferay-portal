@@ -64,6 +64,13 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 			String imagePreviewURL = layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
 			%>
 
+			<portlet:renderURL var="editDisplayPageURL">
+				<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
+				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) %>" />
+			</portlet:renderURL>
+
 			<liferay-ui:search-container-column-text>
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
@@ -76,6 +83,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= layoutPageTemplateEntry.getName() %>"
+							url="<%= editDisplayPageURL %>"
 						>
 							<liferay-frontend:vertical-card-header>
 								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
@@ -144,6 +152,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= layoutPageTemplateEntry.getName() %>"
+							url="<%= editDisplayPageURL %>"
 						>
 							<liferay-frontend:vertical-card-header>
 								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />

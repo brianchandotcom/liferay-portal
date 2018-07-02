@@ -3965,6 +3965,10 @@ version 1.3.0.
 ### Added
 - [LPS-83104]: Set `liferay.releng.` default property values.
 
+### Changed
+- [LPS-83067]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.62.
+
 ### Fixed
 - [LPS-83104]: Fix publishing from sub-repositories.
 

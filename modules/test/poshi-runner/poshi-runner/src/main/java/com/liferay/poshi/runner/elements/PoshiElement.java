@@ -227,10 +227,12 @@ public abstract class PoshiElement
 		StringBuilder sb = new StringBuilder();
 
 		for (char c : poshiScriptBlock.toCharArray()) {
-			if (isBalancedPoshiScript(sb.toString()) && (c == '{')) {
-				String blockName = sb.toString();
+			if (c == '{') {
+				if (isBalancedPoshiScript(sb.toString())) {
+					String blockName = sb.toString();
 
-				return blockName.trim();
+					return blockName.trim();
+				}
 			}
 
 			sb.append(c);
@@ -361,9 +363,11 @@ public abstract class PoshiElement
 				continue;
 			}
 
-			if (isBalancedPoshiScript(poshiScriptSnippet) &&
-				((c == '}') || (c == ';'))) {
+			if ((c != '}') && (c != ';')) {
+				continue;
+			}
 
+			if (isBalancedPoshiScript(poshiScriptSnippet)) {
 				if (splitElseBlocks) {
 					if (isValidPoshiScriptBlock(
 							ElseIfPoshiElement.blockNamePattern,
@@ -736,7 +740,7 @@ public abstract class PoshiElement
 	private static final Pattern _namespacedfunctionFileNamePattern =
 		Pattern.compile(".*?\\.(.*?)\\.function");
 	private static final Pattern _poshiScriptBlockPattern = Pattern.compile(
-		".*?\\{.*\\}$", Pattern.DOTALL);
+		"^[^{]*\\{[\\s\\S]*\\}$");
 	private static final Pattern _poshiScriptCommentPattern = Pattern.compile(
 		"^[\\s]*(\\/\\/.*?(\\n|$)|\\/\\*.*?\\*\\/)", Pattern.DOTALL);
 	private static final Pattern _varInvocationAssignmentStatementPattern;

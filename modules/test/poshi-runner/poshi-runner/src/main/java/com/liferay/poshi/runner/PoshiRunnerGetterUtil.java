@@ -350,6 +350,12 @@ public class PoshiRunnerGetterUtil {
 	}
 
 	public static Element getRootElementFromURL(URL url) throws Exception {
+		return getRootElementFromURL(url, true);
+	}
+
+	public static Element getRootElementFromURL(URL url, boolean addLineNumbers)
+		throws Exception {
+
 		String fileContent = FileUtil.read(url);
 		String filePath = url.getFile();
 
@@ -391,7 +397,9 @@ public class PoshiRunnerGetterUtil {
 					cdata = true;
 				}
 
-				if (line.contains("<![CDATA[") && matcher.find()) {
+				if (line.contains("<![CDATA[") && matcher.find() &&
+					addLineNumbers) {
+
 					for (String reservedTag : _reservedTags) {
 						if (line.contains("<" + reservedTag)) {
 							line = StringUtil.replace(
@@ -409,10 +417,12 @@ public class PoshiRunnerGetterUtil {
 
 				for (String reservedTag : _reservedTags) {
 					if (line.contains("<" + reservedTag)) {
-						line = StringUtil.replace(
-							line, matcher.group(),
-							matcher.group() + " line-number=\"" + lineNumber +
-								"\"");
+						if (addLineNumbers) {
+							line = StringUtil.replace(
+								line, matcher.group(),
+								matcher.group() + " line-number=\"" +
+									lineNumber + "\"");
+						}
 
 						tagIsReservedTag = true;
 
@@ -442,7 +452,10 @@ public class PoshiRunnerGetterUtil {
 			}
 
 			sb.append(line);
-			sb.append("\n");
+
+			if (cdata) {
+				sb.append("\n");
+			}
 
 			lineNumber++;
 		}
@@ -539,9 +552,9 @@ public class PoshiRunnerGetterUtil {
 			"and", "arg", "body", "case", "command", "condition", "contains",
 			"default", "definition", "description", "echo", "else", "elseif",
 			"equals", "execute", "fail", "for", "if", "head", "html", "isset",
-			"not", "off", "on", "or", "property", "return", "set-up", "table",
-			"take-screenshot", "task", "tbody", "td", "tear-down", "thead",
-			"then", "title", "toggle", "tr", "var", "while"
+			"not", "off", "on", "or", "property", "prose", "return", "set-up",
+			"table", "take-screenshot", "task", "tbody", "td", "tear-down",
+			"thead", "then", "title", "toggle", "tr", "var", "while"
 		});
 	private static final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
 	private static final Pattern _variablePattern = Pattern.compile(

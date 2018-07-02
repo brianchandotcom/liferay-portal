@@ -306,14 +306,14 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 	function openSidebar(title) {
 		sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
-		sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><span class="icon-monospaced" id="<portlet:namespace />sidebarHeaderButton"><aui:icon image="times" markupView="lexicon" /></span></div></div>'
+		sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><button class="btn btn-monospaced btn-unstyled" id="<portlet:namespace />sidebarHeaderButton" type="button"><span class="icon-monospaced"><aui:icon image="times" markupView="lexicon" /></span></button></div></div>'
 		sidebar.visible = true;
 	}
 
 	function setSidebarBody(content) {
 		AUI().use(
 			['aui-base', 'aui-parse-content'],
-			function (A) {
+			function(A) {
 				var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
 				var sidebarHeaderButton = A.one('#<portlet:namespace />sidebarHeaderButton');
 
@@ -335,7 +335,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		'<portlet:namespace />sidebar'
 	)
 	.then(
-		function (_sidebar) {
+		function(_sidebar) {
 			sidebar = _sidebar;
 
 			sidebar.on('hide', closeSidebar);

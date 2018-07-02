@@ -51,7 +51,7 @@ import com.liferay.trash.kernel.service.TrashEntryServiceUtil;
  * @see TrashEntryServiceSoap
  * @see HttpPrincipal
  * @see TrashEntryServiceUtil
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
            com.liferay.trash.service.impl.TrashEntryServiceImpl}
  * @generated
  */

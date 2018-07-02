@@ -90,7 +90,7 @@ public interface ThemeLocalService extends BaseLocalService {
 	public List<Theme> getThemes(long companyId);
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getPageThemes}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPageThemes}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

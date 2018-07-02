@@ -28,7 +28,7 @@ public interface IndexerPostProcessor {
 		throws Exception;
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #postProcessContextBooleanFilter(BooleanFilter,
 	 *             SearchContext)}
 	 */
@@ -50,7 +50,7 @@ public interface IndexerPostProcessor {
 		throws Exception;
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
 	 *             SearchContext)}
 	 */

@@ -52,8 +52,8 @@ public class UserConstants {
 		PropsKeys.USERS_EMAIL_ADDRESS_AUTO_SUFFIX);
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getPortraitURL(String,
-	 *             boolean, long, String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getPortraitURL(String, boolean, long, String)}
 	 */
 	@Deprecated
 	public static String getPortraitURL(

@@ -216,10 +216,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addEntry(long, String,
-	 *             String, String, String, int, int, int, int, int, boolean,
-	 *             boolean, String[], String, ImageSelector, ImageSelector,
-	 *             ServiceContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(long,
+	 *             String, String, String, String, int, int, int, int, int,
+	 *             boolean, boolean, String[], String, ImageSelector,
+	 *             ImageSelector, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -953,7 +953,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1161,9 +1161,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #updateEntry(long, long,
-	 *             String, String, String, String, int, int, int, int, int,
-	 *             boolean, boolean, String[], String, ImageSelector,
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
+	 *             long, String, String, String, String, int, int, int, int,
+	 *             int, boolean, boolean, String[], String, ImageSelector,
 	 *             ImageSelector, ServiceContext)}
 	 */
 	@Deprecated
@@ -1469,8 +1469,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #updateStatus(long, long,
-	 *             int, ServiceContext, Map)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateStatus(long,
+	 *             long, int, ServiceContext, Map)}
 	 */
 	@Deprecated
 	@Override
@@ -1694,7 +1694,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected void addDiscussion(BlogsEntry entry, long userId, long groupId)
@@ -1851,7 +1851,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected String getUniqueUrlTitle(
@@ -2280,8 +2280,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #validate(String, String,
-	 *             String, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #validate(String,
+	 *             String, String, int)}
 	 */
 	@Deprecated
 	protected void validate(String title, String urlTitle, String content)

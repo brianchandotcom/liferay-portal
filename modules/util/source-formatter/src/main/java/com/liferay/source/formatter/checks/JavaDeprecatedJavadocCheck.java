@@ -14,14 +14,16 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,21 +50,43 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 					matcher.end(1));
 			}
 
-			String version = matcher.group(3);
+			String releaseCodeName = matcher.group(4);
 
-			if (!ArrayUtil.contains(_OLD_RELEASE_CODE_NAMES, version)) {
+			if (!_releaseInfoMap.containsKey(releaseCodeName)) {
 				String nextReleaseCodeName = _getNextReleaseCodeName();
 
-				if (!nextReleaseCodeName.equals(version)) {
+				if (!releaseCodeName.equals(nextReleaseCodeName)) {
 					return StringUtil.replaceFirst(
-						content, version, nextReleaseCodeName, matcher.start());
+						content, releaseCodeName, nextReleaseCodeName,
+						matcher.start());
 				}
+
+				_releaseInfoMap.put(
+					nextReleaseCodeName, _getNextReleaseVersion());
 			}
 
-			String deprecatedInfo = matcher.group(4);
+			String expectedReleaseVersion = _releaseInfoMap.get(
+				releaseCodeName);
+
+			if (matcher.group(5) == null) {
+				return StringUtil.insert(
+					content,
+					StringBundler.concat(" (", expectedReleaseVersion, ")"),
+					matcher.end(4));
+			}
+
+			String actualReleaseVersion = matcher.group(6);
+
+			if (!actualReleaseVersion.equals(expectedReleaseVersion)) {
+				return StringUtil.replaceFirst(
+					content, actualReleaseVersion, expectedReleaseVersion,
+					matcher.start(5));
+			}
+
+			String deprecatedInfo = matcher.group(7);
 
 			if (Validator.isNull(deprecatedInfo)) {
-				return content;
+				continue;
 			}
 
 			if (!deprecatedInfo.startsWith(StringPool.COMMA)) {
@@ -75,7 +99,7 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 
 				return StringUtil.replaceFirst(
 					content, StringPool.PERIOD, StringPool.BLANK,
-					matcher.end(4) - 1);
+					matcher.end(7) - 1);
 			}
 		}
 
@@ -96,12 +120,36 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		return _nextReleaseCodeName;
 	}
 
-	private static final String[] _OLD_RELEASE_CODE_NAMES =
-		{"Bunyan", "Newton", "Paton", "Wilberforce"};
+	private synchronized String _getNextReleaseVersion() throws Exception {
+		if (_nextReleaseVersion != null) {
+			return _nextReleaseVersion;
+		}
+
+		Field versionField = ReleaseInfo.class.getDeclaredField("_VERSION");
+
+		versionField.setAccessible(true);
+
+		_nextReleaseVersion = StringUtil.replaceLast(
+			String.valueOf(versionField.get(null)), ".0", ".x");
+
+		return _nextReleaseVersion;
+	}
+
+	private static final Map<String, String> _releaseInfoMap = new HashMap<>();
+
+	static {
+		_releaseInfoMap.put("Bunyan", "6.0.x");
+		_releaseInfoMap.put("Judson", "7.1.x");
+		_releaseInfoMap.put("Newton", "6.2.x");
+		_releaseInfoMap.put("Paton", "6.1.x");
+		_releaseInfoMap.put("Wilberforce", "7.0.x");
+	}
 
 	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(\n\\s*\\* @deprecated)( As of ([^, \n]+)(.*?)\n\\s*\\*( @|/))?",
+		"(\n\\s*\\* @deprecated)( As of (([\\w.]+)( \\(([\\w.]+)\\))?)" +
+			"(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
 	private String _nextReleaseCodeName;
+	private String _nextReleaseVersion;
 
 }

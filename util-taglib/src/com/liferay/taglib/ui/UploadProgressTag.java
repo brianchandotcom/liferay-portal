@@ -38,7 +38,7 @@ public class UploadProgressTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public void setRedirect(String redirect) {

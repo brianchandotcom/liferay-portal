@@ -46,7 +46,8 @@ public class FrontendEditorLangResourceBundleLoader
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #loadResourceBundle(Locale)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #loadResourceBundle(Locale)}
 	 */
 	@Deprecated
 	@Override

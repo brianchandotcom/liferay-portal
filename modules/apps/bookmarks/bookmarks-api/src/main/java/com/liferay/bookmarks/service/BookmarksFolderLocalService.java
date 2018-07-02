@@ -402,9 +402,9 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		BookmarksFolder bookmarksFolder);
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #updateFolder(long,
-	long, long, String, String, ServiceContext)} and {@link
-	#mergeFolders(long, long)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateFolder(long, long, long, String, String,
+	ServiceContext)} and {@link #mergeFolders(long, long)}
 	*/
 	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)

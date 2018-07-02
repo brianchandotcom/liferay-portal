@@ -300,7 +300,8 @@ public class WikiPageServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #getOrphans(WikiNode)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getOrphans(WikiNode)}
 	*/
 	@Deprecated
 	public static com.liferay.wiki.model.WikiPageSoap[] getOrphans(

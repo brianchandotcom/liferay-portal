@@ -45,7 +45,7 @@ public class TestMultipleIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -73,7 +73,7 @@ public class TestMultipleIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override

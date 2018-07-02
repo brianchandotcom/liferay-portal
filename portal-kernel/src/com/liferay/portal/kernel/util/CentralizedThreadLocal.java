@@ -21,7 +21,7 @@ import java.util.function.Function;
 
 /**
  * @author     Shuyang Zhou
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.petra.lang.CentralizedThreadLocal}
  */
 @Deprecated

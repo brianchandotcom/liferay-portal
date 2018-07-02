@@ -100,7 +100,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Jorge Ferrer
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.asset.util.impl.AssetUtil}
  */
 @Deprecated
@@ -384,7 +384,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getAddPortletURL(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, String, long, long[], String[],
 	 *             String)}
@@ -408,7 +408,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getAssetPublisherAddItemHolders(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, long[], long[], long[],
 	 *             String[], String)}
@@ -442,7 +442,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getAssetPublisherAddItemHolders(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, long[], long[], long[],
 	 *             String[], String)}
@@ -492,8 +492,8 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getAddURLPopUp(long, long,
-	 *             PortletURL, boolean, Layout)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getAddURLPopUp(long, long, PortletURL, boolean, Layout)}
 	 */
 	@Deprecated
 	public static String getAddURLPopUp(
@@ -662,7 +662,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static String getClassNameMessage(String className, Locale locale) {

@@ -60,7 +60,7 @@ public class ResourceActionsUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public static List<String> getActionsNames(
@@ -70,7 +70,7 @@ public class ResourceActionsUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public static List<String> getActionsNames(
@@ -271,7 +271,7 @@ public class ResourceActionsUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public static void read(String servletContextName, InputStream inputStream)

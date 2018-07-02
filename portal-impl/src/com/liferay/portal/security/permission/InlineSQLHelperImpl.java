@@ -50,21 +50,21 @@ import java.util.Set;
 public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String FILTER_BY_RESOURCE_BLOCK_ID =
 		InlineSQLHelper.class.getName() + ".filterByResourceBlockId";
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String FILTER_BY_RESOURCE_BLOCK_ID_OWNER =
 		InlineSQLHelper.class.getName() + ".filterByResourceBlockIdOwner";
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String FIND_BY_RESOURCE_BLOCK_ID =
@@ -264,7 +264,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected Set<Long> getOwnerResourceBlockIds(
@@ -274,7 +274,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected String getOwnerResourceBlockIdsSQL(
@@ -285,7 +285,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected Set<Long> getResourceBlockIds(
@@ -382,7 +382,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected String getUserResourceBlockIdsSQL(
@@ -393,7 +393,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected String replacePermissionCheckBlocks(

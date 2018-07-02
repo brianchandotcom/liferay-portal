@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author     Raymond Augé
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated
 public class AssetEntriesFacet extends MultiValueFacet {
@@ -196,8 +196,8 @@ public class AssetEntriesFacet extends MultiValueFacet {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, added strictly to support backwards
-	 *             compatibility of {@link
+	 * @deprecated As of Wilberforce (7.0.x), added strictly to support
+	 *             backwards compatibility of {@link
 	 *             Indexer#postProcessContextQuery(BooleanQuery, SearchContext)}
 	 */
 	@Deprecated

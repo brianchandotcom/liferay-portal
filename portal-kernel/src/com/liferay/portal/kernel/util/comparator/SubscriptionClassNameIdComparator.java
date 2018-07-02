@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author     Peter Shin
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.subscription.util.comparator.SubscriptionClassNameIdComparator}
  */
 @Deprecated

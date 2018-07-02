@@ -92,7 +92,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #exportReferenceStagedModel(PortletDataContext, StagedModel,
 	 *             StagedModel, String)}
 	 */
@@ -110,7 +110,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #exportReferenceStagedModel(PortletDataContext, StagedModel,
 	 *             StagedModel, String)}
 	 */
@@ -200,7 +200,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #importReferenceStagedModel(PortletDataContext, Class,
 	 *             Serializable)}
 	 */
@@ -238,7 +238,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #importReferenceStagedModel(PortletDataContext, String,
 	 *             Serializable)}
 	 */
@@ -279,7 +279,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #importReferenceStagedModel(PortletDataContext, StagedModel,
 	 *             Class, Serializable)}
 	 */
@@ -320,7 +320,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #importReferenceStagedModel(PortletDataContext, StagedModel,
 	 *             String, Serializable)}
 	 */

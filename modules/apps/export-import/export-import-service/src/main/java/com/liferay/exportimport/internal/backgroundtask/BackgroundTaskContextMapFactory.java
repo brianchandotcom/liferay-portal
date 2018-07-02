@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * @author     Michael C. Han
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory}
  */
 @Deprecated

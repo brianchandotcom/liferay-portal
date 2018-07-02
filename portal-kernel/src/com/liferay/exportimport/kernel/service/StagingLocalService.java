@@ -86,7 +86,7 @@ public interface StagingLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	public MissingReferences publishStagingRequest(long userId,
@@ -102,7 +102,7 @@ public interface StagingLocalService extends BaseLocalService {
 		String fileName, byte[] bytes) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#publishStagingRequest(long, long, boolean, Map)}
 	*/
 	@Deprecated

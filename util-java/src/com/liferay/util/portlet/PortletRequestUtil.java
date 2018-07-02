@@ -22,7 +22,8 @@ import javax.portlet.PortletResponse;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Raymond Augé
- * @deprecated As of Wilberforce, replaced by {@link PortletRequestModel}
+ * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+ *             PortletRequestModel}
  */
 @Deprecated
 public class PortletRequestUtil {

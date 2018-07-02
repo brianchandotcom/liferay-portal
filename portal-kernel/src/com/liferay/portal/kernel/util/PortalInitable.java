@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Paton, replaced by {@link PortalLifecycle}
+ * @deprecated As of Paton (6.1.x), replaced by {@link PortalLifecycle}
  */
 @Deprecated
 public interface PortalInitable {

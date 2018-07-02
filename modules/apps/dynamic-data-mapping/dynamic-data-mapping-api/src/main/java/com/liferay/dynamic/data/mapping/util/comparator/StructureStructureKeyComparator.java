@@ -47,7 +47,8 @@ public class StructureStructureKeyComparator
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #INSTANCE_DESCENDING}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #INSTANCE_DESCENDING}
 	 */
 	@Deprecated
 	public StructureStructureKeyComparator() {
@@ -55,7 +56,8 @@ public class StructureStructureKeyComparator
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getInstance(boolean)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getInstance(boolean)}
 	 */
 	@Deprecated
 	public StructureStructureKeyComparator(boolean ascending) {

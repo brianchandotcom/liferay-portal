@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.editor;
 
 /**
  * @author     Roberto Díaz
- * @deprecated As of Judson, replaced by
+ * @deprecated As of Judson (7.1.x), replaced by
  *             com.liferay.frontend.editor.api.EditorProvider
  */
 @Deprecated

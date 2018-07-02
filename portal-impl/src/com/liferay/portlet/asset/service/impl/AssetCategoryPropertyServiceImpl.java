@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Jorge Ferrer
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl}
  */
 @Deprecated

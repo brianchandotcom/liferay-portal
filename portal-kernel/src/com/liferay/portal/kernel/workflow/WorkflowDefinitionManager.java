@@ -34,7 +34,7 @@ import java.util.Map;
 public interface WorkflowDefinitionManager {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #deployWorkflowDefinition(long, long, String, String,
 	 *             byte[])}
 	 * @review
@@ -69,7 +69,7 @@ public interface WorkflowDefinitionManager {
 		throws WorkflowException;
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getLatestWorkflowDefinition(long, String)}
 	 * @review
 	 */

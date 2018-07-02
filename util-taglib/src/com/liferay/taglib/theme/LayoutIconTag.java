@@ -81,7 +81,8 @@ public class LayoutIconTag extends IncludeTag implements BodyTag {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #doTag(Layout, PageContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #doTag(Layout,
+	 *             PageContext)}
 	 */
 	@Deprecated
 	public static void doTag(
@@ -93,7 +94,8 @@ public class LayoutIconTag extends IncludeTag implements BodyTag {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #doTag(Layout, PageContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #doTag(Layout,
+	 *             PageContext)}
 	 */
 	@Deprecated
 	public static void doTag(

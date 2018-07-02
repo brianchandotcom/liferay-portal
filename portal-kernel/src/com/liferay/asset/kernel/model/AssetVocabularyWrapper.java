@@ -388,7 +388,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -581,8 +581,8 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #isRequired(long,
-	long)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#isRequired(long, long)}
 	*/
 	@Deprecated
 	@Override
@@ -797,7 +797,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, with no direct replacement
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override

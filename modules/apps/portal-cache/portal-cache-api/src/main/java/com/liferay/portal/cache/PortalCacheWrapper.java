@@ -44,7 +44,7 @@ public class PortalCacheWrapper<K extends Serializable, V>
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override

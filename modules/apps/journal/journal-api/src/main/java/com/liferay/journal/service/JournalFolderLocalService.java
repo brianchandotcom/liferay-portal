@@ -395,7 +395,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		long folderId);
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -428,7 +428,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	public void setSubscriptionLocalService(

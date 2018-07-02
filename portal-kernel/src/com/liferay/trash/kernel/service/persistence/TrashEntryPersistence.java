@@ -33,7 +33,7 @@ import java.util.Date;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl
  * @see TrashEntryUtil
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
 com.liferay.trash.model.impl.TrashEntryImpl}
  * @generated
  */

@@ -60,7 +60,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public java.util.List<Group> getChildren(boolean site);
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getChildrenWithLayouts(boolean, int, int,
 	OrderByComparator)}
 	*/
@@ -159,7 +159,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public boolean hasStagingGroup();
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #hasAncestor}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #hasAncestor}
 	*/
 	@Deprecated()
 	public boolean isChild(long groupId);

@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.search.suggest;
 
 /**
  * @author     Michael C. Han
- * @deprecated As of Judson, moved to {@link
+ * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.portal.search.suggest.NullNGramHolderBuilder}
  */
 @Deprecated

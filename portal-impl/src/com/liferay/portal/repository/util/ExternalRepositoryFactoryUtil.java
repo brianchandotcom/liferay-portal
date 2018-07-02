@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentMap;
 public class ExternalRepositoryFactoryUtil {
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             com.liferay.portal.repository.registry.RepositoryDefinitionCatalogUtil#getExternalRepositoryClassNames(
 	 *             )}
 	 */

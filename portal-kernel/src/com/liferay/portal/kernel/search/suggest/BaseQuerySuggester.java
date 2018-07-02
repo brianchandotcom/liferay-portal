@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * @author     Michael C. Han
- * @deprecated As of Judson, moved to {@link
+ * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.portal.search.suggest.BaseQuerySuggester}
  */
 @Deprecated

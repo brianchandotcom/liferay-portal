@@ -50,7 +50,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -59,7 +59,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -92,7 +92,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -140,7 +140,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -210,7 +210,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -231,7 +231,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -257,7 +257,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override

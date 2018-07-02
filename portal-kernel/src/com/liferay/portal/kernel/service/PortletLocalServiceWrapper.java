@@ -65,7 +65,8 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #clearPortletsMap)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#clearPortletsMap)}
 	*/
 	@Deprecated
 	@Override
@@ -451,7 +452,7 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#loadGetPortletsMap(long))}
 	*/
 	@Deprecated

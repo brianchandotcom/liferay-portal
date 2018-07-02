@@ -636,7 +636,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getKBArticleAndAllDescendantKBArticles(long, int,
 	 *             OrderByComparator)}
 	 */
@@ -904,8 +904,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getKBArticles(long, long,
-	 *             int, int, int, OrderByComparator)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
+	 *             long, int, int, int, OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -919,8 +919,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getKBArticlesCount(long,
-	 *             long, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getKBArticlesCount(long, long, int)}
 	 */
 	@Deprecated
 	@Override

@@ -292,7 +292,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	 *             <code>instanceId</code>.
 	 * @return     the portlet ID, including the instance ID if applicable, or
 	 *             <code>null</code> if it cannot be determined
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getPortletInstanceKey(Map)}
 	 */
 	@Deprecated

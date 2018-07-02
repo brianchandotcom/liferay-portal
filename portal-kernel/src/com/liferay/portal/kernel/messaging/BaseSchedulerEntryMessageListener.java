@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Judson
+ * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
 public abstract class BaseSchedulerEntryMessageListener

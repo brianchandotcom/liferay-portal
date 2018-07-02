@@ -112,7 +112,8 @@ public class PortletFileRepositoryUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #deletePortletFolder}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #deletePortletFolder}
 	 */
 	@Deprecated
 	public static void deleteFolder(long folderId) throws PortalException {

@@ -96,7 +96,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, Replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), Replaced by {@link
 	 *             #deleteCategories(long[])}
 	 */
 	@Deprecated

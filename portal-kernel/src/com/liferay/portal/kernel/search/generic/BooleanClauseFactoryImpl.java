@@ -37,7 +37,8 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #create(Query, String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #create(Query,
+	 *             String)}
 	 */
 	@Deprecated
 	@Override
@@ -48,8 +49,8 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #create(String, String,
-	 *             String)}}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #create(String,
+	 *             String, String)}}
 	 */
 	@Deprecated
 	@Override

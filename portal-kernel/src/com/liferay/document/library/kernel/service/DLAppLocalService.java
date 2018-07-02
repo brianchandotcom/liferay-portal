@@ -177,7 +177,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param fileEntryId the primary key of the file entry
 	* @param serviceContext the service context to be applied
 	* @return the file rank
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	com.liferay.document.library.file.rank.service.DLFileRankLocalService#addFileRank}
 	*/
 	@Deprecated
@@ -241,7 +241,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* only supported by the Liferay repository.
 	*
 	* @param fileEntryId the primary key of the file entry
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByFileEntryId}
 	*/
 	@Deprecated
@@ -252,7 +252,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* supported by the Liferay repository.
 	*
 	* @param userId the primary key of the user
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByUserId}
 	*/
 	@Deprecated
@@ -331,7 +331,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param repositoryId the primary key of the repository
 	* @param userId the primary key of the user
 	* @return the file ranks from the user
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	com.liferay.document.library.file.rank.service.DLFileRankLocalService#getFileRanks}
 	*/
 	@Deprecated
@@ -602,7 +602,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param fileEntryId the primary key of the file rank's file entry
 	* @param serviceContext the service context to be applied
 	* @return the file rank
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	com.liferay.document.library.file.rank.service.DLFileRankLocalService#updateFileRank}
 	*/
 	@Deprecated
@@ -637,7 +637,7 @@ public interface DLAppLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#updateFileShortcuts(long, long)}
 	*/
 	@Deprecated

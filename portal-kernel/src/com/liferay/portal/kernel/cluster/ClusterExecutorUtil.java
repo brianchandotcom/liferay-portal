@@ -38,7 +38,8 @@ public class ClusterExecutorUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #_getClusterExecutor()}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #_getClusterExecutor()}
 	 */
 	@Deprecated
 	public static ClusterExecutor getClusterExecutor() {

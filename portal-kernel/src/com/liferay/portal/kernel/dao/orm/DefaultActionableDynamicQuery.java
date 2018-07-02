@@ -148,7 +148,8 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #setModelClass(Class)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #setModelClass(Class)}
 	 */
 	@Deprecated
 	@Override

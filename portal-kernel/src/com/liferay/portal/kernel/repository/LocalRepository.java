@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 public interface LocalRepository extends DocumentRepository {
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public void updateAsset(

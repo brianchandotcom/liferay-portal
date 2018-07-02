@@ -56,7 +56,7 @@ import java.util.Set;
 public class DocumentImpl implements Document {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             Field#getLocalizedName(Locale, String)}
 	 */
 	@Deprecated
@@ -65,7 +65,7 @@ public class DocumentImpl implements Document {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             Field#getLocalizedName(String, String)}
 	 */
 	@Deprecated
@@ -74,7 +74,7 @@ public class DocumentImpl implements Document {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             Field#getSortableFieldName(String)}
 	 */
 	@Deprecated
@@ -83,8 +83,8 @@ public class DocumentImpl implements Document {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link Field#getSortFieldName(Sort,
-	 *             String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             Field#getSortFieldName(Sort, String)}
 	 */
 	@Deprecated
 	public static String getSortFieldName(Sort sort, String scoreFieldName) {
@@ -92,7 +92,7 @@ public class DocumentImpl implements Document {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             Field#isSortableFieldName(String)}
 	 */
 	@Deprecated

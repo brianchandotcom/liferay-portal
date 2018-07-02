@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 public interface Plugin {
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static final String TYPE_EXT = "ext";

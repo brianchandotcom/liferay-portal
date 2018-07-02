@@ -18,7 +18,8 @@ import com.liferay.portal.kernel.repository.BaseRepository;
 
 /**
  * @author     Mika Koivisto
- * @deprecated As of Wilberforce, replaced by {@link ExternalRepositoryFactory}
+ * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+ *             ExternalRepositoryFactory}
  */
 @Deprecated
 public interface RepositoryFactory {

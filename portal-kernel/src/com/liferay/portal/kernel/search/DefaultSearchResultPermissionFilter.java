@@ -35,7 +35,7 @@ import java.util.Map;
 
 /**
  * @author     Tina Tian
- * @deprecated As of Judson, moved to {@link
+ * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.portal.search.internal.permission.DefaultSearchResultPermissionFilter}
  */
 @Deprecated
@@ -46,7 +46,7 @@ public class DefaultSearchResultPermissionFilter
 	/**
 	 * @param      baseIndexer
 	 * @param      permissionChecker
-	 * @deprecated As of Judson, replace with {@link
+	 * @deprecated As of Judson (7.1.x), replace with {@link
 	 *             #DefaultSearchResultPermissionFilter(SearchExecutor,
 	 *             PermissionChecker)}
 	 */

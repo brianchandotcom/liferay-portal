@@ -819,8 +819,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #updateMessage(long, String,
-	 *             String, List, double, boolean, ServiceContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateMessage(long,
+	 *             String, String, List, double, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

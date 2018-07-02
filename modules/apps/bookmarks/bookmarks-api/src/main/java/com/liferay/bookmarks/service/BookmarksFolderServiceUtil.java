@@ -136,8 +136,8 @@ public class BookmarksFolderServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getSubfolderIds(List,
-	long, long, boolean)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getSubfolderIds(List, long, long, boolean)}
 	*/
 	@Deprecated
 	public static void getSubfolderIds(java.util.List<Long> folderIds,
@@ -194,9 +194,9 @@ public class BookmarksFolderServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #updateFolder(long,
-	long, String, String, ServiceContext)} and {@link
-	#mergeFolders(long, long)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateFolder(long, long, String, String, ServiceContext)}
+	and {@link #mergeFolders(long, long)}
 	*/
 	@Deprecated
 	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(

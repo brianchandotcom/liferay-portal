@@ -194,7 +194,8 @@ public class TrashVersionLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #fetchVersion(String, long)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#fetchVersion(String, long)}
 	*/
 	@Deprecated
 	public static com.liferay.trash.model.TrashVersion fetchVersion(

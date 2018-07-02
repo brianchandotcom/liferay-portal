@@ -80,9 +80,10 @@ public interface CalendarBookingService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #addCalendarBooking(long,
-	long[], long, long, Map, Map, String, long, long, boolean,
-	String, long, String, long, String, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addCalendarBooking(long, long[], long, long, Map, Map,
+	String, long, long, boolean, String, long, String, long,
+	String, ServiceContext)}
 	*/
 	@Deprecated
 	public CalendarBooking addCalendarBooking(long calendarId,
@@ -97,7 +98,7 @@ public interface CalendarBookingService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of Judson
+	* @deprecated As of Judson (7.1.x)
 	*/
 	@Deprecated
 	public CalendarBooking addCalendarBooking(long calendarId,
@@ -196,8 +197,9 @@ public interface CalendarBookingService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #invokeTransition(long, int,
-	long, boolean, boolean, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#invokeTransition(long, int, long, boolean, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public void invokeTransition(long calendarBookingId, int status,
@@ -329,7 +331,7 @@ public interface CalendarBookingService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of Judson, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#updateRecurringCalendarBooking(long, long, long[], Map, Map,
 	String, long, long, boolean, long, String, long, String,
 	ServiceContext)

@@ -28,31 +28,31 @@ import javax.servlet.http.HttpServletRequest;
 public interface AuthTokenWhitelist {
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> getOriginCSRFWhitelist();
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletCSRFWhitelist();
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletCSRFWhitelistActions();
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletInvocationWhitelist();
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletInvocationWhitelistActions();
@@ -63,7 +63,7 @@ public interface AuthTokenWhitelist {
 		HttpServletRequest request, Portlet portlet);
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #isPortletCSRFWhitelisted(HttpServletRequest, Portlet)}
 	 */
 	@Deprecated
@@ -74,7 +74,7 @@ public interface AuthTokenWhitelist {
 		HttpServletRequest request, Portlet portlet);
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #isPortletInvocationWhitelisted(HttpServletRequest, Portlet)}
 	 */
 	@Deprecated
@@ -90,25 +90,25 @@ public interface AuthTokenWhitelist {
 	public boolean isValidSharedSecret(String sharedSecret);
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> resetOriginCSRFWhitelist();
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> resetPortletCSRFWhitelist();
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> resetPortletInvocationWhitelist();
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> resetPortletInvocationWhitelistActions();

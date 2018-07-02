@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
  * @author     Brian Wing Shun Chan
  * @author     Alexander Chow
  * @see        com.liferay.petra.xml.DocUtil
- * @deprecated As of Judson
+ * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
 public class DocUtil {

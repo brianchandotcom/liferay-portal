@@ -37,7 +37,8 @@ public interface PortalCache<K extends Serializable, V> {
 	public List<K> getKeys();
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getPortalCacheName()}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getPortalCacheName()}
 	 */
 	@Deprecated
 	@Id

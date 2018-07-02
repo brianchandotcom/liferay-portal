@@ -62,8 +62,8 @@ public interface ModuleLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* @deprecated As of Judson, replaced by {@link #addModule(long, String,
-	String, String)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #addModule(long,
+	String, String, String)}
 	*/
 	@Deprecated
 	public Module addModule(long userId, long appId, String bundleSymbolicName,

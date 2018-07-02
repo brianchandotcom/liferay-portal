@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.persistence.BatchSession;
 /**
  * @author     Raymond Augé
  * @author     Brian Wing Shun Chan
- * @deprecated As of Newton, see LPS-30598
+ * @deprecated As of Newton (6.2.x), see LPS-30598
  */
 @Deprecated
 public class BatchSessionImpl implements BatchSession {

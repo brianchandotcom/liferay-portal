@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 public class Validator {
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static boolean equals(boolean boolean1, boolean boolean2) {
@@ -48,7 +48,7 @@ public class Validator {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static boolean equals(byte byte1, byte byte2) {
@@ -61,7 +61,7 @@ public class Validator {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static boolean equals(char char1, char char2) {
@@ -74,7 +74,7 @@ public class Validator {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static boolean equals(double double1, double double2) {
@@ -87,7 +87,7 @@ public class Validator {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static boolean equals(float float1, float float2) {
@@ -100,7 +100,7 @@ public class Validator {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static boolean equals(int int1, int int2) {
@@ -113,7 +113,7 @@ public class Validator {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static boolean equals(long long1, long long2) {
@@ -126,7 +126,7 @@ public class Validator {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static boolean equals(Object obj1, Object obj2) {
@@ -142,7 +142,7 @@ public class Validator {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static boolean equals(short short1, short short2) {

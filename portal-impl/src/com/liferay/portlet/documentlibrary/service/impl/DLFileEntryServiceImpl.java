@@ -602,7 +602,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #isKeepFileVersionLabel(long, boolean, ServiceContext)}
 	 */
 	@Deprecated

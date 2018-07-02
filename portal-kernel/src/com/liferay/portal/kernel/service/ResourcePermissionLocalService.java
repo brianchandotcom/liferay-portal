@@ -318,7 +318,7 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		Collection<String> actionIds) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getAvailableResourcePermissionActionIds(long, String, int,
 	String, Collection)}
 	*/
@@ -579,8 +579,8 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getRoles(long, String,
-	int, String, String}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #getRoles(long,
+	String, int, String, String}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -347,8 +347,8 @@ public class DLFolderServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #getSubfolderIds(List,
-	long, long, boolean)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getSubfolderIds(List, long, long, boolean)}
 	*/
 	@Deprecated
 	public static void getSubfolderIds(Long[] folderIds, long groupId,
@@ -544,7 +544,7 @@ public class DLFolderServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, replaced by more general {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by more general {@link
 	#updateFolder(long, String, String, long, List, int,
 	ServiceContext)}
 	*/

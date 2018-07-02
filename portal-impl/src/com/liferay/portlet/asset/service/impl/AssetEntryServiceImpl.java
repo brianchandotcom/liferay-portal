@@ -181,10 +181,10 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #updateEntry(long, Date,
-	 *             Date, String, long, String, long, long[], String[], boolean,
-	 *             boolean, Date, Date, Date, Date, String, String, String,
-	 *             String, String, String, int, int, Double)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
+	 *             Date, Date, String, long, String, long, long[], String[],
+	 *             boolean, boolean, Date, Date, Date, Date, String, String,
+	 *             String, String, String, String, int, int, Double)}
 	 */
 	@Deprecated
 	@Override
@@ -209,10 +209,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #updateEntry(long,
-	 *             Date, Date, String, long, String, long, long[], String[],
-	 *             boolean, boolean, Date, Date, Date, Date, String, String,
-	 *             String, String, String, String, int, int, Double)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #updateEntry(long, Date, Date, String, long, String, long,
+	 *             long[], String[], boolean, boolean, Date, Date, Date, Date,
+	 *             String, String, String, String, String, String, int, int,
+	 *             Double)}
 	 */
 	@Deprecated
 	@Override

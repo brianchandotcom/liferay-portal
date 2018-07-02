@@ -28,7 +28,7 @@ public interface MultiVMPool {
 	public void clear();
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getPortalCache(String)}
 	 */
 	@Deprecated
@@ -36,15 +36,15 @@ public interface MultiVMPool {
 		getCache(String portalCacheName);
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getPortalCache(String,
-	 *             boolean)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getPortalCache(String, boolean)}
 	 */
 	@Deprecated
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getCache(String portalCacheName, boolean blocking);
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getPortalCacheManager()}
 	 */
 	@Deprecated
@@ -64,7 +64,7 @@ public interface MultiVMPool {
 		getPortalCacheManager();
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #removePortalCache(String)}
 	 */
 	@Deprecated

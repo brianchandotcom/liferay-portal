@@ -78,8 +78,9 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Wilberforce, {@link #addUserNotificationEvent(long,
-	String, long, int, long, String, boolean, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), {@link
+	#addUserNotificationEvent(long, String, long, int, long,
+	String, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.UserNotificationEvent addUserNotificationEvent(

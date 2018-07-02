@@ -22,7 +22,7 @@ import java.util.List;
  * Provides a wrapper class to group asset entries by asset category title.
  *
  * @author     Eudaldo Alonso
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.asset.publisher.util.AssetEntryResult}
  */
 @Deprecated

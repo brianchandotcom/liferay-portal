@@ -348,7 +348,7 @@ public interface Localization {
 	 * @param      key the preferences key
 	 * @param      languageId the ID of the language
 	 * @return     the localized preferences key
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getLocalizedName(String, String)}
 	 */
 	@Deprecated

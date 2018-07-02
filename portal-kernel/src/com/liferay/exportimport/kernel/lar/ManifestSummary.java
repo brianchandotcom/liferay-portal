@@ -189,7 +189,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getModelAdditionCount(StagedModel)}
 	 */
 	@Deprecated
@@ -198,7 +198,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getModelAdditionCount(StagedModelType)}
 	 */
 	@Deprecated
@@ -235,7 +235,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getAllModelDeletionCounts()}
 	 */
 	@Deprecated
@@ -244,7 +244,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getModelDeletionCount(StagedModel)}
 	 */
 	@Deprecated

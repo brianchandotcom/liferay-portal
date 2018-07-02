@@ -72,7 +72,8 @@ public class AsyncBroker<K, V> {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #post(Object, boolean[])}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #post(Object,
+	 *             boolean[])}
 	 */
 	@Deprecated
 	public NoticeableFuture<V> post(

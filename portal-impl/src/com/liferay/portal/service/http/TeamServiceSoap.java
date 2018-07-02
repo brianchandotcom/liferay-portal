@@ -65,8 +65,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class TeamServiceSoap {
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #addTeam(long, String,
-	String, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #addTeam(long,
+	String, String, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.TeamSoap addTeam(

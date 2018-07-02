@@ -17,7 +17,7 @@ package com.liferay.calendar.constants;
 /**
  * @author     Eduardo Lundgren
  * @author     Andrea Di Giorgi
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.calendar.web.internal.constants.CalendarWebKeys}
  */
 @Deprecated

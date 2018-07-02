@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.model.ResourceBlock;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.persistence.impl.ResourceBlockPersistenceImpl
  * @see ResourceBlockUtil
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  * @generated
  */
 @Deprecated

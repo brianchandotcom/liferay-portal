@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.search;
 /**
  * @author     Raymond Augé
  * @author     Michael C. Han
- * @deprecated As of Wilberforce, , replaced by {@link
+ * @deprecated As of Wilberforce (7.0.x), , replaced by {@link
  *             com.liferay.portal.kernel.search.generic.TermRangeQueryImpl}
  */
 @Deprecated

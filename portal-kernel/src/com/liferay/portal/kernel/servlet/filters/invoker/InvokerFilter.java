@@ -222,8 +222,8 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getURI(HttpServletRequest,
-	 *             String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getURI(HttpServletRequest, String)}
 	 */
 	@Deprecated
 	protected String getURI(HttpServletRequest request) {
@@ -242,7 +242,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected String getURL(HttpServletRequest request) {

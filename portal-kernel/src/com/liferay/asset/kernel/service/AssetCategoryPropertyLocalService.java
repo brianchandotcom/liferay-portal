@@ -48,7 +48,7 @@ import java.util.List;
  * @see AssetCategoryPropertyLocalServiceUtil
  * @see com.liferay.portlet.asset.service.base.AssetCategoryPropertyLocalServiceBaseImpl
  * @see com.liferay.portlet.asset.service.impl.AssetCategoryPropertyLocalServiceImpl
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
             com.liferay.asset.category.property.service.impl.AssetCategoryPropertyLocalServiceImpl}
  * @generated
  */

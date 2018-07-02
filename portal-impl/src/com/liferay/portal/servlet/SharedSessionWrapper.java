@@ -121,7 +121,7 @@ public class SharedSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of Paton
+	 * @deprecated As of Paton (6.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -132,7 +132,7 @@ public class SharedSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -141,7 +141,7 @@ public class SharedSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -166,7 +166,7 @@ public class SharedSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -182,7 +182,7 @@ public class SharedSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override

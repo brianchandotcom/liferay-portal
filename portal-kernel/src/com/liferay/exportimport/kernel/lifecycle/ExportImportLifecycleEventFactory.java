@@ -25,7 +25,7 @@ import java.io.Serializable;
 public interface ExportImportLifecycleEventFactory {
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public ExportImportLifecycleEvent create(

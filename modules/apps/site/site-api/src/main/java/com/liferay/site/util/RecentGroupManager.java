@@ -98,8 +98,8 @@ public class RecentGroupManager {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getRecentGroups(String,
-	 *             PortletRequest)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getRecentGroups(String, PortletRequest)}
 	 */
 	@Deprecated
 	protected List<Group> getRecentGroups(String value) {

@@ -1150,8 +1150,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getFile(long, String,
-	 *             boolean)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
+	 *             String, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -1164,8 +1164,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getFile(long, String,
-	 *             boolean, int)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
+	 *             String, boolean, int)}
 	 */
 	@Deprecated
 	@Override
@@ -1205,8 +1205,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getFileAsStream(long,
-	 *             String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getFileAsStream(long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -1218,8 +1218,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getFileAsStream(long,
-	 *             String, boolean)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getFileAsStream(long, String, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -1232,8 +1232,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getFileAsStream(long,
-	 *             String, boolean, int)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getFileAsStream(long, String, boolean, int)}
 	 */
 	@Deprecated
 	@Override
@@ -1347,7 +1347,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1566,7 +1566,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1580,7 +1580,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1721,7 +1721,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #isKeepFileVersionLabel(long, boolean, ServiceContext)}
 	 */
 	@Deprecated
@@ -2883,7 +2883,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #validateFileExtension(String, String)}
 	 */
 	@Deprecated

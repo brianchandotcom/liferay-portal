@@ -109,7 +109,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public DLFolder createDLFolder(long folderId);
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#deleteAllByGroup(long)}
 	*/
 	@Deprecated
@@ -384,7 +384,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public long getFolderId(long companyId, long folderId);
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getGroupFolderIds(long, long)}
 	*/
 	@Deprecated
@@ -484,7 +484,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long repositoryId, long folderId);
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getGroupSubfolderIds(List, long, long)}
 	*/
 	@Deprecated
@@ -539,8 +539,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public DLFolder updateDLFolder(DLFolder dlFolder);
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #updateFolder(long,
-	long, String, String, long, List, int, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateFolder(long, long, String, String, long, List, int,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public DLFolder updateFolder(long folderId, long parentFolderId,
@@ -555,8 +556,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced {@link
+	#updateFolder(long, long, String, String, long, List, int,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public DLFolder updateFolder(long folderId, String name,
@@ -571,7 +573,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #
 	updateFolderAndFileEntryTypes(long, long, long, String,
 	String, long, List, int, ServiceContext)}
 	*/

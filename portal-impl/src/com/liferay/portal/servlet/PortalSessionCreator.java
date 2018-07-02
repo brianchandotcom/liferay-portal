@@ -38,7 +38,7 @@ public class PortalSessionCreator extends BasePortalLifecycle {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #PortalSessionCreator(HttpSession)}
 	 */
 	@Deprecated

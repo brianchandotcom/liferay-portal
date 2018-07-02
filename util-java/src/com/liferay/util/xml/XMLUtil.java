@@ -28,7 +28,7 @@ import org.dom4j.DocumentException;
 /**
  * @author     Leonardo Barros
  * @see        com.liferay.petra.xml.XMLUtil
- * @deprecated As of Judson
+ * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
 public class XMLUtil {

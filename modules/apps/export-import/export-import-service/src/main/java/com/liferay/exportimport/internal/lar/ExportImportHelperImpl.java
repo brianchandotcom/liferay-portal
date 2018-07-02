@@ -148,7 +148,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, moved to {@link
+	 * @deprecated As of Judson (7.1.x), moved to {@link
 	 *             ExportImportDateUtil#getCalendar(PortletRequest, String,
 	 *             boolean)}
 	 */
@@ -216,7 +216,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, moved to {@link
+	 * @deprecated As of Judson (7.1.x), moved to {@link
 	 *             ExportImportDateUtil#getDateRange(PortletRequest, long,
 	 *             boolean, long, String, String)}
 	 */
@@ -233,7 +233,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -258,7 +258,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getExportPortletControlsMap(long, String, Map)}
 	 */
 	@Deprecated
@@ -273,7 +273,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getExportPortletControlsMap(long, String, Map, String)}
 	 */
 	@Deprecated
@@ -329,7 +329,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getImportPortletControlsMap(long, String, Map, Element,
 	 *             ManifestSummary)}
 	 */
@@ -345,7 +345,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getImportPortletControlsMap(long, String, Map, Element,
 	 *             ManifestSummary)}
 	 */
@@ -539,7 +539,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getManifestSummary(PortletDataContext)}
 	 */
 	@Deprecated
@@ -857,7 +857,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean)}
 	 */
@@ -873,7 +873,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean)}
 	 */
@@ -889,7 +889,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean)}
 	 */
@@ -905,7 +905,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -919,7 +919,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -933,7 +933,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -945,7 +945,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -958,7 +958,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -972,7 +972,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -985,7 +985,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceImportContentReferences(
 	 *             PortletDataContext, StagedModel, String)}
 	 */
@@ -1000,7 +1000,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceImportContentReferences(
 	 *             PortletDataContext, StagedModel, String)}
 	 */
@@ -1015,7 +1015,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1028,7 +1028,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1041,7 +1041,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1053,7 +1053,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1066,7 +1066,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1078,7 +1078,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1214,7 +1214,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, see {@link
+	 * @deprecated As of Judson (7.1.x), see {@link
 	 *             DefaultConfigurationPortletDataHandler#updateExportPortletPreferencesClassPKs(
 	 *             PortletDataContext, Portlet, PortletPreferences, String,
 	 *             String)}
@@ -1228,7 +1228,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #updateExportPortletPreferencesClassPKs(PortletDataContext,
 	 *             Portlet, PortletPreferences, String, String)}
 	 */
@@ -1245,7 +1245,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, see {@link
+	 * @deprecated As of Judson (7.1.x), see {@link
 	 *             DefaultConfigurationPortletDataHandler#updateImportPortletPreferencesClassPKs(
 	 *             PortletDataContext, PortletPreferences, String, Class, long)}
 	 */
@@ -1259,7 +1259,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #validateMissingReferences(PortletDataContext)}
 	 */
 	@Deprecated

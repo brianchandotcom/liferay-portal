@@ -51,7 +51,7 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getPortalCache(String)}
 	 */
 	@Deprecated
@@ -63,8 +63,8 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getPortalCache(String,
-	 *             boolean)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getPortalCache(String, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -75,7 +75,7 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getPortalCacheManager()}
 	 */
 	@Deprecated
@@ -132,7 +132,7 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #removePortalCache(String)}
 	 */
 	@Deprecated

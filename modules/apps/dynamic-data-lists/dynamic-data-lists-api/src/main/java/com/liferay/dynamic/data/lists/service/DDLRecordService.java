@@ -95,8 +95,8 @@ public interface DDLRecordService extends BaseService {
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #addRecord(long, long,
-	int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#addRecord(long, long, int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
 	public DDLRecord addRecord(long groupId, long recordSetId,
@@ -117,8 +117,8 @@ public interface DDLRecordService extends BaseService {
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #addRecord(long, long,
-	int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#addRecord(long, long, int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
 	public DDLRecord addRecord(long groupId, long recordSetId,
@@ -142,8 +142,9 @@ public interface DDLRecordService extends BaseService {
 	set the record modified date.
 	* @return the affected record
 	* @throws PortalException
-	* @deprecated As of Wilberforce, replaced by {@link #updateRecord(long,
-	boolean, int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateRecord(long, boolean, int, DDMFormValues,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public DDLRecord deleteRecordLocale(long recordId, Locale locale,
@@ -190,8 +191,8 @@ public interface DDLRecordService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce, replaced by {@link #revertRecord(long,
-	String, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#revertRecord(long, String, ServiceContext)}
 	*/
 	@Deprecated
 	public void revertRecordVersion(long recordId, String version,
@@ -232,8 +233,9 @@ public interface DDLRecordService extends BaseService {
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #updateRecord(long,
-	boolean, int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateRecord(long, boolean, int, DDMFormValues,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public DDLRecord updateRecord(long recordId, boolean majorVersion,
@@ -254,8 +256,9 @@ public interface DDLRecordService extends BaseService {
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce, replaced by {@link #updateRecord(long,
-	boolean, int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateRecord(long, boolean, int, DDMFormValues,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public DDLRecord updateRecord(long recordId, int displayIndex,

@@ -25,7 +25,7 @@ import java.util.Locale;
 public interface DDMFormEvaluator {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #evaluate(DDMFormEvaluatorContext)}
 	 */
 	@Deprecated

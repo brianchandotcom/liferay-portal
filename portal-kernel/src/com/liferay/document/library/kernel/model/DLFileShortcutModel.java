@@ -408,7 +408,7 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	 * Returns the trash handler for this document library file shortcut.
 	 *
 	 * @return the trash handler for this document library file shortcut
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override

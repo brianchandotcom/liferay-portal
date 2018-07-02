@@ -82,7 +82,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected DynamicQuery createRecordSetDynamicQuery() {
@@ -90,7 +90,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected DynamicQuery createRecordVersionDynamicQuery() {
@@ -98,7 +98,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void deleteDDMStructures(Set<Long> ddmStructureIds)
@@ -106,7 +106,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void deleteRecordSets(PortletDataContext portletDataContext)
@@ -254,7 +254,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected ActionableDynamicQuery getRecordActionableDynamicQuery(
@@ -265,7 +265,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected ActionableDynamicQuery getRecordSetActionableDynamicQuery(
@@ -276,7 +276,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setDDLRecordLocalService(
@@ -284,7 +284,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setDDLRecordSetLocalService(
@@ -312,7 +312,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setDDMStructureLocalService(

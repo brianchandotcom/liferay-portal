@@ -31,13 +31,6 @@ portletDisplay.setURLBack(stagingProcessesURL.toString());
 renderResponse.setTitle(LanguageUtil.get(request, "publish-templates"));
 %>
 
-<liferay-util:include page="/publish_templates/navigation.jsp" servletContext="<%= application %>" />
-
-<liferay-util:include page="/publish_templates/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-	<liferay-util:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
-</liferay-util:include>
-
 <portlet:actionURL name="editPublishConfiguration" var="restoreTrashEntriesURL">
 	<portlet:param name="mvcRenderCommandName" value="viewPublishConfigurations" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
@@ -56,25 +49,27 @@ renderResponse.setTitle(LanguageUtil.get(request, "publish-templates"));
 </liferay-portlet:renderURL>
 
 <%
-int exportImportConfigurationType = stagingGroup.isStagedRemotely() ? ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE : ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL;
+StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPublishTemplatesToolbarDisplayContext = new StagingProcessesWebPublishTemplatesToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, pageContext, portletURL);
 %>
+
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems="<%= publishTemplatesDisplayContext.getNavigationItems() %>"
+/>
+
+<clay:management-toolbar
+	displayContext="<%= stagingProcessesWebPublishTemplatesToolbarDisplayContext %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showCreationMenu="<%= true %>"
+	showSearch="<%= true %>"
+/>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<aui:form action="<%= portletURL %>">
 		<liferay-ui:search-container
-			displayTerms="<%= new PublishConfigurationDisplayTerms(renderRequest) %>"
-			emptyResultsMessage="there-are-no-saved-publish-templates"
-			iteratorURL="<%= portletURL %>"
-			orderByCol="name"
-			orderByComparator="<%= new ExportImportConfigurationNameComparator(true) %>"
-			orderByType="asc"
-			searchTerms="<%= new PublishConfigurationSearchTerms(renderRequest) %>"
-			total="<%= ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(groupId, exportImportConfigurationType) %>"
+			searchContainer="<%= stagingProcessesWebPublishTemplatesToolbarDisplayContext.getSearchContainer() %>"
 		>
-			<liferay-ui:search-container-results>
-				<%@ include file="/publish_templates/search_results.jspf" %>
-			</liferay-ui:search-container-results>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.exportimport.kernel.model.ExportImportConfiguration"
 				keyProperty="exportImportConfigurationId"

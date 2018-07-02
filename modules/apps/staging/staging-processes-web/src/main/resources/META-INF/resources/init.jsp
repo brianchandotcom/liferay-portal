@@ -36,7 +36,6 @@ page import="com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.exportimport.kernel.model.ExportImportConfiguration" %><%@
 page import="com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
-page import="com.liferay.exportimport.util.comparator.ExportImportConfigurationNameComparator" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchGroupException" %><%@
@@ -82,8 +81,6 @@ page import="com.liferay.staging.processes.web.internal.display.context.PublishT
 page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebPublishTemplatesToolbarDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebToolbarDisplayContext" %><%@
-page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationDisplayTerms" %><%@
-page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
 
@@ -122,8 +119,6 @@ PublishTemplatesDisplayContext publishTemplatesDisplayContext = new PublishTempl
 StagingProcessesWebDisplayContext stagingProcessesWebDisplayContext = new StagingProcessesWebDisplayContext(renderResponse, request);
 
 StagingProcessesWebToolbarDisplayContext stagingProcessesWebToolbarDisplayContext = new StagingProcessesWebToolbarDisplayContext(request, pageContext, liferayPortletResponse);
-
-StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPublishTemplatesToolbarDisplayContext = new StagingProcessesWebPublishTemplatesToolbarDisplayContext(request, pageContext, liferayPortletResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

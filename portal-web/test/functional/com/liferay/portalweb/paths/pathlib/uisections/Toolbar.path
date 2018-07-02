@@ -49,11 +49,6 @@
 	<td>//a[contains(@data-qa-id,'unlockButton')]/span[contains(@class,'icon-monospaced')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>MANAGEMENT_BAR_TRASH_ICON_BUTTON</td>
-	<td>//a[contains(@data-qa-id,'removeButton')]/span[contains(@class,'icon-monospaced')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

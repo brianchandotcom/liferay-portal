@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -375,6 +376,16 @@ public class MergeCentralSubrepositoryUtil {
 		return JenkinsResultsParserUtil.combine(
 			"ci-merge-", subrepositoryName, "-", centralUpstreamBranchName, "-",
 			subrepositoryUpstreamCommit);
+	}
+
+	private static Properties _getPropertiesFromGitrepoFile(File gitrepoFile)
+		throws Exception {
+
+		Properties properties = new Properties();
+
+		properties.load(new FileInputStream(gitrepoFile));
+
+		return properties;
 	}
 
 	private static void _pushMergeBranchToRemote(

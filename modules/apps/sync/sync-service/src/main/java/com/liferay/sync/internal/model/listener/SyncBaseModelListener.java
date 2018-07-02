@@ -16,6 +16,8 @@ package com.liferay.sync.internal.model.listener;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.petra.concurrent.NoticeableExecutorService;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
@@ -88,12 +91,26 @@ public abstract class SyncBaseModelListener<T extends BaseModel<T>>
 
 			});
 
-		try {
-			actionableDynamicQuery.performActions();
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				NoticeableExecutorService noticeableExecutorService =
+					portalExecutorManager.getPortalExecutor(
+						UserModelListener.class.getName());
+
+				noticeableExecutorService.submit(
+					() -> {
+						try {
+							actionableDynamicQuery.performActions();
+						}
+						catch (Exception e) {
+							throw new ModelListenerException(e);
+						}
+
+						return null;
+					});
+
+				return null;
+			});
 	}
 
 	protected void onRemoveRoleAssociation(Object roleId) {
@@ -125,12 +142,26 @@ public abstract class SyncBaseModelListener<T extends BaseModel<T>>
 
 			});
 
-		try {
-			actionableDynamicQuery.performActions();
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				NoticeableExecutorService noticeableExecutorService =
+					portalExecutorManager.getPortalExecutor(
+						UserModelListener.class.getName());
+
+				noticeableExecutorService.submit(
+					() -> {
+						try {
+							actionableDynamicQuery.performActions();
+						}
+						catch (Exception e) {
+							throw new ModelListenerException(e);
+						}
+
+						return null;
+					});
+
+				return null;
+			});
 	}
 
 	protected void updateSyncDLObject(SyncDLObject syncDLObject) {
@@ -152,6 +183,9 @@ public abstract class SyncBaseModelListener<T extends BaseModel<T>>
 			updateSyncDLObject(childSyncDLObject);
 		}
 	}
+
+	@Reference
+	protected PortalExecutorManager portalExecutorManager;
 
 	@Reference
 	protected ResourcePermissionLocalService resourcePermissionLocalService;

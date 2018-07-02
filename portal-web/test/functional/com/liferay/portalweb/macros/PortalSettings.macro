@@ -225,9 +225,7 @@
 
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-		<execute macro="FormFields#viewCheckboxNotChecked">
-			<var name="fieldName" value="ldap--enabled" />
-		</execute>
+		<execute function="AssertNotChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 	</command>
 
 	<command name="editConfigurationAuthenticationCAS">

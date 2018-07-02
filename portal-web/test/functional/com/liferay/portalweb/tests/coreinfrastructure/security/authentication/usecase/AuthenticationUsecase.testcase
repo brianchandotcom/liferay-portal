@@ -80,7 +80,7 @@
 
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="LDAP" />
-			<var name="configurationName" value="LDAP Import" />
+			<var name="configurationName" value="Import" />
 			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
@@ -310,7 +310,7 @@
 
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="LDAP" />
-			<var name="configurationName" value="LDAP Servers" />
+			<var name="configurationName" value="Servers" />
 			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 

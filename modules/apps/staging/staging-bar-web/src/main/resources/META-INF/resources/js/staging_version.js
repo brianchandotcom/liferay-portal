@@ -88,6 +88,8 @@ AUI.add(
 													layoutRevisionDetails.plug(A.Plugin.ParseContent);
 
 													layoutRevisionDetails.setContent(response);
+
+													window.location.reload();
 												}
 											}
 										}

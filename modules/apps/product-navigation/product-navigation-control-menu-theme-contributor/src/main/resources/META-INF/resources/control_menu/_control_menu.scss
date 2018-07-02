@@ -243,9 +243,7 @@
 }
 
 .live-link, .staging-link {
-	font-size: 14px;
-
-	a, a:focus, a:hover {
+	a, a:focus {
 		color: #869CAD;
 	}
 
@@ -253,7 +251,7 @@
 		position: relative;
 
 		&:after {
-			bottom: -20px;
+			bottom: -16px;
 			content: '';
 			left: 0;
 			position: absolute;
@@ -263,10 +261,6 @@
 		a {
 			color: #FFF;
 		}
-	}
-
-	.lexicon-icon {
-		margin-top: -2px;
 	}
 }
 

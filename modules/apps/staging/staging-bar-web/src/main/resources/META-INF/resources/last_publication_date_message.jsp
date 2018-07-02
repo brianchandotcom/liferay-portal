@@ -112,11 +112,18 @@ if (Validator.isNull(publisherName)) {
 		</c:if>
 	</c:when>
 	<c:otherwise>
-		<span class="staging-live-group-name">
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key="x-is-staged" translateArguments="<%= false %>" />
-		</span>
-		<span class="staging-live-help">
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED ? "staging-live-help2-x" : "staging-live-help-x" %>' translateArguments="<%= false %>" />
-		</span>
+		<div class="alert alert-fluid alert-info custom-info-alert" role="alert">
+			<div class="staging-alert-container">
+				<span class="alert-indicator">
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-info-circle">
+						<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#info-circle" />
+					</svg>
+				</span>
+
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key="x-is-staged" translateArguments="<%= false %>" />
+
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED ? "staging-live-help2-x" : "staging-live-help-x" %>' translateArguments="<%= false %>" />
+			</div>
+		</div>
 	</c:otherwise>
 </c:choose>

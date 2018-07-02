@@ -117,19 +117,18 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 						_getFoldersAndFileEntriesAndFileShortcuts(childFolder));
 				}
 				else if (childObject instanceof FileEntry) {
-					FileVersion fileVersion =
-						((FileEntry)childObject).getFileVersion();
+					FileEntry fileEntry = (FileEntry)childObject;
 
-					if (_fileEntryStagedModelDataHandler == null) {
-						_fileEntryStagedModelDataHandler =
+					FileVersion fileVersion = fileEntry.getFileVersion();
+
+					StagedModelDataHandler<FileEntry> stagedModelDataHandler =
+						(StagedModelDataHandler<FileEntry>)
 							StagedModelDataHandlerRegistryUtil.
 								getStagedModelDataHandler(
 									FileEntry.class.getName());
-					}
 
 					if (ArrayUtil.contains(
-							_fileEntryStagedModelDataHandler.
-								getExportableStatuses(),
+							stagedModelDataHandler.getExportableStatuses(),
 							fileVersion.getStatus())) {
 
 						stagedModels.add((StagedModel)childObject);
@@ -168,7 +167,5 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private ExportImportChangesetMVCActionCommand
 		_exportImportChangesetMVCActionCommand;
-
-	private StagedModelDataHandler _fileEntryStagedModelDataHandler;
 
 }

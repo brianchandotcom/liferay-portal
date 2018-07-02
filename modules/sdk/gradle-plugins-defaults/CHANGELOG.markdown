@@ -3972,6 +3972,18 @@ version 1.3.0.
 ### Fixed
 - [LPS-83104]: Fix publishing from sub-repositories.
 
+## 5.4.64 - 2018-07-02
+
+### Added
+- [LPS-82976]: Set the system property `build.profile` to `portal-all` to only
+include projects containing one of the following marker files:
+	- `.lfrbuild-portal`
+	- `.lfrbuild-portal-all`
+	- `.lfrbuild-portal-all-private` when on private branches, or
+	`.lfrbuild-portal-all-public` when on public branches
+	- `.lfrbuild-portal-private` when on private branches, or
+	`.lfrbuild-portal-public` when on public branches
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public
@@ -4407,6 +4419,7 @@ version 1.3.0.
 [LPS-82828]: https://issues.liferay.com/browse/LPS-82828
 [LPS-82857]: https://issues.liferay.com/browse/LPS-82857
 [LPS-82960]: https://issues.liferay.com/browse/LPS-82960
+[LPS-82976]: https://issues.liferay.com/browse/LPS-82976
 [LPS-83067]: https://issues.liferay.com/browse/LPS-83067
 [LPS-83104]: https://issues.liferay.com/browse/LPS-83104
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594

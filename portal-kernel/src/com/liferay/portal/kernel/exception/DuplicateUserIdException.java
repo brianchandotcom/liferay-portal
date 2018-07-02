@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.exception;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Wilberforce, with no direct replacement
+ * @deprecated As of Wilberforce (7.0.x), with no direct replacement
  */
 @Deprecated
 public class DuplicateUserIdException extends PortalException {

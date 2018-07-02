@@ -415,7 +415,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getSubfolderIds(List,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getSubfolderIds(List,
 	 *             long, long, boolean)}
 	 */
 	@Deprecated
@@ -578,7 +578,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by more general {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by more general {@link
 	 *             #updateFolder(long, String, String, long, List, int,
 	 *             ServiceContext)}
 	 */

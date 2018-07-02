@@ -298,7 +298,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #decodeURL(String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #decodeURL(String)}
 	 */
 	@Deprecated
 	@Override
@@ -373,7 +373,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link URLCodec#encodeURL(String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link URLCodec#encodeURL(String)}
 	 */
 	@Deprecated
 	@Override
@@ -382,7 +382,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link URLCodec#encodeURL(String,
+	 * @deprecated As of Judson (7.1.x), replaced by {@link URLCodec#encodeURL(String,
 	 *             boolean)}
 	 */
 	@Deprecated
@@ -442,7 +442,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public HttpClient getClient(HostConfiguration hostConfiguration) {
@@ -528,7 +528,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public HostConfiguration getHostConfiguration(String location)
@@ -963,7 +963,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public void proxifyState(
@@ -1179,7 +1179,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #shortenURL(String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #shortenURL(String)}
 	 */
 	@Deprecated
 	@Override
@@ -1405,7 +1405,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected boolean hasRequestHeader(HttpMethod httpMethod, String name) {
@@ -1425,7 +1425,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected void processPostMethod(
@@ -1483,7 +1483,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected org.apache.commons.httpclient.Cookie toCommonsCookie(
@@ -1493,7 +1493,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected org.apache.commons.httpclient.Cookie[] toCommonsCookies(
@@ -1503,7 +1503,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected org.apache.commons.httpclient.methods.multipart.FilePart
@@ -1553,7 +1553,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected Cookie toServletCookie(
@@ -1615,7 +1615,7 @@ public class HttpImpl implements Http {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected Cookie[] toServletCookies(

@@ -59,7 +59,7 @@ import java.util.Set;
 public class AnnouncementsUtil {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getAnnouncementScopes(User)}
 	 */
 	@Deprecated

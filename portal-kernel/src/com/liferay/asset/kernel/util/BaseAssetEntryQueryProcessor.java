@@ -25,14 +25,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author     Julio Camarero
- * @deprecated As of Judson
+ * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
 public abstract class BaseAssetEntryQueryProcessor
 	implements AssetEntryQueryProcessor {
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -43,7 +43,7 @@ public abstract class BaseAssetEntryQueryProcessor
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -53,7 +53,7 @@ public abstract class BaseAssetEntryQueryProcessor
 
 	/**
 	 * @throws     IOException
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override

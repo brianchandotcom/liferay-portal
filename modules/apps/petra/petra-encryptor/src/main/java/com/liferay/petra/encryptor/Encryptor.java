@@ -123,7 +123,7 @@ public class Encryptor {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link DigesterUtil#digest(String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link DigesterUtil#digest(String)}
 	 */
 	@Deprecated
 	public static String digest(String text) {
@@ -131,7 +131,7 @@ public class Encryptor {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link DigesterUtil#digest(String,
+	 * @deprecated As of Judson (7.1.x), replaced by {@link DigesterUtil#digest(String,
 	 *             String...)}
 	 */
 	@Deprecated
@@ -216,7 +216,7 @@ public class Encryptor {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static Provider getProvider() {

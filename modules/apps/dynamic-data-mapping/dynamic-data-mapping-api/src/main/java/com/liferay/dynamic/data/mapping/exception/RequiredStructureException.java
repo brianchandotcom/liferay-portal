@@ -23,25 +23,25 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredStructureException extends PortalException {
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public static final int REFERENCED_STRUCTURE = 1;
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public static final int REFERENCED_STRUCTURE_LINK = 2;
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public static final int REFERENCED_TEMPLATE = 3;
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public RequiredStructureException(int type) {
@@ -49,7 +49,7 @@ public class RequiredStructureException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public int getType() {

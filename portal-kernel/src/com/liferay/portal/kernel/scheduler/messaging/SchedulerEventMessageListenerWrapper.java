@@ -122,7 +122,7 @@ public class SchedulerEventMessageListenerWrapper
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public void setGroupName(String groupName) {
@@ -130,7 +130,7 @@ public class SchedulerEventMessageListenerWrapper
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public void setJobName(String jobName) {
@@ -157,14 +157,14 @@ public class SchedulerEventMessageListenerWrapper
 		SchedulerEventMessageListenerWrapper.class);
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@SuppressWarnings("unused")
 	private String _groupName;
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@SuppressWarnings("unused")

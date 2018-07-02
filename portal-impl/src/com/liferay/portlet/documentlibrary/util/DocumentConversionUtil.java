@@ -21,7 +21,7 @@ import java.io.InputStream;
 /**
  * @author     Bruno Farache
  * @author     Alexander Chow
- * @deprecated As of Judson, moved to {@link
+ * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil}
  */
 @Deprecated

@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.petra.string.StringPool}
  */
 @Deprecated

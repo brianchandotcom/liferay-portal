@@ -21,7 +21,7 @@ import java.util.TimeZone;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Bunyan, replaced by {@link DateFormatFactoryUtil} or {@link
+ * @deprecated As of Bunyan (6.0.x), replaced by {@link DateFormatFactoryUtil} or {@link
  *             FastDateFormatFactoryUtil}
  */
 @Deprecated

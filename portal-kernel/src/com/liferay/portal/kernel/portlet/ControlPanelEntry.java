@@ -29,7 +29,7 @@ public interface ControlPanelEntry {
 		throws Exception;
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement.<p>This method
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement.<p>This method
 	 *             was originally defined to determine if a portlet should be
 	 *             displayed in the Control Panel. In this version, this method
 	 *             should always return <code>false</code> and remains only to
@@ -45,7 +45,7 @@ public interface ControlPanelEntry {
 		throws Exception;
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement.<p>This method
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement.<p>This method
 	 *             was originally defined to determine if a portlet should be
 	 *             displayed in the Control Panel. In this version, this method
 	 *             should always return <code>false</code> and remains only to

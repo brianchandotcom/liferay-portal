@@ -129,7 +129,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  *
  * @author     Raymond Augé
  * @author     Julio Camarero
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.asset.publisher.util.AssetPublisherHelper}
  */
 @Component(
@@ -378,7 +378,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static List<AssetEntry> getAssetEntries(
@@ -1263,7 +1263,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static void notifySubscriber(
@@ -1272,7 +1272,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public static void notifySubscribers(
@@ -1295,7 +1295,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public static void registerAssetQueryProcessor(
@@ -1357,7 +1357,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public static void unregisterAssetQueryProcessor(
@@ -1381,7 +1381,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public void checkAssetEntries() throws Exception {
@@ -1692,7 +1692,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected void setSubscriptionLocalService(
@@ -1708,7 +1708,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	protected void setUserLocalService(UserLocalService userLocalService) {

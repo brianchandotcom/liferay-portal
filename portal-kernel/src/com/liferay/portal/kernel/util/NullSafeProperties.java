@@ -18,7 +18,7 @@ import java.util.Properties;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Bunyan, renamed to {@link SafeProperties}
+ * @deprecated As of Bunyan (6.0.x), renamed to {@link SafeProperties}
  */
 @Deprecated
 public class NullSafeProperties extends Properties {

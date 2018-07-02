@@ -544,7 +544,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected int databaseInMaxParameters;
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	protected ModelListener<T>[] listeners = new ModelListener[0];

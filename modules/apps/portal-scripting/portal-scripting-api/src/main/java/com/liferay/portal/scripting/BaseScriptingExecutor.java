@@ -53,7 +53,7 @@ public abstract class BaseScriptingExecutor implements ScriptingExecutor {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #eval(Set, Map, Set,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #eval(Set, Map, Set,
 	 *             File)}
 	 */
 	@Deprecated
@@ -68,7 +68,7 @@ public abstract class BaseScriptingExecutor implements ScriptingExecutor {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #eval(Set, Map, Set,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #eval(Set, Map, Set,
 	 *             String)}
 	 */
 	@Deprecated

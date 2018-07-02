@@ -33,7 +33,7 @@ public class RemoteExportException extends PortalException {
 	public static final int NO_PERMISSIONS = 5;
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final int SAME_GROUP = 4;

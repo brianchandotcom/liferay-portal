@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.StringQueryFactory;
 /**
  * @author     Raymond Augé
  * @author     Brian Wing Shun Chan
- * @deprecated As of Wilberforce
+ * @deprecated As of Wilberforce (7.0.x)
  */
 @Deprecated
 public class StringQueryFactoryImpl implements StringQueryFactory {

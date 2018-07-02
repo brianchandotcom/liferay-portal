@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author     Michael C. Han
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Component(
 	immediate = true, service = SingleDestinationMessageSenderFactory.class

@@ -31,7 +31,7 @@ import javax.servlet.jsp.JspWriter;
 public class OutputTag extends PositionTagSupport {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getDataSB(ServletRequest,
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getDataSB(ServletRequest,
 	 *             String)}
 	 */
 	@Deprecated

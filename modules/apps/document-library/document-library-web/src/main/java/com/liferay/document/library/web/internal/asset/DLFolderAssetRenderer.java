@@ -52,7 +52,7 @@ public class DLFolderAssetRenderer
 	public static final String TYPE = "folder";
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	public DLFolderAssetRenderer(Folder folder) {
@@ -80,7 +80,7 @@ public class DLFolderAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override

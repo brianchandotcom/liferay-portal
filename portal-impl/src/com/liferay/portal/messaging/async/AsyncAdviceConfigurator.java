@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * @author     Shuyang Zhou
- * @deprecated As of Judson, moved to {@link
+ * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.portal.internal.messaging.async.AsyncAdviceConfigurator}
  */
 @Deprecated

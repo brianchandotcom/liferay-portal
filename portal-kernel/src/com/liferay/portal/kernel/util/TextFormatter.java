@@ -86,7 +86,7 @@ public class TextFormatter {
 	public static final int O = 14;
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #K}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #K}
 	 */
 	@Deprecated
 	public static final int P = 15;

@@ -16,7 +16,7 @@ package com.liferay.portal.dao.jdbc.util;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Paton, replaced by {@link
+ * @deprecated As of Paton (6.1.x), replaced by {@link
  *             com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean}
  */
 @Deprecated

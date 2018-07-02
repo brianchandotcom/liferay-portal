@@ -192,7 +192,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link #getPortalCache(String)}
+		 * @deprecated As of Judson (7.1.x), replaced by {@link #getPortalCache(String)}
 		 */
 		@Deprecated
 		@Override
@@ -203,7 +203,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link #getPortalCache(String,
+		 * @deprecated As of Judson (7.1.x), replaced by {@link #getPortalCache(String,
 		 *             boolean)}
 		 */
 		@Deprecated
@@ -215,7 +215,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link
+		 * @deprecated As of Judson (7.1.x), replaced by {@link
 		 *             #getPortalCacheManager()}
 		 */
 		@Deprecated
@@ -269,7 +269,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link
+		 * @deprecated As of Judson (7.1.x), replaced by {@link
 		 *             #removePortalCache(String)}
 		 */
 		@Deprecated
@@ -308,7 +308,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link #getPortalCacheName()}
+		 * @deprecated As of Judson (7.1.x), replaced by {@link #getPortalCacheName()}
 		 */
 		@Deprecated
 		@Override
@@ -424,7 +424,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link #getPortalCache(String)}
+		 * @deprecated As of Judson (7.1.x), replaced by {@link #getPortalCache(String)}
 		 */
 		@Deprecated
 		@Override
@@ -435,7 +435,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link #getPortalCache(String,
+		 * @deprecated As of Judson (7.1.x), replaced by {@link #getPortalCache(String,
 		 *             boolean)}
 		 */
 		@Deprecated
@@ -447,7 +447,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link
+		 * @deprecated As of Judson (7.1.x), replaced by {@link
 		 *             #getPortalCacheManager()}
 		 */
 		@Deprecated
@@ -489,7 +489,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link
+		 * @deprecated As of Judson (7.1.x), replaced by {@link
 		 *             #removePortalCache(String)}
 		 */
 		@Deprecated

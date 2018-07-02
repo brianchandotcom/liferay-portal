@@ -145,7 +145,7 @@ public class AlloyServiceInvoker {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #executeDynamicQuery(DynamicQuery)}
 	 */
 	@Deprecated
@@ -155,7 +155,7 @@ public class AlloyServiceInvoker {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #executeDynamicQueryCount(DynamicQuery)}
 	 */
 	@Deprecated

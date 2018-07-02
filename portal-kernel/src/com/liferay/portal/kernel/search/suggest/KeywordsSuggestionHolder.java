@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author     Josef Sustacek
- * @deprecated As of Judson, moved to {@link
+ * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.portal.search.web.internal.search.suggest.KeywordsSuggestionHolder}
  */
 @Deprecated

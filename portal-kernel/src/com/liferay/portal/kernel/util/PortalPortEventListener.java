@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author     Michael C. Han
- * @deprecated As of Wilberforce, replaced by {@link
+ * @deprecated As of Wilberforce (7.0.x), replaced by {@link
  *             PortalInetSocketAddressEventListener}
  */
 @Deprecated

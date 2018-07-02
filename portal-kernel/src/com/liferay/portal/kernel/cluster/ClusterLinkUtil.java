@@ -29,7 +29,7 @@ public class ClusterLinkUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #_getClusterLink()}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #_getClusterLink()}
 	 */
 	@Deprecated
 	public static ClusterLink getClusterLink() {

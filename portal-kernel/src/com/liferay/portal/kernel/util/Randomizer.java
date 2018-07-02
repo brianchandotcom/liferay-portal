@@ -22,7 +22,7 @@ import java.util.Set;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Newton
+ * @deprecated As of Newton (6.2.x)
  */
 @Deprecated
 public class Randomizer extends Random {

@@ -152,7 +152,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	protected String cleanContent(String content) {
@@ -197,7 +197,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	protected SocialActivityFeedEntry doInterpret(
@@ -282,7 +282,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getGroupName(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getGroupName(long,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -490,7 +490,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getUserName(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getUserName(long,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -528,7 +528,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getJSONValue(String,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getJSONValue(String,
 	 *             String, String)}
 	 */
 	@Deprecated

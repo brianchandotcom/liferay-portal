@@ -90,7 +90,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, see {@link #addFileEntry(long, long,
+	 * @deprecated As of Wilberforce (7.0.x), see {@link #addFileEntry(long, long,
 	 *             String, String, String, String, String, File,
 	 *             ServiceContext)}
 	 */
@@ -108,7 +108,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, see {@link #addFileEntry(long, long,
+	 * @deprecated As of Wilberforce (7.0.x), see {@link #addFileEntry(long, long,
 	 *             String, String, String, String, String, InputStream, long,
 	 *             ServiceContext)}
 	 */
@@ -150,7 +150,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #addFolder(long, long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addFolder(long, long,
 	 *             String, String, ServiceContext)}
 	 */
 	@Deprecated
@@ -171,7 +171,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #checkInFileEntry(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #checkInFileEntry(long,
 	 *             long, boolean, String, ServiceContext)}
 	 */
 	@Deprecated
@@ -206,7 +206,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #checkInFileEntry(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #checkInFileEntry(long,
 	 *             long, String, ServiceContext)}
 	 */
 	@Deprecated
@@ -252,7 +252,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #copyFileEntry(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #copyFileEntry(long,
 	 *             long, long, long, ServiceContext)}
 	 */
 	@Deprecated
@@ -682,7 +682,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -691,7 +691,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -743,7 +743,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #moveFileEntry(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #moveFileEntry(long,
 	 *             long, long, ServiceContext)}
 	 */
 	@Deprecated
@@ -770,7 +770,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #moveFolder(long, long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #moveFolder(long, long,
 	 *             long, ServiceContext)}
 	 */
 	@Deprecated
@@ -818,7 +818,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #revertFileEntry(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #revertFileEntry(long,
 	 *             long, String, ServiceContext)}
 	 */
 	@Deprecated
@@ -966,7 +966,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #updateFileEntry(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #updateFileEntry(long,
 	 *             long, String, String, String, String, String, boolean, File,
 	 *             ServiceContext)}
 	 */
@@ -986,7 +986,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #updateFileEntry(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #updateFileEntry(long,
 	 *             long, String, String, String, String, String, boolean,
 	 *             InputStream, long, ServiceContext)}
 	 */

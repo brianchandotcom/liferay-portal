@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Wilberforce, moved to {@link
+ * @deprecated As of Wilberforce (7.0.x), moved to {@link
  *             com.liferay.portal.kernel.jazzy.InvalidWord}
  */
 @Deprecated

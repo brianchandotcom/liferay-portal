@@ -85,7 +85,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @param      name the user group's name
 	 * @param      description the user group's description
 	 * @return     the user group
-	 * @deprecated As of Newton, replaced by {@link #addUserGroup(String,
+	 * @deprecated As of Newton (6.2.x), replaced by {@link #addUserGroup(String,
 	 *             String, ServiceContext)}
 	 */
 	@Deprecated
@@ -261,7 +261,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @param      name the user group's name
 	 * @param      description the the user group's description
 	 * @return     the user group
-	 * @deprecated As of Newton, replaced by {@link #updateUserGroup(long,
+	 * @deprecated As of Newton (6.2.x), replaced by {@link #updateUserGroup(long,
 	 *             String, String, ServiceContext)}
 	 */
 	@Deprecated

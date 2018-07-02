@@ -95,7 +95,7 @@ public class AssetPublisherAddPortletProvider
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override

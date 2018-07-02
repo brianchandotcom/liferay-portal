@@ -99,7 +99,7 @@ public class ScriptingImpl implements Scripting {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #eval(Set, Map, Set,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #eval(Set, Map, Set,
 	 *             String, String)}
 	 */
 	@Deprecated
@@ -123,7 +123,7 @@ public class ScriptingImpl implements Scripting {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #exec(Set, Map, String,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #exec(Set, Map, String,
 	 *             String)}
 	 */
 	@Deprecated

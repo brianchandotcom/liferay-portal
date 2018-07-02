@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * </p>
  *
  * @author     Alexander Chow
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.blogs.internal.verify.VerifyBlogsTrackbacks}
  */
 @Deprecated

@@ -41,7 +41,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -54,7 +54,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -77,7 +77,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -90,7 +90,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	@Override
@@ -132,7 +132,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public void setBooleanClauseFactory(
@@ -142,7 +142,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public void setBooleanQueryFactory(
@@ -160,7 +160,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public void setTermQueryFactory(TermQueryFactory termQueryFactory) {
@@ -168,7 +168,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public void setTermRangeQueryFactory(

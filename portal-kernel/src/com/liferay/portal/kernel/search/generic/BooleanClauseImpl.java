@@ -39,7 +39,7 @@ public class BooleanClauseImpl<T> implements BooleanClause<T> {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getClause}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getClause}
 	 */
 	@Deprecated
 	@Override

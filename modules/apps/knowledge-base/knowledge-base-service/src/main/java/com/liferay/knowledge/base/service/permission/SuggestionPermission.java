@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author     Adolfo Pérez
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated
 public class SuggestionPermission {

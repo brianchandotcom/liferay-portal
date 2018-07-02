@@ -91,7 +91,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public DefaultTemplateResourceLoader(

@@ -28,7 +28,7 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author     Eudaldo Alonso
- * @deprecated As of Judson, in favor of
+ * @deprecated As of Judson (7.1.x), in favor of
  *             com.liferay.frontend.taglib.servlet.taglib.soy.DiffVersionComparatorTag
  */
 @Deprecated

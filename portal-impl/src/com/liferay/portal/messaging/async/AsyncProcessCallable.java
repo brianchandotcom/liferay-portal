@@ -28,7 +28,7 @@ import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author     Shuyang Zhou
- * @deprecated As of Judson, moved to {@link
+ * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.portal.internal.messaging.async.AsyncProcessCallable}
  */
 @Deprecated

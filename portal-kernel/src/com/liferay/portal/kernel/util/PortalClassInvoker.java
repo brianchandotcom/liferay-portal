@@ -25,7 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 public class PortalClassInvoker {
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #invoke(MethodKey,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #invoke(MethodKey,
 	 *             Object...)}
 	 */
 	@Deprecated

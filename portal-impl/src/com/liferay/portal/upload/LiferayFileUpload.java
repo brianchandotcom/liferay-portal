@@ -29,7 +29,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /**
  * @author     Brian Myunghun Kim
  * @author     Brian Wing Shun Chan
- * @deprecated As of Wilberforce, with no direct replacement
+ * @deprecated As of Wilberforce (7.0.x), with no direct replacement
  */
 @Deprecated
 public class LiferayFileUpload extends ServletFileUpload {

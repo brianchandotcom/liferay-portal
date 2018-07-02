@@ -366,7 +366,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public boolean isAccess() {
@@ -573,7 +573,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public void setAccess(boolean access) {

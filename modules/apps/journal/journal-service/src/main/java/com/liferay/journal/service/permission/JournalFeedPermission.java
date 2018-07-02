@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author     Raymond Augé
- * @deprecated As of Judson, with no direct replacement
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Component(
 	property = "model.class.name=com.liferay.journal.model.JournalFeed",
@@ -54,7 +54,7 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static void check(
@@ -87,7 +87,7 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static boolean contains(

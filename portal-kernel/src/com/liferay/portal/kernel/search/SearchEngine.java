@@ -24,14 +24,14 @@ public interface SearchEngine {
 		throws SearchException;
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             BooleanClauseFactoryUtil}
 	 */
 	@Deprecated
 	public BooleanClauseFactory getBooleanClauseFactory();
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public BooleanQueryFactory getBooleanQueryFactory();
@@ -41,13 +41,13 @@ public interface SearchEngine {
 	public IndexWriter getIndexWriter();
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public TermQueryFactory getTermQueryFactory();
 
 	/**
-	 * @deprecated As of Wilberforce
+	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
 	public TermRangeQueryFactory getTermRangeQueryFactory();

@@ -162,7 +162,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #addTempFileEntry(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addTempFileEntry(long,
 	 *             String, String, InputStream, String)}
 	 */
 	@Deprecated
@@ -386,7 +386,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getOrphans(WikiNode)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getOrphans(WikiNode)}
 	 */
 	@Deprecated
 	@Override

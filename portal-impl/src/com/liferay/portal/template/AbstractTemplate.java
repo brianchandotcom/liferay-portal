@@ -151,7 +151,7 @@ public abstract class AbstractTemplate implements Template {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #write(Writer)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #write(Writer)}
 	 */
 	@Deprecated
 	protected void _write(Writer writer) throws TemplateException {

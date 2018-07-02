@@ -275,7 +275,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #deletePortletFolder}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #deletePortletFolder}
 	 */
 	@Deprecated
 	@Override

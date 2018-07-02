@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 /**
  * @author     Raymond Augé
  * @author     Brian Wing Shun Chan
- * @deprecated As of Wilberforce
+ * @deprecated As of Wilberforce (7.0.x)
  */
 @Deprecated
 public class StringQueryFactoryUtil {

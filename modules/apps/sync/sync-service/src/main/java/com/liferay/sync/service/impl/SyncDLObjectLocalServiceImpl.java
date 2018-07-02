@@ -51,7 +51,7 @@ public class SyncDLObjectLocalServiceImpl
 	extends SyncDLObjectLocalServiceBaseImpl {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addSyncDLObject(long, long,
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #addSyncDLObject(long, long,
 	 *             String, long, long, long, String, String, String, String,
 	 *             String, String, String, String, long, long, String, String,
 	 *             String, Date, long, String, String, long, String)}

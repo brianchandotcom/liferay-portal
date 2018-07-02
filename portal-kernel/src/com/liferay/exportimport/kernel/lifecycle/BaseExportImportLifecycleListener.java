@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author     Daniel Kocsis
  * @author     Mate Thurzo
- * @deprecated As of Judson
+ * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
 public abstract class BaseExportImportLifecycleListener

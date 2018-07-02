@@ -98,7 +98,7 @@ import javax.portlet.PortletResponse;
  * @author     Brian Wing Shun Chan
  * @author     Raymond Augé
  * @author     Alexander Chow
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.document.library.internal.search.DLFileEntryIndexer}
  */
 @Deprecated

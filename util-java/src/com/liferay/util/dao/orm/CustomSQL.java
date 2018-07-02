@@ -800,7 +800,7 @@ public class CustomSQL {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #_read(ClassLoader, String,
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #_read(ClassLoader, String,
 	 *             Map)}
 	 */
 	@Deprecated

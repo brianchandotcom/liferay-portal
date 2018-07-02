@@ -55,7 +55,7 @@ public class ConfigurationImpl
 	implements com.liferay.portal.kernel.configuration.Configuration {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #ConfigurationImpl(ClassLoader, String, long, String)}
 	 */
 	@Deprecated
@@ -66,7 +66,7 @@ public class ConfigurationImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #ConfigurationImpl(ClassLoader, String, long, String)}
 	 */
 	@Deprecated

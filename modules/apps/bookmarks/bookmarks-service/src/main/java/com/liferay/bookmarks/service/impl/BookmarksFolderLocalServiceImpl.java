@@ -615,7 +615,7 @@ public class BookmarksFolderLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #updateFolder(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #updateFolder(long,
 	 *             long, long, String, String, ServiceContext)} and {@link
 	 *             #mergeFolders(long, long)}
 	 */

@@ -32,7 +32,7 @@ public class PortletConstants {
 	/**
 	 * Facebook integration method for FBML.
 	 *
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String FACEBOOK_INTEGRATION_FBML = "fbml";
@@ -40,7 +40,7 @@ public class PortletConstants {
 	/**
 	 * Facebook integration method for IFrame.
 	 *
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String FACEBOOK_INTEGRATION_IFRAME = "iframe";
@@ -48,7 +48,7 @@ public class PortletConstants {
 	/**
 	 * Instance separator.
 	 *
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String INSTANCE_SEPARATOR = "_INSTANCE_";
@@ -72,7 +72,7 @@ public class PortletConstants {
 	/**
 	 * User separator.
 	 *
-	 * @deprecated As of Wilberforce, with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String USER_SEPARATOR = "_USER_";
@@ -91,7 +91,7 @@ public class PortletConstants {
 	 * @param      portletId the portlet ID
 	 * @param      userId a user ID
 	 * @return     the properly assembled portlet ID
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static String assemblePortletId(String portletId, long userId) {
@@ -110,7 +110,7 @@ public class PortletConstants {
 	 * @param      instanceId an instance ID. If <code>null</code>, an instance
 	 *             ID is derived from the portlet ID.
 	 * @return     the properly assembled portlet ID
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static String assemblePortletId(
@@ -133,7 +133,7 @@ public class PortletConstants {
 	 * @param      portletId the portlet ID
 	 * @param      instanceId an instance ID
 	 * @return     the properly assembled portlet ID
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static String assemblePortletId(
@@ -145,7 +145,7 @@ public class PortletConstants {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             PortletIdCodec#generateInstanceId()}
 	 */
 	@Deprecated
@@ -158,7 +158,7 @@ public class PortletConstants {
 	 *
 	 * @param      portletId the portlet ID
 	 * @return     the instance ID of the portlet
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             PortletIdCodec#decodeInstanceId(String)}
 	 */
 	@Deprecated
@@ -171,7 +171,7 @@ public class PortletConstants {
 	 *
 	 * @param      portletId the portlet ID
 	 * @return     the root portlet ID of the portlet
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             PortletIdCodec#decodePortletName(String)}
 	 */
 	@Deprecated
@@ -185,7 +185,7 @@ public class PortletConstants {
 	 *
 	 * @param      portletId the portlet ID
 	 * @return     the user ID of the portlet
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             PortletIdCodec#decodeUserId(String)}
 	 */
 	@Deprecated
@@ -194,7 +194,7 @@ public class PortletConstants {
 	}
 
 	/**
-	 * @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static boolean hasIdenticalRootPortletId(
@@ -211,7 +211,7 @@ public class PortletConstants {
 	 * @param      portletId the portlet ID
 	 * @return     <code>true</code> if the portlet ID contains an instance ID;
 	 *             <code>false</code> otherwise
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             PortletIdCodec#hasInstanceId(String)}
 	 */
 	@Deprecated
@@ -225,7 +225,7 @@ public class PortletConstants {
 	 * @param      portletId the portlet ID
 	 * @return     <code>true</code> if the portlet ID contains a user ID;
 	 *             <code>false</code> otherwise
-	 * @deprecated As of Judson, replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             PortletIdCodec#hasUserId(String)}
 	 */
 	@Deprecated

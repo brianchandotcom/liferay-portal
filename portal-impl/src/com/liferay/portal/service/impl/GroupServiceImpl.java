@@ -152,7 +152,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             staging
 	 * @return     the group
 	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce, replaced by {@link #addGroup(long, long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addGroup(long, long,
 	 *             Map, Map, int, boolean, int, String, boolean, boolean,
 	 *             ServiceContext)}
 	 */
@@ -1062,7 +1062,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             tag names for the group.
 	 * @return     the group
 	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce, replaced by {@link #updateGroup(long,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #updateGroup(long,
 	 *             long, Map, Map, int, boolean, int, String, boolean, boolean,
 	 *             ServiceContext)}
 	 */

@@ -1278,7 +1278,7 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	/**
-	 * @deprecated As of Judson, only used for backwards compatibility with LARs
+	 * @deprecated As of Judson (7.1.x), only used for backwards compatibility with LARs
 	 *             that use journal schema under 1.1.0
 	 */
 	@Deprecated

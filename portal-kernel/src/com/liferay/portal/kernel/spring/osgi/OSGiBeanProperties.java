@@ -202,7 +202,7 @@ public @interface OSGiBeanProperties {
 		 *
 		 * @param      object the object (bean)
 		 * @return     the service types
-		 * @deprecated As of Judson, replaced by {@link #interfaces(Object,
+		 * @deprecated As of Judson (7.1.x), replaced by {@link #interfaces(Object,
 		 *             OSGiBeanProperties, String[])}
 		 */
 		@Deprecated

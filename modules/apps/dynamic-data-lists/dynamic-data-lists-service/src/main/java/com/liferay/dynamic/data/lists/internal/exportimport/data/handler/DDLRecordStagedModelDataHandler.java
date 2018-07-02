@@ -55,7 +55,7 @@ public class DDLRecordStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {DDLRecord.class.getName()};
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -66,7 +66,7 @@ public class DDLRecordStagedModelDataHandler
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -78,7 +78,7 @@ public class DDLRecordStagedModelDataHandler
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -89,7 +89,7 @@ public class DDLRecordStagedModelDataHandler
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	@Override
@@ -237,7 +237,7 @@ public class DDLRecordStagedModelDataHandler
 	}
 
 	/**
-	 * @deprecated As of Judson
+	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
 	protected void setDDLRecordLocalService(

@@ -548,7 +548,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             CMISFileVersion#getUserId()}
 	 */
 	@Deprecated
@@ -569,7 +569,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             CMISFileVersion#getUserName()}
 	 */
 	@Deprecated
@@ -590,7 +590,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             CMISFileVersion#getUserUuid()}
 	 */
 	@Deprecated

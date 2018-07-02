@@ -126,7 +126,8 @@ public class SoyPortlet extends MVCPortlet {
 		_bundle = FrameworkUtil.getBundle(clazz);
 
 		try {
-			MVCCommandCache mvcRenderCommandCache = getRenderMVCCommandCache();
+			MVCCommandCache<?> mvcRenderCommandCache =
+				getRenderMVCCommandCache();
 
 			FriendlyURLMapper friendlyURLMapper = _getFriendlyURLMapper();
 
@@ -457,10 +458,10 @@ public class SoyPortlet extends MVCPortlet {
 	}
 
 	private MVCRenderCommand _getMVCRenderCommand(String mvcRenderCommandName) {
-		MVCCommandCache mvcRenderCommandCache = getRenderMVCCommandCache();
+		MVCCommandCache<MVCRenderCommand> mvcRenderCommandCache =
+			getRenderMVCCommandCache();
 
-		return (MVCRenderCommand)mvcRenderCommandCache.getMVCCommand(
-			mvcRenderCommandName);
+		return mvcRenderCommandCache.getMVCCommand(mvcRenderCommandName);
 	}
 
 	private Portlet _getPortlet() {
@@ -495,7 +496,7 @@ public class SoyPortlet extends MVCPortlet {
 			SoyTemplateResourcesProviderUtil.getBundleTemplateResources(
 				_bundle, templatePath));
 
-		MVCCommandCache mvcCommandCache = getRenderMVCCommandCache();
+		MVCCommandCache<?> mvcCommandCache = getRenderMVCCommandCache();
 
 		for (String mvcCommandName : mvcCommandCache.getMVCCommandNames()) {
 			MVCCommand mvcCommand = _getMVCRenderCommand(mvcCommandName);

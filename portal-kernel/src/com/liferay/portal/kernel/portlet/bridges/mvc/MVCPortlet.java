@@ -205,17 +205,17 @@ public class MVCPortlet extends LiferayPortlet {
 
 		String portletId = liferayPortletConfig.getPortletId();
 
-		_actionMVCCommandCache = new MVCCommandCache(
+		_actionMVCCommandCache = new MVCCommandCache<>(
 			MVCActionCommand.EMPTY,
 			getInitParameter("mvc-action-command-package-prefix"),
 			getPortletName(), portletId, MVCActionCommand.class,
 			"ActionCommand");
-		_renderMVCCommandCache = new MVCCommandCache(
+		_renderMVCCommandCache = new MVCCommandCache<>(
 			MVCRenderCommand.EMPTY,
 			getInitParameter("mvc-render-command-package-prefix"),
 			getPortletName(), portletId, MVCRenderCommand.class,
 			"RenderCommand");
-		_resourceMVCCommandCache = new MVCCommandCache(
+		_resourceMVCCommandCache = new MVCCommandCache<>(
 			MVCResourceCommand.EMPTY,
 			getInitParameter("mvc-resource-command-package-prefix"),
 			getPortletName(), portletId, MVCResourceCommand.class,
@@ -278,8 +278,7 @@ public class MVCPortlet extends LiferayPortlet {
 
 		if (!mvcRenderCommandName.equals("/") || Validator.isNull(mvcPath)) {
 			MVCRenderCommand mvcRenderCommand =
-				(MVCRenderCommand)_renderMVCCommandCache.getMVCCommand(
-					mvcRenderCommandName);
+				_renderMVCCommandCache.getMVCCommand(mvcRenderCommandName);
 
 			mvcPath = null;
 
@@ -362,8 +361,7 @@ public class MVCPortlet extends LiferayPortlet {
 
 		if (!actionName.contains(StringPool.COMMA)) {
 			MVCActionCommand mvcActionCommand =
-				(MVCActionCommand)_actionMVCCommandCache.getMVCCommand(
-					actionName);
+				_actionMVCCommandCache.getMVCCommand(actionName);
 
 			if (mvcActionCommand != MVCActionCommand.EMPTY) {
 				if (mvcActionCommand instanceof FormMVCActionCommand) {
@@ -383,8 +381,7 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 		else {
 			List<MVCActionCommand> mvcActionCommands =
-				(List<MVCActionCommand>)_actionMVCCommandCache.getMVCCommands(
-					actionName);
+				_actionMVCCommandCache.getMVCCommands(actionName);
 
 			if (!mvcActionCommands.isEmpty()) {
 				boolean valid = true;
@@ -435,8 +432,7 @@ public class MVCPortlet extends LiferayPortlet {
 
 		if (!resourceID.contains(StringPool.COMMA)) {
 			MVCResourceCommand mvcResourceCommand =
-				(MVCResourceCommand)_resourceMVCCommandCache.getMVCCommand(
-					resourceID);
+				_resourceMVCCommandCache.getMVCCommand(resourceID);
 
 			if (mvcResourceCommand != MVCResourceCommand.EMPTY) {
 				return mvcResourceCommand.serveResource(
@@ -445,8 +441,7 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 		else {
 			List<MVCResourceCommand> mvcResourceCommands =
-				(List<MVCResourceCommand>)
-					_resourceMVCCommandCache.getMVCCommands(resourceID);
+				_resourceMVCCommandCache.getMVCCommands(resourceID);
 
 			if (!mvcResourceCommands.isEmpty()) {
 				for (MVCResourceCommand mvcResourceCommand :
@@ -498,7 +493,7 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 	}
 
-	protected MVCCommandCache getActionMVCCommandCache() {
+	protected MVCCommandCache<MVCActionCommand> getActionMVCCommandCache() {
 		return _actionMVCCommandCache;
 	}
 
@@ -526,11 +521,11 @@ public class MVCPortlet extends LiferayPortlet {
 		return mvcPath;
 	}
 
-	protected MVCCommandCache getRenderMVCCommandCache() {
+	protected MVCCommandCache<MVCRenderCommand> getRenderMVCCommandCache() {
 		return _renderMVCCommandCache;
 	}
 
-	protected MVCCommandCache getResourceMVCCommandCache() {
+	protected MVCCommandCache<MVCResourceCommand> getResourceMVCCommandCache() {
 		return _resourceMVCCommandCache;
 	}
 
@@ -668,8 +663,8 @@ public class MVCPortlet extends LiferayPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
-	private MVCCommandCache _actionMVCCommandCache;
-	private MVCCommandCache _renderMVCCommandCache;
-	private MVCCommandCache _resourceMVCCommandCache;
+	private MVCCommandCache<MVCActionCommand> _actionMVCCommandCache;
+	private MVCCommandCache<MVCRenderCommand> _renderMVCCommandCache;
+	private MVCCommandCache<MVCResourceCommand> _resourceMVCCommandCache;
 
 }

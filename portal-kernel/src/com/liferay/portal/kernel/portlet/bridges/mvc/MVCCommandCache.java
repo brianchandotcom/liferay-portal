@@ -38,11 +38,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Sergio González
  * @author Raymond Augé
  */
-public class MVCCommandCache {
+public class MVCCommandCache<T extends MVCCommand> {
 
 	public MVCCommandCache(
-		MVCCommand emptyMVCCommand, String packagePrefix, String portletName,
-		Class<? extends MVCCommand> mvcCommandClass, String mvcCommandPostFix) {
+		T emptyMVCCommand, String packagePrefix, String portletName,
+		Class<T> mvcCommandClass, String mvcCommandPostFix) {
 
 		this(
 			emptyMVCCommand, packagePrefix, portletName, portletName,
@@ -50,9 +50,8 @@ public class MVCCommandCache {
 	}
 
 	public MVCCommandCache(
-		MVCCommand emptyMVCCommand, String packagePrefix, String portletName,
-		String portletId, Class<? extends MVCCommand> mvcCommandClass,
-		String mvcCommandPostFix) {
+		T emptyMVCCommand, String packagePrefix, String portletName,
+		String portletId, Class<T> mvcCommandClass, String mvcCommandPostFix) {
 
 		_emptyMVCCommand = emptyMVCCommand;
 		_mvcCommandClass = mvcCommandClass;
@@ -83,7 +82,7 @@ public class MVCCommandCache {
 	 */
 	@Deprecated
 	public MVCCommandCache(
-		MVCCommand emptyMVCCommand, String packagePrefix, String portletName,
+		T emptyMVCCommand, String packagePrefix, String portletName,
 		String mvcCommandClassName, String mvcCommandPostFix) {
 
 		this(
@@ -97,12 +96,12 @@ public class MVCCommandCache {
 		}
 	}
 
-	public MVCCommand getMVCCommand(String mvcCommandName) {
+	public T getMVCCommand(String mvcCommandName) {
 		String className = null;
 
 		_initServiceTrackerMap();
 
-		MVCCommand mvcCommand = _serviceTrackerMap.getService(mvcCommandName);
+		T mvcCommand = _serviceTrackerMap.getService(mvcCommandName);
 
 		if (mvcCommand != null) {
 			return mvcCommand;
@@ -128,7 +127,7 @@ public class MVCCommandCache {
 
 			className = sb.toString();
 
-			mvcCommand = (MVCCommand)InstanceFactory.newInstance(className);
+			mvcCommand = (T)InstanceFactory.newInstance(className);
 
 			_mvcCommandCache.put(mvcCommandName, mvcCommand);
 
@@ -151,8 +150,8 @@ public class MVCCommandCache {
 		return _serviceTrackerMap.keySet();
 	}
 
-	public List<? extends MVCCommand> getMVCCommands(String key) {
-		List<MVCCommand> mvcCommands = _mvcCommands.get(key);
+	public List<T> getMVCCommands(String key) {
+		List<T> mvcCommands = _mvcCommands.get(key);
 
 		String[] mvcCommandNames = StringUtil.split(key);
 
@@ -165,7 +164,7 @@ public class MVCCommandCache {
 		mvcCommands = new ArrayList<>();
 
 		for (String mvcCommandName : mvcCommandNames) {
-			MVCCommand mvcCommand = getMVCCommand(mvcCommandName);
+			T mvcCommand = getMVCCommand(mvcCommandName);
 
 			if (mvcCommand != _emptyMVCCommand) {
 				mvcCommands.add(mvcCommand);
@@ -200,16 +199,16 @@ public class MVCCommandCache {
 		return _mvcCommandCache.isEmpty();
 	}
 
-	private static Class<? extends MVCCommand> _getMVCCommandClass(
+	private static <T extends MVCCommand> Class<T> _getMVCCommandClass(
 		String mvcCommandClassName) {
 
-		Class<? extends MVCCommand> mvcCommandClass = null;
+		Class<T> mvcCommandClass = null;
 
 		for (Class<? extends MVCCommand> curMVCCommandClass :
 				_mvcCommandClasses) {
 
 			if (mvcCommandClassName.equals(curMVCCommandClass.getName())) {
-				mvcCommandClass = curMVCCommandClass;
+				mvcCommandClass = (Class<T>)curMVCCommandClass;
 
 				break;
 			}
@@ -253,18 +252,16 @@ public class MVCCommandCache {
 			MVCActionCommand.class, MVCRenderCommand.class,
 			MVCResourceCommand.class);
 
-	private final MVCCommand _emptyMVCCommand;
+	private final T _emptyMVCCommand;
 	private final String _filterString;
-	private final Map<String, MVCCommand> _mvcCommandCache =
+	private final Map<String, T> _mvcCommandCache =
 		new ConcurrentHashMap<>();
-	private final Class<? extends MVCCommand> _mvcCommandClass;
+	private final Class<T> _mvcCommandClass;
 	private final Map<String, List<String>> _mvcCommandKeys =
 		new ConcurrentHashMap<>();
 	private final String _mvcCommandPostFix;
-	private final Map<String, List<MVCCommand>> _mvcCommands =
-		new ConcurrentHashMap<>();
+	private final Map<String, List<T>> _mvcCommands = new ConcurrentHashMap<>();
 	private final String _packagePrefix;
-	private volatile ServiceTrackerMap<String, ? extends MVCCommand>
-		_serviceTrackerMap;
+	private volatile ServiceTrackerMap<String, T> _serviceTrackerMap;
 
 }

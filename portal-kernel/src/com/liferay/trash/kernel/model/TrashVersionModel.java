@@ -38,7 +38,7 @@ import java.io.Serializable;
  * @see TrashVersion
  * @see com.liferay.portlet.trash.model.impl.TrashVersionImpl
  * @see com.liferay.portlet.trash.model.impl.TrashVersionModelImpl
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
            com.liferay.trash.model.impl.TrashVersionImpl}
  * @generated
  */

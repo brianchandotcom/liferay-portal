@@ -61,7 +61,7 @@ import java.rmi.RemoteException;
  * @see TrashEntryServiceHttp
  * @see com.liferay.trash.kernel.model.TrashEntrySoap
  * @see TrashEntryServiceUtil
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
            com.liferay.trash.service.impl.TrashEntryServiceImpl}
  * @generated
  */

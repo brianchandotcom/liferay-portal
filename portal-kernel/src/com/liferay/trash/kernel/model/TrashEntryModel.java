@@ -40,7 +40,7 @@ import java.util.Date;
  * @see TrashEntry
  * @see com.liferay.portlet.trash.model.impl.TrashEntryImpl
  * @see com.liferay.portlet.trash.model.impl.TrashEntryModelImpl
- * @deprecated As of Judson, replaced by {@link
+ * @deprecated As of Judson (7.1.x), replaced by {@link
            com.liferay.trash.model.impl.TrashEntryImpl}
  * @generated
  */

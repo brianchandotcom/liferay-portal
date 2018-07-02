@@ -40,8 +40,6 @@ public abstract class BaseAddLayoutMVCActionCommand
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
-		redirectURL.setParameter("mvcRenderCommandName", "/layout/view");
-
 		editLayoutURL.setParameter("redirect", redirectURL.toString());
 
 		editLayoutURL.setParameter(
@@ -64,8 +62,6 @@ public abstract class BaseAddLayoutMVCActionCommand
 			"mvcRenderCommandName", "/layout/edit_layout");
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter("mvcRenderCommandName", "/layout/view");
 
 		configureLayoutURL.setParameter("redirect", redirectURL.toString());
 

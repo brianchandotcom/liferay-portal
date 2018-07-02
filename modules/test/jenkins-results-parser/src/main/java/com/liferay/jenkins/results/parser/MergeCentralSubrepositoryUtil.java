@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -54,8 +56,27 @@ public class MergeCentralSubrepositoryUtil {
 		List<File> gitrepoFiles = JenkinsResultsParserUtil.findFiles(
 			modulesDir, ".gitrepo");
 
+		List<String> subrepoMergeBlacklist =
+			JenkinsResultsParserUtil.getBuildPropertyAsList(
+				"subrepo.merge.blacklist");
+
 		for (File gitrepoFile : gitrepoFiles) {
 			try {
+				Properties gitrepoProperties = _getPropertiesFromGitrepoFile(
+					gitrepoFile);
+
+				String remote = gitrepoProperties.getProperty("remote");
+
+				Matcher matcher = _githubRemotePattern.matcher(remote);
+
+				if (matcher.find() && !subrepoMergeBlacklist.isEmpty()) {
+					if (subrepoMergeBlacklist.contains(
+							matcher.group("subrepositoryName"))) {
+
+						continue;
+					}
+				}
+
 				CentralSubrepository centralSubrepository =
 					new CentralSubrepository(
 						gitrepoFile, centralUpstreamBranchName);
@@ -412,6 +433,8 @@ public class MergeCentralSubrepositoryUtil {
 		}
 	}
 
+	private static final Pattern _githubRemotePattern = Pattern.compile(
+		"git@github.com:[-\\w]+\\/(?<subrepositoryName>[-\\w]+)\\.git");
 	private static JSONArray _pullsJSONArray;
 	private static List<String> _upstreamRemoteBranchNames;
 

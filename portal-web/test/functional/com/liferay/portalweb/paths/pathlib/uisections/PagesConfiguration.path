@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>PAGES_LOGO_CHECKBOX</td>
-	<td>//input[contains(@id,'LOGO')]</td>
+	<td>//input[contains(@id,'LOGO')]//following-sibling::span</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>PAGES_SITE_TEMPLATE_SETTINGS_CHECKBOX</td>
-	<td>//input[contains(@id,'LAYOUT_SET_PROTOTYPE_SETTINGS')]</td>
+	<td>//input[contains(@id,'LAYOUT_SET_PROTOTYPE_SETTINGS')]//following-sibling::span</td>
 	<td></td>
 </tr>
 <tr>

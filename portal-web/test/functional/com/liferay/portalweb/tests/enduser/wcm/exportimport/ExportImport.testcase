@@ -624,6 +624,7 @@
 		</execute>
 
 		<execute macro="Page#changeCurrentTheme">
+			<var name="pageName" value="Test Page" />
 			<var name="themeName" value="Fjord" />
 		</execute>
 

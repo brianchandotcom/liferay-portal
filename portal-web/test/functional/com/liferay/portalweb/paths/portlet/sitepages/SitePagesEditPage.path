@@ -203,6 +203,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REGULAR_UNIQUE_LOOK_AND_FEEL</td>
+	<td>//input[contains(@id,'regularUniqueLookAndFeel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THEME</td>
 	<td>//div[contains(@data-themeid,'${key_cardText}')]/div/div[2]/div/span/span</td>
 	<td></td>

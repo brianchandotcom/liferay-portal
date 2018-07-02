@@ -1,6 +1,6 @@
 <definition>
 	<command name="click">
-		<execute function="Click" locator1="Button#ANY">
+		<execute function="Click#mouseDownMouseUp" locator1="Button#ANY">
 			<var name="key_text" value="${button}" />
 		</execute>
 	</command>

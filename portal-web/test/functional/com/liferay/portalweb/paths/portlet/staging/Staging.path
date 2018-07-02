@@ -10,11 +10,6 @@
 <tbody>
 <!--PROCESSES-->
 <tr>
-	<td>SCHEDULED</td>
-	<td>//a//span[contains(.,'Scheduled')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PROCESS_SUCCESSFUL</td>
 	<td>//h6[contains(.,'Successful')]</td>
 	<td></td>

@@ -171,11 +171,13 @@
 			<var name="portlet" value="Staging" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Staging#SCHEDULED" value1="Scheduled" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Scheduled" />
+		</execute>
 
 		<var name="key_scheduleTitleName" value="${scheduleTitleName}" />
 
-		<execute function="AssertTextEquals" locator1="StagingPublishToLive#SCHEDULED_TABLE_TITLE" value1="${scheduleTitleName}" />
+		<execute function="AssertTextPresent" locator1="StagingPublishToLive#SCHEDULED_TABLE_TITLE" value1="${scheduleTitleName}" />
 		<execute function="AssertTextEquals" locator1="StagingPublishToLive#SCHEDULED_TABLE_END_DATE" value1="No End Date" />
 	</command>
 

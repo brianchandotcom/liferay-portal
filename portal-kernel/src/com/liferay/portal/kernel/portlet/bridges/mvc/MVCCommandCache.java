@@ -56,7 +56,7 @@ public class MVCCommandCache {
 
 		_emptyMVCCommand = emptyMVCCommand;
 		_mvcCommandClass = mvcCommandClass;
-		_mvcComandPostFix = mvcCommandPostFix;
+		_mvcCommandPostFix = mvcCommandPostFix;
 
 		if (Validator.isNotNull(packagePrefix) &&
 			!packagePrefix.endsWith(StringPool.PERIOD)) {
@@ -124,7 +124,7 @@ public class MVCCommandCache {
 			sb.append(_packagePrefix);
 			sb.append(Character.toUpperCase(mvcCommandName.charAt(0)));
 			sb.append(mvcCommandName.substring(1));
-			sb.append(_mvcComandPostFix);
+			sb.append(_mvcCommandPostFix);
 
 			className = sb.toString();
 
@@ -255,12 +255,12 @@ public class MVCCommandCache {
 
 	private final MVCCommand _emptyMVCCommand;
 	private final String _filterString;
-	private final String _mvcComandPostFix;
 	private final Map<String, MVCCommand> _mvcCommandCache =
 		new ConcurrentHashMap<>();
 	private final Class<? extends MVCCommand> _mvcCommandClass;
 	private final Map<String, List<String>> _mvcCommandKeys =
 		new ConcurrentHashMap<>();
+	private final String _mvcCommandPostFix;
 	private final Map<String, List<MVCCommand>> _mvcCommands =
 		new ConcurrentHashMap<>();
 	private final String _packagePrefix;

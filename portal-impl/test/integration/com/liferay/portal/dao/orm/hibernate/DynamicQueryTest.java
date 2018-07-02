@@ -14,10 +14,6 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -26,10 +22,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -37,7 +31,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -104,44 +97,54 @@ public class DynamicQueryTest {
 
 	@Test
 	public void testInRestrictionCriterionWithMoreThanDatabaseInMaxParametersValue() {
-		DB db = DBManagerUtil.getDB();
+		RestrictionsFactoryImpl restrictionsFactory =
+			new RestrictionsFactoryImpl();
 
-		DBType dbType = db.getDBType();
+		ReflectionTestUtil.setFieldValue(
+			restrictionsFactory, "_databaseInMaxParameters",
+			_DATABASE_IN_MAX_PARAMETERS);
 
-		int databaseInMaxParameters = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
-				new Filter(dbType.getName())));
+		RestrictionsFactoryImpl restrictionsFactoryFieldValue =
+			ReflectionTestUtil.getAndSetFieldValue(
+				RestrictionsFactoryUtil.class, "_restrictionsFactory",
+				restrictionsFactory);
 
-		Assume.assumeTrue(databaseInMaxParameters > 0);
+		try {
+			DynamicQuery dynamicQuery =
+				ClassNameLocalServiceUtil.dynamicQuery();
 
-		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+			List<Long> values = new ArrayList<>(
+				_DATABASE_IN_MAX_PARAMETERS + 1);
 
-		List<Long> values = new ArrayList<>(databaseInMaxParameters + 1);
+			ClassName className1 = _allClassNames.get(1);
+			ClassName className2 = _allClassNames.get(2);
 
-		ClassName className1 = _allClassNames.get(1);
-		ClassName className2 = _allClassNames.get(2);
+			values.add(className1.getClassNameId());
 
-		values.add(className1.getClassNameId());
+			for (long i = 1; i < _DATABASE_IN_MAX_PARAMETERS; i++) {
+				values.add(-i);
+			}
 
-		for (long i = 1; i < databaseInMaxParameters; i++) {
-			values.add(-i);
+			values.add(className2.getClassNameId());
+
+			Assert.assertEquals(_DATABASE_IN_MAX_PARAMETERS + 1, values.size());
+
+			dynamicQuery.add(RestrictionsFactoryUtil.in("classNameId", values));
+
+			List<ClassName> classNames = ClassNameLocalServiceUtil.dynamicQuery(
+				dynamicQuery);
+
+			Assert.assertEquals(classNames.toString(), 2, classNames.size());
+			Assert.assertTrue(
+				classNames.toString(), classNames.contains(className1));
+			Assert.assertTrue(
+				classNames.toString(), classNames.contains(className2));
 		}
-
-		values.add(className2.getClassNameId());
-
-		Assert.assertEquals(databaseInMaxParameters + 1, values.size());
-
-		dynamicQuery.add(RestrictionsFactoryUtil.in("classNameId", values));
-
-		List<ClassName> classNames = ClassNameLocalServiceUtil.dynamicQuery(
-			dynamicQuery);
-
-		Assert.assertEquals(classNames.toString(), 2, classNames.size());
-		Assert.assertTrue(
-			classNames.toString(), classNames.contains(className1));
-		Assert.assertTrue(
-			classNames.toString(), classNames.contains(className2));
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				RestrictionsFactoryUtil.class, "_restrictionsFactory",
+				restrictionsFactoryFieldValue);
+		}
 	}
 
 	@Test
@@ -303,6 +306,8 @@ public class DynamicQueryTest {
 			_allClassNames.subList(0, 10),
 			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
 	}
+
+	private static final int _DATABASE_IN_MAX_PARAMETERS = 1000;
 
 	private List<ClassName> _allClassNames;
 

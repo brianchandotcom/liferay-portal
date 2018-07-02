@@ -14,24 +14,18 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -48,27 +42,34 @@ public class RestrictionsFactoryTest {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	public void setUp() {
-		DB db = DBManagerUtil.getDB();
+	public void setUp() throws Exception {
+		RestrictionsFactoryImpl restrictionsFactory =
+			new RestrictionsFactoryImpl();
 
-		DBType dbType = db.getDBType();
+		ReflectionTestUtil.setFieldValue(
+			restrictionsFactory, "_databaseInMaxParameters",
+			_DATABASE_IN_MAX_PARAMETERS);
 
-		_databaseInMaxParameters = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
-				new Filter(dbType.getName())));
+		_restrictionsFactoryFieldValue = ReflectionTestUtil.getAndSetFieldValue(
+			RestrictionsFactoryUtil.class, "_restrictionsFactory",
+			restrictionsFactory);
+	}
 
-		Assume.assumeTrue(_databaseInMaxParameters > 0);
+	@After
+	public void tearDown() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			RestrictionsFactoryUtil.class, "_restrictionsFactory",
+			_restrictionsFactoryFieldValue);
 	}
 
 	@Test
 	public void testInWithDatabaseInMaxParametersValue() {
-		_testInMaxParametersValue(_databaseInMaxParameters, false);
+		_testInMaxParametersValue(_DATABASE_IN_MAX_PARAMETERS, false);
 	}
 
 	@Test
 	public void testInWithMoreThanDatabaseInMaxParametersValue() {
-		_testInMaxParametersValue(_databaseInMaxParameters + 1, true);
+		_testInMaxParametersValue(_DATABASE_IN_MAX_PARAMETERS + 1, true);
 	}
 
 	private void _testInMaxParametersValue(
@@ -89,6 +90,8 @@ public class RestrictionsFactoryTest {
 			criterion instanceof Disjunction);
 	}
 
-	private int _databaseInMaxParameters;
+	private static final int _DATABASE_IN_MAX_PARAMETERS = 1000;
+
+	private RestrictionsFactoryImpl _restrictionsFactoryFieldValue;
 
 }

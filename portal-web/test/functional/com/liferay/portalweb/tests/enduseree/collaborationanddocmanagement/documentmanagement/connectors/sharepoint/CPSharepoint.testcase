@@ -605,6 +605,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
 			<var name="rowEntry" value="Document_1.xls" />
 		</execute>
 

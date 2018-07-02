@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ENTRY_VIEW_COUNT</td>
-	<td>//div[contains(@class,'metadata')]//div[@class='autofit-row']/div/div</td>
+	<td>//div[contains(@class,'metadata')]//div[@class='autofit-row']/div/div[2]</td>
 	<td></td>
 </tr>
 <tr>

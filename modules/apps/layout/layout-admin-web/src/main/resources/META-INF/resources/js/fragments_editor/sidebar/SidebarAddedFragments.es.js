@@ -2,6 +2,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import './FragmentsEditorSidebarCard.es';
 import templates from './SidebarAddedFragments.soy';
 
 /**
@@ -13,16 +14,15 @@ class SidebarAddedFragments extends Component {
 	/**
 	 * Callback executed when the fragment remove button is clicked.
 	 * It emits a 'fragmentRemoveButtonClick' event with the fragment index.
-	 * @param {MouseEvent} event
+	 * @param {{itemId: !string}} data
 	 * @private
+	 * @review
 	 */
 
-	_handleFragmentRemoveButtonClick(event) {
-		const fragmentEntryLinkId = event.delegateTarget.dataset.fragmentEntryLinkId;
-
+	_handleFragmentRemoveButtonClick(data) {
 		this.emit(
 			'fragmentRemoveButtonClick',
-			{fragmentEntryLinkId}
+			{fragmentEntryLinkId: data.itemId}
 		);
 	}
 }

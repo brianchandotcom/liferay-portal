@@ -2,6 +2,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import './FragmentsEditorSidebarCard.es';
 import templates from './SidebarAvailableFragments.soy';
 
 /**
@@ -13,19 +14,19 @@ class SidebarAvailableFragments extends Component {
 	/**
 	 * Callback that is executed when a fragment entry is clicked.
 	 * It propagates a collectionEntryClick event with the fragment information.
-	 * @param {Event} event
+	 * @param {{
+	 *   itemId: !string,
+	 *   itemName: !string
+	 * }} data
 	 * @private
 	 */
 
-	_handleEntryClick(event) {
-		const fragmentEntryId = event.delegateTarget.dataset.fragmentEntryId;
-		const fragmentName = event.delegateTarget.dataset.fragmentEntryName;
-
+	_handleEntryClick(data) {
 		this.emit(
 			'collectionEntryClick',
 			{
-				fragmentEntryId,
-				fragmentName
+				fragmentEntryId: data.itemId,
+				fragmentName: data.itemName
 			}
 		);
 	}

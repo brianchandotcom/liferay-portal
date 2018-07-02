@@ -6,7 +6,7 @@
 {template .render}
 	{@param spritemap: string}
 	{@param? fragmentEntryLinks: list<[
-		fragmentEntryLinkId: number,
+		fragmentEntryLinkId: string,
 		name: string
 	]>}
 	{@param? _handleFragmentRemoveButtonClick: any}
@@ -14,29 +14,14 @@
 	<div class="sidebar-added-fragments">
 		{if $fragmentEntryLinks}
 			{foreach $fragmentEntryLink in $fragmentEntryLinks}
-				<div class="card" key="{$fragmentEntryLink.fragmentEntryLinkId}">
-					<div class="card-body">
-						<div class="card-row">
-							<div class="flex-col flex-col-expand">
-								<div class="card-title text-truncate" title="{$fragmentEntryLink.name}">
-									{$fragmentEntryLink.name}
-								</div>
-							</div>
-
-							<div class="flex-col">
-								<button
-									class="btn btn-small btn-unstyled"
-									data-fragment-entry-link-id="{$fragmentEntryLink.fragmentEntryLinkId}"
-									data-onclick="{$_handleFragmentRemoveButtonClick}"
-								>
-									<svg class="lexicon-icon">
-										<use xlink:href="{$spritemap}#times"></use>
-									</svg>
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
+				{call com.liferay.layout.admin.web.FragmentsEditorSidebarCard.render}
+					{param events: ['itemClick': $_handleFragmentRemoveButtonClick] /}
+					{param icon: 'times' /}
+					{param itemId: $fragmentEntryLink.fragmentEntryLinkId /}
+					{param itemName: $fragmentEntryLink.name /}
+					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
+					{param spritemap: $spritemap /}
+				{/call}
 			{/foreach}
 		{/if}
 	</div>

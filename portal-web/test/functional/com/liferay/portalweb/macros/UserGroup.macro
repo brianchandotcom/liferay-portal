@@ -254,7 +254,7 @@
 
 		<execute function="Check" locator1="UserGroupsAssignUsers#USER_TABLE_CHECKBOX" />
 
-		<execute function="Click" locator1="Toolbar#MANAGEMENT_BAR_TRASH_ICON_BUTTON" />
+		<execute function="ClickNoError" locator1="Icon#DELETE" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

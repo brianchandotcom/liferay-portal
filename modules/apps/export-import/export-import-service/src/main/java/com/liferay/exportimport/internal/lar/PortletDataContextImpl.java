@@ -328,8 +328,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addPermissions(Class,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #addPermissions(Class, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -698,8 +698,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getAssetCategoryIds(Class,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getAssetCategoryIds(Class, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -752,8 +752,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getAssetTagNames(Class,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getAssetTagNames(Class, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -767,8 +767,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getAssetTagNames(String,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getAssetTagNames(String, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -1231,8 +1231,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getReferenceElement(Class,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getReferenceElement(Class, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -1308,8 +1308,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getReferenceElement(String,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getReferenceElement(String, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -1617,8 +1617,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #importPermissions(Class,
-	 *             Serializable, Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #importPermissions(Class, Serializable, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -1850,8 +1850,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #isModelCounted(String,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #isModelCounted(String, Serializable)}
 	 */
 	@Deprecated
 	@Override

@@ -25,7 +25,8 @@ import java.util.Set;
 public class PortalCacheConfiguration {
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #PORTAL_CACHE_NAME_DEFAULT}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #PORTAL_CACHE_NAME_DEFAULT}
 	 */
 	@Deprecated
 	public static final String DEFAULT_PORTAL_CACHE_NAME = "default";

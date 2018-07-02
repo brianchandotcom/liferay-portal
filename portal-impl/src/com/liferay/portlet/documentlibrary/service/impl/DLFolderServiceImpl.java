@@ -415,8 +415,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getSubfolderIds(List,
-	 *             long, long, boolean)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getSubfolderIds(List, long, long, boolean)}
 	 */
 	@Deprecated
 	@Override

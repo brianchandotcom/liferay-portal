@@ -54,7 +54,8 @@ public class Base64 {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link ##decodeFromURL(String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             ##decodeFromURL(String)}
 	 */
 	@Deprecated
 	public static String fromURLSafe(String base64) {
@@ -105,7 +106,8 @@ public class Base64 {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #encodeToURL(byte[])}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #encodeToURL(byte[])}
 	 */
 	@Deprecated
 	public static String toURLSafe(String base64) {

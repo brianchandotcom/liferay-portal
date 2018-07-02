@@ -228,8 +228,8 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #isRequired(long,
-	 *             long)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #isRequired(long, long)}
 	 */
 	@Deprecated
 	@Override

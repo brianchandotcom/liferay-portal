@@ -55,7 +55,8 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	public int rootMenuItemLevel();
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #rootMenuItemLevel()}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #rootMenuItemLevel()}
 	 */
 	@Deprecated
 	@Meta.AD(deflt = "0", name = "root-layout-level", required = false)

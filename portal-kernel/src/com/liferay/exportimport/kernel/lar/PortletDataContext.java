@@ -134,8 +134,8 @@ public interface PortletDataContext extends Serializable {
 	public void addLocks(String className, String key, Lock lock);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addPermissions(Class,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #addPermissions(Class, Serializable)}
 	 */
 	@Deprecated
 	public void addPermissions(Class<?> clazz, long classPK)
@@ -229,8 +229,8 @@ public interface PortletDataContext extends Serializable {
 	public Object fromXML(String xml);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getAssetCategoryIds(Class,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getAssetCategoryIds(Class, Serializable)}
 	 */
 	@Deprecated
 	public long[] getAssetCategoryIds(Class<?> clazz, long classPK);
@@ -252,14 +252,15 @@ public interface PortletDataContext extends Serializable {
 	public Set<Long> getAssetLinkIds();
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getAssetLinkIds()}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getAssetLinkIds()}
 	 */
 	@Deprecated
 	public Map<String, List<AssetLink>> getAssetLinksMap();
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getAssetTagNames(Class,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getAssetTagNames(Class, Serializable)}
 	 */
 	@Deprecated
 	public String[] getAssetTagNames(Class<?> clazz, long classPK);
@@ -267,8 +268,8 @@ public interface PortletDataContext extends Serializable {
 	public String[] getAssetTagNames(Class<?> clazz, Serializable classPK);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getAssetTagNames(String,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getAssetTagNames(String, Serializable)}
 	 */
 	@Deprecated
 	public String[] getAssetTagNames(String className, long classPK);
@@ -417,8 +418,8 @@ public interface PortletDataContext extends Serializable {
 		StagedModel parentStagedModel, Class<?> clazz, String referenceType);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getReferenceElement(Class,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getReferenceElement(Class, Serializable)}
 	 */
 	@Deprecated
 	public Element getReferenceElement(Class<?> clazz, long classPK);
@@ -452,8 +453,8 @@ public interface PortletDataContext extends Serializable {
 		StagedModel parentStagedModel, String className, Serializable classPK);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getReferenceElement(String,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getReferenceElement(String, Serializable)}
 	 */
 	@Deprecated
 	public Element getReferenceElement(String className, long classPK);
@@ -554,8 +555,8 @@ public interface PortletDataContext extends Serializable {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #importPermissions(Class,
-	 *             Serializable, Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #importPermissions(Class, Serializable, Serializable)}
 	 */
 	@Deprecated
 	public void importPermissions(Class<?> clazz, long classPK, long newClassPK)
@@ -596,8 +597,8 @@ public interface PortletDataContext extends Serializable {
 	public boolean isMissingReference(Element referenceElement);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #isModelCounted(String,
-	 *             Serializable)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #isModelCounted(String, Serializable)}
 	 */
 	@Deprecated
 	public boolean isModelCounted(String className, long classPK);

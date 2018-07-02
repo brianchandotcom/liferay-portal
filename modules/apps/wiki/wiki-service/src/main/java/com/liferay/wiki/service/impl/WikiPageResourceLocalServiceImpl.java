@@ -44,8 +44,8 @@ public class WikiPageResourceLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addPageResource(long,
-	 *             long, String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #addPageResource(long, long, String)}
 	 */
 	@Deprecated
 	@Override

@@ -1150,8 +1150,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long, String,
-	 *             boolean)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
+	 *             String, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -1164,8 +1164,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long, String,
-	 *             boolean, int)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
+	 *             String, boolean, int)}
 	 */
 	@Deprecated
 	@Override
@@ -1205,8 +1205,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFileAsStream(long,
-	 *             String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getFileAsStream(long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -1218,8 +1218,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFileAsStream(long,
-	 *             String, boolean)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getFileAsStream(long, String, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -1232,8 +1232,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFileAsStream(long,
-	 *             String, boolean, int)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getFileAsStream(long, String, boolean, int)}
 	 */
 	@Deprecated
 	@Override

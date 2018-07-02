@@ -136,16 +136,16 @@ public interface PrefsProps {
 	public long getLong(long companyId, String name, long defaultValue);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getLong(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getLong(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public long getLong(
 		PortletPreferences preferences, long companyId, String name);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getLong(PortletPreferences,
-	 *             String, long)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getLong(PortletPreferences, String, long)}
 	 */
 	@Deprecated
 	public long getLong(

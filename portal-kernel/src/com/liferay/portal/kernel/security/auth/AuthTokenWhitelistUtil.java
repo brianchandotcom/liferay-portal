@@ -323,7 +323,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced with no direct replacement
+	 * @deprecated As of Wilberforce (7.0.x), replaced with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void setAuthTokenWhitelist(AuthTokenWhitelist authTokenWhitelist) {

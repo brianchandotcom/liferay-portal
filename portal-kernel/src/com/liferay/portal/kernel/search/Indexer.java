@@ -40,7 +40,8 @@ public interface Indexer<T> {
 	public String getClassName();
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getSearchClassNames}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getSearchClassNames}
 	 */
 	@Deprecated
 	public String[] getClassNames();
@@ -81,8 +82,9 @@ public interface Indexer<T> {
 	public String getSortField(String orderByCol, int sortType);
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getSummary(Document,
-	 *             String, PortletRequest, PortletResponse)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getSummary(Document, String, PortletRequest,
+	 *             PortletResponse)}
 	 */
 	@Deprecated
 	public Summary getSummary(Document document, Locale locale, String snippet)

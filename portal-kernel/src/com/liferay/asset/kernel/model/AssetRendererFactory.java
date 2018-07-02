@@ -117,7 +117,8 @@ public interface AssetRendererFactory<T> {
 	public String getTypeName(Locale locale);
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getTypeName(Locale)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getTypeName(Locale)}
 	 */
 	@Deprecated
 	public String getTypeName(Locale locale, boolean hasSubtypes);

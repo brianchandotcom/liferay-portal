@@ -40,7 +40,8 @@ public abstract class BasePortalCache<K extends Serializable, V>
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPortalCacheName()}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getPortalCacheName()}
 	 */
 	@Deprecated
 	@Override

@@ -2193,7 +2193,8 @@ public class StringUtil {
 	 * @return     a string of the same length as the string whose characters
 	 *             represent a pseudorandom permutation of the characters of the
 	 *             string
-	 * @deprecated As of Judson (7.1.x), replaced by {@link RandomUtil#shuffle(String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             RandomUtil#shuffle(String)}
 	 */
 	@Deprecated
 	public static String randomize(String s) {
@@ -2305,8 +2306,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #removeFromList(String,
-	 *             String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #removeFromList(String, String)}
 	 */
 	@Deprecated
 	public static String remove(String s, String element) {
@@ -2314,8 +2315,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #removeFromList(String,
-	 *             String, String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #removeFromList(String, String, String)}
 	 */
 	@Deprecated
 	public static String remove(String s, String element, String delimiter) {
@@ -4034,7 +4035,8 @@ public class StringUtil {
 	 * @return     a string representing the string <code>s</code> with all
 	 *             occurrences of the specified character removed, or
 	 *             <code>null</code> if <code>s</code> is <code>null</code>
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #removeChar(String, char)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #removeChar(String,
+	 *             char)}
 	 */
 	@Deprecated
 	public static String strip(String s, char remove) {

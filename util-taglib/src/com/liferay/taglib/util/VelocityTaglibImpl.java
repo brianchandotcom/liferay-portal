@@ -258,8 +258,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #breadcrumb(long, String,
-	 *             boolean, boolean, boolean, boolean)}}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #breadcrumb(long,
+	 *             String, boolean, boolean, boolean, boolean)}}
 	 */
 	@Deprecated
 	@Override

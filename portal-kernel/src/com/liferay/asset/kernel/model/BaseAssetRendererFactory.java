@@ -240,7 +240,8 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getTypeName(Locale)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getTypeName(Locale)}
 	 */
 	@Deprecated
 	@Override

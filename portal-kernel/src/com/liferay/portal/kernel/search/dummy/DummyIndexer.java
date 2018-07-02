@@ -50,7 +50,8 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getSearchClassNames}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getSearchClassNames}
 	 */
 	@Deprecated
 	@Override
@@ -110,8 +111,9 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getSummary(Document,
-	 *             String, PortletRequest, PortletResponse)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getSummary(Document, String, PortletRequest,
+	 *             PortletResponse)}
 	 */
 	@Deprecated
 	@Override

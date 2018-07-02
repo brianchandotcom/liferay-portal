@@ -118,8 +118,8 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getString(ResourceBundle,
-	 *             String, Object...)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getString(ResourceBundle, String, Object...)}
 	 */
 	@Deprecated
 	public static String getString(

@@ -52,9 +52,9 @@ import javax.servlet.ServletException;
 
 /**
  * @author     Shuyang Zhou
- * @deprecated As of Judson (7.1.x), replaced by {@link com.liferay.petra.process.
- *             ClassPathUtil} and {@link com.liferay.portal.util.
- *             PortalClassPathUtil}
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.petra.process. ClassPathUtil} and {@link
+ *             com.liferay.portal.util. PortalClassPathUtil}
  */
 @Deprecated
 @ProviderType
@@ -98,7 +98,8 @@ public class ClassPathUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link com.liferay.petra.process.
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             com.liferay.petra.process.
 	 *             ClassPathUtil#getClassPathURLs(String)}
 	 */
 	@Deprecated
@@ -114,7 +115,8 @@ public class ClassPathUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link com.liferay.petra.process.
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             com.liferay.petra.process.
 	 *             ClassPathUtil#getJVMClassPath(boolean)}
 	 */
 	@Deprecated

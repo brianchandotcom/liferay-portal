@@ -88,8 +88,8 @@ public interface VelocityTaglib {
 		throws Exception;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #breadcrumb(long, String,
-	 *             boolean, boolean, boolean, boolean)}}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #breadcrumb(long,
+	 *             String, boolean, boolean, boolean, boolean)}}
 	 */
 	@Deprecated
 	public void breadcrumb(

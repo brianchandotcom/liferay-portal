@@ -99,8 +99,8 @@ public class SoyPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), use {@link SoyPortlet#init(PortletConfig)}}
-	 *             instead
+	 * @deprecated As of Judson (7.1.x), use {@link
+	 *             SoyPortlet#init(PortletConfig)}} instead
 	 */
 	@Deprecated
 	@Override

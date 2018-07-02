@@ -191,8 +191,8 @@ public class TrashIndexer extends BaseIndexer<TrashEntry> {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), added strictly to support backwards
-	 *             compatibility of {@link
+	 * @deprecated As of Wilberforce (7.0.x), added strictly to support
+	 *             backwards compatibility of {@link
 	 *             TrashHandler#getExcludeQuery(SearchContext)}
 	 */
 	@Deprecated

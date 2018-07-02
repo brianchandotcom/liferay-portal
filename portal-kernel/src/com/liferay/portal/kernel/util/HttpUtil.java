@@ -68,7 +68,8 @@ public class HttpUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #decodeURL(String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #decodeURL(String)}
 	 */
 	@Deprecated
 	public static String decodeURL(String url, boolean unescapeSpaces) {
@@ -84,7 +85,8 @@ public class HttpUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link URLCodec#encodeURL(String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             URLCodec#encodeURL(String)}
 	 */
 	@Deprecated
 	public static String encodeURL(String url) {
@@ -92,8 +94,8 @@ public class HttpUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link URLCodec#encodeURL(String,
-	 *             boolean)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             URLCodec#encodeURL(String, boolean)}
 	 */
 	@Deprecated
 	public static String encodeURL(String url, boolean escapeSpaces) {

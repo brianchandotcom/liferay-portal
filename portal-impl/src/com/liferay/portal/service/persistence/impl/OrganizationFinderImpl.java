@@ -107,9 +107,9 @@ public class OrganizationFinderImpl
 		OrganizationFinder.class.getName() + ".joinO_ByUsersOrgs";
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #countO_ByKeywords(long,
-	 *             long, String, String, String, Long, Long,
-	 *             LinkedHashMap<String, Object>)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #countO_ByKeywords(long, long, String, String, String, Long,
+	 *             Long, LinkedHashMap<String, Object>)}
 	 */
 	@Deprecated
 	@Override
@@ -124,7 +124,8 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #countO_ByO_U(long, long)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #countO_ByO_U(long,
+	 *             long)}
 	 */
 	@Deprecated
 	@Override
@@ -449,9 +450,9 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #findO_ByKeywords(long,
-	 *             long, String, String, String, Long, Long,
-	 *             LinkedHashMap<String, Object>, int, int,
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #findO_ByKeywords(long, long, String, String, String, Long,
+	 *             Long, LinkedHashMap<String, Object>, int, int,
 	 *             OrderByComparator<Organization>)}
 	 */
 	@Deprecated
@@ -477,8 +478,8 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #findO_ByC_P(long, long,
-	 *             long, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #findO_ByC_P(long,
+	 *             long, long, int)}
 	 */
 	@Deprecated
 	@Override

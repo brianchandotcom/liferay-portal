@@ -35,7 +35,7 @@ import javax.portlet.ReadOnlyException;
 import org.osgi.service.cm.Configuration;
 
 /**
- * @author Drew Brokke
+ * @author     Drew Brokke
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated

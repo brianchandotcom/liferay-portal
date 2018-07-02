@@ -307,7 +307,8 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #setImportDir(Object)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #setImportDir(Object)}
 	 */
 	@Deprecated
 	public void setPortalCommonDir(Object portalCommonDir) {
@@ -315,7 +316,8 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #setImportFile(Object)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #setImportFile(Object)}
 	 */
 	@Deprecated
 	public void setPortalCommonFile(Object portalCommonFile) {

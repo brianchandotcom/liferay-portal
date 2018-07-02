@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class SchedulerEntryImpl implements SchedulerEntry {
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #SchedulerEntryImpl(String,
-	 *             Trigger, String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #SchedulerEntryImpl(String, Trigger, String)}
 	 */
 	@Deprecated
 	public SchedulerEntryImpl() {

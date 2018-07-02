@@ -83,8 +83,8 @@ public class DocumentImpl implements Document {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link Field#getSortFieldName(Sort,
-	 *             String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             Field#getSortFieldName(Sort, String)}
 	 */
 	@Deprecated
 	public static String getSortFieldName(Sort sort, String scoreFieldName) {

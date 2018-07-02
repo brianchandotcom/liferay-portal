@@ -141,7 +141,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getSearchClassNames}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getSearchClassNames}
 	 */
 	@Deprecated
 	@Override
@@ -336,8 +337,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getSummary(Document,
-	 *             String, PortletRequest, PortletResponse)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getSummary(Document, String, PortletRequest,
+	 *             PortletResponse)}
 	 */
 	@Deprecated
 	@Override
@@ -734,8 +736,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	 * @param      document
 	 * @param      className
 	 * @param      classPK
-	 * @deprecated As of Judson (7.1.x), no direct replacement. Logic now encapsulated
-	 *             in {@link com.liferay.portal.search.internal.contributor.
+	 * @deprecated As of Judson (7.1.x), no direct replacement. Logic now
+	 *             encapsulated in {@link
+	 *             com.liferay.portal.search.internal.contributor.
 	 *             document.AssetDocumentContrbutor}
 	 */
 	@Deprecated
@@ -932,8 +935,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	 * @param      document
 	 * @param      field
 	 * @param      assetCategories
-	 * @deprecated As of Judson (7.1.x), no direct replacement. Logic not encapsulated
-	 *             in {@link com.liferay.portal.search.internal.contributor.
+	 * @deprecated As of Judson (7.1.x), no direct replacement. Logic not
+	 *             encapsulated in {@link
+	 *             com.liferay.portal.search.internal.contributor.
 	 *             document.AssetCategoryDocumentContrbutor}
 	 */
 	@Deprecated
@@ -1380,8 +1384,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		throws Exception;
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), added strictly to support backwards
-	 *             compatibility of {@link
+	 * @deprecated As of Wilberforce (7.0.x), added strictly to support
+	 *             backwards compatibility of {@link
 	 *             Indexer#postProcessSearchQuery(BooleanQuery, SearchContext)}
 	 */
 	@Deprecated

@@ -30,7 +30,8 @@ public class JournalFeedImpl extends JournalFeedBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getDDMStructureKey()}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getDDMStructureKey()}
 	 */
 	@Deprecated
 	@Override
@@ -39,7 +40,8 @@ public class JournalFeedImpl extends JournalFeedBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getDDMTemplateKey()}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getDDMTemplateKey()}
 	 */
 	@Deprecated
 	@Override

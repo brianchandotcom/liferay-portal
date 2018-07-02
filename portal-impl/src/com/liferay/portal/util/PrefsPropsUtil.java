@@ -267,8 +267,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getLong(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getLong(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public static long getLong(
@@ -278,8 +278,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getLong(PortletPreferences,
-	 *             String, long)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getLong(PortletPreferences, String, long)}
 	 */
 	@Deprecated
 	public static long getLong(

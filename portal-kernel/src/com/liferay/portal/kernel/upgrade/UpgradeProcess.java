@@ -110,7 +110,8 @@ public abstract class UpgradeProcess
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #upgrade(UpgradeProcess)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #upgrade(UpgradeProcess)}
 	 */
 	@Deprecated
 	public void upgrade(Class<?> upgradeProcessClass) throws UpgradeException {

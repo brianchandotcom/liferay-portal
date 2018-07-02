@@ -128,7 +128,8 @@ public interface DDMDisplay {
 	public boolean isShowAddButton(Group scopeGroup);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #isShowAddButton(Group)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #isShowAddButton(Group)}
 	 */
 	@Deprecated
 	public boolean isShowAddStructureButton();

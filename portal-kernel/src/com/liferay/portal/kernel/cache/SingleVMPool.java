@@ -33,8 +33,8 @@ public interface SingleVMPool {
 		String portalCacheName);
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPortalCache(String,
-	 *             boolean)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getPortalCache(String, boolean)}
 	 */
 	@Deprecated
 	public PortalCache<? extends Serializable, ?> getCache(

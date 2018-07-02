@@ -28,7 +28,8 @@ public class PortletCategoryKeys {
 	};
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #CONTROL_PANEL_APPS}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #CONTROL_PANEL_APPS}
 	 */
 	@Deprecated
 	public static final String APPS = "apps";
@@ -54,7 +55,8 @@ public class PortletCategoryKeys {
 	public static final String CURRENT_SITE = "current_site";
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #USER_MY_ACCOUNT}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #USER_MY_ACCOUNT}
 	 */
 	@Deprecated
 	public static final String MY = "user";
@@ -105,7 +107,8 @@ public class PortletCategoryKeys {
 		"site_administration.users";
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #CONTROL_PANEL_SITES}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #CONTROL_PANEL_SITES}
 	 */
 	@Deprecated
 	public static final String SITES = "sites";
@@ -113,7 +116,8 @@ public class PortletCategoryKeys {
 	public static final String USER_MY_ACCOUNT = "user.my_account";
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #CONTROL_PANEL_USERS}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #CONTROL_PANEL_USERS}
 	 */
 	@Deprecated
 	public static final String USERS = "users";

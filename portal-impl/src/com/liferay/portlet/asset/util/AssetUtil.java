@@ -492,8 +492,8 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getAddURLPopUp(long, long,
-	 *             PortletURL, boolean, Layout)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getAddURLPopUp(long, long, PortletURL, boolean, Layout)}
 	 */
 	@Deprecated
 	public static String getAddURLPopUp(

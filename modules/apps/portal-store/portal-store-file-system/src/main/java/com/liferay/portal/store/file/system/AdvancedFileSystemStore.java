@@ -142,8 +142,8 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFileNames(List,
-	 *             String, String)}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getFileNames(List, String, String)}
 	 */
 	@Deprecated
 	protected List<String> getAdvancedFileNames(

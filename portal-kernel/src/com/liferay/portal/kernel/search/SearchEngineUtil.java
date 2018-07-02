@@ -23,8 +23,9 @@ import java.util.Map;
  * @author     Bruno Farache
  * @author     Raymond Augé
  * @author     Michael C. Han
- * @deprecated As of Wilberforce (7.0.x), replaced by {@link IndexWriterHelperUtil,
- *             IndexSearcherHelperUtil, SearchEngineHelperUtil}
+ * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+ *             IndexWriterHelperUtil, IndexSearcherHelperUtil,
+ *             SearchEngineHelperUtil}
  */
 @Deprecated
 public class SearchEngineUtil extends SearchEngineHelperUtil {

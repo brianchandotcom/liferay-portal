@@ -57,7 +57,8 @@ public class RuleGroupInstancePriorityComparator
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getInstance(boolean)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getInstance(boolean)}
 	 */
 	@Deprecated
 	public RuleGroupInstancePriorityComparator(boolean ascending) {

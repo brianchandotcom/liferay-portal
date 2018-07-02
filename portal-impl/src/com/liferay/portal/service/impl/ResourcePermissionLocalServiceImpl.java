@@ -840,8 +840,8 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getRoles(long, String,
-	 *             int, String, String}
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getRoles(long,
+	 *             String, int, String, String}
 	 */
 	@Deprecated
 	@Override

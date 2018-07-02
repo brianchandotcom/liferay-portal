@@ -188,6 +188,9 @@ public class SiteNavigationMenuItemStagedModelDataHandler
 				portletDataContext, siteNavigationMenuItem,
 				importedSiteNavigationMenuItem)) {
 
+			_stagedModelRepository.deleteStagedModel(
+				importedSiteNavigationMenuItem);
+
 			return;
 		}
 

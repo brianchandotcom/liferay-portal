@@ -136,9 +136,17 @@ public class ResourceActionLocalServiceImpl
 				}
 
 				try {
-					resourceAction =
-						resourceActionLocalService.addResourceAction(
-							name, actionId, bitwiseValue);
+					long resourceActionId = counterLocalService.increment(
+						ResourceAction.class.getName());
+
+					resourceAction = resourceActionPersistence.create(
+						resourceActionId);
+
+					resourceAction.setName(name);
+					resourceAction.setActionId(actionId);
+					resourceAction.setBitwiseValue(bitwiseValue);
+
+					resourceActionPersistence.update(resourceAction);
 				}
 				catch (Throwable t) {
 					resourceAction =

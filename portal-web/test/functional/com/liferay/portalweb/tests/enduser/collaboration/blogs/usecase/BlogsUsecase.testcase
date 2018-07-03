@@ -1365,6 +1365,8 @@
 
 		<execute function="Pause" locator1="180000" />
 
+		<execute function="Refresh" />
+
 		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />

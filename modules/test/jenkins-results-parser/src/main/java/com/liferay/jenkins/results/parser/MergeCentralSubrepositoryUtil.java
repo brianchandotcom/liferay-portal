@@ -400,7 +400,7 @@ public class MergeCentralSubrepositoryUtil {
 	}
 
 	private static Properties _getPropertiesFromGitrepoFile(File gitrepoFile)
-		throws Exception {
+		throws IOException {
 
 		Properties properties = new Properties();
 

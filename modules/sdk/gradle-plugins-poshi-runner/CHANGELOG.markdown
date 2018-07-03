@@ -35,6 +35,13 @@ repositories.
 - [LPS-80950]: Avoid out-of-memory errors when running on large Git
 repositories.
 
+## 2.2.5 - 2018-07-03
+
+### Fixed
+- [LPS-77359]: Avoid out-of-memory errors when running on large Git
+repositories by invoking Git directly.
+
+[LPS-77359]: https://issues.liferay.com/browse/LPS-77359
 [LPS-78096]: https://issues.liferay.com/browse/LPS-78096
 [LPS-78266]: https://issues.liferay.com/browse/LPS-78266
 [LPS-78537]: https://issues.liferay.com/browse/LPS-78537

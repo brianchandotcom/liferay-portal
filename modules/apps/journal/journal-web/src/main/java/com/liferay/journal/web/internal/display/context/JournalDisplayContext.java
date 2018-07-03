@@ -20,6 +20,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -1498,7 +1500,20 @@ public class JournalDisplayContext {
 			return false;
 		}
 
-		return _isShowPublishAction();
+		StagedModelDataHandler<JournalArticle> stagedModelDataHandler =
+			(StagedModelDataHandler<JournalArticle>)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					JournalArticle.class.getName());
+
+		if (_isShowPublishAction() &&
+			ArrayUtil.contains(
+				stagedModelDataHandler.getExportableStatuses(),
+				article.getStatus())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowPublishFolderAction(JournalFolder folder) {

@@ -48,17 +48,13 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
 		<execute macro="PortalSettings#enableLDAPSetting">
-			<var name="enableCheckboxKey" value="ENABLED" />
+			<var name="enableCheckboxKey" value="enabled" />
 		</execute>
 
 		<execute macro="PortalSettings#addLDAPServer">
 			<var name="LDAPServerName" value="ApacheDS Server" />
 		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 		<execute macro="PortalSettings#editLDAPServer">
 			<var name="LDAPServerName" value="ApacheDS Server" />
@@ -72,16 +68,14 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
+		<execute macro="PortalSettings#enableLDAPSetting">
+			<var name="enableCheckboxKey" value="enabled" />
+		</execute>
 
-		<for list="ENABLED,IMPORT_ENABLED,IMPORT_ON_STARTUP_ENABLED,USE_LDAP_PASSWORD_POLICY" param="enableCheckboxKey">
-			<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
+		<for list="enabled,ldapImportEnabled,importOnStartup,passwordPolicyEnabled" param="enableCheckboxKey">
 			<execute macro="PortalSettings#enableLDAPSetting">
 				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
 			</execute>
-
-			<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 			<execute macro="PortalSettings#viewEnabledLDAPSetting">
 				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
@@ -134,10 +128,8 @@
 					<var name="portlet" value="Instance Settings" />
 				</execute>
 
-				<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
 				<execute macro="PortalSettings#enableLDAPSetting">
-					<var name="enableCheckboxKey" value="ENABLED" />
+					<var name="enableCheckboxKey" value="enabled" />
 				</execute>
 
 				<execute macro="PortalSettings#editLDAPServer">
@@ -152,16 +144,10 @@
 					<var name="portlet" value="Instance Settings" />
 				</execute>
 
-				<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
-				<for list="ENABLED,IMPORT_ENABLED,IMPORT_ON_STARTUP_ENABLED,USE_LDAP_PASSWORD_POLICY" param="enableCheckboxKey">
-					<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
+				<for list="enabled,ldapImportEnabled,importOnStartup,passwordPolicyEnabled" param="enableCheckboxKey">
 					<execute macro="PortalSettings#enableLDAPSetting">
 						<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
 					</execute>
-
-					<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 					<execute macro="PortalSettings#viewEnabledLDAPSetting">
 						<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
@@ -228,13 +214,9 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
 		<execute macro="PortalSettings#addLDAPServer">
 			<var name="LDAPServerName" value="ApacheDS Server" />
 		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 		<execute macro="PortalSettings#editLDAPServer">
 			<var name="LDAPServerName" value="ApacheDS Server" />
@@ -248,23 +230,17 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
 		<execute macro="PortalSettings#enableLDAPSetting">
-			<var name="enableCheckboxKey" value="ENABLED" />
+			<var name="enableCheckboxKey" value="enabled" />
 		</execute>
 
-		<for list="ENABLED,EXPORT_ENABLED,IMPORT_ENABLED,IMPORT_ON_STARTUP_ENABLED," param="enableCheckboxKey">
-			<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
+		<for list="enabled,ldapExportEnabled,ldapImportEnabled,importOnStartup" param="enableCheckboxKey">
 			<execute macro="PortalSettings#enableLDAPSetting">
 				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
 			</execute>
 
-			<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
-			<execute macro="FormFields#viewCheckboxChecked">
-				<var name="fieldName" value="ldap--enabled" />
+			<execute macro="PortalSettings#viewEnabledLDAPSetting">
+				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
 			</execute>
 		</for>
 
@@ -311,7 +287,7 @@
 				</execute>
 
 				<execute macro="PortalSettings#enableLDAPSetting">
-					<var name="enableCheckboxKey" value="ENABLED" />
+					<var name="enableCheckboxKey" value="enabled" />
 				</execute>
 
 				<execute macro="PortalSettings#editLDAPServer">
@@ -326,16 +302,10 @@
 					<var name="portlet" value="Instance Settings" />
 				</execute>
 
-				<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
-				<for list="ENABLED,IMPORT_ENABLED,IMPORT_ON_STARTUP_ENABLED,USE_LDAP_PASSWORD_POLICY" param="enableCheckboxKey">
-					<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
+				<for list="enabled,ldapImportEnabled,importOnStartup,passwordPolicyEnabled" param="enableCheckboxKey">
 					<execute macro="PortalSettings#enableLDAPSetting">
 						<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
 					</execute>
-
-					<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 					<execute macro="PortalSettings#viewEnabledLDAPSetting">
 						<var name="enableCheckboxKey" value="${enableCheckboxKey}" />

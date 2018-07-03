@@ -3736,13 +3736,23 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							</then>
 						</elseif>
 						<else>
+							<if>
+								<isset property="env.HOSTNAME" />
+								<then>
+									<property name="server.host" value="${env.HOSTNAME}" />
+								</then>
+								<else>
+									<property name="server.host" value="localhost" />
+								</else>
+							</if>
+
 							<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
 								<and>
 									<not>
-										<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+										<socket port="${test.app.server.leading.port.number}080" server="localhost" />
 									</not>
 									<not>
-										<http url="http://localhost:${test.app.server.leading.port.number}099" />
+										<socket port="${test.app.server.leading.port.number}099" server="${server.host}" />
 									</not>
 								</and>
 							</waitfor>

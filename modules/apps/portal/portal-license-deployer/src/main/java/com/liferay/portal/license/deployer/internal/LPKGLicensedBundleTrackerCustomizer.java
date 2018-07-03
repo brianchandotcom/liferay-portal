@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import java.util.Enumeration;
+import java.util.Objects;
 
 import org.apache.felix.fileinstall.ArtifactInstaller;
 
@@ -65,6 +66,10 @@ public class LPKGLicensedBundleTrackerCustomizer
 		try {
 			while (enumeration.hasMoreElements()) {
 				url = enumeration.nextElement();
+
+				if (Objects.equals("/index.xml", url.getFile())) {
+					continue;
+				}
 
 				Path tempFilePath = Files.createTempFile(null, ".xml");
 

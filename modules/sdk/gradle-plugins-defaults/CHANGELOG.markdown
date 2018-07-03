@@ -3984,6 +3984,12 @@ include projects containing one of the following marker files:
 	- `.lfrbuild-portal-private` when on private branches, or
 	`.lfrbuild-portal-public` when on public branches
 
+## 5.4.65 - 2018-07-02
+
+### Changed
+- [LPS-83067]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.3.1.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

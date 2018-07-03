@@ -208,9 +208,16 @@ else {
 		/>
 	</c:if>
 
-	<liferay-export-import-changeset:publish-entity-menu-item
-		className="<%= JournalArticle.class.getName() %>"
-		groupId="<%= article.getGroupId() %>"
-		uuid="<%= article.getUuid() %>"
-	/>
+	<c:if test="<%= journalDisplayContext.isShowPublishArticleAction(article) %>">
+		<portlet:actionURL name="/journal/publish_article" var="publishArticleURL">
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message="publish-to-live"
+			url="<%= publishArticleURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

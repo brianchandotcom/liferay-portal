@@ -91,17 +91,20 @@ public class MVCCommandCache<T extends MVCCommand> {
 	}
 
 	public void close() {
-		if (_serviceTrackerMap != null) {
-			_serviceTrackerMap.close();
+		ServiceTrackerMap<String, T> serviceTrackerMap = _serviceTrackerMap;
+
+		if (serviceTrackerMap != null) {
+			serviceTrackerMap.close();
 		}
 	}
 
 	public T getMVCCommand(String mvcCommandName) {
 		String className = null;
 
-		_initServiceTrackerMap();
+		ServiceTrackerMap<String, T> serviceTrackerMap =
+			_getServiceTrackerMap();
 
-		T mvcCommand = _serviceTrackerMap.getService(mvcCommandName);
+		T mvcCommand = serviceTrackerMap.getService(mvcCommandName);
 
 		if (mvcCommand != null) {
 			return mvcCommand;
@@ -145,9 +148,10 @@ public class MVCCommandCache<T extends MVCCommand> {
 	}
 
 	public Set<String> getMVCCommandNames() {
-		_initServiceTrackerMap();
+		ServiceTrackerMap<String, T> serviceTrackerMap =
+			_getServiceTrackerMap();
 
-		return _serviceTrackerMap.keySet();
+		return serviceTrackerMap.keySet();
 	}
 
 	public List<T> getMVCCommands(String key) {
@@ -221,8 +225,10 @@ public class MVCCommandCache<T extends MVCCommand> {
 		return mvcCommandClass;
 	}
 
-	private void _initServiceTrackerMap() {
-		if (_serviceTrackerMap == null) {
+	private ServiceTrackerMap<String, T> _getServiceTrackerMap() {
+		ServiceTrackerMap<String, T> serviceTrackerMap = _serviceTrackerMap;
+
+		if (serviceTrackerMap == null) {
 			synchronized (this) {
 				if (_serviceTrackerMap == null) {
 					_serviceTrackerMap =
@@ -230,8 +236,12 @@ public class MVCCommandCache<T extends MVCCommand> {
 							_mvcCommandClass, _filterString,
 							_SERVICE_REFERENCE_MAPPER);
 				}
+
+				serviceTrackerMap = _serviceTrackerMap;
 			}
 		}
+
+		return serviceTrackerMap;
 	}
 
 	private static final ServiceReferenceMapper<String, MVCCommand>

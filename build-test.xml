@@ -8406,8 +8406,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</if>
 
 				<mirrors-get
-					src="${bundle.zip.url}"
 					dest="liferay-portal-bundle.zip"
+					src="${bundle.zip.url}"
 				/>
 
 				<unzip

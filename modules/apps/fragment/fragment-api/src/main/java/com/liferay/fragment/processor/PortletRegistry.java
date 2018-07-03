@@ -14,12 +14,17 @@
 
 package com.liferay.fragment.processor;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+
 import java.util.List;
 
 /**
  * @author Lance Ji
  */
 public interface PortletRegistry {
+
+	public List<String> getFragmentEntryLinkPortletIds(
+		FragmentEntryLink fragmentEntryLink);
 
 	public List<String> getPortletAliases();
 

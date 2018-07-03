@@ -89,6 +89,12 @@ instances to `true`.
 ### Changed
 - [LPS-83067]: Automatically ignore excessive package version increase warnings
 when checking against older versions.
+- [LPS-83067]: Update the [Liferay Ant BND] dependency to version 2.0.52.
+
+## 1.3.1 - 2018-07-02
+
+### Changed
+- [LPS-83067]: Update the [Liferay Ant BND] dependency to version 2.0.53.
 
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

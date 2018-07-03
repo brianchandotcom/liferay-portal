@@ -20,7 +20,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="SitePages#addPrivateChildPage">
+		<execute macro="SitePages#addChildPage">
 			<var name="childPageName" value="${siteChildPageName}" />
 			<var name="parentPageName" value="${pageName}" />
 		</execute>

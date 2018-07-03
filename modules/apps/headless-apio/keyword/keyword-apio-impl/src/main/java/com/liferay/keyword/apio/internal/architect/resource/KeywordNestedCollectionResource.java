@@ -24,6 +24,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagService;
+import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
 import com.liferay.keyword.apio.architect.identifier.KeywordIdentifier;
 import com.liferay.keyword.apio.internal.architect.form.KeywordForm;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
@@ -31,7 +32,6 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
-import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
 
@@ -50,14 +50,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class KeywordNestedCollectionResource
 	implements NestedCollectionResource
-		<AssetTag, Long, KeywordIdentifier, Long, WebSiteIdentifier> {
+		<AssetTag, Long, KeywordIdentifier, Long, ContentSpaceIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<AssetTag, Long, Long> collectionRoutes(
 		NestedCollectionRoutes.Builder<AssetTag, Long, Long> builder) {
 
 		return builder.addCreator(
-			this::_addTag, _hasPermission.forAddingIn(WebSiteIdentifier.class),
+			this::_addTag,
+			_hasPermission.forAddingIn(ContentSpaceIdentifier.class),
 			KeywordForm::buildForm
 		).addGetter(
 			this::_getPageItems
@@ -92,7 +93,7 @@ public class KeywordNestedCollectionResource
 		).identifier(
 			AssetTag::getTagId
 		).addBidirectionalModel(
-			"interactionService", "keywords", WebSiteIdentifier.class,
+			"interactionService", "keywords", ContentSpaceIdentifier.class,
 			AssetTag::getGroupId
 		).addDate(
 			"dateCreated", AssetTag::getCreateDate

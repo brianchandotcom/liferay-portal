@@ -28,6 +28,7 @@ import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
+import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
 import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementCreatorForm;
 import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementUpdaterForm;
@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 public class WebPageElementNestedCollectionResource
 	implements
 		NestedCollectionResource<JournalArticleWrapper, Long,
-			WebPageElementIdentifier, Long, WebSiteIdentifier> {
+			WebPageElementIdentifier, Long, ContentSpaceIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<JournalArticleWrapper, Long, Long>
@@ -77,7 +77,7 @@ public class WebPageElementNestedCollectionResource
 			this::_getPageItems, ThemeDisplay.class
 		).addCreator(
 			this::_addJournalArticle, ThemeDisplay.class,
-			_hasPermission.forAddingIn(WebSiteIdentifier.class),
+			_hasPermission.forAddingIn(ContentSpaceIdentifier.class),
 			WebPageElementCreatorForm::buildForm
 		).build();
 	}
@@ -110,7 +110,7 @@ public class WebPageElementNestedCollectionResource
 		).identifier(
 			JournalArticle::getId
 		).addBidirectionalModel(
-			"webSite", "webPageElements", WebSiteIdentifier.class,
+			"contentSpace", "webPageElements", ContentSpaceIdentifier.class,
 			JournalArticle::getGroupId
 		).addDate(
 			"dateCreated", JournalArticle::getCreateDate
@@ -145,17 +145,18 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private JournalArticleWrapper _addJournalArticle(
-			long webSiteId, WebPageElementCreatorForm webPageElementCreatorForm,
+			long contentSpaceId,
+			WebPageElementCreatorForm webPageElementCreatorForm,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Locale locale = themeDisplay.getLocale();
 
 		ServiceContext serviceContext =
-			webPageElementCreatorForm.getServiceContext(webSiteId);
+			webPageElementCreatorForm.getServiceContext(contentSpaceId);
 
 		JournalArticle journalArticle = _journalArticleService.addArticle(
-			webSiteId, 0, 0, 0, null, true,
+			contentSpaceId, 0, 0, 0, null, true,
 			webPageElementCreatorForm.getTitleMap(locale),
 			webPageElementCreatorForm.getDescriptionMap(locale),
 			webPageElementCreatorForm.getText(),
@@ -229,11 +230,11 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private PageItems<JournalArticleWrapper> _getPageItems(
-		Pagination pagination, long webSiteId, ThemeDisplay themeDisplay) {
+		Pagination pagination, long contentSpaceId, ThemeDisplay themeDisplay) {
 
 		List<JournalArticleWrapper> journalArticleWrappers = Stream.of(
 			_journalArticleService.getArticles(
-				webSiteId, 0, pagination.getStartPosition(),
+				contentSpaceId, 0, pagination.getStartPosition(),
 				pagination.getEndPosition(), null)
 		).flatMap(
 			List::stream
@@ -243,7 +244,7 @@ public class WebPageElementNestedCollectionResource
 		).collect(
 			Collectors.toList()
 		);
-		int count = _journalArticleService.getArticlesCount(webSiteId, 0);
+		int count = _journalArticleService.getArticlesCount(contentSpaceId, 0);
 
 		return new PageItems<>(journalArticleWrappers, count);
 	}

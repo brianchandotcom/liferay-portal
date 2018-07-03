@@ -20,12 +20,12 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.forms.apio.architect.identifier.DataProviderInstanceIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class DataProviderInstanceNestedCollectionResource
 	implements NestedCollectionResource<DDMDataProviderInstance, Long,
-		DataProviderInstanceIdentifier, Long, WebSiteIdentifier> {
+		DataProviderInstanceIdentifier, Long, ContentSpaceIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<DDMDataProviderInstance, Long, Long>
@@ -79,7 +79,7 @@ public class DataProviderInstanceNestedCollectionResource
 			DDMDataProviderInstance::getDataProviderInstanceId
 		).addBidirectionalModel(
 			"interactionService", "data-provider-instance",
-			WebSiteIdentifier.class, DDMDataProviderInstance::getGroupId
+			ContentSpaceIdentifier.class, DDMDataProviderInstance::getGroupId
 		).addDate(
 			"dateCreated", DDMDataProviderInstance::getCreateDate
 		).addDate(

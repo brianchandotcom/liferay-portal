@@ -20,7 +20,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
-import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
+import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -85,11 +85,9 @@ public class WebSiteCollectionResource
 		).addBoolean(
 			"active", Group::isActive
 		).addLinkedModel(
-			"author", PersonIdentifier.class, Group::getCreatorUserId
+			"contentSpace", ContentSpaceIdentifier.class, Group::getGroupId
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, Group::getCreatorUserId
-		).addLinkedModel(
-			"folder", RootFolderIdentifier.class, Group::getGroupId
 		).addLocalizedStringByLocale(
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(

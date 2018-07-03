@@ -44,6 +44,11 @@
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="${infoMessage}" />
 	</command>
 
+	<command name="viewLocalizationMessage">
+		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE" value1="${defaultLanguageLocalizationMessage}" />
+		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_PREFERRED_LANGUAGE_MESSAGE" value1="${preferredLanguageLocalizationMessage}" />
+	</command>
+
 	<command name="viewRequestFailedToComplete">
 		<execute function="AssertElementPresent" locator1="Message#ERROR" />
 	</command>

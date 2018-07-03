@@ -254,8 +254,7 @@ public class MVCCommandCache<T extends MVCCommand> {
 
 	private final T _emptyMVCCommand;
 	private final String _filterString;
-	private final Map<String, T> _mvcCommandCache =
-		new ConcurrentHashMap<>();
+	private final Map<String, T> _mvcCommandCache = new ConcurrentHashMap<>();
 	private final Class<T> _mvcCommandClass;
 	private final Map<String, List<String>> _mvcCommandKeys =
 		new ConcurrentHashMap<>();

@@ -45,6 +45,10 @@ public class WesterosBankTopHeadDynamicInclude implements DynamicInclude {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		PrintWriter printWriter = response.getWriter();
+
+		printWriter.write("<link data-senna-track=\"permanent\" href=\"");
+
 		String uri =
 			themeDisplay.getCDNBaseURL() + _portal.getPathProxy() +
 				"/o/westeros-bank-theme/css/fragments_editor.css";
@@ -55,10 +59,8 @@ public class WesterosBankTopHeadDynamicInclude implements DynamicInclude {
 		String staticResourceURL = _portal.getStaticResourceURL(
 			request, uri, themeLastModified);
 
-		PrintWriter printWriter = response.getWriter();
-
-		printWriter.write("<link data-senna-track=\"permanent\" href=\"");
 		printWriter.write(staticResourceURL);
+
 		printWriter.write("\" rel=\"stylesheet\" type = \"text/css\" />\n");
 	}
 

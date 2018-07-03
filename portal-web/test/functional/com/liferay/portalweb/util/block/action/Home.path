@@ -627,12 +627,12 @@
 </tr>
 <!--SITE_LOCALIZATION-->
 <tr>
-	<td>PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE</td>
+	<td>PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE</td>
 	<td>//div[@id='portalMessageContainer']/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PORTAL_LOCALIZATION_PREFERRED_MESSAGE</td>
+	<td>PORTAL_LOCALIZATION_PREFERRED_LANGUAGE_MESSAGE</td>
 	<td>//div[@id='portalMessageContainer']/a[2]</td>
 	<td></td>
 </tr>

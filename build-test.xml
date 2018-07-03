@@ -8379,6 +8379,56 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		</if>
 
 		<if>
+			<or>
+				<matches pattern="https?://" string="${test.build.bundle.zip.url}" />
+				<matches pattern="https?://" string="${test.build.portal.osgi.zip.url}" />
+			</or>
+			<then>
+				<local name="bundle.zip.url" />
+
+				<if>
+					<matches pattern="https?://" string="${test.build.bundle.zip.url}" />
+					<then>
+						<property name="bundle.zip.url" value="${test.build.bundle.zip.url}" />
+					</then>
+					<elseif>
+					<matches pattern="https?://" string="${test.build.portal.osgi.zip.url}" />
+						<then>
+							<propertyregex
+								input="${test.build.portal.osgi.zip.url}"
+								override="true"
+								property="bundle.zip.url"
+								regexp="osgi"
+								replace="tomcat"
+							/>
+						</then>
+					</elseif>
+				</if>
+
+				<mirrors-get
+					src="${bundle.zip.url}"
+					dest="liferay-portal-bundle.zip"
+				/>
+
+				<unzip
+					dest="${project.dir}/sql/"
+					src="liferay-portal-bundle.zip"
+				>
+					<patternset
+						includes="liferay-*/data/hypersonic/*"
+					/>
+					<mapper
+						from="liferay-[^/]+/data/hypersonic/([^/]+)"
+						to="\1"
+						type="regexp"
+					/>
+				</unzip>
+
+				<delete file="liferay-portal-bundle.zip" />
+			</then>
+		</if>
+
+		<if>
 			<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
 			<then>
 				<antcall target="prepare-patching-tool" />

@@ -42,20 +42,18 @@ public class WesterosBankTopHeadDynamicInclude implements DynamicInclude {
 			String key)
 		throws IOException {
 
-		long themeLastModified = PortalWebResourcesUtil.getLastModified(
-			PortalWebResourceConstants.RESOURCE_TYPE_THEME_CONTRIBUTOR);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String portalCDNURL = themeDisplay.getCDNBaseURL();
+		String uri =
+			themeDisplay.getCDNBaseURL() + _portal.getPathProxy() +
+				"/o/westeros-bank-theme/css/fragments_editor.css";
 
-		String resourceURL = "/o/westeros-bank-theme/css/fragments_editor.css";
+		long themeLastModified = PortalWebResourcesUtil.getLastModified(
+			PortalWebResourceConstants.RESOURCE_TYPE_THEME_CONTRIBUTOR);
 
 		String staticResourceURL = _portal.getStaticResourceURL(
-			request,
-			portalCDNURL.concat(_portal.getPathProxy()).concat(resourceURL),
-            themeLastModified);
+			request, uri, themeLastModified);
 
 		PrintWriter printWriter = response.getWriter();
 
@@ -70,6 +68,7 @@ public class WesterosBankTopHeadDynamicInclude implements DynamicInclude {
 			"/html/common/themes/top_head.jsp#post");
 	}
 
-	@Reference private Portal _portal;
+	@Reference
+	private Portal _portal;
 
 }

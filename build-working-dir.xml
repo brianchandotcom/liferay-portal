@@ -51,7 +51,6 @@
 			</fail>
 
 			<local name="checkout.private.apps.dirs.git" />
-			<local name="checkout.private.apps.releng.dir" />
 
 			<property name="checkout.private.apps.dirs.git" value="@{checkout.private.apps.dirs}" />
 
@@ -60,16 +59,6 @@
 					var checkoutPrivateAppsDirs = project.getProperty("checkout.private.apps.dirs.git");
 
 					project.setProperty("checkout.private.apps.dirs.git", checkoutPrivateAppsDirs.replace(",", " "));
-
-					var checkoutPrivateAppsDirsArray = checkoutPrivateAppsDirs.split(",");
-
-					for (i = 0; i < checkoutPrivateAppsDirsArray.length; i++) {
-						var checkoutPrivateAppsDir = checkoutPrivateAppsDirsArray[i];
-
-						if (checkoutPrivateAppsDir.contains("/.releng/")) {
-							project.setProperty("checkout.private.apps.releng.dir", checkoutPrivateAppsDir);
-						}
-					}
 				]]>
 			</script>
 

@@ -614,7 +614,11 @@ public class LayoutReferencesExportImportContentProcessor
 			int groupUuidPos =
 				groupFriendlyUrlPos + _DATA_HANDLER_GROUP_FRIENDLY_URL.length();
 
-			int endIndex = content.indexOf(StringPool.AT, groupUuidPos + 1);
+			int endIndex = -1;
+
+			if (content.charAt(groupUuidPos) == CharPool.AT) {
+				endIndex = content.indexOf(StringPool.AT, groupUuidPos + 1);
+			}
 
 			if (endIndex < (groupUuidPos + 1)) {
 				content = StringUtil.replaceFirst(

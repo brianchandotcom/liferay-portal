@@ -12,7 +12,6 @@ runGradleTest {
 	doLast {
 		assert plugins.hasPlugin("com.liferay.target.platform")
 
-		assert idea.module.name == "root"
 		assert idea.module.scopes["PROVIDED"]["plus"][0].name == "targetPlatformIDE"
 
 		Set<Dependency> ideaDependencies = idea.module.resolveDependencies()

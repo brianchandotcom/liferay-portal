@@ -1107,8 +1107,10 @@
 
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Home#PORTAL_LOCALIZATION_MESSAGE_INFO" value1="${pageLocalizationMessage}" />
-		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_PREFERRED_MESSAGE" value1="${pageLocalizationPreferredLanguage}" />
+		<execute macro="Alert#viewLocalizationMessage">
+			<var name="defaultLanguageLocalizationMessage" value="${pageLocalizationMessage}" />
+			<var name="preferredLanguageLocalizationMessage" value="${pageLocalizationPreferredLanguage}" />
+		</execute>
 	</command>
 
 	<command name="viewURLLocale">

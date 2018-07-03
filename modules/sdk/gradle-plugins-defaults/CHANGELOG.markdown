@@ -3996,6 +3996,12 @@ version 1.3.1.
 - [LPS-83067]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.64.
 
+## 5.4.66 - 2018-07-03
+
+### Changed
+- [LPS-82828]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.65.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

@@ -814,6 +814,10 @@
 	</command>
 
 	<command name="viewNoDeletePagesAssociatedWithSiteTemplate">
+		<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_ANGLE_ICON_SPECIFIC">
+			<var name="key_pageName" value="${pageName}" />
+		</execute>
+
 		<execute function="Click#waitForMenuToggleJSClick" locator1="SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON">
 			<var name="key_pageName" value="${page}" />
 		</execute>
@@ -838,7 +842,7 @@
 				<condition function="IsVisible" locator1="Message#ERROR" />
 			</and>
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_4" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_4" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
 			</then>
 		</if>
 	</command>

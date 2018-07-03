@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,10 +28,12 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -39,7 +42,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -52,6 +57,7 @@ import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -157,15 +163,8 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			if (ListUtil.isNotEmpty(fragmentEntryLinks)) {
 				for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-					_fragmentEntryLinkLocalService.addFragmentEntryLink(
-						serviceContext.getUserId(),
-						serviceContext.getScopeGroupId(), 0,
-						fragmentEntryLink.getFragmentEntryId(),
-						_portal.getClassNameId(Layout.class), layout.getPlid(),
-						fragmentEntryLink.getCss(), fragmentEntryLink.getHtml(),
-						fragmentEntryLink.getJs(),
-						fragmentEntryLink.getEditableValues(),
-						fragmentEntryLink.getPosition(), serviceContext);
+					_copyFragmentEntryLink(
+						layout.getPlid(), fragmentEntryLink, serviceContext);
 				}
 			}
 
@@ -194,6 +193,51 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private void _copyFragmentEntryLink(
+			long newPlid, FragmentEntryLink fragmentEntryLink,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FragmentEntryLink newFragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
+				fragmentEntryLink.getFragmentEntryId(),
+				_portal.getClassNameId(Layout.class), newPlid,
+				fragmentEntryLink.getCss(), fragmentEntryLink.getHtml(),
+				fragmentEntryLink.getJs(),
+				fragmentEntryLink.getEditableValues(),
+				fragmentEntryLink.getPosition(), serviceContext);
+
+		List<String> portletIds =
+			_portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
+
+		long defaultPlid = _portal.getControlPanelPlid(
+			serviceContext.getCompanyId());
+
+		for (String portletId : portletIds) {
+			PortletPreferences portletPreferences =
+				_portletPreferencesLocalService.fetchPreferences(
+					serviceContext.getCompanyId(),
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, defaultPlid,
+					portletId);
+
+			if (portletPreferences == null) {
+				continue;
+			}
+
+			String newPortletId = StringUtil.replace(
+				portletId, fragmentEntryLink.getNamespace(),
+				newFragmentEntryLink.getNamespace());
+
+			_portletPreferencesLocalService.addPortletPreferences(
+				serviceContext.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, defaultPlid, newPortletId,
+				null, PortletPreferencesFactoryUtil.toXML(portletPreferences));
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CopyLayoutMVCActionCommand.class);
 
@@ -211,5 +255,11 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
 
 }

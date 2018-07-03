@@ -4914,7 +4914,7 @@ information. Make sure to commit in all build services results.
 		<echo file="create-header.sql">use master
 dump transaction master with no_log
 go
-disk resize name="master", size="500m"
+disk resize name="master", size="750m"
 go
 drop database lportal
 go
@@ -4922,7 +4922,7 @@ exec sp_configure 'lock scheme', 0, datarows
 go
 exec sp_configure 'procedure cache size', 28000
 go
-create database lportal on master = "500m"
+create database lportal on master = "750m"
 go
 exec sp_dboption 'lportal', 'allow nulls by default' , true
 go

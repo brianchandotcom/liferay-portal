@@ -3271,13 +3271,25 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="setup-testable-tomcat-osgi-modules">
 		<sequential>
-			<copy
-				todir="${liferay.home}/osgi/modules"
-			>
-				<fileset
-					dir="${liferay.home}/osgi/test"
-				/>
-			</copy>
+			<condition else="${env.TEST_BATCH_NAME}" property="test.batch.name" value="${test.batch.name}">
+				<isset property="test.batch.name" />
+			</condition>
+
+			<if>
+				<or>
+					<contains string="${test.batch.name}" substring="integration" />
+					<contains string="${test.batch.name}" substring="unit" />
+				</or>
+				<then>
+					<copy
+						todir="${liferay.home}/osgi/modules"
+					>
+						<fileset
+							dir="${liferay.home}/osgi/test"
+						/>
+					</copy>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

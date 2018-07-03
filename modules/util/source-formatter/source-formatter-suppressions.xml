@@ -5,6 +5,7 @@
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/.*" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="CDNCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/CDNCheck\.java" />
 		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaDeprecatedKernelClassesCheck\.java" />
 		<suppress checks="JavaHibernateSQLCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaHibernateSQLCheck\.java" />
 		<suppress checks="JavaIllegalImportsCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaIllegalImportsCheck\.java" />

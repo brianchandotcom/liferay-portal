@@ -79,14 +79,14 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase
 
 		when(
 			ResourceBundleUtil.getBundle(
-				"content.Language", LocaleUtil.BRAZIL, _classLoader)
+				"content.Language", LocaleUtil.BRAZIL, _classLoader, false)
 		).thenReturn(
 			_resourceBundle
 		);
 
 		when(
 			ResourceBundleUtil.getBundle(
-				"content.Language", LocaleUtil.US, _classLoader)
+				"content.Language", LocaleUtil.US, _classLoader, false)
 		).thenReturn(
 			_resourceBundle
 		);

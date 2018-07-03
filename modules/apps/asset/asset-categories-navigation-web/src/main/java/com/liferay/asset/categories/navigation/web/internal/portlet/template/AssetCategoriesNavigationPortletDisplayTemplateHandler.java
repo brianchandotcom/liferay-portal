@@ -63,7 +63,8 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION,
 			resourceBundle);
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return LanguageUtil.format(
+			resourceBundle, "x-template", portletTitle, false);
 	}
 
 	@Override

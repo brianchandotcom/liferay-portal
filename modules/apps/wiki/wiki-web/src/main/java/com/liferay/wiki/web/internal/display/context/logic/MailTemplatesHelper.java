@@ -16,10 +16,8 @@ package com.liferay.wiki.web.internal.display.context.logic;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper;
 
@@ -169,13 +167,8 @@ public class MailTemplatesHelper {
 	}
 
 	protected ResourceBundle getResourceBundle() {
-		ResourceBundle bundleResourceBundle = ResourceBundleUtil.getBundle(
+		return ResourceBundleUtil.getBundle(
 			"content.Language", _wikiRequestHelper.getLocale(), getClass());
-		ResourceBundle portalResourceBundle =
-			LanguageResources.getResourceBundle(_wikiRequestHelper.getLocale());
-
-		return new AggregateResourceBundle(
-			bundleResourceBundle, portalResourceBundle);
 	}
 
 	private final WikiGroupServiceOverriddenConfiguration

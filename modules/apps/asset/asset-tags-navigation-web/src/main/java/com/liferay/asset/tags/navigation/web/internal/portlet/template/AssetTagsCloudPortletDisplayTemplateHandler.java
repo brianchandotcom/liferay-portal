@@ -45,7 +45,8 @@ public class AssetTagsCloudPortletDisplayTemplateHandler
 		String portletTitle = portal.getPortletTitle(
 			AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD, resourceBundle);
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return LanguageUtil.format(
+			resourceBundle, "x-template", portletTitle, false);
 	}
 
 	@Override

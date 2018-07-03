@@ -109,14 +109,14 @@ public class DDMFixture {
 
 		PowerMockito.when(
 			ResourceBundleUtil.getBundle(
-				"content.Language", LocaleUtil.BRAZIL, classLoader)
+				"content.Language", LocaleUtil.BRAZIL, classLoader, false)
 		).thenReturn(
 			resourceBundle
 		);
 
 		PowerMockito.when(
 			ResourceBundleUtil.getBundle(
-				"content.Language", LocaleUtil.US, classLoader)
+				"content.Language", LocaleUtil.US, classLoader, false)
 		).thenReturn(
 			resourceBundle
 		);

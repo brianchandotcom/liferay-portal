@@ -96,7 +96,7 @@ public class DDMFormFactoryHelper {
 
 		try {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				resourceBundleBaseName, locale, clazz.getClassLoader());
+				resourceBundleBaseName, locale, clazz, false);
 
 			if (resourceBundle != null) {
 				resourceBundles.add(resourceBundle);
@@ -195,7 +195,7 @@ public class DDMFormFactoryHelper {
 				ResourceBundle portalResourceBundle =
 					ResourceBundleUtil.getBundle(
 						"content.Language", locale,
-						PortalClassLoaderUtil.getClassLoader());
+						PortalClassLoaderUtil.getClassLoader(), false);
 
 				resourceBundles.add(portalResourceBundle);
 

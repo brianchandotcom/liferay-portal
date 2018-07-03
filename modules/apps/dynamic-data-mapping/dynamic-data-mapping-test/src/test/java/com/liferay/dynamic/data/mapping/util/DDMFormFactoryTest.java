@@ -252,7 +252,7 @@ public class DDMFormFactoryTest {
 		Mockito.when(
 			ResourceBundleUtil.getBundle(
 				Matchers.anyString(), Matchers.any(Locale.class),
-				Matchers.any(ClassLoader.class))
+				Matchers.any(ClassLoader.class), Matchers.anyBoolean())
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);

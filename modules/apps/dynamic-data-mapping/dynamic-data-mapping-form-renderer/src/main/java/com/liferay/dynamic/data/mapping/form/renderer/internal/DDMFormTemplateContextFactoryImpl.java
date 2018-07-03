@@ -105,7 +105,7 @@ public class DDMFormTemplateContextFactoryImpl
 		}
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+			"content.Language", locale, clazz, false);
 
 		if (resourceBundle != null) {
 			resourceBundles.add(resourceBundle);
@@ -272,7 +272,8 @@ public class DDMFormTemplateContextFactoryImpl
 		List<ResourceBundle> resourceBundles = new ArrayList<>();
 
 		ResourceBundle portalResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
+			"content.Language", locale, PortalClassLoaderUtil.getClassLoader(),
+			false);
 
 		resourceBundles.add(portalResourceBundle);
 

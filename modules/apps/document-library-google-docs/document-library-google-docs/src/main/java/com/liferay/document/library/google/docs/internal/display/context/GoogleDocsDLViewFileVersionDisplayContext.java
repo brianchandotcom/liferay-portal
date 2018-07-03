@@ -153,14 +153,16 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 			}
 		}
 
+		printWriter.write("<div class=\"alert alert-info\">");
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", request.getLocale(), getClass());
 
-		printWriter.write("<div class=\"alert alert-info\">");
 		printWriter.write(
 			ResourceBundleUtil.getString(
 				resourceBundle,
 				"google-docs-does-not-provide-a-preview-for-this-document"));
+
 		printWriter.write("</div>");
 	}
 

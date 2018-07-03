@@ -461,11 +461,9 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	protected ResourceBundle getBaseDDMDisplayResourceBundle(
 		String languageId) {
 
-		Class<?> baseDDMDisplayClazz = BaseDDMDisplay.class;
-
 		return ResourceBundleUtil.getBundle(
 			"content.Language", LocaleUtil.fromLanguageId(languageId),
-			baseDDMDisplayClazz.getClassLoader());
+			BaseDDMDisplay.class);
 	}
 
 	/**
@@ -525,21 +523,14 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 		ResourceBundle baseDDMDisplayResourceBundle =
 			ResourceBundleUtil.getBundle(
-				"content.Language", locale,
-				BaseDDMDisplay.class.getClassLoader());
+				"content.Language", locale, BaseDDMDisplay.class);
 
-		ResourceBundleLoader portalResourceBundleLoader =
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
-
-		if (ddmDisplayResourceBundle == null) {
+		if (ddmDisplayResourceBundle != null) {
 			return new AggregateResourceBundle(
-				baseDDMDisplayResourceBundle,
-				portalResourceBundleLoader.loadResourceBundle(locale));
+				ddmDisplayResourceBundle, baseDDMDisplayResourceBundle);
 		}
 
-		return new AggregateResourceBundle(
-			ddmDisplayResourceBundle, baseDDMDisplayResourceBundle,
-			portalResourceBundleLoader.loadResourceBundle(locale));
+		return baseDDMDisplayResourceBundle;
 	}
 
 	protected String getViewTemplatesURL(

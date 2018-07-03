@@ -16,7 +16,7 @@ create index IX_A2534AC2 on JournalArticle (groupId, classNameId, layoutUuid[$CO
 create index IX_F35391E8 on JournalArticle (groupId, folderId, status);
 create index IX_3C028C1E on JournalArticle (groupId, layoutUuid[$COLUMN_LENGTH:75$]);
 create index IX_301D024B on JournalArticle (groupId, status);
-create index IX_D2D249E8 on JournalArticle (groupId, urlTitle[$COLUMN_LENGTH:150$], status);
+create index IX_D2D249E8 on JournalArticle (groupId, urlTitle[$COLUMN_LENGTH:255$], status);
 create index IX_43A0F80F on JournalArticle (groupId, userId, classNameId);
 create index IX_3F1EA19E on JournalArticle (layoutUuid[$COLUMN_LENGTH:75$]);
 create index IX_451D63EC on JournalArticle (resourcePrimKey, indexable, status);

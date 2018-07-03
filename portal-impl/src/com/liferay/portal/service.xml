@@ -789,7 +789,7 @@
 			<finder-column name="friendlyURL" />
 		</finder>
 		<finder name="P_L" return-type="Collection" unique="true">
-			<finder-column arrayable-operator="OR" name="plid" />
+			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="plid" />
 			<finder-column name="languageId" />
 		</finder>
 		<finder name="G_P_F" return-type="Collection">

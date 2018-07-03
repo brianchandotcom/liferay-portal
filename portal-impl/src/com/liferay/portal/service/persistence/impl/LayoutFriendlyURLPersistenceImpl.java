@@ -3723,11 +3723,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 				return Collections.emptyList();
 			}
 			else {
-				List<LayoutFriendlyURL> list = new ArrayList<LayoutFriendlyURL>(1);
-
-				list.add(layoutFriendlyURL);
-
-				return list;
+				return Collections.singletonList(layoutFriendlyURL);
 			}
 		}
 
@@ -3767,76 +3763,27 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE);
-
-			if (plids.length > 0) {
-				query.append("(");
-
-				query.append(_FINDER_COLUMN_P_L_PLID_7);
-
-				query.append(StringUtil.merge(plids));
-
-				query.append(")");
-
-				query.append(")");
-
-				query.append(WHERE_AND);
-			}
-
-			boolean bindLanguageId = false;
-
-			if (languageId == null) {
-				query.append(_FINDER_COLUMN_P_L_LANGUAGEID_1);
-			}
-			else if (languageId.equals("")) {
-				query.append(_FINDER_COLUMN_P_L_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				query.append(_FINDER_COLUMN_P_L_LANGUAGEID_2);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(LayoutFriendlyURLModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(databaseInMaxParameters > 0) &&
+						(plids.length > databaseInMaxParameters)) {
+					list = new ArrayList<LayoutFriendlyURL>();
 
-				Query q = session.createQuery(sql);
+					long[][] plidsPages = (long[][])ArrayUtil.split(plids,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+					for (long[] plidsPage : plidsPages) {
+						list.addAll(_findByP_L(plidsPage, languageId, start,
+								end, orderByComparator, pagination));
+					}
 
-				if (bindLanguageId) {
-					qPos.add(languageId);
-				}
-
-				if (!pagination) {
-					list = (List<LayoutFriendlyURL>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<LayoutFriendlyURL>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = _findByP_L(plids, languageId, start, end,
+							orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -3850,9 +3797,94 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<LayoutFriendlyURL> _findByP_L(long[] plids, String languageId,
+		int start, int end,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator,
+		boolean pagination) {
+		List<LayoutFriendlyURL> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE);
+
+		if (plids.length > 0) {
+			query.append("(");
+
+			query.append(_FINDER_COLUMN_P_L_PLID_7);
+
+			query.append(StringUtil.merge(plids));
+
+			query.append(")");
+
+			query.append(")");
+
+			query.append(WHERE_AND);
+		}
+
+		boolean bindLanguageId = false;
+
+		if (languageId == null) {
+			query.append(_FINDER_COLUMN_P_L_LANGUAGEID_1);
+		}
+		else if (languageId.equals("")) {
+			query.append(_FINDER_COLUMN_P_L_LANGUAGEID_3);
+		}
+		else {
+			bindLanguageId = true;
+
+			query.append(_FINDER_COLUMN_P_L_LANGUAGEID_2);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(LayoutFriendlyURLModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (bindLanguageId) {
+				qPos.add(languageId);
 			}
+
+			if (!pagination) {
+				list = (List<LayoutFriendlyURL>)QueryUtil.list(q, getDialect(),
+						start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
+			}
+			else {
+				list = (List<LayoutFriendlyURL>)QueryUtil.list(q, getDialect(),
+						start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -4115,57 +4147,21 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE);
-
-			if (plids.length > 0) {
-				query.append("(");
-
-				query.append(_FINDER_COLUMN_P_L_PLID_7);
-
-				query.append(StringUtil.merge(plids));
-
-				query.append(")");
-
-				query.append(")");
-
-				query.append(WHERE_AND);
-			}
-
-			boolean bindLanguageId = false;
-
-			if (languageId == null) {
-				query.append(_FINDER_COLUMN_P_L_LANGUAGEID_1);
-			}
-			else if (languageId.equals("")) {
-				query.append(_FINDER_COLUMN_P_L_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				query.append(_FINDER_COLUMN_P_L_LANGUAGEID_2);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+						(plids.length > databaseInMaxParameters)) {
+					count = Long.valueOf(0);
 
-				Query q = session.createQuery(sql);
+					long[][] plidsPages = (long[][])ArrayUtil.split(plids,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (bindLanguageId) {
-					qPos.add(languageId);
+					for (long[] plidsPage : plidsPages) {
+						count += Long.valueOf(_countByP_L(plidsPage, languageId));
+					}
 				}
-
-				count = (Long)q.uniqueResult();
+				else {
+					count = Long.valueOf(_countByP_L(plids, languageId));
+				}
 
 				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_P_L,
 					finderArgs, count);
@@ -4176,9 +4172,71 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByP_L(long[] plids, String languageId) {
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE);
+
+		if (plids.length > 0) {
+			query.append("(");
+
+			query.append(_FINDER_COLUMN_P_L_PLID_7);
+
+			query.append(StringUtil.merge(plids));
+
+			query.append(")");
+
+			query.append(")");
+
+			query.append(WHERE_AND);
+		}
+
+		boolean bindLanguageId = false;
+
+		if (languageId == null) {
+			query.append(_FINDER_COLUMN_P_L_LANGUAGEID_1);
+		}
+		else if (languageId.equals("")) {
+			query.append(_FINDER_COLUMN_P_L_LANGUAGEID_3);
+		}
+		else {
+			bindLanguageId = true;
+
+			query.append(_FINDER_COLUMN_P_L_LANGUAGEID_2);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (bindLanguageId) {
+				qPos.add(languageId);
 			}
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();

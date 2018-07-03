@@ -14,27 +14,19 @@
 
 package com.liferay.gradle.plugins.poshi.runner.internal.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectDatabase;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache.FileKey;
-import org.eclipse.jgit.util.FS;
-
 import org.gradle.BuildAdapter;
 import org.gradle.BuildResult;
+import org.gradle.api.Action;
 import org.gradle.api.Project;
-import org.gradle.api.UncheckedIOException;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
+import org.gradle.process.ExecSpec;
 
 /**
  * @author Andrea Di Giorgi
@@ -58,36 +50,6 @@ public class GitRepositoryBuildAdapter extends BuildAdapter {
 		return gitRepositoryBag.hashHead;
 	}
 
-	private static File _getGitDir(File dir) throws IOException {
-		do {
-			File gitDir = FileKey.resolve(dir, FS.DETECTED);
-
-			if (gitDir != null) {
-				return gitDir;
-			}
-
-			dir = dir.getParentFile();
-		}
-		while (dir != null);
-
-		throw new IOException("Unable to locate .git directory");
-	}
-
-	private static String _getHashHead(Repository repository)
-		throws IOException {
-
-		ObjectId objectId = repository.resolve(Constants.HEAD);
-
-		ObjectDatabase objectDatabase = repository.getObjectDatabase();
-
-		try (ObjectReader objectReader = objectDatabase.newReader()) {
-			AbbreviatedObjectId abbreviatedObjectId = objectReader.abbreviate(
-				objectId);
-
-			return abbreviatedObjectId.name();
-		}
-	}
-
 	private synchronized GitRepositoryBag _getGitRepositoryBag(
 		Project project) {
 
@@ -101,31 +63,40 @@ public class GitRepositoryBuildAdapter extends BuildAdapter {
 
 		long start = System.currentTimeMillis();
 
-		try {
-			FileKey fileKey = FileKey.exact(_getGitDir(rootDir), FS.DETECTED);
+		gitRepositoryBag = new GitRepositoryBag(
+			_getGitResult(project, "rev-parse", "--abbrev-ref", "HEAD"),
+			_getGitResult(project, "rev-parse", "HEAD"));
 
-			try (Repository repository = fileKey.open(true)) {
-				String branchName = repository.getBranch();
-				String hashHead = _getHashHead(repository);
+		_gitRepositoryBags.put(rootDir, gitRepositoryBag);
 
-				gitRepositoryBag = new GitRepositoryBag(branchName, hashHead);
+		if (_logger.isInfoEnabled()) {
+			_logger.info(
+				"Getting data from Git repository in \"{}\" took {} ms.",
+				rootDir, System.currentTimeMillis() - start);
+		}
 
-				_gitRepositoryBags.put(rootDir, gitRepositoryBag);
+		return gitRepositoryBag;
+	}
 
-				if (_logger.isInfoEnabled()) {
-					_logger.info(
-						"Getting data from Git repository in \"{}\" took {} " +
-							"ms.",
-						repository.getDirectory(),
-						System.currentTimeMillis() - start);
+	private String _getGitResult(Project project, final Object... args) {
+		final ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		project.exec(
+			new Action<ExecSpec>() {
+
+				@Override
+				public void execute(ExecSpec execSpec) {
+					execSpec.args(args);
+					execSpec.setExecutable("git");
+					execSpec.setStandardOutput(byteArrayOutputStream);
 				}
 
-				return gitRepositoryBag;
-			}
-		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
-		}
+			});
+
+		String result = byteArrayOutputStream.toString();
+
+		return result.trim();
 	}
 
 	private static final Logger _logger = Logging.getLogger(

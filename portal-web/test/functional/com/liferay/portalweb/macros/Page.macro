@@ -1115,7 +1115,7 @@
 		<if>
 			<isset var="localizationOption" />
 			<then>
-				<execute function="AssertClick" locator1="Message#INFO_4" value1="${localizationOption}" />
+				<execute function="AssertClick" locator1="Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE" value1="${localizationOption}" />
 			</then>
 		</if>
 

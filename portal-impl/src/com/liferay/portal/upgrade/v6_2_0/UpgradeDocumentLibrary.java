@@ -65,7 +65,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		alter(
 			DLFileEntryTypeTable.class,
-			new AlterTableAddColumn("fileEntryTypeKey STRING"),
+			new AlterTableAddColumn("fileEntryTypeKey VARCHAR(75) null"),
 			new AlterColumnType("name", "STRING null"));
 
 		updateFileEntryTypes();

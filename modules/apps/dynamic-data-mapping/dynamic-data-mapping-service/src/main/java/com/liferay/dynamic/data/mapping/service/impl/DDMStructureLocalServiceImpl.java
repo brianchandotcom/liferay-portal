@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -163,6 +164,8 @@ public class DDMStructureLocalServiceImpl
 		structure.setDefinition(ddmFormJSONSerializer.serialize(ddmForm));
 		structure.setStorageType(storageType);
 		structure.setType(type);
+
+		structure.setDDMForm(new DDMForm(ddmForm));
 
 		ddmStructurePersistence.update(structure);
 
@@ -913,6 +916,7 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	@Override
+	@Skip
 	public DDMForm getStructureDDMForm(DDMStructure structure)
 		throws PortalException {
 
@@ -1586,6 +1590,8 @@ public class DDMStructureLocalServiceImpl
 		structureVersion.setStatusByUserName(user.getFullName());
 		structureVersion.setStatusDate(structure.getModifiedDate());
 
+		structureVersion.setDDMForm(structure.getDDMForm());
+
 		ddmStructureVersionPersistence.update(structureVersion);
 
 		return structureVersion;
@@ -1658,6 +1664,8 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersionUserName(user.getFullName());
 		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
 		structure.setDefinition(ddmFormJSONSerializer.serialize(ddmForm));
+
+		structure.setDDMForm(new DDMForm(ddmForm));
 
 		// Structure version
 

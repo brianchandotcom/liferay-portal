@@ -149,4 +149,11 @@ public interface JournalServiceConfiguration {
 	)
 	public String journalArticleStorageType();
 
+	@Meta.AD(
+		deflt = "false",
+		description = "single-asset-publish-includes-version-history-help",
+		name = "single-asset-publish-includes-version-history", required = false
+	)
+	public boolean singleAssetPublishIncludeVersionHistory();
+
 }

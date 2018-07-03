@@ -34,7 +34,7 @@ String rowHREF = (String)objArray[1];
 	</div>
 
 	<div class="blogger-stars">
-		<span><liferay-ui:message key="<%= RatingsType.STARS.getValue() %>" />:</span> <%= statsUser.getRatingsTotalEntries() %>
+		<span><liferay-ui:message key="number-of-ratings" />:</span> <%= statsUser.getRatingsTotalEntries() %>
 	</div>
 
 	<div class="blogger-date">

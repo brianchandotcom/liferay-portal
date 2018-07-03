@@ -75,6 +75,13 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 					matcher.end(4));
 			}
 
+			if (StringUtil.startsWith(matcher.group(5), ",")) {
+				String oldSub = matcher.group(5);
+
+				return StringUtil.replaceFirst(
+					content, oldSub, oldSub.substring(1), matcher.start(5));
+			}
+
 			String actualReleaseVersion = matcher.group(6);
 
 			if (!actualReleaseVersion.equals(expectedReleaseVersion)) {
@@ -146,7 +153,7 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(\n\\s*\\* @deprecated)( As of (([\\w.]+)( \\(([\\w.]+)\\))?)" +
+		"(\n\\s*\\* @deprecated)( As of (([\\w.]+)(,? \\(([\\w.]+)\\))?)" +
 			"(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
 	private String _nextReleaseCodeName;

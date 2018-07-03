@@ -79,7 +79,7 @@ public class CommentNestedCollectionResource
 		).identifier(
 			Comment::getCommentId
 		).addLinkedModel(
-			"author", PersonIdentifier.class, Comment::getUserId
+			"creator", PersonIdentifier.class, Comment::getUserId
 		).addRelatedCollection(
 			"comments", CommentIdentifier.class
 		).addString(

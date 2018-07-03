@@ -1538,9 +1538,13 @@
 
 		<take-screenshot />
 
-		<execute function="Click" locator1="Button#SIGN_IN" value1="Sign In" />
+		<execute macro="Button#click">
+			<var name="button" value="Sign In" />
+		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Button#SIGN_IN" />
+		<execute macro="Button#viewNotPresent">
+			<var name="button" value="Sign In" />
+		</execute>
 
 		<execute macro="User#acceptEndUserLicenseAgreement" />
 

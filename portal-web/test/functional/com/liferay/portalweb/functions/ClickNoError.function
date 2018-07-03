@@ -17,6 +17,14 @@
 		<execute selenium="click" />
 	</command>
 
+	<command name="mouseDownMouseUp">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="mouseDown" />
+
+		<execute selenium="mouseUp" />
+	</command>
+
 	<command name="pauseClick">
 		<execute function="WaitForSPARefresh" />
 

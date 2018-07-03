@@ -65,7 +65,7 @@ public class GitRepositoryBuildAdapter extends BuildAdapter {
 
 		gitRepositoryBag = new GitRepositoryBag(
 			_getGitResult(project, "rev-parse", "--abbrev-ref", "HEAD"),
-			_getGitResult(project, "rev-parse", "HEAD"));
+			_getGitResult(project, "rev-parse", "--short", "HEAD"));
 
 		_gitRepositoryBags.put(rootDir, gitRepositoryBag);
 

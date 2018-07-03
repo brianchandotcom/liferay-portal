@@ -208,17 +208,11 @@ else {
 		/>
 	</c:if>
 
-	<%
-		boolean hasExportImportPortletInfoPermission = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
-		boolean inStagingGroup = stagingGroupHelper.isStagingGroup(scopeGroupId);
-		boolean portletStaged = stagingGroupHelper.isStagedPortlet(scopeGroupId, JournalPortletKeys.JOURNAL);
-	%>
-
-	<c:if test="<%= (article != null) && hasExportImportPortletInfoPermission && inStagingGroup && portletStaged %>">
+	<c:if test="<%= journalDisplayContext.isShowPublishArticleAction(article) %>">
 		<portlet:actionURL name="/journal/publish_article" var="publishArticleURL">
 			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon

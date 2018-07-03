@@ -21,9 +21,9 @@
 	</tear-down>
 
 	<command name="AddThemeSite" priority="5">
+		<property name="osgi.app.includes" value="frontend-theme-porygon" />
 		<property name="portal.acceptance" value="pending" />
 		<property name="test.name.skip.portal.instance" value="PorygonTheme#AddThemeSite" />
-		<property name="theme.file.name" value="porygon-theme.war" />
 
 		<var method="TestPropsUtil#get('theme.contains.resources')" name="themeContainsResources" />
 

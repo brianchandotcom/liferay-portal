@@ -98,6 +98,7 @@
 		<execute macro="Page#viewNoDeletePagesAssociatedWithSiteTemplate">
 			<var name="menuItem" value="Delete" />
 			<var name="page" value="Site Child Page Name" />
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 	</command>
 

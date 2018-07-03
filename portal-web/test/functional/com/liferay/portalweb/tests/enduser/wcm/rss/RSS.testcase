@@ -762,7 +762,7 @@
 
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="RSS" />
-			<var name="configurationName" value="RSS Cache" />
+			<var name="configurationName" value="Cache" />
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 

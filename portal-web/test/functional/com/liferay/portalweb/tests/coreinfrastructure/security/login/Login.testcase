@@ -409,7 +409,7 @@
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="SSO" />
 			<var name="configurationName" value="Token Based SSO" />
-			<var name="configurationScope" value="System Scope" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
 		<execute macro="FormFields#enableCheckbox">

@@ -8274,6 +8274,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						<equals arg1="${app.server.type}" arg2="tcserver" />
 						<then>
 							<ant antfile="build-dist.xml" inheritAll="false" target="unzip-tcserver" />
+
+							<ant antfile="build.xml" inheritAll="false" target="deploy-additional-jars" />
 						</then>
 					</elseif>
 					<elseif>

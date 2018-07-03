@@ -391,7 +391,7 @@
 
 		<execute macro="SiteTemplates#viewDefaultDataLocalizedCP">
 			<var name="siteTemplateDescriptionList" value="Sitio con foro y wiki,Sitio con documentos y noticias" />
-			<var name="siteTemplateNameList" value="Sitio de la Comunidad,Sitio de intranet" />
+			<var name="siteTemplateNameList" value="Sitio de comunidad,Sitio de intranet" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

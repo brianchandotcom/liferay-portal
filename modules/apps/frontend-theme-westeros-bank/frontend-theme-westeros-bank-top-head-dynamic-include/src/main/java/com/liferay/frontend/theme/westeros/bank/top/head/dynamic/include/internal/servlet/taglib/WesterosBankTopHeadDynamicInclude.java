@@ -57,7 +57,7 @@ public class WesterosBankTopHeadDynamicInclude implements DynamicInclude {
 			portalCDNURL.concat(_portal.getPathProxy()).concat(resourceURL),
             themeLastModified);
 
-        PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = response.getWriter();
 
 		printWriter.write("<link data-senna-track=\"permanent\" href=\"");
 		printWriter.write(staticResourceURL);

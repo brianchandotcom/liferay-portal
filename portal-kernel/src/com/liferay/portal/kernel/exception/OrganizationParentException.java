@@ -36,9 +36,28 @@ public class OrganizationParentException extends PortalException {
 		super(cause);
 	}
 
-	public static class InvalidChildType extends OrganizationParentException {
+	public static class MustBeRootable extends OrganizationParentException {
 
-		public InvalidChildType(
+		public MustBeRootable(String type) {
+			super(
+				"Organization of type " + type +
+					" cannot be a root organization");
+
+			_type = type;
+		}
+
+		public String getType() {
+			return _type;
+		}
+
+		private String _type;
+
+	}
+
+	public static class MustHaveValidChildType
+		extends OrganizationParentException {
+
+		public MustHaveValidChildType(
 			String childOrganizationType, String parentOrganizationType) {
 
 			super(
@@ -60,24 +79,6 @@ public class OrganizationParentException extends PortalException {
 
 		private final String _childOrganizationType;
 		private final String _parentOrganizationType;
-
-	}
-
-	public static class MustBeRootable extends OrganizationParentException {
-
-		public MustBeRootable(String type) {
-			super(
-				"Organization of type " + type +
-					" cannot be a root organization");
-
-			_type = type;
-		}
-
-		public String getType() {
-			return _type;
-		}
-
-		private String _type;
 
 	}
 

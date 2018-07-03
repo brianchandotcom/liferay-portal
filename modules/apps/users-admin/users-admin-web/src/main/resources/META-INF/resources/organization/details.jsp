@@ -179,13 +179,13 @@ if (parentOrganization != null) {
 
 <liferay-ui:error exception="<%= OrganizationParentException.class %>" message="please-enter-a-valid-parent-organization" />
 
-<liferay-ui:error exception="<%= OrganizationParentException.InvalidChildType.class %>">
+<liferay-ui:error exception="<%= OrganizationParentException.MustHaveValidChildType.class %>">
 
 	<%
-	OrganizationParentException.InvalidChildType ict = (OrganizationParentException.InvalidChildType)errorException;
+	OrganizationParentException.MustHaveValidChildType mhvct = (OrganizationParentException.MustHaveValidChildType)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= new String[] {ict.getChildOrganizationType(), ict.getParentOrganizationType()} %>" key="an-organization-of-type-x-is-not-allowed-as-a-child-of-type-x" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= new String[] {mhvct.getChildOrganizationType(), mhvct.getParentOrganizationType()} %>" key="an-organization-of-type-x-is-not-allowed-as-a-child-of-type-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= OrganizationParentException.MustBeRootable.class %>">

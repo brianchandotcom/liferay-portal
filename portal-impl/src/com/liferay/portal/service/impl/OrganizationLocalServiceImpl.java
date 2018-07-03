@@ -2456,7 +2456,7 @@ public class OrganizationLocalServiceImpl
 			}
 
 			if (!ArrayUtil.contains(childrenTypes, type)) {
-				throw new OrganizationParentException.InvalidChildType(
+				throw new OrganizationParentException.MustHaveValidChildType(
 					type, parentOrganization.getType());
 			}
 		}

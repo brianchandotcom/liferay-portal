@@ -3993,6 +3993,8 @@ include projects containing one of the following marker files:
 ### Changed
 - [LPS-83067]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.3.1.
+- [LPS-83067]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.64.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

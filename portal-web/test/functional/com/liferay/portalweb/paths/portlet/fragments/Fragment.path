@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_FRAGMENT</td>
-	<td>//ul[contains(@class,'nav')]//div[contains(@id,'fragment-collection')]//button[@data-fragment-entry-name='${key_fragmentName}']</td>
+	<td>//ul[contains(@class,'nav')]//li[contains(.,'${key_collectionName}')]//button[@data-item-name='${key_fragmentName}']</td>
 	<td></td>
 </tr>
 <tr>

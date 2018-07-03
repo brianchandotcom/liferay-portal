@@ -3984,6 +3984,10 @@ include projects containing one of the following marker files:
 	- `.lfrbuild-portal-private` when on private branches, or
 	`.lfrbuild-portal-public` when on public branches
 
+### Changed
+- [LPS-82828]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.63.
+
 ## 5.4.65 - 2018-07-02
 
 ### Changed

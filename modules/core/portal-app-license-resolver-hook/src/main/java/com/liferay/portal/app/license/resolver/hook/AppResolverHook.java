@@ -94,9 +94,8 @@ public class AppResolverHook implements ResolverHook {
 		Properties properties = _getAppLicenseProperties(bundle);
 
 		String productId = (String)properties.get("product-id");
-		String productType = (String)properties.get("product-type");
 
-		if ((productId == null) && (productType == null)) {
+		if (productId == null) {
 			return;
 		}
 
@@ -124,6 +123,7 @@ public class AppResolverHook implements ResolverHook {
 
 			AppLicenseVerifier appLicenseVerifier = entry.getValue();
 
+			String productType = (String)properties.get("product-type");
 			String productVersionId = (String)properties.get(
 				"product-version-id");
 

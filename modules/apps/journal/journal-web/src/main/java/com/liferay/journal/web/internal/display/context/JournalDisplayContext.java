@@ -62,6 +62,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -86,6 +88,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -102,6 +105,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
@@ -1488,6 +1493,22 @@ public class JournalDisplayContext {
 		return true;
 	}
 
+	public boolean isShowPublishArticleAction(JournalArticle article) {
+		if (article == null) {
+			return false;
+		}
+
+		return _isShowPublishAction();
+	}
+
+	public boolean isShowPublishFolderAction(JournalFolder folder) {
+		if (folder == null) {
+			return false;
+		}
+
+		return _isShowPublishAction();
+	}
+
 	public boolean isShowSearch() throws PortalException {
 		if (hasResults()) {
 			return true;
@@ -1815,6 +1836,46 @@ public class JournalDisplayContext {
 
 		return portletURL.toString();
 	}
+
+	private boolean _isShowPublishAction() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		try {
+			if (GroupPermissionUtil.contains(
+					permissionChecker, scopeGroupId,
+					ActionKeys.EXPORT_IMPORT_PORTLET_INFO) &&
+				stagingGroupHelper.isStagingGroup(scopeGroupId) &&
+				stagingGroupHelper.isStagedPortlet(
+					scopeGroupId, JournalPortletKeys.JOURNAL)) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"An exception occured when checking if the publish " +
+						"action should be displayed",
+					pe);
+			}
+
+			return false;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalDisplayContext.class);
 
 	private String[] _addMenuFavItems;
 	private JournalArticle _article;

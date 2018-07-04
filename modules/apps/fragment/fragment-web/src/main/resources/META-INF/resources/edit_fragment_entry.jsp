@@ -82,7 +82,7 @@ renderResponse.setTitle(title);
 				fragmentCollectionId: '<%= fragmentDisplayContext.getFragmentCollectionId() %>',
 				fragmentEntryId: '<%= fragmentDisplayContext.getFragmentEntryId() %>',
 				redirect: '<%= fragmentDisplayContext.getRedirect() %>',
-				name: ''
+				name: '<%= fragmentDisplayContext.getName() %>'
 			},
 			initialCSS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getCssContent()) %>',
 			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',

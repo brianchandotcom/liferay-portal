@@ -465,6 +465,22 @@ public class FragmentDisplayContext {
 		return _jsContent;
 	}
 
+	public String getName() {
+		if (Validator.isNotNull(_name)) {
+			return _name;
+		}
+
+		_name = ParamUtil.getString(_request, "name");
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if ((fragmentEntry != null) && Validator.isNull(_name)) {
+			_name = fragmentEntry.getName();
+		}
+
+		return _name;
+	}
+
 	public String getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
@@ -650,6 +666,7 @@ public class FragmentDisplayContext {
 	private final ItemSelector _itemSelector;
 	private String _jsContent;
 	private String _keywords;
+	private String _name;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

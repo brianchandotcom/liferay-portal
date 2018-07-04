@@ -437,7 +437,15 @@
 	</command>
 
 	<command name="publishInvalidWorkflowDefinition">
-		<execute function="AssertClickNoError" locator1="Button#PUBLISH" value1="Publish" />
+		<if>
+			<equals arg1="${republish}" arg2="true" />
+			<then>
+				<execute function="AssertClickNoError" locator1="Button#UPDATE" value1="Update" />
+			</then>
+			<else>
+				<execute function="AssertClickNoError" locator1="Button#PUBLISH" value1="Publish" />
+			</else>
+		</if>
 
 		<execute macro="Alert#viewErrorMessage">
 			<var name="errorMessage" value="${errorMessage}" />

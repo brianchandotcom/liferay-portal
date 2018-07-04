@@ -198,7 +198,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#delete">
-			<var name="failure" value="You cannot delete asset display pages that are used by one or more assets." />
+			<var name="failure" value="Error:You cannot delete asset display pages that are used by one or more assets." />
 			<var name="rowEntry" value="Display Page Name" />
 		</execute>
 	</command>

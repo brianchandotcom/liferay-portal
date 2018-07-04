@@ -2866,7 +2866,7 @@
 
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="Web Content" />
-			<var name="configurationName" value="Web Content Administration" />
+			<var name="configurationName" value="Administration" />
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 

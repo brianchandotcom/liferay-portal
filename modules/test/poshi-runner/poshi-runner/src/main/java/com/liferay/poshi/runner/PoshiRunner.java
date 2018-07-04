@@ -144,10 +144,6 @@ public class PoshiRunner {
 
 			e.printStackTrace();
 
-			if (PropsValues.TEST_PAUSE_ON_FAILURE) {
-				LoggerUtil.pauseFailedTest();
-			}
-
 			throw e;
 		}
 	}
@@ -167,10 +163,6 @@ public class PoshiRunner {
 			PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
 
 			PoshiRunnerStackTraceUtil.emptyStackTrace();
-
-			if (PropsValues.TEST_PAUSE_ON_FAILURE) {
-				LoggerUtil.pauseFailedTest();
-			}
 		}
 		finally {
 			LoggerUtil.stopLogger();
@@ -194,10 +186,6 @@ public class PoshiRunner {
 			PoshiRunnerStackTraceUtil.emptyStackTrace();
 
 			e.printStackTrace();
-
-			if (PropsValues.TEST_PAUSE_ON_FAILURE) {
-				LoggerUtil.pauseFailedTest();
-			}
 
 			throw e;
 		}

@@ -50,7 +50,7 @@
 		</execute>
 
 		<execute macro="Alert#viewErrorMessage">
-				<var name="errorMessage" value="You do not have the required permissions." />
+			<var name="errorMessage" value="You do not have the required permissions." />
 		</execute>
 
 		<!-- Ignore following step until LPS-73530 is fixed -->

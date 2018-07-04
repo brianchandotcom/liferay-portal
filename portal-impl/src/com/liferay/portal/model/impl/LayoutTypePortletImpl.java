@@ -1715,9 +1715,14 @@ public class LayoutTypePortletImpl
 		try {
 			Layout layout = getLayout();
 
-			LayoutSet layoutSet = layout.getLayoutSet();
+			if (layout.getThemeId() != null) {
+				return layout.getThemeId();
+			}
+			else {
+				LayoutSet layoutSet = layout.getLayoutSet();
 
-			return layoutSet.getThemeId();
+				return layoutSet.getThemeId();
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);

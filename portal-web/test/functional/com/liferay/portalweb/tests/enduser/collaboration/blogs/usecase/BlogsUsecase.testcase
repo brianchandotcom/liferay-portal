@@ -2387,6 +2387,8 @@
 
 		<execute macro="ImageEditor#applyChangesAndSaveFile" />
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />

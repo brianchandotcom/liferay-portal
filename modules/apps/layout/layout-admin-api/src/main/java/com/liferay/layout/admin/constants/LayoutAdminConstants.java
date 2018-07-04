@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.fragment.processor;
-
-import com.liferay.fragment.model.FragmentEntryLink;
-
-import java.util.List;
+package com.liferay.layout.admin.constants;
 
 /**
- * @author Lance Ji
+ * @author Pavel Savinov
  */
-public interface PortletRegistry {
+public class LayoutAdminConstants {
 
-	public List<String> getFragmentEntryLinkPortletIds(
-		FragmentEntryLink fragmentEntryLink);
-
-	public List<String> getPortletAliases();
-
-	public String getPortletName(String alias);
+	public static final String LAYOUT_TYPE_CONTENT = "content";
 
 }

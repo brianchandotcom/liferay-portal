@@ -35,7 +35,9 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.admin.constants.LayoutAdminConstants;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -62,6 +64,7 @@ import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -71,6 +74,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -89,6 +93,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -313,7 +318,10 @@ public class LayoutStagedModelDataHandler
 			exportLinkedLayout(portletDataContext, layout, layoutElement);
 		}
 		else if (Objects.equals(
-					layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+					layout.getType(), LayoutConstants.TYPE_PORTLET) ||
+				 Objects.equals(
+					 layout.getType(),
+					 LayoutAdminConstants.LAYOUT_TYPE_CONTENT)) {
 
 			exportLayoutPortlets(portletDataContext, layout, layoutElement);
 		}
@@ -711,16 +719,18 @@ public class LayoutStagedModelDataHandler
 
 		layouts.put(oldLayoutId, importedLayout);
 
-		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
-			Validator.isNotNull(layout.getTypeSettings())) {
+		importFragmentEntryLinks(portletDataContext, layout, importedLayout);
+
+		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
+			 Validator.isNotNull(layout.getTypeSettings())) ||
+			Objects.equals(
+				layout.getType(), LayoutAdminConstants.LAYOUT_TYPE_CONTENT)) {
 
 			importLayoutPortlets(
 				portletDataContext, importedLayout, layoutElement);
 		}
 
 		importAssets(portletDataContext, layout, importedLayout);
-
-		importFragmentEntryLinks(portletDataContext, layout, importedLayout);
 
 		importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
 
@@ -1135,6 +1145,39 @@ public class LayoutStagedModelDataHandler
 				});
 		}
 
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				layout.getGroupId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			List<String> portletIdList =
+				_portletRegistry.getFragmentEntryLinkPortletIds(
+					fragmentEntryLink);
+
+			for (String portletId : portletIdList) {
+				Settings portletInstanceSettings =
+					SettingsFactoryUtil.getSettings(
+						new PortletInstanceSettingsLocator(layout, portletId));
+
+				String scopeType = portletInstanceSettings.getValue(
+					"lfrScopeType", null);
+				String scopeLayoutUuid = portletInstanceSettings.getValue(
+					"lfrScopeLayoutUuid", null);
+
+				long scopeGroupId = portletDataContext.getScopeGroupId();
+
+				String key = PortletPermissionUtil.getPrimaryKey(
+					layout.getPlid(), portletId);
+
+				portletIds.put(
+					key,
+					new Object[] {
+						portletId, scopeGroupId, scopeType, scopeLayoutUuid
+					});
+			}
+		}
+
 		return portletIds;
 	}
 
@@ -1291,6 +1334,11 @@ public class LayoutStagedModelDataHandler
 			return;
 		}
 
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				layout.getGroupId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid());
+
 		for (Element portletElement : portletsElement.elements()) {
 			String portletPath = portletElement.attributeValue("path");
 			String portletId = portletElement.attributeValue("portlet-id");
@@ -1427,6 +1475,47 @@ public class LayoutStagedModelDataHandler
 			finally {
 				_portletImportController.resetPortletScope(
 					portletDataContext, portletPreferencesGroupId);
+			}
+
+			long defaultPlid = _portal.getControlPanelPlid(
+				layout.getCompanyId());
+
+			PortletPreferences portletPreferences =
+				_portletPreferencesLocalService.fetchPortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, defaultPlid,
+					portletId);
+
+			if (portletPreferences == null) {
+				continue;
+			}
+
+			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+				FragmentEntryLink oldFragmentEntryLink =
+					_getOldFragmentEntryLink(
+						portletDataContext,
+						fragmentEntryLink.getFragmentEntryLinkId());
+
+				if (oldFragmentEntryLink == null) {
+					continue;
+				}
+
+				List<String> portletIds =
+					_portletRegistry.getFragmentEntryLinkPortletIds(
+						oldFragmentEntryLink);
+
+				if (!portletIds.contains(portletId)) {
+					continue;
+				}
+
+				String newPortletId = StringUtil.replace(
+					portletId, oldFragmentEntryLink.getNamespace(),
+					fragmentEntryLink.getNamespace());
+
+				_portletPreferencesLocalService.addPortletPreferences(
+					layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, defaultPlid,
+					newPortletId, portlet, portletPreferences.getPreferences());
 			}
 		}
 	}
@@ -1794,6 +1883,24 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
+	private FragmentEntryLink _getOldFragmentEntryLink(
+			PortletDataContext portletDataContext, long newFragmentEntryLinkId)
+		throws PortalException {
+
+		Map<Long, Long> fragmentEntryLinkIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FragmentEntryLink.class);
+
+		for (Map.Entry<Long, Long> entry : fragmentEntryLinkIds.entrySet()) {
+			if (newFragmentEntryLinkId == entry.getValue()) {
+				return _fragmentEntryLinkLocalService.getFragmentEntryLink(
+					entry.getKey());
+			}
+		}
+
+		return null;
+	}
+
 	private static final String _SAME_GROUP_FRIENDLY_URL =
 		"/[$SAME_GROUP_FRIENDLY_URL$]";
 
@@ -1844,6 +1951,13 @@ public class LayoutStagedModelDataHandler
 	private PortletExportController _portletExportController;
 	private PortletImportController _portletImportController;
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
+
 	private ResourceLocalService _resourceLocalService;
 
 	@Reference

@@ -14,12 +14,64 @@
 
 package com.liferay.portal.cluster.multiple.internal.io;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.osgi.framework.Version;
 
 /**
  * @author Lance Ji
  */
 public class ClusterClassLoaderPool {
+
+	public static void registerFallback(
+		String symbolicName, Version version, ClassLoader classLoader) {
+
+		VersionedClassLoader versionedClassLoader = new VersionedClassLoader(
+			classLoader, version);
+
+		List<VersionedClassLoader> versionedClassLoaderList =
+			_fallbackClassLoaders.get(symbolicName);
+
+		if (versionedClassLoaderList == null) {
+			versionedClassLoaderList = new CopyOnWriteArrayList<>();
+
+			_fallbackClassLoaders.put(symbolicName, versionedClassLoaderList);
+		}
+
+		versionedClassLoaderList.add(versionedClassLoader);
+
+		Collections.sort(versionedClassLoaderList, Collections.reverseOrder());
+	}
+
+	public static void unregisterFallback(
+		String symbolicName, Version version) {
+
+		List<VersionedClassLoader> versionedClassLoaderList =
+			_fallbackClassLoaders.get(symbolicName);
+
+		if (versionedClassLoaderList == null) {
+			return;
+		}
+
+		for (VersionedClassLoader versionedClassLoader :
+				versionedClassLoaderList) {
+
+			if (version.equals(versionedClassLoader.getVersion())) {
+				versionedClassLoaderList.remove(versionedClassLoader);
+
+				if (versionedClassLoaderList.isEmpty()) {
+					_fallbackClassLoaders.remove(symbolicName);
+				}
+			}
+		}
+	}
+
+	private static final Map<String, List<VersionedClassLoader>>
+		_fallbackClassLoaders = new ConcurrentHashMap<>();
 
 	private static class VersionedClassLoader
 		implements Comparable<VersionedClassLoader> {

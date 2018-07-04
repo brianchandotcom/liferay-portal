@@ -1303,7 +1303,7 @@
 		</execute>
 
 		<execute macro="Workflow#publishInvalidWorkflowDefinition">
-			<var name="errorMessage" value="An error occurred in the workflow engine." />
+			<var name="errorMessage" value="Please enter valid content." />
 			<var name="republish" value="true" />
 		</execute>
 	</command>

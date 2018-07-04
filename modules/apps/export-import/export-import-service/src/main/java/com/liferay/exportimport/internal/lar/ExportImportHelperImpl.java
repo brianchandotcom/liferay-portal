@@ -102,6 +102,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.portlet.PortletPreferences;
@@ -452,10 +453,33 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		List<Layout> layouts = new ArrayList<>();
 
-		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
+		Set<Map.Entry<Long, Boolean>> entrySet = layoutIdMap.entrySet();
+
+		for (Map.Entry<Long, Boolean> entry : entrySet) {
 			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 
-			Layout layout = getLayoutOrCreateDummyRootLayout(plid);
+			Layout layout = null;
+
+			try {
+				layout = getLayoutOrCreateDummyRootLayout(plid);
+			}
+			catch (NoSuchLayoutException nsle) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Deleted layout could not be published (plid " + plid +
+							")");
+				}
+
+				// see LPS-36174
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsle, nsle);
+				}
+
+				entrySet.remove(plid);
+
+				continue;
+			}
 
 			if (!layouts.contains(layout)) {
 				layouts.add(layout);

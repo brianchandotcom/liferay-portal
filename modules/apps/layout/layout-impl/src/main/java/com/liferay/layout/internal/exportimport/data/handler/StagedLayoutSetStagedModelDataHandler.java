@@ -16,11 +16,11 @@ package com.liferay.layout.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -348,7 +348,7 @@ public class StagedLayoutSetStagedModelDataHandler
 	protected void exportLayouts(
 			PortletDataContext portletDataContext,
 			StagedLayoutSet stagedLayoutSet)
-		throws PortletDataException {
+		throws Exception {
 
 		// Force to always export layout deletions
 
@@ -360,6 +360,14 @@ public class StagedLayoutSetStagedModelDataHandler
 		portletDataContext.getExportDataGroupElement(Layout.class);
 
 		long[] layoutIds = portletDataContext.getLayoutIds();
+
+		Group group = stagedLayoutSet.getGroup();
+
+		if (group.isLayoutPrototype()) {
+			layoutIds = _exportImportHelper.getAllLayoutIds(
+				group.getGroupId(), portletDataContext.isPrivateLayout());
+		}
+
 		List<StagedModel> stagedModels =
 			_stagedLayoutSetStagedModelRepository.fetchChildrenStagedModels(
 				portletDataContext, stagedLayoutSet);
@@ -776,6 +784,9 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagedLayoutSetStagedModelDataHandler.class);
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
 
 	@Reference
 	private ExportImportProcessCallbackRegistry

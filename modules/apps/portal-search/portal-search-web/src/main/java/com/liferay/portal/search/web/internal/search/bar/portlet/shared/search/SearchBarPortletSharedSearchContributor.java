@@ -14,22 +14,31 @@
 
 package com.liferay.portal.search.web.internal.search.bar.portlet.shared.search;
 
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.web.internal.display.context.Keywords;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
+import com.liferay.portal.search.web.internal.portlet.preferences.PortletPreferencesLookup;
 import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
+import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletDestinationUtil;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferencesImpl;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author André de Oliveira
@@ -48,6 +57,12 @@ public class SearchBarPortletSharedSearchContributor
 		SearchBarPortletPreferences searchBarPortletPreferences =
 			new SearchBarPortletPreferencesImpl(
 				portletSharedSearchSettings.getPortletPreferences());
+
+		if (!shouldContributeToCurrentPageSearch(
+				searchBarPortletPreferences, portletSharedSearchSettings)) {
+
+			return;
+		}
 
 		setKeywords(searchBarPortletPreferences, portletSharedSearchSettings);
 
@@ -73,6 +88,16 @@ public class SearchBarPortletSharedSearchContributor
 			new long[] {getScopeGroupId(portletSharedSearchSettings)});
 	}
 
+	protected Optional<Portlet> findTopSearchBarPortletOptional(
+		ThemeDisplay themeDisplay) {
+
+		Stream<Portlet> stream = getPortlets(themeDisplay);
+
+		return stream.filter(
+			this::isTopSearchBar
+		).findAny();
+	}
+
 	protected SearchScope getDefaultSearchScope() {
 		SearchBarPortletPreferences searchBarPortletPreferences =
 			new SearchBarPortletPreferencesImpl(Optional.empty());
@@ -83,6 +108,17 @@ public class SearchBarPortletSharedSearchContributor
 		return searchScopePreference.getSearchScope();
 	}
 
+	protected Stream<Portlet> getPortlets(ThemeDisplay themeDisplay) {
+		Layout layout = themeDisplay.getLayout();
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		List<Portlet> portlets = layoutTypePortlet.getAllPortlets(false);
+
+		return portlets.stream();
+	}
+
 	protected long getScopeGroupId(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
@@ -90,6 +126,13 @@ public class SearchBarPortletSharedSearchContributor
 			portletSharedSearchSettings.getThemeDisplay();
 
 		return themeDisplay.getScopeGroupId();
+	}
+
+	protected SearchBarPortletPreferences getSearchBarPortletPreferences(
+		Portlet portlet, ThemeDisplay themeDisplay) {
+
+		return new SearchBarPortletPreferencesImpl(
+			portletPreferencesLookup.fetchPreferences(portlet, themeDisplay));
 	}
 
 	protected SearchScope getSearchScope(
@@ -128,6 +171,64 @@ public class SearchBarPortletSharedSearchContributor
 		return false;
 	}
 
+	protected boolean isSamePortlet(
+		Portlet portlet,
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		if (Objects.equals(
+				portlet.getPortletId(),
+				portletSharedSearchSettings.getPortletId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isSearchBarInBodyWithTopSearchBarAlreadyPresent(
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		ThemeDisplay themeDisplay =
+			portletSharedSearchSettings.getThemeDisplay();
+
+		Optional<Portlet> optional = findTopSearchBarPortletOptional(
+			themeDisplay);
+
+		if (!optional.isPresent()) {
+			return false;
+		}
+
+		Portlet portlet = optional.get();
+
+		if (isSamePortlet(portlet, portletSharedSearchSettings)) {
+			return false;
+		}
+
+		SearchBarPortletPreferences searchBarPortletPreferences =
+			getSearchBarPortletPreferences(portlet, themeDisplay);
+
+		if (!SearchBarPortletDestinationUtil.isSameDestination(
+				searchBarPortletPreferences, themeDisplay)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	protected boolean isTopSearchBar(Portlet portlet) {
+		if (portlet.isStatic()) {
+			if (Objects.equals(
+					portlet.getPortletName(),
+					SearchBarPortletKeys.SEARCH_BAR)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected void setKeywords(
 		SearchBarPortletPreferences searchBarPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
@@ -159,5 +260,28 @@ public class SearchBarPortletSharedSearchContributor
 		searchContext.setAttribute(
 			SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX, Boolean.TRUE);
 	}
+
+	protected boolean shouldContributeToCurrentPageSearch(
+		SearchBarPortletPreferences searchBarPortletPreferences,
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		if (!SearchBarPortletDestinationUtil.isSameDestination(
+				searchBarPortletPreferences,
+				portletSharedSearchSettings.getThemeDisplay())) {
+
+			return false;
+		}
+
+		if (isSearchBarInBodyWithTopSearchBarAlreadyPresent(
+				portletSharedSearchSettings)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Reference
+	protected PortletPreferencesLookup portletPreferencesLookup;
 
 }

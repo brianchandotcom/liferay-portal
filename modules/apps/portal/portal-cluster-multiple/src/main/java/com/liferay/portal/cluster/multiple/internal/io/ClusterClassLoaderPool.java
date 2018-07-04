@@ -14,6 +14,11 @@
 
 package com.liferay.portal.cluster.multiple.internal.io;
 
+import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +31,24 @@ import org.osgi.framework.Version;
  * @author Lance Ji
  */
 public class ClusterClassLoaderPool {
+
+	public static String getContextName(ClassLoader classLoader) {
+		String contextName = ClassLoaderPool.getContextName(classLoader);
+
+		if (contextName.equals("null")) {
+			contextName = "null";
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to find contextName for ",
+						classLoader.toString(),
+						", send 'null' as contextName instead"));
+			}
+		}
+
+		return contextName;
+	}
 
 	public static void registerFallback(
 		String symbolicName, Version version, ClassLoader classLoader) {
@@ -69,6 +92,9 @@ public class ClusterClassLoaderPool {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClusterClassLoaderPool.class);
 
 	private static final Map<String, List<VersionedClassLoader>>
 		_fallbackClassLoaders = new ConcurrentHashMap<>();

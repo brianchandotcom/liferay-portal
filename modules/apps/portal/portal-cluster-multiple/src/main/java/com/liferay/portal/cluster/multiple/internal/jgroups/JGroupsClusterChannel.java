@@ -16,9 +16,9 @@ package com.liferay.portal.cluster.multiple.internal.jgroups;
 
 import com.liferay.portal.cluster.multiple.internal.ClusterChannel;
 import com.liferay.portal.cluster.multiple.internal.ClusterReceiver;
+import com.liferay.portal.cluster.multiple.internal.io.ClusterSerializer;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -155,11 +155,11 @@ public class JGroupsClusterChannel implements ClusterChannel {
 			return;
 		}
 
-		Serializer serializer = new Serializer();
+		ClusterSerializer clusterSerializer = new ClusterSerializer();
 
-		serializer.writeObject(message);
+		clusterSerializer.writeObject(message);
 
-		ByteBuffer byteBuffer = serializer.toByteBuffer();
+		ByteBuffer byteBuffer = clusterSerializer.toByteBuffer();
 
 		try {
 			_jChannel.send(

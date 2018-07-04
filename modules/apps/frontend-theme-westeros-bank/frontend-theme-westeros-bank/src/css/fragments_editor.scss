@@ -1,7 +1,8 @@
 .fragment-entry-link-content {
 	@import "imports";
 
-	@import "base";
-
-	@import "custom";
+	@import "partials/buttons";
+	@import "partials/contents";
+	@import "partials/fonts";
+	@import "partials/text-formats";
 }

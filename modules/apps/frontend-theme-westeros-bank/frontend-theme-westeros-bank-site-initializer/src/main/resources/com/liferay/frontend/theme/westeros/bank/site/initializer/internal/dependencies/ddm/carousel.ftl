@@ -1,5 +1,5 @@
 <style>
-	#<@portlet.namespace />.main-carousel-wrapper .item-wrapper-image {
+	#<@portlet.namespace />.wb-carousel-wrapper .item-wrapper-image {
 		background-size: cover;
 		padding-bottom: 100%;
 
@@ -13,7 +13,7 @@
 	}
 </style>
 
-<section class="container-fluid container-fluid-max-xl main-carousel-wrapper" id="<@portlet.namespace />">
+<section class="container-fluid container-fluid-max-xl wb-carousel-wrapper" id="<@portlet.namespace />">
 	<div class="carousel slide" data-ride="carousel" id="main-carousel">
 		<#if ItemHeading.getSiblings()?has_content>
 
@@ -49,7 +49,7 @@
 								</p>
 
 								<p>
-									<a class="btn btn-default btn-theme-default text-uppercase" href="${cur_ItemHeading.ItemLinkText.ItemLinkURL.getData()}">${cur_ItemHeading.ItemLinkText.getData()}</a>
+									<a class="btn btn-default btn-westeros-bank-default text-uppercase" href="${cur_ItemHeading.ItemLinkText.ItemLinkURL.getData()}">${cur_ItemHeading.ItemLinkText.getData()}</a>
 								</p>
 							</div>
 						</div>

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ResourcedModel;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TransientValue;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.ratings.kernel.model.RatingsEntry;
@@ -362,6 +364,21 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
 				"stagedModel", stagedModel, manifestSummary);
+
+			if (stagedModel instanceof AuditedModel) {
+				Element element =
+					portletDataContext.getImportDataStagedModelElement(
+						stagedModel);
+
+				String userUuid = element.attributeValue("user-uuid");
+
+				if (Validator.isNotNull(userUuid)) {
+					AuditedModel auditedModel = (AuditedModel)stagedModel;
+
+					auditedModel.setUserId(
+						portletDataContext.getUserId(userUuid));
+				}
+			}
 
 			if (stagedModel instanceof LocalizedModel) {
 				LocalizedModel localizedModel = (LocalizedModel)stagedModel;

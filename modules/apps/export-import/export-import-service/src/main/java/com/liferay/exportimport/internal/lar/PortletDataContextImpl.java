@@ -255,6 +255,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 			_references.add(getReferenceKey(classedModel));
 		}
 
+		if (classedModel instanceof AuditedModel) {
+			AuditedModel auditedModel = (AuditedModel)classedModel;
+
+			_addUserUuid(element, auditedModel.getUserUuid());
+		}
+
 		addZipEntry(path, classedModel);
 	}
 
@@ -2878,6 +2884,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		element.addAttribute(
 			"asset-entry-priority", String.valueOf(assetEntryPriority));
+	}
+
+	private void _addUserUuid(Element element, String userUuid) {
+		element.addAttribute("user-uuid", userUuid);
 	}
 
 	private static final Class<?>[] _XSTREAM_DEFAULT_ALLOWED_TYPES = {

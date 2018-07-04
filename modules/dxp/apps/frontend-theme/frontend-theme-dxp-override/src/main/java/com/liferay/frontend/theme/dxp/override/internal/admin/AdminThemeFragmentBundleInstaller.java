@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.theme.dxp.override.internal.admin;
 
-import com.liferay.frontend.theme.dxp.override.internal.ThemeFragmentBundleInstaller;
+import com.liferay.frontend.theme.dxp.override.internal.BaseThemeFragmentBundleInstaller;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(enabled = false, immediate = true)
 public class AdminThemeFragmentBundleInstaller
-	extends ThemeFragmentBundleInstaller {
+	extends BaseThemeFragmentBundleInstaller {
 
 	@Override
 	protected String getHostBundleSymbolicName() {

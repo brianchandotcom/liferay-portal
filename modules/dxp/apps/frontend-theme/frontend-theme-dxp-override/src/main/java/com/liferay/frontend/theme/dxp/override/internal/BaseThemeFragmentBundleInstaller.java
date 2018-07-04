@@ -50,7 +50,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Shuyang Zhou
  */
-public abstract class ThemeFragmentBundleInstaller {
+public abstract class BaseThemeFragmentBundleInstaller {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -238,7 +238,7 @@ public abstract class ThemeFragmentBundleInstaller {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ThemeFragmentBundleInstaller.class);
+		BaseThemeFragmentBundleInstaller.class);
 
 	private BundleTracker<Bundle> _bundleTracker;
 	private final Map<Bundle, Bundle> _trackedBundles = new HashMap<>();

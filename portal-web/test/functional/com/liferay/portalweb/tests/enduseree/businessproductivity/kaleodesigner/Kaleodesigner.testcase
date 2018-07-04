@@ -1646,7 +1646,7 @@
 			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#updateWorkflow" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 

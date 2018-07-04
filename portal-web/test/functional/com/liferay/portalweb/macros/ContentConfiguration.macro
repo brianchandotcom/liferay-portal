@@ -3,7 +3,7 @@
 		<for list="${checkContentNameList}" param="contentName">
 			<var name="key_contentName" value="${contentName}" />
 
-			<execute function="Click" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+			<execute function="Check#checkHiddenToggleSwitch" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL" />
 		</for>
 	</command>
 
@@ -126,7 +126,7 @@
 
 	<command name="uncheckContentNameList">
 		<for list="${uncheckContentNameList}" param="contentName">
-			<execute function="Uncheck" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX">
+			<execute function="Check#checkHiddenToggleSwitch" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL">
 				<var name="key_contentName" value="${contentName}" />
 			</execute>
 		</for>

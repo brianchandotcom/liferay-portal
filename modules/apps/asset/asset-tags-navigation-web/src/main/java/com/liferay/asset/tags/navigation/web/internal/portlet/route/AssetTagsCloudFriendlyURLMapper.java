@@ -15,7 +15,6 @@
 package com.liferay.asset.tags.navigation.web.internal.portlet.route;
 
 import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKeys;
-import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,13 +29,6 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = FriendlyURLMapper.class
 )
-public class AssetTagsCloudFriendlyURLMapper extends DefaultFriendlyURLMapper {
-
-	@Override
-	public String getMapping() {
-		return _MAPPING;
-	}
-
-	private static final String _MAPPING = "tag";
-
+public class AssetTagsCloudFriendlyURLMapper
+	extends BaseAssetTagsFriendlyURLMapper {
 }

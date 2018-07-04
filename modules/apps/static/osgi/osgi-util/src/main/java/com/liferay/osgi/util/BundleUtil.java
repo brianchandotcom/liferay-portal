@@ -16,7 +16,9 @@ package com.liferay.osgi.util;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 
 import org.osgi.framework.Bundle;
 
@@ -56,7 +58,9 @@ public class BundleUtil {
 			return null;
 		}
 
-		return enumeration.nextElement();
+		List<URL> list = Collections.list(enumeration);
+
+		return list.get(list.size() - 1);
 	}
 
 }

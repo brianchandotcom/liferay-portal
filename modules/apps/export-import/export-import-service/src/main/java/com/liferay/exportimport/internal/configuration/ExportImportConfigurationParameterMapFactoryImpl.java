@@ -485,9 +485,15 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 				PortletDataHandlerBoolean portletDataHandlerBoolean =
 					(PortletDataHandlerBoolean)exportControl;
 
-				boolean controlValue = MapUtil.getBoolean(
-					parameterMap,
-					portletDataHandlerBoolean.getNamespacedControlName(), true);
+				boolean controlValue =
+					portletDataHandlerBoolean.getDefaultState();
+
+				if (!portletDataHandlerBoolean.isDisabled()) {
+					controlValue = MapUtil.getBoolean(
+						parameterMap,
+						portletDataHandlerBoolean.getNamespacedControlName(),
+						true);
+				}
 
 				if ((portletDataAll || controlValue) &&
 					(portletDataHandlerBoolean.getClassName() != null)) {

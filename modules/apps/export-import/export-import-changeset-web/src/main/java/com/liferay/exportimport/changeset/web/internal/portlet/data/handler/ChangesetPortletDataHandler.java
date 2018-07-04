@@ -85,7 +85,7 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
 
-		String[] stagedModelTypesStrings = parameterMap.get("stagedModelTypes");
+		Object[] stagedModelTypesStrings = parameterMap.get("stagedModelTypes");
 
 		if (ArrayUtil.isEmpty(stagedModelTypesStrings)) {
 			return super.exportData(
@@ -97,7 +97,7 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 
 		for (int i = 0; i < stagedModelTypesStrings.length; i++) {
 			stagedModelTypes[i] = StagedModelType.parse(
-				stagedModelTypesStrings[i]);
+				String.valueOf(stagedModelTypesStrings[i]));
 		}
 
 		setDeletionSystemEventStagedModelTypes(stagedModelTypes);

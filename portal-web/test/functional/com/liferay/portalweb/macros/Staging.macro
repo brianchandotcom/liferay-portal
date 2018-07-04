@@ -971,7 +971,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${searchTerm}" />
 		</execute>
 

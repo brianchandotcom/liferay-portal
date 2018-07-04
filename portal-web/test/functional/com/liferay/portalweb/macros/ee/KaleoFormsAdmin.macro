@@ -593,8 +593,6 @@
 	<command name="saveFieldSet">
 		<execute macro="DDLDataDefinition#save" />
 
-		<execute macro="Alert#viewSuccessMessage" />
-
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<if>

@@ -25,11 +25,10 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySupplier;
+import com.liferay.portal.search.web.internal.portlet.preferences.PortletPreferencesLookup;
 import com.liferay.portal.search.web.internal.portlet.shared.task.PortletSharedRequestHelper;
 import com.liferay.portal.search.web.internal.search.request.SearchContainerBuilder;
 import com.liferay.portal.search.web.internal.search.request.SearchContextBuilder;
@@ -186,23 +185,6 @@ public class PortletSharedSearchRequestImpl
 			searchResponse, portletSharedRequestHelper);
 	}
 
-	protected PortletPreferences fetchPreferences(
-		Portlet portlet, ThemeDisplay themeDisplay) {
-
-		if (portlet.isStatic()) {
-			return portletPreferencesLocalService.fetchPreferences(
-				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				PortletKeys.PREFS_PLID_SHARED, portlet.getPortletId());
-		}
-		else {
-			return portletPreferencesLocalService.fetchPreferences(
-				themeDisplay.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-				portlet.getPortletId());
-		}
-	}
-
 	protected Stream<Portlet> getPortlets(ThemeDisplay themeDisplay) {
 		Layout layout = themeDisplay.getLayout();
 
@@ -244,7 +226,7 @@ public class PortletSharedSearchRequestImpl
 		RenderRequest renderRequest) {
 
 		Optional<PortletPreferences> portletPreferencesOptional =
-			Optional.ofNullable(fetchPreferences(portlet, themeDisplay));
+			portletPreferencesLookup.fetchPreferences(portlet, themeDisplay);
 
 		return searchSettings -> portletSharedSearchContributor.contribute(
 			new PortletSharedSearchSettingsImpl(
@@ -264,7 +246,7 @@ public class PortletSharedSearchRequestImpl
 	protected FacetedSearcherManager facetedSearcherManager;
 
 	@Reference
-	protected PortletPreferencesLocalService portletPreferencesLocalService;
+	protected PortletPreferencesLookup portletPreferencesLookup;
 
 	@Reference
 	protected PortletSharedRequestHelper portletSharedRequestHelper;

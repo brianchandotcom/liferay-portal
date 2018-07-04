@@ -180,7 +180,6 @@ public final class CommandLoggerHandler {
 		_commandLogLoggerElement.setAttribute("data-logid", "01");
 		_commandLogLoggerElement.setClassName("collapse command-log running");
 		_commandLogLoggerElement.setName("ul");
-		_commandLogLoggerElement.setWrittenToLogger(true);
 	}
 
 	public static void stopRunning() {
@@ -648,10 +647,6 @@ public final class CommandLoggerHandler {
 		LoggerElement loggerElement, String status) {
 
 		loggerElement.setAttribute("data-status01", status);
-
-		LoggerUtil.executeJavaScript(
-			"loggerInterface.fire('command-complete', '" +
-				loggerElement.getID() + "')");
 	}
 
 	private static void _warningLineGroupLoggerElement(

@@ -56,22 +56,10 @@ public class LoggerElement {
 
 	public LoggerElement(String id) {
 		_id = id;
-
-		if (Validator.isNotNull(id) && LoggerUtil.isWrittenToLogger(this)) {
-			_writtenToLogger = true;
-		}
 	}
 
 	public void addChildLoggerElement(LoggerElement childLoggerElement) {
 		_childLoggerElements.add(childLoggerElement);
-
-		if (_writtenToLogger) {
-			LoggerUtil.addChildLoggerElement(this, childLoggerElement);
-
-			childLoggerElement.setWrittenToLogger(true);
-
-			childLoggerElement.writeChildLoggerElements();
-		}
 	}
 
 	public void addClassName(String className) {
@@ -198,48 +186,22 @@ public class LoggerElement {
 
 	public void setAttribute(String attributeName, String attributeValue) {
 		_attributes.put(attributeName, attributeValue);
-
-		if (_writtenToLogger) {
-			LoggerUtil.setAttribute(this, attributeName, attributeValue);
-		}
 	}
 
 	public void setClassName(String className) {
 		_className = _fixClassName(className);
-
-		if (_writtenToLogger) {
-			LoggerUtil.setClassName(this);
-		}
 	}
 
 	public void setID(String id) {
-		String oldID = _id;
-
 		_id = id;
-
-		if (_writtenToLogger) {
-			LoggerUtil.setID(oldID, id);
-		}
 	}
 
 	public void setName(String name) {
 		_name = name;
-
-		if (_writtenToLogger) {
-			LoggerUtil.setName(this);
-		}
 	}
 
 	public void setText(String text) {
 		_text = text;
-
-		if (_writtenToLogger) {
-			LoggerUtil.setText(this);
-		}
-	}
-
-	public void setWrittenToLogger(boolean writtenToLogger) {
-		_writtenToLogger = writtenToLogger;
 	}
 
 	@Override
@@ -298,18 +260,6 @@ public class LoggerElement {
 		return sb.toString();
 	}
 
-	public void writeChildLoggerElements() {
-		if (_writtenToLogger) {
-			for (LoggerElement childLoggerElement : _childLoggerElements) {
-				LoggerUtil.addChildLoggerElement(this, childLoggerElement);
-
-				childLoggerElement.setWrittenToLogger(true);
-
-				childLoggerElement.writeChildLoggerElements();
-			}
-		}
-	}
-
 	private String _fixClassName(String className) {
 		String[] classNames = StringUtil.split(className, " ");
 
@@ -326,6 +276,5 @@ public class LoggerElement {
 	private String _id;
 	private String _name = "div";
 	private String _text = "";
-	private boolean _writtenToLogger;
 
 }

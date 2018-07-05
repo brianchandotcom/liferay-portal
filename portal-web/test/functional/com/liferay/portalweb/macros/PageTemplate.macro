@@ -23,7 +23,9 @@
 			<var name="rowEntry" value="${pageTemplateName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}">
+			<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		</execute>
 	</command>
 
 	<command name="deactivateAndActivate">
@@ -196,8 +198,6 @@
 			<var name="rowEntry" value="${pageTemplateName}" />
 		</execute>
 
-		<var name="key_pageTemplateDescription" value="${pageTemplateDescription}" />
-
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Configure" />
 			<var name="rowEntry" value="${pageTemplateName}" />
@@ -221,6 +221,8 @@
 			<var name="rowEntry" value="${pageTemplateName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateStatus}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateStatus}">
+			<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		</execute>
 	</command>
 </definition>

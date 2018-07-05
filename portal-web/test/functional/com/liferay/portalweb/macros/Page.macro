@@ -823,7 +823,7 @@
 		</execute>
 
 		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="${menuItem}" />
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON">

@@ -958,8 +958,9 @@ public class JenkinsResultsParserUtil {
 
 		Properties buildProperties = getBuildProperties();
 
-		String workingDirectoryPath = buildProperties.getProperty(
-			"base.repository.dir") + "/liferay-portal";
+		String workingDirectoryPath =
+			buildProperties.getProperty("base.repository.dir") +
+				"/liferay-portal";
 
 		if (!portalBranchName.equals("master")) {
 			workingDirectoryPath = combine(

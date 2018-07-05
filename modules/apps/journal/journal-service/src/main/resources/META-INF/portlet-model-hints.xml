@@ -22,7 +22,7 @@
 		</field>
 		<field name="version" type="double" />
 		<field name="urlTitle" type="String">
-			<hint name="max-length">150</hint>
+			<hint name="max-length">255</hint>
 		</field>
 		<field name="content" type="String">
 			<hint-collection name="CLOB" />

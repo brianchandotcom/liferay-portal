@@ -1143,35 +1143,89 @@
 			<var name="siteName" value="Moon Rocks 101" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Roles" />
+		</execute>
+
+		<execute macro="Role#add">
+			<var name="roleTitle" value="Regular Role Name" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Roles" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletOption" value="Home Folder Permissions" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoRolesAdminFromPortletConfiguration">
-			<var name="roleName" value="User" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoPermissionSectionViaDropdown">
-			<var name="contentTitle" value="Content" />
-			<var name="permissionName" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
-			<var name="sectionTitle" value="Site Administration" />
-		</execute>
-
-		<execute macro="Role#addPermissions">
+		<execute macro="Role#definePermissionsCP">
 			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_FOLDER_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_ADD_SUBFOLDER_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_UPDATE_CHECKBOX" />
+			<var name="roleTitle" value="Regular Role Name" />
 		</execute>
 
-		<execute macro="IFrame#closeFrame" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Moon Rocks 101" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Members" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignUserAsMemberCP">
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="newPassword" value="test1" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleTitle" value="Regular Role Name" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Moon Rocks 101" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -1182,6 +1236,12 @@
 		<execute macro="DMFolder#addCP">
 			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
 			<var name="siteName" value="Moon Rocks 101" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMFolder#viewCP">
@@ -1242,6 +1302,13 @@
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Moon Rocks 101" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

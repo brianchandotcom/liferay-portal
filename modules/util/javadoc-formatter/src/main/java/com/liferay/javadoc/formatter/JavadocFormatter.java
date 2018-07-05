@@ -1098,8 +1098,13 @@ public class JavadocFormatter {
 			return;
 		}
 
-		_imports = JavaImportsFormatter.getImports(originalContent);
 		_packagePath = ToolsUtil.getPackagePath(fileName);
+
+		if (!_packagePath.startsWith("com.liferay")) {
+			return;
+		}
+
+		_imports = JavaImportsFormatter.getImports(originalContent);
 
 		JavaClass javaClass = null;
 

@@ -33,13 +33,20 @@ import com.thoughtworks.qdox.model.JavaType;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -57,18 +64,16 @@ public class JavadocFormatterUtil {
 
 		Element rootElement = document.addElement("deprecations");
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
+		String[] excludes = {
+			"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
+			"**/classes/**", "**/node_modules/**", "**/portal-client/**",
+			"**/tmp/**"
+		};
 
-		directoryScanner.setBasedir(dirName);
-		directoryScanner.setExcludes(
-			new String[] {
-				"**\\build\\**", "**\\classes\\**", "**\\portal-client\\**"
-			});
-		directoryScanner.setIncludes(new String[] {"**\\*.java"});
+		List<String> fileNames = scanForFiles(
+			dirName, excludes, new String[] {"**/*.java"});
 
-		directoryScanner.scan();
-
-		for (String fileName : directoryScanner.getIncludedFiles()) {
+		for (String fileName : fileNames) {
 			fileName = StringUtil.replace(
 				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
@@ -103,6 +108,71 @@ public class JavadocFormatterUtil {
 
 		return StringUtil.replace(
 			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	}
+
+	public static List<String> scanForFiles(
+			String dirName, String[] excludes, String[] includes)
+		throws Exception {
+
+		final List<String> fileNames = new ArrayList<>();
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		final List<PathMatcher> excludeDirPathMatchers = new ArrayList<>();
+
+		for (String exclude : excludes) {
+			if (exclude.endsWith("/**")) {
+				exclude = exclude.substring(0, exclude.length() - 3);
+			}
+
+			excludeDirPathMatchers.add(
+				fileSystem.getPathMatcher("glob:" + exclude));
+		}
+
+		final List<PathMatcher> includeFilePathMatchers = new ArrayList<>();
+
+		for (String include : includes) {
+			includeFilePathMatchers.add(
+				fileSystem.getPathMatcher("glob:" + include));
+		}
+
+		Files.walkFileTree(
+			Paths.get(dirName),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path dirPath, BasicFileAttributes basicFileAttributes) {
+
+					for (PathMatcher pathMatcher : excludeDirPathMatchers) {
+						if (pathMatcher.matches(_getCanonicalPath(dirPath))) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+					Path filePath, BasicFileAttributes basicFileAttributes) {
+
+					for (PathMatcher pathMatcher : includeFilePathMatchers) {
+						if (!pathMatcher.matches(_getCanonicalPath(filePath))) {
+							continue;
+						}
+
+						fileNames.add(filePath.toString());
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return fileNames;
 	}
 
 	public static String syncDeprecatedVersion(
@@ -175,6 +245,19 @@ public class JavadocFormatterUtil {
 			List<JavaType> javaTypes = javaExecutable.getParameterTypes();
 
 			deprecatedElement.addAttribute("signature", javaTypes.toString());
+		}
+	}
+
+	private static Path _getCanonicalPath(Path path) {
+		try {
+			File file = path.toFile();
+
+			File canonicalFile = file.getCanonicalFile();
+
+			return canonicalFile.toPath();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
 		}
 	}
 

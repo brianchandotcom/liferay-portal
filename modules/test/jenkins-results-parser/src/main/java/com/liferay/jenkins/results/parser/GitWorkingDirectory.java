@@ -1117,10 +1117,6 @@ public class GitWorkingDirectory {
 		return _repositoryName;
 	}
 
-	public String getRepositoryType() {
-		return _repositoryName;
-	}
-
 	public String getRepositoryUsername() {
 		return _repositoryUsername;
 	}

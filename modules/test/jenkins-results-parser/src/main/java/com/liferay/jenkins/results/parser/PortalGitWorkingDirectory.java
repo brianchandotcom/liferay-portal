@@ -242,13 +242,6 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return npmModuleDirsList;
 	}
 
-	@Override
-	public String getRepositoryType() {
-		String repositoryName = getRepositoryName();
-
-		return repositoryName.replace("-ee", "");
-	}
-
 	private boolean _isNPMTestModuleDir(File moduleDir) {
 		List<File> packageJSONFiles = JenkinsResultsParserUtil.findFiles(
 			moduleDir, "package\\.json");

@@ -37,11 +37,4 @@ public class SubrepositoryGitWorkingDirectory extends GitWorkingDirectory {
 		super(upstreamBranchName, workingDirectoryPath, repositoryName);
 	}
 
-	@Override
-	public String getRepositoryType() {
-		String repositoryName = getRepositoryName();
-
-		return repositoryName.replace("-private", "");
-	}
-
 }

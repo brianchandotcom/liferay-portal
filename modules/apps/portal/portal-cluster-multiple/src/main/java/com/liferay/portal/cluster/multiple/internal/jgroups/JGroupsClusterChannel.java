@@ -155,6 +155,11 @@ public class JGroupsClusterChannel implements ClusterChannel {
 			return;
 		}
 
+		if (message == null) {
+			throw new IllegalArgumentException(
+				"Message sent to address " + address + " can not be null");
+		}
+
 		ClusterSerializer clusterSerializer = new ClusterSerializer();
 
 		clusterSerializer.writeObject(message);

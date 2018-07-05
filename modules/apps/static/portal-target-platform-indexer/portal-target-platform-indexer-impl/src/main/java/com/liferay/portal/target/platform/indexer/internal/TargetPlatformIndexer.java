@@ -20,6 +20,7 @@ import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.resource.CapabilityBuilder;
 
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.ByteArrayOutputStream;
@@ -181,7 +182,10 @@ public class TargetPlatformIndexer implements Indexer {
 			return;
 		}
 
-		Path tempJarPath = tempPath.resolve(jarPath.getFileName());
+		String jarPathFileName = String.valueOf(jarPath.getFileName());
+
+		Path tempJarPath = tempPath.resolve(
+			URLCodec.encodeURL(jarPathFileName));
 
 		Files.copy(
 			jarPath, tempJarPath, StandardCopyOption.COPY_ATTRIBUTES,

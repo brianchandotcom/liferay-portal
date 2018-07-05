@@ -224,16 +224,13 @@ public abstract class BaseClientTestCase {
 						"scope", scope
 					)),
 				this::parseAuthorizationCodeString);
-
-			MultivaluedMap<String, String> formData =
-				new MultivaluedHashMap<>();
-
-			formData.add("client_id", clientId);
-			formData.add("client_secret", "oauthTestApplicationSecret");
-			formData.add("code", authorizationCode);
-			formData.add("grant_type", "authorization_code");
-
-			return invocationBuilder.post(Entity.form(formData));
+	
+			BiFunction<String, Invocation.Builder, Response>
+				authorizationCodePKCEFunction = getExchangeAuthorizationCode(
+					authorizationCode, null);
+	
+			return authorizationCodePKCEFunction.apply(
+				clientId, invocationBuilder);
 		};
 	}
 
@@ -267,16 +264,14 @@ public abstract class BaseClientTestCase {
 						"response_type", "code"
 					)),
 				this::parseAuthorizationCodeString);
-
-			MultivaluedMap<String, String> formData =
-				new MultivaluedHashMap<>();
-
-			formData.add("client_id", clientId);
-			formData.add("code", authorizationCode);
-			formData.add("code_verifier", codeVerifier);
-			formData.add("grant_type", "authorization_code");
-
-			return invocationBuilder.post(Entity.form(formData));
+	
+			BiFunction<String, Invocation.Builder, Response>
+				authorizationCodePKCEFunction =
+					getExchangeAuthorizationCodePKCE(
+						authorizationCode, null, codeVerifier);
+	
+			return authorizationCodePKCEFunction.apply(
+				clientId, invocationBuilder);
 		};
 	}
 

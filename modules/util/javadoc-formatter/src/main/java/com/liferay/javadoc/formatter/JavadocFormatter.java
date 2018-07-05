@@ -74,8 +74,6 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.tools.ant.DirectoryScanner;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -165,13 +163,11 @@ public class JavadocFormatter {
 		_updateJavadocs = GetterUtil.getBoolean(
 			arguments.get("javadoc.update"));
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(_inputDirName);
-		directoryScanner.setExcludes(
-			new String[] {
-				"**\\build\\**", "**\\classes\\**", "**\\portal-client\\**"
-			});
+		String[] excludes = {
+			"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
+			"**/classes/**", "**/node_modules/**", "**/portal-client/**",
+			"**/tmp/**"
+		};
 
 		for (String limit : limits) {
 			List<String> includes = new ArrayList<>();
@@ -183,25 +179,20 @@ public class JavadocFormatter {
 
 				for (String curLimit : limitArray) {
 					includes.add(
-						"**\\" + StringUtil.replace(curLimit, '.', '\\') +
-							"\\**\\*.java");
-					includes.add("**\\" + curLimit + ".java");
+						"**/" + StringUtil.replace(curLimit, '.', '/') +
+							"/**/*.java");
+					includes.add("**/" + curLimit + ".java");
 				}
 			}
 			else {
-				includes.add("**\\*.java");
+				includes.add("**/*.java");
 			}
 
-			directoryScanner.setIncludes(
+			List<String> fileNames = JavadocFormatterUtil.scanForFiles(
+				_inputDirName, excludes,
 				includes.toArray(new String[includes.size()]));
 
-			directoryScanner.scan();
-
-			String[] fileNames = StringPool.EMPTY_ARRAY;
-
-			fileNames = directoryScanner.getIncludedFiles();
-
-			if ((fileNames.length == 0) && Validator.isNotNull(limit) &&
+			if (fileNames.isEmpty() && Validator.isNotNull(limit) &&
 				!limit.startsWith("$")) {
 
 				StringBundler sb = new StringBundler("Limit file not found: ");

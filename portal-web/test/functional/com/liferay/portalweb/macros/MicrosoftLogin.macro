@@ -9,6 +9,8 @@
 			<then>
 				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_USER_CHOOSER" value1="${key_userEmail}" />
 
+				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_NEXT_BUTTON" value1="Next" />
+
 				<execute function="Type" locator1="MicrosoftLogin#LOGIN_PASSWORD_FIELD" value1="${key_userPassword}" />
 
 				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_SIGN_IN_BUTTON" value1="Sign in" />
@@ -18,6 +20,8 @@
 
 				<then>
 					<execute function="Type" locator1="MicrosoftLogin#LOGIN_EMAIL_FIELD" value1="${key_userEmail}" />
+
+					<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_NEXT_BUTTON" value1="Next" />
 
 					<execute function="Type" locator1="MicrosoftLogin#LOGIN_PASSWORD_FIELD" value1="${key_userPassword}" />
 

@@ -178,8 +178,7 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected Cookie getAuthenticatedCookie(
-			String login, String password, String hostname)
-		throws URISyntaxException {
+		String login, String password, String hostname) {
 
 		Invocation.Builder invocationBuilder = getInvocationBuilder(
 			hostname, getLoginWebTarget());
@@ -280,15 +279,13 @@ public abstract class BaseClientTestCase {
 		};
 	}
 
-	protected WebTarget getAuthorizeDecisionWebTarget()
-		throws URISyntaxException {
-
+	protected WebTarget getAuthorizeDecisionWebTarget()	 {
 		WebTarget webTarget = getAuthorizeWebTarget();
 
 		return webTarget.path("decision");
 	}
 
-	protected WebTarget getAuthorizeWebTarget() throws URISyntaxException {
+	protected WebTarget getAuthorizeWebTarget() {
 		WebTarget webTarget = getOAuth2WebTarget();
 
 		return webTarget.path("authorize");
@@ -334,12 +331,10 @@ public abstract class BaseClientTestCase {
 		return invocationBuilder;
 	}
 
-	protected WebTarget getJsonWebTarget(String... paths)
-		throws URISyntaxException {
-
+	protected WebTarget getJsonWebTarget(String... paths)	 {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_url.toURI());
+		WebTarget webTarget = client.target(_getPortalURL());
 
 		webTarget = webTarget.path("api");
 		webTarget = webTarget.path("jsonws");
@@ -351,10 +346,10 @@ public abstract class BaseClientTestCase {
 		return webTarget;
 	}
 
-	protected WebTarget getLoginWebTarget() throws URISyntaxException {
+	protected WebTarget getLoginWebTarget() {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_url.toURI());
+		WebTarget webTarget = client.target(_getPortalURL());
 
 		webTarget = webTarget.path("c");
 		webTarget = webTarget.path("portal");
@@ -363,10 +358,10 @@ public abstract class BaseClientTestCase {
 		return webTarget;
 	}
 
-	protected WebTarget getOAuth2WebTarget() throws URISyntaxException {
+	protected WebTarget getOAuth2WebTarget() {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_url.toURI());
+		WebTarget webTarget = client.target(_getPortalURL());
 
 		webTarget = webTarget.path("o");
 		webTarget = webTarget.path("oauth2");
@@ -410,48 +405,40 @@ public abstract class BaseClientTestCase {
 		};
 	}
 
-	protected String getToken(String clientId) throws URISyntaxException {
+	protected String getToken(String clientId) {
 		return getToken(clientId, null);
 	}
 
-	protected String getToken(String clientId, String hostname)
-		throws URISyntaxException {
-
+	protected String getToken(String clientId, String hostname)	 {
 		return parseTokenString(
 			getClientCredentials(
 				clientId, getTokenInvocationBuilder(hostname)));
 	}
 
 	protected <T> T getToken(
-			String clientId, String hostname,
-			BiFunction<String, Invocation.Builder, Response>
-				credentialsBiFunction,
-			Function<Response, T> tokenParser)
-		throws URISyntaxException {
+		String clientId, String hostname,
+		BiFunction<String, Invocation.Builder, Response> credentialsBiFunction,
+		Function<Response, T> tokenParser) {
 
 		return tokenParser.apply(
 			credentialsBiFunction.apply(
 				clientId, getTokenInvocationBuilder(hostname)));
 	}
 
-	protected Invocation.Builder getTokenInvocationBuilder(String hostname)
-		throws URISyntaxException {
-
+	protected Invocation.Builder getTokenInvocationBuilder(String hostname) {
 		return getInvocationBuilder(hostname, getTokenWebTarget());
 	}
 
-	protected WebTarget getTokenWebTarget() throws URISyntaxException {
+	protected WebTarget getTokenWebTarget() {
 		WebTarget webTarget = getOAuth2WebTarget();
 
 		return webTarget.path("token");
 	}
 
-	protected WebTarget getWebTarget(String... paths)
-		throws URISyntaxException {
-
+	protected WebTarget getWebTarget(String... paths)	 {
 		Client client = getClient();
 
-		WebTarget target = client.target(_url.toURI());
+		WebTarget target = client.target(_getPortalURL());
 
 		target = target.path("o");
 		target = target.path("oauth2-test");
@@ -618,6 +605,15 @@ public abstract class BaseClientTestCase {
 		}
 
 		return parameterMap.get("error")[0];
+	}
+
+	private URI _getPortalURL() {
+		try {
+			return _url.toURI();
+		}
+		catch (URISyntaxException urise) {
+			throw new RuntimeException(urise);
+		}
 	}
 
 	@ArquillianResource

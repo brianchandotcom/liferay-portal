@@ -488,13 +488,13 @@
 		<execute macro="DisplayPages#mapEditableTextToAsset">
 			<var name="fragmentName" value="Fragment Name" />
 			<var name="id" value="test3" />
-			<var name="itemName" value="tagNames" />
+			<var name="itemName" value="Tags" />
 		</execute>
 
 		<execute macro="DisplayPages#mapEditableTextToAsset">
 			<var name="fragmentName" value="Fragment Name" />
 			<var name="id" value="test4" />
-			<var name="itemName" value="publishDate" />
+			<var name="itemName" value="Publish Date" />
 		</execute>
 
 		<execute macro="Button#clickPublish" />

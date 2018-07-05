@@ -15,6 +15,7 @@
 package com.liferay.lang.builder;
 
 import com.liferay.lang.builder.comparator.LangBuilderCategoryComparator;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -263,9 +264,10 @@ public class LangBuilder {
 
 	private void _addMessage(
 		Map<LangBuilderCategory, Map<String, String>> messages, String key,
-		String value) {
+		String value, boolean useSingleCategory) {
 
-		LangBuilderCategory langBuilderCategory = _getLangBuilderCategory(key);
+		LangBuilderCategory langBuilderCategory = _getLangBuilderCategory(
+			key, useSingleCategory);
 
 		Map<String, String> categoryMessages = messages.get(
 			langBuilderCategory);
@@ -499,23 +501,28 @@ public class LangBuilder {
 		return value;
 	}
 
-	private LangBuilderCategory _getLangBuilderCategory(String key) {
-		LangBuilderCategory messagesCategory = null;
+	private LangBuilderCategory _getLangBuilderCategory(
+		String key, boolean useSingleCategory) {
+
+		LangBuilderCategory defaultCategory = LangBuilderCategory.MESSAGES;
+
+		if (useSingleCategory) {
+			return defaultCategory;
+		}
 
 		for (LangBuilderCategory langBuilderCategory :
 				LangBuilderCategory.values()) {
 
 			String prefix = langBuilderCategory.getPrefix();
 
-			if (Validator.isNull(prefix)) {
-				messagesCategory = langBuilderCategory;
-			}
-			else if (key.startsWith(prefix)) {
+			if (Validator.isNotNull(prefix) &&
+				key.startsWith(langBuilderCategory.getPrefix())) {
+
 				return langBuilderCategory;
 			}
 		}
 
-		return messagesCategory;
+		return defaultCategory;
 	}
 
 	private String _getMicrosoftLanguageId(String languageId) {
@@ -579,6 +586,16 @@ public class LangBuilder {
 			return null;
 		}
 
+		boolean useSingleCategory = true;
+
+		String absolutePath = StringUtil.replace(
+			propertiesFile.getAbsolutePath(), CharPool.BACK_SLASH,
+			CharPool.SLASH);
+
+		if (absolutePath.contains("/portal-impl/src/content/")) {
+			useSingleCategory = false;
+		}
+
 		String content = _read(propertiesFile);
 
 		Map<LangBuilderCategory, Map<String, String>> messages = new TreeMap<>(
@@ -609,7 +626,7 @@ public class LangBuilder {
 					value = _fixEnglishTranslation(key, value);
 				}
 
-				_addMessage(messages, key, value);
+				_addMessage(messages, key, value, useSingleCategory);
 			}
 		}
 
@@ -622,13 +639,15 @@ public class LangBuilder {
 		for (Map.Entry<LangBuilderCategory, Map<String, String>> entry1 :
 				messages.entrySet()) {
 
-			LangBuilderCategory langBuilderCategory = entry1.getKey();
+			if (!useSingleCategory) {
+				LangBuilderCategory langBuilderCategory = entry1.getKey();
 
-			sb.append("##\n");
-			sb.append("## ");
-			sb.append(langBuilderCategory.getDescription());
-			sb.append("\n");
-			sb.append("##\n\n");
+				sb.append("##\n");
+				sb.append("## ");
+				sb.append(langBuilderCategory.getDescription());
+				sb.append("\n");
+				sb.append("##\n\n");
+			}
 
 			Map<String, String> categoryMessages = entry1.getValue();
 

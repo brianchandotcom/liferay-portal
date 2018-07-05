@@ -768,6 +768,10 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Dummy Page" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="hideFromNavMenu" value="true" />
 			<var name="pageName" value="Language Page" />
 		</execute>

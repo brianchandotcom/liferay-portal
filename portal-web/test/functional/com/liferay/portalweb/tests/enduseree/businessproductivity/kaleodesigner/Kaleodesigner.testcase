@@ -1304,7 +1304,7 @@
 
 		<execute macro="Workflow#publishInvalidWorkflowDefinition">
 			<var name="errorMessage" value="Please enter valid content." />
-			<var name="republish" value="true" />
+			<var name="update" value="true" />
 		</execute>
 	</command>
 

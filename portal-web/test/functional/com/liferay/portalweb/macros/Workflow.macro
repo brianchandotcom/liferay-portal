@@ -438,7 +438,7 @@
 
 	<command name="publishInvalidWorkflowDefinition">
 		<if>
-			<equals arg1="${republish}" arg2="true" />
+			<isset var="update" />
 			<then>
 				<execute function="AssertClickNoError" locator1="Button#UPDATE" value1="Update" />
 			</then>

@@ -27,8 +27,6 @@ import java.io.Serializable;
 
 import java.net.InetAddress;
 
-import java.nio.ByteBuffer;
-
 import org.jgroups.JChannel;
 import org.jgroups.protocols.TP;
 import org.jgroups.stack.Protocol;
@@ -160,16 +158,8 @@ public class JGroupsClusterChannel implements ClusterChannel {
 				"Message sent to address " + address + " can not be null");
 		}
 
-		ClusterSerializer clusterSerializer = new ClusterSerializer();
-
-		clusterSerializer.writeObject(message);
-
-		ByteBuffer byteBuffer = clusterSerializer.toByteBuffer();
-
 		try {
-			_jChannel.send(
-				address, byteBuffer.array(), byteBuffer.position(),
-				byteBuffer.remaining());
+			_jChannel.send(address, ClusterSerializer.writeObject(message));
 
 			if (_log.isDebugEnabled()) {
 				if (address == null) {

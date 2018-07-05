@@ -19,6 +19,8 @@
 		<var method="TestPropsUtil#get('sharepoint.oauth.configuration.scope')" name="configurationScope" />
 		<var method="TestPropsUtil#get('sharepoint.oauth.site.domain')" name="siteDomain" />
 		<var method="TestPropsUtil#get('sharepoint.oauth.tenant.id')" name="tenantId" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.user.name')" name="userName" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.user.password')" name="userPassword" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -116,7 +118,10 @@
 			<var name="key_dmRepositoryName" value="${configurationName}" />
 		</execute>
 
-		<execute macro="MicrosoftLogin#accountSignIn" />
+		<execute macro="MicrosoftLogin#accountSignIn">
+			<var name="userEmail" value="${userName}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
 
 		<execute macro="MicrosoftLogin#confirmSharepointApp">
 			<var name="dmRepositoryName" value="${configurationName}" />

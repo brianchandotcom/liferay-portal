@@ -94,7 +94,8 @@ public interface DDMRESTDataProviderSettings
 	public String filterParameterName();
 
 	@DDMFormField(
-		label = "%support-pagination", properties = "showAsSwitcher=true"
+		label = "%support-pagination", predefinedValue = "false",
+		properties = "showAsSwitcher=true"
 	)
 	public boolean pagination();
 

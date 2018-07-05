@@ -111,7 +111,7 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 		}
 
 		ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue(ddmFormValues, "pagination", "true"));
+			createDDMFormFieldValue(ddmFormValues, "pagination", "false"));
 	}
 
 	protected void addStartEndParameters(DDMFormValues ddmFormValues) {

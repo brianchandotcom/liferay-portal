@@ -19,6 +19,8 @@
 <liferay-staging:defineObjects />
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
+
 if (liveGroup == null) {
 	liveGroup = group;
 	liveGroupId = groupId;
@@ -76,8 +78,12 @@ portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 portletURL.setParameter("displayStyle", displayStyle);
 
+if (Validator.isBlank(backURL)) {
+	backURL = portletURL.toString();
+}
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(portletURL.toString());
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custom-export") : LanguageUtil.format(request, "new-export-based-on-x", exportImportConfiguration.getName(), false));
 %>
@@ -173,7 +179,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 		<aui:button-row>
 			<aui:button type="submit" value="export" />
 
-			<aui:button href="<%= portletURL.toString() %>" type="cancel" />
+			<aui:button href="<%= backURL %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

@@ -327,6 +327,12 @@ public class LayoutRevisionLocalServiceWrapper
 			layoutBranchId, plid);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.LayoutRevision> getLayoutRevisions(
+		int status) {
+		return _layoutRevisionLocalService.getLayoutRevisions(status);
+	}
+
 	/**
 	* Returns a range of all the layout revisions.
 	*

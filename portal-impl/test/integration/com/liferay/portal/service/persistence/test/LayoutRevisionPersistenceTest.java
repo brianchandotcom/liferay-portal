@@ -352,6 +352,13 @@ public class LayoutRevisionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByStatus() throws Exception {
+		_persistence.countByStatus(RandomTestUtil.nextInt());
+
+		_persistence.countByStatus(0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		LayoutRevision newLayoutRevision = addLayoutRevision();
 

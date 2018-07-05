@@ -14,6 +14,7 @@
 
 package com.liferay.javadoc.formatter;
 
+import com.liferay.javadoc.formatter.util.JavadocFormatterUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.Dom4jUtil;
@@ -107,6 +108,9 @@ public class JavadocFormatter {
 			arguments, "javadoc.author", JavadocFormatterArgs.AUTHOR);
 
 		_author = author;
+
+		_deprecationSyncDirName = ArgumentsUtil.getString(
+			arguments, "javadoc.deprecation.sync.dir", null);
 
 		_generateXml = GetterUtil.getBoolean(
 			arguments.get("javadoc.generate.xml"));
@@ -259,7 +263,7 @@ public class JavadocFormatter {
 				String oldJavadocsRuntimeXmlContent = StringPool.BLANK;
 
 				if (javadocsRuntimeXmlFile.exists()) {
-					oldJavadocsRuntimeXmlContent = _read(
+					oldJavadocsRuntimeXmlContent = JavadocFormatterUtil.read(
 						javadocsRuntimeXmlFile);
 				}
 
@@ -561,6 +565,16 @@ public class JavadocFormatter {
 
 			value = ToolsUtil.stripFullyQualifiedClassNames(
 				value, _imports, _packagePath);
+
+			if (name.equals("deprecated") &&
+				(_deprecationSyncDirName != null)) {
+
+				Element nameElement = parentElement.element("name");
+
+				value = JavadocFormatterUtil.syncDeprecatedVersion(
+					value, javaAnnotatedElement, nameElement.getText(),
+					_fullyQualifiedName, _getDeprecationsDocument());
+			}
 
 			value = _trimMultilineText(value);
 
@@ -1069,7 +1083,7 @@ public class JavadocFormatter {
 	private void _format(String fileName) throws Exception {
 		File file = new File(_inputDirName, fileName);
 
-		String originalContent = _read(file);
+		String originalContent = JavadocFormatterUtil.read(file);
 
 		String absolutePath = _getAbsolutePath(fileName);
 
@@ -1101,6 +1115,8 @@ public class JavadocFormatter {
 
 			return;
 		}
+
+		_fullyQualifiedName = javaClass.getFullyQualifiedName();
 
 		String javadocLessContent = _removeJavadocFromJava(
 			javaClass, originalContent);
@@ -1337,6 +1353,23 @@ public class JavadocFormatter {
 		int pos = fileName.lastIndexOf(StringPool.SLASH);
 
 		return fileName.substring(pos + 1, fileName.length() - 5);
+	}
+
+	private Document _getDeprecationsDocument() {
+		if (_deprecationsDocument != null) {
+			return _deprecationsDocument;
+		}
+
+		try {
+			_deprecationsDocument =
+				JavadocFormatterUtil.getDeprecationsDocument(
+					_deprecationSyncDirName);
+		}
+		catch (Exception e) {
+			_deprecationsDocument = DocumentHelper.createDocument();
+		}
+
+		return _deprecationsDocument;
 	}
 
 	private String _getExecutableKey(Element executableElement) {
@@ -1581,7 +1614,7 @@ public class JavadocFormatter {
 			_modifiedFileNames.add(javadocsXmlFile.getAbsolutePath());
 		}
 
-		javadocsXmlContent = _read(javadocsXmlFile);
+		javadocsXmlContent = JavadocFormatterUtil.read(javadocsXmlFile);
 
 		SAXReader saxReader = _getSAXReader();
 
@@ -1937,14 +1970,6 @@ public class JavadocFormatter {
 		}
 
 		return false;
-	}
-
-	private String _read(File file) throws IOException {
-		String s = new String(
-			Files.readAllBytes(file.toPath()), StringPool.UTF8);
-
-		return StringUtil.replace(
-			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	private String _removeJavadocFromJava(JavaClass javaClass, String content) {
@@ -2360,6 +2385,9 @@ public class JavadocFormatter {
 	}
 
 	private final String _author;
+	private Document _deprecationsDocument;
+	private final String _deprecationSyncDirName;
+	private String _fullyQualifiedName;
 	private final boolean _generateXml;
 	private String _imports;
 	private final boolean _initializeMissingJavadocs;

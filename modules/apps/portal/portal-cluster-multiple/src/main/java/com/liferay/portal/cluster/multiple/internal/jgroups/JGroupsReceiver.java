@@ -15,7 +15,7 @@
 package com.liferay.portal.cluster.multiple.internal.jgroups;
 
 import com.liferay.portal.cluster.multiple.internal.ClusterReceiver;
-import com.liferay.portal.cluster.multiple.internal.io.ClusterDeserializer;
+import com.liferay.portal.cluster.multiple.internal.io.ClusterSerializerUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -65,7 +65,7 @@ public class JGroupsReceiver extends ReceiverAdapter {
 
 		try {
 			_clusterReceiver.receive(
-				ClusterDeserializer.readObject(
+				ClusterSerializerUtil.readObject(
 					rawBuffer, message.getOffset(), message.getLength()),
 				new AddressImpl(message.getSrc()));
 		}

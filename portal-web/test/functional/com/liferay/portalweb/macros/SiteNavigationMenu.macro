@@ -13,6 +13,10 @@
 			</then>
 		</if>
 
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="${privacy}" />
+		</execute>
+
 		<execute macro="Portlet#expandTree" />
 
 		<execute macro="Portlet#selectTreeNode">

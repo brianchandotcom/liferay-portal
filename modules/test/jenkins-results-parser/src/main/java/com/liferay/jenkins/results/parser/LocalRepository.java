@@ -89,7 +89,7 @@ public class LocalRepository extends BaseRepository {
 
 		_gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				upstreamBranchName, getName());
+				upstreamBranchName, getDirectory(), getName());
 	}
 
 	protected String getDefaultRelativeRepositoryDirPath() {

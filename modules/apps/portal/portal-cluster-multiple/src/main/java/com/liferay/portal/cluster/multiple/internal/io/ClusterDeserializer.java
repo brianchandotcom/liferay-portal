@@ -62,13 +62,6 @@ public class ClusterDeserializer {
 	private class ClusterProtectedAnnotatedObjectInputStream
 		extends ProtectedObjectInputStream {
 
-		public ClusterProtectedAnnotatedObjectInputStream(
-				InputStream inputStream)
-			throws IOException {
-
-			super(inputStream);
-		}
-
 		@Override
 		protected Class<?> doResolveClass(ObjectStreamClass objectStreamClass)
 			throws ClassNotFoundException, IOException {
@@ -81,6 +74,13 @@ public class ClusterDeserializer {
 			String className = objectStreamClass.getName();
 
 			return ClassResolverUtil.resolve(className, classLoader);
+		}
+
+		private ClusterProtectedAnnotatedObjectInputStream(
+				InputStream inputStream)
+			throws IOException {
+
+			super(inputStream);
 		}
 
 	}

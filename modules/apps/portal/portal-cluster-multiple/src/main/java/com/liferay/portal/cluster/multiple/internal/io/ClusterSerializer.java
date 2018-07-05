@@ -62,12 +62,6 @@ public class ClusterSerializer {
 	private class ClusterAnnotatedObjectOutputStream
 		extends ObjectOutputStream {
 
-		public ClusterAnnotatedObjectOutputStream(OutputStream outputStream)
-			throws IOException {
-
-			super(outputStream);
-		}
-
 		@Override
 		protected void annotateClass(Class<?> clazz) throws IOException {
 			ClassLoader classLoader = clazz.getClassLoader();
@@ -76,6 +70,12 @@ public class ClusterSerializer {
 				classLoader);
 
 			writeUTF(contextName);
+		}
+
+		private ClusterAnnotatedObjectOutputStream(OutputStream outputStream)
+			throws IOException {
+
+			super(outputStream);
 		}
 
 	}

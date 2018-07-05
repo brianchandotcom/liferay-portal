@@ -35,21 +35,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
-
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#enableLDAPSetting">
-			<var name="enableCheckboxKey" value="enabled" />
 		</execute>
 
 		<execute macro="PortalSettings#addLDAPServer">
@@ -68,21 +54,20 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="PortalSettings#enableLDAPSetting">
-			<var name="enableCheckboxKey" value="enabled" />
+		<var name="enableSettingList" value="enabled,ldapImportEnabled,importOnStartup" />
+
+		<execute macro="PortalSettings#configureLDAPSetting">
+			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
 
-		<for list="enabled,ldapImportEnabled,importOnStartup,passwordPolicyEnabled" param="enableCheckboxKey">
-			<execute macro="PortalSettings#enableLDAPSetting">
-				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
-			</execute>
+		<!-- LPS-71630 -->
+		<execute macro="PortalSettings#configureLDAPSetting">
+			<var name="enableSettingList" value="${enableSettingList}" />
+		</execute>
 
-			<execute macro="PortalSettings#viewEnabledLDAPSetting">
-				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
-			</execute>
-		</for>
-
-		<execute function="AssertConsoleTextNotPresent" value1="Unable to encrypt blank password" />
+		<execute macro="PortalSettings#viewEnabledLDAPSetting">
+			<var name="enableSettingList" value="${enableSettingList}" />
+		</execute>
 
 		<execute macro="Portlet#shutdownServer" />
 
@@ -93,94 +78,10 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
-
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME">
-				<var name="key_userScreenName" value="ldapusercn" />
-			</condition>
-
-			<then>
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Configuration" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Instance Settings" />
-				</execute>
-
-				<execute macro="PortalSettings#disableLDAPCP" />
-
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Configuration" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Instance Settings" />
-				</execute>
-
-				<execute macro="PortalSettings#enableLDAPSetting">
-					<var name="enableCheckboxKey" value="enabled" />
-				</execute>
-
-				<execute macro="PortalSettings#editLDAPServer">
-					<var name="LDAPServerName" value="ApacheDS Server" />
-				</execute>
-
-				<execute macro="PortalSettings#testLDAPConnection" />
-
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Configuration" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Instance Settings" />
-				</execute>
-
-				<for list="enabled,ldapImportEnabled,importOnStartup,passwordPolicyEnabled" param="enableCheckboxKey">
-					<execute macro="PortalSettings#enableLDAPSetting">
-						<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
-					</execute>
-
-					<execute macro="PortalSettings#viewEnabledLDAPSetting">
-						<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
-					</execute>
-				</for>
-
-				<execute function="AssertConsoleTextNotPresent" value1="Unable to encrypt blank password" />
-
-				<execute macro="Portlet#shutdownServer" />
-
-				<execute macro="Portlet#startServer">
-					<var name="deleteLiferayHome" value="false" />
-				</execute>
-
-				<execute macro="User#firstLoginPG" />
-
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Configuration" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Server Administration" />
-				</execute>
-
-				<execute macro="ServerAdministration#executeServerResourcesActions">
-					<var name="actionsDescription" value="Reindex all search indexes." />
-				</execute>
-
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Users" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Users and Organizations" />
-				</execute>
-			</then>
-		</if>
 
 		<execute macro="User#viewCP">
 			<var name="userEmailAddress" value="ldapuseremail@liferay.com" />
@@ -201,16 +102,6 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
-
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
@@ -230,19 +121,20 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="PortalSettings#enableLDAPSetting">
-			<var name="enableCheckboxKey" value="enabled" />
+		<var name="enableSettingList" value="enabled,ldapExportEnabled,ldapImportEnabled,importOnStartup" />
+
+		<execute macro="PortalSettings#configureLDAPSetting">
+			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
 
-		<for list="enabled,ldapExportEnabled,ldapImportEnabled,importOnStartup" param="enableCheckboxKey">
-			<execute macro="PortalSettings#enableLDAPSetting">
-				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
-			</execute>
+		<!-- LPS-71630 -->
+		<execute macro="PortalSettings#configureLDAPSetting">
+			<var name="enableSettingList" value="${enableSettingList}" />
+		</execute>
 
-			<execute macro="PortalSettings#viewEnabledLDAPSetting">
-				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
-			</execute>
-		</for>
+		<execute macro="PortalSettings#viewEnabledLDAPSetting">
+			<var name="enableSettingList" value="${enableSettingList}" />
+		</execute>
 
 		<execute macro="Portlet#shutdownServer" />
 
@@ -251,94 +143,10 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
-
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME">
-				<var name="key_userScreenName" value="ldapusercn" />
-			</condition>
-
-			<then>
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Configuration" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Instance Settings" />
-				</execute>
-
-				<execute macro="PortalSettings#disableLDAPCP" />
-
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Configuration" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Instance Settings" />
-				</execute>
-
-				<execute macro="PortalSettings#enableLDAPSetting">
-					<var name="enableCheckboxKey" value="enabled" />
-				</execute>
-
-				<execute macro="PortalSettings#editLDAPServer">
-					<var name="LDAPServerName" value="ApacheDS Server" />
-				</execute>
-
-				<execute macro="PortalSettings#testLDAPConnection" />
-
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Configuration" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Instance Settings" />
-				</execute>
-
-				<for list="enabled,ldapImportEnabled,importOnStartup,passwordPolicyEnabled" param="enableCheckboxKey">
-					<execute macro="PortalSettings#enableLDAPSetting">
-						<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
-					</execute>
-
-					<execute macro="PortalSettings#viewEnabledLDAPSetting">
-						<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
-					</execute>
-				</for>
-
-				<execute function="AssertConsoleTextNotPresent" value1="Unable to encrypt blank password" />
-
-				<execute macro="Portlet#shutdownServer" />
-
-				<execute macro="Portlet#startServer">
-					<var name="deleteLiferayHome" value="false" />
-				</execute>
-
-				<execute macro="User#firstLoginPG" />
-
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Configuration" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Server Administration" />
-				</execute>
-
-				<execute macro="ServerAdministration#executeServerResourcesActions">
-					<var name="actionsDescription" value="Reindex all search indexes." />
-				</execute>
-
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Users" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Users and Organizations" />
-				</execute>
-			</then>
-		</if>
 
 		<execute macro="User#viewCP">
 			<var name="userEmailAddress" value="ldapuseremail@liferay.com" />
@@ -347,44 +155,28 @@
 			<var name="userScreenName" value="ldapusercn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="User#editUserGenderCP">
 			<var name="userGender" value="Female" />
 			<var name="userName" value="ldapusergivenname ldapusersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="User#editUserJobTitleCP">
 			<var name="userJobTitle" value="QA" />
 			<var name="userName" value="ldapusergivenname ldapusersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="User#editUserSuffixCP">
 			<var name="userName" value="ldapusergivenname ldapusersn" />
 			<var name="userSuffix" value="Phd" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="ldapuseremail@liferay.com" />

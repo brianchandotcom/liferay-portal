@@ -4008,6 +4008,12 @@ version 1.3.1.
 - [LPS-77359]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
 version 2.2.5.
 
+## 5.4.68 - 2018-07-04
+
+### Changed
+- [LPS-82828]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.66.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

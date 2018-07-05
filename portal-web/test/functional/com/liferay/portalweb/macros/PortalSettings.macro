@@ -191,6 +191,20 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="configureLDAPSetting">
+		<execute macro="PortalSettingsNavigator#gotoLDAP" />
+
+		<for list="${enableSettingList}" param="enableSetting">
+			<var name="enableSetting" value="PortalSettingsPortlet_${enableSetting}" />
+
+			<execute macro="FormFields#enableCheckbox">
+				<var name="fieldName" value="${enableSetting}" />
+			</execute>
+		</for>
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="configureOpenSSO">
 		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD" value1="${OpenSSOLoginURL}" />
@@ -455,20 +469,6 @@
 		<execute macro="FormFields#viewCheckboxChecked">
 			<var name="fieldName" value="ldapImportEnabled" />
 		</execute>
-	</command>
-
-	<command name="enableLDAPSetting">
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
-		<var name="enableCheckboxKey" value="PortalSettingsPortlet_${enableCheckboxKey}" />
-
-		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="${enableCheckboxKey}" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute function="Refresh" />
 	</command>
 
 	<command name="enableOpenIDConnectCP">
@@ -884,11 +884,13 @@
 	<command name="viewEnabledLDAPSetting">
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-		<var name="enableCheckboxKey" value="PortalSettingsPortlet_${enableCheckboxKey}" />
+		<for list="${enableSettingList}" param="enableSetting">
+			<var name="enableSetting" value="PortalSettingsPortlet_${enableSetting}" />
 
-		<execute macro="FormFields#viewCheckboxChecked">
-			<var name="fieldName" value="${enableCheckboxKey}" />
-		</execute>
+			<execute macro="FormFields#viewCheckboxChecked">
+				<var name="fieldName" value="${enableSetting}" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="viewReservedCredentialsScreenNamesCP">

@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>LOGIN_SIGN_IN_BUTTON</td>
-	<td>//button[contains(.,'Sign in')]</td>
+	<td>//div[contains(@class,'inline-block')]/input[contains(@value,'Sign in')]</td>
 	<td></td>
 </tr>
 <tr>

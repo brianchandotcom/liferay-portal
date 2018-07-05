@@ -14,12 +14,12 @@
 	</command>
 
 	<command name="openNoError">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="null" selenium="selectWindow" />
 
 		<execute argument1="relative=top" selenium="selectFrame" />
 
 		<execute selenium="open" />
-
-		<execute function="WaitForSPARefresh" />
 	</command>
 </definition>

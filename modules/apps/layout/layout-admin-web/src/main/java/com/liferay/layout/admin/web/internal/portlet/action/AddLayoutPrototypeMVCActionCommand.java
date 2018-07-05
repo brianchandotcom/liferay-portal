@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -137,10 +138,20 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 		catch (Throwable t) {
 			_log.error(t, t);
 
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+			if (t.getCause() instanceof LayoutPageTemplateEntryNameException) {
+				jsonObject.put(
+					"error",
+					LanguageUtil.get(
+						themeDisplay.getRequest(),
+						"please-enter-a-valid-name"));
+			}
+			else {
+				jsonObject.put(
+					"error",
+					LanguageUtil.get(
+						themeDisplay.getRequest(),
+						"an-unexpected-error-occurred"));
+			}
 		}
 
 		JSONPortletResponseUtil.writeJSON(

@@ -19,7 +19,6 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author Michael Hashimoto
@@ -34,80 +33,45 @@ public class GitWorkingDirectoryFactory {
 				"Directory path not found " + repositoryDir);
 		}
 
+		String key = repositoryName + "__" + upstreamBranchName;
+
+		if (_gitWorkingDirectories.containsKey(key)) {
+			return _gitWorkingDirectories.get(key);
+		}
+
 		try {
 			String repositoryDirPath = repositoryDir.getCanonicalPath();
 
-			if (_gitWorkingDirectories.containsKey(repositoryDirPath)) {
-				return _gitWorkingDirectories.get(repositoryDirPath);
-			}
-
 			if (repositoryName.startsWith("com-liferay-")) {
 				_gitWorkingDirectories.put(
-					repositoryDirPath,
+					key,
 					new SubrepositoryGitWorkingDirectory(
+						upstreamBranchName, repositoryDirPath, repositoryName));
+			}
+			else if (repositoryName.startsWith("liferay-plugins")) {
+				_gitWorkingDirectories.put(
+					key,
+					new PluginsGitWorkingDirectory(
 						upstreamBranchName, repositoryDirPath, repositoryName));
 			}
 			else if (repositoryName.startsWith("liferay-portal")) {
 				_gitWorkingDirectories.put(
-					repositoryDirPath,
+					key,
 					new PortalGitWorkingDirectory(
 						upstreamBranchName, repositoryDirPath, repositoryName));
 			}
 			else {
 				_gitWorkingDirectories.put(
-					repositoryDirPath,
+					key,
 					new GitWorkingDirectory(
 						upstreamBranchName, repositoryDirPath, repositoryName));
 			}
 
-			return _gitWorkingDirectories.get(repositoryDirPath);
+			return _gitWorkingDirectories.get(key);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
-	}
-
-	public static GitWorkingDirectory newGitWorkingDirectory(
-		String upstreamBranchName, String repositoryName) {
-
-		File repositoryDir = new File(
-			_getRepositoryDirPath(upstreamBranchName, repositoryName));
-
-		return newGitWorkingDirectory(
-			upstreamBranchName, repositoryDir, repositoryName);
-	}
-
-	private static String _getRepositoryDirPath(
-		String branchName, String repositoryName) {
-
-		StringBuilder sb = new StringBuilder();
-
-		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			sb.append(buildProperties.getProperty("base.repository.dir"));
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-
-		sb.append("/");
-		sb.append(repositoryName);
-
-		if (repositoryName.startsWith("liferay-portal") &&
-			!branchName.equals("master")) {
-
-			sb.append("-");
-			sb.append(branchName);
-		}
-		else if (repositoryName.startsWith("com-liferay-") &&
-				 !repositoryName.endsWith("-private")) {
-
-			sb.append("-private");
-		}
-
-		return sb.toString();
 	}
 
 	private static final Map<String, GitWorkingDirectory>

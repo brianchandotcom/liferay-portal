@@ -25,6 +25,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOGIN_NEXT_BUTTON</td>
+	<td>//div[contains(@class,'inline-block')]/input[contains(@value,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOGIN_PASSWORD_FIELD</td>
 	<td>//input[contains(@type,'password')]</td>
 	<td></td>

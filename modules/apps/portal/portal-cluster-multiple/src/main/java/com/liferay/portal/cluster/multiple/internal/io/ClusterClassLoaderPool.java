@@ -16,8 +16,10 @@ package com.liferay.portal.cluster.multiple.internal.io;
 
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +33,60 @@ import org.osgi.framework.Version;
  * @author Lance Ji
  */
 public class ClusterClassLoaderPool {
+
+	public static ClassLoader getClassLoader(String contextName) {
+		ClassLoader classLoader = null;
+
+		if ((contextName != null) && !contextName.equals("null")) {
+			ClassLoader contextClassLoader =
+				ClassLoaderUtil.getContextClassLoader();
+
+			try {
+				ClassLoaderUtil.setContextClassLoader(null);
+
+				classLoader = ClassLoaderPool.getClassLoader(contextName);
+			}
+			finally {
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			}
+
+			if (classLoader == null) {
+				int pos = contextName.indexOf(StringPool.UNDERLINE);
+
+				if (pos > 0) {
+					String symbolicName = contextName.substring(0, pos);
+
+					List<VersionedClassLoader> classLoadersInOrder =
+						_fallbackClassLoaders.get(symbolicName);
+
+					if (classLoadersInOrder != null) {
+						VersionedClassLoader latestVersionClassLoader =
+							classLoadersInOrder.get(0);
+
+						classLoader = latestVersionClassLoader.getClassLoader();
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"Unable to find ClassLoader for ",
+									contextName, ", ClassLoader ", symbolicName,
+									StringPool.UNDERLINE,
+									latestVersionClassLoader.getVersion(),
+									" is provided instead"));
+						}
+					}
+				}
+			}
+		}
+
+		if (classLoader == null) {
+			Thread currentThread = Thread.currentThread();
+
+			classLoader = currentThread.getContextClassLoader();
+		}
+
+		return classLoader;
+	}
 
 	public static String getContextName(ClassLoader classLoader) {
 		String contextName = ClassLoaderPool.getContextName(classLoader);

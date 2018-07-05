@@ -2562,14 +2562,6 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
-		AssetTagModel assetTagModel) {
-
-		return newResourcePermissionModels(
-			AssetTag.class.getName(), String.valueOf(assetTagModel.getTagId()),
-			_sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
 		AssetVocabularyModel assetVocabularyModel) {
 
 		if (assetVocabularyModel.getUserId() == _defaultUserId) {

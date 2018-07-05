@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_0.UpgradePortletId;
@@ -47,7 +48,8 @@ public class KaleoDesignerWebUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.portal.workflow.kaleo.designer.web", "1.0.0", "1.0.1",
 			new UpgradeKaleoDefinitionVersion(
 				_kaleoDefinitionVersionLocalService,
-				_resourceActionLocalService, _resourceActions));
+				_resourceActionLocalService, _resourceActions,
+				_userLocalService));
 	}
 
 	@Reference
@@ -67,5 +69,8 @@ public class KaleoDesignerWebUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private ResourceActions _resourceActions;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

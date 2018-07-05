@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringPool;
@@ -43,12 +44,13 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 	public UpgradeKaleoDefinitionVersion(
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		ResourceActionLocalService resourceActionLocalService,
-		ResourceActions resourceActions) {
+		ResourceActions resourceActions, UserLocalService userLocalService) {
 
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourceActions = resourceActions;
+		_userLocalService = userLocalService;
 	}
 
 	protected void addKaleoDefinitionVersion(
@@ -74,7 +76,7 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		serviceContext.setCreateDate(createDate);
 		serviceContext.setModifiedDate(modifiedDate);
 		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setUserId(userId);
+		serviceContext.setUserId(_getValidUserId(companyId, userId));
 
 		_kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
 			name, title, StringPool.BLANK, content,
@@ -187,6 +189,16 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		}
 	}
 
+	private long _getValidUserId(long companyId, long userId)
+		throws PortalException {
+
+		if (_userLocalService.fetchUserById(userId) != null) {
+			return userId;
+		}
+
+		return _userLocalService.getDefaultUserId(companyId);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeKaleoDefinitionVersion.class);
 
@@ -194,5 +206,6 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		_kaleoDefinitionVersionLocalService;
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourceActions _resourceActions;
+	private final UserLocalService _userLocalService;
 
 }

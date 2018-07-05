@@ -27,7 +27,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Documents and Media" />
+			<var name="configurationCategory" value="Collaboration" />
 			<var name="configurationName" value="Sharepoint OAuth2" />
 			<var name="configurationScope" value="System Scope" />
 		</execute>

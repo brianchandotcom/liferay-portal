@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.definition.link.update.handler.WorkflowDefinitionLinkUpdateHandler;
+import com.liferay.portal.workflow.definition.link.update.handler.WorkflowDefinitionLinkUpdateHandlerRegistryUtil;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.Enumeration;
@@ -84,6 +86,16 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 
 		String className = classNameAndWorkflowDefinition[0];
 		String workflowDefinition = classNameAndWorkflowDefinition[1];
+
+		WorkflowDefinitionLinkUpdateHandler
+			workflowDefinitionLinkUpdateHandler =
+				WorkflowDefinitionLinkUpdateHandlerRegistryUtil.
+					getWorkflowDefinitionLinkUpdateHandler(className);
+
+		if (workflowDefinitionLinkUpdateHandler != null) {
+			workflowDefinitionLinkUpdateHandler.updatedWorkflowDefinitionLink(
+				workflowDefinition);
+		}
 
 		if (Validator.isNotNull(className)) {
 			ThemeDisplay themeDisplay =

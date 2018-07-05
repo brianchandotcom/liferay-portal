@@ -22,15 +22,16 @@ public class PortalLocalRepository extends LocalRepository {
 	protected PortalLocalRepository(String name, String upstreamBranchName) {
 		super(name, upstreamBranchName);
 
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+		if (upstreamBranchName.startsWith("ee-") ||
+			upstreamBranchName.endsWith("-private")) {
 
-		if (!name.equals(gitWorkingDirectory.getRepositoryName())) {
-			throw new IllegalArgumentException(
-				JenkinsResultsParserUtil.combine(
-					"The local repository, ", name,
-					" should not be used with upstream branch ",
-					upstreamBranchName, ". Use ",
-					gitWorkingDirectory.getRepositoryName(), "."));
+			if (!name.endsWith("-ee")) {
+				throw new IllegalArgumentException(
+					JenkinsResultsParserUtil.combine(
+						"The local repository, ", name,
+						" should not be used with upstream branch ",
+						upstreamBranchName, ". Use ", name, "-ee."));
+			}
 		}
 	}
 
@@ -39,7 +40,7 @@ public class PortalLocalRepository extends LocalRepository {
 		String upstreamBranchName = getUpstreamBranchName();
 
 		if (upstreamBranchName.equals("master")) {
-			return name;
+			return name.replace("-ee", "");
 		}
 
 		return JenkinsResultsParserUtil.combine(

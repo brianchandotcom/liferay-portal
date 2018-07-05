@@ -27,6 +27,12 @@ public class SlantedQuotesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (fileName.contains("/Language") &&
+			fileName.endsWith(".properties")) {
+
+			return content;
+		}
+
 		content = _fixSlantedQuotes(
 			content, _SLANTED_DOUBLE_QUOTE_CHARS, StringPool.QUOTE);
 		content = _fixSlantedQuotes(

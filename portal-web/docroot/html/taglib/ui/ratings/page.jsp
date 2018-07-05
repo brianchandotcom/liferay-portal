@@ -80,7 +80,7 @@ boolean enabled = false;
 if (!inTrash) {
 	Group group = themeDisplay.getSiteGroup();
 
-	if (!group.isStagingGroup()) {
+	if (!group.isStagingGroup() && !group.isStagedRemotely()) {
 		enabled = true;
 	}
 }

@@ -122,7 +122,7 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute function="Pause" locator1="1000" />
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="PortletEntry#publish" />
 

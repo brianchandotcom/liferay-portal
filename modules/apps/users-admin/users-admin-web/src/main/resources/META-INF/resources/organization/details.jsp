@@ -185,7 +185,7 @@ if (parentOrganization != null) {
 	OrganizationParentException.MustHaveValidChildType mhvct = (OrganizationParentException.MustHaveValidChildType)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= new String[] {mhvct.getChildOrganizationType(), mhvct.getParentOrganizationType()} %>" key="an-organization-of-type-x-is-not-allowed-as-a-child-of-type-x" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= new String[] {mhvct.getChildOrganizationType(), mhvct.getParentOrganizationType()} %>" key="an-organization-of-type-x-is-not-allowed-as-a-child-of-type-x" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= OrganizationParentException.MustBeRootable.class %>">
@@ -194,7 +194,7 @@ if (parentOrganization != null) {
 	OrganizationParentException.MustBeRootable mbr = (OrganizationParentException.MustBeRootable)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= mbr.getType() %>" key="an-organization-of-type-x-cannot-be-a-root-organization" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= mbr.getType() %>" key="an-organization-of-type-x-cannot-be-a-root-organization" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= OrganizationParentException.MustNotHaveChildren.class %>">
@@ -203,7 +203,7 @@ if (parentOrganization != null) {
 	OrganizationParentException.MustNotHaveChildren mnhc = (OrganizationParentException.MustNotHaveChildren)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= mnhc.getType() %>" key="an-organization-of-type-x-cannot-have-children" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= mnhc.getType() %>" key="an-organization-of-type-x-cannot-have-children" />
 </liferay-ui:error>
 
 <liferay-ui:search-container

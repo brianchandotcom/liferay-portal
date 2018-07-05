@@ -80,7 +80,7 @@ public class DB2DB extends BaseDB {
 
 		super.runSQL(con, templates);
 
-		reorgTables(templates);
+		reorgTables(con, templates);
 	}
 
 	@Override
@@ -200,7 +200,9 @@ public class DB2DB extends BaseDB {
 		}
 	}
 
-	protected void reorgTables(String[] templates) throws SQLException {
+	protected void reorgTables(Connection con, String[] templates)
+		throws SQLException {
+
 		Set<String> tableNames = new HashSet<>();
 
 		for (String template : templates) {
@@ -220,17 +222,8 @@ public class DB2DB extends BaseDB {
 			return;
 		}
 
-		Connection con = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			for (String tableName : tableNames) {
-				reorgTable(con, tableName);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con);
+		for (String tableName : tableNames) {
+			reorgTable(con, tableName);
 		}
 	}
 

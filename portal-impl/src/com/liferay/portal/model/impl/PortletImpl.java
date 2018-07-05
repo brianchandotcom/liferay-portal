@@ -859,7 +859,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public String getDisplayName() {
-		return _displayName;
+		if (Validator.isNull(_displayName)) {
+			return "";
+		} else {
+			return _displayName;
+		}
 	}
 
 	/**

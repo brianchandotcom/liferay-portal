@@ -24,27 +24,22 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author Lance Ji
  */
 public class ClusterDeserializer {
 
-	public ClusterDeserializer(ByteBuffer byteBuffer) {
-		_byteBuffer = byteBuffer;
-	}
+	public static Object readObject(byte[] bytes, int offset, int length)
+		throws ClassNotFoundException {
 
-	public Object readObject() throws ClassNotFoundException {
 		try {
-			byte serializableType = _byteBuffer.get();
+			byte serializableType = bytes[offset];
 
 			if (SerializationConstants.TC_OBJECT == serializableType) {
 				ObjectInputStream objectInputStream =
 					new ClusterProtectedAnnotatedObjectInputStream(
 						new UnsyncByteArrayInputStream(
-							_byteBuffer.array(), _byteBuffer.position(),
-							_byteBuffer.remaining()));
+							bytes, offset + 1, length - 1));
 
 				return objectInputStream.readObject();
 			}
@@ -57,9 +52,7 @@ public class ClusterDeserializer {
 		}
 	}
 
-	private final ByteBuffer _byteBuffer;
-
-	private class ClusterProtectedAnnotatedObjectInputStream
+	private static class ClusterProtectedAnnotatedObjectInputStream
 		extends ProtectedObjectInputStream {
 
 		@Override

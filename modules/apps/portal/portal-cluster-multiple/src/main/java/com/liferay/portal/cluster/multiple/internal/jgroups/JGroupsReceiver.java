@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 
-import java.nio.ByteBuffer;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,12 +53,6 @@ public class JGroupsReceiver extends ReceiverAdapter {
 			return;
 		}
 
-		ByteBuffer byteBuffer = ByteBuffer.wrap(
-			rawBuffer, message.getOffset(), message.getLength());
-
-		ClusterDeserializer clusterDeserializer = new ClusterDeserializer(
-			byteBuffer.slice());
-
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
@@ -73,7 +65,8 @@ public class JGroupsReceiver extends ReceiverAdapter {
 
 		try {
 			_clusterReceiver.receive(
-				clusterDeserializer.readObject(),
+				ClusterDeserializer.readObject(
+					rawBuffer, message.getOffset(), message.getLength()),
 				new AddressImpl(message.getSrc()));
 		}
 		catch (ClassNotFoundException cnfe) {

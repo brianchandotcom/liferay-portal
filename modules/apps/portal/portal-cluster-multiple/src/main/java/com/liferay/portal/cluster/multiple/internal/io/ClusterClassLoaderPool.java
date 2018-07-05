@@ -167,7 +167,7 @@ public class ClusterClassLoaderPool {
 
 		@Override
 		public int compareTo(VersionedClassLoader versionedClassLoader) {
-			return _version.compareTo(versionedClassLoader.getVersion());
+			return _version.compareTo(versionedClassLoader._version);
 		}
 
 		public ClassLoader getClassLoader() {

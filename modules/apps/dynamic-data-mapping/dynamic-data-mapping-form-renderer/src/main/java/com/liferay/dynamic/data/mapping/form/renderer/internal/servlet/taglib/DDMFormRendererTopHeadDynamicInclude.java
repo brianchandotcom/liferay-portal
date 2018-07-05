@@ -47,9 +47,6 @@ public class DDMFormRendererTopHeadDynamicInclude extends BaseDynamicInclude {
 		else {
 			_postfix = _postfix.concat(_servletContext.getContextPath());
 		}
-
-		_postfix = _postfix.concat(
-			"/css/main.css\" rel=\"stylesheet\" type = \"text/css\" />");
 	}
 
 	@Override
@@ -63,9 +60,15 @@ public class DDMFormRendererTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = response.getWriter();
 
-		String content = "<link href=\"".concat(themeDisplay.getCDNBaseURL());
+		String cdnBaseURL = themeDisplay.getCDNBaseURL();
 
-		printWriter.println(content.concat(_postfix));
+		String staticResourceURL = _portal.getStaticResourceURL(
+			request, cdnBaseURL.concat(_postfix).concat("/css/main.css"));
+
+		String content = "<link href=\"".concat(staticResourceURL);
+
+		printWriter.println(
+			content.concat("\" rel=\"stylesheet\" type = \"text/css\" />"));
 	}
 
 	@Override

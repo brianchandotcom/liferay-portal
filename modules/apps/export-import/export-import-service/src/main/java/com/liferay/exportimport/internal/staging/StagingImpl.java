@@ -1901,6 +1901,10 @@ public class StagingImpl implements Staging {
 
 		User user = permissionChecker.getUser();
 
+		if (stagingGroup.isLayout()) {
+			stagingGroup = stagingGroup.getParentGroup();
+		}
+
 		UnicodeProperties typeSettingsProperties =
 			stagingGroup.getTypeSettingsProperties();
 

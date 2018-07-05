@@ -902,6 +902,9 @@
 		<finder name="Plid" return-type="Collection">
 			<finder-column name="plid" />
 		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
 		<finder name="L_H" return-type="Collection">
 			<finder-column name="layoutSetBranchId" />
 			<finder-column name="head" />

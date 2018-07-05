@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.shrinkwrap.osgi.api.BndProjectBuilder;
@@ -567,6 +568,48 @@ public abstract class BaseClientTestCase {
 		return codeParser.apply(
 			authorizationResponseFunction.apply(
 				getAuthenticatedInvocationBuilder(login, password, hostname)));
+	}
+
+	protected BiFunction<String, Invocation.Builder, Response>
+		getExchangeAuthorizationCode(
+			String authorizationCode, String redirectUri) {
+	
+		return (clientId, invocationBuilder) -> {
+			MultivaluedMap<String, String> formData =
+				new MultivaluedHashMap<>();
+	
+			formData.add("client_id", clientId);
+			formData.add("client_secret", "oauthTestApplicationSecret");
+			formData.add("code", authorizationCode);
+			formData.add("grant_type", "authorization_code");
+	
+			if (Validator.isNotNull(redirectUri)) {
+				formData.add("redirect_uri", redirectUri);
+			}
+	
+			return invocationBuilder.post(Entity.form(formData));
+		};
+	}
+	
+	protected BiFunction<String, Invocation.Builder, Response>
+		getExchangeAuthorizationCodePKCE(
+			String authorizationCode, String redirectUri, String codeVerifier) {
+	
+		return (clientId, invocationBuilder) -> {
+			MultivaluedMap<String, String> formData =
+				new MultivaluedHashMap<>();
+	
+			formData.add("client_id", clientId);
+			formData.add("code", authorizationCode);
+			formData.add("code_verifier", codeVerifier);
+			formData.add("grant_type", "authorization_code");
+	
+			if (Validator.isNotNull(redirectUri)) {
+				formData.add("redirect_uri", redirectUri);
+			}
+	
+			return invocationBuilder.post(Entity.form(formData));
+		};
 	}
 	
 	protected String parseAuthorizationCodeString(Response response) {

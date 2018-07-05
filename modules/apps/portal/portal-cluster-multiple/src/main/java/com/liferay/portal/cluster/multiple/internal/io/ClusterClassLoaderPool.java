@@ -98,7 +98,7 @@ public class ClusterClassLoaderPool {
 	public static String getContextName(ClassLoader classLoader) {
 		String contextName = ClassLoaderPool.getContextName(classLoader);
 
-		if (contextName.equals("null")) {
+		if ((classLoader != null) && contextName.equals("null")) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(

@@ -1,7 +1,6 @@
 <definition component-name="portal-plugins-osgi">
-	<property name="portal.release" value="true" />
+	<property name="portal.release" value="false" />
 	<property name="portal.upstream" value="true" />
-	<property name="plugins.deployment.type" value="osgi" />
 	<property name="testray.main.component.name" value="User Interface" />
 
 	<set-up>
@@ -9,8 +8,6 @@
 	</set-up>
 
 	<command name="121ColumnsLayouttplSmoke" priority="4">
-		<property name="layouttpl.plugins.includes" value="1-2-1-columns-layouttpl" />
-
 		<var name="appName" value="1-2-1 Columns Layout" />
 		<var name="portletName" value="1-2-1-columns-layouttpl" />
 

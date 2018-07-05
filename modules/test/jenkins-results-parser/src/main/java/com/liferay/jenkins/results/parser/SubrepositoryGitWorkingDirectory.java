@@ -37,4 +37,30 @@ public class SubrepositoryGitWorkingDirectory extends GitWorkingDirectory {
 		super(upstreamBranchName, workingDirectoryPath, repositoryName);
 	}
 
+	@Override
+	protected void setUpstreamRemoteToPrivateRepository() {
+		Remote upstreamRemote = getUpstreamRemote();
+
+		String remoteURL = upstreamRemote.getRemoteURL();
+
+		if (!remoteURL.contains("-private")) {
+			remoteURL = remoteURL.replace(".git", "-private.git");
+		}
+
+		addRemote(true, "upstream-temp", remoteURL);
+	}
+
+	@Override
+	protected void setUpstreamRemoteToPublicRepository() {
+		Remote upstreamRemote = getUpstreamRemote();
+
+		String remoteURL = upstreamRemote.getRemoteURL();
+
+		if (remoteURL.contains("-private")) {
+			remoteURL = remoteURL.replace("-private", "");
+		}
+
+		addRemote(true, "upstream-temp", remoteURL);
+	}
+
 }

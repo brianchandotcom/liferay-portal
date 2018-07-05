@@ -1804,38 +1804,13 @@ public class GitWorkingDirectory {
 	protected void setUpstreamRemoteToPrivateRepository() {
 		Remote upstreamRemote = getUpstreamRemote();
 
-		String remoteURL = upstreamRemote.getRemoteURL();
-
-		String repositoryName = getRepositoryName();
-
-		if (repositoryName.endsWith("-ee")) {
-			if (!remoteURL.contains("-ee")) {
-				remoteURL = remoteURL.replace(".git", "-ee.git");
-			}
-
-			addRemote(true, "upstream-temp", remoteURL);
-		}
-
-		if (repositoryName.endsWith("-private")) {
-			if (!remoteURL.contains("-private")) {
-				remoteURL = remoteURL.replace(".git", "-private.git");
-			}
-
-			addRemote(true, "upstream-temp", remoteURL);
-		}
+		addRemote(true, "upstream-temp", upstreamRemote.getRemoteURL());
 	}
 
 	protected void setUpstreamRemoteToPublicRepository() {
 		Remote upstreamRemote = getUpstreamRemote();
 
-		String remoteURL = upstreamRemote.getRemoteURL();
-
-		if (remoteURL.contains("-ee") || remoteURL.contains("-private")) {
-			remoteURL = remoteURL.replace("-ee", "");
-			remoteURL = remoteURL.replace("-private", "");
-		}
-
-		addRemote(true, "upstream-temp", remoteURL);
+		addRemote(true, "upstream-temp", upstreamRemote.getRemoteURL());
 	}
 
 	protected void setWorkingDirectory(String workingDirectoryPath)

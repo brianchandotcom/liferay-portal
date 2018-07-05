@@ -41,6 +41,32 @@ public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
 			workingDirectoryPath, repositoryName);
 	}
 
+	@Override
+	protected void setUpstreamRemoteToPrivateRepository() {
+		Remote upstreamRemote = getUpstreamRemote();
+
+		String remoteURL = upstreamRemote.getRemoteURL();
+
+		if (!remoteURL.contains("-ee")) {
+			remoteURL = remoteURL.replace(".git", "-ee.git");
+		}
+
+		addRemote(true, "upstream-temp", remoteURL);
+	}
+
+	@Override
+	protected void setUpstreamRemoteToPublicRepository() {
+		Remote upstreamRemote = getUpstreamRemote();
+
+		String remoteURL = upstreamRemote.getRemoteURL();
+
+		if (remoteURL.contains("-ee")) {
+			remoteURL = remoteURL.replace("-ee", "");
+		}
+
+		addRemote(true, "upstream-temp", remoteURL);
+	}
+
 	private static String _getPluginsUpstreamBranchName(
 		String portalUpstreamBranchName) {
 

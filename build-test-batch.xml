@@ -2628,6 +2628,16 @@ app.server.type=@{app.server.type}]]></echo>
 	<target name="compile-jsp-jdk8">
 		<run-batch-test>
 			<test-action>
+				<delete dir="${project.dir}/portal-web/docroot/html" />
+
+				<copy
+					todir="${project.dir}/portal-web/docroot/html"
+				>
+					<fileset
+						dir="${app.server.tomcat.dir}/webapps/ROOT/html"
+					/>
+				</copy>
+
 				<ant dir="portal-web" target="compile-tomcat" />
 
 				<gradle-execute dir="modules" task="compileJSP" />

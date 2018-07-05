@@ -438,6 +438,163 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
+	* Returns all the layout revisions where status = &#63;.
+	*
+	* @param status the status
+	* @return the matching layout revisions
+	*/
+	public static List<LayoutRevision> findByStatus(int status) {
+		return getPersistence().findByStatus(status);
+	}
+
+	/**
+	* Returns a range of all the layout revisions where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of layout revisions
+	* @param end the upper bound of the range of layout revisions (not inclusive)
+	* @return the range of matching layout revisions
+	*/
+	public static List<LayoutRevision> findByStatus(int status, int start,
+		int end) {
+		return getPersistence().findByStatus(status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the layout revisions where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of layout revisions
+	* @param end the upper bound of the range of layout revisions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching layout revisions
+	*/
+	public static List<LayoutRevision> findByStatus(int status, int start,
+		int end, OrderByComparator<LayoutRevision> orderByComparator) {
+		return getPersistence()
+				   .findByStatus(status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the layout revisions where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of layout revisions
+	* @param end the upper bound of the range of layout revisions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching layout revisions
+	*/
+	public static List<LayoutRevision> findByStatus(int status, int start,
+		int end, OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByStatus(status, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first layout revision in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout revision
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
+	*/
+	public static LayoutRevision findByStatus_First(int status,
+		OrderByComparator<LayoutRevision> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutRevisionException {
+		return getPersistence().findByStatus_First(status, orderByComparator);
+	}
+
+	/**
+	* Returns the first layout revision in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
+	*/
+	public static LayoutRevision fetchByStatus_First(int status,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+		return getPersistence().fetchByStatus_First(status, orderByComparator);
+	}
+
+	/**
+	* Returns the last layout revision in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout revision
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
+	*/
+	public static LayoutRevision findByStatus_Last(int status,
+		OrderByComparator<LayoutRevision> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutRevisionException {
+		return getPersistence().findByStatus_Last(status, orderByComparator);
+	}
+
+	/**
+	* Returns the last layout revision in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
+	*/
+	public static LayoutRevision fetchByStatus_Last(int status,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+		return getPersistence().fetchByStatus_Last(status, orderByComparator);
+	}
+
+	/**
+	* Returns the layout revisions before and after the current layout revision in the ordered set where status = &#63;.
+	*
+	* @param layoutRevisionId the primary key of the current layout revision
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next layout revision
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	*/
+	public static LayoutRevision[] findByStatus_PrevAndNext(
+		long layoutRevisionId, int status,
+		OrderByComparator<LayoutRevision> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutRevisionException {
+		return getPersistence()
+				   .findByStatus_PrevAndNext(layoutRevisionId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the layout revisions where status = &#63; from the database.
+	*
+	* @param status the status
+	*/
+	public static void removeByStatus(int status) {
+		getPersistence().removeByStatus(status);
+	}
+
+	/**
+	* Returns the number of layout revisions where status = &#63;.
+	*
+	* @param status the status
+	* @return the number of matching layout revisions
+	*/
+	public static int countByStatus(int status) {
+		return getPersistence().countByStatus(status);
+	}
+
+	/**
 	* Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
 	*
 	* @param layoutSetBranchId the layout set branch ID

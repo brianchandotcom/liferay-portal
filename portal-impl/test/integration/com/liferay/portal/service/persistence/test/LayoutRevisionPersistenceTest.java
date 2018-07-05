@@ -254,6 +254,13 @@ public class LayoutRevisionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByStatus() throws Exception {
+		_persistence.countByStatus(RandomTestUtil.nextInt());
+
+		_persistence.countByStatus(0);
+	}
+
+	@Test
 	public void testCountByL_H() throws Exception {
 		_persistence.countByL_H(RandomTestUtil.nextLong(),
 			RandomTestUtil.randomBoolean());

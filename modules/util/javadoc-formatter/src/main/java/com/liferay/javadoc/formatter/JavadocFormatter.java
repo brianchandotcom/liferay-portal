@@ -1085,11 +1085,7 @@ public class JavadocFormatter {
 
 		String originalContent = JavadocFormatterUtil.read(file);
 
-		String absolutePath = _getAbsolutePath(fileName);
-
-		if (absolutePath.contains("modules/third-party") ||
-			fileName.endsWith("Application.java") ||
-			fileName.endsWith("JavadocFormatter.java") ||
+		if (fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("Mojo.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
 			fileName.endsWith("WebProxyPortlet.java") ||

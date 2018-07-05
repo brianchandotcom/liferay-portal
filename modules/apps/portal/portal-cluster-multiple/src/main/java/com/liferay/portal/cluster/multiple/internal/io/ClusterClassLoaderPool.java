@@ -56,12 +56,12 @@ public class ClusterClassLoaderPool {
 				if (pos > 0) {
 					String symbolicName = contextName.substring(0, pos);
 
-					List<VersionedClassLoader> classLoadersInOrder =
+					List<VersionedClassLoader> versionedClassLoaderList =
 						_fallbackClassLoaders.get(symbolicName);
 
-					if (classLoadersInOrder != null) {
+					if (versionedClassLoaderList != null) {
 						VersionedClassLoader latestVersionClassLoader =
-							classLoadersInOrder.get(0);
+							versionedClassLoaderList.get(0);
 
 						classLoader = latestVersionClassLoader.getClassLoader();
 

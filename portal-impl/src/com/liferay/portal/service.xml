@@ -958,6 +958,9 @@
 			<finder-column name="head" />
 			<finder-column name="plid" />
 		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
 
 		<!-- References -->
 

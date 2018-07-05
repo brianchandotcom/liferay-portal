@@ -638,12 +638,12 @@
 		<execute macro="DDLRecord#addCP" />
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="English (United States) Categoria" />
+			<var name="ddlRecordFieldData" value="en-US Categoria" />
 			<var name="fieldName" value="Categoria" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="English (United States) Pergunta" />
+			<var name="ddlRecordFieldData" value="en-US Pergunta" />
 			<var name="fieldName" value="Pergunta" />
 		</execute>
 

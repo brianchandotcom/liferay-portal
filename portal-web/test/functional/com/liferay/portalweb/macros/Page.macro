@@ -822,8 +822,8 @@
 			<var name="key_pageName" value="${page}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="${menuItem}" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="${menuItem}" />
 		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON">

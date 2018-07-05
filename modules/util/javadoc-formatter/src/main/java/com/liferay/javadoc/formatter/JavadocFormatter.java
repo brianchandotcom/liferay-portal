@@ -1081,15 +1081,10 @@ public class JavadocFormatter {
 	}
 
 	private void _format(String fileName) throws Exception {
-		File file = new File(_inputDirName, fileName);
-
-		String originalContent = JavadocFormatterUtil.read(file);
-
 		if (fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("Mojo.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
-			fileName.endsWith("WebProxyPortlet.java") ||
-			_hasGeneratedTag(originalContent)) {
+			fileName.endsWith("WebProxyPortlet.java")) {
 
 			return;
 		}
@@ -1097,6 +1092,14 @@ public class JavadocFormatter {
 		_packagePath = ToolsUtil.getPackagePath(fileName);
 
 		if (!_packagePath.startsWith("com.liferay")) {
+			return;
+		}
+
+		File file = new File(_inputDirName, fileName);
+
+		String originalContent = JavadocFormatterUtil.read(file);
+
+		if (_hasGeneratedTag(originalContent)) {
 			return;
 		}
 

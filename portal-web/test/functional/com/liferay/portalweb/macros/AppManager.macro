@@ -49,13 +49,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertElementPresent" locator1="Button#BROWSE" />
+		<execute function="AssertElementPresent" locator1="TextInput#FILE" />
 
-		<execute function="Click" locator1="Button#BROWSE" />
-
-		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
-
-		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${warFileName}" />
+		<execute function="UploadCommonFile#uploadCommonFileHiddenNoMouseOver" locator1="TextInput#FILE" value1="${warFileName}" />
 
 		<execute macro="Button#clickInstall" />
 

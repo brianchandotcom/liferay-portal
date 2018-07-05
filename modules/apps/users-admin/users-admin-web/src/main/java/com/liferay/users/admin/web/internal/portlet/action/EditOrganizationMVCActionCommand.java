@@ -166,7 +166,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 						actionRequest, clazz.getName() + nslte.getType());
 				}
 				else {
-					SessionErrors.add(actionRequest, e.getClass());
+					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
 
 				if (e instanceof RequiredOrganizationException) {

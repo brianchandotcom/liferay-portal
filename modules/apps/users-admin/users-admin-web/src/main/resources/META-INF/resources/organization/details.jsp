@@ -179,6 +179,33 @@ if (parentOrganization != null) {
 
 <liferay-ui:error exception="<%= OrganizationParentException.class %>" message="please-enter-a-valid-parent-organization" />
 
+<liferay-ui:error exception="<%= OrganizationParentException.MustHaveValidChildType.class %>">
+
+	<%
+	OrganizationParentException.MustHaveValidChildType mhvct = (OrganizationParentException.MustHaveValidChildType)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= new String[] {mhvct.getChildOrganizationType(), mhvct.getParentOrganizationType()} %>" key="an-organization-of-type-x-is-not-allowed-as-a-child-of-type-x" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= OrganizationParentException.MustBeRootable.class %>">
+
+	<%
+	OrganizationParentException.MustBeRootable mbr = (OrganizationParentException.MustBeRootable)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= mbr.getType() %>" key="an-organization-of-type-x-cannot-be-a-root-organization" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= OrganizationParentException.MustNotHaveChildren.class %>">
+
+	<%
+	OrganizationParentException.MustNotHaveChildren mnhc = (OrganizationParentException.MustNotHaveChildren)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= mnhc.getType() %>" key="an-organization-of-type-x-cannot-have-children" />
+</liferay-ui:error>
+
 <liferay-ui:search-container
 	headerNames="name,type,null"
 	id="parentOrganizationSearchContainer"

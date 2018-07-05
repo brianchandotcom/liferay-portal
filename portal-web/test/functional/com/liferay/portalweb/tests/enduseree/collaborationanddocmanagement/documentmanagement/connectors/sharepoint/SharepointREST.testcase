@@ -32,7 +32,7 @@
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 
-		<execute function="Click" locator1="Button#ADD_ENTRY" />
+		<execute function="Click" locator1="Button#ADD" />
 
 		<execute function="Type" locator1="TextArea#ANY" value1="${configurationName}">
 			<var name="key_text" value="name" />

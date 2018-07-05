@@ -16,8 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.Properties;
-
 /**
  * @author Michael Hashimoto
  */
@@ -30,32 +28,32 @@ public class JunitPortalBatchBuildRunner extends PortalBatchBuildRunner {
 	}
 
 	private void _setPortalBuildProperties() {
-		Properties properties = new Properties();
-
-		String portalBranchName =
+		String portalUpstreamBranchName =
 			portalGitWorkingDirectory.getUpstreamBranchName();
 
-		if (portalBranchName.contains("7.0.x") ||
-			portalBranchName.contains("7.1.x") ||
-			portalBranchName.contains("master")) {
+		if (portalUpstreamBranchName.contains("7.0.x") ||
+			portalUpstreamBranchName.contains("7.1.x") ||
+			portalUpstreamBranchName.contains("master")) {
 
 			String otherPortalBranchName = null;
 
-			if (portalBranchName.contains("7.0.x")) {
-				otherPortalBranchName = portalBranchName.replace(
+			if (portalUpstreamBranchName.contains("7.0.x")) {
+				otherPortalBranchName = portalUpstreamBranchName.replace(
 					"7.0.x", "master");
 			}
-			else if (portalBranchName.contains("7.1.x")) {
-				otherPortalBranchName = portalBranchName.replace(
+			else if (portalUpstreamBranchName.contains("7.1.x")) {
+				otherPortalBranchName = portalUpstreamBranchName.replace(
 					"7.1.x", "7.0.x");
 			}
-			else if (portalBranchName.contains("master")) {
-				otherPortalBranchName = portalBranchName.replace(
+			else {
+				otherPortalBranchName = portalUpstreamBranchName.replace(
 					"master", "7.0.x");
 			}
-			else {
-				throw new RuntimeException(
-					"Invalid portal branch name " + portalBranchName);
+
+			String otherPortalRepositoryName = "liferay-portal";
+
+			if (!otherPortalBranchName.equals("master")) {
+				otherPortalRepositoryName += "-ee";
 			}
 
 			BaseWorkspace otherPortalWorkspace = WorkspaceFactory.newWorkspace(
@@ -64,12 +62,10 @@ public class JunitPortalBatchBuildRunner extends PortalBatchBuildRunner {
 			File otherPortalRepositoryDir =
 				otherPortalWorkspace.getRepositoryDir();
 
-			properties.put(
+			portalBuildProperties.put(
 				"release.versions.test.other.dir",
 				otherPortalRepositoryDir.toString());
 		}
-
-		portalWorkspace.setBuildProperties(properties);
 	}
 
 }

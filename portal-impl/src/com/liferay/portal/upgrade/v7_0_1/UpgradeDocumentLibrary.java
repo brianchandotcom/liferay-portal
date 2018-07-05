@@ -122,10 +122,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("select fileVersionId, ddmStructureId from ");
+			sb.append("select fileVersionId, DDMStructureId from ");
 			sb.append("DLFileEntryMetadata where fileVersionId in (select ");
 			sb.append("fileVersionId from DLFileEntryMetadata group by ");
-			sb.append("fileVersionId having count(*) = 2) and ddmStructureId ");
+			sb.append("fileVersionId having count(*) = 2) and DDMStructureId ");
 			sb.append("= ?");
 
 			try (PreparedStatement ps1 = connection.prepareStatement(
@@ -134,7 +134,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
 						"delete from DLFileEntryMetadata where fileVersionId " +
-							"= ? and ddmStructureId = ?")) {
+							"= ? and DDMStructureId = ?")) {
 
 				ps1.setLong(1, oldDDMStructureId);
 
@@ -142,7 +142,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 				while (resultSet.next()) {
 					long fileVersionId = resultSet.getLong("fileVersionId");
-					long ddmStructureId = resultSet.getLong("ddmStructureId");
+					long ddmStructureId = resultSet.getLong("DDMStructureId");
 
 					ps2.setLong(1, fileVersionId);
 					ps2.setLong(2, ddmStructureId);

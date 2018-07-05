@@ -249,6 +249,9 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	public LayoutRevision getLayoutRevision(long layoutSetBranchId,
 		long layoutBranchId, long plid) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutRevision> getLayoutRevisions(int status);
+
 	/**
 	* Returns a range of all the layout revisions.
 	*

@@ -423,6 +423,7 @@
 		<description message="This is a use case for LPS-53992." />
 
 		<property name="portal.acceptance" value="pending" />
+		<property name="test.name.skip.portal.instance" value="Kaleodesigner#AddTaskNodeEditNameAndDesciptionAndNotificationsAndDeleteViaViewTab" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -799,6 +800,7 @@
 
 	<command name="EditAssignmentsForTaskNodeKDCP" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="Kaleodesigner#EditAssignmentsForTaskNodeKDCP" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">

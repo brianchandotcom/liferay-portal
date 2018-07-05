@@ -19,21 +19,21 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${pageTemplateName}" />
+		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
 	</command>
 
 	<command name="deactivateAndActivate">
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${pageTemplateName}" />
+		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
-
-		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configure">
-			<var name="key_menuItem" value="Configure" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="${pageTemplateName}" />
 		</execute>
 
 		<if>
@@ -61,14 +61,13 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${pageTemplateName}" />
+		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
-
-		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configure">
-			<var name="key_menuItem" value="Configure" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="${pageTemplateName}" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -105,9 +104,9 @@
 	</command>
 
 	<command name="gotoPageTemplateViaEdit">
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${pageTemplateName}" />
+		</execute>
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 	</command>
@@ -193,16 +192,15 @@
 	</command>
 
 	<command name="viewDescription">
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${pageTemplateName}" />
+		</execute>
 
 		<var name="key_pageTemplateDescription" value="${pageTemplateDescription}" />
 
-		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configure">
-			<var name="key_menuItem" value="Configure" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="${pageTemplateName}" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertValue" locator1="TextInput#DESCRIPTION" value1="${pageTemplateDescription}" />
@@ -219,9 +217,10 @@
 	</command>
 
 	<command name="viewStatus">
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${pageTemplateName}" />
+		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateStatus}" />
 	</command>
 </definition>

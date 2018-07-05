@@ -141,9 +141,11 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			return;
 		}
 
-		if (packageName.matches(".*\\.internal\\.([\\w.]+\\.)?impl")) {
+		if (packageName.matches(".*\\.internal\\.([\\w.]+\\.)?impl") ||
+			packageName.matches(".*\\.impl\\.([\\w.]+\\.)?internal")) {
+
 			addMessage(
-				fileName, "Do not use 'impl' inside 'internal'",
+				fileName, "Do not use both 'impl' and 'internal'",
 				"package.markdown");
 		}
 

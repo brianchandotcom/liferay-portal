@@ -53,10 +53,17 @@ public class GrantAuthorizationCodePKCEKillSwitchTest
 	public void test() throws Exception {
 		Assert.assertEquals(
 			"unauthorized_client",
-			getToken(
-				"oauthTestApplicationCodePKCE", null,
-				getAuthorizationCodePKCE("test@liferay.com", "test", null),
-				this::parseError));
+			getCodeResponse(
+				"test@liferay.com", "test", null,
+				getCode(
+					webTarget -> webTarget.queryParam(
+						"client_id", "oauthTestApplicationCodePKCE"
+					).queryParam(
+						"code_challenge", "NotChecked"
+					).queryParam(
+						"response_type", "code"
+					)),
+				this::parseErrorParameter));
 	}
 
 	public static class

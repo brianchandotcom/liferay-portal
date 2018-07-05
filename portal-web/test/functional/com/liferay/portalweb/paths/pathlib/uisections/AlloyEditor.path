@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>CONTENT_FIELD_BOLD</td>
-	<td>//div[contains(@class,'alloy-editor-container')]//div[(contains(@data-placeholder,'Write your content here...') or contains(@data-placeholder,'Content')) and contains(@title,'Rich Text Editor')]//strong[contains(.,'${key_boldContent}')]</td>
+	<td>//div[contains(@class,'alloy-editor-placeholder') and contains(@data-placeholder,'Write your content here...')]/p/strong[contains(.,'${key_boldContent}')]</td>
 	<td></td>
 </tr>
 <tr>

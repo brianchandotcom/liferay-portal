@@ -1048,11 +1048,11 @@
 			<var name="fieldFieldLabel" value="SelectENG" />
 			<var name="fieldName" value="Select" />
 			<var name="fieldOptionsNames" value="ENGOption1" />
-			<var name="fieldOptionsValue" value="value 1" />
+			<var name="fieldOptionsValues" value="Value 1" />
 		</execute>
 
-		<execute macro="PortletEntry#changeLocale">
-			<var name="locale" value="ja-JP" />
+		<execute macro="Form#addTranslation">
+			<var name="localizedLanguage" value="Japanese (Japan)" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#editField">
@@ -1066,6 +1066,7 @@
 			<var name="fieldFieldLabel" value="SelectJA" />
 			<var name="fieldName" value="Select" />
 			<var name="fieldOptionsNames" value="JAOption1" />
+			<var name="fieldOptionsValues" value="Value 1" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />

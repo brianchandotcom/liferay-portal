@@ -1305,7 +1305,8 @@
 		</execute>
 
 		<execute macro="Workflow#publishInvalidWorkflowDefinition">
-			<var name="errorMessage" value="An error occurred in the workflow engine." />
+			<var name="errorMessage" value="Please enter valid content." />
+			<var name="update" value="true" />
 		</execute>
 	</command>
 
@@ -1647,7 +1648,7 @@
 			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#updateWorkflow" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 

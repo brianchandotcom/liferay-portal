@@ -33,7 +33,7 @@
 	</command>
 
 	<command name="viewErrorMessage">
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Error:${errorMessage}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR" value1="${errorMessage}" />
 	</command>
 
 	<command name="viewExpireContentFailedMessage">

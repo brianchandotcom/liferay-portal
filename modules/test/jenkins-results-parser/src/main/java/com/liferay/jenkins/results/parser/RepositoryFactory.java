@@ -24,7 +24,6 @@ public class RepositoryFactory {
 	public static LocalRepository getLocalRepository(
 		String repositoryName, String upstreamBranchName) {
 
-		/*
 		if (repositoryName.startsWith("com-liferay-")) {
 			return new SubrepositoryLocalRepository(
 				repositoryName, upstreamBranchName);
@@ -34,7 +33,6 @@ public class RepositoryFactory {
 			return new PluginsLocalRepository(
 				repositoryName, upstreamBranchName);
 		}
-		*/
 
 		if (repositoryName.startsWith("liferay-portal")) {
 			return new PortalLocalRepository(

@@ -370,7 +370,9 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentSize" value="24KB" />
+			<var name="dmDocumentSize" value="34KB" />
+			<var name="dmDocumentTitle" value="Document_3.doc" />
+		</execute>
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 

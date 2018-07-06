@@ -131,7 +131,8 @@ public class AddContentLayoutMVCActionCommand
 					serviceContext);
 			}
 
-			String redirectURL = getRedirectURL(actionResponse, layout);
+			String redirectURL = getRedirectURL(
+				actionRequest, actionResponse, layout);
 
 			if (Objects.equals(layout.getType(), "content")) {
 				redirectURL = getContentRedirectURL(actionResponse, layout);

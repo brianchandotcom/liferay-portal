@@ -119,7 +119,8 @@ public class AddSimpleLayoutMVCActionCommand
 
 			SessionMessages.add(actionRequest, "layoutAdded", layout);
 
-			String redirectURL = getRedirectURL(actionResponse, layout);
+			String redirectURL = getRedirectURL(
+				actionRequest, actionResponse, layout);
 
 			if (Objects.equals(type, "content")) {
 				redirectURL = getContentRedirectURL(actionResponse, layout);

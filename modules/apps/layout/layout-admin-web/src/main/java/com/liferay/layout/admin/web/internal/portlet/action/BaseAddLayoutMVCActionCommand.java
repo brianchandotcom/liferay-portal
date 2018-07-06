@@ -17,8 +17,10 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
 
@@ -50,7 +52,8 @@ public abstract class BaseAddLayoutMVCActionCommand
 	}
 
 	protected String getRedirectURL(
-		ActionResponse actionResponse, Layout layout) {
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		Layout layout) {
 
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(actionResponse);
@@ -65,6 +68,9 @@ public abstract class BaseAddLayoutMVCActionCommand
 
 		configureLayoutURL.setParameter("redirect", redirectURL.toString());
 
+		configureLayoutURL.setParameter(
+			"portletResource",
+			ParamUtil.getString(actionRequest, "portletResource"));
 		configureLayoutURL.setParameter(
 			"groupId", String.valueOf(layout.getGroupId()));
 		configureLayoutURL.setParameter(

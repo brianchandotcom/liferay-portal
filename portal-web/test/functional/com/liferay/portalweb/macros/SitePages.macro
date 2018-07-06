@@ -147,9 +147,17 @@
 	</command>
 
 	<command name="addPrivatePage">
-		<execute macro="LexiconEntry#gotoAddMenuItem">
-			<var name="menuItem" value="Private Page" />
-		</execute>
+		<if>
+			<equals arg1="${siteTemplate}" arg2="true" />
+			<then>
+				<execute macro="LexiconEntry#gotoAdd" />
+			</then>
+			<else>
+				<execute macro="LexiconEntry#gotoAddMenuItem">
+					<var name="menuItem" value="Private Page" />
+				</execute>
+			</else>
+		</if>
 
 		<execute macro="SitePages#_addPage">
 			<var name="hideFromNavMenu" value="${hideFromNavMenu}" />

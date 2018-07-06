@@ -33,7 +33,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
-import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.forms.apio.internal.architect.form.FormContextForm;
 import com.liferay.forms.apio.internal.helper.FormInstanceRecordResourceHelper;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.structure.apio.architect.identifier.FormStructureIdentifier;
 
 import java.util.Arrays;
 import java.util.List;
@@ -114,7 +114,7 @@ public class FormInstanceNestedCollectionResource
 		).addLinkedModel(
 			"author", PersonIdentifier.class, DDMFormInstance::getUserId
 		).addLinkedModel(
-			"structure", StructureIdentifier.class,
+			"structure", FormStructureIdentifier.class,
 			DDMFormInstance::getStructureId
 		).addNested(
 			"settings", this::_getSettings,

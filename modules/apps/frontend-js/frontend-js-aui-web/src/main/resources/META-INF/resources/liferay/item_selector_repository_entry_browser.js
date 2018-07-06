@@ -174,27 +174,9 @@ AUI.add(
 									rootNode.removeClass(CSS_DROP_ACTIVE);
 
 									if (eventDrop) {
-										var fileExtension = dataTransfer.files[0].name.split('.').pop().toLowerCase();
+										var file = dataTransfer.files[0];
 
-										var validExtensions = instance.get('validExtensions');
-
-										if (validExtensions === '*' || validExtensions.indexOf(fileExtension) != -1) {
-											var maxFileSize = instance.get('maxFileSize');
-
-											if (dataTransfer.files[0].size <= maxFileSize) {
-												instance._previewFile(dataTransfer.files[0]);
-											}
-											else {
-												var message =  Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
-
-												instance._showError(message);
-											}
-										}
-										else {
-											var message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [validExtensions]);
-
-											instance._showError(message);
-										}
+										instance._validateFile(file);
 									}
 								}
 							}
@@ -267,18 +249,9 @@ AUI.add(
 					_onInputFileChanged: function(event) {
 						var instance = this;
 
-						var maxFileSize = instance.get('maxFileSize');
-
 						var file = event.currentTarget.getDOMNode().files[0];
 
-						if (file.size > maxFileSize) {
-							var message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
-
-							instance._showError(message);
-						}
-						else {
-							instance._previewFile(file);
-						}
+						instance._validateFile(file);
 					},
 
 					_onItemSelected: function(itemViewer) {
@@ -394,6 +367,32 @@ AUI.add(
 						instance._uploadItemViewer.show();
 
 						instance._itemSelectorUploader.startUpload(file, instance.get('uploadItemURL'));
+					},
+
+					_validateFile: function(file) {
+						var instance = this;
+
+						var fileExtension = file.name.split('.').pop().toLowerCase();
+
+						var validExtensions = instance.get('validExtensions');
+
+						if (validExtensions === '*' || validExtensions.indexOf(fileExtension) != -1) {
+							var maxFileSize = instance.get('maxFileSize');
+
+							if (file.size <= maxFileSize) {
+								instance._previewFile(file);
+							}
+							else {
+								var message =  Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
+
+								instance._showError(message);
+							}
+						}
+						else {
+							var message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [validExtensions]);
+
+							instance._showError(message);
+						}
 					}
 				}
 			}

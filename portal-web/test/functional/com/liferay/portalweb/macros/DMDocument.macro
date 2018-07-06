@@ -2700,8 +2700,16 @@
 
 		<execute function="Check" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
 
-		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_LOCK_ICON_BUTTON" />
-		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_UNLOCK_ICON_BUTTON" />
+		<execute function="Click" locator1="Icon#TOOLBAR_ELLIPSIS" />
+
+		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkout">
+			<var name="key_menuItem" value="Checkout" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkin">
+			<var name="key_menuItem" value="Checkin" />
+		</execute>
+
 		<execute function="AssertVisible" locator1="Button#MOVE" />
 		<execute function="AssertVisible" locator1="Button#RECYCLE_BIN" />
 

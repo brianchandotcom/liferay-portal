@@ -182,10 +182,8 @@ public class TargetPlatformIndexer implements Indexer {
 			return;
 		}
 
-		String jarPathFileName = String.valueOf(jarPath.getFileName());
-
 		Path tempJarPath = tempPath.resolve(
-			URLCodec.encodeURL(jarPathFileName));
+			URLCodec.encodeURL(String.valueOf(jarPath.getFileName())));
 
 		Files.copy(
 			jarPath, tempJarPath, StandardCopyOption.COPY_ATTRIBUTES,

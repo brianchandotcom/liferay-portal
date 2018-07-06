@@ -2033,7 +2033,7 @@
 	</command>
 
 	<command name="EditWebContentViaArticleTitle" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Web Content Administration" />
 
 		<execute macro="Navigator#openURL" />

@@ -16,8 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutAdded" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-created-succesfully") %>' targetNode="#controlMenuAlertsContainer" />
-
 <%
 int siteNavigationMenusCount = SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId);
 %>

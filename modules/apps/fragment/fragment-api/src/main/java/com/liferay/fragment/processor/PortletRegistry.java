@@ -16,6 +16,7 @@ package com.liferay.fragment.processor;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,8 +24,11 @@ import java.util.List;
  */
 public interface PortletRegistry {
 
-	public List<String> getFragmentEntryLinkPortletIds(
-		FragmentEntryLink fragmentEntryLink);
+	public default List<String> getFragmentEntryLinkPortletIds(
+		FragmentEntryLink fragmentEntryLink) {
+
+		return Collections.emptyList();
+	}
 
 	public List<String> getPortletAliases();
 

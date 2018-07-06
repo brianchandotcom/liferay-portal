@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.forms.apio.architect.identifier;
+package com.liferay.structure.apio.architect.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code DDMStructure} identifier.
+ * Holds information about a {@code DDMStructure} identifier used for {@code
+ * JournalArticle} elements
  *
- * @author Paulo Cruz
+ * @author Javier Gamarra
  * @review
  */
 public interface StructureIdentifier extends Identifier<Long> {

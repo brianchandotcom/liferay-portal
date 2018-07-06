@@ -164,11 +164,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BROWSE</td>
-	<td>//fieldset[contains(@class,'fieldset')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BROWSE_IMAGE</td>
 	<td>//button[contains(@class,'browse-image')]</td>
 	<td></td>

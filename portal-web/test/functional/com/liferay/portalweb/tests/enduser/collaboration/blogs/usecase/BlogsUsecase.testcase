@@ -330,7 +330,7 @@
 		<execute macro="BlogsNavigator#gotoBrowseImage" />
 
 		<execute macro="ItemSelector#searchDMImages">
-			<var name="imageFileName" value="Document_1.jpg" />
+			<var name="imageFileName" value="Document_1" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />

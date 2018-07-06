@@ -34,7 +34,7 @@ public class GitWorkingDirectoryFactory {
 		}
 
 		String key = JenkinsResultsParserUtil.combine(
-			repositoryName, "__", upstreamBranchName);
+			repositoryName, "_", upstreamBranchName);
 
 		if (_gitWorkingDirectories.containsKey(key)) {
 			return _gitWorkingDirectories.get(key);

@@ -210,7 +210,7 @@
 	</command>
 
 	<command name="saveRepeatingEvent">
-		<execute macro="Button#clickSave" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RECURRING_EVENT_DIALOG_BOX_HEADER" />
 

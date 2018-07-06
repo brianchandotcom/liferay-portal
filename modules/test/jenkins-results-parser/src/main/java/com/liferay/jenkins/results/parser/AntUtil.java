@@ -14,19 +14,16 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import java.util.Map;
 
 import org.apache.tools.ant.Project;
-import org.apache.tools.ant.ProjectHelper;
 import org.apache.tools.ant.RuntimeConfigurable;
 import org.apache.tools.ant.Task;
-
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
 
 /**
  * @author Cesar Polanco
@@ -53,68 +50,107 @@ public class AntUtil {
 	}
 
 	public static void callTarget(
-		Project project, File baseDir, File buildFile, String targetName,
+		File baseDir, String buildFileName, String targetName,
 		Map<String, String> parameters) {
 
-		if (targetName == null) {
-			targetName = project.getDefaultTarget();
+		String[] bashCommands = new String[3];
+
+		if (_isWindows()) {
+			bashCommands[0] = "cmd";
+			bashCommands[1] = "/c";
+		}
+		else {
+			bashCommands[0] = "/bin/sh";
+			bashCommands[1] = "-c";
 		}
 
-		String projectName = project.getName();
+		StringBuilder sb = new StringBuilder();
 
-		if (buildFile != null) {
-			ProjectHelper.configureProject(project, buildFile);
+		sb.append("ant");
 
-			projectName = _getProjectName(buildFile);
+		if (buildFileName != null) {
+			sb.append(" -f ");
+			sb.append(buildFileName);
 		}
 
-		if (!projectName.equals(project.getName())) {
-			targetName = JenkinsResultsParserUtil.combine(
-				projectName, ".", targetName);
+		if (targetName != null) {
+			sb.append(" ");
+			sb.append(targetName);
 		}
 
 		if (parameters != null) {
 			for (Map.Entry<String, String> parameter : parameters.entrySet()) {
-				project.setUserProperty(
-					parameter.getKey(), parameter.getValue());
+				sb.append(" -D");
+				sb.append(parameter.getKey());
+				sb.append("=\"");
+				sb.append(parameter.getValue());
+				sb.append("\"");
 			}
 		}
 
-		File projectBaseDir = project.getBaseDir();
-
-		boolean useBaseDir = false;
-
-		if ((baseDir != null) && !baseDir.equals(projectBaseDir)) {
-			useBaseDir = true;
-		}
+		bashCommands[2] = sb.toString();
 
 		try {
-			if (useBaseDir) {
-				project.setBaseDir(baseDir);
+			ProcessBuilder processBuilder = new ProcessBuilder(bashCommands);
+
+			if (baseDir == null) {
+				baseDir = new File(".");
 			}
 
-			project.executeTarget(targetName);
-		}
-		finally {
-			if (useBaseDir) {
-				project.setBaseDir(projectBaseDir);
+			processBuilder.directory(baseDir.getAbsoluteFile());
+
+			final Process process = processBuilder.start();
+
+			Thread thread = new Thread() {
+
+				@Override
+				public void run() {
+					try {
+						BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(process.getInputStream()));
+
+						String line = null;
+
+						while ((line = bufferedReader.readLine()) != null) {
+							System.out.println(line);
+						}
+
+						bufferedReader.close();
+					}
+					catch (IOException ioe) {
+						ioe.printStackTrace();
+					}
+				}
+
+			};
+
+			thread.start();
+
+			process.waitFor();
+
+			int exitValue = process.exitValue();
+
+			if (exitValue != 0) {
+				System.out.println(
+					JenkinsResultsParserUtil.readInputStream(
+						process.getErrorStream(), true));
+
+				throw new RuntimeException();
 			}
+		}
+		catch (InterruptedException | IOException e) {
+			e.printStackTrace();
+
+			throw new RuntimeException(e);
 		}
 	}
 
-	private static String _getProjectName(File buildFile) {
-		try {
-			String buildFileContent = JenkinsResultsParserUtil.read(buildFile);
-
-			Document document = Dom4JUtil.parse(buildFileContent);
-
-			Element element = document.getRootElement();
-
-			return element.attributeValue("name");
+	private static boolean _isWindows() {
+		if (File.pathSeparator.equals(";")) {
+			return true;
 		}
-		catch (DocumentException | IOException e) {
-			throw new RuntimeException(e);
-		}
+
+		return false;
 	}
 
 }

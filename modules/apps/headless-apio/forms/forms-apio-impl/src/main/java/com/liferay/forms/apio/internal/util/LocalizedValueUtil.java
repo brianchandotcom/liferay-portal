@@ -12,15 +12,30 @@
  * details.
  */
 
-package com.liferay.forms.apio.architect.identifier;
+package com.liferay.forms.apio.internal.util;
 
-import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.apio.architect.functional.Try;
+import com.liferay.dynamic.data.mapping.model.Value;
+
+import java.util.Locale;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
- * Holds information about a {@code DDMStructure} identifier.
- *
  * @author Paulo Cruz
- * @review
  */
-public interface StructureIdentifier extends Identifier<Long> {
+public final class LocalizedValueUtil {
+
+	public static <T> BiFunction<T, Locale, String> getLocalizedString(
+		Function<T, Value> function) {
+
+		return (value, locale) -> Try.fromFallible(
+			() -> function.apply(value)
+		).map(
+			localizedValue -> localizedValue.getString(locale)
+		).orElse(
+			null
+		);
+	}
+
 }

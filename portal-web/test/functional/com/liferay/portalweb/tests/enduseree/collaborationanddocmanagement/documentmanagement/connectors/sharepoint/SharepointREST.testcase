@@ -151,7 +151,7 @@
 
 	<command name="CheckinDocument" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -177,7 +177,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">
@@ -209,7 +209,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<var name="key_dmDocumentTitle" value="Document_3.txt" />
@@ -228,7 +228,7 @@
 
 	<command name="DeleteDocumentInSubfolder" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderCP">
@@ -255,7 +255,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -281,7 +281,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -304,7 +304,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -320,7 +320,7 @@
 
 	<command name="DeleteSubfolder" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderCP">
@@ -343,7 +343,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMFolder#cannotViewCP">
@@ -353,7 +353,7 @@
 
 	<command name="EditDocumentFile" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -396,7 +396,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoDocumentCP">
@@ -421,7 +421,7 @@
 
 	<command name="MoveCheckedoutDocumentToFolder" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderCP">
@@ -443,7 +443,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -467,7 +467,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">
@@ -493,7 +493,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
@@ -502,7 +502,7 @@
 
 		<execute macro="DMDocument#moveToSubFolderCP">
 			<var name="dmDocumentTitle" value="Document_1.txt" />
-			<var name="dmFolderName" value="Sharepoint (${configurationName})" />
+			<var name="dmFolderName" value="Collaboration Test Application" />
 			<var name="dmSubFolderName" value="Sharepoint Subfolder" />
 		</execute>
 
@@ -526,7 +526,7 @@
 
 	<command name="MoveDocumentToHome" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -568,7 +568,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#cannotViewCP">
@@ -578,7 +578,7 @@
 
 	<command name="SearchDocumentViaHome" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -602,7 +602,7 @@
 
 		<execute macro="DMDocument#viewSearchResultsCP">
 			<var name="dmDocumentTitle" value="Document_3.odt" />
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 	</command>
 
@@ -638,7 +638,7 @@
 		</execute>
 
 		<execute macro="DMNavigator#gotoRepository">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
@@ -671,7 +671,7 @@
 
 	<command name="ViewEditedCheckedoutDocument" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -695,7 +695,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -722,7 +722,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">
@@ -740,7 +740,7 @@
 
 	<command name="ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -774,7 +774,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoDocumentCP">
@@ -788,7 +788,7 @@
 
 	<command name="ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -822,7 +822,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoDocumentCP">
@@ -836,11 +836,11 @@
 
 	<command name="ViewRepository" priority="4">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 
 		<execute macro="DMRepository#viewBreadcrumb">
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositoryName" value="Collaboration Test Application" />
 		</execute>
 	</command>
 </definition>

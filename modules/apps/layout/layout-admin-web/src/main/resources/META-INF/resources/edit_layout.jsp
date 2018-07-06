@@ -154,7 +154,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 			<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 			<liferay-frontend:edit-form-body>
-				<liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutAdded" %>' message="the-page-was-created-succesfully" />
+				<liferay-ui:success key="layoutAdded" message="the-page-was-created-succesfully" />
 
 				<liferay-ui:error exception="<%= LayoutTypeException.class %>">
 

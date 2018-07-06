@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -117,11 +117,7 @@ public class AddSimpleLayoutMVCActionCommand
 				stagingGroupId, privateLayout, layout.getLayoutId(),
 				layout.getTypeSettingsProperties());
 
-			String portletResource = ParamUtil.getString(
-				actionRequest, "portletResource");
-
-			MultiSessionMessages.add(
-				actionRequest, portletResource + "layoutAdded", layout);
+			SessionMessages.add(actionRequest, "layoutAdded", layout);
 
 			String redirectURL = getRedirectURL(actionResponse, layout);
 

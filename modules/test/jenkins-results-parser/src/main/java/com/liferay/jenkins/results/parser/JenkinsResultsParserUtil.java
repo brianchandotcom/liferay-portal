@@ -1140,14 +1140,6 @@ public class JenkinsResultsParserUtil {
 		return false;
 	}
 
-	public static boolean isRunningJenkins() {
-		if (System.getenv("JENKINS_HOME") == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public static String join(String delimiter, String... strings) {
 		StringBuilder sb = new StringBuilder();
 

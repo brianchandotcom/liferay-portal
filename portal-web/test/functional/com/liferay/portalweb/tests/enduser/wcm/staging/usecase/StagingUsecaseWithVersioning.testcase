@@ -508,7 +508,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#viewCustomLogoPG" />
+		<execute macro="Page#viewLayoutLogoPG">
+			<var name="assertLayoutLogoPresent" value="true" />
+		</execute>
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
@@ -531,6 +533,8 @@
 
 		<execute macro="Page#viewDefaultLogoPG" />
 
+		<execute macro="Page#viewLayoutLogoPG" />
+
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -545,7 +549,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#viewCustomLogoPG" />
+		<execute macro="Page#viewLayoutLogoPG">
+			<var name="assertLayoutLogoPresent" value="true" />
+		</execute>
 	</command>
 
 	<command name="StagingMergeSitePagesVariation1" priority="4">

@@ -36,13 +36,13 @@ public interface UserFileUploadsConfiguration {
 	public long imageMaxSize();
 
 	@Meta.AD(
-		deflt = "120", description = "users-image-maximum-height-help",
+		deflt = "290", description = "users-image-maximum-height-help",
 		name = "maximum-height", required = false
 	)
 	public int imageMaxHeight();
 
 	@Meta.AD(
-		deflt = "100", description = "users-image-maximum-width-help",
+		deflt = "290", description = "users-image-maximum-width-help",
 		name = "maximum-width", required = false
 	)
 	public int imageMaxWidth();

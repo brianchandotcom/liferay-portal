@@ -422,7 +422,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDisplayPageWithComplexFragments" priority="4">
+	<command name="ViewDisplayPageWithComplexRichTextFragments" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -488,13 +488,13 @@
 		<execute macro="DisplayPages#mapEditableTextToAsset">
 			<var name="fragmentName" value="Fragment Name" />
 			<var name="id" value="test3" />
-			<var name="itemName" value="tagNames" />
+			<var name="itemName" value="Tags" />
 		</execute>
 
 		<execute macro="DisplayPages#mapEditableTextToAsset">
 			<var name="fragmentName" value="Fragment Name" />
 			<var name="id" value="test4" />
-			<var name="itemName" value="publishDate" />
+			<var name="itemName" value="Publish Date" />
 		</execute>
 
 		<execute macro="Button#clickPublish" />

@@ -430,13 +430,13 @@
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_LINK" />
 
 		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="${categoryName}" />
+			<var name="portletTitle" value="Categories" />
 		</execute>
 
 		<execute function="Click" locator1="Icon#BACK" />
 
 		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="${vocabularyName}" />
+			<var name="portletTitle" value="Categories" />
 		</execute>
 	</command>
 

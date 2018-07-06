@@ -37,7 +37,7 @@
 		<var name="app_name" value="Collaboration Test Application" />
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="MicrosoftLogin#SHAREPOINT_NOTIFICATION" />
+			<condition function="IsElementPresent" locator1="MicrosoftLogin#SHAREPOINT_NOTIFICATION" />
 
 			<then>
 				<execute function="AssertClick" locator1="MicrosoftLogin#SHAREPOINT_TRUST_IT_BUTTON" value1="Trust It" />

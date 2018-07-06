@@ -238,6 +238,10 @@ public class DDMDisplayContext {
 				for (DDMDisplayTabItem ddmDisplayTabItem :
 						ddmDisplay.getTabItems()) {
 
+					if (!ddmDisplayTabItem.isShow(liferayPortletRequest)) {
+						continue;
+					}
+
 					String ddmDisplayTabItemTitle = GetterUtil.getString(
 						ddmDisplayTabItem.getTitle(
 							liferayPortletRequest, liferayPortletResponse));

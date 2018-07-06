@@ -22,7 +22,7 @@ public class Database {
 	public static Database getDB2Database() {
 		return new Database(
 			"com.ibm.db2.jcc.DB2Driver", "jdbc:db2://", "localhost", 50000,
-			"/lportal",
+			"lportal",
 			":deferPrepares=false;fullyMaterializeInputStreams=true;" +
 				"fullyMaterializeLobData=true;progresssiveLocators=2;" +
 					"progressiveStreaming=2;");
@@ -31,15 +31,14 @@ public class Database {
 	public static Database getMariaDBDatabase() {
 		return new Database(
 			"org.mariadb.jdbc.Driver", "jdbc:mariadb://", "localhost", 0,
-			"/lportal",
+			"lportal",
 			"?useUnicode=true&characterEncoding=UTF-8" +
 				"&useFastDateParsing=false");
 	}
 
 	public static Database getMySQLDatabase() {
 		return new Database(
-			"com.mysql.jdbc.Driver", "jdbc:mysql://", "localhost", 0,
-			"/lportal",
+			"com.mysql.jdbc.Driver", "jdbc:mysql://", "localhost", 0, "lportal",
 			"?characterEncoding=UTF-8&dontTrackOpenResources=true" +
 				"&holdResultsOpenOverStatementClose=true" +
 					"&useFastDateParsing=false&useUnicode=true");
@@ -48,25 +47,25 @@ public class Database {
 	public static Database getOracleDataSource() {
 		return new Database(
 			"oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@", "localhost", 1521,
-			":xe", "");
+			"xe", "");
 	}
 
 	public static Database getPostgreSQLDatabase() {
 		return new Database(
 			"org.postgresql.Driver", "jdbc:postgresql://", "localhost", 5432,
-			"/lportal", "");
+			"lportal", "");
 	}
 
 	public static Database getSQLServerDatabase() {
 		return new Database(
 			"com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://",
-			"localhost", 0, ";databaseName=lportal", "");
+			"localhost", 0, "lportal", "");
 	}
 
 	public static Database getSybaseDatabase() {
 		return new Database(
 			"com.sybase.jdbc4.jdbc.SybDriver", "jdbc:sybase:Tds:", "localhost",
-			5000, "/lportal", "");
+			5000, "lportal", "");
 	}
 
 	public String getClassName() {
@@ -100,7 +99,7 @@ public class Database {
 			sb.append(_port);
 		}
 
-		sb.append(_databaseName);
+		sb.append(_buildDatabaseName(_databaseName));
 		sb.append(_params);
 
 		return sb.toString();
@@ -140,6 +139,20 @@ public class Database {
 		_port = port;
 		_databaseName = databaseName;
 		_params = params;
+	}
+
+	private String _buildDatabaseName(String databaseName) {
+		if (_protocol.contains("sqlserver")) {
+			databaseName = ";databaseName=".concat(databaseName);
+		}
+		else if (_protocol.contains("oracle")) {
+			databaseName = ":".concat(databaseName);
+		}
+		else {
+			databaseName = "/".concat(databaseName);
+		}
+
+		return databaseName;
 	}
 
 	private String _className;

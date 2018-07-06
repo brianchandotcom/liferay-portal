@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
+import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.util.PropsValues;
 
@@ -33,6 +34,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.web.context.support.XmlWebApplicationContext;
@@ -62,6 +64,11 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 
 		public ClassLoader getBeanClassLoader();
 
+	}
+
+	@Override
+	protected DefaultListableBeanFactory createBeanFactory() {
+		return new LiferayBeanFactory(getInternalParentBeanFactory());
 	}
 
 	@Override

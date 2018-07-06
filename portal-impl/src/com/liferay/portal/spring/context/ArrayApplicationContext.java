@@ -16,9 +16,11 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.spring.bean.LiferayBeanFactory;
 
 import java.io.FileNotFoundException;
 
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -29,6 +31,11 @@ public class ArrayApplicationContext extends ClassPathXmlApplicationContext {
 
 	public ArrayApplicationContext(String[] configLocations) {
 		super(configLocations);
+	}
+
+	@Override
+	protected DefaultListableBeanFactory createBeanFactory() {
+		return new LiferayBeanFactory(getInternalParentBeanFactory());
 	}
 
 	@Override

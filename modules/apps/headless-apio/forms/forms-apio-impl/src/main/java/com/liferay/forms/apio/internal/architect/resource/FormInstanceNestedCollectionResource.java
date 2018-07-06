@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.structure.apio.architect.identifier.StructureIdentifier;
+import com.liferay.structure.apio.architect.identifier.FormStructureIdentifier;
 
 import java.util.Arrays;
 import java.util.List;
@@ -114,7 +114,7 @@ public class FormInstanceNestedCollectionResource
 		).addLinkedModel(
 			"author", PersonIdentifier.class, DDMFormInstance::getUserId
 		).addLinkedModel(
-			"structure", StructureIdentifier.class,
+			"structure", FormStructureIdentifier.class,
 			DDMFormInstance::getStructureId
 		).addNested(
 			"settings", this::_getSettings,

@@ -1638,10 +1638,11 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="WorkflowAsset#gotoViaNotification">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="user" value="Test Test" />
-		</execute>
+		<execute function="Click" locator1="Notifications#USER_BAR_BADGE_COUNT" />
+
+		<execute function="Click" locator1="Notifications#NOTIFICATIONS_BADGE_COUNT" />
+
+		<execute function="AssertClick" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="Test Test sent you a Blogs Entry for review in the workflow." />
 
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Assign to Me" />

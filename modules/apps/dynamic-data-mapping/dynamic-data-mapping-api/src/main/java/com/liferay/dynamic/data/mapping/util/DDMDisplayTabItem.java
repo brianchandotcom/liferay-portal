@@ -34,4 +34,8 @@ public interface DDMDisplayTabItem {
 		return null;
 	}
 
+	public default boolean isShow(LiferayPortletRequest liferayPortletRequest) {
+		return true;
+	}
+
 }

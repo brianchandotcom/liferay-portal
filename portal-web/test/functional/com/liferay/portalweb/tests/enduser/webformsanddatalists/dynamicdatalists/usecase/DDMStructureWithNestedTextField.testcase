@@ -79,12 +79,12 @@
 		<execute macro="DDLRecord#addCP" />
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="English (United States) Parent" />
+			<var name="ddlRecordFieldData" value="en-US Parent" />
 			<var name="fieldName" value="textParent" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="English (United States) Child" />
+			<var name="ddlRecordFieldData" value="en-US Child" />
 			<var name="fieldName" value="textChild" />
 		</execute>
 

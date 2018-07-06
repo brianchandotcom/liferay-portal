@@ -105,17 +105,16 @@ public class AntUtil {
 
 				@Override
 				public void run() {
-					try {
-						BufferedReader bufferedReader = new BufferedReader(
-							new InputStreamReader(process.getInputStream()));
+					try (BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(process.getInputStream()))) {
 
-						String line = null;
+						String line = bufferedReader.readLine();
 
-						while ((line = bufferedReader.readLine()) != null) {
+						while (line != null) {
 							System.out.println(line);
-						}
 
-						bufferedReader.close();
+							line = bufferedReader.readLine();
+						}
 					}
 					catch (IOException ioe) {
 						ioe.printStackTrace();

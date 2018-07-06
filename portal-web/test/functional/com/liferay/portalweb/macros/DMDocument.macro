@@ -970,7 +970,7 @@
 			<isset var="recycleBinDisabled" />
 			<then>
 				<execute macro="LexiconEntry#delete">
-					<var name="rowEntry" value="${dmDocumenTitle}" />
+					<var name="rowEntry" value="${dmDocumentTitle}" />
 				</execute>
 			</then>
 			<else>

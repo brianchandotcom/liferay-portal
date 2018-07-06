@@ -116,7 +116,7 @@ public class KaleoDesignerWebVerifyProcess extends VerifyProcess {
 		_kaleoDefinitionVersionLocalService;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.web)(release.schema.version=1.0.1))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.web)(release.schema.version=1.0.2))"
 	)
 	private Release _release;
 

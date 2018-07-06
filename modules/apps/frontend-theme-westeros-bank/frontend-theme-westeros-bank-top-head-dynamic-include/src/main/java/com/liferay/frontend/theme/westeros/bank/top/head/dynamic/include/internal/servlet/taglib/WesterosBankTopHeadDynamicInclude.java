@@ -15,7 +15,10 @@
 package com.liferay.frontend.theme.westeros.bank.top.head.dynamic.include.internal.servlet.taglib;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -49,6 +52,13 @@ public class WesterosBankTopHeadDynamicInclude implements DynamicInclude {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		Theme theme = _themeLocalService.getTheme(
+			themeDisplay.getCompanyId(), _THEME_ID);
+
+		if (!Objects.equals(theme.getThemeId(), _THEME_ID)) {
+			return;
+		}
+
 		Layout layout = themeDisplay.getLayout();
 
 		if (!layout.isTypeControlPanel()) {
@@ -65,15 +75,18 @@ public class WesterosBankTopHeadDynamicInclude implements DynamicInclude {
 
 		printWriter.write("<link data-senna-track=\"permanent\" href=\"");
 
-		String uri =
-			themeDisplay.getCDNBaseURL() + _portal.getPathProxy() +
-				"/o/westeros-bank-theme/css/fragments_editor.css";
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(themeDisplay.getCDNBaseURL());
+		sb.append(_portal.getPathProxy());
+		sb.append(theme.getContextPath());
+		sb.append("/css/fragments_editor.css");
 
 		long themeLastModified = PortalWebResourcesUtil.getLastModified(
 			PortalWebResourceConstants.RESOURCE_TYPE_THEME_CONTRIBUTOR);
 
 		String staticResourceURL = _portal.getStaticResourceURL(
-			request, uri, themeLastModified);
+			request, sb.toString(), themeLastModified);
 
 		printWriter.write(staticResourceURL);
 
@@ -86,7 +99,13 @@ public class WesterosBankTopHeadDynamicInclude implements DynamicInclude {
 			"/html/common/themes/top_head.jsp#post");
 	}
 
+	private static final String _THEME_ID =
+		"westerosbank_WAR_westerosbanktheme";
+
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ThemeLocalService _themeLocalService;
 
 }

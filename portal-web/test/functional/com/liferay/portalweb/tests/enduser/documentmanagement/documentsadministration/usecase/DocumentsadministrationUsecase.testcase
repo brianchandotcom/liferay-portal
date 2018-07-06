@@ -1968,6 +1968,7 @@
 
 		<execute macro="SitePages#addPrivatePage">
 			<var name="pageName" value="DM Site Page Name - Global" />
+			<var name="siteTemplate" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

@@ -62,12 +62,23 @@ public class StagingUtil {
 		_staging.addModelToChangesetCollection(model);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             StagingURLHelper#buildRemoteURL(ExportImportConfiguration)}
+	 */
+	@Deprecated
 	public static String buildRemoteURL(
 		ExportImportConfiguration exportImportConfiguration) {
 
 		return _staging.buildRemoteURL(exportImportConfiguration);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             StagingURLHelper#buildRemoteURL(String, int, String,
+	 *             boolean)}
+	 */
+	@Deprecated
 	public static String buildRemoteURL(
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection) {
@@ -90,6 +101,11 @@ public class StagingUtil {
 			remoteGroupId, privateLayout);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             StagingURLHelper#buildRemoteURL(UnicodeProperties)}
+	 */
+	@Deprecated
 	public static String buildRemoteURL(
 		UnicodeProperties typeSettingsProperties) {
 

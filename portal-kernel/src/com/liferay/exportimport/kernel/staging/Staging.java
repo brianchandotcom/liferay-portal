@@ -57,9 +57,20 @@ public interface Staging {
 	public <T extends BaseModel> void addModelToChangesetCollection(T model)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             StagingURLHelper#buildRemoteURL(ExportImportConfiguration)}
+	 */
+	@Deprecated
 	public String buildRemoteURL(
 		ExportImportConfiguration exportImportConfiguration);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             StagingURLHelper#buildRemoteURL(String, int, String,
+	 *             boolean)}
+	 */
+	@Deprecated
 	public String buildRemoteURL(
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection);
@@ -73,6 +84,11 @@ public interface Staging {
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection, long remoteGroupId, boolean privateLayout);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             StagingURLHelper#buildRemoteURL(UnicodeProperties)}
+	 */
+	@Deprecated
 	public String buildRemoteURL(UnicodeProperties typeSettingsProperties);
 
 	/**

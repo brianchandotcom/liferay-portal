@@ -59,6 +59,7 @@ import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.kernel.staging.StagingURLHelper;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
@@ -157,7 +158,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.service.http.StagingServiceHttp;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -255,10 +255,7 @@ public class StagingImpl implements Staging {
 			return;
 		}
 
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if (!stagingGroupHelper.isStagingGroup(group)) {
+		if (!_stagingGroupHelper.isStagingGroup(group)) {
 			return;
 		}
 
@@ -272,50 +269,31 @@ public class StagingImpl implements Staging {
 			classPK);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             StagingURLHelper#buildRemoteURL(ExportImportConfiguration)}
+	 */
+	@Deprecated
 	@Override
 	public String buildRemoteURL(
 		ExportImportConfiguration exportImportConfiguration) {
 
-		Map<String, Serializable> settingsMap =
-			exportImportConfiguration.getSettingsMap();
-
-		String remoteAddress = MapUtil.getString(settingsMap, "remoteAddress");
-		int remotePort = MapUtil.getInteger(settingsMap, "remotePort");
-		String remotePathContext = MapUtil.getString(
-			settingsMap, "remotePathContext");
-		boolean secureConnection = MapUtil.getBoolean(
-			settingsMap, "secureConnection");
-
-		return buildRemoteURL(
-			remoteAddress, remotePort, remotePathContext, secureConnection);
+		return _stagingURLHelper.buildRemoteURL(exportImportConfiguration);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             StagingURLHelper#buildRemoteURL(String, int, String,
+	 *             boolean)}
+	 */
+	@Deprecated
 	@Override
 	public String buildRemoteURL(
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection) {
 
-		StringBundler sb = new StringBundler(5);
-
-		if (secureConnection) {
-			sb.append(Http.HTTPS_WITH_SLASH);
-		}
-		else {
-			sb.append(Http.HTTP_WITH_SLASH);
-		}
-
-		sb.append(remoteAddress);
-
-		if (remotePort > 0) {
-			sb.append(StringPool.COLON);
-			sb.append(remotePort);
-		}
-
-		if (Validator.isNotNull(remotePathContext)) {
-			sb.append(remotePathContext);
-		}
-
-		return sb.toString();
+		return _stagingURLHelper.buildRemoteURL(
+			remoteAddress, remotePort, remotePathContext, secureConnection);
 	}
 
 	/**
@@ -332,19 +310,14 @@ public class StagingImpl implements Staging {
 			remoteAddress, remotePort, remotePathContext, secureConnection);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             StagingURLHelper#buildRemoteURL(UnicodeProperties)}
+	 */
+	@Deprecated
 	@Override
 	public String buildRemoteURL(UnicodeProperties typeSettingsProperties) {
-		String remoteAddress = typeSettingsProperties.getProperty(
-			"remoteAddress");
-		int remotePort = GetterUtil.getInteger(
-			typeSettingsProperties.getProperty("remotePort"));
-		String remotePathContext = typeSettingsProperties.getProperty(
-			"remotePathContext");
-		boolean secureConnection = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("secureConnection"));
-
-		return buildRemoteURL(
-			remoteAddress, remotePort, remotePathContext, secureConnection);
+		return _stagingURLHelper.buildRemoteURL(typeSettingsProperties);
 	}
 
 	/**
@@ -1909,8 +1882,8 @@ public class StagingImpl implements Staging {
 			stagingGroup.getTypeSettingsProperties();
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			buildRemoteURL(typeSettingsProperties), user.getLogin(),
-			user.getPassword(), user.isPasswordEncrypted());
+			_stagingURLHelper.buildRemoteURL(typeSettingsProperties),
+			user.getLogin(), user.getPassword(), user.isPasswordEncrypted());
 
 		long remoteGroupId = GetterUtil.getLong(
 			typeSettingsProperties.getProperty("remoteGroupId"));
@@ -2574,7 +2547,7 @@ public class StagingImpl implements Staging {
 				sourceGroupId, remoteAddress, remotePort, remotePathContext,
 				secureConnection, sourceGroup.getRemoteLiveGroupId());
 
-			String remoteURL = buildRemoteURL(
+			String remoteURL = _stagingURLHelper.buildRemoteURL(
 				remoteAddress, remotePort, remotePathContext, secureConnection);
 
 			PermissionChecker permissionChecker =
@@ -3649,7 +3622,7 @@ public class StagingImpl implements Staging {
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
 
-		String remoteURL = buildRemoteURL(
+		String remoteURL = _stagingURLHelper.buildRemoteURL(
 			remoteAddress, remotePort, remotePathContext, secureConnection);
 
 		PermissionChecker permissionChecker =
@@ -4373,7 +4346,13 @@ public class StagingImpl implements Staging {
 	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
 
 	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
+
+	@Reference
 	private StagingLocalService _stagingLocalService;
+
+	@Reference
+	private StagingURLHelper _stagingURLHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

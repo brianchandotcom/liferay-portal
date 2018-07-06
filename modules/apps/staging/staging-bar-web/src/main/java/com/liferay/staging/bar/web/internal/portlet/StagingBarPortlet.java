@@ -17,6 +17,7 @@ package com.liferay.staging.bar.web.internal.portlet;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.exportimport.kernel.staging.StagingURLHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -268,7 +269,7 @@ public class StagingBarPortlet extends MVCPortlet {
 			boolean secureConnection = GetterUtil.getBoolean(
 				typeSettingsProperties.getProperty("secureConnection"));
 
-			remoteURL = _staging.buildRemoteURL(
+			remoteURL = _stagingURLHelper.buildRemoteURL(
 				remoteAddress, remotePort, remotePathContext, secureConnection);
 
 			if ((liveGroup != null) && group.isStagedRemotely()) {
@@ -633,5 +634,8 @@ public class StagingBarPortlet extends MVCPortlet {
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private StagingURLHelper _stagingURLHelper;
 
 }

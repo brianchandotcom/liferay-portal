@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.exportimport.kernel.staging.StagingURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -201,7 +202,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		ExportImportConfiguration exportImportConfiguration =
 			(ExportImportConfiguration)attributes.get(0);
 
-		return _staging.buildRemoteURL(exportImportConfiguration);
+		return _stagingURLHelper.buildRemoteURL(exportImportConfiguration);
 	}
 
 	private void _propagateEvent(
@@ -235,6 +236,9 @@ public class EventRemotePropagatorExportImportLifecycleListener
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private StagingURLHelper _stagingURLHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.kernel.staging.StagingURLHelperUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -5095,7 +5096,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		User user = permissionChecker.getUser();
 
-		String remoteURL = StagingUtil.buildRemoteURL(
+		String remoteURL = StagingURLHelperUtil.buildRemoteURL(
 			remoteAddress, remotePort, remotePathContext, secureConnection);
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(

@@ -55,8 +55,10 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Override
 	public void tag(AssetEntry assetEntry) throws PortalException {
+		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+
 		if (!_assetAutoTaggerConfiguration.enabled() ||
-			!ListUtil.isEmpty(assetEntry.getTags())) {
+			!ListUtil.isEmpty(assetEntry.getTags()) || assetRenderer == null) {
 
 			return;
 		}
@@ -69,8 +71,6 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		}
 
 		ServiceContext serviceContext = _createServiceContext(assetEntry);
-
-		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
 		for (AssetAutoTagProvider assetAutoTagProvider :
 				assetAutoTagProviders) {

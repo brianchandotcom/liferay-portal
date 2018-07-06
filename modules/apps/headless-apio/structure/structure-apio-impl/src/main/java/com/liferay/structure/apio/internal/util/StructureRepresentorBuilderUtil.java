@@ -42,8 +42,9 @@ import java.util.Map.Entry;
  */
 public class StructureRepresentorBuilderUtil {
 
-	public static Representor.FirstStep<DDMStructure> getStructureFirstStep(
-		Representor.Builder<DDMStructure, Long> builder) {
+	public static Representor.FirstStep<DDMStructure>
+		buildDDMStructureFirstStep(
+			Representor.Builder<DDMStructure, Long> builder) {
 
 		return builder.types(
 			"Structure"

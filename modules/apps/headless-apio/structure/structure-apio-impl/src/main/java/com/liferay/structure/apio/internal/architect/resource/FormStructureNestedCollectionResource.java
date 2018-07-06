@@ -14,7 +14,7 @@
 
 package com.liferay.structure.apio.internal.architect.resource;
 
-import static com.liferay.structure.apio.internal.util.StructureRepresentorBuilderUtil.getStructureFirstStep;
+import static com.liferay.structure.apio.internal.util.StructureRepresentorBuilderUtil.buildDDMStructureFirstStep;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -74,11 +74,11 @@ public class FormStructureNestedCollectionResource
 	public Representor<DDMStructure> representor(
 		Representor.Builder<DDMStructure, Long> builder) {
 
-		Representor.FirstStep<DDMStructure> builderFirstStep =
-			getStructureFirstStep(builder);
+		Representor.FirstStep<DDMStructure> ddmStructureFirstStep =
+			buildDDMStructureFirstStep(builder);
 
 		Representor.FirstStep<DDMStructure> bidirectionalModelStep =
-			builderFirstStep.addBidirectionalModel(
+			ddmStructureFirstStep.addBidirectionalModel(
 				"interactionService", "formStructures",
 				ContentSpaceIdentifier.class, DDMStructureModel::getGroupId);
 
@@ -97,14 +97,15 @@ public class FormStructureNestedCollectionResource
 
 		Long classNameId = className.getClassNameId();
 
-		List<DDMStructure> structures = _ddmStructureLocalService.getStructures(
-			groupId, classNameId, pagination.getStartPosition(),
-			pagination.getEndPosition(), null);
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getStructures(
+				groupId, classNameId, pagination.getStartPosition(),
+				pagination.getEndPosition(), null);
 
-		int structuresCount = _ddmStructureLocalService.getStructuresCount(
+		int count = _ddmStructureLocalService.getStructuresCount(
 			groupId, classNameId);
 
-		return new PageItems<>(structures, structuresCount);
+		return new PageItems<>(ddmStructures, count);
 	}
 
 	@Reference

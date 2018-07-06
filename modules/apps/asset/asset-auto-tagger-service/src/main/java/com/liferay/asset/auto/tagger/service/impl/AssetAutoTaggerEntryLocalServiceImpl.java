@@ -45,6 +45,14 @@ public class AssetAutoTaggerEntryLocalServiceImpl
 	public AssetAutoTaggerEntry addAssetAutoTaggerEntry(
 		AssetEntry assetEntry, AssetTag assetTag) {
 
+		AssetAutoTaggerEntry existingEntry =
+			assetAutoTaggerEntryPersistence.fetchByA_A(
+				assetEntry.getEntryId(), assetTag.getTagId());
+
+		if (existingEntry != null) {
+			return existingEntry;
+		}
+
 		long entryId = counterLocalService.increment();
 
 		AssetAutoTaggerEntry entry = assetAutoTaggerEntryPersistence.create(

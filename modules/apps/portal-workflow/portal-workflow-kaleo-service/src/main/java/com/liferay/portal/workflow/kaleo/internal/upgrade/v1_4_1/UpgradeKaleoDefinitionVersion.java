@@ -15,12 +15,12 @@
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1.util.KaleoActionTable;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1.util.KaleoConditionTable;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1.util.KaleoDefinitionTable;
@@ -39,6 +39,8 @@ import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1.util.KaleoTaskT
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1.util.KaleoTimerInstanceTokenTable;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1.util.KaleoTimerTable;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1.util.KaleoTransitionTable;
+
+import java.io.IOException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,12 +70,41 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		upgradeKaleoDefinitionVersion();
 
+		removeDuplicatedKaleoDefinitions();
 		removeKaleoDefinitionId();
 		removeStartKaleoNodeId();
 	}
 
 	protected String getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
+	}
+
+	protected void removeDuplicatedKaleoDefinitions()
+		throws IOException, SQLException {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
+				"select name, MAX(version) version from KaleoDefinition " +
+					"group by name");
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"delete from KaleoDefinition where name = ? and version " +
+						"< ?");
+			ResultSet rs = ps1.executeQuery()) {
+
+			while (rs.next()) {
+				String name = rs.getString("name");
+				int version = rs.getInt("version");
+
+				ps2.setString(1, name);
+				ps2.setInt(2, version);
+
+				ps2.addBatch();
+			}
+
+			ps2.executeBatch();
+		}
 	}
 
 	protected void removeKaleoDefinitionId() throws Exception {

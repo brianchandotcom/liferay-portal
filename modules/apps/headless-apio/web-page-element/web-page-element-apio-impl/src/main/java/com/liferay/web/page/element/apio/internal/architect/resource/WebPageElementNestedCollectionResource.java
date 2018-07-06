@@ -17,18 +17,25 @@ package com.liferay.web.page.element.apio.internal.architect.resource;
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.aggregate.rating.apio.architect.identifier.AggregateRatingIdentifier;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagModel;
+import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
@@ -120,6 +127,15 @@ public class WebPageElementNestedCollectionResource
 			"datePublished", JournalArticle::getDisplayDate
 		).addDate(
 			"lastReviewed", JournalArticle::getReviewDate
+		).addNestedList(
+			"fields", this::_getJournalArticleFields,
+			fieldValuesBuilder -> fieldValuesBuilder.types(
+				"ContentFieldValue"
+			).addLocalizedStringByLocale(
+				"value", this::_getLocalizedString
+			).addString(
+				"name", DDMFormFieldValue::getName
+			).build()
 		).addLinkedModel(
 			"aggregateRating", AggregateRatingIdentifier.class,
 			this::_createClassNameClassPK
@@ -201,6 +217,28 @@ public class WebPageElementNestedCollectionResource
 		return ListUtil.toList(assetTags, AssetTagModel::getName);
 	}
 
+	private List<DDMFormFieldValue> _getJournalArticleFields(
+		JournalArticleWrapper journalArticleWrapper) {
+
+		return Try.fromFallible(
+			() ->
+				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+					JournalArticle.class)
+		).map(
+			assetRendererFactory -> assetRendererFactory.getAssetRenderer(
+				journalArticleWrapper,
+				AssetRendererFactory.TYPE_LATEST_APPROVED)
+		).map(
+			AssetRenderer::getDDMFormValuesReader
+		).map(
+			DDMFormValuesReader::getDDMFormValues
+		).map(
+			DDMFormValues::getDDMFormFieldValues
+		).orElse(
+			null
+		);
+	}
+
 	private String _getJournalArticleHtml(
 		JournalArticleWrapper journalArticleWrapper, Locale locale) {
 
@@ -227,6 +265,18 @@ public class WebPageElementNestedCollectionResource
 			journalArticleId);
 
 		return new JournalArticleWrapper(journalArticle, themeDisplay);
+	}
+
+	private String _getLocalizedString(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		return Try.fromFallible(
+			ddmFormFieldValue::getValue
+		).map(
+			value -> value.getString(locale)
+		).orElse(
+			null
+		);
 	}
 
 	private PageItems<JournalArticleWrapper> _getPageItems(

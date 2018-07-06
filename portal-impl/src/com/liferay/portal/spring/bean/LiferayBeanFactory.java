@@ -14,6 +14,10 @@
 
 package com.liferay.portal.spring.bean;
 
+import com.liferay.portal.security.lang.DoPrivilegedFactory;
+import com.liferay.portal.spring.aop.DynamicProxyCreator;
+import com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator;
+
 import java.beans.PropertyDescriptor;
 
 import org.springframework.beans.BeanWrapper;
@@ -33,6 +37,20 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 
 	public LiferayBeanFactory(BeanFactory parentBeanFactory) {
 		super(parentBeanFactory);
+	}
+
+	@Override
+	public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
+		super.addBeanPostProcessor(beanPostProcessor);
+
+		if ((beanPostProcessor instanceof
+				InstantiationAwareBeanPostProcessor) &&
+			!(beanPostProcessor instanceof DoPrivilegedFactory) &&
+			!(beanPostProcessor instanceof DynamicProxyCreator) &&
+			!(beanPostProcessor instanceof ServiceBeanAutoProxyCreator)) {
+
+			_postProcessPropertyValues = true;
+		}
 	}
 
 	@Override
@@ -96,7 +114,10 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 			needsDependencyCheck = false;
 		}
 
-		if (hasInstantiationAwareBeanPostProcessors || needsDependencyCheck) {
+		if ((hasInstantiationAwareBeanPostProcessors &&
+			 _postProcessPropertyValues) ||
+			needsDependencyCheck) {
+
 			PropertyDescriptor[] propertyDescriptors =
 				filterPropertyDescriptorsForDependencyCheck(beanWrapper, true);
 
@@ -166,5 +187,7 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 
 		return true;
 	}
+
+	private boolean _postProcessPropertyValues;
 
 }

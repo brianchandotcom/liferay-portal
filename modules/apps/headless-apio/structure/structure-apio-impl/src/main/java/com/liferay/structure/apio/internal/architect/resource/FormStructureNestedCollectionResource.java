@@ -22,6 +22,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
@@ -29,7 +30,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameService;
-import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.structure.apio.architect.identifier.FormStructureIdentifier;
 
 import java.util.List;
@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FormStructureNestedCollectionResource
 	implements
 		NestedCollectionResource<DDMStructure, Long, FormStructureIdentifier,
-			Long, WebSiteIdentifier> {
+			Long, ContentSpaceIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<DDMStructure, Long, Long> collectionRoutes(
@@ -79,8 +79,8 @@ public class FormStructureNestedCollectionResource
 
 		Representor.FirstStep<DDMStructure> bidirectionalModelStep =
 			builderFirstStep.addBidirectionalModel(
-				"interactionService", "formStructures", WebSiteIdentifier.class,
-				DDMStructureModel::getGroupId);
+				"interactionService", "formStructures",
+				ContentSpaceIdentifier.class, DDMStructureModel::getGroupId);
 
 		return bidirectionalModelStep.build();
 	}

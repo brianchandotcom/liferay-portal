@@ -109,7 +109,7 @@
 	</command>
 
 	<command name="contentDeletion">
-		<execute function="Check" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX" />
+		<execute function="Click" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX" />
 	</command>
 
 	<command name="deleteMissingPages">

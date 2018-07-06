@@ -17,6 +17,7 @@ package com.liferay.portal.search.web.internal.search.bar.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
@@ -115,8 +116,15 @@ public class SearchBarPortlet extends MVCPortlet {
 			portletSharedSearchResponse::getKeywordsOptional,
 			searchBarPortletDisplayBuilder::setKeywords);
 
+		SearchSettings searchSettings =
+			portletSharedSearchResponse.getSearchSettings();
+
+		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
+			renderRequest);
+
 		searchBarPortletDisplayBuilder.setKeywordsParameterName(
-			searchBarPortletPreferences.getKeywordsParameterName());
+			getKeywordsParameterName(
+				searchSettings, searchBarPortletPreferences, themeDisplay));
 
 		String scopeParameterName =
 			searchBarPortletPreferences.getScopeParameterName();
@@ -131,16 +139,29 @@ public class SearchBarPortlet extends MVCPortlet {
 
 		searchBarPortletDisplayBuilder.setSearchScopePreference(
 			searchBarPortletPreferences.getSearchScopePreference());
-		searchBarPortletDisplayBuilder.setThemeDisplay(
-			portletSharedSearchResponse.getThemeDisplay(renderRequest));
-
-		SearchSettings searchSettings =
-			portletSharedSearchResponse.getSearchSettings();
+		searchBarPortletDisplayBuilder.setThemeDisplay(themeDisplay);
 
 		searchBarPortletDisplayBuilder.setEmptySearchEnabled(
 			isEmptySearchEnabled(searchSettings));
 
 		return searchBarPortletDisplayBuilder.build();
+	}
+
+	protected String getKeywordsParameterName(
+		SearchSettings searchSettings,
+		SearchBarPortletPreferences searchBarPortletPreferences,
+		ThemeDisplay themeDisplay) {
+
+		if (!SearchBarPortletDestinationUtil.isSameDestination(
+				searchBarPortletPreferences, themeDisplay)) {
+
+			return searchBarPortletPreferences.getKeywordsParameterName();
+		}
+
+		Optional<String> optional = searchSettings.getKeywordsParameterName();
+
+		return optional.orElse(
+			searchBarPortletPreferences.getKeywordsParameterName());
 	}
 
 	protected boolean isEmptySearchEnabled(SearchSettings searchSettings) {

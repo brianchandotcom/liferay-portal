@@ -14,9 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Michael Hashimoto
  */
@@ -26,12 +23,8 @@ public abstract class BaseBuildRunner {
 		return job;
 	}
 
-	public void setupWorkspace() {
-		primaryWorkspace.setupWorkspace();
-
-		for (BaseWorkspace workspace : _workspaces) {
-			workspace.setupWorkspace();
-		}
+	public void setup() {
+		primaryLocalRepository.setup();
 	}
 
 	protected BaseBuildRunner(Job job) {
@@ -39,8 +32,6 @@ public abstract class BaseBuildRunner {
 	}
 
 	protected final Job job;
-	protected BaseWorkspace primaryWorkspace;
-
-	private final List<BaseWorkspace> _workspaces = new ArrayList<>();
+	protected LocalRepository primaryLocalRepository;
 
 }

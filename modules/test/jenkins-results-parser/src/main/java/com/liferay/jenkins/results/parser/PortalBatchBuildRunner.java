@@ -48,18 +48,16 @@ public class PortalBatchBuildRunner extends BatchBuildRunner {
 
 		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
 
-		portalGitWorkingDirectory =
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			portalTestClassJob.getPortalGitWorkingDirectory();
 
-		primaryWorkspace = WorkspaceFactory.newWorkspace(
-			portalGitWorkingDirectory.getRepositoryType(),
+		primaryLocalRepository = RepositoryFactory.getLocalRepository(
+			portalGitWorkingDirectory.getRepositoryName(),
 			portalGitWorkingDirectory.getUpstreamBranchName());
 
-		if (!(primaryWorkspace instanceof PortalWorkspace)) {
+		if (!(primaryLocalRepository instanceof PortalLocalRepository)) {
 			throw new RuntimeException("Invalid workspace");
 		}
-
-		portalWorkspace = (PortalWorkspace)primaryWorkspace;
 
 		String hostname = System.getenv("HOSTNAME");
 
@@ -88,15 +86,13 @@ public class PortalBatchBuildRunner extends BatchBuildRunner {
 
 	protected final Properties portalAppServerProperties = new Properties();
 	protected final Properties portalBuildProperties = new Properties();
-	protected PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected final Properties portalSQLProperties = new Properties();
 	protected final Properties portalTestProperties = new Properties();
-	protected PortalWorkspace portalWorkspace;
 
 	private void _setPortalAppServerProperties() {
 		portalAppServerProperties.put(
 			"app.server.parent.dir",
-			portalWorkspace.getRepositoryDir() + "/bundles");
+			primaryLocalRepository.getDirectory() + "/bundles");
 	}
 
 	private void _setPortalBuildProperties() {
@@ -120,7 +116,7 @@ public class PortalBatchBuildRunner extends BatchBuildRunner {
 		portalBuildProperties.put("jsp.precompile.parallel", "off");
 
 		portalBuildProperties.put(
-			"liferay.home", portalWorkspace.getRepositoryDir() + "/bundles");
+			"liferay.home", primaryLocalRepository.getDirectory() + "/bundles");
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

@@ -29,7 +29,7 @@ public class JunitPortalBatchBuildRunner extends PortalBatchBuildRunner {
 
 	private void _setPortalBuildProperties() {
 		String portalUpstreamBranchName =
-			portalGitWorkingDirectory.getUpstreamBranchName();
+			primaryLocalRepository.getUpstreamBranchName();
 
 		if (portalUpstreamBranchName.contains("7.0.x") ||
 			portalUpstreamBranchName.contains("7.1.x") ||
@@ -56,11 +56,12 @@ public class JunitPortalBatchBuildRunner extends PortalBatchBuildRunner {
 				otherPortalRepositoryName += "-ee";
 			}
 
-			BaseWorkspace otherPortalWorkspace = WorkspaceFactory.newWorkspace(
-				"liferay-portal", otherPortalBranchName);
+			LocalRepository otherPortalLocalRepository =
+				RepositoryFactory.getLocalRepository(
+					otherPortalRepositoryName, otherPortalBranchName);
 
 			File otherPortalRepositoryDir =
-				otherPortalWorkspace.getRepositoryDir();
+				otherPortalLocalRepository.getDirectory();
 
 			portalBuildProperties.put(
 				"release.versions.test.other.dir",

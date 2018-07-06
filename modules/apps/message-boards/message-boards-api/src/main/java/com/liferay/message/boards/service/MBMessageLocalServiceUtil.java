@@ -652,12 +652,42 @@ public class MBMessageLocalServiceUtil {
 		return getService().getPositionInThread(messageId);
 	}
 
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getRootDiscussionMessages(
+		String className, long classPK, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRootDiscussionMessages(className, classPK, status);
+	}
+
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getRootDiscussionMessages(
+		String className, long classPK, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getRootDiscussionMessages(className, classPK, status,
+			start, end);
+	}
+
+	public static int getRootDiscussionMessagesCount(String className,
+		long classPK, int status) {
+		return getService()
+				   .getRootDiscussionMessagesCount(className, classPK, status);
+	}
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getRootDiscussionMessages(
+	String, long, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getRootMessages(
 		String className, long classPK, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRootMessages(className, classPK, status);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getRootDiscussionMessages(
+	String, long, int, int, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getRootMessages(
 		String className, long classPK, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -665,6 +695,11 @@ public class MBMessageLocalServiceUtil {
 				   .getRootMessages(className, classPK, status, start, end);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getRootDiscussionMessagesCount(String, long, int)}
+	*/
+	@Deprecated
 	public static int getRootMessagesCount(String className, long classPK,
 		int status) {
 		return getService().getRootMessagesCount(className, classPK, status);

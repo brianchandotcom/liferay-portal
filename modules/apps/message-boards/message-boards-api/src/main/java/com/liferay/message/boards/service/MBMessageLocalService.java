@@ -489,13 +489,40 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public int getPositionInThread(long messageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getRootDiscussionMessages(String className,
+		long classPK, int status) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getRootDiscussionMessages(String className,
+		long classPK, int status, int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRootDiscussionMessagesCount(String className, long classPK,
+		int status);
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getRootDiscussionMessages(
+	String, long, int)}
+	*/
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getRootMessages(String className, long classPK,
 		int status) throws PortalException;
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getRootDiscussionMessages(
+	String, long, int, int, int)}
+	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getRootMessages(String className, long classPK,
 		int status, int start, int end) throws PortalException;
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getRootDiscussionMessagesCount(String, long, int)}
+	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRootMessagesCount(String className, long classPK, int status);
 

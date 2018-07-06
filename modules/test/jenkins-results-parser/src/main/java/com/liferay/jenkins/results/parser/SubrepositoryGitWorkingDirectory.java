@@ -20,25 +20,21 @@ import java.io.IOException;
  * @author Michael Hashimoto
  * @author Peter Yoo
  */
-public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
+public class SubrepositoryGitWorkingDirectory extends GitWorkingDirectory {
 
-	public PluginsGitWorkingDirectory(
-			String portalUpstreamBranchName, String workingDirectoryPath)
+	public SubrepositoryGitWorkingDirectory(
+			String upstreamBranchName, String workingDirectoryPath)
 		throws IOException {
 
-		super(
-			_getPluginsUpstreamBranchName(portalUpstreamBranchName),
-			workingDirectoryPath);
+		super(upstreamBranchName, workingDirectoryPath);
 	}
 
-	public PluginsGitWorkingDirectory(
-			String portalUpstreamBranchName, String workingDirectoryPath,
+	public SubrepositoryGitWorkingDirectory(
+			String upstreamBranchName, String workingDirectoryPath,
 			String repositoryName)
 		throws IOException {
 
-		super(
-			_getPluginsUpstreamBranchName(portalUpstreamBranchName),
-			workingDirectoryPath, repositoryName);
+		super(upstreamBranchName, workingDirectoryPath, repositoryName);
 	}
 
 	@Override
@@ -47,8 +43,8 @@ public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
 
 		String remoteURL = upstreamRemote.getRemoteURL();
 
-		if (!remoteURL.contains("-ee")) {
-			remoteURL = remoteURL.replace(".git", "-ee.git");
+		if (!remoteURL.contains("-private")) {
+			remoteURL = remoteURL.replace(".git", "-private.git");
 		}
 
 		addRemote(true, "upstream-temp", remoteURL);
@@ -60,24 +56,11 @@ public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
 
 		String remoteURL = upstreamRemote.getRemoteURL();
 
-		if (remoteURL.contains("-ee")) {
-			remoteURL = remoteURL.replace("-ee", "");
+		if (remoteURL.contains("-private")) {
+			remoteURL = remoteURL.replace("-private", "");
 		}
 
 		addRemote(true, "upstream-temp", remoteURL);
-	}
-
-	private static String _getPluginsUpstreamBranchName(
-		String portalUpstreamBranchName) {
-
-		if (portalUpstreamBranchName.contains("7.0.x") ||
-			portalUpstreamBranchName.contains("7.1.x") ||
-			portalUpstreamBranchName.contains("master")) {
-
-			return "7.0.x";
-		}
-
-		return portalUpstreamBranchName;
 	}
 
 }

@@ -242,6 +242,32 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return npmModuleDirsList;
 	}
 
+	@Override
+	protected void setUpstreamRemoteToPrivateRepository() {
+		Remote upstreamRemote = getUpstreamRemote();
+
+		String remoteURL = upstreamRemote.getRemoteURL();
+
+		if (!remoteURL.contains("-ee")) {
+			remoteURL = remoteURL.replace(".git", "-ee.git");
+		}
+
+		addRemote(true, "upstream-temp", remoteURL);
+	}
+
+	@Override
+	protected void setUpstreamRemoteToPublicRepository() {
+		Remote upstreamRemote = getUpstreamRemote();
+
+		String remoteURL = upstreamRemote.getRemoteURL();
+
+		if (remoteURL.contains("-ee")) {
+			remoteURL = remoteURL.replace("-ee", "");
+		}
+
+		addRemote(true, "upstream-temp", remoteURL);
+	}
+
 	private boolean _isNPMTestModuleDir(File moduleDir) {
 		List<File> packageJSONFiles = JenkinsResultsParserUtil.findFiles(
 			moduleDir, "package\\.json");

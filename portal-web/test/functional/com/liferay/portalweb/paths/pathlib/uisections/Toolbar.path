@@ -38,17 +38,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--MANAGEMENT_BAR-->
-<tr>
-	<td>MANAGEMENT_BAR_LOCK_ICON_BUTTON</td>
-	<td>//a[contains(@data-qa-id,'lockButton')]/span[contains(@class,'icon-monospaced')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MANAGEMENT_BAR_UNLOCK_ICON_BUTTON</td>
-	<td>//a[contains(@data-qa-id,'unlockButton')]/span[contains(@class,'icon-monospaced')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

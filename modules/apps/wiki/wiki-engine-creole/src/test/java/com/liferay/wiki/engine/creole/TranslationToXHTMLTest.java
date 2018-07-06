@@ -464,6 +464,13 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
+	public void testParseLinkEscapedBracket() throws Exception {
+		Assert.assertEquals(
+			"<p>link:<a href=\"http://liferay.com\">[1]</a> </p>",
+			translate("link-15.creole"));
+	}
+
+	@Test
 	public void testParseLinkFtp() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"ftp://liferay.com\">Liferay</a> </p>",

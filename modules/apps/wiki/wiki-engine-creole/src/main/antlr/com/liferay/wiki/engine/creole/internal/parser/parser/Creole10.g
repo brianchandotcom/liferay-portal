@@ -1161,6 +1161,7 @@ COLON_SLASH				: ':'  '/';
 ITAL					: '//';
 NOWIKI_OPEN				: '{{{';
 NOWIKI_CLOSE			: '}}}';
+ESCAPED_BRACKET			: ESCAPE ']' {setText("]");};
 LINK_OPEN				: '[[';
 LINK_CLOSE				: ']]';
 IMAGE_OPEN				: '{{';

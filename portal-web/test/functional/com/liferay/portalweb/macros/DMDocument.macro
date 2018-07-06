@@ -2710,8 +2710,13 @@
 			<var name="key_menuItem" value="Checkin" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Button#MOVE" />
-		<execute function="AssertVisible" locator1="Button#RECYCLE_BIN" />
+		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
+			<var name="key_menuItem" value="Move" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to Recycle Bin">
+			<var name="key_menuItem" value="Move to Recycle Bin" />
+		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page" />
@@ -2732,7 +2737,7 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
 
-		<execute function="AssertVisible" locator1="Button#RECYCLE_BIN" />
+		<execute function="AssertVisible" locator1="Icon#DELETE" />
 	</command>
 
 	<command name="viewTag">

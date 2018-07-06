@@ -665,7 +665,7 @@
 		<var name="key_dmFolderName" value="Collaboration Test Application" />
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="Collaboration Test Application" />
-		
+
 		<execute function="AssertElementPresent" locator1="MicrosoftLogin#LOGIN_EMAIL_FIELD" />
 	</command>
 
@@ -699,6 +699,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
 			<var name="rowEntry" value="Document_1.xls" />
 		</execute>
 
@@ -748,6 +749,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
 			<var name="rowEntry" value="Document_1.docx" />
 		</execute>
 
@@ -795,6 +797,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
 			<var name="rowEntry" value="Document_3.docx" />
 		</execute>
 

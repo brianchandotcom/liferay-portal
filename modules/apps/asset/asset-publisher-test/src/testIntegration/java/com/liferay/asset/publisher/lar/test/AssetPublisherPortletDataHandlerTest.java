@@ -66,4 +66,9 @@ public class AssetPublisherPortletDataHandlerTest
 		return false;
 	}
 
+	@Override
+	protected boolean isDisplayPortlet() {
+		return true;
+	}
+
 }

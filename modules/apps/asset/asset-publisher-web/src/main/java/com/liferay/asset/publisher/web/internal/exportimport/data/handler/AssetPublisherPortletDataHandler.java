@@ -45,6 +45,11 @@ public class AssetPublisherPortletDataHandler
 		return SCHEMA_VERSION;
 	}
 
+	@Override
+	public boolean isDisplayPortlet() {
+		return true;
+	}
+
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);

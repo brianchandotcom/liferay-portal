@@ -33,7 +33,8 @@ public class GitWorkingDirectoryFactory {
 				"Directory path not found " + repositoryDir);
 		}
 
-		String key = repositoryName + "__" + upstreamBranchName;
+		String key = JenkinsResultsParserUtil.combine(
+			repositoryName, "__", upstreamBranchName);
 
 		if (_gitWorkingDirectories.containsKey(key)) {
 			return _gitWorkingDirectories.get(key);

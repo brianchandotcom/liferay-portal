@@ -14,33 +14,59 @@
 
 package com.liferay.portal.search.solr.internal.groupby;
 
+import com.liferay.portal.kernel.search.GroupBy;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.groupby.BaseGroupByTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
+ * @author Tibor Lipusz
+ * @author André de Oliveira
  */
 public class GroupByTest extends BaseGroupByTestCase {
 
-	@Override
 	@Test
-	public void testGroupBy() throws Exception {
-		super.testGroupBy();
+	public void testSolrReturnsGroupedHitsOnly() throws Exception {
+		addDocuments("one", 1);
+
+		SearchContext searchContext = createSearchContext();
+
+		searchContext.setGroupBy(new GroupBy(GROUP_FIELD));
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				assertGroupedHitsOnly("one", searchContext);
+
+				return null;
+			});
 	}
 
-	@Override
-	@Test
-	public void testStartAndEnd() throws Exception {
-		super.testStartAndEnd();
-	}
+	protected void assertGroupedHitsOnly(
+			String key, SearchContext searchContext)
+		throws Exception {
 
-	@Override
-	@Test
-	public void testStartAndSize() throws Exception {
-		super.testStartAndSize();
+		Hits hits1 = search(searchContext);
+
+		Assert.assertEquals(hits1.toString(), 0, hits1.getLength());
+
+		Map<String, Hits> groupedHitsMap = hits1.getGroupedHits();
+
+		Hits hits2 = groupedHitsMap.get(key);
+
+		Assert.assertNotNull(hits2);
+
+		Assert.assertNotEquals(0, hits2.getLength());
 	}
 
 	@Override

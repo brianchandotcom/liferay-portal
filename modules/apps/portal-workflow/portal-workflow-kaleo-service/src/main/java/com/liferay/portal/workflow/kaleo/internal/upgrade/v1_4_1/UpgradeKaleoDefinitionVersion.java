@@ -84,7 +84,7 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select name, MAX(version) version from KaleoDefinition " +
+				"select name, MAX(version) as version from KaleoDefinition " +
 					"group by name");
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(

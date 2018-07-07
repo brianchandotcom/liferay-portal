@@ -14,10 +14,7 @@
 
 package com.liferay.portal.search.solr.internal.filter;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.solr.filter.TermsFilterTranslator;
 
 import java.util.ArrayList;
@@ -27,6 +24,7 @@ import org.apache.lucene.queries.TermsQuery;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
+import org.apache.solr.client.solrj.util.ClientUtils;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,7 +41,7 @@ public class TermsFilterTranslatorImpl implements TermsFilterTranslator {
 		ArrayList<Term> terms = new ArrayList<>();
 
 		for (String value : termsFilter.getValues()) {
-			terms.add(new Term(field, escape(value)));
+			terms.add(new Term(field, ClientUtils.escapeQueryChars(value)));
 		}
 
 		TermsQuery termsQuery = new TermsQuery(terms);
@@ -58,12 +56,5 @@ public class TermsFilterTranslatorImpl implements TermsFilterTranslator {
 
 		return booleanQuery;
 	}
-
-	protected static String escape(String s) {
-		return StringUtil.replace(s, CharPool.SPACE, _ESCAPED_SPACE);
-	}
-
-	private static final String _ESCAPED_SPACE = StringPool.BACK_SLASH.concat(
-		StringPool.SPACE);
 
 }

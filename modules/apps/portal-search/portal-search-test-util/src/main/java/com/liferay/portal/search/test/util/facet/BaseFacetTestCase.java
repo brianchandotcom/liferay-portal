@@ -53,26 +53,20 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 		}
 	}
 
-	protected void assertSearch(Consumer<Helper> consumer) throws Exception {
+	protected void assertSearchFacet(Consumer<FacetTestHelper> consumer)
+		throws Exception {
+
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS,
 			() -> {
-				consumer.accept(new Helper());
+				consumer.accept(new FacetTestHelper());
 
 				return null;
 			});
 	}
 
 	protected Hits doSearch(SearchContext searchContext) {
-		try {
-			return search(searchContext);
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return search(searchContext);
 	}
 
 	protected Hits doSearch(
@@ -101,9 +95,9 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 
 	protected final JSONFactory jsonFactory = new JSONFactoryImpl();
 
-	protected class Helper {
+	protected class FacetTestHelper {
 
-		public Helper() {
+		public FacetTestHelper() {
 			_searchContext = createSearchContext();
 		}
 

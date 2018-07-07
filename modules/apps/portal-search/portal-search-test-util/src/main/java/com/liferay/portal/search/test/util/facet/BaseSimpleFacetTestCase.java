@@ -42,7 +42,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 		addDocuments(2, "five");
 		addDocuments(1, "six");
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
@@ -55,7 +55,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 					facet, Arrays.asList("one=6", "two=5", "three=4"));
 			});
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
@@ -77,7 +77,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 		addDocuments(3, "four");
 		addDocuments(2, "fivE");
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
@@ -88,7 +88,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 				helper.assertFrequencies(facet, Arrays.asList("One=6"));
 			});
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
@@ -107,7 +107,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 	public void testMaxTermsNegative() throws Exception {
 		addDocument("One");
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
@@ -123,7 +123,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 	public void testMaxTermsZero() throws Exception {
 		addDocument("One");
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
@@ -143,7 +143,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 		addDocuments(3, "four");
 		addDocuments(2, "five");
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
@@ -167,7 +167,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 		addDocument("One");
 		addDocument(presentButUnmatched);
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
@@ -194,8 +194,10 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 		return Field.STATUS;
 	}
 
-	protected void select(Facet facet, String value, Helper helper) {
-		helper.setSearchContextAttribute(facet.getFieldId(), value);
+	protected void select(
+		Facet facet, String value, FacetTestHelper facetTestHelper) {
+
+		facetTestHelper.setSearchContextAttribute(facet.getFieldId(), value);
 	}
 
 	protected void setFrequencyThreshold(Facet facet, int frequencyThreshold) {

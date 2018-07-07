@@ -17,14 +17,14 @@ package com.liferay.portal.search.elasticsearch6.internal.filter;
 import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.LiferayIndexCreator;
-import com.liferay.portal.search.test.util.filter.BaseTermsFilterTestCase;
+import com.liferay.portal.search.test.util.filter.BaseTermFilterTestCase;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 /**
- * @author André de Oliveira
+ * @author Eric Yan
  */
-public class TermsFilterTest extends BaseTermsFilterTestCase {
+public class TermFilterTest extends BaseTermFilterTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {

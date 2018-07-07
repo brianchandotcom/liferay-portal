@@ -73,7 +73,7 @@ public abstract class BaseAggregationFilteringTestCase
 		addDocument("tde", "20180602100847", 222, "u ab");
 		addDocument("tde", "20180602100857", 111, "u cd");
 
-		assertSearch(
+		assertSearchAggregationFiltering(
 			helper -> {
 				helper.search();
 
@@ -100,7 +100,7 @@ public abstract class BaseAggregationFilteringTestCase
 		addDocument("tde", "20180602100847", 222, "u ab");
 		addDocument("tde", "20180602100857", 111, "u cd");
 
-		assertSearch(
+		assertSearchAggregationFiltering(
 			helper -> {
 				helper.setSearchContextAttribute(
 					SearchContextAttributes.ATTRIBUTE_KEY_BASIC_FACET_SELECTION,
@@ -136,7 +136,7 @@ public abstract class BaseAggregationFilteringTestCase
 		addDocument("tde", "20180602100847", 222, "u ab");
 		addDocument("tde", "20180602100857", 111, "u cd");
 
-		assertSearch(
+		assertSearchAggregationFiltering(
 			helper -> {
 				helper.select(MOD, "[20180602100830 TO 20180602100839]");
 
@@ -164,7 +164,7 @@ public abstract class BaseAggregationFilteringTestCase
 		addDocument("tde", "20180602100847", 222, "u ab");
 		addDocument("tde", "20180602100857", 111, "u cd");
 
-		assertSearch(
+		assertSearchAggregationFiltering(
 			helper -> {
 				helper.select(SIT, "111");
 
@@ -192,7 +192,7 @@ public abstract class BaseAggregationFilteringTestCase
 		addDocument("tde", "20180602100847", 222, "u ab");
 		addDocument("tde", "20180602100857", 111, "u cd");
 
-		assertSearch(
+		assertSearchAggregationFiltering(
 			helper -> {
 				helper.select(TAG, "tde");
 
@@ -221,7 +221,7 @@ public abstract class BaseAggregationFilteringTestCase
 		addDocument("tde", "20180602100847", 222, "u ab");
 		addDocument("tde", "20180602100857", 111, "u cd");
 
-		assertSearch(
+		assertSearchAggregationFiltering(
 			helper -> {
 				helper.select(USE, "u ab");
 
@@ -249,7 +249,7 @@ public abstract class BaseAggregationFilteringTestCase
 		addDocument("tde", "20180602100847", 222, "u ab");
 		addDocument("tde", "20180602100857", 111, "u cd");
 
-		assertSearch(
+		assertSearchAggregationFiltering(
 			helper -> {
 				helper.select(TAG, "tde");
 				helper.select(USE, "u cd");
@@ -304,11 +304,14 @@ public abstract class BaseAggregationFilteringTestCase
 			});
 	}
 
-	protected void assertSearch(Consumer<Helper> consumer) throws Exception {
+	protected void assertSearchAggregationFiltering(
+			Consumer<AggregationFilteringTestHelper> consumer)
+		throws Exception {
+
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS,
 			() -> {
-				consumer.accept(new Helper());
+				consumer.accept(new AggregationFilteringTestHelper());
 
 				return null;
 			});
@@ -323,15 +326,7 @@ public abstract class BaseAggregationFilteringTestCase
 	}
 
 	protected Hits doSearch(SearchContext searchContext) {
-		try {
-			return search(searchContext);
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return search(searchContext);
 	}
 
 	protected void setUpJSONFactoryUtil() {
@@ -355,9 +350,9 @@ public abstract class BaseAggregationFilteringTestCase
 	protected SiteFacetFactory siteFacetFactory = new SiteFacetFactoryImpl();
 	protected UserFacetFactory userFacetFactory = new UserFacetFactoryImpl();
 
-	private class Helper {
+	private class AggregationFilteringTestHelper {
 
-		public Helper() {
+		public AggregationFilteringTestHelper() {
 			_searchContext = createSearchContext();
 
 			addFacet(MOD, createModifiedFacet());

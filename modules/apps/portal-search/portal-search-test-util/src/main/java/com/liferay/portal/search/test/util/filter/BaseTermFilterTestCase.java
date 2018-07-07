@@ -15,7 +15,7 @@
 package com.liferay.portal.search.test.util.filter;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -25,57 +25,59 @@ import org.junit.Test;
 
 /**
  * @author André de Oliveira
+ * @author Eric Yan
  */
-public abstract class BaseTermsFilterTestCase extends BaseIndexingTestCase {
+public abstract class BaseTermFilterTestCase extends BaseIndexingTestCase {
 
 	@Test
 	public void testBasicSearch() throws Exception {
 		index("One");
-		index("Two");
-		index("Three");
 
-		assertTermsFilter(new String[] {"Two", "Three"});
+		assertTermFilter("One", "One");
+
+		assertTermFilter("one", "");
 	}
 
 	@Test
 	public void testLuceneSpecialCharacters() throws Exception {
-		index("One\\+-!():^[]\"{}~*?|&/Two");
-		index("Three");
+		String value = "One\\+-!():^[]\"{}~*?|&/Two";
 
-		assertTermsFilter(
-			new String[] {"One\\+-!():^[]\"{}~*?|&/Two", "Three"});
+		index(value);
+
+		assertTermFilter(value, value);
 	}
 
 	@Test
 	public void testSolrSpecialCharacters() throws Exception {
-		index("One\\+-!():^[]\"{}~*?|&/; Two");
-		index("Three");
+		String value = "One\\+-!():^[]\"{}~*?|&/; Two";
 
-		assertTermsFilter(
-			new String[] {"One\\+-!():^[]\"{}~*?|&/; Two", "Three"});
+		index(value);
+
+		assertTermFilter(value, value);
 	}
 
 	@Test
 	public void testSpaces() throws Exception {
 		index("One Two");
-		index("Three");
 
-		assertTermsFilter(new String[] {"One Two", "Three"});
+		assertTermFilter("One Two", "One Two");
+
+		assertTermFilter("One", "");
+		assertTermFilter("Two", "");
 	}
 
-	protected void assertTermsFilter(String[] values) throws Exception {
+	protected void assertTermFilter(String filterValue, String expectedValue)
+		throws Exception {
+
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.setFilter(
-					new TermsFilter(_FIELD) {
-						{
-							addValues(values);
-						}
-					});
+					new TermFilter(_FIELD, filterValue));
 
 				indexingTestHelper.search();
 
-				indexingTestHelper.assertValues(_FIELD, Arrays.asList(values));
+				indexingTestHelper.assertValues(
+					_FIELD, Arrays.asList(expectedValue));
 			});
 	}
 

@@ -22,19 +22,27 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.test.util.DocumentsAssert;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.SearchMapUtil;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.junit.After;
@@ -126,9 +134,21 @@ public abstract class BaseIndexingTestCase {
 		}
 	}
 
+	protected void assertSearch(Consumer<IndexingTestHelper> consumer)
+		throws Exception {
+
+		IdempotentRetryAssert.retryAssert(
+			10, TimeUnit.SECONDS,
+			() -> {
+				consumer.accept(new IndexingTestHelper());
+
+				return null;
+			});
+	}
+
 	protected abstract IndexingFixture createIndexingFixture() throws Exception;
 
-	protected Query getDefaultQuery() throws Exception {
+	protected Query getDefaultQuery() {
 		Map<String, String> map = SearchMapUtil.join(
 			toMap(Field.COMPANY_ID, String.valueOf(COMPANY_ID)),
 			toMap(Field.ENTRY_CLASS_NAME, _entryClassName));
@@ -150,30 +170,80 @@ public abstract class BaseIndexingTestCase {
 		return _indexWriter;
 	}
 
-	protected Hits search(SearchContext searchContext) throws Exception {
+	protected Hits search(SearchContext searchContext) {
 		return search(searchContext, getDefaultQuery());
 	}
 
-	protected Hits search(SearchContext searchContext, Query query)
-		throws Exception {
+	protected Hits search(SearchContext searchContext, Query query) {
+		try {
+			return _indexSearcher.search(searchContext, query);
+		}
+		catch (SearchException se) {
+			Throwable t = se.getCause();
 
-		return _indexSearcher.search(searchContext, query);
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+
+			throw new RuntimeException(se);
+		}
 	}
 
 	protected Hits search(
-			SearchContext searchContext, QueryContributor queryContributor)
-		throws Exception {
+		SearchContext searchContext, QueryContributor queryContributor) {
 
 		return search(searchContext, _getQuery(queryContributor));
+	}
+
+	protected void setPreBooleanFilter(Filter filter, Query query) {
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		booleanFilter.add(filter, BooleanClauseOccur.MUST);
+
+		query.setPreBooleanFilter(booleanFilter);
 	}
 
 	protected static final long COMPANY_ID = RandomTestUtil.randomLong();
 
 	protected static final long GROUP_ID = RandomTestUtil.randomLong();
 
-	private Query _getQuery(QueryContributor queryContributor)
-		throws Exception {
+	protected class IndexingTestHelper {
 
+		public IndexingTestHelper() {
+			_searchContext = createSearchContext();
+		}
+
+		public void assertValues(
+			String fieldName, List<String> expectedValues) {
+
+			DocumentsAssert.assertValues(
+				(String)_searchContext.getAttribute("queryString"),
+				_hits.getDocs(), fieldName, expectedValues);
+		}
+
+		public void search() {
+			QueryContributor queryContributor = null;
+
+			if (_filter != null) {
+				queryContributor =
+					booleanQuery -> setPreBooleanFilter(_filter, booleanQuery);
+			}
+
+			_hits = BaseIndexingTestCase.this.search(
+				_searchContext, _getQuery(queryContributor));
+		}
+
+		public void setFilter(Filter filter) {
+			_filter = filter;
+		}
+
+		private Filter _filter;
+		private Hits _hits;
+		private final SearchContext _searchContext;
+
+	}
+
+	private Query _getQuery(QueryContributor queryContributor) {
 		Query query = getDefaultQuery();
 
 		if (queryContributor == null) {
@@ -182,7 +252,12 @@ public abstract class BaseIndexingTestCase {
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
-		booleanQuery.add(query, BooleanClauseOccur.MUST);
+		try {
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		catch (ParseException pe) {
+			throw new RuntimeException(pe);
+		}
 
 		queryContributor.contribute(booleanQuery);
 

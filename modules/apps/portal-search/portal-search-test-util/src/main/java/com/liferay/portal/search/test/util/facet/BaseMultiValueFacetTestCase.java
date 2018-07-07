@@ -37,7 +37,7 @@ public abstract class BaseMultiValueFacetTestCase extends BaseFacetTestCase {
 		addDocuments(3, "four");
 		addDocuments(2, "five");
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				MultiValueFacet multiValueFacet = helper.addFacet(
 					this::createFacet);
@@ -71,7 +71,8 @@ public abstract class BaseMultiValueFacetTestCase extends BaseFacetTestCase {
 	}
 
 	protected void select(
-		MultiValueFacet multiValueFacet, Helper helper, String... values) {
+		MultiValueFacet multiValueFacet, FacetTestHelper facetTestHelper,
+		String... values) {
 
 		JSONArray jsonArray = jsonFactory.createJSONArray();
 
@@ -81,7 +82,7 @@ public abstract class BaseMultiValueFacetTestCase extends BaseFacetTestCase {
 
 		multiValueFacet.setValues(jsonArray);
 
-		helper.setSearchContextAttribute(
+		facetTestHelper.setSearchContextAttribute(
 			multiValueFacet.getFieldId(), StringUtil.merge(values));
 	}
 

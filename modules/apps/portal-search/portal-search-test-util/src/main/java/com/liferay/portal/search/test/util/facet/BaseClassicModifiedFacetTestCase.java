@@ -56,7 +56,7 @@ public abstract class BaseClassicModifiedFacetTestCase
 			"[past-month TO *]", "[past-year TO *]"
 		};
 
-		assertSearch(
+		assertSearchFacet(
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 

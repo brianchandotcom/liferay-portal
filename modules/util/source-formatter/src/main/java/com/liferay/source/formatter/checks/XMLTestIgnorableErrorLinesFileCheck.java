@@ -20,6 +20,7 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import java.util.List;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -35,7 +36,7 @@ public class XMLTestIgnorableErrorLinesFileCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws DocumentException {
 
 		if (fileName.endsWith("/test-ignorable-error-lines.xml")) {
 			_checkTestIgnorableErrorLinesXml(fileName, content);
@@ -46,7 +47,7 @@ public class XMLTestIgnorableErrorLinesFileCheck extends BaseFileCheck {
 
 	private void _checkTestIgnorableErrorLinesXml(
 			String fileName, String content)
-		throws Exception {
+		throws DocumentException {
 
 		Document document = SourceUtil.readXML(content);
 

@@ -24,6 +24,7 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -61,7 +62,7 @@ public abstract class BaseSourceProcessorTestCase {
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() throws IOException {
 		FileUtils.deleteDirectory(_temporaryRootFolder);
 	}
 

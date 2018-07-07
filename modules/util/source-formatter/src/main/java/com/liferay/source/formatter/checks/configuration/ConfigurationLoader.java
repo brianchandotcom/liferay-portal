@@ -17,9 +17,12 @@ package com.liferay.source.formatter.checks.configuration;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.io.IOException;
+
 import java.util.List;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -29,7 +32,7 @@ public class ConfigurationLoader {
 
 	public static SourceFormatterConfiguration loadConfiguration(
 			String fileName)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		SourceFormatterConfiguration sourceFormatterConfiguration =
 			new SourceFormatterConfiguration();

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.DockerfileSourceUtil;
 
+import java.io.IOException;
+
 /**
  * @author Peter Shin
  */
@@ -30,7 +32,7 @@ public class DockerfileInstructionCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		StringBundler sb = new StringBundler();
 

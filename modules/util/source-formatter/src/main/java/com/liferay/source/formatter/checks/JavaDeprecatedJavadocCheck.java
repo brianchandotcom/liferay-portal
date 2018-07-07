@@ -35,12 +35,14 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws ReflectiveOperationException {
 
 		return _formatDeprecatedJavadoc(content);
 	}
 
-	private String _formatDeprecatedJavadoc(String content) throws Exception {
+	private String _formatDeprecatedJavadoc(String content)
+		throws ReflectiveOperationException {
+
 		Matcher matcher = _deprecatedPattern.matcher(content);
 
 		while (matcher.find()) {
@@ -113,7 +115,9 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private synchronized String _getNextReleaseCodeName() throws Exception {
+	private synchronized String _getNextReleaseCodeName()
+		throws ReflectiveOperationException {
+
 		if (_nextReleaseCodeName != null) {
 			return _nextReleaseCodeName;
 		}
@@ -127,7 +131,9 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		return _nextReleaseCodeName;
 	}
 
-	private synchronized String _getNextReleaseVersion() throws Exception {
+	private synchronized String _getNextReleaseVersion()
+		throws ReflectiveOperationException {
+
 		if (_nextReleaseVersion != null) {
 			return _nextReleaseVersion;
 		}

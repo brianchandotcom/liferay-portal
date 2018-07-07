@@ -156,7 +156,7 @@ public class SourceFormatterUtil {
 			String[] excludes, String[] includes,
 			SourceFormatterExcludes sourceFormatterExcludes,
 			boolean includeSubrepositories)
-		throws Exception {
+		throws IOException {
 
 		if (ArrayUtil.isEmpty(includes)) {
 			return new ArrayList<>();
@@ -296,10 +296,8 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<File> getSuppressionsFiles(
-			String baseDirName, List<String> allFileNames,
-			SourceFormatterExcludes sourceFormatterExcludes,
-			String... fileNames)
-		throws Exception {
+		String baseDirName, List<String> allFileNames,
+		SourceFormatterExcludes sourceFormatterExcludes, String... fileNames) {
 
 		List<File> suppressionsFiles = new ArrayList<>();
 
@@ -354,7 +352,7 @@ public class SourceFormatterUtil {
 			String baseDirName, String[] excludes, String[] includes,
 			SourceFormatterExcludes sourceFormatterExcludes,
 			boolean includeSubrepositories)
-		throws Exception {
+		throws IOException {
 
 		if (ArrayUtil.isEmpty(includes)) {
 			return new ArrayList<>();
@@ -409,7 +407,7 @@ public class SourceFormatterUtil {
 	private static List<String> _filterRecentChangesFileNames(
 			String baseDirName, List<String> recentChangesFileNames,
 			PathMatchers pathMatchers)
-		throws Exception {
+		throws IOException {
 
 		List<String> fileNames = new ArrayList<>();
 
@@ -561,7 +559,7 @@ public class SourceFormatterUtil {
 	private static List<String> _scanForFiles(
 			final String baseDirName, final PathMatchers pathMatchers,
 			final boolean includeSubrepositories)
-		throws Exception {
+		throws IOException {
 
 		final List<String> fileNames = new ArrayList<>();
 

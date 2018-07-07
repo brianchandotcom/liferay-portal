@@ -32,10 +32,12 @@ import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.parser.ParseException;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,6 +82,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		// SKIP
+
 		content = formatIncorrectLineBreak(fileName, content);
 
 		content = _formatSingleLineTagAttributes(absolutePath, content);
@@ -91,6 +95,9 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 	@Override
 	protected Tag formatTagAttributeType(Tag tag) throws Exception {
+
+		// SKIP
+
 		Map<String, String> setMethodsMap = _getSetMethodsMap(tag.getName());
 
 		Map<String, String> attributesMap = tag.getAttributesMap();
@@ -160,6 +167,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	private String _formatSingleLineTagAttributes(
 			String absolutePath, String content)
 		throws Exception {
+
+		// SKIP
 
 		StringBundler sb = new StringBundler();
 
@@ -291,6 +300,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	private synchronized Map<String, String> _getSetMethodsMap(String tagName)
 		throws Exception {
 
+		// SKIP
+
 		if (_tagSetMethodsMap != null) {
 			return _tagSetMethodsMap.get(tagName);
 		}
@@ -387,7 +398,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 	private Map<String, String> _getSetMethodsMap(
 			String tagFileName, String utilTaglibSrcDirName)
-		throws Exception {
+		throws IOException, ParseException {
 
 		if (_classSetMethodsMap.containsKey(tagFileName)) {
 			return _classSetMethodsMap.get(tagFileName);
@@ -464,7 +475,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		}
 	}
 
-	private List<String> _getTLDFileNames() throws Exception {
+	private List<String> _getTLDFileNames() throws IOException {
 		String[] excludes =
 			{"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"};
 

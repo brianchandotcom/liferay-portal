@@ -29,8 +29,7 @@ public class PropertiesDependenciesFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("/dependencies.properties")) {
 			return _formatDependenciesProperties(content);

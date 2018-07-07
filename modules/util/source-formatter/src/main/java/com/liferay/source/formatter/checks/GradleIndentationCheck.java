@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+
 /**
  * @author Peter Shin
  */
@@ -29,12 +31,12 @@ public class GradleIndentationCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		return _checkIndentation(content);
 	}
 
-	private String _checkIndentation(String content) throws Exception {
+	private String _checkIndentation(String content) throws IOException {
 		boolean insideQuotes = false;
 		int tabCount = 0;
 

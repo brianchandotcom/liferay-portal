@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -45,7 +47,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		// When running tests, the contentsMap is empty, because the file
 		// extension of the test files is *.testjsp
@@ -77,7 +79,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	private void _addJSPUnusedImports(
 			String fileName, List<String> importLines,
 			List<String> unneededImports)
-		throws Exception {
+		throws IOException {
 
 		Set<String> checkedFileNames = new HashSet<>();
 		Set<String> includeFileNames = new HashSet<>();
@@ -108,7 +110,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private synchronized Map<String, String> _getContentsMap()
-		throws Exception {
+		throws IOException {
 
 		if (_contentsMap != null) {
 			return _contentsMap;
@@ -128,7 +130,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 	private List<String> _getJSPDuplicateImports(
 			String fileName, String content, List<String> importLines)
-		throws Exception {
+		throws IOException {
 
 		List<String> duplicateImports = new ArrayList<>();
 
@@ -207,7 +209,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	private boolean _hasUnusedPortletDefineObjectsProperty(
 			String fileName, String portletDefineObjectProperty,
 			Set<String> checkedFileNames, Set<String> includeFileNames)
-		throws Exception {
+		throws IOException {
 
 		StringBundler sb = new StringBundler(4);
 
@@ -224,7 +226,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	private boolean _hasUnusedVariable(
 			String fileName, String line, Set<String> checkedFileNames,
 			Set<String> includeFileNames)
-		throws Exception {
+		throws IOException {
 
 		if (line.contains(": ")) {
 			return false;
@@ -252,7 +254,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 	private boolean _isJSPDuplicateImport(
 			String fileName, String importLine, boolean checkFile)
-		throws Exception {
+		throws IOException {
 
 		Map<String, String> contentsMap = _getContentsMap();
 
@@ -360,7 +362,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private String _removeUnusedImports(String fileName, String content)
-		throws Exception {
+		throws IOException {
 
 		if (fileName.endsWith("init-ext.jsp")) {
 			return content;
@@ -406,7 +408,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 	private String _removeUnusedPortletDefineObjects(
 			String fileName, String content)
-		throws Exception {
+		throws IOException {
 
 		if (!content.contains("<portlet:defineObjects />\n")) {
 			return content;
@@ -430,7 +432,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private String _removeUnusedTaglibs(String fileName, String content)
-		throws Exception {
+		throws IOException {
 
 		Set<String> checkedFileNames = new HashSet<>();
 		Set<String> includeFileNames = new HashSet<>();
@@ -442,7 +444,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	private String _removeUnusedTaglibs(
 			String fileName, String content, Set<String> checkedFileNames,
 			Set<String> includeFileNames)
-		throws Exception {
+		throws IOException {
 
 		Matcher matcher = _taglibURIPattern.matcher(content);
 
@@ -464,7 +466,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 	private String _removeUnusedVariables(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (absolutePath.contains("/src/main/resources/alloy_mvc/jsp/") &&
 			absolutePath.endsWith(".jspf")) {

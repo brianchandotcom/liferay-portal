@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -33,7 +35,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (!fileName.endsWith(".jsp") && !fileName.endsWith(".jspf") &&
 			!fileName.endsWith(".tag")) {
@@ -198,7 +200,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 	}
 
 	private String _formatTabs(String content, String originalContent)
-		throws Exception {
+		throws IOException {
 
 		List<JSPLine> jspLines = _getJSPLines(content);
 
@@ -348,7 +350,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 		}
 	}
 
-	private List<JSPLine> _getJSPLines(String content) throws Exception {
+	private List<JSPLine> _getJSPLines(String content) throws IOException {
 		List<JSPLine> jspLines = new ArrayList<>();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =

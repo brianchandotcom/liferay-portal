@@ -27,8 +27,7 @@ public class XMLIndentationCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+		String fileName, String absolutePath, String content) {
 
 		while (true) {
 			String newContent = _fixTagsIndentation(content);

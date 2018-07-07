@@ -20,6 +20,7 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import java.util.List;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -30,7 +31,7 @@ public class TLDElementOrderCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws DocumentException {
 
 		_checkElementOrder(fileName, content);
 
@@ -38,7 +39,7 @@ public class TLDElementOrderCheck extends BaseFileCheck {
 	}
 
 	private void _checkElementOrder(String fileName, String content)
-		throws Exception {
+		throws DocumentException {
 
 		Document document = SourceUtil.readXML(content);
 

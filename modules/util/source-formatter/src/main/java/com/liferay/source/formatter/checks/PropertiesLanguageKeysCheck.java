@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (!fileName.endsWith("/content/Language.properties")) {
 			return content;
@@ -105,7 +106,7 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 	}
 
 	private Properties _getPortalImplLanguageProperties(String absolutePath)
-		throws Exception {
+		throws IOException {
 
 		if (absolutePath.endsWith(_PORTAL_IMPL_LANGUAGE_PROPERTIES_FILE_NAME)) {
 			return null;

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +41,7 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (absolutePath.contains("/src/main/resources/") &&
 			!_hasBNDExportPackage(fileName)) {
@@ -51,7 +53,7 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 	}
 
 	private List<String> _getBNDExportPackages(String fileName)
-		throws Exception {
+		throws IOException {
 
 		BNDSettings bndSettings = getBNDSettings(fileName);
 
@@ -109,7 +111,7 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 		return exportPackages;
 	}
 
-	private boolean _hasBNDExportPackage(String fileName) throws Exception {
+	private boolean _hasBNDExportPackage(String fileName) throws IOException {
 		List<String> bndExportPackages = _getBNDExportPackages(fileName);
 
 		for (String bndExportPackage : bndExportPackages) {

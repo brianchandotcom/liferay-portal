@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
 /**
@@ -165,13 +166,13 @@ public class SourceUtil {
 		return sb.toString();
 	}
 
-	public static Document readXML(File file) throws Exception {
+	public static Document readXML(File file) throws DocumentException {
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
 		return saxReader.read(file);
 	}
 
-	public static Document readXML(String content) throws Exception {
+	public static Document readXML(String content) throws DocumentException {
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
 		return saxReader.read(new UnsyncStringReader(content));

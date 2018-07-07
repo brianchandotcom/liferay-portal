@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+
 /**
  * @author Hugo Huijser
  */
@@ -29,7 +31,7 @@ public class PropertiesPortletFileCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (fileName.endsWith("/portlet.properties")) {
 			return _formatPortletProperties(fileName, content);
@@ -39,7 +41,7 @@ public class PropertiesPortletFileCheck extends BaseFileCheck {
 	}
 
 	private String _formatPortletProperties(String fileName, String content)
-		throws Exception {
+		throws IOException {
 
 		if (!content.contains("include-and-override=portlet-ext.properties")) {
 			content =

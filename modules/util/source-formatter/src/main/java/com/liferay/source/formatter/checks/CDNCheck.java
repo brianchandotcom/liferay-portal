@@ -23,8 +23,7 @@ public class CDNCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+		String fileName, String absolutePath, String content) {
 
 		return _fixCDNURL(content);
 	}

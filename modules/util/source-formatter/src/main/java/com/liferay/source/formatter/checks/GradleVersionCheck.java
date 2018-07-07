@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,7 +32,7 @@ public class GradleVersionCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		Matcher matcher = _versionPattern.matcher(content);
 
@@ -72,7 +73,7 @@ public class GradleVersionCheck extends BaseFileCheck {
 	private String _fixMicroVersion(
 			String fileName, String content, String line, String name,
 			String version)
-		throws Exception {
+		throws IOException {
 
 		if (!line.startsWith("provided ") || !name.startsWith("com.liferay.") ||
 			!version.matches("[0-9]+\\.[0-9]+\\.[1-9][0-9]*")) {

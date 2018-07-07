@@ -25,6 +25,8 @@ import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -36,7 +38,7 @@ import java.util.regex.Pattern;
 public class JavaClassParser {
 
 	public static List<JavaClass> parseAnonymousClasses(String content)
-		throws Exception {
+		throws IOException, ParseException {
 
 		List<JavaClass> anonymousClasses = new ArrayList<>();
 
@@ -77,7 +79,7 @@ public class JavaClassParser {
 	}
 
 	public static JavaClass parseJavaClass(String fileName, String content)
-		throws Exception {
+		throws IOException, ParseException {
 
 		String className = JavaSourceUtil.getClassName(fileName);
 
@@ -163,7 +165,7 @@ public class JavaClassParser {
 
 	private static JavaTerm _getJavaTerm(
 			String javaTermContent, String indent, int lineNumber)
-		throws Exception {
+		throws IOException, ParseException {
 
 		Pattern pattern = Pattern.compile(
 			"(\n|^)" + indent +
@@ -197,7 +199,7 @@ public class JavaClassParser {
 	private static JavaTerm _getJavaTerm(
 			String javaTermContent, String startLine, String accessModifier,
 			int lineNumber)
-		throws Exception {
+		throws IOException, ParseException {
 
 		if (startLine.startsWith("static {")) {
 			return new JavaStaticBlock(javaTermContent, lineNumber);
@@ -288,7 +290,7 @@ public class JavaClassParser {
 
 	private static JavaClass _parseExtendsImplements(
 			JavaClass javaClass, String s)
-		throws Exception {
+		throws ParseException {
 
 		if (SourceUtil.getLevel(s, "<", ">") != 0) {
 			throw new ParseException("Parsing error around class declaration");
@@ -335,7 +337,7 @@ public class JavaClassParser {
 			String className, String classContent, int lineNumber,
 			String accessModifier, boolean isAbstract, boolean isStatic,
 			boolean anonymous)
-		throws Exception {
+		throws IOException, ParseException {
 
 		JavaClass javaClass = new JavaClass(
 			className, classContent, accessModifier, lineNumber, isAbstract,

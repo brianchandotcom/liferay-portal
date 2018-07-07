@@ -27,6 +27,7 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,7 +66,7 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws Exception {
+		throws IOException {
 
 		if (javaTerm.hasAnnotation("Override")) {
 			return javaTerm.getContent();
@@ -131,7 +132,7 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 	}
 
 	private synchronized String[] _getAPISignatureExceptions()
-		throws Exception {
+		throws IOException {
 
 		if (_apiSignatureExceptions != null) {
 			return _apiSignatureExceptions;
@@ -174,7 +175,7 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 	private boolean _isException(
 			String packageName, String className, String methodName,
 			JavaSignature javaSignature)
-		throws Exception {
+		throws IOException {
 
 		StringBundler sb = new StringBundler(6);
 

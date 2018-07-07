@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,7 +39,7 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (fileName.endsWith("/liferay-plugin-package.properties")) {
 			return _fixIncorrectLiferayVersions(absolutePath, content);
@@ -49,7 +50,7 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 
 	private String _fixIncorrectLiferayVersions(
 			String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (!isPortalSource() || !isModulesApp(absolutePath, false)) {
 			return content;
@@ -74,7 +75,7 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 			"liferay-versions=" + portalVersion + "+", matcher.start());
 	}
 
-	private String _getPortalVersion(boolean privateApp) throws Exception {
+	private String _getPortalVersion(boolean privateApp) throws IOException {
 		String portalVersion = _getPublicPortalVersion();
 
 		if (privateApp) {
@@ -94,7 +95,7 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 		return portalVersion;
 	}
 
-	private synchronized String _getPrivatePortalVersion() throws Exception {
+	private synchronized String _getPrivatePortalVersion() throws IOException {
 		if (_privatePortalVersion != null) {
 			return _privatePortalVersion;
 		}
@@ -141,7 +142,7 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 		return _privatePortalVersion;
 	}
 
-	private synchronized String _getPublicPortalVersion() throws Exception {
+	private synchronized String _getPublicPortalVersion() throws IOException {
 		if (_publicPortalVersion != null) {
 			return _publicPortalVersion;
 		}

@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -47,7 +48,7 @@ public class BNDSettings {
 		return _fileName;
 	}
 
-	public Properties getLanguageProperties() throws Exception {
+	public Properties getLanguageProperties() throws IOException {
 		if (_languageProperties != null) {
 			return _languageProperties;
 		}

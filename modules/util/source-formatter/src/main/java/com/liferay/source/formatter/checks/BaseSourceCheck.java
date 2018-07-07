@@ -31,10 +31,12 @@ import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -50,6 +52,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
@@ -188,7 +191,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _baseDirName;
 	}
 
-	protected BNDSettings getBNDSettings(String fileName) throws Exception {
+	protected BNDSettings getBNDSettings(String fileName) throws IOException {
 		for (Map.Entry<String, BNDSettings> entry :
 				_bndSettingsMap.entrySet()) {
 
@@ -223,7 +226,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected Map<String, String> getCheckstyleAttributesMap(String checkName)
-		throws Exception {
+		throws CheckstyleException {
 
 		return CheckstyleUtil.getAttributesMap(
 			checkName, _checkstyleConfiguration);
@@ -231,13 +234,13 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected String getCheckstyleAttributeValue(
 			String checkName, String attributeName)
-		throws Exception {
+		throws CheckstyleException {
 
 		return CheckstyleUtil.getAttributeValue(
 			checkName, attributeName, _checkstyleConfiguration);
 	}
 
-	protected String getContent(String fileName, int level) throws Exception {
+	protected String getContent(String fileName, int level) throws IOException {
 		File file = getFile(fileName, level);
 
 		if (file != null) {
@@ -254,7 +257,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected Document getCustomSQLDocument(
 			String fileName, String absolutePath,
 			Document portalCustomSQLDocument)
-		throws Exception {
+		throws DocumentException {
 
 		if (isPortalSource() && !isModulesFile(absolutePath)) {
 			return portalCustomSQLDocument;
@@ -294,7 +297,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected List<String> getFileNames(
 			String baseDirName, String[] excludes, String[] includes)
-		throws Exception {
+		throws IOException {
 
 		return SourceFormatterUtil.scanForFiles(
 			baseDirName, excludes, includes, _sourceFormatterExcludes, true);
@@ -381,7 +384,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _pluginsInsideModulesDirectoryNames;
 	}
 
-	protected String getPortalContent(String fileName) throws Exception {
+	protected String getPortalContent(String fileName) throws IOException {
 		String content = getContent(fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
 		if (Validator.isNotNull(content)) {
@@ -398,7 +401,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected synchronized Document getPortalCustomSQLDocument()
-		throws Exception {
+		throws DocumentException, IOException {
 
 		if (_portalCustomSQLDocument != null) {
 			return _portalCustomSQLDocument;
@@ -462,7 +465,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected InputStream getPortalInputStream(String fileName)
-		throws Exception {
+		throws IOException {
 
 		File file = getFile(fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 

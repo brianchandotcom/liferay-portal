@@ -25,6 +25,7 @@ import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
@@ -43,6 +44,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -240,7 +242,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			_populateServiceXMLElements("modules/apps", 6);
 			_populateServiceXMLElements("portal-impl/src/com/liferay", 4);
 		}
-		catch (Exception e) {
+		catch (DocumentException | IOException e) {
 			return null;
 		}
 
@@ -285,7 +287,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	}
 
 	private void _populateServiceXMLElements(String dirName, int maxDepth)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		File directory = getFile(dirName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 

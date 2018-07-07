@@ -38,6 +38,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtility;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -176,7 +177,7 @@ public class DeprecatedMethodCallsCheck extends BaseCheck {
 	}
 
 	private synchronized Map<String, String> _getBundleSymbolicNamesMap()
-		throws Exception {
+		throws IOException {
 
 		if (_bundleSymbolicNamesMap != null) {
 			return _bundleSymbolicNamesMap;

@@ -23,7 +23,7 @@ public interface JavaTermCheck extends SourceCheck {
 
 	public String process(
 			String fileName, String absolutePath, JavaClass javaClass,
-			String content)
+			String content) // SKIP
 		throws Exception;
 
 }

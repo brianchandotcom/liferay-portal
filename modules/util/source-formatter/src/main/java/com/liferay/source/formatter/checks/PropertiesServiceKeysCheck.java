@@ -28,8 +28,7 @@ public class PropertiesServiceKeysCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("/service.properties")) {
 			return content;

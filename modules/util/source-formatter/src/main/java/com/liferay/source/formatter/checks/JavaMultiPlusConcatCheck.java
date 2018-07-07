@@ -24,6 +24,7 @@ import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws Exception {
+		throws IOException {
 
 		if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) ||
 			isModulesApp(absolutePath, true) ||
@@ -65,7 +66,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 	private void _checkConcat(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws Exception {
+		throws IOException {
 
 		String javaTermContent = javaTerm.getContent();
 
@@ -239,7 +240,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 	}
 
 	private boolean _hasKernelOrPetraStringDependency(String fileName)
-		throws Exception {
+		throws IOException {
 
 		int x = fileName.length();
 

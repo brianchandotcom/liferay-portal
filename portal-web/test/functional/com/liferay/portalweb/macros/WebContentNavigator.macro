@@ -176,8 +176,8 @@
 			</condition>
 
 			<then>
-				<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Showing ${pageMod} elements">
-					<var name="key_menuItem" value="Showing ${pageMod} elements" />
+				<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Showing ${pageMod} Elements">
+					<var name="key_menuItem" value="Showing ${pageMod} Elements" />
 				</execute>
 			</then>
 		</if>

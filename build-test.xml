@@ -4331,6 +4331,12 @@ create database lportal${database.index} character set utf8;</echo>
 update db cfg for lportal using logsecond 254;
 connect to lportal;</replacevalue>
 						</replace>
+						<replace
+							file="create.sql"
+						>
+							<replacetoken>create database lportal pagesize 8192;</replacetoken>
+							<replacevalue>create database lportal pagesize 32768 temporary tablespace managed by automatic storage;</replacevalue>
+						</replace>
 					</then>
 					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />

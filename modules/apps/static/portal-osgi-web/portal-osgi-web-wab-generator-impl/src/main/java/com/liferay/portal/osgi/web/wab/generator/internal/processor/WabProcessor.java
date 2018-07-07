@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.processor;
 
+import aQute.bnd.component.DSAnnotations;
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Analyzer;
@@ -1056,6 +1057,16 @@ public class WabProcessor {
 		analyzer.setProperty("Web-ContextPath", getWebContextPath());
 
 		Set<Object> plugins = analyzer.getPlugins();
+
+		Iterator<Object> iterator = plugins.iterator();
+
+		while (iterator.hasNext()) {
+			Object plugin = iterator.next();
+
+			if (plugin instanceof DSAnnotations) {
+				iterator.remove();
+			}
+		}
 
 		plugins.add(new JspAnalyzerPlugin());
 

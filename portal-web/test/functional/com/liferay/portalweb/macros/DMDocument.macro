@@ -970,7 +970,7 @@
 			<isset var="recycleBinDisabled" />
 			<then>
 				<execute macro="LexiconEntry#delete">
-					<var name="rowEntry" value="${dmDocumenTitle}" />
+					<var name="rowEntry" value="${dmDocumentTitle}" />
 				</execute>
 			</then>
 			<else>
@@ -2618,7 +2618,7 @@
 		<if>
 			<isset var="dmRepositoryName" />
 			<then>
-				<execute function="AssertClick" locator1="DocumentsAndMedia#SEARCH_REPOSITORY_TAB" value1="${dmRepositoryName}" />
+				<execute function="AssertClick#assertTextClickAtAndPause" locator1="DocumentsAndMedia#SEARCH_REPOSITORY_TAB" value1="repository ${dmRepositoryName}" />
 			</then>
 		</if>
 

@@ -596,8 +596,8 @@
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="Icon#DISPLAY_STYLE_ACTIVE">
-				<var name="key_displayStyle" value="descriptive" />
+			<condition function="IsElementPresent" locator1="Icon#CURRENT_DISPLAY_STYLE_ACTIVE">
+				<var name="key_displayStyle" value="list" />
 			</condition>
 
 			<then>

@@ -1,7 +1,7 @@
 <definition>
 	<command name="accountSignIn">
 		<var method="TestPropsUtil#get('sharepoint.oauth.user.name')" name="key_userEmail" />
-		<var method="TestPropsUtil#get('sharepoint.oauth.user.password')" name="userPassword" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.user.password')" name="key_userPassword" />
 
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="MicrosoftLogin#LOGIN_USER_CHOOSER" />
@@ -9,7 +9,9 @@
 			<then>
 				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_USER_CHOOSER" value1="${key_userEmail}" />
 
-				<execute function="Type" locator1="MicrosoftLogin#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_NEXT_BUTTON" value1="Next" />
+
+				<execute function="Type" locator1="MicrosoftLogin#LOGIN_PASSWORD_FIELD" value1="${key_userPassword}" />
 
 				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_SIGN_IN_BUTTON" value1="Sign in" />
 			</then>
@@ -19,7 +21,9 @@
 				<then>
 					<execute function="Type" locator1="MicrosoftLogin#LOGIN_EMAIL_FIELD" value1="${key_userEmail}" />
 
-					<execute function="Type" locator1="MicrosoftLogin#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+					<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_NEXT_BUTTON" value1="Next" />
+
+					<execute function="Type" locator1="MicrosoftLogin#LOGIN_PASSWORD_FIELD" value1="${key_userPassword}" />
 
 					<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_SIGN_IN_BUTTON" value1="Sign in" />
 				</then>
@@ -33,7 +37,7 @@
 		<var name="app_name" value="Collaboration Test Application" />
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="MicrosoftLogin#SHAREPOINT_NOTIFICATION" />
+			<condition function="IsElementPresent" locator1="MicrosoftLogin#SHAREPOINT_NOTIFICATION" />
 
 			<then>
 				<execute function="AssertClick" locator1="MicrosoftLogin#SHAREPOINT_TRUST_IT_BUTTON" value1="Trust It" />

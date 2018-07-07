@@ -359,7 +359,7 @@
 <!--SEARCH-->
 <tr>
 	<td>SEARCH_REPOSITORY_TAB</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'${key_dmRepositoryName}')]</td>
+	<td>//div[contains(@class,'search-info')]/a[contains(.,'${dmRepositoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

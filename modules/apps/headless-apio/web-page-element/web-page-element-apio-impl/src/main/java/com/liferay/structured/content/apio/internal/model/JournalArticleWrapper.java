@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.web.page.element.apio.internal.model;
+package com.liferay.structured.content.apio.internal.model;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

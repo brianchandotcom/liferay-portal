@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.web.page.element.apio.internal.architect.form;
+package com.liferay.structured.content.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
@@ -22,8 +22,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Instances of this class represent the values extracted from a web page
- * element form.
+ * Instances of this class represent the values extracted from a structured
+ * content form.
  *
  * @author Alejandro Hernández
  * @review

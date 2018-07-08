@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.web.page.element.apio.internal.permission;
+package com.liferay.structured.content.apio.internal.permission;
 
 import com.liferay.apio.architect.alias.routes.permission.HasNestedAddingPermissionFunction;
 import com.liferay.apio.architect.credentials.Credentials;

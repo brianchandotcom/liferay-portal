@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.web.page.element.apio.architect.identifier;
+package com.liferay.structured.content.apio.architect.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 

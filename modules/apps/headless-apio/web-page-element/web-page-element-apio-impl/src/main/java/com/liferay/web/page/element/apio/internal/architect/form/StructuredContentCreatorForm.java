@@ -34,46 +34,46 @@ import java.util.Map;
  * @author Alejandro Hernández
  * @review
  */
-public class WebPageElementCreatorForm {
+public class StructuredContentCreatorForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code WebPageElementCreatorForm}
+	 * Builds a {@code Form} that generates {@code StructuredContentCreatorForm}
 	 * depending on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a web page element creator form
+	 * @return a structured content creator form
 	 * @review
 	 */
-	public static Form<WebPageElementCreatorForm> buildForm(
-		Builder<WebPageElementCreatorForm> formBuilder) {
+	public static Form<StructuredContentCreatorForm> buildForm(
+		Builder<StructuredContentCreatorForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The web page element creator form"
+			__ -> "The structured content creator form"
 		).description(
-			__ -> "This form can be used to create a web page element"
+			__ -> "This form can be used to create a structured content"
 		).constructor(
-			WebPageElementCreatorForm::new
+			StructuredContentCreatorForm::new
 		).addOptionalStringList(
-			"keywords", WebPageElementCreatorForm::_setKeywords
+			"keywords", StructuredContentCreatorForm::_setKeywords
 		).addRequiredDate(
-			"displayDate", WebPageElementCreatorForm::_setDisplayDate
+			"displayDate", StructuredContentCreatorForm::_setDisplayDate
 		).addRequiredString(
-			"description", WebPageElementCreatorForm::_setDescription
+			"description", StructuredContentCreatorForm::_setDescription
 		).addRequiredString(
-			"structure", WebPageElementCreatorForm::_setStructure
+			"structure", StructuredContentCreatorForm::_setStructure
 		).addRequiredString(
-			"template", WebPageElementCreatorForm::_setTemplate
+			"template", StructuredContentCreatorForm::_setTemplate
 		).addRequiredString(
-			"text", WebPageElementCreatorForm::_setText
+			"text", StructuredContentCreatorForm::_setText
 		).addRequiredString(
-			"title", WebPageElementCreatorForm::_setTitle
+			"title", StructuredContentCreatorForm::_setTitle
 		).build();
 	}
 
 	/**
-	 * Returns the web page element's description map.
+	 * Returns the structured content's description map.
 	 *
-	 * @return the web page element's description map
+	 * @return the structured content's description map
 	 * @review
 	 */
 	public Map<Locale, String> getDescriptionMap(Locale locale) {
@@ -85,9 +85,9 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
-	 * Returns the web page element's display date day.
+	 * Returns the structured content's display date day.
 	 *
-	 * @return the web page element's display date day
+	 * @return the structured content's display date day
 	 * @review
 	 */
 	public int getDisplayDateDay() {
@@ -95,9 +95,9 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
-	 * Returns the web page element's display date hour.
+	 * Returns the structured content's display date hour.
 	 *
-	 * @return the web page element's display date hour
+	 * @return the structured content's display date hour
 	 * @review
 	 */
 	public int getDisplayDateHour() {
@@ -105,9 +105,9 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
-	 * Returns the web page element's display date minute.
+	 * Returns the structured content's display date minute.
 	 *
-	 * @return the web page element's display date minute
+	 * @return the structured content's display date minute
 	 * @review
 	 */
 	public int getDisplayDateMinute() {
@@ -115,9 +115,9 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
-	 * Returns the web page element's display date month.
+	 * Returns the structured content's display date month.
 	 *
-	 * @return the web page element's display date month
+	 * @return the structured content's display date month
 	 * @review
 	 */
 	public int getDisplayDateMonth() {
@@ -125,9 +125,9 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
-	 * Returns the web page element's display date year.
+	 * Returns the structured content's display date year.
 	 *
-	 * @return the web page element's display date year
+	 * @return the structured content's display date year
 	 * @review
 	 */
 	public int getDisplayDateYear() {
@@ -156,9 +156,9 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
-	 * Returns the web page element's structure ID.
+	 * Returns the structured content's structure ID.
 	 *
-	 * @return the web page element's structure ID
+	 * @return the structured content's structure ID
 	 * @review
 	 */
 	public String getStructure() {
@@ -166,9 +166,9 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
-	 * Returns the web page element's template ID.
+	 * Returns the structured content's template ID.
 	 *
-	 * @return the web page element's template ID
+	 * @return the structured content's template ID
 	 * @review
 	 */
 	public String getTemplate() {
@@ -176,9 +176,9 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
-	 * Returns the web page element's text.
+	 * Returns the structured content's text.
 	 *
-	 * @return the web page element's text
+	 * @return the structured content's text
 	 * @review
 	 */
 	public String getText() {
@@ -186,9 +186,9 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
-	 * Returns the web page element's title map.
+	 * Returns the structured content's title map.
 	 *
-	 * @return the web page element's title map
+	 * @return the structured content's title map
 	 * @review
 	 */
 	public Map<Locale, String> getTitleMap(Locale locale) {

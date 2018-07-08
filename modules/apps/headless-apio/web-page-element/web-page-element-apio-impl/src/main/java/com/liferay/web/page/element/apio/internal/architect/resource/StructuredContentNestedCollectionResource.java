@@ -48,8 +48,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
-import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementCreatorForm;
-import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementUpdaterForm;
+import com.liferay.web.page.element.apio.internal.architect.form.StructuredContentCreatorForm;
+import com.liferay.web.page.element.apio.internal.architect.form.StructuredContentUpdaterForm;
 import com.liferay.web.page.element.apio.internal.model.JournalArticleWrapper;
 
 import java.util.List;
@@ -61,15 +61,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose <a
- * href="http://schema.org/WebPageElement">WebPageElement </a> resources through
- * a web API. The resources are mapped from the internal model {@code
+ * Provides the information necessary to expose a StructuredContent resources
+ * through a web API. The resources are mapped from the internal model {@code
  * JournalArticle}.
  *
  * @author Javier Gamarra
  */
 @Component(immediate = true)
-public class WebPageElementNestedCollectionResource
+public class StructuredContentNestedCollectionResource
 	implements
 		NestedCollectionResource<JournalArticleWrapper, Long,
 			WebPageElementIdentifier, Long, ContentSpaceIdentifier> {
@@ -85,13 +84,13 @@ public class WebPageElementNestedCollectionResource
 		).addCreator(
 			this::_addJournalArticle, ThemeDisplay.class,
 			_hasPermission.forAddingIn(ContentSpaceIdentifier.class),
-			WebPageElementCreatorForm::buildForm
+			StructuredContentCreatorForm::buildForm
 		).build();
 	}
 
 	@Override
 	public String getName() {
-		return "web-page-element";
+		return "structured-contents";
 	}
 
 	@Override
@@ -104,7 +103,7 @@ public class WebPageElementNestedCollectionResource
 			idempotent(this::_deleteJournalArticle), _hasPermission::forDeleting
 		).addUpdater(
 			this::_updateJournalArticle, ThemeDisplay.class,
-			_hasPermission::forUpdating, WebPageElementUpdaterForm::buildForm
+			_hasPermission::forUpdating, StructuredContentUpdaterForm::buildForm
 		).build();
 	}
 
@@ -113,11 +112,11 @@ public class WebPageElementNestedCollectionResource
 		Representor.Builder<JournalArticleWrapper, Long> builder) {
 
 		return builder.types(
-			"WebPageElement"
+			"StructuredContent"
 		).identifier(
 			JournalArticle::getId
 		).addBidirectionalModel(
-			"contentSpace", "webPageElements", ContentSpaceIdentifier.class,
+			"contentSpace", "structuredContents", ContentSpaceIdentifier.class,
 			JournalArticle::getGroupId
 		).addDate(
 			"dateCreated", JournalArticle::getCreateDate
@@ -128,7 +127,7 @@ public class WebPageElementNestedCollectionResource
 		).addDate(
 			"lastReviewed", JournalArticle::getReviewDate
 		).addNestedList(
-			"fields", this::_getJournalArticleDDMFormFieldValues,
+			"values", this::_getJournalArticleDDMFormFieldValues,
 			fieldValuesBuilder -> fieldValuesBuilder.types(
 				"ContentFieldValue"
 			).addLocalizedStringByLocale(
@@ -162,27 +161,27 @@ public class WebPageElementNestedCollectionResource
 
 	private JournalArticleWrapper _addJournalArticle(
 			long contentSpaceId,
-			WebPageElementCreatorForm webPageElementCreatorForm,
+			StructuredContentCreatorForm structuredContentCreatorForm,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Locale locale = themeDisplay.getLocale();
 
 		ServiceContext serviceContext =
-			webPageElementCreatorForm.getServiceContext(contentSpaceId);
+			structuredContentCreatorForm.getServiceContext(contentSpaceId);
 
 		JournalArticle journalArticle = _journalArticleService.addArticle(
 			contentSpaceId, 0, 0, 0, null, true,
-			webPageElementCreatorForm.getTitleMap(locale),
-			webPageElementCreatorForm.getDescriptionMap(locale),
-			webPageElementCreatorForm.getText(),
-			webPageElementCreatorForm.getStructure(),
-			webPageElementCreatorForm.getTemplate(), null,
-			webPageElementCreatorForm.getDisplayDateMonth(),
-			webPageElementCreatorForm.getDisplayDateDay(),
-			webPageElementCreatorForm.getDisplayDateYear(),
-			webPageElementCreatorForm.getDisplayDateHour(),
-			webPageElementCreatorForm.getDisplayDateMinute(), 0, 0, 0, 0, 0,
+			structuredContentCreatorForm.getTitleMap(locale),
+			structuredContentCreatorForm.getDescriptionMap(locale),
+			structuredContentCreatorForm.getText(),
+			structuredContentCreatorForm.getStructure(),
+			structuredContentCreatorForm.getTemplate(), null,
+			structuredContentCreatorForm.getDisplayDateMonth(),
+			structuredContentCreatorForm.getDisplayDateDay(),
+			structuredContentCreatorForm.getDisplayDateYear(),
+			structuredContentCreatorForm.getDisplayDateHour(),
+			structuredContentCreatorForm.getDisplayDateMinute(), 0, 0, 0, 0, 0,
 			true, 0, 0, 0, 0, 0, true, true, null, serviceContext);
 
 		return new JournalArticleWrapper(journalArticle, themeDisplay);
@@ -301,7 +300,7 @@ public class WebPageElementNestedCollectionResource
 
 	private JournalArticleWrapper _updateJournalArticle(
 			long journalArticleId,
-			WebPageElementUpdaterForm webPageElementUpdaterForm,
+			StructuredContentUpdaterForm structuredContentUpdaterForm,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -309,16 +308,16 @@ public class WebPageElementNestedCollectionResource
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(webPageElementUpdaterForm.getGroup());
+		serviceContext.setScopeGroupId(structuredContentUpdaterForm.getGroup());
 
 		JournalArticle journalArticle = _journalArticleService.updateArticle(
-			webPageElementUpdaterForm.getUser(),
-			webPageElementUpdaterForm.getGroup(), 0,
+			structuredContentUpdaterForm.getUser(),
+			structuredContentUpdaterForm.getGroup(), 0,
 			String.valueOf(journalArticleId),
-			webPageElementUpdaterForm.getVersion(),
-			webPageElementUpdaterForm.getTitleMap(),
-			webPageElementUpdaterForm.getDescriptionMap(),
-			webPageElementUpdaterForm.getText(), null, serviceContext);
+			structuredContentUpdaterForm.getVersion(),
+			structuredContentUpdaterForm.getTitleMap(),
+			structuredContentUpdaterForm.getDescriptionMap(),
+			structuredContentUpdaterForm.getText(), null, serviceContext);
 
 		return new JournalArticleWrapper(journalArticle, themeDisplay);
 	}

@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.structure.apio.internal.architect.resource;
-
-import static com.liferay.structure.apio.internal.util.StructureRepresentorBuilderUtil.buildDDMStructureFirstStep;
+package com.liferay.forms.apio.internal.architect.resource;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -27,10 +25,11 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameService;
-import com.liferay.structure.apio.architect.identifier.FormStructureIdentifier;
+import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelper;
 
 import java.util.List;
 
@@ -48,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component
 public class FormStructureNestedCollectionResource
 	implements
-		NestedCollectionResource<DDMStructure, Long, FormStructureIdentifier,
+		NestedCollectionResource<DDMStructure, Long, StructureIdentifier,
 			Long, ContentSpaceIdentifier> {
 
 	@Override
@@ -75,7 +74,8 @@ public class FormStructureNestedCollectionResource
 		Representor.Builder<DDMStructure, Long> builder) {
 
 		Representor.FirstStep<DDMStructure> ddmStructureFirstStep =
-			buildDDMStructureFirstStep(builder);
+			_structureRepresentorBuilderHelper.buildDDMStructureFirstStep(
+				builder);
 
 		Representor.FirstStep<DDMStructure> bidirectionalModelStep =
 			ddmStructureFirstStep.addBidirectionalModel(
@@ -113,5 +113,9 @@ public class FormStructureNestedCollectionResource
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private StructureRepresentorBuilderHelper
+		_structureRepresentorBuilderHelper;
 
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.structure.apio.internal.architect.resource;
 
-import static com.liferay.structure.apio.internal.util.StructureRepresentorBuilderUtil.buildDDMStructureFirstStep;
-
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -31,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
+import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelper;
 
 import java.util.List;
 
@@ -75,7 +74,8 @@ public class ContentStructureNestedCollectionResource
 		Representor.Builder<DDMStructure, Long> builder) {
 
 		Representor.FirstStep<DDMStructure> ddmStructureFirstStep =
-			buildDDMStructureFirstStep(builder);
+			_structureRepresentorBuilderHelper.buildDDMStructureFirstStep(
+				builder);
 
 		Representor.FirstStep<DDMStructure> bidirectionalModelStep =
 			ddmStructureFirstStep.addBidirectionalModel(
@@ -113,5 +113,9 @@ public class ContentStructureNestedCollectionResource
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private StructureRepresentorBuilderHelper
+		_structureRepresentorBuilderHelper;
 
 }

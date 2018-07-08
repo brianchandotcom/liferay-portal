@@ -29,9 +29,12 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelper;
 import com.liferay.structure.apio.internal.model.FormLayoutPage;
 
 import java.util.Map.Entry;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Provides the information necessary to expose Structure resources through a
@@ -40,11 +43,13 @@ import java.util.Map.Entry;
  *
  * @author Paulo Cruz
  */
-public class StructureRepresentorBuilderUtil {
+@Component(immediate = true, service = StructureRepresentorBuilderHelper.class)
+public class StructureRepresentorBuilderHelperImpl
+	implements StructureRepresentorBuilderHelper {
 
-	public static Representor.FirstStep<DDMStructure>
-		buildDDMStructureFirstStep(
-			Representor.Builder<DDMStructure, Long> builder) {
+	@Override
+	public Representor.FirstStep<DDMStructure> buildDDMStructureFirstStep(
+		Representor.Builder<DDMStructure, Long> builder) {
 
 		return builder.types(
 			"Structure"
@@ -64,13 +69,13 @@ public class StructureRepresentorBuilderUtil {
 			"name", DDMStructure::getName
 		).addNested(
 			"successPage", StructureRepresentorUtil::getSuccessPage,
-			StructureRepresentorBuilderUtil::_buildSuccessPageSettings
+			StructureRepresentorBuilderHelperImpl::_buildSuccessPageSettings
 		).addNested(
 			"version", StructureRepresentorUtil::getVersion,
-			StructureRepresentorBuilderUtil::_buildVersion
+			StructureRepresentorBuilderHelperImpl::_buildVersion
 		).addNestedList(
 			"pages", StructureRepresentorUtil::getPages,
-			StructureRepresentorBuilderUtil::_buildFormPages
+			StructureRepresentorBuilderHelperImpl::_buildFormPages
 		);
 	}
 
@@ -129,13 +134,13 @@ public class StructureRepresentorBuilderUtil {
 			"tip", getLocalizedString(DDMFormField::getTip)
 		).addNested(
 			"grid", ddmFormField -> ddmFormField,
-			StructureRepresentorBuilderUtil::_buildGridProperties
+			StructureRepresentorBuilderHelperImpl::_buildGridProperties
 		).addNested(
 			"validation", DDMFormField::getDDMFormFieldValidation,
-			StructureRepresentorBuilderUtil::_buildValidationProperties
+			StructureRepresentorBuilderHelperImpl::_buildValidationProperties
 		).addNestedList(
 			"options", getFieldOptions(DDMFormField::getDDMFormFieldOptions),
-			StructureRepresentorBuilderUtil::_buildFieldOptions
+			StructureRepresentorBuilderHelperImpl::_buildFieldOptions
 		).addString(
 			"additionalType", DDMFormField::getType
 		).addString(
@@ -165,7 +170,7 @@ public class StructureRepresentorBuilderUtil {
 			"text", FormLayoutPage::getDescription
 		).addNestedList(
 			"fields", FormLayoutPage::getFields,
-			StructureRepresentorBuilderUtil::_buildFormFields
+			StructureRepresentorBuilderHelperImpl::_buildFormFields
 		).build();
 	}
 
@@ -176,10 +181,10 @@ public class StructureRepresentorBuilderUtil {
 			"FormFieldProperties"
 		).addNestedList(
 			"columns", getFieldOptions("columns"),
-			StructureRepresentorBuilderUtil::_buildFieldOptions
+			StructureRepresentorBuilderHelperImpl::_buildFieldOptions
 		).addNestedList(
 			"rows", getFieldOptions("rows"),
-			StructureRepresentorBuilderUtil::_buildFieldOptions
+			StructureRepresentorBuilderHelperImpl::_buildFieldOptions
 		).build();
 	}
 

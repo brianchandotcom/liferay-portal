@@ -17,11 +17,11 @@ package com.liferay.structured.content.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code WebPageElement} identifier. It's identified
- * by the internal {@code JournalArticle#getArticleId()}.
+ * Holds information about an StructuredContent identifier. It's identified by
+ * the internal {@code JournalArticle#getArticleId()}.
  *
  * @author Alejandro Hernández
  * @review
  */
-public interface WebPageElementIdentifier extends Identifier<Long> {
+public interface StructuredContentIdentifier extends Identifier<Long> {
 }

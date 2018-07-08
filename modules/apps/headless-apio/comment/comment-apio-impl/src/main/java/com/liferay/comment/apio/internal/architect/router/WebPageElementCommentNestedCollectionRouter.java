@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
+import com.liferay.structured.content.apio.architect.identifier.WebPageElementIdentifier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

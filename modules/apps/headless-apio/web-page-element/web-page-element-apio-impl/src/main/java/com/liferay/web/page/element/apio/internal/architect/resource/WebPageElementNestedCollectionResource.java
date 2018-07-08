@@ -37,13 +37,13 @@ import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifie
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.journal.util.JournalContent;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -242,19 +242,21 @@ public class WebPageElementNestedCollectionResource
 	private String _getJournalArticleHtml(
 		JournalArticleWrapper journalArticleWrapper, Locale locale) {
 
-		JournalArticleDisplay journalArticleDisplay =
-			_journalContent.getDisplay(
+		try {
+			String content = _journalArticleService.getArticleContent(
 				journalArticleWrapper.getGroupId(),
-				journalArticleWrapper.getArticleId(), null,
-				locale.getLanguage(), journalArticleWrapper.getThemeDisplay());
+				journalArticleWrapper.getArticleId(), locale.getLanguage(),
+				null, journalArticleWrapper.getThemeDisplay());
 
-		String content = journalArticleDisplay.getContent();
-
-		if (content == null) {
-			return null;
+			return content.replaceAll("[\\t\\n]", "");
+		}
+		catch (PortalException pe) {
+			if (_log.isInfoEnabled()) {
+				_log.info(pe, pe);
+			}
 		}
 
-		return content.replaceAll("[\\t\\n]", "");
+		return null;
 	}
 
 	private JournalArticleWrapper _getJournalArticleWrapper(
@@ -323,6 +325,9 @@ public class WebPageElementNestedCollectionResource
 		return new JournalArticleWrapper(journalArticle, themeDisplay);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebPageElementNestedCollectionResource.class);
+
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
@@ -333,8 +338,5 @@ public class WebPageElementNestedCollectionResource
 
 	@Reference
 	private JournalArticleService _journalArticleService;
-
-	@Reference
-	private JournalContent _journalContent;
 
 }

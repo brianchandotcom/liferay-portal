@@ -25,26 +25,26 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
+import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the {@code Category} resources
- * contained inside a <a href="http://schema.org/WebPageElement">WebPageElement
- * </a> through a web API. The resources are mapped from the internal model
- * {@link AssetCategory} and {@code JournalArticle}.
+ * contained inside a StructuredContent through a web API. The resources are
+ * mapped from the internal model {@link AssetCategory} and {@code
+ * JournalArticle}.
  *
  * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class WebPageElementCategoryNestedCollectionRouter extends
-	BaseCategoryNestedCollectionRouter<WebPageElementIdentifier>
+public class StructuredContentCategoryNestedCollectionRouter extends
+	BaseCategoryNestedCollectionRouter<StructuredContentIdentifier>
 	implements NestedCollectionRouter
 		<AssetCategory, Long, CategoryIdentifier, Long,
-			WebPageElementIdentifier> {
+			StructuredContentIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<AssetCategory, Long, Long> collectionRoutes(
@@ -54,7 +54,7 @@ public class WebPageElementCategoryNestedCollectionRouter extends
 			this::getPageItems
 		).addCreator(
 			this::addAssetCategory,
-			_hasPermission.forAddingIn(WebPageElementIdentifier.class),
+			_hasPermission.forAddingIn(StructuredContentIdentifier.class),
 			NestedCategoryForm::buildForm
 		).build();
 	}

@@ -23,26 +23,25 @@ import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.structured.content.apio.architect.identifier.WebPageElementIdentifier;
+import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/Comment">Comment</a> resources contained inside a <a
- * href="http://schema.org/WebPageElement">WebPageElement</a> through a web API.
- * The resources are mapped from the internal model {@link Comment} and {@code
- * JournalArticle}.
+ * href="http://schema.org/Comment">Comment</a> resources contained inside a
+ * StructuredContent through a web API. The resources are mapped from the
+ * internal model {@link Comment} and {@code JournalArticle}.
  *
  * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class WebPageElementCommentNestedCollectionRouter extends
-	BaseCommentNestedCollectionRouter<WebPageElementIdentifier>
+public class StructuredContentCommentNestedCollectionRouter extends
+	BaseCommentNestedCollectionRouter<StructuredContentIdentifier>
 	implements NestedCollectionRouter
-		<Comment, Long, CommentIdentifier, Long, WebPageElementIdentifier> {
+		<Comment, Long, CommentIdentifier, Long, StructuredContentIdentifier> {
 
 	@Override
 	protected CommentManager getCommentManager() {

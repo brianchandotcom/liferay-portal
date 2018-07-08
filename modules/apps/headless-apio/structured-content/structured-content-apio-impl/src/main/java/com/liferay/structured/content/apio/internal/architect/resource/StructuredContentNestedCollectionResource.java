@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.structured.content.apio.architect.identifier.WebPageElementIdentifier;
+import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentUpdaterForm;
 import com.liferay.structured.content.apio.internal.model.JournalArticleWrapper;
@@ -71,7 +71,7 @@ import org.osgi.service.component.annotations.Reference;
 public class StructuredContentNestedCollectionResource
 	implements
 		NestedCollectionResource<JournalArticleWrapper, Long,
-			WebPageElementIdentifier, Long, ContentSpaceIdentifier> {
+			StructuredContentIdentifier, Long, ContentSpaceIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<JournalArticleWrapper, Long, Long>

@@ -82,6 +82,7 @@ public class ClusterSerializationUtilTest {
 		}
 		catch (RuntimeException re) {
 			Assert.assertTrue(
+				String.valueOf(re.getCause()),
 				re.getCause() instanceof StreamCorruptedException);
 		}
 
@@ -121,12 +122,14 @@ public class ClusterSerializationUtilTest {
 
 		// Test 2, failed
 
+		IOException ioe = new IOException("Forced IOException");
+
 		Serializable serializable = new Serializable() {
 
 			private void writeObject(ObjectOutputStream objectOutputStream)
 				throws IOException {
 
-				throw new IOException("Forced IOException");
+				throw ioe;
 			}
 
 		};
@@ -140,13 +143,11 @@ public class ClusterSerializationUtilTest {
 			String message = re.getMessage();
 
 			Assert.assertTrue(
+				message,
 				message.startsWith(
 					"Unable to write ordinary serializable object "));
 
-			Throwable throwable = re.getCause();
-
-			Assert.assertTrue(throwable instanceof IOException);
-			Assert.assertEquals("Forced IOException", throwable.getMessage());
+			Assert.assertSame(ioe, re.getCause());
 		}
 	}
 

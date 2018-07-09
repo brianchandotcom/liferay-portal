@@ -148,15 +148,15 @@ AUI.add(
 
 						var footerToolbar = [
 							{
-								label: Liferay.Language.get('done'),
-								on: {
-									click: A.bind('_updateSelectedEntries', instance)
-								}
-							},
-							{
 								label: Liferay.Language.get('cancel'),
 								on: {
 									click: A.bind('_hideSelectDialog', instance)
+								}
+							},
+							{
+								label: Liferay.Language.get('done'),
+								on: {
+									click: A.bind('_updateSelectedEntries', instance)
 								}
 							}
 						];

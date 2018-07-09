@@ -15,6 +15,7 @@
 package com.liferay.portal.cluster.multiple.internal.io;
 
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -51,7 +52,7 @@ public class ClusterClassLoaderPool {
 			}
 
 			if (classLoader == null) {
-				int pos = contextName.indexOf(StringPool.UNDERLINE);
+				int pos = contextName.indexOf(CharPool.UNDERLINE);
 
 				if (pos > 0) {
 					String symbolicName = contextName.substring(0, pos);

@@ -36,20 +36,20 @@ public class ClusterSerializationUtil {
 	public static Object readObject(byte[] bytes, int offset, int length)
 		throws ClassNotFoundException {
 
-		try {
-			byte serializableType = bytes[offset];
+		byte serializableType = bytes[offset];
 
-			if (SerializationConstants.TC_OBJECT == serializableType) {
-				ObjectInputStream objectInputStream =
-					new ClusterProtectedAnnotatedObjectInputStream(
-						new UnsyncByteArrayInputStream(
-							bytes, offset + 1, length - 1));
-
-				return objectInputStream.readObject();
-			}
-
+		if (SerializationConstants.TC_OBJECT != serializableType) {
 			throw new IllegalStateException(
 				"Unable to deserialize this type:" + serializableType);
+		}
+
+		try {
+			ObjectInputStream objectInputStream =
+				new ClusterProtectedAnnotatedObjectInputStream(
+					new UnsyncByteArrayInputStream(
+						bytes, offset + 1, length - 1));
+
+			return objectInputStream.readObject();
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

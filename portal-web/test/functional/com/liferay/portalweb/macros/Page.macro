@@ -1112,8 +1112,9 @@
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 
 		<execute macro="Alert#viewLocalizationMessage">
-			<var name="defaultLanguageLocalizationMessage" value="${pageLocalizationMessage}" />
-			<var name="preferredLanguageLocalizationMessage" value="${pageLocalizationPreferredLanguage}" />
+			<var name="defaultLanguageLocalizationMessage" value="${defaultLanguageLocalizationMessage}" />
+			<var name="preferredLanguageLocalizationMessage" value="${preferredLanguageLocalizationMessage}" />
+			<var name="translationLanguageLocalizationMessage" value="${translationLanguageLocalizationMessage}" />
 		</execute>
 	</command>
 

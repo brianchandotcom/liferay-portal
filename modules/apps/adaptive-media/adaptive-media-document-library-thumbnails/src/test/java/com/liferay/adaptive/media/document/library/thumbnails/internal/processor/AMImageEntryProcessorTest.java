@@ -58,6 +58,224 @@ public class AMImageEntryProcessorTest {
 	}
 
 	@Test
+	public void testGetPreviewAsStreamDoesNotTriggerAMProcessorWhenAmImageExists()
+		throws Exception {
+
+		Mockito.when(
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+		).thenAnswer(
+			invocation -> Stream.of(_adaptiveMedia)
+		);
+
+		_amImageEntryProcessor.getPreviewAsStream(_fileVersion);
+
+		Mockito.verify(
+			_amAsyncProcessor, Mockito.never()
+		).triggerProcess(
+			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+		);
+	}
+
+	@Test
+	public void testGetPreviewAsStreamDoesNotTriggerAMProcessorWhenInvalidSize()
+		throws Exception {
+
+		Mockito.when(
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+		).thenAnswer(
+			invocation -> Stream.empty()
+		);
+
+		Mockito.when(
+			_amImageMimeTypeProvider.isMimeTypeSupported(Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_amImageValidator.isValid(_fileVersion)
+		).thenReturn(
+			false
+		);
+
+		_amImageEntryProcessor.getPreviewAsStream(_fileVersion);
+
+		Mockito.verify(
+			_amAsyncProcessor, Mockito.never()
+		).triggerProcess(
+			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+		);
+	}
+
+	@Test
+	public void testGetPreviewAsStreamDoesNotTriggerAMProcessorWhenNotSupported()
+		throws Exception {
+
+		Mockito.when(
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+		).thenAnswer(
+			invocation -> Stream.empty()
+		);
+
+		Mockito.when(
+			_amImageMimeTypeProvider.isMimeTypeSupported(Mockito.anyString())
+		).thenReturn(
+			false
+		);
+
+		_amImageEntryProcessor.getPreviewAsStream(_fileVersion);
+
+		Mockito.verify(
+			_amAsyncProcessor, Mockito.never()
+		).triggerProcess(
+			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+		);
+	}
+
+	@Test
+	public void testGetPreviewAsStreamTriggersAMProcessorWhenNoAmImageExists()
+		throws Exception {
+
+		Mockito.when(
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+		).thenAnswer(
+			invocation -> Stream.empty()
+		);
+
+		Mockito.when(
+			_amImageMimeTypeProvider.isMimeTypeSupported(Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_amImageValidator.isValid(_fileVersion)
+		).thenReturn(
+			true
+		);
+
+		_amImageEntryProcessor.getPreviewAsStream(_fileVersion);
+
+		Mockito.verify(
+			_amAsyncProcessor
+		).triggerProcess(
+			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+		);
+	}
+
+	@Test
+	public void testGetPreviewFileSizeDoesNotTriggerAMProcessorWhenAmImageExists()
+		throws Exception {
+
+		Mockito.when(
+			_adaptiveMedia.getValueOptional(Mockito.any())
+		).thenReturn(
+			Optional.empty()
+		);
+
+		Mockito.when(
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+		).thenAnswer(
+			invocation -> Stream.of(_adaptiveMedia)
+		);
+
+		_amImageEntryProcessor.getPreviewFileSize(_fileVersion);
+
+		Mockito.verify(
+			_amAsyncProcessor, Mockito.never()
+		).triggerProcess(
+			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+		);
+	}
+
+	@Test
+	public void testGetPreviewFileSizeDoesNotTriggerAMProcessorWhenInvalidSize()
+		throws Exception {
+
+		Mockito.when(
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+		).thenAnswer(
+			invocation -> Stream.empty()
+		);
+
+		Mockito.when(
+			_amImageMimeTypeProvider.isMimeTypeSupported(Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_amImageValidator.isValid(_fileVersion)
+		).thenReturn(
+			false
+		);
+
+		_amImageEntryProcessor.getPreviewFileSize(_fileVersion);
+
+		Mockito.verify(
+			_amAsyncProcessor, Mockito.never()
+		).triggerProcess(
+			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+		);
+	}
+
+	@Test
+	public void testGetPreviewFileSizeDoesNotTriggerAMProcessorWhenNotSupported()
+		throws Exception {
+
+		Mockito.when(
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+		).thenAnswer(
+			invocation -> Stream.empty()
+		);
+
+		Mockito.when(
+			_amImageMimeTypeProvider.isMimeTypeSupported(Mockito.anyString())
+		).thenReturn(
+			false
+		);
+
+		_amImageEntryProcessor.getPreviewFileSize(_fileVersion);
+
+		Mockito.verify(
+			_amAsyncProcessor, Mockito.never()
+		).triggerProcess(
+			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+		);
+	}
+
+	@Test
+	public void testGetPreviewFileSizeTriggersAMProcessorWhenNoAmImageExists()
+		throws Exception {
+
+		Mockito.when(
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+		).thenAnswer(
+			invocation -> Stream.empty()
+		);
+
+		Mockito.when(
+			_amImageMimeTypeProvider.isMimeTypeSupported(Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_amImageValidator.isValid(_fileVersion)
+		).thenReturn(
+			true
+		);
+
+		_amImageEntryProcessor.getPreviewFileSize(_fileVersion);
+
+		Mockito.verify(
+			_amAsyncProcessor
+		).triggerProcess(
+			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+		);
+	}
+
+	@Test
 	public void testGetThumbnailAsStreamDoesNotTriggerAMProcessorWhenAmImageExists()
 		throws Exception {
 

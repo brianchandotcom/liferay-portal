@@ -39,6 +39,19 @@ public class AMCompanyThumbnailConfigurationInitializer {
 	public void initializeCompany(Company company)
 		throws AMImageConfigurationException, IOException {
 
+		int dlFileEntryPreviewMaxHeight = PrefsPropsUtil.getInteger(
+			PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT);
+		int dlFileEntryPreviewMaxWidth = PrefsPropsUtil.getInteger(
+			PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH);
+
+		if ((dlFileEntryPreviewMaxHeight > 0) ||
+			(dlFileEntryPreviewMaxWidth > 0)) {
+
+			_createAMDocumentLibraryPreviewConfiguration(
+				company, dlFileEntryPreviewMaxHeight,
+				dlFileEntryPreviewMaxWidth);
+		}
+
 		int dlFileEntryThumbnailMaxHeight = PrefsPropsUtil.getInteger(
 			PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT);
 		int dlFileEntryThumbnailMaxWidth = PrefsPropsUtil.getInteger(
@@ -77,6 +90,22 @@ public class AMCompanyThumbnailConfigurationInitializer {
 				company, dlFileEntryThumbnailCustom2MaxHeight,
 				dlFileEntryThumbnailCustom2MaxWidth);
 		}
+	}
+
+	private void _createAMDocumentLibraryPreviewConfiguration(
+			Company company, int maxHeight, int maxWidth)
+		throws AMImageConfigurationException, IOException {
+
+		String name = String.format("%s %dx%d", "Preview", maxWidth, maxHeight);
+
+		Map<String, String> properties = new HashMap<>();
+
+		properties.put("max-height", String.valueOf(maxHeight));
+		properties.put("max-width", String.valueOf(maxWidth));
+
+		_amImageConfigurationHelper.addAMImageConfigurationEntry(
+			company.getCompanyId(), name,
+			"This image resolution was automatically added.", name, properties);
 	}
 
 	private void _createAMDocumentLibraryThumbnailConfiguration(

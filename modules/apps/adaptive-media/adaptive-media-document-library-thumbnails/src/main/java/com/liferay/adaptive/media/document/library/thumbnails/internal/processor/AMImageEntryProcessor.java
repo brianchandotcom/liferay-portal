@@ -97,12 +97,41 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	public InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
-		return _imageProcessor.getPreviewAsStream(fileVersion);
+		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
+			_getPreviewAdaptiveMedia(fileVersion);
+
+		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
+			adaptiveMediaStream.findFirst();
+
+		if (!adaptiveMediaOptional.isPresent()) {
+			_processAMImage(fileVersion);
+		}
+
+		return adaptiveMediaOptional.map(
+			AdaptiveMedia::getInputStream
+		).orElse(
+			new ByteArrayInputStream(new byte[0])
+		);
 	}
 
 	@Override
 	public long getPreviewFileSize(FileVersion fileVersion) throws Exception {
-		return _imageProcessor.getPreviewFileSize(fileVersion);
+		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
+			_getPreviewAdaptiveMedia(fileVersion);
+
+		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
+			adaptiveMediaStream.findFirst();
+
+		if (!adaptiveMediaOptional.isPresent()) {
+			_processAMImage(fileVersion);
+		}
+
+		return adaptiveMediaOptional.flatMap(
+			mediaMedia -> mediaMedia.getValueOptional(
+				AMAttribute.getContentLengthAMAttribute())
+		).orElse(
+			0L
+		);
 	}
 
 	@Override
@@ -251,6 +280,24 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	@Override
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
+	}
+
+	private Stream<AdaptiveMedia<AMImageProcessor>> _getPreviewAdaptiveMedia(
+			FileVersion fileVersion)
+		throws PortalException {
+
+		return _amImageFinder.getAdaptiveMediaStream(
+			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
+				fileVersion
+			).with(
+				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH,
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH)
+			).with(
+				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT,
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT)
+			).done());
 	}
 
 	private Stream<AdaptiveMedia<AMImageProcessor>> _getThumbnailAdaptiveMedia(

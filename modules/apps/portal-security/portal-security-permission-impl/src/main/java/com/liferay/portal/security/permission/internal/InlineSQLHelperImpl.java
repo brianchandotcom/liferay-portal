@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -52,27 +51,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = InlineSQLHelper.class)
 @DoPrivileged
 public class InlineSQLHelperImpl implements InlineSQLHelper {
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String FILTER_BY_RESOURCE_BLOCK_ID =
-		InlineSQLHelper.class.getName() + ".filterByResourceBlockId";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String FILTER_BY_RESOURCE_BLOCK_ID_OWNER =
-		InlineSQLHelper.class.getName() + ".filterByResourceBlockIdOwner";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String FIND_BY_RESOURCE_BLOCK_ID =
-		InlineSQLHelper.class.getName() + ".findByResourceBlockId";
 
 	public static final String FIND_BY_RESOURCE_PERMISSION =
 		InlineSQLHelper.class.getName() + ".findByResourcePermission";
@@ -267,37 +245,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			bridgeJoin);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected Set<Long> getOwnerResourceBlockIds(
-		long companyId, long[] groupIds, String className) {
-
-		return Collections.emptySet();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String getOwnerResourceBlockIdsSQL(
-		PermissionChecker permissionChecker, long checkGroupId,
-		String className, Set<Long> ownerResourceBlockIds) {
-
-		return StringPool.BLANK;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected Set<Long> getResourceBlockIds(
-		long companyId, long[] groupIds, String className) {
-
-		return Collections.emptySet();
-	}
-
 	protected long[] getRoleIds(long groupId) {
 		long[] roleIds = PermissionChecker.DEFAULT_ROLE_IDS;
 
@@ -383,28 +330,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		return userId;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String getUserResourceBlockIdsSQL(
-		PermissionChecker permissionChecker, long checkGroupId, long[] roleIds,
-		String className, Set<Long> userResourceBlockIds) {
-
-		return StringPool.BLANK;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String replacePermissionCheckBlocks(
-		String sql, String className, String classPKField, String userIdField,
-		long[] groupIds, String bridgeJoin) {
-
-		return StringPool.BLANK;
 	}
 
 	protected String replacePermissionCheckJoin(

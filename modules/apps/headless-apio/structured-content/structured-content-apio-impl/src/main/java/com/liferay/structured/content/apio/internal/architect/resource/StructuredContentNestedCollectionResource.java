@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentUpdaterForm;
@@ -142,6 +143,10 @@ public class StructuredContentNestedCollectionResource
 			"creator", PersonIdentifier.class, JournalArticle::getUserId
 		).addLocalizedStringByLocale(
 			"renderedContent", this::_getJournalArticleHtml
+		).addLinkedModel(
+			"contentStructure", ContentStructureIdentifier.class,
+			journalArticleWrapper ->
+				journalArticleWrapper.getDDMStructure().getStructureId()
 		).addRelatedCollection(
 			"categories", CategoryIdentifier.class
 		).addRelatedCollection(

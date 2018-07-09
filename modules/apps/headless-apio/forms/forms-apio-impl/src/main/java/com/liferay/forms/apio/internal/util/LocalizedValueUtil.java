@@ -12,21 +12,30 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal;
+package com.liferay.forms.apio.internal.util;
+
+import com.liferay.apio.architect.functional.Try;
+import com.liferay.dynamic.data.mapping.model.Value;
+
+import java.util.Locale;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * @author Paulo Cruz
  */
-public class FormFieldValue {
+public final class LocalizedValueUtil {
 
-	public FormFieldValue(String identifier, String name, String value) {
-		this.identifier = identifier;
-		this.name = name;
-		this.value = value;
+	public static <T> BiFunction<T, Locale, String> getLocalizedString(
+		Function<T, Value> function) {
+
+		return (value, locale) -> Try.fromFallible(
+			() -> function.apply(value)
+		).map(
+			localizedValue -> localizedValue.getString(locale)
+		).orElse(
+			null
+		);
 	}
-
-	public final String identifier;
-	public final String name;
-	public final String value;
 
 }

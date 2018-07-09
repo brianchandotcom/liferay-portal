@@ -15,7 +15,11 @@
 package com.liferay.forms.apio.internal.architect.provider;
 
 import com.liferay.apio.architect.provider.Provider;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.forms.apio.internal.model.ServiceContextWrapper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,26 +28,27 @@ import javax.ws.rs.InternalServerErrorException;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Victor Oliveira
+ * Lets resources provide the service context {@code ServiceContext} as a
+ * parameter in the methods of the different routes builders.
+ *
+ * @author Paulo Cruz
  */
 @Component(immediate = true)
-public class DDMFormRenderingContextProvider
-	implements Provider<DDMFormRenderingContext> {
+public class ServiceContextWrapperProvider
+	implements Provider<ServiceContextWrapper> {
 
 	@Override
-	public DDMFormRenderingContext createContext(
+	public ServiceContextWrapper createContext(
 		HttpServletRequest httpServletRequest) {
 
 		try {
-			DDMFormRenderingContext ddmFormRenderingContext =
-				new DDMFormRenderingContext();
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DDMFormInstanceRecord.class.getName(), httpServletRequest);
 
-			ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
-
-			return ddmFormRenderingContext;
+			return new ServiceContextWrapper(serviceContext);
 		}
-		catch (Exception e) {
-			throw new InternalServerErrorException(e.getMessage(), e);
+		catch (PortalException pe) {
+			throw new InternalServerErrorException(pe.getMessage(), pe);
 		}
 	}
 

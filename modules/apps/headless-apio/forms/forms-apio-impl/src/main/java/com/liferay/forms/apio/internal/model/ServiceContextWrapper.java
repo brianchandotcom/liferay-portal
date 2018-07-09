@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal;
+package com.liferay.forms.apio.internal.model;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Paulo Cruz
  */
-public class FormInstanceRecordServiceContext {
+public class ServiceContextWrapper {
 
-	public FormInstanceRecordServiceContext(ServiceContext serviceContext) {
+	public ServiceContextWrapper(ServiceContext serviceContext) {
 		_serviceContext = serviceContext;
 	}
 

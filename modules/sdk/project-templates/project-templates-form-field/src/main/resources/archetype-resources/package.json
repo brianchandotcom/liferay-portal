@@ -14,7 +14,7 @@
 		"metal-tools-soy": "^4.2.1",
 		"rimraf": "^2.6.2"
 	},
-	"name": "${artifactId}-form-field",
+	"name": "dynamic-data-${artifactId}-form-field",
 	"scripts": {
 		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,${artifactId}_field.js && liferay-npm-bundler && rimraf src/**/*.soy.js"
 	},

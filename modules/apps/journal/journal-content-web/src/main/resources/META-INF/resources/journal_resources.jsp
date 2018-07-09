@@ -24,35 +24,31 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 
 <aui:input id='<%= refererPortletName + "ddmTemplateKey" %>' name='<%= refererPortletName + "preferences--ddmTemplateKey--" %>' type="hidden" useNamespace="<%= false %>" value="<%= journalContentDisplayContext.getDDMTemplateKey() %>" />
 
-<div class="article-preview row">
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<p class="text-muted"><liferay-ui:message key="layout.types.article" /></p>
+<p class="text-muted">
+	<liferay-ui:message key="layout.types.article" />
+</p>
 
-		<div class="article-preview-content-container">
-			<c:if test="<%= article != null %>">
-				<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>" />
-			</c:if>
-		</div>
-
-		<div class="button-holder">
-			<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
-
-			<c:if test="<%= article != null %>">
-				<aui:button cssClass="selector-button" name="removeWebContent" value="remove" />
-			</c:if>
-		</div>
+<div class="row">
+	<div class="col-md-4">
+		<c:if test="<%= article != null %>">
+			<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>" />
+		</c:if>
 	</div>
 </div>
 
+<div class="button-holder">
+	<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
+
+	<c:if test="<%= article != null %>">
+		<aui:button cssClass="selector-button" name="removeWebContent" value="remove" />
+	</c:if>
+</div>
+
 <c:if test="<%= article != null %>">
-	<div class="row template-preview">
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<liferay-util:include page="/journal_template.jsp" servletContext="<%= application %>" />
-		</div>
-	</div>
+	<liferay-util:include page="/journal_template.jsp" servletContext="<%= application %>" />
 
 	<div class="configuration-options-container row">
-		<div class="col-md-6 col-sm-6 col-xs-12">
+		<div class="col-md-4">
 			<aui:fieldset>
 				<aui:field-wrapper label="user-tools">
 					<liferay-asset:asset-addon-entry-selector

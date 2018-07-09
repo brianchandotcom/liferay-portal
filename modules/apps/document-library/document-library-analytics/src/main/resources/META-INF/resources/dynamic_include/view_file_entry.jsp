@@ -35,6 +35,7 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 				fileEntryId: '<%= fileEntry.getFileEntryId() %>',
 				groupId: '<%= fileEntry.getGroupId() %>',
 				fileEntryUUID: '<%= fileEntry.getUuid() %>',
+				title: '<%= fileEntry.getTitle() %>',
 				version: '<%= fileEntry.getVersion() %>'
 			}
 		);

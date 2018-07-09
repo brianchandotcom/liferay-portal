@@ -45,6 +45,7 @@
 							groupId: match[1],
 							fileEntryUUID: match[4],
 							preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
+							title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
 							version: uri.getParameterValue('version')
 						}
 					);

@@ -34,7 +34,7 @@ import org.junit.Test;
 /**
  * @author Tina Tian
  */
-public class ClusterSerializerUtilTest {
+public class ClusterSerializationUtilTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
@@ -42,7 +42,7 @@ public class ClusterSerializerUtilTest {
 
 	@Test
 	public void testConstructor() {
-		new ClusterSerializerUtil();
+		new ClusterSerializationUtil();
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class ClusterSerializerUtilTest {
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
-		Object object = ClusterSerializerUtil.readObject(
+		Object object = ClusterSerializationUtil.readObject(
 			byteBuffer.array(), byteBuffer.position(), byteBuffer.remaining());
 
 		Assert.assertEquals(object, date);
@@ -74,7 +74,7 @@ public class ClusterSerializerUtilTest {
 		byteBuffer.put(2, (byte)0xFF);
 
 		try {
-			object = ClusterSerializerUtil.readObject(
+			object = ClusterSerializationUtil.readObject(
 				byteBuffer.array(), byteBuffer.position(),
 				byteBuffer.remaining());
 
@@ -94,7 +94,7 @@ public class ClusterSerializerUtilTest {
 		byteBuffer = serializer.toByteBuffer();
 
 		try {
-			object = ClusterSerializerUtil.readObject(
+			object = ClusterSerializationUtil.readObject(
 				byteBuffer.array(), byteBuffer.position(),
 				byteBuffer.remaining());
 
@@ -113,7 +113,7 @@ public class ClusterSerializerUtilTest {
 
 		Date date = new Date(123456);
 
-		byte[] bytes = ClusterSerializerUtil.writeObject(date);
+		byte[] bytes = ClusterSerializationUtil.writeObject(date);
 
 		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(bytes));
 
@@ -132,7 +132,7 @@ public class ClusterSerializerUtilTest {
 		};
 
 		try {
-			ClusterSerializerUtil.writeObject(serializable);
+			ClusterSerializationUtil.writeObject(serializable);
 
 			Assert.fail();
 		}

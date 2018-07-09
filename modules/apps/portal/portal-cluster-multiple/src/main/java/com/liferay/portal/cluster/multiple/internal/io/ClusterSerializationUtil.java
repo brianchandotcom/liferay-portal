@@ -31,7 +31,7 @@ import java.io.Serializable;
 /**
  * @author Tina Tian
  */
-public class ClusterSerializerUtil {
+public class ClusterSerializationUtil {
 
 	public static Object readObject(byte[] bytes, int offset, int length)
 		throws ClassNotFoundException {

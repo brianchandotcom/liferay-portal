@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -899,43 +900,53 @@ public class JournalArticleStagedModelDataHandler
 					smallFile, null, articleURL, serviceContext);
 			}
 
-			// Clean up initial publication
+			serviceContext.setModifiedDate(importedArticle.getModifiedDate());
 
-			if (ExportImportThreadLocal.isInitialLayoutStagingInProcess() &&
-				(article.getStatus() == WorkflowConstants.STATUS_DRAFT)) {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-				_journalArticleLocalService.deleteArticle(article);
+			try {
+
+				// Clean up initial publication
+
+				if (ExportImportThreadLocal.isInitialLayoutStagingInProcess() &&
+					(article.getStatus() == WorkflowConstants.STATUS_DRAFT)) {
+
+					_journalArticleLocalService.deleteArticle(article);
+				}
+
+				boolean exportVersionHistory =
+					portletDataContext.getBooleanParameter(
+						"journal", "version-history");
+
+				if (!ExportImportThreadLocal.isStagingInProcess() ||
+					!exportVersionHistory) {
+
+					updateArticleVersions(importedArticle);
+				}
+
+				if (Validator.isNull(newArticleId)) {
+					articleIds.put(
+						article.getArticleId(), importedArticle.getArticleId());
+				}
+
+				Map<Long, Long> articlePrimaryKeys =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						JournalArticle.class + ".primaryKey");
+
+				articlePrimaryKeys.put(
+					article.getPrimaryKey(), importedArticle.getPrimaryKey());
+
+				_importAssetDisplayPage(
+					portletDataContext, article, importedArticle);
+
+				_importFriendlyURLEntries(
+					portletDataContext, article, importedArticle);
 			}
-
-			boolean exportVersionHistory =
-				portletDataContext.getBooleanParameter(
-					"journal", "version-history");
-
-			if (!ExportImportThreadLocal.isStagingInProcess() ||
-				!exportVersionHistory) {
-
-				updateArticleVersions(importedArticle);
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
 			}
 
 			portletDataContext.importClassedModel(article, importedArticle);
-
-			if (Validator.isNull(newArticleId)) {
-				articleIds.put(
-					article.getArticleId(), importedArticle.getArticleId());
-			}
-
-			Map<Long, Long> articlePrimaryKeys =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					JournalArticle.class + ".primaryKey");
-
-			articlePrimaryKeys.put(
-				article.getPrimaryKey(), importedArticle.getPrimaryKey());
-
-			_importAssetDisplayPage(
-				portletDataContext, article, importedArticle);
-
-			_importFriendlyURLEntries(
-				portletDataContext, article, importedArticle);
 		}
 		finally {
 			if (smallFile != null) {

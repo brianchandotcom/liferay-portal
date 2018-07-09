@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -102,11 +104,22 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		return serviceContext;
 	}
 
+	private boolean _isInTrash(AssetEntry assetEntry) throws PortalException {
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			assetEntry.getClassName());
+
+		if (trashHandler != null) {
+			return trashHandler.isInTrash(assetEntry.getClassPK());
+		}
+
+		return false;
+	}
+
 	private void _tag(AssetEntry assetEntry) throws PortalException {
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
 		if (!_assetAutoTaggerConfiguration.enabled() ||
-			(assetRenderer == null)) {
+			(assetRenderer == null) || _isInTrash(assetEntry)) {
 
 			return;
 		}

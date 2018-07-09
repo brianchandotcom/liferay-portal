@@ -29,6 +29,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
+import java.net.URLEncoder;
+
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -181,7 +183,8 @@ public class TargetPlatformIndexer implements Indexer {
 			return;
 		}
 
-		Path tempJarPath = tempPath.resolve(jarPath.getFileName());
+		Path tempJarPath = tempPath.resolve(
+			URLEncoder.encode(String.valueOf(jarPath.getFileName()), "UTF-8"));
 
 		Files.copy(
 			jarPath, tempJarPath, StandardCopyOption.COPY_ATTRIBUTES,

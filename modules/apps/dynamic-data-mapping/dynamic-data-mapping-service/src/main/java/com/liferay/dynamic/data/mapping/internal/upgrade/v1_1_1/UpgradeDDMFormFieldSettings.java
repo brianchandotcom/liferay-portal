@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -89,8 +90,15 @@ public class UpgradeDDMFormFieldSettings extends UpgradeProcess {
 			Map<String, Object> properties = ddmFormField.getProperties();
 
 			if (properties.containsKey("ddmDataProviderInstanceId")) {
+				String ddmDataProviderInstanceId = GetterUtil.getString(
+					properties.get("ddmDataProviderInstanceId"));
+
 				properties.put(
-					"ddmDataProviderInstanceOutput", "Default-Output");
+					"ddmDataProviderInstanceId",
+					"[\"" + ddmDataProviderInstanceId + "\"]");
+
+				properties.put(
+					"ddmDataProviderInstanceOutput", "[\"Default-Output\"]");
 			}
 		}
 

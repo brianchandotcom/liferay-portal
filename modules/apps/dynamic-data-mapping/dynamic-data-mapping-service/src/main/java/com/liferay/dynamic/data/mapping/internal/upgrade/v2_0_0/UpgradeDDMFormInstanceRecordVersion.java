@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_1;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -40,9 +40,10 @@ public class UpgradeDDMFormInstanceRecordVersion extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb1 = new StringBundler(4);
+		StringBundler sb1 = new StringBundler(5);
 
-		sb1.append("select DDLRecordVersion.* , DDMFormInstance.version as  ");
+		sb1.append("select DDLRecordVersion.* , DDMFormInstance.groupId as ");
+		sb1.append("formInstanceGroupId, DDMFormInstance.version as ");
 		sb1.append("formInstanceVersion from DDLRecordVersion inner join ");
 		sb1.append("DDMFormInstance on DDLRecordVersion.recordSetId = ");
 		sb1.append("DDMFormInstance.formInstanceId");
@@ -69,7 +70,7 @@ public class UpgradeDDMFormInstanceRecordVersion extends UpgradeProcess {
 
 				ps2.setLong(1, recordVersionId);
 
-				ps2.setLong(2, rs.getLong("groupId"));
+				ps2.setLong(2, rs.getLong("formInstanceGroupId"));
 				ps2.setLong(3, rs.getLong("companyId"));
 				ps2.setLong(4, rs.getLong("userId"));
 				ps2.setString(5, rs.getString("userName"));

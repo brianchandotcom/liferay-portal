@@ -157,6 +157,10 @@ public class DDMFormContextToDDMFormValues
 		JSONObject fieldJSONObject, DDMFormField ddmFormField,
 		DDMFormFieldValue ddmFormFieldValue) {
 
+		if (ddmFormField.isTransient()) {
+			return;
+		}
+
 		String type = ddmFormField.getType();
 
 		if (ddmFormField.isLocalizable()) {

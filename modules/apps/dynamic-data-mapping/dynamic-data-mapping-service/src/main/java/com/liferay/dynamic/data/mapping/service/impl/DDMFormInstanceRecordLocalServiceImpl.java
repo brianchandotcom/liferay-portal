@@ -49,7 +49,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -601,11 +602,11 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		Class<?> clazz = getClass();
+	protected ResourceBundle getResourceBundle(Locale defaultLocale) {
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+		return portalResourceBundleLoader.loadResourceBundle(defaultLocale);
 	}
 
 	protected boolean isKeepFormInstanceRecordVersionLabel(

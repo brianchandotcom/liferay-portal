@@ -50,7 +50,8 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -312,20 +313,23 @@ public class DDMFormInstanceRecordIndexer
 			ddmFormInstance.getStructure(), ddmFormValues, locale);
 	}
 
+	protected ResourceBundle getResourceBundle(Locale defaultLocale) {
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+
+		return portalResourceBundleLoader.loadResourceBundle(defaultLocale);
+	}
+
 	protected String getTitle(long ddmFormInstanceId, Locale locale) {
 		try {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", locale,
-				DDMFormInstanceRecordIndexer.class.getClassLoader());
-
 			DDMFormInstance ddmFormInstance =
 				ddmFormInstanceLocalService.getFormInstance(ddmFormInstanceId);
 
 			String ddmFormInstanceName = ddmFormInstance.getName(locale);
 
 			return LanguageUtil.format(
-				resourceBundle, "new-entry-for-form-x", ddmFormInstanceName,
-				false);
+				getResourceBundle(locale), "new-entry-for-form-x",
+				ddmFormInstanceName, false);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

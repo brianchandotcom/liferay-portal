@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal;
+package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util;
+package com.liferay.portal.workflow.kaleo.runtime.integration.internal.util;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;

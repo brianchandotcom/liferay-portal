@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal;
+package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,8 +41,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
-import com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util.LazyWorkflowTaskAssigneeList;
-import com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util.WorkflowTaskAssigneesSupplier;
+import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.LazyWorkflowTaskAssigneeList;
+import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.WorkflowTaskAssigneesSupplier;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;

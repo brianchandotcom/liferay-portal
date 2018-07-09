@@ -960,6 +960,7 @@
 		<execute macro="Alert#viewLocalizationMessage">
 			<var name="defaultLanguageLocalizationMessage" value="Mostrar la página en español (España)." />
 			<var name="preferredLanguageLocalizationMessage" value="Set English (United States) as your preferred language." />
+			<var name="translationLanguageLocalizationMessage" value="Esta página se muestra en inglés (Estados Unidos)." />
 		</execute>
 
 		<execute macro="User#logoutPG" />

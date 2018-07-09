@@ -16,6 +16,8 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
+<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#pre" />
+
 <%
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
@@ -244,3 +246,5 @@ else {
 
 	Liferay.on('changeScope', changeScopeHandles);
 </aui:script>
+
+<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#post" />

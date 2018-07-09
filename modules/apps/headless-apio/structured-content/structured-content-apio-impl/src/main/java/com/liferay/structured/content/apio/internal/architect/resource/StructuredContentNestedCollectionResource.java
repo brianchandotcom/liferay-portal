@@ -149,12 +149,12 @@ public class StructuredContentNestedCollectionResource
 			this::_createClassNameClassPK
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, JournalArticle::getUserId
-		).addLocalizedStringByLocale(
-			"renderedContent", this::_getJournalArticleHtml
 		).addLinkedModel(
 			"contentStructure", ContentStructureIdentifier.class,
 			journalArticleWrapper ->
 				journalArticleWrapper.getDDMStructure().getStructureId()
+		).addLocalizedStringByLocale(
+			"renderedContent", this::_getJournalArticleHtml
 		).addRelatedCollection(
 			"categories", CategoryIdentifier.class
 		).addRelatedCollection(
@@ -217,6 +217,25 @@ public class StructuredContentNestedCollectionResource
 			journalArticle.getArticleResourceUuid(), new ServiceContext());
 	}
 
+	private List<DDMFormFieldValue> _getFormFieldValues(
+		List<DDMFormFieldValue> ddmFormFieldValues) {
+
+		Stream<DDMFormFieldValue> ddmFormFieldValueStream =
+			ddmFormFieldValues.stream();
+
+		List<DDMFormFieldValue> nestedDDMFormFieldValues =
+			ddmFormFieldValueStream.flatMap(
+				ddmFormFieldValue -> _getFormFieldValues(
+					ddmFormFieldValue.getNestedDDMFormFieldValues()
+				).stream()
+			).collect(
+				Collectors.toList()
+			);
+
+		nestedDDMFormFieldValues.addAll(ddmFormFieldValues);
+
+		return nestedDDMFormFieldValues;
+	}
 
 	private Long _getImageId(DDMFormFieldValue ddmFormFieldValue) {
 		Value value = ddmFormFieldValue.getValue();
@@ -261,6 +280,8 @@ public class StructuredContentNestedCollectionResource
 			DDMFormValuesReader::getDDMFormValues
 		).map(
 			DDMFormValues::getDDMFormFieldValues
+		).map(
+			this::_getFormFieldValues
 		).orElse(
 			null
 		);

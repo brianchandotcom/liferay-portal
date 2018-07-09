@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -57,9 +56,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 	public void tag(AssetEntry assetEntry) throws PortalException {
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
-		if (!_assetAutoTaggerConfiguration.enabled() ||
-			!ListUtil.isEmpty(assetEntry.getTags()) || assetRenderer == null) {
-
+		if (!_assetAutoTaggerConfiguration.enabled() || assetRenderer == null) {
 			return;
 		}
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,7 +43,9 @@ public class AssetAutoTaggerMessageListener extends BaseMessageListener {
 		AssetEntry assetEntry = (AssetEntry)message.getPayload();
 
 		try {
-			_assetAutoTagger.tag(assetEntry);
+			if (ListUtil.isEmpty(assetEntry.getTags())) {
+				_assetAutoTagger.tag(assetEntry);
+			}
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to auto tag asset entry " + assetEntry, pe);

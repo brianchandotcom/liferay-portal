@@ -59,6 +59,16 @@ public class CalculateDDMFormRuleActionSerializer
 		Set<String> ddmFormFields = ddmFormFieldStream.collect(
 			Collectors.toSet());
 
+		String newExpression = buildExpression(expression, ddmFormFields);
+
+		return String.format(
+			_FUNCTION_CALL_BINARY_EXPRESSION_FORMAT, "calculate",
+			_calculateDDMFormRuleAction.getTarget(), newExpression);
+	}
+
+	protected String buildExpression(
+		String expression, Set<String> ddmFormFields) {
+
 		String newExpression = expression;
 
 		int start = Integer.MAX_VALUE;
@@ -102,9 +112,7 @@ public class CalculateDDMFormRuleActionSerializer
 			newExpression = replace(expression, newExpression, start, end);
 		}
 
-		return String.format(
-			_FUNCTION_CALL_BINARY_EXPRESSION_FORMAT, "calculate",
-			_calculateDDMFormRuleAction.getTarget(), newExpression);
+		return newExpression;
 	}
 
 	protected boolean matchAnyField(

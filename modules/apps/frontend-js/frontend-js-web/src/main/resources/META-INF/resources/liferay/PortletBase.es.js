@@ -29,7 +29,10 @@ class PortletBase extends Component {
 		root = dom.toElement(root) || this.rootNode || document;
 
 		return root.querySelectorAll(
-			this.namespaceSelectors_(this.namespace, selectors)
+			this.namespaceSelectors_(
+				this.portletNamespace || this.namespace,
+				selectors
+			)
 		);
 	}
 
@@ -114,7 +117,10 @@ class PortletBase extends Component {
 	 */
 
 	ns(obj) {
-		return Liferay.Util.ns(this.namespace, obj);
+		return Liferay.Util.ns(
+			this.portletNamespace || this.namespace,
+			obj
+		);
 	}
 
 	/**
@@ -132,7 +138,10 @@ class PortletBase extends Component {
 		root = dom.toElement(root) || this.rootNode || document;
 
 		return root.querySelector(
-			this.namespaceSelectors_(this.namespace, selectors)
+			this.namespaceSelectors_(
+				this.portletNamespace || this.namespace,
+				selectors
+			)
 		);
 	}
 
@@ -145,7 +154,9 @@ class PortletBase extends Component {
 	 */
 
 	rootNodeValueFn_() {
-		return dom.toElement('#p_p_id' + this.namespace);
+		return dom.toElement(
+			`#p_p_id${this.portletNamespace || this.namespace}`
+		);
 	}
 }
 
@@ -161,6 +172,7 @@ PortletBase.STATE = {
 
 	/**
 	 * Portlet's namespace
+	 * @deprecated since 7.1
 	 * @instance
 	 * @memberof PortletBase
 	 * @review
@@ -168,6 +180,18 @@ PortletBase.STATE = {
 	 */
 
 	namespace: {
+		validator: core.isString
+	},
+
+	/**
+	 * Portlet's namespace
+	 * @instance
+	 * @memberof PortletBase
+	 * @review
+	 * @type {string}
+	 */
+
+	portletNamespace: {
 		validator: core.isString
 	},
 

@@ -120,6 +120,8 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 		ServiceContext serviceContext = _createServiceContext(assetEntry);
 
+		boolean needsReindex = false;
+
 		for (AssetAutoTagProvider assetAutoTagProvider :
 				assetAutoTagProviders) {
 
@@ -136,18 +138,26 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 						serviceContext);
 				}
 
-				_assetTagLocalService.addAssetEntryAssetTag(
-					assetEntry.getEntryId(), assetTag);
+				if (!_assetTagLocalService.hasAssetEntryAssetTag(
+						assetEntry.getEntryId(), assetTag.getTagId())) {
 
-				_assetAutoTaggerEntryLocalService.addAssetAutoTaggerEntry(
-					assetEntry, assetTag);
+					_assetTagLocalService.addAssetEntryAssetTag(
+						assetEntry.getEntryId(), assetTag);
+
+					_assetAutoTaggerEntryLocalService.addAssetAutoTaggerEntry(
+						assetEntry, assetTag);
+
+					needsReindex = true;
+				}
 			}
 		}
 
-		Indexer<Object> indexer = _indexerRegistry.getIndexer(
-			assetEntry.getClassName());
+		if (needsReindex) {
+			Indexer<Object> indexer = _indexerRegistry.getIndexer(
+				assetEntry.getClassName());
 
-		indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
+			indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
+		}
 	}
 
 	private volatile AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;

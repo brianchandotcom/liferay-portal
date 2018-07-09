@@ -26,7 +26,12 @@ import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 
 import java.util.List;
 
@@ -49,7 +54,7 @@ public class ContentSpaceCollectionResource
 		CollectionRoutes.Builder<Group, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Company.class
+			this::_getPageItems, Company.class, PermissionChecker.class
 		).build();
 	}
 
@@ -91,23 +96,26 @@ public class ContentSpaceCollectionResource
 	}
 
 	private Group _getGroup(long groupId) throws PortalException {
-		return _groupService.getGroup(groupId);
+		return _groupLocalService.getGroup(groupId);
 	}
 
 	private PageItems<Group> _getPageItems(
-			Pagination pagination, Company company)
+			Pagination pagination, Company company,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
-		List<Group> groups = _groupService.getGroups(
-			company.getCompanyId(), 0, true, pagination.getStartPosition(),
-			pagination.getEndPosition());
-		int count = _groupService.getGroupsCount(
-			company.getCompanyId(), 0, true);
+		GroupPermissionUtil.check(permissionChecker, ActionKeys.VIEW);
+
+		List<Group> groups = _groupLocalService.getGroups(
+			company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID, true,
+			pagination.getStartPosition(), pagination.getEndPosition());
+		int count = _groupLocalService.getGroupsCount(
+			company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID, true);
 
 		return new PageItems<>(groups, count);
 	}
 
 	@Reference
-	private GroupService _groupService;
+	private GroupLocalService _groupLocalService;
 
 }

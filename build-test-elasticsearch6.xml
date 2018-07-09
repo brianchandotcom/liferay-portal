@@ -728,11 +728,18 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	<target name="start-kibana">
 		<unzip-kibana />
 
-		<chmod perm="a+x" type="both">
-			<fileset dir="${elastic.kibana.dir}/bin">
+		<chmod
+			perm="a+x"
+			type="both"
+		>
+			<fileset
+				dir="${elastic.kibana.dir}/bin"
+			>
 				<include name="**" />
 			</fileset>
-			<fileset dir="${elastic.kibana.dir}/node">
+			<fileset
+				dir="${elastic.kibana.dir}/node"
+			>
 				<include name="**" />
 			</fileset>
 		</chmod>

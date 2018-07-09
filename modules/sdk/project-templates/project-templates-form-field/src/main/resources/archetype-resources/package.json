@@ -16,7 +16,7 @@
 	},
 	"name": "dynamic-data-${artifactId}-form-field",
 	"scripts": {
-		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,${artifactId}_field.js && liferay-npm-bundler && rimraf src/**/*.soy.js"
+		"build": "metalsoy && babel -d#if (${buildType} != "gradle") target/classes/META-INF/resources#else build/resources/main/META-INF/resources#end src/main/resources/META-INF/resources --ignore config.js,${artifactId}_field.js && liferay-npm-bundler && rimraf src/**/*.soy.js"
 	},
 	"version": "1.0.0"
 }

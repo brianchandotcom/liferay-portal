@@ -1,0 +1,11 @@
+$portlet-decorate-border-color: transparent;
+$portlet-decorate-border-style: solid;
+$portlet-decorate-border-width: 1px;
+
+.fragment-entry-link-content {
+	@import "imports";
+
+	@import "base";
+
+	@import "custom";
+}

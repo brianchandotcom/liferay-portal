@@ -102,7 +102,6 @@ public class UndoTag extends IncludeTag {
 
 		List<TrashedModel> trashedModels = _getTrashedModels();
 
-		List<String> classNames = new ArrayList<>();
 		List<Long> restoreTrashEntryIds = new ArrayList<>();
 		List<String> titles = new ArrayList<>();
 
@@ -115,8 +114,6 @@ public class UndoTag extends IncludeTag {
 				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
 					trashedModel.getTrashEntryClassPK());
 
-				classNames.add(trashRenderer.getClassName());
-
 				restoreTrashEntryIds.add(trashEntry.getEntryId());
 				titles.add(trashRenderer.getTitle(themeDisplay.getLocale()));
 			}
@@ -124,7 +121,6 @@ public class UndoTag extends IncludeTag {
 			}
 		}
 
-		request.setAttribute("liferay-trash:undo:classNames", classNames);
 		request.setAttribute("liferay-trash:undo:cmd", _getCmd());
 		request.setAttribute("liferay-trash:undo:portletURL", _portletURL);
 		request.setAttribute("liferay-trash:undo:redirect", _redirect);

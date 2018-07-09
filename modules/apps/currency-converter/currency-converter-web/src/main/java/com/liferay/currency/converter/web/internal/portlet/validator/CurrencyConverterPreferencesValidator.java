@@ -14,9 +14,9 @@
 
 package com.liferay.currency.converter.web.internal.portlet.validator;
 
-import com.liferay.currency.converter.web.internal.constants.CurrencyConverterPortletKeys;
 import com.liferay.currency.converter.model.CurrencyConverter;
 import com.liferay.currency.converter.util.CurrencyConverterUtil;
+import com.liferay.currency.converter.web.internal.constants.CurrencyConverterPortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;

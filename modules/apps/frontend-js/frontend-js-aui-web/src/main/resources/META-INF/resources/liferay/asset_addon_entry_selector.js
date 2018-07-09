@@ -100,6 +100,7 @@ AUI.add(
 						if (!dialog) {
 							var dialogConfig = {
 								'toolbars.footer': instance._getSelectDialogFooterToolbar(),
+								autoHeightRatio: 0.5,
 								width: 540
 							};
 

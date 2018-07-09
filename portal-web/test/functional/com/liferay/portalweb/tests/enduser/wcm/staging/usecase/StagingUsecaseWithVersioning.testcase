@@ -378,7 +378,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="YouTube" />
+			<var name="portletName" value="Site Map" />
 		</execute>
 
 		<execute macro="Staging#deletePageVariationPG">
@@ -414,13 +414,13 @@
 
 		<execute macro="ProductMenu#gotoLiveSite" />
 
-		<var name="key_portletName" value="Web Content Display" />
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
 
-		<execute function="AssertElementPresent" locator1="Home#PORTLET" />
-
-		<var name="key_portletName" value="YouTube" />
-
-		<execute function="AssertElementPresent" locator1="Home#PORTLET" />
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Site Map" />
+		</execute>
 	</command>
 
 	<command name="StagingDeleteSitePagesVariation" priority="4">
@@ -463,7 +463,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="YouTube" />
+			<var name="portletName" value="Site Map" />
 		</execute>
 
 		<execute macro="Staging#deleteSitePagesVariationPG">
@@ -483,9 +483,12 @@
 
 		<execute macro="ProductMenu#gotoLiveSite" />
 
-		<execute function="IsElementPresent" locator1="Home#PORTLET">
-			<var name="portletTypeKey" value="YouTube" />
-			<var name="portletTypeKey" value="Web Content Display" />
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Site Map" />
 		</execute>
 	</command>
 

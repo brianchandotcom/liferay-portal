@@ -117,6 +117,8 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getJSONArray("options"), ddmFormField);
 		setDDMFormFieldOptionsProperty(jsonObject, ddmFormField, "columns");
 		setDDMFormFieldOptionsProperty(jsonObject, ddmFormField, "rows");
+		setDDMFormFieldReadOnly(
+			jsonObject.getBoolean("readOnly", false), ddmFormField);
 		setDDMFormFieldRepeatable(
 			jsonObject.getBoolean("repeatable", false), ddmFormField);
 		setDDMFormFieldRequired(
@@ -283,6 +285,12 @@ public class DDMFormTemplateContextProcessor {
 			jsonArray);
 
 		ddmFormField.setProperty(property, ddmFormFieldOptions);
+	}
+
+	protected void setDDMFormFieldReadOnly(
+		boolean readOnly, DDMFormField ddmFormField) {
+
+		ddmFormField.setReadOnly(readOnly);
 	}
 
 	protected void setDDMFormFieldRepeatable(

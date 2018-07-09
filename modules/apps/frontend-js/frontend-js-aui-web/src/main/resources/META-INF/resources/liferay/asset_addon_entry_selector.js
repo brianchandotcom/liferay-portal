@@ -154,6 +154,7 @@ AUI.add(
 								}
 							},
 							{
+								cssClass: 'btn-primary',
 								label: Liferay.Language.get('done'),
 								on: {
 									click: A.bind('_updateSelectedEntries', instance)

@@ -40,7 +40,7 @@ public class ClusterClassLoaderPool {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		if ((contextName != null) && !contextName.equals("null")) {
+		if ((contextName != null) && !contextName.equals(StringPool.NULL)) {
 			try {
 				currentThread.setContextClassLoader(null);
 
@@ -96,7 +96,7 @@ public class ClusterClassLoaderPool {
 	public static String getContextName(ClassLoader classLoader) {
 		String contextName = ClassLoaderPool.getContextName(classLoader);
 
-		if ((classLoader != null) && contextName.equals("null")) {
+		if ((classLoader != null) && contextName.equals(StringPool.NULL)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(

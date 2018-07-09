@@ -98,7 +98,7 @@ public class ClusterClassLoaderPoolTest {
 			ClusterClassLoaderPool.getClassLoader(null));
 		Assert.assertSame(
 			ClassLoaderUtil.getContextClassLoader(),
-			ClusterClassLoaderPool.getClassLoader("null"));
+			ClusterClassLoaderPool.getClassLoader(StringPool.NULL));
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -177,12 +177,12 @@ public class ClusterClassLoaderPoolTest {
 			_SYMBOLIC_NAME, new Version("1.0.0"), classLoader);
 
 		Assert.assertEquals(
-			"null", ClusterClassLoaderPool.getContextName(null));
+			StringPool.NULL, ClusterClassLoaderPool.getContextName(null));
 		Assert.assertEquals(
 			_CONTEXT_NAME_1,
 			ClusterClassLoaderPool.getContextName(classLoader));
 		Assert.assertEquals(
-			"null",
+			StringPool.NULL,
 			ClusterClassLoaderPool.getContextName(
 				new URLClassLoader(new URL[0])));
 	}
@@ -200,7 +200,8 @@ public class ClusterClassLoaderPoolTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertEquals(
-				"null", ClusterClassLoaderPool.getContextName(classLoader));
+				StringPool.NULL,
+				ClusterClassLoaderPool.getContextName(classLoader));
 
 			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
 
@@ -209,7 +210,8 @@ public class ClusterClassLoaderPoolTest {
 			logRecords = captureHandler.resetLogLevel(Level.FINE);
 
 			Assert.assertEquals(
-				"null", ClusterClassLoaderPool.getContextName(classLoader));
+				StringPool.NULL,
+				ClusterClassLoaderPool.getContextName(classLoader));
 
 			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 

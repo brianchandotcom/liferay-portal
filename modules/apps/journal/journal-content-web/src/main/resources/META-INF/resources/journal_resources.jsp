@@ -56,7 +56,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 						hiddenInput="preferences--userToolAssetAddonEntryKeys--"
 						id="userToolsAssetAddonEntriesSelector"
 						selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
-						title="select-user-tools"
+						title='<%= LanguageUtil.get(request, "select-user-tools") %>'
 					/>
 				</aui:field-wrapper>
 
@@ -66,7 +66,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 						hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
 						id="contentMetadataAssetAddonEntriesSelector"
 						selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
-						title="select-content-metadata"
+						title='<%= LanguageUtil.get(request, "select-content-metadata") %>'
 					/>
 				</aui:field-wrapper>
 

@@ -19,6 +19,8 @@ import com.liferay.asset.auto.tagger.service.base.AssetAutoTaggerEntryLocalServi
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 
+import java.util.List;
+
 /**
  * The implementation of the asset auto tagger entry local service.
  *
@@ -63,6 +65,14 @@ public class AssetAutoTaggerEntryLocalServiceImpl
 		entry.setAssetTagId(assetTag.getTagId());
 
 		return assetAutoTaggerEntryPersistence.update(entry);
+	}
+
+	@Override
+	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
+		AssetEntry assetEntry) {
+
+		return assetAutoTaggerEntryPersistence.findByAssetEntryId(
+			assetEntry.getEntryId());
 	}
 
 }

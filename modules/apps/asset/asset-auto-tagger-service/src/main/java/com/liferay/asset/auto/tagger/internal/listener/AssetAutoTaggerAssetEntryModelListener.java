@@ -15,7 +15,10 @@
 package com.liferay.asset.auto.tagger.internal.listener;
 
 import com.liferay.asset.auto.tagger.internal.constants.AssetAutoTaggerDestinationNames;
+import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
+import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Activate;
@@ -57,6 +61,27 @@ public class AssetAutoTaggerAssetEntryModelListener
 			});
 	}
 
+	@Override
+	public void onAfterUpdate(AssetEntry assetEntry)
+		throws ModelListenerException {
+
+		List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
+			_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+				assetEntry);
+
+		for (AssetAutoTaggerEntry assetAutoTaggerEntry :
+				assetAutoTaggerEntries) {
+
+			if (!_assetTagLocalService.hasAssetEntryAssetTag(
+					assetEntry.getEntryId(),
+					assetAutoTaggerEntry.getAssetTagId())) {
+
+				_assetAutoTaggerEntryLocalService.deleteAssetAutoTaggerEntry(
+					assetAutoTaggerEntry);
+			}
+		}
+	}
+
 	@Activate
 	protected void activate() {
 		DestinationConfiguration destinationConfiguration =
@@ -75,6 +100,12 @@ public class AssetAutoTaggerAssetEntryModelListener
 		_messageBus.removeDestination(
 			AssetAutoTaggerDestinationNames.ASSET_AUTO_TAGGER);
 	}
+
+	@Reference
+	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

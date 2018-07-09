@@ -457,15 +457,6 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="SEO" />
-		</execute>
-
 		<execute macro="AssetCategorization#addCategory">
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />

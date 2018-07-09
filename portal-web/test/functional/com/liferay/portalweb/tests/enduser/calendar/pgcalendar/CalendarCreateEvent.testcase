@@ -423,7 +423,7 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewAllDay">
+		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="Calendar Event Title2" />
 		</execute>
 	</command>

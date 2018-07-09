@@ -339,7 +339,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Usuarios" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Usuarios y Organizaciones" />
+			<var name="portlet" value="Usuarios y organizaciones" />
 		</execute>
 
 		<execute macro="Organization#addWithLocalizedCountryCP">
@@ -358,7 +358,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Usuarios" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Usuarios y Organizaciones" />
+			<var name="portlet" value="Usuarios y organizaciones" />
 		</execute>
 
 		<execute macro="Organization#viewLocalizedCountryCP">

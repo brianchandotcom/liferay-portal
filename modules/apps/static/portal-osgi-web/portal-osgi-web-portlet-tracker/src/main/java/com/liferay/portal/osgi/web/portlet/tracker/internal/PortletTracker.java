@@ -75,6 +75,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -477,6 +478,7 @@ public class PortletTracker
 		collectPortletPreferences(serviceReference, portletModel);
 		collectResourceBundle(serviceReference, portletModel);
 		collectSecurityRoleRefs(serviceReference, portletModel);
+		collectSupportedLocales(serviceReference, portletModel);
 		collectSupportedProcessingEvents(serviceReference, portletModel);
 		collectSupportedPublicRenderParameters(serviceReference, portletModel);
 		collectSupportedPublishingEvents(serviceReference, portletModel);
@@ -883,6 +885,20 @@ public class PortletTracker
 		portletModel.setUnlinkedRoles(unlinkedRoles);
 
 		portletModel.linkRoles();
+	}
+
+	protected void collectSupportedLocales(
+		ServiceReference<Portlet> serviceReference,
+		com.liferay.portal.kernel.model.Portlet portletModel) {
+
+		Set<String> supportedLocales = new LinkedHashSet<>();
+
+		supportedLocales.addAll(
+			StringPlus.asList(
+				serviceReference.getProperty(
+					"javax.portlet.supported-locale")));
+
+		portletModel.setSupportedLocales(supportedLocales);
 	}
 
 	protected void collectSupportedProcessingEvents(

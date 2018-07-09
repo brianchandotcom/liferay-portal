@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,17 +36,18 @@ public class ClusterClassLoaderPool {
 	public static ClassLoader getClassLoader(String contextName) {
 		ClassLoader classLoader = null;
 
-		if ((contextName != null) && !contextName.equals("null")) {
-			ClassLoader contextClassLoader =
-				ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
 
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		if ((contextName != null) && !contextName.equals("null")) {
 			try {
-				ClassLoaderUtil.setContextClassLoader(null);
+				currentThread.setContextClassLoader(null);
 
 				classLoader = ClassLoaderPool.getClassLoader(contextName);
 			}
 			finally {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 
 			if (classLoader == null) {
@@ -87,9 +87,7 @@ public class ClusterClassLoaderPool {
 		}
 
 		if (classLoader == null) {
-			Thread currentThread = Thread.currentThread();
-
-			classLoader = currentThread.getContextClassLoader();
+			classLoader = contextClassLoader;
 		}
 
 		return classLoader;

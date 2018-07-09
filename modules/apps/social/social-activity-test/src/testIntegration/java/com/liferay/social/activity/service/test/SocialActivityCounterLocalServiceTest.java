@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.social.activity.service.test.util.SocialActivityTestUtil;
+import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityCounter;
 import com.liferay.social.kernel.model.SocialActivityCounterConstants;
 import com.liferay.social.kernel.model.SocialActivityLimit;
@@ -105,6 +106,34 @@ public class SocialActivityCounterLocalServiceTest
 
 		Assert.assertNotNull(activityLimit);
 		Assert.assertEquals(2, activityLimit.getCount());
+	}
+
+	@Test
+	public void testAddThenRevokeVote() throws Exception {
+		SocialActivityTestUtil.addActivity(creatorUser, group, assetEntry, 1);
+
+		SocialActivityTestUtil.addActivity(
+			actorUser, group, assetEntry,
+			SocialActivityConstants.TYPE_ADD_VOTE);
+
+		SocialActivityCounter contribution =
+			SocialActivityTestUtil.getActivityCounter(
+				group.getGroupId(),
+				SocialActivityCounterConstants.NAME_CONTRIBUTION, creatorUser);
+
+		Assert.assertNotNull(contribution);
+		Assert.assertEquals(5, contribution.getCurrentValue());
+
+		SocialActivityTestUtil.addActivity(
+			actorUser, group, assetEntry,
+			SocialActivityConstants.TYPE_REVOKE_VOTE);
+
+		contribution = SocialActivityTestUtil.getActivityCounter(
+			group.getGroupId(),
+			SocialActivityCounterConstants.NAME_CONTRIBUTION, creatorUser);
+
+		Assert.assertNotNull(contribution);
+		Assert.assertEquals(0, contribution.getCurrentValue());
 	}
 
 	@Test

@@ -42,6 +42,22 @@
 	</activity>
 	<activity>
 		<model-name>com.liferay.message.boards.model.MBMessage</model-name>
+		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_REVOKE_VOTE}</activity-type>
+		<language-key>REVOKE_VOTE</language-key>
+		<contribution-value>-5</contribution-value>
+		<contribution-limit enabled="false" />
+		<participation-value>-1</participation-value>
+		<counter>
+			<name>asset.votes</name>
+			<owner-type>asset</owner-type>
+		</counter>
+		<counter>
+			<name>user.votes</name>
+			<owner-type>actor</owner-type>
+		</counter>
+	</activity>
+	<activity>
+		<model-name>com.liferay.message.boards.model.MBMessage</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_SUBSCRIBE}</activity-type>
 		<language-key>SUBSCRIBE</language-key>
 		<contribution-value>2</contribution-value>

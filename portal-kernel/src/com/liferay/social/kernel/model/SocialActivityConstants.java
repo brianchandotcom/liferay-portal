@@ -36,6 +36,8 @@ public class SocialActivityConstants {
 
 	public static final int TYPE_RESTORE_FROM_TRASH = 10008;
 
+	public static final int TYPE_REVOKE_VOTE = 10011;
+
 	public static final int TYPE_SUBSCRIBE = 10002;
 
 	public static final int TYPE_UNSUBSCRIBE = 10003;

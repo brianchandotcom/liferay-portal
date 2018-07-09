@@ -30,4 +30,36 @@
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
+	<activity>
+		<model-name>test-model</model-name>
+		<activity-type>10004</activity-type>
+		<language-key>ADD_VOTE</language-key>
+		<log-activity>true</log-activity>
+		<contribution-value>5</contribution-value>
+		<contribution-limit period="period">2</contribution-limit>
+		<counter>
+			<name>asset.test.2</name>
+			<owner-type>asset</owner-type>
+		</counter>
+		<counter>
+			<name>user.test.2</name>
+			<owner-type>actor</owner-type>
+		</counter>
+	</activity>
+	<activity>
+		<model-name>test-model</model-name>
+		<activity-type>10011</activity-type>
+		<language-key>REVOKE_VOTE</language-key>
+		<log-activity>true</log-activity>
+		<contribution-value>-5</contribution-value>
+		<contribution-limit period="period">2</contribution-limit>
+		<counter>
+			<name>asset.test.2</name>
+			<owner-type>asset</owner-type>
+		</counter>
+		<counter>
+			<name>user.test.2</name>
+			<owner-type>actor</owner-type>
+		</counter>
+	</activity>
 </liferay-social>

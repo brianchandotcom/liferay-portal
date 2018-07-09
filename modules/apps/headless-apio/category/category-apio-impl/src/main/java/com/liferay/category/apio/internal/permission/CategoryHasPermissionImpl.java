@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
+import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 import com.liferay.vocabulary.apio.architect.identifier.VocabularyIdentifier;
-import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,7 +88,7 @@ public class CategoryHasPermissionImpl implements HasPermission<Long> {
 					ActionKeys.UPDATE);
 		}
 
-		if (identifierClass.equals(WebPageElementIdentifier.class)) {
+		if (identifierClass.equals(StructuredContentIdentifier.class)) {
 			return (credentials, journalArticleId) ->
 				_journalArticleModelResourcePermission.contains(
 					(PermissionChecker)credentials.get(),

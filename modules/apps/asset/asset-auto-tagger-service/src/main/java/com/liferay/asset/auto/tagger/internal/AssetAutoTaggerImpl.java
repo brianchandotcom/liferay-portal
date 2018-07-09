@@ -27,9 +27,14 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -104,11 +109,29 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		return serviceContext;
 	}
 
+	private void _ensurePermissionChecker(User user) throws PortalException {
+		if (PermissionThreadLocal.getPermissionChecker() == null) {
+			PermissionChecker permissionChecker = null;
+
+			try {
+				permissionChecker = PermissionCheckerFactoryUtil.create(user);
+			}
+			catch (Exception e) {
+				throw new PortalException(e);
+			}
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
+	}
+
 	private boolean _isInTrash(AssetEntry assetEntry) throws PortalException {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			assetEntry.getClassName());
 
 		if (trashHandler != null) {
+			_ensurePermissionChecker(
+				_userLocalService.getUser(assetEntry.getUserId()));
+
 			return trashHandler.isInTrash(assetEntry.getClassPK());
 		}
 
@@ -192,5 +215,8 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

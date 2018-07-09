@@ -433,16 +433,16 @@ public class KBArticleStagedModelDataHandler
 		Element stagedModelElement =
 			portletDataContext.getImportDataStagedModelElement(stagedModel);
 
-		Element referencesElement = stagedModelElement.element("references");
-
 		long kbArticleClassNameId = _portal.getClassNameId(
 			KBArticleConstants.getClassName());
 		long kbFolderClassNameId = _portal.getClassNameId(
 			KBFolderConstants.getClassName());
 
-		if (referencesElement == null) {
-			stagedModel.setParentResourceClassNameId(kbFolderClassNameId);
+		stagedModel.setParentResourceClassNameId(kbFolderClassNameId);
 
+		Element referencesElement = stagedModelElement.element("references");
+
+		if (referencesElement == null) {
 			return;
 		}
 
@@ -460,10 +460,6 @@ public class KBArticleStagedModelDataHandler
 				if (className.equals(KBArticle.class.getName())) {
 					stagedModel.setParentResourceClassNameId(
 						kbArticleClassNameId);
-				}
-				else {
-					stagedModel.setParentResourceClassNameId(
-						kbFolderClassNameId);
 				}
 
 				break;

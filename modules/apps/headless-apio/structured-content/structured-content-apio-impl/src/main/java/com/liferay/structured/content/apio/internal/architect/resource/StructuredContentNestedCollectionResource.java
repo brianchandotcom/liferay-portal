@@ -36,17 +36,23 @@ import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
@@ -133,6 +139,8 @@ public class StructuredContentNestedCollectionResource
 				"ContentFieldValue"
 			).addLocalizedStringByLocale(
 				"value", this::_getLocalizedString
+			).addLinkedModel(
+				"image", MediaObjectIdentifier.class, this::_getImageId
 			).addString(
 				"name", DDMFormFieldValue::getName
 			).build()
@@ -207,6 +215,23 @@ public class StructuredContentNestedCollectionResource
 		_journalArticleService.deleteArticle(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),
 			journalArticle.getArticleResourceUuid(), new ServiceContext());
+	}
+
+
+	private Long _getImageId(DDMFormFieldValue ddmFormFieldValue) {
+		Value value = ddmFormFieldValue.getValue();
+
+		String valueString = value.getString(LocaleUtil.getDefault());
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
+
+			return jsonObject.getLong("fileEntryId");
+		}
+		catch (JSONException jsone) {
+			return null;
+		}
 	}
 
 	private List<String> _getJournalArticleAssetTags(

@@ -627,23 +627,23 @@
 </tr>
 <!--SITE_LOCALIZATION-->
 <tr>
+	<td>PORTAL_LOCALIZATION_TRANSLATION_LANGUAGE_MESSAGE</td>
+	<td>//div[@id='portalMessageContainer']/div/div/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE</td>
-	<td>//div[@id='portalMessageContainer']/a</td>
+	<td>//div[@id='portalMessageContainer']//div[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PORTAL_LOCALIZATION_PREFERRED_LANGUAGE_MESSAGE</td>
-	<td>//div[@id='portalMessageContainer']/a[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTAL_LOCALIZATION_MESSAGE_INFO</td>
-	<td>//div[@id='portalMessageContainer']</td>
+	<td>//div[@id='portalMessageContainer']//div[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PORTAL_LOCALIZATION_IGNORE_BUTTON</td>
-	<td>//div[@id='portalMessageContainer']/button[@id='ignoreUserLocaleOptions']</td>
+	<td>//div[@id='portalMessageContainer']//button[@id='ignoreUserLocaleOptions']</td>
 	<td></td>
 </tr>
 </tbody>

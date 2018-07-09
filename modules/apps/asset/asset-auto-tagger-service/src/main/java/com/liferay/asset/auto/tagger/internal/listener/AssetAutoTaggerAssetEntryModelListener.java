@@ -18,8 +18,10 @@ import com.liferay.asset.auto.tagger.internal.constants.AssetAutoTaggerDestinati
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
@@ -62,22 +64,29 @@ public class AssetAutoTaggerAssetEntryModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(AssetEntry assetEntry)
+	public void onAfterRemoveAssociation(
+			Object classPK, String associationClassName,
+			Object associationClassPK)
 		throws ModelListenerException {
 
-		List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
-			_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
-				assetEntry);
+		if (associationClassName.equals(AssetTag.class.getName())) {
+			try {
+				AssetTag assetTag = _assetTagLocalService.getTag(
+					(Long)associationClassPK);
 
-		for (AssetAutoTaggerEntry assetAutoTaggerEntry :
-				assetAutoTaggerEntries) {
+				List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
+					_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+						assetTag);
 
-			if (!_assetTagLocalService.hasAssetEntryAssetTag(
-					assetEntry.getEntryId(),
-					assetAutoTaggerEntry.getAssetTagId())) {
+				for (AssetAutoTaggerEntry assetAutoTaggerEntry :
+						assetAutoTaggerEntries) {
 
-				_assetAutoTaggerEntryLocalService.deleteAssetAutoTaggerEntry(
-					assetAutoTaggerEntry);
+					_assetAutoTaggerEntryLocalService.
+						deleteAssetAutoTaggerEntry(assetAutoTaggerEntry);
+				}
+			}
+			catch (PortalException pe) {
+				throw new ModelListenerException(pe);
 			}
 		}
 	}

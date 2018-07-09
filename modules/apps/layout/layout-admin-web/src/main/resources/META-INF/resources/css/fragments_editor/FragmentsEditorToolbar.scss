@@ -19,14 +19,25 @@
 	}
 
 	&__add-fragment-button {
+		border: none;
+		color: #FFF;
 		padding: 0;
 	}
 
 	&__translation-status-button {
+		height: 32px;
+		line-height: 1;
 		padding: 0;
+		width: 32px;
+
+		.inline-item {
+			vertical-align: text-top;
+		}
 
 		.btn-section {
-			padding: 0 0.5em;
+			font-size: 9px;
+			line-height: 0;
+			padding: 0;
 		}
 	}
 

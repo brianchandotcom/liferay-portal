@@ -29,11 +29,11 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -156,9 +156,9 @@ public class InlineSQLHelperImplTest {
 		_role = RoleTestUtil.addRole(
 			"scopeCompanyRole", RoleConstants.TYPE_REGULAR);
 
-		RoleLocalServiceUtil.addUserRole(_user.getUserId(), _role);
+		_roleLocalService.addUserRole(_user.getUserId(), _role);
 
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
+		_resourcePermissionLocalService.addResourcePermission(
 			CompanyThreadLocal.getCompanyId(), _CLASS_NAME,
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(_role.getCompanyId()), _role.getRoleId(),
@@ -186,11 +186,11 @@ public class InlineSQLHelperImplTest {
 
 		_setPermissionChecker();
 
-		Role guestRole = RoleLocalServiceUtil.getRole(
+		Role guestRole = _roleLocalService.getRole(
 			_groupThree.getCompanyId(), RoleConstants.GUEST);
-		Role siteMemberRole = RoleLocalServiceUtil.getRole(
+		Role siteMemberRole = _roleLocalService.getRole(
 			_groupThree.getCompanyId(), RoleConstants.SITE_MEMBER);
-		Role userRole = RoleLocalServiceUtil.getRole(
+		Role userRole = _roleLocalService.getRole(
 			_groupThree.getCompanyId(), RoleConstants.USER);
 
 		long[] roleIds = (long[])_getRoleIdsMethod.invoke(
@@ -216,7 +216,7 @@ public class InlineSQLHelperImplTest {
 
 		String sql = _replacePermissionCheckJoin(_SQL_PLAIN);
 
-		Role ownerRole = RoleLocalServiceUtil.getRole(
+		Role ownerRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.OWNER);
 
 		StringBundler sb = new StringBundler(3);
@@ -234,7 +234,7 @@ public class InlineSQLHelperImplTest {
 
 		_addGroupRole(_groupOne, "scopeGroupRole");
 
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
+		_resourcePermissionLocalService.addResourcePermission(
 			CompanyThreadLocal.getCompanyId(), _CLASS_NAME,
 			ResourceConstants.SCOPE_GROUP,
 			String.valueOf(_groupOne.getGroupId()), _role.getRoleId(),
@@ -258,7 +258,7 @@ public class InlineSQLHelperImplTest {
 
 		_addGroupRole(_groupOne, "scopeGroupTemplateRole");
 
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
+		_resourcePermissionLocalService.addResourcePermission(
 			CompanyThreadLocal.getCompanyId(), _CLASS_NAME,
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
@@ -284,7 +284,7 @@ public class InlineSQLHelperImplTest {
 
 		_groupThree.setCompanyId(_company.getCompanyId());
 
-		GroupLocalServiceUtil.updateGroup(_groupThree);
+		_groupLocalService.updateGroup(_groupThree);
 
 		_addGroupRole(_groupThree, RoleConstants.SITE_MEMBER);
 
@@ -301,10 +301,10 @@ public class InlineSQLHelperImplTest {
 
 	@Test
 	public void testIsNotEnabledForOmniAdmin() throws Exception {
-		Role role = RoleLocalServiceUtil.getRole(
+		Role role = _roleLocalService.getRole(
 			_user.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), _user);
+		_userLocalService.addRoleUser(role.getRoleId(), _user);
 
 		_setPermissionChecker();
 
@@ -372,10 +372,10 @@ public class InlineSQLHelperImplTest {
 	}
 
 	private void _addGroupRole(Group group, String roleName) throws Exception {
-		Role role = RoleLocalServiceUtil.getRole(
+		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), roleName);
 
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+		_userGroupRoleLocalService.addUserGroupRoles(
 			new long[] {_user.getUserId()}, group.getGroupId(),
 			role.getRoleId());
 	}
@@ -475,6 +475,9 @@ public class InlineSQLHelperImplTest {
 
 	private long[] _groupIds;
 
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	@DeleteAfterTestRun
 	private Group _groupOne;
 
@@ -489,10 +492,22 @@ public class InlineSQLHelperImplTest {
 
 	private PermissionChecker _originalPermissionChecker;
 
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
 	@DeleteAfterTestRun
 	private Role _role;
 
+	@Inject
+	private RoleLocalService _roleLocalService;
+
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

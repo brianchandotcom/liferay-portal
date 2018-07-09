@@ -456,8 +456,8 @@
 	</command>
 
 	<command name="localizedPG">
-		<execute function="Click" locator1="Link#PAGE_LOCALE">
-			<var name="key_pageLocale" value="${pageLocale}" />
+		<execute function="Click" locator1="Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE">
+			<var name="pageLocale" value="${pageLocale}" />
 		</execute>
 	</command>
 

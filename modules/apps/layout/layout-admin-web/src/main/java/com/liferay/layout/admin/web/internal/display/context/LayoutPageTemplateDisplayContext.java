@@ -25,6 +25,7 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutAdminWebConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
+import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
@@ -123,6 +125,25 @@ public class LayoutPageTemplateDisplayContext {
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public List<DropdownItem> getCollectionsDropdownItems() throws Exception {
+		return new DropdownItemList() {
+			{
+				if (LayoutPageTemplateCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						getLayoutPageTemplateCollectionId(),
+						ActionKeys.DELETE)) {
+
+					add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "deleteCollections");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "delete"));
+						});
+				}
+			}
+		};
 	}
 
 	public CreationMenu getCreationMenu() {

@@ -48,14 +48,25 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 									</div>
 
 									<div class="autofit-col autofit-col-end">
-										<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
-											<liferay-ui:icon
-												icon="plus"
-												iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
-												markupView="lexicon"
-												url="<%= editLayoutPageTemplateCollectionURL %>"
-											/>
-										</c:if>
+										<ul class="navbar-nav">
+											<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
+												<li>
+													<liferay-ui:icon
+														icon="plus"
+														iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+														markupView="lexicon"
+														url="<%= editLayoutPageTemplateCollectionURL %>"
+													/>
+												</li>
+											</c:if>
+
+											<li>
+												<clay:dropdown-actions
+													componentId="actionsComponent"
+													dropdownItems="<%= layoutPageTemplateDisplayContext.getCollectionsDropdownItems() %>"
+												/>
+											</li>
+										</ul>
 									</div>
 								</div>
 
@@ -131,3 +142,60 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 		</div>
 	</div>
 </div>
+
+<aui:form cssClass="hide" name="layoutPageTemplateCollectionsFm">
+</aui:form>
+
+<aui:script use="liferay-item-selector-dialog">
+	var deleteCollections = function() {
+		var layoutPageTemplateCollectionsFm = $(document.<portlet:namespace />layoutPageTemplateCollectionsFm);
+
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+			{
+				eventName: '<portlet:namespace />selectCollections',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItem = event.newVal;
+
+						if (selectedItem) {
+							layoutPageTemplateCollectionsFm.append(selectedItem);
+
+							submitForm(layoutPageTemplateCollectionsFm, '<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/layout/delete_layout_page_template_collection"><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>');
+						}
+					}
+				},
+				'strings.add': '<liferay-ui:message key="delete" />',
+				title: '<liferay-ui:message key="delete-collection" />',
+				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/layout/select_layout_page_template_collections" /></portlet:renderURL>'
+			}
+		);
+
+		itemSelectorDialog.open();
+	};
+
+	var ACTIONS = {
+		'deleteCollections': deleteCollections
+	};
+
+	Liferay.componentReady('actionsComponent').then(
+		function(actionsComponent) {
+			actionsComponent.on(
+				['click', 'itemClicked'],
+				function(event, facade) {
+					var itemData;
+
+					if (event.data && event.data.item) {
+						itemData = event.data.item.data;
+					}
+					else if (!event.data && facade && facade.target) {
+						itemData = facade.target.data;
+					}
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
+</aui:script>

@@ -111,6 +111,8 @@ AUI.add(
 						if (Lang.isObject(responseText)) {
 							if (responseText.errorMessage) {
 								instance._showError(responseText.errorMessage);
+
+								instance._fileNameNode.set('value', '');
 							}
 
 							if (responseText.tempImageFileName) {

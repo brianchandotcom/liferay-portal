@@ -149,7 +149,7 @@ public class StructuredContentNestedCollectionResource
 		).addString(
 			"description", JournalArticleWrapper::getDescription
 		).addString(
-			"text", JournalArticle::getContent
+			"content", JournalArticle::getContent
 		).addString(
 			"title", JournalArticle::getTitle
 		).addStringList(

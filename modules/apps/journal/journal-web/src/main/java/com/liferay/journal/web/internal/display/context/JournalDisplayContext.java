@@ -1444,8 +1444,11 @@ public class JournalDisplayContext {
 			group = group.getParentGroup();
 		}
 
-		if (group.isStaged() && !group.isStagingGroup() &&
-			!group.isStagedRemotely() &&
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if ((stagingGroupHelper.isLocalLiveGroup(group) ||
+			 stagingGroupHelper.isRemoteLiveGroup(group)) &&
 			group.isStagedPortlet(JournalPortletKeys.JOURNAL)) {
 
 			return false;

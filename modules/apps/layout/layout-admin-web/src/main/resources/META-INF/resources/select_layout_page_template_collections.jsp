@@ -17,34 +17,34 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new FragmentCollectionsDisplayContext(renderRequest, renderResponse, request);
+LayoutPageTemplateCollectionsDisplayContext layoutPageTemplateCollectionsDisplayContext = new LayoutPageTemplateCollectionsDisplayContext(renderRequest, renderResponse, request);
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= fragmentCollectionsDisplayContext.getClearResultsURL() %>"
-	filterDropdownItems="<%= fragmentCollectionsDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= fragmentCollectionsDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= fragmentCollectionsDisplayContext.getSearchActionURL() %>"
-	searchContainerId="fragmentCollections"
+	clearResultsURL="<%= layoutPageTemplateCollectionsDisplayContext.getClearResultsURL() %>"
+	filterDropdownItems="<%= layoutPageTemplateCollectionsDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= layoutPageTemplateCollectionsDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= layoutPageTemplateCollectionsDisplayContext.getSearchActionURL() %>"
+	searchContainerId="layoutPageTemplateCollections"
 	searchFormName="searchFm"
-	sortingOrder="<%= fragmentCollectionsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= fragmentCollectionsDisplayContext.getSortingURL() %>"
+	sortingOrder="<%= layoutPageTemplateCollectionsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= layoutPageTemplateCollectionsDisplayContext.getSortingURL() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		id="fragmentCollections"
-		searchContainer="<%= fragmentCollectionsDisplayContext.getSearchContainer() %>"
+		id="layoutPageTemplateCollections"
+		searchContainer="<%= layoutPageTemplateCollectionsDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.fragment.model.FragmentCollection"
-			keyProperty="fragmentCollectionId"
-			modelVar="fragmentCollection"
+			className="com.liferay.layout.page.template.model.LayoutPageTemplateCollection"
+			keyProperty="layoutPageTemplateCollectionId"
+			modelVar="layoutPageTemplateCollection"
 		>
 			<liferay-ui:search-container-column-text
 				name="name"
 				truncate="<%= true %>"
-				value="<%= HtmlUtil.escape(fragmentCollection.getName()) %>"
+				value="<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
@@ -61,13 +61,13 @@ FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new Fragme
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />fragmentCollections');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />layoutPageTemplateCollections');
 
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
 			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(fragmentCollectionsDisplayContext.getEventName()) %>',
+				'<%= HtmlUtil.escapeJS(layoutPageTemplateCollectionsDisplayContext.getEventName()) %>',
 				{
 					data: event.elements.allSelectedElements.getDOMNodes()
 				}

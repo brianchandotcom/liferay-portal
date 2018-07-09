@@ -14,10 +14,11 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -42,7 +43,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutPageTemplateCollectionsDisplayContext {
 
-	public FragmentCollectionsDisplayContext(
+	public LayoutPageTemplateCollectionsDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		HttpServletRequest request) {
 
@@ -110,7 +111,8 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 		PortletURL searchActionURL = _renderResponse.createRenderURL();
 
 		searchActionURL.setParameter(
-			"mvcRenderCommandName", "/fragment/view_fragment_collections");
+			"mvcRenderCommandName",
+			"/layout/select_layout_page_template_collections");
 		searchActionURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		return searchActionURL.toString();
@@ -131,9 +133,10 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		OrderByComparator<FragmentCollection> orderByComparator =
-			FragmentPortletUtil.getFragmentCollectionOrderByComparator(
-				_getOrderByCol(), getOrderByType());
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
+			LayoutPageTemplatePortletUtil.
+				getLayoutPageTemplateCollectionOrderByComparator(
+					_getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(_getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -141,29 +144,34 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		List<FragmentCollection> fragmentCollections = null;
+		List<LayoutPageTemplateCollection> fragmentCollections = null;
 		int fragmentCollectionsCount = 0;
 
 		if (_isSearch()) {
 			fragmentCollections =
-				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), _getKeywords(),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollections(
+						themeDisplay.getScopeGroupId(), _getKeywords(),
+						searchContainer.getStart(), searchContainer.getEnd(),
+						orderByComparator);
 
 			fragmentCollectionsCount =
-				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), _getKeywords());
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollectionsCount(
+						themeDisplay.getScopeGroupId(), _getKeywords());
 		}
 		else {
 			fragmentCollections =
-				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator);
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollections(
+						themeDisplay.getScopeGroupId(),
+						searchContainer.getStart(), searchContainer.getEnd(),
+						orderByComparator);
 
 			fragmentCollectionsCount =
-				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId());
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollectionsCount(
+						themeDisplay.getScopeGroupId());
 		}
 
 		searchContainer.setTotal(fragmentCollectionsCount);
@@ -255,7 +263,8 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/fragment/view_fragment_collections");
+			"mvcRenderCommandName",
+			"/layout/select_layout_page_template_collections");
 
 		String eventName = getEventName();
 

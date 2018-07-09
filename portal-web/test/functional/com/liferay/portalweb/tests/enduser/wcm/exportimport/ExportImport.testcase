@@ -670,6 +670,7 @@
 
 		<execute macro="Page#viewCurrentTheme">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Test Page" />
 			<var name="themeName" value="Fjord" />
 		</execute>
 	</command>

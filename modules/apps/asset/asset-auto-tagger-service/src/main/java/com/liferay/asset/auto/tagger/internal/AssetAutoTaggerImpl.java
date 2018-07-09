@@ -30,6 +30,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -54,9 +57,57 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Override
 	public void tag(AssetEntry assetEntry) throws PortalException {
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					_tag(assetEntry);
+
+					return null;
+				});
+		}
+		catch (Throwable t) {
+			throw new PortalException(t);
+		}
+	}
+
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		modified(properties);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, AssetAutoTagProvider.class, "model.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_assetAutoTaggerConfiguration = ConfigurableUtil.createConfigurable(
+			AssetAutoTaggerConfiguration.class, properties);
+	}
+
+	private ServiceContext _createServiceContext(AssetEntry assetEntry) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(assetEntry.getGroupId());
+
+		return serviceContext;
+	}
+
+	private void _tag(AssetEntry assetEntry) throws PortalException {
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
-		if (!_assetAutoTaggerConfiguration.enabled() || assetRenderer == null) {
+		if (!_assetAutoTaggerConfiguration.enabled() ||
+			(assetRenderer == null)) {
+
 			return;
 		}
 
@@ -99,37 +150,6 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
 	}
 
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		modified(properties);
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, AssetAutoTagProvider.class, "model.class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		_assetAutoTaggerConfiguration = ConfigurableUtil.createConfigurable(
-			AssetAutoTaggerConfiguration.class, properties);
-	}
-
-	private ServiceContext _createServiceContext(AssetEntry assetEntry) {
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(assetEntry.getGroupId());
-
-		return serviceContext;
-	}
-
 	private volatile AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
 
 	@Reference
@@ -146,5 +166,8 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	private ServiceTrackerMap<String, List<AssetAutoTagProvider>>
 		_serviceTrackerMap;
+	private final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 }

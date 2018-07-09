@@ -452,7 +452,8 @@ public class JournalArticleModelValidator
 		if (Validator.isNotNull(ddmStructureKey)) {
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
-					groupId, classNameId, ddmStructureKey, true);
+					_portal.getSiteGroupId(groupId), classNameId,
+					ddmStructureKey, true);
 
 			if (ddmStructure == null) {
 				throw new NoSuchStructureException();
@@ -464,7 +465,8 @@ public class JournalArticleModelValidator
 
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-				groupId, classNameId, ddmTemplateKey, true);
+				_portal.getSiteGroupId(groupId), classNameId, ddmTemplateKey,
+				true);
 
 			if (ddmTemplate == null) {
 				throw new NoSuchTemplateException();

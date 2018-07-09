@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.currency.converter.web.internal.util;
+package com.liferay.currency.converter.util;
 
-import com.liferay.currency.converter.web.internal.model.CurrencyConverter;
+import com.liferay.currency.converter.model.CurrencyConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.webcache.WebCacheItem;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.theme.westeros.bank.top.head.dynamic.include.internal.servlet.taglib;
+package com.liferay.frontend.theme.westeros.bank.site.initializer.internal.servlet.taglib;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;

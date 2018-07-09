@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.currency.converter.web.internal.util;
+package com.liferay.currency.converter.util;
 
-import com.liferay.currency.converter.web.internal.model.CurrencyConverter;
+import com.liferay.currency.converter.model.CurrencyConverter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Time;

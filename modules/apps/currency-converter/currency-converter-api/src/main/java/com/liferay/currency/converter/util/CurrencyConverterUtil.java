@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.currency.converter.web.internal.util;
+package com.liferay.currency.converter.util;
 
-import com.liferay.currency.converter.web.internal.model.CurrencyConverter;
+import com.liferay.currency.converter.model.CurrencyConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
@@ -27,18 +27,12 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class CurrencyConverterUtil {
 
-	public static Map<String, String> getAllSymbols(
-		HttpServletRequest request) {
-
-		Locale locale = request.getLocale();
-
+	public static Map<String, String> getAllSymbols(Locale locale) {
 		String key = locale.toString();
 
 		Map<String, String> symbols = _symbolsPool.get(key);
@@ -50,7 +44,7 @@ public class CurrencyConverterUtil {
 		symbols = new TreeMap<>();
 
 		for (String symbol : _instance._currencyIds) {
-			symbols.put(LanguageUtil.get(request, symbol), symbol);
+			symbols.put(LanguageUtil.get(locale, symbol), symbol);
 		}
 
 		_symbolsPool.put(key, symbols);

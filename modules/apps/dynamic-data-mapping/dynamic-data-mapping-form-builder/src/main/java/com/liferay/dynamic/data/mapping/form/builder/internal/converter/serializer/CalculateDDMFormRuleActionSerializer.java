@@ -53,13 +53,13 @@ public class CalculateDDMFormRuleActionSerializer
 
 		Stream<String> ddmFormFieldStream = keySet.stream();
 
-		ddmFormFieldStream = ddmFormFieldStream.filter(
-			ddmFormField -> expression.contains(ddmFormField));
+		Set<String> ddmFormFieldNames = ddmFormFieldStream.filter(
+			ddmFormField -> expression.contains(ddmFormField)
+		).collect(
+			Collectors.toSet()
+		);
 
-		Set<String> ddmFormFields = ddmFormFieldStream.collect(
-			Collectors.toSet());
-
-		String newExpression = buildExpression(expression, ddmFormFields);
+		String newExpression = buildExpression(expression, ddmFormFieldNames);
 
 		return String.format(
 			_FUNCTION_CALL_BINARY_EXPRESSION_FORMAT, "calculate",
@@ -67,7 +67,7 @@ public class CalculateDDMFormRuleActionSerializer
 	}
 
 	protected String buildExpression(
-		String expression, Set<String> ddmFormFields) {
+		String expression, Set<String> ddmFormFieldNames) {
 
 		int start = Integer.MAX_VALUE;
 		int end = Integer.MIN_VALUE;
@@ -83,7 +83,7 @@ public class CalculateDDMFormRuleActionSerializer
 
 			String compareStr = sb.toString();
 
-			boolean match = matchAnyField(compareStr, ddmFormFields);
+			boolean match = matchAnyField(compareStr, ddmFormFieldNames);
 
 			if (match) {
 				newExpressionSB.append(token);

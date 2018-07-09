@@ -139,8 +139,6 @@ public class StructuredContentNestedCollectionResource
 			"aggregateRating", AggregateRatingIdentifier.class,
 			this::_createClassNameClassPK
 		).addLinkedModel(
-			"author", PersonIdentifier.class, JournalArticle::getUserId
-		).addLinkedModel(
 			"creator", PersonIdentifier.class, JournalArticle::getUserId
 		).addLocalizedStringByLocale(
 			"renderedContent", this::_getJournalArticleHtml

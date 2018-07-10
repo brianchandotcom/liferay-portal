@@ -92,7 +92,7 @@ public class FormInstanceNestedCollectionResource
 		).addDate(
 			"datePublished", DDMFormInstance::getLastPublishDate
 		).addLinkedModel(
-			"author", PersonIdentifier.class, DDMFormInstance::getUserId
+			"creator", PersonIdentifier.class, DDMFormInstance::getUserId
 		).addLinkedModel(
 			"structure", StructureIdentifier.class,
 			DDMFormInstance::getStructureId
@@ -104,7 +104,7 @@ public class FormInstanceNestedCollectionResource
 			nestedBuilder -> nestedBuilder.types(
 				"FormInstanceVersion"
 			).addLinkedModel(
-				"author", PersonIdentifier.class,
+				"creator", PersonIdentifier.class,
 				DDMFormInstanceVersion::getUserId
 			).addString(
 				"name", DDMFormInstanceVersion::getVersion

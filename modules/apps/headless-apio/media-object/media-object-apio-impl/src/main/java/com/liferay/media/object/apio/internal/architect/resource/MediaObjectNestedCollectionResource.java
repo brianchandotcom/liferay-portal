@@ -108,7 +108,7 @@ public class MediaObjectNestedCollectionResource
 		).addDate(
 			"datePublished", FileEntry::getLastPublishDate
 		).addLinkedModel(
-			"author", PersonIdentifier.class, FileEntry::getUserId
+			"creator", PersonIdentifier.class, FileEntry::getUserId
 		).addNumber(
 			"contentSize", FileEntry::getSize
 		).addRelatedCollection(

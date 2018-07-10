@@ -121,8 +121,6 @@ public class BlogPostingNestedCollectionResource
 			"aggregateRating", AggregateRatingIdentifier.class,
 			ClassNameClassPK::create
 		).addLinkedModel(
-			"author", PersonIdentifier.class, BlogsEntry::getUserId
-		).addLinkedModel(
 			"creator", PersonIdentifier.class, BlogsEntry::getUserId
 		).addLinkedModel(
 			"image", MediaObjectIdentifier.class,

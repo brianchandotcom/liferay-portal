@@ -111,8 +111,6 @@ public class CategoryNestedCollectionResource
 		).addDate(
 			"datePublished", AssetCategory::getLastPublishDate
 		).addLinkedModel(
-			"author", PersonIdentifier.class, AssetCategory::getUserId
-		).addLinkedModel(
 			"creator", PersonIdentifier.class, AssetCategory::getUserId
 		).addLocalizedStringByLocale(
 			"description", AssetCategory::getDescription

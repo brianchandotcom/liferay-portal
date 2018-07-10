@@ -106,8 +106,6 @@ public class VocabularyNestedCollectionResource
 		).addDate(
 			"datePublished", AssetVocabulary::getLastPublishDate
 		).addLinkedModel(
-			"author", PersonIdentifier.class, AssetVocabulary::getUserId
-		).addLinkedModel(
 			"creator", PersonIdentifier.class, AssetVocabulary::getUserId
 		).addLocalizedStringByLocale(
 			"description", AssetVocabulary::getDescription

@@ -308,6 +308,7 @@ http://www.w3.org/TR/html401/struct/global.html
 			</regexp-list>
 		</attribute>
 
+
 		<!--  Common positioning attributes  -->
 
 		<attribute name="width">
@@ -736,7 +737,6 @@ http://www.w3.org/TR/html401/struct/global.html
 		<!-- List tags -->
 
 		<tag name="ul" action="validate"/>
-
 		<tag name="ol" action="validate">
 			<attribute name="type">
 				<literal-list>
@@ -748,7 +748,6 @@ http://www.w3.org/TR/html401/struct/global.html
 				</literal-list>
 			</attribute>
 		</tag>
-
 		<tag name="li" action="validate"/>
 
 

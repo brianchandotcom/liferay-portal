@@ -814,9 +814,14 @@
 	</command>
 
 	<command name="viewNoDeletePagesAssociatedWithSiteTemplate">
-		<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_ANGLE_ICON_SPECIFIC">
-			<var name="key_pageName" value="${pageName}" />
-		</execute>
+		<if>
+			<isset var="pageName" />
+			<then>
+				<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_ANGLE_ICON_SPECIFIC">
+					<var name="key_pageName" value="${pageName}" />
+				</execute>
+			</then>
+		</if>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON">
 			<var name="key_pageName" value="${page}" />

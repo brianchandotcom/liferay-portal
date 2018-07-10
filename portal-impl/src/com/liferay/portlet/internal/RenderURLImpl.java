@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 
@@ -44,18 +45,26 @@ public class RenderURLImpl extends PortletURLImpl implements RenderURL {
 
 	@Override
 	public String getFragmentIdentifier() {
-
-		// TODO
-
-		throw new UnsupportedOperationException();
+		return _fragmentIdentifier;
 	}
 
 	@Override
-	public void setFragmentIdentifier(String fragment) {
-
-		// TODO
-
-		throw new UnsupportedOperationException();
+	public void setFragmentIdentifier(String fragmentIdentifier) {
+		_fragmentIdentifier = fragmentIdentifier;
 	}
+
+	@Override
+	public String toString() {
+		String toString = super.toString();
+
+		if (_fragmentIdentifier != null) {
+			toString = toString.concat(StringPool.POUND).concat(
+				_fragmentIdentifier);
+		}
+
+		return toString;
+	}
+
+	private String _fragmentIdentifier;
 
 }

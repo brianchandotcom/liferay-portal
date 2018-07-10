@@ -122,8 +122,6 @@
 
 				editor.insertElement(el);
 				editor.execCommand('enter');
-
-				editor.setData(editor.getData());
 			}
 		}
 	);

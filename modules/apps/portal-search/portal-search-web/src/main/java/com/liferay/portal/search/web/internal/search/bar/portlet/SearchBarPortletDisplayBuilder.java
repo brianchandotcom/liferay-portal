@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
@@ -77,7 +76,7 @@ public class SearchBarPortletDisplayBuilder {
 			searchBarPortletDisplayContext.setSearchURL(getURLCurrentPath());
 		}
 		else {
-			String destinationURL = getDestinationURL();
+			String destinationURL = getDestinationURL(_destination);
 
 			if (destinationURL == null) {
 				searchBarPortletDisplayContext.setDestinationUnreachable(true);
@@ -124,31 +123,37 @@ public class SearchBarPortletDisplayBuilder {
 		_themeDisplay = themeDisplay;
 	}
 
-	protected Layout getDestinationLayout() {
-		String destination = _destination;
+	protected static String slashify(String s) {
+		if (s.charAt(0) == CharPool.SLASH) {
+			return s;
+		}
 
-		if (!StringUtil.startsWith(destination, CharPool.SLASH)) {
-			destination = StringPool.SLASH.concat(destination);
+		return StringPool.SLASH.concat(s);
+	}
+
+	protected Layout fetchLayoutByFriendlyURL(
+		long groupId, String friendlyURL) {
+
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			groupId, false, friendlyURL);
+
+		if (layout != null) {
+			return layout;
 		}
 
 		return _layoutLocalService.fetchLayoutByFriendlyURL(
-			_themeDisplay.getScopeGroupId(), false, destination);
+			groupId, true, friendlyURL);
 	}
 
-	protected String getDestinationURL() {
-		Layout layout = getDestinationLayout();
+	protected String getDestinationURL(String friendlyURL) {
+		Layout layout = fetchLayoutByFriendlyURL(
+			_themeDisplay.getScopeGroupId(), slashify(friendlyURL));
 
 		if (layout == null) {
 			return null;
 		}
 
-		String layoutFriendlyURL = getLayoutFriendlyURL(layout);
-
-		if (layoutFriendlyURL == null) {
-			return null;
-		}
-
-		return layoutFriendlyURL;
+		return getLayoutFriendlyURL(layout);
 	}
 
 	protected String getKeywords() {

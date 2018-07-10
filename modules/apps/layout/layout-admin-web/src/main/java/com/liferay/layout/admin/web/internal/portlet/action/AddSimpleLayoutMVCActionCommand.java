@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -132,6 +133,10 @@ public class AddSimpleLayoutMVCActionCommand
 				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException pe) {
+			SessionErrors.add(actionRequest, "layoutNameInvalid");
+
+			hideDefaultErrorMessage(actionRequest);
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(pe, pe);
 			}

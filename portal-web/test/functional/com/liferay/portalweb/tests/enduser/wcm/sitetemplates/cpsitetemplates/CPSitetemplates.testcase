@@ -571,12 +571,6 @@
 		</execute>
 
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="2" />
-			<var name="columnNumberTo" value="1" />
-			<var name="portletName" value="User Statistics" />
-		</execute>
-
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
 			<var name="columnNumberFrom" value="1" />
 			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Message Boards" />
@@ -584,12 +578,6 @@
 
 		<execute macro="ProductMenu#gotoSiteViaLink">
 			<var name="site" value="Community Site" />
-		</execute>
-
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="User Statistics" />
 		</execute>
 
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">
@@ -613,9 +601,9 @@
 		</execute>
 
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="2" />
-			<var name="columnNumberTo" value="1" />
-			<var name="portletName" value="User Statistics" />
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Message Boards" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -623,8 +611,8 @@
 		</execute>
 
 		<execute macro="SiteTemplates#resetPageChanges">
-			<var name="columnNumberTo" value="1" />
-			<var name="portletName" value="User Statistics" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Message Boards" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -632,8 +620,8 @@
 		</execute>
 
 		<execute macro="SiteTemplates#viewResetPageChanges">
-			<var name="columnNumberFrom" value="2" />
-			<var name="portletName" value="User Statistics" />
+			<var name="columnNumberFrom" value="1" />
+			<var name="portletName" value="Message Boards" />
 		</execute>
 	</command>
 

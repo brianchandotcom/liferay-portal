@@ -822,11 +822,9 @@
 			<var name="pageNameList" value="Home,Wiki" />
 		</execute>
 
-		<for list="Message Boards,User Statistics" param="portletTitleName">
-			<var name="key_portletTitleName" value="${portletTitleName}" />
-
-			<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="${portletTitleName}" />
-		</for>
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards">
+			<var name="key_portletTitleName" value="Message Boards" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />

@@ -40,7 +40,10 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -124,6 +127,30 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		}
 	}
 
+	private List<AssetAutoTagProvider> _getAssetAutoTagProviders(
+		String className) {
+
+		List<AssetAutoTagProvider> assetAutoTagProviders = new ArrayList<>();
+
+		List<AssetAutoTagProvider> generalAssetAutoTagProviders =
+			_serviceTrackerMap.getService("*");
+
+		if (!ListUtil.isEmpty(generalAssetAutoTagProviders)) {
+			assetAutoTagProviders.addAll(generalAssetAutoTagProviders);
+		}
+
+		if (Validator.isNotNull(className)) {
+			List<AssetAutoTagProvider> classNameAssetAutoTagProviders =
+				_serviceTrackerMap.getService(className);
+
+			if (!ListUtil.isEmpty(classNameAssetAutoTagProviders)) {
+				assetAutoTagProviders.addAll(classNameAssetAutoTagProviders);
+			}
+		}
+
+		return assetAutoTagProviders;
+	}
+
 	private boolean _isInTrash(AssetEntry assetEntry) throws PortalException {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			assetEntry.getClassName());
@@ -148,11 +175,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		}
 
 		List<AssetAutoTagProvider> assetAutoTagProviders =
-			_serviceTrackerMap.getService(assetEntry.getClassName());
-
-		if (assetAutoTagProviders == null) {
-			return;
-		}
+			_getAssetAutoTagProviders(assetEntry.getClassName());
 
 		ServiceContext serviceContext = _createServiceContext(assetEntry);
 

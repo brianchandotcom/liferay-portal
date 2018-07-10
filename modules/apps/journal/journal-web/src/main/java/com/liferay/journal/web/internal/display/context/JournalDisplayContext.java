@@ -1444,19 +1444,25 @@ public class JournalDisplayContext {
 			group = group.getParentGroup();
 		}
 
-		if (group.isStaged() && !group.isStagingGroup() &&
-			!group.isStagedRemotely() &&
-			group.isStagedPortlet(JournalPortletKeys.JOURNAL)) {
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if ((stagingGroupHelper.isLocalLiveGroup(group) ||
+			 stagingGroupHelper.isRemoteLiveGroup(group)) &&
+			stagingGroupHelper.isStagedPortlet(
+				group, JournalPortletKeys.JOURNAL)) {
 
 			return false;
 		}
 
 		if (JournalFolderPermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			getFolderId(), ActionKeys.ADD_FOLDER) ||
-		JournalFolderPermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			getFolderId(), ActionKeys.ADD_ARTICLE)) {
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				getFolderId(), ActionKeys.ADD_FOLDER) ||
+			JournalFolderPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), getFolderId(),
+				ActionKeys.ADD_ARTICLE)) {
 
 			return true;
 		}

@@ -70,11 +70,51 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Override
 	public void tag(AssetEntry assetEntry) throws PortalException {
+		if (!_assetAutoTaggerConfiguration.enabled() ||
+			!assetEntry.isVisible() || _isInTrash(assetEntry)) {
+
+			return;
+		}
+
 		try {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
-					_tag(assetEntry);
+					boolean needsReindex = false;
+
+					ServiceContext serviceContext = _createServiceContext(
+						assetEntry);
+
+					for (String tag : _getAutoTags(assetEntry)) {
+						AssetTag assetTag = _assetTagLocalService.fetchTag(
+							assetEntry.getGroupId(), tag);
+
+						if (assetTag == null) {
+							assetTag = _assetTagLocalService.addTag(
+								assetEntry.getUserId(), assetEntry.getGroupId(),
+								tag, serviceContext);
+						}
+
+						if (!_assetTagLocalService.hasAssetEntryAssetTag(
+								assetEntry.getEntryId(), assetTag.getTagId())) {
+
+							_assetTagLocalService.addAssetEntryAssetTag(
+								assetEntry.getEntryId(), assetTag);
+
+							_assetAutoTaggerEntryLocalService.
+								addAssetAutoTaggerEntry(assetEntry, assetTag);
+
+							_assetTagLocalService.incrementAssetCount(
+								assetTag.getTagId(),
+								assetEntry.getClassNameId());
+
+							needsReindex = true;
+						}
+					}
+
+					if (needsReindex) {
+						_reindex(assetEntry);
+					}
 
 					return null;
 				});
@@ -229,48 +269,6 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 		if (indexer != null) {
 			indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
-		}
-	}
-
-	private void _tag(AssetEntry assetEntry) throws PortalException {
-		if (!_assetAutoTaggerConfiguration.enabled() ||
-			!assetEntry.isVisible() || _isInTrash(assetEntry)) {
-
-			return;
-		}
-
-		boolean needsReindex = false;
-
-		ServiceContext serviceContext = _createServiceContext(assetEntry);
-
-		for (String tag : _getAutoTags(assetEntry)) {
-			AssetTag assetTag = _assetTagLocalService.fetchTag(
-				assetEntry.getGroupId(), tag);
-
-			if (assetTag == null) {
-				assetTag = _assetTagLocalService.addTag(
-					assetEntry.getUserId(), assetEntry.getGroupId(), tag,
-					serviceContext);
-			}
-
-			if (!_assetTagLocalService.hasAssetEntryAssetTag(
-					assetEntry.getEntryId(), assetTag.getTagId())) {
-
-				_assetTagLocalService.addAssetEntryAssetTag(
-					assetEntry.getEntryId(), assetTag);
-
-				_assetAutoTaggerEntryLocalService.addAssetAutoTaggerEntry(
-					assetEntry, assetTag);
-
-				_assetTagLocalService.incrementAssetCount(
-					assetTag.getTagId(), assetEntry.getClassNameId());
-
-				needsReindex = true;
-			}
-		}
-
-		if (needsReindex) {
-			_reindex(assetEntry);
 		}
 	}
 

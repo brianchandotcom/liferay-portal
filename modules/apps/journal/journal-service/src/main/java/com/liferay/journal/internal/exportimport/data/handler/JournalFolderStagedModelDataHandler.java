@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.ArrayList;
@@ -143,7 +141,7 @@ public class JournalFolderStagedModelDataHandler
 				folder.getUuid(), groupId);
 
 			if (existingFolder == null) {
-				String name = getFolderName(
+				String name = _journalFolderLocalService.getUniqueFolderName(
 					null, groupId, parentFolderId, folder.getName(), 2);
 
 				serviceContext.setUuid(folder.getUuid());
@@ -153,7 +151,7 @@ public class JournalFolderStagedModelDataHandler
 					folder.getDescription(), serviceContext);
 			}
 			else {
-				String name = getFolderName(
+				String name = _journalFolderLocalService.getUniqueFolderName(
 					folder.getUuid(), groupId, parentFolderId, folder.getName(),
 					2);
 
@@ -164,7 +162,7 @@ public class JournalFolderStagedModelDataHandler
 			}
 		}
 		else {
-			String name = getFolderName(
+			String name = _journalFolderLocalService.getUniqueFolderName(
 				null, groupId, parentFolderId, folder.getName(), 2);
 
 			importedFolder = _journalFolderLocalService.addFolder(
@@ -218,27 +216,6 @@ public class JournalFolderStagedModelDataHandler
 				portletDataContext, folder, ddmStructure,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
-	}
-
-	protected String getFolderName(
-			String uuid, long groupId, long parentFolderId, String name,
-			int count)
-		throws Exception {
-
-		JournalFolder folder = _journalFolderLocalService.fetchFolder(
-			groupId, parentFolderId, name);
-
-		if (folder == null) {
-			return name;
-		}
-
-		if (Validator.isNotNull(uuid) && uuid.equals(folder.getUuid())) {
-			return name;
-		}
-
-		name = StringUtil.appendParentheticalSuffix(name, count);
-
-		return getFolderName(uuid, groupId, parentFolderId, name, ++count);
 	}
 
 	protected void importFolderDDMStructures(

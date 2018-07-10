@@ -480,6 +480,13 @@ public class JournalFolderLocalServiceUtil {
 		return getService().getSubscriptionLocalService();
 	}
 
+	public static String getUniqueFolderName(String uuid, long groupId,
+		long parentFolderId, String name, int count) {
+		return getService()
+				   .getUniqueFolderName(uuid, groupId, parentFolderId, name,
+			count);
+	}
+
 	public static com.liferay.journal.model.JournalFolder moveFolder(
 		long folderId, long parentFolderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

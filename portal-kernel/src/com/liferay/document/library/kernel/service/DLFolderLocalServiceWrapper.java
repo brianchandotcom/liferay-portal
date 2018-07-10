@@ -711,6 +711,13 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
+	public String getUniqueFolderName(String uuid, long groupId,
+		long parentFolderId, String name, int count) {
+		return _dlFolderLocalService.getUniqueFolderName(uuid, groupId,
+			parentFolderId, name, count);
+	}
+
+	@Override
 	public boolean hasDLFileEntryTypeDLFolder(long fileEntryTypeId,
 		long folderId) {
 		return _dlFolderLocalService.hasDLFileEntryTypeDLFolder(fileEntryTypeId,

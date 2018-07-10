@@ -493,6 +493,10 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getUniqueFolderName(String uuid, long groupId,
+		long parentFolderId, String name, int count);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDLFileEntryTypeDLFolder(long fileEntryTypeId,
 		long folderId);
 

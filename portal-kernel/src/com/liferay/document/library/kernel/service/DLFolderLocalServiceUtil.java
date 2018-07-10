@@ -634,6 +634,13 @@ public class DLFolderLocalServiceUtil {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
 	}
 
+	public static String getUniqueFolderName(String uuid, long groupId,
+		long parentFolderId, String name, int count) {
+		return getService()
+				   .getUniqueFolderName(uuid, groupId, parentFolderId, name,
+			count);
+	}
+
 	public static boolean hasDLFileEntryTypeDLFolder(long fileEntryTypeId,
 		long folderId) {
 		return getService().hasDLFileEntryTypeDLFolder(fileEntryTypeId, folderId);

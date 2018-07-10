@@ -401,6 +401,10 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.service.SubscriptionLocalService getSubscriptionLocalService();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getUniqueFolderName(String uuid, long groupId,
+		long parentFolderId, String name, int count);
+
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalFolder moveFolder(long folderId, long parentFolderId,
 		ServiceContext serviceContext) throws PortalException;

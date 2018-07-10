@@ -53,18 +53,28 @@ public class CalculateDDMFormRuleActionSerializer
 
 		Stream<String> ddmFormFieldStream = keySet.stream();
 
-		ddmFormFieldStream = ddmFormFieldStream.filter(
-			ddmFormField -> expression.contains(ddmFormField));
+		Set<String> ddmFormFieldNames = ddmFormFieldStream.filter(
+			ddmFormField -> expression.contains(ddmFormField)
+		).collect(
+			Collectors.toSet()
+		);
 
-		Set<String> ddmFormFields = ddmFormFieldStream.collect(
-			Collectors.toSet());
+		String newExpression = buildExpression(expression, ddmFormFieldNames);
 
-		String newExpression = expression;
+		return String.format(
+			_FUNCTION_CALL_BINARY_EXPRESSION_FORMAT, "calculate",
+			_calculateDDMFormRuleAction.getTarget(), newExpression);
+	}
+
+	protected String buildExpression(
+		String expression, Set<String> ddmFormFieldNames) {
 
 		int start = Integer.MAX_VALUE;
 		int end = Integer.MIN_VALUE;
 
-		StringBuffer sb = new StringBuffer();
+		StringBuilder newExpressionSB = new StringBuilder();
+
+		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < expression.length(); i++) {
 			char token = expression.charAt(i);
@@ -73,9 +83,11 @@ public class CalculateDDMFormRuleActionSerializer
 
 			String compareStr = sb.toString();
 
-			boolean match = matchAnyField(compareStr, ddmFormFields);
+			boolean match = matchAnyField(compareStr, ddmFormFieldNames);
 
 			if (match) {
+				newExpressionSB.append(token);
+
 				if (start == Integer.MAX_VALUE) {
 					start = i;
 				}
@@ -85,13 +97,13 @@ public class CalculateDDMFormRuleActionSerializer
 				}
 			}
 			else {
-				end = i;
-				sb = new StringBuffer();
-
-				if (end > start) {
-					newExpression = replace(
-						expression, newExpression, start, end);
+				if (i > start) {
+					replace(expression, newExpressionSB, start, i);
 				}
+
+				newExpressionSB.append(token);
+
+				sb = new StringBuilder();
 
 				start = Integer.MAX_VALUE;
 				end = Integer.MIN_VALUE;
@@ -99,19 +111,17 @@ public class CalculateDDMFormRuleActionSerializer
 		}
 
 		if (end > start) {
-			newExpression = replace(expression, newExpression, start, end);
+			replace(expression, newExpressionSB, start, end);
 		}
 
-		return String.format(
-			_FUNCTION_CALL_BINARY_EXPRESSION_FORMAT, "calculate",
-			_calculateDDMFormRuleAction.getTarget(), newExpression);
+		return newExpressionSB.toString();
 	}
 
 	protected boolean matchAnyField(
 		String compareStr, Set<String> ddmFormFields) {
 
 		for (String ddmFormField : ddmFormFields) {
-			if (ddmFormField.contains(compareStr)) {
+			if (ddmFormField.startsWith(compareStr)) {
 				return true;
 			}
 		}
@@ -124,16 +134,19 @@ public class CalculateDDMFormRuleActionSerializer
 			expression, CharPool.OPEN_BRACKET, CharPool.CLOSE_BRACKET);
 	}
 
-	protected String replace(
-		String expression, String newExpression, int start, int end) {
+	protected void replace(
+		String expression, StringBuilder newExpressionSB, int start, int end) {
 
-		String matchFound = expression.substring(start, end);
+		String fieldName = expression.substring(start, end);
 
-		String matchReplacement = String.format(
-			_FUNCTION_CALL_UNARY_EXPRESSION_FORMAT, "getValue", matchFound);
+		String fieldNameReplacement = String.format(
+			_FUNCTION_CALL_UNARY_EXPRESSION_FORMAT, "getValue", fieldName);
 
-		return StringUtil.replaceFirst(
-			newExpression, matchFound, matchReplacement, start);
+		int currentLength = newExpressionSB.length();
+
+		newExpressionSB.replace(
+			currentLength - fieldName.length(), currentLength,
+			fieldNameReplacement);
 	}
 
 	private static final String _FUNCTION_CALL_BINARY_EXPRESSION_FORMAT =

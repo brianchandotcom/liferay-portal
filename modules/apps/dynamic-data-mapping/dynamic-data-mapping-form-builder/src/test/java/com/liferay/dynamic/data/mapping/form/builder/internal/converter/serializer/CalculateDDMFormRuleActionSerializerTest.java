@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,6 +45,115 @@ public class CalculateDDMFormRuleActionSerializerTest extends PowerMockito {
 	@Before
 	public void setUp() {
 		setUpServiceContextThreadLocal();
+	}
+
+	@Test
+	public void testBuildExpression1() {
+		CalculateDDMFormRuleActionSerializer
+			calculateDDMFormRuleActionSerializer =
+				new CalculateDDMFormRuleActionSerializer(null);
+
+		Set<String> ddmFormFields = new HashSet<>();
+
+		ddmFormFields.add("Num1");
+		ddmFormFields.add("Num12");
+		ddmFormFields.add("Num123");
+
+		String expression = "(Num123+Num1+Num12) * 0.25 * Num123";
+
+		String result = calculateDDMFormRuleActionSerializer.buildExpression(
+			expression, ddmFormFields);
+
+		Assert.assertEquals(
+			"(getValue('Num123')+getValue('Num1')+getValue('Num12')) * 0.25 " +
+				"* getValue('Num123')",
+			result);
+	}
+
+	@Test
+	public void testBuildExpression2() {
+		CalculateDDMFormRuleActionSerializer
+			calculateDDMFormRuleActionSerializer =
+				new CalculateDDMFormRuleActionSerializer(null);
+
+		Set<String> ddmFormFields = new HashSet<>();
+
+		ddmFormFields.add("Num1");
+		ddmFormFields.add("Num2");
+		ddmFormFields.add("Num3");
+		ddmFormFields.add("Num4");
+
+		String expression = "(Num1+Num2+Num3+Num4) * 0.25";
+
+		String result = calculateDDMFormRuleActionSerializer.buildExpression(
+			expression, ddmFormFields);
+
+		Assert.assertEquals(
+			"(getValue('Num1')+getValue('Num2')+getValue('Num3')+" +
+				"getValue('Num4')) * 0.25",
+			result);
+	}
+
+	@Test
+	public void testBuildExpression3() {
+		CalculateDDMFormRuleActionSerializer
+			calculateDDMFormRuleActionSerializer =
+				new CalculateDDMFormRuleActionSerializer(null);
+
+		Set<String> ddmFormFields = new HashSet<>();
+
+		ddmFormFields.add("Num1");
+		ddmFormFields.add("Num2");
+		ddmFormFields.add("Num3");
+
+		String expression = "Num1+Num2+Num3*3";
+
+		String result = calculateDDMFormRuleActionSerializer.buildExpression(
+			expression, ddmFormFields);
+
+		Assert.assertEquals(
+			"getValue('Num1')+getValue('Num2')+getValue('Num3')*3", result);
+	}
+
+	@Test
+	public void testBuildExpression4() {
+		CalculateDDMFormRuleActionSerializer
+			calculateDDMFormRuleActionSerializer =
+				new CalculateDDMFormRuleActionSerializer(null);
+
+		Set<String> ddmFormFields = new HashSet<>();
+
+		ddmFormFields.add("Num1");
+		ddmFormFields.add("Num2");
+		ddmFormFields.add("Num3");
+
+		String expression = "(Num1-Num2*2)-Num3";
+
+		String result = calculateDDMFormRuleActionSerializer.buildExpression(
+			expression, ddmFormFields);
+
+		Assert.assertEquals(
+			"(getValue('Num1')-getValue('Num2')*2)-getValue('Num3')", result);
+	}
+
+	@Test
+	public void testBuildExpression5() {
+		CalculateDDMFormRuleActionSerializer
+			calculateDDMFormRuleActionSerializer =
+				new CalculateDDMFormRuleActionSerializer(null);
+
+		Set<String> ddmFormFields = new HashSet<>();
+
+		ddmFormFields.add("Num1");
+		ddmFormFields.add("Num2");
+
+		String expression = "(Num1 * Num2) + 0.25";
+
+		String result = calculateDDMFormRuleActionSerializer.buildExpression(
+			expression, ddmFormFields);
+
+		Assert.assertEquals(
+			"(getValue('Num1') * getValue('Num2')) + 0.25", result);
 	}
 
 	@Test

@@ -47,13 +47,27 @@ AUI.add(
 				'</label>' +
 			'</li>';
 
-		var TPL_SUMMARY_ASSET_ADDON_ENTRY = '<li class="list-entry" data-key="{key}" data-label="{label}">' +
-				'<span class="label label-default">' +
-					'{label}' +
-					'<a class="remove-button" href="javascript:;">' +
-						Liferay.Util.getLexiconIconTpl('times') +
-					'</a>' +
-				'</span>' +
+		var TPL_SUMMARY_ASSET_ADDON_ENTRY = '<li class="col-md-4 list-entry" data-key="{key}" data-label="{label}">' +
+				'<div class="card card-horizontal card-type-directory">' +
+					'<div class="card-body">' +
+						'<div class="card-row">' +
+							'<div class="autofit-col autofit-col-expand autofit-col-gutters">' +
+								'<section class="autofit-section">' +
+									'<h3 class="card-title" title="{label}">' +
+										'<span class="text-truncate-inline">' +
+											'<span class="text-truncate">{label}</span>' +
+										'</span>' +
+									'</h3>' +
+								'</section>' +
+							'</div>' +
+							'<div class="autofit-col">' +
+								'<a class="remove-button" href="javascript:;">' +
+									Liferay.Util.getLexiconIconTpl('times') +
+								'</a>' +
+							'</div>' +
+						'</div>' +
+					'</div>' +
+				'</div>' +
 			'</li>';
 
 		var AssetAddonEntrySelector = A.Component.create(

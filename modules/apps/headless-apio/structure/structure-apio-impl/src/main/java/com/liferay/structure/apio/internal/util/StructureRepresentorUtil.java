@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.structure.apio.internal.model.FormLayoutPage;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -136,7 +137,7 @@ public final class StructureRepresentorUtil {
 	}
 
 	private static List<String> _getFieldNames(
-		DDMFormLayoutPage ddmFormLayoutPage) {
+		DDMFormLayoutPage ddmFormLayoutPage, DDMStructure ddmStructure) {
 
 		return Optional.ofNullable(
 			ddmFormLayoutPage.getDDMFormLayoutRows()
@@ -150,6 +151,8 @@ public final class StructureRepresentorUtil {
 			List::stream
 		).map(
 			DDMFormLayoutColumn::getDDMFormFieldNames
+		).map(
+			formFieldNames -> _getNestedFieldNames(formFieldNames, ddmStructure)
 		).flatMap(
 			List::stream
 		).collect(
@@ -177,7 +180,7 @@ public final class StructureRepresentorUtil {
 		_getFormLayoutPage(DDMStructure ddmStructure) {
 
 		return ddmFormLayoutPage -> Optional.ofNullable(
-			_getFieldNames(ddmFormLayoutPage)
+			_getFieldNames(ddmFormLayoutPage, ddmStructure)
 		).map(
 			_getFieldsPerPage(ddmStructure)
 		).map(
@@ -185,6 +188,34 @@ public final class StructureRepresentorUtil {
 				ddmFormLayoutPage, ddmFormFields)
 		).orElse(
 			null
+		);
+	}
+
+	private static List<String> _getNestedFieldNames(
+		List<String> ddmFormFieldNames, DDMStructure ddmStructure) {
+
+		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
+
+		Stream<DDMFormField> ddmFormFieldStream = ddmFormFields.stream();
+
+		return ddmFormFieldStream.filter(
+			formField -> ddmFormFieldNames.contains(formField.getName())
+		).map(
+			formField -> formField.getNestedDDMFormFields(
+			).stream(
+			).map(
+				DDMFormField::getName
+			).collect(
+				Collectors.toList()
+			)
+		).map(
+			fieldNames -> _getNestedFieldNames(fieldNames, ddmStructure)
+		).peek(
+			fieldNames -> fieldNames.addAll(ddmFormFieldNames)
+		).flatMap(
+			Collection::stream
+		).collect(
+			Collectors.toList()
 		);
 	}
 

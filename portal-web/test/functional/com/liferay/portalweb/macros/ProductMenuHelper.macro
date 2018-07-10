@@ -111,13 +111,17 @@
 
 	<command name="openProductMenu">
 		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
+			<and>
+				<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
+				<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_CLOSED" />
+			</and>
 			<then>
 				<execute function="Click" locator1="ProductMenu#TOGGLE" />
 			</then>
 		</if>
 
 		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
+		<execute function="AssertElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_CLOSED" />
 
 		<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_BODY" />
 	</command>

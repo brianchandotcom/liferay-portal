@@ -47,31 +47,29 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 <c:if test="<%= article != null %>">
 	<liferay-util:include page="/journal_template.jsp" servletContext="<%= application %>" />
 
-	<div class="configuration-options-container row">
-		<div class="col-md-4">
-			<aui:fieldset>
-				<aui:field-wrapper label="user-tools">
-					<liferay-asset:asset-addon-entry-selector
-						assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
-						hiddenInput="preferences--userToolAssetAddonEntryKeys--"
-						id="userToolsAssetAddonEntriesSelector"
-						selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
-						title='<%= LanguageUtil.get(request, "select-user-tools") %>'
-					/>
-				</aui:field-wrapper>
+	<h4>
+		<liferay-ui:message key="user-tools" />
+	</h4>
 
-				<aui:field-wrapper label="content-metadata">
-					<liferay-asset:asset-addon-entry-selector
-						assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
-						hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
-						id="contentMetadataAssetAddonEntriesSelector"
-						selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
-						title='<%= LanguageUtil.get(request, "select-content-metadata") %>'
-					/>
-				</aui:field-wrapper>
+	<liferay-asset:asset-addon-entry-selector
+		assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
+		hiddenInput="preferences--userToolAssetAddonEntryKeys--"
+		id="userToolsAssetAddonEntriesSelector"
+		selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
+		title='<%= LanguageUtil.get(request, "select-user-tools") %>'
+	/>
 
-				<aui:input name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
-			</aui:fieldset>
-		</div>
-	</div>
+	<h4>
+		<liferay-ui:message key="content-metadata" />
+	</h4>
+
+	<liferay-asset:asset-addon-entry-selector
+		assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
+		hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
+		id="contentMetadataAssetAddonEntriesSelector"
+		selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
+		title='<%= LanguageUtil.get(request, "select-content-metadata") %>'
+	/>
+
+	<aui:input name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
 </c:if>

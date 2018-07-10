@@ -55,7 +55,9 @@
 
 	</ul>
 
-	<aui:button cssClass="select-button" name='<%= id + "selectButton" %>' value="select" />
+	<div class="button-holder">
+		<aui:button cssClass="select-button" name='<%= id + "selectButton" %>' value="select" />
+	</div>
 </div>
 
 <aui:script use="liferay-asset-addon-entry-selector">

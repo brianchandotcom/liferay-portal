@@ -1715,7 +1715,7 @@ public class LayoutTypePortletImpl
 		try {
 			Layout layout = getLayout();
 
-			if (layout.getThemeId() != null) {
+			if (!layout.isInheritLookAndFeel()) {
 				return layout.getThemeId();
 			}
 			else {

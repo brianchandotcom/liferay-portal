@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Activate;
@@ -70,23 +68,13 @@ public class AssetAutoTaggerAssetEntryModelListener
 		throws ModelListenerException {
 
 		if (associationClassName.equals(AssetTag.class.getName())) {
-			try {
-				AssetTag assetTag = _assetTagLocalService.getTag(
-					(Long)associationClassPK);
+			AssetAutoTaggerEntry assetAutoTaggerEntry =
+				_assetAutoTaggerEntryLocalService.fetchAssetAutoTaggerEntry(
+					(Long)classPK, (Long)associationClassPK);
 
-				List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
-					_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
-						assetTag);
-
-				for (AssetAutoTaggerEntry assetAutoTaggerEntry :
-						assetAutoTaggerEntries) {
-
-					_assetAutoTaggerEntryLocalService.
-						deleteAssetAutoTaggerEntry(assetAutoTaggerEntry);
-				}
-			}
-			catch (PortalException pe) {
-				throw new ModelListenerException(pe);
+			if (assetAutoTaggerEntry != null) {
+				_assetAutoTaggerEntryLocalService.deleteAssetAutoTaggerEntry(
+					assetAutoTaggerEntry);
 			}
 		}
 	}

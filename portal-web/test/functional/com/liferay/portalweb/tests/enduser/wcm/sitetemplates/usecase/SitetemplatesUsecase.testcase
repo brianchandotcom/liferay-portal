@@ -317,7 +317,6 @@
 			</execute>
 
 			<execute macro="Page#viewNoDeletePagesAssociatedWithSiteTemplate">
-				<var name="menuItem" value="Delete" />
 				<var name="page" value="${page}" />
 			</execute>
 		</for>

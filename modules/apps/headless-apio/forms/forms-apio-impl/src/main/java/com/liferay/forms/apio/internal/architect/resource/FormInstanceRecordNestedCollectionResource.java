@@ -118,13 +118,13 @@ public class FormInstanceRecordNestedCollectionResource
 		).addDate(
 			"datePublished", DDMFormInstanceRecord::getLastPublishDate
 		).addLinkedModel(
-			"author", PersonIdentifier.class, DDMFormInstanceRecord::getUserId
+			"creator", PersonIdentifier.class, DDMFormInstanceRecord::getUserId
 		).addNested(
 			"version", FormInstanceRecordResourceUtil::getVersion,
 			versionBuilder -> versionBuilder.types(
 				"FormInstanceRecordVersion"
 			).addLinkedModel(
-				"author", PersonIdentifier.class,
+				"creator", PersonIdentifier.class,
 				DDMFormInstanceRecordVersion::getUserId
 			).addString(
 				"name", DDMFormInstanceRecordVersionModel::getVersion

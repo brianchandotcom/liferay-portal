@@ -64,7 +64,7 @@ public class BlogPostingForm {
 		).addOptionalDate(
 			"dateModified", BlogPostingForm::_setModifiedDate
 		).addOptionalLong(
-			"author", BlogPostingForm::_setAuthorId
+			"creator", BlogPostingForm::_setAuthorId
 		).addOptionalLong(
 			"image", BlogPostingForm::_setImageId
 		).addOptionalString(

@@ -62,7 +62,7 @@ public class StructureRepresentorBuilderHelperImpl
 		).addDate(
 			"datePublished", DDMStructure::getLastPublishDate
 		).addLinkedModel(
-			"author", PersonIdentifier.class, DDMStructure::getUserId
+			"creator", PersonIdentifier.class, DDMStructure::getUserId
 		).addLocalizedStringByLocale(
 			"description", DDMStructure::getDescription
 		).addLocalizedStringByLocale(
@@ -220,7 +220,7 @@ public class StructureRepresentorBuilderHelperImpl
 		return nestedBuilder.types(
 			"StructureVersion"
 		).addLinkedModel(
-			"author", PersonIdentifier.class, DDMStructureVersion::getUserId
+			"creator", PersonIdentifier.class, DDMStructureVersion::getUserId
 		).addString(
 			"name", DDMStructureVersion::getVersion
 		).build();

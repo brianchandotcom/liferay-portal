@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -80,21 +80,17 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
+					Set<String> tags = _getAutoTags(assetEntry);
+
+					tags.removeAll(Arrays.asList(assetEntry.getTagNames()));
+
+					List<AssetTag> assetTags = _assetTagLocalService.checkTags(
+						assetEntry.getUserId(), assetEntry.getGroupId(),
+						tags.toArray(new String[0]));
+
 					boolean needsReindex = false;
 
-					ServiceContext serviceContext = _createServiceContext(
-						assetEntry);
-
-					for (String tag : _getAutoTags(assetEntry)) {
-						AssetTag assetTag = _assetTagLocalService.fetchTag(
-							assetEntry.getGroupId(), tag);
-
-						if (assetTag == null) {
-							assetTag = _assetTagLocalService.addTag(
-								assetEntry.getUserId(), assetEntry.getGroupId(),
-								tag, serviceContext);
-						}
-
+					for (AssetTag assetTag : assetTags) {
 						if (!_assetTagLocalService.hasAssetEntryAssetTag(
 								assetEntry.getEntryId(), assetTag.getTagId())) {
 
@@ -177,16 +173,6 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 	protected void modified(Map<String, Object> properties) {
 		_assetAutoTaggerConfiguration = ConfigurableUtil.createConfigurable(
 			AssetAutoTaggerConfiguration.class, properties);
-	}
-
-	private ServiceContext _createServiceContext(AssetEntry assetEntry) {
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(assetEntry.getGroupId());
-
-		return serviceContext;
 	}
 
 	private void _ensurePermissionChecker(User user) throws PortalException {

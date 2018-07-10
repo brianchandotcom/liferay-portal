@@ -492,6 +492,22 @@
 			<var name="dmDocumentTitle" value="Document_1.png" />
 		</execute>
 
+		<if>
+			<condition function="IsElementNotPresent" locator1="Portlet#PORTLET_CONTENT" />
+			<then>
+				<execute macro="ProductMenu#gotoPortlet">
+					<var name="category" value="Sites" />
+					<var name="panel" value="Control Panel" />
+					<var name="portlet" value="Site Templates" />
+				</execute>
+
+				<execute macro="SiteTemplates#gotoViewPages">
+					<var name="siteName" value="${siteName}" />
+					<var name="siteTemplateName" value="Site Template Name" />
+				</execute>
+			</then>
+		</if>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Tasks" />
 		</execute>

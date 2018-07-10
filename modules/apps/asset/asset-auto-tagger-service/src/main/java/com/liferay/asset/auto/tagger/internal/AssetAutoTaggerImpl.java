@@ -207,6 +207,9 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 					_assetAutoTaggerEntryLocalService.addAssetAutoTaggerEntry(
 						assetEntry, assetTag);
 
+					_assetTagLocalService.incrementAssetCount(
+						assetTag.getTagId(), assetEntry.getClassNameId());
+
 					needsReindex = true;
 				}
 			}

@@ -15,6 +15,7 @@
 package com.liferay.sharepoint.rest.repository.internal.search.kql;
 
 import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -158,6 +159,16 @@ public class KQLQueryVisitor implements QueryVisitor<KQLQuery> {
 		return _visitQueryTerm(wildcardQuery.getQueryTerm());
 	}
 
+	private String _removeExtension(String s) {
+		int i = s.lastIndexOf(CharPool.PERIOD);
+
+		if (i == -1) {
+			return s;
+		}
+
+		return s.substring(0, i);
+	}
+
 	private String _translateField(String field) {
 		if (field.equals(Field.CREATE_DATE) ||
 			field.equals(Field.MODIFIED_DATE)) {
@@ -193,6 +204,10 @@ public class KQLQueryVisitor implements QueryVisitor<KQLQuery> {
 						"yyyy-MM-ddTHH:mm:ss");
 
 				return dateFormat.format(date);
+			}
+
+			if (field.equals(Field.NAME) || field.equals(Field.TITLE)) {
+				value = _removeExtension(value);
 			}
 
 			String formattedValue =

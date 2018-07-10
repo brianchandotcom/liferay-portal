@@ -38,7 +38,7 @@
 		<finder name="AssetTagId" return-type="Collection">
 			<finder-column name="assetTagId" />
 		</finder>
-		<finder name="A_A" return-type="AssetAutoTaggerEntry" unique="true">
+		<finder name="A_A" return-type="AssetAutoTaggerEntry">
 			<finder-column name="assetEntryId" />
 			<finder-column name="assetTagId" />
 		</finder>

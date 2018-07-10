@@ -19,7 +19,7 @@
 <div class="lfr-asset-addon-entry-selector" id="<%= namespace + id %>assetAddonEntrySelector">
 	<aui:input name="<%= hiddenInput %>" type="hidden" value='<%= ListUtil.toString(selectedAssetAddonEntries, "key") %>' />
 
-	<ul class="list-inline list-unstyled selected-entries">
+	<ul class="list-inline list-unstyled row selected-entries">
 
 		<%
 		for (AssetAddonEntry assetAddonEntry : selectedAssetAddonEntries) {

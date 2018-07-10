@@ -308,18 +308,6 @@ http://www.w3.org/TR/html401/struct/global.html
 			</regexp-list>
 		</attribute>
 
-		<!--  Ordered list attributes  -->
-
-		<attribute name="type">
-			<literal-list>
-				<literal value="1"/>
-				<literal value="a"/>
-				<literal value="A"/>
-				<literal value="i"/>
-				<literal value="I"/>
-			</literal-list>
-		</attribute>
-
 		<!--  Common positioning attributes  -->
 
 		<attribute name="width">
@@ -750,7 +738,15 @@ http://www.w3.org/TR/html401/struct/global.html
 		<tag name="ul" action="validate"/>
 
 		<tag name="ol" action="validate">
-			<attribute name="type"/>
+			<attribute name="type">
+				<literal-list>
+					<literal value="1"/>
+					<literal value="a"/>
+					<literal value="A"/>
+					<literal value="i"/>
+					<literal value="I"/>
+				</literal-list>
+			</attribute>
 		</tag>
 
 		<tag name="li" action="validate"/>

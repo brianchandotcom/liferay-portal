@@ -34,6 +34,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -137,10 +139,10 @@ public class StructuredContentNestedCollectionResource
 			"values", this::_getJournalArticleDDMFormFieldValues,
 			fieldValuesBuilder -> fieldValuesBuilder.types(
 				"ContentFieldValue"
+			).addLinkedModel(
+				"file", MediaObjectIdentifier.class, this::_getFileEntryId
 			).addLocalizedStringByLocale(
 				"value", this::_getLocalizedString
-			).addLinkedModel(
-				"image", MediaObjectIdentifier.class, this::_getImageId
 			).addString(
 				"name", DDMFormFieldValue::getName
 			).build()
@@ -217,6 +219,34 @@ public class StructuredContentNestedCollectionResource
 			journalArticle.getArticleResourceUuid(), new ServiceContext());
 	}
 
+	private Long _getFileEntryId(DDMFormFieldValue ddmFormFieldValue) {
+		Value value = ddmFormFieldValue.getValue();
+
+		String valueString = value.getString(LocaleUtil.getDefault());
+
+		try {
+			if (_isJsonObject(valueString)) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				long groupId = jsonObject.getLong("groupId");
+				String uuid = jsonObject.getString("uuid");
+
+				FileEntry fileEntry =
+					_dlAppService.getFileEntryByUuidAndGroupId(uuid, groupId);
+
+				return fileEntry.getFileEntryId();
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return null;
+	}
+
 	private List<DDMFormFieldValue> _getFormFieldValues(
 		List<DDMFormFieldValue> ddmFormFieldValues) {
 
@@ -235,22 +265,6 @@ public class StructuredContentNestedCollectionResource
 		nestedDDMFormFieldValues.addAll(ddmFormFieldValues);
 
 		return nestedDDMFormFieldValues;
-	}
-
-	private Long _getImageId(DDMFormFieldValue ddmFormFieldValue) {
-		Value value = ddmFormFieldValue.getValue();
-
-		String valueString = value.getString(LocaleUtil.getDefault());
-
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			return jsonObject.getLong("fileEntryId");
-		}
-		catch (JSONException jsone) {
-			return null;
-		}
 	}
 
 	private List<String> _getJournalArticleAssetTags(
@@ -399,6 +413,9 @@ public class StructuredContentNestedCollectionResource
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"

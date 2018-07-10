@@ -357,35 +357,33 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 				(List<String>)servletContext.getAttribute(
 					"com.liferay.beanFilterNames");
 
-			if ((beanPortletIds != null) || (beanFilterNames != null)) {
-				if ((beanPortletIds != null) && _log.isInfoEnabled()) {
-					if (beanPortletIds.size() == 1) {
-						_log.info(
-							"1 bean portlet for " + servletContextName +
-								" was unregistered");
-					}
-					else {
-						_log.info(
-							StringBundler.concat(
-								String.valueOf(beanPortletIds.size()),
-								" bean portlets for ", servletContextName,
-								" were unregistered"));
-					}
+			if ((beanPortletIds != null) && _log.isInfoEnabled()) {
+				if (beanPortletIds.size() == 1) {
+					_log.info(
+						"1 bean portlet for " + servletContextName +
+							" was unregistered");
 				}
+				else {
+					_log.info(
+						StringBundler.concat(
+							String.valueOf(beanPortletIds.size()),
+							" bean portlets for ", servletContextName,
+							" were unregistered"));
+				}
+			}
 
-				if ((beanFilterNames != null) && _log.isInfoEnabled()) {
-					if (beanFilterNames.size() == 1) {
-						_log.info(
-							"1 bean filter for " + servletContextName +
-								" was unregistered");
-					}
-					else {
-						_log.info(
-							StringBundler.concat(
-								String.valueOf(beanFilterNames.size()),
-								" bean filters for ", servletContextName,
-								" were unregistered"));
-					}
+			if ((beanFilterNames != null) && _log.isInfoEnabled()) {
+				if (beanFilterNames.size() == 1) {
+					_log.info(
+						"1 bean filter for " + servletContextName +
+							" was unregistered");
+				}
+				else {
+					_log.info(
+						StringBundler.concat(
+							String.valueOf(beanFilterNames.size()),
+							" bean filters for ", servletContextName,
+							" were unregistered"));
 				}
 			}
 

@@ -20,17 +20,23 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNa
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -145,7 +151,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 	}
 
 	@Test
-	public void testDeleteLayoutPageTemplate() throws Exception {
+	public void testDeleteLayoutPageTemplateCollection() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -166,6 +172,273 @@ public class LayoutPageTemplateCollectionServiceTest {
 				fetchLayoutPageTemplateCollection(
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId()));
+	}
+
+	@Test
+	public void testDeleteLayoutPageTemplateCollections() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection1 =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection 1",
+					null, serviceContext);
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection 2",
+					null, serviceContext);
+
+		long[] layoutPageTemplateCollections = {
+			layoutPageTemplateCollection1.getLayoutPageTemplateCollectionId(),
+			layoutPageTemplateCollection2.getLayoutPageTemplateCollectionId()
+		};
+
+		LayoutPageTemplateCollectionServiceUtil.
+			deleteLayoutPageTemplateCollections(layoutPageTemplateCollections);
+
+		Assert.assertNull(
+			LayoutPageTemplateCollectionServiceUtil.
+				fetchLayoutPageTemplateCollection(
+					layoutPageTemplateCollection1.
+						getLayoutPageTemplateCollectionId()));
+
+		Assert.assertNull(
+			LayoutPageTemplateCollectionServiceUtil.
+				fetchLayoutPageTemplateCollection(
+					layoutPageTemplateCollection2.
+						getLayoutPageTemplateCollectionId()));
+	}
+
+	@Test
+	public void testGetLayoutPageTemplateCollections() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection1 =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection 1",
+					null, serviceContext);
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection 2",
+					null, serviceContext);
+
+		List<LayoutPageTemplateCollection> actualLayoutPageTemplateCollections =
+			LayoutPageTemplateCollectionServiceUtil.
+				getLayoutPageTemplateCollections(_group.getGroupId());
+
+		Assert.assertTrue(
+			actualLayoutPageTemplateCollections.contains(
+				layoutPageTemplateCollection1));
+		Assert.assertTrue(
+			actualLayoutPageTemplateCollections.contains(
+				layoutPageTemplateCollection2));
+	}
+
+	@Test
+	public void testGetLayoutPageTemplateCollectionsByComparator()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				LayoutPageTemplateCollectionServiceUtil.
+					addLayoutPageTemplateCollection(
+						group.getGroupId(), "AA Page Template Collection", null,
+						serviceContext);
+
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					group.getGroupId(), "AB Page Template Collection", null,
+					serviceContext);
+
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					group.getGroupId(), "AC Page Template Collection", null,
+					serviceContext);
+
+			OrderByComparator orderByComparator =
+				new LayoutPageTemplateCollectionNameComparator(true);
+
+			List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollections(
+						group.getGroupId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, orderByComparator);
+
+			LayoutPageTemplateCollection firstLayoutPageTemplateCollection =
+				layoutPageTemplateCollections.get(0);
+
+			Assert.assertEquals(
+				firstLayoutPageTemplateCollection,
+				layoutPageTemplateCollection);
+
+			orderByComparator = new LayoutPageTemplateCollectionNameComparator(
+				false);
+
+			layoutPageTemplateCollections =
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollections(
+						group.getGroupId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, orderByComparator);
+
+			LayoutPageTemplateCollection lastLayoutPageTemplateCollection =
+				layoutPageTemplateCollections.get(
+					layoutPageTemplateCollections.size() - 1);
+
+			Assert.assertEquals(
+				lastLayoutPageTemplateCollection, layoutPageTemplateCollection);
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
+	}
+
+	@Test
+	public void testGetLayoutPageTemplateCollectionsByKeywords()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		int originalLayoutPageTemplateCollectionsCount =
+			LayoutPageTemplateCollectionServiceUtil.
+				getLayoutPageTemplateCollectionsCount(
+					_group.getGroupId(), "theme");
+
+		LayoutPageTemplateCollectionServiceUtil.addLayoutPageTemplateCollection(
+			_group.getGroupId(), "Fjord theme collection", null,
+			serviceContext);
+
+		LayoutPageTemplateCollectionServiceUtil.addLayoutPageTemplateCollection(
+			_group.getGroupId(), "Theme Westeros collection", null,
+			serviceContext);
+
+		int actualLayoutPageTemplateCollectionsCount =
+			LayoutPageTemplateCollectionServiceUtil.
+				getLayoutPageTemplateCollectionsCount(
+					_group.getGroupId(), "theme");
+
+		Assert.assertEquals(
+			originalLayoutPageTemplateCollectionsCount + 2,
+			actualLayoutPageTemplateCollectionsCount);
+	}
+
+	@Test
+	public void testGetLayoutPageTemplateCollectionsByKeywordsAndComparator()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					group.getGroupId(), "AA FjordCollection", null,
+					serviceContext);
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				LayoutPageTemplateCollectionServiceUtil.
+					addLayoutPageTemplateCollection(
+						group.getGroupId(), "AB Theme Collection", null,
+						serviceContext);
+
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					group.getGroupId(), "AC Theme Collection", null,
+					serviceContext);
+
+			OrderByComparator orderByComparator =
+				new LayoutPageTemplateCollectionNameComparator(true);
+
+			List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollections(
+						group.getGroupId(), "theme", QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, orderByComparator);
+
+			LayoutPageTemplateCollection firstLayoutPageTemplateCollection =
+				layoutPageTemplateCollections.get(0);
+
+			Assert.assertEquals(
+				firstLayoutPageTemplateCollection,
+				layoutPageTemplateCollection);
+
+			orderByComparator = new LayoutPageTemplateCollectionNameComparator(
+				false);
+
+			layoutPageTemplateCollections =
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollections(
+						group.getGroupId(), "theme", QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, orderByComparator);
+
+			LayoutPageTemplateCollection lastLayoutPageTemplateCollection =
+				layoutPageTemplateCollections.get(
+					layoutPageTemplateCollections.size() - 1);
+
+			Assert.assertEquals(
+				lastLayoutPageTemplateCollection, layoutPageTemplateCollection);
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
+	}
+
+	@Test
+	public void testGetLayoutPageTemplateCollectionsByRange() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			LayoutPageTemplateCollection layoutPageTemplateCollection1 =
+				LayoutPageTemplateCollectionServiceUtil.
+					addLayoutPageTemplateCollection(
+						group.getGroupId(), "Layout Page Template Collection 1",
+						null, serviceContext);
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection2 =
+				LayoutPageTemplateCollectionServiceUtil.
+					addLayoutPageTemplateCollection(
+						group.getGroupId(), "Layout Page Template Collection 2",
+						null, serviceContext);
+
+			List<LayoutPageTemplateCollection>
+				actualLayoutPageTemplateCollections =
+					LayoutPageTemplateCollectionServiceUtil.
+						getLayoutPageTemplateCollections(
+							group.getGroupId(), 0, 2);
+
+			Assert.assertTrue(
+				actualLayoutPageTemplateCollections.contains(
+					layoutPageTemplateCollection1));
+			Assert.assertTrue(
+				actualLayoutPageTemplateCollections.contains(
+					layoutPageTemplateCollection2));
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
 	}
 
 	@Test
@@ -197,6 +470,35 @@ public class LayoutPageTemplateCollectionServiceTest {
 				fetchLayoutPageTemplateCollection(
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId()));
+	}
+
+	@Test
+	public void testUpdateLayoutPageTemplateCollection()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
+
+		layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				updateLayoutPageTemplateCollection(
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					"Layout Page Template Collection New", "Description New");
+
+		Assert.assertEquals(
+			"Layout Page Template Collection New",
+			layoutPageTemplateCollection.getName());
+
+		Assert.assertEquals(
+			"Description New", layoutPageTemplateCollection.getDescription());
 	}
 
 	@DeleteAfterTestRun

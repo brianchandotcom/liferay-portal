@@ -1449,7 +1449,8 @@ public class JournalDisplayContext {
 
 		if ((stagingGroupHelper.isLocalLiveGroup(group) ||
 			 stagingGroupHelper.isRemoteLiveGroup(group)) &&
-			group.isStagedPortlet(JournalPortletKeys.JOURNAL)) {
+			stagingGroupHelper.isStagedPortlet(
+				group, JournalPortletKeys.JOURNAL)) {
 
 			return false;
 		}

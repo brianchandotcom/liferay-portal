@@ -26,7 +26,7 @@ AUI.add(
 					'<input {checked} class="form-check-input sr-only" data-key={key} data-label={label} type="checkbox">' +
 					'<div class="card p-3">' +
 						'<div class="card-row">' +
-							'<div class="flex-col icon-{icon} mr-2"></div>' +
+							Liferay.Util.getLexiconIconTpl('{icon}') +
 							'<div class="flex-col">{label}</div>' +
 						'</div>' +
 					'</div>' +

@@ -145,7 +145,7 @@ public class ReflectionUtilTest {
 				Assert.assertSame(
 					TestClass._privateStaticFinalObject, field.get(null));
 			}
-			else {
+			else if (name.equals("_privateStaticObject")) {
 				Assert.assertSame(
 					TestClass._privateStaticObject, field.get(null));
 			}

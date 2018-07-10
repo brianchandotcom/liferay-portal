@@ -388,24 +388,6 @@ else {
 
 										</li>
 									</ul>
-
-									<ul>
-										<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-publish-their">
-											<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
-
-											<aui:a cssClass="modify-link" href="javascript:;" id="contentOptionsLink" label="change" method="get" />
-
-											<div class="hide" id="<portlet:namespace />contentOptions">
-												<ul class="lfr-tree list-unstyled">
-													<li class="tree-item">
-														<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
-
-														<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
-													</li>
-												</ul>
-											</div>
-										</aui:fieldset>
-									</ul>
 								</li>
 							</c:if>
 						</ul>

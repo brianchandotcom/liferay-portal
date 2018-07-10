@@ -917,6 +917,8 @@
 
 		<execute function="Pause" locator1="5000" />
 
+		<execute function="SelectFrameTop" />
+
 		<execute function="SelectFrame" locator1="WCSelectDisplayPage#DISPLAY_PAGE_CONFIGURATION_IFRAME" />
 
 		<if>

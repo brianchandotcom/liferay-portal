@@ -99,7 +99,17 @@ public class Database {
 			sb.append(_port);
 		}
 
-		sb.append(_buildDatabaseName(_databaseName));
+		if (_protocol.contains("sqlserver")) {
+			sb.append(";databaseName=");
+		}
+		else if (_protocol.contains("oracle")) {
+			sb.append(":");
+		}
+		else {
+			sb.append("/");
+		}
+
+		sb.append(_databaseName);
 		sb.append(_params);
 
 		return sb.toString();
@@ -139,20 +149,6 @@ public class Database {
 		_port = port;
 		_databaseName = databaseName;
 		_params = params;
-	}
-
-	private String _buildDatabaseName(String databaseName) {
-		if (_protocol.contains("sqlserver")) {
-			databaseName = ";databaseName=".concat(databaseName);
-		}
-		else if (_protocol.contains("oracle")) {
-			databaseName = ":".concat(databaseName);
-		}
-		else {
-			databaseName = "/".concat(databaseName);
-		}
-
-		return databaseName;
 	}
 
 	private String _className;

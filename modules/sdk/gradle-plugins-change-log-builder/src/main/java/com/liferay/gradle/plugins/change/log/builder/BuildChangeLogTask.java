@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
@@ -311,6 +312,19 @@ public class BuildChangeLogTask extends DefaultTask {
 
 			if (Validator.isNotNull(ticketId)) {
 				ticketIds.add(ticketId);
+			}
+		}
+
+		if (rangeStart.equals(GitUtil.getHashOldest(repository))) {
+			try (RevWalk revWalk = new RevWalk(repository)) {
+				RevCommit revCommit = revWalk.parseCommit(
+					repository.resolve(rangeStart));
+
+				String ticketId = _getTicketId(revCommit);
+
+				if (Validator.isNotNull(ticketId)) {
+					ticketIds.add(ticketId);
+				}
 			}
 		}
 

@@ -7599,8 +7599,8 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle.class);
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			article.getGroupId(), classNameId, article.getDDMStructureKey(),
-			true);
+			PortalUtil.getSiteGroupId(article.getGroupId()), classNameId,
+			article.getDDMStructureKey(), true);
 
 		return ddmStructure.getStructureId();
 	}
@@ -7972,7 +7972,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			article.getGroupId(),
+			PortalUtil.getSiteGroupId(article.getGroupId()),
 			classNameLocalService.getClassNameId(JournalArticle.class),
 			article.getDDMStructureKey(), true);
 

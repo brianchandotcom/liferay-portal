@@ -24,22 +24,50 @@ AUI.add(
 		var TPL_STR_SELECTED_ASSET_ADDON_ENTRY = '<li class="col-md-6 form-check form-check-card">' +
 				'<label class="form-check-label">' +
 					'<input {checked} class="form-check-input sr-only" data-key={key} data-label={label} type="checkbox">' +
-					'<div class="card p-3">' +
-						'<div class="card-row">' +
-							'<div class="flex-col icon-{icon} mr-2"></div>' +
-							'<div class="flex-col">{label}</div>' +
+					'<div class="card card-horizontal card-type-directory">' +
+						'<div class="card-body">' +
+							'<div class="card-row">' +
+								'<div class="autofit-col">' +
+									'<span class="sticker">' +
+										Liferay.Util.getLexiconIconTpl('{icon}') +
+									'</span>' +
+								'</div>' +
+								'<div class="autofit-col autofit-col-expand autofit-col-gutters">' +
+									'<section class="autofit-section">' +
+										'<h3 class="card-title" title="{label}">' +
+											'<span class="text-truncate-inline">' +
+												'<span class="text-truncate">{label}</span>' +
+											'</span>' +
+										'</h3>' +
+									'</section>' +
+								'</div>' +
+							'</div>' +
 						'</div>' +
 					'</div>' +
 				'</label>' +
 			'</li>';
 
-		var TPL_SUMMARY_ASSET_ADDON_ENTRY = '<li class="list-entry" data-key="{key}" data-label="{label}">' +
-				'<span class="label label-default">' +
-					'{label}' +
-					'<a class="remove-button" href="javascript:;">' +
-						Liferay.Util.getLexiconIconTpl('times') +
-					'</a>' +
-				'</span>' +
+		var TPL_SUMMARY_ASSET_ADDON_ENTRY = '<li class="col-md-4 list-entry" data-key="{key}" data-label="{label}">' +
+				'<div class="card card-horizontal card-type-directory">' +
+					'<div class="card-body">' +
+						'<div class="card-row">' +
+							'<div class="autofit-col autofit-col-expand autofit-col-gutters">' +
+								'<section class="autofit-section">' +
+									'<h3 class="card-title" title="{label}">' +
+										'<span class="text-truncate-inline">' +
+											'<span class="text-truncate">{label}</span>' +
+										'</span>' +
+									'</h3>' +
+								'</section>' +
+							'</div>' +
+							'<div class="autofit-col">' +
+								'<a class="remove-button" href="javascript:;">' +
+									Liferay.Util.getLexiconIconTpl('times') +
+								'</a>' +
+							'</div>' +
+						'</div>' +
+					'</div>' +
+				'</div>' +
 			'</li>';
 
 		var AssetAddonEntrySelector = A.Component.create(
@@ -100,6 +128,7 @@ AUI.add(
 						if (!dialog) {
 							var dialogConfig = {
 								'toolbars.footer': instance._getSelectDialogFooterToolbar(),
+								autoHeightRatio: 0.5,
 								width: 540
 							};
 
@@ -148,15 +177,16 @@ AUI.add(
 
 						var footerToolbar = [
 							{
-								label: Liferay.Language.get('done'),
-								on: {
-									click: A.bind('_updateSelectedEntries', instance)
-								}
-							},
-							{
 								label: Liferay.Language.get('cancel'),
 								on: {
 									click: A.bind('_hideSelectDialog', instance)
+								}
+							},
+							{
+								cssClass: 'btn-primary',
+								label: Liferay.Language.get('done'),
+								on: {
+									click: A.bind('_updateSelectedEntries', instance)
 								}
 							}
 						];

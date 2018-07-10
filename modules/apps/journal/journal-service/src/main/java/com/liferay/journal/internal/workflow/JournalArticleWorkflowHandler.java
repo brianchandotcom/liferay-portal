@@ -78,7 +78,8 @@ public class JournalArticleWorkflowHandler
 			article.getFolderId());
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			article.getGroupId(), _portal.getClassNameId(JournalArticle.class),
+			_portal.getSiteGroupId(article.getGroupId()),
+			_portal.getClassNameId(JournalArticle.class),
 			article.getDDMStructureKey(), true);
 
 		WorkflowDefinitionLink workflowDefinitionLink =

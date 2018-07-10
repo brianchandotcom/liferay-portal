@@ -19,20 +19,34 @@
 <div class="lfr-asset-addon-entry-selector" id="<%= namespace + id %>assetAddonEntrySelector">
 	<aui:input name="<%= hiddenInput %>" type="hidden" value='<%= ListUtil.toString(selectedAssetAddonEntries, "key") %>' />
 
-	<ul class="list-inline list-unstyled selected-entries">
+	<ul class="list-inline list-unstyled row selected-entries">
 
 		<%
 		for (AssetAddonEntry assetAddonEntry : selectedAssetAddonEntries) {
 		%>
 
-			<li class="list-entry" data-key="<%= assetAddonEntry.getKey() %>" data-label="<%= assetAddonEntry.getLabel(locale) %>">
-				<span class="label label-default">
-					<%= assetAddonEntry.getLabel(locale) %>
+			<li class="col-md-4 list-entry" data-key="<%= assetAddonEntry.getKey() %>" data-label="<%= assetAddonEntry.getLabel(locale) %>">
+				<div class="card card-horizontal card-type-directory">
+					<div class="card-body">
+						<div class="card-row">
+							<div class="autofit-col autofit-col-expand autofit-col-gutters">
+								<section class="autofit-section">
+									<h3 class="card-title" title="{label}">
+										<span class="text-truncate-inline">
+											<span class="text-truncate"><%= assetAddonEntry.getLabel(locale) %></span>
+										</span>
+									</h3>
+								</section>
+							</div>
 
-					<aui:a cssClass="remove-button" href="javascript:;">
-						<aui:icon image="times" markupView="lexicon" />
-					</aui:a>
-				</span>
+							<div class="autofit-col">
+								<a class="remove-button" href="javascript:;">
+									<aui:icon image="times" markupView="lexicon" />
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</li>
 
 		<%
@@ -41,7 +55,9 @@
 
 	</ul>
 
-	<aui:button cssClass="select-button" name='<%= id + "selectButton" %>' value="select" />
+	<div class="button-holder">
+		<aui:button cssClass="select-button" name='<%= id + "selectButton" %>' value="select" />
+	</div>
 </div>
 
 <aui:script use="liferay-asset-addon-entry-selector">

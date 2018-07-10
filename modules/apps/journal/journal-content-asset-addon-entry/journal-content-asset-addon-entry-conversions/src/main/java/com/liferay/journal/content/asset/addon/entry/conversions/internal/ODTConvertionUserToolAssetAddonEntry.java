@@ -36,7 +36,7 @@ public class ODTConvertionUserToolAssetAddonEntry
 
 	@Override
 	public String getIcon() {
-		return "font";
+		return "text";
 	}
 
 	@Override

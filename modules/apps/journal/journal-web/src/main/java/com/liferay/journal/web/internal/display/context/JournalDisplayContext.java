@@ -787,6 +787,9 @@ public class JournalDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationBarItems(String currentItem) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		return new NavigationItemList() {
 			{
 				add(
@@ -799,19 +802,23 @@ public class JournalDisplayContext {
 							LanguageUtil.get(_request, "web-content"));
 					});
 
-				add(
-					navigationItem -> {
-						navigationItem.setHref(_getStructuresURL());
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "structures"));
-					});
+				Group group = themeDisplay.getScopeGroup();
 
-				add(
-					navigationItem -> {
-						navigationItem.setHref(_getTemplatesURL());
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "templates"));
-					});
+				if (!group.isLayout()) {
+					add(
+						navigationItem -> {
+							navigationItem.setHref(_getStructuresURL());
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "structures"));
+						});
+
+					add(
+						navigationItem -> {
+							navigationItem.setHref(_getTemplatesURL());
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "templates"));
+						});
+				}
 
 				if (_journalWebConfiguration.showFeeds() &&
 					PortalUtil.isRSSFeedsEnabled()) {

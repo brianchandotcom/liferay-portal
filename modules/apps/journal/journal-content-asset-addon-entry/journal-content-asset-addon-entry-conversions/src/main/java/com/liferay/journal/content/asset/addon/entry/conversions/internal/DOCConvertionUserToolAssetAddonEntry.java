@@ -36,7 +36,7 @@ public class DOCConvertionUserToolAssetAddonEntry
 
 	@Override
 	public String getIcon() {
-		return "font";
+		return "text";
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public class CommentRatingsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getIcon() {
-		return "comment-alt";
+		return "comments";
 	}
 
 	@Override

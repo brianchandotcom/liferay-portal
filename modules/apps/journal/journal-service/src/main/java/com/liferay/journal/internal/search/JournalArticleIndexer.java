@@ -402,7 +402,8 @@ public class JournalArticleIndexer
 		throws Exception {
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			article.getGroupId(), _portal.getClassNameId(JournalArticle.class),
+			_portal.getSiteGroupId(article.getGroupId()),
+			_portal.getClassNameId(JournalArticle.class),
 			article.getDDMStructureKey(), true);
 
 		if (ddmStructure == null) {
@@ -723,7 +724,8 @@ public class JournalArticleIndexer
 		throws Exception {
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			article.getGroupId(), _portal.getClassNameId(JournalArticle.class),
+			_portal.getSiteGroupId(article.getGroupId()),
+			_portal.getClassNameId(JournalArticle.class),
 			article.getDDMStructureKey(), true);
 
 		if (ddmStructure == null) {

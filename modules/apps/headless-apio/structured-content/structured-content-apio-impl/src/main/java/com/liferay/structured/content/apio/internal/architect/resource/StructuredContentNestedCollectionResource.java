@@ -324,6 +324,8 @@ public class StructuredContentNestedCollectionResource
 			ddmFormFieldValue::getValue
 		).map(
 			value -> value.getString(locale)
+		).filter(
+			valueString -> !_isJsonObject(valueString)
 		).orElse(
 			null
 		);
@@ -347,6 +349,25 @@ public class StructuredContentNestedCollectionResource
 		int count = _journalArticleService.getArticlesCount(contentSpaceId, 0);
 
 		return new PageItems<>(journalArticleWrappers, count);
+	}
+
+	private boolean _isJsonObject(String json) {
+		try {
+			if (json.startsWith("{") &&
+				(JSONFactoryUtil.createJSONObject(json) != null)) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (JSONException jsone) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to parse JSON", jsone);
+			}
+
+			return false;
+		}
 	}
 
 	private JournalArticleWrapper _updateJournalArticle(

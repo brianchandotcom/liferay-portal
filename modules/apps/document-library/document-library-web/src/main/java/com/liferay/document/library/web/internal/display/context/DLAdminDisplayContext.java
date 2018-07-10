@@ -635,7 +635,9 @@ public class DLAdminDisplayContext {
 
 					dlSearchResults.add(fileEntry);
 				}
-				else if (className.equals(DLFolder.class.getName())) {
+				else if (className.equals(DLFolder.class.getName()) ||
+						 className.equals(Folder.class.getName())) {
+
 					curFolder = DLAppLocalServiceUtil.getFolder(
 						searchResult.getClassPK());
 

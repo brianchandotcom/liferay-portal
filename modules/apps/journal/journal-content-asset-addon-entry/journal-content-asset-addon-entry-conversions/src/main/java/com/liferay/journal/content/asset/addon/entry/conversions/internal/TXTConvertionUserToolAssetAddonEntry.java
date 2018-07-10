@@ -36,7 +36,7 @@ public class TXTConvertionUserToolAssetAddonEntry
 
 	@Override
 	public String getIcon() {
-		return "file-alt";
+		return "document";
 	}
 
 	@Override

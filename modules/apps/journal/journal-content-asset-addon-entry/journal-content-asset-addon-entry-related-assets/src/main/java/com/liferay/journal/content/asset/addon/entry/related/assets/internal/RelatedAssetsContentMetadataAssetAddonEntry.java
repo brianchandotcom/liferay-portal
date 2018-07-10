@@ -34,7 +34,7 @@ public class RelatedAssetsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getIcon() {
-		return "file";
+		return "page";
 	}
 
 	@Override

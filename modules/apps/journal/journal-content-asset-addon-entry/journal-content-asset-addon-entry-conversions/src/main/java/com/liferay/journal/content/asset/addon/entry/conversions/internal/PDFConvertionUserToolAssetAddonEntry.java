@@ -36,7 +36,7 @@ public class PDFConvertionUserToolAssetAddonEntry
 
 	@Override
 	public String getIcon() {
-		return "file-text";
+		return "document";
 	}
 
 	@Override

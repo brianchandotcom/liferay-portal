@@ -34,7 +34,7 @@ public class RatingsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getIcon() {
-		return "comments";
+		return "star-half";
 	}
 
 	@Override

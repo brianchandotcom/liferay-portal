@@ -34,7 +34,7 @@ public class LocalesUserToolAssetAddonEntry
 
 	@Override
 	public String getIcon() {
-		return "flag";
+		return "flag-full";
 	}
 
 	@Override

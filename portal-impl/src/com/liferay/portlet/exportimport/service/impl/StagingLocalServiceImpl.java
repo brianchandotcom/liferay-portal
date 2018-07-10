@@ -213,6 +213,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		if (liveGroup.isLayout()) {
+			disableStaging(
+				portletRequest, liveGroup.getParentGroup(), serviceContext);
+
+			return;
+		}
+
 		UnicodeProperties typeSettingsProperties =
 			liveGroup.getTypeSettingsProperties();
 
@@ -283,6 +290,14 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			long userId, Group liveGroup, boolean branchingPublic,
 			boolean branchingPrivate, ServiceContext serviceContext)
 		throws PortalException {
+
+		if (liveGroup.isLayout()) {
+			enableLocalStaging(
+				userId, liveGroup.getParentGroup(), branchingPublic,
+				branchingPrivate, serviceContext);
+
+			return;
+		}
 
 		if (liveGroup.isStagedRemotely()) {
 			disableStaging(liveGroup, serviceContext);

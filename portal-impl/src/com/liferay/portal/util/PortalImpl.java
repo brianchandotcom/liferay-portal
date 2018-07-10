@@ -2850,7 +2850,12 @@ public class PortalImpl implements Portal {
 			(layoutSet.getGroupId() != layout.getGroupId()) ||
 			(layoutSet.isPrivateLayout() != layout.isPrivateLayout())) {
 
-			layoutSet = layout.getLayoutSet();
+			layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+				layout.getGroupId(), layout.isPrivateLayout());
+		}
+
+		if (layoutSet == null) {
+			return null;
 		}
 
 		String groupFriendlyURL = getGroupFriendlyURL(

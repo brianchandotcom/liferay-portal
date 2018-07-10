@@ -169,7 +169,8 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
 		if (!_assetAutoTaggerConfiguration.enabled() ||
-			(assetRenderer == null) || _isInTrash(assetEntry)) {
+			!assetEntry.isVisible() || (assetRenderer == null) ||
+			_isInTrash(assetEntry)) {
 
 			return;
 		}
@@ -215,7 +216,10 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			Indexer<Object> indexer = _indexerRegistry.getIndexer(
 				assetEntry.getClassName());
 
-			indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
+			if (indexer != null) {
+				indexer.reindex(
+					assetEntry.getClassName(), assetEntry.getClassPK());
+			}
 		}
 	}
 

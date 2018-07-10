@@ -1,15 +1,15 @@
-Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} npm Portlet Extender
+Liferay-Releng-App-Description: NPM Portlet Extender is an OSGi bundle that serves as a bridge between traditional portlet and modern frontend development. It allows you to develop NPM projects for Liferay Portal with pure JavaScript tooling (npm, gulp...) and still deploy them as portlets in your Liferay Portal instance.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} NPM Portlet Extender
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category:
 Liferay-Releng-Demo-Url:
-Liferay-Releng-Deprecated: true
+Liferay-Releng-Deprecated: false
 Liferay-Releng-Fix-Delivery-Method:
 Liferay-Releng-Labs: true
-Liferay-Releng-Marketplace: false
+Liferay-Releng-Marketplace: true
 Liferay-Releng-Portal-Required: false
 Liferay-Releng-Public: ${liferay.releng.public}
-Liferay-Releng-Restart-Required: true
+Liferay-Releng-Restart-Required: false
 Liferay-Releng-Suite:
 Liferay-Releng-Support-Url: http://www.liferay.com
 Liferay-Releng-Supported: ${liferay.releng.supported}

@@ -5,4 +5,3 @@ Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="liferay.npm.portlet";\
 		version:Version="1.0.0"
--sources: true

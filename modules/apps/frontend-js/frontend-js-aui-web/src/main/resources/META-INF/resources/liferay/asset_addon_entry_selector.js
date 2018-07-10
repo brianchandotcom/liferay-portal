@@ -24,10 +24,24 @@ AUI.add(
 		var TPL_STR_SELECTED_ASSET_ADDON_ENTRY = '<li class="col-md-6 form-check form-check-card">' +
 				'<label class="form-check-label">' +
 					'<input {checked} class="form-check-input sr-only" data-key={key} data-label={label} type="checkbox">' +
-					'<div class="card p-3">' +
-						'<div class="card-row">' +
-							Liferay.Util.getLexiconIconTpl('{icon}') +
-							'<div class="flex-col">{label}</div>' +
+					'<div class="card card-horizontal card-type-directory">' +
+						'<div class="card-body">' +
+							'<div class="card-row">' +
+								'<div class="autofit-col">' +
+									'<span class="sticker">' +
+										Liferay.Util.getLexiconIconTpl('{icon}') +
+									'</span>' +
+								'</div>' +
+								'<div class="autofit-col autofit-col-expand autofit-col-gutters">' +
+									'<section class="autofit-section">' +
+										'<h3 class="card-title" title="{label}">' +
+											'<span class="text-truncate-inline">' +
+												'<span class="text-truncate">{label}</span>' +
+											'</span>' +
+										'</h3>' +
+									'</section>' +
+								'</div>' +
+							'</div>' +
 						'</div>' +
 					'</div>' +
 				'</label>' +

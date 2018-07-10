@@ -234,7 +234,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 	@Override
 	public InputStream toBundle(File lpkgFile) throws IOException {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream()) {
+				new UnsyncByteArrayOutputStream(
+					(int)(lpkgFile.length() + 512))) {
 
 			try (ZipFile zipFile = new ZipFile(lpkgFile);
 				JarOutputStream jarOutputStream = new JarOutputStream(

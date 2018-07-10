@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
@@ -80,14 +81,17 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 	protected void addKaleoDefinitionsFromKaleoDefinitionVersion()
 		throws PortalException, SQLException {
 
+		StringBundler sb1 = new StringBundler(6);
+
+		sb1.append("select kdv.* from KaleoDefinitionVersion kdv join ( ");
+		sb1.append("select name, max(version) version from ");
+		sb1.append("KaleoDefinitionVersion group by name) sub on sub.name = ");
+		sb1.append("kdv.name and sub.version = kdv.version left join ");
+		sb1.append("KaleoDefinition kd on kdv.name = kd.name where ");
+		sb1.append("kd.kaleoDefinitionId is null");
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(
-				"select kdv.* from KaleoDefinitionVersion kdv join (select " +
-					"name, max(version) version from KaleoDefinitionVersion " +
-						"group by name) sub on sub.name = kdv.name and " +
-							"sub.version = kdv.version left join " +
-								"KaleoDefinition kd on kdv.name = kd.name " +
-									"where kd.kaleoDefinitionId is null");
+			PreparedStatement ps1 = connection.prepareStatement(sb1.toString());
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {

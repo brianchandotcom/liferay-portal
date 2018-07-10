@@ -21,11 +21,10 @@ import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.content.space.apio.architect.util.ContentSpaceUtil;
 import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,7 +89,7 @@ public class ContentSpaceCollectionResource
 		).addLocalizedStringByLocale(
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(
-			"name", this::_getName
+			"name", ContentSpaceUtil::getName
 		).addString(
 			"membershipType", Group::getTypeLabel
 		).build();
@@ -99,19 +97,6 @@ public class ContentSpaceCollectionResource
 
 	private Group _getGroup(long groupId) throws PortalException {
 		return _groupLocalService.getGroup(groupId);
-	}
-
-	private String _getName(Group group, Locale locale) {
-		try {
-			return group.getDescriptiveName(locale);
-		}
-		catch (PortalException pe) {
-			if (_log.isInfoEnabled()) {
-				_log.info(pe, pe);
-			}
-
-			return group.getName(locale);
-		}
 	}
 
 	private PageItems<Group> _getPageItems(
@@ -129,9 +114,6 @@ public class ContentSpaceCollectionResource
 
 		return new PageItems<>(groups, count);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ContentSpaceCollectionResource.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

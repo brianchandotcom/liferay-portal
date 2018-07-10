@@ -61,11 +61,9 @@
 	</command>
 
 	<command name="getTestName">
-		<var method="TestPropsUtil#get('test.name')" name="namespacedTestName" />
+		<var method="TestPropsUtil#get('test.name')" name="testName" />
 
-		<var method="PoshiRunnerStackTraceUtil#getCurrentNamespace()" name="namespace" />
-
-		<var method="StringUtil#replace('${namespacedTestName}', '${namespace}.', '')" name="testName" />
+		<var method="RegexUtil#replace('${testName}', '[^\.]*\.(.*)', '1')" name="testName" />
 
 		<return value="${testName}" />
 	</command>

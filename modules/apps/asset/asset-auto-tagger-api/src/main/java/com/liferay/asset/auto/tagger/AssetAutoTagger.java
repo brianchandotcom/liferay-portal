@@ -24,4 +24,6 @@ public interface AssetAutoTagger {
 
 	public void tag(AssetEntry assetEntry) throws PortalException;
 
+	public void untag(AssetEntry assetEntry) throws PortalException;
+
 }

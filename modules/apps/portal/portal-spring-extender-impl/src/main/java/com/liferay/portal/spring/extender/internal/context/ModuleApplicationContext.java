@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
+import com.liferay.portal.spring.bean.LiferayBeanFactory;
+
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import java.util.List;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -58,6 +61,11 @@ public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 		}
 
 		return resources.toArray(new Resource[resources.size()]);
+	}
+
+	@Override
+	protected DefaultListableBeanFactory createBeanFactory() {
+		return new LiferayBeanFactory(getInternalParentBeanFactory());
 	}
 
 	private final Bundle _bundle;

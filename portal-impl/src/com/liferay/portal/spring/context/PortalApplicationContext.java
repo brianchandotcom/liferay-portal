@@ -16,12 +16,14 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.FileNotFoundException;
 
 import javax.servlet.ServletContext;
 
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -58,6 +60,11 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
 				PARENT_APPLICATION_CONTEXT);
 
 		setParent(_parentApplicationContext);
+	}
+
+	@Override
+	protected DefaultListableBeanFactory createBeanFactory() {
+		return new LiferayBeanFactory(getInternalParentBeanFactory());
 	}
 
 	@Override

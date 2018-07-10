@@ -46,6 +46,7 @@ import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
+import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -62,6 +63,7 @@ import java.util.zip.ZipFile;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -226,7 +228,15 @@ public class InitUtil {
 			ApplicationContext appApplicationContext =
 				new ClassPathXmlApplicationContext(
 					configLocations.toArray(new String[configLocations.size()]),
-					infrastructureApplicationContext);
+					infrastructureApplicationContext) {
+
+					@Override
+					protected DefaultListableBeanFactory createBeanFactory() {
+						return new LiferayBeanFactory(
+							getInternalParentBeanFactory());
+					}
+
+				};
 
 			BeanLocator beanLocator = new BeanLocatorImpl(
 				ClassLoaderUtil.getPortalClassLoader(), appApplicationContext);

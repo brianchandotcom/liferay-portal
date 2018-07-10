@@ -271,6 +271,31 @@ public class BuildChangeLogTask extends DefaultTask {
 		return rangeStart + "^";
 	}
 
+	private String _getTicketId(RevCommit revCommit) {
+		String message = revCommit.getShortMessage();
+
+		int index = message.indexOf('-');
+
+		if (index == -1) {
+			return null;
+		}
+
+		String prefix = message.substring(0, index);
+		Set<String> ticketIdPrefixes = getTicketIdPrefixes();
+
+		if (!ticketIdPrefixes.contains(prefix)) {
+			return null;
+		}
+
+		index = message.indexOf(' ');
+
+		if (index == -1) {
+			index = message.length();
+		}
+
+		return message.substring(0, index);
+	}
+
 	private Set<String> _getTicketIds(
 			String rangeStart, String rangeEnd, Repository repository)
 		throws Exception {
@@ -278,33 +303,15 @@ public class BuildChangeLogTask extends DefaultTask {
 		Set<String> ticketIds = new TreeSet<>(
 			new NaturalOrderStringComparator());
 
-		Set<String> ticketIdPrefixes = getTicketIdPrefixes();
-
 		Iterable<RevCommit> revCommits = GitUtil.getCommits(
 			getDirs(), rangeStart, rangeEnd, repository);
 
 		for (RevCommit revCommit : revCommits) {
-			String message = revCommit.getShortMessage();
+			String ticketId = _getTicketId(revCommit);
 
-			int index = message.indexOf('-');
-
-			if (index == -1) {
-				continue;
+			if (Validator.isNotNull(ticketId)) {
+				ticketIds.add(ticketId);
 			}
-
-			String prefix = message.substring(0, index);
-
-			if (!ticketIdPrefixes.contains(prefix)) {
-				continue;
-			}
-
-			index = message.indexOf(' ');
-
-			if (index == -1) {
-				index = message.length();
-			}
-
-			ticketIds.add(message.substring(0, index));
 		}
 
 		return ticketIds;

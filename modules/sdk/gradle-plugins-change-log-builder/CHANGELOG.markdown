@@ -15,6 +15,12 @@ repositories.
 - [LPS-82857]: Avoid error when running that does not contain commits older than
 2 years.
 
+## 1.1.1 - 2018-07-10
+
+### Fixed
+- [LPS-82960]: Avoid error when the only valid commit is the initial commit.
+
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-80950]: https://issues.liferay.com/browse/LPS-80950
 [LPS-82857]: https://issues.liferay.com/browse/LPS-82857
+[LPS-82960]: https://issues.liferay.com/browse/LPS-82960

@@ -159,14 +159,20 @@ public class PortletURLImpl
 
 	@Override
 	public Appendable append(Appendable appendable) throws IOException {
-		throw new UnsupportedOperationException();
+		return append(appendable, true);
 	}
 
 	@Override
 	public Appendable append(Appendable appendable, boolean escapeXml)
 		throws IOException {
 
-		throw new UnsupportedOperationException();
+		String toString = toString();
+
+		if (escapeXml && !_escapeXml) {
+			toString = HtmlUtil.escape(toString);
+		}
+
+		return appendable.append(toString);
 	}
 
 	@Override

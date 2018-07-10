@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADDRESSES</td>
-	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Addresses')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADDITIONAL_EMAIL_ADDRESSES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Additional Email Addresses')]</td>
 	<td></td>

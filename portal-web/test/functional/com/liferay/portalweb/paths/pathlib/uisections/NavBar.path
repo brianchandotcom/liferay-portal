@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADDRESSES</td>
+	<td>//a[contains(@class,'nav-link') and contains(.,'Addresses')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPLICATION_SEARCH_FIELD</td>
 	<td>//input[contains(@id,'searchApplication')]</td>
 	<td>Application Search Field</td>

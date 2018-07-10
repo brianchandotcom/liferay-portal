@@ -21,10 +21,9 @@ import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.content.space.apio.architect.util.ContentSpaceUtil;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -32,7 +31,6 @@ import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.site.apio.internal.model.GroupWrapper;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -94,7 +92,7 @@ public class WebSiteCollectionResource
 		).addLocalizedStringByLocale(
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(
-			"name", this::_getName
+			"name", ContentSpaceUtil::getName
 		).addRelatedCollection(
 			"members", PersonIdentifier.class
 		).addString(
@@ -111,19 +109,6 @@ public class WebSiteCollectionResource
 		throws PortalException {
 
 		return new GroupWrapper(_groupService.getGroup(groupId), themeDisplay);
-	}
-
-	private String _getName(GroupWrapper groupWrapper, Locale locale) {
-		try {
-			return groupWrapper.getDescriptiveName(locale);
-		}
-		catch (PortalException pe) {
-			if (_log.isInfoEnabled()) {
-				_log.info(pe, pe);
-			}
-
-			return groupWrapper.getName(locale);
-		}
 	}
 
 	private PageItems<GroupWrapper> _getPageItems(
@@ -154,9 +139,6 @@ public class WebSiteCollectionResource
 
 		return null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WebSiteCollectionResource.class);
 
 	@Reference
 	private GroupService _groupService;

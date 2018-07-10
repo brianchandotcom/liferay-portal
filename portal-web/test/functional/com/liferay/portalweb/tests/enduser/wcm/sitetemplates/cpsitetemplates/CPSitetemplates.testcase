@@ -106,6 +106,13 @@
 			<var name="site" value="Site Template Site Name" />
 		</execute>
 
+		<if>
+			<condition function="IsElementNotPresent" locator1="Portlet#PORTLET_CONTENT" />
+			<then>
+				<execute function="Refresh" />
+			</then>
+		</if>
+
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Hello World" />
 		</execute>

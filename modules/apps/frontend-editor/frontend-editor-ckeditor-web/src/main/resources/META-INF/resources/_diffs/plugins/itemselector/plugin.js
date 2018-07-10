@@ -399,7 +399,7 @@
 									var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
 
 									editor.insertElement(el);
-									editor.insertElement(CKEDITOR.dom.element.createFromHtml('<br>'));
+									editor.execCommand('enter');
 
 									editor.focus();
 								}

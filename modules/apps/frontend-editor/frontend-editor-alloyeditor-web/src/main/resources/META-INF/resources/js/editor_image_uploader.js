@@ -206,7 +206,7 @@ AUI.add(
 
 								imageContainer.remove();
 
-								image._node.outerHTML += '<br>';
+								editor.execCommand('enter');
 
 								editor.fire(
 									'imageUploaded',

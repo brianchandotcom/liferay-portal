@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -200,6 +201,14 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 	@Override
 	public <T extends PortletURL & ActionURL> T createActionURL() {
+		Portlet portlet = getPortlet();
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		if (portletApp.getSpecMajorVersion() == 3) {
+			return (T)createActionURL(portletName, MimeResponse.Copy.PUBLIC);
+		}
+
 		return (T)createActionURL(portletName);
 	}
 
@@ -311,6 +320,14 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 	@Override
 	public <T extends PortletURL & RenderURL> T createRenderURL() {
+		Portlet portlet = getPortlet();
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		if (portletApp.getSpecMajorVersion() == 3) {
+			return (T)createRenderURL(portletName, MimeResponse.Copy.PUBLIC);
+		}
+
 		return (T)createRenderURL(portletName);
 	}
 

@@ -138,20 +138,15 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 		catch (Throwable t) {
 			_log.error(t, t);
 
+			String errorMessage = "an-unexpected-error-occurred";
+
 			if (t.getCause() instanceof LayoutPageTemplateEntryNameException) {
-				jsonObject.put(
-					"error",
-					LanguageUtil.get(
-						themeDisplay.getRequest(),
-						"please-enter-a-valid-name"));
+				errorMessage = "please-enter-a-valid-name";
 			}
-			else {
-				jsonObject.put(
-					"error",
-					LanguageUtil.get(
-						themeDisplay.getRequest(),
-						"an-unexpected-error-occurred"));
-			}
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

@@ -121,7 +121,7 @@
 				}
 
 				editor.insertElement(el);
-				editor.insertElement(CKEDITOR.dom.element.createFromHtml('<br>'));
+				editor.execCommand('enter');
 
 				editor.setData(editor.getData());
 			}

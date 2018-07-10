@@ -27,25 +27,21 @@
 	<command name="ViewWebContentInSampleDrools" priority="4">
 		<property name="osgi.modules.includes" value="portal-rules-engine-sample-web" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="Addresses" />
 		</execute>
 
-		<execute macro="User#gotoEditCP">
-			<var name="userScreenName" value="test" />
-		</execute>
-
-		<execute macro="Organization#gotoIdentificationCP" />
-
-		<execute macro="Organization#addAddressCP">
-			<var name="orgAddressCity" value="Diamond Bar" />
-			<var name="orgAddressCountry" value="United States" />
-			<var name="orgAddressPostal" value="91765" />
-			<var name="orgAddressRegion" value="California" />
-			<var name="orgAddressStreet" value="1400 Montefino Ave" />
-			<var name="orgAddressType" value="Personal" />
+		<execute macro="User#addAddressViaMyAccount">
+			<var name="userAddressCity" value="Diamond Bar" />
+			<var name="userAddressCountry" value="United States" />
+			<var name="userAddressPostalCode" value="91765" />
+			<var name="userAddressRegion" value="California" />
+			<var name="userAddressStreet1" value="1400 Montefino Ave" />
+			<var name="userAddressType" value="Personal" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

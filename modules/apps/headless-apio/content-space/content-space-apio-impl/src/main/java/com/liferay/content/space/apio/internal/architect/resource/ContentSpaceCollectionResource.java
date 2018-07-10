@@ -92,8 +92,6 @@ public class ContentSpaceCollectionResource
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(
 			"name", this::_getName
-		).addString(
-			"membershipType", Group::getTypeLabel
 		).build();
 	}
 

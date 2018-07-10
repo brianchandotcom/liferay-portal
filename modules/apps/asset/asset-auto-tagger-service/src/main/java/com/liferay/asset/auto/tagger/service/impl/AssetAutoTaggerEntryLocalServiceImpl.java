@@ -68,6 +68,14 @@ public class AssetAutoTaggerEntryLocalServiceImpl
 	}
 
 	@Override
+	public AssetAutoTaggerEntry fetchAssetAutoTaggerEntry(
+		long assetEntryId, long assetTagId) {
+
+		return assetAutoTaggerEntryPersistence.fetchByA_A(
+			assetEntryId, assetTagId);
+	}
+
+	@Override
 	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
 		AssetEntry assetEntry) {
 

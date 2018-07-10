@@ -145,7 +145,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 	}
 
 	@Test
-	public void testDeleteLayoutPageTemplate() throws Exception {
+	public void testDeleteLayoutPageTemplateCollection() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());

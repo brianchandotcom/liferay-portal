@@ -24,8 +24,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -314,9 +316,19 @@ public class SetupWizardUtil {
 		String lastName = ParamUtil.getString(
 			request, "adminLastName", PropsValues.DEFAULT_ADMIN_LAST_NAME);
 
+		boolean passwordReset = false;
+
+		PasswordPolicy passwordPolicy =
+			PasswordPolicyLocalServiceUtil.getDefaultPasswordPolicy(
+				company.getCompanyId());
+
+		if ((passwordPolicy != null) && passwordPolicy.isChangeable()) {
+			passwordReset = true;
+		}
+
 		User user = SetupWizardSampleDataUtil.updateAdminUser(
 			company, themeDisplay.getLocale(), themeDisplay.getLanguageId(),
-			emailAddress, firstName, lastName, true);
+			emailAddress, firstName, lastName, passwordReset);
 
 		PropsValues.ADMIN_EMAIL_FROM_NAME = user.getFullName();
 

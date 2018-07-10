@@ -14,9 +14,12 @@
 
 package com.liferay.npm.portlet.extender.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 
 import javax.portlet.RenderRequest;
@@ -43,11 +46,23 @@ public class NPMPortlet extends MVCPortlet {
 
 			String portletElementId = "npm-portlet-" + response.getNamespace();
 
-			_writeContainerDiv(writer, portletElementId);
+			writer.print(
+				StringUtil.replace(
+					_HTML_TPL, new String[] {"$PORTLET_ELEMENT_ID"},
+					new String[] {portletElementId}));
 
-			_writeScript(
-				writer, portletElementId, response.getNamespace(),
-				request.getContextPath());
+			writer.print(
+				StringUtil.replace(
+					_JAVA_SCRIPT_TPL,
+					new String[] {
+						"$CONTEXT_PATH", "$PORTLET_ELEMENT_ID",
+						"$PORTLET_NAMESPACE", "$PACKAGE_NAME",
+						"$PACKAGE_VERSION"
+					},
+					new String[] {
+						request.getContextPath(), portletElementId,
+						response.getNamespace(), _name, _version
+					}));
 
 			writer.flush();
 		}
@@ -56,83 +71,31 @@ public class NPMPortlet extends MVCPortlet {
 		}
 	}
 
-	private void _writeContainerDiv(
-		PrintWriter writer, String portletElementId) {
+	private static String _loadTemplate(String name) {
+		InputStream inputStream = NPMPortlet.class.getResourceAsStream(
+			"dependencies/" + name);
 
-		writer.print("<div");
+		try {
+			return StringUtil.read(inputStream);
+		}
+		catch (Exception e) {
+			_logger.error("Unable to read template " + name, e);
+		}
 
-		writer.print(" ");
-
-		writer.print("id=");
-		writer.print("\"");
-		writer.print(portletElementId);
-		writer.print("\"");
-
-		writer.print("></div>");
+		return StringPool.BLANK;
 	}
 
-	private void _writeParameters(
-		PrintWriter writer, String portletElementId, String portletNamespace,
-		String contextPath) {
+	private static final String _HTML_TPL;
 
-		writer.print("{");
-
-		writer.print("portletNamespace: ");
-		writer.print("\"");
-		writer.print(portletNamespace);
-		writer.print("\"");
-
-		writer.print(",");
-
-		writer.print("contextPath: ");
-		writer.print("\"");
-		writer.print(contextPath);
-		writer.print("\"");
-
-		writer.print(",");
-
-		writer.print("portletElementId: ");
-		writer.print("\"");
-		writer.print(portletElementId);
-		writer.print("\"");
-
-		writer.print("}");
-	}
-
-	private void _writeScript(
-		PrintWriter writer, String portletElementId, String portletNamespace,
-		String contextPath) {
-
-		writer.println("<script type=\"text/javascript\">");
-
-		writer.print("Liferay.Loader.require(");
-
-		writer.print("\"");
-		writer.print(_name);
-		writer.print("@");
-		writer.print(_version);
-		writer.print("\"");
-
-		writer.print(",");
-
-		writer.print("function(module) {");
-
-		writer.print("module.default(");
-
-		_writeParameters(
-			writer, portletElementId, portletNamespace, contextPath);
-
-		writer.print(");");
-
-		writer.print("}");
-
-		writer.print(");");
-
-		writer.print("</script>");
-	}
+	private static final String _JAVA_SCRIPT_TPL;
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		NPMPortlet.class);
+
+	static {
+		_HTML_TPL = _loadTemplate("bootstrap.html.tpl");
+		_JAVA_SCRIPT_TPL = _loadTemplate("bootstrap.js.tpl");
+	}
 
 	private final String _name;
 	private final String _version;

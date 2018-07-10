@@ -70,7 +70,7 @@ if (article != null) {
 		/>
 	</aui:field-wrapper>
 
-	<aui:field-wrapper label="tags">
+	<aui:field-wrapper>
 		<liferay-asset:asset-tags-selector
 			className="<%= JournalArticle.class.getName() %>"
 			classPK="<%= classPK %>"

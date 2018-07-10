@@ -47,10 +47,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<label for="<portlet:namespace />assetTagsSelector">
-					<liferay-ui:message key="tags" />
-				</label>
-
 				<div class="button-holder">
 					<liferay-asset:asset-tags-selector
 						addCallback="onAddTag"

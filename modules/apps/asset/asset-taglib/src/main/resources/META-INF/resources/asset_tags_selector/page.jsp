@@ -29,6 +29,10 @@ String removeCallback = GetterUtil.getString((String)request.getAttribute("lifer
 String tagNames = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:tagNames"));
 %>
 
+<h4>
+	<liferay-ui:message key="tags" />
+</h4>
+
 <div class="lfr-tags-selector-content" id="<portlet:namespace /><%= id %>assetTagsSelector">
 	<aui:input name="<%= hiddenInput %>" type="hidden" />
 

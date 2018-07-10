@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -125,7 +126,7 @@ public class JSPSourceUtil {
 	}
 
 	public static Map<String, String> getContentsMap(List<String> fileNames)
-		throws Exception {
+		throws IOException {
 
 		Map<String, String> contentsMap = new ConcurrentHashMap<>();
 

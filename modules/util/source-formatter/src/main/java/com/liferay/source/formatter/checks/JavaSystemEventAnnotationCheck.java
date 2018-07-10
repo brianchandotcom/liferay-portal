@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,7 +38,7 @@ public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (fileName.endsWith("PortletDataHandler.java")) {
 			_checkSystemEventAnnotations(fileName, content);
@@ -47,7 +48,7 @@ public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 	}
 
 	private void _checkSystemEventAnnotations(String fileName, String content)
-		throws Exception {
+		throws IOException {
 
 		int pos = content.indexOf("setDeletionSystemEventStagedModelTypes");
 

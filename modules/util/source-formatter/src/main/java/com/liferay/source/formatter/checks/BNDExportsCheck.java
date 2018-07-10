@@ -25,6 +25,7 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,7 +54,7 @@ public class BNDExportsCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (!fileName.endsWith("/bnd.bnd") ||
 			absolutePath.contains("/third-party/")) {
@@ -108,7 +109,7 @@ public class BNDExportsCheck extends BaseFileCheck {
 	}
 
 	private void _checkExportPackageinfo(String fileName, String content)
-		throws Exception {
+		throws IOException {
 
 		Matcher matcher = _exportsPattern.matcher(content);
 

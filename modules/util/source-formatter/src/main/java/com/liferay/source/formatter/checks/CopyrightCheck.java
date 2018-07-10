@@ -22,6 +22,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Hugo Huijser
@@ -35,7 +36,7 @@ public class CopyrightCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		String copyright = _getCopyright();
 
@@ -66,7 +67,7 @@ public class CopyrightCheck extends BaseFileCheck {
 	private String _fixCopyright(
 			String fileName, String absolutePath, String content,
 			String copyright)
-		throws Exception {
+		throws IOException {
 
 		String customCopyright = _getCustomCopyright(absolutePath);
 
@@ -120,7 +121,7 @@ public class CopyrightCheck extends BaseFileCheck {
 		return _commercialCopyright;
 	}
 
-	private synchronized String _getCopyright() throws Exception {
+	private synchronized String _getCopyright() throws IOException {
 		if (_copyright != null) {
 			return _copyright;
 		}
@@ -147,7 +148,7 @@ public class CopyrightCheck extends BaseFileCheck {
 		return _copyright;
 	}
 
-	private String _getCustomCopyright(String absolutePath) throws Exception {
+	private String _getCustomCopyright(String absolutePath) throws IOException {
 		for (int x = absolutePath.length();;) {
 			x = absolutePath.lastIndexOf(CharPool.SLASH, x);
 

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.io.IOException;
+
 /**
  * @author Hugo Huijser
  */
@@ -27,7 +29,7 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		StringBundler sb = new StringBundler();
 

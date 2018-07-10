@@ -37,7 +37,7 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (fileName.endsWith("/bnd.bnd") &&
 			!isModulesApp(absolutePath, true) &&

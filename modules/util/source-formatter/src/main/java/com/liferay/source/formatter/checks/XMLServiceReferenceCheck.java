@@ -24,6 +24,7 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -41,7 +43,7 @@ public class XMLServiceReferenceCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		if (!fileName.endsWith("/service.xml")) {
 			return content;
@@ -152,7 +154,7 @@ public class XMLServiceReferenceCheck extends BaseFileCheck {
 	private boolean _isRequiredReference(
 			String entityName, String referenceEntityName, boolean localService,
 			boolean remoteService, String dirName, String packageName)
-		throws Exception {
+		throws IOException {
 
 		String referenceVarName = TextFormatter.format(
 			referenceEntityName, TextFormatter.I);

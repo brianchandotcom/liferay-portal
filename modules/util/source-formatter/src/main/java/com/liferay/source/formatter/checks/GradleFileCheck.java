@@ -16,6 +16,8 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.parser.GradleFile;
 
+import java.io.IOException;
+
 /**
  * @author Peter Shin
  */
@@ -24,6 +26,6 @@ public interface GradleFileCheck extends SourceCheck {
 	public String process(
 			String fileName, String absolutePath, GradleFile gradleFile,
 			String content)
-		throws Exception;
+		throws IOException;
 
 }

@@ -16,6 +16,8 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.parser.GradleFile;
 
+import java.io.IOException;
+
 /**
  * @author Peter Shin
  */
@@ -26,7 +28,7 @@ public abstract class BaseGradleFileCheck
 	public String process(
 			String fileName, String absolutePath, GradleFile gradleFile,
 			String content)
-		throws Exception {
+		throws IOException {
 
 		clearSourceFormatterMessages(fileName);
 
@@ -36,6 +38,6 @@ public abstract class BaseGradleFileCheck
 	protected abstract String doProcess(
 			String filename, String absolutePath, GradleFile gradleFile,
 			String fileContent)
-		throws Exception;
+		throws IOException;
 
 }

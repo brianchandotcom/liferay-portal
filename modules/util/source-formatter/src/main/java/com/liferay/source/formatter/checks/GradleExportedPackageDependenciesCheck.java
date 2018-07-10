@@ -22,6 +22,7 @@ import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
@@ -54,7 +55,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (!absolutePath.contains("/modules/apps/")) {
 			return content;
@@ -76,7 +77,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 	}
 
 	private String _formatDependencies(String content, String dependencies)
-		throws Exception {
+		throws IOException {
 
 		int x = dependencies.indexOf("\n");
 		int y = dependencies.lastIndexOf("\n");
@@ -170,7 +171,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 
 	private synchronized Map<String, String>
 			_getEmptyExportPackageBundleSymbolicMap()
-		throws Exception {
+		throws IOException {
 
 		if (_emptyExportPackageBundleSymbolicMap != null) {
 			return _emptyExportPackageBundleSymbolicMap;
@@ -241,7 +242,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 
 	private boolean _isValidBundleSymbolicName(
 			String dependencyName, String dependencyVersion)
-		throws Exception {
+		throws IOException {
 
 		Map<String, String> emptyExportPackageBundleSymbolicMap =
 			_getEmptyExportPackageBundleSymbolicMap();

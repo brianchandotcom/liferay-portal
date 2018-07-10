@@ -27,6 +27,7 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
@@ -52,7 +53,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
 
@@ -71,7 +72,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	private void _checkLanguageKeys(
 			String fileName, String absolutePath, String content,
 			List<Pattern> patterns)
-		throws Exception {
+		throws IOException {
 
 		if (fileName.endsWith(".vm")) {
 			return;
@@ -93,7 +94,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	private void _checkLanguageKeys(
 			String fileName, String absolutePath, String content,
 			Properties portalLanguageProperties, Pattern pattern)
-		throws Exception {
+		throws IOException {
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -165,7 +166,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	}
 
 	private Properties _getBNDLanguageProperties(BNDSettings bndSettings)
-		throws Exception {
+		throws IOException {
 
 		Properties bndFileLanguageProperties =
 			bndSettings.getLanguageProperties();
@@ -176,7 +177,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	}
 
 	private Properties _getBuildGradleLanguageProperties(String absolutePath)
-		throws Exception {
+		throws IOException {
 
 		Properties properties = _buildGradleLanguagePropertiesMap.get(
 			absolutePath);
@@ -246,7 +247,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	}
 
 	private Properties _getLangModuleLanguageProperties(String absolutePath)
-		throws Exception {
+		throws IOException {
 
 		if (!isModulesFile(absolutePath)) {
 			return null;
@@ -485,7 +486,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	}
 
 	private synchronized Properties _getPortalLanguageProperties()
-		throws Exception {
+		throws IOException {
 
 		if (_portalLanguageProperties != null) {
 			return _portalLanguageProperties;

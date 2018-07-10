@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +38,7 @@ import java.util.TreeSet;
 public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected List<String> doGetFileNames() throws Exception {
+	protected List<String> doGetFileNames() throws IOException {
 		String[] includes = getIncludes();
 
 		if (ArrayUtil.isEmpty(includes)) {
@@ -65,6 +67,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
+		// SKIP
+
 		file = super.format(file, fileName, absolutePath, content);
 
 		_processCheckstyle(file);
@@ -73,7 +77,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void postFormat() throws Exception {
+	protected void postFormat() throws CheckstyleException {
 		_processCheckstyle(
 			_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
 
@@ -91,7 +95,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void preFormat() throws Exception {
+	protected void preFormat() throws CheckstyleException {
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
 		_checkstyleLogger = new CheckstyleLogger(
@@ -132,7 +136,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private Collection<String> _getPluginJavaFiles(String[] includes)
-		throws Exception {
+		throws IOException {
 
 		Collection<String> fileNames = new TreeSet<>();
 
@@ -144,7 +148,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private Collection<String> _getPortalJavaFiles(String[] includes)
-		throws Exception {
+		throws IOException {
 
 		Collection<String> fileNames = new TreeSet<>();
 
@@ -190,7 +194,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return fileNames;
 	}
 
-	private synchronized void _processCheckstyle(File file) throws Exception {
+	private synchronized void _processCheckstyle(File file)
+		throws CheckstyleException {
+
 		_ungeneratedFiles.add(file);
 
 		if (_ungeneratedFiles.size() == CheckstyleUtil.BATCH_SIZE) {
@@ -201,7 +207,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	private void _processCheckstyle(File[] files) throws Exception {
+	private void _processCheckstyle(File[] files) throws CheckstyleException {
 		if (ArrayUtil.isEmpty(files)) {
 			return;
 		}

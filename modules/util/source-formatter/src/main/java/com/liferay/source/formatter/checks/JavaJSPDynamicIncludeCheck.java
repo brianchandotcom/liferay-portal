@@ -27,6 +27,7 @@ import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +48,7 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws Exception {
+		throws IOException {
 
 		String className = javaTerm.getName();
 
@@ -101,7 +102,7 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private BNDSettings _getBNDSettings(String fileName) throws Exception {
+	private BNDSettings _getBNDSettings(String fileName) throws IOException {
 		String bndFileLocation = fileName;
 
 		while (true) {
@@ -125,7 +126,7 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private String _getBundleSymbolicName(String fileName) throws Exception {
+	private String _getBundleSymbolicName(String fileName) throws IOException {
 		BNDSettings bndSettings = _getBNDSettings(fileName);
 
 		if (bndSettings == null) {

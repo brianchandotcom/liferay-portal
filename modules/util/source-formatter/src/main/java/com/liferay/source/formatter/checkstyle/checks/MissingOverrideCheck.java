@@ -41,6 +41,7 @@ import com.thoughtworks.qdox.model.expression.AnnotationValue;
 import com.thoughtworks.qdox.model.impl.DefaultJavaParameterizedType;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -144,7 +145,7 @@ public class MissingOverrideCheck extends BaseCheck {
 	}
 
 	private JavaProjectBuilder _getJavaProjectBuilder(String fileName)
-		throws Exception {
+		throws IOException {
 
 		if (_javaProjectBuilder != null) {
 			return _javaProjectBuilder;

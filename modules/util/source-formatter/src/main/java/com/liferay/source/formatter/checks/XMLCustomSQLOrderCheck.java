@@ -23,6 +23,7 @@ import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -33,7 +34,7 @@ public class XMLCustomSQLOrderCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws DocumentException {
 
 		if (fileName.contains("/custom-sql/")) {
 			Document document = SourceUtil.readXML(content);

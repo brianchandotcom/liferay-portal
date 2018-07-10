@@ -16,6 +16,8 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.IOException;
+
 /**
  * @author Hugo Huijser
  */
@@ -24,7 +26,7 @@ public class XMLWhitespaceCheck extends WhitespaceCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		content = StringUtil.replace(content, "\"/>\n", "\" />\n");
 

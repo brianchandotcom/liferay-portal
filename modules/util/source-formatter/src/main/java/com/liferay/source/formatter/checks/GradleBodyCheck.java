@@ -30,9 +30,8 @@ public class GradleBodyCheck extends BaseGradleFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, GradleFile gradleFile,
-			String content)
-		throws Exception {
+		String fileName, String absolutePath, GradleFile gradleFile,
+		String content) {
 
 		if (absolutePath.contains("/project-templates-")) {
 			return content;

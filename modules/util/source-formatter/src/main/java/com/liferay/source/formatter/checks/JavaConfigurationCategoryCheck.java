@@ -42,7 +42,7 @@ public class JavaConfigurationCategoryCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (!fileName.endsWith("Configuration.java")) {
 			return content;
@@ -68,7 +68,7 @@ public class JavaConfigurationCategoryCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private List<String> _getCategoryKeys() throws Exception {
+	private List<String> _getCategoryKeys() throws IOException {
 		if (_categoryKeys != null) {
 			return _categoryKeys;
 		}

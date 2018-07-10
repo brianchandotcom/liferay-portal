@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.PropertiesSourceProcessor;
 
+import java.io.IOException;
+
 import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
@@ -33,7 +35,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (((isPortalSource() || isSubrepository()) &&
 			 fileName.matches(".*portal-legacy-.*\\.properties")) ||
@@ -47,7 +49,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 	}
 
 	private void _checkPortalProperties(String fileName, String content)
-		throws Exception {
+		throws IOException {
 
 		String portalPortalPropertiesContent =
 			_getPortalPortalPropertiesContent();
@@ -92,7 +94,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 	}
 
 	private synchronized String _getPortalPortalPropertiesContent()
-		throws Exception {
+		throws IOException {
 
 		if (_portalPortalPropertiesContent != null) {
 			return _portalPortalPropertiesContent;

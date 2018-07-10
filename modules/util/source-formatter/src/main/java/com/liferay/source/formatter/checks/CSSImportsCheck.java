@@ -28,8 +28,7 @@ public class CSSImportsCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+		String fileName, String absolutePath, String content) {
 
 		Matcher matcher = _importsPattern.matcher(content);
 

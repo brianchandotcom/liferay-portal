@@ -22,6 +22,7 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import java.util.List;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -32,7 +33,7 @@ public class XMLServiceEntityNameCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws DocumentException {
 
 		if (!fileName.endsWith("/service.xml")) {
 			return content;

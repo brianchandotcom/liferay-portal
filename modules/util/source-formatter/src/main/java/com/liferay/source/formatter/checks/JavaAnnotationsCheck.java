@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -37,7 +39,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		return _formatAnnotations(fileName, content);
 	}
@@ -265,7 +267,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 	}
 
 	private String _formatAnnotations(String fileName, String content)
-		throws Exception {
+		throws IOException {
 
 		List<String> annotationsBlocks = _getAnnotationsBlocks(content);
 
@@ -285,7 +287,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 	private String _formatAnnotations(
 			String fileName, String content, String annotationsBlock,
 			String indent, boolean sortAnnotations)
-		throws Exception {
+		throws IOException {
 
 		List<String> annotations = _splitAnnotations(annotationsBlock, indent);
 
@@ -375,7 +377,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 
 	private List<String> _splitAnnotations(
 			String annotationsBlock, String indent)
-		throws Exception {
+		throws IOException {
 
 		List<String> annotations = new ArrayList<>();
 

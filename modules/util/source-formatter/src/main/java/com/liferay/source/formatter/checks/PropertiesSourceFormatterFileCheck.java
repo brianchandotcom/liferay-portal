@@ -22,6 +22,7 @@ import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Enumeration;
@@ -36,7 +37,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (fileName.endsWith("/source-formatter.properties")) {
 			_checkSourceFormatterProperties(fileName);
@@ -46,7 +47,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 	}
 
 	private void _checkSourceFormatterProperties(String fileName)
-		throws Exception {
+		throws IOException {
 
 		int level = ToolsUtil.PLUGINS_MAX_DIR_LEVEL;
 

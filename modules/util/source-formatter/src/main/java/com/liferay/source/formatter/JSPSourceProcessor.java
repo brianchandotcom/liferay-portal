@@ -25,9 +25,11 @@ import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.Files;
 
@@ -48,6 +50,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
+
+		// SKIP
+
 		String[] excludes = {"**/null.jsp", "**/tools/**"};
 
 		List<String> fileNames = getFileNames(excludes, getIncludes());
@@ -97,6 +102,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
+		// SKIP
+
 		// When executing 'format-source-current-branch',
 		// 'format-source-latest-author', or 'format-source-local-changes', we
 		// add included and referenced file names in order to detect unused
@@ -128,7 +135,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void postFormat() throws Exception {
+	protected void postFormat() throws CheckstyleException, IOException {
 		_processCheckstyle();
 
 		for (SourceFormatterMessage sourceFormatterMessage :
@@ -143,7 +150,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void preFormat() throws Exception {
+	protected void preFormat() throws CheckstyleException {
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
 		_checkstyleLogger = new AlloyMVCCheckstyleLogger(
@@ -158,6 +165,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	private Map<String, String> _getDeletedContentsMap(String[] excludes)
 		throws Exception {
+
+		// SKIP
 
 		List<String> fileNames = Collections.emptyList();
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
@@ -216,7 +225,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return contentsMap;
 	}
 
-	private void _processCheckstyle() throws Exception {
+	private void _processCheckstyle() throws CheckstyleException, IOException {
 		if (_ungeneratedFiles.isEmpty()) {
 			return;
 		}
@@ -235,7 +244,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	private synchronized void _processCheckstyle(
 			String absolutePath, String content)
-		throws Exception {
+		throws CheckstyleException, IOException {
 
 		File file = AlloyMVCCheckstyleUtil.getJavaFile(absolutePath, content);
 

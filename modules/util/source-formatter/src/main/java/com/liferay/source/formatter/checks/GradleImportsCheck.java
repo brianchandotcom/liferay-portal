@@ -20,6 +20,8 @@ import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.GradleImportsFormatter;
 import com.liferay.source.formatter.parser.GradleFile;
 
+import java.io.IOException;
+
 /**
  * @author Hugo Huijser
  */
@@ -29,7 +31,7 @@ public class GradleImportsCheck extends BaseGradleFileCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, GradleFile gradleFile,
 			String content)
-		throws Exception {
+		throws IOException {
 
 		String importsBlock = gradleFile.getImportsBlock();
 

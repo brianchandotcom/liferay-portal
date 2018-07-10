@@ -37,8 +37,7 @@ public class BNDSuiteCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+		String fileName, String absolutePath, String content) {
 
 		if (!absolutePath.endsWith("/app.bnd")) {
 			return content;

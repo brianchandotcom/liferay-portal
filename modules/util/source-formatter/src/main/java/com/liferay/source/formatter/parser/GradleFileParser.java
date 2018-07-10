@@ -28,9 +28,7 @@ import java.util.regex.Pattern;
  */
 public class GradleFileParser {
 
-	public static GradleFile parse(String fileName, String content)
-		throws Exception {
-
+	public static GradleFile parse(String fileName, String content) {
 		Set<String> applyPlugins = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 		String bodyBlock = StringPool.BLANK;
 		String buildScriptBlock = StringPool.BLANK;

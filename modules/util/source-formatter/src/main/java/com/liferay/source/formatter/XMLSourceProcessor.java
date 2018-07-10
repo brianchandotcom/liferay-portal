@@ -16,6 +16,8 @@ package com.liferay.source.formatter;
 
 import com.liferay.source.formatter.checks.util.XMLSourceUtil;
 
+import java.io.IOException;
+
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ import java.util.List;
 public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected List<String> doGetFileNames() throws Exception {
+	protected List<String> doGetFileNames() throws IOException {
 		String[] excludes = {
 			"**/.bnd/**", "**/.idea/**", "**/.ivy/**", "**/bin/**",
 			"**/javadocs-*.xml", "**/logs/**", "**/portal-impl/**/*.action",

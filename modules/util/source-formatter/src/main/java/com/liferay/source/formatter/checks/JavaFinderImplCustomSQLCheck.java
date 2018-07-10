@@ -21,11 +21,14 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -42,7 +45,7 @@ public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 
@@ -80,9 +83,8 @@ public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 	}
 
 	private void _checkCustomSQL(
-			String fileName, String methodContent, String fileContent,
-			Document customSQLDocument, String finderName)
-		throws Exception {
+		String fileName, String methodContent, String fileContent,
+		Document customSQLDocument, String finderName) {
 
 		if ((customSQLDocument == null) || !customSQLDocument.hasContent()) {
 			return;

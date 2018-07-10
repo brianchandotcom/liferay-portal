@@ -19,6 +19,8 @@ import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.JSPImportsFormatter;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -32,7 +34,7 @@ public class JSPImportsCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		content = _formatJSPImportsOrTaglibs(
 			fileName, content, _jspImportPattern,
@@ -67,7 +69,7 @@ public class JSPImportsCheck extends BaseFileCheck {
 	private String _formatJSPImportsOrTaglibs(
 			String fileName, String content, Pattern compressedPattern,
 			Pattern uncompressedPattern)
-		throws Exception {
+		throws IOException {
 
 		if (fileName.endsWith("init-ext.jsp")) {
 			return content;

@@ -22,12 +22,14 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -43,7 +45,7 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		if (fileName.endsWith("-look-and-feel.xml")) {
 			_checkCompatibility(fileName, absolutePath, content);
@@ -54,7 +56,7 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 
 	private void _checkCompatibility(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		if (!isPortalSource() || !isModulesApp(absolutePath, false)) {
 			return;
@@ -89,7 +91,7 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _getPortalVersion(boolean privateApp) throws Exception {
+	private String _getPortalVersion(boolean privateApp) throws IOException {
 		String portalVersion = _getPublicPortalVersion();
 
 		if (privateApp) {
@@ -109,7 +111,7 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 		return portalVersion;
 	}
 
-	private synchronized String _getPrivatePortalVersion() throws Exception {
+	private synchronized String _getPrivatePortalVersion() throws IOException {
 		if (_privatePortalVersion != null) {
 			return _privatePortalVersion;
 		}
@@ -156,7 +158,7 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 		return _privatePortalVersion;
 	}
 
-	private synchronized String _getPublicPortalVersion() throws Exception {
+	private synchronized String _getPublicPortalVersion() throws IOException {
 		if (_publicPortalVersion != null) {
 			return _publicPortalVersion;
 		}

@@ -27,6 +27,7 @@ import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
@@ -58,7 +59,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws Exception {
+		throws IOException {
 
 		if (absolutePath.contains("/test/")) {
 			return javaTerm.getContent();
@@ -116,7 +117,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 	private boolean _extendsPortalKernelUpgradeProcess(
 			String absolutePath, String fileContent)
-		throws Exception {
+		throws IOException {
 
 		String upgradeAbsolutePath = absolutePath;
 		String upgradeContent = fileContent;
@@ -194,7 +195,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 		return false;
 	}
 
-	private List<String> _getUpgradeAbsolutePaths() throws Exception {
+	private List<String> _getUpgradeAbsolutePaths() throws IOException {
 		if (_upgradeAbsolutePaths != null) {
 			return _upgradeAbsolutePaths;
 		}
@@ -249,7 +250,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 		return _upgradeAbsolutePaths;
 	}
 
-	private String _getUpgradeContent(String absolutePath) throws Exception {
+	private String _getUpgradeContent(String absolutePath) throws IOException {
 		if (_upgradeContentsMap.containsKey(absolutePath)) {
 			return _upgradeContentsMap.get(absolutePath);
 		}

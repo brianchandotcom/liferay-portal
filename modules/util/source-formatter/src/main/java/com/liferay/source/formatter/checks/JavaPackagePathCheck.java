@@ -24,6 +24,8 @@ import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +49,7 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws Exception {
+		throws IOException {
 
 		if (javaTerm.getParentJavaClass() != null) {
 			return javaTerm.getContent();
@@ -84,7 +86,7 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 	}
 
 	private void _checkModulePackageName(String fileName, String packageName)
-		throws Exception {
+		throws IOException {
 
 		if (!packageName.startsWith("com.liferay")) {
 			return;

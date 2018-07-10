@@ -124,7 +124,7 @@ public class CheckstyleUtil {
 	public static Configuration getConfiguration(
 			String configurationFileName, Map<String, Properties> propertiesMap,
 			SourceFormatterArgs sourceFormatterArgs)
-		throws Exception {
+		throws CheckstyleException {
 
 		ClassLoader classLoader = CheckstyleUtil.class.getClassLoader();
 

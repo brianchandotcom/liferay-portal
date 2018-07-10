@@ -23,11 +23,13 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Objects;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
@@ -38,7 +40,7 @@ public class SuppressionsLoader {
 
 	public static SourceFormatterSuppressions loadSuppressions(
 			String baseDirName, List<File> files)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		SourceFormatterSuppressions sourceFormatterSuppressions =
 			new SourceFormatterSuppressions();
@@ -107,7 +109,7 @@ public class SuppressionsLoader {
 			SourceFormatterSuppressions sourceFormatterSuppressions,
 			Element suppressionsElement, String absolutePath,
 			boolean moveToSourceFormatterSuppressionsFile)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		if (suppressionsElement == null) {
 			return sourceFormatterSuppressions;
@@ -136,7 +138,7 @@ public class SuppressionsLoader {
 			Element suppressionsElement, String absolutePath,
 			String portalFileLocation,
 			boolean moveToSourceFormatterSuppressionsFile)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		if (suppressionsElement == null) {
 			return sourceFormatterSuppressions;
@@ -171,7 +173,7 @@ public class SuppressionsLoader {
 
 	private static void _moveSuppressionsToSourceFormatterSuppressionsFile(
 			String absolutePath, List<Element> suppressElements, String name)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		int pos = absolutePath.lastIndexOf(CharPool.SLASH);
 

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 
+import java.io.IOException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +36,7 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		Matcher matcher = _ifStatementPattern.matcher(content);
 
@@ -160,7 +162,7 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 		return StringUtil.replace(ifClause, line, newLine);
 	}
 
-	private String _formatIfClause(String ifClause) throws Exception {
+	private String _formatIfClause(String ifClause) throws IOException {
 		String strippedQuotesIfClause = stripQuotes(ifClause);
 
 		if (strippedQuotesIfClause.contains("//")) {
@@ -333,7 +335,7 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 
 	private String _formatIfClause(
 			String ifClause, String fileName, int lineNumber)
-		throws Exception {
+		throws IOException {
 
 		String ifClauseSingleLine = StringUtil.replace(
 			ifClause,

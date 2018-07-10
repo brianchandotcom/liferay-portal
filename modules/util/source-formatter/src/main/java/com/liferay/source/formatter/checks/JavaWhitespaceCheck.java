@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.IOException;
+
 /**
  * @author Hugo Huijser
  */
@@ -29,7 +31,7 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		content = _formatWhitespace(fileName, content);
 
@@ -39,7 +41,7 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	private String _formatWhitespace(String fileName, String content)
-		throws Exception {
+		throws IOException {
 
 		StringBundler sb = new StringBundler();
 

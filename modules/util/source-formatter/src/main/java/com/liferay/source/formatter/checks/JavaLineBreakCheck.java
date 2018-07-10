@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +43,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws CheckstyleException, IOException {
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
@@ -677,7 +681,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 	private String _fixLineStartingWithCloseParenthesis(
 			String content, String fileName)
-		throws Exception {
+		throws CheckstyleException {
 
 		Matcher matcher = _lineStartingWithCloseParenthesisPattern.matcher(
 			content);
@@ -864,7 +868,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		}
 	}
 
-	private boolean _hasAllowedChain(String line) throws Exception {
+	private boolean _hasAllowedChain(String line) throws CheckstyleException {
 		Map<String, String> checkstyleAttributesMap =
 			getCheckstyleAttributesMap("ChainingCheck");
 

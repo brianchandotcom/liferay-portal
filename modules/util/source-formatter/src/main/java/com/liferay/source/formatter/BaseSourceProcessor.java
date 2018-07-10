@@ -33,13 +33,16 @@ import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.awt.Desktop;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.CharsetDecoder;
@@ -81,6 +84,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public final void format() throws Exception {
+
+		// SKIP
+
 		List<String> fileNames = getFileNames();
 
 		if (_sourceFormatterArgs.isShowDebugInformation()) {
@@ -119,7 +125,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				new Callable<Void>() {
 
 					@Override
-					public Void call() throws Exception {
+					public Void call() {
 						_performTask(fileName);
 
 						return null;
@@ -140,6 +146,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	public final List<String> getFileNames() throws Exception {
+
+		// SKIP
+
 		List<String> fileNames = _sourceFormatterArgs.getFileNames();
 
 		if (fileNames != null) {
@@ -264,7 +273,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected void addProgressStatusUpdate(
 			ProgressStatusUpdate progressStatusUpdate)
-		throws Exception {
+		throws InterruptedException {
 
 		_progressStatusQueue.put(progressStatusUpdate);
 	}
@@ -298,6 +307,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
+		// SKIP
+
 		Set<String> modifiedContents = new HashSet<>();
 		Set<String> modifiedMessages = new TreeSet<>();
 
@@ -314,6 +325,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String originalContent, Set<String> modifiedContents,
 			Set<String> modifiedMessages, int count)
 		throws Exception {
+
+		// SKIP
 
 		_sourceFormatterMessagesMap.remove(fileName);
 
@@ -364,14 +377,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected List<String> getFileNames(String[] excludes, String[] includes)
-		throws Exception {
+		throws IOException {
 
 		return getFileNames(excludes, includes, false);
 	}
 
 	protected List<String> getFileNames(
 			String[] excludes, String[] includes, boolean forceIncludeAllFiles)
-		throws Exception {
+		throws IOException {
 
 		if (!forceIncludeAllFiles &&
 			(_sourceFormatterArgs.getRecentChangesFileNames() != null)) {
@@ -420,9 +433,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void postFormat() throws Exception {
+
+		// SKIP
+
 	}
 
 	protected void preFormat() throws Exception {
+
+		// SKIP
+
 	}
 
 	protected void printError(String fileName, String message) {
@@ -434,7 +453,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected synchronized Set<SourceFormatterMessage> processCheckstyle(
 			Configuration configuration, CheckstyleLogger checkstyleLogger,
 			File[] files)
-		throws Exception {
+		throws CheckstyleException {
 
 		if (ArrayUtil.isEmpty(files)) {
 			return Collections.emptySet();
@@ -464,7 +483,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected File processFormattedFile(
 			File file, String fileName, String content, String newContent,
 			Set<String> modifiedMessages)
-		throws Exception {
+		throws IOException, URISyntaxException {
 
 		if (!content.equals(newContent)) {
 			if (_sourceFormatterArgs.isPrintErrors()) {
@@ -550,7 +569,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_checkstyleConfiguration = checkstyleConfiguration;
 	}
 
-	private void _checkUTF8(File file, String fileName) throws Exception {
+	private void _checkUTF8(File file, String fileName) throws IOException {
 		byte[] bytes = FileUtil.getBytes(file);
 
 		try {
@@ -606,6 +625,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private void _format(String fileName) throws Exception {
+
+		// SKIP
+
 		if (!_isMatchPath(fileName)) {
 			addProgressStatusUpdate(
 				new ProgressStatusUpdate(ProgressStatus.CHECK_FILE_COMPLETED));
@@ -637,6 +659,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			boolean includeModuleChecks, String checkName)
 		throws Exception {
 
+		// SKIP
+
 		Class<?> clazz = getClass();
 
 		List<SourceCheck> sourceChecks = SourceChecksUtil.getSourceChecks(
@@ -651,7 +675,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return sourceChecks;
 	}
 
-	private void _initSourceCheck(SourceCheck sourceCheck) throws Exception {
+	private void _initSourceCheck(SourceCheck sourceCheck) {
 		sourceCheck.setAllFileNames(_allFileNames);
 		sourceCheck.setBaseDirName(_sourceFormatterArgs.getBaseDirName());
 		sourceCheck.setCheckstyleConfiguration(_checkstyleConfiguration);
@@ -743,6 +767,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content,
 			Set<String> modifiedMessages)
 		throws Exception {
+
+		// SKIP
 
 		SourceChecksResult sourceChecksResult =
 			SourceChecksUtil.processSourceChecks(

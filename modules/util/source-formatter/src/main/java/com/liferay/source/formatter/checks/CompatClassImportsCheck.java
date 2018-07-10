@@ -21,6 +21,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws Exception {
+		throws IOException {
 
 		if (isPortalSource() || isSubrepository() ||
 			absolutePath.contains("/ext-") ||
@@ -49,7 +50,7 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 		return _fixCompatClassImports(content);
 	}
 
-	private String _fixCompatClassImports(String content) throws Exception {
+	private String _fixCompatClassImports(String content) throws IOException {
 		Map<String, String> compatClassNamesMap = _getCompatClassNamesMap();
 
 		for (Map.Entry<String, String> entry : compatClassNamesMap.entrySet()) {
@@ -75,7 +76,7 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 	}
 
 	private synchronized Map<String, String> _getCompatClassNamesMap()
-		throws Exception {
+		throws IOException {
 
 		if (_compatClassNamesMap != null) {
 			return _compatClassNamesMap;

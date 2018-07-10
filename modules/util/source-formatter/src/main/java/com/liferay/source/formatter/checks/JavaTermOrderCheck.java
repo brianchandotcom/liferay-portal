@@ -19,9 +19,12 @@ import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.comparator.JavaTermComparator;
 
+import java.io.IOException;
+
 import java.util.List;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 
 /**
  * @author Hugo Huijser
@@ -32,7 +35,7 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws Exception {
+		throws DocumentException, IOException {
 
 		String javaTermContent = javaTerm.getContent();
 

@@ -23,8 +23,7 @@ public class JavaCollatorUtilCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("CollatorUtil.java") &&
 			!fileName.endsWith("CollatorUtilTest.java")) {
@@ -35,9 +34,7 @@ public class JavaCollatorUtilCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkCollatorGetInstance(String fileName, String content)
-		throws Exception {
-
+	private void _checkCollatorGetInstance(String fileName, String content) {
 		int index = content.indexOf("Collator.getInstance(");
 
 		while (index != -1) {

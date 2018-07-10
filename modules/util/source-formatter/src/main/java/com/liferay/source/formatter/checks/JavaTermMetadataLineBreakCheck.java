@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
 
+import java.io.IOException;
+
 /**
  * @author Peter Shin
  */
@@ -31,7 +33,7 @@ public class JavaTermMetadataLineBreakCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws Exception {
+		throws IOException {
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(javaTerm.getContent()));

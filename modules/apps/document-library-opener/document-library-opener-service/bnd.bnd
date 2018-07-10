@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Document Library Opener Service
+Bundle-SymbolicName: com.liferay.document.library.opener.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

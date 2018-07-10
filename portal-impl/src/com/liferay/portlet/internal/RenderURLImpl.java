@@ -55,13 +55,14 @@ public class RenderURLImpl extends PortletURLImpl implements RenderURL {
 
 	@Override
 	public String toString() {
-		if (_fragmentIdentifier == null) {
-			return super.toString();
+		String toString = super.toString();
+
+		if (_fragmentIdentifier != null) {
+			toString = toString.concat(StringPool.POUND).concat(
+				_fragmentIdentifier);
 		}
-		else {
-			return super.toString().concat(
-				StringPool.POUND).concat(_fragmentIdentifier);
-		}
+
+		return toString;
 	}
 
 	private String _fragmentIdentifier;

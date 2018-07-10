@@ -181,6 +181,9 @@ public class SharepointServerResponseConverter {
 			JSONArray cellsResultsJSONArray = cellsJSONObject.getJSONArray(
 				"results");
 
+			ExtRepositoryObjectType extRepositoryObjectType =
+				ExtRepositoryObjectType.OBJECT;
+
 			String extension = null;
 			String parentLink = null;
 			double score = 0;
@@ -196,6 +199,15 @@ public class SharepointServerResponseConverter {
 				if (key.equals("Description")) {
 					snippet = GetterUtil.getString(
 						cellsResultJSONObject.getString("Value"));
+				}
+				else if (key.equals("IsDocument")) {
+					if (cellsResultJSONObject.getBoolean("Value")) {
+						extRepositoryObjectType = ExtRepositoryObjectType.FILE;
+					}
+					else {
+						extRepositoryObjectType =
+							ExtRepositoryObjectType.FOLDER;
+					}
 				}
 				else if (key.equals("ParentLink")) {
 					parentLink = cellsResultJSONObject.getString("Value");
@@ -219,14 +231,15 @@ public class SharepointServerResponseConverter {
 			}
 
 			if (Validator.isNull(parentLink) ||
-				!parentLink.startsWith(_rootDocumentPath)) {
+				!parentLink.startsWith(_rootDocumentPath) ||
+				(extRepositoryObjectType == ExtRepositoryObjectType.OBJECT)) {
 
 				continue;
 			}
 
 			ExtRepositoryObject extRepositoryObject =
 				_extRepository.getExtRepositoryObject(
-					ExtRepositoryObjectType.FILE,
+					extRepositoryObjectType,
 					parentLink.substring(_siteAbsoluteURL.length()),
 					_getFileName(title, extension));
 

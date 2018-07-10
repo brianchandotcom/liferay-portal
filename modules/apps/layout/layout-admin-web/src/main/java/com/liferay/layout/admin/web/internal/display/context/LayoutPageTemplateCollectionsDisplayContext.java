@@ -144,38 +144,38 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		List<LayoutPageTemplateCollection> fragmentCollections = null;
-		int fragmentCollectionsCount = 0;
+		List<LayoutPageTemplateCollection> layoutPageTemplateCollections = null;
+		int layoutPageTemplateCollectionsCount = 0;
 
 		if (_isSearch()) {
-			fragmentCollections =
+			layoutPageTemplateCollections =
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollections(
 						themeDisplay.getScopeGroupId(), _getKeywords(),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						orderByComparator);
 
-			fragmentCollectionsCount =
+			layoutPageTemplateCollectionsCount =
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollectionsCount(
 						themeDisplay.getScopeGroupId(), _getKeywords());
 		}
 		else {
-			fragmentCollections =
+			layoutPageTemplateCollections =
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollections(
 						themeDisplay.getScopeGroupId(),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						orderByComparator);
 
-			fragmentCollectionsCount =
+			layoutPageTemplateCollectionsCount =
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollectionsCount(
 						themeDisplay.getScopeGroupId());
 		}
 
-		searchContainer.setTotal(fragmentCollectionsCount);
-		searchContainer.setResults(fragmentCollections);
+		searchContainer.setTotal(layoutPageTemplateCollectionsCount);
+		searchContainer.setResults(layoutPageTemplateCollections);
 
 		_searchContainer = searchContainer;
 

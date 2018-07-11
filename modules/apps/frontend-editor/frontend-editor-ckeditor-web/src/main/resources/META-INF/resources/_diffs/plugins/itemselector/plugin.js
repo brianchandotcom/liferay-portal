@@ -385,8 +385,8 @@
 
 				if (selectedItem) {
 					var eventName = editor.name + 'selectItem';
-
 					var imageSrc = instance._getItemSrc(editor, selectedItem);
+					var isSelectionEmpty = editor.isSelectionEmpty();
 
 					Liferay.Util.getWindow(eventName).onceAfter(
 						'destroy',
@@ -399,7 +399,10 @@
 									var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
 
 									editor.insertElement(el);
-									editor.execCommand('enter');
+
+									if (isSelectionEmpty) {
+										editor.execCommand('enter');
+									}
 
 									editor.focus();
 								}

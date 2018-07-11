@@ -66,10 +66,9 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 		Class<? extends ModelResourcePermission> clazz =
 			_modelResourcePermission.getClass();
 
-		Field field = null;
-
 		try {
-			field = clazz.getDeclaredField("_modelResourcePermissionLogics");
+			Field field = clazz.getDeclaredField(
+				"_modelResourcePermissionLogics");
 
 			field.setAccessible(true);
 
@@ -90,10 +89,9 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 		Class<? extends ModelResourcePermission> clazz =
 			_modelResourcePermission.getClass();
 
-		Field field = null;
-
 		try {
-			field = clazz.getDeclaredField("_modelResourcePermissionLogics");
+			Field field = clazz.getDeclaredField(
+				"_modelResourcePermissionLogics");
 
 			field.setAccessible(true);
 

@@ -915,11 +915,26 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
 			<var name="nodeNodeLabel" value="EndNode" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
 		</execute>
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
@@ -958,11 +973,26 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
 			<var name="nodeNodeLabel" value="EndNode" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
 		</execute>
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
@@ -1038,11 +1068,26 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
 			<var name="nodeNodeLabel" value="EndNode" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
 		</execute>
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
@@ -1088,11 +1133,26 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
 			<var name="nodeNodeLabel" value="EndNode" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
 		</execute>
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
@@ -1130,11 +1190,26 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
 			<var name="nodeNodeLabel" value="EndNode" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
 		</execute>
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
@@ -1172,11 +1247,26 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
 			<var name="nodeNodeLabel" value="EndNode" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
 		</execute>
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">

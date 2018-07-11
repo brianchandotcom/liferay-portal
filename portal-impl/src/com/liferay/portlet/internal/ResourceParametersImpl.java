@@ -23,21 +23,13 @@ import javax.portlet.ResourceParameters;
  * @author Neil Griffin
  */
 public class ResourceParametersImpl
-	extends PortletParametersBase implements ResourceParameters {
+	extends PortletParametersBase<MutableResourceParameters>
+	implements ResourceParameters {
 
 	public ResourceParametersImpl(
 		Map<String, String[]> parameterMap, String namespace) {
 
-		super(parameterMap, namespace);
-	}
-
-	@Override
-	public MutableResourceParameters clone() {
-		Map<String, String[]> parameterMap = getParameterMap();
-
-		Map<String, String[]> copiedMap = deepCopyMap(parameterMap);
-
-		return new MutableResourceParametersImpl(copiedMap);
+		super(parameterMap, namespace, MutableResourceParametersImpl::new);
 	}
 
 }

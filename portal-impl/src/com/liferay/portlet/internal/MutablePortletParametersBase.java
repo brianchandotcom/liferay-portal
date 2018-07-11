@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.portlet.MutablePortletParameters;
 import javax.portlet.PortletParameters;
@@ -26,10 +27,15 @@ import javax.portlet.PortletParameters;
  * @author Neil Griffin
  */
 public abstract class MutablePortletParametersBase
-	extends PortletParametersBase implements LiferayMutablePortletParameters {
+	<T extends MutablePortletParameters>
+		extends PortletParametersBase<T>
+		implements LiferayMutablePortletParameters {
 
-	public MutablePortletParametersBase(Map<String, String[]> parameterMap) {
-		super(parameterMap, null);
+	public MutablePortletParametersBase(
+		Map<String, String[]> parameterMap,
+		Function<Map<String, String[]>, T> mutablePortletParametersCreator) {
+
+		super(parameterMap, null, mutablePortletParametersCreator);
 	}
 
 	@Override

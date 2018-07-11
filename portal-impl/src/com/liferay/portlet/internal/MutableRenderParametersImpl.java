@@ -24,14 +24,17 @@ import javax.portlet.MutableRenderParameters;
  * @author Neil Griffin
  */
 public class MutableRenderParametersImpl
-	extends MutablePortletParametersBase
+	extends MutablePortletParametersBase<MutableRenderParameters>
 	implements LiferayMutableRenderParameters {
 
 	public MutableRenderParametersImpl(
 		Map<String, String[]> parameterMap,
 		Set<String> publicRenderParameterNames) {
 
-		super(parameterMap);
+		super(
+			parameterMap,
+			copiedMap -> new MutableRenderParametersImpl(
+				copiedMap, publicRenderParameterNames));
 
 		_originalParameterMap = deepCopyMap(parameterMap);
 		_publicRenderParameterNames = publicRenderParameterNames;
@@ -53,16 +56,6 @@ public class MutableRenderParametersImpl
 		Set<String> parameterNames = parameterMap.keySet();
 
 		parameterNames.removeAll(_publicRenderParameterNames);
-	}
-
-	@Override
-	public MutableRenderParameters clone() {
-		Map<String, String[]> parameterMap = getParameterMap();
-
-		Map<String, String[]> copiedMap = deepCopyMap(parameterMap);
-
-		return new MutableRenderParametersImpl(
-			copiedMap, _publicRenderParameterNames);
 	}
 
 	@Override

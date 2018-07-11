@@ -77,6 +77,11 @@ else {
 	<liferay-ui:message arguments="<%= String.valueOf(upe.changeableDate) %>" key="you-cannot-change-your-password-yet" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
+<liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreAlphanumeric.class %>" message="that-password-must-have-more-alphanumeric-characters" />
+<liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreLowercase.class %>" message="that-password-must-have-more-lowercase-characters" />
+<liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreNumbers.class %>" message="that-password-must-have-more-number-characters" />
+<liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreSymbols.class %>" message="that-password-must-have-more-symbol-characters" />
+<liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreUppercase.class %>" message="that-password-must-have-more-uppercase-characters" />
 <liferay-ui:error exception="<%= UserPasswordException.MustNotBeEqualToCurrent.class %>" message="your-new-password-cannot-be-the-same-as-your-old-password-please-enter-a-different-password" />
 <liferay-ui:error exception="<%= UserPasswordException.MustNotBeNull.class %>" message="the-password-cannot-be-blank" />
 <liferay-ui:error exception="<%= UserPasswordException.MustNotBeRecentlyUsed.class %>" message="that-password-has-already-been-used-please-enter-a-different-password" />

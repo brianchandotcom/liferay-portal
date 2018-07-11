@@ -29,10 +29,6 @@ import javax.portlet.PortletParameters;
  */
 public abstract class PortletParametersBase implements PortletParameters {
 
-	public PortletParametersBase(Map<String, String[]> parameterMap) {
-		this(parameterMap, null);
-	}
-
 	public PortletParametersBase(
 		Map<String, String[]> parameterMap, String namespace) {
 

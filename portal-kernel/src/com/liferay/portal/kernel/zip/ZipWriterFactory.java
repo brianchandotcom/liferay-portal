@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.zip;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.File;
 
 /**
  * @author Raymond Augé
  */
+@ProviderType
 public interface ZipWriterFactory {
 
 	public ZipWriter getZipWriter();

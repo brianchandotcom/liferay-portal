@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.zip;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.InputStream;
 
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
+@ProviderType
 public interface ZipReader {
 
 	public void close();

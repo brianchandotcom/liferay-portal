@@ -15,7 +15,6 @@
 package com.liferay.portlet.internal;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,15 +43,7 @@ public class MutableRenderParametersImpl
 
 		Set<String> parameterNames = parameterMap.keySet();
 
-		Iterator<String> itr = parameterNames.iterator();
-
-		while (itr.hasNext()) {
-			String parameterName = itr.next();
-
-			if (!_publicRenderParameterNames.contains(parameterName)) {
-				itr.remove();
-			}
-		}
+		parameterNames.retainAll(_publicRenderParameterNames);
 	}
 
 	@Override
@@ -61,15 +52,7 @@ public class MutableRenderParametersImpl
 
 		Set<String> parameterNames = parameterMap.keySet();
 
-		Iterator<String> itr = parameterNames.iterator();
-
-		while (itr.hasNext()) {
-			String parameterName = itr.next();
-
-			if (_publicRenderParameterNames.contains(parameterName)) {
-				itr.remove();
-			}
-		}
+		parameterNames.removeAll(_publicRenderParameterNames);
 	}
 
 	@Override

@@ -81,14 +81,16 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 	protected void addKaleoDefinitionsFromKaleoDefinitionVersion()
 		throws PortalException, SQLException {
 
-		StringBundler sb1 = new StringBundler(6);
+		StringBundler sb1 = new StringBundler(8);
 
-		sb1.append("select kdv.* from KaleoDefinitionVersion kdv join ( ");
-		sb1.append("select name, max(version) version from ");
-		sb1.append("KaleoDefinitionVersion group by name) sub on sub.name = ");
-		sb1.append("kdv.name and sub.version = kdv.version left join ");
-		sb1.append("KaleoDefinition kd on kdv.name = kd.name where ");
-		sb1.append("kd.kaleoDefinitionId is null");
+		sb1.append("select KaleoDefinitionVersion.* from ");
+		sb1.append("KaleoDefinitionVersion join (select name, max(version) ");
+		sb1.append("version from KaleoDefinitionVersion group by name) sub ");
+		sb1.append("on sub.name = KaleoDefinitionVersion.name and sub.");
+		sb1.append("version = KaleoDefinitionVersion.version left join ");
+		sb1.append("KaleoDefinition on KaleoDefinitionVersion.name = ");
+		sb1.append("KaleoDefinition.name where KaleoDefinition.");
+		sb1.append("kaleoDefinitionId is null");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(sb1.toString());

@@ -14,6 +14,7 @@
 
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.external;
 
+import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.repository.authorization.oauth2.Token;
 import com.liferay.document.library.repository.authorization.oauth2.TokenStore;
 import com.liferay.document.library.repository.external.CredentialsProvider;
@@ -557,6 +558,8 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 
 		try {
+			_validateExtension(extRepositoryObjectKey, newTitle);
+
 			String url = _sharepointURLHelper.getMoveFileURL(
 				extRepositoryObjectKey, newExtRepositoryFolderKey, newTitle);
 
@@ -878,6 +881,20 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 
 		return s;
+	}
+
+	private void _validateExtension(String oldPath, String newPath)
+		throws PortalException {
+
+		String oldExtension = FileUtil.getExtension(oldPath);
+
+		String newExtension = FileUtil.getExtension(newPath);
+
+		if (!newExtension.equals(oldExtension)) {
+			throw new SourceFileNameException(
+				"Sharepoint repository does not support changing the file " +
+					"extension");
+		}
 	}
 
 	private String _libraryPath;

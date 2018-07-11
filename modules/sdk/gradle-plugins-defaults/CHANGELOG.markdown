@@ -4025,6 +4025,23 @@ version 2.2.5.
 ### Fixed
 - [LPS-83300]: The system property `junit.code.coverage` was not being read.
 
+## 5.4.71 - 2018-07-10
+
+### Changed
+- [LPS-82960]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.68.
+- [LPS-82960]: Update the [Liferay Gradle Plugins Change Log Builder] dependency
+to version 1.1.1.
+
+### Fixed
+- [LPS-82960]: Set the project property `jira.project.keys` for sub-repositories
+to add new ticket ID prefixes for the `buildChangeLog` task.
+
+## 5.4.72 - 2018-07-10
+
+### Fixed
+- [LPS-82960]: Load `ci.properties` file to read `jira.project.keys`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

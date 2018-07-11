@@ -15,7 +15,6 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -118,41 +117,15 @@ public class VerifyGroup extends VerifyProcess {
 
 	protected void verifySites() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			ActionableDynamicQuery actionableDynamicQuery =
-				GroupLocalServiceUtil.getActionableDynamicQuery();
+			long organizationClassNameId = PortalUtil.getClassNameId(
+				Organization.class);
 
-			actionableDynamicQuery.setAddCriteriaMethod(
-				new ActionableDynamicQuery.AddCriteriaMethod() {
-
-					@Override
-					public void addCriteria(DynamicQuery dynamicQuery) {
-						dynamicQuery.add(
-							RestrictionsFactoryUtil.eq(
-								"classNameId",
-								PortalUtil.getClassNameId(Organization.class)));
-						dynamicQuery.add(
-							RestrictionsFactoryUtil.eq("site", false));
-					}
-
-				});
-			actionableDynamicQuery.setParallel(true);
-			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod<Group>() {
-
-					@Override
-					public void performAction(Group group) {
-						if ((group.getPrivateLayoutsPageCount() > 0) ||
-							(group.getPublicLayoutsPageCount() > 0)) {
-
-							group.setSite(true);
-
-							GroupLocalServiceUtil.updateGroup(group);
-						}
-					}
-
-				});
-
-			actionableDynamicQuery.performActions();
+			runSQL(
+				StringBundler.concat(
+					"update Group_ set site = [$TRUE$] where classNameId = ",
+					String.valueOf(organizationClassNameId),
+					" and site = [$FALSE$] and exists (select 1 from Layout ",
+					"where Layout.groupId = Group_.groupId)"));
 		}
 	}
 

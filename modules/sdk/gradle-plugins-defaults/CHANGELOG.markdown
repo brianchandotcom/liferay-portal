@@ -4037,6 +4037,11 @@ to version 1.1.1.
 - [LPS-82960]: Set the project property `jira.project.keys` for sub-repositories
 to add new ticket ID prefixes for the `buildChangeLog` task.
 
+## 5.4.72 - 2018-07-10
+
+### Fixed
+- [LPS-82960]: Load `ci.properties` file to read `jira.project.keys`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

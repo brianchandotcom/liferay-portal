@@ -1093,7 +1093,7 @@ public class LocalizationImpl implements Localization {
 				}
 			}
 
-			return getXml(map, key, defaultLanguageId);
+			return getXml(map, defaultLanguageId, key);
 		}
 
 		for (Locale locale : availableLocales) {

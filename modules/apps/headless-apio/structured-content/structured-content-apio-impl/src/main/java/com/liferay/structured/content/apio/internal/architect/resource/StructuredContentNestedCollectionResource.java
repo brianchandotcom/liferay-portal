@@ -145,8 +145,7 @@ public class StructuredContentNestedCollectionResource
 			this::_createClassNameClassPK
 		).addLinkedModel(
 			"contentStructure", ContentStructureIdentifier.class,
-			journalArticleWrapper ->
-				journalArticleWrapper.getDDMStructure().getStructureId()
+			this::_getJournalArticleStructureId
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, JournalArticle::getUserId
 		).addNestedList(
@@ -311,6 +310,14 @@ public class StructuredContentNestedCollectionResource
 		).orElse(
 			null
 		);
+	}
+
+	private Long _getJournalArticleStructureId(
+		JournalArticleWrapper journalArticleWrapper) {
+
+		DDMStructure ddmStructure = journalArticleWrapper.getDDMStructure();
+
+		return ddmStructure.getStructureId();
 	}
 
 	private JournalArticleWrapper _getJournalArticleWrapper(

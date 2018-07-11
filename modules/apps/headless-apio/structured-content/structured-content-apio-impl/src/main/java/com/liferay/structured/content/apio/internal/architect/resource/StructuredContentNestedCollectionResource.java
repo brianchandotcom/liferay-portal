@@ -144,11 +144,11 @@ public class StructuredContentNestedCollectionResource
 			"aggregateRating", AggregateRatingIdentifier.class,
 			this::_createClassNameClassPK
 		).addLinkedModel(
-			"creator", PersonIdentifier.class, JournalArticle::getUserId
-		).addLinkedModel(
 			"contentStructure", ContentStructureIdentifier.class,
 			journalArticleWrapper ->
 				journalArticleWrapper.getDDMStructure().getStructureId()
+		).addLinkedModel(
+			"creator", PersonIdentifier.class, JournalArticle::getUserId
 		).addNestedList(
 			"renderedContentsByTemplate", this::_getRenderedJournalArticles,
 			nestedBuilder -> nestedBuilder.types(
@@ -357,25 +357,6 @@ public class StructuredContentNestedCollectionResource
 		return new PageItems<>(journalArticleWrappers, count);
 	}
 
-	private boolean _isJSONObject(String json) {
-		try {
-			if (json.startsWith("{") &&
-				(JSONFactoryUtil.createJSONObject(json) != null)) {
-
-				return true;
-			}
-
-			return false;
-		}
-		catch (JSONException jsone) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse JSON", jsone);
-			}
-
-			return false;
-		}
-	}
-
 	private String _getRenderedContent(
 		JournalArticleWrapper journalArticleWrapper, DDMTemplate ddmTemplate,
 		Locale locale) {
@@ -412,6 +393,25 @@ public class StructuredContentNestedCollectionResource
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	private boolean _isJSONObject(String json) {
+		try {
+			if (json.startsWith("{") &&
+				(JSONFactoryUtil.createJSONObject(json) != null)) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (JSONException jsone) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to parse JSON", jsone);
+			}
+
+			return false;
+		}
 	}
 
 	private JournalArticleWrapper _updateJournalArticle(

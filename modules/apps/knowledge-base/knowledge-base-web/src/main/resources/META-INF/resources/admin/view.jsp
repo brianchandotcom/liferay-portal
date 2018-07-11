@@ -180,10 +180,34 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 								<h5 class="text-default">
 									<span>
-										<liferay-ui:message arguments="<%= KBFolderServiceUtil.getKBFoldersCount(kbFolder.getGroupId(), kbFolder.getKbFolderId()) %>" key="x-folders" />
+
+										<%
+										int kbFoldersCount = KBFolderServiceUtil.getKBFoldersCount(kbFolder.getGroupId(), kbFolder.getKbFolderId());
+										%>
+
+										<c:choose>
+											<c:when test="<%= kbFoldersCount == 1 %>">
+												<liferay-ui:message arguments="<%= kbFoldersCount %>" key="x-folder" />
+											</c:when>
+											<c:otherwise>
+												<liferay-ui:message arguments="<%= kbFoldersCount %>" key="x-folders" />
+											</c:otherwise>
+										</c:choose>
 									</span>
 									<span class="kb-descriptive-details">
-										<liferay-ui:message arguments="<%= KBArticleServiceUtil.getKBArticlesCount(kbFolder.getGroupId(), kbFolder.getKbFolderId(), WorkflowConstants.STATUS_ANY) %>" key="x-articles" />
+
+										<%
+										int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(kbFolder.getGroupId(), kbFolder.getKbFolderId(), WorkflowConstants.STATUS_ANY);
+										%>
+
+										<c:choose>
+											<c:when test="<%= kbArticlesCount == 1 %>">
+												<liferay-ui:message arguments="<%= kbArticlesCount %>" key="x-article" />
+											</c:when>
+											<c:otherwise>
+												<liferay-ui:message arguments="<%= kbArticlesCount %>" key="x-articles" />
+											</c:otherwise>
+										</c:choose>
 									</span>
 								</h5>
 							</liferay-ui:search-container-column-text>

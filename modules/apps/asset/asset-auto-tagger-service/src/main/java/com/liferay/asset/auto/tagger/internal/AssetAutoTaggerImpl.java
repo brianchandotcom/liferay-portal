@@ -88,27 +88,18 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 						assetEntry.getUserId(), assetEntry.getGroupId(),
 						tags.toArray(new String[0]));
 
-					boolean needsReindex = false;
-
 					for (AssetTag assetTag : assetTags) {
-						if (!_assetTagLocalService.hasAssetEntryAssetTag(
-								assetEntry.getEntryId(), assetTag.getTagId())) {
+						_assetTagLocalService.addAssetEntryAssetTag(
+							assetEntry.getEntryId(), assetTag);
 
-							_assetTagLocalService.addAssetEntryAssetTag(
-								assetEntry.getEntryId(), assetTag);
+						_assetAutoTaggerEntryLocalService.
+							addAssetAutoTaggerEntry(assetEntry, assetTag);
 
-							_assetAutoTaggerEntryLocalService.
-								addAssetAutoTaggerEntry(assetEntry, assetTag);
-
-							_assetTagLocalService.incrementAssetCount(
-								assetTag.getTagId(),
-								assetEntry.getClassNameId());
-
-							needsReindex = true;
-						}
+						_assetTagLocalService.incrementAssetCount(
+							assetTag.getTagId(), assetEntry.getClassNameId());
 					}
 
-					if (needsReindex) {
+					if (!assetTags.isEmpty()) {
 						_reindex(assetEntry);
 					}
 

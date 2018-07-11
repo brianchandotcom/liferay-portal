@@ -77,7 +77,7 @@ public abstract class PortletParametersBase implements PortletParameters {
 		}
 
 		if ((_namespace != null) && (name != null)) {
-			values = _parameterMap.get(_namespace + name);
+			values = _parameterMap.get(_namespace.concat(name));
 
 			if ((values == null) && name.startsWith(_namespace)) {
 				values = _parameterMap.get(name.substring(_namespace.length()));

@@ -156,17 +156,17 @@ public class StructuredContentNestedCollectionResource
 			journalArticleWrapper ->
 				journalArticleWrapper.getDDMStructure().getStructureId()
 		).addLocalizedStringByLocale(
+			"description", JournalArticleWrapper::getDescription
+		).addLocalizedStringByLocale(
 			"renderedContent", this::_getJournalArticleHtml
+		).addLocalizedStringByLocale(
+			"title", JournalArticle::getTitle
 		).addRelatedCollection(
 			"categories", CategoryIdentifier.class
 		).addRelatedCollection(
 			"comments", CommentIdentifier.class
 		).addString(
-			"description", JournalArticleWrapper::getDescription
-		).addString(
 			"content", JournalArticle::getContent
-		).addString(
-			"title", JournalArticle::getTitle
 		).addStringList(
 			"keywords", this::_getJournalArticleAssetTags
 		).build();

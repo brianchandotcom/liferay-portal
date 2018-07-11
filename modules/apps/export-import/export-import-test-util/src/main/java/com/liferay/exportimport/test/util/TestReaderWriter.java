@@ -106,6 +106,10 @@ public class TestReaderWriter implements ZipReader, ZipWriter {
 		return StringPool.BLANK;
 	}
 
+	@Override
+	public void umount() {
+	}
+
 	private final List<String> _binaryEntries = new ArrayList<>();
 	private final Map<String, String> _entries = new HashMap<>();
 

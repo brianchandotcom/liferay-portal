@@ -137,6 +137,18 @@ public class ZipWriterImpl implements ZipWriter {
 		return _file.getPath();
 	}
 
+	@Override
+	public void umount() {
+		try {
+			File.umount(_file);
+		}
+		catch (ArchiveException ae) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to unmount file entry", ae);
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(ZipWriterImpl.class);
 
 	static {

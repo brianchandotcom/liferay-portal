@@ -2303,6 +2303,36 @@
 				</comments>
 			</library>
 			<library>
+				<file-name>lib/portal/libtensorflow.jar</file-name>
+				<version>1.8.0</version>
+				<project-name>Tensorflow</project-name>
+				<project-url>https://www.tensorflow.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+				<comments>
+					See LPS-83379.
+				</comments>
+			</library>
+			<library>
+				<file-name>lib/portal/libtensorflow_jni.jar</file-name>
+				<version>1.8.0</version>
+				<project-name>Tensorflow</project-name>
+				<project-url>https://www.tensorflow.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+				<comments>
+					See LPS-83379.
+				</comments>
+			</library>
+			<library>
 				<file-name>lib/portal/liferay-icu4j.jar</file-name>
 				<version>54.1.1.LIFERAY-PATCHED-1</version>
 				<project-name>ICU4J</project-name>
@@ -3077,6 +3107,21 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/tensorflow.jar</file-name>
+				<version>1.8.0</version>
+				<project-name>Tensorflow</project-name>
+				<project-url>https://www.tensorflow.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+				<comments>
+					See LPS-83379.
+				</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/tika-core.jar</file-name>

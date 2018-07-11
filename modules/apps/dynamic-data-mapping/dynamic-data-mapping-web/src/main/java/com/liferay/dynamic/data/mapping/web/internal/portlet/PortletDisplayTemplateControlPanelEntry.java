@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.site.navigation.admin.web.internal.portlet;
+package com.liferay.dynamic.data.mapping.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,20 +28,16 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
+	property = "javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE,
 	service = ControlPanelEntry.class
 )
-public class SiteNavigationAdminControlPanelEntry
+public class PortletDisplayTemplateControlPanelEntry
 	extends BaseControlPanelEntry {
 
 	@Override
-	protected boolean hasAccessPermissionDenied(
+	public boolean hasAccessPermissionDenied(
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
-
-		if (group.isCompany()) {
-			return true;
-		}
 
 		if (group.isLayout()) {
 			return true;

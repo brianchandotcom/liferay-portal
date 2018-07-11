@@ -50,6 +50,10 @@ public class FragmentControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
+		if (group.isLayout()) {
+			return true;
+		}
+
 		return super.hasAccessPermissionDenied(
 			permissionChecker, group, portlet);
 	}

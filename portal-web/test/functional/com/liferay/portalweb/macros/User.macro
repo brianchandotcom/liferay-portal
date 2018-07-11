@@ -56,7 +56,7 @@
 	</command>
 
 	<command name="addAddressViaMyAccount">
-		<execute function="Click" locator1="NavListItem#ADDRESSES" />
+		<execute function="Click" locator1="NavBar#ADDRESSES" />
 
 		<execute function="Type" locator1="TextInput#STREET_1" value1="${userAddressStreet1}" />
 

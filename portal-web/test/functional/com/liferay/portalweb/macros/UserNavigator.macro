@@ -1,4 +1,10 @@
 <definition>
+	<command name="gotoContact">
+		<execute macro="Navigator#gotoNavUnderline">
+			<var name="navUnderline" value="Contact" />
+		</execute>
+	</command>
+
 	<command name="gotoDisplaySettings">
 		<execute macro="UserNavigator#gotoPreferences" />
 

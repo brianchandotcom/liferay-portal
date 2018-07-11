@@ -1715,6 +1715,10 @@ public class LayoutTypePortletImpl
 		try {
 			Layout layout = getLayout();
 
+			if (!layout.isInheritLookAndFeel()) {
+				return layout.getThemeId();
+			}
+
 			LayoutSet layoutSet = layout.getLayoutSet();
 
 			return layoutSet.getThemeId();

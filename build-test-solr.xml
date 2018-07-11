@@ -134,13 +134,11 @@ SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 
 	<macrodef name="create-solr-ssl-keystore">
 		<sequential>
-			<get-ip-address />
-
 			<exec dir="${solr.dir}/server/etc" executable="keytool">
 				<arg value="-genkeypair" />
 				<arg line="-alias solr-ssl" />
 				<arg line="-dname &quot;CN=localhost, OU=Organizational Unit, O=Organization, L=Location, ST=State, C=Country&quot;" />
-				<arg line="-ext SAN=DNS:localhost,IP:${ip.address},IP:127.0.0.1" />
+				<arg line="-ext SAN=DNS:localhost,IP:127.0.0.1" />
 				<arg line="-keyalg RSA" />
 				<arg line="-keypass secret" />
 				<arg line="-keysize 2048" />

@@ -46,7 +46,10 @@
 
 	<command name="viewLocalizationMessage">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#PORTAL_LOCALIZATION_TRANSLATION_LANGUAGE_MESSAGE" value1="${translationLanguageLocalizationMessage}" />
-		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE" value1="${defaultLanguageLocalizationMessage}" />
+		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE" value1="${defaultLanguageLocalizationMessage}">
+			<var name="key_pageLocale" value="${defaultLanguageLocalizationMessage}" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_PREFERRED_LANGUAGE_MESSAGE" value1="${preferredLanguageLocalizationMessage}" />
 	</command>
 

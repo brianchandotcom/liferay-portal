@@ -33,7 +33,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 				"select id_ from Portlet where portletId = '176'");
 			ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
+			if (rs.next()) {
 				removeDuplicatedPortletPreferences();
 				removeDuplicatedResourcePermissions();
 

@@ -177,6 +177,13 @@ public class SourceFormatter {
 				arguments, "include.subrepositories",
 				SourceFormatterArgs.INCLUDE_SUBREPOSITORIES);
 
+			List<String> recentChangesFileNames =
+				sourceFormatterArgs.getRecentChangesFileNames();
+
+			if (recentChangesFileNames != null) {
+				includeSubrepositories = true;
+			}
+
 			sourceFormatterArgs.setIncludeSubrepositories(
 				includeSubrepositories);
 

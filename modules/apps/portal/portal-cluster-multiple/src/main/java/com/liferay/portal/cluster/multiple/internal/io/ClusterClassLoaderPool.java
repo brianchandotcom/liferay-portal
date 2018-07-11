@@ -21,11 +21,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.osgi.framework.Version;
 
@@ -57,23 +56,25 @@ public class ClusterClassLoaderPool {
 				if (pos > 0) {
 					String symbolicName = contextName.substring(0, pos);
 
-					List<VersionedClassLoader> versionedClassLoaderList =
+					ConcurrentNavigableMap<Version, ClassLoader> classLoaders =
 						_fallbackClassLoaders.get(symbolicName);
 
-					if (versionedClassLoaderList != null) {
-						VersionedClassLoader latestVersionClassLoader =
-							versionedClassLoaderList.get(0);
+					if (classLoaders != null) {
+						Map.Entry<Version, ClassLoader> entry =
+							classLoaders.lastEntry();
 
-						classLoader = latestVersionClassLoader.getClassLoader();
+						if (entry != null) {
+							classLoader = entry.getValue();
 
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringBundler.concat(
-									"Unable to find ClassLoader for ",
-									contextName, ", ClassLoader ", symbolicName,
-									StringPool.UNDERLINE,
-									latestVersionClassLoader.getVersion(),
-									" is provided instead"));
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									StringBundler.concat(
+										"Unable to find ClassLoader for ",
+										contextName, ", ClassLoader ",
+										symbolicName, StringPool.UNDERLINE,
+										entry.getKey(),
+										" is provided instead"));
+							}
 						}
 					}
 				}
@@ -113,76 +114,40 @@ public class ClusterClassLoaderPool {
 	public static void registerFallback(
 		String symbolicName, Version version, ClassLoader classLoader) {
 
-		VersionedClassLoader versionedClassLoader = new VersionedClassLoader(
-			classLoader, version);
+		_fallbackClassLoaders.compute(
+			symbolicName,
+			(key, classLoaders) -> {
+				if (classLoaders == null) {
+					classLoaders = new ConcurrentSkipListMap<>();
+				}
 
-		List<VersionedClassLoader> versionedClassLoaderList =
-			_fallbackClassLoaders.get(symbolicName);
+				classLoaders.put(version, classLoader);
 
-		if (versionedClassLoaderList == null) {
-			versionedClassLoaderList = new CopyOnWriteArrayList<>();
-
-			_fallbackClassLoaders.put(symbolicName, versionedClassLoaderList);
-		}
-
-		versionedClassLoaderList.add(versionedClassLoader);
-
-		Collections.sort(versionedClassLoaderList, Collections.reverseOrder());
+				return classLoaders;
+			});
 	}
 
 	public static void unregisterFallback(
 		String symbolicName, Version version) {
 
-		List<VersionedClassLoader> versionedClassLoaderList =
-			_fallbackClassLoaders.get(symbolicName);
+		_fallbackClassLoaders.computeIfPresent(
+			symbolicName,
+			(key, classLoaders) -> {
+				classLoaders.remove(version);
 
-		if (versionedClassLoaderList == null) {
-			return;
-		}
-
-		for (VersionedClassLoader versionedClassLoader :
-				versionedClassLoaderList) {
-
-			if (version.equals(versionedClassLoader.getVersion())) {
-				versionedClassLoaderList.remove(versionedClassLoader);
-
-				if (versionedClassLoaderList.isEmpty()) {
-					_fallbackClassLoaders.remove(symbolicName);
+				if (classLoaders.isEmpty()) {
+					return null;
 				}
-			}
-		}
+
+				return classLoaders;
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterClassLoaderPool.class);
 
-	private static final Map<String, List<VersionedClassLoader>>
-		_fallbackClassLoaders = new ConcurrentHashMap<>();
-
-	private static class VersionedClassLoader
-		implements Comparable<VersionedClassLoader> {
-
-		@Override
-		public int compareTo(VersionedClassLoader versionedClassLoader) {
-			return _version.compareTo(versionedClassLoader._version);
-		}
-
-		public ClassLoader getClassLoader() {
-			return _classLoader;
-		}
-
-		public Version getVersion() {
-			return _version;
-		}
-
-		private VersionedClassLoader(ClassLoader classLoader, Version version) {
-			_classLoader = classLoader;
-			_version = version;
-		}
-
-		private final ClassLoader _classLoader;
-		private final Version _version;
-
-	}
+	private static final
+		Map<String, ConcurrentNavigableMap<Version, ClassLoader>>
+			_fallbackClassLoaders = new ConcurrentHashMap<>();
 
 }

@@ -72,7 +72,7 @@
 
 	<command name="viewSuccessMessageText">
 		<execute function="AssertVisible" locator1="Message#SUCCESS" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="${successMessage}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="${successMessage}" />
 	</command>
 
 	<command name="waitForSuccessMessageHide">

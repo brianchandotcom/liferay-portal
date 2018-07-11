@@ -58,6 +58,12 @@ public class PropertiesModulesFileCheck extends BaseFileCheck {
 			return content;
 		}
 
+		List<String> fileExtensions = getFileExtensions();
+
+		if (!fileExtensions.contains("bnd")) {
+			return content;
+		}
+
 		StringBundler sb = new StringBundler();
 
 		Map<String, String> bundleVersionsMap = _getBundleVersionsMap();

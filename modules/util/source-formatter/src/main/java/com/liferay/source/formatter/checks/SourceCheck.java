@@ -47,6 +47,8 @@ public interface SourceCheck {
 
 	public void setEnabled(boolean enabled);
 
+	public void setFileExtensions(List<String> fileExtenstions);
+
 	public void setMaxLineLength(int maxLineLength);
 
 	public void setPluginsInsideModulesDirectoryNames(

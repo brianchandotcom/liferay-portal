@@ -234,6 +234,9 @@
 /portal/spring-orm.jar
 /portal/spring-oxm.jar
 /portal/spring-tx.jar
+/portal/tensorflow.jar
+/portal/libtensorflow.jar
+/portal/libtensorflow_jni.jar
 /portal/spring-web.jar
 /portal/spring-webmvc.jar
 /portal/spring-webmvc-portlet.jar

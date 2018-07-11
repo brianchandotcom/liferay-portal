@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.portlet.MutablePortletParameters;
@@ -99,10 +100,10 @@ public abstract class PortletParametersBase implements PortletParameters {
 
 	protected Map<String, String[]> deepCopyMap(Map<String, String[]> map) {
 		Map<String, String[]> copiedMap = new HashMap<>();
-		Set<String> keySet = map.keySet();
 
-		for (String key : keySet) {
-			String[] values = map.get(key);
+		for (Entry<String, String[]> entry : map.entrySet()) {
+			String key = entry.getKey();
+			String[] values = entry.getValue();
 
 			if (values != null) {
 				String[] copiedParameterValues = values.clone();

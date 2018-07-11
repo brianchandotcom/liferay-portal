@@ -140,6 +140,12 @@ public class LayoutExportController implements ExportController {
 		catch (Throwable t) {
 			ExportImportThreadLocal.setLayoutExportInProcess(false);
 
+			if (portletDataContext != null) {
+				ZipWriter zipWriter = portletDataContext.getZipWriter();
+
+				zipWriter.umount();
+			}
+
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_FAILED,
 				getProcessFlag(),

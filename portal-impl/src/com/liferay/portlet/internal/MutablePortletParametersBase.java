@@ -35,10 +35,10 @@ public abstract class MutablePortletParametersBase
 	@Override
 	public MutablePortletParameters add(PortletParameters portletParameters) {
 		MutablePortletParameters oldMutablePortletParameters = clone();
-		Set<String> newParameterNames = portletParameters.getNames();
+
 		Map<String, String[]> parameterMap = getParameterMap();
 
-		for (String newParameterName : newParameterNames) {
+		for (String newParameterName : portletParameters.getNames()) {
 			String[] values = portletParameters.getValues(newParameterName);
 
 			String[] copiedValues = values.clone();

@@ -711,6 +711,35 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	@Override
+	public DDMStructure fetchStructureByUuidAndGroupId(
+		String uuid, long groupId, boolean includeAncestorStructures) {
+
+		DDMStructure structure = ddmStructurePersistence.fetchByUUID_G(
+			uuid, groupId);
+
+		if (structure != null) {
+			return structure;
+		}
+
+		if (!includeAncestorStructures) {
+			return null;
+		}
+
+		for (long ancestorSiteGroupId :
+				PortalUtil.getAncestorSiteGroupIds(groupId)) {
+
+			structure = ddmStructurePersistence.fetchByUUID_G(
+				uuid, ancestorSiteGroupId);
+
+			if (structure != null) {
+				return structure;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public List<DDMStructure> getChildrenStructures(long parentStructureId) {
 		return ddmStructurePersistence.findByParentStructureId(
 			parentStructureId);

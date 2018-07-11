@@ -568,6 +568,13 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructure fetchStructureByUuidAndGroupId(
+		String uuid, long groupId, boolean includeAncestorStructures) {
+		return _ddmStructureLocalService.fetchStructureByUuidAndGroupId(uuid,
+			groupId, includeAncestorStructures);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _ddmStructureLocalService.getActionableDynamicQuery();
 	}

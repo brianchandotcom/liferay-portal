@@ -546,6 +546,13 @@ public class DDMStructureLocalServiceUtil {
 			includeAncestorStructures);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMStructure fetchStructureByUuidAndGroupId(
+		String uuid, long groupId, boolean includeAncestorStructures) {
+		return getService()
+				   .fetchStructureByUuidAndGroupId(uuid, groupId,
+			includeAncestorStructures);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

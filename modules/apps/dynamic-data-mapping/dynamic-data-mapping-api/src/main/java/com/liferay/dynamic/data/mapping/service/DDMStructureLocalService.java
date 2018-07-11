@@ -457,6 +457,10 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		String structureKey, boolean includeAncestorStructures);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMStructure fetchStructureByUuidAndGroupId(String uuid,
+		long groupId, boolean includeAncestorStructures);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

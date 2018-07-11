@@ -438,8 +438,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		else if (className.equals(DDMStructure.class.getName())) {
 			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchDDMStructureByUuidAndGroupId(
-					uuid, groupId);
+				_ddmStructureLocalService.fetchStructureByUuidAndGroupId(
+					uuid, groupId, true);
 
 			if (ddmStructure == null) {
 				Map<String, String> structureUuids =

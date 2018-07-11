@@ -197,8 +197,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="must have DELETE permission for com.liferay.portal.kernel.model.User" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="com.liferay.portal.kernel.security.auth.PrincipalException$MustHavePermission" />
-
-		<execute function="AssertConsoleTextPresent" value1="must have DELETE permission for com.liferay.portal.kernel.model.User" />
 	</command>
 
 	<command name="ValidateForwardURLPG" priority="5">

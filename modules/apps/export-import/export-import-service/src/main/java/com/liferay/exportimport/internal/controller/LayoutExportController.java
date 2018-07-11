@@ -143,7 +143,7 @@ public class LayoutExportController implements ExportController {
 			if (portletDataContext != null) {
 				ZipWriter zipWriter = portletDataContext.getZipWriter();
 
-				zipWriter.getFile();
+				zipWriter.umount();
 			}
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(

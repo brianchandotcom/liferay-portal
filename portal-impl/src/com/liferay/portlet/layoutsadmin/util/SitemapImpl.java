@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -265,6 +266,16 @@ public class SitemapImpl implements Sitemap {
 				entry.getKey());
 
 			for (Layout layout : layouts) {
+				UnicodeProperties layoutTypeSettings =
+					layout.getTypeSettingsProperties();
+
+				boolean sitemapInclude = GetterUtil.getBoolean(
+					layoutTypeSettings.getProperty("sitemap-include"), true);
+
+				if (!sitemapInclude) {
+					continue;
+				}
+
 				Element sitemapElement = element.addElement("sitemap");
 
 				Element locationElement = sitemapElement.addElement("loc");

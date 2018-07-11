@@ -206,8 +206,6 @@ AUI.add(
 
 								imageContainer.remove();
 
-								editor.execCommand('enter');
-
 								editor.fire(
 									'imageUploaded',
 									{

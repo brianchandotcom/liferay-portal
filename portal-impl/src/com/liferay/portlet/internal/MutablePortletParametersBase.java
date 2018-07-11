@@ -98,11 +98,7 @@ public abstract class MutablePortletParametersBase
 
 		Map<String, String[]> parameterMap = getParameterMap();
 
-		for (String oldParameterName : oldParameterNames) {
-			if (!newParameterNames.contains(oldParameterName)) {
-				parameterMap.remove(oldParameterName);
-			}
-		}
+		parameterMap.clear();
 
 		for (String newParameterName : newParameterNames) {
 			String[] values = portletParameters.getValues(newParameterName);

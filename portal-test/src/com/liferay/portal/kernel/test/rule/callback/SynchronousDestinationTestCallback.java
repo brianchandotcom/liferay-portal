@@ -174,6 +174,7 @@ public class SynchronousDestinationTestCallback
 			replaceDestination(DestinationNames.SCHEDULER_ENGINE);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 			replaceDestination("liferay/adaptive_media_processor");
+			replaceDestination("liferay/asset_auto_tagger");
 			replaceDestination("liferay/report_request");
 			replaceDestination("liferay/reports_admin");
 

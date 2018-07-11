@@ -53,7 +53,6 @@ import java.util.Set;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -63,7 +62,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = AssetAutoTagger.class
 )
 public class AssetAutoTaggerImpl implements AssetAutoTagger {

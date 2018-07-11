@@ -37,7 +37,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				"**/framework.properties", "**/gradle-wrapper.properties",
 				"**/imported-files.properties",
 				"**/content/Language*.properties",
-				"**/liferay-plugin-package*.properties", "**/portal.properties",
+				"**/liferay-plugin-package*.properties",
+				"**/modules/modules.properties", "**/portal.properties",
 				"**/portal-ext.properties", "**/portal-legacy-*.properties",
 				"**/portlet.properties", "**/service.properties",
 				"**/source-formatter.properties", "**/test.properties"

@@ -15,28 +15,16 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checks.util.BNDSourceUtil;
-import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.util.FileUtil;
 
-import java.io.File;
 import java.io.IOException;
-
-import java.nio.file.FileVisitOption;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,18 +39,9 @@ import java.util.regex.Pattern;
 public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
-		return true;
-	}
-
-	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws IOException {
-
-		if (!absolutePath.contains("/modules/apps/")) {
-			return content;
-		}
 
 		int x = absolutePath.lastIndexOf(StringPool.SLASH);
 
@@ -196,91 +175,31 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 			return _publishedMajorVersionsMap;
 		}
 
-		File portalDir = getPortalDir();
+		Map<String, String> bundleVersionsMap = new HashMap<>();
 
-		if (portalDir == null) {
+		String content = getPortalContent(_MODULES_PROPERTIES_FILE_NAME);
+
+		if (Validator.isNull(content)) {
 			_publishedMajorVersionsMap = Collections.emptyMap();
 
 			return _publishedMajorVersionsMap;
 		}
 
-		final List<File> files = new ArrayList<>();
+		List<String> lines = ListUtil.fromString(content);
 
-		Files.walkFileTree(
-			portalDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 15,
-			new SimpleFileVisitor<Path>() {
+		for (String line : lines) {
+			String[] array = StringUtil.split(line, StringPool.EQUAL);
 
-				@Override
-				public FileVisitResult preVisitDirectory(
-					Path dirPath, BasicFileAttributes basicFileAttributes) {
-
-					String dirName = String.valueOf(dirPath.getFileName());
-
-					if (ArrayUtil.contains(_SKIP_DIR_NAMES, dirName)) {
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					Path path = dirPath.resolve("bnd.bnd");
-
-					if (Files.exists(path)) {
-						files.add(path.toFile());
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
+			if (array.length == 2) {
+				bundleVersionsMap.put(array[0], array[1]);
+			}
+		}
 
 		_publishedMajorVersionsMap = new HashMap<>();
 
-		for (File file : files) {
-			String content = FileUtil.read(file);
-
-			String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
-				content, "Bundle-SymbolicName");
-
-			if (Validator.isNull(bundleSymbolicName)) {
-				continue;
-			}
-
-			String path = SourceUtil.getAbsolutePath(file);
-
-			if (path.endsWith("/portal-impl/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.portal.impl";
-			}
-			else if (path.endsWith("/portal-kernel/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.portal.kernel";
-			}
-			else if (path.endsWith("/portal-test-integration/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.portal.test.integration";
-			}
-			else if (path.endsWith("/portal-test/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.portal.test";
-			}
-			else if (path.endsWith("/portal-support-tomcat/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.support.tomcat";
-			}
-			else if (path.endsWith("/util-bridges/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.util.bridges";
-			}
-			else if (path.endsWith("/util-java/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.util.java";
-			}
-			else if (path.endsWith("/util-slf4j/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.util.slf4j";
-			}
-			else if (path.endsWith("/util-taglib/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.util.taglib";
-			}
-
-			if (!bundleSymbolicName.startsWith("com.liferay.")) {
-				continue;
-			}
-
-			String bundleVersion = BNDSourceUtil.getDefinitionValue(
-				content, "Bundle-Version");
+		for (Map.Entry<String, String> entry : bundleVersionsMap.entrySet()) {
+			String bundleSymbolicName = entry.getKey();
+			String bundleVersion = entry.getValue();
 
 			String majorVersion = _getMajorVersion(bundleVersion);
 
@@ -327,11 +246,8 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private static final String[] _SKIP_DIR_NAMES = {
-		".git", ".gradle", ".idea", ".m2", ".settings", "bin", "build",
-		"classes", "dependencies", "node_modules", "sql", "src", "test",
-		"test-classes", "test-coverage", "test-results", "tmp"
-	};
+	private static final String _MODULES_PROPERTIES_FILE_NAME =
+		"modules/modules.properties";
 
 	private final Pattern _dependenciesPattern = Pattern.compile(
 		"(\n|\\A)(\t*)dependencies \\{\n");

@@ -109,6 +109,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public void setFileExtensions(List<String> fileExtensions) {
+		_fileExtensions = fileExtensions;
+	}
+
+	@Override
 	public void setMaxLineLength(int maxLineLength) {
 		_maxLineLength = maxLineLength;
 	}
@@ -293,6 +298,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected File getFile(String fileName, int level) {
 		return SourceFormatterUtil.getFile(_baseDirName, fileName, level);
+	}
+
+	protected List<String> getFileExtensions() {
+		return _fileExtensions;
 	}
 
 	protected List<String> getFileNames(
@@ -773,6 +782,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		new ConcurrentHashMap<>();
 	private Configuration _checkstyleConfiguration;
 	private boolean _enabled = true;
+	private List<String> _fileExtensions;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private Document _portalCustomSQLDocument;

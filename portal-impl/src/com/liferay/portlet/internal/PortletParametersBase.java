@@ -139,7 +139,7 @@ public abstract class PortletParametersBase implements PortletParameters {
 
 			String nameString = (String)name;
 
-			if ((_namespace != null) && nameString.startsWith(_namespace)) {
+			if (nameString.startsWith(_namespace)) {
 				return super.contains(
 					nameString.substring(_namespace.length()));
 			}
@@ -149,7 +149,7 @@ public abstract class PortletParametersBase implements PortletParameters {
 
 		private NameHashSet(Set<String> names, String namespace) {
 			for (String name : names) {
-				if ((namespace != null) && name.startsWith(namespace)) {
+				if (name.startsWith(namespace)) {
 					add(name.substring(namespace.length()));
 				}
 				else {

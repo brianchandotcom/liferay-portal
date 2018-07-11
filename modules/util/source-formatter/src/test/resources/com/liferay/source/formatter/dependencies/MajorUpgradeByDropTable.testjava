@@ -35,6 +35,8 @@ public class MajorUpgradeByDropTable implements UpgradeStepRegistrator {
 				protected void doUpgrade() throws Exception {
 					runSQL("drop table testTable");
 				}
+
 			});
 	}
+
 }

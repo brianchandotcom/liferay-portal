@@ -36,6 +36,8 @@ public class MajorUpgradeByAlterTableDropColumnClause
 				protected void doUpgrade() throws Exception {
 					runSQL("alter table testTable drop column test");
 				}
+
 			});
 	}
+
 }

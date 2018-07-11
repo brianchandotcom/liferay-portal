@@ -38,6 +38,8 @@ public class MajorUpgradeByAlterTableDropColumn
 						MajorUpgradeByAlterTableDropColumn.class,
 						new AlterTableDropColumn("test"));
 				}
+
 			});
 	}
+
 }

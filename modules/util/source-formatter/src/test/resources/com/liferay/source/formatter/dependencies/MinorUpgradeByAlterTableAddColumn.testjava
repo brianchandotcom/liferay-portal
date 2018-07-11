@@ -38,6 +38,8 @@ public class MinorUpgradeByAlterTableAddColumn
 						MinorUpgradeByAlterTableAddColumn.class,
 						new AlterTableAddColumn("test LONG"));
 				}
+
 			});
 	}
+
 }

@@ -37,6 +37,8 @@ public class MajorUpgradeByAlterColumnName implements UpgradeStepRegistrator {
 						MajorUpgradeByAlterColumnName.class,
 						new AlterColumnName("test", "tested VARCHAR(75) null"));
 				}
+
 			});
 	}
+
 }

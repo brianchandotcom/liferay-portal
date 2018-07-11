@@ -36,6 +36,8 @@ public class MinorUpgradeByAlterTableAddColumnClause
 				protected void doUpgrade() throws Exception {
 					runSQL("alter table testTable add test");
 				}
+
 			});
 	}
+
 }

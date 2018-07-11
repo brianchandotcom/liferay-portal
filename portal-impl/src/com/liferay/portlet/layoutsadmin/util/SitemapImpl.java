@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutsadmin.util;
 
+import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layouts.admin.kernel.util.Sitemap;
 import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
 import com.liferay.layouts.admin.kernel.util.SitemapURLProviderRegistryUtil;
@@ -270,7 +271,9 @@ public class SitemapImpl implements Sitemap {
 					layout.getTypeSettingsProperties();
 
 				boolean sitemapInclude = GetterUtil.getBoolean(
-					layoutTypeSettings.getProperty("sitemap-include"), true);
+					layoutTypeSettings.getProperty(
+						LayoutTypePortletConstants.SITEMAP_INCLUDE),
+					true);
 
 				if (!sitemapInclude) {
 					continue;

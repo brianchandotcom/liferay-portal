@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
 import com.liferay.layouts.admin.kernel.util.SitemapUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -94,7 +95,9 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 			layout.getTypeSettingsProperties();
 
 		if (!GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("sitemap-include"), true)) {
+				typeSettingsProperties.getProperty(
+					LayoutTypePortletConstants.SITEMAP_INCLUDE),
+				true)) {
 
 			return;
 		}

@@ -152,10 +152,6 @@ public abstract class MutablePortletParametersBase
 			throw new IllegalArgumentException();
 		}
 
-		if (values == null) {
-			values = new String[0];
-		}
-
 		_mutated = true;
 
 		Map<String, String[]> parameterMap = getParameterMap();

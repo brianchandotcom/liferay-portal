@@ -34,9 +34,13 @@ AUI.add(
 		A.mix(
 			A.DataType.DateMath,
 			{
-				getWeeksInMonth: function(date) {
+				getWeeksInMonth: function(date, firstDayOfWeek) {
 					var daysInMonth = DateMath.getDaysInMonth(date.getFullYear(), date.getMonth());
-					var firstWeekDay = DateMath.getDate(date.getFullYear(), date.getMonth(), 1).getDay();
+					var firstWeekDay = DateMath.getDate(date.getFullYear(), date.getMonth(), 1).getDay() - firstDayOfWeek;
+
+					if (firstWeekDay < 0) {
+						firstWeekDay = firstWeekDay + 7;
+					}
 
 					var daysInFirstWeek = DateMath.WEEK_LENGTH - firstWeekDay;
 
@@ -712,7 +716,9 @@ AUI.add(
 
 						var viewDate = scheduler.get('viewDate');
 
-						var weeks = DateMath.getWeeksInMonth(viewDate);
+						var firstDayOfWeek = scheduler.get('firstDayOfWeek');
+
+						var weeks = DateMath.getWeeksInMonth(viewDate, firstDayOfWeek);
 
 						SchedulerMonthView.superclass._syncCellDimensions.apply(this, arguments);
 
@@ -722,7 +728,11 @@ AUI.add(
 					_uiSetDate: function(date) {
 						var instance = this;
 
-						var weeks = DateMath.getWeeksInMonth(date);
+						var scheduler = instance.get('scheduler');
+
+						var firstDayOfWeek = scheduler.get('firstDayOfWeek');
+
+						var weeks = DateMath.getWeeksInMonth(date, firstDayOfWeek);
 
 						A.each(
 							instance.tableRows,

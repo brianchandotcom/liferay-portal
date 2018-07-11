@@ -29,7 +29,7 @@ public abstract class MutablePortletParametersBase
 	extends PortletParametersBase implements LiferayMutablePortletParameters {
 
 	public MutablePortletParametersBase(Map<String, String[]> parameterMap) {
-		super(parameterMap);
+		super(parameterMap, null);
 	}
 
 	@Override

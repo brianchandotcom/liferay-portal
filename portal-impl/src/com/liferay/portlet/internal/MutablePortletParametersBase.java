@@ -128,13 +128,26 @@ public abstract class MutablePortletParametersBase
 
 	@Override
 	public String setValue(String name, String value, boolean append) {
-		String[] oldValues;
+		if (name == null) {
+			throw new IllegalArgumentException();
+		}
+
+		String[] oldValues = getValues(name);
 
 		if (value == null) {
-			oldValues = setValues(name, null, append);
+			removeParameter(name);
 		}
 		else {
-			oldValues = setValues(name, new String[] {value}, append);
+			Map<String, String[]> parameterMap = getParameterMap();
+
+			if (append && (oldValues != null)) {
+				String[] newValues = ArrayUtil.append(oldValues, value);
+
+				parameterMap.put(name, newValues);
+			}
+			else {
+				parameterMap.put(name, new String[] {value});
+			}
 		}
 
 		_mutated = true;

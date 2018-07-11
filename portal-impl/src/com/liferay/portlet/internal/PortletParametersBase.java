@@ -105,13 +105,13 @@ public abstract class PortletParametersBase implements PortletParameters {
 			String key = entry.getKey();
 			String[] values = entry.getValue();
 
-			if (values != null) {
+			if (values == null) {
+				copiedMap.put(key, null);
+			}
+			else {
 				String[] copiedParameterValues = values.clone();
 
 				copiedMap.put(key, copiedParameterValues);
-			}
-			else {
-				copiedMap.put(key, null);
 			}
 		}
 

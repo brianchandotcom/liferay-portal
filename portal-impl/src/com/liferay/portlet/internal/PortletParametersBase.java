@@ -133,11 +133,13 @@ public abstract class PortletParametersBase implements PortletParameters {
 				return true;
 			}
 
+			if (!(name instanceof String)) {
+				return false;
+			}
+
 			String nameString = (String)name;
 
-			if ((_namespace != null) && (nameString != null) &&
-				nameString.startsWith(_namespace)) {
-
+			if ((_namespace != null) && nameString.startsWith(_namespace)) {
 				return super.contains(
 					nameString.substring(_namespace.length()));
 			}

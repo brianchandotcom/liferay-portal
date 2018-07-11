@@ -98,7 +98,7 @@ public abstract class PortletParametersBase implements PortletParameters {
 	}
 
 	protected Map<String, String[]> deepCopyMap(Map<String, String[]> map) {
-		Map<String, String[]> copiedMap = new HashMap<>(map.size());
+		Map<String, String[]> copiedMap = new HashMap<>();
 		Set<String> keySet = map.keySet();
 
 		for (String key : keySet) {

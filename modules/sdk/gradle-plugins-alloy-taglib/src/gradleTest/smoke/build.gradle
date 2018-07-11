@@ -14,9 +14,9 @@ buildTaglibs {
 
 dependencies {
 	alloyTaglib group: "com.liferay.alloy-taglibs", name: "alloy-taglib", version: "latest.release"
-	alloyTaglib group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.16.0"
-	alloyTaglib group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.32.0"
-	alloyTaglib group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.2.0"
+	alloyTaglib group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "3.0.0"
+	alloyTaglib group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
+	alloyTaglib group: "com.liferay.portal", name: "com.liferay.util.java", version: "3.0.0"
 	alloyTaglib group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.7"
 	alloyTaglib group: "commons-beanutils", name: "commons-beanutils", version: "1.9.2"
 	alloyTaglib group: "commons-configuration", name: "commons-configuration", version: "1.10"

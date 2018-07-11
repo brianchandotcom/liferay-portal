@@ -163,11 +163,11 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		String servletContextName = servletContext.getServletContextName();
 
 		List<String> beanPortletIds = (List<String>)servletContext.getAttribute(
-			"com.liferay.beanPortletIds");
+			WebKeys.BEAN_PORTLET_IDS);
 
 		List<String> beanFilterNames =
 			(List<String>)servletContext.getAttribute(
-				"com.liferay.beanFilterNames");
+				WebKeys.BEAN_FILTER_NAMES);
 
 		if ((beanPortletIds != null) || (beanFilterNames != null)) {
 			if ((beanPortletIds != null) && _log.isInfoEnabled()) {
@@ -351,11 +351,11 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		if (portlets == null) {
 			List<String> beanPortletIds =
 				(List<String>)servletContext.getAttribute(
-					"com.liferay.beanPortletIds");
+					WebKeys.BEAN_PORTLET_IDS);
 
 			List<String> beanFilterNames =
 				(List<String>)servletContext.getAttribute(
-					"com.liferay.beanFilterNames");
+					WebKeys.BEAN_FILTER_NAMES);
 
 			if ((beanPortletIds != null) && _log.isInfoEnabled()) {
 				if (beanPortletIds.size() == 1) {

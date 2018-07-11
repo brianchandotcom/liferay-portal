@@ -58,6 +58,10 @@ public interface WebKeys {
 
 	public static final String AVAILABLE_LOCALES = "AVAILABLE_LOCALES";
 
+	public static final String BEAN_FILTER_NAMES = "BEAN_FILTER_NAMES";
+
+	public static final String BEAN_PORTLET_IDS = "BEAN_PORTLET_IDS";
+
 	public static final String BLOGS_CATEGORY = "BLOGS_CATEGORY";
 
 	public static final String BLOGS_ENTRY = "BLOGS_ENTRY";

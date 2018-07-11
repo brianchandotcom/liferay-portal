@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author David Zhang
@@ -33,6 +34,9 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
+				removeDuplicatedPortletPreferences();
+				removeDuplicatedResourcePermissions();
+
 				runSQL(
 					"delete from Portlet where portletId = '" +
 						LicenseManagerPortletKeys.LICENSE_MANAGER + "'");
@@ -47,6 +51,64 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 		return new String[][] {
 			new String[] {"176", LicenseManagerPortletKeys.LICENSE_MANAGER}
 		};
+	}
+
+	protected void removeDuplicatedPortletPreferences() throws SQLException {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select ownerId, ownerType, plid from PortletPreferences " +
+					"where portletId = '176'");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long ownerId = rs.getLong(1);
+				int ownerType = rs.getInt(2);
+				long plid = rs.getLong(3);
+
+				try (PreparedStatement psDelete = connection.prepareStatement(
+						"delete from PortletPreferences where ownerId = ? " +
+							"and ownerType = ? and plid = ? and portletId = " +
+								"?")) {
+
+					psDelete.setLong(1, ownerId);
+					psDelete.setInt(2, ownerType);
+					psDelete.setLong(3, plid);
+					psDelete.setString(
+						4, LicenseManagerPortletKeys.LICENSE_MANAGER);
+
+					psDelete.executeUpdate();
+				}
+			}
+		}
+	}
+
+	protected void removeDuplicatedResourcePermissions() throws SQLException {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select companyId, scope, primKey, roleId from " +
+					"ResourcePermission where name = '176'");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long companyId = rs.getLong(1);
+				int scope = rs.getInt(2);
+				String primKey = rs.getString(3);
+				long roleId = rs.getLong(4);
+
+				try (PreparedStatement psDelete = connection.prepareStatement(
+						"delete from ResourcePermission where companyId = ? " +
+							"and name = ? and scope = ? and primkey = ? and " +
+								"roleId = ?")) {
+
+					psDelete.setLong(1, companyId);
+					psDelete.setString(
+						2, LicenseManagerPortletKeys.LICENSE_MANAGER);
+					psDelete.setInt(3, scope);
+					psDelete.setString(4, primKey);
+					psDelete.setLong(5, roleId);
+
+					psDelete.executeUpdate();
+				}
+			}
+		}
 	}
 
 }

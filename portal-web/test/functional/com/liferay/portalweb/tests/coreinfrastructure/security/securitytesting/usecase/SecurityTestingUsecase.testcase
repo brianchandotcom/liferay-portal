@@ -99,7 +99,7 @@
 		</execute>
 
 		<execute macro="User#assignRegularRoleCP">
-			<var name="roleName" value="Power User" />
+			<var name="roleTitle" value="Power User" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -138,7 +138,7 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#BODY" value1="Portlet is temporarily unavailable.">
-			<var name="portletName" value="App Manager" />
+			<var name="key_portletName" value="App Manager" />
 		</execute>
 
 		<execute function="AssertConsoleTextPresent" value1="must be the company administrator to perform the action" />

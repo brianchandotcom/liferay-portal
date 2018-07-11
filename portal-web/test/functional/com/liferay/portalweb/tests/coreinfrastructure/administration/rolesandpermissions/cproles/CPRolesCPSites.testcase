@@ -415,6 +415,10 @@
 			<var name="key_menuItem" value="Add Child Site" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Blank Site" />
+		</execute>
+
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="Child SiteName2" />
 		</execute>

@@ -23,21 +23,13 @@ import javax.portlet.MutableActionParameters;
  * @author Neil Griffin
  */
 public class ActionParametersImpl
-	extends PortletParametersBase implements ActionParameters {
+	extends PortletParametersBase<MutableActionParameters>
+	implements ActionParameters {
 
 	public ActionParametersImpl(
 		Map<String, String[]> parameterMap, String namespace) {
 
-		super(parameterMap, namespace);
-	}
-
-	@Override
-	public MutableActionParameters clone() {
-		Map<String, String[]> parameterMap = getParameterMap();
-
-		Map<String, String[]> copiedMap = deepCopyMap(parameterMap);
-
-		return new MutableActionParametersImpl(copiedMap);
+		super(parameterMap, namespace, MutableActionParametersImpl::new);
 	}
 
 }

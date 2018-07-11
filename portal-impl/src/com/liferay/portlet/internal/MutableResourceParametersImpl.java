@@ -22,20 +22,11 @@ import javax.portlet.MutableResourceParameters;
  * @author Neil Griffin
  */
 public class MutableResourceParametersImpl
-	extends MutablePortletParametersBase
+	extends MutablePortletParametersBase<MutableResourceParameters>
 	implements LiferayMutablePortletParameters, MutableResourceParameters {
 
 	public MutableResourceParametersImpl(Map<String, String[]> parameterMap) {
-		super(parameterMap);
-	}
-
-	@Override
-	public MutableResourceParameters clone() {
-		Map<String, String[]> parameterMap = getParameterMap();
-
-		Map<String, String[]> copiedMap = deepCopyMap(parameterMap);
-
-		return new MutableResourceParametersImpl(copiedMap);
+		super(parameterMap, MutableResourceParametersImpl::new);
 	}
 
 }

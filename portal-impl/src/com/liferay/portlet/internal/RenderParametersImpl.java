@@ -24,30 +24,19 @@ import javax.portlet.MutableRenderParameters;
  * @author Neil Griffin
  */
 public class RenderParametersImpl
-	extends PortletParametersBase implements LiferayRenderParameters {
+	extends PortletParametersBase<MutableRenderParameters>
+	implements LiferayRenderParameters {
 
 	public RenderParametersImpl(
 		Map<String, String[]> parameterMap,
 		Set<String> publicRenderParameterNames, String namespace) {
 
-		super(parameterMap, namespace);
+		super(
+			parameterMap, namespace,
+			copiedMap -> new MutableRenderParametersImpl(
+				copiedMap, _nullSafe(publicRenderParameterNames)));
 
-		if (publicRenderParameterNames == null) {
-			_publicRenderParameterNames = Collections.emptySet();
-		}
-		else {
-			_publicRenderParameterNames = publicRenderParameterNames;
-		}
-	}
-
-	@Override
-	public MutableRenderParameters clone() {
-		Map<String, String[]> parameterMap = getParameterMap();
-
-		Map<String, String[]> copiedMap = deepCopyMap(parameterMap);
-
-		return new MutableRenderParametersImpl(
-			copiedMap, _publicRenderParameterNames);
+		_publicRenderParameterNames = _nullSafe(publicRenderParameterNames);
 	}
 
 	@Override
@@ -58,6 +47,14 @@ public class RenderParametersImpl
 	@Override
 	public boolean isPublic(String name) {
 		return _publicRenderParameterNames.contains(name);
+	}
+
+	private static Set<String> _nullSafe(Set<String> set) {
+		if (set == null) {
+			return Collections.emptySet();
+		}
+
+		return set;
 	}
 
 	private final Set<String> _publicRenderParameterNames;

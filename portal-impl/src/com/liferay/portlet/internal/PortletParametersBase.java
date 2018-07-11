@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.portlet.MutablePortletParameters;
 import javax.portlet.PortletParameters;
@@ -27,17 +28,23 @@ import javax.portlet.PortletParameters;
 /**
  * @author Neil Griffin
  */
-public abstract class PortletParametersBase implements PortletParameters {
+public abstract class PortletParametersBase<T extends MutablePortletParameters>
+	implements PortletParameters {
 
 	public PortletParametersBase(
-		Map<String, String[]> parameterMap, String namespace) {
+		Map<String, String[]> parameterMap, String namespace,
+		Function<Map<String, String[]>, T> mutablePortletParametersCreator) {
 
 		_parameterMap = parameterMap;
 		_namespace = namespace;
+		_mutablePortletParametersCreator = mutablePortletParametersCreator;
 	}
 
 	@Override
-	public abstract MutablePortletParameters clone();
+	public T clone() {
+		return _mutablePortletParametersCreator.apply(
+			deepCopyMap(getParameterMap()));
+	}
 
 	@Override
 	public Set<String> getNames() {
@@ -118,6 +125,8 @@ public abstract class PortletParametersBase implements PortletParameters {
 		return _parameterMap;
 	}
 
+	private final Function<Map<String, String[]>, T>
+		_mutablePortletParametersCreator;
 	private final String _namespace;
 	private final Map<String, String[]> _parameterMap;
 

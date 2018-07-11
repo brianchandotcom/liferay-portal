@@ -557,17 +557,32 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 	}
 
 	/**
+	 * In case of layout staging this method
 	 * 1. Removes PORTLET_DATA_portletId and PORTLET_DATA_ALL parameters in
-	 * parameterMap and replaces them with PORTLET_DATA_changesetPortletId. 2.
-	 * It also adds model specific parameters to be able to decide in changeset
-	 * portlet data handler whether a model needs to be exported or not. For
-	 * example: <"com.liferay.journal.model.JournalArticle",
-	 * [<code>true</code>]> 3. It adds originalPortletId parameter in case of
-	 * portlet publication
+	 *    parameterMap and replaces them with PORTLET_DATA_changesetPortletId.
+	 * 2. Adds model specific parameters to be able to decide in changeset
+	 *    portlet data handler whether a model needs to be exported or not.
+	 *    For example: <"com.liferay.journal.model.JournalArticle",
+	 *    [<code>true</code>]>
+	 * 3. Adds originalPortletId parameter in case of portlet publication
+	 *
+	 * In case of portlet staging
+	 * 1. PORTLET_DATA_portletId is kept as it is
+	 * 2. PortletExportControllerImpl and PortletImportControllerImpl calls the
+	 *    changeset portlet data handler directly
 	 *
 	 * @param parameterMap
 	 */
 	private void _replaceParameterMap(Map<String, String[]> parameterMap) {
+		boolean portletPublish = false;
+
+		if (Objects.equals(
+				MapUtil.getString(parameterMap, "javax.portlet.action"),
+				"publishPortlet")) {
+
+			portletPublish = true;
+		}
+
 		try {
 			List<Portlet> dataSiteLevelPortlets =
 				_exportImportHelper.getDataSiteLevelPortlets(
@@ -577,9 +592,15 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 				parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
 
 			for (Portlet dataSiteLevelPortlet : dataSiteLevelPortlets) {
-				String[] portletDataValues = parameterMap.remove(
+				String portletDataKey =
 					PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-						dataSiteLevelPortlet.getRootPortletId());
+						dataSiteLevelPortlet.getRootPortletId();
+
+				String[] portletDataValues = parameterMap.get(portletDataKey);
+
+				if (!portletPublish) {
+					parameterMap.remove(portletDataKey);
+				}
 
 				if (portletDataAll ||
 					((portletDataValues != null) &&
@@ -590,27 +611,17 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 
 					_addModelParameter(
 						parameterMap, dataSiteLevelPortlet, portletDataAll);
-
-					if (Objects.equals(
-							MapUtil.getString(
-								parameterMap, "javax.portlet.action"),
-							"publishPortlet")) {
-
-						parameterMap.put(
-							"originalPortletId",
-							new String[] {
-								dataSiteLevelPortlet.getRootPortletId()
-							});
-					}
 				}
 			}
 
-			parameterMap.remove(PortletDataHandlerKeys.PORTLET_DATA_ALL);
+			if (!portletPublish) {
+				parameterMap.remove(PortletDataHandlerKeys.PORTLET_DATA_ALL);
 
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-					ChangesetPortletKeys.CHANGESET,
-				new String[] {StringPool.TRUE});
+				parameterMap.put(
+					PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+						ChangesetPortletKeys.CHANGESET,
+					new String[] {StringPool.TRUE});
+			}
 		}
 		catch (Exception e) {
 			throw new ExportImportRuntimeException(e);

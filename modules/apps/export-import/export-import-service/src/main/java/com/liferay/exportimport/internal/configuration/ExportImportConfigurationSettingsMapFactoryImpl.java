@@ -16,11 +16,9 @@ package com.liferay.exportimport.internal.configuration;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
-import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -343,12 +341,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 		}
 
 		if (Validator.isNotNull(portletId)) {
-			if (ExportImportDateUtil.isRangeFromLastPublishDate(parameterMap)) {
-				settingsMap.put("portletId", ChangesetPortletKeys.CHANGESET);
-			}
-			else {
-				settingsMap.put("portletId", portletId);
-			}
+			settingsMap.put("portletId", portletId);
 		}
 
 		if (privateLayout != null) {

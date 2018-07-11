@@ -25,6 +25,7 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.util.ExpandoConverterUtil;
+import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletImportController;
 import com.liferay.exportimport.internal.lar.DeletionSystemEventImporter;
@@ -34,6 +35,7 @@ import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
 import com.liferay.exportimport.kernel.exception.MissingReferenceException;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -71,6 +73,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
@@ -391,9 +394,28 @@ public class PortletImportControllerImpl implements PortletImportController {
 			return null;
 		}
 
-		portletPreferences = portletDataHandler.importData(
-			portletDataContext, portletDataContext.getPortletId(),
-			portletPreferences, portletData);
+		if (ExportImportThreadLocal.isPortletStagingInProcess() &&
+			ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			String changesetPortletId = ChangesetPortletKeys.CHANGESET;
+
+			Portlet changesetPortlet = _portletLocalService.getPortletById(
+				changesetPortletId);
+
+			PortletDataHandler changesetPortletPortletDataHandlerInstance =
+				changesetPortlet.getPortletDataHandlerInstance();
+
+			portletPreferences =
+				changesetPortletPortletDataHandlerInstance.importData(
+					portletDataContext, changesetPortletId, portletPreferences,
+					portletData);
+		}
+		else {
+			portletPreferences = portletDataHandler.importData(
+				portletDataContext, portletDataContext.getPortletId(),
+				portletPreferences, portletData);
+		}
 
 		if (portletPreferences == null) {
 			return null;
@@ -1602,6 +1624,10 @@ public class PortletImportControllerImpl implements PortletImportController {
 		_portletDataHandlerStatusMessageSender;
 
 	private PortletItemLocalService _portletItemLocalService;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
+
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 	private UserLocalService _userLocalService;
 

@@ -15,7 +15,6 @@
 package com.liferay.portlet.exportimport.service.impl;
 
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -67,22 +65,10 @@ public class ExportImportConfigurationLocalServiceImpl
 			long userId, int type, Map<String, Serializable> settingsMap)
 		throws PortalException {
 
-		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)settingsMap.get("parameterMap");
-
-		if (ExportImportDateUtil.isRangeFromLastPublishDate(parameterMap)) {
-			return exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					userId,
-					MapUtil.getString(parameterMap, "originalPortletId"), type,
-					settingsMap);
-		}
-		else {
-			return exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					userId, GetterUtil.getString(settingsMap.get("portletId")),
-					type, settingsMap);
-		}
+		return exportImportConfigurationLocalService.
+			addDraftExportImportConfiguration(
+				userId, GetterUtil.getString(settingsMap.get("portletId")),
+				type, settingsMap);
 	}
 
 	@Override

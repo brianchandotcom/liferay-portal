@@ -81,6 +81,32 @@ public class ModulesStructureTest {
 		}
 
 		_modulesDirPath = Paths.get("modules");
+
+		_checkoutPrivateAppsDirs = new HashSet<>();
+
+		if (Files.exists(Paths.get("working.dir.properties"))) {
+			Properties properties = new Properties();
+
+			try (InputStream inputStream = Files.newInputStream(
+					Paths.get("working.dir.properties"))) {
+
+				properties.load(inputStream);
+			}
+
+			String projectNames = properties.getProperty(
+				"working.dir.checkout.private.apps.project.names");
+
+			String[] projectNamesArray = StringUtil.split(projectNames);
+
+			for (String projectName : projectNamesArray) {
+				String dirs = properties.getProperty(
+					"working.dir.checkout.private.apps." + projectName +
+						".dirs");
+
+				Collections.addAll(
+					_checkoutPrivateAppsDirs, StringUtil.split(dirs));
+			}
+		}
 	}
 
 	@Test
@@ -800,6 +826,22 @@ public class ModulesStructureTest {
 		return false;
 	}
 
+	private boolean _isInPrivateModulesCheckoutDir(Path dirPath) {
+		if (!_isInPrivateModulesDir(dirPath)) {
+			return false;
+		}
+
+		String absolutePath = ModulesStructureTestUtil.getAbsolutePath(dirPath);
+
+		for (String checkoutPrivateAppsDir : _checkoutPrivateAppsDirs) {
+			if (absolutePath.contains(checkoutPrivateAppsDir)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isInPrivateModulesDir(Path dirPath) {
 		return _isInModulesRootDir(dirPath, "private");
 	}
@@ -833,10 +875,10 @@ public class ModulesStructureTest {
 			return false;
 		}
 
-		if (_isInModulesRootDir(
-				dirPath, "private", "sdk", "third-party", "util") ||
+		if (_isInModulesRootDir(dirPath, "sdk", "third-party", "util") ||
 			Files.exists(dirPath.resolve(".lfrbuild-ci")) ||
-			_isInGitRepoReadOnly(dirPath)) {
+			_isInGitRepoReadOnly(dirPath) ||
+			_isInPrivateModulesCheckoutDir(dirPath)) {
 
 			return false;
 		}
@@ -1384,6 +1426,7 @@ public class ModulesStructureTest {
 
 	private static String _branchName;
 	private static Properties _buildProperties;
+	private static Set<String> _checkoutPrivateAppsDirs;
 	private static final Set<String> _excludedDirNames = SetUtil.fromList(
 		Arrays.asList(
 			"bin", "build", "classes", "node_modules", "test-classes", "tmp"));

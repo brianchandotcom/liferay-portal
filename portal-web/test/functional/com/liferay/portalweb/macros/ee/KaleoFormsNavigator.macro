@@ -18,8 +18,8 @@
 			<var name="key_kfFieldSetName" value="${kfFieldSetName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Forms">
-			<var name="key_menuItem" value="Manage Forms" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage Forms" />
 		</execute>
 	</command>
 </definition>

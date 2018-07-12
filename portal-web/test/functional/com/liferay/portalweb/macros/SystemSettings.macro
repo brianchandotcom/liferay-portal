@@ -57,8 +57,8 @@
 	<command name="resetConfiguration">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Reset Default Values">
-			<var name="key_menuItem" value="Reset Default Values" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Reset Default Values" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

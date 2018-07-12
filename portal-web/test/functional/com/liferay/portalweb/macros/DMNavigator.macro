@@ -6,8 +6,8 @@
 
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${dmDocumentTypeName}">
-			<var name="key_menuItem" value="${dmDocumentTypeName}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${dmDocumentTypeName}" />
 		</execute>
 	</command>
 
@@ -16,8 +16,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Repository">
-			<var name="key_menuItem" value="Repository" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Repository" />
 		</execute>
 	</command>
 
@@ -26,8 +26,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Repository">
-			<var name="key_menuItem" value="Repository" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Repository" />
 		</execute>
 	</command>
 
@@ -71,8 +71,8 @@
 	<command name="gotoDocumentVersion">
 		<execute macro="DMNavigator#gotoDocumentDetails" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Versions">
-			<var name="key_menuItem" value="Versions" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Versions" />
 		</execute>
 	</command>
 
@@ -89,8 +89,8 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

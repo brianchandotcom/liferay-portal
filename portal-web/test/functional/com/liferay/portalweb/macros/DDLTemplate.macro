@@ -32,8 +32,8 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
-			<var name="key_menuItem" value="Manage Templates" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage Templates" />
 		</execute>
 
 		<execute function="AssertElementPresent#assertVisible" locator1="Portlet#HEADER" value1="Templates for Structure: ${ddlDataDefinitionName}" />
@@ -119,8 +119,8 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
-			<var name="key_menuItem" value="Manage Templates" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage Templates" />
 		</execute>
 
 		<execute function="AssertElementPresent#assertVisible" locator1="Portlet#HEADER" value1="Templates for Structure: Data Definition" />
@@ -131,8 +131,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Form Template">
-			<var name="key_menuItem" value="Add Form Template" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Add Form Template" />
 		</execute>
 
 		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
@@ -145,8 +145,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Form Template">
-			<var name="key_menuItem" value="Add Form Template" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Add Form Template" />
 		</execute>
 
 		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
@@ -171,16 +171,16 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
-			<var name="key_menuItem" value="Manage Templates" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage Templates" />
 		</execute>
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Copy">
-			<var name="key_menuItem" value="Copy" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Copy" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#COPY_STRUCTURE" />
@@ -211,8 +211,8 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
-			<var name="key_menuItem" value="Manage Templates" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage Templates" />
 		</execute>
 
 		<execute macro="Search#searchCP">
@@ -243,8 +243,8 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
-			<var name="key_menuItem" value="Manage Templates" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage Templates" />
 		</execute>
 
 		<execute macro="Portlet#viewEmptyMessage">
@@ -261,16 +261,16 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
-			<var name="key_menuItem" value="Manage Templates" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage Templates" />
 		</execute>
 
 		<var name="key_ddlTemplateName" value="${ddlDisplayTemplateName}" />
 
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Pause" locator1="1000" />
@@ -297,8 +297,8 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
-			<var name="key_menuItem" value="Manage Templates" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage Templates" />
 		</execute>
 
 		<execute macro="Search#searchCP">
@@ -307,8 +307,8 @@
 
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS_1" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -408,8 +408,8 @@
 			<then>
 				<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
 
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
-					<var name="key_menuItem" value="Manage Templates" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Manage Templates" />
 				</execute>
 
 				<if>
@@ -439,8 +439,8 @@
 
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />

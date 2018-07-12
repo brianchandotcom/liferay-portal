@@ -8,8 +8,8 @@
 
 		<var method="StringUtil#upperCase('${assetTypeLocator}')" name="assetTypeLocator" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${assetType}">
-			<var name="key_menuItem" value="${assetType}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${assetType}" />
 		</execute>
 	</command>
 
@@ -18,8 +18,8 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
-			<var name="key_menuItem" value="Bookmark" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Bookmark" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">

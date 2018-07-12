@@ -1026,8 +1026,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Google Docs">
-			<var name="key_menuItem" value="Google Docs" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Google Docs" />
 		</execute>
 
 		<execute macro="GoogleDoc#gotoDrive">
@@ -1440,8 +1440,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Google Docs">
-			<var name="key_menuItem" value="Google Docs" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Google Docs" />
 		</execute>
 
 		<execute macro="GoogleDoc#gotoDrive">

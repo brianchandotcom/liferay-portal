@@ -16,8 +16,8 @@
 			<then>
 				<execute function="Click" locator1="AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS" />
 
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Adapt Remaining">
-					<var name="key_menuItem" value="Adapt Remaining" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Adapt Remaining" />
 				</execute>
 			</then>
 		</if>
@@ -118,8 +118,8 @@
 
 		<execute function="Click" locator1="AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -134,8 +134,8 @@
 
 		<execute function="Click" locator1="AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Disable">
-			<var name="key_menuItem" value="Disable" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Disable" />
 		</execute>
 
 		<var name="key_imageState" value="${imageState}" />
@@ -158,8 +158,8 @@
 
 		<execute function="Click" locator1="AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<if>
@@ -234,8 +234,8 @@
 
 		<execute function="Click" locator1="AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Enable">
-			<var name="key_menuItem" value="Enable" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Enable" />
 		</execute>
 
 		<var name="key_imageState" value="${imageState}" />

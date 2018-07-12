@@ -16,8 +16,8 @@
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" value1="${wikiPageTitle}" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
-			<var name="key_menuItem" value="Restore" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Restore" />
 		</execute>
 	</command>
 

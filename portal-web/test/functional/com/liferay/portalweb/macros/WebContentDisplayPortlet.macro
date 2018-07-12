@@ -158,8 +158,8 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit Template">
-			<var name="key_menuItem" value="Edit Template" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit Template" />
 		</execute>
 	</command>
 

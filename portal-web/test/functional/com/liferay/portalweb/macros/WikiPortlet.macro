@@ -60,8 +60,8 @@
 
 		<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_DROPDOWN" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
-			<var name="key_menuItem" value="Unsubscribe" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Unsubscribe" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

@@ -72,8 +72,8 @@
 
 		<var name="key_menuItem" value="${contentType}" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${contentType}">
-			<var name="key_menuItem" value="${contentType}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${contentType}" />
 		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />

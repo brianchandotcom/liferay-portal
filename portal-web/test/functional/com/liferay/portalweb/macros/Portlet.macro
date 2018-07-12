@@ -258,8 +258,8 @@
 
 		<execute function="Click" locator1="Portlet#SPECIFIC_ELLIPSIS_ICON" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Remove">
-			<var name="key_menuItem" value="Remove" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Remove" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to remove this component?" />

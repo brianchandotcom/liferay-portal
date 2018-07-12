@@ -18,8 +18,8 @@
 	<command name="configurePaginationCP">
 		<execute function="Click" locator1="Dropdown#ENTRIES" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${itemsPerPage}">
-			<var name="key_menuItem" value="${itemsPerPage}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${itemsPerPage}" />
 		</execute>
 	</command>
 </definition>

@@ -206,8 +206,8 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign to Me">
-			<var name="key_menuItem" value="Assign to Me" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Assign to Me" />
 		</execute>
 
 		<execute macro="IFrame#selectConfigurationFrame" />
@@ -326,8 +326,8 @@
 
 		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DIALOG_BOX_TITLE" value1="Delete workflow?" />
@@ -421,8 +421,8 @@
 
 		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute macro="Workflow#viewDefinitionPublicationStatus">
@@ -677,8 +677,8 @@
 
 		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Unpublish">
-			<var name="key_menuItem" value="Unpublish" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Unpublish" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -700,8 +700,8 @@
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Update Due Date">
-			<var name="key_menuItem" value="Update Due Date" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Update Due Date" />
 		</execute>
 
 		<var method="DateUtil#getCurrentYear()" name="currentYear" />
@@ -747,8 +747,8 @@
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Update Due Date">
-			<var name="key_menuItem" value="Update Due Date" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Update Due Date" />
 		</execute>
 
 		<var method="DateUtil#getCurrentYear()" name="currentYear" />

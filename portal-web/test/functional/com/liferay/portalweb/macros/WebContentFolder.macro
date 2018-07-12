@@ -10,8 +10,8 @@
 			</condition>
 
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
-					<var name="key_menuItem" value="Folder" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Folder" />
 				</execute>
 			</then>
 		</if>
@@ -172,8 +172,8 @@
 
 		<execute function="Click" locator1="WC#ENTRY_LIST_MENULIST_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 	</command>
 

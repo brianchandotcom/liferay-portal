@@ -172,8 +172,8 @@
 
 		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Pages">
-			<var name="key_menuItem" value="Manage Pages" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage Pages" />
 		</execute>
 
 		<var name="key_page" value="Test User Group Page 1" />

@@ -4,8 +4,8 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Page">
-			<var name="key_menuItem" value="Add Page" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Add Page" />
 		</execute>
 	</command>
 
@@ -100,8 +100,8 @@
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Copy">
-			<var name="key_menuItem" value="Copy" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Copy" />
 		</execute>
 	</command>
 
@@ -110,8 +110,8 @@
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 	</command>
 
@@ -124,8 +124,8 @@
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
-			<var name="key_menuItem" value="Move" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Move" />
 		</execute>
 	</command>
 

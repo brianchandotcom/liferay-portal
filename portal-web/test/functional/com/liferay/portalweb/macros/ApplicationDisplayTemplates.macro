@@ -8,8 +8,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${adtType} Template">
-			<var name="key_menuItem" value="${adtType} Template" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${adtType} Template" />
 		</execute>
 
 		<execute macro="SiteAdmin#viewPortletTitle">

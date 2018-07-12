@@ -30,15 +30,15 @@
 			<then>
 				<var name="key_menuItem" value="View Page without my customizations" />
 
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View Page without my customizations">
-					<var name="key_menuItem" value="View Page without my customizations" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="View Page without my customizations" />
 				</execute>
 			</then>
 			<else>
 				<var name="key_menuItem" value="Reset My Customizations" />
 
-				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Reset My Customizations">
-					<var name="key_menuItem" value="Reset My Customizations" />
+				<execute macro="MenuItem#clickNoError">
+					<var name="menuItem" value="Reset My Customizations" />
 				</execute>
 
 				<execute function="Confirm" value1="Are you sure you want to reset your customizations to default?" />

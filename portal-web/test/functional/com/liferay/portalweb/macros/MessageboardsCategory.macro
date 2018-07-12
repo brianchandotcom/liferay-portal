@@ -4,8 +4,8 @@
 	<command name="addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Category">
-			<var name="key_menuItem" value="Category" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Category" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -73,8 +73,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subcategory">
-			<var name="key_menuItem" value="Subcategory" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subcategory" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -95,8 +95,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subcategory">
-			<var name="key_menuItem" value="Subcategory" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subcategory" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -262,8 +262,8 @@
 
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
@@ -284,8 +284,8 @@
 
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
-			<var name="key_menuItem" value="Subscribe" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subscribe" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

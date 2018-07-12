@@ -287,8 +287,8 @@
 
 		<execute function="Click" locator1="Button#SELECT" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
-			<var name="key_menuItem" value="Basic Document" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Basic Document" />
 		</execute>
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />

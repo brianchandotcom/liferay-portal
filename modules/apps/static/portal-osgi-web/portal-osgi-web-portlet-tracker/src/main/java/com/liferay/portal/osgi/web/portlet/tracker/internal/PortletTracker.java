@@ -451,9 +451,10 @@ public class PortletTracker
 
 			String portletName = portletModel.getPortletName();
 
-			if (portletName.contains(PortletConstants.WAR_SEPARATOR)) {
-				portletName = portletName.substring(
-					0, portletName.indexOf(PortletConstants.WAR_SEPARATOR));
+			int index = portletName.indexOf(PortletConstants.WAR_SEPARATOR);
+
+			if (index != -1) {
+				portletName = portletName.substring(0, index);
 			}
 
 			String containerRuntimeOptionPrefix =

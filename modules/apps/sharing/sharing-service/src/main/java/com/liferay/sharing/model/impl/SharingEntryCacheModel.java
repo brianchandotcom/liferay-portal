@@ -83,8 +83,8 @@ public class SharingEntryCacheModel implements CacheModel<SharingEntry>,
 		sb.append(fromUserId);
 		sb.append(", toUserId=");
 		sb.append(toUserId);
-		sb.append(", className=");
-		sb.append(className);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append(", actionIds=");
@@ -125,14 +125,7 @@ public class SharingEntryCacheModel implements CacheModel<SharingEntry>,
 
 		sharingEntryImpl.setFromUserId(fromUserId);
 		sharingEntryImpl.setToUserId(toUserId);
-
-		if (className == null) {
-			sharingEntryImpl.setClassName("");
-		}
-		else {
-			sharingEntryImpl.setClassName(className);
-		}
-
+		sharingEntryImpl.setClassNameId(classNameId);
 		sharingEntryImpl.setClassPK(classPK);
 		sharingEntryImpl.setActionIds(actionIds);
 
@@ -156,7 +149,8 @@ public class SharingEntryCacheModel implements CacheModel<SharingEntry>,
 		fromUserId = objectInput.readLong();
 
 		toUserId = objectInput.readLong();
-		className = objectInput.readUTF();
+
+		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
 
@@ -185,12 +179,7 @@ public class SharingEntryCacheModel implements CacheModel<SharingEntry>,
 
 		objectOutput.writeLong(toUserId);
 
-		if (className == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(className);
-		}
+		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
 
@@ -205,7 +194,7 @@ public class SharingEntryCacheModel implements CacheModel<SharingEntry>,
 	public long modifiedDate;
 	public long fromUserId;
 	public long toUserId;
-	public String className;
+	public long classNameId;
 	public long classPK;
 	public long actionIds;
 }

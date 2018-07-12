@@ -10,7 +10,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="fromUserId" type="long" />
 		<field name="toUserId" type="long" />
-		<field name="className" type="String" />
+		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="actionIds" type="long" />
 	</model>

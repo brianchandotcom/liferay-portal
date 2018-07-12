@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -43,8 +44,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SharingEntryModel extends BaseModel<SharingEntry>, ShardedModel,
-	StagedModel {
+public interface SharingEntryModel extends AttachedModel, BaseModel<SharingEntry>,
+	ShardedModel, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -215,25 +216,37 @@ public interface SharingEntryModel extends BaseModel<SharingEntry>, ShardedModel
 	public void setToUserUuid(String toUserUuid);
 
 	/**
-	 * Returns the class name of this sharing entry.
+	 * Returns the fully qualified class name of this sharing entry.
 	 *
-	 * @return the class name of this sharing entry
+	 * @return the fully qualified class name of this sharing entry
 	 */
-	@AutoEscape
+	@Override
 	public String getClassName();
 
-	/**
-	 * Sets the class name of this sharing entry.
-	 *
-	 * @param className the class name of this sharing entry
-	 */
 	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this sharing entry.
+	 *
+	 * @return the class name ID of this sharing entry
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this sharing entry.
+	 *
+	 * @param classNameId the class name ID of this sharing entry
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
 
 	/**
 	 * Returns the class pk of this sharing entry.
 	 *
 	 * @return the class pk of this sharing entry
 	 */
+	@Override
 	public long getClassPK();
 
 	/**
@@ -241,6 +254,7 @@ public interface SharingEntryModel extends BaseModel<SharingEntry>, ShardedModel
 	 *
 	 * @param classPK the class pk of this sharing entry
 	 */
+	@Override
 	public void setClassPK(long classPK);
 
 	/**

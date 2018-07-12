@@ -37,7 +37,7 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public SharingEntry addSharingEntry(
-			long fromUserId, long toUserId, String className, long classPK,
+			long fromUserId, long toUserId, long classNameId, long classPK,
 			long groupId,
 			Collection<SharingEntryActionKey> sharingEntryActionKeys,
 			ServiceContext serviceContext)
@@ -61,7 +61,7 @@ public class SharingEntryLocalServiceImpl
 		sharingEntry.setGroupId(groupId);
 		sharingEntry.setFromUserId(fromUserId);
 		sharingEntry.setToUserId(toUserId);
-		sharingEntry.setClassName(className);
+		sharingEntry.setClassNameId(classNameId);
 		sharingEntry.setClassPK(classPK);
 
 		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
@@ -89,14 +89,44 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteGroupSharingEntries(long groupId) {
+		List<SharingEntry> sharingEntries =
+			sharingEntryPersistence.findByGroupId(groupId);
+
+		for (SharingEntry sharingEntry : sharingEntries) {
+			sharingEntryPersistence.remove(sharingEntry);
+		}
+	}
+
+	@Override
+	public void deleteSharingEntries(long classNameId, long classPK) {
+		List<SharingEntry> sharingEntries = sharingEntryPersistence.findByC_C(
+			classNameId, classPK);
+
+		for (SharingEntry sharingEntry : sharingEntries) {
+			sharingEntryPersistence.remove(sharingEntry);
+		}
+	}
+
+	@Override
 	public SharingEntry deleteSharingEntry(
-			long toUserId, String className, long classPK)
+			long toUserId, long classNameId, long classPK)
 		throws PortalException {
 
-		SharingEntry sharingEntry = sharingEntryPersistence.findByTU_CN_PK(
-			toUserId, className, classPK);
+		SharingEntry sharingEntry = sharingEntryPersistence.findByTU_C_C(
+			toUserId, classNameId, classPK);
 
 		return sharingEntryPersistence.remove(sharingEntry);
+	}
+
+	@Override
+	public void deleteToUserSharingEntries(long toUserId) {
+		List<SharingEntry> sharingEntries =
+			sharingEntryPersistence.findByToUserId(toUserId);
+
+		for (SharingEntry sharingEntry : sharingEntries) {
+			sharingEntryPersistence.remove(sharingEntry);
+		}
 	}
 
 	@Override
@@ -105,19 +135,24 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<SharingEntry> getSharingEntries(
-		String className, long classPK) {
+	public List<SharingEntry> getGroupSharingEntries(long groupId) {
+		return sharingEntryPersistence.findByGroupId(groupId);
+	}
 
-		return sharingEntryPersistence.findByCN_PK(className, classPK);
+	@Override
+	public List<SharingEntry> getSharingEntries(
+		long classNameId, long classPK) {
+
+		return sharingEntryPersistence.findByC_C(classNameId, classPK);
 	}
 
 	@Override
 	public SharingEntry getSharingEntry(
-			long toUserId, String className, long classPK)
+			long toUserId, long classNameId, long classPK)
 		throws PortalException {
 
-		return sharingEntryPersistence.findByTU_CN_PK(
-			toUserId, className, classPK);
+		return sharingEntryPersistence.findByTU_C_C(
+			toUserId, classNameId, classPK);
 	}
 
 	@Override
@@ -127,18 +162,18 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public List<SharingEntry> getToUserSharingEntries(
-		long toUserId, String className) {
+		long toUserId, long classNameId) {
 
-		return sharingEntryPersistence.findByTU_CN(toUserId, className);
+		return sharingEntryPersistence.findByTU_C(toUserId, classNameId);
 	}
 
 	@Override
 	public boolean hasSharingPermission(
-		long toUserId, String className, long classPK,
+		long toUserId, long classNameId, long classPK,
 		SharingEntryActionKey sharingEntryActionKey) {
 
-		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTU_CN_PK(
-			toUserId, className, classPK);
+		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTU_C_C(
+			toUserId, classNameId, classPK);
 
 		if (sharingEntry == null) {
 			return false;
@@ -158,15 +193,23 @@ public class SharingEntryLocalServiceImpl
 		throws InvalidSharingEntryActionKeyException {
 
 		if (sharedEntryActionKeys.isEmpty()) {
-			throw new InvalidSharingEntryActionKeyException();
+			throw new InvalidSharingEntryActionKeyException(
+				"Shared entry action keys is empty");
 		}
 
 		for (SharingEntryActionKey curSharingEntryActionKey :
 				sharedEntryActionKeys) {
 
 			if (curSharingEntryActionKey == null) {
-				throw new InvalidSharingEntryActionKeyException();
+				throw new InvalidSharingEntryActionKeyException(
+					"Shared entry action keys contains a null value");
 			}
+		}
+
+		if (!sharedEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
+			throw new InvalidSharingEntryActionKeyException(
+				"Shared entry action keys must contain VIEW shared entry " +
+					"action key");
 		}
 	}
 
@@ -174,7 +217,8 @@ public class SharingEntryLocalServiceImpl
 		throws InvalidSharingEntryUserException {
 
 		if (fromUserId == toUserId) {
-			throw new InvalidSharingEntryUserException();
+			throw new InvalidSharingEntryUserException(
+				"From user cannot be the same as to user");
 		}
 	}
 

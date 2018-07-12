@@ -41,7 +41,7 @@ public class SharingEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setFromUserId(model.getFromUserId());
 		soapModel.setToUserId(model.getToUserId());
-		soapModel.setClassName(model.getClassName());
+		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setActionIds(model.getActionIds());
 
@@ -160,12 +160,12 @@ public class SharingEntrySoap implements Serializable {
 		_toUserId = toUserId;
 	}
 
-	public String getClassName() {
-		return _className;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
-	public void setClassName(String className) {
-		_className = className;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
 	}
 
 	public long getClassPK() {
@@ -192,7 +192,7 @@ public class SharingEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private long _fromUserId;
 	private long _toUserId;
-	private String _className;
+	private long _classNameId;
 	private long _classPK;
 	private long _actionIds;
 }

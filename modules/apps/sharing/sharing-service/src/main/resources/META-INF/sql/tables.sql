@@ -7,7 +7,7 @@ create table SharingEntry (
 	modifiedDate DATE null,
 	fromUserId LONG,
 	toUserId LONG,
-	className VARCHAR(75) null,
+	classNameId LONG,
 	classPK LONG,
 	actionIds LONG
 );

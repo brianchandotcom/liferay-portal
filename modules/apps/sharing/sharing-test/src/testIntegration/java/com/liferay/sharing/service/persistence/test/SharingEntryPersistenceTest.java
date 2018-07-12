@@ -138,7 +138,7 @@ public class SharingEntryPersistenceTest {
 
 		newSharingEntry.setToUserId(RandomTestUtil.nextLong());
 
-		newSharingEntry.setClassName(RandomTestUtil.randomString());
+		newSharingEntry.setClassNameId(RandomTestUtil.nextLong());
 
 		newSharingEntry.setClassPK(RandomTestUtil.nextLong());
 
@@ -166,8 +166,8 @@ public class SharingEntryPersistenceTest {
 			newSharingEntry.getFromUserId());
 		Assert.assertEquals(existingSharingEntry.getToUserId(),
 			newSharingEntry.getToUserId());
-		Assert.assertEquals(existingSharingEntry.getClassName(),
-			newSharingEntry.getClassName());
+		Assert.assertEquals(existingSharingEntry.getClassNameId(),
+			newSharingEntry.getClassNameId());
 		Assert.assertEquals(existingSharingEntry.getClassPK(),
 			newSharingEntry.getClassPK());
 		Assert.assertEquals(existingSharingEntry.getActionIds(),
@@ -202,6 +202,13 @@ public class SharingEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
+	}
+
+	@Test
 	public void testCountByFromUserId() throws Exception {
 		_persistence.countByFromUserId(RandomTestUtil.nextLong());
 
@@ -216,31 +223,27 @@ public class SharingEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByTU_CN() throws Exception {
-		_persistence.countByTU_CN(RandomTestUtil.nextLong(), "");
-
-		_persistence.countByTU_CN(0L, "null");
-
-		_persistence.countByTU_CN(0L, (String)null);
-	}
-
-	@Test
-	public void testCountByCN_PK() throws Exception {
-		_persistence.countByCN_PK("", RandomTestUtil.nextLong());
-
-		_persistence.countByCN_PK("null", 0L);
-
-		_persistence.countByCN_PK((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByTU_CN_PK() throws Exception {
-		_persistence.countByTU_CN_PK(RandomTestUtil.nextLong(), "",
+	public void testCountByTU_C() throws Exception {
+		_persistence.countByTU_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByTU_CN_PK(0L, "null", 0L);
+		_persistence.countByTU_C(0L, 0L);
+	}
 
-		_persistence.countByTU_CN_PK(0L, (String)null, 0L);
+	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_C(0L, 0L);
+	}
+
+	@Test
+	public void testCountByTU_C_C() throws Exception {
+		_persistence.countByTU_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByTU_C_C(0L, 0L, 0L);
 	}
 
 	@Test
@@ -269,8 +272,8 @@ public class SharingEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("SharingEntry", "uuid",
 			true, "sharingEntryId", true, "groupId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "fromUserId", true,
-			"toUserId", true, "className", true, "classPK", true, "actionIds",
-			true);
+			"toUserId", true, "classNameId", true, "classPK", true,
+			"actionIds", true);
 	}
 
 	@Test
@@ -485,9 +488,9 @@ public class SharingEntryPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingSharingEntry.getToUserId()),
 			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
 				"getOriginalToUserId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingSharingEntry.getClassName(),
-				ReflectionTestUtil.invoke(existingSharingEntry,
-					"getOriginalClassName", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingSharingEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
+				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(existingSharingEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
 				"getOriginalClassPK", new Class<?>[0]));
@@ -512,7 +515,7 @@ public class SharingEntryPersistenceTest {
 
 		sharingEntry.setToUserId(RandomTestUtil.nextLong());
 
-		sharingEntry.setClassName(RandomTestUtil.randomString());
+		sharingEntry.setClassNameId(RandomTestUtil.nextLong());
 
 		sharingEntry.setClassPK(RandomTestUtil.nextLong());
 

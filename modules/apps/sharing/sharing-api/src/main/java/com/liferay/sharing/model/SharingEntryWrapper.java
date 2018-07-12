@@ -68,7 +68,7 @@ public class SharingEntryWrapper implements SharingEntry,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("fromUserId", getFromUserId());
 		attributes.put("toUserId", getToUserId());
-		attributes.put("className", getClassName());
+		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("actionIds", getActionIds());
 
@@ -125,10 +125,10 @@ public class SharingEntryWrapper implements SharingEntry,
 			setToUserId(toUserId);
 		}
 
-		String className = (String)attributes.get("className");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (className != null) {
-			setClassName(className);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -165,13 +165,23 @@ public class SharingEntryWrapper implements SharingEntry,
 	}
 
 	/**
-	* Returns the class name of this sharing entry.
+	* Returns the fully qualified class name of this sharing entry.
 	*
-	* @return the class name of this sharing entry
+	* @return the fully qualified class name of this sharing entry
 	*/
 	@Override
 	public String getClassName() {
 		return _sharingEntry.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this sharing entry.
+	*
+	* @return the class name ID of this sharing entry
+	*/
+	@Override
+	public long getClassNameId() {
+		return _sharingEntry.getClassNameId();
 	}
 
 	/**
@@ -344,14 +354,19 @@ public class SharingEntryWrapper implements SharingEntry,
 		_sharingEntry.setCachedModel(cachedModel);
 	}
 
-	/**
-	* Sets the class name of this sharing entry.
-	*
-	* @param className the class name of this sharing entry
-	*/
 	@Override
 	public void setClassName(String className) {
 		_sharingEntry.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this sharing entry.
+	*
+	* @param classNameId the class name ID of this sharing entry
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_sharingEntry.setClassNameId(classNameId);
 	}
 
 	/**

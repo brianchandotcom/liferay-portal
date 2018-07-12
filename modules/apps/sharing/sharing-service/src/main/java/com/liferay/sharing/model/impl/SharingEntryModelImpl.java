@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryModel;
@@ -76,7 +77,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "fromUserId", Types.BIGINT },
 			{ "toUserId", Types.BIGINT },
-			{ "className", Types.VARCHAR },
+			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "actionIds", Types.BIGINT }
 		};
@@ -91,12 +92,12 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("fromUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("toUserId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("actionIds", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SharingEntry (uuid_ VARCHAR(75) null,sharingEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,fromUserId LONG,toUserId LONG,className VARCHAR(75) null,classPK LONG,actionIds LONG)";
+	public static final String TABLE_SQL_CREATE = "create table SharingEntry (uuid_ VARCHAR(75) null,sharingEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,fromUserId LONG,toUserId LONG,classNameId LONG,classPK LONG,actionIds LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SharingEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY sharingEntry.sharingEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SharingEntry.sharingEntryId ASC";
@@ -112,7 +113,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.sharing.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.sharing.model.SharingEntry"),
 			true);
-	public static final long CLASSNAME_COLUMN_BITMASK = 1L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long FROMUSERID_COLUMN_BITMASK = 8L;
@@ -168,7 +169,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("fromUserId", getFromUserId());
 		attributes.put("toUserId", getToUserId());
-		attributes.put("className", getClassName());
+		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("actionIds", getActionIds());
 
@@ -228,10 +229,10 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 			setToUserId(toUserId);
 		}
 
-		String className = (String)attributes.get("className");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (className != null) {
-			setClassName(className);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -428,27 +429,44 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 	@Override
 	public String getClassName() {
-		if (_className == null) {
+		if (getClassNameId() <= 0) {
 			return "";
 		}
-		else {
-			return _className;
-		}
+
+		return PortalUtil.getClassName(getClassNameId());
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_columnBitmask |= CLASSNAME_COLUMN_BITMASK;
+		long classNameId = 0;
 
-		if (_originalClassName == null) {
-			_originalClassName = _className;
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
 		}
 
-		_className = className;
+		setClassNameId(classNameId);
 	}
 
-	public String getOriginalClassName() {
-		return GetterUtil.getString(_originalClassName);
+	@Override
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	@Override
+	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
+		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@Override
@@ -486,7 +504,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
-				SharingEntry.class.getName()));
+				SharingEntry.class.getName()), getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -528,7 +546,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		sharingEntryImpl.setModifiedDate(getModifiedDate());
 		sharingEntryImpl.setFromUserId(getFromUserId());
 		sharingEntryImpl.setToUserId(getToUserId());
-		sharingEntryImpl.setClassName(getClassName());
+		sharingEntryImpl.setClassNameId(getClassNameId());
 		sharingEntryImpl.setClassPK(getClassPK());
 		sharingEntryImpl.setActionIds(getActionIds());
 
@@ -613,7 +631,9 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 		sharingEntryModelImpl._setOriginalToUserId = false;
 
-		sharingEntryModelImpl._originalClassName = sharingEntryModelImpl._className;
+		sharingEntryModelImpl._originalClassNameId = sharingEntryModelImpl._classNameId;
+
+		sharingEntryModelImpl._setOriginalClassNameId = false;
 
 		sharingEntryModelImpl._originalClassPK = sharingEntryModelImpl._classPK;
 
@@ -662,13 +682,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 
 		sharingEntryCacheModel.toUserId = getToUserId();
 
-		sharingEntryCacheModel.className = getClassName();
-
-		String className = sharingEntryCacheModel.className;
-
-		if ((className != null) && (className.length() == 0)) {
-			sharingEntryCacheModel.className = null;
-		}
+		sharingEntryCacheModel.classNameId = getClassNameId();
 
 		sharingEntryCacheModel.classPK = getClassPK();
 
@@ -697,8 +711,8 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		sb.append(getFromUserId());
 		sb.append(", toUserId=");
 		sb.append(getToUserId());
-		sb.append(", className=");
-		sb.append(getClassName());
+		sb.append(", classNameId=");
+		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
 		sb.append(", actionIds=");
@@ -749,8 +763,8 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		sb.append(getToUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>className</column-name><column-value><![CDATA[");
-		sb.append(getClassName());
+			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
+		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classPK</column-name><column-value><![CDATA[");
@@ -788,8 +802,9 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	private long _toUserId;
 	private long _originalToUserId;
 	private boolean _setOriginalToUserId;
-	private String _className;
-	private String _originalClassName;
+	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;

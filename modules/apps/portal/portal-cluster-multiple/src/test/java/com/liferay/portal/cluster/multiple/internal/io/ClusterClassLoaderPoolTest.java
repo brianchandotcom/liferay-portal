@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -79,9 +78,7 @@ public class ClusterClassLoaderPoolTest {
 	}
 
 	@Test
-	public void testConcurrentRegister()
-		throws ExecutionException, InterruptedException {
-
+	public void testConcurrentRegister() throws Exception {
 		ClassLoader classLoader1 = new URLClassLoader(new URL[0]);
 		ClassLoader classLoader2 = new URLClassLoader(new URL[0]);
 
@@ -133,9 +130,7 @@ public class ClusterClassLoaderPoolTest {
 	}
 
 	@Test
-	public void testConcurrentUnregister()
-		throws ExecutionException, InterruptedException {
-
+	public void testConcurrentUnregister() throws Exception {
 		ClassLoader classLoader = new URLClassLoader(new URL[0]);
 
 		ClusterClassLoaderPool.registerFallback(

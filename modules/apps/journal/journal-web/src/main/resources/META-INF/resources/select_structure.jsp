@@ -17,31 +17,24 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long classPK = ParamUtil.getLong(request, "classPK");
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
+JournalSelectDDMStructureDisplayContext journalSelectDDMStructureDisplayContext = new JournalSelectDDMStructureDisplayContext(renderRequest, renderResponse);
 
-SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSearch();
+SearchContainer<DDMStructure> structureSearch = journalSelectDDMStructureDisplayContext.getStructureSearch();
 %>
 
-<liferay-util:include page="/structure_navigation_bar.jsp" servletContext="<%= application %>" />
-
 <clay:management-toolbar
-	clearResultsURL="<%= ddmDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= ddmDisplayContext.getSelectStructureCreationMenu() %>"
-	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE) %>"
-	filterDropdownItems="<%= ddmDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE) %>"
-	namespace="<%= renderResponse.getNamespace() %>"
-	searchActionURL="<%= ddmDisplayContext.getSelectStructureSearchActionURL() %>"
-	searchContainerId="<%= ddmDisplayContext.getStructureSearchContainerId() %>"
+	clearResultsURL="<%= journalSelectDDMStructureDisplayContext.getClearResultsURL() %>"
+	disabled="<%= journalSelectDDMStructureDisplayContext.isDisabledManagementBar() %>"
+	filterDropdownItems="<%= journalSelectDDMStructureDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= journalSelectDDMStructureDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= journalSelectDDMStructureDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchForm"
 	selectable="<%= false %>"
-	sortingOrder="<%= ddmDisplayContext.getOrderByType() %>"
-	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
+	sortingOrder="<%= journalSelectDDMStructureDisplayContext.getOrderByType() %>"
+	sortingURL="<%= journalSelectDDMStructureDisplayContext.getSortingURL() %>"
 />
 
-<aui:form action="<%= ddmDisplayContext.getSelectStructureSearchActionURL() %>" cssClass="container-fluid-1280" method="post" name="selectStructureFm">
+<aui:form cssClass="container-fluid-1280" method="post" name="selectStructureFm">
 	<liferay-ui:search-container
 		searchContainer="<%= structureSearch %>"
 	>
@@ -60,15 +53,10 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 				name="name"
 			>
 				<c:choose>
-					<c:when test="<%= ddmDisplay.isEnableSelectStructureLink(structure, classPK) %>">
+					<c:when test="<%= structure.getStructureId() != journalSelectDDMStructureDisplayContext.getClassPK() %>">
 
 						<%
-						Map<String, Object> data = new HashMap<String, Object>();
-
-						if (ddmDisplay.isShowConfirmSelectStructure()) {
-							data.put("confirm-selection", Boolean.TRUE.toString());
-							data.put("confirm-selection-message", ddmDisplay.getConfirmSelectStructureMessage(locale));
-						}
+						Map<String, Object> data = new HashMap<>();
 
 						data.put("ddmstructureid", structure.getStructureId());
 						data.put("ddmstructurekey", structure.getStructureKey());
@@ -99,14 +87,12 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="list"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
 </aui:form>
 
 <aui:script>
-	Liferay.Util.focusFormField(document.<portlet:namespace />searchForm.<portlet:namespace />keywords);
-
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectStructureFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectStructureFm', '<%= HtmlUtil.escapeJS(journalSelectDDMStructureDisplayContext.getEventName()) %>');
 </aui:script>

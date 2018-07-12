@@ -19,6 +19,8 @@
 <%
 String displayStyle = ddmFormAdminDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddmFormAdminDisplayContext.getPortletURL();
+
+FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFormAdminDisplayContext.getPermissionCheckerHelper();
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
@@ -45,7 +47,7 @@ PortletURL portletURL = ddmFormAdminDisplayContext.getPortletURL();
 				</portlet:renderURL>
 
 				<%
-				if (!ddmFormAdminDisplayContext.isShowEditFormInstanceIcon(formInstance)) {
+				if (!formInstancePermissionCheckerHelper.isShowEditIcon(formInstance)) {
 					rowURL = null;
 				}
 				%>

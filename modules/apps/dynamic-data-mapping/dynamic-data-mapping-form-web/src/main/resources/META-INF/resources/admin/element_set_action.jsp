@@ -22,6 +22,8 @@ PortletURL portletURL = ddmFormAdminDisplayContext.getPortletURL();
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 DDMStructure ddmStructure = (DDMStructure)row.getObject();
+
+FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDisplayContext.getPermissionCheckerHelper();
 %>
 
 <liferay-ui:icon-menu
@@ -31,22 +33,43 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcPath" value="/admin/edit_element_set.jsp" />
-		<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-		<portlet:param name="structureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-	</portlet:renderURL>
+	<c:if test="<%= fieldSetPermissionCheckerHelper.isShowEditIcon(ddmStructure) %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcPath" value="/admin/edit_element_set.jsp" />
+			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+			<portlet:param name="structureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL %>"
-	/>
+		<liferay-ui:icon
+			message="edit"
+			url="<%= editURL %>"
+		/>
+	</c:if>
 
-	<portlet:actionURL name="deleteStructure" var="deleteURL">
-		<portlet:param name="structureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= fieldSetPermissionCheckerHelper.isShowPermissionsIcon(ddmStructure) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= DDMStructure.class.getName() %>"
+			modelResourceDescription="<%= ddmStructure.getName(locale) %>"
+			resourcePrimKey="<%= String.valueOf(ddmStructure.getStructureId()) %>"
+			var="permissionsElementSetURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteURL %>"
-	/>
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= permissionsElementSetURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= fieldSetPermissionCheckerHelper.isShowDeleteIcon(ddmStructure) %>">
+		<portlet:actionURL name="deleteStructure" var="deleteURL">
+			<portlet:param name="structureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

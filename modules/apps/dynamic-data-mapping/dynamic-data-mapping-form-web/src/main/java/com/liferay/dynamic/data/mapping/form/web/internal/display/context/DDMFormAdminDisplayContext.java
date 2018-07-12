@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormAdminRequestHelper;
+import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.FormInstancePermissionCheckerHelper;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FormInstanceSearch;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
@@ -129,6 +130,9 @@ public class DDMFormAdminDisplayContext {
 		_storageEngine = storageEngine;
 
 		formAdminRequestHelper = new DDMFormAdminRequestHelper(renderRequest);
+
+		_formInstancePermissionCheckerHelper =
+			new FormInstancePermissionCheckerHelper(formAdminRequestHelper);
 	}
 
 	public List<DropdownItem> getActionItemsDropdownItems() {
@@ -187,7 +191,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		if (!isShowAddButton()) {
+		if (!_formInstancePermissionCheckerHelper.isShowAddButton()) {
 			return null;
 		}
 
@@ -554,6 +558,10 @@ public class DDMFormAdminDisplayContext {
 
 	public PermissionChecker getPermissionChecker() {
 		return formAdminRequestHelper.getPermissionChecker();
+	}
+
+	public <T> T getPermissionCheckerHelper() {
+		return (T)_formInstancePermissionCheckerHelper;
 	}
 
 	public PortletURL getPortletURL() {
@@ -1074,6 +1082,8 @@ public class DDMFormAdminDisplayContext {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMStructureService _ddmStructureService;
 	private String _displayStyle;
+	private final FormInstancePermissionCheckerHelper
+		_formInstancePermissionCheckerHelper;
 	private final JSONFactory _jsonFactory;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

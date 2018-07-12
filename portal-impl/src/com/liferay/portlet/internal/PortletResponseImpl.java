@@ -174,21 +174,21 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 			List<Element> values = _markupHeadElements.get(key);
 
-			if (values != null) {
-				if (element != null) {
-					values.add(element);
-				}
-				else {
-					_markupHeadElements.remove(key);
-				}
-			}
-			else {
+			if (values == null) {
 				if (element != null) {
 					values = new ArrayList<>();
 
 					values.add(element);
 
 					_markupHeadElements.put(key, values);
+				}
+			}
+			else {
+				if (element == null) {
+					_markupHeadElements.remove(key);
+				}
+				else {
+					values.add(element);
 				}
 			}
 		}

@@ -49,7 +49,7 @@ AUI.add(
 
 						var focusTarget = instance._getFocusTarget();
 
-						var row = container.one('[name="' + focusTarget.row + '"]');
+						var row = container.one('tr[name="' + focusTarget.row + '"]');
 
 						var column = row.one('[data-row-index="' + focusTarget.index + '"]');
 
@@ -140,7 +140,7 @@ AUI.add(
 
 						var value = instance.get('value');
 
-						value[target.attr('name')] = target.attr('value');
+						value[target.attr('data-row')] = target.attr('value');
 
 						instance._setFocusTarget(target);
 

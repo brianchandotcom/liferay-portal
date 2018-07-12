@@ -34,7 +34,7 @@
 
 				{if $required}
 					<svg aria-hidden="true"
-						 class="lexicon-icon lexicon-icon-asterisk reference-mark">
+						class="lexicon-icon lexicon-icon-asterisk reference-mark">
 						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"/>
 					</svg>
 				{/if}
@@ -63,16 +63,17 @@
 
 				<tbody>
 					{foreach $row in $rows}
-						<tr name="{$row.value}">
+						<tr name="{$name}_{$row.value}">
 							<td>{$row.label}</td>
 							{foreach $column in $columns}
 								<td>
-									<input {if $focusTarget and ($focusTarget.row == $row.value and $focusTarget.index == index($column))}autoFocus{/if}
+									<input {if $focusTarget and ($focusTarget.row == $name+'_'+$row.value and $focusTarget.index == index($column))}autoFocus{/if}
 										{if $column.value == $value[$row.value]}checked{/if}
 										class="form-builder-grid-field"
+										data-row="{$row.value}"
 										data-row-index="{index($column)}"
 										{if $readOnly}disabled{/if}
-										name="{$row.value}"
+										name="{$name}_{$row.value}"
 										type="radio"
 										value="{$column.value}"
 									/>

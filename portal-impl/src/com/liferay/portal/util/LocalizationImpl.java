@@ -862,8 +862,18 @@ public class LocalizationImpl implements Localization {
 
 			xmlStreamWriter.writeStartElement(_ROOT);
 
-			xmlStreamWriter.writeAttribute(
-				_AVAILABLE_LOCALES, StringUtil.merge(map.keySet()));
+			StringBundler sb = new StringBundler(2 * map.size() - 1);
+
+			sb.append(defaultLanguageId);
+
+			for (String languageId : map.keySet()) {
+				if (!defaultLanguageId.equals(languageId)) {
+					sb.append(StringPool.COMMA);
+					sb.append(languageId);
+				}
+			}
+
+			xmlStreamWriter.writeAttribute(_AVAILABLE_LOCALES, sb.toString());
 			xmlStreamWriter.writeAttribute(_DEFAULT_LOCALE, defaultLanguageId);
 
 			for (Map.Entry<String, String> entry : map.entrySet()) {

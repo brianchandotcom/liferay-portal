@@ -1484,8 +1484,8 @@
 
 		<execute macro="KaleoDesigner#showDetails" />
 
-		<execute macro="KaleoDesigner#undoDraft" />
-		<execute macro="KaleoDesigner#undoDraft" />
+		<execute macro="KaleoDesigner#restoreDraft" />
+		<execute macro="KaleoDesigner#restoreDraft" />
 		<execute macro="KaleoDesigner#redoDraft" />
 
 		<execute macro="KaleoDesigner#viewDraftVersion">

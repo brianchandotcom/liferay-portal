@@ -48,10 +48,10 @@
 	<td></td>
 	<td></td>
 </tr>
-<!-- DRAFT_HISTORY -->
+<!-- REVISION_HISTORY -->
 <tr>
-	<td>DRAFT_HISTORY_UNDO_BUTTON</td>
-	<td>//button[contains(@id,'undoButton')]</td>
+	<td>REVISION_HISTORY_RESTORE_BUTTON</td>
+	<td>//span[contains(.,'Restore')]</td>
 	<td></td>
 </tr>
 <tr>

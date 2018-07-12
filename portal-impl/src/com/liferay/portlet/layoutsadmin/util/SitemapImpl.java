@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutsadmin.util;
 
+import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layouts.admin.kernel.util.Sitemap;
 import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
 import com.liferay.layouts.admin.kernel.util.SitemapURLProviderRegistryUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -265,6 +267,18 @@ public class SitemapImpl implements Sitemap {
 				entry.getKey());
 
 			for (Layout layout : layouts) {
+				UnicodeProperties typeSettingsProperties =
+					layout.getTypeSettingsProperties();
+
+				boolean sitemapInclude = GetterUtil.getBoolean(
+					typeSettingsProperties.getProperty(
+						LayoutTypePortletConstants.SITEMAP_INCLUDE),
+					true);
+
+				if (!sitemapInclude) {
+					continue;
+				}
+
 				Element sitemapElement = element.addElement("sitemap");
 
 				Element locationElement = sitemapElement.addElement("loc");

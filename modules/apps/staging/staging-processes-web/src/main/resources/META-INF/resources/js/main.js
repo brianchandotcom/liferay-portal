@@ -760,12 +760,21 @@ AUI.add(
 						}
 
 						if (cmdNode) {
+							var form = instance.get('form');
+
+							var portletURL = Liferay.PortletURL.createURL(form.get('action'));
+
+							portletURL.setParameter("p_p_lifecycle", "0");
+
+							form.set('action', portletURL.toString());
+
 							var currentURL = instance.byId('currentURL');
 
-							cmdNode.val(STR_EMPTY);
 							redirectNode.val(currentURL);
 
-							submitForm(instance.get('form'));
+							cmdNode.val(STR_EMPTY);
+
+							submitForm(form);
 						}
 					},
 

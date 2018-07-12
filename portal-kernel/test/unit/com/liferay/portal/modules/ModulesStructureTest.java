@@ -127,9 +127,25 @@ public class ModulesStructureTest {
 						Path gradlePropertiesPath = dirPath.resolve(
 							"gradle.properties");
 
-						Assert.assertFalse(
-							"Forbidden " + gradlePropertiesPath,
-							Files.deleteIfExists(gradlePropertiesPath));
+						boolean liferaySpringBootDefaultsPlugin = false;
+
+						if (Files.exists(buildGradlePath)) {
+							String applyPlugin =
+								"apply plugin: " +
+									"\"com.liferay.spring.boot.defaults\"";
+							String content = ModulesStructureTestUtil.read(
+								buildGradlePath);
+
+							if (content.contains(applyPlugin)) {
+								liferaySpringBootDefaultsPlugin = true;
+							}
+						}
+
+						if (!liferaySpringBootDefaultsPlugin) {
+							Assert.assertFalse(
+								"Forbidden " + gradlePropertiesPath,
+								Files.deleteIfExists(gradlePropertiesPath));
+						}
 
 						Path settingsGradlePath = dirPath.resolve(
 							"settings.gradle");

@@ -28,10 +28,6 @@
 		<execute function="AssertClick" locator1="Configuration#NAVIGATION_RSS" value1="RSS" />
 	</command>
 
-	<command name="saveConfigurationIFrame">
-		<execute macro="Button#clickSave" />
-	</command>
-
 	<command name="selectConfigurationIFrame">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>

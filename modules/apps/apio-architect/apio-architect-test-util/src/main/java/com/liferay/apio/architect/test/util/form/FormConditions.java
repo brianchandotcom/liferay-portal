@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.test.util.form;
 
-import static com.liferay.apio.architect.impl.internal.date.DateTransformer.asDate;
+import static com.liferay.apio.architect.impl.date.DateTransformer.asDate;
 
 import static org.hamcrest.text.IsEmptyString.emptyOrNullString;
 

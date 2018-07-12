@@ -21,17 +21,15 @@ import static org.hamcrest.core.Is.is;
 
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
-import com.google.gson.JsonObject;
-
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.impl.internal.message.json.DocumentationMessageMapper;
-import com.liferay.apio.architect.impl.internal.message.json.ErrorMessageMapper;
-import com.liferay.apio.architect.impl.internal.message.json.FormMessageMapper;
-import com.liferay.apio.architect.impl.internal.message.json.MessageMapper;
-import com.liferay.apio.architect.impl.internal.message.json.PageMessageMapper;
-import com.liferay.apio.architect.impl.internal.message.json.SingleModelMessageMapper;
-import com.liferay.apio.architect.impl.internal.writer.ErrorWriter;
+import com.liferay.apio.architect.impl.message.json.DocumentationMessageMapper;
+import com.liferay.apio.architect.impl.message.json.ErrorMessageMapper;
+import com.liferay.apio.architect.impl.message.json.FormMessageMapper;
+import com.liferay.apio.architect.impl.message.json.MessageMapper;
+import com.liferay.apio.architect.impl.message.json.PageMessageMapper;
+import com.liferay.apio.architect.impl.message.json.SingleModelMessageMapper;
+import com.liferay.apio.architect.impl.writer.ErrorWriter;
 import com.liferay.apio.architect.test.util.internal.writer.MockDocumentationWriter;
 import com.liferay.apio.architect.test.util.internal.writer.MockFormWriter;
 import com.liferay.apio.architect.test.util.internal.writer.MockPageWriter;
@@ -107,10 +105,10 @@ public class MessageMapperTesterBuilder {
 		public MessageMapperStep createDocumentationFile(
 			DocumentationMessageMapper documentationMessageMapper) {
 
-			JsonObject jsonObject = MockDocumentationWriter.write(
+			String result = MockDocumentationWriter.write(
 				documentationMessageMapper);
 
-			_createFile(jsonObject.toString(), "documentation");
+			_createFile(result, "documentation");
 
 			return this;
 		}
@@ -147,9 +145,9 @@ public class MessageMapperTesterBuilder {
 		public MessageMapperStep createFormFile(
 			FormMessageMapper formMessageMapper) {
 
-			JsonObject jsonObject = MockFormWriter.write(formMessageMapper);
+			String result = MockFormWriter.write(formMessageMapper);
 
-			_createFile(jsonObject.toString(), "form");
+			_createFile(result, "form");
 
 			return this;
 		}
@@ -166,9 +164,9 @@ public class MessageMapperTesterBuilder {
 		public MessageMapperStep createPageFile(
 			PageMessageMapper<RootModel> pageMessageMapper) {
 
-			JsonObject jsonObject = MockPageWriter.write(pageMessageMapper);
+			String result = MockPageWriter.write(pageMessageMapper);
 
-			_createFile(jsonObject.toString(), "page");
+			_createFile(result, "page");
 
 			return this;
 		}
@@ -185,10 +183,10 @@ public class MessageMapperTesterBuilder {
 		public MessageMapperStep createSingleModelFile(
 			SingleModelMessageMapper<RootModel> singleModelMessageMapper) {
 
-			JsonObject jsonObject = MockSingleModelWriter.write(
+			String result = MockSingleModelWriter.write(
 				singleModelMessageMapper);
 
-			_createFile(jsonObject.toString(), "single_model");
+			_createFile(result, "single_model");
 
 			return this;
 		}
@@ -205,12 +203,11 @@ public class MessageMapperTesterBuilder {
 		public MessageMapperStep validateDocumentationMessageMapper(
 			DocumentationMessageMapper documentationMessageMapper) {
 
-			JsonObject jsonObject = MockDocumentationWriter.write(
+			String result = MockDocumentationWriter.write(
 				documentationMessageMapper);
 
 			_validateMessageMapper(
-				documentationMessageMapper, jsonObject.toString(),
-				"documentation");
+				documentationMessageMapper, result, "documentation");
 
 			return this;
 		}
@@ -247,10 +244,9 @@ public class MessageMapperTesterBuilder {
 		public MessageMapperStep validateFormMessageMapper(
 			FormMessageMapper formMessageMapper) {
 
-			JsonObject jsonObject = MockFormWriter.write(formMessageMapper);
+			String result = MockFormWriter.write(formMessageMapper);
 
-			_validateMessageMapper(
-				formMessageMapper, jsonObject.toString(), "form");
+			_validateMessageMapper(formMessageMapper, result, "form");
 
 			return this;
 		}
@@ -267,10 +263,9 @@ public class MessageMapperTesterBuilder {
 		public MessageMapperStep validatePageMessageMapper(
 			PageMessageMapper<RootModel> pageMessageMapper) {
 
-			JsonObject jsonObject = MockPageWriter.write(pageMessageMapper);
+			String result = MockPageWriter.write(pageMessageMapper);
 
-			_validateMessageMapper(
-				pageMessageMapper, jsonObject.toString(), "page");
+			_validateMessageMapper(pageMessageMapper, result, "page");
 
 			return this;
 		}
@@ -287,12 +282,11 @@ public class MessageMapperTesterBuilder {
 		public MessageMapperStep validateSingleModelMessageMapper(
 			SingleModelMessageMapper<RootModel> singleModelMessageMapper) {
 
-			JsonObject jsonObject = MockSingleModelWriter.write(
+			String result = MockSingleModelWriter.write(
 				singleModelMessageMapper);
 
 			_validateMessageMapper(
-				singleModelMessageMapper, jsonObject.toString(),
-				"single_model");
+				singleModelMessageMapper, result, "single_model");
 
 			return this;
 		}

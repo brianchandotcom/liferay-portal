@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.test.util.form;
 
-import static com.liferay.apio.architect.impl.internal.form.FormImpl.BuilderImpl.empty;
+import static com.liferay.apio.architect.impl.form.FormImpl.BuilderImpl.empty;
 import static com.liferay.apio.architect.test.util.form.FormMatchers.isReturnedIn;
 
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -20,9 +20,9 @@ import static com.liferay.apio.architect.test.util.representor.MockRepresentorCr
 import static com.liferay.apio.architect.test.util.representor.MockRepresentorCreator.createThirdEmbeddedModelRepresentor;
 
 import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.apio.architect.impl.internal.operation.OperationImpl;
-import com.liferay.apio.architect.impl.internal.request.RequestInfo;
-import com.liferay.apio.architect.impl.internal.single.model.SingleModelImpl;
+import com.liferay.apio.architect.impl.operation.OperationImpl;
+import com.liferay.apio.architect.impl.request.RequestInfo;
+import com.liferay.apio.architect.impl.single.model.SingleModelImpl;
 import com.liferay.apio.architect.operation.HTTPMethod;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.representor.Representor;

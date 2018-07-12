@@ -70,6 +70,26 @@ public class APIError {
 	}
 
 	/**
+	 * Returns the API error's message. This method can be used to get a
+	 * meaningful message for logging purposes.
+	 *
+	 * @return the API error's message
+	 */
+	public String getMessage() {
+		if (_description != null) {
+			return _description;
+		}
+
+		String message = _exception.getMessage();
+
+		if ((message != null) && !message.isEmpty()) {
+			return message;
+		}
+
+		return _exception.toString();
+	}
+
+	/**
 	 * Returns the API error's HTTP status code.
 	 *
 	 * @return the API error's HTTP status code

@@ -21,9 +21,11 @@ import com.liferay.apio.architect.error.APIError;
 /**
  * Defines loggers for Apio warnings.
  *
- * @author Alejandro Hernández
+ * @author     Alejandro Hernández
+ * @deprecated As of 1.1.1, with no direct replacement
  */
 @ConsumerType
+@Deprecated
 public interface ApioLogger {
 
 	/**

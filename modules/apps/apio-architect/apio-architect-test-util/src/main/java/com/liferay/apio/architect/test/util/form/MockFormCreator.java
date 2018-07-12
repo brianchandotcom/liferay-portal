@@ -16,7 +16,7 @@ package com.liferay.apio.architect.test.util.form;
 
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
-import com.liferay.apio.architect.impl.internal.form.FormImpl.BuilderImpl;
+import com.liferay.apio.architect.impl.form.FormImpl.BuilderImpl;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;

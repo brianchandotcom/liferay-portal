@@ -451,7 +451,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	public String getProperty(String key) {
 		Object value = _headers.get(key);
 
-		if ((value != null) && (value instanceof String[])) {
+		if (value instanceof String[]) {
 			String[] values = (String[])value;
 
 			return (String)ArrayUtil.getValue(values, 0);
@@ -473,7 +473,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		for (String key : keySet) {
 			Object value = _headers.get(key);
 
-			if ((value != null) && (value instanceof String[])) {
+			if (value instanceof String[]) {
 				propertyNames.add(key);
 			}
 		}
@@ -485,7 +485,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	public Collection<String> getPropertyValues(String key) {
 		Object value = _headers.get(key);
 
-		if ((value != null) && (value instanceof String[])) {
+		if (value instanceof String[]) {
 			return Arrays.asList((String[])value);
 		}
 

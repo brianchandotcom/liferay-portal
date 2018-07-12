@@ -44,8 +44,8 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 		throws IOException {
 
 		if (isPortalSource()) {
-			if (!absolutePath.contains("/modules/apps/") ||
-				!absolutePath.contains("/modules/private/")) {
+			if (absolutePath.contains("/modules/sdk/") ||
+				absolutePath.contains("/modules/util/")) {
 
 				return content;
 			}

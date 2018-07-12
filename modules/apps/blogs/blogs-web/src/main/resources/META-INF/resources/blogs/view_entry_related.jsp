@@ -18,6 +18,7 @@
 
 <%
   BlogsEntry blogsEntry = (BlogsEntry)request.getAttribute("view_entry_related.jsp-blogs_entry");
+  String redirect = ParamUtil.getString(request, "redirect");
 %>
 
 <c:if test="<%= blogsEntry != null %>">
@@ -43,7 +44,7 @@
       <div class="card-body widget-topbar">
         <div class="autofit-row card-title">
           <div class="autofit-col autofit-col-expand">
-            <portlet:renderURL var="previousEntryURL">
+            <portlet:renderURL var="blogsEntryURL">
               <portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
               <portlet:param name="redirect" value="<%= redirect %>" />
               <portlet:param name="urlTitle" value="<%= blogsEntry.getUrlTitle() %>" />
@@ -52,10 +53,10 @@
             <liferay-util:html-top
               outputKey="blogs_previous_entry_link"
             >
-              <link href="<%= previousEntryURL.toString() %>" rel="prev" />
+              <link href="<%= blogsEntryURL.toString() %>" rel="prev" />
             </liferay-util:html-top>
 
-            <h3 class="title"><a class="title-link" href="<%= previousEntryURL %>">
+            <h3 class="title"><a class="title-link" href="<%= blogsEntryURL %>">
               <%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle,
                   blogsEntry)) %></a>
             </h3>
@@ -66,17 +67,17 @@
           <div class="autofit-col inline-item-before">
 
             <%
-            User previousEntryUser = UserLocalServiceUtil.fetchUser(blogsEntry.getUserId());
+            User blogsEntryUser = UserLocalServiceUtil.fetchUser(blogsEntry.getUserId());
 
-            String previousEntryUserURL = StringPool.BLANK;
+            String blogsEntryUserURL = StringPool.BLANK;
 
-            if ((previousEntryUser != null) && !previousEntryUser.isDefaultUser()) {
-              previousEntryUserURL = previousEntryUser.getDisplayURL(themeDisplay);
+            if ((blogsEntryUser != null) && !blogsEntryUser.isDefaultUser()) {
+              blogsEntryUserURL = blogsEntryUser.getDisplayURL(themeDisplay);
             }
             %>
 
             <liferay-ui:user-portrait
-              user="<%= previousEntryUser %>"
+              user="<%= blogsEntryUser %>"
             />
           </div>
 
@@ -84,7 +85,7 @@
             <div class="autofit-row">
               <div class="autofit-col autofit-col-expand">
                 <div class="text-truncate-inline">
-                  <a class="text-truncate username" href="<%= previousEntryUserURL %>"><%= blogsEntry.getUserName() %></a>
+                  <a class="text-truncate username" href="<%= blogsEntryUserURL %>"><%= blogsEntry.getUserName() %></a>
                 </div>
 
                 <div class="text-secondary">
@@ -105,7 +106,7 @@
           <div class="autofit-float autofit-row autofit-row-center widget-toolbar">
             <c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">
               <div class="autofit-col">
-                <portlet:renderURL var="previousEntryViewCommentsURL">
+                <portlet:renderURL var="blogsEntryViewCommentsURL">
                   <portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
                   <portlet:param name="scroll" value='<%= renderResponse.getNamespace() + "discussionContainer" %>' />
 
@@ -119,7 +120,7 @@
                   </c:choose>
                 </portlet:renderURL>
 
-                <a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= previousEntryViewCommentsURL %>">
+                <a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= blogsEntryViewCommentsURL %>">
                   <span class="inline-item inline-item-before">
                     <clay:icon
                       symbol="comments"
@@ -135,11 +136,11 @@
               <div class="autofit-col">
 
                 <%
-                RatingsEntry previousEntryRatingsEntry = null;
-                RatingsStats previousEntryRatingsStats = RatingsStatsLocalServiceUtil.fetchStats(BlogsEntry.class.getName(), blogsEntry.getEntryId());
+                RatingsEntry blogsEntryRatingsEntry = null;
+                RatingsStats blogsEntryRatingsStats = RatingsStatsLocalServiceUtil.fetchStats(BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
-                if (previousEntryRatingsStats != null) {
-                  previousEntryRatingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(themeDisplay.getUserId(), BlogsEntry.class.getName(), blogsEntry.getEntryId());
+                if (blogsEntryRatingsStats != null) {
+                  blogsEntryRatingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(themeDisplay.getUserId(), BlogsEntry.class.getName(), blogsEntry.getEntryId());
                 }
                 %>
 
@@ -147,14 +148,14 @@
                   className="<%= BlogsEntry.class.getName() %>"
                   classPK="<%= blogsEntry.getEntryId() %>"
                   inTrash="<%= blogsEntry.isInTrash() %>"
-                  ratingsEntry="<%= previousEntryRatingsEntry %>"
-                  ratingsStats="<%= previousEntryRatingsStats %>"
+                  ratingsEntry="<%= blogsEntryRatingsEntry %>"
+                  ratingsStats="<%= blogsEntryRatingsStats %>"
                 />
               </div>
             </c:if>
 
             <div class="autofit-col autofit-col-end">
-              <liferay-portlet:renderURL varImpl="previousEntryBookmarksURL">
+              <liferay-portlet:renderURL varImpl="blogsEntryBookmarksURL">
                 <portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 
                 <c:choose>
@@ -174,7 +175,7 @@
                 target="_blank"
                 title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, blogsEntry) %>"
                 types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"
-                urlImpl="<%= previousEntryBookmarksURL %>"
+                urlImpl="<%= blogsEntryBookmarksURL %>"
               />
             </div>
           </div>

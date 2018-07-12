@@ -223,6 +223,10 @@ public class PortletDataContextZipWriterTest {
 			throw new UnsupportedOperationException();
 		}
 
+		@Override
+		public void umount() {
+		}
+
 		private final List<MethodHandler> _methodHandlers = new ArrayList<>();
 
 	}

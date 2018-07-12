@@ -49,8 +49,6 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		// SKIP
-
 		content = formatIncorrectLineBreak(fileName, content);
 
 		content = _formatTagAttributes(absolutePath, content);
@@ -67,8 +65,6 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 
 	private String _formatTagAttributes(String absolutePath, String content)
 		throws Exception {
-
-		// SKIP
 
 		StringBundler sb = new StringBundler();
 

@@ -36,8 +36,6 @@ public abstract class BaseFileCheck
 	public String process(String fileName, String absolutePath, String content)
 		throws Exception {
 
-		// SKIP
-
 		clearSourceFormatterMessages(fileName);
 
 		return doProcess(fileName, absolutePath, content);

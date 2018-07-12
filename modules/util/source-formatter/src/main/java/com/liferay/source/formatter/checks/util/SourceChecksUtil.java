@@ -61,8 +61,6 @@ public class SourceChecksUtil {
 			boolean includeModuleChecks, String checkName)
 		throws Exception {
 
-		// SKIP
-
 		List<SourceCheck> sourceChecks = _getSourceChecks(
 			sourceFormatterConfiguration, sourceProcessorName, propertiesMap,
 			portalSource, subrepository, includeModuleChecks, checkName);
@@ -83,8 +81,6 @@ public class SourceChecksUtil {
 			SourceFormatterSuppressions sourceFormatterSuppressions,
 			boolean showDebugInformation)
 		throws Exception {
-
-		// SKIP
 
 		SourceChecksResult sourceChecksResult = new SourceChecksResult(content);
 
@@ -195,8 +191,6 @@ public class SourceChecksUtil {
 			boolean includeModuleChecks, String checkName)
 		throws Exception {
 
-		// SKIP
-
 		List<SourceCheck> sourceChecks = new ArrayList<>();
 
 		List<SourceCheckConfiguration> sourceCheckConfigurations =
@@ -291,8 +285,6 @@ public class SourceChecksUtil {
 			String fileName, String absolutePath)
 		throws Exception {
 
-		// SKIP
-
 		sourceChecksResult.setContent(
 			fileCheck.process(
 				fileName, absolutePath, sourceChecksResult.getContent()));
@@ -334,8 +326,6 @@ public class SourceChecksUtil {
 			JavaClass javaClass, List<JavaClass> anonymousClasses,
 			String fileName, String absolutePath)
 		throws Exception {
-
-		// SKIP
 
 		sourceChecksResult.setContent(
 			javaTermCheck.process(

@@ -50,9 +50,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
-
-		// SKIP
-
 		String[] excludes = {"**/null.jsp", "**/tools/**"};
 
 		List<String> fileNames = getFileNames(excludes, getIncludes());
@@ -101,8 +98,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected File format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
-
-		// SKIP
 
 		// When executing 'format-source-current-branch',
 		// 'format-source-latest-author', or 'format-source-local-changes', we
@@ -165,8 +160,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	private Map<String, String> _getDeletedContentsMap(String[] excludes)
 		throws Exception {
-
-		// SKIP
 
 		List<String> fileNames = Collections.emptyList();
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();

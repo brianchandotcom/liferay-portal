@@ -90,9 +90,6 @@ public class SourceFormatter {
 		};
 
 	public static void main(String[] args) throws Exception {
-
-		// SKIP
-
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		try {
@@ -256,9 +253,6 @@ public class SourceFormatter {
 	}
 
 	public void format() throws Exception {
-
-		// SKIP
-
 		_printProgressStatusMessage("Scanning for files...");
 
 		_init();
@@ -307,9 +301,6 @@ public class SourceFormatter {
 
 					@Override
 					public Void call() throws Exception {
-
-						// SKIP
-
 						_runSourceProcessor(sourceProcessor);
 
 						return null;
@@ -772,8 +763,6 @@ public class SourceFormatter {
 
 	private void _runSourceProcessor(SourceProcessor sourceProcessor)
 		throws Exception {
-
-		// SKIP
 
 		sourceProcessor.setAllFileNames(_allFileNames);
 		sourceProcessor.setPluginsInsideModulesDirectoryNames(

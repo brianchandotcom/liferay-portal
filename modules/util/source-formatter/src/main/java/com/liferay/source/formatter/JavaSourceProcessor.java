@@ -67,8 +67,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		// SKIP
-
 		file = super.format(file, fileName, absolutePath, content);
 
 		_processCheckstyle(file);

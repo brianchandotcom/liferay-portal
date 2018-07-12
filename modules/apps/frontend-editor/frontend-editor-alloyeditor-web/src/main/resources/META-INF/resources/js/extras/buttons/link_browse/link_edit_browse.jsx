@@ -83,7 +83,7 @@ var LinkEditBrowse = React.createClass({
 	 */
 	render: function() {
 		return (
-			<div>
+			<div className="ae-container-link-edit-browse">
 				<AlloyEditor.ButtonLinkEdit ref='linkEditButton' {...this.props} />
 				<button aria-label="Browse" className="ae-button" onClick={this._browseClick} title="browse">
 					<FolderIconSvg />

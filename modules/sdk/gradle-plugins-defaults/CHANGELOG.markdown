@@ -4054,6 +4054,12 @@ to add new ticket ID prefixes for the `buildChangeLog` task.
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.70.
 
+## 5.4.75 - 2018-07-12
+
+### Fixed
+- [LPS-82960]: Check `gradle.properties` for `jira.project.keys` when running
+the `buildChangeLog` task.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

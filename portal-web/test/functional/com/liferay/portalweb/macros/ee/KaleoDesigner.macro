@@ -514,10 +514,6 @@
 		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DRAFT_HISTORY_LATEST_VERSION_BUTTON" value1="Latest Version" />
 	</command>
 
-	<command name="redoDraft">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DRAFT_HISTORY_REDO_BUTTON" value1="Redo" />
-	</command>
-
 	<command name="removeNodeSettingsSection">
 		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_REMOVE_SECTION" value1="Remove" />
 	</command>

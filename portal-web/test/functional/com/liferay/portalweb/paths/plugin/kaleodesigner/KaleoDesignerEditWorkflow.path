@@ -55,11 +55,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DRAFT_HISTORY_REDO_BUTTON</td>
-	<td>//button[contains(@id,'redoButton')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DRAFT_HISTORY_LATEST_VERSION_BUTTON</td>
 	<td>//button[contains(@id,'latestButton')]</td>
 	<td></td>

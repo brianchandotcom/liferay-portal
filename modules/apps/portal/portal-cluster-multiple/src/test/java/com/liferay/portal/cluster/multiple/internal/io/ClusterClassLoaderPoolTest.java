@@ -407,9 +407,6 @@ public class ClusterClassLoaderPoolTest {
 	private static final String _CONTEXT_NAME_3 =
 		ClusterClassLoaderPoolTest._SYMBOLIC_NAME + "_3.0.0";
 
-	private static final String _CONTEXT_NAME_4 =
-		ClusterClassLoaderPoolTest._SYMBOLIC_NAME + "_4.0.0";
-
 	private static final String _SYMBOLIC_NAME = "symbolic.name";
 
 	private Map<String, ClassLoader> _classLoaders;

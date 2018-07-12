@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.test.util.internal.list;
 
-import com.liferay.apio.architect.impl.internal.list.FunctionalList;
+import com.liferay.apio.architect.impl.list.FunctionalList;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -21,7 +21,7 @@ import static com.liferay.apio.architect.test.util.form.FormMatchers.isReturnedI
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.liferay.apio.architect.form.Form.Builder;
-import com.liferay.apio.architect.impl.internal.form.FormImpl.BuilderImpl;
+import com.liferay.apio.architect.impl.form.FormImpl.BuilderImpl;
 
 import java.util.Collections;
 

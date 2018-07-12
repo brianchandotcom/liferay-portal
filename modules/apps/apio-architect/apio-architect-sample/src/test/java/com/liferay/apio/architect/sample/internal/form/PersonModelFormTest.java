@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.sample.internal.form;
 
-import static com.liferay.apio.architect.impl.internal.form.FormImpl.BuilderImpl.empty;
+import static com.liferay.apio.architect.impl.form.FormImpl.BuilderImpl.empty;
 import static com.liferay.apio.architect.sample.internal.form.PersonForm.buildForm;
 import static com.liferay.apio.architect.test.util.form.FormMatchers.isAFormWithConditions;
 import static com.liferay.apio.architect.test.util.form.FormMatchers.isReturnedIn;

@@ -2,13 +2,14 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="ParsePrimitiveTypeCheck" files="apio-architect-uri-mapper-impl/src/main/java/com/liferay/apio/architect/uri/mapper/internal/PathLongIdentifierMapper\.java" />
+		<suppress checks="ParsePrimitiveTypeCheck" files="apio-architect-uri-mapper-impl/src/main/java/com/liferay/apio/architect/uri/mapper/impl/PathLongIdentifierMapper\.java" />
 		<suppress checks="SelfReferenceCheck" files="apio-architect-api/src/main/java/com/liferay/apio/architect/functional/Try\.java" />
 		<suppress checks="VariableNameCheck" files="apio-architect-api/src/main/java/com/liferay/apio/architect/routes/.*" />
-		<suppress checks="VariableNameCheck" files="apio-architect-impl/src/main/java/com/liferay/apio/architect/impl/internal/routes/.*" />
+		<suppress checks="VariableNameCheck" files="apio-architect-impl/src/main/java/com/liferay/apio/architect/impl/routes/.*" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="JavaModuleInternalImportsCheck" files="apio-architect-impl/src/main/java/com/liferay/apio/architect/impl/internal/wiring/osgi/manager/base/BaseManager\.java" />
+		<suppress checks="JavaDeprecatedJavadocCheck" files=".*" />
+		<suppress checks="JavaModuleInternalImportsCheck" files="apio-architect-impl/src/main/java/com/liferay/apio/architect/impl/wiring/osgi/manager/base/BaseManager\.java" />
 		<suppress checks="JavaStaticImportsCheck" files=".*" />
 	</source-check>
 </suppressions>

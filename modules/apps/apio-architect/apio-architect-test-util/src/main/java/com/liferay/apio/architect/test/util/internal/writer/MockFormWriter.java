@@ -16,12 +16,8 @@ package com.liferay.apio.architect.test.util.internal.writer;
 
 import static com.liferay.apio.architect.test.util.writer.MockWriterUtil.getRequestInfo;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import com.liferay.apio.architect.impl.internal.message.json.FormMessageMapper;
-import com.liferay.apio.architect.impl.internal.request.RequestInfo;
-import com.liferay.apio.architect.impl.internal.writer.FormWriter;
+import com.liferay.apio.architect.impl.message.json.FormMessageMapper;
+import com.liferay.apio.architect.impl.writer.FormWriter;
 import com.liferay.apio.architect.test.util.form.MockFormCreator;
 
 /**
@@ -38,22 +34,22 @@ public class MockFormWriter {
 	/**
 	 * Writes a {@link com.liferay.apio.architect.form.Form} object.
 	 *
-	 * @param formMessageMapper the {@code FormMessageMapper} to use for writing
-	 *        the JSON object
+	 * @param  formMessageMapper the {@code FormMessageMapper} to use for
+	 *         writing the JSON object
+	 * @return the {@code String} containing the JSON Object.
+	 * @review
 	 */
-	public static JsonObject write(FormMessageMapper formMessageMapper) {
-		RequestInfo requestInfo = getRequestInfo();
-
+	public static String write(FormMessageMapper formMessageMapper) {
 		FormWriter formWriter = FormWriter.create(
 			builder -> builder.form(
 				MockFormCreator.createForm("f", "s")
 			).formMessageMapper(
 				formMessageMapper
 			).requestInfo(
-				requestInfo
+				getRequestInfo()
 			).build());
 
-		return new Gson().fromJson(formWriter.write(), JsonObject.class);
+		return formWriter.write();
 	}
 
 	private MockFormWriter() {

@@ -683,9 +683,9 @@
 
 					<execute macro="Button#clickSave" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_1" value1="Your request was sent. You will receive a reply by email." />
-
-					<execute macro="Alert#viewSuccessMessage" />
+					<execute macro="Alert#viewSuccessMessageText">
+						<var name="successMessage" value="Your request was sent. You will receive a reply by email." />
+					</execute>
 
 					<execute macro="MySites#viewMembershipRequested">
 						<var name="siteName" value="${siteName}" />

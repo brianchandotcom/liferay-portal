@@ -106,8 +106,13 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 		form.attr('method', 'post');
 
 		form.fm('deleteRoleIds').val(deleteRoleIds);
+		form.fm('redirect').val('<portlet:renderURL><portlet:param name="mvcPath" value="/view.jsp" /></portlet:renderURL>');
 
-		document.<portlet:namespace />fm.p_p_lifecycle.value = '1';
+		var p_p_lifecycle = document.<portlet:namespace />fm.p_p_lifecycle;
+
+		if (p_p_lifecycle) {
+			p_p_lifecycle.value = '1';
+		}
 
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 			submitForm(form, '<portlet:actionURL name="deleteRoles"><portlet:param name="redirect" value="<%= portletURL.toString() %>" /></portlet:actionURL>');

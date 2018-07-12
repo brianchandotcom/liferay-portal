@@ -510,6 +510,10 @@ public class ProjectTemplateFilesTest {
 					"Forbidden whitespace leading character in " + path,
 					Character.isWhitespace(line.charAt(0)));
 
+				if (line.startsWith("#")) {
+					continue;
+				}
+
 				int pos = line.indexOf('=');
 
 				Assert.assertNotEquals(

@@ -46,7 +46,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionURL;
@@ -462,19 +462,17 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 	@Override
 	public Collection<String> getPropertyNames() {
-		Set<String> keySet = _headers.keySet();
-
-		if (keySet.isEmpty()) {
+		if (_headers.isEmpty()) {
 			return Collections.emptySet();
 		}
 
 		List<String> propertyNames = new ArrayList<>();
 
-		for (String key : keySet) {
-			Object value = _headers.get(key);
+		for (Entry<String, Object> entry : _headers.entrySet()) {
+			Object value = entry.getValue();
 
 			if (value instanceof String[]) {
-				propertyNames.add(key);
+				propertyNames.add(entry.getKey());
 			}
 		}
 

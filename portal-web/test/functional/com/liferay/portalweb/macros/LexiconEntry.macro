@@ -147,6 +147,12 @@
 		</execute>
 	</command>
 
+	<command name="openEntryMenu">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+	</command>
+
 	<command name="selectEntry">
 		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
 			<var name="key_rowEntry" value="${rowEntry}" />

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -47,23 +48,16 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.lang.reflect.Method;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Christopher Kian
@@ -76,40 +70,6 @@ public class InlineSQLHelperImplTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(InlineSQLHelperImplTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		for (Bundle installedBundle : bundleContext.getBundles()) {
-			String symbolicName = installedBundle.getSymbolicName();
-
-			if (symbolicName.equals(
-					"com.liferay.portal.security.permission.impl")) {
-
-				bundle = installedBundle;
-
-				break;
-			}
-		}
-
-		Class<?> clazz = bundle.loadClass(
-			"com.liferay.portal.security.permission.internal." +
-				"InlineSQLHelperImpl");
-
-		_replacePermissionCheckJoinMethod = clazz.getDeclaredMethod(
-			"replacePermissionCheckJoin", String.class, String.class,
-			String.class, String.class, String.class, long[].class,
-			String.class);
-
-		_replacePermissionCheckJoinMethod.setAccessible(true);
-
-		_getRoleIdsMethod = clazz.getDeclaredMethod("getRoleIds", Long.TYPE);
-
-		_getRoleIdsMethod.setAccessible(true);
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -166,10 +126,8 @@ public class InlineSQLHelperImplTest {
 
 		_setPermissionChecker();
 
-		String sql = (String)_replacePermissionCheckJoinMethod.invoke(
-			_inlineSQLHelper, _SQL_PLAIN, _CLASS_NAME, _CLASS_PK_FIELD,
-			_USER_ID_FIELD, _GROUP_ID_FIELD,
-			new long[] {_groupOne.getGroupId()}, null);
+		String sql = _replacePermissionCheckJoin(
+			_SQL_PLAIN, _groupOne.getGroupId());
 
 		Assert.assertSame(_SQL_PLAIN, sql);
 
@@ -193,8 +151,9 @@ public class InlineSQLHelperImplTest {
 		Role userRole = _roleLocalService.getRole(
 			_groupThree.getCompanyId(), RoleConstants.USER);
 
-		long[] roleIds = (long[])_getRoleIdsMethod.invoke(
-			_inlineSQLHelper, _groupThree.getGroupId());
+		long[] roleIds = ReflectionTestUtil.invoke(
+			_inlineSQLHelper, "getRoleIds", new Class<?>[] {long.class},
+			_groupThree.getGroupId());
 
 		String msg = StringUtil.merge(roleIds);
 
@@ -214,7 +173,7 @@ public class InlineSQLHelperImplTest {
 
 		_setPermissionChecker();
 
-		String sql = _replacePermissionCheckJoin(_SQL_PLAIN);
+		String sql = _replacePermissionCheckJoin(_SQL_PLAIN, _groupIds);
 
 		Role ownerRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.OWNER);
@@ -266,10 +225,8 @@ public class InlineSQLHelperImplTest {
 
 		_setPermissionChecker();
 
-		String sql = (String)_replacePermissionCheckJoinMethod.invoke(
-			_inlineSQLHelper, _SQL_PLAIN, _CLASS_NAME, _CLASS_PK_FIELD,
-			_USER_ID_FIELD, _GROUP_ID_FIELD,
-			new long[] {_groupOne.getGroupId()}, null);
+		String sql = _replacePermissionCheckJoin(
+			_SQL_PLAIN, _groupOne.getGroupId());
 
 		Assert.assertSame(_SQL_PLAIN, sql);
 
@@ -328,7 +285,7 @@ public class InlineSQLHelperImplTest {
 
 		_setPermissionChecker();
 
-		String sql = _replacePermissionCheckJoin(_SQL_PLAIN);
+		String sql = _replacePermissionCheckJoin(_SQL_PLAIN, _groupIds);
 
 		_assertWhereClause(sql, _CLASS_PK_FIELD);
 
@@ -383,9 +340,7 @@ public class InlineSQLHelperImplTest {
 	private void _assertClauseOrdering(String sql, String endingClause)
 		throws Exception {
 
-		String actualSql = (String)_replacePermissionCheckJoinMethod.invoke(
-			_inlineSQLHelper, sql, _CLASS_NAME, _CLASS_PK_FIELD, _USER_ID_FIELD,
-			_GROUP_ID_FIELD, _groupIds, null);
+		String actualSql = _replacePermissionCheckJoin(sql, _groupIds);
 
 		int wherePos = actualSql.lastIndexOf(_WHERE_CLAUSE);
 		int groupByPos = actualSql.indexOf(_GROUP_BY_CLAUSE);
@@ -425,10 +380,15 @@ public class InlineSQLHelperImplTest {
 		Assert.assertTrue(sql, sql.contains(sb.toString()));
 	}
 
-	private String _replacePermissionCheckJoin(String sql) throws Exception {
-		return (String)_replacePermissionCheckJoinMethod.invoke(
-			_inlineSQLHelper, sql, _CLASS_NAME, _CLASS_PK_FIELD, _USER_ID_FIELD,
-			_GROUP_ID_FIELD, _groupIds, null);
+	private String _replacePermissionCheckJoin(String sql, long... groupIds) {
+		return ReflectionTestUtil.invoke(
+			_inlineSQLHelper, "replacePermissionCheckJoin",
+			new Class<?>[] {
+				String.class, String.class, String.class, String.class,
+				String.class, long[].class, String.class
+			},
+			sql, _CLASS_NAME, _CLASS_PK_FIELD, _USER_ID_FIELD, _GROUP_ID_FIELD,
+			groupIds, null);
 	}
 
 	private void _setPermissionChecker() throws Exception {
@@ -466,9 +426,6 @@ public class InlineSQLHelperImplTest {
 		_RESOURCE_PERMISSION + ".ownerId";
 
 	private static final String _WHERE_CLAUSE = " WHERE ";
-
-	private static Method _getRoleIdsMethod;
-	private static Method _replacePermissionCheckJoinMethod;
 
 	@DeleteAfterTestRun
 	private Company _company;

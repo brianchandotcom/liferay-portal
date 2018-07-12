@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 
+	@Override
 	public DDMDataProviderResponse invoke(
 		DDMDataProviderRequest ddmDataProviderRequest) {
 

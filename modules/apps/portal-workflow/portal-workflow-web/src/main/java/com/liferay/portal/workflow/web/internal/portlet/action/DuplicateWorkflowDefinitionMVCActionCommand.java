@@ -49,6 +49,7 @@ import org.osgi.service.component.annotations.Component;
 public class DuplicateWorkflowDefinitionMVCActionCommand
 	extends DeployWorkflowDefinitionMVCActionCommand {
 
+	@Override
 	protected void addDefaultTitle(
 		ActionRequest actionRequest, Map<Locale, String> titleMap) {
 

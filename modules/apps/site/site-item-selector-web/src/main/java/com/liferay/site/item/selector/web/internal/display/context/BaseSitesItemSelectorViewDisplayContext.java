@@ -63,6 +63,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		this.portletURL = portletURL;
 	}
 
+	@Override
 	public String getClearResultsURL() throws PortletException {
 		PortletURL clearResultsURL = getPortletURL();
 
@@ -95,6 +96,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		return displayStyle;
 	}
 
+	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -140,6 +142,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		return _orderByCol;
 	}
 
+	@Override
 	public String getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
@@ -169,6 +172,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 			PortalUtil.getLiferayPortletResponse(getPortletResponse()));
 	}
 
+	@Override
 	public String getSearchActionURL() throws PortletException {
 		PortletURL searchActionURL = getPortletURL();
 
@@ -180,6 +184,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		return _siteItemSelectorCriterion;
 	}
 
+	@Override
 	public String getSortingURL() throws PortletException {
 		PortletURL sortingURL = getPortletURL();
 
@@ -190,12 +195,14 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		return sortingURL.toString();
 	}
 
+	@Override
 	public int getTotalItems() throws Exception {
 		SearchContainer groupSearch = getGroupSearch();
 
 		return groupSearch.getTotal();
 	}
 
+	@Override
 	public List<ViewTypeItem> getViewTypeItems() throws PortletException {
 		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{

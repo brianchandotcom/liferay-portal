@@ -36,6 +36,7 @@ public class OAuth2AuthorizePortletDisplayContext
 		return _assignableScopes;
 	}
 
+	@Override
 	public OAuth2Application getOAuth2Application() {
 		return _oAuth2Application;
 	}

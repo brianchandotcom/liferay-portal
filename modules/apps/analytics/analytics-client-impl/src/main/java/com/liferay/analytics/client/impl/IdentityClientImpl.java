@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class IdentityClientImpl implements IdentityClient {
 
+	@Override
 	public String getUserId(IdentityContextMessage identityContextMessage)
 		throws Exception {
 

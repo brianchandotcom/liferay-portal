@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AnalyticsClientImpl implements AnalyticsClient {
 
+	@Override
 	public String sendAnalytics(AnalyticsEventsMessage analyticsEventsMessage)
 		throws Exception {
 

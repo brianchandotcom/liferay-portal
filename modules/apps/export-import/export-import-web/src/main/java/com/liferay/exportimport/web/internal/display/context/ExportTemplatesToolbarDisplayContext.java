@@ -55,6 +55,7 @@ public class ExportTemplatesToolbarDisplayContext
 			liveGroupId, company, iteratorURL);
 	}
 
+	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getRenderURL();
 

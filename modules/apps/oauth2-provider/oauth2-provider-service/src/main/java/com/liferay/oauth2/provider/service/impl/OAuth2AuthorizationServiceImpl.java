@@ -36,6 +36,7 @@ import java.util.List;
 public class OAuth2AuthorizationServiceImpl
 	extends OAuth2AuthorizationServiceBaseImpl {
 
+	@Override
 	public List<OAuth2Authorization> getApplicationOAuth2Authorizations(
 			long oAuth2ApplicationId, int start, int end,
 			OrderByComparator<OAuth2Authorization> orderByComparator)
@@ -48,6 +49,7 @@ public class OAuth2AuthorizationServiceImpl
 			oAuth2ApplicationId, start, end, orderByComparator);
 	}
 
+	@Override
 	public int getApplicationOAuth2AuthorizationsCount(long oAuth2ApplicationId)
 		throws PortalException {
 
@@ -58,6 +60,7 @@ public class OAuth2AuthorizationServiceImpl
 			oAuth2ApplicationId);
 	}
 
+	@Override
 	public List<OAuth2Authorization> getUserOAuth2Authorizations(
 			int start, int end,
 			OrderByComparator<OAuth2Authorization> orderByComparator)
@@ -69,6 +72,7 @@ public class OAuth2AuthorizationServiceImpl
 			user.getUserId(), start, end, orderByComparator);
 	}
 
+	@Override
 	public int getUserOAuth2AuthorizationsCount() throws PortalException {
 		User user = getUser();
 

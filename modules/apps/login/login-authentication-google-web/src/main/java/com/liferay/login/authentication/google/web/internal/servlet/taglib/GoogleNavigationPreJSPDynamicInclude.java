@@ -70,6 +70,7 @@ public class GoogleNavigationPreJSPDynamicInclude
 		return _log;
 	}
 
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.login.authentication.google.web)",
 		unbind = "-"

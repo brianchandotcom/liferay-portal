@@ -41,6 +41,7 @@ import java.util.List;
  */
 public abstract class AmazonVM extends VM {
 
+	@Override
 	public void create() {
 		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
 
@@ -81,6 +82,7 @@ public abstract class AmazonVM extends VM {
 		_waitForInstanceState("running");
 	}
 
+	@Override
 	public void delete() {
 		TerminateInstancesRequest terminateInstancesRequest =
 			new TerminateInstancesRequest();

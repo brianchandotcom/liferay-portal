@@ -46,6 +46,7 @@ public abstract class BaseAnnouncementsEntryUADDisplay
 			Long.valueOf(primaryKey.toString()));
 	}
 
+	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] {"title", "content"};
 	}

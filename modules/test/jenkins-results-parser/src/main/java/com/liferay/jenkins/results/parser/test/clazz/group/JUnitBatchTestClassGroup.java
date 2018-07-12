@@ -359,6 +359,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return relevantTestClassNameRelativeGlobs;
 	}
 
+	@Override
 	protected void setAxisTestClassGroups() {
 		int axisCount = getAxisCount();
 

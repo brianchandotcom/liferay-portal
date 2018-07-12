@@ -50,6 +50,7 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 		super(liferayPortletRequest, liferayPortletResponse, request);
 	}
 
+	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -80,6 +81,7 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 		};
 	}
 
+	@Override
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -99,6 +101,7 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 		return portletURL;
 	}
 
+	@Override
 	public SearchContainer getSearchContainer() throws Exception {
 		if (_searchContainer != null) {
 			return _searchContainer;

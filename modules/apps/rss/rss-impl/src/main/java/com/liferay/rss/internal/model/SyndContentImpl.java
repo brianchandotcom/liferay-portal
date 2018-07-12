@@ -36,6 +36,7 @@ public class SyndContentImpl implements SyndContent {
 		_type = type;
 	}
 
+	@Override
 	public void setValue(String value) {
 		_value = value;
 	}

@@ -106,6 +106,7 @@ public interface NumericDDMFormFieldTypeSettings
 		},
 		type = "numeric"
 	)
+	@Override
 	public LocalizedValue predefinedValue();
 
 	@DDMFormField

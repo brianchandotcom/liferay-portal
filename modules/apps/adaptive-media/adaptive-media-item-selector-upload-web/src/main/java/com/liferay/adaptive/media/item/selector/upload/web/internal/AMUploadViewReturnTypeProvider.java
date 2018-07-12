@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
 public class AMUploadViewReturnTypeProvider
 	implements ItemSelectorViewReturnTypeProvider {
 
+	@Override
 	public List<ItemSelectorReturnType>
 		populateSupportedItemSelectorReturnTypes(
 			List<ItemSelectorReturnType> supportedItemSelectorReturnTypes) {

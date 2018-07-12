@@ -127,6 +127,7 @@ public class GeoDistanceFilterTest extends BaseIndexingTestCase {
 				FIELD, latitude, longitude));
 	}
 
+	@Override
 	protected void setPreBooleanFilter(Filter filter, Query query) {
 		BooleanFilter booleanFilter = new BooleanFilter();
 

@@ -1188,6 +1188,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the maximum size of buffered bytes before storing occurs
 	 */
+	@Override
 	public int getMultipartFileSizeThreshold() {
 		return _multipartFileSizeThreshold;
 	}
@@ -1197,6 +1198,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the directory for storing uploaded files
 	 */
+	@Override
 	public String getMultipartLocation() {
 		return _multipartLocation;
 	}
@@ -1206,6 +1208,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the maximum number of bytes permitted for an uploaded file
 	 */
+	@Override
 	public long getMultipartMaxFileSize() {
 		return _multipartMaxFileSize;
 	}
@@ -1215,6 +1218,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the maximum number of bytes permitted for a multipart request
 	 */
+	@Override
 	public long getMultipartMaxRequestSize() {
 		return _multipartMaxRequestSize;
 	}
@@ -2641,6 +2645,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *         method should be invoked during a partial action triggered by a
 	 *         different portlet on the same portal page
 	 */
+	@Override
 	public boolean isPartialActionServeResource() {
 		return _partialActionServeResource;
 	}
@@ -2667,6 +2672,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the specified CSS resource dependencies are
 	 *         to be referenced in the page's header
 	 */
+	@Override
 	public boolean isPortletDependencyCssEnabled() {
 		return _portletDependencyCssEnabled;
 	}
@@ -2682,6 +2688,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the specified JavaScript resource
 	 *         dependencies are to be referenced in the page's header
 	 */
+	@Override
 	public boolean isPortletDependencyJavaScriptEnabled() {
 		return _portletDependencyJavaScriptEnabled;
 	}
@@ -3440,6 +3447,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param multipartFileSizeThreshold the maximum size of buffered bytes
 	 *        before storing occurs
 	 */
+	@Override
 	public void setMultipartFileSizeThreshold(int multipartFileSizeThreshold) {
 		_multipartFileSizeThreshold = multipartFileSizeThreshold;
 	}
@@ -3449,6 +3457,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param multipartLocation the directory for storing uploaded files
 	 */
+	@Override
 	public void setMultipartLocation(String multipartLocation) {
 		_multipartLocation = multipartLocation;
 	}
@@ -3459,6 +3468,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param multipartMaxFileSize the maximum number of bytes permitted for an
 	 *        uploaded file
 	 */
+	@Override
 	public void setMultipartMaxFileSize(long multipartMaxFileSize) {
 		_multipartMaxFileSize = multipartMaxFileSize;
 	}
@@ -3469,6 +3479,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param multipartMaxRequestSize the maximum number of bytes permitted for
 	 *        a multipart request
 	 */
+	@Override
 	public void setMultipartMaxRequestSize(long multipartMaxRequestSize) {
 		_multipartMaxRequestSize = multipartMaxRequestSize;
 	}
@@ -3604,6 +3615,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param portletDependencyCssEnabled whether the CSS resource dependencies
 	 *        that are specified in <code>portlet.xml</code>,
 	 */
+	@Override
 	public void setPortletDependencyCssEnabled(
 		boolean portletDependencyCssEnabled) {
 
@@ -3625,6 +3637,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *        javax.portlet.HeaderResponse#addDependency(String, String, String,
 	 *        String)} are to be referenced in the page's header
 	 */
+	@Override
 	public void setPortletDependencyJavaScriptEnabled(
 		boolean portletDependencyJavaScriptEnabled) {
 

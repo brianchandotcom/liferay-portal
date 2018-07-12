@@ -67,6 +67,7 @@ public class OAuth2ScopeGrantLocalServiceImpl
 		return oAuth2ScopeGrantPersistence.update(oAuth2ScopeGrant);
 	}
 
+	@Override
 	public Collection<OAuth2ScopeGrant> getOAuth2ScopeGrants(
 		long oAuth2ApplicationScopeAliasesId, int start, int end,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {

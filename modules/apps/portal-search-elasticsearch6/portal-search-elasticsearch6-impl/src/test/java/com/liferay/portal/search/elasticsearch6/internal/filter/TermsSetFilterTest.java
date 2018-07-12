@@ -115,6 +115,7 @@ public class TermsSetFilterTest extends BaseIndexingTestCase {
 		return null;
 	}
 
+	@Override
 	protected void setPreBooleanFilter(Filter filter, Query query) {
 		BooleanFilter booleanFilter = new BooleanFilter();
 

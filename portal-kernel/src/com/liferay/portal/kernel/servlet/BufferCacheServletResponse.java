@@ -353,6 +353,7 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
 	}
 
+	@Override
 	public void setContentLengthLong(long contentLength) {
 
 		// Buffered response cannot accept content length because content post

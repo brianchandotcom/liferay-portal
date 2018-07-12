@@ -452,9 +452,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		Object[] values = _headers.get(key);
 
 		if (values instanceof String[]) {
-			String[] stringValues = (String[])values;
-
-			return stringValues[0];
+			return (String)values[0];
 		}
 
 		return null;

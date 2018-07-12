@@ -17,6 +17,7 @@ package com.liferay.document.library.opener.google.drive.internal.service;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -51,13 +52,17 @@ public class OAuth2Manager {
 		GoogleAuthorizationCodeRequestUrl googleAuthorizationCodeRequestUrl =
 			_googleAuthorizationCodeFlow.newAuthorizationUrl();
 
-		return googleAuthorizationCodeRequestUrl.setState(
-			state
-		).setRedirectUri(
-			redirectUri
-		).setScopes(
-			Collections.singleton(DriveScopes.DRIVE_FILE)
-		).build();
+		googleAuthorizationCodeRequestUrl =
+			googleAuthorizationCodeRequestUrl.setState(state);
+
+		googleAuthorizationCodeRequestUrl =
+			googleAuthorizationCodeRequestUrl.setRedirectUri(redirectUri);
+
+		googleAuthorizationCodeRequestUrl =
+			googleAuthorizationCodeRequestUrl.setScopes(
+				Collections.singleton(DriveScopes.DRIVE_FILE));
+
+		return googleAuthorizationCodeRequestUrl.build();
 	}
 
 	public Credential getCredential(long userId) throws IOException {
@@ -69,12 +74,15 @@ public class OAuth2Manager {
 			long userId, String code, String redirectUri)
 		throws IOException {
 
+		GoogleAuthorizationCodeTokenRequest
+			googleAuthorizationCodeTokenRequest =
+				_googleAuthorizationCodeFlow.newTokenRequest(code);
+
+		googleAuthorizationCodeTokenRequest =
+			googleAuthorizationCodeTokenRequest.setRedirectUri(redirectUri);
+
 		GoogleTokenResponse googleTokenResponse =
-			_googleAuthorizationCodeFlow.newTokenRequest(
-				code
-			).setRedirectUri(
-				redirectUri
-			).execute();
+			googleAuthorizationCodeTokenRequest.execute();
 
 		_googleAuthorizationCodeFlow.createAndStoreCredential(
 			googleTokenResponse, String.valueOf(userId));
@@ -88,15 +96,20 @@ public class OAuth2Manager {
 			ConfigurableUtil.createConfigurable(
 				GoogleDriveOpenerConfiguration.class, properties);
 
-		_googleAuthorizationCodeFlow = new GoogleAuthorizationCodeFlow.Builder(
-			GoogleNetHttpTransport.newTrustedTransport(),
-			JacksonFactory.getDefaultInstance(),
-			googleDriveOpenerConfiguration.clientId(),
-			googleDriveOpenerConfiguration.clientSecret(),
-			Collections.singleton(DriveScopes.DRIVE_FILE)
-		).setDataStoreFactory(
-			MemoryDataStoreFactory.getDefaultInstance()
-		).build();
+		GoogleAuthorizationCodeFlow.Builder googleAuthorizationCodeFlowBuilder =
+			new GoogleAuthorizationCodeFlow.Builder(
+				GoogleNetHttpTransport.newTrustedTransport(),
+				JacksonFactory.getDefaultInstance(),
+				googleDriveOpenerConfiguration.clientId(),
+				googleDriveOpenerConfiguration.clientSecret(),
+				Collections.singleton(DriveScopes.DRIVE_FILE));
+
+		googleAuthorizationCodeFlowBuilder =
+			googleAuthorizationCodeFlowBuilder.setDataStoreFactory(
+				MemoryDataStoreFactory.getDefaultInstance());
+
+		_googleAuthorizationCodeFlow =
+			googleAuthorizationCodeFlowBuilder.build();
 	}
 
 	private GoogleAuthorizationCodeFlow _googleAuthorizationCodeFlow;

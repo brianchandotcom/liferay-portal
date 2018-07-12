@@ -843,6 +843,7 @@ public class UIItemsBuilder {
 		}
 
 		portletURL.setParameter("backURL", _getCurrentURL());
+		portletURL.setParameter("redirect", StringPool.BLANK);
 
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.PUBLISH,

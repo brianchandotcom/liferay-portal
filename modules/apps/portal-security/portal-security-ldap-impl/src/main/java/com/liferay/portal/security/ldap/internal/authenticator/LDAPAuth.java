@@ -244,13 +244,14 @@ public class LDAPAuth implements Authenticator {
 			if (userPassword != null) {
 				String ldapPassword = new String((byte[])userPassword.get());
 
-				String encryptedPassword = removeEncryptionAlgorithm(
-					ldapPassword);
-
 				String algorithm =
 					ldapAuthConfiguration.passwordEncryptionAlgorithm();
 
+				String encryptedPassword = password;
+
 				if (Validator.isNotNull(algorithm)) {
+					ldapPassword = removeEncryptionAlgorithm(ldapPassword);
+
 					encryptedPassword = _passwordEncryptor.encrypt(
 						algorithm, password, ldapPassword);
 				}

@@ -134,6 +134,24 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			annotation, StringPool.PERCENT, StringPool.BLANK, matcher.start());
 	}
 
+	private String _fixIncorrectFragmentAlias(String parameterProperties) {
+		if (parameterProperties.contains(
+				"com.liferay.portlet.instanceable=true")) {
+
+			return parameterProperties;
+		}
+
+		Matcher matcher = _fragmentPortletAliasPattern.matcher(
+			parameterProperties);
+
+		if (matcher.find()) {
+			return StringUtil.removeSubstring(
+				parameterProperties, matcher.group());
+		}
+
+		return parameterProperties;
+	}
+
 	private String _fixSingleValueArray(String annotation) {
 		int x = -1;
 
@@ -192,7 +210,9 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _formatAnnotationParameterProperties(String annotation) {
+	private String _formatAnnotationParameterProperties(
+		String fileName, String annotation) {
+
 		if (!annotation.contains("@Component(")) {
 			return annotation;
 		}
@@ -216,6 +236,15 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			String newParameterProperties = StringUtil.replace(
 				parameterProperties, new String[] {" =", "= "},
 				new String[] {"=", "="});
+
+			if (fileName.endsWith("Portlet.java")) {
+				String parameterName = matcher.group(1);
+
+				if (parameterName.equals("property")) {
+					newParameterProperties = _fixIncorrectFragmentAlias(
+						newParameterProperties);
+				}
+			}
 
 			if (!parameterProperties.equals(newParameterProperties)) {
 				return StringUtil.replaceFirst(
@@ -301,7 +330,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 				newAnnotation = _fixAnnotationMetaTypeProperties(newAnnotation);
 				newAnnotation = _fixSingleValueArray(newAnnotation);
 				newAnnotation = _formatAnnotationParameterProperties(
-					newAnnotation);
+					fileName, newAnnotation);
 
 				_checkMetaAnnotationKeys(fileName, content, newAnnotation);
 
@@ -433,6 +462,9 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		"\\s(\\w+) = \"([\\w\\.\\-]+?)\"");
 	private final Pattern _annotationParameterPropertyPattern = Pattern.compile(
 		"\t(\\w+) = \\{");
+	private final Pattern _fragmentPortletAliasPattern = Pattern.compile(
+		"(\n\t*| )\"com\\.liferay\\.fragment\\.entry\\.processor\\.portlet\\." +
+			"alias=.+?\",?");
 	private final Pattern _modifierPattern = Pattern.compile(
 		"[^\n]\n(\t*)(public|protected|private)");
 

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DRAFT_VERSION_HEADER</td>
-	<td>//span[contains(.,'Draft Version')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DRAFT_VERSION</td>
 	<td>//span[contains(.,'Draft Version')]/../div[contains(.,'${key_draftVersion}')]</td>
 	<td></td>
@@ -31,6 +26,16 @@
 <tr>
 	<td>DIAGRAM_TAB</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Diagram')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVISION_HISTORY</td>
+	<td>//li[@class='tab']/a[contains(.,'Revision History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVISION_HISTORY_ACTIVE</td>
+	<td>//li[@class='tab active']/a[contains(.,'Revision History')]</td>
 	<td></td>
 </tr>
 <tr>

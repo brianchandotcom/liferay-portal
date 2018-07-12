@@ -1504,13 +1504,19 @@
 
 		<execute macro="Workflow#saveDefinition" />
 
+		<execute macro="KaleoDesigner#showRevisionHistory" />
+
+		<execute macro="KaleoDesigner#restoreDraft">
+			<var name="rowIndexNumber" value="1" />
+		</execute>
+
 		<execute macro="KaleoDesigner#showDetails" />
 
-		<execute macro="KaleoDesigner#restoreDraft" />
-
-		<execute macro="KaleoDesigner#viewDraftVersion">
-			<var name="draftVersion" value="2" />
+		<execute macro="KaleoDesigner#viewTotalModifications">
+			<var name="totalModifications" value="4" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="KaleoDesigner#viewNodePresent">
 			<var name="nodeNodeLabel" value="Start" />
@@ -1542,18 +1548,19 @@
 			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
 		</execute>
 
+		<execute macro="KaleoDesigner#showRevisionHistory" />
+
+		<execute macro="KaleoDesigner#restoreDraft">
+			<var name="rowIndexNumber" value="3" />
+		</execute>
+
 		<execute macro="KaleoDesigner#showDetails" />
 
-		<execute macro="KaleoDesigner#viewDraftVersion">
-			<var name="draftVersion" value="3" />
+		<execute macro="KaleoDesigner#viewTotalModifications">
+			<var name="totalModifications" value="5" />
 		</execute>
 
-		<execute macro="KaleoDesigner#restoreDraft" />
-		<execute macro="KaleoDesigner#restoreDraft" />
-
-		<execute macro="KaleoDesigner#viewDraftVersion">
-			<var name="draftVersion" value="1" />
-		</execute>
+		<execute function="Refresh" />
 
 		<execute macro="KaleoDesigner#viewNodePresent">
 			<var name="nodeNodeLabel" value="Start" />

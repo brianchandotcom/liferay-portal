@@ -161,7 +161,8 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		if (StringUtil.equalsIgnoreCase(
 				key, MimeResponse.MARKUP_HEAD_ELEMENT)) {
 
-			if (StringUtil.equalsIgnoreCase(element.getNodeName(), "script") &&
+			if ((element != null) &&
+				StringUtil.equalsIgnoreCase(element.getNodeName(), "script") &&
 				!element.hasChildNodes()) {
 
 				// LPS-77798

@@ -670,36 +670,43 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	private void _configureTaskBuildChangeLog(
 		BuildChangeLogTask buildChangeLogTask, File destinationDir) {
 
-		Project project = buildChangeLogTask.getProject();
+		String ticketIdPrefixes = GradleUtil.getProperty(
+			buildChangeLogTask.getProject(), "jira.project.keys", (String)null);
 
-		File file = project.file("ci.properties");
+		if (ticketIdPrefixes == null) {
+			Project project = buildChangeLogTask.getProject();
 
-		if (!file.exists()) {
-			Project rootProject = project.getRootProject();
+			File file = project.file("ci.properties");
 
-			file = rootProject.file("ci.properties");
+			if (!file.exists()) {
+				Project rootProject = project.getRootProject();
+
+				file = rootProject.file("ci.properties");
+			}
+
+			if (file.exists()) {
+				Properties properties = new Properties();
+
+				try (FileInputStream fileInputStream =
+						new FileInputStream(file)) {
+
+					properties.load(fileInputStream);
+				}
+				catch (IOException ioe) {
+					Logger logger = buildChangeLogTask.getLogger();
+
+					if (logger.isWarnEnabled()) {
+						logger.warn(
+							"Unable to read ci.properties file from {}", file);
+					}
+				}
+
+				ticketIdPrefixes = properties.getProperty("jira.project.keys");
+			}
 		}
 
-		if (file.exists()) {
-			Properties properties = new Properties();
-
-			try (FileInputStream fileInputStream = new FileInputStream(file)) {
-				properties.load(fileInputStream);
-			}
-			catch (IOException ioe) {
-				Logger logger = buildChangeLogTask.getLogger();
-
-				if (logger.isWarnEnabled()) {
-					logger.warn(
-						"Unable to read ci.properties file from {}", file);
-				}
-			}
-
-			String keys = properties.getProperty("jira.project.keys");
-
-			if (Validator.isNotNull(keys)) {
-				buildChangeLogTask.ticketIdPrefixes(keys.split(","));
-			}
+		if (Validator.isNotNull(ticketIdPrefixes)) {
+			buildChangeLogTask.ticketIdPrefixes(ticketIdPrefixes.split(","));
 		}
 
 		buildChangeLogTask.setChangeLogFile(

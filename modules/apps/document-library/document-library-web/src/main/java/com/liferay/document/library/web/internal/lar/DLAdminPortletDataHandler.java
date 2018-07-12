@@ -88,10 +88,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
-	},
+	property = "javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 	service = PortletDataHandler.class
 )
 public class DLAdminPortletDataHandler extends BasePortletDataHandler {
@@ -123,7 +120,6 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		setDataLocalized(true);
-		setDataPortletPreferences("rootFolderId");
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(DLFileEntryType.class),
 			new StagedModelType(DLFileShortcut.class),

@@ -1093,6 +1093,10 @@ public class LocalizationImpl implements Localization {
 				}
 			}
 
+			if (map.isEmpty()) {
+				return StringPool.BLANK;
+			}
+
 			return getXml(map, defaultLanguageId, key);
 		}
 

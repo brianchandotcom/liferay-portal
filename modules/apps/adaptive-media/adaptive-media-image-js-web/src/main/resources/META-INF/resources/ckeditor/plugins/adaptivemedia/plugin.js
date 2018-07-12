@@ -111,6 +111,7 @@
 			_onSelectedImageChange: function(editor, imageSrc, selectedItem) {
 				var el;
 				var instance = this;
+				var isSelectionEmpty = editor.isSelectionEmpty();
 				var fileEntryAttributeName = editor.config.adaptiveMediaFileEntryAttributeName;
 
 				if (selectedItem.returnType === STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE) {
@@ -122,7 +123,9 @@
 
 				editor.insertElement(el);
 
-				editor.setData(editor.getData());
+				if (isSelectionEmpty) {
+					editor.execCommand('enter');
+				}
 			}
 		}
 	);

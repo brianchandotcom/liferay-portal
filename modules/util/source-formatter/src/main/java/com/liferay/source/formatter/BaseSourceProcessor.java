@@ -84,9 +84,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public final void format() throws Exception {
-
-		// SKIP
-
 		List<String> fileNames = getFileNames();
 
 		if (_sourceFormatterArgs.isShowDebugInformation()) {
@@ -146,9 +143,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	public final List<String> getFileNames() throws Exception {
-
-		// SKIP
-
 		List<String> fileNames = _sourceFormatterArgs.getFileNames();
 
 		if (fileNames != null) {
@@ -307,8 +301,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		// SKIP
-
 		Set<String> modifiedContents = new HashSet<>();
 		Set<String> modifiedMessages = new TreeSet<>();
 
@@ -325,8 +317,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String originalContent, Set<String> modifiedContents,
 			Set<String> modifiedMessages, int count)
 		throws Exception {
-
-		// SKIP
 
 		_sourceFormatterMessagesMap.remove(fileName);
 
@@ -433,15 +423,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void postFormat() throws Exception {
-
-		// SKIP
-
 	}
 
 	protected void preFormat() throws Exception {
-
-		// SKIP
-
 	}
 
 	protected void printError(String fileName, String message) {
@@ -625,9 +609,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private void _format(String fileName) throws Exception {
-
-		// SKIP
-
 		if (!_isMatchPath(fileName)) {
 			addProgressStatusUpdate(
 				new ProgressStatusUpdate(ProgressStatus.CHECK_FILE_COMPLETED));
@@ -658,8 +639,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			boolean includeModuleChecks, String checkName)
 		throws Exception {
-
-		// SKIP
 
 		Class<?> clazz = getClass();
 
@@ -768,8 +747,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content,
 			Set<String> modifiedMessages)
 		throws Exception {
-
-		// SKIP
 
 		SourceChecksResult sourceChecksResult =
 			SourceChecksUtil.processSourceChecks(

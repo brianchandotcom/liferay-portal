@@ -36,8 +36,6 @@ public abstract class BaseJavaTermCheck
 			String content)
 		throws Exception {
 
-		// SKIP
-
 		clearSourceFormatterMessages(fileName);
 
 		return _walkJavaClass(
@@ -46,7 +44,7 @@ public abstract class BaseJavaTermCheck
 
 	protected abstract String doProcess(
 			String filename, String absolutePath, JavaTerm javaTerm,
-			String fileContent) // SKIP
+			String fileContent)
 		throws Exception;
 
 	protected abstract String[] getCheckableJavaTermNames();
@@ -128,8 +126,6 @@ public abstract class BaseJavaTermCheck
 			String fileName, String absolutePath, JavaClass javaClass,
 			String parentContent, String fileContent)
 		throws Exception {
-
-		// SKIP
 
 		String javaClassContent = javaClass.getContent();
 

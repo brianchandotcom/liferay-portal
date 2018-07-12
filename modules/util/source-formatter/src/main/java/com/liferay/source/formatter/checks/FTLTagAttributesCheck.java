@@ -35,8 +35,6 @@ public class FTLTagAttributesCheck extends TagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		// SKIP
-
 		content = formatIncorrectLineBreak(fileName, content);
 
 		content = _formatTagAttributes(absolutePath, content);
@@ -46,8 +44,6 @@ public class FTLTagAttributesCheck extends TagAttributesCheck {
 
 	private String _formatTagAttributes(String absolutePath, String content)
 		throws Exception {
-
-		// SKIP
 
 		StringBundler sb = new StringBundler();
 

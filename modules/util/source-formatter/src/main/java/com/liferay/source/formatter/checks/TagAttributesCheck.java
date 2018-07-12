@@ -94,8 +94,6 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 			String absolutePath, String content, boolean escapeQuotes)
 		throws Exception {
 
-		// SKIP
-
 		Matcher matcher = _multilineTagPattern.matcher(content);
 
 		while (matcher.find()) {
@@ -146,8 +144,6 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 			boolean forceSingleLine)
 		throws Exception {
 
-		// SKIP
-
 		Tag tag = _parseTag(s, escapeQuotes);
 
 		if (tag == null) {
@@ -166,9 +162,6 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 	}
 
 	protected Tag formatTagAttributeType(Tag tag) throws Exception {
-
-		// SKIP
-
 		return tag;
 	}
 

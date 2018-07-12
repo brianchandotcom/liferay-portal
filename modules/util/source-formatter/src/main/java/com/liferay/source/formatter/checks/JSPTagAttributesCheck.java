@@ -82,8 +82,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		// SKIP
-
 		content = formatIncorrectLineBreak(fileName, content);
 
 		content = _formatSingleLineTagAttributes(absolutePath, content);
@@ -95,9 +93,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 	@Override
 	protected Tag formatTagAttributeType(Tag tag) throws Exception {
-
-		// SKIP
-
 		Map<String, String> setMethodsMap = _getSetMethodsMap(tag.getName());
 
 		Map<String, String> attributesMap = tag.getAttributesMap();
@@ -167,8 +162,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	private String _formatSingleLineTagAttributes(
 			String absolutePath, String content)
 		throws Exception {
-
-		// SKIP
 
 		StringBundler sb = new StringBundler();
 
@@ -299,8 +292,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 	private synchronized Map<String, String> _getSetMethodsMap(String tagName)
 		throws Exception {
-
-		// SKIP
 
 		if (_tagSetMethodsMap != null) {
 			return _tagSetMethodsMap.get(tagName);

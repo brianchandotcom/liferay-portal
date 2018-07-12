@@ -95,6 +95,12 @@ if (portletTitleBasedNavigation) {
 
 					<div class="row widget-mode-card">
 
+						<%
+							request.setAttribute("view_entry_related.jsp-blogs_entry", previousEntry);
+						%>
+
+						<liferay-util:include page="/blogs/view_entry_related.jsp" servletContext="<%= application %>" />
+
 						<c:if test="<%= nextEntry != null %>">
 							<div class="col-lg-6">
 								<div class="card">

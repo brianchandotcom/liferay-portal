@@ -52,15 +52,24 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 		navigationItems="<%= ddmFormAdminDisplayContext.getElementSetBuilderNavigationItems() %>"
 	/>
 
+	<nav class="management-bar management-bar-light navbar navbar-expand-md toolbar-group-field">
+		<div class="container toolbar">
+			<ul class="navbar-nav toolbar-group-field"></ul>
+			<ul class="navbar-nav toolbar-group-field">
+				<li class="nav-item">
+					<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced">
+						<svg class="lexicon-icon">
+							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
+						</svg>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
 	<div class="container-fluid-1280">
 		<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= false %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />
 	</div>
-
-	<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button">
-		<svg class="lexicon-icon">
-			<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
-		</svg>
-	</button>
 
 	<aui:form action="<%= saveStructureURL %>" cssClass="ddm-form-builder-form" method="post" name="editForm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

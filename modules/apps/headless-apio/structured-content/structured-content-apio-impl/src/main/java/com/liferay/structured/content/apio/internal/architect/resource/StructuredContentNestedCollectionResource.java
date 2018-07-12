@@ -165,8 +165,6 @@ public class StructuredContentNestedCollectionResource
 			"categories", CategoryIdentifier.class
 		).addRelatedCollection(
 			"comments", CommentIdentifier.class
-		).addString(
-			"content", JournalArticle::getContent
 		).addStringList(
 			"keywords", this::_getJournalArticleAssetTags
 		).build();

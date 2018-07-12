@@ -521,7 +521,7 @@
 	<command name="restoreDraft">
 		<var name="key_rowIndexNumber" value="${rowIndexNumber}" />
 
-		<execute function="AssertClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS_N" value1="${rowIndexNumber}" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS_N" />
 
 		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#REVISION_HISTORY_RESTORE_BUTTON" value1="Restore" />
 	</command>
@@ -805,6 +805,12 @@
 		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
 
 		<execute function="Pause" locator1="1000" />
+	</command>
+
+	<command name="viewTotalModifications">
+		<var name="key_totalModifications" value="${totalModifications}" />
+
+		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#TOTAL_MODIFICATIONS" value1="${totalModifications} Revisions" />
 	</command>
 
 	<command name="viewViewTab">

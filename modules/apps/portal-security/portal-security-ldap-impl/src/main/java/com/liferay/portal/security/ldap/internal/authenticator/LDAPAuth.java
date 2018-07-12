@@ -244,13 +244,14 @@ public class LDAPAuth implements Authenticator {
 			if (userPassword != null) {
 				String ldapPassword = new String((byte[])userPassword.get());
 
-				String encryptedPassword = removeEncryptionAlgorithm(
-					ldapPassword);
-
 				String algorithm =
 					ldapAuthConfiguration.passwordEncryptionAlgorithm();
 
+				String encryptedPassword = password;
+
 				if (Validator.isNotNull(algorithm)) {
+					ldapPassword = removeEncryptionAlgorithm(ldapPassword);
+
 					encryptedPassword = _passwordEncryptor.encrypt(
 						algorithm, password, ldapPassword);
 				}
@@ -687,13 +688,13 @@ public class LDAPAuth implements Authenticator {
 			return ldapPassword;
 		}
 
-		int y = ldapPassword.indexOf(StringPool.CLOSE_CURLY_BRACE);
+		int y = ldapPassword.indexOf(StringPool.CLOSE_CURLY_BRACE, x);
 
 		if (y == -1) {
 			return ldapPassword;
 		}
 
-		return ldapPassword.substring(x, y + 1);
+		return ldapPassword.substring(y + 1);
 	}
 
 	@Reference(

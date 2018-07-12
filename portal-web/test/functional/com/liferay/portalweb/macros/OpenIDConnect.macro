@@ -59,8 +59,8 @@
 
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="SSO" />
-			<var name="configurationName" value="OpenID Connect" />
-			<var name="configurationScope" value="Virtual Instance Scope" />
+			<var name="configurationName" value="OpenID Connect Provider" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute function="Click" locator1="Button#ADD" />

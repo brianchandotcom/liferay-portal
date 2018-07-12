@@ -693,7 +693,7 @@ public class LDAPAuth implements Authenticator {
 			return ldapPassword;
 		}
 
-		return ldapPassword.substring(x, y + 1);
+		return ldapPassword.substring(y + 1);
 	}
 
 	@Reference(

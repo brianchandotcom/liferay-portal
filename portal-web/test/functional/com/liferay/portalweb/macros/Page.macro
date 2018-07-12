@@ -953,15 +953,15 @@
 
 	<command name="viewPagesOrder">
 		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#LIST_GROUP_ITEM_ROW_ENTRY" value1="${pageName1}">
-			<var name="key_index" value="1" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#LIST_GROUP_ITEM_ROW_ENTRY" value1="${pageName2}">
 			<var name="key_index" value="2" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#LIST_GROUP_ITEM_ROW_ENTRY" value1="${pageName3}">
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#LIST_GROUP_ITEM_ROW_ENTRY" value1="${pageName2}">
 			<var name="key_index" value="3" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#LIST_GROUP_ITEM_ROW_ENTRY" value1="${pageName3}">
+			<var name="key_index" value="4" />
 		</execute>
 	</command>
 

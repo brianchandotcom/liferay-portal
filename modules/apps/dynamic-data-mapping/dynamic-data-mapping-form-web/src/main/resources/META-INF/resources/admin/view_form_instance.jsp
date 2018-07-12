@@ -30,7 +30,6 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 
 		<liferay-ui:search-container
 			id="<%= ddmFormAdminDisplayContext.getSearchContainerId() %>"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= ddmFormAdminDisplayContext.getSearch() %>"
 		>
 			<liferay-ui:search-container-row

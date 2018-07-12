@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKe
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormAdminRequestHelper;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.FormInstancePermissionCheckerHelper;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
+import com.liferay.dynamic.data.mapping.form.web.internal.search.FormInstanceRowChecker;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FormInstanceSearch;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMExporterFactory;
@@ -664,6 +665,9 @@ public class DDMFormAdminDisplayContext {
 		else {
 			formInstanceSearch.setEmptyResultsMessage("there-are-no-forms");
 		}
+
+		formInstanceSearch.setRowChecker(
+			new FormInstanceRowChecker(getRenderResponse()));
 
 		setDDMFormInstanceSearchResults(formInstanceSearch);
 		setDDMFormInstanceSearchTotal(formInstanceSearch);

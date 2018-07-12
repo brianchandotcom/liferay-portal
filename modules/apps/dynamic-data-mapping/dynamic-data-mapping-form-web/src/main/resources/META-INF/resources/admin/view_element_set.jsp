@@ -33,7 +33,6 @@ FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDi
 
 		<liferay-ui:search-container
 			id="structure"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= ddmFormAdminDisplayContext.getSearch() %>"
 		>
 			<liferay-ui:search-container-row

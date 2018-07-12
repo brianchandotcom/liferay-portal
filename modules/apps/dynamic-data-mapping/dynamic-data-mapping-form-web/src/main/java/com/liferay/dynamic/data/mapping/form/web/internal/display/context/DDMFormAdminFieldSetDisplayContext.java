@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.FieldSetPermissionCheckerHelper;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
+import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetRowChecker;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearch;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearchTerms;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
@@ -318,6 +319,9 @@ public class DDMFormAdminFieldSetDisplayContext
 		else {
 			fieldSetSearch.setEmptyResultsMessage("there-are-no-element-sets");
 		}
+
+		fieldSetSearch.setRowChecker(
+			new FieldSetRowChecker(getRenderResponse()));
 
 		setFieldSetsSearchResults(fieldSetSearch);
 		setFieldSetsSearchTotal(fieldSetSearch);

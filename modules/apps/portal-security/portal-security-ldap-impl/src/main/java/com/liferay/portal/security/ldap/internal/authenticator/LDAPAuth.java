@@ -688,7 +688,7 @@ public class LDAPAuth implements Authenticator {
 			return ldapPassword;
 		}
 
-		int y = ldapPassword.indexOf(StringPool.CLOSE_CURLY_BRACE);
+		int y = ldapPassword.indexOf(StringPool.CLOSE_CURLY_BRACE, x);
 
 		if (y == -1) {
 			return ldapPassword;

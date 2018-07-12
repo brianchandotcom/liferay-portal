@@ -11,10 +11,6 @@
 			@include experimental(overflow-scrolling, touch);
 		}
 
-		ol ol {
-			list-style: decimal outside;
-		}
-
 		pre {
 			background : #FFF;
 			border: 1px dashed #2F6FAB;

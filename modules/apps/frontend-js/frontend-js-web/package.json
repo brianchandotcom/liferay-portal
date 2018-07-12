@@ -38,7 +38,7 @@
 		"babel-loader": "^7.1.4",
 		"babel-preset-env": "^1.6.1",
 		"check-source-formatting": "^2.0.4",
-		"jest": "^20.0.4",
+		"jest": "23.2.0",
 		"liferay-jest-junit-reporter": "0.0.3",
 		"liferay-npm-bridge-generator": "^2.0.0",
 		"liferay-npm-bundler": "^2.1.0",
@@ -52,12 +52,16 @@
 		"globals": {
 			"Liferay": {}
 		},
+		"setupFiles": [
+			"<rootDir>/test/liferay/portlet/mock/setup.es.js"
+		],
 		"testMatch": [
 			"**/test/**/*.js"
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/node_modules/",
-			"<rootDir>/test/liferay/portlet/mock/portlet_data.es.js"
+			"<rootDir>/test/liferay/portlet/mock/portlet_data.es.js",
+			"<rootDir>/test/liferay/portlet/mock/setup.es.js"
 		],
 		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
 		"transformIgnorePatterns": [

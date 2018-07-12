@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormW
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearch;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearchTerms;
-import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormPermission;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMExporterFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -333,12 +332,6 @@ public class DDMFormAdminFieldSetDisplayContext
 	@Override
 	public String getSearchContainerId() {
 		return "structure";
-	}
-
-	@Override
-	public boolean isShowAddButton() {
-		return DDMFormPermission.contains(
-			getPermissionChecker(), getScopeGroupId(), "ADD_STRUCTURE");
 	}
 
 	protected OrderByComparator<DDMStructure> getDDMStructureOrderByComparator(

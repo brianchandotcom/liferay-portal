@@ -15,17 +15,27 @@
 package com.liferay.portal.cluster.multiple.internal.io;
 
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.net.URL;
 import java.net.URLClassLoader;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -55,6 +65,10 @@ public class ClusterClassLoaderPoolTest {
 
 		_fallbackClassLoaders = ReflectionTestUtil.getFieldValue(
 			ClusterClassLoaderPool.class, "_fallbackClassLoaders");
+
+		Thread thread = Thread.currentThread();
+
+		_contextClassLoader = thread.getContextClassLoader();
 	}
 
 	@After
@@ -62,6 +76,113 @@ public class ClusterClassLoaderPoolTest {
 		_classLoaders.clear();
 		_contextNames.clear();
 		_fallbackClassLoaders.clear();
+	}
+
+	@Test
+	public void testConcurrentRegister()
+		throws ExecutionException, InterruptedException {
+
+		ClassLoader classLoader1 = new URLClassLoader(new URL[0]);
+		ClassLoader classLoader2 = new URLClassLoader(new URL[0]);
+
+		ClusterClassLoaderPool.registerFallback(
+			_SYMBOLIC_NAME, new Version("1.0.0"), classLoader1);
+
+		Assert.assertSame(
+			classLoader1,
+			ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
+		Assert.assertSame(
+			classLoader1,
+			ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_2));
+
+		BlockingInvocationHandler blockingInvocationHandler = _block();
+
+		FutureTask<Void> futureTask = new FutureTask<>(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() {
+					Assert.assertSame(
+						classLoader2,
+						ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
+					Assert.assertSame(
+						classLoader2,
+						ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_2));
+
+					return null;
+				}
+
+			});
+
+		Thread thread = new Thread(
+			futureTask,
+			StringBundler.concat(
+				ClusterClassLoaderPoolTest.class.getName(), StringPool.DASH,
+				"testConcurrentRegister"));
+
+		thread.start();
+
+		blockingInvocationHandler.waitUntilBlock();
+
+		ClusterClassLoaderPool.registerFallback(
+			_SYMBOLIC_NAME, new Version("2.0.0"), classLoader2);
+
+		blockingInvocationHandler.unblock();
+
+		futureTask.get();
+	}
+
+	@Test
+	public void testConcurrentUnregister()
+		throws ExecutionException, InterruptedException {
+
+		ClassLoader classLoader = new URLClassLoader(new URL[0]);
+
+		ClusterClassLoaderPool.registerFallback(
+			_SYMBOLIC_NAME, new Version("1.0.0"), classLoader);
+
+		Assert.assertSame(
+			classLoader,
+			ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
+		Assert.assertSame(
+			classLoader,
+			ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_2));
+
+		BlockingInvocationHandler blockingInvocationHandler = _block();
+
+		FutureTask<Void> futureTask = new FutureTask<>(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() {
+					Assert.assertSame(
+						_contextClassLoader,
+						ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
+					Assert.assertSame(
+						_contextClassLoader,
+						ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_2));
+
+					return null;
+				}
+
+			});
+
+		Thread thread = new Thread(
+			futureTask,
+			StringBundler.concat(
+				ClusterClassLoaderPoolTest.class.getName(), StringPool.DASH,
+				"testConcurrentUnregister"));
+
+		thread.start();
+
+		blockingInvocationHandler.waitUntilBlock();
+
+		ClusterClassLoaderPool.unregisterFallback(
+			_SYMBOLIC_NAME, new Version("1.0.0"));
+
+		blockingInvocationHandler.unblock();
+
+		futureTask.get();
 	}
 
 	@Test
@@ -91,13 +212,12 @@ public class ClusterClassLoaderPoolTest {
 			classLoader2,
 			ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_3));
 		Assert.assertSame(
-			ClassLoaderUtil.getContextClassLoader(),
+			_contextClassLoader,
 			ClusterClassLoaderPool.getClassLoader(_SYMBOLIC_NAME));
 		Assert.assertSame(
-			ClassLoaderUtil.getContextClassLoader(),
-			ClusterClassLoaderPool.getClassLoader(null));
+			_contextClassLoader, ClusterClassLoaderPool.getClassLoader(null));
 		Assert.assertSame(
-			ClassLoaderUtil.getContextClassLoader(),
+			_contextClassLoader,
 			ClusterClassLoaderPool.getClassLoader(StringPool.NULL));
 
 		try (CaptureHandler captureHandler =
@@ -144,7 +264,7 @@ public class ClusterClassLoaderPoolTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertSame(
-				ClassLoaderUtil.getContextClassLoader(),
+				_contextClassLoader,
 				ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
 
 			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
@@ -154,7 +274,7 @@ public class ClusterClassLoaderPoolTest {
 			logRecords = captureHandler.resetLogLevel(Level.FINE);
 
 			Assert.assertSame(
-				ClassLoaderUtil.getContextClassLoader(),
+				_contextClassLoader,
 				ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
 
 			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
@@ -267,6 +387,22 @@ public class ClusterClassLoaderPoolTest {
 			_fallbackClassLoaders.toString(), _fallbackClassLoaders.isEmpty());
 	}
 
+	private BlockingInvocationHandler _block() {
+		BlockingInvocationHandler blockingInvocationHandler =
+			new BlockingInvocationHandler(
+				_fallbackClassLoaders.get(_SYMBOLIC_NAME));
+
+		_fallbackClassLoaders.put(
+			_SYMBOLIC_NAME,
+			(ConcurrentNavigableMap<Version, ClassLoader>)
+				ProxyUtil.newProxyInstance(
+					ClusterClassLoaderPoolTest.class.getClassLoader(),
+					new Class<?>[] {ConcurrentNavigableMap.class},
+					blockingInvocationHandler));
+
+		return blockingInvocationHandler;
+	}
+
 	private static final String _CONTEXT_NAME_1 =
 		ClusterClassLoaderPoolTest._SYMBOLIC_NAME + "_1.0.0";
 
@@ -282,7 +418,50 @@ public class ClusterClassLoaderPoolTest {
 	private static final String _SYMBOLIC_NAME = "symbolic.name";
 
 	private Map<String, ClassLoader> _classLoaders;
+	private ClassLoader _contextClassLoader;
 	private Map<ClassLoader, String> _contextNames;
-	private Map<String, List> _fallbackClassLoaders;
+	private Map<String, ConcurrentNavigableMap<Version, ClassLoader>>
+		_fallbackClassLoaders;
+
+	private class BlockingInvocationHandler implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws Throwable {
+
+			String methodName = method.getName();
+
+			if (methodName.equals("lastEntry")) {
+				_waitCountDownLatch.countDown();
+
+				_blockCountDownLatch.await();
+			}
+
+			return method.invoke(_concurrentNavigableMap, args);
+		}
+
+		public void unblock() {
+			_blockCountDownLatch.countDown();
+		}
+
+		public void waitUntilBlock() throws InterruptedException {
+			_waitCountDownLatch.await();
+		}
+
+		private BlockingInvocationHandler(
+			ConcurrentNavigableMap<Version, ClassLoader>
+				concurrentNavigableMap) {
+
+			_concurrentNavigableMap = concurrentNavigableMap;
+		}
+
+		private final CountDownLatch _blockCountDownLatch = new CountDownLatch(
+			1);
+		private final ConcurrentNavigableMap<Version, ClassLoader>
+			_concurrentNavigableMap;
+		private final CountDownLatch _waitCountDownLatch = new CountDownLatch(
+			1);
+
+	}
 
 }

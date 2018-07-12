@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -48,8 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Connor McKay
  */
-@Component(immediate = true, service = InlineSQLHelper.class)
-@DoPrivileged
+@Component(immediate = true)
 public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	public static final String FIND_BY_RESOURCE_PERMISSION =

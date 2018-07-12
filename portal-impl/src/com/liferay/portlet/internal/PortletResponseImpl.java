@@ -92,7 +92,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			setDateHeader(name, date);
 		}
 		else {
-			values = ArrayUtil.append(values, Long.valueOf(date));
+			values = ArrayUtil.append(values, date);
 
 			_headers.put(name, values);
 		}
@@ -128,7 +128,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			setIntHeader(name, value);
 		}
 		else {
-			values = ArrayUtil.append(values, Integer.valueOf(value));
+			values = ArrayUtil.append(values, value);
 
 			_headers.put(name, values);
 		}
@@ -517,7 +517,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			_headers.remove(name);
 		}
 		else {
-			_headers.put(name, new Long[] {Long.valueOf(date)});
+			_headers.put(name, new Long[] {date});
 		}
 	}
 
@@ -545,7 +545,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			_headers.remove(name);
 		}
 		else {
-			_headers.put(name, new Integer[] {Integer.valueOf(value)});
+			_headers.put(name, new Integer[] {value});
 		}
 	}
 

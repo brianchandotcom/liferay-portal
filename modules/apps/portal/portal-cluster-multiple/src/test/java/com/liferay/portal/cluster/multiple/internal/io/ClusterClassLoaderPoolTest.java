@@ -398,16 +398,21 @@ public class ClusterClassLoaderPoolTest {
 		return blockingInvocationHandler;
 	}
 
-	private static final String _CONTEXT_NAME_1 =
-		ClusterClassLoaderPoolTest._SYMBOLIC_NAME + "_1.0.0";
+	private static final String _CONTEXT_NAME_1;
 
-	private static final String _CONTEXT_NAME_2 =
-		ClusterClassLoaderPoolTest._SYMBOLIC_NAME + "_2.0.0";
+	private static final String _CONTEXT_NAME_2;
 
-	private static final String _CONTEXT_NAME_3 =
-		ClusterClassLoaderPoolTest._SYMBOLIC_NAME + "_3.0.0";
+	private static final String _CONTEXT_NAME_3;
 
 	private static final String _SYMBOLIC_NAME = "symbolic.name";
+
+	static {
+		_CONTEXT_NAME_1 = _SYMBOLIC_NAME + "_1.0.0";
+
+		_CONTEXT_NAME_2 = _SYMBOLIC_NAME + "_2.0.0";
+
+		_CONTEXT_NAME_3 = _SYMBOLIC_NAME + "_3.0.0";
+	}
 
 	private Map<String, ClassLoader> _classLoaders;
 	private ClassLoader _contextClassLoader;

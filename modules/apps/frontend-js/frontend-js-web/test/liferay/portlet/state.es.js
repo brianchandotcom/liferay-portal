@@ -3,11 +3,11 @@ import RenderState from '../../../src/main/resources/META-INF/resources/liferay/
 import register from '../../../src/main/resources/META-INF/resources/liferay/portlet/register.es';
 
 describe(
-	'The portlet hub state functionality',
+	'PortletHub',
 	() => {
 
 		describe(
-			'the newState function',
+			'newState',
 			() => {
 				it(
 					'should return a new RenderState object',
@@ -47,7 +47,7 @@ describe(
 		);
 
 		describe(
-			'the newParameters function',
+			'newParameters',
 			() => {
 				it(
 					'should return new parameters according to the data passed',
@@ -83,7 +83,7 @@ describe(
 		);
 
 		describe(
-			'Render State',
+			'RenderState',
 			() => {
 				describe(
 					'constructor',
@@ -537,6 +537,5 @@ describe(
 				);
 			}
 		);
-
 	}
 );

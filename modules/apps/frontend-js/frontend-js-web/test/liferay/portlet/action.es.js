@@ -1,7 +1,7 @@
 import register from '../../../src/main/resources/META-INF/resources/liferay/portlet/register.es';
 
 describe(
-	'Portlet hub action functionality',
+	'PortletHub',
 	() => {
 
 		beforeEach(
@@ -17,7 +17,7 @@ describe(
 		);
 
 		describe(
-			'The action function',
+			'action',
 			() => {
 				const ids = portlet.getIds();
 				const onStateChange = jest.fn();
@@ -261,7 +261,7 @@ describe(
 		);
 
 		describe(
-			'Actions affect multiple portlets',
+			'actions affect multiple portlets',
 			() => {
 				const onStateChangeA = jest.fn();
 				const onStateChangeB = jest.fn();

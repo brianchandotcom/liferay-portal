@@ -50,7 +50,9 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Please enter a valid file." />
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="Please enter a valid file." />
+		</execute>
 	</command>
 
 	<command name="DownloadReportPG" priority="4">

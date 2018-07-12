@@ -31,7 +31,6 @@ import java.net.URLClassLoader;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
@@ -95,20 +94,15 @@ public class ClusterClassLoaderPoolTest {
 		BlockingInvocationHandler blockingInvocationHandler = _block();
 
 		FutureTask<Void> futureTask = new FutureTask<>(
-			new Callable<Void>() {
+			() -> {
+				Assert.assertSame(
+					classLoader2,
+					ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
+				Assert.assertSame(
+					classLoader2,
+					ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_2));
 
-				@Override
-				public Void call() {
-					Assert.assertSame(
-						classLoader2,
-						ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
-					Assert.assertSame(
-						classLoader2,
-						ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_2));
-
-					return null;
-				}
-
+				return null;
 			});
 
 		Thread thread = new Thread(
@@ -146,20 +140,15 @@ public class ClusterClassLoaderPoolTest {
 		BlockingInvocationHandler blockingInvocationHandler = _block();
 
 		FutureTask<Void> futureTask = new FutureTask<>(
-			new Callable<Void>() {
+			() -> {
+				Assert.assertSame(
+					_contextClassLoader,
+					ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
+				Assert.assertSame(
+					_contextClassLoader,
+					ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_2));
 
-				@Override
-				public Void call() {
-					Assert.assertSame(
-						_contextClassLoader,
-						ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
-					Assert.assertSame(
-						_contextClassLoader,
-						ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_2));
-
-					return null;
-				}
-
+				return null;
 			});
 
 		Thread thread = new Thread(
@@ -244,7 +233,7 @@ public class ClusterClassLoaderPoolTest {
 				classLoader2,
 				ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_3));
 
-			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -262,7 +251,7 @@ public class ClusterClassLoaderPoolTest {
 				_contextClassLoader,
 				ClusterClassLoaderPool.getClassLoader(_CONTEXT_NAME_1));
 
-			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Test 2, log level is FINE
 
@@ -318,7 +307,7 @@ public class ClusterClassLoaderPoolTest {
 				StringPool.NULL,
 				ClusterClassLoaderPool.getContextName(classLoader));
 
-			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Test 2, log level is FINE
 

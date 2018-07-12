@@ -1,60 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.filterByResourceBlockId">
-		<![CDATA[
-			WHERE
-				resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$])
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.filterByResourceBlockIdOwner">
-		<![CDATA[
-			WHERE
-				(resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$])) OR
-				(
-					([$USER_ID_FIELD$] = [$USER_ID$]) AND
-					(resourceBlockId IN ([$OWNER_RESOURCE_BLOCK_ID$]))
-				)
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.findByResourceBlockId">
-		<![CDATA[
-			SELECT
-				resourceBlock.resourceBlockId
-			FROM
-				ResourceBlock resourceBlock
-			WHERE
-				resourceBlock.resourceBlockId IN
-					(
-						SELECT
-							resourceBlockPermission.resourceBlockId
-						FROM
-							ResourceBlockPermission resourceBlockPermission
-						WHERE
-							resourceBlockPermission.roleId IN ([$ROLE_ID$])
-					) AND
-				(resourceBlock.companyId = [$COMPANY_ID$]) AND
-				(resourceBlock.groupId = [$GROUP_ID$]) AND
-				(resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]')
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.findByResourcePermission">
-		<![CDATA[
-			SELECT
-				DISTINCT ResourcePermission.primKeyId
-			FROM
-				ResourcePermission
-			WHERE
-				(ResourcePermission.companyId = [$COMPANY_ID$]) AND
-				(ResourcePermission.name = '[$CLASS_NAME$]') AND
-				(ResourcePermission.scope = [$RESOURCE_SCOPE_INDIVIDUAL$]) AND
-				(ResourcePermission.viewActionId = [$TRUE$]) AND
-				(
-					[$ROLE_IDS_OR_OWNER_ID$]
-					[$GROUP_ADMIN_RESOURCE_PERMISSION$]
-				)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.countByLayouts">
 		<![CDATA[
 			SELECT

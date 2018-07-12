@@ -47,6 +47,7 @@ public class PortalSettingsCASAuthenticationJSPDynamicInclude
 		return _log;
 	}
 
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.cas.web)",
 		unbind = "-"

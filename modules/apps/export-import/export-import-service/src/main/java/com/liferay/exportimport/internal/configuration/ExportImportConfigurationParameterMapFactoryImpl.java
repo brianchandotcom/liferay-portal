@@ -55,6 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportImportConfigurationParameterMapFactoryImpl
 	implements ExportImportConfigurationParameterMapFactory {
 
+	@Override
 	public Map<String, String[]> buildFullPublishParameterMap() {
 		return buildParameterMap(
 			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, true, false,
@@ -63,6 +64,7 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 			UserIdStrategy.CURRENT_USER_ID);
 	}
 
+	@Override
 	public Map<String, String[]> buildParameterMap() {
 		return buildParameterMap(
 			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, true, false,
@@ -71,6 +73,7 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 			true, true, UserIdStrategy.CURRENT_USER_ID);
 	}
 
+	@Override
 	public Map<String, String[]> buildParameterMap(
 		PortletRequest portletRequest) {
 
@@ -182,6 +185,7 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 		return parameterMap;
 	}
 
+	@Override
 	public Map<String, String[]> buildParameterMap(
 		String dataStrategy, Boolean deleteMissingLayouts,
 		Boolean deletePortletData, Boolean deletions,

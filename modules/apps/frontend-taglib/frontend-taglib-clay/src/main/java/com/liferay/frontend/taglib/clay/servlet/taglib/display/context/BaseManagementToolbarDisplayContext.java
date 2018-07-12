@@ -54,6 +54,7 @@ public class BaseManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
+	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		DropdownItemList filterDropdownItems = new DropdownItemList() {
 			{

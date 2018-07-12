@@ -56,6 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BundleManagerImpl implements BundleManager {
 
+	@Override
 	public Bundle getBundle(String symbolicName, String versionString) {
 		Version version = Version.parseVersion(versionString);
 
@@ -70,6 +71,7 @@ public class BundleManagerImpl implements BundleManager {
 		return null;
 	}
 
+	@Override
 	public List<Bundle> getBundles() {
 		return ListUtil.fromArray(_bundleContext.getBundles());
 	}

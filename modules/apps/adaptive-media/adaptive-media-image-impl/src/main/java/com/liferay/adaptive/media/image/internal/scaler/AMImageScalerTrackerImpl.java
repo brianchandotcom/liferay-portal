@@ -50,6 +50,7 @@ public class AMImageScalerTrackerImpl implements AMImageScalerTracker {
 		_serviceTrackerMap.close();
 	}
 
+	@Override
 	public AMImageScaler getAMImageScaler(String mimeType) {
 		List<AMImageScaler> amImageScalers = _serviceTrackerMap.getService(
 			mimeType);

@@ -264,6 +264,7 @@ public abstract class BaseDateRangeFilterTestCase extends BaseIndexingTestCase {
 		return Date.from(zonedDateTime.toInstant());
 	}
 
+	@Override
 	protected void setPreBooleanFilter(Filter filter, Query query) {
 		BooleanFilter booleanFilter = new BooleanFilter();
 

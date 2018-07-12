@@ -76,12 +76,15 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 			getCategory());
 	}
 
+	@Override
 	public String getOrderByCol() {
 		return ParamUtil.getString(request, "orderByCol", "title");
 	}
 
+	@Override
 	public abstract PortletURL getPortletURL();
 
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = liferayPortletResponse.createRenderURL();
 
@@ -115,6 +118,7 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 			getDefaultEntriesMap(states), portletURL, "state", getState());
 	}
 
+	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"title"};
 	}

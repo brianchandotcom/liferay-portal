@@ -25,6 +25,7 @@ import com.liferay.wiki.model.WikiPage;
  */
 public class UpgradeWikiPage extends UpgradeProcess {
 
+	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long wikiPageClassNameId = PortalUtil.getClassNameId(

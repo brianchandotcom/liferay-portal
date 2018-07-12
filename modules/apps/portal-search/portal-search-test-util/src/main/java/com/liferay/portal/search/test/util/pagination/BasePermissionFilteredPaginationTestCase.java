@@ -59,6 +59,7 @@ public abstract class BasePermissionFilteredPaginationTestCase
 	extends BaseIndexingTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

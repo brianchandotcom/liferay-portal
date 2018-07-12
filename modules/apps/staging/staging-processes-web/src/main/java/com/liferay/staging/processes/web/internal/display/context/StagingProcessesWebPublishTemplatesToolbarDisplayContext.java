@@ -73,6 +73,7 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
+	@Override
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{

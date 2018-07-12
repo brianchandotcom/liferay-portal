@@ -61,6 +61,7 @@ import javax.portlet.PortletRequest;
  */
 public class JournalHelperImpl implements JournalHelper {
 
+	@Override
 	public String diffHtml(
 			long groupId, String articleId, double sourceVersion,
 			double targetVersion, String languageId,
@@ -102,6 +103,7 @@ public class JournalHelperImpl implements JournalHelper {
 			new UnsyncStringReader(targetArticleDisplay.getContent()));
 	}
 
+	@Override
 	public String getAbsolutePath(PortletRequest portletRequest, long folderId)
 		throws PortalException {
 
@@ -137,6 +139,7 @@ public class JournalHelperImpl implements JournalHelper {
 		return sb.toString();
 	}
 
+	@Override
 	public Layout getArticleLayout(String layoutUuid, long groupId) {
 		if (Validator.isNull(layoutUuid)) {
 			return null;
@@ -159,6 +162,7 @@ public class JournalHelperImpl implements JournalHelper {
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
+	@Override
 	public List<JournalArticle> getArticles(Hits hits) throws PortalException {
 		List<Document> documents = hits.toList();
 
@@ -192,6 +196,7 @@ public class JournalHelperImpl implements JournalHelper {
 		return articles;
 	}
 
+	@Override
 	public int getRestrictionType(long folderId) {
 		int restrictionType = JournalFolderConstants.RESTRICTION_TYPE_INHERIT;
 
@@ -205,6 +210,7 @@ public class JournalHelperImpl implements JournalHelper {
 		return restrictionType;
 	}
 
+	@Override
 	public String getTemplateScript(
 			long groupId, String ddmTemplateKey, Map<String, String> tokens,
 			String languageId)

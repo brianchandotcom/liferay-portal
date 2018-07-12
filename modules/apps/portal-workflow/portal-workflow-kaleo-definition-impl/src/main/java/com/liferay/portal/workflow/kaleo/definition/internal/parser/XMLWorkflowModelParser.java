@@ -100,6 +100,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		}
 	}
 
+	@Override
 	public void setValidate(boolean validate) {
 		_validate = validate;
 	}

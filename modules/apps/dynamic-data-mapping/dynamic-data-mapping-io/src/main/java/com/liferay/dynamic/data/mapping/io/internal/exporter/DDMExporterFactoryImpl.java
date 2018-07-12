@@ -35,10 +35,12 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = DDMExporterFactory.class)
 public class DDMExporterFactoryImpl implements DDMExporterFactory {
 
+	@Override
 	public Set<String> getAvailableFormats() {
 		return Collections.unmodifiableSet(_ddmFormExporters.keySet());
 	}
 
+	@Override
 	public Map<String, String> getAvailableFormatsMap() {
 		Map<String, String> availableFormatsMap = new TreeMap<>();
 
@@ -51,6 +53,7 @@ public class DDMExporterFactoryImpl implements DDMExporterFactory {
 		return availableFormatsMap;
 	}
 
+	@Override
 	public DDMFormExporter getDDMFormExporter(String format) {
 		DDMFormExporter ddmExporter = _ddmFormExporters.get(format);
 

@@ -38,6 +38,7 @@ import javax.servlet.ServletContext;
 public abstract class BaseWorkflowPortletTab
 	extends BaseJSPDynamicInclude implements WorkflowPortletTab {
 
+	@Override
 	public PortletURL getSearchURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 

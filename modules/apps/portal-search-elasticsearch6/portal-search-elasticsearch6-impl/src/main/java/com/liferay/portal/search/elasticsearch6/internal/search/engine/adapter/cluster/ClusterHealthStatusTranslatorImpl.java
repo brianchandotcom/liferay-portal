@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Component;
 public class ClusterHealthStatusTranslatorImpl
 	implements ClusterHealthStatusTranslator {
 
+	@Override
 	public ClusterHealthStatus translate(
 		org.elasticsearch.cluster.health.ClusterHealthStatus
 			clusterHealthStatus) {

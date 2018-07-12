@@ -56,6 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ConfigurationEntryRetrieverImpl
 	implements ConfigurationEntryRetriever {
 
+	@Override
 	public ConfigurationCategory getConfigurationCategory(
 		String configurationCategoryKey) {
 

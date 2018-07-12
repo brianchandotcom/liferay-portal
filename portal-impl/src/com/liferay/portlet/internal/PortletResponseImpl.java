@@ -431,9 +431,9 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	public Map<String, String[]> getProperties() {
 		Map<String, String[]> properties = new LinkedHashMap<>();
 
-		for (Map.Entry<String, Object> entry : _headers.entrySet()) {
+		for (Map.Entry<String, Object[]> entry : _headers.entrySet()) {
 			String name = entry.getKey();
-			Object[] values = (Object[])entry.getValue();
+			Object[] values = entry.getValue();
 
 			String[] valuesString = new String[values.length];
 
@@ -449,12 +449,12 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 	@Override
 	public String getProperty(String key) {
-		Object value = _headers.get(key);
+		Object[] values = _headers.get(key);
 
-		if (value instanceof String[]) {
-			String[] values = (String[])value;
+		if (values instanceof String[]) {
+			String[] stringValues = (String[])values;
 
-			return values[0];
+			return stringValues[0];
 		}
 
 		return null;
@@ -468,10 +468,10 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 		List<String> propertyNames = new ArrayList<>();
 
-		for (Entry<String, Object> entry : _headers.entrySet()) {
-			Object value = entry.getValue();
+		for (Entry<String, Object[]> entry : _headers.entrySet()) {
+			Object[] values = entry.getValue();
 
-			if (value instanceof String[]) {
+			if (values instanceof String[]) {
 				propertyNames.add(entry.getKey());
 			}
 		}
@@ -481,10 +481,10 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 	@Override
 	public Collection<String> getPropertyValues(String key) {
-		Object value = _headers.get(key);
+		Object[] values = _headers.get(key);
 
-		if (value instanceof String[]) {
-			return Arrays.asList((String[])value);
+		if (values instanceof String[]) {
+			return Arrays.asList((String[])values);
 		}
 
 		return Collections.emptySet();
@@ -665,7 +665,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	private final Map<String, Constructor<? extends PortletURLImpl>>
 		_constructors = new ConcurrentHashMap<>();
 	private Document _document;
-	private final Map<String, Object> _headers = new LinkedHashMap<>();
+	private final Map<String, Object[]> _headers = new LinkedHashMap<>();
 	private final Map<String, List<Element>> _markupHeadElements =
 		new LinkedHashMap<>();
 	private String _namespace;

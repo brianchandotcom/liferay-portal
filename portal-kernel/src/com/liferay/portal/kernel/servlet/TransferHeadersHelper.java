@@ -28,6 +28,6 @@ public interface TransferHeadersHelper {
 		RequestDispatcher requestDispatcher);
 
 	public void transferHeaders(
-		Map<String, Object> headers, HttpServletResponse httpServletResponse);
+		Map<String, Object[]> headers, HttpServletResponse httpServletResponse);
 
 }

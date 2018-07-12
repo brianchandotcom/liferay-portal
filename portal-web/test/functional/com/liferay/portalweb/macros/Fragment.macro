@@ -53,17 +53,11 @@
 
 		<execute function="AssertTextEquals" locator1="Modal#HEADER" value1="Add Fragment" />
 
-		<execute macro="Fragment#editFragment">
-			<var name="fragmentName" value="${fragmentName}" />
-		</execute>
-
-		<execute macro="Button#clickSave" />
-	</command>
-
-	<command name="editFragment">
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${fragmentName}" />
 		</execute>
+
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="exportCollection">

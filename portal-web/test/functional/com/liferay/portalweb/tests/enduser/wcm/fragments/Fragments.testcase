@@ -209,8 +209,8 @@
 			<var name="rowEntry" value="Fragment Name" />
 		</execute>
 
-		<execute macro="Fragment#editFragment">
-			<var name="fragmentName" value="Rename Fragment" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="Rename Fragment" />
 		</execute>
 
 		<execute macro="Modal#save" />

@@ -1,0 +1,178 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.document.library.opener.google.drive.internal.service;
+
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
+import com.liferay.document.library.opener.google.drive.constants.GoogleDriveConstants;
+import com.liferay.document.library.opener.google.drive.model.GoogleDriveFileReference;
+import com.liferay.document.library.opener.google.drive.service.GoogleDriveManager;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceWrapper;
+
+import java.io.File;
+import java.io.Serializable;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Adolfo Pérez
+ */
+@Component(immediate = true, service = ServiceWrapper.class)
+public class GoogleDriveOpenerDLAppServiceWrapper extends DLAppServiceWrapper {
+
+	public GoogleDriveOpenerDLAppServiceWrapper() {
+		super(null);
+	}
+
+	public GoogleDriveOpenerDLAppServiceWrapper(DLAppService dlAppService) {
+		super(dlAppService);
+	}
+
+	@Override
+	public void cancelCheckOut(long fileEntryId) throws PortalException {
+		super.cancelCheckOut(fileEntryId);
+
+		_googleDriveManager.delete(
+			getFileEntry(fileEntryId), _createServiceContext());
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long fileEntryId, boolean majorVersion, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_updateFileEntryFromGoogleDrive(fileEntry, serviceContext);
+
+		super.checkInFileEntry(
+			fileEntryId, majorVersion, changeLog, serviceContext);
+
+		_googleDriveManager.delete(fileEntry, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long fileEntryId, String lockUuid, ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_updateFileEntryFromGoogleDrive(fileEntry, serviceContext);
+
+		super.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
+
+		_googleDriveManager.delete(fileEntry, serviceContext);
+	}
+
+	@Override
+	public void checkOutFileEntry(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		super.checkOutFileEntry(fileEntryId, serviceContext);
+
+		if (_isCheckOutInGoogleDrive(serviceContext)) {
+			GoogleDriveFileReference.setCurrentGoogleDriveFileReference(
+				_googleDriveManager.checkOut(
+					getFileEntry(fileEntryId), serviceContext));
+		}
+	}
+
+	@Override
+	public FileEntry checkOutFileEntry(
+			long fileEntryId, String owner, long expirationTime,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = super.checkOutFileEntry(
+			fileEntryId, owner, expirationTime, serviceContext);
+
+		if (_isCheckOutInGoogleDrive(serviceContext)) {
+			GoogleDriveFileReference.setCurrentGoogleDriveFileReference(
+				_googleDriveManager.checkOut(fileEntry, serviceContext));
+		}
+
+		return fileEntry;
+	}
+
+	private ServiceContext _createServiceContext() {
+		ServiceContext serviceContext = new ServiceContext();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		serviceContext.setUserId(permissionChecker.getUserId());
+
+		return serviceContext;
+	}
+
+	private boolean _isCheckOutInGoogleDrive(ServiceContext serviceContext) {
+		Serializable checkOutInGoogleDrive = serviceContext.getAttribute(
+			GoogleDriveConstants.CHECK_OUT_IN_GOOGLE_DRIVE);
+
+		if ((checkOutInGoogleDrive != null) &&
+			checkOutInGoogleDrive.equals(Boolean.TRUE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _updateFileEntryFromGoogleDrive(
+			FileEntry fileEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		File file = _googleDriveManager.getContentFile(
+			fileEntry, serviceContext);
+
+		try {
+			updateFileEntry(
+				fileEntry.getFileEntryId(), fileEntry.getFileName(),
+				fileEntry.getMimeType(), fileEntry.getTitle(),
+				fileEntry.getDescription(), StringPool.BLANK, false, file,
+				serviceContext);
+		}
+		finally {
+			if (file != null) {
+				if (!file.delete()) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Couldn't delete temporary file " +
+								file.getAbsolutePath());
+					}
+				}
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GoogleDriveOpenerDLAppServiceWrapper.class);
+
+	@Reference
+	private GoogleDriveManager _googleDriveManager;
+
+}

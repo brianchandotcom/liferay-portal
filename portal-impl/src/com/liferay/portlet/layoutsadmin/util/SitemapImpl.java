@@ -267,11 +267,11 @@ public class SitemapImpl implements Sitemap {
 				entry.getKey());
 
 			for (Layout layout : layouts) {
-				UnicodeProperties layoutTypeSettings =
+				UnicodeProperties typeSettingsProperties =
 					layout.getTypeSettingsProperties();
 
 				boolean sitemapInclude = GetterUtil.getBoolean(
-					layoutTypeSettings.getProperty(
+					typeSettingsProperties.getProperty(
 						LayoutTypePortletConstants.SITEMAP_INCLUDE),
 					true);
 

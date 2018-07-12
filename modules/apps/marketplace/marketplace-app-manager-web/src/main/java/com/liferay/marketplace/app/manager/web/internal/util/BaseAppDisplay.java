@@ -57,7 +57,13 @@ public abstract class BaseAppDisplay implements AppDisplay {
 			return _suiteTitle;
 		}
 
-		Bundle bundle = _bundles.get(0);
+		List<Bundle> bundles = getBundles();
+
+		if (bundles.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		Bundle bundle = bundles.get(0);
 
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);

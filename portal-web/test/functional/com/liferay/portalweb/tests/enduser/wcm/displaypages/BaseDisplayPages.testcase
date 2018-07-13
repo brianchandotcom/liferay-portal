@@ -40,9 +40,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
+		<execute macro="NavItem#gotoDisplayPages" />
 
 		<execute macro="DisplayPages#add">
 			<var name="displayPageName" value="Display Page Name" />
@@ -58,9 +56,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
+		<execute macro="NavItem#gotoDisplayPages" />
 
 		<execute macro="DisplayPages#add">
 			<var name="displayPageName" value="Display Page Name" />
@@ -83,9 +79,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
+		<execute macro="NavItem#gotoDisplayPages" />
 
 		<execute macro="DisplayPages#add">
 			<var name="displayPageName" value="Display Page Name" />
@@ -97,9 +91,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
+		<execute macro="NavItem#gotoDisplayPages" />
 
 		<execute macro="LexiconEntry#delete">
 			<var name="rowEntry" value="Display Page Name" />
@@ -117,9 +109,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
+		<execute macro="NavItem#gotoDisplayPages" />
 
 		<execute macro="DisplayPages#add">
 			<var name="displayPageName" value="Display Page Name" />
@@ -131,9 +121,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
+		<execute macro="NavItem#gotoDisplayPages" />
 
 		<execute macro="LayoutPageTemplates#rename">
 			<var name="pageTemplateName" value="Display Page Name New" />
@@ -152,9 +140,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
+		<execute macro="NavItem#gotoDisplayPages" />
 
 		<execute macro="DisplayPages#add">
 			<var name="displayPageName" value="Display Page Name" />
@@ -193,9 +179,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
+		<execute macro="NavItem#gotoDisplayPages" />
 
 		<execute macro="LexiconEntry#delete">
 			<var name="failure" value="Error:You cannot delete asset display pages that are used by one or more assets." />

@@ -275,9 +275,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="User Groups" />
-		</execute>
+		<execute macro="NavItem#gotoUserGroups" />
 
 		<execute macro="Site#assignSiteRoleCP">
 			<var name="resourceName" value="User Group Name" />
@@ -290,9 +288,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="User Groups" />
-		</execute>
+		<execute macro="NavItem#gotoUserGroups" />
 
 		<execute macro="Site#viewSiteRoleViaSiteMembershipsCP">
 			<var name="resourceName" value="User Group Name" />
@@ -761,9 +757,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Organizations" />
-		</execute>
+		<execute macro="NavItem#gotoOrganizations" />
 
 		<execute macro="Site#searchMembershipCP">
 			<var name="emptyResults" value="true" />
@@ -806,9 +800,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="User Groups" />
-		</execute>
+		<execute macro="NavItem#gotoUserGroups" />
 
 		<execute macro="Site#searchMembershipCP">
 			<var name="emptyResults" value="true" />
@@ -871,9 +863,7 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Users" />
-		</execute>
+		<execute macro="NavItem#gotoUsers" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="20 Entries" />
 

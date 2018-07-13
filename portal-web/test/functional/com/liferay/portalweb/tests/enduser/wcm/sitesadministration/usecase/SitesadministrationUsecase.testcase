@@ -528,9 +528,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="User Groups" />
-		</execute>
+		<execute macro="NavItem#gotoUserGroups" />
 
 		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 

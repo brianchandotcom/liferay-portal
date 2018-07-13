@@ -250,9 +250,7 @@
 
 		<execute macro="UserBar#gotoDashboard" />
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Available Sites" />
-		</execute>
+		<execute macro="NavItem#gotoAvailableSites" />
 
 		<execute macro="MySites#viewMembershipRequested">
 			<var name="siteName" value="Site Name" />

@@ -20,9 +20,6 @@
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("view_entry_content.jsp-searchContainer");
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
-
-RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("view_entry_content.jsp-ratingsEntry");
-RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_content.jsp-ratingsStats");
 %>
 
 <c:choose>
@@ -143,6 +140,11 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 					</c:when>
 				</c:choose>
 
+				<%
+					request.setAttribute("entry_toolbar.jsp-entry", entry);
+				%>
+
+				<liferay-util:include page="/blogs/entry_toolbar.jsp" servletContext="<%= application %>" />
 			</div>
 
 			<c:if test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) %>">

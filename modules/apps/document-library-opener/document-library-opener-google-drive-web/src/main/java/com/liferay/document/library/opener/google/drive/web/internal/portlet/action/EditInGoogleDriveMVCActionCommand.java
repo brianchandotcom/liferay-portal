@@ -68,9 +68,6 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
-			// Fail early if file doesn't exist or the user haven't got the
-			// required permissions.
-
 			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 			if (_dlOpenerGoogleDriveManager.hasValidCredential(
@@ -80,8 +77,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 					dlOpenerDriveFileReferenceOptional =
 						DLOpenerGoogleDriveFileReference.
 							captureDLOpenerGoogleDriveFileReference(
-								() ->
-									_executeCommand(actionRequest, fileEntry));
+								() -> _executeCommand(
+									actionRequest, fileEntry));
 
 				dlOpenerDriveFileReferenceOptional.ifPresent(
 					driveFileReference -> actionRequest.setAttribute(

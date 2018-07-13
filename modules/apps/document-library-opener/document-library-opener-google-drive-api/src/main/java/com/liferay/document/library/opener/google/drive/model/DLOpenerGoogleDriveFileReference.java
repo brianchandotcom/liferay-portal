@@ -15,6 +15,7 @@
 package com.liferay.document.library.opener.google.drive.model;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Optional;
 
@@ -53,21 +54,25 @@ public class DLOpenerGoogleDriveFileReference {
 		_threadLocal.set(dlOpenerGoogleDriveFileReference);
 	}
 
-	public DLOpenerGoogleDriveFileReference(String cookie, long fileEntryId) {
-		_cookie = cookie;
-		_fileEntryId = fileEntryId;
-	}
+	public DLOpenerGoogleDriveFileReference(
+		String googleDriveFileId, long fileEntryId) {
 
-	public String getCookie() {
-		return _cookie;
+		_googleDriveFileId = googleDriveFileId;
+		_fileEntryId = fileEntryId;
 	}
 
 	public long getFileEntryId() {
 		return _fileEntryId;
 	}
 
-	public String getUrl() {
-		return "https://docs.google.com/document/d/" + getCookie() + "/edit";
+	public String getGoogleDriveFileId() {
+		return _googleDriveFileId;
+	}
+
+	public String getGoogleDocsEditURL() {
+		return StringBundler.concat(
+			"https://docs.google.com/document/d/", getGoogleDriveFileId(),
+			"/edit");
 	}
 
 	public interface UnsafeRunnable<E extends Throwable> {
@@ -79,7 +84,7 @@ public class DLOpenerGoogleDriveFileReference {
 	private static final ThreadLocal<DLOpenerGoogleDriveFileReference>
 		_threadLocal = new CentralizedThreadLocal<>(true);
 
-	private final String _cookie;
 	private final long _fileEntryId;
+	private final String _googleDriveFileId;
 
 }

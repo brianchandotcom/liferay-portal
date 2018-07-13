@@ -21,6 +21,6 @@ import java.util.List;
  */
 public interface AssetAutoTagProvider<T> {
 
-	public List<String> getTags(T model);
+	public List<String> getTagNames(T model);
 
 }

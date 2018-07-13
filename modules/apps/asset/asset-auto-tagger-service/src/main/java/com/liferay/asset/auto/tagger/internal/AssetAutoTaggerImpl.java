@@ -93,13 +93,17 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
-					Set<String> tags = _getAutoTags(assetEntry);
+					Set<String> tagNames = _getAutoTagNames(assetEntry);
 
-					tags.removeAll(Arrays.asList(assetEntry.getTagNames()));
+					tagNames.removeAll(Arrays.asList(assetEntry.getTagNames()));
 
 					List<AssetTag> assetTags = _assetTagLocalService.checkTags(
 						assetEntry.getUserId(), assetEntry.getGroupId(),
-						tags.toArray(new String[0]));
+						tagNames.toArray(new String[0]));
+
+					if (assetTags.isEmpty()) {
+						return null;
+					}
 
 					for (AssetTag assetTag : assetTags) {
 						_assetTagLocalService.addAssetEntryAssetTag(
@@ -112,9 +116,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 							assetTag.getTagId(), assetEntry.getClassNameId());
 					}
 
-					if (!assetTags.isEmpty()) {
-						_reindex(assetEntry);
-					}
+					_reindex(assetEntry);
 
 					return null;
 				});
@@ -135,6 +137,10 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 						_assetAutoTaggerEntryLocalService.
 							getAssetAutoTaggerEntries(assetEntry);
 
+					if (!assetAutoTaggerEntries.isEmpty()) {
+						return null;
+					}
+
 					for (AssetAutoTaggerEntry assetAutoTaggerEntry :
 							assetAutoTaggerEntries) {
 
@@ -147,9 +153,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 							assetEntry.getClassNameId());
 					}
 
-					if (!assetAutoTaggerEntries.isEmpty()) {
-						_reindex(assetEntry);
-					}
+					_reindex(assetEntry);
 
 					return null;
 				});
@@ -207,10 +211,10 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		return assetAutoTagProviders;
 	}
 
-	private Set<String> _getAutoTags(AssetEntry assetEntry) {
+	private Set<String> _getAutoTagNames(AssetEntry assetEntry) {
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
-		Set<String> tags = new HashSet<>();
+		Set<String> tagNames = new HashSet<>();
 
 		if (assetRenderer != null) {
 			List<AssetAutoTagProvider> assetAutoTagProviders =
@@ -219,13 +223,13 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			for (AssetAutoTagProvider assetAutoTagProvider :
 					assetAutoTagProviders) {
 
-				tags.addAll(
-					assetAutoTagProvider.getTags(
+				tagNames.addAll(
+					assetAutoTagProvider.getTagNames(
 						assetRenderer.getAssetObject()));
 			}
 		}
 
-		return tags;
+		return tagNames;
 	}
 
 	private boolean _isInTrash(AssetEntry assetEntry) throws PortalException {

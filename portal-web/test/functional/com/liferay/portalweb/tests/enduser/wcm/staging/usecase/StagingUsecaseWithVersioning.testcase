@@ -85,13 +85,19 @@
 			<var name="parentPageName" value="Staging Test Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Page 1" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Staging#changeSitePageVariationPG">
 			<var name="sitePagesVariationMenulistName" value="Main Variation" />
 			<var name="sitePagesVariationName" value="Summer" />
 		</execute>
 
-		<execute macro="Staging#viewNotAvailableMenuItem">
+		<execute macro="Page#viewNoPage">
 			<var name="pageName" value="Page 1" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 
@@ -160,6 +166,17 @@
 
 		<execute macro="SitePages#deletePage">
 			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Page#viewNoPage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 
@@ -898,23 +915,14 @@
 
 		<execute function="AssertElementPresent" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 
-		<execute macro="Page#selectSitePagesVariationName">
-			<var name="sitePagesVariationName" value="Main Variation" />
+		<execute macro="Staging#changeSitePageVariationPG">
+			<var name="sitePagesVariationMenulistName" value="Main Variation" />
+			<var name="sitePagesVariationName" value="Site Pages Variation Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Staging#viewIncompletePageViaStagingPageVariation">
+		<execute macro="Staging#enablePageInSitePagesVariation">
 			<var name="pageName" value="Test Page Name" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePagesVariationName" value="Main Variation" />
 		</execute>
 	</command>

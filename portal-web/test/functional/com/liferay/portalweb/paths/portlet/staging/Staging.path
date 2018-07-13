@@ -232,8 +232,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_MENU_REVISION_DETAILS_MESSAGE</td>
-	<td>//li[contains(@id,'layoutRevisionDetails')]/ul/li/p</td>
+	<td>STAGING_BAR_PAGE_VARIATIONS_ALERT</td>
+	<td>//div[contains(@class,'staging-bar-level-3')]//div[contains(@class,'staging-alert-container')]</td>
 	<td></td>
 </tr>
 <tr>

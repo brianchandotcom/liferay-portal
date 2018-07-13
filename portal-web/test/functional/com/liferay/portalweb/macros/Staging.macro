@@ -551,7 +551,7 @@
 	</command>
 
 	<command name="enablePageInSitePagesVariation">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#STAGING_MENU_REVISION_DETAILS_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#STAGING_BAR_PAGE_VARIATIONS_ALERT" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
 
 		<execute function="AssertClick" locator1="Staging#STAGING_MENU_ENABLE_PAGE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
 
@@ -1109,14 +1109,6 @@
 		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_CONTENT_INFO" />
 
 		<execute macro="IFrame#closeFrame" />
-	</command>
-
-	<command name="viewNotAvailableMenuItem">
-		<var name="key_page" value="${pageName}" />
-
-		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS" />
-
-		<execute function="AssertNotVisible" locator1="SitePages#DELETE_SPECIFIC_PAGE" />
 	</command>
 
 	<command name="viewNotStagedAssetMessageOnStaging">

@@ -2062,7 +2062,7 @@
 			<then>
 				<execute macro="PortletEntry#selectAll" />
 
-				<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
+				<execute function="ClickNoError" locator1="Icon#MOVE_TO_RECYCLE_BIN" />
 
 				<execute function="Confirm" value1="Are you sure you want to deactivate the selected users?" />
 
@@ -2081,9 +2081,9 @@
 			<then>
 				<execute macro="PortletEntry#selectAll" />
 
-				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+				<execute function="ClickNoError" locator1="Icon#MOVE_TO_RECYCLE_BIN" />
 
-				<execute function="Confirm#waitForConfirmation" />
+				<execute function="Confirm" value1="Are you sure you want to permanently delete the selected users?" />
 
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>

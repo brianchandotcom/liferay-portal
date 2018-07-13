@@ -640,9 +640,19 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Community Site Name" />
+		</execute>
+
 		<execute macro="Staging#changeSitePageVariationPG">
 			<var name="sitePagesVariationMenulistName" value="Main Variation Edit" />
 			<var name="sitePagesVariationName" value="Christmas Variation" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Staging#enablePageInSitePagesVariation">
@@ -748,13 +758,13 @@
 			<var name="pageName" value="Empty Page Name" />
 		</execute>
 
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Empty Variation" />
-		</execute>
-
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Empty Page Name" />
 			<var name="siteName" value="Community Site Name" />
+		</execute>
+
+		<execute macro="Staging#viewSitePagesVariationPG">
+			<var name="sitePagesVariationName" value="Empty Variation" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />

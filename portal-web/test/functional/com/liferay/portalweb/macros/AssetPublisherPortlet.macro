@@ -1020,8 +1020,8 @@
 							</execute>
 						</then>
 						<else>
-							<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-								<var name="key_menuItem" value="OTHER_SITE" />
+							<execute macro="MenuItem#viewNotPresent">
+								<var name="menuItem" value="OTHER_SITE" />
 							</execute>
 						</else>
 					</if>

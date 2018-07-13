@@ -247,12 +247,12 @@
 
 		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
 
-		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Restore" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Restore" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Delete" />
 		</execute>
 	</command>
 

@@ -1832,8 +1832,8 @@
 
 				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" value1="Actions" />
 
-				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
-					<var name="key_menuItem" value="Move to Recycle Bin" />
+				<execute macro="MenuItem#viewPresent">
+					<var name="menuItem" value="Move to Recycle Bin" />
 				</execute>
 
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />
@@ -1863,8 +1863,8 @@
 
 				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ACTIONS" value1="Actions" />
 
-				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
-					<var name="key_menuItem" value="Move to Recycle Bin" />
+				<execute macro="MenuItem#viewPresent">
+					<var name="menuItem" value="Move to Recycle Bin" />
 				</execute>
 
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />

@@ -440,12 +440,12 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Add Child Site" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Add Child Site" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<var name="key_site" value="Child SiteName2" />
@@ -518,12 +518,12 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Add Child Site" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Add Child Site" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<var name="key_site" value="Child SiteName2" />

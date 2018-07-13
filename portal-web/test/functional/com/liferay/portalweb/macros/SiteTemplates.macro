@@ -371,8 +371,8 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="${siteTemplateName}" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="${siteTemplateName}" />
 		</execute>
 	</command>
 

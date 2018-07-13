@@ -28,16 +28,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -66,18 +62,11 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Override
 	public boolean isAutoTaggeable(AssetEntry assetEntry) {
-		try {
-			if (_assetAutoTaggerConfiguration.enabled() &&
-				assetEntry.isVisible() &&
-				ListUtil.isNotEmpty(
-					_getAssetAutoTagProviders(assetEntry.getClassName())) &&
-				!_isInTrash(assetEntry)) {
+		if (_assetAutoTaggerConfiguration.enabled() && assetEntry.isVisible() &&
+			ListUtil.isNotEmpty(
+				_getAssetAutoTagProviders(assetEntry.getClassName()))) {
 
-				return true;
-			}
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+			return true;
 		}
 
 		return false;
@@ -232,17 +221,6 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		return tagNames;
 	}
 
-	private boolean _isInTrash(AssetEntry assetEntry) throws PortalException {
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			assetEntry.getClassName());
-
-		if (trashHandler != null) {
-			return trashHandler.isInTrash(assetEntry.getClassPK());
-		}
-
-		return false;
-	}
-
 	private void _reindex(AssetEntry assetEntry) throws PortalException {
 		Indexer<Object> indexer = _indexerRegistry.getIndexer(
 			assetEntry.getClassName());
@@ -251,9 +229,6 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetAutoTaggerImpl.class);
 
 	private volatile AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
 

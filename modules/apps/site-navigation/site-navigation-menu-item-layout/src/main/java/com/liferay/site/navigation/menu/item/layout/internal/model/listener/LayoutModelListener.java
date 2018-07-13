@@ -48,9 +48,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) throws ModelListenerException {
-		if (ExportImportThreadLocal.isStagingInProcess() ||
-			ExportImportThreadLocal.isImportInProcess()) {
-
+		if (ExportImportThreadLocal.isStagingInProcess()) {
 			return;
 		}
 

@@ -194,12 +194,12 @@ public class RoleDisplayContext {
 							navigationItem.setActive(
 								type == RoleConstants.TYPE_REGULAR);
 
-							PortletURL viewRoleNavigationURL =
+							PortletURL viewRegularRoleNavigationURL =
 								PortletURLUtil.clone(
 									portletURL, liferayPortletResponse);
 
 							navigationItem.setHref(
-								viewRoleNavigationURL, "type",
+								viewRegularRoleNavigationURL, "type",
 								RoleConstants.TYPE_REGULAR);
 
 							navigationItem.setLabel(
@@ -211,12 +211,12 @@ public class RoleDisplayContext {
 							navigationItem.setActive(
 								type == RoleConstants.TYPE_SITE);
 
-							PortletURL viewRoleNavigationURL =
+							PortletURL viewSiteRoleNavigationURL =
 								PortletURLUtil.clone(
 									portletURL, liferayPortletResponse);
 
 							navigationItem.setHref(
-								viewRoleNavigationURL, "type",
+								viewSiteRoleNavigationURL, "type",
 								RoleConstants.TYPE_SITE);
 
 							navigationItem.setLabel(
@@ -229,12 +229,12 @@ public class RoleDisplayContext {
 							navigationItem.setActive(
 								type == RoleConstants.TYPE_ORGANIZATION);
 
-							PortletURL viewRoleNavigationURL =
+							PortletURL viewOrganizationRoleNavigationURL =
 								PortletURLUtil.clone(
 									portletURL, liferayPortletResponse);
 
 							navigationItem.setHref(
-								viewRoleNavigationURL, "type",
+								viewOrganizationRoleNavigationURL, "type",
 								RoleConstants.TYPE_ORGANIZATION);
 
 							navigationItem.setLabel(

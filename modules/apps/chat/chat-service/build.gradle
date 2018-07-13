@@ -1,6 +1,5 @@
 buildService {
 	apiDir = "../chat-api/src/main/java"
-	testDir = "../chat-test/src/testIntegration/java"
 }
 
 dependencies {

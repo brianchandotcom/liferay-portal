@@ -337,7 +337,6 @@
 	</command>
 
 	<command name="AddBlogWithFormatting" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -417,8 +416,6 @@
 	</command>
 
 	<command name="DeleteBlogsEntries" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<for list="1,2,3" param="entryCount">
 			<execute macro="Navigator#openURL" />
 

@@ -56,7 +56,6 @@
 	</tear-down>
 
 	<command name="AddChildSiteWikiFrontPageFormatHTML" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
@@ -328,8 +327,6 @@
 	</command>
 
 	<command name="AddWikiFrontPageChildPageFormatHTML" priority="4">
-		<property name="portal.acceptance" value="false" />
-
 		<var name="welcomeToLiferay">
 			<![CDATA[
 				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
@@ -792,7 +789,6 @@
 	</command>
 
 	<command name="AddWikiPages" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#gotoPage">
@@ -889,8 +885,6 @@
 	</command>
 
 	<command name="CancelAddPage" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>

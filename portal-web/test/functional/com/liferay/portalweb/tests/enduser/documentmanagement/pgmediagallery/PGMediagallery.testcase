@@ -286,8 +286,6 @@
 	</command>
 
 	<command name="EditFolder" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Media Gallery Page" />
 		</execute>
@@ -318,8 +316,6 @@
 	</command>
 
 	<command name="EditFolderDocument" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Media Gallery Page" />
 		</execute>

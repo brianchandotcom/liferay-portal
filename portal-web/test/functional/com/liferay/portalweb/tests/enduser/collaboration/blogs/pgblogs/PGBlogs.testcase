@@ -77,8 +77,6 @@
 	</tear-down>
 
 	<command name="AddBlogsEntries" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -1067,8 +1065,6 @@
 	</command>
 
 	<command name="MoveToRecycleBinBlogsEntry" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -1181,8 +1177,6 @@
 	</command>
 
 	<command name="SaveBlogsEntryDraftAuto" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

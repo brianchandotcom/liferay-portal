@@ -54,7 +54,7 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 					return null;
 				}
 
-				if (!_assetAutoTagger.isAutoTaggeable(assetEntry)) {
+				if (!_assetAutoTagger.isAutoTaggable(assetEntry)) {
 					return null;
 				}
 

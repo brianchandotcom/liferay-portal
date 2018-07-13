@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Override
-	public boolean isAutoTaggeable(AssetEntry assetEntry) {
+	public boolean isAutoTaggable(AssetEntry assetEntry) {
 		if (_assetAutoTaggerConfiguration.enabled() && assetEntry.isVisible() &&
 			ListUtil.isNotEmpty(
 				_getAssetAutoTagProviders(assetEntry.getClassName()))) {
@@ -74,7 +74,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Override
 	public void tag(AssetEntry assetEntry) throws PortalException {
-		if (!isAutoTaggeable(assetEntry)) {
+		if (!isAutoTaggable(assetEntry)) {
 			return;
 		}
 

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface AssetAutoTagger {
 
-	public boolean isAutoTaggeable(AssetEntry assetEntry);
+	public boolean isAutoTaggable(AssetEntry assetEntry);
 
 	public void tag(AssetEntry assetEntry) throws PortalException;
 

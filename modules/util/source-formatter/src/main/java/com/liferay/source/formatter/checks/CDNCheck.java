@@ -33,10 +33,14 @@ public class CDNCheck extends BaseFileCheck {
 			content,
 			new String[] {
 				"cdn.lfrs.sl/releases.liferay.com",
-				"cdn.lfrs.sl/repository.liferay.com"
+				"cdn.lfrs.sl/repository.liferay.com",
+				"repository.liferay.com/nexus/service/local/repo_groups" +
+					"/private/content/"
 			},
 			new String[] {
-				"releases-cdn.liferay.com", "repository-cdn.liferay.com"
+				"releases-cdn.liferay.com", "repository-cdn.liferay.com",
+				"repository-cdn.liferay.com/nexus/service/local/repo_groups" +
+					"/private/content/"
 			});
 	}
 

@@ -84,7 +84,7 @@ public class ClusterClassLoaderPool {
 				_log.debug(
 					StringBundler.concat(
 						"Unable to find class loader for ", contextName,
-						", fall back to current thread's context class " ,
+						", fall back to current thread's context class ",
 						"loader"));
 			}
 		}

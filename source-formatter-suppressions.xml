@@ -118,6 +118,11 @@
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portal/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portlet/exportimport/service\.xml" />
 
+		<!-- Temporary suppressions for portal -->
+
+		<suppress checks="GradleDependencyVersionCheck" files="modules/sdk/.*" />
+		<suppress checks="GradleDependencyVersionCheck" files="modules/util/.*" />
+
 		<!-- Temporary suppressions for private repos and subrepos -->
 
 		<suppress checks="BNDBundleCheck" files="modules/private/.*" />

@@ -23,7 +23,7 @@ function meta(request) {
 		keywords: getAttribute('meta[name="keywords"]', 'content'),
 		languageId: navigator.language,
 		referrer: document.referrer,
-		title: getAttribute('title', 'innerHTML'),
+		title: getAttribute('title', 'textContent'),
 		url: location.href,
 		userAgent: navigator.userAgent,
 		...request.context,

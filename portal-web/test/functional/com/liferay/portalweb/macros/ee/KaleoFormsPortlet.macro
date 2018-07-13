@@ -321,10 +321,9 @@
 			<isset var="assignedToMyRoles" />
 			<then>
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${kfProcessName}" />
-		</execute>
-
+				<execute macro="LexiconEntry#openEntryMenu">
+					<var name="rowEntry" value="${kfProcessName}" />
+				</execute>
 			</then>
 			<elseif>
 				<isset var="assignedToMe" />

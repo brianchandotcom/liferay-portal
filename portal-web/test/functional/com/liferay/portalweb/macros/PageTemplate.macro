@@ -134,6 +134,7 @@
 			<condition function="IsElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
 				<var name="rowEntry" value="${pageTemplateName}" />
 			</condition>
+
 			<then>
 				<execute macro="LexiconEntry#openEntryMenu">
 					<var name="rowEntry" value="${pageTemplateName}" />

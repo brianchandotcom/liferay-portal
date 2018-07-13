@@ -22,6 +22,8 @@ String displayStyle = ddmFormAdminDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddmFormAdminDisplayContext.getPortletURL();
 
 portletURL.setParameter("displayStyle", displayStyle);
+
+FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDisplayContext.getPermissionCheckerHelper();
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
@@ -31,7 +33,6 @@ portletURL.setParameter("displayStyle", displayStyle);
 
 		<liferay-ui:search-container
 			id="structure"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= ddmFormAdminDisplayContext.getSearch() %>"
 		>
 			<liferay-ui:search-container-row
@@ -46,6 +47,12 @@ portletURL.setParameter("displayStyle", displayStyle);
 					<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
 					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 				</portlet:renderURL>
+
+				<%
+				if (!fieldSetPermissionCheckerHelper.isShowEditIcon(structure)) {
+					rowURL = null;
+				}
+				%>
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>

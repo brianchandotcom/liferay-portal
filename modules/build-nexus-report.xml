@@ -55,7 +55,7 @@
 	<target depends="prepare-report-dir" name="get-repository-index">
 		<get
 			dest="${nexus.reports.dir}/${repository.name}.index"
-			src="https://repository.liferay.com/nexus/content/repositories/${repository.name}/com/liferay"
+			src="https://repository-cdn.liferay.com/nexus/content/repositories/${repository.name}/com/liferay"
 		/>
 
 		<replaceregexp

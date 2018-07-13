@@ -66,13 +66,7 @@ public class KBArticleAssetRendererFactory
 		KBArticle kbArticle = getKBArticle(
 			classPK, WorkflowConstants.STATUS_ANY);
 
-		classPK = kbArticle.getKbArticleId();
-
-		if (kbArticle.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			classPK = kbArticle.getResourcePrimKey();
-		}
-
-		return super.getAssetEntry(className, classPK);
+		return super.getAssetEntry(className, kbArticle.getClassPK());
 	}
 
 	@Override

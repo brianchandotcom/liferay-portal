@@ -850,11 +850,20 @@ public class LocalizationImpl implements Localization {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
-
 		XMLStreamWriter xmlStreamWriter = null;
 
+		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+
+		ClassLoader contextClassLoader =
+			ClassLoaderUtil.getContextClassLoader();
+
 		try {
+			if (contextClassLoader != portalClassLoader) {
+				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
+			}
+
+			XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
+
 			xmlStreamWriter = xmlOutputFactory.createXMLStreamWriter(
 				unsyncStringWriter);
 
@@ -899,6 +908,10 @@ public class LocalizationImpl implements Localization {
 			_log.error(ioe, ioe);
 		}
 		finally {
+			if (contextClassLoader != portalClassLoader) {
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			}
+
 			if (xmlStreamWriter != null) {
 				try {
 					xmlStreamWriter.close();

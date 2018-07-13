@@ -16,7 +16,7 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -24,9 +24,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,27 +39,6 @@ public class RestrictionsFactoryTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		RestrictionsFactoryImpl restrictionsFactory =
-			new RestrictionsFactoryImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			restrictionsFactory, "_databaseInMaxParameters",
-			_DATABASE_IN_MAX_PARAMETERS);
-
-		_restrictionsFactoryFieldValue = ReflectionTestUtil.getAndSetFieldValue(
-			RestrictionsFactoryUtil.class, "_restrictionsFactory",
-			restrictionsFactory);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			RestrictionsFactoryUtil.class, "_restrictionsFactory",
-			_restrictionsFactoryFieldValue);
-	}
-
 	@Test
 	public void testInWithDatabaseInMaxParametersValue() {
 		_testInMaxParametersValue(_DATABASE_IN_MAX_PARAMETERS, false);
@@ -75,13 +52,19 @@ public class RestrictionsFactoryTest {
 	private void _testInMaxParametersValue(
 		int length, boolean expectedDisjunction) {
 
+		RestrictionsFactory restrictionsFactory = new RestrictionsFactoryImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			restrictionsFactory, "_databaseInMaxParameters",
+			_DATABASE_IN_MAX_PARAMETERS);
+
 		List<Integer> values = new ArrayList<>(length);
 
 		for (int i = 0; i < length; i++) {
 			values.add(i);
 		}
 
-		Criterion criterion = RestrictionsFactoryUtil.in("property", values);
+		Criterion criterion = restrictionsFactory.in("property", values);
 
 		Class<?> clazz = criterion.getClass();
 
@@ -91,7 +74,5 @@ public class RestrictionsFactoryTest {
 	}
 
 	private static final int _DATABASE_IN_MAX_PARAMETERS = 1000;
-
-	private RestrictionsFactoryImpl _restrictionsFactoryFieldValue;
 
 }

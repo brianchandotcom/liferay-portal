@@ -107,7 +107,7 @@
 		</for>
 	</command>
 
-	<command name="AddBlogsEntry" priority="4">
+	<command name="AddBlogsEntry" priority="5">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

@@ -132,7 +132,7 @@
 		</task>
 	</command>
 
-	<command name="AddBlogsEntry" priority="4">
+	<command name="AddBlogsEntry" priority="5">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

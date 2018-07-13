@@ -1,9 +1,0 @@
-Bundle-Name: Liferay Commerce Product Content API
-Bundle-SymbolicName: com.liferay.commerce.product.content.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.commerce.product.content.constants,\
-	com.liferay.commerce.product.content.render,\
-	com.liferay.commerce.product.content.render.list,\
-	com.liferay.commerce.product.content.render.list.entry,\
-	com.liferay.commerce.product.content.util

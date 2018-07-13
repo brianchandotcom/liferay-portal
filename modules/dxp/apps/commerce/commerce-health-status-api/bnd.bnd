@@ -1,9 +1,0 @@
-Bundle-Name: Liferay Commerce Health Status API
-Bundle-SymbolicName: com.liferay.commerce.health.status.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.commerce.health.status
-Import-Package:\
-	com.liferay.portal.kernel.dao.search;version="[7.2.0,8.0.0)",\
-	com.liferay.portal.kernel.search;version="[7.5.0,8.0.0)",\
-	\
-	*

@@ -1,4 +1,0 @@
-dependencies {
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180611.211525-10"
-	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-}

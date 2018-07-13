@@ -1,9 +1,0 @@
-{
-	"cpu": 2,
-	"dependencies": [
-		"lfr"
-	],
-	"id": "pxy",
-	"image": "nginx:1.13.6-alpine",
-	"memory": 512
-}

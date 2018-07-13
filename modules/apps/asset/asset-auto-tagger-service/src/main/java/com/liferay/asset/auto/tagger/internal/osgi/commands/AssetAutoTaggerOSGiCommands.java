@@ -27,7 +27,6 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -37,16 +36,16 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Alejandro Tardín
@@ -116,6 +115,27 @@ public class AssetAutoTaggerOSGiCommands {
 			});
 	}
 
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		modified(properties);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, AssetAutoTagProvider.class, "model.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_assetAutoTaggerConfiguration = ConfigurableUtil.createConfigurable(
+			AssetAutoTaggerConfiguration.class, properties);
+	}
+
 	private void _forEachAssetEntry(
 		String[] classNames,
 		UnsafeConsumer<AssetEntry, PortalException> consumer) {
@@ -127,10 +147,8 @@ public class AssetAutoTaggerOSGiCommands {
 			if (!ArrayUtil.isEmpty(classNames)) {
 				actionableDynamicQuery.setAddCriteriaMethod(
 					dynamicQuery -> {
-						dynamicQuery.add(
-							_getClassNameIdCriterion(classNames));
-					}
-				);
+						dynamicQuery.add(_getClassNameIdCriterion(classNames));
+					});
 			}
 
 			actionableDynamicQuery.setPerformActionMethod(
@@ -159,32 +177,13 @@ public class AssetAutoTaggerOSGiCommands {
 		return criterion;
 	}
 
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		modified(properties);
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, AssetAutoTagProvider.class, "model.class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		_assetAutoTaggerConfiguration = ConfigurableUtil.createConfigurable(
-			AssetAutoTaggerConfiguration.class, properties);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetAutoTaggerOSGiCommands.class);
 
 	@Reference
 	private AssetAutoTagger _assetAutoTagger;
+
+	private volatile AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
 
 	@Reference
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
@@ -200,7 +199,5 @@ public class AssetAutoTaggerOSGiCommands {
 
 	private ServiceTrackerMap<String, List<AssetAutoTagProvider>>
 		_serviceTrackerMap;
-
-	private volatile AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
 
 }

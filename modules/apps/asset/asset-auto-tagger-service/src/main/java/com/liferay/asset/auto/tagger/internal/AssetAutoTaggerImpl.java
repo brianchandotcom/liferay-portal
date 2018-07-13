@@ -271,7 +271,6 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	private ServiceTrackerMap<String, List<AssetAutoTagProvider>>
 		_serviceTrackerMap;
-
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});

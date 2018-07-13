@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = ModelListener.class)
-public class AssetAutoTaggerAssetEntryModelListener
-	extends BaseModelListener<AssetEntry> {
+public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 
 	@Override
 	public void onAfterCreate(AssetEntry assetEntry)

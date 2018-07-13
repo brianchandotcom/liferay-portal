@@ -128,15 +128,6 @@ public class UpgradeExecutor {
 
 	private class UpgradeInfosRunnable implements Runnable {
 
-		public UpgradeInfosRunnable(
-			String bundleSymbolicName, List<UpgradeInfo> upgradeInfos,
-			OutputStream outputStream) {
-
-			_bundleSymbolicName = bundleSymbolicName;
-			_upgradeInfos = upgradeInfos;
-			_outputStream = outputStream;
-		}
-
 		@Override
 		public void run() {
 			int buildNumber = 0;
@@ -192,6 +183,15 @@ public class UpgradeExecutor {
 			}
 
 			CacheRegistryUtil.clear();
+		}
+
+		private UpgradeInfosRunnable(
+			String bundleSymbolicName, List<UpgradeInfo> upgradeInfos,
+			OutputStream outputStream) {
+
+			_bundleSymbolicName = bundleSymbolicName;
+			_upgradeInfos = upgradeInfos;
+			_outputStream = outputStream;
 		}
 
 		private void _updateReleaseState(int state) {

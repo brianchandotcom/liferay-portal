@@ -34,7 +34,8 @@ public class TransferHeadersHelperUtil {
 	}
 
 	public static void transferHeaders(
-		Map<String, Object> headers, HttpServletResponse httpServletResponse) {
+		Map<String, Object[]> headers,
+		HttpServletResponse httpServletResponse) {
 
 		_getTransferHeadersHelper().transferHeaders(
 			headers, httpServletResponse);

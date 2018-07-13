@@ -15,7 +15,6 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.Criterion;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -41,17 +40,17 @@ public class RestrictionsFactoryTest {
 
 	@Test
 	public void testInWithDatabaseInMaxParametersValue() {
-		_testInMaxParametersValue(_DATABASE_IN_MAX_PARAMETERS, false);
+		_testInMaxParametersValue(
+			_DATABASE_IN_MAX_PARAMETERS, CriterionImpl.class);
 	}
 
 	@Test
 	public void testInWithMoreThanDatabaseInMaxParametersValue() {
-		_testInMaxParametersValue(_DATABASE_IN_MAX_PARAMETERS + 1, true);
+		_testInMaxParametersValue(
+			_DATABASE_IN_MAX_PARAMETERS + 1, DisjunctionImpl.class);
 	}
 
-	private void _testInMaxParametersValue(
-		int length, boolean expectedDisjunction) {
-
+	private void _testInMaxParametersValue(int length, Class<?> expectedClass) {
 		RestrictionsFactory restrictionsFactory = new RestrictionsFactoryImpl();
 
 		ReflectionTestUtil.setFieldValue(
@@ -66,11 +65,7 @@ public class RestrictionsFactoryTest {
 
 		Criterion criterion = restrictionsFactory.in("property", values);
 
-		Class<?> clazz = criterion.getClass();
-
-		Assert.assertEquals(
-			clazz.getName(), expectedDisjunction,
-			criterion instanceof Disjunction);
+		Assert.assertSame(expectedClass, criterion.getClass());
 	}
 
 	private static final int _DATABASE_IN_MAX_PARAMETERS = 1000;

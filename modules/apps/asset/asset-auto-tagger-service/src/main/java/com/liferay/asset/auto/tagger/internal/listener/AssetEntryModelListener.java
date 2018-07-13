@@ -14,6 +14,7 @@
 
 package com.liferay.asset.auto.tagger.internal.listener;
 
+import com.liferay.asset.auto.tagger.AssetAutoTagger;
 import com.liferay.asset.auto.tagger.internal.constants.AssetAutoTaggerDestinationNames;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
@@ -51,6 +52,10 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 		TransactionCommitCallbackUtil.registerCallback(
 			(Callable<Void>)() -> {
 				if (!ListUtil.isEmpty(assetEntry.getTags())) {
+					return null;
+				}
+
+				if (!_assetAutoTagger.isAutoTaggeable(assetEntry)) {
 					return null;
 				}
 
@@ -101,6 +106,9 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 		_messageBus.removeDestination(
 			AssetAutoTaggerDestinationNames.ASSET_AUTO_TAGGER);
 	}
+
+	@Reference
+	private AssetAutoTagger _assetAutoTagger;
 
 	@Reference
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;

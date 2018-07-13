@@ -28,12 +28,10 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -67,10 +65,24 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Override
-	public void tag(AssetEntry assetEntry) throws PortalException {
-		if (!_assetAutoTaggerConfiguration.enabled() ||
-			!assetEntry.isVisible() || _isInTrash(assetEntry)) {
+	public boolean isAutoTaggeable(AssetEntry assetEntry) {
+		try {
+			if (_assetAutoTaggerConfiguration.enabled() &&
+				assetEntry.isVisible() && !_isInTrash(assetEntry)) {
 
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return false;
+	}
+
+	@Override
+	public void tag(AssetEntry assetEntry) throws PortalException {
+		if (!isAutoTaggeable(assetEntry)) {
 			return;
 		}
 
@@ -168,21 +180,6 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			AssetAutoTaggerConfiguration.class, properties);
 	}
 
-	private void _ensurePermissionChecker(User user) throws PortalException {
-		if (PermissionThreadLocal.getPermissionChecker() == null) {
-			PermissionChecker permissionChecker = null;
-
-			try {
-				permissionChecker = PermissionCheckerFactoryUtil.create(user);
-			}
-			catch (Exception e) {
-				throw new PortalException(e);
-			}
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
-	}
-
 	private List<AssetAutoTagProvider> _getAssetAutoTagProviders(
 		String className) {
 
@@ -233,9 +230,6 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			assetEntry.getClassName());
 
 		if (trashHandler != null) {
-			_ensurePermissionChecker(
-				_userLocalService.getUser(assetEntry.getUserId()));
-
 			return trashHandler.isInTrash(assetEntry.getClassPK());
 		}
 
@@ -250,6 +244,9 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetAutoTaggerImpl.class);
 
 	private volatile AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
 

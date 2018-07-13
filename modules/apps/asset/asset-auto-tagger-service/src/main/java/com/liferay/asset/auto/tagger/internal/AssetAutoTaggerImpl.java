@@ -137,7 +137,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 						_assetAutoTaggerEntryLocalService.
 							getAssetAutoTaggerEntries(assetEntry);
 
-					if (!assetAutoTaggerEntries.isEmpty()) {
+					if (assetAutoTaggerEntries.isEmpty()) {
 						return null;
 					}
 

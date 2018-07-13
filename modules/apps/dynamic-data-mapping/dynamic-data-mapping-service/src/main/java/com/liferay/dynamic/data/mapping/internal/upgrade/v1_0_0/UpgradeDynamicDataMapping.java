@@ -1977,7 +1977,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				nodes = dynamicContentXPath.selectNodes(dynamicElementElement);
 
-				Element element = (Element)nodes.get(index);
+				Element element = null;
+
+				if (nodes.isEmpty()) {
+					element = dynamicElementElement.addElement(
+						"dynamic-content");
+				}
+				else {
+					element = (Element)nodes.get(index);
+				}
 
 				element.addAttribute("language-id", languageId);
 

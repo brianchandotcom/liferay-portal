@@ -65,14 +65,14 @@ public class DLOpenerGoogleDriveFileReference {
 		return _fileEntryId;
 	}
 
-	public String getGoogleDriveFileId() {
-		return _googleDriveFileId;
-	}
-
 	public String getGoogleDocsEditURL() {
 		return StringBundler.concat(
 			"https://docs.google.com/document/d/", getGoogleDriveFileId(),
 			"/edit");
+	}
+
+	public String getGoogleDriveFileId() {
+		return _googleDriveFileId;
 	}
 
 	public interface UnsafeRunnable<E extends Throwable> {

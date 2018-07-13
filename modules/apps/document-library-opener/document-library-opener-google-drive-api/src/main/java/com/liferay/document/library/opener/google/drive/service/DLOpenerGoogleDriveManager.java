@@ -17,7 +17,6 @@ package com.liferay.document.library.opener.google.drive.service;
 import com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,16 +27,14 @@ import java.io.IOException;
 public interface DLOpenerGoogleDriveManager {
 
 	public DLOpenerGoogleDriveFileReference checkOut(
-			FileEntry fileEntry, ServiceContext serviceContext)
+			long userId, FileEntry fileEntry)
 		throws PortalException;
 
-	public void delete(FileEntry fileEntry, ServiceContext serviceContext)
-		throws PortalException;
+	public void delete(long userId, FileEntry fileEntry) throws PortalException;
 
 	public String getAuthorizationURL(String state, String redirectUri);
 
-	public File getContentFile(
-			FileEntry fileEntry, ServiceContext serviceContext)
+	public File getContentFile(long userId, FileEntry fileEntry)
 		throws PortalException;
 
 	public boolean hasValidCredential(long userId) throws IOException;
@@ -49,7 +46,7 @@ public interface DLOpenerGoogleDriveManager {
 		throws IOException;
 
 	public DLOpenerGoogleDriveFileReference requestEditAccess(
-			FileEntry fileEntry, ServiceContext serviceContext)
+			long userId, FileEntry fileEntry)
 		throws PortalException;
 
 }

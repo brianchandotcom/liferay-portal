@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -55,7 +55,7 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		super.cancelCheckOut(fileEntryId);
 
 		_dlOpenerGoogleDriveManager.delete(
-			getFileEntry(fileEntryId), _createServiceContext());
+			_getUserId(), getFileEntry(fileEntryId));
 	}
 
 	@Override
@@ -71,7 +71,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		super.checkInFileEntry(
 			fileEntryId, majorVersion, changeLog, serviceContext);
 
-		_dlOpenerGoogleDriveManager.delete(fileEntry, serviceContext);
+		_dlOpenerGoogleDriveManager.delete(
+			serviceContext.getUserId(), fileEntry);
 	}
 
 	@Override
@@ -85,7 +86,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		super.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
 
-		_dlOpenerGoogleDriveManager.delete(fileEntry, serviceContext);
+		_dlOpenerGoogleDriveManager.delete(
+			serviceContext.getUserId(), fileEntry);
 	}
 
 	@Override
@@ -99,7 +101,7 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 			DLOpenerGoogleDriveFileReference.
 				setCurrentDLOpenerGoogleDriveFileReference(
 					_dlOpenerGoogleDriveManager.checkOut(
-						getFileEntry(fileEntryId), serviceContext));
+						serviceContext.getUserId(), getFileEntry(fileEntryId)));
 		}
 	}
 
@@ -116,21 +118,14 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 			DLOpenerGoogleDriveFileReference.
 				setCurrentDLOpenerGoogleDriveFileReference(
 					_dlOpenerGoogleDriveManager.checkOut(
-						fileEntry, serviceContext));
+						serviceContext.getUserId(), fileEntry));
 		}
 
 		return fileEntry;
 	}
 
-	private ServiceContext _createServiceContext() {
-		ServiceContext serviceContext = new ServiceContext();
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		serviceContext.setUserId(permissionChecker.getUserId());
-
-		return serviceContext;
+	private long _getUserId() {
+		return GetterUtil.getLong(PrincipalThreadLocal.getName());
 	}
 
 	private boolean _isCheckOutInGoogleDrive(ServiceContext serviceContext) {
@@ -151,7 +146,7 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		throws PortalException {
 
 		File file = _dlOpenerGoogleDriveManager.getContentFile(
-			fileEntry, serviceContext);
+			serviceContext.getUserId(), fileEntry);
 
 		try {
 			updateFileEntry(

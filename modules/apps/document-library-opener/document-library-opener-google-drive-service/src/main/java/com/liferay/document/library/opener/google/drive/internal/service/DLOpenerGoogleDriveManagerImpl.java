@@ -30,7 +30,6 @@ import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLoc
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,7 +53,7 @@ public class DLOpenerGoogleDriveManagerImpl
 
 	@Override
 	public DLOpenerGoogleDriveFileReference checkOut(
-			FileEntry fileEntry, ServiceContext serviceContext)
+			long userId, FileEntry fileEntry)
 		throws PortalException {
 
 		try {
@@ -70,7 +69,7 @@ public class DLOpenerGoogleDriveManagerImpl
 				fileEntry.getMimeType(), _getFileEntryContents(fileEntry));
 
 			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory, _getCredential(serviceContext)
+				_netHttpTransport, _jsonFactory, _getCredential(userId)
 			).build();
 
 			Drive.Files driveFiles = drive.files();
@@ -83,8 +82,7 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			_dlOpenerFileEntryReferenceLocalService.
 				addDLOpenerFileEntryReference(
-					serviceContext.getUserId(), uploadedFile.getId(),
-					fileEntry);
+					userId, uploadedFile.getId(), fileEntry);
 
 			return new DLOpenerGoogleDriveFileReference(
 				uploadedFile.getId(), fileEntry.getFileEntryId());
@@ -95,12 +93,12 @@ public class DLOpenerGoogleDriveManagerImpl
 	}
 
 	@Override
-	public void delete(FileEntry fileEntry, ServiceContext serviceContext)
+	public void delete(long userId, FileEntry fileEntry)
 		throws PortalException {
 
 		try {
 			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory, _getCredential(serviceContext)
+				_netHttpTransport, _jsonFactory, _getCredential(userId)
 			).build();
 
 			Drive.Files driveFiles = drive.files();
@@ -124,13 +122,12 @@ public class DLOpenerGoogleDriveManagerImpl
 	}
 
 	@Override
-	public File getContentFile(
-			FileEntry fileEntry, ServiceContext serviceContext)
+	public File getContentFile(long userId, FileEntry fileEntry)
 		throws PortalException {
 
 		try {
 			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory, _getCredential(serviceContext)
+				_netHttpTransport, _jsonFactory, _getCredential(userId)
 			).build();
 
 			Drive.Files driveFiles = drive.files();
@@ -189,7 +186,7 @@ public class DLOpenerGoogleDriveManagerImpl
 
 	@Override
 	public DLOpenerGoogleDriveFileReference requestEditAccess(
-			FileEntry fileEntry, ServiceContext serviceContext)
+			long userId, FileEntry fileEntry)
 		throws PortalException {
 
 		try {
@@ -203,7 +200,7 @@ public class DLOpenerGoogleDriveManagerImpl
 						" is not a Google Drive file"));
 			}
 
-			_checkCredential(serviceContext);
+			_checkCredential(userId);
 
 			return new DLOpenerGoogleDriveFileReference(
 				googleDriveFileId, fileEntry.getFileEntryId());
@@ -219,22 +216,21 @@ public class DLOpenerGoogleDriveManagerImpl
 		_netHttpTransport = GoogleNetHttpTransport.newTrustedTransport();
 	}
 
-	private void _checkCredential(ServiceContext serviceContext)
+	private void _checkCredential(long userId)
 		throws IOException, PrincipalException {
 
-		_getCredential(serviceContext);
+		_getCredential(userId);
 	}
 
-	private Credential _getCredential(ServiceContext serviceContext)
+	private Credential _getCredential(long userId)
 		throws IOException, PrincipalException {
 
-		Credential credential = _oAuth2Manager.getCredential(
-			serviceContext.getUserId());
+		Credential credential = _oAuth2Manager.getCredential(userId);
 
 		if (credential == null) {
 			throw new PrincipalException(
 				StringBundler.concat(
-					"User ", String.valueOf(serviceContext.getUserId()),
+					"User ", String.valueOf(userId),
 					" has no valid Google credential"));
 		}
 

@@ -32,10 +32,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -65,13 +67,16 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 			if (_dlOpenerGoogleDriveManager.hasValidCredential(
-					_portal.getUserId(actionRequest))) {
+					themeDisplay.getUserId())) {
 
 				Optional<DLOpenerGoogleDriveFileReference>
 					dlOpenerDriveFileReferenceOptional =
@@ -96,10 +101,13 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _executeCommand(
-			PortletRequest portletRequest, FileEntry fileEntry)
+			ActionRequest actionRequest, FileEntry fileEntry)
 		throws PortalException {
 
-		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(
 				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT)) {
@@ -109,17 +117,19 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals(
 					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN)) {
 
+			boolean majorVersion = ParamUtil.getBoolean(
+				actionRequest, "majorVersion");
+			String changeLog = ParamUtil.getString(actionRequest, "changeLog");
+
 			_dlAppService.checkInFileEntry(
-				fileEntry.getFileEntryId(),
-				ParamUtil.getBoolean(portletRequest, "majorVersion"),
-				ParamUtil.getString(portletRequest, "changeLog"),
-				ServiceContextFactory.getInstance(portletRequest));
+				fileEntry.getFileEntryId(), majorVersion, changeLog,
+				ServiceContextFactory.getInstance(actionRequest));
 		}
 		else if (cmd.equals(
 					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT)) {
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				portletRequest);
+				actionRequest);
 
 			serviceContext.setAttribute(
 				DLOpenerGoogleDriveConstants.CHECK_OUT_IN_GOOGLE_DRIVE,
@@ -135,8 +145,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 			DLOpenerGoogleDriveFileReference.
 				setCurrentDLOpenerGoogleDriveFileReference(
 					_dlOpenerGoogleDriveManager.requestEditAccess(
-						fileEntry,
-						ServiceContextFactory.getInstance(portletRequest)));
+						themeDisplay.getUserId(), fileEntry));
 		}
 		else {
 			throw new IllegalArgumentException();
@@ -160,20 +169,23 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _performAuthorizationFlow(
-			PortletRequest portletRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String state = StringUtil.randomString(5);
 
 		State.save(
 			_portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(portletRequest)),
-			_portal.getUserId(portletRequest), _getSuccessURL(portletRequest),
-			_getFailureURL(portletRequest), state);
+				_portal.getHttpServletRequest(actionRequest)),
+			themeDisplay.getUserId(), _getSuccessURL(actionRequest),
+			_getFailureURL(actionRequest), state);
 
 		actionResponse.sendRedirect(
 			_dlOpenerGoogleDriveManager.getAuthorizationURL(
-				state, _oAuth2Helper.getRedirectUri(portletRequest)));
+				state, _oAuth2Helper.getRedirectUri(actionRequest)));
 	}
 
 	@Reference

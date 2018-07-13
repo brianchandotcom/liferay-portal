@@ -115,12 +115,6 @@
 		</execute>
 	</command>
 
-	<command name="clickSubmitLocalized">
-		<execute macro="Button#click">
-			<var name="button" value="${buttonName}" />
-		</execute>
-	</command>
-
 	<command name="clickUpdate">
 		<execute macro="Button#click">
 			<var name="button" value="Update" />

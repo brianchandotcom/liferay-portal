@@ -69,7 +69,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddDocument" priority="5">
+	<command name="AddDocuments" priority="5">
 		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
@@ -252,34 +252,6 @@
 			<var name="dmDocumentTitle" value="Document_1.xlsx" />
 			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
-	</command>
-
-	<command name="AddDocuments" priority="5">
-		<property name="portal.acceptance" value="false" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<for list="1,2,3" param="entryCount">
-			<execute macro="DMDocument#addPG">
-				<var name="dmDocumentDescription" value="DM Document Description" />
-				<var name="dmDocumentFile" value="Document_${entryCount}.doc" />
-				<var name="dmDocumentTitle" value="Document_${entryCount}.doc" />
-			</execute>
-		</for>
-
-		<for list="1,2,3" param="entryCount">
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Documents and Media Page" />
-			</execute>
-
-			<execute macro="DMDocument#viewPG">
-				<var name="dmDocumentDescription" value="DM Document Description" />
-				<var name="dmDocumentSize" value="22KB" />
-				<var name="dmDocumentTitle" value="Document_${entryCount}.doc" />
-			</execute>
-		</for>
 	</command>
 
 	<command name="AddDocumentTypes" priority="4">

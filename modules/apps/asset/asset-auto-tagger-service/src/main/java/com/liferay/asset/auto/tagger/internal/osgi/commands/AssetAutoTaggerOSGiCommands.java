@@ -164,7 +164,8 @@ public class AssetAutoTaggerOSGiCommands {
 	private Criterion _getClassNameIdCriterion(String[] classNames) {
 		Property property = PropertyFactoryUtil.forName("classNameId");
 
-		Criterion criterion = property.eq(classNames[0]);
+		Criterion criterion = property.eq(
+			_classNameLocalService.getClassNameId(classNames[0]));
 
 		for (int i = 1; i < classNames.length; i++) {
 			long classNameId = _classNameLocalService.getClassNameId(

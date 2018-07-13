@@ -79,6 +79,11 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		return _sharingEntryLocalService.createSharingEntry(sharingEntryId);
 	}
 
+	@Override
+	public void deleteGroupSharingEntries(long groupId) {
+		_sharingEntryLocalService.deleteGroupSharingEntries(groupId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -87,6 +92,11 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteSharingEntries(long classNameId, long classPK) {
+		_sharingEntryLocalService.deleteSharingEntries(classNameId, classPK);
 	}
 
 	/**
@@ -121,6 +131,11 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	public com.liferay.sharing.model.SharingEntry deleteSharingEntry(
 		com.liferay.sharing.model.SharingEntry sharingEntry) {
 		return _sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+	}
+
+	@Override
+	public void deleteToUserSharingEntries(long toUserId) {
+		_sharingEntryLocalService.deleteToUserSharingEntries(toUserId);
 	}
 
 	@Override
@@ -243,6 +258,12 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getFromUserSharingEntries(
 		long fromUserId) {
 		return _sharingEntryLocalService.getFromUserSharingEntries(fromUserId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry> getGroupSharingEntries(
+		long groupId) {
+		return _sharingEntryLocalService.getGroupSharingEntries(groupId);
 	}
 
 	@Override

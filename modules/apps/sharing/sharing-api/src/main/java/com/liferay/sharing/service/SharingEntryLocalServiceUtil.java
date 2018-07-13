@@ -83,6 +83,10 @@ public class SharingEntryLocalServiceUtil {
 		return getService().createSharingEntry(sharingEntryId);
 	}
 
+	public static void deleteGroupSharingEntries(long groupId) {
+		getService().deleteGroupSharingEntries(groupId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -90,6 +94,10 @@ public class SharingEntryLocalServiceUtil {
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteSharingEntries(long classNameId, long classPK) {
+		getService().deleteSharingEntries(classNameId, classPK);
 	}
 
 	/**
@@ -120,6 +128,10 @@ public class SharingEntryLocalServiceUtil {
 	public static com.liferay.sharing.model.SharingEntry deleteSharingEntry(
 		com.liferay.sharing.model.SharingEntry sharingEntry) {
 		return getService().deleteSharingEntry(sharingEntry);
+	}
+
+	public static void deleteToUserSharingEntries(long toUserId) {
+		getService().deleteToUserSharingEntries(toUserId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -229,6 +241,11 @@ public class SharingEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.sharing.model.SharingEntry> getFromUserSharingEntries(
 		long fromUserId) {
 		return getService().getFromUserSharingEntries(fromUserId);
+	}
+
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getGroupSharingEntries(
+		long groupId) {
+		return getService().getGroupSharingEntries(groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

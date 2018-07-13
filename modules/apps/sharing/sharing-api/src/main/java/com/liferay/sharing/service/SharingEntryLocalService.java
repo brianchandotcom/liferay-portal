@@ -93,12 +93,16 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public SharingEntry createSharingEntry(long sharingEntryId);
 
+	public void deleteGroupSharingEntries(long groupId);
+
 	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	public void deleteSharingEntries(long classNameId, long classPK);
 
 	/**
 	* Deletes the sharing entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -122,6 +126,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public SharingEntry deleteSharingEntry(SharingEntry sharingEntry);
+
+	public void deleteToUserSharingEntries(long toUserId);
 
 	public DynamicQuery dynamicQuery();
 
@@ -205,6 +211,9 @@ public interface SharingEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getFromUserSharingEntries(long fromUserId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getGroupSharingEntries(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

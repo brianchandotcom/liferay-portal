@@ -29,6 +29,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
 		<finder name="FromUserId" return-type="Collection">
 			<finder-column name="fromUserId" />
 		</finder>

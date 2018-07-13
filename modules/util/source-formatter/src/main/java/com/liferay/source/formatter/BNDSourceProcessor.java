@@ -70,6 +70,14 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			return false;
 		}
 
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
+		List<String> fileExtensions = sourceFormatterArgs.getFileExtensions();
+
+		if (!fileExtensions.contains("bnd")) {
+			return false;
+		}
+
 		return true;
 	}
 

@@ -17,13 +17,9 @@ package com.liferay.asset.auto.tagger.internal.messaging;
 import com.liferay.asset.auto.tagger.AssetAutoTagger;
 import com.liferay.asset.auto.tagger.internal.constants.AssetAutoTaggerDestinationNames;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,21 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetAutoTaggerMessageListener extends BaseMessageListener {
 
 	@Override
-	protected void doReceive(Message message) {
+	protected void doReceive(Message message) throws Exception {
 		AssetEntry assetEntry = (AssetEntry)message.getPayload();
 
-		try {
-			if (ListUtil.isEmpty(assetEntry.getTags())) {
-				_assetAutoTagger.tag(assetEntry);
-			}
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to auto tag asset entry " + assetEntry, pe);
-		}
+		_assetAutoTagger.tag(assetEntry);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetAutoTaggerMessageListener.class);
 
 	@Reference
 	private AssetAutoTagger _assetAutoTagger;

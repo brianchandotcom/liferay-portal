@@ -105,7 +105,8 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 				});
 		}
 		catch (Throwable t) {
-			throw new PortalException(t);
+			throw new PortalException(
+				"Unable to auto tag asset entry " + assetEntry.getEntryId(), t);
 		}
 	}
 
@@ -139,7 +140,10 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 				});
 		}
 		catch (Throwable t) {
-			throw new PortalException(t);
+			throw new PortalException(
+				"Unable to remove auto tag from asset entry " +
+					assetEntry.getEntryId(),
+				t);
 		}
 	}
 

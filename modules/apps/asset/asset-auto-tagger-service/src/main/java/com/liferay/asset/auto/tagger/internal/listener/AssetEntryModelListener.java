@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.concurrent.Callable;
 
@@ -49,6 +50,10 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			(Callable<Void>)() -> {
+				if (!ListUtil.isEmpty(assetEntry.getTags())) {
+					return null;
+				}
+
 				Message message = new Message();
 
 				message.setPayload(assetEntry);

@@ -734,8 +734,8 @@
 					<var name="key_itemName" value="${siteName}" />
 				</execute>
 
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-					<var name="key_rowEntry" value="${siteName}" />
+				<execute macro="LexiconEntry#openEntryMenu">
+					<var name="rowEntry" value="${siteName}" />
 				</execute>
 
 				<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Leave">
@@ -781,8 +781,8 @@
 			<var name="key_itemName" value="${siteName}" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${siteName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteName}" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Join">

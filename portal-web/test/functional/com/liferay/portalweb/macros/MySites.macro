@@ -15,8 +15,8 @@
 	</command>
 
 	<command name="viewMembershipRequested">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${siteName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteName}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
@@ -41,8 +41,8 @@
 				</execute>
 			</then>
 			<else>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-					<var name="key_rowEntry" value="${siteName}" />
+				<execute macro="LexiconEntry#openEntryMenu">
+					<var name="rowEntry" value="${siteName}" />
 				</execute>
 
 				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">

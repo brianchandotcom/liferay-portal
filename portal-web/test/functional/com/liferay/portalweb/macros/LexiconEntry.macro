@@ -92,8 +92,8 @@
 	</command>
 
 	<command name="gotoEntryMenuItem">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${rowEntry}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${rowEntry}" />
 		</execute>
 
 		<execute macro="MenuItem#click">
@@ -102,8 +102,8 @@
 	</command>
 
 	<command name="gotoEntryMenuItemNoError">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${rowEntry}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${rowEntry}" />
 		</execute>
 
 		<execute macro="MenuItem#clickNoError">
@@ -112,8 +112,8 @@
 	</command>
 
 	<command name="gotoEntryMenuItemNoWait">
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${rowEntry}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${rowEntry}" />
 		</execute>
 
 		<execute macro="MenuItem#click">
@@ -122,8 +122,8 @@
 	</command>
 
 	<command name="gotoEntryMenuItemNoWaitNoError">
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${rowEntry}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${rowEntry}" />
 		</execute>
 
 		<execute macro="MenuItem#clickNoError">
@@ -148,7 +148,7 @@
 	</command>
 
 	<command name="openEntryMenu">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
 			<var name="key_rowEntry" value="${rowEntry}" />
 		</execute>
 	</command>

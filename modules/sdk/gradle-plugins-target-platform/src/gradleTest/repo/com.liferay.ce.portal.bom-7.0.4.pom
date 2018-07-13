@@ -31,7 +31,7 @@
 		<repository>
 			<id>liferay-public-snapshots</id>
 			<name>Liferay Public Snapshots</name>
-			<url>https://repository.liferay.com/nexus/content/repositories/liferay-public-snapshots/</url>
+			<url>https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots/</url>
 		</repository>
 	</repositories>
 	<dependencyManagement>

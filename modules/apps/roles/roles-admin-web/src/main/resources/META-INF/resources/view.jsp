@@ -39,7 +39,7 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%= roleDisplayContext.getViewRoleNavigationItems(portletURL) %>"
+	navigationItems="<%= roleDisplayContext.getViewRoleNavigationItems(liferayPortletResponse, portletURL) %>"
 />
 
 <clay:management-toolbar
@@ -107,7 +107,11 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 
 		form.fm('deleteRoleIds').val(deleteRoleIds);
 
-		document.<portlet:namespace />fm.p_p_lifecycle.value = '1';
+		var p_p_lifecycle = document.<portlet:namespace />fm.p_p_lifecycle;
+
+		if (p_p_lifecycle) {
+			p_p_lifecycle.value = '1';
+		}
 
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 			submitForm(form, '<portlet:actionURL name="deleteRoles"><portlet:param name="redirect" value="<%= portletURL.toString() %>" /></portlet:actionURL>');

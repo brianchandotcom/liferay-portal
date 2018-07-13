@@ -16,10 +16,12 @@ package com.liferay.roles.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -178,6 +180,7 @@ public class RoleDisplayContext {
 	}
 
 	public List<NavigationItem> getViewRoleNavigationItems(
+			LiferayPortletResponse liferayPortletResponse,
 			PortletURL portletURL)
 		throws Exception {
 
@@ -186,35 +189,58 @@ public class RoleDisplayContext {
 		return new NavigationItemList() {
 			{
 				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							type == RoleConstants.TYPE_REGULAR);
-						navigationItem.setHref(
-							portletURL, "type", RoleConstants.TYPE_REGULAR);
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "regular-roles"));
-					});
+					SafeConsumer.ignore(
+						navigationItem -> {
+							navigationItem.setActive(
+								type == RoleConstants.TYPE_REGULAR);
+
+							PortletURL viewRegularRoleNavigationURL =
+								PortletURLUtil.clone(
+									portletURL, liferayPortletResponse);
+
+							navigationItem.setHref(
+								viewRegularRoleNavigationURL, "type",
+								RoleConstants.TYPE_REGULAR);
+
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "regular-roles"));
+						}));
+				add(
+					SafeConsumer.ignore(
+						navigationItem -> {
+							navigationItem.setActive(
+								type == RoleConstants.TYPE_SITE);
+
+							PortletURL viewSiteRoleNavigationURL =
+								PortletURLUtil.clone(
+									portletURL, liferayPortletResponse);
+
+							navigationItem.setHref(
+								viewSiteRoleNavigationURL, "type",
+								RoleConstants.TYPE_SITE);
+
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "site-roles"));
+						}));
 
 				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							type == RoleConstants.TYPE_SITE);
-						navigationItem.setHref(
-							portletURL, "type", RoleConstants.TYPE_SITE);
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "site-roles"));
-					});
+					SafeConsumer.ignore(
+						navigationItem -> {
+							navigationItem.setActive(
+								type == RoleConstants.TYPE_ORGANIZATION);
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							type == RoleConstants.TYPE_ORGANIZATION);
-						navigationItem.setHref(
-							portletURL, "type",
-							RoleConstants.TYPE_ORGANIZATION);
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "organization-roles"));
-					});
+							PortletURL viewOrganizationRoleNavigationURL =
+								PortletURLUtil.clone(
+									portletURL, liferayPortletResponse);
+
+							navigationItem.setHref(
+								viewOrganizationRoleNavigationURL, "type",
+								RoleConstants.TYPE_ORGANIZATION);
+
+							navigationItem.setLabel(
+								LanguageUtil.get(
+									_request, "organization-roles"));
+						}));
 			}
 		};
 	}

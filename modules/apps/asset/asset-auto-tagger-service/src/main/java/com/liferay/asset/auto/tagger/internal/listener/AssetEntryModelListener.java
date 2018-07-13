@@ -114,9 +114,6 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 	@Reference
-	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
 	private DestinationFactory _destinationFactory;
 
 	@Reference

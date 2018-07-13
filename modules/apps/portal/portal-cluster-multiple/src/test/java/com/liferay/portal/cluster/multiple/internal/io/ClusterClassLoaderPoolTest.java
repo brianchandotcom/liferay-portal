@@ -221,8 +221,9 @@ public class ClusterClassLoaderPoolTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Unable to find ClassLoader for " + _CONTEXT_NAME_3 +
-					", ClassLoader " + _CONTEXT_NAME_2 + " is provided instead",
+				"Unable to find class loader for " + _CONTEXT_NAME_3 +
+					", class loader " + _CONTEXT_NAME_2 +
+						" is provided instead",
 				logRecord.getMessage());
 
 			// Test 2, log level is OFF
@@ -266,8 +267,8 @@ public class ClusterClassLoaderPoolTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Unable to find ClassLoader for " + _CONTEXT_NAME_1 +
-					", fall back to current thread's context classLoader",
+				"Unable to find class loader for " + _CONTEXT_NAME_1 +
+					", fall back to current thread's context class loader",
 				logRecord.getMessage());
 		}
 	}
@@ -322,8 +323,8 @@ public class ClusterClassLoaderPoolTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Unable to find contextName for " + classLoader +
-					", send 'null' as contextName instead",
+				"Unable to find context name for " + classLoader +
+					", send 'null' as context name instead",
 				logRecord.getMessage());
 		}
 	}

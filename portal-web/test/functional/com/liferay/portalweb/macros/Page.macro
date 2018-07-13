@@ -138,8 +138,8 @@
 			<var name="key_pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Configure">
-			<var name="key_menuItem" value="Configure" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Configure" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
@@ -425,8 +425,8 @@
 
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage">
-			<var name="key_menuItem" value="Manage" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage" />
 		</execute>
 	</command>
 
@@ -537,8 +537,8 @@
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="${sitePagesVariationName}">
-			<var name="key_menuItem" value="${sitePagesVariationName}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${sitePagesVariationName}" />
 		</execute>
 	</command>
 
@@ -675,8 +675,8 @@
 			<var name="key_pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Configure">
-			<var name="key_menuItem" value="Configure" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Configure" />
 		</execute>
 
 		<execute function="AssertTextPresent" locator1="SitePagesEditPage#VIEW_THEME" value1="${themeName}" />

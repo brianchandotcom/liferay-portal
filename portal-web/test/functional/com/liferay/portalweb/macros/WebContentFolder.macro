@@ -47,8 +47,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
-			<var name="key_menuItem" value="Subfolder" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subfolder" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">

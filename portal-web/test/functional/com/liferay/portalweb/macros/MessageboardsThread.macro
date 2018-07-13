@@ -310,8 +310,8 @@
 			<var name="key_threadReplyBody" value="${threadReplyBody}" />
 		</execute>
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Ban This User">
-			<var name="key_menuItem" value="Ban This User" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Ban This User" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -356,8 +356,8 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to Recycle Bin">
-			<var name="key_menuItem" value="Move to Recycle Bin" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Move to Recycle Bin" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />

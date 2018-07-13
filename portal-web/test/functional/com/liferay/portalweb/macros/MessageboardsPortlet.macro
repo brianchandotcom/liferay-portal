@@ -267,8 +267,8 @@
 
 		<execute function="Click" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_ACTIONS" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Unban This User">
-			<var name="key_menuItem" value="Unban This User" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Unban This User" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

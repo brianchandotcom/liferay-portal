@@ -681,8 +681,8 @@
 	<command name="navigateToStagingMenuItem">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Staging">
-			<var name="key_menuItem" value="Staging" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Staging" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />

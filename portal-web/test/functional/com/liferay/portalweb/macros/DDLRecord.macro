@@ -720,8 +720,8 @@
 
 		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="View">
-			<var name="key_menuItem" value="View" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="View" />
 		</execute>
 
 		<if>

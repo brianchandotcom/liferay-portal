@@ -45,8 +45,8 @@
 			<then>
 				<execute function="Click" locator1="Configuration#SCOPE_SELECT" />
 
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Global">
-					<var name="key_menuItem" value="Global" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Global" />
 				</execute>
 			</then>
 		</if>
@@ -56,8 +56,8 @@
 			<then>
 				<execute function="Click" locator1="Configuration#SCOPE_SELECT" />
 
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Other Site...">
-					<var name="key_menuItem" value="Other Site..." />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Other Site..." />
 				</execute>
 
 				<execute function="SelectFrame" value1="relative=top" />
@@ -75,8 +75,8 @@
 			<then>
 				<execute function="Click" locator1="Configuration#SCOPE_SELECT" />
 
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
-					<var name="key_menuItem" value="Current Site" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Current Site" />
 				</execute>
 			</then>
 		</if>

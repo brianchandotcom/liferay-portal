@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.asset.auto.tagger">
 	<namespace>AssetAutoTagger</namespace>
-	<entity local-service="true" name="AssetAutoTaggerEntry" remote-service="true" trash-enabled="false" uuid="true">
+	<entity local-service="true" name="AssetAutoTaggerEntry" remote-service="false" trash-enabled="false" uuid="false">
 
 		<!-- PK fields -->
 

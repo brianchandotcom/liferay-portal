@@ -30,7 +30,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected String[] doGetIncludes() {
-		if (isPortalSource() || isSubrepository()) {
+		if (isPortalSource()) {
+			return new String[] {"**/*.properties"};
+		}
+		else if (isSubrepository()) {
 			return new String[] {
 				"**/app-server.properties", "**/build.properties",
 				"**/ci.properties", "**/lib/*/dependencies.properties",
@@ -44,12 +47,13 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				"**/source-formatter.properties", "**/test.properties"
 			};
 		}
-
-		return new String[] {
-			"**/liferay-plugin-package.properties", "**/portal.properties",
-			"**/portal-ext.properties", "**/portlet.properties",
-			"**/service.properties", "**/source-formatter.properties"
-		};
+		else {
+			return new String[] {
+				"**/liferay-plugin-package.properties", "**/portal.properties",
+				"**/portal-ext.properties", "**/portlet.properties",
+				"**/service.properties", "**/source-formatter.properties"
+			};
+		}
 	}
 
 }

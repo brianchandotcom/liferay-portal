@@ -2,7 +2,6 @@
 
 <model-hints>
 	<model name="com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry">
-		<field name="uuid" type="String" />
 		<field name="assetAutoTaggerEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

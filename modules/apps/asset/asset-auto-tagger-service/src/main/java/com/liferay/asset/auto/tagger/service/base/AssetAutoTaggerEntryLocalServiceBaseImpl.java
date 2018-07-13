@@ -20,12 +20,6 @@ import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryPersistence;
 
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
-import com.liferay.exportimport.kernel.lar.ManifestSummary;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -35,7 +29,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -224,19 +217,6 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the asset auto tagger entry matching the UUID and group.
-	 *
-	 * @param uuid the asset auto tagger entry's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
-	 */
-	@Override
-	public AssetAutoTaggerEntry fetchAssetAutoTaggerEntryByUuidAndGroupId(
-		String uuid, long groupId) {
-		return assetAutoTaggerEntryPersistence.fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the asset auto tagger entry with the primary key.
 	 *
 	 * @param assetAutoTaggerEntryId the primary key of the asset auto tagger entry
@@ -287,58 +267,6 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 			"assetAutoTaggerEntryId");
 	}
 
-	@Override
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
-		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
-				@Override
-				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
-
-					StagedModelType stagedModelType = getStagedModelType();
-
-					long modelAdditionCount = super.performCount();
-
-					manifestSummary.addModelAdditionCount(stagedModelType,
-						modelAdditionCount);
-
-					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
-							stagedModelType);
-
-					manifestSummary.addModelDeletionCount(stagedModelType,
-						modelDeletionCount);
-
-					return modelAdditionCount;
-				}
-			};
-
-		initActionableDynamicQuery(exportActionableDynamicQuery);
-
-		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(dynamicQuery,
-						"modifiedDate");
-				}
-			});
-
-		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
-
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetAutoTaggerEntry>() {
-				@Override
-				public void performAction(
-					AssetAutoTaggerEntry assetAutoTaggerEntry)
-					throws PortalException {
-					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						assetAutoTaggerEntry);
-				}
-			});
-		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
-				PortalUtil.getClassNameId(AssetAutoTaggerEntry.class.getName())));
-
-		return exportActionableDynamicQuery;
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -352,51 +280,6 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return assetAutoTaggerEntryPersistence.findByPrimaryKey(primaryKeyObj);
-	}
-
-	/**
-	 * Returns all the asset auto tagger entries matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the asset auto tagger entries
-	 * @param companyId the primary key of the company
-	 * @return the matching asset auto tagger entries, or an empty list if no matches were found
-	 */
-	@Override
-	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntriesByUuidAndCompanyId(
-		String uuid, long companyId) {
-		return assetAutoTaggerEntryPersistence.findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of asset auto tagger entries matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the asset auto tagger entries
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of asset auto tagger entries
-	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching asset auto tagger entries, or an empty list if no matches were found
-	 */
-	@Override
-	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntriesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
-		return assetAutoTaggerEntryPersistence.findByUuid_C(uuid, companyId,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset auto tagger entry matching the UUID and group.
-	 *
-	 * @param uuid the asset auto tagger entry's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching asset auto tagger entry
-	 * @throws PortalException if a matching asset auto tagger entry could not be found
-	 */
-	@Override
-	public AssetAutoTaggerEntry getAssetAutoTaggerEntryByUuidAndGroupId(
-		String uuid, long groupId) throws PortalException {
-		return assetAutoTaggerEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

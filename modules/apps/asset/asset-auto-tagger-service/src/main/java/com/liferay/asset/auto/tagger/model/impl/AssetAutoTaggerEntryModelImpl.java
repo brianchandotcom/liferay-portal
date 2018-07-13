@@ -18,22 +18,17 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntryModel;
-import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntrySoap;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -41,10 +36,8 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,7 +53,6 @@ import java.util.Map;
  * @see AssetAutoTaggerEntryModel
  * @generated
  */
-@JSON(strict = true)
 @ProviderType
 public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTaggerEntry>
 	implements AssetAutoTaggerEntryModel {
@@ -71,7 +63,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 	 */
 	public static final String TABLE_NAME = "AssetAutoTaggerEntry";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
 			{ "assetAutoTaggerEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -83,7 +74,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetAutoTaggerEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -93,7 +83,7 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 		TABLE_COLUMNS_MAP.put("assetTagId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetAutoTaggerEntry (uuid_ VARCHAR(75) null,assetAutoTaggerEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,assetTagId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table AssetAutoTaggerEntry (assetAutoTaggerEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,assetTagId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table AssetAutoTaggerEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetAutoTaggerEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetAutoTaggerEntry.createDate DESC";
@@ -111,58 +101,7 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 			true);
 	public static final long ASSETENTRYID_COLUMN_BITMASK = 1L;
 	public static final long ASSETTAGID_COLUMN_BITMASK = 2L;
-	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static AssetAutoTaggerEntry toModel(
-		AssetAutoTaggerEntrySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		AssetAutoTaggerEntry model = new AssetAutoTaggerEntryImpl();
-
-		model.setUuid(soapModel.getUuid());
-		model.setAssetAutoTaggerEntryId(soapModel.getAssetAutoTaggerEntryId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setAssetEntryId(soapModel.getAssetEntryId());
-		model.setAssetTagId(soapModel.getAssetTagId());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<AssetAutoTaggerEntry> toModels(
-		AssetAutoTaggerEntrySoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<AssetAutoTaggerEntry> models = new ArrayList<AssetAutoTaggerEntry>(soapModels.length);
-
-		for (AssetAutoTaggerEntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
-
+	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.asset.auto.tagger.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry"));
 
@@ -203,7 +142,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("assetAutoTaggerEntryId", getAssetAutoTaggerEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -220,12 +158,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long assetAutoTaggerEntryId = (Long)attributes.get(
 				"assetAutoTaggerEntryId");
 
@@ -270,31 +202,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 		}
 	}
 
-	@JSON
-	@Override
-	public String getUuid() {
-		if (_uuid == null) {
-			return "";
-		}
-		else {
-			return _uuid;
-		}
-	}
-
-	@Override
-	public void setUuid(String uuid) {
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
-		}
-
-		_uuid = uuid;
-	}
-
-	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
-	}
-
-	@JSON
 	@Override
 	public long getAssetAutoTaggerEntryId() {
 		return _assetAutoTaggerEntryId;
@@ -305,7 +212,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 		_assetAutoTaggerEntryId = assetAutoTaggerEntryId;
 	}
 
-	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -313,22 +219,9 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
-		}
-
 		_groupId = groupId;
 	}
 
-	public long getOriginalGroupId() {
-		return _originalGroupId;
-	}
-
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -336,22 +229,9 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
 		_companyId = companyId;
 	}
 
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
-	}
-
-	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -364,7 +244,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 		_createDate = createDate;
 	}
 
-	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -381,7 +260,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	@Override
 	public long getAssetEntryId() {
 		return _assetEntryId;
@@ -404,7 +282,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 		return _originalAssetEntryId;
 	}
 
-	@JSON
 	@Override
 	public long getAssetTagId() {
 		return _assetTagId;
@@ -425,12 +302,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 
 	public long getOriginalAssetTagId() {
 		return _originalAssetTagId;
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				AssetAutoTaggerEntry.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -464,7 +335,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 	public Object clone() {
 		AssetAutoTaggerEntryImpl assetAutoTaggerEntryImpl = new AssetAutoTaggerEntryImpl();
 
-		assetAutoTaggerEntryImpl.setUuid(getUuid());
 		assetAutoTaggerEntryImpl.setAssetAutoTaggerEntryId(getAssetAutoTaggerEntryId());
 		assetAutoTaggerEntryImpl.setGroupId(getGroupId());
 		assetAutoTaggerEntryImpl.setCompanyId(getCompanyId());
@@ -535,16 +405,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 	public void resetOriginalValues() {
 		AssetAutoTaggerEntryModelImpl assetAutoTaggerEntryModelImpl = this;
 
-		assetAutoTaggerEntryModelImpl._originalUuid = assetAutoTaggerEntryModelImpl._uuid;
-
-		assetAutoTaggerEntryModelImpl._originalGroupId = assetAutoTaggerEntryModelImpl._groupId;
-
-		assetAutoTaggerEntryModelImpl._setOriginalGroupId = false;
-
-		assetAutoTaggerEntryModelImpl._originalCompanyId = assetAutoTaggerEntryModelImpl._companyId;
-
-		assetAutoTaggerEntryModelImpl._setOriginalCompanyId = false;
-
 		assetAutoTaggerEntryModelImpl._setModifiedDate = false;
 
 		assetAutoTaggerEntryModelImpl._originalAssetEntryId = assetAutoTaggerEntryModelImpl._assetEntryId;
@@ -561,14 +421,6 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 	@Override
 	public CacheModel<AssetAutoTaggerEntry> toCacheModel() {
 		AssetAutoTaggerEntryCacheModel assetAutoTaggerEntryCacheModel = new AssetAutoTaggerEntryCacheModel();
-
-		assetAutoTaggerEntryCacheModel.uuid = getUuid();
-
-		String uuid = assetAutoTaggerEntryCacheModel.uuid;
-
-		if ((uuid != null) && (uuid.length() == 0)) {
-			assetAutoTaggerEntryCacheModel.uuid = null;
-		}
 
 		assetAutoTaggerEntryCacheModel.assetAutoTaggerEntryId = getAssetAutoTaggerEntryId();
 
@@ -603,11 +455,9 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", assetAutoTaggerEntryId=");
+		sb.append("{assetAutoTaggerEntryId=");
 		sb.append(getAssetAutoTaggerEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -628,16 +478,12 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>assetAutoTaggerEntryId</column-name><column-value><![CDATA[");
 		sb.append(getAssetAutoTaggerEntryId());
@@ -676,15 +522,9 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetAutoTaggerEntry.class, ModelWrapper.class
 		};
-	private String _uuid;
-	private String _originalUuid;
 	private long _assetAutoTaggerEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

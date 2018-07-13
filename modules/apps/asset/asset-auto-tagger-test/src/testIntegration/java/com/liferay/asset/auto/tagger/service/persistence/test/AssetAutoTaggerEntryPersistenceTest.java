@@ -56,7 +56,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -124,8 +123,6 @@ public class AssetAutoTaggerEntryPersistenceTest {
 
 		AssetAutoTaggerEntry newAssetAutoTaggerEntry = _persistence.create(pk);
 
-		newAssetAutoTaggerEntry.setUuid(RandomTestUtil.randomString());
-
 		newAssetAutoTaggerEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newAssetAutoTaggerEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -142,8 +139,6 @@ public class AssetAutoTaggerEntryPersistenceTest {
 
 		AssetAutoTaggerEntry existingAssetAutoTaggerEntry = _persistence.findByPrimaryKey(newAssetAutoTaggerEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetAutoTaggerEntry.getUuid(),
-			newAssetAutoTaggerEntry.getUuid());
 		Assert.assertEquals(existingAssetAutoTaggerEntry.getAssetAutoTaggerEntryId(),
 			newAssetAutoTaggerEntry.getAssetAutoTaggerEntryId());
 		Assert.assertEquals(existingAssetAutoTaggerEntry.getGroupId(),
@@ -160,33 +155,6 @@ public class AssetAutoTaggerEntryPersistenceTest {
 			newAssetAutoTaggerEntry.getAssetEntryId());
 		Assert.assertEquals(existingAssetAutoTaggerEntry.getAssetTagId(),
 			newAssetAutoTaggerEntry.getAssetTagId());
-	}
-
-	@Test
-	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid("");
-
-		_persistence.countByUuid("null");
-
-		_persistence.countByUuid((String)null);
-	}
-
-	@Test
-	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
-
-		_persistence.countByUUID_G("null", 0L);
-
-		_persistence.countByUUID_G((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
-
-		_persistence.countByUuid_C("null", 0L);
-
-		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -236,9 +204,9 @@ public class AssetAutoTaggerEntryPersistenceTest {
 
 	protected OrderByComparator<AssetAutoTaggerEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetAutoTaggerEntry",
-			"uuid", true, "assetAutoTaggerEntryId", true, "groupId", true,
-			"companyId", true, "createDate", true, "modifiedDate", true,
-			"assetEntryId", true, "assetTagId", true);
+			"assetAutoTaggerEntryId", true, "groupId", true, "companyId", true,
+			"createDate", true, "modifiedDate", true, "assetEntryId", true,
+			"assetTagId", true);
 	}
 
 	@Test
@@ -447,15 +415,6 @@ public class AssetAutoTaggerEntryPersistenceTest {
 
 		AssetAutoTaggerEntry existingAssetAutoTaggerEntry = _persistence.findByPrimaryKey(newAssetAutoTaggerEntry.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(
-				existingAssetAutoTaggerEntry.getUuid(),
-				ReflectionTestUtil.invoke(existingAssetAutoTaggerEntry,
-					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(
-				existingAssetAutoTaggerEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingAssetAutoTaggerEntry,
-				"getOriginalGroupId", new Class<?>[0]));
-
 		Assert.assertEquals(Long.valueOf(
 				existingAssetAutoTaggerEntry.getAssetEntryId()),
 			ReflectionTestUtil.<Long>invoke(existingAssetAutoTaggerEntry,
@@ -471,8 +430,6 @@ public class AssetAutoTaggerEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		AssetAutoTaggerEntry assetAutoTaggerEntry = _persistence.create(pk);
-
-		assetAutoTaggerEntry.setUuid(RandomTestUtil.randomString());
 
 		assetAutoTaggerEntry.setGroupId(RandomTestUtil.nextLong());
 

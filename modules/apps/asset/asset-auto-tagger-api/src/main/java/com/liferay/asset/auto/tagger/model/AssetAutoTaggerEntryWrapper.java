@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -61,7 +59,6 @@ public class AssetAutoTaggerEntryWrapper implements AssetAutoTaggerEntry,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("assetAutoTaggerEntryId", getAssetAutoTaggerEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -75,12 +72,6 @@ public class AssetAutoTaggerEntryWrapper implements AssetAutoTaggerEntry,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long assetAutoTaggerEntryId = (Long)attributes.get(
 				"assetAutoTaggerEntryId");
 
@@ -225,16 +216,6 @@ public class AssetAutoTaggerEntryWrapper implements AssetAutoTaggerEntry,
 		return _assetAutoTaggerEntry.getPrimaryKeyObj();
 	}
 
-	/**
-	* Returns the uuid of this asset auto tagger entry.
-	*
-	* @return the uuid of this asset auto tagger entry
-	*/
-	@Override
-	public String getUuid() {
-		return _assetAutoTaggerEntry.getUuid();
-	}
-
 	@Override
 	public int hashCode() {
 		return _assetAutoTaggerEntry.hashCode();
@@ -371,16 +352,6 @@ public class AssetAutoTaggerEntryWrapper implements AssetAutoTaggerEntry,
 		_assetAutoTaggerEntry.setPrimaryKeyObj(primaryKeyObj);
 	}
 
-	/**
-	* Sets the uuid of this asset auto tagger entry.
-	*
-	* @param uuid the uuid of this asset auto tagger entry
-	*/
-	@Override
-	public void setUuid(String uuid) {
-		_assetAutoTaggerEntry.setUuid(uuid);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<AssetAutoTaggerEntry> toCacheModel() {
 		return _assetAutoTaggerEntry.toCacheModel();
@@ -424,11 +395,6 @@ public class AssetAutoTaggerEntryWrapper implements AssetAutoTaggerEntry,
 		}
 
 		return false;
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return _assetAutoTaggerEntry.getStagedModelType();
 	}
 
 	@Override

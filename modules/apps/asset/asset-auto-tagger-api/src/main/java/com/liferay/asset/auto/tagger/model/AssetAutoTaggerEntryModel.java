@@ -18,11 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +42,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface AssetAutoTaggerEntryModel extends BaseModel<AssetAutoTaggerEntry>,
-	ShardedModel, StagedModel {
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,23 +62,6 @@ public interface AssetAutoTaggerEntryModel extends BaseModel<AssetAutoTaggerEntr
 	 * @param primaryKey the primary key of this asset auto tagger entry
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the uuid of this asset auto tagger entry.
-	 *
-	 * @return the uuid of this asset auto tagger entry
-	 */
-	@AutoEscape
-	@Override
-	public String getUuid();
-
-	/**
-	 * Sets the uuid of this asset auto tagger entry.
-	 *
-	 * @param uuid the uuid of this asset auto tagger entry
-	 */
-	@Override
-	public void setUuid(String uuid);
 
 	/**
 	 * Returns the asset auto tagger entry ID of this asset auto tagger entry.
@@ -131,7 +112,6 @@ public interface AssetAutoTaggerEntryModel extends BaseModel<AssetAutoTaggerEntr
 	 *
 	 * @return the create date of this asset auto tagger entry
 	 */
-	@Override
 	public Date getCreateDate();
 
 	/**
@@ -139,7 +119,6 @@ public interface AssetAutoTaggerEntryModel extends BaseModel<AssetAutoTaggerEntr
 	 *
 	 * @param createDate the create date of this asset auto tagger entry
 	 */
-	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -147,7 +126,6 @@ public interface AssetAutoTaggerEntryModel extends BaseModel<AssetAutoTaggerEntr
 	 *
 	 * @return the modified date of this asset auto tagger entry
 	 */
-	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -155,7 +133,6 @@ public interface AssetAutoTaggerEntryModel extends BaseModel<AssetAutoTaggerEntr
 	 *
 	 * @param modifiedDate the modified date of this asset auto tagger entry
 	 */
-	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**

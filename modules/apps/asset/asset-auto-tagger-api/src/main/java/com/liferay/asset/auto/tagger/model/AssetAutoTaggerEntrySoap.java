@@ -23,10 +23,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.asset.auto.tagger.service.http.AssetAutoTaggerEntryServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.asset.auto.tagger.service.http.AssetAutoTaggerEntryServiceSoap
  * @generated
  */
 @ProviderType
@@ -35,7 +34,6 @@ public class AssetAutoTaggerEntrySoap implements Serializable {
 		AssetAutoTaggerEntry model) {
 		AssetAutoTaggerEntrySoap soapModel = new AssetAutoTaggerEntrySoap();
 
-		soapModel.setUuid(model.getUuid());
 		soapModel.setAssetAutoTaggerEntryId(model.getAssetAutoTaggerEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -98,14 +96,6 @@ public class AssetAutoTaggerEntrySoap implements Serializable {
 		setAssetAutoTaggerEntryId(pk);
 	}
 
-	public String getUuid() {
-		return _uuid;
-	}
-
-	public void setUuid(String uuid) {
-		_uuid = uuid;
-	}
-
 	public long getAssetAutoTaggerEntryId() {
 		return _assetAutoTaggerEntryId;
 	}
@@ -162,7 +152,6 @@ public class AssetAutoTaggerEntrySoap implements Serializable {
 		_assetTagId = assetTagId;
 	}
 
-	private String _uuid;
 	private long _assetAutoTaggerEntryId;
 	private long _groupId;
 	private long _companyId;

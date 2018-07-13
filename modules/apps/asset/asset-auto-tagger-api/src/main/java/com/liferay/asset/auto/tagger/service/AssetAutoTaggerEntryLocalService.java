@@ -20,11 +20,8 @@ import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,11 +73,6 @@ public interface AssetAutoTaggerEntryLocalService extends BaseLocalService,
 	public AssetAutoTaggerEntry addAssetAutoTaggerEntry(
 		AssetAutoTaggerEntry assetAutoTaggerEntry);
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link AssetAutoTaggerEntryLocalServiceUtil} to access the asset auto tagger entry local service.
-	*/
 	public AssetAutoTaggerEntry addAssetAutoTaggerEntry(AssetEntry assetEntry,
 		AssetTag assetTag);
 
@@ -189,17 +181,6 @@ public interface AssetAutoTaggerEntryLocalService extends BaseLocalService,
 	public AssetAutoTaggerEntry fetchAssetAutoTaggerEntry(long assetEntryId,
 		long assetTagId);
 
-	/**
-	* Returns the asset auto tagger entry matching the UUID and group.
-	*
-	* @param uuid the asset auto tagger entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetAutoTaggerEntry fetchAssetAutoTaggerEntryByUuidAndGroupId(
-		String uuid, long groupId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -227,32 +208,6 @@ public interface AssetAutoTaggerEntryLocalService extends BaseLocalService,
 		int end);
 
 	/**
-	* Returns all the asset auto tagger entries matching the UUID and company.
-	*
-	* @param uuid the UUID of the asset auto tagger entries
-	* @param companyId the primary key of the company
-	* @return the matching asset auto tagger entries, or an empty list if no matches were found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntriesByUuidAndCompanyId(
-		String uuid, long companyId);
-
-	/**
-	* Returns a range of asset auto tagger entries matching the UUID and company.
-	*
-	* @param uuid the UUID of the asset auto tagger entries
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of asset auto tagger entries
-	* @param end the upper bound of the range of asset auto tagger entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching asset auto tagger entries, or an empty list if no matches were found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntriesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator);
-
-	/**
 	* Returns the number of asset auto tagger entries.
 	*
 	* @return the number of asset auto tagger entries
@@ -270,22 +225,6 @@ public interface AssetAutoTaggerEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetAutoTaggerEntry getAssetAutoTaggerEntry(
 		long assetAutoTaggerEntryId) throws PortalException;
-
-	/**
-	* Returns the asset auto tagger entry matching the UUID and group.
-	*
-	* @param uuid the asset auto tagger entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching asset auto tagger entry
-	* @throws PortalException if a matching asset auto tagger entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetAutoTaggerEntry getAssetAutoTaggerEntryByUuidAndGroupId(
-		String uuid, long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

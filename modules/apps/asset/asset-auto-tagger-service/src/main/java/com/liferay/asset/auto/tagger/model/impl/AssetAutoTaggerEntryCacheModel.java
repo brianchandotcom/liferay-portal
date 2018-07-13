@@ -65,11 +65,9 @@ public class AssetAutoTaggerEntryCacheModel implements CacheModel<AssetAutoTagge
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{uuid=");
-		sb.append(uuid);
-		sb.append(", assetAutoTaggerEntryId=");
+		sb.append("{assetAutoTaggerEntryId=");
 		sb.append(assetAutoTaggerEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -91,13 +89,6 @@ public class AssetAutoTaggerEntryCacheModel implements CacheModel<AssetAutoTagge
 	@Override
 	public AssetAutoTaggerEntry toEntityModel() {
 		AssetAutoTaggerEntryImpl assetAutoTaggerEntryImpl = new AssetAutoTaggerEntryImpl();
-
-		if (uuid == null) {
-			assetAutoTaggerEntryImpl.setUuid("");
-		}
-		else {
-			assetAutoTaggerEntryImpl.setUuid(uuid);
-		}
 
 		assetAutoTaggerEntryImpl.setAssetAutoTaggerEntryId(assetAutoTaggerEntryId);
 		assetAutoTaggerEntryImpl.setGroupId(groupId);
@@ -127,8 +118,6 @@ public class AssetAutoTaggerEntryCacheModel implements CacheModel<AssetAutoTagge
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		uuid = objectInput.readUTF();
-
 		assetAutoTaggerEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -145,13 +134,6 @@ public class AssetAutoTaggerEntryCacheModel implements CacheModel<AssetAutoTagge
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		if (uuid == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(uuid);
-		}
-
 		objectOutput.writeLong(assetAutoTaggerEntryId);
 
 		objectOutput.writeLong(groupId);
@@ -165,7 +147,6 @@ public class AssetAutoTaggerEntryCacheModel implements CacheModel<AssetAutoTagge
 		objectOutput.writeLong(assetTagId);
 	}
 
-	public String uuid;
 	public long assetAutoTaggerEntryId;
 	public long groupId;
 	public long companyId;

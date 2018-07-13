@@ -54,11 +54,6 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 		return getService().addAssetAutoTaggerEntry(assetAutoTaggerEntry);
 	}
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link AssetAutoTaggerEntryLocalServiceUtil} to access the asset auto tagger entry local service.
-	*/
 	public static com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry addAssetAutoTaggerEntry(
 		com.liferay.asset.kernel.model.AssetEntry assetEntry,
 		com.liferay.asset.kernel.model.AssetTag assetTag) {
@@ -197,19 +192,6 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 		return getService().fetchAssetAutoTaggerEntry(assetEntryId, assetTagId);
 	}
 
-	/**
-	* Returns the asset auto tagger entry matching the UUID and group.
-	*
-	* @param uuid the asset auto tagger entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
-	*/
-	public static com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry fetchAssetAutoTaggerEntryByUuidAndGroupId(
-		String uuid, long groupId) {
-		return getService()
-				   .fetchAssetAutoTaggerEntryByUuidAndGroupId(uuid, groupId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -241,37 +223,6 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the asset auto tagger entries matching the UUID and company.
-	*
-	* @param uuid the UUID of the asset auto tagger entries
-	* @param companyId the primary key of the company
-	* @return the matching asset auto tagger entries, or an empty list if no matches were found
-	*/
-	public static java.util.List<com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry> getAssetAutoTaggerEntriesByUuidAndCompanyId(
-		String uuid, long companyId) {
-		return getService()
-				   .getAssetAutoTaggerEntriesByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns a range of asset auto tagger entries matching the UUID and company.
-	*
-	* @param uuid the UUID of the asset auto tagger entries
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of asset auto tagger entries
-	* @param end the upper bound of the range of asset auto tagger entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching asset auto tagger entries, or an empty list if no matches were found
-	*/
-	public static java.util.List<com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry> getAssetAutoTaggerEntriesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry> orderByComparator) {
-		return getService()
-				   .getAssetAutoTaggerEntriesByUuidAndCompanyId(uuid,
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	* Returns the number of asset auto tagger entries.
 	*
 	* @return the number of asset auto tagger entries
@@ -291,26 +242,6 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 		long assetAutoTaggerEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAssetAutoTaggerEntry(assetAutoTaggerEntryId);
-	}
-
-	/**
-	* Returns the asset auto tagger entry matching the UUID and group.
-	*
-	* @param uuid the asset auto tagger entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching asset auto tagger entry
-	* @throws PortalException if a matching asset auto tagger entry could not be found
-	*/
-	public static com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry getAssetAutoTaggerEntryByUuidAndGroupId(
-		String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getAssetAutoTaggerEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

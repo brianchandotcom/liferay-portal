@@ -14,11 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet" prefix="portlet" %>
-
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
-<%@ page import="com.liferay.document.library.opener.google.drive.model.GoogleDriveFileReference" %><%@
-page import="com.liferay.document.library.opener.google.drive.web.internal.constants.GoogleDriveOpenerWebConstants" %><%@
-page import="com.liferay.document.library.opener.google.drive.web.internal.constants.GoogleDriveOpenerWebKeys" %><%@
-page import="com.liferay.portal.kernel.util.Constants" %>
+<%@ page import="com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference" %><%@
+page import="com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebKeys" %>

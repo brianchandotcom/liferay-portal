@@ -22,7 +22,7 @@ import java.util.Collection;
 /**
  * @author Adolfo Pérez
  */
-public class GoogleDriveMimeTypes {
+public class DLOpenerGoogleDriveMimeTypes {
 
 	public static final String APPLICATION_VND_GOOGLE_APPS_DOCUMENT =
 		"application/vnd.google-apps.document";

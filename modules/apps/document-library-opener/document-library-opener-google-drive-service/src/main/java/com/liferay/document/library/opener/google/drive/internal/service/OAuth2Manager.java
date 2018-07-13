@@ -24,7 +24,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.drive.DriveScopes;
 
-import com.liferay.document.library.opener.google.drive.internal.configuration.GoogleDriveOpenerConfiguration;
+import com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.io.IOException;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.document.library.opener.google.drive.internal.configuration.GoogleDriveOpenerConfiguration",
+	configurationPid = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = OAuth2Manager.class
 )
@@ -92,16 +92,16 @@ public class OAuth2Manager {
 	protected void activate(Map<String, Object> properties)
 		throws GeneralSecurityException, IOException {
 
-		GoogleDriveOpenerConfiguration googleDriveOpenerConfiguration =
+		DLOpenerGoogleDriveConfiguration dlOpenerGoogleDriveConfiguration =
 			ConfigurableUtil.createConfigurable(
-				GoogleDriveOpenerConfiguration.class, properties);
+				DLOpenerGoogleDriveConfiguration.class, properties);
 
 		GoogleAuthorizationCodeFlow.Builder googleAuthorizationCodeFlowBuilder =
 			new GoogleAuthorizationCodeFlow.Builder(
 				GoogleNetHttpTransport.newTrustedTransport(),
 				JacksonFactory.getDefaultInstance(),
-				googleDriveOpenerConfiguration.clientId(),
-				googleDriveOpenerConfiguration.clientSecret(),
+				dlOpenerGoogleDriveConfiguration.clientId(),
+				dlOpenerGoogleDriveConfiguration.clientSecret(),
 				Collections.singleton(DriveScopes.DRIVE_FILE));
 
 		googleAuthorizationCodeFlowBuilder =

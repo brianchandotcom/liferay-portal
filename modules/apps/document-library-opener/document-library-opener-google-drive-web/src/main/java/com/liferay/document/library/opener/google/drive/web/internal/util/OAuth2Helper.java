@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.opener.google.drive.web.internal.util;
 
-import com.liferay.document.library.opener.google.drive.web.internal.constants.GoogleDriveOpenerWebConstants;
+import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletRequest;
@@ -40,7 +40,7 @@ public class OAuth2Helper {
 
 	private String _getRedirectUri(String portalURL) {
 		return portalURL + Portal.PATH_MODULE +
-			GoogleDriveOpenerWebConstants.GOOGLE_DRIVE_SERVLET_PATH;
+			DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_SERVLET_PATH;
 	}
 
 	@Reference

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.document.library.opener.google.drive.constants;
+package com.liferay.document.library.opener.google.drive.web.internal.constants;
 
 /**
  * @author Adolfo Pérez
  */
-public class GoogleDriveConstants {
+public class DLOpenerGoogleDriveWebKeys {
 
-	public static final String CHECK_OUT_IN_GOOGLE_DRIVE =
-		"checkOutInGoogleDrive";
+	public static final String DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE =
+		"dlOpenerGoogleDriveFileReference";
 
 }

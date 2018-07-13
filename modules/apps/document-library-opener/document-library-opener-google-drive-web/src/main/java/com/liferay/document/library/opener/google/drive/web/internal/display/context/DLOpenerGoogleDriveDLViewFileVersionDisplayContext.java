@@ -18,9 +18,9 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
-import com.liferay.document.library.opener.google.drive.constants.GoogleDriveMimeTypes;
-import com.liferay.document.library.opener.google.drive.service.GoogleDriveManager;
-import com.liferay.document.library.opener.google.drive.web.internal.constants.GoogleDriveOpenerWebConstants;
+import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
+import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -51,24 +51,24 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Adolfo Pérez
  */
-public class GoogleDriveOpenerDLViewFileVersionDisplayContext
+public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	extends BaseDLViewFileVersionDisplayContext {
 
-	public GoogleDriveOpenerDLViewFileVersionDisplayContext(
+	public DLOpenerGoogleDriveDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion, Function<String, String> translationFunction,
-		GoogleDriveManager googleDriveManager) {
+		DLOpenerGoogleDriveManager dlOpenerGoogleDriveManager) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
 		_translationFunction = translationFunction;
-		_googleDriveManager = googleDriveManager;
+		_dlOpenerGoogleDriveManager = dlOpenerGoogleDriveManager;
 	}
 
 	@Override
 	public Menu getMenu() throws PortalException {
-		if (!GoogleDriveMimeTypes.isMimeTypeSupported(
+		if (!DLOpenerGoogleDriveMimeTypes.isMimeTypeSupported(
 				fileVersion.getMimeType())) {
 
 			return super.getMenu();
@@ -99,7 +99,8 @@ public class GoogleDriveOpenerDLViewFileVersionDisplayContext
 			_translationFunction.apply("checkout-to-google-drive"));
 		menuItem.setMethod(HttpMethods.POST);
 		menuItem.setURL(
-			_getActionURL(GoogleDriveOpenerWebConstants.GOOGLE_DRIVE_CHECKOUT));
+			_getActionURL(
+				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
 
 		return menuItem;
 	}
@@ -110,7 +111,7 @@ public class GoogleDriveOpenerDLViewFileVersionDisplayContext
 		menuItem.setLabel(_translationFunction.apply("edit-in-google-drive"));
 		menuItem.setMethod(HttpMethods.POST);
 		menuItem.setURL(
-			_getActionURL(GoogleDriveOpenerWebConstants.GOOGLE_DRIVE_EDIT));
+			_getActionURL(DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
 
 		return menuItem;
 	}
@@ -147,7 +148,7 @@ public class GoogleDriveOpenerDLViewFileVersionDisplayContext
 		FileEntry fileEntry = fileVersion.getFileEntry();
 
 		if (fileEntry.isCheckedOut() ||
-			_googleDriveManager.isGoogleDriveFile(fileEntry)) {
+			_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 
 			return true;
 		}
@@ -168,7 +169,7 @@ public class GoogleDriveOpenerDLViewFileVersionDisplayContext
 						StringBundler.concat(
 							_getNamespace(), "showVersionDetailsDialog('",
 							_getActionURL(
-								GoogleDriveOpenerWebConstants.
+								DLOpenerGoogleDriveWebConstants.
 									GOOGLE_DRIVE_CHECKIN),
 							"');"));
 				}
@@ -180,7 +181,7 @@ public class GoogleDriveOpenerDLViewFileVersionDisplayContext
 					urlMenuItem.setMethod(HttpMethods.POST);
 					urlMenuItem.setURL(
 						_getActionURL(
-							GoogleDriveOpenerWebConstants.
+							DLOpenerGoogleDriveWebConstants.
 								GOOGLE_DRIVE_CANCEL_CHECKOUT));
 				}
 			}
@@ -192,7 +193,7 @@ public class GoogleDriveOpenerDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"c3a385d0-7551-11e8-9798-186590d14d8f");
 
-	private final GoogleDriveManager _googleDriveManager;
+	private final DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
 	private final Function<String, String> _translationFunction;
 
 }

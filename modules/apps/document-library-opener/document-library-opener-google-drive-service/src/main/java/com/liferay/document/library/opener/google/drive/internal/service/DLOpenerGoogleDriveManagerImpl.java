@@ -22,9 +22,9 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
 
-import com.liferay.document.library.opener.google.drive.constants.GoogleDriveMimeTypes;
-import com.liferay.document.library.opener.google.drive.model.GoogleDriveFileReference;
-import com.liferay.document.library.opener.google.drive.service.GoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
+import com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference;
+import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,11 +48,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = GoogleDriveManager.class)
-public class GoogleDriveManagerImpl implements GoogleDriveManager {
+@Component(immediate = true, service = DLOpenerGoogleDriveManager.class)
+public class DLOpenerGoogleDriveManagerImpl
+	implements DLOpenerGoogleDriveManager {
 
 	@Override
-	public GoogleDriveFileReference checkOut(
+	public DLOpenerGoogleDriveFileReference checkOut(
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -61,7 +62,8 @@ public class GoogleDriveManagerImpl implements GoogleDriveManager {
 				new com.google.api.services.drive.model.File();
 
 			file.setMimeType(
-				GoogleDriveMimeTypes.APPLICATION_VND_GOOGLE_APPS_DOCUMENT);
+				DLOpenerGoogleDriveMimeTypes.
+					APPLICATION_VND_GOOGLE_APPS_DOCUMENT);
 			file.setName(fileEntry.getTitle());
 
 			FileContent fileContent = new FileContent(
@@ -84,7 +86,7 @@ public class GoogleDriveManagerImpl implements GoogleDriveManager {
 					serviceContext.getUserId(), uploadedFile.getId(),
 					fileEntry);
 
-			return new GoogleDriveFileReference(
+			return new DLOpenerGoogleDriveFileReference(
 				uploadedFile.getId(), fileEntry.getFileEntryId());
 		}
 		catch (IOException ioe) {
@@ -186,7 +188,7 @@ public class GoogleDriveManagerImpl implements GoogleDriveManager {
 	}
 
 	@Override
-	public GoogleDriveFileReference requestEditAccess(
+	public DLOpenerGoogleDriveFileReference requestEditAccess(
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -203,7 +205,7 @@ public class GoogleDriveManagerImpl implements GoogleDriveManager {
 
 			_checkCredential(serviceContext);
 
-			return new GoogleDriveFileReference(
+			return new DLOpenerGoogleDriveFileReference(
 				googleDriveFileId, fileEntry.getFileEntryId());
 		}
 		catch (IOException ioe) {

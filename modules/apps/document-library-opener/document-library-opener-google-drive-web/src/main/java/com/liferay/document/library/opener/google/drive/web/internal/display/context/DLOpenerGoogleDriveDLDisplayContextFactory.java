@@ -17,7 +17,7 @@ package com.liferay.document.library.opener.google.drive.web.internal.display.co
 import com.liferay.document.library.display.context.BaseDLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
-import com.liferay.document.library.opener.google.drive.service.GoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDriveManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = DLDisplayContextFactory.class)
-public class GoogleDriveOpenerDLDisplayContextFactory
+public class DLOpenerGoogleDriveDLDisplayContextFactory
 	extends BaseDLDisplayContextFactory {
 
 	@Override
@@ -55,7 +55,7 @@ public class GoogleDriveOpenerDLDisplayContextFactory
 			throw new SystemException(
 				StringBundler.concat(
 					"Unable to build ",
-					GoogleDriveOpenerDLViewFileVersionDisplayContext.class.
+					DLOpenerGoogleDriveDLViewFileVersionDisplayContext.class.
 						getSimpleName(),
 					" for shortcut ", fileShortcut.getPrimaryKey()),
 				pe);
@@ -68,10 +68,10 @@ public class GoogleDriveOpenerDLDisplayContextFactory
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 
-		return new GoogleDriveOpenerDLViewFileVersionDisplayContext(
+		return new DLOpenerGoogleDriveDLViewFileVersionDisplayContext(
 			parentDLViewFileVersionDisplayContext, request, response,
 			fileVersion, key -> _translateKey(request, key),
-			_googleDriveManager);
+			_dlOpenerGoogleDriveManager);
 	}
 
 	private String _translateKey(HttpServletRequest request, String key) {
@@ -82,7 +82,7 @@ public class GoogleDriveOpenerDLDisplayContextFactory
 	}
 
 	@Reference
-	private GoogleDriveManager _googleDriveManager;
+	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
 
 	@Reference
 	private Language _language;

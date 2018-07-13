@@ -21,11 +21,13 @@ import java.util.Optional;
 /**
  * @author Adolfo Pérez
  */
-public class GoogleDriveFileReference {
+public class DLOpenerGoogleDriveFileReference {
 
-	public static <E extends Throwable> Optional<GoogleDriveFileReference>
-			captureGoogleDriveFileReference(
-				GoogleDriveFileReference.UnsafeRunnable<E> unsafeRunnable)
+	public static
+			<E extends Throwable> Optional<DLOpenerGoogleDriveFileReference>
+				captureDLOpenerGoogleDriveFileReference(
+					DLOpenerGoogleDriveFileReference.UnsafeRunnable<E>
+						unsafeRunnable)
 		throws E {
 
 		try {
@@ -40,18 +42,18 @@ public class GoogleDriveFileReference {
 		}
 	}
 
-	public static void setCurrentGoogleDriveFileReference(
-		GoogleDriveFileReference googleDriveFileReference) {
+	public static void setCurrentDLOpenerGoogleDriveFileReference(
+		DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference) {
 
 		if (_threadLocal.get() != null) {
 			throw new IllegalStateException(
 				"Google Drive file reference initialized twice");
 		}
 
-		_threadLocal.set(googleDriveFileReference);
+		_threadLocal.set(dlOpenerGoogleDriveFileReference);
 	}
 
-	public GoogleDriveFileReference(String cookie, long fileEntryId) {
+	public DLOpenerGoogleDriveFileReference(String cookie, long fileEntryId) {
 		_cookie = cookie;
 		_fileEntryId = fileEntryId;
 	}
@@ -74,8 +76,8 @@ public class GoogleDriveFileReference {
 
 	}
 
-	private static final ThreadLocal<GoogleDriveFileReference> _threadLocal =
-		new CentralizedThreadLocal<>(true);
+	private static final ThreadLocal<DLOpenerGoogleDriveFileReference>
+		_threadLocal = new CentralizedThreadLocal<>(true);
 
 	private final String _cookie;
 	private final long _fileEntryId;

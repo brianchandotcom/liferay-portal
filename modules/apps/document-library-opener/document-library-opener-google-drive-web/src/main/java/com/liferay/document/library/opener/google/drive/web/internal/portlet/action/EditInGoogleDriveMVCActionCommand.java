@@ -16,11 +16,11 @@ package com.liferay.document.library.opener.google.drive.web.internal.portlet.ac
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.opener.google.drive.constants.GoogleDriveConstants;
-import com.liferay.document.library.opener.google.drive.model.GoogleDriveFileReference;
-import com.liferay.document.library.opener.google.drive.service.GoogleDriveManager;
-import com.liferay.document.library.opener.google.drive.web.internal.constants.GoogleDriveOpenerWebConstants;
-import com.liferay.document.library.opener.google.drive.web.internal.constants.GoogleDriveOpenerWebKeys;
+import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveConstants;
+import com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference;
+import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
+import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebKeys;
 import com.liferay.document.library.opener.google.drive.web.internal.util.OAuth2Helper;
 import com.liferay.document.library.opener.google.drive.web.internal.util.State;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,16 +73,20 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 
 			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
-			if (_googleDriveManager.hasValidCredential(
+			if (_dlOpenerGoogleDriveManager.hasValidCredential(
 					_portal.getUserId(actionRequest))) {
 
-				Optional<GoogleDriveFileReference> driveFileReferenceOptional =
-					GoogleDriveFileReference.captureGoogleDriveFileReference(
-						() -> _executeCommand(actionRequest, fileEntry));
+				Optional<DLOpenerGoogleDriveFileReference>
+					dlOpenerDriveFileReferenceOptional =
+						DLOpenerGoogleDriveFileReference.
+							captureDLOpenerGoogleDriveFileReference(
+								() ->
+									_executeCommand(actionRequest, fileEntry));
 
-				driveFileReferenceOptional.ifPresent(
+				dlOpenerDriveFileReferenceOptional.ifPresent(
 					driveFileReference -> actionRequest.setAttribute(
-						GoogleDriveOpenerWebKeys.GOOGLE_DRIVE_FILE_REFERENCE,
+						DLOpenerGoogleDriveWebKeys.
+							DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE,
 						driveFileReference));
 			}
 			else {
@@ -101,12 +105,12 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
 
 		if (cmd.equals(
-				GoogleDriveOpenerWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT)) {
+				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT)) {
 
 			_dlAppService.cancelCheckOut(fileEntry.getFileEntryId());
 		}
 		else if (cmd.equals(
-					GoogleDriveOpenerWebConstants.GOOGLE_DRIVE_CHECKIN)) {
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN)) {
 
 			_dlAppService.checkInFileEntry(
 				fileEntry.getFileEntryId(),
@@ -115,24 +119,27 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 				ServiceContextFactory.getInstance(portletRequest));
 		}
 		else if (cmd.equals(
-					GoogleDriveOpenerWebConstants.GOOGLE_DRIVE_CHECKOUT)) {
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT)) {
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				portletRequest);
 
 			serviceContext.setAttribute(
-				GoogleDriveConstants.CHECK_OUT_IN_GOOGLE_DRIVE, Boolean.TRUE);
+				DLOpenerGoogleDriveConstants.CHECK_OUT_IN_GOOGLE_DRIVE,
+				Boolean.TRUE);
 
 			_dlAppService.checkOutFileEntry(
 				fileEntry.getFileEntryId(), serviceContext);
 		}
-		else if (cmd.equals(GoogleDriveOpenerWebConstants.GOOGLE_DRIVE_EDIT) &&
-				 _googleDriveManager.isGoogleDriveFile(fileEntry)) {
+		else if (cmd.equals(
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT) &&
+				 _dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 
-			GoogleDriveFileReference.setCurrentGoogleDriveFileReference(
-				_googleDriveManager.requestEditAccess(
-					fileEntry,
-					ServiceContextFactory.getInstance(portletRequest)));
+			DLOpenerGoogleDriveFileReference.
+				setCurrentDLOpenerGoogleDriveFileReference(
+					_dlOpenerGoogleDriveManager.requestEditAccess(
+						fileEntry,
+						ServiceContextFactory.getInstance(portletRequest)));
 		}
 		else {
 			throw new IllegalArgumentException();
@@ -168,7 +175,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 			_getFailureURL(portletRequest), state);
 
 		actionResponse.sendRedirect(
-			_googleDriveManager.getAuthorizationURL(
+			_dlOpenerGoogleDriveManager.getAuthorizationURL(
 				state, _oAuth2Helper.getRedirectUri(portletRequest)));
 	}
 
@@ -176,7 +183,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 	private DLAppService _dlAppService;
 
 	@Reference
-	private GoogleDriveManager _googleDriveManager;
+	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
 
 	@Reference
 	private OAuth2Helper _oAuth2Helper;

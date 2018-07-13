@@ -17,11 +17,11 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <%
-GoogleDriveFileReference googleDriveFileReference = (GoogleDriveFileReference)request.getAttribute(GoogleDriveOpenerWebKeys.GOOGLE_DRIVE_FILE_REFERENCE);
+DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoogleDriveFileReference)request.getAttribute(DLOpenerGoogleDriveWebKeys.DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE);
 %>
 
-<c:if test="<%= Validator.isNotNull(googleDriveFileReference) %>">
+<c:if test="<%= Validator.isNotNull(dlOpenerGoogleDriveFileReference) %>">
 	<aui:script>
-		window.open('<%= googleDriveFileReference.getUrl() %>');
+		window.open('<%= dlOpenerGoogleDriveFileReference.getUrl() %>');
 	</aui:script>
 </c:if>

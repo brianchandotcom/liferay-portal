@@ -16,9 +16,9 @@ package com.liferay.document.library.opener.google.drive.internal.service;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
-import com.liferay.document.library.opener.google.drive.constants.GoogleDriveConstants;
-import com.liferay.document.library.opener.google.drive.model.GoogleDriveFileReference;
-import com.liferay.document.library.opener.google.drive.service.GoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveConstants;
+import com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference;
+import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDriveManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -39,13 +39,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = ServiceWrapper.class)
-public class GoogleDriveOpenerDLAppServiceWrapper extends DLAppServiceWrapper {
+public class DLOpenerGoogleDriveDLAppServiceWrapper
+	extends DLAppServiceWrapper {
 
-	public GoogleDriveOpenerDLAppServiceWrapper() {
+	public DLOpenerGoogleDriveDLAppServiceWrapper() {
 		super(null);
 	}
 
-	public GoogleDriveOpenerDLAppServiceWrapper(DLAppService dlAppService) {
+	public DLOpenerGoogleDriveDLAppServiceWrapper(DLAppService dlAppService) {
 		super(dlAppService);
 	}
 
@@ -53,7 +54,7 @@ public class GoogleDriveOpenerDLAppServiceWrapper extends DLAppServiceWrapper {
 	public void cancelCheckOut(long fileEntryId) throws PortalException {
 		super.cancelCheckOut(fileEntryId);
 
-		_googleDriveManager.delete(
+		_dlOpenerGoogleDriveManager.delete(
 			getFileEntry(fileEntryId), _createServiceContext());
 	}
 
@@ -70,7 +71,7 @@ public class GoogleDriveOpenerDLAppServiceWrapper extends DLAppServiceWrapper {
 		super.checkInFileEntry(
 			fileEntryId, majorVersion, changeLog, serviceContext);
 
-		_googleDriveManager.delete(fileEntry, serviceContext);
+		_dlOpenerGoogleDriveManager.delete(fileEntry, serviceContext);
 	}
 
 	@Override
@@ -84,7 +85,7 @@ public class GoogleDriveOpenerDLAppServiceWrapper extends DLAppServiceWrapper {
 
 		super.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
 
-		_googleDriveManager.delete(fileEntry, serviceContext);
+		_dlOpenerGoogleDriveManager.delete(fileEntry, serviceContext);
 	}
 
 	@Override
@@ -95,9 +96,10 @@ public class GoogleDriveOpenerDLAppServiceWrapper extends DLAppServiceWrapper {
 		super.checkOutFileEntry(fileEntryId, serviceContext);
 
 		if (_isCheckOutInGoogleDrive(serviceContext)) {
-			GoogleDriveFileReference.setCurrentGoogleDriveFileReference(
-				_googleDriveManager.checkOut(
-					getFileEntry(fileEntryId), serviceContext));
+			DLOpenerGoogleDriveFileReference.
+				setCurrentDLOpenerGoogleDriveFileReference(
+					_dlOpenerGoogleDriveManager.checkOut(
+						getFileEntry(fileEntryId), serviceContext));
 		}
 	}
 
@@ -111,8 +113,10 @@ public class GoogleDriveOpenerDLAppServiceWrapper extends DLAppServiceWrapper {
 			fileEntryId, owner, expirationTime, serviceContext);
 
 		if (_isCheckOutInGoogleDrive(serviceContext)) {
-			GoogleDriveFileReference.setCurrentGoogleDriveFileReference(
-				_googleDriveManager.checkOut(fileEntry, serviceContext));
+			DLOpenerGoogleDriveFileReference.
+				setCurrentDLOpenerGoogleDriveFileReference(
+					_dlOpenerGoogleDriveManager.checkOut(
+						fileEntry, serviceContext));
 		}
 
 		return fileEntry;
@@ -131,7 +135,7 @@ public class GoogleDriveOpenerDLAppServiceWrapper extends DLAppServiceWrapper {
 
 	private boolean _isCheckOutInGoogleDrive(ServiceContext serviceContext) {
 		Serializable checkOutInGoogleDrive = serviceContext.getAttribute(
-			GoogleDriveConstants.CHECK_OUT_IN_GOOGLE_DRIVE);
+			DLOpenerGoogleDriveConstants.CHECK_OUT_IN_GOOGLE_DRIVE);
 
 		if ((checkOutInGoogleDrive != null) &&
 			checkOutInGoogleDrive.equals(Boolean.TRUE)) {
@@ -146,7 +150,7 @@ public class GoogleDriveOpenerDLAppServiceWrapper extends DLAppServiceWrapper {
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		File file = _googleDriveManager.getContentFile(
+		File file = _dlOpenerGoogleDriveManager.getContentFile(
 			fileEntry, serviceContext);
 
 		try {
@@ -170,9 +174,9 @@ public class GoogleDriveOpenerDLAppServiceWrapper extends DLAppServiceWrapper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GoogleDriveOpenerDLAppServiceWrapper.class);
+		DLOpenerGoogleDriveDLAppServiceWrapper.class);
 
 	@Reference
-	private GoogleDriveManager _googleDriveManager;
+	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
 
 }

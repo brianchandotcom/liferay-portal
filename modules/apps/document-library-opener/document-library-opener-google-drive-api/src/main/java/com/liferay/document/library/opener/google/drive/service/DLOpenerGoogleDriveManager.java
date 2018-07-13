@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.opener.google.drive.service;
 
-import com.liferay.document.library.opener.google.drive.model.GoogleDriveFileReference;
+import com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -25,9 +25,9 @@ import java.io.IOException;
 /**
  * @author Adolfo Pérez
  */
-public interface GoogleDriveManager {
+public interface DLOpenerGoogleDriveManager {
 
-	public GoogleDriveFileReference checkOut(
+	public DLOpenerGoogleDriveFileReference checkOut(
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -48,7 +48,7 @@ public interface GoogleDriveManager {
 			long userId, String code, String redirectUri)
 		throws IOException;
 
-	public GoogleDriveFileReference requestEditAccess(
+	public DLOpenerGoogleDriveFileReference requestEditAccess(
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException;
 

@@ -23,11 +23,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "documents-and-media")
 @Meta.OCD(
-	id = "com.liferay.document.library.opener.google.drive.internal.configuration.GoogleDriveOpenerConfiguration",
+	id = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration",
 	localization = "content/Language",
 	name = "google-drive-opener-configuration-name"
 )
-public interface GoogleDriveOpenerConfiguration {
+public interface DLOpenerGoogleDriveConfiguration {
 
 	@Meta.AD(description = "client-id-description", name = "client-id")
 	public String clientId();

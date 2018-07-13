@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.opener.google.drive.web.internal.servlet;
 
-import com.liferay.document.library.opener.google.drive.service.GoogleDriveManager;
-import com.liferay.document.library.opener.google.drive.web.internal.constants.GoogleDriveOpenerWebConstants;
+import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.document.library.opener.google.drive.web.internal.util.OAuth2Helper;
 import com.liferay.document.library.opener.google.drive.web.internal.util.State;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.document.library.opener.google.drive.web.internal.struts.GoogleDriveOAuth2Servlet",
-		"osgi.http.whiteboard.servlet.pattern=" + GoogleDriveOpenerWebConstants.GOOGLE_DRIVE_SERVLET_PATH,
+		"osgi.http.whiteboard.servlet.pattern=" + DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_SERVLET_PATH,
 		"servlet.init.httpMethods=GET,POST"
 	},
 	service = Servlet.class
@@ -84,7 +84,7 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 			state.goToFailurePage(request, response);
 		}
 		else {
-			_googleDriveManager.requestAuthorizationToken(
+			_dlOpenerGoogleDriveManager.requestAuthorizationToken(
 				state.getUserId(), code, _oAuth2Helper.getRedirectUri(request));
 
 			state.goToSuccessPage(request, response);
@@ -94,7 +94,7 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 	private static final long serialVersionUID = 7759897747401129852L;
 
 	@Reference
-	private GoogleDriveManager _googleDriveManager;
+	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
 
 	@Reference
 	private OAuth2Helper _oAuth2Helper;

@@ -68,7 +68,10 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 	public boolean isAutoTaggeable(AssetEntry assetEntry) {
 		try {
 			if (_assetAutoTaggerConfiguration.enabled() &&
-				assetEntry.isVisible() && !_isInTrash(assetEntry)) {
+				assetEntry.isVisible() &&
+				ListUtil.isNotEmpty(
+					_getAssetAutoTagProviders(assetEntry.getClassName())) &&
+				!_isInTrash(assetEntry)) {
 
 				return true;
 			}
@@ -264,6 +267,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	private ServiceTrackerMap<String, List<AssetAutoTagProvider>>
 		_serviceTrackerMap;
+
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});

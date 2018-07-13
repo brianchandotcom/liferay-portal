@@ -1,5 +1,4 @@
 @import "bourbon";
-@import "mixins";
 
 $imageeditor-btn-padding: 8px 4px !default;
 $imageeditor-controls-height: 52px !default;
@@ -82,10 +81,10 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 		.btn {
 			color: $imageeditor-text-color;
-			padding: $imageeditor-btn-padding;
 		}
 
 		.controls-container {
+			align-items: center;
 			bottom: $imageeditor-controls-height;
 			height: 0;
 			left: 0;
@@ -98,7 +97,6 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 			.tool-controls {
 				overflow: visible;
-				padding: 10px 0 0;
 
 				> * {
 					align-items: center;
@@ -122,7 +120,6 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 				.centered {
 					flex-grow: 1;
-					margin: 0 32px;
 				}
 
 				.carousel-wrapper {
@@ -209,6 +206,10 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 		}
 	}
 
+	.dialog-body {
+		position: relative;
+	}
+
 	.selection {
 		.resize-handle {
 			background-color: #FFF;
@@ -265,16 +266,6 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 				height: $slider-height;
 				width: $slider-height;
 			}
-		}
-	}
-
-	.input-group {
-		margin: 0 auto;
-
-		input.form-control {
-			float: none;
-			margin: 0 15px;
-			width: 100px;
 		}
 	}
 }

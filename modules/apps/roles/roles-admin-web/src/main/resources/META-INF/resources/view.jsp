@@ -106,7 +106,6 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 		form.attr('method', 'post');
 
 		form.fm('deleteRoleIds').val(deleteRoleIds);
-		form.fm('redirect').val('<portlet:renderURL><portlet:param name="mvcPath" value="/view.jsp" /></portlet:renderURL>');
 
 		var p_p_lifecycle = document.<portlet:namespace />fm.p_p_lifecycle;
 

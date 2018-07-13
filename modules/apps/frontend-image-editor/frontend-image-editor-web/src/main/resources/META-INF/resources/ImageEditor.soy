@@ -125,7 +125,7 @@
 		{let $control : $tool.controls[0] /}
 
 		<a class="btn btn-monospaced" data-control="{$control.variant}" data-onclick="requestImageEditorEdit" data-tool="tool-{$toolIndex}" href="javascript:;">
-			<svg class="icon-monospaced lexicon-icon">
+			<svg class="lexicon-icon">
 				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 			</svg>
 		</a>
@@ -148,7 +148,7 @@
 	{call liferay.frontend.Dropdown.render}
 		{param header kind="html"}
 			<a class="btn btn-monospaced" data-onclick="toggle" href="javascript:;">
-				<svg class="icon-monospaced lexicon-icon" data-icon="{$tool.icon}">
+				<svg class="lexicon-icon" data-icon="{$tool.icon}">
 					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 				</svg>
 			</a>
@@ -157,7 +157,7 @@
 		{param body kind="html"}
 			{foreach $control in $tool.controls}
 				<li data-onclick="toggle">
-					<a data-control="{$control.variant}" data-onclick="{$requestImageEditorEdit}" data-tool="tool-{$toolIndex}">{$control.label}</a>
+					<a data-control="{$control.variant}" data-onclick="{$requestImageEditorEdit}" data-tool="tool-{$toolIndex}" href="javascript:;">{$control.label}</a>
 				</li>
 			{/foreach}
 		{/param}
@@ -184,11 +184,16 @@
  */
 {template .tool_control}
 	<div class="controls-container d-flex {$selectedControl and $selectedControl.label == $control.label ? 'open' : ''}">
-		<div class="col-2 mt-4">
-			<button class="btn btn-link" data-onclick="accept">{msg desc=""}apply{/msg}</button>
+		<div class="col-3 col-md-2 mt-4">
+			<button class="btn btn-link" data-onclick="accept">
+				<span class="d-none d-sm-block">{msg desc=""}apply{/msg}</span>
+				<svg class="d-sm-none lexicon-icon">
+					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#check"></use>
+				</svg>
+			</button>
 		</div>
 
-		<div class="col-8 tool-controls">
+		<div class="col-6 col-md-8 pt-sm-2 tool-controls">
 			{if $selectedControl and $selectedControl.label == $control.label}
 				{call .active_controls data="all"}
 					{param modulePath: $control.modulePath /}
@@ -197,8 +202,13 @@
 			{/if}
 		</div>
 
-		<div class="col-2 mt-4">
-			<button class="btn btn-link" data-onclick="discard">{msg desc=""}cancel{/msg}</button>
+		<div class="col-3 col-md-2 mt-4">
+			<button class="btn btn-link" data-onclick="discard">
+				<span class="d-none d-sm-block">{msg desc=""}cancel{/msg}</span>
+				<svg class="d-sm-none lexicon-icon">
+					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
+				</svg>
+			</button>
 		</div>
 	</div>
 {/template}

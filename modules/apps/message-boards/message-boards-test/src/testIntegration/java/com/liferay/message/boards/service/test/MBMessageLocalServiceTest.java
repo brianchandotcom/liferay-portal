@@ -23,6 +23,7 @@ import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -157,6 +159,49 @@ public class MBMessageLocalServiceTest {
 			"image/png");
 
 		Assert.assertEquals(1, message.getAttachmentsFileEntriesCount());
+	}
+
+	@Test
+	public void testAddMessageWithEmptyBody() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		String subject = StringUtil.randomString();
+
+		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
+			user.getUserId(), user.getFullName(), TestPropsValues.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, subject,
+			StringPool.BLANK, ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(subject, mbMessage.getBody());
+	}
+
+	@Test
+	public void testAddMessageWithNullBody() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		String subject = StringUtil.randomString();
+
+		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
+			user.getUserId(), user.getFullName(), TestPropsValues.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, subject, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(subject, mbMessage.getBody());
+	}
+
+	@Test
+	public void testAddMessageWithOnlyBlanksInBody() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		String subject = StringUtil.randomString();
+		String body = StringPool.SPACE;
+
+		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
+			user.getUserId(), user.getFullName(), TestPropsValues.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, subject, body,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(body, mbMessage.getBody());
 	}
 
 	@Test

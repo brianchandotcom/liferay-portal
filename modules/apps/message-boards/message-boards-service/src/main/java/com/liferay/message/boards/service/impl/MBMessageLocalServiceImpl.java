@@ -2008,16 +2008,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected String getBody(String subject, String body, String format) {
-		if (Validator.isNull(body)) {
-			if (StringUtil.equals(format, "html")) {
-				return HtmlUtil.escape(subject);
-			}
-			else {
-				return subject;
-			}
+		if (!Validator.isBlank(body)) {
+			return body;
 		}
 
-		return body;
+		if (StringUtil.equals(format, "html")) {
+			return HtmlUtil.escape(subject);
+		}
+
+		return subject;
 	}
 
 	protected String getDiscussionMessageSubject(String subject, String body)

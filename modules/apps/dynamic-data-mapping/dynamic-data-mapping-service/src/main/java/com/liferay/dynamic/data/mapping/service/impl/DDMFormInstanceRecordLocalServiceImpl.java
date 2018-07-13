@@ -18,10 +18,12 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordGroupIdException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.internal.notification.DDMFormEmailNotificationSender;
 import com.liferay.dynamic.data.mapping.internal.storage.StorageEngineAccessor;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -141,6 +143,11 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				DDMFormInstanceRecord.class.getName(),
 				ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
 				ddmFormInstanceRecordVersion, serviceContext);
+		}
+
+		if (isEmailNotificationEnabled(ddmFormInstance)) {
+			ddmFormEmailNotificationSender.sendEmailNotification(
+				serviceContext, ddmFormInstanceRecord);
 		}
 
 		return ddmFormInstanceRecord;
@@ -358,10 +365,10 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 			ddmFormInstanceRecord.getLatestFormInstanceRecordVersion();
 
-		if (ddmFormInstanceRecordVersion.isApproved()) {
-			DDMFormInstance ddmFormInstance =
-				ddmFormInstanceRecord.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstanceRecord.getFormInstance();
 
+		if (ddmFormInstanceRecordVersion.isApproved()) {
 			long ddmStorageId = storageEngine.create(
 				ddmFormInstance.getCompanyId(),
 				ddmFormInstance.getStructureId(), ddmFormValues,
@@ -409,6 +416,11 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				DDMFormInstanceRecord.class.getName(),
 				ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
 				ddmFormInstanceRecordVersion, serviceContext);
+		}
+
+		if (isEmailNotificationEnabled(ddmFormInstance)) {
+			ddmFormEmailNotificationSender.sendEmailNotification(
+				serviceContext, ddmFormInstanceRecord);
 		}
 
 		return ddmFormInstanceRecord;
@@ -609,6 +621,16 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return portalResourceBundleLoader.loadResourceBundle(defaultLocale);
 	}
 
+	protected boolean isEmailNotificationEnabled(
+			DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		DDMFormInstanceSettings formInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		return formInstanceSettings.sendEmailNotification();
+	}
+
 	protected boolean isKeepFormInstanceRecordVersionLabel(
 			DDMFormInstanceRecordVersion lastDDMFormInstanceRecordVersion,
 			DDMFormInstanceRecordVersion latestDDMFormInstanceRecordVersion,
@@ -744,6 +766,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 					"ID");
 		}
 	}
+
+	@ServiceReference(type = DDMFormEmailNotificationSender.class)
+	protected DDMFormEmailNotificationSender ddmFormEmailNotificationSender;
 
 	@ServiceReference(type = IndexerRegistry.class)
 	protected IndexerRegistry indexerRegistry;

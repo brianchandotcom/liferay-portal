@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.internal.notification;
+package com.liferay.dynamic.data.mapping.internal.notification;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -74,7 +75,7 @@ import java.util.ResourceBundle;
 
 import javax.mail.internet.InternetAddress;
 
-import javax.portlet.PortletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -86,12 +87,12 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMFormEmailNotificationSender {
 
 	public void sendEmailNotification(
-		PortletRequest portletRequest,
+		ServiceContext serviceContext,
 		DDMFormInstanceRecord ddmFormInstanceRecord) {
 
 		try {
 			MailMessage mailMessage = createMailMessage(
-				portletRequest, ddmFormInstanceRecord);
+				serviceContext.getRequest(), ddmFormInstanceRecord);
 
 			_mailService.sendEmail(mailMessage);
 		}
@@ -101,7 +102,7 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	protected MailMessage createMailMessage(
-			PortletRequest portletRequest,
+			HttpServletRequest httpServletRequest,
 			DDMFormInstanceRecord ddmFormInstanceRecord)
 		throws Exception {
 
@@ -117,7 +118,7 @@ public class DDMFormEmailNotificationSender {
 		String subject = getEmailSubject(ddmFormInstance);
 
 		String body = getEmailBody(
-			portletRequest, ddmFormInstance, ddmFormInstanceRecord);
+			httpServletRequest, ddmFormInstance, ddmFormInstanceRecord);
 
 		MailMessage mailMessage = new MailMessage(
 			fromInternetAddress, subject, body, true);
@@ -132,7 +133,8 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	protected Template createTemplate(
-			PortletRequest portletRequest, DDMFormInstance ddmFormInstance,
+			HttpServletRequest httpServletRequest,
+			DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecord ddmFormInstanceRecord)
 		throws PortalException {
 
@@ -141,7 +143,8 @@ public class DDMFormEmailNotificationSender {
 			getTemplateResource(_TEMPLATE_PATH), false);
 
 		populateParameters(
-			template, portletRequest, ddmFormInstance, ddmFormInstanceRecord);
+			template, httpServletRequest, ddmFormInstance,
+			ddmFormInstanceRecord);
 
 		return template;
 	}
@@ -172,12 +175,13 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	protected String getEmailBody(
-			PortletRequest portletRequest, DDMFormInstance ddmFormInstance,
+			HttpServletRequest httpServletRequest,
+			DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecord ddmFormInstanceRecord)
 		throws PortalException {
 
 		Template template = createTemplate(
-			portletRequest, ddmFormInstance, ddmFormInstanceRecord);
+			httpServletRequest, ddmFormInstance, ddmFormInstanceRecord);
 
 		return render(template);
 	}
@@ -409,8 +413,11 @@ public class DDMFormEmailNotificationSender {
 		return new URLTemplateResource(templateURL.getPath(), templateURL);
 	}
 
-	protected ThemeDisplay getThemeDisplay(PortletRequest portletRequest) {
-		return (ThemeDisplay)portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
+	protected ThemeDisplay getThemeDisplay(
+		HttpServletRequest httpServletRequest) {
+
+		return (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	protected String getUserName(
@@ -477,7 +484,7 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	protected void populateParameters(
-			Template template, PortletRequest portletRequest,
+			Template template, HttpServletRequest httpServletRequest,
 			DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecord ddmFormInstanceRecord)
 		throws PortalException {
@@ -491,7 +498,7 @@ public class DDMFormEmailNotificationSender {
 			"siteName", getSiteName(ddmFormInstance.getGroupId(), locale));
 		template.put("userName", getUserName(ddmFormInstanceRecord, locale));
 
-		ThemeDisplay themeDisplay = getThemeDisplay(portletRequest);
+		ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
 
 		template.put(
 			"viewFormEntriesURL",

@@ -1,0 +1,8 @@
+{
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.2.1",
+		"metal-cli": "^4.2.0"
+	},
+	"name": "dynamic-data-mapping-service",
+	"version": "4.0.0"
+}

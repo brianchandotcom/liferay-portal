@@ -2,10 +2,10 @@
 
 /**
  * Print a form field.
- *
- * @param field
  */
 {template .field}
+	{@param field: ?}
+
 	{if isNonnull($field)}
 		<p style="color: #9aa2a6; font-size: 18px; margin: 32px 0 16px 0;">{$field.label}</p>
 		<p style="font-size: 16px; margin: 0;">{$field.value}</p>
@@ -14,10 +14,10 @@
 
 /**
  * Print a list of form fields.
- *
- * @param fields
  */
 {template .fields}
+	{@param fields: ?}
+
 	{foreach $field in $fields}
 		{call form.field data="all"}
 			{param field: $field /}
@@ -27,16 +27,16 @@
 
 /**
  * Print a form entry.
- *
- * @param authorName
- * @param formName
- * @param pages
- * @param siteName
- * @param userName
- * @param viewFormEntriesURL
- * @param viewFormURL
  */
 {template .form_entry}
+	{@param authorName: string}
+	{@param formName: string}
+	{@param pages: ?}
+	{@param siteName: string}
+	{@param userName: string}
+	{@param viewFormEntriesURL: string}
+	{@param viewFormURL: string}
+
 	<!DOCTYPE html>
 
 	<html>
@@ -83,10 +83,10 @@
 
 /**
  * Print a list of pages
- *
- * @param pages
  */
 {template .pages}
+	{@param pages: ?}
+
 	{foreach $page in $pages}
 		<div style="background-color: #fff; border-radius: 4px; margin: 0 auto 24px auto; padding: 40px;">
 			<h4 style="color: #9aa2a6; font-size: 21px; font-weight: 500; margin: 0;">{$page.title}</h4>

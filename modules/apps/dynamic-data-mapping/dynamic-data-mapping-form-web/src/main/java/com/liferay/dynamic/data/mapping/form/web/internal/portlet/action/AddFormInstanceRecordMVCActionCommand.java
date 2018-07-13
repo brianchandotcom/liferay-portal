@@ -18,7 +18,6 @@ import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
-import com.liferay.dynamic.data.mapping.form.web.internal.notification.DDMFormEmailNotificationSender;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -111,6 +110,8 @@ public class AddFormInstanceRecordMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), actionRequest);
 
+		serviceContext.setRequest(_portal.getHttpServletRequest(actionRequest));
+
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 			_ddmFormInstanceRecordVersionLocalService.
 				fetchLatestFormInstanceRecordVersion(
@@ -118,23 +119,14 @@ public class AddFormInstanceRecordMVCActionCommand
 					ddmFormInstance.getVersion(),
 					WorkflowConstants.STATUS_DRAFT);
 
-		DDMFormInstanceRecord ddmFormInstanceRecord;
-
 		if (ddmFormInstanceRecordVersion == null) {
-			ddmFormInstanceRecord =
-				_ddmFormInstanceRecordService.addFormInstanceRecord(
-					groupId, formInstanceId, ddmFormValues, serviceContext);
+			_ddmFormInstanceRecordService.addFormInstanceRecord(
+				groupId, formInstanceId, ddmFormValues, serviceContext);
 		}
 		else {
-			ddmFormInstanceRecord =
-				_ddmFormInstanceRecordService.updateFormInstanceRecord(
-					ddmFormInstanceRecordVersion.getFormInstanceRecordId(),
-					false, ddmFormValues, serviceContext);
-		}
-
-		if (isEmailNotificationEnabled(ddmFormInstance)) {
-			_ddmFormEmailNotificationSender.sendEmailNotification(
-				actionRequest, ddmFormInstanceRecord);
+			_ddmFormInstanceRecordService.updateFormInstanceRecord(
+				ddmFormInstanceRecordVersion.getFormInstanceRecordId(), false,
+				ddmFormValues, serviceContext);
 		}
 
 		if (SessionErrors.isEmpty(actionRequest)) {
@@ -174,23 +166,6 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
 		return ddmStructure.getDDMForm();
-	}
-
-	protected boolean isEmailNotificationEnabled(
-			DDMFormInstance ddmFormInstance)
-		throws PortalException {
-
-		DDMFormInstanceSettings formInstanceSettings =
-			ddmFormInstance.getSettingsModel();
-
-		return formInstanceSettings.sendEmailNotification();
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLFormEmailNotificationSender(
-		DDMFormEmailNotificationSender ddmFormEmailNotificationSender) {
-
-		_ddmFormEmailNotificationSender = ddmFormEmailNotificationSender;
 	}
 
 	@Reference(unbind = "-")
@@ -238,7 +213,6 @@ public class AddFormInstanceRecordMVCActionCommand
 	private AddFormInstanceRecordMVCCommandHelper
 		_addFormInstanceMVCCommandHelper;
 
-	private DDMFormEmailNotificationSender _ddmFormEmailNotificationSender;
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
 
 	@Reference

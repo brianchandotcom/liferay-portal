@@ -17,12 +17,14 @@ package com.liferay.frontend.js.bundle.config.extender.internal;
 import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigTracker.JSConfig;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.minifier.MinifierUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import java.net.URL;
 
@@ -89,11 +91,9 @@ public class JSBundleConfigServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
+		StringWriter stringWriter = new StringWriter();
 
-		ServletOutputStream servletOutputStream = response.getOutputStream();
-
-		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
+		PrintWriter printWriter = new PrintWriter(stringWriter);
 
 		Collection<JSConfig> jsConfigs = _jsBundleConfigTracker.getJSConfigs();
 
@@ -104,22 +104,21 @@ public class JSBundleConfigServlet extends HttpServlet {
 				URL url = jsConfig.getURL();
 
 				try (InputStream inputStream = url.openStream()) {
-					servletOutputStream.println("try {");
+					printWriter.println("try {");
 
 					ServletContext servletContext =
 						jsConfig.getServletContext();
 
-					servletOutputStream.println(
+					printWriter.println(
 						StringBundler.concat(
 							"var MODULE_PATH = '", _portal.getPathProxy(),
 							servletContext.getContextPath(), "';"));
 
-					StreamUtil.transfer(
-						inputStream, servletOutputStream, false);
+					printWriter.print(StringUtil.read(inputStream));
 
-					servletOutputStream.println("} catch (error) {");
-					servletOutputStream.println("console.error(error);");
-					servletOutputStream.println("}");
+					printWriter.println("} catch (error) {");
+					printWriter.println("console.error(error);");
+					printWriter.println("}");
 				}
 				catch (Exception e) {
 					_logger.log(Logger.LOG_ERROR, "Unable to open resource", e);
@@ -130,6 +129,8 @@ public class JSBundleConfigServlet extends HttpServlet {
 		}
 
 		printWriter.close();
+
+		_writeResponse(response, stringWriter.toString());
 	}
 
 	@Reference(unbind = "-")
@@ -137,6 +138,21 @@ public class JSBundleConfigServlet extends HttpServlet {
 		JSBundleConfigTracker jsBundleConfigTracker) {
 
 		_jsBundleConfigTracker = jsBundleConfigTracker;
+	}
+
+	private void _writeResponse(HttpServletResponse response, String content)
+		throws IOException {
+
+		response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
+
+		ServletOutputStream servletOutputStream = response.getOutputStream();
+
+		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
+
+		printWriter.write(
+			MinifierUtil.minifyJavaScript("/o/js_bundle_config", content));
+
+		printWriter.close();
 	}
 
 	private ComponentContext _componentContext;

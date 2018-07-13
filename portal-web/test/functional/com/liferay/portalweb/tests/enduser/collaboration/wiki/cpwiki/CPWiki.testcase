@@ -300,7 +300,7 @@
 	</command>
 
 	<command name="DeleteWikiNode" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -383,7 +383,6 @@
 	</command>
 
 	<command name="ImportLarAddWikiPageType" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">

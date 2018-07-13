@@ -85,7 +85,6 @@
 	</command>
 
 	<command name="AddDocumentTypeAndMetadata" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -324,7 +323,6 @@
 	</command>
 
 	<command name="CannotViewFolderAsSiteMember" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -490,7 +488,6 @@
 	</command>
 
 	<command name="CannotViewMultipleDocumentsAsSiteMember" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1488,7 +1485,6 @@
 	</command>
 
 	<command name="UpdateDocumentTypeWithPermissions" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="test.name.skip.portal.instance" value="DocumentsadministrationUsecase#UpdateDocumentTypeWithPermissions" />
 		<property name="testray.component.names" value="Training" />
 
@@ -1791,7 +1787,6 @@
 	</command>
 
 	<command name="ViewDocumentWithGlobalScope" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2031,7 +2026,6 @@
 	</command>
 
 	<command name="ViewFileCategoryAndTags" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2146,7 +2140,6 @@
 	</command>
 
 	<command name="ViewFolderAsOrganizationUser" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">

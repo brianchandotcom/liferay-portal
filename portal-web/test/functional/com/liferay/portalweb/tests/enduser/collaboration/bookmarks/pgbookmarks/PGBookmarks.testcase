@@ -58,8 +58,6 @@
 	</tear-down>
 
 	<command name="AddBookmark" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
@@ -134,8 +132,6 @@
 	</command>
 
 	<command name="AddFolderBookmarkURLInvalid" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
@@ -245,8 +241,6 @@
 	</command>
 
 	<command name="EditFolderBookmark" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
@@ -340,8 +334,6 @@
 	</command>
 
 	<command name="RemoveBookmarkPortlet" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>

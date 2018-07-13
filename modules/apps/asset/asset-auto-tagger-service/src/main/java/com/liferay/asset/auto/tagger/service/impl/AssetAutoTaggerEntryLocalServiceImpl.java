@@ -22,49 +22,33 @@ import com.liferay.asset.kernel.model.AssetTag;
 import java.util.List;
 
 /**
- * The implementation of the asset auto tagger entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see AssetAutoTaggerEntryLocalServiceBaseImpl
- * @see com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalServiceUtil
+ * @author Alejandro Tardín
  */
 public class AssetAutoTaggerEntryLocalServiceImpl
 	extends AssetAutoTaggerEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalServiceUtil} to access the asset auto tagger entry local service.
-	 */
 	@Override
 	public AssetAutoTaggerEntry addAssetAutoTaggerEntry(
 		AssetEntry assetEntry, AssetTag assetTag) {
 
-		AssetAutoTaggerEntry existingEntry =
+		AssetAutoTaggerEntry existingAssetAutoTaggerEntry =
 			assetAutoTaggerEntryPersistence.fetchByA_A(
 				assetEntry.getEntryId(), assetTag.getTagId());
 
-		if (existingEntry != null) {
-			return existingEntry;
+		if (existingAssetAutoTaggerEntry != null) {
+			return existingAssetAutoTaggerEntry;
 		}
 
-		long entryId = counterLocalService.increment();
+		long assetAutoTaggerEntryId = counterLocalService.increment();
 
-		AssetAutoTaggerEntry entry = assetAutoTaggerEntryPersistence.create(
-			entryId);
+		AssetAutoTaggerEntry assetAutoTaggerEntry =
+			assetAutoTaggerEntryPersistence.create(assetAutoTaggerEntryId);
 
-		entry.setGroupId(assetEntry.getGroupId());
-		entry.setAssetEntryId(assetEntry.getEntryId());
-		entry.setAssetTagId(assetTag.getTagId());
+		assetAutoTaggerEntry.setGroupId(assetEntry.getGroupId());
+		assetAutoTaggerEntry.setAssetEntryId(assetEntry.getEntryId());
+		assetAutoTaggerEntry.setAssetTagId(assetTag.getTagId());
 
-		return assetAutoTaggerEntryPersistence.update(entry);
+		return assetAutoTaggerEntryPersistence.update(assetAutoTaggerEntry);
 	}
 
 	@Override

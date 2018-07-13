@@ -1,0 +1,75 @@
+<definition>
+	<command name="_gotoNavItem">
+		<var name="key_navItem" value="${navItem}" />
+
+		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="${navItem}" />
+
+		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK" />
+	</command>
+
+	<command name="gotoAvailableSites">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="Available Sites" />
+		</execute>
+	</command>
+
+	<command name="gotoDisplayPages">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+	</command>
+
+	<command name="gotoGlobalTemplates">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="Global Templates" />
+		</execute>
+	</command>
+
+	<command name="gotoOrganizations">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="Organizations" />
+		</execute>
+	</command>
+
+	<command name="gotoPages">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="Pages" />
+		</execute>
+	</command>
+
+	<command name="gotoPageTemplates">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="Page Templates" />
+		</execute>
+	</command>
+
+	<command name="gotoSchemes">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="Schemes" />
+		</execute>
+	</command>
+
+	<command name="gotoStructures">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="Structures" />
+		</execute>
+	</command>
+
+	<command name="gotoTemplates">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
+	</command>
+
+	<command name="gotoUserGroups">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="User Groups" />
+		</execute>
+	</command>
+
+	<command name="gotoUsers">
+		<execute macro="NavItem#_gotoNavItem">
+			<var name="navItem" value="Users" />
+		</execute>
+	</command>
+</definition>

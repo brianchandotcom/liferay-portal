@@ -312,7 +312,7 @@ if (portletTitleBasedNavigation) {
 					</liferay-expando:custom-attributes-available>
 				</c:if>
 
-				<c:if test="<%= folder == null %>">
+				<c:if test="<%= (folder == null) && !RepositoryUtil.isExternalRepository(repositoryId) %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 						<liferay-ui:input-permissions
 							modelName="<%= DLFolderConstants.getClassName() %>"

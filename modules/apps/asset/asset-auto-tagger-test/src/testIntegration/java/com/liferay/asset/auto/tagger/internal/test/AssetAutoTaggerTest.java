@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnsafeRunnable;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -106,7 +105,7 @@ public class AssetAutoTaggerTest {
 	public void testAutoTagsANewAssetOnCreation() throws Exception {
 		_withAutoTaggingEnabled(
 			() -> {
-				AssetEntry assetEntry = _addAssetEntry();
+				AssetEntry assetEntry = _addFileEntryAssetEntry();
 
 				_assertContainsTag(assetEntry, _AUTO_TAG);
 			});
@@ -114,7 +113,7 @@ public class AssetAutoTaggerTest {
 
 	@Test
 	public void testIsDisabledByDefault() throws Exception {
-		AssetEntry assetEntry = _addAssetEntry();
+		AssetEntry assetEntry = _addFileEntryAssetEntry();
 
 		List<AssetTag> assetTags = assetEntry.getTags();
 
@@ -125,7 +124,7 @@ public class AssetAutoTaggerTest {
 	public void testKeepsTagCounters() throws Exception {
 		_withAutoTaggingEnabled(
 			() -> {
-				AssetEntry assetEntry = _addAssetEntry();
+				AssetEntry assetEntry = _addFileEntryAssetEntry();
 
 				AssetTag assetTag = _assetTagLocalService.getTag(
 					_group.getGroupId(), _AUTO_TAG);
@@ -145,7 +144,7 @@ public class AssetAutoTaggerTest {
 	public void testRemovesAutoTags() throws Exception {
 		_withAutoTaggingEnabled(
 			() -> {
-				AssetEntry assetEntry = _addAssetEntry();
+				AssetEntry assetEntry = _addFileEntryAssetEntry();
 
 				_assertContainsTag(assetEntry, _AUTO_TAG);
 
@@ -161,7 +160,7 @@ public class AssetAutoTaggerTest {
 			});
 	}
 
-	private AssetEntry _addAssetEntry() throws PortalException {
+	private AssetEntry _addFileEntryAssetEntry() throws PortalException {
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
@@ -194,7 +193,7 @@ public class AssetAutoTaggerTest {
 				"The asset entry has not been tagged with '%s'", tag));
 	}
 
-	private void _withAutoTaggingEnabled(UnsafeRunnable runnable)
+	private void _withAutoTaggingEnabled(UnsafeRunnable unsafeRunnable)
 		throws Exception {
 
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
@@ -205,7 +204,7 @@ public class AssetAutoTaggerTest {
 				new ConfigurationTemporarySwapper(
 					_CONFIGURATION_PID, dictionary)) {
 
-			runnable.run();
+			unsafeRunnable.run();
 		}
 	}
 

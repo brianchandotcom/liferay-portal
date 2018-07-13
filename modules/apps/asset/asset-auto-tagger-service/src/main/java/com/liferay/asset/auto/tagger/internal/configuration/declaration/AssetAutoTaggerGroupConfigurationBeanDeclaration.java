@@ -12,15 +12,23 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.internal.configuration;
+package com.liferay.asset.auto.tagger.internal.configuration.declaration;
+
+import com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerGroupConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Tardín
  */
-public interface AssetAutoTaggerConfiguration {
+@Component
+public class AssetAutoTaggerGroupConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public boolean enabled();
-
-	public int maximumNumberOfTagsPerAsset();
+	@Override
+	public Class getConfigurationBeanClass() {
+		return AssetAutoTaggerGroupConfiguration.class;
+	}
 
 }

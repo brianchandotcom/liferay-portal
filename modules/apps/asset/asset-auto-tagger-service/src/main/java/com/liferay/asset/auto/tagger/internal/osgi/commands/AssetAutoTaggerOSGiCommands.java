@@ -63,6 +63,12 @@ import java.util.Set;
 public class AssetAutoTaggerOSGiCommands {
 
 	public void tagAllUntagged(String... classNames) {
+		if (!_assetAutoTaggerConfiguration.enabled()) {
+			System.out.println("Asset auto tagging is disabled");
+
+			return;
+		}
+
 		if (ArrayUtil.isEmpty(classNames)) {
 			Set<String> classNamesSet = _serviceTrackerMap.keySet();
 

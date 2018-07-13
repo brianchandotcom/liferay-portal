@@ -217,7 +217,7 @@ public class AssetAutoTaggerTest {
 
 	private static final String _CONFIGURATION_PID =
 		"com.liferay.asset.auto.tagger.internal.configuration." +
-			"AssetAutoTaggerConfiguration";
+			"AssetAutoTaggerSystemConfiguration";
 
 	@Inject
 	private AssetAutoTagger _assetAutoTagger;

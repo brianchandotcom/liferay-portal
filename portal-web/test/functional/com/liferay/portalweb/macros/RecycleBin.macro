@@ -5,7 +5,9 @@
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
 
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${assetName}" />
+		</execute>
 
 		<execute macro="MenuItem#clickNoError">
 			<var name="menuItem" value="Delete" />
@@ -102,7 +104,9 @@
 
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${assetName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Restore" />
@@ -139,8 +143,8 @@
 	</command>
 
 	<command name="restoreOverwriteCP">
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS">
-			<var name="key_assetName" value="${assetName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${assetName}" />
 		</execute>
 
 		<execute macro="MenuItem#click">
@@ -162,7 +166,9 @@
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
 
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${assetName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Restore" />
@@ -245,7 +251,9 @@
 
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${assetName}" />
+		</execute>
 
 		<execute macro="MenuItem#viewPresent">
 			<var name="menuItem" value="Restore" />

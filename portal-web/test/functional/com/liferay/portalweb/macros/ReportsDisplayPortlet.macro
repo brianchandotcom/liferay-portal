@@ -4,7 +4,9 @@
 
 		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 
-		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${reportsFileName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
 

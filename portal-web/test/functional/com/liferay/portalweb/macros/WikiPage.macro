@@ -510,7 +510,9 @@
 
 		<var name="key_wikiPageVersion" value="${wikiPageVersionNew}" />
 
-		<execute function="Click" locator1="Wiki#COMPARE_VERSIONS_VERSION_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${wikiPageVersionNew}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Wiki#HISTORY_ACTIVITIES_TABLE_COMPARE_TO_LINK" value1="Compare to..." />
 
@@ -730,7 +732,9 @@
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${entryComment}" />
 
-		<execute function="Click" locator1="Comments#COMMENT_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${entryComment}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Edit" />
@@ -758,9 +762,9 @@
 	</command>
 
 	<command name="editPageCP">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute function="Click" locator1="Wiki#DESCRIPTIVE_VIEW_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Edit" />
@@ -952,9 +956,9 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute function="Click" locator1="Wiki#DESCRIPTIVE_VIEW_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
@@ -1110,7 +1114,9 @@
 		<var name="key_wikiPageRevision" value="1.0" />
 		<var name="key_wikiPageTitle" value="${wikiPage2Title}" />
 
-		<execute function="Click" locator1="Wiki#HISTORY_VERSIONS_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${wikiPage2Title}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Revert" />
@@ -1138,7 +1144,9 @@
 		<var name="key_wikiPageRevision" value="${wikiPageRevisionOld}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="Click" locator1="Wiki#HISTORY_VERSIONS_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Revert" />

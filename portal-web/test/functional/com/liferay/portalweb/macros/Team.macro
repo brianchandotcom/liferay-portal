@@ -142,14 +142,18 @@
 	</command>
 
 	<command name="deleteCP">
-		<var name="key_teamName" value="${teamName}" />
-
 		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="table" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${teamName}" />
+		</execute>
+
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${teamName}" />
+		</execute>
+
 		<execute macro="MenuItem#clickNoError">
 			<var name="menuItem" value="Delete" />
 		</execute>

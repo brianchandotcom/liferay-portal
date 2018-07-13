@@ -2,8 +2,8 @@
 	<command name="changeDisplayStyle">
 		<execute function="Click" locator1="Icon#CURRENT_DISPLAY_STYLE" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
-			<var method="StringUtil#upperCaseFirstLetter('${displayStyle}')" name="key_menuItem" />
+		<execute macro="MenuItem#click">
+			<var method="StringUtil#upperCaseFirstLetter('${displayStyle}')" name="menuItem" />
 		</execute>
 	</command>
 
@@ -51,8 +51,8 @@
 	<command name="gotoAddMenuItem">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#MENU_ITEM" value1="${menuItem}">
-			<var name="key_menuItem" value="${menuItem}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${menuItem}" />
 		</execute>
 	</command>
 

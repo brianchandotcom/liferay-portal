@@ -274,16 +274,16 @@
 	<command name="viewFavoriteStructureViaPlusButton">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="More">
-			<var name="key_menuItem" value="More" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="More" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="FAVORITES">
-			<var name="key_menuItem" value="favorites" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="favorites" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="${structureName}">
-			<var name="key_menuItem" value="${structureName}" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="${structureName}" />
 		</execute>
 	</command>
 

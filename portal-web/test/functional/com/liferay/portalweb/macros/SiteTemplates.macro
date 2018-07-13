@@ -141,7 +141,9 @@
 	<command name="deleteCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteTemplateName}" />
+		</execute>
 
 		<execute macro="MenuItem#clickNoError">
 			<var name="menuItem" value="Delete" />
@@ -208,7 +210,9 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
 
-		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteTemplateName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Manage" />
@@ -264,7 +268,9 @@
 		<while>
 			<condition function="IsElementPresent" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
 			<then>
-				<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+				<execute macro="LexiconEntry#openEntryMenu">
+					<var name="rowEntry" value="${siteTemplateName}" />
+				</execute>
 
 				<execute macro="MenuItem#clickNoError">
 					<var name="menuItem" value="Delete" />
@@ -342,7 +348,9 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="Site Template Name" />
 
-		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteTemplateName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Manage" />

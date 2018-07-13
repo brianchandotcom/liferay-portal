@@ -306,8 +306,8 @@
 	</command>
 
 	<command name="banUser">
-		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
-			<var name="key_threadReplyBody" value="${threadReplyBody}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadReplyBody}" />
 		</execute>
 
 		<execute macro="MenuItem#click">
@@ -354,7 +354,9 @@
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
-		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadSubject}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Move to Recycle Bin" />
@@ -569,8 +571,8 @@
 	</command>
 
 	<command name="markAsAnswerCP">
-		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
-			<var name="key_threadReplyBody" value="${threadReplyBody}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadReplyBody}" />
 		</execute>
 
 		<execute macro="MenuItem#click">
@@ -581,8 +583,8 @@
 	</command>
 
 	<command name="markAsAnswerPG">
-		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
-			<var name="key_threadReplyBody" value="${threadReplyBody}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadReplyBody}" />
 		</execute>
 
 		<execute macro="MenuItem#click">
@@ -597,8 +599,8 @@
 			<var name="key_categoryName" value="${categoryName1}" />
 		</execute>
 
-		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS">
-			<var name="key_threadSubject" value="${threadSubject}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadSubject}" />
 		</execute>
 
 		<execute macro="MenuItem#click">
@@ -751,8 +753,8 @@
 	<command name="removeViewPermissionsPG">
 		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
 
-		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS">
-			<var name="key_threadSubject" value="${threadSubject}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadSubject}" />
 		</execute>
 
 		<execute macro="MenuItem#click">

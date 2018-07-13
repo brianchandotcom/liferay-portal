@@ -15,8 +15,8 @@
 	</command>
 
 	<command name="deleteComment">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Comments#COMMENT_ACTIONS">
-			<var name="key_entryComment" value="${entryComment}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${entryComment}" />
 		</execute>
 
 		<execute macro="MenuItem#clickNoError">
@@ -29,8 +29,8 @@
 	</command>
 
 	<command name="editComment">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Comments#COMMENT_ACTIONS">
-			<var name="key_entryComment" value="${entryComment}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${entryComment}" />
 		</execute>
 
 		<execute macro="MenuItem#click">

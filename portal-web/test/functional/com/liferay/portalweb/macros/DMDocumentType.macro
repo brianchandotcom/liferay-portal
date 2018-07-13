@@ -43,7 +43,9 @@
 
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute function="Click" locator1="DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${dmDocumentTypeName}" />
+		</execute>
 
 		<execute macro="MenuItem#clickNoError">
 			<var name="menuItem" value="Delete" />
@@ -60,7 +62,9 @@
 
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute function="Click" locator1="DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${dmDocumentTypeName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Edit" />

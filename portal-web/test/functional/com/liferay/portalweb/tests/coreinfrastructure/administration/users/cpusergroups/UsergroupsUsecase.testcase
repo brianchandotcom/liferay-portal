@@ -378,9 +378,13 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#USER_TABLE_NAME" value1="userfn3 userln3" />
 		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SCREEN_NAME" value1="usersn3" />
-		<execute function="Click" locator1="SiteMemberships#USER_TABLE_ACTIONS" />
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign Site Roles">
-			<var name="key_menuItem" value="Assign Site Roles" />
+
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="userfn3 userln3" />
+		</execute>
+
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Assign Site Roles" />
 		</execute>
 
 		<execute macro="User#logoutUserPG" />

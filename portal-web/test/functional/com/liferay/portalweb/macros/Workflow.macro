@@ -92,14 +92,14 @@
 			<elseif>
 				<isset var="boardWorkflowTask" />
 				<then>
-					<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Approve ${boardWorkflowTask}">
-						<var name="key_menuItem" value="Approve ${boardWorkflowTask}" />
+					<execute macro="MenuItem#viewPresent">
+						<var name="menuItem" value="Approve ${boardWorkflowTask}" />
 					</execute>
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Approve">
-					<var name="key_menuItem" value="Approve" />
+				<execute macro="MenuItem#viewPresent">
+					<var name="menuItem" value="Approve" />
 				</execute>
 			</else>
 		</if>
@@ -465,8 +465,8 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Reject">
-			<var name="key_menuItem" value="Reject" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Reject" />
 		</execute>
 
 		<if>
@@ -534,8 +534,8 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Resubmit">
-			<var name="key_menuItem" value="Resubmit" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Resubmit" />
 		</execute>
 
 		<execute macro="Workflow#confirmWorkflowAction" />

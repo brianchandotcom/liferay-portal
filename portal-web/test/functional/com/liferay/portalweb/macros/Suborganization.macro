@@ -27,7 +27,9 @@
 
 		<var name="key_suborgName" value="${suborgName}" />
 
-		<execute function="Click" locator1="UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${suborgName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Edit" />

@@ -1,8 +1,8 @@
 <definition>
 	<command name="deactivateAppCP">
-		<var name="key_appName" value="${appName}" />
-
-		<execute function="Click" locator1="AppManager#APP_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${appName}" />
+		</execute>
 
 		<execute macro="MenuItem#clickNoError">
 			<var name="menuItem" value="Deactivate" />
@@ -25,9 +25,9 @@
 	</command>
 
 	<command name="uninstallAppCP">
-		<var name="key_appName" value="${appName}" />
-
-		<execute function="Click" locator1="AppManager#APP_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${appName}" />
+		</execute>
 
 		<execute macro="MenuItem#clickNoError">
 			<var name="menuItem" value="Uninstall" />

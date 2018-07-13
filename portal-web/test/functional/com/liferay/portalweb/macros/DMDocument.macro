@@ -2105,15 +2105,15 @@
 		<if>
 			<equals arg1="${viewCheckoutOption}" arg2="true" />
 			<then>
-				<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkout">
-					<var name="key_menuItem" value="Checkout" />
+				<execute macro="MenuItem#viewPresent">
+					<var name="menuItem" value="Checkout" />
 				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${viewCheckoutOption}" arg2="false" />
 				<then>
-					<execute function="AssertNotVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkout">
-						<var name="key_menuItem" value="Checkout" />
+					<execute macro="MenuItem#viewNotPresent">
+						<var name="menuItem" value="Checkout" />
 					</execute>
 				</then>
 			</elseif>
@@ -2632,40 +2632,40 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
-			<var name="key_menuItem" value="Folder" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Folder" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Shortcut">
-			<var name="key_menuItem" value="Shortcut" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Shortcut" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Repository">
-			<var name="key_menuItem" value="Repository" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Repository" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Multiple Documents">
-			<var name="key_menuItem" value="Multiple Documents" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Multiple Documents" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
-			<var name="key_menuItem" value="Basic Document" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Basic Document" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Contract">
-			<var name="key_menuItem" value="Contract" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Contract" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Marketing Banner">
-			<var name="key_menuItem" value="Marketing Banner" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Marketing Banner" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Online Training">
-			<var name="key_menuItem" value="Online Training" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Online Training" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Sales Presentation">
-			<var name="key_menuItem" value="Sales Presentation" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Sales Presentation" />
 		</execute>
 
 		<execute function="SelectFrameTop" />
@@ -2678,44 +2678,44 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#DOWNLOAD" value1="Download" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
-			<var name="key_menuItem" value="Move" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Move" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkout">
-			<var name="key_menuItem" value="Checkout" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Checkout" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to Recycle Bin">
-			<var name="key_menuItem" value="Move to Recycle Bin" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Move to Recycle Bin" />
 		</execute>
 
 		<execute function="Check" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
 
 		<execute function="Click" locator1="Icon#TOOLBAR_ELLIPSIS" />
 
-		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkout">
-			<var name="key_menuItem" value="Checkout" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Checkout" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkin">
-			<var name="key_menuItem" value="Checkin" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Checkin" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
-			<var name="key_menuItem" value="Move" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Move" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to Recycle Bin">
-			<var name="key_menuItem" value="Move to Recycle Bin" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Move to Recycle Bin" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -2731,8 +2731,8 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#DOWNLOAD" value1="Download" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to Recycle Bin">
-			<var name="key_menuItem" value="Move to Recycle Bin" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Move to Recycle Bin" />
 		</execute>
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />

@@ -26,7 +26,9 @@
 	<command name="deactivatePortalInstance">
 		<var name="key_virtualHost" value="${virtualHost}" />
 
-		<execute function="Click" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${virtualHost}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Edit" />
@@ -44,7 +46,9 @@
 
 		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
 
-		<execute function="Click" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${virtualHost}" />
+		</execute>
 
 		<execute macro="MenuItem#clickNoError">
 			<var name="menuItem" value="Delete" />

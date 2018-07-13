@@ -510,7 +510,9 @@
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
-		<execute function="Click" locator1="StagingManageVariations#SITE_PAGES_VARIATIONS_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${sitePagesVariationName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Edit" />

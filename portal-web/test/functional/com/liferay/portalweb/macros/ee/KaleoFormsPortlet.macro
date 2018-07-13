@@ -39,7 +39,11 @@
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_NAME" value1="${kfProcessName}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_SUBMISSION_DATE" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
-		<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
+
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${kfProcessName}" />
+		</execute>
+
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Assign to Me" />
 		</execute>
@@ -69,7 +73,11 @@
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_NAME" value1="${kfProcessName}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_SUBMISSION_DATE" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
-		<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
+
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${kfProcessName}" />
+		</execute>
+
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Assign to..." />
 		</execute>
@@ -312,7 +320,11 @@
 		<if>
 			<isset var="assignedToMyRoles" />
 			<then>
-				<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
+
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${kfProcessName}" />
+		</execute>
+
 			</then>
 			<elseif>
 				<isset var="assignedToMe" />
@@ -565,7 +577,9 @@
 		<execute function="AssertElementPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_END_DATE" />
 
-		<execute function="Click" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${kfProcessName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Withdraw Submission" />

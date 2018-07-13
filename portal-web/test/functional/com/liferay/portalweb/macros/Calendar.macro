@@ -605,7 +605,9 @@
 
 		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_NAME" value1="${calendarName}" />
 
-		<execute function="Click" locator1="CalendarManageCalendars#CALENDAR_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${calendarName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Export" />
@@ -634,7 +636,10 @@
 		<var name="key_calendarName" value="${calendarName}" />
 
 		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_NAME" value1="${calendarName}" />
-		<execute function="Click" locator1="CalendarManageCalendars#CALENDAR_TABLE_ACTIONS" />
+
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${calendarName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Import" />

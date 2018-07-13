@@ -21,9 +21,9 @@
 
 		<execute function="Click" locator1="CampaignContentDisplay#RULE_PANEL_SELECT_CONTENT" />
 
-		<var name="key_menuItem" value="${contentType}" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${contentType}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -46,9 +46,9 @@
 		<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
 		<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL_SELECT_CONTENT" />
 
-		<var name="key_menuItem" value="${contentType}" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${contentType}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 

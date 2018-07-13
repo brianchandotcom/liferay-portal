@@ -456,7 +456,9 @@
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
-		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${orgName}" />
+		</execute>
 	</command>
 
 	<command name="gotoCP">
@@ -560,7 +562,9 @@
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USERS_AND_SUBORGANIZATIONS_TABLE_NAME" value1="${userFullName}" />
 
-		<execute function="Click" locator1="UsersAndOrganizations#USERS_AND_SUBORGANIZATIONS_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${userFullName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Remove" />
@@ -584,7 +588,9 @@
 	<command name="selectParentOrganizationCP">
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${orgName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Edit" />
@@ -690,7 +696,9 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
 
-		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${orgName}" />
+		</execute>
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Edit" />
@@ -708,8 +716,8 @@
 			<var name="key_navItem" value="${navItem}" />
 		</execute>
 
-		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_ACTIONS">
-			<var name="key_orgName" value="${orgName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${orgName}" />
 		</execute>
 
 		<execute macro="MenuItem#click">

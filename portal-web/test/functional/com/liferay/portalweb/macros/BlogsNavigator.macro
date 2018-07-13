@@ -210,7 +210,9 @@
 		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_STATUS" value1="Draft" />
 
-		<execute function="Click" locator1="Blogs#ENTRY_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 

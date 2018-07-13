@@ -165,12 +165,8 @@
 			<var name="key_threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
-			<var name="key_threadReplyBody" value="${threadReplyBody}" />
-		</execute>
-
-		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
-			<var name="key_threadReplyBody" value="${threadReplyBody}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadReplyBody}" />
 		</execute>
 
 		<execute macro="MenuItem#click">
@@ -262,8 +258,8 @@
 			<var name="portlet" value="User Groups" />
 		</execute>
 
-		<execute function="Click" locator1="UserGroups#USER_GROUP_TABLE_ACTIONS">
-			<var name="key_userGroupName" value="${userGroupName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${userGroupName}" />
 		</execute>
 
 		<execute macro="MenuItem#click">

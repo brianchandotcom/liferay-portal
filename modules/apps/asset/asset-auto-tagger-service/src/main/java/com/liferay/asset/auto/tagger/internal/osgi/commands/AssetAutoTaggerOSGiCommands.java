@@ -105,6 +105,10 @@ public class AssetAutoTaggerOSGiCommands {
 			assetEntry -> {
 				String[] tagsBefore = assetEntry.getTagNames();
 
+				if (tagsBefore.length > 0) {
+					return;
+				}
+
 				_assetAutoTagger.untag(assetEntry);
 
 				String[] tagsAfter = assetEntry.getTagNames();

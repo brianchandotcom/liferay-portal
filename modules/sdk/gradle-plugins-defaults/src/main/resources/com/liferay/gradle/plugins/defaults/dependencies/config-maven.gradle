@@ -62,11 +62,11 @@ tasks.withType(Upload) {
 					}
 				}
 
-				repository(url: project.properties["sonatype.release.url"] ?: "https://repository.liferay.com/nexus/content/repositories/liferay-public-releases") {
+				repository(url: project.properties["sonatype.release.url"] ?: "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases") {
 					authentication password: project.properties["sonatype.release.password"], userName: project.properties["sonatype.release.username"]
 				}
 
-				snapshotRepository(url: project.properties["sonatype.snapshot.url"] ?: "https://repository.liferay.com/nexus/content/repositories/liferay-public-snapshots") {
+				snapshotRepository(url: project.properties["sonatype.snapshot.url"] ?: "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots") {
 					authentication password: project.properties["sonatype.snapshot.password"], userName: project.properties["sonatype.snapshot.username"]
 				}
 			}

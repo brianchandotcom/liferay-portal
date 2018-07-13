@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_1_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.asset.auto.tagger">
+	<namespace>AssetAutoTagger</namespace>
+	<entity local-service="true" name="AssetAutoTaggerEntry" remote-service="false" trash-enabled="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="assetAutoTaggerEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="assetEntryId" type="long" />
+		<column name="assetTagId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="AssetEntryId" return-type="Collection">
+			<finder-column name="assetEntryId" />
+		</finder>
+		<finder name="AssetTagId" return-type="Collection">
+			<finder-column name="assetTagId" />
+		</finder>
+		<finder name="A_A" return-type="AssetAutoTaggerEntry" unique="true">
+			<finder-column name="assetEntryId" />
+			<finder-column name="assetTagId" />
+		</finder>
+	</entity>
+</service-builder>

@@ -23,7 +23,7 @@ import javax.portlet.ResourceParameters;
  * @author Neil Griffin
  */
 public class ResourceParametersImpl
-	extends PortletParametersBase<MutableResourceParameters>
+	extends BasePortletParameters<MutableResourceParameters>
 	implements ResourceParameters {
 
 	public ResourceParametersImpl(

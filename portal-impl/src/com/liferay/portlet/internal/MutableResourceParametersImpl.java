@@ -22,7 +22,7 @@ import javax.portlet.MutableResourceParameters;
  * @author Neil Griffin
  */
 public class MutableResourceParametersImpl
-	extends MutablePortletParametersBase<MutableResourceParameters>
+	extends BaseMutablePortletParameters<MutableResourceParameters>
 	implements LiferayMutablePortletParameters, MutableResourceParameters {
 
 	public MutableResourceParametersImpl(Map<String, String[]> parameterMap) {

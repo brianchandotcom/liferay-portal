@@ -22,7 +22,7 @@ import javax.portlet.MutableActionParameters;
  * @author Neil Griffin
  */
 public class MutableActionParametersImpl
-	extends MutablePortletParametersBase<MutableActionParameters>
+	extends BaseMutablePortletParameters<MutableActionParameters>
 	implements LiferayMutablePortletParameters, MutableActionParameters {
 
 	public MutableActionParametersImpl(Map<String, String[]> parameterMap) {

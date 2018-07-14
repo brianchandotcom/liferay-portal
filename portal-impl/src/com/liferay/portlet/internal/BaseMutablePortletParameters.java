@@ -26,12 +26,12 @@ import javax.portlet.PortletParameters;
 /**
  * @author Neil Griffin
  */
-public abstract class MutablePortletParametersBase
+public abstract class BaseMutablePortletParameters
 	<T extends MutablePortletParameters>
-		extends PortletParametersBase<T>
+		extends BasePortletParameters<T>
 		implements LiferayMutablePortletParameters {
 
-	public MutablePortletParametersBase(
+	public BaseMutablePortletParameters(
 		Map<String, String[]> parameterMap,
 		Function<Map<String, String[]>, T> mutablePortletParametersCreator) {
 

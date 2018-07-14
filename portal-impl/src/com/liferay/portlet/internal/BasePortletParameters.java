@@ -28,10 +28,10 @@ import javax.portlet.PortletParameters;
 /**
  * @author Neil Griffin
  */
-public abstract class PortletParametersBase<T extends MutablePortletParameters>
+public abstract class BasePortletParameters<T extends MutablePortletParameters>
 	implements PortletParameters {
 
-	public PortletParametersBase(
+	public BasePortletParameters(
 		Map<String, String[]> parameterMap, String namespace,
 		Function<Map<String, String[]>, T> mutablePortletParametersCreator) {
 

@@ -14,14 +14,23 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.criterion.Restrictions;
@@ -31,6 +40,18 @@ import org.hibernate.criterion.Restrictions;
  */
 @DoPrivileged
 public class RestrictionsFactoryImpl implements RestrictionsFactory {
+
+	public void afterPropertiesSet() {
+		DB db = DBManagerUtil.getDB();
+
+		DBType dbType = db.getDBType();
+
+		_databaseInMaxParameters = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
+				new Filter(dbType.getName())),
+			Integer.MAX_VALUE);
+	}
 
 	@Override
 	public Criterion allEq(Map<String, Criterion> propertyNameValues) {
@@ -102,12 +123,35 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 	@Override
 	public Criterion in(String propertyName, Collection<?> values) {
+		int size = values.size();
+
+		if (size > _databaseInMaxParameters) {
+			Disjunction disjunction = disjunction();
+
+			int start = 0;
+			int end = _databaseInMaxParameters;
+
+			List<?> list = ListUtil.fromCollection(values);
+
+			while (start < size) {
+				disjunction.add(
+					new CriterionImpl(
+						Restrictions.in(
+							propertyName, ListUtil.subList(list, start, end))));
+
+				start += _databaseInMaxParameters;
+				end += _databaseInMaxParameters;
+			}
+
+			return disjunction;
+		}
+
 		return new CriterionImpl(Restrictions.in(propertyName, values));
 	}
 
 	@Override
 	public Criterion in(String propertyName, Object[] values) {
-		return new CriterionImpl(Restrictions.in(propertyName, values));
+		return in(propertyName, ListUtil.toList(values));
 	}
 
 	@Override
@@ -240,5 +284,7 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 		return new CriterionImpl(
 			Restrictions.sqlRestriction(sql, values, hibernateTypes));
 	}
+
+	private int _databaseInMaxParameters;
 
 }

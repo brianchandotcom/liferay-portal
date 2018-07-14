@@ -7,19 +7,20 @@
 	position: relative;
 
 	.list-group {
-		flex-direction: row;
-		flex-wrap: wrap;
+		flex-flow: row wrap;
 	}
 }
 
 .list-group-card-item {
 	display: block;
-	float: left;
-	margin-buttom: 8px;
+	margin-bottom: 8px;
 	margin-top: 32px;
+	max-width: 10%;
+	min-width: 120px;
 	position: relative;
 	text-align: center;
-	width: 100px;
+	width: 100%;
+	word-wrap: break-word;
 
 	a {
 		color: #000;

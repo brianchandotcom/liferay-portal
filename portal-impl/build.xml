@@ -777,7 +777,7 @@ This target does not format .es.js files. Please run the following command from 
 
 	<target name="format-source-bnd">
 		<antcall target="format-source-all">
-			<param name="source.file.extensions" value="bnd,gradle,properties" />
+			<param name="source.file.extensions" value="bnd,gradle" />
 		</antcall>
 	</target>
 

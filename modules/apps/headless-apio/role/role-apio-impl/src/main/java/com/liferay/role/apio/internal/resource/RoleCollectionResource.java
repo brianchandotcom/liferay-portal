@@ -96,10 +96,9 @@ public class RoleCollectionResource
 	private PageItems<Role> _getPageItems(
 		Pagination pagination, Company company) {
 
-		List<Role> roles =
-			_roleService.search(company.getCompanyId(), null, null, null,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
+		List<Role> roles = _roleService.search(
+			company.getCompanyId(), null, null, null,
+			pagination.getStartPosition(), pagination.getEndPosition(), null);
 
 		int count = _roleService.searchCount(
 			company.getCompanyId(), null, null, null);

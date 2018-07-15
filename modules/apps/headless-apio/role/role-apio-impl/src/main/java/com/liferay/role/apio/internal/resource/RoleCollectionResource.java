@@ -21,7 +21,6 @@ import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleService;
@@ -95,12 +94,17 @@ public class RoleCollectionResource
 	}
 
 	private PageItems<Role> _getPageItems(
-			Pagination pagination, Company company)
-		throws PortalException {
+		Pagination pagination, Company company) {
 
-		List<Role> roles = _roleService.getRoles(company.getCompanyId(), null);
+		List<Role> roles =
+			_roleService.search(company.getCompanyId(), null, null, null,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				null);
 
-		return new PageItems<>(roles, roles.size());
+		int count = _roleService.searchCount(
+			company.getCompanyId(), null, null, null);
+
+		return new PageItems<>(roles, count);
 	}
 
 	@Reference

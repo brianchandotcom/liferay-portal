@@ -75,6 +75,10 @@ public class RoleCollectionResource
 			"Role"
 		).identifier(
 			Role::getRoleId
+		).addBoolean(
+			"systemRole", Role::isSystem
+		).addBoolean(
+			"teamRole", Role::isTeam
 		).addDate(
 			"dateCreated", Role::getCreateDate
 		).addDate(
@@ -85,6 +89,8 @@ public class RoleCollectionResource
 			"description", Role::getDescription
 		).addString(
 			"name", Role::getName
+		).addString(
+			"type", Role::getTypeLabel
 		).build();
 	}
 

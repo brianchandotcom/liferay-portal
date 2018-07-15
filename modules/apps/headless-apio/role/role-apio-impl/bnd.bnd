@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Role Apio Implementation
+Bundle-SymbolicName: com.liferay.role.apio.impl
+Bundle-Version: 1.0.0

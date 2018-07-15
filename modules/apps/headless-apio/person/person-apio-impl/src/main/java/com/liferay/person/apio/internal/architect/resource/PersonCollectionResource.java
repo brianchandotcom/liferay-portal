@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.role.apio.identifier.RoleIdentifier;
 
 import java.util.Date;
 import java.util.List;
@@ -113,6 +114,8 @@ public class PersonCollectionResource
 			"honorificPrefix", _getContactField(Contact::getPrefixId)
 		).addLocalizedStringByLocale(
 			"honorificSuffix", _getContactField(Contact::getSuffixId)
+		).addRelatedCollection(
+			"roles", RoleIdentifier.class
 		).addRelativeURL(
 			"image", UserWrapper::getPortraitURL
 		).addString(

@@ -215,8 +215,8 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 		<#assign versionEntity = entity.versionEntity />
 
 		@Override
-		public boolean isDraft() {
-			return _${entity.varName}.isDraft();
+		public boolean isHead() {
+			return _${entity.varName}.isHead();
 		}
 
 		@Override

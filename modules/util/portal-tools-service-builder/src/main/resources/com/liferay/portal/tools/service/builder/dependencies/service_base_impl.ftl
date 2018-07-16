@@ -1116,7 +1116,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			${entityVarName} = ${entity.varName}Persistence.findByPrimaryKey(${entityVarName}.getPrimaryKey());
 
 			<#if entity.versionEntity??>
-				if (!${entityVarName}.isDraft()) {
+				if (${entityVarName}.isHead()) {
 					throw new IllegalArgumentException("Can only update draft entries " + ${entityVarName}.getPrimaryKey());
 				}
 			</#if>
@@ -1149,7 +1149,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			${entityVarName} = ${entity.varName}Persistence.findByPrimaryKey(${entityVarName}.getPrimaryKey());
 
 			<#if entity.versionEntity??>
-				if (!${entityVarName}.isDraft()) {
+				if (${entityVarName}.isHead()) {
 					throw new IllegalArgumentException("Can only update draft entries " + ${entityVarName}.getPrimaryKey());
 				}
 			</#if>
@@ -1421,7 +1421,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		@Indexable(type = IndexableType.REINDEX)
 		@Override
 		public ${entity.name} checkout(${entity.name} published${entity.name}, int version) throws PortalException {
-			if (published${entity.name}.isDraft()) {
+			if (!published${entity.name}.isHead()) {
 				throw new IllegalArgumentException("Unable to checkout with unpublished changes " + published${entity.name}.getHeadId());
 			}
 
@@ -1449,7 +1449,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		@Indexable(type = IndexableType.DELETE)
 		@Override
 		public ${entity.name} delete(${entity.name} published${entity.name}) throws PortalException {
-			if (published${entity.name}.isDraft()) {
+			if (!published${entity.name}.isHead()) {
 				throw new IllegalArgumentException("${entity.name} is a draft " + published${entity.name}.getPrimaryKey());
 			}
 
@@ -1477,7 +1477,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		public ${entity.name} deleteDraft(${entity.name} draft${entity.name})
 			throws PortalException {
 
-			if (!draft${entity.name}.isDraft()) {
+			if (draft${entity.name}.isHead()) {
 				throw new IllegalArgumentException("${entity.name} is not a draft " + draft${entity.name}.getPrimaryKey());
 			}
 
@@ -1509,11 +1509,11 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 
 		@Override
 		public ${entity.name} fetchDraft(${entity.name} ${entity.varName}) {
-			if (${entity.varName}.isDraft()) {
-				return ${entity.varName};
+			if (${entity.varName}.isHead()) {
+				return ${entity.varName}Persistence.fetchByHeadId(${entity.varName}.getPrimaryKey());
 			}
 
-			return ${entity.varName}Persistence.fetchByHeadId(${entity.varName}.getPrimaryKey());
+			return ${entity.varName};
 		}
 
 		@Override
@@ -1523,10 +1523,10 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 
 		@Override
 		public ${versionEntity.name} fetchLatestVersion(${entity.name} ${entity.varName}) {
-			long primaryKey = ${entity.varName}.getPrimaryKey();
+			long primaryKey = ${entity.varName}.getHeadId();
 
-			if (${entity.varName}.isDraft()) {
-				primaryKey = ${entity.varName}.getHeadId();
+			if (${entity.varName}.isHead()) {
+				primaryKey = ${entity.varName}.getPrimaryKey();
 			}
 
 			return ${versionEntity.varName}Persistence.fetchBy${pkEntityMethod}_First(primaryKey, null);
@@ -1534,7 +1534,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 
 		@Override
 		public ${entity.name} fetchPublished(${entity.name} ${entity.varName}) {
-			if (!${entity.varName}.isDraft()) {
+			if (${entity.varName}.isHead()) {
 				return ${entity.varName};
 			}
 
@@ -1558,7 +1558,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 
 		@Override
 		public ${entity.name} getDraft(${entity.name} ${entity.varName}) throws PortalException {
-			if (${entity.varName}.isDraft()) {
+			if (!${entity.varName}.isHead()) {
 				return ${entity.varName};
 			}
 
@@ -1586,10 +1586,10 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 
 		@Override
 		public ${versionEntity.name} getVersion(${entity.name} ${entity.varName}, int version) throws PortalException {
-			long primaryKey = ${entity.varName}.getPrimaryKey();
+			long primaryKey = ${entity.varName}.getHeadId();
 
-			if (${entity.varName}.isDraft()) {
-				primaryKey = ${entity.varName}.getHeadId();
+			if (${entity.varName}.isHead()) {
+				primaryKey = ${entity.varName}.getPrimaryKey();
 			}
 
 			return ${versionEntity.varName}Persistence.findBy${pkEntityMethod}_Version(primaryKey, version);
@@ -1599,7 +1599,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		public List<${versionEntity.name}> getVersions(${entity.name} ${entity.varName}) {
 			long primaryKey = ${entity.varName}.getPrimaryKey();
 
-			if (${entity.varName}.isDraft()) {
+			if (!${entity.varName}.isHead()) {
 				if (${entity.varName}.getHeadId() == ${entity.varName}.getPrimaryKey()) {
 					return Collections.emptyList();
 				}
@@ -1613,7 +1613,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		@Indexable(type = IndexableType.REINDEX)
 		@Override
 		public ${entity.name} publishDraft(${entity.name} draft${entity.name}) throws PortalException {
-			if (!draft${entity.name}.isDraft()) {
+			if (draft${entity.name}.isHead()) {
 				throw new IllegalArgumentException("Can only publish drafts " + draft${entity.name}.getPrimaryKey());
 			}
 
@@ -1671,7 +1671,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		@Indexable(type = IndexableType.REINDEX)
 		@Override
 		public ${entity.name} updateDraft(${entity.name} draft${entity.name}) throws PortalException {
-			if (!draft${entity.name}.isDraft()) {
+			if (draft${entity.name}.isHead()) {
 				throw new IllegalArgumentException("Can only update draft entries " + draft${entity.name}.getPrimaryKey());
 			}
 

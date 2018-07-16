@@ -555,12 +555,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#assign versionEntity = entity.versionEntity />
 
 		@Override
-		public boolean isDraft() {
+		public boolean isHead() {
 			if (getHeadId() > 0) {
-				return true;
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		@Override

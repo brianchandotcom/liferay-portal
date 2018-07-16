@@ -582,6 +582,19 @@
 		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
+	<command name="reactivateInactiveWorkflowDefinition">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${workflowDefinitionTitle}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute function="Refresh" />
+	</command>
+
 	<command name="saveAndContinueForm">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 

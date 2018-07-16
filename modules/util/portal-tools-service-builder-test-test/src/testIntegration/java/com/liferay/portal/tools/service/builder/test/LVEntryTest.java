@@ -132,7 +132,7 @@ public class LVEntryTest {
 		draftLVEntry = _versionService.checkout(_lvEntry, 1);
 
 		Assert.assertEquals(_GROUP_ID_1, draftLVEntry.getGroupId());
-		Assert.assertTrue(draftLVEntry.toString(), draftLVEntry.isDraft());
+		Assert.assertFalse(draftLVEntry.toString(), draftLVEntry.isHead());
 
 		lvEntryVersions = _versionService.getVersions(_lvEntry);
 
@@ -187,7 +187,7 @@ public class LVEntryTest {
 	public void testCreate() {
 		LVEntry lvEntry = _versionService.create();
 
-		Assert.assertTrue(lvEntry.isDraft());
+		Assert.assertFalse(lvEntry.isHead());
 		Assert.assertTrue(lvEntry.isNew());
 		Assert.assertEquals(lvEntry.getHeadId(), lvEntry.getPrimaryKey());
 
@@ -513,7 +513,7 @@ public class LVEntryTest {
 
 		draftLVEntry = _versionService.updateDraft(draftLVEntry);
 
-		Assert.assertTrue(draftLVEntry.isDraft());
+		Assert.assertFalse(draftLVEntry.isHead());
 
 		Assert.assertSame(
 			draftLVEntry, _versionService.fetchDraft(draftLVEntry));
@@ -579,7 +579,7 @@ public class LVEntryTest {
 		_lvEntryLocalService.updateLVEntryLocalization(
 			draftLVEntry, _LANGUAGE_ID_1, _TITLE_1, _CONTENT_1);
 
-		Assert.assertTrue(draftLVEntry.isDraft());
+		Assert.assertFalse(draftLVEntry.isHead());
 
 		Assert.assertNull(_versionService.fetchPublished(draftLVEntry));
 		Assert.assertNull(
@@ -702,11 +702,11 @@ public class LVEntryTest {
 	public void testPublish() throws Exception {
 		LVEntry draftLVEntry = _versionService.create();
 
-		Assert.assertTrue(draftLVEntry.toString(), draftLVEntry.isDraft());
+		Assert.assertFalse(draftLVEntry.toString(), draftLVEntry.isHead());
 
 		_lvEntry = _versionService.publishDraft(draftLVEntry);
 
-		Assert.assertFalse(_lvEntry.toString(), _lvEntry.isDraft());
+		Assert.assertTrue(_lvEntry.toString(), _lvEntry.isHead());
 
 		LVEntryVersion lvEntryVersion = _versionService.fetchLatestVersion(
 			_lvEntry);

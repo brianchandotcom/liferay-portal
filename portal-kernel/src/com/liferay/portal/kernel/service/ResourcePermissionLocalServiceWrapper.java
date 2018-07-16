@@ -32,6 +32,48 @@ public class ResourcePermissionLocalServiceWrapper
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
+	@Override
+	public void addModelResourcePermissions(
+		com.liferay.portal.kernel.model.AuditedModel auditedModel,
+		ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.addModelResourcePermissions(auditedModel,
+			serviceContext);
+	}
+
+	@Override
+	public void addModelResourcePermissions(long companyId, long groupId,
+		long userId, String name, String primKey,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.addModelResourcePermissions(companyId,
+			groupId, userId, name, primKey, modelPermissions);
+	}
+
+	/**
+	* Adds resources for the model with the name and primary key string, always
+	* creating a resource at the individual scope and only creating resources
+	* at the group, group template, and company scope if such resources don't
+	* already exist.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param userId the primary key of the user adding the resources
+	* @param name a name for the resource, typically the model's class name
+	* @param primKey the primary key string of the model instance, optionally
+	an empty string if no instance exists
+	* @param groupPermissions the group permissions to be applied
+	* @param guestPermissions the guest permissions to be applied
+	*/
+	@Override
+	public void addModelResourcePermissions(long companyId, long groupId,
+		long userId, String name, String primKey, String[] groupPermissions,
+		String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.addModelResourcePermissions(companyId,
+			groupId, userId, name, primKey, groupPermissions, guestPermissions);
+	}
+
 	/**
 	* Grants the role permission at the scope to perform the action on
 	* resources of the type. Existing actions are retained.
@@ -85,6 +127,34 @@ public class ResourcePermissionLocalServiceWrapper
 	public com.liferay.portal.kernel.model.ResourcePermission addResourcePermission(
 		com.liferay.portal.kernel.model.ResourcePermission resourcePermission) {
 		return _resourcePermissionLocalService.addResourcePermission(resourcePermission);
+	}
+
+	/**
+	* Adds resources for the entity with the name and primary key string,
+	* always creating a resource at the individual scope and only creating
+	* resources at the group, group template, and company scope if such
+	* resources don't already exist.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param userId the primary key of the user adding the resources
+	* @param name a name for the resource, which should be a portlet ID if the
+	resource is a portlet or the resource's class name otherwise
+	* @param primKey the primary key string of the resource instance,
+	optionally an empty string if no instance exists
+	* @param portletActions whether to associate portlet actions with the
+	resource
+	* @param addGroupPermissions whether to add group permissions
+	* @param addGuestPermissions whether to add guest permissions
+	*/
+	@Override
+	public void addResourcePermissions(long companyId, long groupId,
+		long userId, String name, String primKey, boolean portletActions,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.addResourcePermissions(companyId,
+			groupId, userId, name, primKey, portletActions,
+			addGroupPermissions, addGuestPermissions);
 	}
 
 	/**
@@ -887,6 +957,23 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
+	* Updates the resources for the model, replacing their group and guest
+	* permissions with new ones from the service context.
+	*
+	* @param auditedModel the model associated with the resources
+	* @param serviceContext the service context to be applied. Can set group
+	and guest permissions.
+	*/
+	@Override
+	public void updateModelResourcePermissions(
+		com.liferay.portal.kernel.model.AuditedModel auditedModel,
+		ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.updateModelResourcePermissions(auditedModel,
+			serviceContext);
+	}
+
+	/**
 	* Updates the resource permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePermission the resource permission
@@ -896,6 +983,52 @@ public class ResourcePermissionLocalServiceWrapper
 	public com.liferay.portal.kernel.model.ResourcePermission updateResourcePermission(
 		com.liferay.portal.kernel.model.ResourcePermission resourcePermission) {
 		return _resourcePermissionLocalService.updateResourcePermission(resourcePermission);
+	}
+
+	/**
+	* Updates resources matching the group, name, and primary key at the
+	* individual scope, setting new group and guest permissions.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param name the resource's name, which should be a portlet ID if the
+	resource is a portlet or the resource's class name otherwise
+	* @param primKey the primary key of the resource instance
+	* @param groupPermissions the group permissions to be applied
+	* @param guestPermissions the guest permissions to be applied
+	*/
+	@Override
+	public void updateResourcePermissions(long companyId, long groupId,
+		String name, long primKey, String[] groupPermissions,
+		String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.updateResourcePermissions(companyId,
+			groupId, name, primKey, groupPermissions, guestPermissions);
+	}
+
+	@Override
+	public void updateResourcePermissions(long companyId, long groupId,
+		String name, String primKey,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.updateResourcePermissions(companyId,
+			groupId, name, primKey, modelPermissions);
+	}
+
+	@Override
+	public void updateResourcePermissions(long companyId, long groupId,
+		String name, String primKey, String[] groupPermissions,
+		String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.updateResourcePermissions(companyId,
+			groupId, name, primKey, groupPermissions, guestPermissions);
+	}
+
+	@Override
+	public void updateResourcePermissions(long companyId, String name,
+		int scope, String primKey, String newPrimKey) {
+		_resourcePermissionLocalService.updateResourcePermissions(companyId,
+			name, scope, primKey, newPrimKey);
 	}
 
 	@Override

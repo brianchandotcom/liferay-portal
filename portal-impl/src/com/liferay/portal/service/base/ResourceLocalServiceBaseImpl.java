@@ -25,11 +25,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.ResourceLocalService;
-import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
-import com.liferay.portal.kernel.service.persistence.RoleFinder;
-import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -95,44 +92,6 @@ public abstract class ResourceLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the resource action local service.
-	 *
-	 * @return the resource action local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceActionLocalService getResourceActionLocalService() {
-		return resourceActionLocalService;
-	}
-
-	/**
-	 * Sets the resource action local service.
-	 *
-	 * @param resourceActionLocalService the resource action local service
-	 */
-	public void setResourceActionLocalService(
-		com.liferay.portal.kernel.service.ResourceActionLocalService resourceActionLocalService) {
-		this.resourceActionLocalService = resourceActionLocalService;
-	}
-
-	/**
-	 * Returns the resource action persistence.
-	 *
-	 * @return the resource action persistence
-	 */
-	public ResourceActionPersistence getResourceActionPersistence() {
-		return resourceActionPersistence;
-	}
-
-	/**
-	 * Sets the resource action persistence.
-	 *
-	 * @param resourceActionPersistence the resource action persistence
-	 */
-	public void setResourceActionPersistence(
-		ResourceActionPersistence resourceActionPersistence) {
-		this.resourceActionPersistence = resourceActionPersistence;
-	}
-
-	/**
 	 * Returns the resource permission local service.
 	 *
 	 * @return the resource permission local service
@@ -189,61 +148,6 @@ public abstract class ResourceLocalServiceBaseImpl extends BaseLocalServiceImpl
 		this.resourcePermissionFinder = resourcePermissionFinder;
 	}
 
-	/**
-	 * Returns the role local service.
-	 *
-	 * @return the role local service
-	 */
-	public com.liferay.portal.kernel.service.RoleLocalService getRoleLocalService() {
-		return roleLocalService;
-	}
-
-	/**
-	 * Sets the role local service.
-	 *
-	 * @param roleLocalService the role local service
-	 */
-	public void setRoleLocalService(
-		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
-		this.roleLocalService = roleLocalService;
-	}
-
-	/**
-	 * Returns the role persistence.
-	 *
-	 * @return the role persistence
-	 */
-	public RolePersistence getRolePersistence() {
-		return rolePersistence;
-	}
-
-	/**
-	 * Sets the role persistence.
-	 *
-	 * @param rolePersistence the role persistence
-	 */
-	public void setRolePersistence(RolePersistence rolePersistence) {
-		this.rolePersistence = rolePersistence;
-	}
-
-	/**
-	 * Returns the role finder.
-	 *
-	 * @return the role finder
-	 */
-	public RoleFinder getRoleFinder() {
-		return roleFinder;
-	}
-
-	/**
-	 * Sets the role finder.
-	 *
-	 * @param roleFinder the role finder
-	 */
-	public void setRoleFinder(RoleFinder roleFinder) {
-		this.roleFinder = roleFinder;
-	}
-
 	public void afterPropertiesSet() {
 	}
 
@@ -288,20 +192,10 @@ public abstract class ResourceLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceActionLocalService.class)
-	protected com.liferay.portal.kernel.service.ResourceActionLocalService resourceActionLocalService;
-	@BeanReference(type = ResourceActionPersistence.class)
-	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = com.liferay.portal.kernel.service.ResourcePermissionLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
 	@BeanReference(type = ResourcePermissionFinder.class)
 	protected ResourcePermissionFinder resourcePermissionFinder;
-	@BeanReference(type = com.liferay.portal.kernel.service.RoleLocalService.class)
-	protected com.liferay.portal.kernel.service.RoleLocalService roleLocalService;
-	@BeanReference(type = RolePersistence.class)
-	protected RolePersistence rolePersistence;
-	@BeanReference(type = RoleFinder.class)
-	protected RoleFinder roleFinder;
 }

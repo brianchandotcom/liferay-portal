@@ -20,7 +20,7 @@
 DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoogleDriveFileReference)request.getAttribute(DLOpenerGoogleDriveWebKeys.DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE);
 %>
 
-<c:if test="<%= Validator.isNotNull(dlOpenerGoogleDriveFileReference) %>">
+<c:if test="<%= dlOpenerGoogleDriveFileReference != null %>">
 	<aui:script>
 		window.open('<%= dlOpenerGoogleDriveFileReference.getGoogleDocsEditURL() %>');
 	</aui:script>

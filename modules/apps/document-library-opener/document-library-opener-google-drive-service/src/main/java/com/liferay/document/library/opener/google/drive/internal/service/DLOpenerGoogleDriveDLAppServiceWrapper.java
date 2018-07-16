@@ -110,7 +110,7 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 				if (!file.delete()) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Couldn't delete temporary file " +
+							"Unable to delete temporary file " +
 								file.getAbsolutePath());
 					}
 				}

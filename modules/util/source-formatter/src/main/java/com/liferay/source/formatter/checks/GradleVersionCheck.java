@@ -43,7 +43,9 @@ public class GradleVersionCheck extends BaseFileCheck {
 			_checkDefaultVersion(
 				fileName, content, name, version, matcher.start());
 
-			if (absolutePath.contains("/modules/apps/")) {
+			if (absolutePath.contains("/modules/apps/") ||
+				absolutePath.contains("/modules/private/apps/")) {
+
 				content = _fixMicroVersion(
 					fileName, content, matcher.group(1), name, version);
 			}

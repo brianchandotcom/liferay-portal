@@ -59,6 +59,8 @@ else {
 				</svg>
 			</span>
 
+			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+
 			<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' />
 		</div>
 	</div>

@@ -40,6 +40,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 	@Override
 	public List<String> getTagNames(FileEntry fileEntry) {
 		if (!_googleCloudVisionConfiguration.enabled() ||
-			_isTemporary(fileEntry)) {
+			_isTemporary(fileEntry) || !_isFormatSupported(fileEntry)) {
 
 			return Collections.emptyList();
 		}
@@ -147,6 +148,12 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 		return payload.toString();
 	}
 
+	private boolean _isFormatSupported(FileEntry fileEntry) {
+		String extension = fileEntry.getExtension();
+
+		return _supportedFormats.contains(StringUtil.toUpperCase(extension));
+	}
+
 	private boolean _isTemporary(FileEntry fileEntry) {
 		return fileEntry.isRepositoryCapabilityProvided(
 			TemporaryFileEntriesCapability.class);
@@ -188,6 +195,9 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GoogleCloudVisionImageAssetAutoTagProvider.class);
+
+	private static final List<String> _supportedFormats = Arrays.asList(
+		"JPEG", "JPG", "PNG", "GIF", "BMP", "WEBP", "RAW", "ICO");
 
 	private volatile GoogleCloudVisionAssetAutoTagProviderConfiguration
 		_googleCloudVisionConfiguration;

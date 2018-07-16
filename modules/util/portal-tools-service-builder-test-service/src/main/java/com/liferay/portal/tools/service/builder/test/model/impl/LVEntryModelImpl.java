@@ -312,12 +312,12 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 	}
 
 	@Override
-	public boolean isDraft() {
+	public boolean isHead() {
 		if (getHeadId() > 0) {
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override

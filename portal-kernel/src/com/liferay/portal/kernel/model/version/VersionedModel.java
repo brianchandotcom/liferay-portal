@@ -23,7 +23,7 @@ public interface VersionedModel<V extends VersionModel> {
 
 	public long getPrimaryKey();
 
-	public boolean isDraft();
+	public boolean isHead();
 
 	public void populateVersionModel(V versionModel);
 

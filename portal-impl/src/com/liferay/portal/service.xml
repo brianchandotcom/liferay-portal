@@ -2069,9 +2069,7 @@
 
 		<!-- References -->
 
-		<reference entity="ResourceAction" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
-		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="ResourceAction" remote-service="false">
 

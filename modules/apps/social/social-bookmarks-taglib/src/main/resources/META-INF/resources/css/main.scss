@@ -1,4 +1,6 @@
 .taglib-social-bookmarks {
+	display: inline-flex;
+
 	.taglib-social-bookmark {
 		display: inline-block;
 		vertical-align: top;
@@ -6,6 +8,10 @@
 		img {
 			vertical-align: baseline;
 		}
+	}
+
+	.taglib-social-bookmark + .taglib-social-bookmark {
+		padding-left: .5rem;
 	}
 
 	.dropdown {
@@ -32,9 +38,14 @@
 		}
 	}
 
-	> ul, > div {
-		display: inline-block;
+	> ul,
+	> div {
+		display: inline-flex;
 		margin: 0;
 		vertical-align: top;
+	}
+
+	> div {
+		padding-left: .5rem;
 	}
 }

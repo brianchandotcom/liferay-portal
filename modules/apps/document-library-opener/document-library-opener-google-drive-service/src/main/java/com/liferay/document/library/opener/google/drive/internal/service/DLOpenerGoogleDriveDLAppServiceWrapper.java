@@ -16,8 +16,6 @@ package com.liferay.document.library.opener.google.drive.internal.service;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
-import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveConstants;
-import com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDriveManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,7 +28,6 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.File;
-import java.io.Serializable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,55 +87,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 			serviceContext.getUserId(), fileEntry);
 	}
 
-	@Override
-	public void checkOutFileEntry(
-			long fileEntryId, ServiceContext serviceContext)
-		throws PortalException {
-
-		super.checkOutFileEntry(fileEntryId, serviceContext);
-
-		if (_isCheckOutInGoogleDrive(serviceContext)) {
-			DLOpenerGoogleDriveFileReference.
-				setCurrentDLOpenerGoogleDriveFileReference(
-					_dlOpenerGoogleDriveManager.checkOut(
-						serviceContext.getUserId(), getFileEntry(fileEntryId)));
-		}
-	}
-
-	@Override
-	public FileEntry checkOutFileEntry(
-			long fileEntryId, String owner, long expirationTime,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		FileEntry fileEntry = super.checkOutFileEntry(
-			fileEntryId, owner, expirationTime, serviceContext);
-
-		if (_isCheckOutInGoogleDrive(serviceContext)) {
-			DLOpenerGoogleDriveFileReference.
-				setCurrentDLOpenerGoogleDriveFileReference(
-					_dlOpenerGoogleDriveManager.checkOut(
-						serviceContext.getUserId(), fileEntry));
-		}
-
-		return fileEntry;
-	}
-
 	private long _getUserId() {
 		return GetterUtil.getLong(PrincipalThreadLocal.getName());
-	}
-
-	private boolean _isCheckOutInGoogleDrive(ServiceContext serviceContext) {
-		Serializable checkOutInGoogleDrive = serviceContext.getAttribute(
-			DLOpenerGoogleDriveConstants.CHECK_OUT_IN_GOOGLE_DRIVE);
-
-		if ((checkOutInGoogleDrive != null) &&
-			checkOutInGoogleDrive.equals(Boolean.TRUE)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _updateFileEntryFromGoogleDrive(

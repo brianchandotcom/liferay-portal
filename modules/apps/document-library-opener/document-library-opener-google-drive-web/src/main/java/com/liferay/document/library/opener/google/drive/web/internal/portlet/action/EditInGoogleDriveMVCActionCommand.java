@@ -15,10 +15,10 @@
 package com.liferay.document.library.opener.google.drive.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveConstants;
 import com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.service.util.DLOpenerGoogleDriveDLHelper;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebKeys;
 import com.liferay.document.library.opener.google.drive.web.internal.util.OAuth2Helper;
@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -40,8 +39,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-
-import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -73,23 +70,10 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
-			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
-
 			if (_dlOpenerGoogleDriveManager.hasValidCredential(
 					themeDisplay.getUserId())) {
 
-				Optional<DLOpenerGoogleDriveFileReference>
-					dlOpenerDriveFileReferenceOptional =
-						DLOpenerGoogleDriveFileReference.
-							captureDLOpenerGoogleDriveFileReference(
-								() -> _executeCommand(
-									actionRequest, fileEntry));
-
-				dlOpenerDriveFileReferenceOptional.ifPresent(
-					driveFileReference -> actionRequest.setAttribute(
-						DLOpenerGoogleDriveWebKeys.
-							DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE,
-						driveFileReference));
+				_executeCommand(actionRequest, fileEntryId);
 			}
 			else {
 				_performAuthorizationFlow(actionRequest, actionResponse);
@@ -100,19 +84,21 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _executeCommand(
-			ActionRequest actionRequest, FileEntry fileEntry)
+	private void _executeCommand(ActionRequest actionRequest, long fileEntryId)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference =
+			null;
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(
 				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT)) {
 
-			_dlAppService.cancelCheckOut(fileEntry.getFileEntryId());
+			_dlOpenerGoogleDriveDLHelper.cancelCheckOut(fileEntryId);
 		}
 		else if (cmd.equals(
 					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN)) {
@@ -121,9 +107,11 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "majorVersion");
 			String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 
-			_dlAppService.checkInFileEntry(
-				fileEntry.getFileEntryId(), majorVersion, changeLog,
-				ServiceContextFactory.getInstance(actionRequest));
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
+			_dlOpenerGoogleDriveDLHelper.checkInFileEntry(
+				fileEntryId, majorVersion, changeLog, serviceContext);
 		}
 		else if (cmd.equals(
 					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT)) {
@@ -135,20 +123,26 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 				DLOpenerGoogleDriveConstants.CHECK_OUT_IN_GOOGLE_DRIVE,
 				Boolean.TRUE);
 
-			_dlAppService.checkOutFileEntry(
-				fileEntry.getFileEntryId(), serviceContext);
+			dlOpenerGoogleDriveFileReference =
+				_dlOpenerGoogleDriveDLHelper.checkOutFileEntry(
+					fileEntryId, serviceContext);
 		}
 		else if (cmd.equals(
-					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT) &&
-				 _dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT)) {
 
-			DLOpenerGoogleDriveFileReference.
-				setCurrentDLOpenerGoogleDriveFileReference(
-					_dlOpenerGoogleDriveManager.requestEditAccess(
-						themeDisplay.getUserId(), fileEntry));
+			dlOpenerGoogleDriveFileReference =
+				_dlOpenerGoogleDriveDLHelper.editInGoogleDrive(
+					themeDisplay.getUserId(), fileEntryId);
 		}
 		else {
 			throw new IllegalArgumentException();
+		}
+
+		if (dlOpenerGoogleDriveFileReference != null) {
+			actionRequest.setAttribute(
+				DLOpenerGoogleDriveWebKeys.
+					DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE,
+				dlOpenerGoogleDriveFileReference);
 		}
 	}
 
@@ -189,7 +183,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLOpenerGoogleDriveDLHelper _dlOpenerGoogleDriveDLHelper;
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;

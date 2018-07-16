@@ -14,45 +14,12 @@
 
 package com.liferay.document.library.opener.google.drive.model;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
-
-import java.util.Optional;
 
 /**
  * @author Adolfo Pérez
  */
 public class DLOpenerGoogleDriveFileReference {
-
-	public static
-			<E extends Throwable> Optional<DLOpenerGoogleDriveFileReference>
-				captureDLOpenerGoogleDriveFileReference(
-					DLOpenerGoogleDriveFileReference.UnsafeRunnable<E>
-						unsafeRunnable)
-		throws E {
-
-		try {
-			_threadLocal.remove();
-
-			unsafeRunnable.run();
-
-			return Optional.ofNullable(_threadLocal.get());
-		}
-		finally {
-			_threadLocal.remove();
-		}
-	}
-
-	public static void setCurrentDLOpenerGoogleDriveFileReference(
-		DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference) {
-
-		if (_threadLocal.get() != null) {
-			throw new IllegalStateException(
-				"Google Drive file reference initialized twice");
-		}
-
-		_threadLocal.set(dlOpenerGoogleDriveFileReference);
-	}
 
 	public DLOpenerGoogleDriveFileReference(
 		String googleDriveFileId, long fileEntryId) {
@@ -74,15 +41,6 @@ public class DLOpenerGoogleDriveFileReference {
 	public String getGoogleDriveFileId() {
 		return _googleDriveFileId;
 	}
-
-	public interface UnsafeRunnable<E extends Throwable> {
-
-		public void run() throws E;
-
-	}
-
-	private static final ThreadLocal<DLOpenerGoogleDriveFileReference>
-		_threadLocal = new CentralizedThreadLocal<>(true);
 
 	private final long _fileEntryId;
 	private final String _googleDriveFileId;

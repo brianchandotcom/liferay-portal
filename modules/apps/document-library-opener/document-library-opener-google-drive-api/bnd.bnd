@@ -4,4 +4,5 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.document.library.opener.google.drive.constants,\
 	com.liferay.document.library.opener.google.drive.model,\
-	com.liferay.document.library.opener.google.drive.service
+	com.liferay.document.library.opener.google.drive.service,\
+	com.liferay.document.library.opener.google.drive.service.util

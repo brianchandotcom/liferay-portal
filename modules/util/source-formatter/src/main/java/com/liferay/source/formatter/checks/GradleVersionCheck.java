@@ -43,7 +43,9 @@ public class GradleVersionCheck extends BaseFileCheck {
 			_checkDefaultVersion(
 				fileName, content, name, version, matcher.start());
 
-			if (absolutePath.contains("/modules/apps/")) {
+			if (absolutePath.contains("/modules/apps/") ||
+				absolutePath.contains("/modules/private/apps/")) {
+
 				content = _fixMicroVersion(
 					fileName, content, matcher.group(1), name, version);
 			}
@@ -75,7 +77,11 @@ public class GradleVersionCheck extends BaseFileCheck {
 			String version)
 		throws IOException {
 
-		if (!line.startsWith("provided ") || !name.startsWith("com.liferay.") ||
+		if (!line.startsWith("compileOnly ") && !line.startsWith("provided ")) {
+			return content;
+		}
+
+		if (!name.startsWith("com.liferay.") ||
 			!version.matches("[0-9]+\\.[0-9]+\\.[1-9][0-9]*")) {
 
 			return content;

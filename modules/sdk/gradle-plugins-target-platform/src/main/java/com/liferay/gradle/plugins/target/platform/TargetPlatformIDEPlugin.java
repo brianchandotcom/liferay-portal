@@ -63,8 +63,8 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
-		GradleUtil.applyPlugin(project, JavaPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
+		GradleUtil.applyPlugin(project, JavaPlugin.class);
 		GradleUtil.applyPlugin(project, TargetPlatformPlugin.class);
 
 		DependencyManagementExtension dependencyManagementExtension =

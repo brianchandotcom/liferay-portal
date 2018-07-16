@@ -174,15 +174,32 @@ com.liferay.petra.string.StringBundler pageTopSB = OutputTag.getDataSB(request, 
 
 </c:if>
 
-<script type="text/javascript">
-	var portlet = portlet || {};
+<%
+	boolean portletHubRequired = false;
 
-	portlet.impl = portlet.impl || {};
+	for (Portlet portlet : portlets) {
+		List<PortletDependency> portletDependencies = portlet.getPortletDependencies();
 
-	portlet.impl.getInitData = function() {
-		return <%= RenderStateUtil.generateJSON(request, themeDisplay) %>;
+		for (PortletDependency portletDependency : portletDependencies) {
+			if (Objects.equals(portletDependency.getName(), "PortletHub") && Objects.equals(portletDependency.getScope(), "javax.portlet")) {
+				portletHubRequired = true;
+				break;
+			}
+		}
 	}
-</script>
+%>
+
+<c:if test="<%= portletHubRequired %>">
+	<script type="text/javascript">
+		var portlet = portlet || {};
+
+		portlet.impl = portlet.impl || {};
+
+		portlet.impl.getInitData = function() {
+			return <%= RenderStateUtil.generateJSON(request, themeDisplay) %>;
+		}
+	</script>
+</c:if>
 
 <%-- Theme CSS --%>
 

@@ -13,7 +13,7 @@ class GoogleMapsDialog extends State {
 	constructor(...args) {
 		super(...args);
 
-		this._dialog = google.maps.InfoWindow();
+		this._dialog = new google.maps.InfoWindow();
 	}
 
 	/**

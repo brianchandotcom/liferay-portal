@@ -434,7 +434,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 	@Override
 	public VersionedEntry checkout(VersionedEntry publishedVersionedEntry,
 		int version) throws PortalException {
-		if (publishedVersionedEntry.isDraft()) {
+		if (!publishedVersionedEntry.isHead()) {
 			throw new IllegalArgumentException(
 				"Unable to checkout with unpublished changes " +
 				publishedVersionedEntry.getHeadId());
@@ -468,7 +468,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 	@Override
 	public VersionedEntry delete(VersionedEntry publishedVersionedEntry)
 		throws PortalException {
-		if (publishedVersionedEntry.isDraft()) {
+		if (!publishedVersionedEntry.isHead()) {
 			throw new IllegalArgumentException("VersionedEntry is a draft " +
 				publishedVersionedEntry.getPrimaryKey());
 		}
@@ -497,7 +497,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 	@Override
 	public VersionedEntry deleteDraft(VersionedEntry draftVersionedEntry)
 		throws PortalException {
-		if (!draftVersionedEntry.isDraft()) {
+		if (draftVersionedEntry.isHead()) {
 			throw new IllegalArgumentException("VersionedEntry is not a draft " +
 				draftVersionedEntry.getPrimaryKey());
 		}
@@ -534,11 +534,11 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 
 	@Override
 	public VersionedEntry fetchDraft(VersionedEntry versionedEntry) {
-		if (versionedEntry.isDraft()) {
-			return versionedEntry;
+		if (versionedEntry.isHead()) {
+			return versionedEntryPersistence.fetchByHeadId(versionedEntry.getPrimaryKey());
 		}
 
-		return versionedEntryPersistence.fetchByHeadId(versionedEntry.getPrimaryKey());
+		return versionedEntry;
 	}
 
 	@Override
@@ -549,10 +549,10 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 	@Override
 	public VersionedEntryVersion fetchLatestVersion(
 		VersionedEntry versionedEntry) {
-		long primaryKey = versionedEntry.getPrimaryKey();
+		long primaryKey = versionedEntry.getHeadId();
 
-		if (versionedEntry.isDraft()) {
-			primaryKey = versionedEntry.getHeadId();
+		if (versionedEntry.isHead()) {
+			primaryKey = versionedEntry.getPrimaryKey();
 		}
 
 		return versionedEntryVersionPersistence.fetchByVersionedEntryId_First(primaryKey,
@@ -561,7 +561,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 
 	@Override
 	public VersionedEntry fetchPublished(VersionedEntry versionedEntry) {
-		if (!versionedEntry.isDraft()) {
+		if (versionedEntry.isHead()) {
 			return versionedEntry;
 		}
 
@@ -587,7 +587,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 	@Override
 	public VersionedEntry getDraft(VersionedEntry versionedEntry)
 		throws PortalException {
-		if (versionedEntry.isDraft()) {
+		if (!versionedEntry.isHead()) {
 			return versionedEntry;
 		}
 
@@ -618,10 +618,10 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 	@Override
 	public VersionedEntryVersion getVersion(VersionedEntry versionedEntry,
 		int version) throws PortalException {
-		long primaryKey = versionedEntry.getPrimaryKey();
+		long primaryKey = versionedEntry.getHeadId();
 
-		if (versionedEntry.isDraft()) {
-			primaryKey = versionedEntry.getHeadId();
+		if (versionedEntry.isHead()) {
+			primaryKey = versionedEntry.getPrimaryKey();
 		}
 
 		return versionedEntryVersionPersistence.findByVersionedEntryId_Version(primaryKey,
@@ -633,7 +633,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 		VersionedEntry versionedEntry) {
 		long primaryKey = versionedEntry.getPrimaryKey();
 
-		if (versionedEntry.isDraft()) {
+		if (!versionedEntry.isHead()) {
 			if (versionedEntry.getHeadId() == versionedEntry.getPrimaryKey()) {
 				return Collections.emptyList();
 			}
@@ -648,7 +648,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 	@Override
 	public VersionedEntry publishDraft(VersionedEntry draftVersionedEntry)
 		throws PortalException {
-		if (!draftVersionedEntry.isDraft()) {
+		if (draftVersionedEntry.isHead()) {
 			throw new IllegalArgumentException("Can only publish drafts " +
 				draftVersionedEntry.getPrimaryKey());
 		}
@@ -713,7 +713,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 	@Override
 	public VersionedEntry updateDraft(VersionedEntry draftVersionedEntry)
 		throws PortalException {
-		if (!draftVersionedEntry.isDraft()) {
+		if (draftVersionedEntry.isHead()) {
 			throw new IllegalArgumentException("Can only update draft entries " +
 				draftVersionedEntry.getPrimaryKey());
 		}

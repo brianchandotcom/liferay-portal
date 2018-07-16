@@ -314,8 +314,8 @@ public class VersionedEntryWrapper implements VersionedEntry,
 	}
 
 	@Override
-	public boolean isDraft() {
-		return _versionedEntry.isDraft();
+	public boolean isHead() {
+		return _versionedEntry.isHead();
 	}
 
 	@Override

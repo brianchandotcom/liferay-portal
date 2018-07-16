@@ -946,4 +946,12 @@
 	<command name="viewUnpublishedWorkflowDefinitions">
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_UNPUBLISHED_TAB" value1="Unpublished" />
 	</command>
+
+	<command name="viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
+		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitions" />
+
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="${unpublishedWorkflowDefinitionTitle}">
+			<var name="key_workflowDefinitionTitle" value="${unpublishedWorkflowDefinitionTitle}" />
+		</execute>
+	</command>
 </definition>

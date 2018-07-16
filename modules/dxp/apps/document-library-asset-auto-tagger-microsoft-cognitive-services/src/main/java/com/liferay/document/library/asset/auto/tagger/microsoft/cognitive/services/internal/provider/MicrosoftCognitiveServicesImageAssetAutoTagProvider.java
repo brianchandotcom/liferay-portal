@@ -39,6 +39,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -61,9 +62,10 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 	implements AssetAutoTagProvider<FileEntry> {
 
 	@Override
-	public List<String> getTags(FileEntry fileEntry) {
+	public List<String> getTagNames(FileEntry fileEntry) {
 		if (!_configuration.enabled() || _isTemporary(fileEntry) ||
-			(fileEntry.getSize() > _MAX_SIZE)) {
+			(fileEntry.getSize() > _MAX_SIZE) ||
+			!_isFormatSupported(fileEntry)) {
 
 			return Collections.emptyList();
 		}
@@ -101,6 +103,12 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		_configuration = ConfigurableUtil.createConfigurable(
 			MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration.class,
 			properties);
+	}
+
+	private boolean _isFormatSupported(FileEntry fileEntry) {
+		String extension = fileEntry.getExtension();
+
+		return _supportedFormats.contains(StringUtil.toUpperCase(extension));
 	}
 
 	private boolean _isTemporary(FileEntry fileEntry) {
@@ -146,6 +154,9 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MicrosoftCognitiveServicesImageAssetAutoTagProvider.class);
+
+	private static final List<String> _supportedFormats = Arrays.asList(
+		"JPEG", "JPG", "PNG", "GIF", "BMP");
 
 	private volatile MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration
 		_configuration;

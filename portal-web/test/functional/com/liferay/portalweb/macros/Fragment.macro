@@ -85,7 +85,7 @@
 
 		<var method="FileUtil#getIncludedResourceURLs('${pattern}', '${tempDir}')" name="fileName" />
 
-		<var name="fileName" value="${fileName}" />
+		<var method="StringUtil#valueOf('${fileName}')" name="fileName" />
 
 		<var method="RegexUtil#replace('${fileName}', '\[(.*)\]', '1')" name="fileName" />
 

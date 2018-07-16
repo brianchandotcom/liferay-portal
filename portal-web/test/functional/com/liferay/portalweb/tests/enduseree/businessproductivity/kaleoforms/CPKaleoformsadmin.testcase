@@ -248,49 +248,19 @@
 
 		<execute macro="KaleoFormsAdmin#viewNoPublishedWorkflowDefinitions" />
 
-		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
+			<var name="unpublishedWorkflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
-		<execute macro="Workflow#reactivateInactiveWorkflowDefinition">
+		<execute macro="KaleoFormsAdmin#reactivateInactiveWorkflowDefinition">
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
+		<execute macro="KaleoFormsAdmin#viewPublishedWorkflowDefinitions" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Kaleo Forms Admin" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="Single Approver">
+			<var name="key_workflowDefinitionTitle" value="Single Approver" />
 		</execute>
-
-		<execute macro="KaleoFormsAdmin#addProcess" />
-
-		<execute macro="KaleoFormsAdmin#addProcessDetails">
-			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#next" />
-
-		<execute macro="KaleoFormsAdmin#chooseFieldSet">
-			<var name="kfFieldSetName" value="New Kaleo Field Set" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#next" />
-
-		<var name="key_workflowDefinitionTitle" value="Single Approver" />
-
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="Single Approver" />
-
-		<var name="key_rowEntry" value="Single Approver" />
-
-		<execute function="AssertElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
 	</command>
@@ -354,53 +324,25 @@
 
 		<execute macro="KaleoFormsAdmin#viewNoPublishedWorkflowDefinitions" />
 
-		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
+			<var name="unpublishedWorkflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
-		<execute macro="Workflow#deleteWorkflowDefinition">
+		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
+			<var name="unpublishedWorkflowDefinitionTitle" value="Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#deleteWorkflowDraft">
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#addProcess" />
-
-		<execute macro="KaleoFormsAdmin#addProcessDetails">
-			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#next" />
-
-		<execute macro="KaleoFormsAdmin#chooseFieldSet">
-			<var name="kfFieldSetName" value="New Kaleo Field Set" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#next" />
-
 		<execute macro="KaleoFormsAdmin#viewNoPublishedWorkflowDefinitions" />
 
-		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
+			<var name="unpublishedWorkflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
-		<execute macro="Workflow#reactivateInactiveWorkflowDefinition">
+		<execute macro="KaleoFormsAdmin#reactivateInactiveWorkflowDefinition">
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 	</command>

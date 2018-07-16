@@ -773,6 +773,8 @@
 	</command>
 
 	<command name="viewNoPublishedWorkflowDefinitions">
+		<execute macro="KaleoFormsAdmin#viewPublishedWorkflowDefinitions" />
+
 		<execute macro="PortletEntry#viewEmptyMessage">
 			<var name="entity" value="Published Definitions" />
 		</execute>

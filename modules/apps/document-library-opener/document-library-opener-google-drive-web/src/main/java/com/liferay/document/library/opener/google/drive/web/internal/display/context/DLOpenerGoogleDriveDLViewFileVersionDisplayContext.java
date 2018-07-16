@@ -22,6 +22,7 @@ import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogle
 import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -38,8 +39,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.UUID;
-import java.util.function.Function;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -57,12 +58,12 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	public DLOpenerGoogleDriveDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, Function<String, String> translationFunction,
+		FileVersion fileVersion, ResourceBundle resourceBundle,
 		DLOpenerGoogleDriveManager dlOpenerGoogleDriveManager) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
-		_translationFunction = translationFunction;
+		_resourceBundle = resourceBundle;
 		_dlOpenerGoogleDriveManager = dlOpenerGoogleDriveManager;
 	}
 
@@ -77,26 +78,27 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		Menu menu = super.getMenu();
 
 		if (_isCheckedOutInGoogleDrive()) {
-			Collection<MenuItem> menuItems = _patchMenuItems(
-				menu.getMenuItems());
+			Collection<MenuItem> menuItems = menu.getMenuItems();
 
-			menuItems.add(_createEditInGoogleDriveMenuItem());
+			_updateCancelCheckoutAndCheckinMenuItems(menuItems);
+
+			menuItems.add(_createEditInGoogleDocsMenuItem());
 
 			return menu;
 		}
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 
-		menuItems.add(_createCheckoutInGoogleDriveMenuItem());
+		menuItems.add(_createCheckoutInGoogleDocsMenuItem());
 
 		return menu;
 	}
 
-	private MenuItem _createCheckoutInGoogleDriveMenuItem() {
+	private MenuItem _createCheckoutInGoogleDocsMenuItem() {
 		URLMenuItem menuItem = new URLMenuItem();
 
 		menuItem.setLabel(
-			_translationFunction.apply("checkout-to-google-drive"));
+			LanguageUtil.get(_resourceBundle, "checkout-to-google-docs"));
 		menuItem.setMethod(HttpMethods.POST);
 		menuItem.setURL(
 			_getActionURL(
@@ -105,10 +107,11 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		return menuItem;
 	}
 
-	private MenuItem _createEditInGoogleDriveMenuItem() {
+	private MenuItem _createEditInGoogleDocsMenuItem() {
 		URLMenuItem menuItem = new URLMenuItem();
 
-		menuItem.setLabel(_translationFunction.apply("edit-in-google-drive"));
+		menuItem.setLabel(
+			LanguageUtil.get(_resourceBundle, "edit-in-google-docs"));
 		menuItem.setMethod(HttpMethods.POST);
 		menuItem.setURL(
 			_getActionURL(DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
@@ -156,7 +159,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		return false;
 	}
 
-	private Collection<MenuItem> _patchMenuItems(
+	private void _updateCancelCheckoutAndCheckinMenuItems(
 		Collection<MenuItem> menuItems) {
 
 		for (MenuItem menuItem : menuItems) {
@@ -186,14 +189,12 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 				}
 			}
 		}
-
-		return menuItems;
 	}
 
 	private static final UUID _UUID = UUID.fromString(
 		"c3a385d0-7551-11e8-9798-186590d14d8f");
 
 	private final DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
-	private final Function<String, String> _translationFunction;
+	private final ResourceBundle _resourceBundle;
 
 }

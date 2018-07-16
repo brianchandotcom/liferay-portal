@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.document.library.opener.google.drive.web.internal.struts.GoogleDriveOAuth2Servlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.document.library.opener.google.drive.web.internal.servlet.GoogleDriveOAuth2Servlet",
 		"osgi.http.whiteboard.servlet.pattern=" + DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_SERVLET_PATH,
 		"servlet.init.httpMethods=GET,POST"
 	},

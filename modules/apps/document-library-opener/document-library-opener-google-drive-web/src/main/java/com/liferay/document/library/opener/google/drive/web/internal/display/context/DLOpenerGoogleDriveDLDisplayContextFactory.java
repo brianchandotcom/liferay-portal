@@ -21,11 +21,11 @@ import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDr
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,27 +68,18 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		return new DLOpenerGoogleDriveDLViewFileVersionDisplayContext(
 			parentDLViewFileVersionDisplayContext, request, response,
-			fileVersion, key -> _translateKey(request, key),
+			fileVersion,
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale()),
 			_dlOpenerGoogleDriveManager);
-	}
-
-	private String _translateKey(HttpServletRequest request, String key) {
-		return _language.get(
-			_resourceBundleLoader.loadResourceBundle(
-				_portal.getLocale(request)),
-			key);
 	}
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.document.library.opener.google.drive.web)"

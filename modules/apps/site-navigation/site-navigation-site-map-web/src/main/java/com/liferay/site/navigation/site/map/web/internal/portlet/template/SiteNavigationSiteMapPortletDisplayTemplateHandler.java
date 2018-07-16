@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
@@ -88,6 +89,11 @@ public class SiteNavigationSiteMapPortletDisplayTemplateHandler
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/site/navigation/site/map/web/portlet/template" +
 			"/dependencies/portlet-display-templates.xml";
+	}
+
+	@Reference(unbind = "-")
+	protected void setTemplateHandlerRegistry(
+		TemplateHandlerRegistry templateHandlerRegistry) {
 	}
 
 	@Reference

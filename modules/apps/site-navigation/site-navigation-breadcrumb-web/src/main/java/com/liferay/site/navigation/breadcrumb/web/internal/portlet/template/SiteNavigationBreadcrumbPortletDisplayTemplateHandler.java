@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTempla
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
@@ -129,6 +130,11 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/site/navigation/breadcrumb/web/portlet/template" +
 			"/dependencies/portlet-display-templates.xml";
+	}
+
+	@Reference(unbind = "-")
+	protected void setTemplateHandlerRegistry(
+		TemplateHandlerRegistry templateHandlerRegistry) {
 	}
 
 	@Reference

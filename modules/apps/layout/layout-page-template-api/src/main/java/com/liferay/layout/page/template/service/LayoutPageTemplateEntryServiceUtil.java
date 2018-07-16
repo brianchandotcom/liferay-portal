@@ -98,6 +98,10 @@ public class LayoutPageTemplateEntryServiceUtil {
 				   .fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId) {
 		return getService()
@@ -105,6 +109,10 @@ public class LayoutPageTemplateEntryServiceUtil {
 			layoutPageTemplateCollectionId);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId, int status) {
 		return getService()
@@ -112,6 +120,10 @@ public class LayoutPageTemplateEntryServiceUtil {
 			layoutPageTemplateCollectionId, status);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId, String name) {
 		return getService()
@@ -119,6 +131,10 @@ public class LayoutPageTemplateEntryServiceUtil {
 			layoutPageTemplateCollectionId, name);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId, String name, int status) {
 		return getService()

@@ -181,6 +181,10 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId) throws RemoteException {
 		try {
@@ -196,6 +200,10 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId, int status)
 		throws RemoteException {
@@ -212,6 +220,10 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId, String name)
 		throws RemoteException {
@@ -228,6 +240,10 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId, String name, int status)
 		throws RemoteException {

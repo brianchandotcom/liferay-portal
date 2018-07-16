@@ -91,6 +91,10 @@ public class LayoutPageTemplateEntryServiceWrapper
 		return _layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId) {
@@ -98,6 +102,10 @@ public class LayoutPageTemplateEntryServiceWrapper
 			layoutPageTemplateCollectionId);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId, int status) {
@@ -105,6 +113,10 @@ public class LayoutPageTemplateEntryServiceWrapper
 			layoutPageTemplateCollectionId, status);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId, String name) {
@@ -112,6 +124,10 @@ public class LayoutPageTemplateEntryServiceWrapper
 			layoutPageTemplateCollectionId, name);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId, String name, int status) {

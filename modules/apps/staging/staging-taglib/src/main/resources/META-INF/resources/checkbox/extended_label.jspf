@@ -1,0 +1,45 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<span class="custom-control-label-text">
+	<%= HtmlUtil.escape(label) %><%= separator %>
+
+	<liferay-staging:popover
+		id="<%= popoverName %>"
+		text="<%= popoverText %>"
+		title="<%= label %>"
+	/>
+
+	<c:if test="<%= items > 0 %>">
+		<span class="staging-taglib-checkbox-items"><%= items + StringPool.SPACE + LanguageUtil.get(request, "items") %></span>
+	</c:if>
+
+	<c:if test="<%= deletions > 0 %>">
+		<span class="deletions staging-taglib-checkbox-deletions"><%= deletions + StringPool.SPACE + LanguageUtil.get(request, "deletions") %></span>
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(description) %>">
+		<span class="staging-taglib-checkbox-description"><%= HtmlUtil.escape(description) %></span>
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(warning) %>">
+		<span class="staging-taglib-checkbox-warning"><%= HtmlUtil.escape(warning) %></span>
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(suggestion) %>">
+		<span class="staging-taglib-checkbox-suggestion"><%= HtmlUtil.escape(suggestion) %></span>
+	</c:if>
+</span>

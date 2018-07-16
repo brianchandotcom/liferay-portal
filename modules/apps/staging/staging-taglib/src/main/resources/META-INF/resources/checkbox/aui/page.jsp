@@ -16,11 +16,10 @@
 
 <%@ include file="/checkbox/init.jsp" %>
 
-<div class="custom-checkbox custom-control">
-	<label>
-		<input class="custom-control-input" data-qa-id="<%= name %>" id="<%= HtmlUtil.escape(domId) %>" <%= disabledString %> <%= checkedString %> type="checkbox" name="<%= HtmlUtil.escape(domName) %>">
-		<span class="custom-control-label">
-			<%@ include file="/checkbox/extended_label.jspf" %>
-		</span>
-	</label>
-</div>
+<liferay-util:buffer
+	var="extendedLabel"
+>
+	<%@ include file="/checkbox/extended_label.jspf" %>
+</liferay-util:buffer>
+
+<aui:input checked="<%= checked %>" data-qa-id="<%= name %>" disabled="<%= disabled %>" id="<%= id %>" label="<%= extendedLabel %>" name="<%= name %>" type="checkbox" />

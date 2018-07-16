@@ -16,7 +16,7 @@
 </tr>
 <tr>
 	<td>STAGING_LOCAL_LIVE</td>
-	<td>//span[contains(.,'Local Live:')]</td>
+	<td>//span[contains(.,'Local Live')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,14 +45,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_HIDDEN_RADIO</td>
-	<td>//label[contains(.,'${key_contentName}')]//input</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--REMOTE_STAGING-->
 <tr>
 	<td>REMOTE_STAGING_IP</td>
-	<td>//input[contains(@id,'remoteAddress')]</td>
+	<td>//span[contains(@id,'remoteAddress')]</td>
 	<td></td>
 </tr>
 <tr>

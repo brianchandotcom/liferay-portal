@@ -30,26 +30,26 @@
 		<if>
 			<equals arg1="${pageVersioningEnabled}" arg2="true" />
 			<then>
-				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
-				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#ENABLED_ON_PRIVATE_PAGES_CHECKBOX" />
+				<execute function="Click" locator1="Checkbox#ENABLED_ON_PUBLIC_PAGES" />
+-				<execute function="Click" locator1="Checkbox#ENABLED_ON_PRIVATE_PAGES" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="noContent" />
 			<then>
-				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
+				<execute function="Click" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
 
-				<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
+				<execute function="Click" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
 			</then>
 			<elseif>
 				<isset var="contentName" />
 				<then>
-					<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
+					<execute function="Click" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
 
-					<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
+					<execute function="Click" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
 
-					<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_CHECKBOX">
+					<execute function="Click" locator1="SiteSettingsStaging#CONTENT_CHECKBOX">
 						<var name="key_contentName" value="${contentName}" />
 					</execute>
 				</then>
@@ -60,18 +60,18 @@
 					<for list="Documents and Media,Mobile Device Families,Web Content" param="contentName">
 						<var name="key_contentName" value="${contentName}" />
 
-						<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
+						<execute function="Click" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
 					</for>
 
 					<for list="Application Display Template,Blogs,Bookmarks,Calendar,Documents and Media,Forms,Knowledge Base,Message Boards,Mobile Device Families,Polls,Web Content,Wiki" param="contentName">
 						<var name="key_contentName" value="${contentName}" />
 
-						<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
+						<execute function="Click" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
 					</for>
 				</then>
 			</elseif>
 			<else>
-				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
+				<execute function="Click" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
 			</else>
 		</if>
 
@@ -81,7 +81,7 @@
 			<if>
 				<condition function="IsElementPresent" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
 				<then>
-					<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
+					<execute function="Click" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
 				</then>
 			</if>
 		</for>
@@ -531,8 +531,8 @@
 		<if>
 			<equals arg1="${pageVersioningEnabled}" arg2="true" />
 			<then>
-				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
-				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#ENABLED_ON_PRIVATE_PAGES_CHECKBOX" />
+				<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLED_ON_PUBLIC_PAGES" />
+				<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLED_ON_PRIVATE_PAGES" />
 			</then>
 		</if>
 
@@ -541,7 +541,7 @@
 			<then>
 				<var name="key_contentName" value="${isNotEditable}" />
 
-				<execute function="AssertNotEditable#assertNotVisible" locator1="SiteSettingsStaging#CONTENT_HIDDEN_RADIO" />
+				<execute function="AssertNotVisible" locator1="Checkbox#STAGED_CONTENT" />
 			</then>
 		</if>
 
@@ -641,7 +641,7 @@
 		<if>
 			<isset var="enableOnPublicPages" />
 			<then>
-				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
+				<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLED_ON_PUBLIC_PAGES" />
 
 				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 			</then>
@@ -650,7 +650,7 @@
 		<if>
 			<isset var="enableOnPrivatePages" />
 			<then>
-				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#ENABLED_ON_PRIVATE_PAGES_CHECKBOX" />
+				<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLED_ON_PRIVATE_PAGES" />
 
 				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 			</then>

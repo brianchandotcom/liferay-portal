@@ -142,7 +142,7 @@ public class CheckboxTag extends BaseCssTag {
 		request.setAttribute("liferay-staging:checkbox:warning", _warning);
 	}
 
-	private static final String _PAGE = "/checkbox/page.jsp";
+	private static final String _PAGE = "/checkbox/aui/page.jsp";
 
 	private boolean _checked;
 	private long _deletions;

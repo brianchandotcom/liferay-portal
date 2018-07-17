@@ -325,7 +325,7 @@ public class MetadataManagerImpl
 				securityPolicyRules.add(securityPolicyRule);
 			}
 			else if (communicationProfileId.equals(
-						SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI)) {
+						 SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI)) {
 
 				SecurityConfiguration securityConfiguration =
 					Configuration.getGlobalSecurityConfiguration();

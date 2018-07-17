@@ -74,8 +74,8 @@ public class SPIAdminUtil {
 				itr.remove();
 			}
 			else if (Arrays.binarySearch(
-						PortletPropsValues.SPI_BLACKLIST_SERVLET_CONTEXT_NAMES,
-						servletContextName) >= 0) {
+						 PortletPropsValues.SPI_BLACKLIST_SERVLET_CONTEXT_NAMES,
+						 servletContextName) >= 0) {
 
 				itr.remove();
 			}

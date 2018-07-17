@@ -165,7 +165,7 @@ public class KaleoFormsAdminDisplayContext {
 				_kaleoFormsWebConfiguration.defaultDisplayView());
 		}
 		else if (ArrayUtil.contains(
-					getDisplayViews(), _kaleoFormsAdminDisplayStyle)) {
+					 getDisplayViews(), _kaleoFormsAdminDisplayStyle)) {
 
 			portalPreferences.setValue(
 				KaleoFormsPortletKeys.KALEO_FORMS_ADMIN, "display-style",

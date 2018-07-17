@@ -87,7 +87,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 			PortalCacheHelperUtil.removeAllWithoutReplicator(portalCache);
 		}
 		else if (portalCacheClusterEventType.equals(
-					PortalCacheClusterEventType.PUT) ||
+					 PortalCacheClusterEventType.PUT) ||
 				 portalCacheClusterEventType.equals(
 					 PortalCacheClusterEventType.UPDATE)) {
 

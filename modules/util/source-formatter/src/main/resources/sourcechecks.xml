@@ -411,8 +411,12 @@
 	</source-processor>
 	<source-processor name="YMLSourceProcessor">
 		<check name="YMLDefinitionOrderCheck" />
+
+		<!--
 		<check name="YMLWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
+		-->
+
 	</source-processor>
 </source-formatter>

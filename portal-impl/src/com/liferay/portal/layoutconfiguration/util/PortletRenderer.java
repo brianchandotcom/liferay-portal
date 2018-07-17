@@ -137,13 +137,15 @@ public class PortletRenderer {
 		while (attributeNames.hasMoreElements()) {
 			String attributeName = attributeNames.nextElement();
 
-			if (attributeName.startsWith("javax.portlet.faces")) {
+			if (attributeName.contains(
+					"javax.portlet.faces.renderResponseOutput")) {
+
 				headerRequestAttributes.put(
 					attributeName, request.getAttribute(attributeName));
 			}
 			else if (attributePrefixes != null) {
 				for (String attributePrefix : attributePrefixes) {
-					if (attributeName.startsWith(attributePrefix)) {
+					if (attributeName.contains(attributePrefix)) {
 						headerRequestAttributes.put(
 							attributeName, request.getAttribute(attributeName));
 

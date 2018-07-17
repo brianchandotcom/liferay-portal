@@ -31,6 +31,13 @@ public class PropertiesLongLinesCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		if (absolutePath.endsWith("-portal.properties") ||
+			absolutePath.matches(
+				".*\\/portal-impl\\/src\\/portal[\\w-]+\\.properties")) {
+
+			return content;
+		}
+
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 

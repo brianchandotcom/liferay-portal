@@ -84,8 +84,7 @@ public class ActionRequestImpl
 			if (renderParameterNames.contains(name)) {
 				String namespacedParameter = portletNamespace + name;
 
-				if (renderParameterNames.contains(name) &&
-					servletRequestParameterMap.containsKey(
+				if (servletRequestParameterMap.containsKey(
 						namespacedParameter)) {
 
 					actionParameterMap.put(

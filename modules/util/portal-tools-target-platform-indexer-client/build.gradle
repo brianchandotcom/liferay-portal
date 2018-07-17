@@ -1,6 +1,6 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "com.liferay.portal.target.platform.indexer", version: "4.0.7"
-	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	compile group: "com.liferay", name: "com.liferay.portal.target.platform.indexer", version: "4.0.7"
+	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 }
 
 distributions {

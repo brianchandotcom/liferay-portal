@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CLASSIC_SEARCH_BAR</td>
+	<td>//input[contains(@id,'templateSearch') and @type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACET_CONFIGURE</td>
 	<td>//div[label[contains(.,'${key_facetName}')]]/following-sibling::div//a[contains(.,'Configure')]</td>
 	<td></td>
@@ -66,7 +71,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_SEARCH_BAR</td>
-	<td>//header[@id='banner']//input[@title='Search'] | //input[contains(@id,'templateSearch') and @type='text'] | //input[contains(@data-qa-id,'searchInput')]</td>
+	<td>//header[@id='banner']//input[@title='Search'] | //input[contains(@data-qa-id,'searchInput')]</td>
 	<td></td>
 </tr>
 <tr>

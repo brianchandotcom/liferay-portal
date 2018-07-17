@@ -100,7 +100,9 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());
 
-		if (_isShowDisplayPageEntry(assetEntry)) {
+		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
+			_isShowDisplayPageEntry(assetEntry)) {
+
 			return _getDisplayPageURL(assetEntry, mainPath, requestContext);
 		}
 
@@ -140,6 +142,11 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		JournalArticle journalArticle =
 			_journalArticleLocalService.getArticleByUrlTitle(
 				groupId, normalizedUrlTitle);
+
+		if (Validator.isNotNull(journalArticle.getLayoutUuid())) {
+			return _layoutLocalService.getLayoutByUuidAndGroupId(
+				journalArticle.getLayoutUuid(), groupId, privateLayout);
+		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(),

@@ -994,3 +994,29 @@ This was done to strengthen Liferay Portal's security due to potential XXE/SSRF
 vulnerabilities.
 
 ---------------------------------------
+
+### Removed description html escaping in PortletDisplay
+- **Date:** 2018-Jul-17
+- **JIRA Ticket:** LPS-83185
+
+#### What changed?
+
+The portlet description stored inside `PortletDisplay.java` is no longer escaped
+automatically.
+
+#### Who is affected?
+
+This affects anyone who relied on the value of the portlet description being
+already escaped and using it to generate some html. In that case, a small UI
+change might be observed as some characters might become unescaped.
+
+#### How should I update my code?
+
+If you were using the `portletDescription` value to generate some html, you
+should escape it using the proper escape sequence using `HtmlUtil.escape`.
+
+#### Why was this change made?
+
+This change corrects a best practice violation regarding content escaping.
+
+---------------------------------------

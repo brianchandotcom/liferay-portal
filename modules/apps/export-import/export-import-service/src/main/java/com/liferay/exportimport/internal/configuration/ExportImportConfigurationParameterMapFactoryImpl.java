@@ -557,21 +557,44 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 	}
 
 	/**
-	 * In case of layout staging this method
-	 * 1. Removes PORTLET_DATA_portletId and PORTLET_DATA_ALL parameters in
-	 *    parameterMap and replaces them with PORTLET_DATA_changesetPortletId.
-	 * 2. Adds model specific parameters to be able to decide in changeset
-	 *    portlet data handler whether a model needs to be exported or not.
-	 *    For example: <"com.liferay.journal.model.JournalArticle",
-	 *    [<code>true</code>]>
-	 * 3. Adds originalPortletId parameter in case of portlet publication
+	 * Completes different actions depending on the following cases:
 	 *
-	 * In case of portlet staging
-	 * 1. PORTLET_DATA_portletId is kept as it is
-	 * 2. PortletExportControllerImpl and PortletImportControllerImpl calls the
-	 *    changeset portlet data handler directly
+	 * <p>
+	 * Layout Staging:
+	 * </p>
 	 *
-	 * @param parameterMap
+	 * <ol>
+	 * <li>
+	 * Removes the <code>PORTLET_DATA_portletId</code> and
+	 * <code>PORTLET_DATA_ALL</code> parameters in the parameter map and
+	 * replaces them with <code>PORTLET_DATA_changesetPortletId</code>.
+	 * </li>
+	 * <li>
+	 * Adds model specific parameters to be able to decide whether a model needs
+	 * to be exported in the changeset portlet data handler. For example:
+	 * <"com.liferay.journal.model.JournalArticle", [<code>true</code>]>.
+	 * </li>
+	 * <li>
+	 * Adds the original portlet ID parameter in case of portlet publication.
+	 * </li>
+	 * </ol>
+	 *
+	 * <p>
+	 * Portlet Staging:
+	 * </p>
+	 *
+	 * <ol>
+	 * <li>
+	 * The <code>PORTLET_DATA_portletId<code> remains the same.
+	 * </li>
+	 * <li>
+	 * The <code>PortletExportControllerImpl</code> and
+	 * <code>PortletImportControllerImpl</code> calls the changeset portlet data
+	 * handler directly.
+	 * </li>
+	 * </ol>
+	 *
+	 * @param parameterMap the parameter map
 	 */
 	private void _replaceParameterMap(Map<String, String[]> parameterMap) {
 		boolean portletPublish = false;

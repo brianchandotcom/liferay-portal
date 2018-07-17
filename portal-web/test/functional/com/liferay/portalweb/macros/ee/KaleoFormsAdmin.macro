@@ -773,8 +773,6 @@
 	</command>
 
 	<command name="viewNoPublishedWorkflowDefinitions">
-		<execute macro="KaleoFormsAdmin#viewPublishedWorkflowDefinitions" />
-
 		<execute macro="PortletEntry#viewEmptyMessage">
 			<var name="entity" value="Published Definitions" />
 		</execute>
@@ -963,8 +961,6 @@
 	</command>
 
 	<command name="viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
-		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitions" />
-
 		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="${unpublishedWorkflowDefinitionTitle}">
 			<var name="key_workflowDefinitionTitle" value="${unpublishedWorkflowDefinitionTitle}" />
 		</execute>

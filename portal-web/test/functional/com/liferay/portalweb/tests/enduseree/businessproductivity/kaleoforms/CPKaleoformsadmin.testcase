@@ -248,6 +248,8 @@
 
 		<execute macro="KaleoFormsAdmin#viewNoPublishedWorkflowDefinitions" />
 
+		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitions" />
+
 		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
 			<var name="unpublishedWorkflowDefinitionTitle" value="Single Approver" />
 		</execute>
@@ -324,6 +326,8 @@
 
 		<execute macro="KaleoFormsAdmin#viewNoPublishedWorkflowDefinitions" />
 
+		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitions" />
+
 		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
 			<var name="unpublishedWorkflowDefinitionTitle" value="Single Approver" />
 		</execute>
@@ -335,8 +339,6 @@
 		<execute macro="KaleoFormsAdmin#deleteWorkflowDraft">
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewNoPublishedWorkflowDefinitions" />
 
 		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
 			<var name="unpublishedWorkflowDefinitionTitle" value="Single Approver" />

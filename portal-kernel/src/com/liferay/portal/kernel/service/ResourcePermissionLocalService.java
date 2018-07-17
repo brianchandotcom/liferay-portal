@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -65,6 +67,31 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourcePermissionLocalServiceUtil} to access the resource permission local service. Add custom service methods to {@link com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addModelResourcePermissions(AuditedModel auditedModel,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void addModelResourcePermissions(long companyId, long groupId,
+		long userId, String name, String primKey,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	/**
+	* Adds resources for the model with the name and primary key string, always
+	* creating a resource at the individual scope and only creating resources
+	* at the group, group template, and company scope if such resources don't
+	* already exist.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param userId the primary key of the user adding the resources
+	* @param name a name for the resource, typically the model's class name
+	* @param primKey the primary key string of the model instance, optionally
+	an empty string if no instance exists
+	* @param groupPermissions the group permissions to be applied
+	* @param guestPermissions the guest permissions to be applied
+	*/
+	public void addModelResourcePermissions(long companyId, long groupId,
+		long userId, String name, String primKey, String[] groupPermissions,
+		String[] guestPermissions) throws PortalException;
 
 	/**
 	* Grants the role permission at the scope to perform the action on
@@ -117,6 +144,29 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ResourcePermission addResourcePermission(
 		ResourcePermission resourcePermission);
+
+	/**
+	* Adds resources for the entity with the name and primary key string,
+	* always creating a resource at the individual scope and only creating
+	* resources at the group, group template, and company scope if such
+	* resources don't already exist.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param userId the primary key of the user adding the resources
+	* @param name a name for the resource, which should be a portlet ID if the
+	resource is a portlet or the resource's class name otherwise
+	* @param primKey the primary key string of the resource instance,
+	optionally an empty string if no instance exists
+	* @param portletActions whether to associate portlet actions with the
+	resource
+	* @param addGroupPermissions whether to add group permissions
+	* @param addGuestPermissions whether to add guest permissions
+	*/
+	public void addResourcePermissions(long companyId, long groupId,
+		long userId, String name, String primKey, boolean portletActions,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
 
 	/**
 	* Grants the role permissions at the scope to perform the actions on all
@@ -771,6 +821,17 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Updates the resources for the model, replacing their group and guest
+	* permissions with new ones from the service context.
+	*
+	* @param auditedModel the model associated with the resources
+	* @param serviceContext the service context to be applied. Can set group
+	and guest permissions.
+	*/
+	public void updateModelResourcePermissions(AuditedModel auditedModel,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
 	* Updates the resource permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePermission the resource permission
@@ -779,4 +840,31 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ResourcePermission updateResourcePermission(
 		ResourcePermission resourcePermission);
+
+	/**
+	* Updates resources matching the group, name, and primary key at the
+	* individual scope, setting new group and guest permissions.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param name the resource's name, which should be a portlet ID if the
+	resource is a portlet or the resource's class name otherwise
+	* @param primKey the primary key of the resource instance
+	* @param groupPermissions the group permissions to be applied
+	* @param guestPermissions the guest permissions to be applied
+	*/
+	public void updateResourcePermissions(long companyId, long groupId,
+		String name, long primKey, String[] groupPermissions,
+		String[] guestPermissions) throws PortalException;
+
+	public void updateResourcePermissions(long companyId, long groupId,
+		String name, String primKey, ModelPermissions modelPermissions)
+		throws PortalException;
+
+	public void updateResourcePermissions(long companyId, long groupId,
+		String name, String primKey, String[] groupPermissions,
+		String[] guestPermissions) throws PortalException;
+
+	public void updateResourcePermissions(long companyId, String name,
+		int scope, String primKey, String newPrimKey);
 }

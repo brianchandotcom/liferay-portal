@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.npm.portlet.extender;
+package com.liferay.frontend.js.portlet.extender;
 
-import com.liferay.npm.portlet.extender.internal.NPMPortlet;
+import com.liferay.frontend.js.portlet.extender.internal.JSPortlet;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -55,8 +55,8 @@ import org.slf4j.LoggerFactory;
  * @author Ray Augé
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = NPMPortletExtender.class)
-public class NPMPortletExtender {
+@Component(immediate = true, service = JSPortletExtender.class)
+public class JSPortletExtender {
 
 	@Activate
 	public void activate(BundleContext context) {
@@ -124,7 +124,9 @@ public class NPMPortletExtender {
 
 			Object value = attributes.get(ExtenderNamespace.EXTENDER_NAMESPACE);
 
-			if ((value != null) && value.equals("liferay.npm.portlet")) {
+			if ((value != null) &&
+				value.equals("liferay.frontend.js.portlet")) {
+
 				return true;
 			}
 		}
@@ -133,7 +135,7 @@ public class NPMPortletExtender {
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
-		NPMPortletExtender.class);
+		JSPortletExtender.class);
 
 	private BundleTracker<ServiceRegistration<?>> _bundleTracker;
 
@@ -178,7 +180,7 @@ public class NPMPortletExtender {
 						ServiceRegistration<?> serviceRegistration =
 							bundleContext.registerService(
 								new String[] {Portlet.class.getName()},
-								new NPMPortlet(name, version), properties);
+								new JSPortlet(name, version), properties);
 
 						return serviceRegistration;
 					}

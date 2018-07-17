@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.npm.portlet.extender.internal;
+package com.liferay.frontend.js.portlet.extender.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -32,9 +32,9 @@ import org.slf4j.LoggerFactory;
  * @author Ray Augé
  * @author Iván Zaera Avellón
  */
-public class NPMPortlet extends MVCPortlet {
+public class JSPortlet extends MVCPortlet {
 
-	public NPMPortlet(String name, String version) {
+	public JSPortlet(String name, String version) {
 		_name = name;
 		_version = version;
 	}
@@ -44,7 +44,7 @@ public class NPMPortlet extends MVCPortlet {
 		try {
 			PrintWriter writer = response.getWriter();
 
-			String portletElementId = "npm-portlet-" + response.getNamespace();
+			String portletElementId = "js-portlet-" + response.getNamespace();
 
 			writer.print(
 				StringUtil.replace(
@@ -72,7 +72,7 @@ public class NPMPortlet extends MVCPortlet {
 	}
 
 	private static String _loadTemplate(String name) {
-		InputStream inputStream = NPMPortlet.class.getResourceAsStream(
+		InputStream inputStream = JSPortlet.class.getResourceAsStream(
 			"dependencies/" + name);
 
 		try {
@@ -90,7 +90,7 @@ public class NPMPortlet extends MVCPortlet {
 	private static final String _JAVA_SCRIPT_TPL;
 
 	private static final Logger _logger = LoggerFactory.getLogger(
-		NPMPortlet.class);
+		JSPortlet.class);
 
 	static {
 		_HTML_TPL = _loadTemplate("bootstrap.html.tpl");

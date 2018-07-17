@@ -1,7 +1,0 @@
-Bundle-Name: Liferay npm Portlet Extender
-Bundle-SymbolicName: com.liferay.npm.portlet.extender
-Bundle-Version: 1.0.0
-Provide-Capability:\
-	osgi.extender;\
-		osgi.extender="liferay.npm.portlet";\
-		version:Version="1.0.0"

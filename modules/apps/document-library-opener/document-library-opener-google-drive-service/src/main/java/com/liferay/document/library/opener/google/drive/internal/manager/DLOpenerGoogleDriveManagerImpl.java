@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.opener.google.drive.internal.service;
+package com.liferay.document.library.opener.google.drive.internal.manager;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -24,7 +24,7 @@ import com.google.api.services.drive.Drive;
 
 import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
 import com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference;
-import com.liferay.document.library.opener.google.drive.service.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.manager.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;

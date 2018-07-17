@@ -3,6 +3,6 @@ Bundle-SymbolicName: com.liferay.document.library.opener.google.drive.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.document.library.opener.google.drive.constants,\
+	com.liferay.document.library.opener.google.drive.manager,\
 	com.liferay.document.library.opener.google.drive.model,\
-	com.liferay.document.library.opener.google.drive.service,\
-	com.liferay.document.library.opener.google.drive.service.util
+	com.liferay.document.library.opener.google.drive.util

@@ -195,7 +195,6 @@
 		</execute>
 
 		<execute macro="SearchPortlet#searchPG">
-			<var name="localizationIDName" value="Suchen" />
 			<var name="searchTerm" value="Kategorienamen" />
 		</execute>
 

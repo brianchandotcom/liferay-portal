@@ -53,17 +53,6 @@
 	<td>//div[contains(@class,'portlet-options')]/a[contains(@id,'_SearchPortlet') and @title='Options']</td>
 	<td></td>
 </tr>
-<!--The title attribute for the search comment changes depending on language.-->
-<tr>
-	<td>SEARCH_BUTTON</td>
-	<td>//button[contains(.,'${key_searchIDName}')] | //button[contains(.,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_PORTLET_SEARCH_BUTTON</td>
-	<td>//*[name()='a' or 'button'][contains(@onclick,'SearchPortlet_search()')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>SETUP_DESTINATION</td>
 	<td>//a[.='Set up its destination to make it visible.']</td>
@@ -71,7 +60,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_SEARCH_BAR</td>
-	<td>//header[@id='banner']//input[@title='Search'] | //input[contains(@data-qa-id,'searchInput')]</td>
+	<td>//header[@id='banner']//input[@title='Search']</td>
 	<td></td>
 </tr>
 <tr>

@@ -43,8 +43,8 @@ public interface ZipWriter {
 	public String getPath();
 
 	/**
-	 * Silently unmounts the file entry attached to this zip writer. If the
-	 * operation fails a message will be logged with warning level.
+	 * Silently unmounts the file entry attached to this Zip writer. If the
+	 * operation fails, a message is logged with a warning level.
 	 */
 	public void umount();
 

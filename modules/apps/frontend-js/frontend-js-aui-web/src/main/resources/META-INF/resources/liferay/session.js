@@ -341,8 +341,8 @@ AUI.add(
 
 									elapsed = timeOffset;
 
-									if (Lang.toInt(instance._localTimestamp) < timestamp) {
-										instance._localTimestamp = timestamp;
+									if (instance._initTimestamp !== timestamp) {
+										instance.set('timestamp', timestamp);
 
 										var sessionState = instance.get('sessionState');
 

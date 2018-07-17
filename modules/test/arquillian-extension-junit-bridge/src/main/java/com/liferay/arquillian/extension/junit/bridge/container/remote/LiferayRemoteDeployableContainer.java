@@ -14,14 +14,10 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container.remote;
 
-import java.io.IOException;
-
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.jboss.arquillian.container.osgi.karaf.remote.KarafRemoteDeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
-import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.HTTPContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.core.api.Instance;
@@ -47,8 +43,9 @@ public class LiferayRemoteDeployableContainer
 		ProtocolMetaData protocolMetaData = super.deploy(archive);
 
 		protocolMetaData.addContext(
-			new HTTPContext(liferayRemoteContainerConfiguration.getHttpHost(),
-			liferayRemoteContainerConfiguration.getHttpPort()));
+			new HTTPContext(
+				liferayRemoteContainerConfiguration.getHttpHost(),
+				liferayRemoteContainerConfiguration.getHttpPort()));
 
 		return protocolMetaData;
 	}
@@ -67,17 +64,11 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	@Override
-	protected void awaitArquillianBundleActive(long timeout, TimeUnit unit)
-		throws InterruptedException, IOException, TimeoutException {
-
-		//On purpose: It is not needed to install an Arquillian Bundle
+	protected void awaitArquillianBundleActive(long timeout, TimeUnit unit) {
 	}
 
 	@Override
-	protected void installArquillianBundle()
-		throws IOException, LifecycleException {
-
-		//On purpose: It is not needed to install an Arquillian Bundle
+	protected void installArquillianBundle() {
 	}
 
 	@ApplicationScoped

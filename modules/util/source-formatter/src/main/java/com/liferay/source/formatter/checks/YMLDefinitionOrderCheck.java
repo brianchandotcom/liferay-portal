@@ -15,12 +15,11 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.YMLSourceUtil;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -40,28 +39,11 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		return _sortDefinitions(fileName, content, StringPool.BLANK);
 	}
 
-	private List<String> _getDefinitions(String content, String indent) {
-		List<String> definitions = new ArrayList<>();
-
-		Pattern pattern = Pattern.compile(
-			StringBundler.concat(
-				"^", indent, "[a-z].*:.*(\n|\\Z)((", indent,
-				"[^a-z\n].*)?(\n|\\Z))*"),
-			Pattern.MULTILINE);
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			definitions.add(matcher.group());
-		}
-
-		return definitions;
-	}
-
 	private String _sortDefinitions(
 		String fileName, String content, String indent) {
 
-		List<String> definitions = _getDefinitions(content, indent);
+		List<String> definitions = YMLSourceUtil.getDefinitions(
+			content, indent);
 
 		DefinitionComparator definitionComparator = new DefinitionComparator(
 			fileName);

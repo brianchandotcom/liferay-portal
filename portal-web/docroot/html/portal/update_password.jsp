@@ -79,60 +79,14 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 				</div>
 			</c:when>
 			<c:otherwise>
-				<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_password" %>' method="post" name="fm">
+				<div id="<portlet:namespace />requestFailedMessage"></div>
+				<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_password" %>' method="post" name="update-password-fm">
 					<aui:input name="p_l_id" type="hidden" value="<%= layout.getPlid() %>" />
 					<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
 					<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 					<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
 					<aui:input name="ticketKey" type="hidden" value="<%= ticketKey %>" />
-
-					<c:if test="<%= !SessionErrors.isEmpty(request) %>">
-						<div class="alert alert-danger">
-							<c:choose>
-								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustBeLonger.class.getName()) %>">
-
-									<%
-									UserPasswordException.MustBeLonger upe = (UserPasswordException.MustBeLonger)SessionErrors.get(request, UserPasswordException.MustBeLonger.class.getName());
-									%>
-
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minLength) %>" key="that-password-is-too-short" translateArguments="<%= false %>" />
-								</c:when>
-								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustComplyWithModelListeners.class.getName()) %>">
-									<liferay-ui:message key="that-password-is-invalid-please-enter-a-different-password" />
-								</c:when>
-								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustComplyWithRegex.class.getName()) %>">
-
-									<%
-									UserPasswordException.MustComplyWithRegex upe = (UserPasswordException.MustComplyWithRegex)SessionErrors.get(request, UserPasswordException.MustComplyWithRegex.class.getName());
-									%>
-
-									<liferay-ui:message arguments="<%= upe.regex %>" key="that-password-does-not-comply-with-the-regular-expression" translateArguments="<%= false %>" />
-								</c:when>
-								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustMatch.class.getName()) %>">
-									<liferay-ui:message key="the-passwords-you-entered-do-not-match" />
-								</c:when>
-								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeEqualToCurrent.class.getName()) %>">
-									<liferay-ui:message key="your-new-password-cannot-be-the-same-as-your-old-password-please-enter-a-different-password" />
-								</c:when>
-								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeNull.class.getName()) %>">
-									<liferay-ui:message key="the-password-cannot-be-blank" />
-								</c:when>
-								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeRecentlyUsed.class.getName()) %>">
-									<liferay-ui:message key="that-password-has-already-been-used-please-enter-a-different-password" />
-								</c:when>
-								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeTrivial.class.getName()) %>">
-									<liferay-ui:message key="that-password-uses-common-words-please-enter-a-password-that-is-harder-to-guess-i-e-contains-a-mix-of-numbers-and-letters" />
-								</c:when>
-								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotContainDictionaryWords.class.getName()) %>">
-									<liferay-ui:message key="that-password-uses-common-dictionary-words" />
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="your-request-failed-to-complete" />
-								</c:otherwise>
-							</c:choose>
-						</div>
-					</c:if>
 
 					<aui:fieldset>
 						<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="password" name="password1" showRequiredLabel="<%= false %>" type="password">
@@ -152,6 +106,84 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 						<aui:button type="submit" />
 					</aui:button-row>
 				</aui:form>
+
+				<c:if test="<%= !SessionErrors.isEmpty(request) %>">
+					<aui:script use="liferay-form">
+						var validationErrors = [];
+
+						<c:choose>
+							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustBeLonger.class.getName()) %>">
+								<%
+									UserPasswordException.MustBeLonger upe = (UserPasswordException.MustBeLonger)SessionErrors.get(request, UserPasswordException.MustBeLonger.class.getName());
+								%>
+								validationErrors.push('<liferay-ui:message arguments="<%= String.valueOf(upe.minLength) %>" key="that-password-is-too-short" translateArguments="<%= false %>" />');
+							</c:when>
+							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustComplyWithModelListeners.class.getName()) %>">
+								validationErrors.push('<liferay-ui:message key="that-password-is-invalid-please-enter-a-different-password" />');
+							</c:when>
+							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustComplyWithRegex.class.getName()) %>">
+
+								<%
+									UserPasswordException.MustComplyWithRegex upe = (UserPasswordException.MustComplyWithRegex)SessionErrors.get(request, UserPasswordException.MustComplyWithRegex.class.getName());
+								%>
+
+								validationErrors.push('<liferay-ui:message arguments="<%= upe.regex %>" key="that-password-does-not-comply-with-the-regular-expression" translateArguments="<%= false %>" />');
+							</c:when>
+							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustMatch.class.getName()) %>">
+								validationErrors.push('<liferay-ui:message key="the-passwords-you-entered-do-not-match" />');
+							</c:when>
+							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeEqualToCurrent.class.getName()) %>">
+								validationErrors.push('<liferay-ui:message key="your-new-password-cannot-be-the-same-as-your-old-password-please-enter-a-different-password" />');
+							</c:when>
+							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeNull.class.getName()) %>">
+								validationErrors.push('<liferay-ui:message key="the-password-cannot-be-blank" />');
+							</c:when>
+							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeRecentlyUsed.class.getName()) %>">
+								validationErrors.push('<liferay-ui:message key="that-password-has-already-been-used-please-enter-a-different-password" />');
+							</c:when>
+							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeTrivial.class.getName()) %>">
+								validationErrors.push('<liferay-ui:message key="that-password-uses-common-words-please-enter-a-password-that-is-harder-to-guess-i-e-contains-a-mix-of-numbers-and-letters" />');
+							</c:when>
+							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotContainDictionaryWords.class.getName()) %>">
+								validationErrors.push('<liferay-ui:message key="that-password-uses-common-dictionary-words" />');
+							</c:when>
+							<c:otherwise>
+								var errorMessage = '<liferay-ui:message key="your-request-failed-to-complete" />';
+								var requestFailedMessage = AUI().one('#<portlet:namespace />requestFailedMessage');
+
+								requestFailedMessage.html('<div class="alert alert-danger">' + errorMessage + '</div>');
+							</c:otherwise>
+						</c:choose>
+
+						var form = Liferay.Form.get('<portlet:namespace />update-password-fm');
+
+						var newFieldRules = [];
+						var oldFieldRules = form.get('fieldRules');
+
+						if (validationErrors.length > 0) {
+							newFieldRules.push(
+								{
+									body: function(val, fieldNode, ruleValue) {
+										return true;
+									},
+									custom: false,
+									errorMessage: validationErrors.join(' '),
+									fieldName: '<portlet:namespace />password1',
+									validatorName: 'required'
+								}
+							);
+						}
+
+						var fieldRules = oldFieldRules.concat(newFieldRules);
+
+						form.set('fieldRules', fieldRules);
+
+						var formValidator = form.formValidator;
+
+						formValidator.validateField('<portlet:namespace />password1');
+					</aui:script>
+				</c:if>
+
 			</c:otherwise>
 		</c:choose>
 	</div>

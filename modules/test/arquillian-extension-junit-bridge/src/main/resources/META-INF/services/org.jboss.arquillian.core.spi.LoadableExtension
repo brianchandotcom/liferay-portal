@@ -1,2 +1,1 @@
 com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension
-org.arquillian.container.osgi.remote.OSGiAllInBundleExtension

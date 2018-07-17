@@ -46,7 +46,7 @@ public class IfClauseWhitespace {
 			return;
 		}
 		else if (StringUtil.contains(
-					testString, "make this too long for single line") ||
+					 testString, "make this too long for single line") ||
 				 StringUtil.contains(
 					 testString, "make this too long also for single line")) {
 

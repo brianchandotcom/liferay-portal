@@ -900,6 +900,12 @@ public class JournalArticleStagedModelDataHandler
 					smallFile, null, articleURL, serviceContext);
 			}
 
+			_journalArticleLocalService.updateAsset(
+				userId, importedArticle, serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds(),
+				serviceContext.getAssetPriority());
+
 			serviceContext.setModifiedDate(importedArticle.getModifiedDate());
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);

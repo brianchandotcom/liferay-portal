@@ -71,6 +71,26 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 		}
 
 		@Override
+		public boolean isAvailable() {
+			if (!_assetAutoTaggerSystemConfiguration.enabled()) {
+				return false;
+			}
+
+			try {
+				AssetAutoTaggerCompanyConfiguration
+					assetAutoTaggerCompanyConfiguration =
+						_configurationProvider.getCompanyConfiguration(
+							AssetAutoTaggerCompanyConfiguration.class,
+							_companyId);
+
+				return assetAutoTaggerCompanyConfiguration.enabled();
+			}
+			catch (ConfigurationException ce) {
+				return _assetAutoTaggerSystemConfiguration.enabled();
+			}
+		}
+
+		@Override
 		public boolean enabled() {
 			try {
 				if (!_assetAutoTaggerSystemConfiguration.enabled()) {

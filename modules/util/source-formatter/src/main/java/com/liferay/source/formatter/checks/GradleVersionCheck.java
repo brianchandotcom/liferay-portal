@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -46,8 +47,10 @@ public class GradleVersionCheck extends BaseFileCheck {
 			if (absolutePath.contains("/modules/apps/") ||
 				absolutePath.contains("/modules/private/apps/")) {
 
-				content = _fixMicroVersion(
-					fileName, content, matcher.group(1), name, version);
+				if (!_isTestUtilModule(absolutePath)) {
+					content = _fixMicroVersion(
+						fileName, content, matcher.group(1), name, version);
+				}
 			}
 		}
 
@@ -115,6 +118,20 @@ public class GradleVersionCheck extends BaseFileCheck {
 			"version: \"" + version.substring(0, pos + 1) + "0\"");
 
 		return StringUtil.replaceFirst(content, line, newLine);
+	}
+
+	private boolean _isTestUtilModule(String absolutePath) {
+		int x = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
+
+		String moduleName = absolutePath.substring(y + 1, x);
+
+		if (!moduleName.endsWith("-test-util")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private final Pattern _bndConditionalPackagePattern = Pattern.compile(

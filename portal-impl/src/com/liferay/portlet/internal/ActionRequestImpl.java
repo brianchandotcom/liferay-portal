@@ -82,14 +82,11 @@ public class ActionRequestImpl
 			// V3PortletParametersTests_SPEC11_3_getNames
 
 			if (renderParameterNames.contains(name)) {
-				String namespacedParameter = portletNamespace + name;
+				String[] values = servletRequestParameterMap.get(
+					portletNamespace.concat(name));
 
-				if (servletRequestParameterMap.containsKey(
-						namespacedParameter)) {
-
-					actionParameterMap.put(
-						name,
-						servletRequestParameterMap.get(namespacedParameter));
+				if (values != null) {
+					actionParameterMap.put(name, values);
 				}
 			}
 			else {

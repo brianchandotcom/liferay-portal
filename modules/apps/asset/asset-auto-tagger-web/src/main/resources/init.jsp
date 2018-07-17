@@ -20,7 +20,10 @@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration" %>
+<%@ page import="com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration" %><%@
+page import="com.liferay.asset.auto.tagger.web.internal.constants.PortalSettingsAssetAutoTaggerConstants" %>
+
+<%@ page import="javax.portlet.ActionRequest" %>
 
 <liferay-frontend:defineObjects />
 

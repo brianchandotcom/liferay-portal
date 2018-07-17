@@ -340,6 +340,16 @@ AUI.add(
 									timeOffset = Math.floor((Date.now() - timestamp) / 1000) * 1000;
 
 									elapsed = timeOffset;
+
+									if (instance._initTimestamp !== timestamp) {
+										instance.set('timestamp', timestamp);
+
+										var sessionState = instance.get('sessionState');
+
+										if (sessionState != 'active') {
+											instance.set('sessionState', 'active', SRC_EVENT_OBJ);
+										}
+									}
 								}
 								else {
 									timestamp = 'expired';

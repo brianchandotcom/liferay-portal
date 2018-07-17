@@ -85,7 +85,7 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 
 		sb1.append("select KaleoDefinitionVersion.* from ");
 		sb1.append("KaleoDefinitionVersion join (select name, max(version) ");
-		sb1.append("as version from KaleoDefinitionVersion group by name) as ");
+		sb1.append("as version from KaleoDefinitionVersion group by name) ");
 		sb1.append("sub on sub.name = KaleoDefinitionVersion.name and sub.");
 		sb1.append("version = KaleoDefinitionVersion.version left join ");
 		sb1.append("KaleoDefinition on KaleoDefinitionVersion.name = ");

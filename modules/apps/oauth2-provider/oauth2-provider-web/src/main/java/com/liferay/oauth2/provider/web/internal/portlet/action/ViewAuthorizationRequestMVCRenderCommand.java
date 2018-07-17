@@ -87,6 +87,14 @@ public class ViewAuthorizationRequestMVCRenderCommand
 			return "/authorize/error.jsp";
 		}
 
+		String error = oAuth2Parameters.get("error");
+
+		if ("invalid_client".equals(error)) {
+			SessionErrors.add(renderRequest, "clientIdInvalid");
+
+			return "/authorize/error.jsp";
+		}
+
 		String clientId = oAuth2Parameters.get("client_id");
 
 		try {

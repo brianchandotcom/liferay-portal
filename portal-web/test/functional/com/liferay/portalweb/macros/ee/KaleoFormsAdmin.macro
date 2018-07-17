@@ -590,9 +590,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute macro="PortletEntry#publish" />
-
-		<execute function="Refresh" />
+		<execute macro="KaleoFormsAdmin#publishWorkflow" />
 	</command>
 
 	<command name="saveAndContinueForm">

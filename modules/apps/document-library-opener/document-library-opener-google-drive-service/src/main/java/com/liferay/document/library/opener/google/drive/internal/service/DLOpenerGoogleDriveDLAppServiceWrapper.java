@@ -51,8 +51,11 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 	public void cancelCheckOut(long fileEntryId) throws PortalException {
 		super.cancelCheckOut(fileEntryId);
 
-		_dlOpenerGoogleDriveManager.delete(
-			_getUserId(), getFileEntry(fileEntryId));
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		if (_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+			_dlOpenerGoogleDriveManager.delete(_getUserId(), fileEntry);
+		}
 	}
 
 	@Override
@@ -62,6 +65,13 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		throws PortalException {
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		if (!_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+			super.checkInFileEntry(
+				fileEntryId, majorVersion, changeLog, serviceContext);
+
+			return;
+		}
 
 		_updateFileEntryFromGoogleDrive(fileEntry, serviceContext);
 
@@ -78,6 +88,12 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		throws PortalException {
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		if (!_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+			super.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
+
+			return;
+		}
 
 		_updateFileEntryFromGoogleDrive(fileEntry, serviceContext);
 

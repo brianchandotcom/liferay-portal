@@ -37,6 +37,10 @@ public class TestIntegrationTomcatExtension {
 		return GradleUtil.toFile(_project, _dir);
 	}
 
+	public String getHostName() {
+		return GradleUtil.toString(_hostName);
+	}
+
 	public int getJmxRemotePort() {
 		return GradleUtil.toInteger(_jmxRemotePort);
 	}
@@ -79,6 +83,10 @@ public class TestIntegrationTomcatExtension {
 		_dir = dir;
 	}
 
+	public void setHostName(Object hostName) {
+		_hostName = hostName;
+	}
+
 	public void setJmxRemotePort(Object jmxRemotePort) {
 		_jmxRemotePort = jmxRemotePort;
 	}
@@ -105,6 +113,7 @@ public class TestIntegrationTomcatExtension {
 
 	private Object _checkPath = "/web/guest";
 	private Object _dir;
+	private Object _hostName = "localhost";
 	private Object _jmxRemotePort = 8099;
 	private Object _liferayHome;
 	private Object _managerPassword = "tomcat";

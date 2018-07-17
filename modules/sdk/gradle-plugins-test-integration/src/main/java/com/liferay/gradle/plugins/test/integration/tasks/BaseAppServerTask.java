@@ -87,6 +87,11 @@ public abstract class BaseAppServerTask extends DefaultTask {
 	}
 
 	@Input
+	public String getHostName() {
+		return GradleUtil.toString(_hostName);
+	}
+
+	@Input
 	public int getPortNumber() {
 		return GradleUtil.toInteger(_portNumber);
 	}
@@ -94,7 +99,7 @@ public abstract class BaseAppServerTask extends DefaultTask {
 	public boolean isReachable() {
 		try {
 			URL url = new URL(
-				"http", "localhost", getPortNumber(), getCheckPath());
+				"http", getHostName(), getPortNumber(), getCheckPath());
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)url.openConnection();
@@ -141,6 +146,10 @@ public abstract class BaseAppServerTask extends DefaultTask {
 
 	public void setExecutableArgs(Object... executableArgs) {
 		setExecutableArgs(Arrays.asList(executableArgs));
+	}
+
+	public void setHostName(Object hostName) {
+		_hostName = hostName;
 	}
 
 	public void setPortNumber(Object portNumber) {
@@ -191,6 +200,7 @@ public abstract class BaseAppServerTask extends DefaultTask {
 	private long _checkTimeout = 10 * 60 * 1000;
 	private Object _executable;
 	private final List<Object> _executableArgs = new ArrayList<>();
+	private Object _hostName = "localhost";
 	private Object _portNumber;
 
 }

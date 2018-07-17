@@ -610,6 +610,16 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			});
 
+		baseAppServerTask.setHostName(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return testIntegrationTomcatExtension.getHostName();
+				}
+
+			});
+
 		baseAppServerTask.setPortNumber(
 			new Callable<Integer>() {
 

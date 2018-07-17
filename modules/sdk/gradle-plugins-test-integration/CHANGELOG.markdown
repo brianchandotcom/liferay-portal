@@ -67,6 +67,12 @@ a file already exists in the `osgi/test` directory before copying it from the
 - [LPS-78750]: Automatically set Tomcat's `.sh` files when executing the
 `setUpTestableTomcat` task.
 
+## 2.2.2 - 2018-07-17
+
+### Added
+- [LPS-83520]: Add the ability to set the application server host name by setting the
+property `testIntegrationTomcat.hostName`. The default value is `localhost`.
+
 [Liferay Portal Test]: https://github.com/liferay/liferay-portal/tree/master/portal-test
 [Liferay Portal Test Integration]: https://github.com/liferay/liferay-portal/tree/master/portal-test-integration
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -78,3 +84,4 @@ a file already exists in the `osgi/test` directory before copying it from the
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525
 [LPS-75239]: https://issues.liferay.com/browse/LPS-75239
 [LPS-78750]: https://issues.liferay.com/browse/LPS-78750
+[LPS-83520]: https://issues.liferay.com/browse/LPS-83520

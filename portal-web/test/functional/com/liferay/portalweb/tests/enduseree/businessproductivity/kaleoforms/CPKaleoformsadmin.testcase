@@ -316,37 +316,37 @@
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#deactivateWorkflow">
-			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#deactivateWorkflow">
-			<var name="workflowDefinitionTitle" value="Single Approver" />
-		</execute>
+		<for list="Single Approver,Workflow Definition Title" param="workflowDefinitionTitle">
+			<execute macro="KaleoFormsAdmin#deactivateWorkflow">
+				<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+			</execute>
+		</for>
 
 		<execute macro="KaleoFormsAdmin#viewNoPublishedWorkflowDefinitions" />
 
 		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitions" />
 
-		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
-			<var name="unpublishedWorkflowDefinitionTitle" value="Single Approver" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
-			<var name="unpublishedWorkflowDefinitionTitle" value="Workflow Definition Title" />
-		</execute>
+		<for list="Single Approver,Workflow Definition Title" param="workflowDefinitionTitle">
+			<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
+				<var name="unpublishedWorkflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+			</execute>
+		</for>
 
 		<execute macro="KaleoFormsAdmin#deleteWorkflowDraft">
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
-			<var name="unpublishedWorkflowDefinitionTitle" value="Single Approver" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#reactivateInactiveWorkflowDefinition">
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewPublishedWorkflowDefinitions" />
+
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="Single Approver">
+			<var name="key_workflowDefinitionTitle" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
 	</command>
 
 	<command name="DeleteCreateFormViaDDL" priority="3">

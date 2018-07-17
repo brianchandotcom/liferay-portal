@@ -189,6 +189,39 @@ public class DDMFormInstanceVersionServiceHttp {
 		}
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion getLatestFormInstanceVersion(
+		HttpPrincipal httpPrincipal, long ddmFormInstanceId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(DDMFormInstanceVersionServiceUtil.class,
+					"getLatestFormInstanceVersion",
+					_getLatestFormInstanceVersionParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					ddmFormInstanceId, status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DDMFormInstanceVersionServiceHttp.class);
 	private static final Class<?>[] _getFormInstanceVersionParameterTypes0 = new Class[] {
 			long.class
@@ -201,4 +234,6 @@ public class DDMFormInstanceVersionServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _getLatestFormInstanceVersionParameterTypes3 =
 		new Class[] { long.class };
+	private static final Class<?>[] _getLatestFormInstanceVersionParameterTypes4 =
+		new Class[] { long.class, int.class };
 }

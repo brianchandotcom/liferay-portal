@@ -84,6 +84,18 @@ public class DDMFormInstanceVersionServiceImpl
 			ddmFormInstanceId);
 	}
 
+	@Override
+	public DDMFormInstanceVersion getLatestFormInstanceVersion(
+			long ddmFormInstanceId, int status)
+		throws PortalException {
+
+		_ddmFormInstanceVersionPermissionModelResourcePermission.check(
+			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
+
+		return ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
+			ddmFormInstanceId, status);
+	}
+
 	private static volatile ModelResourcePermission<DDMFormInstance>
 		_ddmFormInstanceVersionPermissionModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

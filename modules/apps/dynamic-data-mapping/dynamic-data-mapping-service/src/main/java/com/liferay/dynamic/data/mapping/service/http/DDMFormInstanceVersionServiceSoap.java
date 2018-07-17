@@ -127,5 +127,21 @@ public class DDMFormInstanceVersionServiceSoap {
 		}
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersionSoap getLatestFormInstanceVersion(
+		long ddmFormInstanceId, int status) throws RemoteException {
+		try {
+			com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion returnValue =
+				DDMFormInstanceVersionServiceUtil.getLatestFormInstanceVersion(ddmFormInstanceId,
+					status);
+
+			return com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DDMFormInstanceVersionServiceSoap.class);
 }

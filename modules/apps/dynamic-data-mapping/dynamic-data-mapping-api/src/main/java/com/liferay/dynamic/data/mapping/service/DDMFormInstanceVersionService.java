@@ -73,6 +73,10 @@ public interface DDMFormInstanceVersionService extends BaseService {
 	public DDMFormInstanceVersion getLatestFormInstanceVersion(
 		long ddmFormInstanceId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMFormInstanceVersion getLatestFormInstanceVersion(
+		long ddmFormInstanceId, int status) throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*

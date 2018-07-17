@@ -149,10 +149,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
-			<var name="nodePort" value="9080" />
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">

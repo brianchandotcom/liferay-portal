@@ -52,7 +52,7 @@
 <!--REMOTE_STAGING-->
 <tr>
 	<td>REMOTE_STAGING_IP</td>
-	<td>//span[contains(@id,'remoteAddress')]</td>
+	<td>//input[contains(@id,'remoteAddress')]</td>
 	<td></td>
 </tr>
 <tr>

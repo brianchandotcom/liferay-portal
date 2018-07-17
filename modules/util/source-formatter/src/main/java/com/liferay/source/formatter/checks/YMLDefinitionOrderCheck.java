@@ -66,12 +66,17 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 					content, definition, previousDefinition);
 			}
 
-			String newDefinition = _sortDefinitions(
-				fileName, definition, indent + StringPool.FOUR_SPACES);
+			String nestedDefinitionIndent =
+				YMLSourceUtil.getNestedDefinitionIndent(definition);
 
-			if (!newDefinition.equals(definition)) {
-				return StringUtil.replaceFirst(
-					content, definition, newDefinition);
+			if (!nestedDefinitionIndent.equals(StringPool.BLANK)) {
+				String newDefinition = _sortDefinitions(
+					fileName, definition, nestedDefinitionIndent);
+
+				if (!newDefinition.equals(definition)) {
+					return StringUtil.replaceFirst(
+						content, definition, newDefinition);
+				}
 			}
 		}
 

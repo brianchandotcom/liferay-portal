@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter.checks.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,26 @@ public class YMLSourceUtil {
 		}
 
 		return definitions;
+	}
+
+	public static String getNestedDefinitionIndent(String definition) {
+		String[] lines = StringUtil.splitLines(definition);
+
+		if (lines.length <= 1) {
+			return StringPool.BLANK;
+		}
+
+		for (int i = 1; i < lines.length; i++) {
+			String line = lines[i];
+
+			String indent = line.replaceAll("^(\\s+).+", "$1");
+
+			if (!indent.equals(line)) {
+				return indent;
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 }

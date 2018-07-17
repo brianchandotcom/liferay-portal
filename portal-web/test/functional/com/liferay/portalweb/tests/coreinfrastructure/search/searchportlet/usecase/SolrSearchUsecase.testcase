@@ -63,15 +63,13 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<for list="Type Facet,Search Results,Search Bar" param="portletName">
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Search Page" />
-			</execute>
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Search Page" />
+		</execute>
 
-			<execute macro="Portlet#addPG">
-				<var name="portletName" value="${portletName}" />
-			</execute>
-		</for>
+		<execute macro="SearchPortlet#addSearchPortlets">
+			<var name="searchPortletList" value="Type Facet,Search Results,Search Bar" />
+		</execute>
 
 		<execute macro="SearchBarPortlet#configureParameterNames">
 			<var name="keywordsParameterName" value="keywordparameter" />
@@ -267,15 +265,9 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<for list="Search Results,Search Bar" param="portletName">
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Search Page" />
-			</execute>
-
-			<execute macro="Portlet#addPG">
-				<var name="portletName" value="${portletName}" />
-			</execute>
-		</for>
+		<execute macro="SearchPortlet#addSearchPortlets">
+			<var name="searchPortletList" value="Search Results,Search Bar" />
+		</execute>
 
 		<execute macro="SearchPortlet#configureScope">
 			<var name="searchScope" value="Let the User Choose" />
@@ -1334,15 +1326,9 @@
 			<var name="pageName" value="${searchPage}" />
 		</execute>
 
-		<for list="Search Options,Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar" param="portletName">
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="${searchPage}" />
-			</execute>
-
-			<execute macro="Portlet#addPG">
-				<var name="portletName" value="${portletName}" />
-			</execute>
-		</for>
+		<execute macro="SearchPortlet#addSearchPortlets">
+			<var name="searchPortletList" value="Search Options,Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar" />
+		</execute>
 
 		<execute macro="SearchPortlet#configureScope">
 			<var name="searchScope" value="Everything" />

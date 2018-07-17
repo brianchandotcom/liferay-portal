@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.internal.configuration;
+package com.liferay.asset.auto.tagger.configuration;
 
 /**
  * @author Alejandro Tardín

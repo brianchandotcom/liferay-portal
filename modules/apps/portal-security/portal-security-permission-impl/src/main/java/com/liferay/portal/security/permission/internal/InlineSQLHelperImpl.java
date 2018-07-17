@@ -17,6 +17,7 @@ package com.liferay.portal.security.permission.internal;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -34,20 +35,26 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.security.permission.internal.configuration.InlinePermissionConfiguration;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  * @author Connor McKay
  */
-@Component(immediate = true)
+@Component(
+	configurationPid = "com.liferay.portal.security.permission.internal.configuration.InlinePermissionConfiguration",
+	immediate = true
+)
 public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	public static final String FIND_BY_RESOURCE_PERMISSION =
@@ -65,7 +72,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	@Override
 	public boolean isEnabled(long companyId, long groupId) {
-		if (!PropsValues.PERMISSIONS_INLINE_SQL_CHECK_ENABLED) {
+		if (!_inlinePermissionConfiguration.sqlCheckEnabled()) {
 			return false;
 		}
 
@@ -99,7 +106,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	@Override
 	public boolean isEnabled(long[] groupIds) {
-		if (!PropsValues.PERMISSIONS_INLINE_SQL_CHECK_ENABLED) {
+		if (!_inlinePermissionConfiguration.sqlCheckEnabled()) {
 			return false;
 		}
 
@@ -241,6 +248,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return replacePermissionCheckJoin(
 			sql, className, classPKField, userIdField, groupIdField, groupIds,
 			bridgeJoin);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_inlinePermissionConfiguration = ConfigurableUtil.createConfigurable(
+			InlinePermissionConfiguration.class, properties);
 	}
 
 	protected long[] getRoleIds(long groupId) {
@@ -545,6 +559,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	private volatile InlinePermissionConfiguration
+		_inlinePermissionConfiguration;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -585,7 +585,7 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 	 *
 	 * <ol>
 	 * <li>
-	 * The <code>PORTLET_DATA_portletId<code> remains the same.
+	 * The <code>PORTLET_DATA_portletId</code> remains the same.
 	 * </li>
 	 * <li>
 	 * The <code>PortletExportControllerImpl</code> and

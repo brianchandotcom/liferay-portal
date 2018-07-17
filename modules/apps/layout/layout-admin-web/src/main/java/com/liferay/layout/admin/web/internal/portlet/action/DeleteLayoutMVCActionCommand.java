@@ -19,6 +19,8 @@ import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -146,9 +148,20 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		for (long curSelPlid : selPlids) {
-			deleteLayout(curSelPlid, actionRequest, actionResponse);
+			try {
+				deleteLayout(curSelPlid, actionRequest, actionResponse);
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to delete layout with ID " + curSelPlid, pe);
+				}
+			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeleteLayoutMVCActionCommand.class);
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

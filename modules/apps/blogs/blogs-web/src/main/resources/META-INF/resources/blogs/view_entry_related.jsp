@@ -102,82 +102,14 @@
 
 			<div class="card-footer">
 				<div class="card-row">
-					<div class="autofit-float autofit-row autofit-row-center widget-toolbar">
-						<c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">
-							<div class="autofit-col">
-								<portlet:renderURL var="blogsEntryViewCommentsURL">
-									<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-									<portlet:param name="scroll" value='<%= renderResponse.getNamespace() + "discussionContainer" %>' />
 
-									<c:choose>
-										<c:when test="<%= Validator.isNotNull(blogsEntry.getUrlTitle()) %>">
-											<portlet:param name="urlTitle" value="<%= blogsEntry.getUrlTitle() %>" />
-										</c:when>
-										<c:otherwise>
-											<portlet:param name="entryId" value="<%= String.valueOf(blogsEntry.getEntryId()) %>" />
-										</c:otherwise>
-									</c:choose>
-								</portlet:renderURL>
+					<%
+						request.setAttribute("entry_toolbar.jsp-entry", blogsEntry);
+						request.setAttribute("entry_toolbar.jsp-showOnlyIcons", Boolean.TRUE);
+						request.setAttribute("entry_toolbar.jsp-socialBookmarksDisplayStyle", "menu");
+					%>
 
-								<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= blogsEntryViewCommentsURL %>">
-									<span class="inline-item inline-item-before">
-										<clay:icon
-											symbol="comments"
-										/>
-									</span>
-
-									<%= CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), blogsEntry.getEntryId()) %>
-								</a>
-							</div>
-						</c:if>
-
-						<c:if test="<%= blogsPortletInstanceConfiguration.enableRatings() %>">
-							<div class="autofit-col">
-
-								<%
-								RatingsEntry blogsEntryRatingsEntry = null;
-								RatingsStats blogsEntryRatingsStats = RatingsStatsLocalServiceUtil.fetchStats(BlogsEntry.class.getName(), blogsEntry.getEntryId());
-
-								if (blogsEntryRatingsStats != null) {
-									blogsEntryRatingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(themeDisplay.getUserId(), BlogsEntry.class.getName(), blogsEntry.getEntryId());
-								}
-								%>
-
-								<liferay-ui:ratings
-									className="<%= BlogsEntry.class.getName() %>"
-									classPK="<%= blogsEntry.getEntryId() %>"
-									inTrash="<%= blogsEntry.isInTrash() %>"
-									ratingsEntry="<%= blogsEntryRatingsEntry %>"
-									ratingsStats="<%= blogsEntryRatingsStats %>"
-								/>
-							</div>
-						</c:if>
-
-						<div class="autofit-col autofit-col-end">
-							<liferay-portlet:renderURL varImpl="blogsEntryBookmarksURL">
-								<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-
-								<c:choose>
-									<c:when test="<%= Validator.isNotNull(blogsEntry.getUrlTitle()) %>">
-										<portlet:param name="urlTitle" value="<%= blogsEntry.getUrlTitle() %>" />
-									</c:when>
-									<c:otherwise>
-										<portlet:param name="entryId" value="<%= String.valueOf(blogsEntry.getEntryId()) %>" />
-									</c:otherwise>
-								</c:choose>
-							</liferay-portlet:renderURL>
-
-							<liferay-social-bookmarks:bookmarks
-								className="<%= BlogsEntry.class.getName() %>"
-								classPK="<%= blogsEntry.getEntryId() %>"
-								displayStyle="menu"
-								target="_blank"
-								title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, blogsEntry) %>"
-								types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"
-								urlImpl="<%= blogsEntryBookmarksURL %>"
-							/>
-						</div>
-					</div>
+					<liferay-util:include page="/blogs/entry_toolbar.jsp" servletContext="<%= application %>" />
 				</div>
 			</div>
 		</div>

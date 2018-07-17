@@ -30,7 +30,7 @@
 <liferay-social-bookmarks:bookmarks
 	className="<%= BlogsEntry.class.getName() %>"
 	classPK="<%= entry.getEntryId() %>"
-	displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
+	displayStyle='<%= GetterUtil.getString(request.getAttribute("entry_toolbar.jsp-socialBookmarksDisplayStyle"), blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle()) %>'
 	target="_blank"
 	title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
 	types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"

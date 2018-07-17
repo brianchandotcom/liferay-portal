@@ -345,7 +345,8 @@ public class PortletContainerImpl implements PortletContainer {
 			request, layout, Arrays.asList(portlet),
 			themeDisplay.isLifecycleAction());
 
-		if (themeDisplay.isLifecycleRender() ||
+		if (themeDisplay.isHubAction() || themeDisplay.isHubPartialAction() ||
+			themeDisplay.isLifecycleRender() ||
 			themeDisplay.isLifecycleResource()) {
 
 			WindowState windowState = WindowStateFactory.getWindowState(

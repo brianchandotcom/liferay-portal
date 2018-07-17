@@ -158,24 +158,6 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="Bookmark#addBookmarkViaAP">
-			<var name="bookmarkDescription" value="Test Bookmark Description" />
-			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Bookmark#viewBookmarkViaAP">
-			<var name="bookmarkName" value="Test Bookmark Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
 		<execute macro="CalendarEvent#addPGViaAP">
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
@@ -296,7 +278,7 @@
 			<var name="webContentTitle" value="WC Webcontent Title" />
 		</execute>
 
-		<for list="Blogs,Bookmarks,Calendar,Documents and Media,Dynamic Data Lists Display,Knowledge Base Article,Web Content Display" param="portletName">
+		<for list="Blogs,Calendar,Documents and Media,Dynamic Data Lists Display,Knowledge Base Article,Web Content Display" param="portletName">
 			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="Asset Publisher Page" />
 			</execute>

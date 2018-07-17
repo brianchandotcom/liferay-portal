@@ -16,8 +16,8 @@ package com.liferay.document.library.opener.google.drive.web.internal.portlet.ac
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveConstants;
-import com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.manager.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.model.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.util.DLOpenerGoogleDriveDLHelper;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebKeys;

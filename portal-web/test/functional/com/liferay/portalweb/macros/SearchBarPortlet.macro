@@ -88,9 +88,9 @@
 	</command>
 
 	<command name="gotoOptions">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#SEARCH_BAR_ELLIPSIS_ICON" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON" />
 
-		<execute function="Click" locator1="Search#SEARCH_BAR_ELLIPSIS_ICON" />
+		<execute function="Click" locator1="Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON" />
 
 		<if>
 			<isset var="portletOption" />
@@ -103,9 +103,9 @@
 	</command>
 
 	<command name="searchPG">
-		<execute function="Type" locator1="Search#SEARCH_BAR" value1="${searchTerm}" />
+		<execute function="Type" locator1="Search#SEARCH_BAR_WIDGET" value1="${searchTerm}" />
 
-		<execute function="KeyPress" locator1="Search#SEARCH_BAR" value1="\RETURN" />
+		<execute function="KeyPress" locator1="Search#SEARCH_BAR_WIDGET" value1="\RETURN" />
 	</command>
 
 	<command name="selectScopeInput">
@@ -115,7 +115,7 @@
 				<equals arg1="${searchScope}" arg2="This Site" />
 			</or>
 			<then>
-				<execute function="Select" locator1="Search#SEARCH_BAR_SCOPE_SELECT" value1="${searchScope}" />
+				<execute function="Select" locator1="Search#SEARCH_BAR_WIDGET_SCOPE_SELECT" value1="${searchScope}" />
 			</then>
 			<else>
 				<fail message="Invalid search scope. Must be (Everything|This Site)." />

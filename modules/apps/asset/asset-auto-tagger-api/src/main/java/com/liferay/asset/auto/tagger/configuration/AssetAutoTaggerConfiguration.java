@@ -21,6 +21,8 @@ public interface AssetAutoTaggerConfiguration {
 
 	public boolean enabled();
 
+	public boolean isAvailable();
+
 	public int maximumNumberOfTagsPerAsset();
 
 }

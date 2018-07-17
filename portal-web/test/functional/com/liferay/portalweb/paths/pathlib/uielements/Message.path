@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_PUBLISH_UNSUCCESSFUL_EXTENSION</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'The source file does not have the same extension as the original file')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_SPECIFIC_FORM_FIELD_REQUIRED</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/../../div[contains(@class,'has-error')]//div[contains(@class,'help-block')] | //div[contains(@data-fieldname,'${key_fieldName}')]/../../div[contains(@class,'has-error')]//div[contains(@class,'form-feedback-indicator')]</td>
 	<td></td>

@@ -668,7 +668,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The source file does not have the same extension as the original file." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_PUBLISH_UNSUCCESSFUL_EXTENSION" value1="The source file does not have the same extension as the original file." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -716,7 +716,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The source file does not have the same extension as the original file." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_PUBLISH_UNSUCCESSFUL_EXTENSION" value1="The source file does not have the same extension as the original file." />
 
 		<execute macro="Navigator#openURL" />
 

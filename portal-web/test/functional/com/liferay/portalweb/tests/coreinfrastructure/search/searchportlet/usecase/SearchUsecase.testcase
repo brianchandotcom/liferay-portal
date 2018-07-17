@@ -70,6 +70,12 @@
 			<var name="searchPortletList" value="Type Facet,Search Results,Search Bar" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Search Results" />
+		</execute>
+
 		<execute macro="SearchBarPortlet#configureParameterNames">
 			<var name="keywordsParameterName" value="keywordparameter" />
 			<var name="scopeParameterName" value="scopeparameter" />
@@ -267,6 +273,12 @@
 
 		<execute macro="SearchPortlet#addSearchPortlets">
 			<var name="searchPortletList" value="Search Results,Search Bar" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Search Results" />
 		</execute>
 
 		<execute macro="SearchPortlet#configureScope">
@@ -1418,6 +1430,12 @@
 
 		<execute macro="SearchPortlet#addSearchPortlets">
 			<var name="searchPortletList" value="Search Options,Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Search Results" />
 		</execute>
 
 		<execute macro="SearchPortlet#configureScope">

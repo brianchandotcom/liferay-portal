@@ -17,7 +17,11 @@ package com.liferay.portal.search.engine.adapter.search;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.filter.Filter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -28,6 +32,10 @@ public abstract class BaseSearchRequest<T extends SearchResponse>
 
 	@Override
 	public abstract T accept(SearchRequestExecutor searchRequestExecutor);
+
+	public Map<String, Facet> getFacets() {
+		return _facets;
+	}
 
 	public String[] getIndexNames() {
 		return _indexNames;
@@ -49,12 +57,28 @@ public abstract class BaseSearchRequest<T extends SearchResponse>
 		return _timeoutInMilliseconds;
 	}
 
+	public boolean isBasicFacetSelection() {
+		return _basicFacetSelection;
+	}
+
 	public boolean isRequestCache() {
 		return _requestCache;
 	}
 
 	public boolean isTrackTotalHits() {
 		return _trackTotalHits;
+	}
+
+	public void putAllFacets(Map<String, Facet> faects) {
+		_facets.putAll(faects);
+	}
+
+	public void putFacet(String fieldName, Facet facet) {
+		_facets.put(fieldName, facet);
+	}
+
+	public void setBasicFacetSelection(boolean basicFacetSelection) {
+		_basicFacetSelection = basicFacetSelection;
 	}
 
 	public void setIndexNames(String[] indexNames) {
@@ -85,6 +109,8 @@ public abstract class BaseSearchRequest<T extends SearchResponse>
 		_trackTotalHits = trackTotalHits;
 	}
 
+	private boolean _basicFacetSelection;
+	private final Map<String, Facet> _facets = new HashMap<>();
 	private String[] _indexNames;
 	private float _minimumScore;
 	private Filter _postFilter;

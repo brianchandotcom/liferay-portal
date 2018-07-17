@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +70,32 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			groupBy.getField());
 
 		TopHitsAggregationBuilder topHitsAggregationBuilder = getTopHitsBuilder(
-			searchContext, start, end, groupBy);
+			searchContext.getQueryConfig(), searchContext.getSorts(), start,
+			end, groupBy);
+
+		termsAggregationBuilder.subAggregation(topHitsAggregationBuilder);
+
+		searchRequestBuilder.addAggregation(termsAggregationBuilder);
+	}
+
+	@Override
+	public void translate(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		GroupBy groupBy = searchSearchRequest.getGroupBy();
+
+		TermsAggregationBuilder termsAggregationBuilder =
+			AggregationBuilders.terms(
+				GROUP_BY_AGGREGATION_PREFIX + groupBy.getField());
+
+		termsAggregationBuilder = termsAggregationBuilder.field(
+			groupBy.getField());
+
+		TopHitsAggregationBuilder topHitsAggregationBuilder = getTopHitsBuilder(
+			searchSearchRequest.getQueryConfig(),
+			searchSearchRequest.getSorts(), searchSearchRequest.getStart(),
+			searchSearchRequest.getSize(), groupBy);
 
 		termsAggregationBuilder.subAggregation(topHitsAggregationBuilder);
 
@@ -213,7 +239,8 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 	}
 
 	protected TopHitsAggregationBuilder getTopHitsBuilder(
-		SearchContext searchContext, int start, int end, GroupBy groupBy) {
+		QueryConfig queryConfig, Sort[] sorts, int start, int end,
+		GroupBy groupBy) {
 
 		TopHitsAggregationBuilder topHitsAggregationBuilder =
 			AggregationBuilders.topHits(TOP_HITS_AGGREGATION_NAME);
@@ -234,11 +261,9 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 		topHitsAggregationBuilder.size(groupBySize);
 
-		addHighlights(
-			topHitsAggregationBuilder, searchContext.getQueryConfig());
-		addSelectedFields(
-			topHitsAggregationBuilder, searchContext.getQueryConfig());
-		addSorts(topHitsAggregationBuilder, searchContext.getSorts());
+		addHighlights(topHitsAggregationBuilder, queryConfig);
+		addSelectedFields(topHitsAggregationBuilder, queryConfig);
+		addSorts(topHitsAggregationBuilder, sorts);
 
 		return topHitsAggregationBuilder;
 	}

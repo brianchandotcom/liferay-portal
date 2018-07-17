@@ -12,28 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.groupby;
+package com.liferay.portal.search.elasticsearch6.internal.sort;
 
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.kernel.search.Sort;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 
 /**
  * @author Michael C. Han
  */
-public interface GroupByTranslator {
-
-	public static final String GROUP_BY_AGGREGATION_PREFIX = "GroupBy_";
-
-	public static final String TOP_HITS_AGGREGATION_NAME = "_topHits";
+public interface SortTranslator {
 
 	public void translate(
-		SearchRequestBuilder searchRequestBuilder, SearchContext searchContext,
-		int start, int end);
-
-	public void translate(
-		SearchRequestBuilder searchRequestBuilder,
-		SearchSearchRequest searchSearchRequest);
+		SearchRequestBuilder searchRequestBuilder, Sort[] sorts);
 
 }

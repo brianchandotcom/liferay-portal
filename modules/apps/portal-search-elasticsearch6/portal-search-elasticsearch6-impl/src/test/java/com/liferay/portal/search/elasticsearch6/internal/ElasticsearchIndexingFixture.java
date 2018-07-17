@@ -28,6 +28,7 @@ import com.liferay.portal.search.elasticsearch6.internal.connection.TestElastics
 import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchUpdateDocumentCommand;
 import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetProcessor;
+import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.filter.BooleanFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.filter.DateRangeFilterTranslatorImpl;
@@ -46,6 +47,7 @@ import com.liferay.portal.search.elasticsearch6.internal.filter.TermFilterTransl
 import com.liferay.portal.search.elasticsearch6.internal.filter.TermsFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.filter.TermsSetFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.groupby.DefaultGroupByTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.highlight.DefaultHighlighterTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch6.internal.query.BooleanQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.query.DisMaxQueryTranslatorImpl;
@@ -60,6 +62,7 @@ import com.liferay.portal.search.elasticsearch6.internal.query.StringQueryTransl
 import com.liferay.portal.search.elasticsearch6.internal.query.TermQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.query.TermRangeQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.query.WildcardQueryTranslatorImpl;
+import com.liferay.portal.search.elasticsearch6.internal.sort.DefaultSortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.DefaultStatsTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.suggest.ElasticsearchSuggesterTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.suggest.PhraseSuggesterTranslatorImpl;
@@ -137,6 +140,15 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	@Override
 	public void tearDown() throws Exception {
 		_elasticsearchFixture.tearDown();
+	}
+
+	protected static DefaultFacetTranslator createDefaultFacetTranslator() {
+		return new DefaultFacetTranslator() {
+			{
+				facetProcessor = _facetProcessor;
+				filterTranslator = createElasticsearchFilterTranslator();
+			}
+		};
 	}
 
 	protected static ElasticsearchFilterTranslator
@@ -253,12 +265,14 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 			{
 				elasticsearchConnectionManager =
 					elasticsearchConnectionManager1;
-				facetProcessor = _facetProcessor;
+				facetTranslator = createDefaultFacetTranslator();
 				filterTranslator = createElasticsearchFilterTranslator();
 				groupByTranslator = new DefaultGroupByTranslator();
+				highlighterTranslator = new DefaultHighlighterTranslator();
 				indexNameBuilder = indexNameBuilder1;
 				props = createProps();
 				queryTranslator = createElasticsearchQueryTranslator();
+				sortTranslator = new DefaultSortTranslator();
 				statsTranslator = new DefaultStatsTranslator();
 				searchHitDocumentTranslator =
 					new SearchHitDocumentTranslatorImpl();
@@ -333,10 +347,11 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 	}
 
+	private static FacetProcessor<SearchRequestBuilder> _facetProcessor =
+		new DefaultFacetProcessor();
+
 	private final long _companyId;
 	private final ElasticsearchFixture _elasticsearchFixture;
-	private FacetProcessor<SearchRequestBuilder> _facetProcessor =
-		new DefaultFacetProcessor();
 	private final IndexCreator _indexCreator;
 	private final IndexNameBuilder _indexNameBuilder =
 		new TestIndexNameBuilder();

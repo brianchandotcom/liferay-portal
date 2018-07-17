@@ -31,6 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Bruno Farache
@@ -277,7 +278,13 @@ public class Field implements Serializable {
 	}
 
 	public static boolean isSortableFieldName(String name) {
-		return name.endsWith(_SORTABLE_FIELD_SUFFIX);
+		if (Objects.equals(name, Field.PRIORITY) ||
+			name.endsWith(_SORTABLE_FIELD_SUFFIX)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean validateFieldName(String name) {

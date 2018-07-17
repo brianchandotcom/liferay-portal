@@ -22,10 +22,8 @@ import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexSearcher;
-import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.GeoDistanceSort;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
@@ -34,21 +32,15 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
-import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
-import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -58,34 +50,26 @@ import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch6.constants.ElasticsearchSearchContextAttributes;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch6.internal.facet.AggregationFilteringFacetProcessorContext;
-import com.liferay.portal.search.elasticsearch6.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetCollectorFactory;
-import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor;
-import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessorContext;
+import com.liferay.portal.search.elasticsearch6.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetUtil;
 import com.liferay.portal.search.elasticsearch6.internal.groupby.GroupByTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.highlight.HighlighterTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
+import com.liferay.portal.search.elasticsearch6.internal.sort.SortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.util.DocumentTypes;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.common.geo.GeoDistance;
-import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -93,17 +77,10 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.Aggregation;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.metrics.tophits.TopHits;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
-import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.GeoDistanceSortBuilder;
-import org.elasticsearch.search.sort.SortBuilder;
-import org.elasticsearch.search.sort.SortBuilders;
-import org.elasticsearch.search.sort.SortOrder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -256,52 +233,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_logExceptionsOnly = _elasticsearchConfiguration.logExceptionsOnly();
 	}
 
-	protected void addFacets(
-		SearchRequestBuilder searchRequestBuilder,
-		List<QueryBuilder> queryBuilders, SearchContext searchContext) {
-
-		Map<String, Facet> facetsMap = searchContext.getFacets();
-
-		Collection<Facet> facets = facetsMap.values();
-
-		FacetProcessorContext facetProcessorContext = getFacetProcessorContext(
-			facets, searchContext);
-
-		for (Facet facet : facets) {
-			if (facet.isStatic()) {
-				continue;
-			}
-
-			addFilterQuery(queryBuilders, facet, searchContext);
-
-			Optional<AggregationBuilder> optional = facetProcessor.processFacet(
-				facet);
-
-			optional.map(
-				aggregationBuilder -> postProcessAggregationBuilder(
-					aggregationBuilder, facetProcessorContext)
-			).ifPresent(
-				searchRequestBuilder::addAggregation
-			);
-		}
-	}
-
-	protected void addFilterQuery(
-		List<QueryBuilder> queryBuilders, Facet facet,
-		SearchContext searchContext) {
-
-		BooleanClause<Filter> booleanClause =
-			facet.getFacetFilterBooleanClause();
-
-		if (booleanClause == null) {
-			return;
-		}
-
-		QueryBuilder queryBuilder = translate(booleanClause, searchContext);
-
-		queryBuilders.add(queryBuilder);
-	}
-
 	protected void addGroupBy(
 		SearchRequestBuilder searchRequestBuilder, SearchContext searchContext,
 		int start, int end) {
@@ -316,54 +247,16 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			searchRequestBuilder, searchContext, start, end);
 	}
 
-	protected void addHighlightedField(
-		HighlightBuilder highlightBuilder, QueryConfig queryConfig,
-		String fieldName) {
-
-		highlightBuilder.field(
-			fieldName, queryConfig.getHighlightFragmentSize(),
-			queryConfig.getHighlightSnippetSize());
-
-		String localizedFieldName = Field.getLocalizedName(
-			queryConfig.getLocale(), fieldName);
-
-		highlightBuilder.field(
-			localizedFieldName, queryConfig.getHighlightFragmentSize(),
-			queryConfig.getHighlightSnippetSize());
-	}
-
 	protected void addHighlights(
 		SearchRequestBuilder searchRequestBuilder, SearchContext searchContext,
 		QueryConfig queryConfig) {
-
-		if (!queryConfig.isHighlightEnabled()) {
-			return;
-		}
-
-		HighlightBuilder highlightBuilder = new HighlightBuilder();
-
-		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
-			addHighlightedField(
-				highlightBuilder, queryConfig, highlightFieldName);
-		}
-
-		highlightBuilder.postTags(HighlightUtil.HIGHLIGHT_TAG_CLOSE);
-		highlightBuilder.preTags(HighlightUtil.HIGHLIGHT_TAG_OPEN);
-
-		boolean highlighterRequireFieldMatch =
-			queryConfig.isHighlightRequireFieldMatch();
 
 		boolean luceneSyntax = GetterUtil.getBoolean(
 			searchContext.getAttribute(
 				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX));
 
-		if (luceneSyntax) {
-			highlighterRequireFieldMatch = false;
-		}
-
-		highlightBuilder.requireFieldMatch(highlighterRequireFieldMatch);
-
-		searchRequestBuilder.highlighter(highlightBuilder);
+		highlighterTranslator.translate(
+			searchRequestBuilder, queryConfig, luceneSyntax);
 	}
 
 	protected void addPagination(
@@ -440,84 +333,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
-	protected void addSort(
-		SearchRequestBuilder searchRequestBuilder, Sort[] sorts) {
-
-		if (ArrayUtil.isEmpty(sorts)) {
-			return;
-		}
-
-		Set<String> sortFieldNames = new HashSet<>(sorts.length);
-
-		for (Sort sort : sorts) {
-			if (sort == null) {
-				continue;
-			}
-
-			String sortFieldName = getSortFieldName(sort, "_score");
-
-			if (sortFieldNames.contains(sortFieldName)) {
-				continue;
-			}
-
-			sortFieldNames.add(sortFieldName);
-
-			SortOrder sortOrder = SortOrder.ASC;
-
-			if (sort.isReverse() || sortFieldName.equals("_score")) {
-				sortOrder = SortOrder.DESC;
-			}
-
-			SortBuilder<?> sortBuilder = null;
-
-			if (sortFieldName.equals("_score")) {
-				sortBuilder = SortBuilders.scoreSort();
-			}
-			else if (sort.getType() == Sort.GEO_DISTANCE_TYPE) {
-				GeoDistanceSort geoDistanceSort = (GeoDistanceSort)sort;
-
-				List<GeoPoint> geoPoints = new ArrayList<>();
-
-				for (GeoLocationPoint geoLocationPoint :
-						geoDistanceSort.getGeoLocationPoints()) {
-
-					geoPoints.add(
-						new GeoPoint(
-							geoLocationPoint.getLatitude(),
-							geoLocationPoint.getLongitude()));
-				}
-
-				GeoDistanceSortBuilder geoDistanceSortBuilder =
-					SortBuilders.geoDistanceSort(
-						sortFieldName,
-						geoPoints.toArray(new GeoPoint[geoPoints.size()]));
-
-				geoDistanceSortBuilder.geoDistance(GeoDistance.ARC);
-
-				Collection<String> geoHashes = geoDistanceSort.getGeoHashes();
-
-				if (!geoHashes.isEmpty()) {
-					geoDistanceSort.addGeoHash(
-						geoHashes.toArray(new String[geoHashes.size()]));
-				}
-
-				sortBuilder = geoDistanceSortBuilder;
-			}
-			else {
-				FieldSortBuilder fieldSortBuilder = SortBuilders.fieldSort(
-					sortFieldName);
-
-				fieldSortBuilder.unmappedType("string");
-
-				sortBuilder = fieldSortBuilder;
-			}
-
-			sortBuilder.order(sortOrder);
-
-			searchRequestBuilder.addSort(sortBuilder);
-		}
-	}
-
 	protected void addStats(
 		SearchRequestBuilder searchRequestBuilder,
 		SearchContext searchContext) {
@@ -545,31 +360,28 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		addStats(searchRequestBuilder, searchContext);
 
-		List<QueryBuilder> queryBuilders = new ArrayList<>();
+		boolean basicFacetSelection = GetterUtil.getBoolean(
+			searchContext.getAttribute(
+				SearchContextAttributes.ATTRIBUTE_KEY_BASIC_FACET_SELECTION));
+
+		facetTranslator.translate(
+			searchRequestBuilder, query, searchContext.getFacets(),
+			basicFacetSelection);
 
 		if (!count) {
-			addFacets(searchRequestBuilder, queryBuilders, searchContext);
 			addGroupBy(searchRequestBuilder, searchContext, start, end);
 			addHighlights(searchRequestBuilder, searchContext, queryConfig);
 			addPagination(searchRequestBuilder, start, end);
 			addPreference(searchRequestBuilder, searchContext);
 			addSelectedFields(searchRequestBuilder, queryConfig);
-			addSort(searchRequestBuilder, searchContext.getSorts());
+
+			sortTranslator.translate(
+				searchRequestBuilder, searchContext.getSorts());
 
 			searchRequestBuilder.setTrackScores(queryConfig.isScoreEnabled());
 		}
 		else {
 			searchRequestBuilder.setSize(0);
-		}
-
-		if (query.getPostFilter() != null) {
-			queryBuilders.add(
-				filterTranslator.translate(
-					query.getPostFilter(), searchContext));
-		}
-
-		if (!ListUtil.isEmpty(queryBuilders)) {
-			searchRequestBuilder.setPostFilter(getPostFilter(queryBuilders));
 		}
 
 		QueryBuilder queryBuilder = queryTranslator.translate(
@@ -641,34 +453,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			aggregationsMap.get(FacetUtil.getAggregationName(facet)));
 	}
 
-	protected FacetProcessorContext getFacetProcessorContext(
-		Collection<Facet> facets, SearchContext searchContext) {
-
-		boolean basicFacetSelection = GetterUtil.getBoolean(
-			searchContext.getAttribute(
-				SearchContextAttributes.ATTRIBUTE_KEY_BASIC_FACET_SELECTION));
-
-		if (basicFacetSelection) {
-			return null;
-		}
-
-		return AggregationFilteringFacetProcessorContext.newInstance(facets);
-	}
-
-	protected QueryBuilder getPostFilter(List<QueryBuilder> queryBuilders) {
-		if (queryBuilders.size() == 1) {
-			return queryBuilders.get(0);
-		}
-
-		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-
-		for (QueryBuilder queryBuilder : queryBuilders) {
-			boolQueryBuilder.must(queryBuilder);
-		}
-
-		return boolQueryBuilder;
-	}
-
 	protected String[] getSelectedIndexNames(
 		QueryConfig queryConfig, SearchContext searchContext) {
 
@@ -694,16 +478,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return new String[] {DocumentTypes.LIFERAY};
 	}
 
-	protected String getSortFieldName(Sort sort, String scoreFieldName) {
-		String sortFieldName = sort.getFieldName();
-
-		if (Objects.equals(sortFieldName, Field.PRIORITY)) {
-			return sortFieldName;
-		}
-
-		return Field.getSortFieldName(sort, scoreFieldName);
-	}
-
 	protected boolean handle(Exception e) {
 		Throwable throwable = e.getCause();
 
@@ -726,18 +500,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 
 		return false;
-	}
-
-	protected AggregationBuilder postProcessAggregationBuilder(
-		AggregationBuilder aggregationBuilder,
-		FacetProcessorContext facetProcessorContext) {
-
-		if (facetProcessorContext != null) {
-			return facetProcessorContext.postProcessAggregationBuilder(
-				aggregationBuilder);
-		}
-
-		return aggregationBuilder;
 	}
 
 	protected Hits processResponse(
@@ -797,17 +559,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		hits.setScores(ArrayUtil.toFloatArray(scores));
 
 		return hits;
-	}
-
-	protected QueryBuilder translate(
-		BooleanClause<Filter> booleanClause, SearchContext searchContext) {
-
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		booleanFilter.add(
-			booleanClause.getClause(), booleanClause.getBooleanClauseOccur());
-
-		return filterTranslator.translate(booleanFilter, searchContext);
 	}
 
 	protected void updateFacetCollectors(
@@ -900,14 +651,17 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	@Reference
 	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
 
-	@Reference(service = CompositeFacetProcessor.class)
-	protected FacetProcessor<SearchRequestBuilder> facetProcessor;
+	@Reference
+	protected FacetTranslator facetTranslator;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	protected FilterTranslator<QueryBuilder> filterTranslator;
 
 	@Reference
 	protected GroupByTranslator groupByTranslator;
+
+	@Reference
+	protected HighlighterTranslator highlighterTranslator;
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
@@ -920,6 +674,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Reference
 	protected SearchHitDocumentTranslator searchHitDocumentTranslator;
+
+	@Reference
+	protected SortTranslator sortTranslator;
 
 	@Reference
 	protected StatsTranslator statsTranslator;

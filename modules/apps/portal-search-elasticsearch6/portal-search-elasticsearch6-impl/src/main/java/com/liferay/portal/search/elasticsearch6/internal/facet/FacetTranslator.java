@@ -12,28 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.groupby;
+package com.liferay.portal.search.elasticsearch6.internal.facet;
 
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.facet.Facet;
+
+import java.util.Map;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 
 /**
  * @author Michael C. Han
  */
-public interface GroupByTranslator {
-
-	public static final String GROUP_BY_AGGREGATION_PREFIX = "GroupBy_";
-
-	public static final String TOP_HITS_AGGREGATION_NAME = "_topHits";
+public interface FacetTranslator {
 
 	public void translate(
-		SearchRequestBuilder searchRequestBuilder, SearchContext searchContext,
-		int start, int end);
-
-	public void translate(
-		SearchRequestBuilder searchRequestBuilder,
-		SearchSearchRequest searchSearchRequest);
+		SearchRequestBuilder searchRequestBuilder, Query query,
+		Map<String, Facet> facetsMap, boolean basicFacetSelection);
 
 }

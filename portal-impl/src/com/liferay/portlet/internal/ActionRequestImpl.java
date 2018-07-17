@@ -81,10 +81,7 @@ public class ActionRequestImpl
 			// same name as a public render parameter). See: TCK
 			// V3PortletParametersTests_SPEC11_3_getNames
 
-			if (!renderParameterNames.contains(name)) {
-				actionParameterMap.put(name, mapEntry.getValue());
-			}
-			else {
+			if (renderParameterNames.contains(name)) {
 				String namespacedParameter = portletNamespace + name;
 
 				if (renderParameterNames.contains(name) &&
@@ -95,6 +92,9 @@ public class ActionRequestImpl
 						name,
 						servletRequestParameterMap.get(namespacedParameter));
 				}
+			}
+			else {
+				actionParameterMap.put(name, mapEntry.getValue());
 			}
 		}
 

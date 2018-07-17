@@ -39,17 +39,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_BAR</td>
+	<td>SEARCH_BAR_WIDGET</td>
 	<td>//input[not(ancestor::header[@id='banner'])][@title='Search']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_BAR_ELLIPSIS_ICON</td>
+	<td>SEARCH_BAR_WIDGET_ELLIPSIS_ICON</td>
 	<td>//header[@class='portlet-topper' and contains(.,'Search Bar')][not(ancestor::header[@id='banner'])]//div[contains(@class,'portlet-options')]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_BAR_SCOPE_SELECT</td>
+	<td>SEARCH_BAR_WIDGET_SCOPE_SELECT</td>
 	<td>//div[not(ancestor::header[@id='banner'])]/select[@title='Scope']</td>
 	<td></td>
 </tr>

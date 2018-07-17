@@ -14,6 +14,8 @@
 
 package com.liferay.asset.auto.tagger.internal.configuration;
 
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -35,7 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration",
 	service = AssetAutoTaggerConfigurationFactory.class
 )
-public class AssetAutoTaggerConfigurationFactory {
+public class AssetAutoTaggerConfigurationFactoryImpl
+	implements AssetAutoTaggerConfigurationFactory {
 
 	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration(
 		long companyId, long groupId) {

@@ -16,6 +16,7 @@ package com.liferay.asset.auto.tagger.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**

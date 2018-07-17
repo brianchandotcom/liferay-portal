@@ -123,7 +123,7 @@
 		</execute>
 
 		<execute macro="Page#addFriendlyURLLocalizedPG">
-			<var name="friendlyUrlLocalized" value="de_DE" />
+			<var name="friendlyUrlLocalized" value="de-DE" />
 			<var name="localizedFriendlyURL" value="/german" />
 		</execute>
 

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Preston Crary
@@ -66,6 +68,8 @@ public class DLFileEntryPermission {
 	}
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)",
 		unbind = "-"
 	)

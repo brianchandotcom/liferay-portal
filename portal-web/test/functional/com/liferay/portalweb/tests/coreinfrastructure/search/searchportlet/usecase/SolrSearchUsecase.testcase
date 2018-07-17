@@ -193,7 +193,7 @@
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Apple" />
 		</execute>
 
@@ -406,7 +406,7 @@
 			<var name="site" value="${siteName}" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="WC Title" />
 		</execute>
 
@@ -498,7 +498,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Entry" />
 		</execute>
 
@@ -542,7 +542,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Entry" />
 		</execute>
 
@@ -578,7 +578,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="WC Title" />
 		</execute>
 
@@ -715,7 +715,7 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm"><![CDATA["AssetContent"]]></var>
 		</execute>
 
@@ -1729,7 +1729,7 @@
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Liferay Alert" />
 		</execute>
 
@@ -1758,7 +1758,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Document" />
 		</execute>
 
@@ -1766,7 +1766,7 @@
 			<var name="searchAssetTitle" value="DM Document Title 1" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Document" />
 		</execute>
 
@@ -1830,7 +1830,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Web Content Article" />
 		</execute>
 
@@ -1841,7 +1841,7 @@
 
 		<execute macro="ProductMenu#gotoLiveSite" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Web Content Article" />
 		</execute>
 
@@ -1872,7 +1872,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Web Content Article" />
 		</execute>
 
@@ -1882,7 +1882,7 @@
 
 		<execute macro="ProductMenu#gotoLiveSite" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Web Content Article" />
 		</execute>
 
@@ -1966,7 +1966,7 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="Test Test" />
 		</execute>
 

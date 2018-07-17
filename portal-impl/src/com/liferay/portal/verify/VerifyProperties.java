@@ -1445,6 +1445,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.security.sso.opensso"
 		},
 
+		// Permissions
+
+		new String[] {
+			"permissions.inline.sql.check.enabled", "sqlCheckEnabled",
+			"com.liferay.portal.security.permission.impl"
+		},
+
 		// Polls
 
 		new String[] {

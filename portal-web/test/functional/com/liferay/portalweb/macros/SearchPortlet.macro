@@ -157,31 +157,6 @@
 
 		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${searchTerm}" />
 
-		<if>
-			<isset var="localizationIDName" />
-			<then>
-				<var name="key_searchIDName" value="${localizationIDName}" />
-			</then>
-			<else>
-				<var name="key_searchIDName" value="Search" />
-			</else>
-		</if>
-
-		<var name="key_searchScope" value="${searchScope}" />
-
-		<if>
-			<equals arg1="${searchScope}" arg2="Everything" />
-			<then>
-				<execute function="Select" locator1="Select#SCOPE" value1="${searchScope}" />
-			</then>
-			<elseif>
-				<equals arg1="${searchScope}" arg2="This Site" />
-				<then>
-					<execute function="Select" locator1="Select#SCOPE" value1="${searchScope}" />
-				</then>
-			</elseif>
-		</if>
-
 		<execute function="KeyPress" locator1="Search#TEMPLATE_SEARCH_BAR" value1="\RETURN" />
 	</command>
 

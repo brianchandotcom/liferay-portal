@@ -293,7 +293,7 @@ public class CalendarResourceStagedModelDataHandler
 			classPK = portletDataContext.getScopeGroupId();
 		}
 		else if (calendarResource.getClassNameId() ==
-					_portal.getClassNameId(User.class)) {
+					 _portal.getClassNameId(User.class)) {
 
 			classPK = userId;
 		}

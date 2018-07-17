@@ -61,7 +61,7 @@ public class MultiMatchQueryTranslatorImpl
 				query = phraseQuery;
 			}
 			else if (multiMatchQueryType ==
-						MultiMatchQuery.Type.PHRASE_PREFIX) {
+						 MultiMatchQuery.Type.PHRASE_PREFIX) {
 
 				query = new PrefixQuery(term);
 			}

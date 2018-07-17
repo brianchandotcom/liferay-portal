@@ -239,7 +239,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 			return optionsToJSONArray((DDMFormFieldOptions)property);
 		}
 		else if (Objects.equals(
-					ddmFormFieldTypeSetting.getType(), "validation")) {
+					 ddmFormFieldTypeSetting.getType(), "validation")) {
 
 			return toJSONObject((DDMFormFieldValidation)property);
 		}

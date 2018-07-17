@@ -113,7 +113,7 @@ public class XMLPoshiFileCheck extends BaseFileCheck {
 				content = StringUtil.replace(content, statement, newStatement);
 			}
 			else if (!StringUtil.equalsIgnoreCase(
-						"</var>", closingElementName)) {
+						 "</var>", closingElementName)) {
 
 				String newStatement = StringUtil.replace(
 					statement, matcher.group(2), "\n\n");

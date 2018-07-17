@@ -67,7 +67,7 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 				newResultRows.add(resultRow);
 			}
 			else if (kbComment.getStatus() ==
-						KBCommentConstants.STATUS_IN_PROGRESS) {
+						 KBCommentConstants.STATUS_IN_PROGRESS) {
 
 				inProgressResultRows.add(resultRow);
 			}

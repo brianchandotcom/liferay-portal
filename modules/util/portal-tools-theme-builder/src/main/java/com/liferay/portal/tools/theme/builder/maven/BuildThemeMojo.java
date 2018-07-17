@@ -64,7 +64,7 @@ public class BuildThemeMojo extends AbstractMojo {
 					_themeBuilderArgs.setParentDir(artifact.getFile());
 				}
 				else if (artifactId.equals(
-							"com.liferay.frontend.theme.unstyled") &&
+							 "com.liferay.frontend.theme.unstyled") &&
 						 (_themeBuilderArgs.getUnstyledDir() == null)) {
 
 					Artifact artifact = _resolveArtifact(componentDependency);

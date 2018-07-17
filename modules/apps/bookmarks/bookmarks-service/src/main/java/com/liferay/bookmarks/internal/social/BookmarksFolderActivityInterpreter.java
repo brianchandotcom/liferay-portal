@@ -77,7 +77,7 @@ public class BookmarksFolderActivityInterpreter
 			}
 		}
 		else if (activityType ==
-					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
 				return "activity-bookmarks-folder-restore-from-trash";

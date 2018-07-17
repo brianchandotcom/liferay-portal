@@ -184,7 +184,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			throw new UserPasswordException.MustNotBeEqualToCurrent(userId);
 		}
 		else if (!PasswordTrackerLocalServiceUtil.isValidPassword(
-					userId, password1)) {
+					 userId, password1)) {
 
 			throw new UserPasswordException.MustNotBeRecentlyUsed(userId);
 		}

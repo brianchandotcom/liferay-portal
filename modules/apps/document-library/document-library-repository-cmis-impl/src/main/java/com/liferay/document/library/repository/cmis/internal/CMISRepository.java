@@ -1667,7 +1667,7 @@ public class CMISRepository extends BaseCmisRepository {
 				deleteMappedFileEntry(document);
 			}
 			else if (cmisObject instanceof
-						org.apache.chemistry.opencmis.client.api.Folder) {
+						 org.apache.chemistry.opencmis.client.api.Folder) {
 
 				org.apache.chemistry.opencmis.client.api.Folder cmisSubfolder =
 					(org.apache.chemistry.opencmis.client.api.Folder)cmisObject;
@@ -2305,7 +2305,7 @@ public class CMISRepository extends BaseCmisRepository {
 			return toFileEntry((Document)cmisObject);
 		}
 		else if (cmisObject instanceof
-					org.apache.chemistry.opencmis.client.api.Folder) {
+					 org.apache.chemistry.opencmis.client.api.Folder) {
 
 			org.apache.chemistry.opencmis.client.api.Folder cmisFolder =
 				(org.apache.chemistry.opencmis.client.api.Folder)cmisObject;

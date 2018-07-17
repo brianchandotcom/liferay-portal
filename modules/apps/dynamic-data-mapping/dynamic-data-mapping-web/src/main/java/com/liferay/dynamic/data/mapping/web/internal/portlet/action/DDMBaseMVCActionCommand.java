@@ -228,8 +228,8 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 				String.valueOf(template.getTemplateId()));
 		}
 		else if (Objects.equals(
-					template.getMode(),
-					DDMTemplateConstants.TEMPLATE_MODE_CREATE)) {
+					 template.getMode(),
+					 DDMTemplateConstants.TEMPLATE_MODE_CREATE)) {
 
 			portletPreferences.setValue(
 				"formDDMTemplateId", String.valueOf(template.getTemplateId()));

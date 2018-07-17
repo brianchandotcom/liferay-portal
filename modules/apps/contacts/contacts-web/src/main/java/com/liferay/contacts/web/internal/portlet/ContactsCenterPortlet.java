@@ -864,7 +864,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			}
 		}
 		else if (filterBy.equals(
-					ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS) &&
+					 ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS) &&
 				 !portletId.equals(ContactsPortletKeys.MEMBERS)) {
 
 			List<Entry> entries = entryLocalService.search(

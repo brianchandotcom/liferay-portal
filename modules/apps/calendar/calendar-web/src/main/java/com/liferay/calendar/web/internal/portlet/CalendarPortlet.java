@@ -680,7 +680,7 @@ public class CalendarPortlet extends MVCPortlet {
 				serveResourceCalendars(resourceRequest, resourceResponse);
 			}
 			else if (!super.callResourceMethod(
-						resourceRequest, resourceResponse)) {
+						 resourceRequest, resourceResponse)) {
 
 				serveUnknownResource(resourceRequest, resourceResponse);
 			}
@@ -856,7 +856,7 @@ public class CalendarPortlet extends MVCPortlet {
 				"please-select-at-least-one-category-for-x", vocabularyTitle);
 		}
 		else if (assetCategoryException.getType() ==
-					AssetCategoryException.TOO_MANY_CATEGORIES) {
+					 AssetCategoryException.TOO_MANY_CATEGORIES) {
 
 			errorMessage = themeDisplay.translate(
 				"you-cannot-select-more-than-one-category-for-x",

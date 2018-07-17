@@ -1811,7 +1811,7 @@ public class ServiceBuilder {
 				"com.liferay.portal.kernel.repository.model.Folder")) {
 		}
 		else if (returnTypeGenericsName.contains(
-					"com.liferay.portal.kernel.repository.")) {
+					 "com.liferay.portal.kernel.repository.")) {
 
 			return false;
 		}
@@ -2310,7 +2310,7 @@ public class ServiceBuilder {
 						exceptionFile, content, _modifiedFileNames);
 				}
 				else if (content.contains(
-							"portal.exception.NoSuchModelException")) {
+							 "portal.exception.NoSuchModelException")) {
 
 					content = StringUtil.replace(
 						content, "portal.exception.NoSuchModelException",
@@ -4297,7 +4297,7 @@ public class ServiceBuilder {
 						PortalException.class.getName(), "RemoteException");
 				}
 				else if (tagValue.startsWith(
-							PrincipalException.class.getName())) {
+							 PrincipalException.class.getName())) {
 
 					tagValue = tagValue.replaceFirst(
 						PrincipalException.class.getName(), "RemoteException");

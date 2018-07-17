@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Frontend JS Portlet Extender
+Bundle-SymbolicName: com.liferay.frontend.js.portlet.extender
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="liferay.frontend.js.portlet";\
+		version:Version="1.0.0"

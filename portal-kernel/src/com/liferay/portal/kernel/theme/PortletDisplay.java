@@ -609,8 +609,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 	}
 
 	public void setDescription(String description) {
-		description = HtmlUtil.escape(description);
-
 		_description = description;
 	}
 

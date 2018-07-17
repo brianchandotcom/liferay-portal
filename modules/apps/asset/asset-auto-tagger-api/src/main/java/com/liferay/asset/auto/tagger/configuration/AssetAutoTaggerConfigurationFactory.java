@@ -14,12 +14,18 @@
 
 package com.liferay.asset.auto.tagger.configuration;
 
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+
 /**
  * @author Alejandro Tardín
  */
 public interface AssetAutoTaggerConfigurationFactory {
 
 	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration(
-		long companyId, long groupId);
+		Company company);
+
+	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration(
+		Group group);
 
 }

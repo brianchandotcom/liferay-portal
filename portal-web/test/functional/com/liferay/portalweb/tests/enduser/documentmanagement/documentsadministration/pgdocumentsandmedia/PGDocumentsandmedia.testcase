@@ -2262,7 +2262,7 @@
 			<var name="siteName" value="Site Name 1" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="DM Document Title" />
 		</execute>
 

@@ -847,7 +847,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="blue" />
 		</execute>
 
@@ -856,7 +856,7 @@
 			<var name="searchAssetTitle" value="Entry Title 1" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchPortlet#searchClassicPG">
 			<var name="searchTerm" value="yellow" />
 		</execute>
 

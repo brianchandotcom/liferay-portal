@@ -16,7 +16,6 @@ package com.liferay.asset.auto.tagger.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -30,8 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "asset-auto-tagger-group-configuration-name"
 )
-public interface AssetAutoTaggerGroupConfiguration
-	extends AssetAutoTaggerConfiguration {
+public interface AssetAutoTaggerGroupConfiguration {
 
 	/**
 	 * Enables asset auto tagging
@@ -41,15 +39,5 @@ public interface AssetAutoTaggerGroupConfiguration
 		required = false
 	)
 	public boolean enabled();
-
-	/**
-	 * Specifies the maximum number of tags that can be added for a given asset
-	 */
-	@Meta.AD(
-		deflt = "-1",
-		description = "maximum-number-of-tags-per-asset-description",
-		name = "maximum-number-of-tags-per-asset", required = false
-	)
-	public int maximumNumberOfTagsPerAsset();
 
 }

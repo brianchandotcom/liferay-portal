@@ -17,8 +17,15 @@ package com.liferay.asset.auto.tagger.internal.configuration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,9 +48,29 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 	implements AssetAutoTaggerConfigurationFactory {
 
 	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration(
-		long companyId, long groupId) {
+		Company company) {
 
-		return new ScopedAssetAutoTaggerConfiguration(companyId, groupId);
+		try {
+			return new CompanyAssetAutoTaggerConfiguration(company);
+		}
+		catch (ConfigurationException ce) {
+			_log.error(ce, ce);
+
+			return _assetAutoTaggerSystemConfiguration;
+		}
+	}
+
+	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration(
+		Group group) {
+
+		try {
+			return new GroupAssetAutoTaggerConfiguration(group);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			return _assetAutoTaggerSystemConfiguration;
+		}
 	}
 
 	@Activate
@@ -54,103 +81,57 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 				AssetAutoTaggerSystemConfiguration.class, properties);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetAutoTaggerConfigurationFactoryImpl.class);
+
 	private volatile AssetAutoTaggerConfiguration
 		_assetAutoTaggerSystemConfiguration;
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private class ScopedAssetAutoTaggerConfiguration
+	private class CompanyAssetAutoTaggerConfiguration
 		implements AssetAutoTaggerConfiguration {
 
-		public ScopedAssetAutoTaggerConfiguration(
-			long companyId, long groupId) {
+		public CompanyAssetAutoTaggerConfiguration(Company company)
+			throws ConfigurationException {
 
-			_companyId = companyId;
-			_groupId = groupId;
-		}
-
-		@Override
-		public boolean isAvailable() {
-			if (!_assetAutoTaggerSystemConfiguration.enabled()) {
-				return false;
-			}
-
-			try {
-				AssetAutoTaggerCompanyConfiguration
-					assetAutoTaggerCompanyConfiguration =
-						_configurationProvider.getCompanyConfiguration(
-							AssetAutoTaggerCompanyConfiguration.class,
-							_companyId);
-
-				return assetAutoTaggerCompanyConfiguration.enabled();
-			}
-			catch (ConfigurationException ce) {
-				return _assetAutoTaggerSystemConfiguration.enabled();
-			}
+			_assetAutoTaggerCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					AssetAutoTaggerCompanyConfiguration.class,
+					company.getCompanyId());
 		}
 
 		@Override
 		public boolean enabled() {
-			try {
-				if (!_assetAutoTaggerSystemConfiguration.enabled()) {
-					return false;
-				}
-
-				AssetAutoTaggerCompanyConfiguration
-					assetAutoTaggerCompanyConfiguration =
-						_configurationProvider.getCompanyConfiguration(
-							AssetAutoTaggerCompanyConfiguration.class,
-							_companyId);
-
-				if (!assetAutoTaggerCompanyConfiguration.enabled()) {
-					return false;
-				}
-
-				AssetAutoTaggerGroupConfiguration
-					assetAutoTaggerGroupConfiguration =
-						_configurationProvider.getGroupConfiguration(
-							AssetAutoTaggerGroupConfiguration.class, _groupId);
-
-				return assetAutoTaggerGroupConfiguration.enabled();
+			if (!_assetAutoTaggerSystemConfiguration.enabled()) {
+				return false;
 			}
-			catch (ConfigurationException ce) {
-				return _assetAutoTaggerSystemConfiguration.enabled();
-			}
+
+			return _assetAutoTaggerCompanyConfiguration.enabled();
+		}
+
+		@Override
+		public boolean isAvailable() {
+			return _assetAutoTaggerSystemConfiguration.enabled();
 		}
 
 		@Override
 		public int maximumNumberOfTagsPerAsset() {
-			try {
-				AssetAutoTaggerCompanyConfiguration
-					assetAutoTaggerCompanyConfiguration =
-						_configurationProvider.getCompanyConfiguration(
-							AssetAutoTaggerCompanyConfiguration.class,
-							_companyId);
-
-				AssetAutoTaggerGroupConfiguration
-					assetAutoTaggerGroupConfiguration =
-						_configurationProvider.getGroupConfiguration(
-							AssetAutoTaggerGroupConfiguration.class, _groupId);
-
-				return Collections.min(
-					Arrays.asList(
-						_assetAutoTaggerSystemConfiguration.
-							maximumNumberOfTagsPerAsset(),
-						assetAutoTaggerCompanyConfiguration.
-							maximumNumberOfTagsPerAsset(),
-						assetAutoTaggerGroupConfiguration.
-							maximumNumberOfTagsPerAsset()),
-					new MaximumNumberOfTagsPerAssetComparator());
-			}
-			catch (ConfigurationException ce) {
-				return _assetAutoTaggerSystemConfiguration.
-					maximumNumberOfTagsPerAsset();
-			}
+			return Collections.min(
+				Arrays.asList(
+					_assetAutoTaggerSystemConfiguration.
+						maximumNumberOfTagsPerAsset(),
+					_assetAutoTaggerCompanyConfiguration.
+						maximumNumberOfTagsPerAsset()),
+				new MaximumNumberOfTagsPerAssetComparator());
 		}
 
-		private final long _companyId;
-		private final long _groupId;
+		private AssetAutoTaggerCompanyConfiguration
+			_assetAutoTaggerCompanyConfiguration;
 
 		private class MaximumNumberOfTagsPerAssetComparator
 			implements Comparator<Integer> {
@@ -173,6 +154,64 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 			}
 
 		}
+
+	}
+
+	private class GroupAssetAutoTaggerConfiguration
+		implements AssetAutoTaggerConfiguration {
+
+		public GroupAssetAutoTaggerConfiguration(Group group)
+			throws PortalException {
+
+			_group = group;
+
+			_assetAutoTaggerCompanyConfiguration =
+				new CompanyAssetAutoTaggerConfiguration(
+					_companyLocalService.getCompany(_group.getCompanyId()));
+		}
+
+		@Override
+		public boolean enabled() {
+			try {
+				if (!_assetAutoTaggerCompanyConfiguration.enabled()) {
+					return false;
+				}
+
+				String assetAutoTaggingEnabledProperty =
+					_group.getTypeSettingsProperty("assetAutoTaggingEnabled");
+
+				if (Validator.isNotNull(assetAutoTaggingEnabledProperty)) {
+					return Boolean.valueOf(assetAutoTaggingEnabledProperty);
+				}
+				else {
+					AssetAutoTaggerGroupConfiguration
+						assetAutoTaggerGroupConfiguration =
+							_configurationProvider.getGroupConfiguration(
+								AssetAutoTaggerGroupConfiguration.class,
+								_group.getGroupId());
+
+					return assetAutoTaggerGroupConfiguration.enabled();
+				}
+			}
+			catch (ConfigurationException ce) {
+				return _assetAutoTaggerCompanyConfiguration.enabled();
+			}
+		}
+
+		@Override
+		public boolean isAvailable() {
+			return _assetAutoTaggerCompanyConfiguration.enabled();
+		}
+
+		@Override
+		public int maximumNumberOfTagsPerAsset() {
+			return _assetAutoTaggerCompanyConfiguration.
+				maximumNumberOfTagsPerAsset();
+		}
+
+		private AssetAutoTaggerConfiguration
+			_assetAutoTaggerCompanyConfiguration;
+		private final Group _group;
 
 	}
 

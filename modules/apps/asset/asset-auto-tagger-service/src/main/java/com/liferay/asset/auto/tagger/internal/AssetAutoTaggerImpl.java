@@ -28,8 +28,11 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -61,14 +64,20 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Override
 	public boolean isAutoTaggable(AssetEntry assetEntry) {
-		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
-			_getAssetAutoTaggerConfiguration(assetEntry);
+		try {
+			AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
+				_getAssetAutoTaggerConfiguration(assetEntry);
 
-		if (assetAutoTaggerConfiguration.enabled() && assetEntry.isVisible() &&
-			ListUtil.isNotEmpty(
-				_getAssetAutoTagProviders(assetEntry.getClassName()))) {
+			if (assetAutoTaggerConfiguration.enabled() &&
+				assetEntry.isVisible() &&
+				ListUtil.isNotEmpty(
+					_getAssetAutoTagProviders(assetEntry.getClassName()))) {
 
-			return true;
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
 
 		return false;
@@ -179,11 +188,12 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 	}
 
 	private AssetAutoTaggerConfiguration _getAssetAutoTaggerConfiguration(
-		AssetEntry assetEntry) {
+			AssetEntry assetEntry)
+		throws PortalException {
 
 		return _assetAutoTaggerConfigurationFactory.
 			getAssetAutoTaggerConfiguration(
-				assetEntry.getCompanyId(), assetEntry.getGroupId());
+				_groupLocalService.getGroup(assetEntry.getGroupId()));
 	}
 
 	private List<AssetAutoTagProvider> _getAssetAutoTagProviders(
@@ -253,6 +263,9 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetAutoTaggerImpl.class);
+
 	@Reference
 	private AssetAutoTaggerConfigurationFactory
 		_assetAutoTaggerConfigurationFactory;
@@ -265,6 +278,9 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

@@ -15,6 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge;
 
 import com.liferay.arquillian.containter.osgi.allin.remote.KarafWithoutBundleRemoteDeployableContainer;
+import com.liferay.arquillian.containter.osgi.allin.remote.NoOpArchiveApplicationProcessor;
 import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.deployment.JUnitBridgeAuxiliaryArchiveAppender;
@@ -22,8 +23,11 @@ import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserve
 
 import java.net.URL;
 
+import org.jboss.arquillian.container.osgi.OSGiApplicationArchiveProcessor;
+import org.jboss.arquillian.container.osgi.karaf.remote.KarafRemoteDeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
+import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.junit.container.JUnitDeploymentAppender;
@@ -43,6 +47,13 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.override(
 				AuxiliaryArchiveAppender.class, JUnitDeploymentAppender.class,
 				JUnitBridgeAuxiliaryArchiveAppender.class);
+			extensionBuilder.override(
+				ApplicationArchiveProcessor.class,
+				OSGiApplicationArchiveProcessor.class,
+				NoOpArchiveApplicationProcessor.class);
+			extensionBuilder.override(
+				DeployableContainer.class, KarafRemoteDeployableContainer.class,
+				KarafWithoutBundleRemoteDeployableContainer.class);
 			extensionBuilder.override(
 				DeployableContainer.class,
 				KarafWithoutBundleRemoteDeployableContainer.class,

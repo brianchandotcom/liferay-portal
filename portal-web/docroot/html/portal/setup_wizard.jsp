@@ -306,6 +306,10 @@
 						A.one('#fm').on(
 							'submit',
 							function(event) {
+								if (!adminFirstName.value || !adminLastName.value || !adminEmailAddress.value) {
+									return;
+								}
+
 								if (defaultDatabase.val() == 'true') {
 									startInstall();
 

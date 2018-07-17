@@ -192,10 +192,11 @@
 		</execute>
 
 		<execute macro="Page#viewTranslationsPG">
-			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain). Display the page in English (United States). Set Spanish (Spain) as your preferred language." />
-			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
+			<var name="defaultLanguageLocalizationMessage" value="Display the page in English (United States)." />
 			<var name="pageName" value="Casa" />
+			<var name="preferredLanguageLocalizationMessage" value="Establecer español (España) como su idioma preferido." />
 			<var name="sitePageURL" value="${portalURL}/es/web/site-name/home" />
+			<var name="translationLanguageLocalizationMessage" value="This page is displayed in Spanish (Spain)." />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -229,9 +230,10 @@
 
 		<execute macro="Page#viewTranslationsPG">
 			<var name="childPageName" value="Blog Página" />
-			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain). Display the page in English (United States). Set Spanish (Spain) as your preferred language." />
-			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
+			<var name="defaultLanguageLocalizationMessage" value="Display the page in English (United States)." />
+			<var name="preferredLanguageLocalizationMessage" value="Establecer español (España) como su idioma preferido." />
 			<var name="sitePageURL" value="${portalURL}/es/web/site-name/blog-page" />
+			<var name="translationLanguageLocalizationMessage" value="This page is displayed in Spanish (Spain)." />
 		</execute>
 	</command>
 

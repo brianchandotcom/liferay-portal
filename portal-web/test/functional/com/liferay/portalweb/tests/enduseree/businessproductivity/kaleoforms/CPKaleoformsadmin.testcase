@@ -3867,6 +3867,8 @@
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
 
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute macro="Workflow#saveDefinition" />
 
 		<execute macro="IFrame#closeFrame" />

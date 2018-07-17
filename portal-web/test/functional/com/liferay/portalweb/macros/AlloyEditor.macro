@@ -18,7 +18,7 @@
 
 		<execute function="Click" locator1="Button#EDITOR_SWITCH" />
 
-		<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="${content}" />
+		<execute function="Type#typeAceEditor" locator1="TextArea#ACE_EDITOR" value1="${content}" />
 	</command>
 
 	<command name="addTitle">

@@ -1,7 +1,7 @@
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import debounce from 'metal-debounce';
 import {Config} from 'metal-state';
+import debounce from 'metal-debounce';
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import Soy from 'metal-soy';
 
 import templates from './FragmentPreview.soy';
 
@@ -37,7 +37,7 @@ const PREVIEW_SIZES = Object.keys(SIZE_RATIO);
  * It allows modifying the preview with an update method.
  */
 
-class FragmentPreview extends Component {
+class FragmentPreview extends PortletBase {
 
 	/**
 	 * @inheritDoc
@@ -131,30 +131,25 @@ class FragmentPreview extends Component {
 		if (!this._loading) {
 			this._loading = true;
 
-			const formData = new FormData();
-
-			formData.append(`${this.namespace}css`, this.css);
-			formData.append(`${this.namespace}html`, this.html);
-			formData.append(`${this.namespace}js`, this.js);
-
-			fetch(
+			this.fetch(
 				this.renderFragmentEntryURL,
 				{
-					body: formData,
-					credentials: 'include',
-					method: 'post'
+					css: this.css,
+					html: this.html,
+					js: this.js
 				}
-			).then(
-				response => response.text()
-			).then(
-				response => {
-					this._loading = false;
-					this.refs.previewFrame.contentWindow.postMessage(
-						JSON.stringify({data: response}),
-						'*'
-					);
-				}
-			);
+			)
+				.then(
+					response => response.text()
+				).then(
+					response => {
+						this._loading = false;
+						this.refs.previewFrame.contentWindow.postMessage(
+							JSON.stringify({data: response}),
+							'*'
+						);
+					}
+				);
 		}
 	}
 

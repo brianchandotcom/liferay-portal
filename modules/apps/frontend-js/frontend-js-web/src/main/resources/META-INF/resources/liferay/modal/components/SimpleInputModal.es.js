@@ -1,9 +1,9 @@
-import {isString} from 'metal';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import {isString} from 'metal';
+import Soy from 'metal-soy';
 
 import '../../compat/modal/Modal.es';
+import PortletBase from '../../PortletBase.es';
 import templates from './SimpleInputModal.soy';
 
 /**
@@ -11,7 +11,7 @@ import templates from './SimpleInputModal.soy';
  * @review
  */
 
-class SimpleInputModal extends Component {
+class SimpleInputModal extends PortletBase {
 
 	/**
 	 * @inheritDoc
@@ -43,14 +43,7 @@ class SimpleInputModal extends Component {
 	 */
 
 	_defaultFormSubmit(event) {
-		fetch(
-			this.formSubmitURL,
-			{
-				body: new FormData(event.form),
-				credentials: 'include',
-				method: 'POST'
-			}
-		)
+		this.fetch(this.formSubmitURL, event.form)
 			.then(response => response.json())
 			.then(
 				responseContent => {
@@ -63,7 +56,7 @@ class SimpleInputModal extends Component {
 					}
 				}
 			)
-			.catch (
+			.catch(
 				response => {
 					this._handleFormError(response);
 				}

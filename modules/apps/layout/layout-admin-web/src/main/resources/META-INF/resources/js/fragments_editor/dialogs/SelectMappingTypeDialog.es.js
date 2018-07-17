@@ -1,5 +1,5 @@
-import Component from 'metal-component';
 import {Config} from 'metal-state';
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
@@ -9,7 +9,7 @@ import templates from './SelectMappingTypeDialog.soy';
  * SelectMappingTypeDialog
  */
 
-class SelectMappingTypeDialog extends Component {
+class SelectMappingTypeDialog extends PortletBase {
 
 	/**
 	 * @inheritDoc
@@ -125,38 +125,22 @@ class SelectMappingTypeDialog extends Component {
 	_handleSubmitButtonClick() {
 		this._savingChanges = true;
 
-		const formData = new FormData();
-
-		formData.append(
-			`${this.portletNamespace}classPK`,
-			this.classPK
-		);
-
-		formData.append(
-			`${this.portletNamespace}classNameId`,
-			this._selectedMappingTypeId
-		);
-
-		formData.append(
-			`${this.portletNamespace}classTypeId`,
-			this._selectedMappingSubtypeId
-		);
-
-		return fetch(
+		return this.fetch(
 			this.updateLayoutPageTemplateEntryAssetTypeURL,
 			{
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
+				classNameId: this._selectedMappingTypeId,
+				classPK: this.classPK,
+				classTypeId: this._selectedMappingSubtypeId
 			}
-		).then(
-			response => response.json()
-		).then(
-			() => {
-				this._emitSelectedMappingLabels();
-				this.visible = false;
-			}
-		);
+		)
+			.then(
+				response => response.json()
+			).then(
+				() => {
+					this._emitSelectedMappingLabels();
+					this.visible = false;
+				}
+			);
 	}
 
 	/**
@@ -188,27 +172,17 @@ class SelectMappingTypeDialog extends Component {
 	_loadMappingSubtypes() {
 		this._mappingSubtypes = null;
 
-		const formData = new FormData();
-
-		formData.append(
-			`${this.portletNamespace}classNameId`,
-			this._selectedMappingTypeId
-		);
-
-		return fetch(
+		return this.fetch(
 			this.getAssetClassTypesURL,
-			{
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
-			}
-		).then(
-			response => response.json()
-		).then(
-			response => {
-				this._mappingSubtypes = response;
-			}
-		);
+			{classNameId: this._selectedMappingTypeId}
+		)
+			.then(
+				response => response.json()
+			).then(
+				response => {
+					this._mappingSubtypes = response;
+				}
+			);
 	}
 
 	/**
@@ -218,19 +192,14 @@ class SelectMappingTypeDialog extends Component {
 	 */
 
 	_loadMappingTypes() {
-		return fetch(
-			this.getAssetDisplayContributorsURL,
-			{
-				credentials: 'include',
-				method: 'POST'
-			}
-		).then(
-			response => response.json()
-		).then(
-			response => {
-				this._mappingTypes = response;
-			}
-		);
+		return this.fetch(this.getAssetDisplayContributorsURL, {})
+			.then(
+				response => response.json()
+			).then(
+				response => {
+					this._mappingTypes = response;
+				}
+			);
 	}
 }
 

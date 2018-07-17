@@ -402,7 +402,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please sign in to vote." />
 
-		<execute function="AssertElementPresent" locator1="Search#TEMPLATE_SEARCH_BAR" />
+		<execute function="AssertElementPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
 
 		<execute macro="SignIn#signIn">
 			<var name="userEmailAddress" value="test@liferay.com" />

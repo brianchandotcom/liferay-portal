@@ -14,6 +14,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMBEDDED_SEARCH_BAR</td>
+	<td>//header[@id='banner']//input[@title='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON</td>
+	<td>//header[@class='portlet-topper' and contains(.,'Search')][ancestor::header[@id='banner']]//div[contains(@class,'portlet-options')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_SEARCH_BAR_SCOPE_SELECT</td>
+	<td>//header[@id='banner']//div/select[@title='Scope']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACET_CONFIGURE</td>
 	<td>//div[label[contains(.,'${key_facetName}')]]/following-sibling::div//a[contains(.,'Configure')]</td>
 	<td></td>
@@ -56,21 +71,6 @@
 <tr>
 	<td>SETUP_DESTINATION</td>
 	<td>//a[.='Set up its destination to make it visible.']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_SEARCH_BAR</td>
-	<td>//header[@id='banner']//input[@title='Search']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_SEARCH_BAR_ELLIPSIS_ICON</td>
-	<td>//header[@class='portlet-topper' and contains(.,'Search')][ancestor::header[@id='banner']]//div[contains(@class,'portlet-options')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_SEARCH_BAR_SCOPE_SELECT</td>
-	<td>//header[@id='banner']//div/select[@title='Scope']</td>
 	<td></td>
 </tr>
 </tbody>

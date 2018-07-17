@@ -100,9 +100,9 @@
 	</command>
 
 	<command name="gotoOptions">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#TEMPLATE_SEARCH_BAR_ELLIPSIS_ICON" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON" />
 
-		<execute function="Click" locator1="Search#TEMPLATE_SEARCH_BAR_ELLIPSIS_ICON" />
+		<execute function="Click" locator1="Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON" />
 
 		<if>
 			<isset var="portletOption" />
@@ -153,11 +153,11 @@
 	</command>
 
 	<command name="searchPG">
-		<execute function="AssertElementPresent" locator1="Search#TEMPLATE_SEARCH_BAR" />
+		<execute function="AssertElementPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
 
-		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${searchTerm}" />
+		<execute function="Type" locator1="Search#EMBEDDED_SEARCH_BAR" value1="${searchTerm}" />
 
-		<execute function="KeyPress" locator1="Search#TEMPLATE_SEARCH_BAR" value1="\RETURN" />
+		<execute function="KeyPress" locator1="Search#EMBEDDED_SEARCH_BAR" value1="\RETURN" />
 	</command>
 
 	<command name="selectScopeInput">
@@ -167,7 +167,7 @@
 				<equals arg1="${searchScope}" arg2="This Site" />
 			</or>
 			<then>
-				<execute function="Select" locator1="Search#TEMPLATE_SEARCH_BAR_SCOPE_SELECT" value1="${searchScope}" />
+				<execute function="Select" locator1="Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT" value1="${searchScope}" />
 			</then>
 			<else>
 				<fail message="Invalid search scope. Must be (Everything|This Site)." />
@@ -195,7 +195,7 @@
 	</command>
 
 	<command name="viewIncrementalSearchPG">
-		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${searchTerm}" />
+		<execute function="Type" locator1="Search#EMBEDDED_SEARCH_BAR" value1="${searchTerm}" />
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Search#INCREMENTAL_SEARCH_SUGGESTION" value1="${kbArticleTitle}" />
@@ -214,7 +214,7 @@
 	</command>
 
 	<command name="viewSearchHidden">
-		<execute function="AssertElementNotPresent" locator1="Search#TEMPLATE_SEARCH_BAR" />
+		<execute function="AssertElementNotPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
 	</command>
 
 	<command name="viewSearchNoAssetTitle">

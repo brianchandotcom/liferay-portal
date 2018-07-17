@@ -716,7 +716,7 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 					orderByComparator.isAscending());
 		}
 		else if (orderByComparator instanceof
-					BackgroundTaskCreateDateComparator) {
+					 BackgroundTaskCreateDateComparator) {
 
 			return new com.liferay.portal.background.task.internal.comparator.
 				BackgroundTaskCreateDateComparator(

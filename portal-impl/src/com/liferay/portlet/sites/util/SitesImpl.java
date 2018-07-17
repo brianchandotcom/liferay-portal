@@ -1593,7 +1593,7 @@ public class SitesImpl implements Sites {
 				ActionKeys.UPDATE);
 		}
 		else if (!GroupPermissionUtil.contains(
-					permissionChecker, group, ActionKeys.UPDATE) &&
+					 permissionChecker, group, ActionKeys.UPDATE) &&
 				 (!group.isUser() ||
 				  (permissionChecker.getUserId() != group.getClassPK()))) {
 

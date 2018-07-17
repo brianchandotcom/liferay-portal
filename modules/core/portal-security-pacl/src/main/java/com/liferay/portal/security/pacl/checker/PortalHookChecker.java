@@ -70,7 +70,7 @@ public class PortalHookChecker extends BaseChecker {
 			value = (String)subject;
 		}
 		else if (name.equals(
-					PORTAL_HOOK_PERMISSION_LANGUAGE_PROPERTIES_LOCALE)) {
+					 PORTAL_HOOK_PERMISSION_LANGUAGE_PROPERTIES_LOCALE)) {
 
 			key = "security-manager-hook-language-properties-locales";
 
@@ -133,7 +133,7 @@ public class PortalHookChecker extends BaseChecker {
 			}
 		}
 		else if (name.equals(
-					PORTAL_HOOK_PERMISSION_LANGUAGE_PROPERTIES_LOCALE)) {
+					 PORTAL_HOOK_PERMISSION_LANGUAGE_PROPERTIES_LOCALE)) {
 
 			Locale locale = (Locale)subject;
 

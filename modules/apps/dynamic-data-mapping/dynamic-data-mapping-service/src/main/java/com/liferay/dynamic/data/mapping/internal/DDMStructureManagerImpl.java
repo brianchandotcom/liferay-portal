@@ -400,29 +400,29 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 				portalException.getMessage(), portalException.getCause());
 		}
 		else if (portalException instanceof
-					com.liferay.dynamic.data.mapping.exception.
-						RequiredStructureException) {
+					 com.liferay.dynamic.data.mapping.exception.
+						 RequiredStructureException) {
 
 			return new RequiredStructureException(
 				portalException.getMessage(), portalException.getCause());
 		}
 		else if (portalException instanceof
-					com.liferay.dynamic.data.mapping.exception.
-						StructureDefinitionException) {
+					 com.liferay.dynamic.data.mapping.exception.
+						 StructureDefinitionException) {
 
 			return new StructureDefinitionException(
 				portalException.getMessage(), portalException.getCause());
 		}
 		else if (portalException instanceof
-					com.liferay.dynamic.data.mapping.exception.
-						StructureDuplicateElementException) {
+					 com.liferay.dynamic.data.mapping.exception.
+						 StructureDuplicateElementException) {
 
 			return new StructureDuplicateElementException(
 				portalException.getMessage(), portalException.getCause());
 		}
 		else if (portalException instanceof
-					com.liferay.dynamic.data.mapping.exception.
-						StructureNameException) {
+					 com.liferay.dynamic.data.mapping.exception.
+						 StructureNameException) {
 
 			return new StructureNameException(
 				portalException.getMessage(), portalException.getCause());

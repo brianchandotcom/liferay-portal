@@ -84,7 +84,7 @@ public class JournalFolderActivityInterpreter
 			}
 		}
 		else if (activityType ==
-					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+					 SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
 				return "activity-journal-folder-restore-from-trash";

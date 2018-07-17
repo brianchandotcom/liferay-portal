@@ -292,7 +292,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 							ownerId);
 					}
 					else if (ownerType ==
-								PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
+								 PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
 
 						companyId = ownerId;
 					}
@@ -311,7 +311,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 						}
 					}
 					else if (ownerType ==
-								PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION) {
+								 PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION) {
 
 						companyId = getCompanyId(
 							"select companyId from Organization_ where " +

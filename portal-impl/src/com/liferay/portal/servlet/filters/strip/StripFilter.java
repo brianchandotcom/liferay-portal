@@ -676,8 +676,8 @@ public class StripFilter extends BasePortalFilter {
 					continue;
 				}
 				else if (hasMarker(
-							charBuffer,
-							_MARKER_STYLE_DATA_SENNA_TRACK_PERMANENT)) {
+							 charBuffer,
+							 _MARKER_STYLE_DATA_SENNA_TRACK_PERMANENT)) {
 
 					processCSS(
 						request, response, charBuffer, writer,
@@ -686,8 +686,8 @@ public class StripFilter extends BasePortalFilter {
 					continue;
 				}
 				else if (hasMarker(
-							charBuffer,
-							_MARKER_STYLE_DATA_SENNA_TRACK_TEMPORARY)) {
+							 charBuffer,
+							 _MARKER_STYLE_DATA_SENNA_TRACK_TEMPORARY)) {
 
 					processCSS(
 						request, response, charBuffer, writer,

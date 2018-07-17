@@ -5,6 +5,7 @@ Export-Package: com.liferay.asset.auto.tagger
 Export-Package:\
 	com.liferay.asset.auto.tagger,\
 	com.liferay.asset.auto.tagger.configuration,\
+	com.liferay.asset.auto.tagger.constants,\
 	com.liferay.asset.auto.tagger.exception,\
 	com.liferay.asset.auto.tagger.model,\
 	com.liferay.asset.auto.tagger.service,\

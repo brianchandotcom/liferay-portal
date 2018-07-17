@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.web.internal.configuration;
+package com.liferay.asset.auto.tagger.web.internal.servlet.taglib.ui;
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -43,18 +45,19 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "form.navigator.entry.order:Integer=90",
 	service = FormNavigatorEntry.class
 )
-public class AssetAutoTaggerSitesFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<Group>
-	implements FormNavigatorEntry<Group> {
+public class AssetAutoTaggerCompanySettingsFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<Company>
+	implements FormNavigatorEntry<Company> {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED;
+		return
+			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
 	}
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS;
 	}
 
 	@Override
@@ -75,21 +78,22 @@ public class AssetAutoTaggerSitesFormNavigatorEntry
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		request.setAttribute(
 			AssetAutoTaggerConfiguration.class.getName(),
 			_assetAutoTaggerConfigurationFactory.
-				getAssetAutoTaggerConfiguration(liveGroup));
+				getAssetAutoTaggerConfiguration(themeDisplay.getCompany()));
 
 		super.include(request, response);
 	}
 
 	@Override
-	public boolean isVisible(User user, Group group) {
+	public boolean isVisible(User user, Company company) {
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
 			_assetAutoTaggerConfigurationFactory.
-				getAssetAutoTaggerConfiguration(group);
+				getAssetAutoTaggerConfiguration(company);
 
 		return assetAutoTaggerConfiguration.isAvailable();
 	}
@@ -105,7 +109,7 @@ public class AssetAutoTaggerSitesFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/sites_admin/asset_auto_tagger.jsp";
+		return "/portal_settings/asset_auto_tagger.jsp";
 	}
 
 	@Reference

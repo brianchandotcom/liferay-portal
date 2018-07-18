@@ -1159,8 +1159,9 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Page#changeLogoViaPageCP">
+		<execute macro="Page#changeSiteLogoViaPageCP">
 			<var name="logoFile" value="Document_3.png" />
+			<var name="pageName" value="Public Pages" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

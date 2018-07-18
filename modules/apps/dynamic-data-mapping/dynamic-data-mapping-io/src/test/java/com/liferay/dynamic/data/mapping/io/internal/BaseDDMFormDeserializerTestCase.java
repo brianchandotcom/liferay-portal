@@ -160,8 +160,19 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings) {
 
 		Assert.assertNotNull(ddmFormSuccessPageSettings);
-		Assert.assertNull(ddmFormSuccessPageSettings.getBody());
-		Assert.assertNull(ddmFormSuccessPageSettings.getTitle());
+
+		LocalizedValue body = ddmFormSuccessPageSettings.getBody();
+
+		Map<Locale, String> bodyValues = body.getValues();
+
+		Assert.assertEquals(bodyValues.toString(), 0, bodyValues.size());
+
+		LocalizedValue title = ddmFormSuccessPageSettings.getBody();
+
+		Map<Locale, String> titleValues = title.getValues();
+
+		Assert.assertEquals(titleValues.toString(), 0, titleValues.size());
+
 		Assert.assertFalse(ddmFormSuccessPageSettings.isEnabled());
 	}
 

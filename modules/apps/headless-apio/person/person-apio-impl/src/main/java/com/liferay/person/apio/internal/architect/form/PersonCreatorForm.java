@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * Instances of this class represent the values extracted from a person creator
@@ -57,7 +58,7 @@ public class PersonCreatorForm {
 			"familyName", PersonCreatorForm::_setFamilyName
 		).addRequiredString(
 			"givenName", PersonCreatorForm::_setGivenName
-		).addRequiredString(
+		).addOptionalString(
 			"jobTitle", PersonCreatorForm::_setJobTitle
 		).addRequiredString(
 			"password1", PersonCreatorForm::_setPassword1
@@ -155,7 +156,11 @@ public class PersonCreatorForm {
 	 * @review
 	 */
 	public String getJobTitle() {
-		return _jobTitle;
+		return Optional.ofNullable(
+			_jobTitle
+		).orElse(
+			""
+		);
 	}
 
 	/**

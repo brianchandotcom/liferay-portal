@@ -113,8 +113,10 @@ public class WabDirURLStreamHandlerService
 			File generatedJarFile = _wabGenerator.generate(
 				_classLoader, warDir, parameters);
 
-			try (Jar generatedJar = new Jar(generatedJarFile)) {
-				generatedJar.expand(warDir);
+			if (generatedJarFile != null) {
+				try (Jar generatedJar = new Jar(generatedJarFile)) {
+					generatedJar.expand(warDir);
+				}
 			}
 
 			uri = warDir.toURI();

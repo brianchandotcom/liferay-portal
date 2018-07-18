@@ -1096,11 +1096,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 			String portletNamespacedName = null;
 
-			if (name != null) {
-				if (name.startsWith(portletNamespace)) {
-					portletNamespacedName = name;
-					name = name.substring(portletNamespace.length());
-				}
+			if ((name != null) && name.startsWith(portletNamespace)) {
+				portletNamespacedName = name;
+
+				name = name.substring(portletNamespace.length());
 			}
 
 			_name = name;

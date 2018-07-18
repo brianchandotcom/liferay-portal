@@ -166,7 +166,7 @@ public class PersonCollectionResource
 		User user = _userLocalService.addUser(
 			UserConstants.USER_ID_DEFAULT, themeDisplay.getCompanyId(), false,
 			personCreatorForm.getPassword1(), personCreatorForm.getPassword2(),
-			personCreatorForm.hasAlternateName(),
+			personCreatorForm.needsAlternateName(),
 			personCreatorForm.getAlternateName(), personCreatorForm.getEmail(),
 			0, StringPool.BLANK, LocaleUtil.getDefault(),
 			personCreatorForm.getGivenName(), StringPool.BLANK,

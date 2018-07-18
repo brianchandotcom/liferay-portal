@@ -371,7 +371,7 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws PortalException {
 		draftLVEntry = lvEntryPersistence.findByPrimaryKey(draftLVEntry.getPrimaryKey());
 
-		if (!draftLVEntry.isDraft()) {
+		if (draftLVEntry.isHead()) {
 			throw new IllegalArgumentException("Can only update draft entries " +
 				draftLVEntry.getPrimaryKey());
 		}
@@ -389,7 +389,7 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 		Map<String, String> contentMap) throws PortalException {
 		draftLVEntry = lvEntryPersistence.findByPrimaryKey(draftLVEntry.getPrimaryKey());
 
-		if (!draftLVEntry.isDraft()) {
+		if (draftLVEntry.isHead()) {
 			throw new IllegalArgumentException("Can only update draft entries " +
 				draftLVEntry.getPrimaryKey());
 		}
@@ -616,7 +616,7 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public LVEntry checkout(LVEntry publishedLVEntry, int version)
 		throws PortalException {
-		if (publishedLVEntry.isDraft()) {
+		if (!publishedLVEntry.isHead()) {
 			throw new IllegalArgumentException(
 				"Unable to checkout with unpublished changes " +
 				publishedLVEntry.getHeadId());
@@ -648,7 +648,7 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LVEntry delete(LVEntry publishedLVEntry) throws PortalException {
-		if (publishedLVEntry.isDraft()) {
+		if (!publishedLVEntry.isHead()) {
 			throw new IllegalArgumentException("LVEntry is a draft " +
 				publishedLVEntry.getPrimaryKey());
 		}
@@ -675,7 +675,7 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LVEntry deleteDraft(LVEntry draftLVEntry) throws PortalException {
-		if (!draftLVEntry.isDraft()) {
+		if (draftLVEntry.isHead()) {
 			throw new IllegalArgumentException("LVEntry is not a draft " +
 				draftLVEntry.getPrimaryKey());
 		}
@@ -712,11 +712,11 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public LVEntry fetchDraft(LVEntry lvEntry) {
-		if (lvEntry.isDraft()) {
-			return lvEntry;
+		if (lvEntry.isHead()) {
+			return lvEntryPersistence.fetchByHeadId(lvEntry.getPrimaryKey());
 		}
 
-		return lvEntryPersistence.fetchByHeadId(lvEntry.getPrimaryKey());
+		return lvEntry;
 	}
 
 	@Override
@@ -726,10 +726,10 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public LVEntryVersion fetchLatestVersion(LVEntry lvEntry) {
-		long primaryKey = lvEntry.getPrimaryKey();
+		long primaryKey = lvEntry.getHeadId();
 
-		if (lvEntry.isDraft()) {
-			primaryKey = lvEntry.getHeadId();
+		if (lvEntry.isHead()) {
+			primaryKey = lvEntry.getPrimaryKey();
 		}
 
 		return lvEntryVersionPersistence.fetchByLvEntryId_First(primaryKey, null);
@@ -737,7 +737,7 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public LVEntry fetchPublished(LVEntry lvEntry) {
-		if (!lvEntry.isDraft()) {
+		if (lvEntry.isHead()) {
 			return lvEntry;
 		}
 
@@ -762,7 +762,7 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public LVEntry getDraft(LVEntry lvEntry) throws PortalException {
-		if (lvEntry.isDraft()) {
+		if (!lvEntry.isHead()) {
 			return lvEntry;
 		}
 
@@ -791,10 +791,10 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public LVEntryVersion getVersion(LVEntry lvEntry, int version)
 		throws PortalException {
-		long primaryKey = lvEntry.getPrimaryKey();
+		long primaryKey = lvEntry.getHeadId();
 
-		if (lvEntry.isDraft()) {
-			primaryKey = lvEntry.getHeadId();
+		if (lvEntry.isHead()) {
+			primaryKey = lvEntry.getPrimaryKey();
 		}
 
 		return lvEntryVersionPersistence.findByLvEntryId_Version(primaryKey,
@@ -805,7 +805,7 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public List<LVEntryVersion> getVersions(LVEntry lvEntry) {
 		long primaryKey = lvEntry.getPrimaryKey();
 
-		if (lvEntry.isDraft()) {
+		if (!lvEntry.isHead()) {
 			if (lvEntry.getHeadId() == lvEntry.getPrimaryKey()) {
 				return Collections.emptyList();
 			}
@@ -819,7 +819,7 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LVEntry publishDraft(LVEntry draftLVEntry) throws PortalException {
-		if (!draftLVEntry.isDraft()) {
+		if (draftLVEntry.isHead()) {
 			throw new IllegalArgumentException("Can only publish drafts " +
 				draftLVEntry.getPrimaryKey());
 		}
@@ -882,7 +882,7 @@ public abstract class LVEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LVEntry updateDraft(LVEntry draftLVEntry) throws PortalException {
-		if (!draftLVEntry.isDraft()) {
+		if (draftLVEntry.isHead()) {
 			throw new IllegalArgumentException("Can only update draft entries " +
 				draftLVEntry.getPrimaryKey());
 		}

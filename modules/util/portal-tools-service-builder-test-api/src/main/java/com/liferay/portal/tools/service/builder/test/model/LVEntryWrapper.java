@@ -394,8 +394,8 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 	}
 
 	@Override
-	public boolean isDraft() {
-		return _lvEntry.isDraft();
+	public boolean isHead() {
+		return _lvEntry.isHead();
 	}
 
 	@Override

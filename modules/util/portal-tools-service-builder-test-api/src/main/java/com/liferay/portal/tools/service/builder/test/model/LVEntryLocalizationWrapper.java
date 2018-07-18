@@ -391,8 +391,8 @@ public class LVEntryLocalizationWrapper implements LVEntryLocalization,
 	}
 
 	@Override
-	public boolean isDraft() {
-		return _lvEntryLocalization.isDraft();
+	public boolean isHead() {
+		return _lvEntryLocalization.isHead();
 	}
 
 	@Override

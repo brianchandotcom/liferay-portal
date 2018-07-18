@@ -484,7 +484,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public RenderParameters getRenderParameters() {
-		throw new UnsupportedOperationException();
+		return _renderParameters;
 	}
 
 	@Override
@@ -808,6 +808,11 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		_locale = themeDisplay.getLocale();
 		_plid = plid;
+
+		// TODO: Set render parameter values
+
+		_renderParameters = new RenderParametersImpl(
+			new HashMap<>(), new HashSet<>(), portletNamespace);
 	}
 
 	@Override
@@ -1107,6 +1112,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private Profile _profile;
 	private String _remoteUser;
 	private long _remoteUserId;
+	private RenderParameters _renderParameters;
 	private HttpServletRequest _request;
 	private PortletSessionImpl _session;
 	private boolean _strutsPortlet;

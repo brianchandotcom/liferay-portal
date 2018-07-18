@@ -118,7 +118,7 @@ public class ResourceRequestImpl
 
 	@Override
 	public ResourceParameters getResourceParameters() {
-		throw new UnsupportedOperationException();
+		return _resourceParameters;
 	}
 
 	@Override
@@ -148,6 +148,13 @@ public class ResourceRequestImpl
 		if (!PortalUtil.isValidResourceId(_resourceID)) {
 			_resourceID = StringPool.BLANK;
 		}
+
+		String portletNamespace = PortalUtil.getPortletNamespace(
+			getPortletName());
+
+		_resourceParameters = new ResourceParametersImpl(
+			getPortletParameterMap(request, portletNamespace),
+			portletNamespace);
 	}
 
 	@Override
@@ -201,5 +208,6 @@ public class ResourceRequestImpl
 	private String _cacheablity;
 	private LiferayPortletAsyncContext _portletAsyncContext;
 	private String _resourceID;
+	private ResourceParameters _resourceParameters;
 
 }

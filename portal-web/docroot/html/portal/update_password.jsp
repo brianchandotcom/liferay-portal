@@ -89,7 +89,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 					<aui:input name="ticketKey" type="hidden" value="<%= ticketKey %>" />
 
 					<aui:fieldset>
-						<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="password" name="password1" showRequiredLabel="<%= false %>" type="password">
+						<aui:input class="lfr-input-text-container" label="password" name="password1" showRequiredLabel="<%= false %>" type="password">
 							<aui:validator name="required" />
 						</aui:input>
 

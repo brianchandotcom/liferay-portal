@@ -1134,9 +1134,9 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			return false;
 		}
 
-		private String _name;
+		private final String _name;
 		private final String _portletNamespacedName;
-		private String[] _values;
+		private final String[] _values;
 
 	}
 

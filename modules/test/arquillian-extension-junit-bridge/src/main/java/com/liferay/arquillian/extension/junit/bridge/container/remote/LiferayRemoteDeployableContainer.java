@@ -106,10 +106,6 @@ public class LiferayRemoteDeployableContainer
 				mBeanServer, objectName, ServiceStateMBean.class, 30,
 				TimeUnit.SECONDS);
 
-			installArquillianBundle();
-
-			awaitArquillianBundleActive(30, TimeUnit.SECONDS);
-
 			awaitBootstrapCompleteServices();
 		}
 		catch (RuntimeException re) {
@@ -118,14 +114,6 @@ public class LiferayRemoteDeployableContainer
 		catch (Exception e) {
 			throw new LifecycleException("Cannot start Karaf container", e);
 		}
-	}
-
-	@Override
-	protected void awaitArquillianBundleActive(long timeout, TimeUnit unit) {
-	}
-
-	@Override
-	protected void installArquillianBundle() {
 	}
 
 	@ApplicationScoped

@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge;
 
 import com.liferay.arquillian.container.osgi.remote.bundleclasspath.BundleClassPathAuxiliaryAppender;
 import com.liferay.arquillian.container.osgi.remote.commandservice.CommandServiceAuxiliaryAppender;
-import com.liferay.arquillian.container.osgi.remote.instanceproducer.OSGiAllInBundleInstanceProducer;
 import com.liferay.arquillian.container.osgi.remote.processor.OSGiAllInProcessor;
 import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActivatorsManager;
 import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActivatorsManagerImpl;
@@ -83,7 +82,6 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.service(
 				BundleActivatorsManager.class,
 				BundleActivatorsManagerImpl.class);
-			extensionBuilder.observer(OSGiAllInBundleInstanceProducer.class);
 			extensionBuilder.service(
 				CommandService.class, JMXCommandService.class);
 		}

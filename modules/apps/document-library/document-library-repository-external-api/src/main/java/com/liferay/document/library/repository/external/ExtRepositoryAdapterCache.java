@@ -54,10 +54,7 @@ public class ExtRepositoryAdapterCache implements Cloneable {
 	public <T extends ExtRepositoryModelAdapter<?>> T get(
 		String extRepositoryModelKey) {
 
-		Map<String, ExtRepositoryModelAdapter<?>> extRepositoryAdapters =
-			_getExtRepositoryAdapters();
-
-		T extRepositoryAdapter = (T)extRepositoryAdapters.get(
+		T extRepositoryAdapter = (T)_extRepositoryAdapters.get(
 			extRepositoryModelKey);
 
 		if (extRepositoryAdapter != null) {
@@ -75,9 +72,6 @@ public class ExtRepositoryAdapterCache implements Cloneable {
 	}
 
 	public void put(ExtRepositoryModelAdapter<?> extRepositoryModelAdapter) {
-		Map<String, ExtRepositoryModelAdapter<?>> extRepositoryAdapters =
-			_getExtRepositoryAdapters();
-
 		ExtRepositoryModel extRepositoryModel =
 			extRepositoryModelAdapter.getExtRepositoryModel();
 
@@ -88,29 +82,16 @@ public class ExtRepositoryAdapterCache implements Cloneable {
 			_log.info("Put " + extRepositoryModelKey);
 		}
 
-		extRepositoryAdapters.put(
+		_extRepositoryAdapters.put(
 			extRepositoryModelKey, extRepositoryModelAdapter);
 	}
 
 	public void remove(String extRepositoryModelKey) {
-		Map<String, ExtRepositoryModelAdapter<?>> extRepositoryAdapters =
-			_getExtRepositoryAdapters();
-
 		if (_log.isInfoEnabled()) {
 			_log.info("Remove " + extRepositoryModelKey);
 		}
 
-		extRepositoryAdapters.remove(extRepositoryModelKey);
-	}
-
-	private Map<String, ExtRepositoryModelAdapter<?>>
-		_getExtRepositoryAdapters() {
-
-		if (_extRepositoryAdapters == null) {
-			_extRepositoryAdapters = new HashMap<>();
-		}
-
-		return _extRepositoryAdapters;
+		_extRepositoryAdapters.remove(extRepositoryModelKey);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -121,6 +102,7 @@ public class ExtRepositoryAdapterCache implements Cloneable {
 			ExtRepositoryAdapterCache.class.getName(),
 			ExtRepositoryAdapterCache::new);
 
-	private Map<String, ExtRepositoryModelAdapter<?>> _extRepositoryAdapters;
+	private final Map<String, ExtRepositoryModelAdapter<?>>
+		_extRepositoryAdapters = new HashMap<>();
 
 }

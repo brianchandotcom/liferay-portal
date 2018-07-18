@@ -18,6 +18,8 @@ import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.apio.architect.function.throwable.ThrowableFunction;
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -63,10 +65,10 @@ public class BlogPostingForm {
 			"dateCreated", BlogPostingForm::_setCreateDate
 		).addOptionalDate(
 			"dateModified", BlogPostingForm::_setModifiedDate
-		).addOptionalLong(
-			"creator", BlogPostingForm::_setAuthorId
-		).addOptionalLong(
-			"image", BlogPostingForm::_setImageId
+		).addOptionalLinkedModel(
+			"creator", PersonIdentifier.class, BlogPostingForm::_setCreatorId
+		).addOptionalLinkedModel(
+			"image", MediaObjectIdentifier.class, BlogPostingForm::_setImageId
 		).addOptionalString(
 			"alternativeHeadline", BlogPostingForm::_setAlternativeHeadline
 		).addOptionalString(
@@ -111,19 +113,19 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's author ID if present. Returns the provided
+	 * Returns the blog posting's creator ID if present. Returns the provided
 	 * default ID otherwise.
 	 *
-	 * @param  defaultAuthorId the default author ID
-	 * @return the blog posting's author ID, if present; the provided default ID
-	 *         otherwise.
+	 * @param  defaultCreatorId the default creator ID
+	 * @return the blog posting's creator ID, if present; the provided default
+	 *         ID otherwise.
 	 * @review
 	 */
-	public long getAuthorId(long defaultAuthorId) {
+	public long getCreatorId(long defaultCreatorId) {
 		return Optional.ofNullable(
-			_authorId
+			_creatorId
 		).orElse(
-			defaultAuthorId
+			defaultCreatorId
 		);
 	}
 
@@ -268,12 +270,12 @@ public class BlogPostingForm {
 		_articleBody = articleBody;
 	}
 
-	private void _setAuthorId(long authorId) {
-		_authorId = authorId;
-	}
-
 	private void _setCreateDate(Date createDate) {
 		_createDate = createDate;
+	}
+
+	private void _setCreatorId(long creatorId) {
+		_creatorId = creatorId;
 	}
 
 	private void _setDescription(String description) {
@@ -310,8 +312,8 @@ public class BlogPostingForm {
 
 	private String _alternativeHeadline;
 	private String _articleBody;
-	private Long _authorId;
 	private Date _createDate;
+	private Long _creatorId;
 	private String _description;
 	private Date _displayDate;
 	private String _headline;

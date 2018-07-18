@@ -112,7 +112,8 @@
 		<liferay-social-bookmarks:bookmarks
 			className="<%= BlogsEntry.class.getName() %>"
 			classPK="<%= entry.getEntryId() %>"
-			displayStyle='<%= showOnlyIcons ? "menu" : blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle()) %>'
+			displayStyle='<%= showOnlyIcons ? "inline" : blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>'
+			maxInlineItems="<%= showOnlyIcons ? 0 : 3 %>"
 			target="_blank"
 			title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
 			types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"

@@ -408,7 +408,8 @@ public class PageWriter<T> {
 			rootSingleModel);
 
 		_writeNestedLists(
-			baseRepresentorFunction, singleModel, itemJsonObjectBuilder, null);
+			baseRepresentorFunction, singleModel, itemJsonObjectBuilder,
+			rootSingleModel, null);
 
 		_pageMessageMapper.onFinishNestedCollectionItem(
 			collectionJSONObjectBuilder, itemJsonObjectBuilder, singleModel);
@@ -470,7 +471,7 @@ public class PageWriter<T> {
 
 		_writeNestedLists(
 			_representorFunction::apply, singleModel, itemJsonObjectBuilder,
-			null);
+			singleModel, null);
 
 		_pageMessageMapper.onFinishItem(
 			_jsonObjectBuilder, itemJsonObjectBuilder, singleModel);
@@ -610,7 +611,7 @@ public class PageWriter<T> {
 
 		_writeNestedLists(
 			baseRepresentorFunction, singleModel, itemJsonObjectBuilder,
-			embeddedPathElements);
+			rootSingleModel, embeddedPathElements);
 
 		_writeNestedResources(
 			baseRepresentorFunction, singleModel, itemJsonObjectBuilder,
@@ -642,6 +643,7 @@ public class PageWriter<T> {
 	private <S> void _writeNestedLists(
 		BaseRepresentorFunction baseRepresentorFunction,
 		SingleModel<S> singleModel, JSONObjectBuilder jsonObjectBuilder,
+		SingleModel rootSingleModel,
 		FunctionalList<String> embeddedPathElements) {
 
 		baseRepresentorFunction.apply(
@@ -672,7 +674,7 @@ public class PageWriter<T> {
 					embeddedNestedPathElements,
 					__ -> Optional.of(
 						nestedListFieldFunction.getNestedRepresentor()),
-					singleModel);
+					rootSingleModel);
 			}
 		);
 	}

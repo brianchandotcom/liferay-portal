@@ -115,12 +115,46 @@
 				"member": [
 					{
 						"@type": ["Type 6"],
+						"nested4": {
+							"@type": ["Type 7"],
+							"nestedList": {
+								"@type": ["Collection"],
+								"member": [
+									{
+										"@type": ["Type 8"],
+										"number1": 2017
+									}, {
+										"@type": ["Type 8"],
+										"number1": 2017
+									}
+								],
+								"totalItems": 2
+							},
+							"string1": "id 4"
+						},
 						"number1": 2017,
 						"string1": "id 1",
 						"string2": "string2"
 					},
 					{
 						"@type": ["Type 6"],
+						"nested4": {
+							"@type": ["Type 7"],
+							"nestedList": {
+								"@type": ["Collection"],
+								"member": [
+									{
+										"@type": ["Type 8"],
+										"number1": 2017
+									}, {
+										"@type": ["Type 8"],
+										"number1": 2017
+									}
+								],
+								"totalItems": 2
+							},
+							"string1": "id 4"
+						},
 						"number1": 2017,
 						"string1": "id 2",
 						"string2": "string2"
@@ -250,12 +284,46 @@
 				"member": [
 					{
 						"@type": ["Type 6"],
+						"nested4": {
+							"@type": ["Type 7"],
+							"nestedList": {
+								"@type": ["Collection"],
+								"member": [
+									{
+										"@type": ["Type 8"],
+										"number1": 2017
+									}, {
+										"@type": ["Type 8"],
+										"number1": 2017
+									}
+								],
+								"totalItems": 2
+							},
+							"string1": "id 4"
+						},
 						"number1": 2017,
 						"string1": "id 1",
 						"string2": "string2"
 					},
 					{
 						"@type": ["Type 6"],
+						"nested4": {
+							"@type": ["Type 7"],
+							"nestedList": {
+								"@type": ["Collection"],
+								"member": [
+									{
+										"@type": ["Type 8"],
+										"number1": 2017
+									}, {
+										"@type": ["Type 8"],
+										"number1": 2017
+									}
+								],
+								"totalItems": 2
+							},
+							"string1": "id 4"
+						},
 						"number1": 2017,
 						"string1": "id 2",
 						"string2": "string2"
@@ -385,12 +453,46 @@
 				"member": [
 					{
 						"@type": ["Type 6"],
+						"nested4": {
+							"@type": ["Type 7"],
+							"nestedList": {
+								"@type": ["Collection"],
+								"member": [
+									{
+										"@type": ["Type 8"],
+										"number1": 2017
+									}, {
+										"@type": ["Type 8"],
+										"number1": 2017
+									}
+								],
+								"totalItems": 2
+							},
+							"string1": "id 4"
+						},
 						"number1": 2017,
 						"string1": "id 1",
 						"string2": "string2"
 					},
 					{
 						"@type": ["Type 6"],
+						"nested4": {
+							"@type": ["Type 7"],
+							"nestedList": {
+								"@type": ["Collection"],
+								"member": [
+									{
+										"@type": ["Type 8"],
+										"number1": 2017
+									}, {
+										"@type": ["Type 8"],
+										"number1": 2017
+									}
+								],
+								"totalItems": 2
+							},
+							"string1": "id 4"
+						},
 						"number1": 2017,
 						"string1": "id 2",
 						"string2": "string2"

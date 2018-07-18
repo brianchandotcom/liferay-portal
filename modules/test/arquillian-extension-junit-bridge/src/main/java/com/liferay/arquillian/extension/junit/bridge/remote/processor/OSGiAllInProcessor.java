@@ -48,7 +48,6 @@ import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
-import org.jboss.shrinkwrap.api.container.ClassContainer;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
@@ -155,13 +154,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	private void _addTestClass(JavaArchive javaArchive, TestClass testClass)
 		throws IOException {
 
-		Class<ClassContainer> classContainerClass = ClassContainer.class;
-
-		if (!classContainerClass.isAssignableFrom(javaArchive.getClass())) {
-			throw new IllegalArgumentException(
-				"ClassContainer expected: " + javaArchive);
-		}
-
 		Class<?> javaClass = testClass.getJavaClass();
 
 		Set<Class<?>> classes = new HashSet<>();
@@ -176,8 +168,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			superclass = superclass.getSuperclass();
 		}
 
-		((ClassContainer<?>)javaArchive).addClasses(
-			classes.toArray(new Class<?>[classes.size()]));
+		javaArchive.addClasses(classes.toArray(new Class<?>[classes.size()]));
 
 		ManifestManager manifestManager = _manifestManagerInstance.get();
 

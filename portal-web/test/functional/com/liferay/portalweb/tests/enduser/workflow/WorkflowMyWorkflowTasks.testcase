@@ -657,10 +657,11 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
+		<var name="key_entryTitle" value="Blogs Entry Title" />
+
+		<execute function="AssertElementPresent" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_STATUS" value1="Pending" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea2@liferay.com" />

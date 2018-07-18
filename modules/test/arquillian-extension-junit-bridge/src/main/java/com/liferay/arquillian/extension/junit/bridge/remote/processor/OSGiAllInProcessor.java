@@ -46,6 +46,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.Node;
+import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.container.ClassContainer;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
@@ -188,8 +189,10 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 				Map<ArchivePath, Node> javaArchiveContentMap =
 					javaArchive.getContent();
 
-				for (ArchivePath auxpath : javaArchiveContentMap.keySet()) {
-					if (auxpath.toString().endsWith(path)) {
+				for (ArchivePath archivePath : javaArchiveContentMap.keySet()) {
+					String archivePathString = archivePath.toString();
+
+					if (archivePathString.endsWith(path)) {
 						testClassFound = true;
 
 						break;
@@ -346,7 +349,9 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		Node node = archive.get(JarFile.MANIFEST_NAME);
 
 		if (node != null) {
-			manifest = new Manifest(node.getAsset().openStream());
+			Asset asset = node.getAsset();
+
+			manifest = new Manifest(asset.openStream());
 		}
 
 		if (manifest != null) {

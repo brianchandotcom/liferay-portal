@@ -169,14 +169,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		}
 
 		javaArchive.addClasses(classes.toArray(new Class<?>[classes.size()]));
-
-		ManifestManager manifestManager = _manifestManagerInstance.get();
-
-		Manifest manifest = manifestManager.putAttributeValue(
-			manifestManager.getManifest(javaArchive), "Export-Package",
-			javaClass.getPackage().getName());
-
-		manifestManager.replaceManifest(javaArchive, manifest);
 	}
 
 	private void _cleanRepeatedImports(

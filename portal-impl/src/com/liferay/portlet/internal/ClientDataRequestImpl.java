@@ -31,13 +31,17 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ClientDataRequest;
 import javax.portlet.PortletException;
+import javax.portlet.RenderParameters;
 
 import javax.servlet.ServletRequestWrapper;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 /**
@@ -152,6 +156,36 @@ public abstract class ClientDataRequestImpl
 		}
 
 		getHttpServletRequest().setCharacterEncoding(enc);
+	}
+
+	protected Map<String, String[]> getPortletParameterMap(
+		HttpServletRequest request, String portletNamespace) {
+
+		Map<String, String[]> portletParameterMap = new LinkedHashMap<>();
+		Map<String, String[]> parameterMap = getParameterMap();
+		Map<String, String[]> servletRequestParameterMap =
+			request.getParameterMap();
+		RenderParameters renderParameters = getRenderParameters();
+
+		Set<String> renderParameterNames = renderParameters.getNames();
+
+		for (Map.Entry<String, String[]> mapEntry : parameterMap.entrySet()) {
+			String name = mapEntry.getKey();
+
+			if (renderParameterNames.contains(name)) {
+				String[] values = servletRequestParameterMap.get(
+					portletNamespace.concat(name));
+
+				if (values != null) {
+					portletParameterMap.put(name, values);
+				}
+			}
+			else {
+				portletParameterMap.put(name, mapEntry.getValue());
+			}
+		}
+
+		return portletParameterMap;
 	}
 
 	private void _checkContentType() {

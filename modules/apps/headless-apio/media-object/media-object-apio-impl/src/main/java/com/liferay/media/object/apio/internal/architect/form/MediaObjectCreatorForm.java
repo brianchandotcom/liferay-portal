@@ -53,14 +53,14 @@ public class MediaObjectCreatorForm {
 			"changeLog", MediaObjectCreatorForm::_setChangelog
 		).addOptionalString(
 			"description", MediaObjectCreatorForm::_setDescription
+		).addOptionalString(
+			"title", MediaObjectCreatorForm::_setTitle
 		).addOptionalStringList(
 			"keywords", MediaObjectCreatorForm::_setKeywords
 		).addRequiredFile(
 			"binaryFile", MediaObjectCreatorForm::_setBinaryFile
 		).addRequiredString(
 			"name", MediaObjectCreatorForm::_setName
-		).addRequiredString(
-			"title", MediaObjectCreatorForm::_setTitle
 		).build();
 	}
 

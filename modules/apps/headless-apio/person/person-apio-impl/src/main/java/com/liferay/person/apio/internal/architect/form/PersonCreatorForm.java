@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * Instances of this class represent the values extracted from a person creator
@@ -49,7 +50,7 @@ public class PersonCreatorForm {
 			"gender", PersonCreatorForm::_setGender
 		).addOptionalString(
 			"alternateName", PersonCreatorForm::_setAlternateName
-		).addRequiredDate(
+		).addOptionalDate(
 			"birthDate", PersonCreatorForm::_setBirthDate
 		).addRequiredString(
 			"email", PersonCreatorForm::_setEmail
@@ -57,12 +58,8 @@ public class PersonCreatorForm {
 			"familyName", PersonCreatorForm::_setFamilyName
 		).addRequiredString(
 			"givenName", PersonCreatorForm::_setGivenName
-		).addRequiredString(
+		).addOptionalString(
 			"jobTitle", PersonCreatorForm::_setJobTitle
-		).addRequiredString(
-			"password1", PersonCreatorForm::_setPassword1
-		).addRequiredString(
-			"password2", PersonCreatorForm::_setPassword2
 		).build();
 	}
 
@@ -83,7 +80,11 @@ public class PersonCreatorForm {
 	 * @review
 	 */
 	public int getBirthdayDay() {
-		return _birthdayDay;
+		if (_birthdayDay != null) {
+			return _birthdayDay;
+		}
+
+		return 1;
 	}
 
 	/**
@@ -93,7 +94,11 @@ public class PersonCreatorForm {
 	 * @review
 	 */
 	public int getBirthdayMonth() {
-		return _birthdayMonth;
+		if (_birthdayMonth != null) {
+			return _birthdayMonth;
+		}
+
+		return 0;
 	}
 
 	/**
@@ -103,7 +108,11 @@ public class PersonCreatorForm {
 	 * @review
 	 */
 	public int getBirthdayYear() {
-		return _birthdayYear;
+		if (_birthdayYear != null) {
+			return _birthdayYear;
+		}
+
+		return 1970;
 	}
 
 	/**
@@ -143,38 +152,11 @@ public class PersonCreatorForm {
 	 * @review
 	 */
 	public String getJobTitle() {
-		return _jobTitle;
-	}
-
-	/**
-	 * Returns the person's password (first attempt)
-	 *
-	 * @return the person's password (first attempt)
-	 * @review
-	 */
-	public String getPassword1() {
-		return _password1;
-	}
-
-	/**
-	 * Returns the person's password (second attempt)
-	 *
-	 * @return the person's password (second attempt)
-	 * @review
-	 */
-	public String getPassword2() {
-		return _password2;
-	}
-
-	/**
-	 * Checks if the person has an alternate name
-	 *
-	 * @return {@code true} if the person has an alternate name; {@code false}
-	 *         otherwise
-	 * @review
-	 */
-	public boolean hasAlternateName() {
-		return Validator.isNull(_alternateName);
+		return Optional.ofNullable(
+			_jobTitle
+		).orElse(
+			""
+		);
 	}
 
 	/**
@@ -184,7 +166,22 @@ public class PersonCreatorForm {
 	 * @review
 	 */
 	public boolean isMale() {
-		return _male;
+		return Optional.ofNullable(
+			_male
+		).orElse(
+			true
+		);
+	}
+
+	/**
+	 * Checks if the person has an alternate name
+	 *
+	 * @return {@code true} if the person has an alternate name; {@code false}
+	 *         otherwise
+	 * @review
+	 */
+	public boolean needsAlternateName() {
+		return Validator.isNull(_alternateName);
 	}
 
 	private void _setAlternateName(String alternateName) {
@@ -221,24 +218,14 @@ public class PersonCreatorForm {
 		_jobTitle = jobTitle;
 	}
 
-	private void _setPassword1(String password1) {
-		_password1 = password1;
-	}
-
-	private void _setPassword2(String password2) {
-		_password2 = password2;
-	}
-
 	private String _alternateName;
-	private int _birthdayDay;
-	private int _birthdayMonth;
-	private int _birthdayYear;
+	private Integer _birthdayDay;
+	private Integer _birthdayMonth;
+	private Integer _birthdayYear;
 	private String _email;
 	private String _familyName;
 	private String _givenName;
 	private String _jobTitle;
 	private Boolean _male;
-	private String _password1;
-	private String _password2;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.media.object.apio.internal.architect.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
-import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -30,6 +29,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
@@ -99,8 +99,8 @@ public class MediaObjectNestedCollectionResource
 		).addBidirectionalModel(
 			"folder", "mediaObjects", FolderIdentifier.class,
 			FileEntry::getFolderId
-		).addBinary(
-			"contentStream", this::_getBinaryFile
+		).addRelativeURL(
+			"contentStream", this::_getFileEntryPreviewURL
 		).addDate(
 			"dateCreated", FileEntry::getCreateDate
 		).addDate(
@@ -126,22 +126,23 @@ public class MediaObjectNestedCollectionResource
 		).build();
 	}
 
-	private BinaryFile _getBinaryFile(FileEntry fileEntry) {
-		return Try.fromFallible(
-			() -> new BinaryFile(
-				fileEntry.getContentStream(), fileEntry.getSize(),
-				fileEntry.getMimeType())
-		).orElse(
-			null
-		);
-	}
-
 	private FileEntry _getFileEntry(
 			long groupId, MediaObjectCreatorForm mediaObjectCreatorForm)
 		throws PortalException {
 
 		return _mediaObjectHelper.addFileEntry(
 			groupId, 0L, mediaObjectCreatorForm);
+	}
+
+	private String _getFileEntryPreviewURL(FileEntry fileEntry) {
+		return Try.fromFallible(
+			fileEntry::getFileVersion
+		).map(
+			version -> DLUtil.getPreviewURL(
+				fileEntry, version, null, "", false, false)
+		).orElse(
+			null
+		);
 	}
 
 	private List<String> _getMediaObjectAssetTags(FileEntry fileEntry) {

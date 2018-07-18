@@ -149,7 +149,7 @@ public class BlogPostingNestedCollectionResource
 			CurrentUser currentUser)
 		throws PortalException {
 
-		long userId = blogPostingForm.getAuthorId(currentUser.getUserId());
+		long userId = blogPostingForm.getCreatorId(currentUser.getUserId());
 
 		ImageSelector imageSelector = blogPostingForm.getImageSelector(
 			_dlAppLocalService::getFileEntry);
@@ -190,7 +190,7 @@ public class BlogPostingNestedCollectionResource
 			CurrentUser currentUser)
 		throws PortalException {
 
-		long userId = blogPostingForm.getAuthorId(currentUser.getUserId());
+		long userId = blogPostingForm.getCreatorId(currentUser.getUserId());
 
 		ImageSelector imageSelector = blogPostingForm.getImageSelector(
 			_dlAppLocalService::getFileEntry);

@@ -1,34 +1,4 @@
 <definition>
-	<command name="addSearchPortlets">
-		<if>
-			<condition function="IsNotVisible" locator1="ControlMenuAddPanel#CLOSE_ADD_PANEL" />
-			<then>
-				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
-			</then>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" />
-		<execute function="AssertVisible" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" value1="Widgets" />
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute macro="Panel#expandSidebarApplicationsPanel" />
-
-		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="search" />
-
-		<for list="${searchPortletList}" param="portletName">
-			<execute macro="Portlet#_clickAddPortlet">
-				<var name="portletName" value="${portletName}" />
-			</execute>
-
-			<var name="key_portletName" value="${portletName}" />
-
-			<execute function="AssertElementPresent" locator1="Portlet#LOADED" />
-
-			<execute function="AssertElementPresent" locator1="Home#PORTLET" />
-		</for>
-	</command>
-
 	<command name="addTagFacet">
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_TAGS" value1="${tagName}">
 			<var name="key_tagName" value="${tagName}" />
@@ -39,32 +9,6 @@
 		<execute function="AssertClick" locator1="Button#CLEAR" value1="Clear" />
 
 		<execute function="AssertElementNotPresent" locator1="SearchResults#RESULTS_TABLE_GENERIC" />
-	</command>
-
-	<command name="configureParameterNames">
-		<execute macro="SearchPortlet#gotoOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<if>
-			<isset var="keywordsParameterName" />
-			<then>
-				<execute function="Type" locator1="SearchBarConfiguration#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="scopeParameterName" />
-			<then>
-				<execute function="Type" locator1="SearchBarConfiguration#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
-			</then>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="IFrame#closeFrame" />
 	</command>
 
 	<command name="configureScope">
@@ -160,21 +104,6 @@
 		<execute function="KeyPress" locator1="Search#EMBEDDED_SEARCH_BAR" value1="\RETURN" />
 	</command>
 
-	<command name="selectScopeInput">
-		<if>
-			<or>
-				<equals arg1="${searchScope}" arg2="Everything" />
-				<equals arg1="${searchScope}" arg2="This Site" />
-			</or>
-			<then>
-				<execute function="Select" locator1="Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT" value1="${searchScope}" />
-			</then>
-			<else>
-				<fail message="Invalid search scope. Must be (Everything|This Site)." />
-			</else>
-		</if>
-	</command>
-
 	<command name="unscopeAssetFacetPG">
 		<execute function="Click" locator1="SearchResults#ASSET_TYPE_FACET_ANY_ASSET" />
 	</command>
@@ -211,10 +140,6 @@
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
 		<execute function="AssertTextEquals" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
-	</command>
-
-	<command name="viewSearchHidden">
-		<execute function="AssertElementNotPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
 	</command>
 
 	<command name="viewSearchNoAssetTitle">
@@ -271,10 +196,6 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC" value1="${searchAssetSummary}" />
 			</then>
 		</if>
-	</command>
-
-	<command name="viewSearchResultWithNoPermissions">
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords: ${searchTerm}." />
 	</command>
 
 	<command name="viewUserFacetPG">

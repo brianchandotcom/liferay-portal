@@ -1,4 +1,34 @@
 <definition>
+	<command name="addWidgets">
+		<if>
+			<condition function="IsNotVisible" locator1="ControlMenuAddPanel#CLOSE_ADD_PANEL" />
+			<then>
+				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
+			</then>
+		</if>
+
+		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" />
+		<execute function="AssertVisible" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" value1="Widgets" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute macro="Panel#expandSidebarApplicationsPanel" />
+
+		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="search" />
+
+		<for list="${searchPortletList}" param="portletName">
+			<execute macro="Portlet#_clickAddPortlet">
+				<var name="portletName" value="${portletName}" />
+			</execute>
+
+			<var name="key_portletName" value="${portletName}" />
+
+			<execute function="AssertElementPresent" locator1="Portlet#LOADED" />
+
+			<execute function="AssertElementPresent" locator1="Home#PORTLET" />
+		</for>
+	</command>
+
 	<command name="configureDestination">
 		<execute function="Click" locator1="Search#SETUP_DESTINATION" />
 
@@ -16,8 +46,8 @@
 		<execute macro="IFrame#closeFrame" />
 	</command>
 
-	<command name="configureParameterNames">
-		<execute macro="SearchBarPortlet#gotoOptions">
+	<command name="configureEmbeddedParameterNames">
+		<execute macro="SearchBarPortlet#gotoEmbeddedOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -42,8 +72,60 @@
 		<execute macro="IFrame#closeFrame" />
 	</command>
 
-	<command name="configureScope">
-		<execute macro="SearchBarPortlet#gotoOptions">
+	<command name="configureEmbeddedScope">
+		<execute macro="SearchBarPortlet#gotoEmbeddedOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<if>
+			<or>
+				<equals arg1="${searchScope}" arg2="Everything" />
+				<equals arg1="${searchScope}" arg2="Let the User Choose" />
+				<equals arg1="${searchScope}" arg2="This Site" />
+			</or>
+			<then>
+				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+				<execute function="Select" locator1="Select#SCOPE_CONFIGURATION" value1="${searchScope}" />
+			</then>
+			<else>
+				<fail message="Invalid search scope. Must be (Everything|Let the User Choose|This Site)." />
+			</else>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
+	<command name="configureWidgetParameterNames">
+		<execute macro="SearchBarPortlet#gotoWidgetOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<if>
+			<isset var="keywordsParameterName" />
+			<then>
+				<execute function="Type" locator1="SearchBarConfiguration#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="scopeParameterName" />
+			<then>
+				<execute function="Type" locator1="SearchBarConfiguration#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
+	<command name="configureWidgetScope">
+		<execute macro="SearchBarPortlet#gotoWidgetOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -87,7 +169,28 @@
 		<return value="${searchURL}" />
 	</command>
 
-	<command name="gotoOptions">
+	<command name="gotoEmbeddedOptions">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON" />
+
+		<execute function="Click" locator1="Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON" />
+
+		<if>
+			<isset var="portletOption" />
+			<then>
+				<var name="key_menuItem" value="${portletOption}" />
+
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoResultDetails">
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+	</command>
+
+	<command name="gotoWidgetOptions">
 		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON" />
 
 		<execute function="Click" locator1="Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON" />
@@ -108,7 +211,22 @@
 		<execute function="KeyPress" locator1="Search#SEARCH_BAR_WIDGET" value1="\RETURN" />
 	</command>
 
-	<command name="selectScopeInput">
+	<command name="selectEmbeddedScopeInput">
+		<if>
+			<or>
+				<equals arg1="${searchScope}" arg2="Everything" />
+				<equals arg1="${searchScope}" arg2="This Site" />
+			</or>
+			<then>
+				<execute function="Select" locator1="Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT" value1="${searchScope}" />
+			</then>
+			<else>
+				<fail message="Invalid search scope. Must be (Everything|This Site)." />
+			</else>
+		</if>
+	</command>
+
+	<command name="selectWidgetScopeInput">
 		<if>
 			<or>
 				<equals arg1="${searchScope}" arg2="Everything" />
@@ -121,5 +239,13 @@
 				<fail message="Invalid search scope. Must be (Everything|This Site)." />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewSearchHidden">
+		<execute function="AssertElementNotPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
+	</command>
+
+	<command name="viewSearchResultWithNoPermissions">
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords: ${searchTerm}." />
 	</command>
 </definition>

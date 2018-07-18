@@ -190,7 +190,11 @@ public class PersonCreatorForm {
 	 * @review
 	 */
 	public boolean isMale() {
-		return _male;
+		return Optional.ofNullable(
+			_male
+		).orElse(
+			true
+		);
 	}
 
 	/**

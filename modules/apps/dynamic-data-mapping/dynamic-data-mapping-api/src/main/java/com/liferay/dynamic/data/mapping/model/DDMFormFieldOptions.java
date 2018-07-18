@@ -31,6 +31,7 @@ import java.util.Set;
 public class DDMFormFieldOptions implements Serializable {
 
 	public DDMFormFieldOptions() {
+		_defaultLocale = LocaleUtil.getDefault();
 	}
 
 	public DDMFormFieldOptions(DDMFormFieldOptions ddmFormFieldOptions) {
@@ -119,7 +120,7 @@ public class DDMFormFieldOptions implements Serializable {
 		}
 	}
 
-	private Locale _defaultLocale = LocaleUtil.getDefault();
+	private Locale _defaultLocale;
 	private final Map<String, LocalizedValue> _options = new LinkedHashMap<>();
 
 }

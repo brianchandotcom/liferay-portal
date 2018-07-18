@@ -33,6 +33,8 @@ import java.util.Objects;
 public class DDMFormField implements Serializable {
 
 	public DDMFormField() {
+		_ddmFormFieldRules = new ArrayList<>();
+		_nestedDDMFormFields = new ArrayList<>();
 		_properties = new LinkedHashMap<>();
 	}
 
@@ -41,6 +43,9 @@ public class DDMFormField implements Serializable {
 
 		setDDMFormFieldOptions(
 			new DDMFormFieldOptions(ddmFormField.getDDMFormFieldOptions()));
+
+		_ddmFormFieldRules = new ArrayList<>(
+			ddmFormField._ddmFormFieldRules.size());
 
 		for (DDMFormFieldRule ddmFormFieldRule :
 				ddmFormField._ddmFormFieldRules) {
@@ -62,6 +67,9 @@ public class DDMFormField implements Serializable {
 		setStyle(new LocalizedValue(ddmFormField.getStyle()));
 		setTip(new LocalizedValue(ddmFormField.getTip()));
 
+		_nestedDDMFormFields = new ArrayList<>(
+			ddmFormField._nestedDDMFormFields.size());
+
 		for (DDMFormField nestedDDMFormField :
 				ddmFormField._nestedDDMFormFields) {
 
@@ -70,6 +78,8 @@ public class DDMFormField implements Serializable {
 	}
 
 	public DDMFormField(String name, String type) {
+		_ddmFormFieldRules = new ArrayList<>();
+		_nestedDDMFormFields = new ArrayList<>();
 		_properties = new LinkedHashMap<>();
 
 		setName(name);
@@ -368,8 +378,8 @@ public class DDMFormField implements Serializable {
 	}
 
 	private DDMForm _ddmForm;
-	private List<DDMFormFieldRule> _ddmFormFieldRules = new ArrayList<>();
-	private List<DDMFormField> _nestedDDMFormFields = new ArrayList<>();
+	private List<DDMFormFieldRule> _ddmFormFieldRules;
+	private List<DDMFormField> _nestedDDMFormFields;
 	private final Map<String, Object> _properties;
 
 }

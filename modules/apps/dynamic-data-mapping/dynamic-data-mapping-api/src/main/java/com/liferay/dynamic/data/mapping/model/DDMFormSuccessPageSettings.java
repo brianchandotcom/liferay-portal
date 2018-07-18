@@ -29,14 +29,16 @@ import java.util.Objects;
 public class DDMFormSuccessPageSettings implements Serializable {
 
 	public DDMFormSuccessPageSettings() {
+		_body = new LocalizedValue();
+		_title = new LocalizedValue();
 	}
 
 	public DDMFormSuccessPageSettings(
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings) {
 
-		_body = ddmFormSuccessPageSettings._body;
+		_body = new LocalizedValue(ddmFormSuccessPageSettings._body);
 		_enabled = ddmFormSuccessPageSettings._enabled;
-		_title = ddmFormSuccessPageSettings._title;
+		_title = new LocalizedValue(ddmFormSuccessPageSettings._title);
 	}
 
 	public DDMFormSuccessPageSettings(

@@ -176,12 +176,8 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			superclass = superclass.getSuperclass();
 		}
 
-		String javaArchiveName = javaArchive.getName();
-
-		if (!javaArchiveName.endsWith(".war")) {
-			((ClassContainer<?>)javaArchive).addClasses(
-				classes.toArray(new Class<?>[classes.size()]));
-		}
+		((ClassContainer<?>)javaArchive).addClasses(
+			classes.toArray(new Class<?>[classes.size()]));
 
 		ManifestManager manifestManager = _manifestManagerInstance.get();
 

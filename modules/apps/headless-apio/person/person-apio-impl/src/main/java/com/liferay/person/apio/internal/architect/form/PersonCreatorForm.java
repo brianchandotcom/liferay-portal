@@ -49,7 +49,7 @@ public class PersonCreatorForm {
 			"gender", PersonCreatorForm::_setGender
 		).addOptionalString(
 			"alternateName", PersonCreatorForm::_setAlternateName
-		).addRequiredDate(
+		).addOptionalDate(
 			"birthDate", PersonCreatorForm::_setBirthDate
 		).addRequiredString(
 			"email", PersonCreatorForm::_setEmail
@@ -83,7 +83,11 @@ public class PersonCreatorForm {
 	 * @review
 	 */
 	public int getBirthdayDay() {
-		return _birthdayDay;
+		if (_birthdayDay != null) {
+			return _birthdayDay;
+		}
+
+		return 1;
 	}
 
 	/**
@@ -93,7 +97,11 @@ public class PersonCreatorForm {
 	 * @review
 	 */
 	public int getBirthdayMonth() {
-		return _birthdayMonth;
+		if (_birthdayMonth != null) {
+			return _birthdayMonth;
+		}
+
+		return 0;
 	}
 
 	/**
@@ -103,7 +111,11 @@ public class PersonCreatorForm {
 	 * @review
 	 */
 	public int getBirthdayYear() {
-		return _birthdayYear;
+		if (_birthdayYear != null) {
+			return _birthdayYear;
+		}
+
+		return 1970;
 	}
 
 	/**
@@ -230,9 +242,9 @@ public class PersonCreatorForm {
 	}
 
 	private String _alternateName;
-	private int _birthdayDay;
-	private int _birthdayMonth;
-	private int _birthdayYear;
+	private Integer _birthdayDay;
+	private Integer _birthdayMonth;
+	private Integer _birthdayYear;
 	private String _email;
 	private String _familyName;
 	private String _givenName;

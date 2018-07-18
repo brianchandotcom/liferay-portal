@@ -29,6 +29,8 @@ import java.util.Objects;
 public class DDMFormSuccessPageSettings implements Serializable {
 
 	public DDMFormSuccessPageSettings() {
+		_body = new LocalizedValue();
+		_title = new LocalizedValue();
 	}
 
 	public DDMFormSuccessPageSettings(
@@ -103,8 +105,8 @@ public class DDMFormSuccessPageSettings implements Serializable {
 		_title = title;
 	}
 
-	private LocalizedValue _body = new LocalizedValue();
+	private LocalizedValue _body;
 	private boolean _enabled;
-	private LocalizedValue _title = new LocalizedValue();
+	private LocalizedValue _title;
 
 }

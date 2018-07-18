@@ -27,6 +27,7 @@ import com.liferay.portlet.RenderParametersPool;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,6 +36,7 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderParameters;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -118,7 +120,7 @@ public class ResourceRequestImpl
 
 	@Override
 	public ResourceParameters getResourceParameters() {
-		throw new UnsupportedOperationException();
+		return _resourceParameters;
 	}
 
 	@Override
@@ -148,6 +150,43 @@ public class ResourceRequestImpl
 		if (!PortalUtil.isValidResourceId(_resourceID)) {
 			_resourceID = StringPool.BLANK;
 		}
+
+		Map<String, String[]> resourceParameterMap = new LinkedHashMap<>();
+		RenderParameters renderParameters = getRenderParameters();
+
+		Set<String> renderParameterNames = renderParameters.getNames();
+
+		Map<String, String[]> parameterMap = getParameterMap();
+		String portletNamespace = PortalUtil.getPortletNamespace(
+			getPortletName());
+		Map<String, String[]> servletRequestParameterMap =
+			request.getParameterMap();
+
+		for (Map.Entry<String, String[]> mapEntry : parameterMap.entrySet()) {
+			String name = mapEntry.getKey();
+
+			// If the parameter name is not a public/private render parameter,
+			// then regard it as a resource parameter. Otherwise, if the
+			// parameter name is prefixed with the portlet namespace in the
+			// original request, then regard it as a resource parameter (even if
+			// it has the/ same name as a public render parameter). See: TCK
+			// V3PortletParametersTests_SPEC11_4_getNames.
+
+			if (renderParameterNames.contains(name)) {
+				String[] values = servletRequestParameterMap.get(
+					portletNamespace.concat(name));
+
+				if (values != null) {
+					resourceParameterMap.put(name, values);
+				}
+			}
+			else {
+				resourceParameterMap.put(name, mapEntry.getValue());
+			}
+		}
+
+		_resourceParameters = new ResourceParametersImpl(
+			resourceParameterMap, portletNamespace);
 	}
 
 	@Override
@@ -201,5 +240,6 @@ public class ResourceRequestImpl
 	private String _cacheablity;
 	private LiferayPortletAsyncContext _portletAsyncContext;
 	private String _resourceID;
+	private ResourceParameters _resourceParameters;
 
 }

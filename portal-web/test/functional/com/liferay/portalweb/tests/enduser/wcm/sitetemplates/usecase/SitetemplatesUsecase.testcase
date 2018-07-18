@@ -318,6 +318,7 @@
 
 			<execute macro="Page#viewNoDeletePagesAssociatedWithSiteTemplate">
 				<var name="page" value="${page}" />
+				<var name="pageName" value="Public Pages" />
 			</execute>
 		</for>
 	</command>

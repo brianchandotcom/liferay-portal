@@ -181,6 +181,12 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 						var formValidator = form.formValidator;
 
 						formValidator.validateField('<portlet:namespace />password1');
+
+						AUI().ready(
+							function() {
+								Liferay.Util.focusFormField('#password1');
+							}
+						);
 					</aui:script>
 				</c:if>
 

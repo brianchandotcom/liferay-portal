@@ -264,15 +264,16 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			ZipExporter auxiliaryArchiveZipExporter = auxiliaryArchive.as(
 				ZipExporter.class);
 
-			InputStream auxiliaryArchiveInputStream =
-				auxiliaryArchiveZipExporter.exportAsInputStream();
-
-			ByteArrayAsset byteArrayAsset = new ByteArrayAsset(
-				auxiliaryArchiveInputStream);
-
 			String path = "extension/" + auxiliaryArchive.getName();
 
-			javaArchive.addAsResource(byteArrayAsset, path);
+			try (InputStream auxiliaryArchiveInputStream =
+					auxiliaryArchiveZipExporter.exportAsInputStream()) {
+
+				ByteArrayAsset byteArrayAsset = new ByteArrayAsset(
+					auxiliaryArchiveInputStream);
+
+				javaArchive.addAsResource(byteArrayAsset, path);
+			}
 
 			ManifestManager manifestManager = _manifestManagerInstance.get();
 
@@ -351,7 +352,9 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		if (node != null) {
 			Asset asset = node.getAsset();
 
-			manifest = new Manifest(asset.openStream());
+			try (InputStream inputStream = asset.openStream()) {
+				manifest = new Manifest(inputStream);
+			}
 		}
 
 		if (manifest != null) {

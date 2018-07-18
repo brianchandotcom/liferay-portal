@@ -336,7 +336,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		folderIds.add(folderId);
 
 		return dlFileEntryFinder.filterCountByG_F(
-			groupId, folderIds, new QueryDefinition<DLFileEntry>(status));
+			groupId, folderIds, new QueryDefinition<>(status));
 	}
 
 	@Override
@@ -364,8 +364,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		folderIds.add(folderId);
 
 		return dlFileEntryFinder.filterCountByG_U_F_M(
-			groupId, 0, folderIds, mimeTypes,
-			new QueryDefinition<DLFileEntry>(status));
+			groupId, 0, folderIds, mimeTypes, new QueryDefinition<>(status));
 	}
 
 	@Override
@@ -424,22 +423,20 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return dlFileEntryFinder.filterCountByG_F(
 				groupId, folderIds, queryDefinition);
 		}
-		else {
-			int start = 0;
-			int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
 
-			int filesCount = dlFileEntryFinder.filterCountByG_F(
-				groupId, folderIds.subList(start, end), queryDefinition);
+		int start = 0;
+		int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
 
-			List<Long> sublist = folderIds.subList(start, end);
+		int filesCount = dlFileEntryFinder.filterCountByG_F(
+			groupId, folderIds.subList(start, end), queryDefinition);
 
-			sublist.clear();
+		List<Long> sublist = folderIds.subList(start, end);
 
-			filesCount += getFoldersFileEntriesCount(
-				groupId, folderIds, status);
+		sublist.clear();
 
-			return filesCount;
-		}
+		filesCount += getFoldersFileEntriesCount(groupId, folderIds, status);
+
+		return filesCount;
 	}
 
 	@Override
@@ -454,15 +451,14 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		if (folderIds.isEmpty()) {
 			return Collections.emptyList();
 		}
-		else if (userId <= 0) {
+
+		if (userId <= 0) {
 			return dlFileEntryPersistence.filterFindByG_F(
 				groupId, ArrayUtil.toLongArray(folderIds), start, end, obc);
 		}
-		else {
-			return dlFileEntryPersistence.filterFindByG_U_F(
-				groupId, userId, ArrayUtil.toLongArray(folderIds), start, end,
-				obc);
-		}
+
+		return dlFileEntryPersistence.filterFindByG_U_F(
+			groupId, userId, ArrayUtil.toLongArray(folderIds), start, end, obc);
 	}
 
 	@Override
@@ -483,8 +479,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return dlFileEntryFinder.filterFindByG_U_R_F_M(
-				groupId, userId, repositoryIds, new ArrayList<Long>(),
-				mimeTypes, queryDefinition);
+				groupId, userId, repositoryIds, new ArrayList<>(), mimeTypes,
+				queryDefinition);
 		}
 
 		List<Long> folderIds = dlFolderService.getFolderIds(
@@ -521,14 +517,14 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		if (folderIds.isEmpty()) {
 			return 0;
 		}
-		else if (userId <= 0) {
+
+		if (userId <= 0) {
 			return dlFileEntryPersistence.filterCountByG_F(
 				groupId, ArrayUtil.toLongArray(folderIds));
 		}
-		else {
-			return dlFileEntryPersistence.filterCountByG_U_F(
-				groupId, userId, ArrayUtil.toLongArray(folderIds));
-		}
+
+		return dlFileEntryPersistence.filterCountByG_U_F(
+			groupId, userId, ArrayUtil.toLongArray(folderIds));
 	}
 
 	@Override
@@ -545,8 +541,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return dlFileEntryFinder.filterCountByG_U_R_F_M(
-				groupId, userId, repositoryIds, new ArrayList<Long>(),
-				mimeTypes, new QueryDefinition<DLFileEntry>(status));
+				groupId, userId, repositoryIds, new ArrayList<>(), mimeTypes,
+				new QueryDefinition<>(status));
 		}
 
 		List<Long> folderIds = dlFolderService.getFolderIds(
@@ -558,7 +554,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryFinder.filterCountByG_U_R_F_M(
 			groupId, userId, repositoryIds, folderIds, mimeTypes,
-			new QueryDefinition<DLFileEntry>(status));
+			new QueryDefinition<>(status));
 	}
 
 	@Override
@@ -586,6 +582,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		return dlFileEntryLocalService.isFileEntryCheckedOut(fileEntryId);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isKeepFileVersionLabel(
 			long fileEntryId, boolean majorVersion,

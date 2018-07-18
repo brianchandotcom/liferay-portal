@@ -814,6 +814,10 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().isFileEntryCheckedOut(fileEntryId);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	public static boolean isKeepFileVersionLabel(long fileEntryId,
 		boolean majorVersion,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

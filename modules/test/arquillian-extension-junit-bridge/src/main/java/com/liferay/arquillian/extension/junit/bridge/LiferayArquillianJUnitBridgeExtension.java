@@ -56,6 +56,11 @@ public class LiferayArquillianJUnitBridgeExtension
 		if (url == null) {
 			extensionBuilder.override(
 				ApplicationArchiveProcessor.class,
+				com.liferay.arquillian.container.osgi.remote.processor.
+					OSGiAllInProcessor.class,
+				OSGiAllInProcessor.class);
+			extensionBuilder.override(
+				ApplicationArchiveProcessor.class,
 				OSGiApplicationArchiveProcessor.class,
 				NoOpArchiveApplicationProcessor.class);
 			extensionBuilder.override(
@@ -67,8 +72,6 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.service(
 				DeploymentScenarioGenerator.class,
 				BndDeploymentScenarioGenerator.class);
-			extensionBuilder.service(
-				ApplicationArchiveProcessor.class, OSGiAllInProcessor.class);
 			extensionBuilder.service(
 				AuxiliaryArchiveAppender.class,
 				BundleClassPathAuxiliaryAppender.class);

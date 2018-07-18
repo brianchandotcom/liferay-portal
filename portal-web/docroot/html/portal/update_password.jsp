@@ -113,9 +113,11 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 
 						<c:choose>
 							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustBeLonger.class.getName()) %>">
+
 								<%
 									UserPasswordException.MustBeLonger upe = (UserPasswordException.MustBeLonger)SessionErrors.get(request, UserPasswordException.MustBeLonger.class.getName());
 								%>
+
 								validationErrors.push('<liferay-ui:message arguments="<%= String.valueOf(upe.minLength) %>" key="that-password-is-too-short" translateArguments="<%= false %>" />');
 							</c:when>
 							<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustComplyWithModelListeners.class.getName()) %>">
@@ -189,7 +191,6 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 						);
 					</aui:script>
 				</c:if>
-
 			</c:otherwise>
 		</c:choose>
 	</div>

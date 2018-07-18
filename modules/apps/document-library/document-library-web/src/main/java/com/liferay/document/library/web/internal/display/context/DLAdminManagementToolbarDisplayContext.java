@@ -49,6 +49,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -102,12 +104,14 @@ public class DLAdminManagementToolbarDisplayContext {
 		return new DropdownItemList() {
 			{
 				Group scopeGroup = _themeDisplay.getScopeGroup();
+				StagingGroupHelper stagingGroupHelper =
+					StagingGroupHelperUtil.getStagingGroupHelper();
 
 				boolean stagedActions = false;
 
-				if (!scopeGroup.isStaged() || scopeGroup.isStagingGroup() ||
-					!scopeGroup.isStagedPortlet(
-						DLPortletKeys.DOCUMENT_LIBRARY)) {
+				if (!stagingGroupHelper.isLiveGroup(scopeGroup) ||
+					!stagingGroupHelper.isStagedPortlet(
+						scopeGroup, DLPortletKeys.DOCUMENT_LIBRARY)) {
 
 					stagedActions = true;
 				}

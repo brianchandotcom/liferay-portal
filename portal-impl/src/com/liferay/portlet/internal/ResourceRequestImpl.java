@@ -152,15 +152,14 @@ public class ResourceRequestImpl
 		}
 
 		Map<String, String[]> resourceParameterMap = new LinkedHashMap<>();
-		RenderParameters renderParameters = getRenderParameters();
-
-		Set<String> renderParameterNames = renderParameters.getNames();
-
 		Map<String, String[]> parameterMap = getParameterMap();
 		String portletNamespace = PortalUtil.getPortletNamespace(
 			getPortletName());
 		Map<String, String[]> servletRequestParameterMap =
 			request.getParameterMap();
+		RenderParameters renderParameters = getRenderParameters();
+
+		Set<String> renderParameterNames = renderParameters.getNames();
 
 		for (Map.Entry<String, String[]> mapEntry : parameterMap.entrySet()) {
 			String name = mapEntry.getKey();

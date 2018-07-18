@@ -60,10 +60,6 @@ public class PersonCreatorForm {
 			"givenName", PersonCreatorForm::_setGivenName
 		).addOptionalString(
 			"jobTitle", PersonCreatorForm::_setJobTitle
-		).addRequiredString(
-			"password1", PersonCreatorForm::_setPassword1
-		).addRequiredString(
-			"password2", PersonCreatorForm::_setPassword2
 		).build();
 	}
 
@@ -164,26 +160,6 @@ public class PersonCreatorForm {
 	}
 
 	/**
-	 * Returns the person's password (first attempt)
-	 *
-	 * @return the person's password (first attempt)
-	 * @review
-	 */
-	public String getPassword1() {
-		return _password1;
-	}
-
-	/**
-	 * Returns the person's password (second attempt)
-	 *
-	 * @return the person's password (second attempt)
-	 * @review
-	 */
-	public String getPassword2() {
-		return _password2;
-	}
-
-	/**
 	 * Checks if the person is a male
 	 *
 	 * @return {@code true} if the person is a male; {@code false} otherwise
@@ -242,14 +218,6 @@ public class PersonCreatorForm {
 		_jobTitle = jobTitle;
 	}
 
-	private void _setPassword1(String password1) {
-		_password1 = password1;
-	}
-
-	private void _setPassword2(String password2) {
-		_password2 = password2;
-	}
-
 	private String _alternateName;
 	private Integer _birthdayDay;
 	private Integer _birthdayMonth;
@@ -259,7 +227,5 @@ public class PersonCreatorForm {
 	private String _givenName;
 	private String _jobTitle;
 	private Boolean _male;
-	private String _password1;
-	private String _password2;
 
 }

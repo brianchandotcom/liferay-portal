@@ -383,7 +383,7 @@ public class DetailASTUtil {
 				}
 			}
 			else if (previousAST.getType() ==
-						TokenTypes.RESOURCE_SPECIFICATION) {
+						 TokenTypes.RESOURCE_SPECIFICATION) {
 
 				DetailAST recourcesAST = previousAST.findFirstToken(
 					TokenTypes.RESOURCES);

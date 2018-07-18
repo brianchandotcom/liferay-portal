@@ -190,7 +190,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 					javaArchive.getContent();
 
 				for (ArchivePath archivePath : javaArchiveContentMap.keySet()) {
-					String archivePathString = archivePath.toString();
+					String archivePathString = archivePath.get();
 
 					if (archivePathString.endsWith(path)) {
 						testClassFound = true;

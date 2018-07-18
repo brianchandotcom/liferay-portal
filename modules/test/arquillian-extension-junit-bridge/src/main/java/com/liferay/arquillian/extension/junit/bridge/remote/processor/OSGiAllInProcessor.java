@@ -24,11 +24,9 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -151,24 +149,14 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		manifestManager.replaceManifest(javaArchive, manifest);
 	}
 
-	private void _addTestClass(JavaArchive javaArchive, TestClass testClass)
-		throws IOException {
-
+	private void _addTestClass(JavaArchive javaArchive, TestClass testClass) {
 		Class<?> javaClass = testClass.getJavaClass();
 
-		Set<Class<?>> classes = new HashSet<>();
+		while (javaClass != Object.class) {
+			javaArchive.addClass(javaClass);
 
-		classes.add(javaClass);
-
-		Class<?> superclass = javaClass.getSuperclass();
-
-		while (superclass != Object.class) {
-			classes.add(superclass);
-
-			superclass = superclass.getSuperclass();
+			javaClass = javaClass.getSuperclass();
 		}
-
-		javaArchive.addClasses(classes.toArray(new Class<?>[classes.size()]));
 	}
 
 	private void _cleanRepeatedImports(

@@ -14,13 +14,13 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container.remote;
 
-import org.jboss.arquillian.container.osgi.karaf.remote.KarafRemoteContainerConfiguration;
+import org.jboss.arquillian.container.osgi.jmx.JMXContainerConfiguration;
 
 /**
  * @author Preston Crary
  */
 public class LiferayRemoteContainerConfiguration
-	extends KarafRemoteContainerConfiguration {
+	extends JMXContainerConfiguration {
 
 	public static final String LIFERAY_DEFAULT_HTTP_HOST = "localhost";
 

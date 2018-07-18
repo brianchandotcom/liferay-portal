@@ -4,7 +4,9 @@
 
 		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="${navItem}" />
 
-		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK" />
+		<execute macro="NavItem#viewActive">
+			<var name="navItem" value="${navItem}" />
+		</execute>
 	</command>
 
 	<command name="gotoAvailableSites">
@@ -70,6 +72,12 @@
 	<command name="gotoUsers">
 		<execute macro="NavItem#click">
 			<var name="navItem" value="Users" />
+		</execute>
+	</command>
+
+	<command name="viewActive">
+		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
+			<var name="key_navItem" value="${navItem}" />
 		</execute>
 	</command>
 </definition>

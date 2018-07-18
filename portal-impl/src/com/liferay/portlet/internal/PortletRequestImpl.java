@@ -1091,24 +1091,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	private class Parameter {
 
-		public Parameter(
-			String name, String[] values, String portletNamespace) {
-
-			String portletNamespacedName = null;
-
-			if ((name != null) && name.startsWith(portletNamespace)) {
-				portletNamespacedName = name;
-
-				name = name.substring(portletNamespace.length());
-			}
-
-			_name = name;
-
-			_portletNamespacedName = portletNamespacedName;
-
-			_values = values;
-		}
-
 		public String getName() {
 			return _name;
 		}
@@ -1133,6 +1115,24 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			return false;
 		}
 
+		private Parameter(
+			String name, String[] values, String portletNamespace) {
+
+			String portletNamespacedName = null;
+
+			if ((name != null) && name.startsWith(portletNamespace)) {
+				portletNamespacedName = name;
+
+				name = name.substring(portletNamespace.length());
+			}
+
+			_name = name;
+
+			_portletNamespacedName = portletNamespacedName;
+
+			_values = values;
+		}
+
 		private final String _name;
 		private final String _portletNamespacedName;
 		private final String[] _values;
@@ -1150,17 +1150,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	}
 
 	private class RequestParameter extends Parameter {
-
-		public RequestParameter(
-			String name, String[] values, String portletNamespace) {
-
-			super(name, values, portletNamespace);
-
-			// TODO: Additional Portlet 3.0 related initialization.
-
-		}
-
-		// TODO: Additional Portlet 3.0 related methods.
 
 		public boolean isNameInvalid() {
 			String name = getName();
@@ -1185,6 +1174,17 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			}
 
 			return false;
+		}
+
+		// TODO: Additional Portlet 3.0 related methods.
+
+		private RequestParameter(
+			String name, String[] values, String portletNamespace) {
+
+			super(name, values, portletNamespace);
+
+			// TODO: Additional Portlet 3.0 related initialization.
+
 		}
 
 	}

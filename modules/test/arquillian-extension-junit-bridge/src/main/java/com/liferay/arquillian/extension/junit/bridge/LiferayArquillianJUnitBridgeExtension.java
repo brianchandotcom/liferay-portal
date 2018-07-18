@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge;
 
 import com.liferay.arquillian.container.osgi.remote.bundleclasspath.BundleClassPathAuxiliaryAppender;
 import com.liferay.arquillian.container.osgi.remote.commandservice.CommandServiceAuxiliaryAppender;
-import com.liferay.arquillian.container.osgi.remote.processor.OSGiAllInProcessor;
 import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActivatorsManager;
 import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActivatorsManagerImpl;
 import com.liferay.arquillian.container.osgi.remote.processor.service.ImportPackageManager;
@@ -28,6 +27,7 @@ import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentSce
 import com.liferay.arquillian.extension.junit.bridge.deployment.JUnitBridgeAuxiliaryArchiveAppender;
 import com.liferay.arquillian.extension.junit.bridge.deployment.NoOpArchiveApplicationProcessor;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
+import com.liferay.arquillian.extension.junit.bridge.remote.processor.OSGiAllInProcessor;
 
 import java.net.URL;
 

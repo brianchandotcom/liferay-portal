@@ -69,7 +69,8 @@ public class JavaClassParser {
 				anonymousClasses.add(
 					_parseJavaClass(
 						StringPool.BLANK, classContent, lineNumber,
-						JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false, true));
+						JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false, false,
+						true));
 
 				break;
 			}
@@ -107,9 +108,20 @@ public class JavaClassParser {
 			isAbstract = true;
 		}
 
+		boolean isInterface = false;
+
+		if (matcher.group(4) != null) {
+			String token = matcher.group(4);
+
+			if (token.equals("interface")) {
+				isInterface = true;
+			}
+		}
+
 		JavaClass javaClass = _parseJavaClass(
 			className, classContent, lineNumber,
-			JavaTerm.ACCESS_MODIFIER_PUBLIC, isAbstract, false, false);
+			JavaTerm.ACCESS_MODIFIER_PUBLIC, isAbstract, false, isInterface,
+			false);
 
 		javaClass.setPackageName(JavaSourceUtil.getPackageName(content));
 
@@ -210,6 +222,7 @@ public class JavaClassParser {
 		}
 
 		boolean isAbstract = startLine.contains(" abstract ");
+		boolean isInterface = startLine.contains(" interface ");
 		boolean isStatic = startLine.contains(" static ");
 
 		int x = startLine.indexOf(CharPool.EQUAL);
@@ -221,7 +234,7 @@ public class JavaClassParser {
 
 			return _parseJavaClass(
 				_getClassName(startLine), javaTermContent, lineNumber,
-				accessModifier, isAbstract, isStatic, false);
+				accessModifier, isAbstract, isStatic, isInterface, false);
 		}
 
 		if (((x > 0) && ((y == -1) || (y > x))) ||
@@ -336,12 +349,12 @@ public class JavaClassParser {
 	private static JavaClass _parseJavaClass(
 			String className, String classContent, int lineNumber,
 			String accessModifier, boolean isAbstract, boolean isStatic,
-			boolean anonymous)
+			boolean isInterface, boolean anonymous)
 		throws IOException, ParseException {
 
 		JavaClass javaClass = new JavaClass(
 			className, classContent, accessModifier, lineNumber, isAbstract,
-			isStatic, anonymous);
+			isStatic, isInterface, anonymous);
 
 		String indent = SourceUtil.getIndent(classContent) + StringPool.TAB;
 

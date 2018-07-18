@@ -179,17 +179,6 @@ public class PersonCreatorForm {
 	}
 
 	/**
-	 * Checks if the person has an alternate name
-	 *
-	 * @return {@code true} if the person has an alternate name; {@code false}
-	 *         otherwise
-	 * @review
-	 */
-	public boolean hasAlternateName() {
-		return Validator.isNull(_alternateName);
-	}
-
-	/**
 	 * Checks if the person is a male
 	 *
 	 * @return {@code true} if the person is a male; {@code false} otherwise
@@ -197,6 +186,17 @@ public class PersonCreatorForm {
 	 */
 	public boolean isMale() {
 		return _male;
+	}
+
+	/**
+	 * Checks if the person has an alternate name
+	 *
+	 * @return {@code true} if the person has an alternate name; {@code false}
+	 *         otherwise
+	 * @review
+	 */
+	public boolean needsAlternateName() {
+		return Validator.isNull(_alternateName);
 	}
 
 	private void _setAlternateName(String alternateName) {

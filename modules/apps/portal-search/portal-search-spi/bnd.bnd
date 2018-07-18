@@ -4,6 +4,7 @@ Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.portal.search.spi.model.index.contributor,\
 	com.liferay.portal.search.spi.model.index.contributor.helper,\
+	com.liferay.portal.search.spi.model.permission,\
 	com.liferay.portal.search.spi.model.query.contributor,\
 	com.liferay.portal.search.spi.model.query.contributor.helper,\
 	com.liferay.portal.search.spi.model.registrar,\

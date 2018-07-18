@@ -51,15 +51,17 @@
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
 		<%
+		long logoId = organization.getLogoId();
+
 		row.setCssClass("entry-card lfr-asset-item");
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:icon-vertical-card
+			<liferay-frontend:vertical-card
 				actionJsp="/organization_action.jsp"
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
-				icon="users"
+				imageUrl='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=" + logoId + "&t=" + WebServerServletTokenUtil.getToken(logoId) %>'
 				resultRow="<%= row %>"
 				rowChecker="<%= organizationSearchContainer.getRowChecker() %>"
 				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"

@@ -37,22 +37,33 @@ portletURL.setParameter("portletResource", portletResource);
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:nav-bar cssClass="navbar-collapse-absolute" markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
+		<clay:navigation-bar
+			navigationItems='<%=
+				new JSPNavigationItemList(pageContext) {
+					{
+						portletURL.setParameter("tabs2", "export");
 
-				<%
-				portletURL.setParameter("tabs2", "export");
-				%>
+						add(
+							navigationItem -> {
+								navigationItem.setActive(tabs2.equals("export"));
+								navigationItem.setHref(portletURL.toString());
+								navigationItem.setLabel(LanguageUtil.get(request, "export"));
+							}
+						);
 
-				<aui:nav-item href="<%= portletURL.toString() %>" label="export" selected='<%= tabs2.equals("export") %>' />
+						portletURL.setParameter("tabs2", "import");
 
-				<%
-				portletURL.setParameter("tabs2", "import");
-				%>
-
-				<aui:nav-item href="<%= portletURL.toString() %>" label="import" selected='<%= tabs2.equals("import") %>' />
-			</aui:nav>
-		</aui:nav-bar>
+						add(
+							navigationItem -> {
+								navigationItem.setActive(tabs2.equals("import"));
+								navigationItem.setHref(portletURL.toString());
+								navigationItem.setLabel(LanguageUtil.get(request, "import"));
+							}
+						);
+					}
+				}
+			%>'
+		/>
 
 		<div class="portlet-export-import-container" id="<portlet:namespace />exportImportPortletContainer">
 			<liferay-util:include page="/export_import_error.jsp" servletContext="<%= application %>" />

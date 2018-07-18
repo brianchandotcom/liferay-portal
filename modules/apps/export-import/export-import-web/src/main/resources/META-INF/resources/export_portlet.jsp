@@ -25,22 +25,33 @@ portletURL.setParameter("mvcRenderCommandName", "exportImport");
 portletURL.setParameter("portletResource", portletResource);
 %>
 
-<aui:nav-bar cssClass="navbar-collapse-absolute" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<clay:navigation-bar
+	navigationItems='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				portletURL.setParameter("tabs3", "new-export-process");
 
-		<%
-		portletURL.setParameter("tabs3", "new-export-process");
-		%>
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs3.equals("new-export-process"));
+						navigationItem.setHref(portletURL.toString());
+						navigationItem.setLabel(LanguageUtil.get(request, "new-export-process"));
+					}
+				);
 
-		<aui:nav-item href="<%= portletURL.toString() %>" label="new-export-process" selected='<%= tabs3.equals("new-export-process") %>' />
+				portletURL.setParameter("tabs3", "current-and-previous");
 
-		<%
-		portletURL.setParameter("tabs3", "current-and-previous");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="current-and-previous" selected='<%= tabs3.equals("current-and-previous") %>' />
-	</aui:nav>
-</aui:nav-bar>
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs3.equals("current-and-previous"));
+						navigationItem.setHref(portletURL.toString());
+						navigationItem.setLabel(LanguageUtil.get(request, "current-and-previous"));
+					}
+				);
+			}
+		}
+	%>'
+/>
 
 <c:choose>
 	<c:when test='<%= tabs3.equals("new-export-process") %>'>

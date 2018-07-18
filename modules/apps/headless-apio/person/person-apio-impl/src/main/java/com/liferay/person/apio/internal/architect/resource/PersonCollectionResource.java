@@ -164,9 +164,8 @@ public class PersonCollectionResource
 		throws PortalException {
 
 		User user = _userLocalService.addUser(
-			UserConstants.USER_ID_DEFAULT, themeDisplay.getCompanyId(), false,
-			personCreatorForm.getPassword1(), personCreatorForm.getPassword2(),
-			personCreatorForm.needsAlternateName(),
+			UserConstants.USER_ID_DEFAULT, themeDisplay.getCompanyId(), true,
+			null, null, personCreatorForm.needsAlternateName(),
 			personCreatorForm.getAlternateName(), personCreatorForm.getEmail(),
 			0, StringPool.BLANK, LocaleUtil.getDefault(),
 			personCreatorForm.getGivenName(), StringPool.BLANK,

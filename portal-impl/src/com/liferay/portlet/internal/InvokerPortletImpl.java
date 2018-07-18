@@ -50,8 +50,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.lang.reflect.Method;
-
 import java.util.List;
 import java.util.Map;
 
@@ -59,8 +57,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
-import javax.portlet.GenericPortlet;
-import javax.portlet.HeaderPortlet;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
 import javax.portlet.Portlet;
@@ -152,25 +148,8 @@ public class InvokerPortletImpl
 			facesPortlet = true;
 		}
 
-		boolean headerPortlet = false;
-
-		if (portlet instanceof HeaderPortlet) {
-			headerPortlet = true;
-
-			try {
-				Method renderHeadersMethod = portletClass.getMethod(
-					"renderHeaders", HeaderRequest.class, HeaderResponse.class);
-
-				if (GenericPortlet.class ==
-						renderHeadersMethod.getDeclaringClass()) {
-
-					headerPortlet = false;
-				}
-			}
-			catch (NoSuchMethodException nsme) {
-				_log.error(nsme, nsme);
-			}
-		}
+		boolean headerPortlet = PortletTypeUtil.isHeaderPortlet(
+			portlet, portletClass);
 
 		boolean strutsPortlet = ClassUtil.isSubclass(
 			portletClass, StrutsPortlet.class);

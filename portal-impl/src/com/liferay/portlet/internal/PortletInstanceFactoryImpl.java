@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portlet.PortletBagFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -168,32 +166,13 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		}
 
 		if (rootInvokerPortletInstance == null) {
-			PortletBag portletBag = PortletBagPool.get(rootPortletId);
-
-			// Portlet bag should never be null unless the portlet has been
-			// undeployed
-
-			if (portletBag == null) {
-				PortletBagFactory portletBagFactory = new PortletBagFactory();
-
-				portletBagFactory.setClassLoader(
-					ClassLoaderUtil.getPortalClassLoader());
-				portletBagFactory.setServletContext(servletContext);
-				portletBagFactory.setWARFile(false);
-
-				try {
-					portletBag = portletBagFactory.create(portlet);
-				}
-				catch (Exception e) {
-					throw new PortletException(e);
-				}
-			}
-
 			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 				portlet, servletContext);
 
 			rootInvokerPortletInstance = init(
-				portlet, portletConfig, portletBag.getPortletInstance());
+				portlet, portletConfig,
+				PortletBagUtil.getPortletInstance(
+					servletContext, portlet, rootPortletId));
 
 			if (deployed) {
 				portletInstances.put(rootPortletId, rootInvokerPortletInstance);

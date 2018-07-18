@@ -52,6 +52,8 @@ import com.liferay.portal.layoutconfiguration.util.xml.PortletLogic;
 import com.liferay.portal.layoutconfiguration.util.xml.RenderURLLogic;
 import com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.internal.PortletBagUtil;
+import com.liferay.portlet.internal.PortletTypeUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.DummyVelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglib;
@@ -444,13 +446,29 @@ public class RuntimePageImpl implements RuntimePage {
 			}
 
 			for (PortletRenderer portletRenderer : portletRenderers) {
-				Portlet portlet = portletRenderer.getPortlet();
+				Portlet portletModel = portletRenderer.getPortlet();
+
+				if (!portletModel.isReady()) {
+					continue;
+				}
+
+				javax.portlet.Portlet portlet =
+					PortletBagUtil.getPortletInstance(
+						request.getServletContext(), portletModel,
+						portletModel.getRootPortletId());
+
+				if (!PortletTypeUtil.isHeaderPortlet(
+						portlet, portlet.getClass())) {
+
+					continue;
+				}
 
 				Map<String, Object> headerRequestMap =
 					portletRenderer.renderHeaders(
 						request, response,
-						portlet.getHeaderRequestAttributePrefixes());
-				String rendererPortletId = portlet.getPortletId();
+						portletModel.getHeaderRequestAttributePrefixes());
+
+				String rendererPortletId = portletModel.getPortletId();
 
 				portletHeaderRequestMap.put(
 					rendererPortletId, headerRequestMap);

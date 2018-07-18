@@ -704,23 +704,12 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					continue;
 				}
 
-				if (facesPortlet) {
-					if (requestParameter.isPortletNamespaced() ||
-						!portlet.isRequiresNamespacedParameters()) {
+				if (requestParameter.isPortletNamespaced() ||
+					!portlet.isRequiresNamespacedParameters()) {
 
-						dynamicRequest.setParameterValues(
-							requestParameter.getName(true),
-							requestParameter.getValues());
-					}
-				}
-				else {
-					if (requestParameter.isPortletNamespaced() ||
-						!portlet.isRequiresNamespacedParameters()) {
-
-						dynamicRequest.setParameterValues(
-							requestParameter.getName(),
-							requestParameter.getValues());
-					}
+					dynamicRequest.setParameterValues(
+						requestParameter.getName(facesPortlet),
+						requestParameter.getValues());
 				}
 			}
 

@@ -187,6 +187,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapFilterValidator.validate(
 				groupFilter, "SystemLDAPConfiguration.groupSearchFilter");
 
+			groupName = _encodedGroupName(groupName);
+
 			StringBundler sb = new StringBundler(
 				Validator.isNotNull(groupFilter) ? 9 : 5);
 
@@ -820,7 +822,11 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
-			enu = ldapContext.search(groupDN, sb.toString(), searchControls);
+			Name name = new CompositeName();
+
+			name.add(groupDN);
+
+			enu = ldapContext.search(name, sb.toString(), searchControls);
 
 			if (enu.hasMoreElements()) {
 				return true;
@@ -1004,6 +1010,19 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			systemLDAPConfigurationProvider) {
 
 		_systemLDAPConfigurationProvider = systemLDAPConfigurationProvider;
+	}
+
+	private String _encodedGroupName(String name) {
+		String[] oldString = {
+			StringPool.STAR, StringPool.OPEN_PARENTHESIS,
+			StringPool.CLOSE_PARENTHESIS, StringPool.NULL_CHAR
+		};
+
+		String[] newString = {"\\2a", "\\28", "\\29", "\\00"};
+
+		String groupName = StringUtil.replace(name, oldString, newString);
+
+		return groupName;
 	}
 
 	private Attributes _getAttributes(

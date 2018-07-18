@@ -147,6 +147,14 @@ public class MBMessageActivityInterpreter
 				return "activity-message-boards-message-reply-message-in";
 			}
 		}
+		else if (activityType == MBActivityKeys.UPDATE_MESSAGE) {
+			if (Validator.isNull(groupName)) {
+				return "activity-message-boards-message-update-message";
+			}
+			else {
+				return "activity-message-boards-message-update-message-in";
+			}
+		}
 
 		return null;
 	}

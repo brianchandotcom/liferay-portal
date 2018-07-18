@@ -23,4 +23,6 @@ public class MBActivityKeys {
 
 	public static final int REPLY_MESSAGE = 2;
 
+	public static final int UPDATE_MESSAGE = 3;
+
 }

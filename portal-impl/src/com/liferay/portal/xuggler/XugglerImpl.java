@@ -115,7 +115,7 @@ public class XugglerImpl implements Xuggler {
 	}
 
 	protected void informAdministrator(String errorMessage) {
-		if (!_informAdministrator) {
+		if (!_informAdministrator || !_log.isWarnEnabled()) {
 			return;
 		}
 
@@ -131,7 +131,7 @@ public class XugglerImpl implements Xuggler {
 		sb.append("/external-services. Error message is: ");
 		sb.append(errorMessage);
 
-		_log.error(sb.toString());
+		_log.warn(sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(XugglerImpl.class);

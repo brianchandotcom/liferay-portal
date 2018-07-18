@@ -44,8 +44,8 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.Node;
+import org.jboss.shrinkwrap.api.asset.ArchiveAsset;
 import org.jboss.shrinkwrap.api.asset.Asset;
-import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
@@ -206,19 +206,10 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 					_REMOTE_LOADABLE_EXTENSION_FILE);
 			}
 
-			ZipExporter auxiliaryArchiveZipExporter = auxiliaryArchive.as(
-				ZipExporter.class);
-
 			String path = "extension/" + auxiliaryArchive.getName();
 
-			try (InputStream auxiliaryArchiveInputStream =
-					auxiliaryArchiveZipExporter.exportAsInputStream()) {
-
-				ByteArrayAsset byteArrayAsset = new ByteArrayAsset(
-					auxiliaryArchiveInputStream);
-
-				javaArchive.addAsResource(byteArrayAsset, path);
-			}
+			javaArchive.addAsResource(
+				new ArchiveAsset(auxiliaryArchive, ZipExporter.class), path);
 
 			ManifestManager manifestManager = _manifestManagerInstance.get();
 

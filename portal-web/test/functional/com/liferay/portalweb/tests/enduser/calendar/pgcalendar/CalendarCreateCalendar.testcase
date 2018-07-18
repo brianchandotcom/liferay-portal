@@ -200,7 +200,7 @@
 
 		<execute macro="CalendarNavigator#gotoPreviousDay" />
 
-		<execute function="ScrollWebElementIntoView" locator1="DragAndDrop#CALENDAR_EVENT" />
+		<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
 
 		<execute macro="CalendarEvent#resizeViaEventBlock" />
 

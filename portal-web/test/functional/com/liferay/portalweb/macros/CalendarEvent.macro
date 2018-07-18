@@ -1380,7 +1380,7 @@
 	</command>
 
 	<command name="resizeViaEventBlock">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="DragAndDrop#CALENDAR_EVENT" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
 
 		<execute function="SikuliDragAndDrop" locator1="Calendar#SCHEDULER_VIEW_DAY_RESIZER_ICON" value1="0,100" />
 	</command>

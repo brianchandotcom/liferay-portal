@@ -15,42 +15,18 @@
 package com.liferay.message.boards.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
-import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
+import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.kernel.staging.Staging;
-import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBThreadFlag;
-import com.liferay.message.boards.service.MBBanLocalService;
-import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.service.MBStatsUserLocalService;
-import com.liferay.message.boards.service.MBThreadFlagLocalService;
-import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Criterion;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
@@ -62,32 +38,46 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Raymond Augé
  * @author Daniel Kocsis
+ * @author Gergely Mathe
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN
-	},
+	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 	service = PortletDataHandler.class
 )
 public class MBPortletDataHandler extends BasePortletDataHandler {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             MBAdminPortletDataHandler#NAMESPACE}
+	 */
+	@Deprecated
 	public static final String NAMESPACE = "message_boards";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             MBAdminPortletDataHandler#SCHEMA_VERSION}
+	 */
+	@Deprecated
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override
+	public String getNamespace() {
+		return _mbAdminPortletDataHandler.getNamespace();
+	}
+
+	@Override
 	public String getSchemaVersion() {
-		return SCHEMA_VERSION;
+		return _mbAdminPortletDataHandler.getSchemaVersion();
 	}
 
 	@Override
 	public String getServiceName() {
-		return MBConstants.SERVICE_NAME;
+		return _mbAdminPortletDataHandler.getServiceName();
 	}
 
 	@Activate
 	protected void activate() {
+		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(MBBan.class),
 			new StagedModelType(MBCategory.class),
@@ -96,17 +86,17 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(MBThreadFlag.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "categories", true, false, null,
+				getNamespace(), "categories", true, false, null,
 				MBCategory.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "messages", true, false, null,
+				getNamespace(), "messages", true, false, null,
 				MBMessage.class.getName(),
 				StagedModelType.REFERRER_CLASS_NAME_ALL),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "thread-flags", true, false, null,
+				getNamespace(), "thread-flags", true, false, null,
 				MBThreadFlag.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "user-bans", true, false, null,
+				getNamespace(), "user-bans", true, false, null,
 				MBBan.class.getName()));
 		setPublishToLiveByDefault(
 			PropsValues.MESSAGE_BOARDS_PUBLISH_TO_LIVE_BY_DEFAULT);
@@ -119,26 +109,8 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (portletDataContext.addPrimaryKey(
-				MBPortletDataHandler.class, "deleteData")) {
-
-			return portletPreferences;
-		}
-
-		_mbBanLocalService.deleteBansByGroupId(
-			portletDataContext.getScopeGroupId());
-
-		_mbCategoryLocalService.deleteCategories(
-			portletDataContext.getScopeGroupId());
-
-		_mbStatsUserLocalService.deleteStatsUsersByGroupId(
-			portletDataContext.getScopeGroupId());
-
-		_mbThreadLocalService.deleteThreads(
-			portletDataContext.getScopeGroupId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-
-		return portletPreferences;
+		return _mbAdminPortletDataHandler.doDeleteData(
+			portletDataContext, portletId, portletPreferences);
 	}
 
 	@Override
@@ -147,47 +119,8 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(MBConstants.RESOURCE_NAME);
-
-		Element rootElement = addExportDataRootElement(portletDataContext);
-
-		rootElement.addAttribute(
-			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "categories") ||
-			portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
-
-			ActionableDynamicQuery categoryActionableDynamicQuery =
-				_mbCategoryLocalService.getExportActionableDynamicQuery(
-					portletDataContext);
-
-			categoryActionableDynamicQuery.performActions();
-		}
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
-			ActionableDynamicQuery messageActionableDynamicQuery =
-				getMessageActionableDynamicQuery(portletDataContext);
-
-			messageActionableDynamicQuery.performActions();
-		}
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "thread-flags")) {
-			ActionableDynamicQuery threadFlagActionableDynamicQuery =
-				_mbThreadFlagLocalService.getExportActionableDynamicQuery(
-					portletDataContext);
-
-			threadFlagActionableDynamicQuery.performActions();
-		}
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "user-bans")) {
-			ActionableDynamicQuery banActionableDynamicQuery =
-				_mbBanLocalService.getExportActionableDynamicQuery(
-					portletDataContext);
-
-			banActionableDynamicQuery.performActions();
-		}
-
-		return getExportDataRootElementString(rootElement);
+		return _mbAdminPortletDataHandler.doExportData(
+			portletDataContext, portletId, portletPreferences);
 	}
 
 	@Override
@@ -196,60 +129,8 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPortletPermissions(MBConstants.RESOURCE_NAME);
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "categories") ||
-			portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
-
-			Element categoriesElement =
-				portletDataContext.getImportDataGroupElement(MBCategory.class);
-
-			List<Element> categoryElements = categoriesElement.elements();
-
-			for (Element categoryElement : categoryElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, categoryElement);
-			}
-		}
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
-			Element messagesElement =
-				portletDataContext.getImportDataGroupElement(MBMessage.class);
-
-			List<Element> messageElements = messagesElement.elements();
-
-			for (Element messageElement : messageElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, messageElement);
-			}
-		}
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "thread-flags")) {
-			Element threadFlagsElement =
-				portletDataContext.getImportDataGroupElement(
-					MBThreadFlag.class);
-
-			List<Element> threadFlagElements = threadFlagsElement.elements();
-
-			for (Element threadFlagElement : threadFlagElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, threadFlagElement);
-			}
-		}
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "user-bans")) {
-			Element userBansElement =
-				portletDataContext.getImportDataGroupElement(MBBan.class);
-
-			List<Element> userBanElements = userBansElement.elements();
-
-			for (Element userBanElement : userBanElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, userBanElement);
-			}
-		}
-
-		return null;
+		return _mbAdminPortletDataHandler.doImportData(
+			portletDataContext, portletId, portletPreferences, data);
 	}
 
 	@Override
@@ -258,160 +139,11 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (ExportImportDateUtil.isRangeFromLastPublishDate(
-				portletDataContext)) {
-
-			_staging.populateLastPublishDateCounts(
-				portletDataContext,
-				new StagedModelType[] {
-					new StagedModelType(MBBan.class.getName()),
-					new StagedModelType(MBCategory.class.getName()),
-					new StagedModelType(MBMessage.class.getName()),
-					new StagedModelType(MBThread.class.getName()),
-					new StagedModelType(MBThreadFlag.class.getName())
-				});
-
-			return;
-		}
-
-		ActionableDynamicQuery banActionableDynamicQuery =
-			_mbBanLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		banActionableDynamicQuery.performCount();
-
-		ActionableDynamicQuery categoryActionableDynamicQuery =
-			_mbCategoryLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		categoryActionableDynamicQuery.performCount();
-
-		ActionableDynamicQuery messageActionableDynamicQuery =
-			getMessageActionableDynamicQuery(portletDataContext);
-
-		messageActionableDynamicQuery.performCount();
-
-		ActionableDynamicQuery threadActionableDynamicQuery =
-			_mbThreadLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		threadActionableDynamicQuery.performCount();
-
-		ActionableDynamicQuery threadFlagActionableDynamicQuery =
-			_mbThreadFlagLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		threadFlagActionableDynamicQuery.performCount();
+		_mbAdminPortletDataHandler.doPrepareManifestSummary(
+			portletDataContext, portletPreferences);
 	}
-
-	protected ActionableDynamicQuery getMessageActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery actionableDynamicQuery =
-			_mbMessageLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion modifiedDateCriterion =
-						portletDataContext.getDateRangeCriteria("modifiedDate");
-					Criterion statusDateCriterion =
-						portletDataContext.getDateRangeCriteria("statusDate");
-
-					if ((modifiedDateCriterion != null) &&
-						(statusDateCriterion != null)) {
-
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
-
-						disjunction.add(modifiedDateCriterion);
-						disjunction.add(statusDateCriterion);
-
-						dynamicQuery.add(disjunction);
-					}
-
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
-
-					dynamicQuery.add(classNameIdProperty.eq(0L));
-
-					Property statusProperty = PropertyFactoryUtil.forName(
-						"status");
-
-					if (portletDataContext.isInitialPublication()) {
-						dynamicQuery.add(
-							statusProperty.ne(
-								WorkflowConstants.STATUS_IN_TRASH));
-					}
-					else {
-						StagedModelDataHandler<?> stagedModelDataHandler =
-							StagedModelDataHandlerRegistryUtil.
-								getStagedModelDataHandler(
-									MBMessage.class.getName());
-
-						dynamicQuery.add(
-							statusProperty.in(
-								stagedModelDataHandler.
-									getExportableStatuses()));
-					}
-				}
-
-			});
-
-		return actionableDynamicQuery;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBBanLocalService(MBBanLocalService mbBanLocalService) {
-		_mbBanLocalService = mbBanLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBStatsUserLocalService(
-		MBStatsUserLocalService mbStatsUserLocalService) {
-
-		_mbStatsUserLocalService = mbStatsUserLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadFlagLocalService(
-		MBThreadFlagLocalService mbThreadFlagLocalService) {
-
-		_mbThreadFlagLocalService = mbThreadFlagLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
-	private MBBanLocalService _mbBanLocalService;
-	private MBCategoryLocalService _mbCategoryLocalService;
-	private MBMessageLocalService _mbMessageLocalService;
-	private MBStatsUserLocalService _mbStatsUserLocalService;
-	private MBThreadFlagLocalService _mbThreadFlagLocalService;
-	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference
-	private Staging _staging;
+	private MBAdminPortletDataHandler _mbAdminPortletDataHandler;
 
 }

@@ -108,9 +108,6 @@ public class LiferayRemoteDeployableContainer
 
 			awaitBootstrapCompleteServices();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
 		catch (Exception e) {
 			throw new LifecycleException("Cannot start Karaf container", e);
 		}

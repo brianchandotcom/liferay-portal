@@ -34,9 +34,9 @@ public class DDMFormSuccessPageSettings implements Serializable {
 	public DDMFormSuccessPageSettings(
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings) {
 
-		_body = ddmFormSuccessPageSettings._body;
+		_body = new LocalizedValue(ddmFormSuccessPageSettings._body);
 		_enabled = ddmFormSuccessPageSettings._enabled;
-		_title = ddmFormSuccessPageSettings._title;
+		_title = new LocalizedValue(ddmFormSuccessPageSettings._title);
 	}
 
 	public DDMFormSuccessPageSettings(
@@ -103,8 +103,8 @@ public class DDMFormSuccessPageSettings implements Serializable {
 		_title = title;
 	}
 
-	private LocalizedValue _body;
+	private LocalizedValue _body = new LocalizedValue();
 	private boolean _enabled;
-	private LocalizedValue _title;
+	private LocalizedValue _title = new LocalizedValue();
 
 }

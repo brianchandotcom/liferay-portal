@@ -46,9 +46,10 @@ public class LiferayConnectionWizard extends ComponentWizard {
 	public void setupProperties(
 		LiferayConnectionProperties liferayConnectionProperties) {
 
-		liferayConnectionProperties.setupProperties();
+		this.liferayConnectionProperties.setupProperties();
 
-		liferayConnectionProperties.copyValuesFrom(liferayConnectionProperties);
+		this.liferayConnectionProperties.copyValuesFrom(
+			liferayConnectionProperties);
 	}
 
 	public boolean supportsProperties(ComponentProperties componentProperties) {

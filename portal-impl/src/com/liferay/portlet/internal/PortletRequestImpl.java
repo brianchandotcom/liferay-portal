@@ -686,7 +686,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 				RequestParameter requestParameter = new RequestParameter(
 					entry.getKey(), entry.getValue(), portletNamespace);
 
-				if (requestParameter.isNameInvalid()) {
+				if (requestParameter.isNameInvalid(_strutsPortlet)) {
 					continue;
 				}
 
@@ -1089,7 +1089,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private Principal _userPrincipal;
 	private WindowState _windowState;
 
-	private class Parameter {
+	private static class Parameter {
 
 		public String getName() {
 			return _name;
@@ -1139,19 +1139,9 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	}
 
-	private class PortletPreferencesPrivilegedAction
-		implements PrivilegedAction<PortletPreferences> {
+	private static class RequestParameter extends Parameter {
 
-		@Override
-		public PortletPreferences run() {
-			return new PortletPreferencesWrapper(getPreferencesImpl());
-		}
-
-	}
-
-	private class RequestParameter extends Parameter {
-
-		public boolean isNameInvalid() {
+		public boolean isNameInvalid(boolean strutsPortlet) {
 			String name = getName();
 
 			if (Validator.isNull(name) ||
@@ -1164,7 +1154,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 				return true;
 			}
 
-			if (_strutsPortlet) {
+			if (strutsPortlet) {
 				Matcher matcher = _strutsPortletIgnoredParamtersPattern.matcher(
 					name);
 
@@ -1185,6 +1175,16 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 			// TODO: Additional Portlet 3.0 related initialization.
 
+		}
+
+	}
+
+	private class PortletPreferencesPrivilegedAction
+		implements PrivilegedAction<PortletPreferences> {
+
+		@Override
+		public PortletPreferences run() {
+			return new PortletPreferencesWrapper(getPreferencesImpl());
 		}
 
 	}

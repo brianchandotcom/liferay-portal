@@ -1094,16 +1094,16 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		public Parameter(
 			String name, String[] values, String portletNamespace) {
 
-			_name = name;
-
 			String portletNamespacedName = null;
 
-			if (_name != null) {
-				if (_name.startsWith(portletNamespace)) {
-					portletNamespacedName = _name;
-					_name = _name.substring(portletNamespace.length());
+			if (name != null) {
+				if (name.startsWith(portletNamespace)) {
+					portletNamespacedName = name;
+					name = name.substring(portletNamespace.length());
 				}
 			}
+
+			_name = name;
 
 			_portletNamespacedName = portletNamespacedName;
 

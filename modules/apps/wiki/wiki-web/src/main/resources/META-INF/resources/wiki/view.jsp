@@ -309,7 +309,7 @@ if (portletTitleBasedNavigation) {
 							/>
 						</liferay-expando:custom-attributes-available>
 
-						<c:if test="<%= Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) %>">
+						<c:if test="<%= followRedirect || (redirectPage == null) %>">
 							<div class="page-actions">
 								<div class="stats">
 

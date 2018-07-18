@@ -96,6 +96,27 @@
 	</c:if>
 
 	<div class="autofit-col autofit-col-end">
-		<%@ include file="/blogs/social_bookmarks.jspf" %>
+		<liferay-portlet:renderURL varImpl="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
+			<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
+
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(entry.getUrlTitle()) %>">
+					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+				</c:when>
+				<c:otherwise>
+					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+				</c:otherwise>
+			</c:choose>
+		</liferay-portlet:renderURL>
+
+		<liferay-social-bookmarks:bookmarks
+			className="<%= BlogsEntry.class.getName() %>"
+			classPK="<%= entry.getEntryId() %>"
+			displayStyle='<%= showOnlyIcons ? "menu" : blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle()) %>'
+			target="_blank"
+			title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
+			types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"
+			urlImpl="<%= bookmarkURL %>"
+		/>
 	</div>
 </div>

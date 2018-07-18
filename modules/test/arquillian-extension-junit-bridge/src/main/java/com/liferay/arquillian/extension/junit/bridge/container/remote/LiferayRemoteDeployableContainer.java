@@ -25,10 +25,6 @@ import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.HTTPContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.InstanceProducer;
-import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
-import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.shrinkwrap.api.Archive;
 
 import org.osgi.jmx.framework.BundleStateMBean;
@@ -46,15 +42,12 @@ public class LiferayRemoteDeployableContainer
 	public ProtocolMetaData deploy(Archive<?> archive)
 		throws DeploymentException {
 
-		LiferayRemoteContainerConfiguration
-			liferayRemoteContainerConfiguration = configurationInstance.get();
-
 		ProtocolMetaData protocolMetaData = super.deploy(archive);
 
 		protocolMetaData.addContext(
 			new HTTPContext(
-				liferayRemoteContainerConfiguration.getHttpHost(),
-				liferayRemoteContainerConfiguration.getHttpPort()));
+				_liferayRemoteContainerConfiguration.getHttpHost(),
+				_liferayRemoteContainerConfiguration.getHttpPort()));
 
 		return protocolMetaData;
 	}
@@ -66,10 +59,10 @@ public class LiferayRemoteDeployableContainer
 	}
 
 	@Override
-	public void setup(T config) {
-		configurationInstanceProducer.set(config);
+	public void setup(T configuration) {
+		_liferayRemoteContainerConfiguration = configuration;
 
-		super.setup(config);
+		super.setup(configuration);
 	}
 
 	@Override
@@ -113,14 +106,7 @@ public class LiferayRemoteDeployableContainer
 		}
 	}
 
-	@ApplicationScoped
-	@Inject
-	protected Instance<LiferayRemoteContainerConfiguration>
-		configurationInstance;
-
-	@ApplicationScoped
-	@Inject
-	protected InstanceProducer<LiferayRemoteContainerConfiguration>
-		configurationInstanceProducer;
+	private LiferayRemoteContainerConfiguration
+		_liferayRemoteContainerConfiguration;
 
 }

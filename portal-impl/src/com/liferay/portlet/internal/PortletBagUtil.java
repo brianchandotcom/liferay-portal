@@ -58,10 +58,6 @@ public class PortletBagUtil {
 			}
 		}
 
-		if (portletBag == null) {
-			return null;
-		}
-
 		return portletBag.getPortletInstance();
 	}
 

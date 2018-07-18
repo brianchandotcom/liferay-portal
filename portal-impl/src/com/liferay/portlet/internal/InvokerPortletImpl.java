@@ -148,8 +148,7 @@ public class InvokerPortletImpl
 			facesPortlet = true;
 		}
 
-		boolean headerPortlet = PortletTypeUtil.isHeaderPortlet(
-			portlet, portletClass);
+		boolean headerPortlet = PortletTypeUtil.isHeaderPortlet(portlet);
 
 		boolean strutsPortlet = ClassUtil.isSubclass(
 			portletClass, StrutsPortlet.class);

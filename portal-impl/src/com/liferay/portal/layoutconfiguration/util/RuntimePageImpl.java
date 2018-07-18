@@ -457,9 +457,7 @@ public class RuntimePageImpl implements RuntimePage {
 						request.getServletContext(), portletModel,
 						portletModel.getRootPortletId());
 
-				if (!PortletTypeUtil.isHeaderPortlet(
-						portlet, portlet.getClass())) {
-
+				if (!PortletTypeUtil.isHeaderPortlet(portlet)) {
 					continue;
 				}
 

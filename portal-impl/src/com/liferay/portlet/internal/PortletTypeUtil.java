@@ -33,12 +33,12 @@ import javax.portlet.Portlet;
  */
 public class PortletTypeUtil {
 
-	public static boolean isHeaderPortlet(
-		Portlet portlet, Class<? extends Portlet> portletClass) {
-
+	public static boolean isHeaderPortlet(Portlet portlet) {
 		if (!(portlet instanceof HeaderPortlet)) {
 			return false;
 		}
+
+		Class<?> portletClass = portlet.getClass();
 
 		try {
 			Method renderHeadersMethod = portletClass.getMethod(

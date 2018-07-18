@@ -179,30 +179,8 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		String javaArchiveName = javaArchive.getName();
 
 		if (!javaArchiveName.endsWith(".war")) {
-			for (Class<?> clazz : classes) {
-				boolean testClassFound = false;
-
-				String className = clazz.getName();
-
-				String path = className.replace('.', '/') + ".class";
-
-				Map<ArchivePath, Node> javaArchiveContentMap =
-					javaArchive.getContent();
-
-				for (ArchivePath archivePath : javaArchiveContentMap.keySet()) {
-					String archivePathString = archivePath.get();
-
-					if (archivePathString.endsWith(path)) {
-						testClassFound = true;
-
-						break;
-					}
-				}
-
-				if (!testClassFound) {
-					((ClassContainer<?>)javaArchive).addClass(clazz);
-				}
-			}
+			((ClassContainer<?>)javaArchive).addClasses(
+				classes.toArray(new Class<?>[classes.size()]));
 		}
 
 		ManifestManager manifestManager = _manifestManagerInstance.get();

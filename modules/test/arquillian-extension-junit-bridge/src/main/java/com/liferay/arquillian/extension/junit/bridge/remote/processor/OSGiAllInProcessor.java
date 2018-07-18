@@ -94,12 +94,9 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 				_addBundleActivator(javaArchive, bundleActivator);
 			}
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
+		catch (IOException ioe) {
 			throw new IllegalArgumentException(
-				"Not a valid OSGi bundle: " + archive, e);
+				"Not a valid OSGi bundle: " + archive, ioe);
 		}
 	}
 

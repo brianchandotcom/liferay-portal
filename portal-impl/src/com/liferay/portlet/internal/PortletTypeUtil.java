@@ -36,27 +36,25 @@ public class PortletTypeUtil {
 	public static boolean isHeaderPortlet(
 		Portlet portlet, Class<? extends Portlet> portletClass) {
 
-		boolean headerPortlet = false;
-
-		if (portlet instanceof HeaderPortlet) {
-			headerPortlet = true;
-
-			try {
-				Method renderHeadersMethod = portletClass.getMethod(
-					"renderHeaders", HeaderRequest.class, HeaderResponse.class);
-
-				if (GenericPortlet.class ==
-						renderHeadersMethod.getDeclaringClass()) {
-
-					headerPortlet = false;
-				}
-			}
-			catch (NoSuchMethodException nsme) {
-				_log.error(nsme, nsme);
-			}
+		if (!(portlet instanceof HeaderPortlet)) {
+			return false;
 		}
 
-		return headerPortlet;
+		try {
+			Method renderHeadersMethod = portletClass.getMethod(
+				"renderHeaders", HeaderRequest.class, HeaderResponse.class);
+
+			if (GenericPortlet.class !=
+					renderHeadersMethod.getDeclaringClass()) {
+
+				return true;
+			}
+		}
+		catch (NoSuchMethodException nsme) {
+			_log.error(nsme, nsme);
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

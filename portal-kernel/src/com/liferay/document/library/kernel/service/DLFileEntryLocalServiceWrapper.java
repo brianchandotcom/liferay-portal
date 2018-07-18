@@ -656,8 +656,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getFileEntries(
 		long groupId, long userId, java.util.List<Long> repositoryIds,
 		java.util.List<Long> folderIds, String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition)
-		throws Exception {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
 		return _dlFileEntryLocalService.getFileEntries(groupId, userId,
 			repositoryIds, folderIds, mimeTypes, queryDefinition);
 	}
@@ -666,8 +665,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getFileEntries(
 		long groupId, long userId, java.util.List<Long> folderIds,
 		String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition)
-		throws Exception {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
 		return _dlFileEntryLocalService.getFileEntries(groupId, userId,
 			folderIds, mimeTypes, queryDefinition);
 	}
@@ -710,8 +708,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	public int getFileEntriesCount(long groupId, long userId,
 		java.util.List<Long> repositoryIds, java.util.List<Long> folderIds,
 		String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition)
-		throws Exception {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
 		return _dlFileEntryLocalService.getFileEntriesCount(groupId, userId,
 			repositoryIds, folderIds, mimeTypes, queryDefinition);
 	}
@@ -719,8 +716,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	@Override
 	public int getFileEntriesCount(long groupId, long userId,
 		java.util.List<Long> folderIds, String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition)
-		throws Exception {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
 		return _dlFileEntryLocalService.getFileEntriesCount(groupId, userId,
 			folderIds, mimeTypes, queryDefinition);
 	}
@@ -895,11 +891,14 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
-	public boolean isFileEntryCheckedOut(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public boolean isFileEntryCheckedOut(long fileEntryId) {
 		return _dlFileEntryLocalService.isFileEntryCheckedOut(fileEntryId);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public boolean isKeepFileVersionLabel(long fileEntryId,
 		boolean majorVersion,

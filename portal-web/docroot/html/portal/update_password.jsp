@@ -184,7 +184,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 
 						AUI().ready(
 							function() {
-								Liferay.Util.focusFormField('#password1');
+								Liferay.Util.focusFormField('#<portlet:namespace />password1');
 							}
 						);
 					</aui:script>

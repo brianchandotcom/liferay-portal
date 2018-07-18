@@ -82,20 +82,20 @@ public class BlogsReadingTimeEditorConfigContributor
 
 		jsonObject.put("extraPlugins", extraPlugins);
 
-		String namespace = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:namespace"));
+		_readingTimeConfigContributor.populateConfigJSONObject(
+			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+			requestBackedPortletURLFactory);
 
 		JSONObject readingTimeJSONObject = jsonObject.getJSONObject(
 			"readingTime");
 
 		if (readingTimeJSONObject != null) {
+			String namespace = GetterUtil.getString(
+				inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:namespace"));
+
 			readingTimeJSONObject.put("elementId", namespace + "readingTime");
 		}
-
-		_readingTimeConfigContributor.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
-			requestBackedPortletURLFactory);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

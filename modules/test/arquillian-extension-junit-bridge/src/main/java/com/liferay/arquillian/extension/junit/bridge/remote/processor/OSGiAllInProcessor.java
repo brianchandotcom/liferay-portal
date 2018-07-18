@@ -20,7 +20,6 @@ import com.liferay.arquillian.container.osgi.remote.processor.service.ImportPack
 import com.liferay.arquillian.container.osgi.remote.processor.service.ManifestManager;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,21 +38,15 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.jboss.arquillian.protocol.jmx.JMXTestRunner;
 import org.jboss.arquillian.test.spi.TestClass;
-import org.jboss.osgi.metadata.OSGiManifestBuilder;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.asset.ArchiveAsset;
-import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Matthew Tambara
@@ -64,8 +57,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	public void process(Archive<?> archive, TestClass testClass) {
 		try {
 			JavaArchive javaArchive = (JavaArchive)archive;
-
-			_validateBundleArchive(javaArchive);
 
 			_addTestClass(javaArchive, testClass);
 
@@ -219,41 +210,36 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			manifestManager.replaceManifest(javaArchive, manifest);
 
-			try {
-				_validateBundleArchive(auxiliaryArchive);
+			Node manifestNode = auxiliaryArchive.get(JarFile.MANIFEST_NAME);
 
-				Manifest auxiliaryArchiveManifest = manifestManager.getManifest(
-					(JavaArchive)auxiliaryArchive);
-
-				Attributes mainAttributes =
-					auxiliaryArchiveManifest.getMainAttributes();
-
-				String value = mainAttributes.getValue("Import-package");
-
-				if (value != null) {
-					String[] importValues = value.split(",");
-
-					manifest = manifestManager.putAttributeValue(
-						manifest, "Import-Package", importValues);
-
-					manifestManager.replaceManifest(javaArchive, manifest);
-				}
-
-				String bundleActivatorValue = mainAttributes.getValue(
-					"Bundle-Activator");
-
-				if ((bundleActivatorValue != null) &&
-					!bundleActivatorValue.isEmpty()) {
-
-					_addBundleActivator(javaArchive, bundleActivatorValue);
-				}
+			if (manifestNode == null) {
+				continue;
 			}
-			catch (BundleException be) {
-				if (_logger.isInfoEnabled()) {
-					_logger.info(
-						"Not processing manifest from " + auxiliaryArchive +
-							": " + be.getMessage());
-				}
+
+			Manifest auxiliaryArchiveManifest = manifestManager.getManifest(
+				(JavaArchive)auxiliaryArchive);
+
+			Attributes mainAttributes =
+				auxiliaryArchiveManifest.getMainAttributes();
+
+			String value = mainAttributes.getValue("Import-package");
+
+			if (value != null) {
+				String[] importValues = value.split(",");
+
+				manifest = manifestManager.putAttributeValue(
+					manifest, "Import-Package", importValues);
+
+				manifestManager.replaceManifest(javaArchive, manifest);
+			}
+
+			String bundleActivatorValue = mainAttributes.getValue(
+				"Bundle-Activator");
+
+			if ((bundleActivatorValue != null) &&
+				!bundleActivatorValue.isEmpty()) {
+
+				_addBundleActivator(javaArchive, bundleActivatorValue);
 			}
 		}
 	}
@@ -278,38 +264,12 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		return archives;
 	}
 
-	private void _validateBundleArchive(Archive<?> archive)
-		throws BundleException, IOException {
-
-		Manifest manifest = null;
-
-		Node node = archive.get(JarFile.MANIFEST_NAME);
-
-		if (node != null) {
-			Asset asset = node.getAsset();
-
-			try (InputStream inputStream = asset.openStream()) {
-				manifest = new Manifest(inputStream);
-			}
-		}
-
-		if (manifest != null) {
-			OSGiManifestBuilder.validateBundleManifest(manifest);
-		}
-		else {
-			throw new BundleException("can't obtain Manifest");
-		}
-	}
-
 	private static final String _ACTIVATORS_FILE =
 		"/META-INF/services/" + BundleActivator.class.getCanonicalName();
 
 	private static final String _REMOTE_LOADABLE_EXTENSION_FILE =
 		"/META-INF/services/" +
 			RemoteLoadableExtension.class.getCanonicalName();
-
-	private static final Logger _logger = LoggerFactory.getLogger(
-		ApplicationArchiveProcessor.class);
 
 	@Inject
 	private Instance<BundleActivatorsManager> _bundleActivatorsManagerInstance;

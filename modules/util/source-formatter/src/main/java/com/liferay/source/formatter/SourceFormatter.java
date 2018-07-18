@@ -847,7 +847,7 @@ public class SourceFormatter {
 						}
 					}
 					else if (progressStatus.equals(
-								ProgressStatus.CHECK_FILE_COMPLETED)) {
+								 ProgressStatus.CHECK_FILE_COMPLETED)) {
 
 						processedChecksFileCount++;
 
@@ -864,7 +864,7 @@ public class SourceFormatter {
 							totalChecksFileCount);
 					}
 					else if (progressStatus.equals(
-								ProgressStatus.SOURCE_FORMAT_COMPLETED)) {
+								 ProgressStatus.SOURCE_FORMAT_COMPLETED)) {
 
 						if (_maxStatusMessageLength == -1) {
 							break;

@@ -270,14 +270,14 @@ catch (NoSuchFolderException nsfe) {
 
 		if (form) {
 			var currentFolderColumns = form.querySelector('#<portlet:namespace />currentFolderColumns');
-			var folderColumns = form.querySelector('#<portlet:namespace />preferences--folderColumns--');
+			var folderColumns = form.querySelector('#<portlet:namespace />folderColumns');
 
 			if (currentFolderColumns && folderColumns) {
 				folderColumns.value = Util.listSelect(currentFolderColumns);
 			}
 
 			var currentEntryColumns = form.querySelector('#<portlet:namespace />currentEntryColumns');
-			var entryColumns = form.querySelector('#<portlet:namespace />preferences--entryColumns--');
+			var entryColumns = form.querySelector('#<portlet:namespace />entryColumns');
 
 			if (currentEntryColumns && entryColumns) {
 				entryColumns.value = Util.listSelect(currentEntryColumns);

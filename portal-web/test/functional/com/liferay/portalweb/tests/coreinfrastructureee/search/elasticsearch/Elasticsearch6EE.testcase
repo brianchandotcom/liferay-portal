@@ -85,7 +85,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Apple" />
 		</execute>
 
@@ -101,7 +101,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Orange" />
 		</execute>
 
@@ -133,7 +133,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Apple" />
 		</execute>
 
@@ -149,7 +149,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Orange" />
 		</execute>
 
@@ -203,7 +203,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Apple" />
 		</execute>
 
@@ -219,7 +219,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Orange" />
 		</execute>
 
@@ -248,7 +248,7 @@
 			<var name="nodePort" value="8" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Apple" />
 		</execute>
 
@@ -266,7 +266,7 @@
 			<var name="url" value="http://localhost:9080" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Orange" />
 		</execute>
 

@@ -375,7 +375,7 @@
 			<var name="folderName" value="Test Folder Name" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Test Bookmark Name" />
 		</execute>
 
@@ -393,7 +393,7 @@
 			<var name="folderName" value="Test Folder Name" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="asdf" />
 		</execute>
 
@@ -409,7 +409,7 @@
 			<var name="folderName" value="Test Folder Name" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm"><![CDATA["Test Bookmark Name"]]></var>
 		</execute>
 

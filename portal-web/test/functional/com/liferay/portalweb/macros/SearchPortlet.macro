@@ -96,14 +96,6 @@
 		<execute function="KeyPress" locator1="Search#CLASSIC_SEARCH_BAR" value1="\RETURN" />
 	</command>
 
-	<command name="searchPG">
-		<execute function="AssertElementPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
-
-		<execute function="Type" locator1="Search#EMBEDDED_SEARCH_BAR" value1="${searchTerm}" />
-
-		<execute function="KeyPress" locator1="Search#EMBEDDED_SEARCH_BAR" value1="\RETURN" />
-	</command>
-
 	<command name="unscopeAssetFacetPG">
 		<execute function="Click" locator1="SearchResults#ASSET_TYPE_FACET_ANY_ASSET" />
 	</command>

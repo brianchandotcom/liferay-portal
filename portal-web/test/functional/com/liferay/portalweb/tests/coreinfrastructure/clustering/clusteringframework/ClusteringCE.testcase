@@ -198,7 +198,7 @@
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Entry2" />
 		</execute>
 

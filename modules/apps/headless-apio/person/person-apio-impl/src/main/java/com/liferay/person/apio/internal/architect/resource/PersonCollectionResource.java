@@ -16,6 +16,7 @@ package com.liferay.person.apio.internal.architect.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
+import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -27,6 +28,7 @@ import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.person.apio.internal.architect.form.PersonCreatorForm;
 import com.liferay.person.apio.internal.architect.form.PersonUpdaterForm;
 import com.liferay.person.apio.internal.model.UserWrapper;
+import com.liferay.person.apio.internal.query.FullNameQuery;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,17 +37,22 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException.MustBeCompanyAdmin;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.role.apio.identifier.RoleIdentifier;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -74,7 +81,8 @@ public class PersonCollectionResource
 		CollectionRoutes.Builder<UserWrapper, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, ThemeDisplay.class
+			this::_getPageItems, FullNameQuery.class, Credentials.class,
+			ThemeDisplay.class
 		).addCreator(
 			this::_addUser, ThemeDisplay.class, _hasPermission::forAdding,
 			PersonCreatorForm::buildForm
@@ -198,20 +206,44 @@ public class PersonCollectionResource
 	}
 
 	private PageItems<UserWrapper> _getPageItems(
-			Pagination pagination, ThemeDisplay themeDisplay)
+			Pagination pagination, FullNameQuery fullNameQuery,
+			Credentials credentials, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<UserWrapper> userWrappers = Stream.of(
-			_userService.getCompanyUsers(
-				themeDisplay.getCompanyId(), pagination.getStartPosition(),
-				pagination.getEndPosition())
-		).flatMap(
-			List::stream
-		).map(
-			user -> new UserWrapper(user, themeDisplay)
-		).collect(
-			Collectors.toList()
-		);
+		Optional<String> optional = fullNameQuery.getFullNameOptional();
+
+		if (optional.isPresent()) {
+			PermissionChecker permissionChecker =
+				(PermissionChecker)credentials.get();
+
+			if (!permissionChecker.isCompanyAdmin(
+					themeDisplay.getCompanyId())) {
+
+				throw new MustBeCompanyAdmin(permissionChecker);
+			}
+
+			List<User> users = _userLocalService.search(
+				themeDisplay.getCompanyId(), optional.get(),
+				WorkflowConstants.STATUS_ANY, null,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				new UserLastNameComparator());
+
+			List<UserWrapper> userWrappers = _toUserWrapperList(
+				users, themeDisplay);
+
+			int count = _userLocalService.searchCount(
+				themeDisplay.getCompanyId(), optional.get(),
+				WorkflowConstants.STATUS_ANY, null);
+
+			return new PageItems<>(userWrappers, count);
+		}
+
+		List<User> users = _userService.getCompanyUsers(
+			themeDisplay.getCompanyId(), pagination.getStartPosition(),
+			pagination.getEndPosition());
+
+		List<UserWrapper> userWrappers = _toUserWrapperList(
+			users, themeDisplay);
 
 		int count = _userService.getCompanyUsersCount(
 			themeDisplay.getCompanyId());
@@ -229,6 +261,20 @@ public class PersonCollectionResource
 		User user = _userService.getUserById(userId);
 
 		return new UserWrapper(user, themeDisplay);
+	}
+
+	private List<UserWrapper> _toUserWrapperList(
+		List<User> list, ThemeDisplay themeDisplay) {
+
+		return Stream.of(
+			list
+		).flatMap(
+			List::stream
+		).map(
+			user -> new UserWrapper(user, themeDisplay)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private UserWrapper _updateUser(

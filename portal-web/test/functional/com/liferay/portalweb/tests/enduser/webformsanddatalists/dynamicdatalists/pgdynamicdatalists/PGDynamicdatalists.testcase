@@ -1040,7 +1040,7 @@
 			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchEmbedded">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="Record Text" />
 		</execute>
 
@@ -1049,7 +1049,7 @@
 			<var name="searchAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#gotoResultDetails">
+		<execute macro="SearchPortlets#gotoResultDetails">
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 		</execute>
 
@@ -1063,7 +1063,7 @@
 			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchEmbedded">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="123" />
 		</execute>
 
@@ -1072,7 +1072,7 @@
 			<var name="searchAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#gotoResultDetails">
+		<execute macro="SearchPortlets#gotoResultDetails">
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 		</execute>
 
@@ -1215,7 +1215,7 @@
 			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchEmbedded">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="Record Text" />
 		</execute>
 
@@ -1224,7 +1224,7 @@
 			<var name="searchAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#gotoResultDetails">
+		<execute macro="SearchPortlets#gotoResultDetails">
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 		</execute>
 
@@ -1239,11 +1239,11 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchEmbedded">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="Record Text" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResultWithNoPermissions">
+		<execute macro="SearchPortlets#viewSearchResultWithNoPermissions">
 			<var name="searchTerm" value="Record Text" />
 		</execute>
 	</command>

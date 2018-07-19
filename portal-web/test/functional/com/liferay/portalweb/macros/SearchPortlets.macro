@@ -47,7 +47,7 @@
 	</command>
 
 	<command name="configureEmbeddedParameterNames">
-		<execute macro="SearchBarPortlet#gotoEmbeddedOptions">
+		<execute macro="SearchPortlets#gotoEmbeddedOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -73,7 +73,7 @@
 	</command>
 
 	<command name="configureEmbeddedScope">
-		<execute macro="SearchBarPortlet#gotoEmbeddedOptions">
+		<execute macro="SearchPortlets#gotoEmbeddedOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -99,7 +99,7 @@
 	</command>
 
 	<command name="configureWidgetParameterNames">
-		<execute macro="SearchBarPortlet#gotoWidgetOptions">
+		<execute macro="SearchPortlets#gotoWidgetOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -125,7 +125,7 @@
 	</command>
 
 	<command name="configureWidgetScope">
-		<execute macro="SearchBarPortlet#gotoWidgetOptions">
+		<execute macro="SearchPortlets#gotoWidgetOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

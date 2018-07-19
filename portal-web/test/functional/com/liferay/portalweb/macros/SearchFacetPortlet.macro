@@ -145,7 +145,7 @@
 				<isset var="searchURL" />
 			</not>
 			<then>
-				<execute macro="SearchBarPortlet#getSearchTermURL">
+				<execute macro="SearchPortlets#getSearchTermURL">
 					<return name="searchURL" />
 					<var name="searchPage" value="${searchPage}" />
 					<var name="searchTerm" value="${searchTerm}" />

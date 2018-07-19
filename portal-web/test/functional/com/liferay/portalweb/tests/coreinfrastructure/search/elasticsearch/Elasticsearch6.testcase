@@ -120,7 +120,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchBarPortlet#searchEmbedded">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="Apple" />
 		</execute>
 
@@ -136,7 +136,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchBarPortlet#searchEmbedded">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="Orange" />
 		</execute>
 

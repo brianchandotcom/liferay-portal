@@ -371,7 +371,7 @@
 			<var name="pageName" value="Media Gallery Page" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchEmbedded">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="DM Document Title" />
 		</execute>
 
@@ -384,7 +384,7 @@
 			<var name="pageName" value="Media Gallery Page" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchEmbedded">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm"><![CDATA["DM Document Title"]]></var>
 		</execute>
 
@@ -397,7 +397,7 @@
 			<var name="pageName" value="Media Gallery Page" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchEmbedded">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="asdf" />
 		</execute>
 

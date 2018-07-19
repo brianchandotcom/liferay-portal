@@ -152,10 +152,13 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="cards" />
+		</execute>
+
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE_LINK" />
-
 		<execute function="AssertElementPresent" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" />
 	</command>
 

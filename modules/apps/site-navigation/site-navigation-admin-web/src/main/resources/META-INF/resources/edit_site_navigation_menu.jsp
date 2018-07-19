@@ -145,25 +145,15 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	var siteNavigationMenuItemRemoveButtonKeyupHandler = null;
 
 	var closeSidebar = function() {
-		var saveChanges = !changed ? false : confirm(
-			'<liferay-ui:message key="you-have-unsaved-changes.-do-you-want-to-save-them" />'
-		);
+		var saveChanges = false;
 
-		if (!changed || !saveChanges) {
-			if (sidebarBodyChangeHandler) {
-				sidebarBodyChangeHandler.detach();
-
-				sidebarBodyChangeHandler = null;
-			}
-
-			sidebar.body = '';
-			sidebar.visible = false;
-
-			changed = false;
-
-			return true;
+		if (changed) {
+			saveChanges = confirm(
+				'<liferay-ui:message key="you-have-unsaved-changes.-do-you-want-to-save-them" />'
+			);
 		}
-		else if (saveChanges) {
+
+		if (saveChanges) {
 			AUI().use(
 				['aui-base'],
 				function(A) {
@@ -174,11 +164,21 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 					}
 				}
 			);
+		}
+		else {
+			if (sidebarBodyChangeHandler) {
+				sidebarBodyChangeHandler.detach();
 
-			return false;
+				sidebarBodyChangeHandler = null;
+			}
+
+			sidebar.body = '';
+			sidebar.visible = false;
+
+			changed = false;
 		}
 
-		return false;
+		return !saveChanges;
 	};
 
 	var handleMenuItemSelected = function(siteNavigationMenuItem) {

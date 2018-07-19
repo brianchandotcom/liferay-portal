@@ -198,6 +198,12 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		Collection<AuxiliaryArchiveAppender> archiveAppenders =
 			serviceLoader.all(AuxiliaryArchiveAppender.class);
 
+		List<String> bundleClassPaths = new ArrayList<>();
+
+		bundleClassPaths.add(".");
+
+		List<String> importPackages = new ArrayList<>();
+
 		for (AuxiliaryArchiveAppender archiveAppender : archiveAppenders) {
 			Archive<?> auxiliaryArchive =
 				archiveAppender.createAuxiliaryArchive();
@@ -238,7 +244,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			javaArchive.addAsResource(
 				new ArchiveAsset(auxiliaryArchive, ZipExporter.class), path);
 
-			_addManifestValues(manifest, "Bundle-ClassPath", ".", path);
+			bundleClassPaths.add(path);
 
 			Manifest auxiliaryArchiveManifest = _getManifest(auxiliaryArchive);
 
@@ -252,8 +258,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			String value = mainAttributes.getValue("Import-package");
 
 			if (value != null) {
-				_addManifestValues(
-					manifest, "Import-Package", StringUtil.split(value));
+				Collections.addAll(importPackages, StringUtil.split(value));
 			}
 
 			String bundleActivatorValue = mainAttributes.getValue(
@@ -265,6 +270,14 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 				_addBundleActivator(javaArchive, bundleActivatorValue);
 			}
 		}
+
+		_addManifestValues(
+			manifest, "Bundle-ClassPath",
+			bundleClassPaths.toArray(new String[bundleClassPaths.size()]));
+
+		_addManifestValues(
+			manifest, "Import-Package",
+			importPackages.toArray(new String[importPackages.size()]));
 
 		return archives;
 	}

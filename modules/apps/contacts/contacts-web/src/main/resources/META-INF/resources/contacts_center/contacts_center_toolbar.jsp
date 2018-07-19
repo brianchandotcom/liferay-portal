@@ -79,7 +79,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
-				cssClass: '<%= showAddAsConnectionButton ? "" : "hidden" %>',
+				cssClass: '<%= showAddAsConnectionButton ? "" : "hide" %>',
 				icon: 'icon-plus-sign',
 				id: '<portlet:namespace />addConnectionButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "connect") %>',
@@ -96,7 +96,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
-				cssClass: '<%= showRemoveAsConnectionButton ? "" : "hidden" %>',
+				cssClass: '<%= showRemoveAsConnectionButton ? "" : "hide" %>',
 				icon: 'icon-minus-sign',
 				id: '<portlet:namespace />removeConnectionButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "disconnect") %>',
@@ -113,7 +113,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
-				cssClass: 'more <%= showFollowButton ? "" : "hidden" %>',
+				cssClass: 'more <%= showFollowButton ? "" : "hide" %>',
 				icon: 'icon-plus-sign',
 				id: '<portlet:namespace />followButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "follow") %>',
@@ -130,7 +130,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
-				cssClass: 'more <%= showUnFollowButton ? "" : "hidden" %>',
+				cssClass: 'more <%= showUnFollowButton ? "" : "hide" %>',
 				icon: 'icon-minus-sign',
 				id: '<portlet:namespace />unfollowButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "unfollow") %>',
@@ -147,7 +147,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
-				cssClass: 'more <%= showBlockButton ? "" : "hidden" %>',
+				cssClass: 'more <%= showBlockButton ? "" : "hide" %>',
 				icon: 'icon-ban-circle',
 				id: '<portlet:namespace />blockButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "block") %>',
@@ -164,7 +164,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
-				cssClass: 'more <%= showUnBlockButton ? "" : "hidden" %>',
+				cssClass: 'more <%= showUnBlockButton ? "" : "hide" %>',
 				icon: 'icon-ok',
 				id: '<portlet:namespace />unblockButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "unblock") %>',

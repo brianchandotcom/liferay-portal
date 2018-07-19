@@ -16,10 +16,10 @@ package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.servi
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -28,15 +28,11 @@ import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCap
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +44,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -63,8 +60,8 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 
 	@Override
 	public List<String> getTagNames(FileEntry fileEntry) {
-		if (!_configuration.enabled() || _isTemporary(fileEntry) ||
-			(fileEntry.getSize() > _MAX_SIZE) ||
+		if (!_microsoftCognitiveServicesConfiguration.enabled() ||
+			_isTemporary(fileEntry) || (fileEntry.getSize() > _MAX_SIZE) ||
 			!_isFormatSupported(fileEntry)) {
 
 			return Collections.emptyList();
@@ -73,22 +70,22 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		try {
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
-			JSONObject responseObject = _queryComputerVision(
-				fileVersion.getContentStream(false));
+			JSONObject responseJSONObject = _queryComputerVisionJSONObject(
+				fileVersion);
 
-			JSONArray tagsArray = responseObject.getJSONArray("tags");
+			JSONArray tagsJSONArray = responseJSONObject.getJSONArray("tags");
 
-			List<String> tags = new ArrayList<>();
+			List<String> tagNames = new ArrayList<>();
 
-			if (tagsArray != null) {
-				for (int i = 0; i < tagsArray.length(); i++) {
-					JSONObject tagObject = tagsArray.getJSONObject(i);
+			if (tagsJSONArray != null) {
+				for (int i = 0; i < tagsJSONArray.length(); i++) {
+					JSONObject tagJSONObject = tagsJSONArray.getJSONObject(i);
 
-					tags.add(tagObject.getString("name"));
+					tagNames.add(tagJSONObject.getString("name"));
 				}
 			}
 
-			return tags;
+			return tagNames;
 		}
 		catch (IOException | PortalException e) {
 			_log.error(e, e);
@@ -100,9 +97,11 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_configuration = ConfigurableUtil.createConfigurable(
-			MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration.class,
-			properties);
+		_microsoftCognitiveServicesConfiguration =
+			ConfigurableUtil.createConfigurable(
+				MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration.
+					class,
+				properties);
 	}
 
 	private boolean _isFormatSupported(FileEntry fileEntry) {
@@ -116,38 +115,24 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 			TemporaryFileEntriesCapability.class);
 	}
 
-	private JSONObject _queryComputerVision(InputStream imageInputStream)
-		throws IOException, JSONException {
+	private JSONObject _queryComputerVisionJSONObject(FileVersion fileVersion)
+		throws IOException, PortalException {
 
-		URL url = new URL(_configuration.apiEndpoint() + "/tag");
+		Http.Options options = new Http.Options();
 
-		URLConnection connection = url.openConnection();
+		options.addHeader(
+			"Ocp-Apim-Subscription-Key",
+			_microsoftCognitiveServicesConfiguration.apiKey());
+		options.addFilePart(
+			HtmlUtil.escape(fileVersion.getTitle()),
+			HtmlUtil.escape(fileVersion.getFileName()),
+			FileUtil.getBytes(fileVersion.getContentStream(false)),
+			fileVersion.getMimeType(), StringPool.UTF8);
+		options.setLocation(
+			_microsoftCognitiveServicesConfiguration.apiEndpoint() + "/tag");
+		options.setPost(true);
 
-		HttpURLConnection http = (HttpURLConnection)connection;
-
-		http.setRequestMethod("POST");
-		http.setDoOutput(true);
-
-		http.setRequestProperty("Content-Type", "application/octet-stream");
-		http.setRequestProperty(
-			"Ocp-Apim-Subscription-Key", _configuration.apiKey());
-
-		try (OutputStream os = http.getOutputStream()) {
-			os.write(FileUtil.getBytes(imageInputStream));
-		}
-
-		http.getResponseMessage();
-
-		try (InputStream is = http.getInputStream()) {
-			return JSONFactoryUtil.createJSONObject(StringUtil.read(is));
-		}
-		catch (Exception e) {
-			try (InputStream is = http.getErrorStream()) {
-				_log.error(StringUtil.read(is));
-
-				throw e;
-			}
-		}
+		return JSONFactoryUtil.createJSONObject(_http.URLtoString(options));
 	}
 
 	private static final int _MAX_SIZE = 4 * 1024 * 1024;
@@ -158,7 +143,10 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 	private static final List<String> _supportedFormats = Arrays.asList(
 		"JPEG", "JPG", "PNG", "GIF", "BMP");
 
+	@Reference
+	private Http _http;
+
 	private volatile MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration
-		_configuration;
+		_microsoftCognitiveServicesConfiguration;
 
 }

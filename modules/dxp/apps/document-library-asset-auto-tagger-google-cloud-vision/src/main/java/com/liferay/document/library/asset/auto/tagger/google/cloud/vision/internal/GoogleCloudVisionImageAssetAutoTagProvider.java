@@ -16,6 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.inter
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderConfiguration;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -28,16 +29,12 @@ import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCap
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +46,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -71,30 +69,37 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 		}
 
 		try {
-			JSONObject responseObject = _queryGoogleVision(
-				_getRequestJSON(fileEntry));
+			JSONObject responseJSONObject = _queryGoogleCloudVisionJSONObject(
+				_getRequestJSONPayload(fileEntry));
 
-			JSONArray responsesArray = responseObject.getJSONArray("responses");
+			JSONArray responsesJSONArray = responseJSONObject.getJSONArray(
+				"responses");
 
-			List<String> tags = new ArrayList<>();
+			List<String> tagNames = new ArrayList<>();
 
-			if ((responsesArray != null) && (responsesArray.length() > 0)) {
-				JSONObject firstResponse = responsesArray.getJSONObject(0);
+			if ((responsesJSONArray != null) &&
+				(responsesJSONArray.length() > 0)) {
 
-				JSONArray labelAnnotations = firstResponse.getJSONArray(
-					"labelAnnotations");
+				JSONObject firstResponseJSONObject =
+					responsesJSONArray.getJSONObject(0);
 
-				if (labelAnnotations != null) {
-					for (int i = 0; i < labelAnnotations.length(); i++) {
-						JSONObject labelAnnotation =
-							labelAnnotations.getJSONObject(i);
+				JSONArray labelAnnotationsJSONArray =
+					firstResponseJSONObject.getJSONArray("labelAnnotations");
 
-						tags.add(labelAnnotation.getString("description"));
+				if (labelAnnotationsJSONArray != null) {
+					for (int i =
+							 0; i < labelAnnotationsJSONArray.length(); i++) {
+
+						JSONObject labelAnnotationJSONObject =
+							labelAnnotationsJSONArray.getJSONObject(i);
+
+						tagNames.add(
+							labelAnnotationJSONObject.getString("description"));
 					}
 				}
 			}
 
-			return tags;
+			return tagNames;
 		}
 		catch (IOException | PortalException e) {
 			_log.error(e, e);
@@ -111,41 +116,41 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			properties);
 	}
 
-	private String _getRequestJSON(FileEntry fileEntry)
+	private String _getRequestJSONPayload(FileEntry fileEntry)
 		throws IOException, PortalException {
 
-		JSONObject requestObject = JSONFactoryUtil.createJSONObject();
+		JSONObject requestJSONObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject imageObject = JSONFactoryUtil.createJSONObject();
+		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		imageObject.put(
+		imageJSONObject.put(
 			"content",
 			Base64.encode(
 				FileUtil.getBytes(fileVersion.getContentStream(false))));
 
-		requestObject.put("image", imageObject);
+		requestJSONObject.put("image", imageJSONObject);
 
-		JSONObject featureObject = JSONFactoryUtil.createJSONObject();
+		JSONObject featureJSONObject = JSONFactoryUtil.createJSONObject();
 
-		featureObject.put("type", "LABEL_DETECTION");
+		featureJSONObject.put("type", "LABEL_DETECTION");
 
-		JSONArray featuresArray = JSONFactoryUtil.createJSONArray();
+		JSONArray featuresJSONArray = JSONFactoryUtil.createJSONArray();
 
-		featuresArray.put(featureObject);
+		featuresJSONArray.put(featureJSONObject);
 
-		requestObject.put("features", featuresArray);
+		requestJSONObject.put("features", featuresJSONArray);
 
-		JSONArray requestsArray = JSONFactoryUtil.createJSONArray();
+		JSONArray requestsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		requestsArray.put(requestObject);
+		requestsJSONArray.put(requestJSONObject);
 
-		JSONObject payload = JSONFactoryUtil.createJSONObject();
+		JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject();
 
-		payload.put("requests", requestsArray);
+		payloadJSONObject.put("requests", requestsJSONArray);
 
-		return payload.toString();
+		return payloadJSONObject.toString();
 	}
 
 	private boolean _isFormatSupported(FileEntry fileEntry) {
@@ -159,38 +164,19 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			TemporaryFileEntriesCapability.class);
 	}
 
-	private JSONObject _queryGoogleVision(String jsonPayload)
+	private JSONObject _queryGoogleCloudVisionJSONObject(String jsonPayload)
 		throws IOException, JSONException {
 
-		URL url = new URL(
+		Http.Options options = new Http.Options();
+
+		options.setBody(
+			jsonPayload, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setLocation(
 			"https://vision.googleapis.com/v1/images:annotate?key=" +
 				_googleCloudVisionConfiguration.apiKey());
+		options.setPost(true);
 
-		URLConnection connection = url.openConnection();
-
-		HttpURLConnection http = (HttpURLConnection)connection;
-
-		http.setRequestMethod("POST");
-		http.setDoOutput(true);
-
-		http.setRequestProperty("Content-Type", "application/json");
-
-		try (OutputStream os = http.getOutputStream()) {
-			os.write(jsonPayload.getBytes());
-		}
-
-		http.getResponseMessage();
-
-		try (InputStream is = http.getInputStream()) {
-			return JSONFactoryUtil.createJSONObject(StringUtil.read(is));
-		}
-		catch (Exception e) {
-			try (InputStream is = http.getErrorStream()) {
-				_log.error(StringUtil.read(is));
-
-				throw e;
-			}
-		}
+		return JSONFactoryUtil.createJSONObject(_http.URLtoString(options));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -201,5 +187,8 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 	private volatile GoogleCloudVisionAssetAutoTagProviderConfiguration
 		_googleCloudVisionConfiguration;
+
+	@Reference
+	private Http _http;
 
 }

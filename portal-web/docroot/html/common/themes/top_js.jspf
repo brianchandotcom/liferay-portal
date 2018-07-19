@@ -472,7 +472,9 @@ if (Validator.isNull(liferayAnalyticsKey)) {
 				);
 			}
 
-			Analytics.send('pageViewed', 'Page');
+			if (!themeDisplay.isControlPanel()) {
+				Analytics.send('pageViewed', 'Page');
+			}
 
 			<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
 				Liferay.on(
@@ -491,7 +493,9 @@ if (Validator.isNull(liferayAnalyticsKey)) {
 							);
 						}
 
-						Analytics.send('pageViewed', 'Page', {'page': event.path});
+						if (!themeDisplay.isControlPanel()) {
+							Analytics.send('pageViewed', 'Page', {'page': event.path});
+						}
 					}
 				);
 			</c:if>

@@ -371,12 +371,9 @@ public class DLFileEntryLocalServiceImpl
 					throw new InvalidLockException("UUIDs do not match");
 				}
 			}
-			catch (PortalException pe) {
-				if (pe instanceof ExpiredLockException ||
-					pe instanceof NoSuchLockException) {
-				}
-				else {
-					throw pe;
+			catch (ExpiredLockException | NoSuchLockException e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
 				}
 			}
 		}
@@ -1570,11 +1567,11 @@ public class DLFileEntryLocalServiceImpl
 
 				return uniqueTitle;
 			}
-			catch (PortalException pe) {
-				if (!(pe instanceof DuplicateFolderNameException) &&
-					!(pe instanceof DuplicateFileEntryException)) {
+			catch (DuplicateFileEntryException |
+				   DuplicateFolderNameException e) {
 
-					throw pe;
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
 				}
 			}
 
@@ -2197,32 +2194,23 @@ public class DLFileEntryLocalServiceImpl
 	public boolean verifyFileEntryLock(long fileEntryId, String lockUuid)
 		throws PortalException {
 
-		boolean lockVerified = false;
-
 		try {
 			Lock lock = LockManagerUtil.getLock(
 				DLFileEntry.class.getName(), fileEntryId);
 
 			if (Objects.equals(lock.getUuid(), lockUuid)) {
-				lockVerified = true;
+				return true;
 			}
+
+			return false;
 		}
-		catch (PortalException pe) {
-			if (pe instanceof ExpiredLockException ||
-				pe instanceof NoSuchLockException) {
+		catch (ExpiredLockException | NoSuchLockException e) {
+			DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
+				fileEntryId);
 
-				DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
-					fileEntryId);
-
-				lockVerified = dlFolderLocalService.verifyInheritableLock(
-					dlFileEntry.getFolderId(), lockUuid);
-			}
-			else {
-				throw pe;
-			}
+			return dlFolderLocalService.verifyInheritableLock(
+				dlFileEntry.getFolderId(), lockUuid);
 		}
-
-		return lockVerified;
 	}
 
 	protected void addFileEntryResources(
@@ -2723,29 +2711,17 @@ public class DLFileEntryLocalServiceImpl
 					serviceContext);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException | SystemException e) {
 			if (autoCheckIn) {
 				try {
 					cancelCheckOut(userId, fileEntryId);
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception e2) {
+					_log.error(e2, e2);
 				}
 			}
 
-			throw pe;
-		}
-		catch (SystemException se) {
-			if (autoCheckIn) {
-				try {
-					cancelCheckOut(userId, fileEntryId);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-
-			throw se;
+			throw e;
 		}
 		finally {
 			if (!autoCheckIn && !checkedOut) {

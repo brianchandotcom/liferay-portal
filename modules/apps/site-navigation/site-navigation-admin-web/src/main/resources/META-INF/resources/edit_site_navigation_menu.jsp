@@ -217,35 +217,17 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	};
 
 	var handlePortletDestroy = function() {
-		if (showSiteNavigationMenuSettingsButtonClickHandler) {
-			showSiteNavigationMenuSettingsButtonClickHandler.detach();
+		sidebar.dispose();
+		siteNavigationMenuEditor.dispose();
+		siteNavigationMenuItemRemoveButtonClickHandler.detach();
+		siteNavigationMenuItemRemoveButtonKeyupHandler.detach();
+		showSiteNavigationMenuSettingsButtonClickHandler.detach();
 
-			showSiteNavigationMenuSettingsButtonClickHandler = null;
-		}
-
-		if (siteNavigationMenuItemRemoveButtonClickHandler) {
-			siteNavigationMenuItemRemoveButtonClickHandler.detach();
-
-			siteNavigationMenuItemRemoveButtonClickHandler = null;
-		}
-
-		if (siteNavigationMenuItemRemoveButtonKeyupHandler) {
-			siteNavigationMenuItemRemoveButtonKeyupHandler.detach();
-
-			siteNavigationMenuItemRemoveButtonKeyupHandler = null;
-		}
-
-		if (siteNavigationMenuEditor) {
-			siteNavigationMenuEditor.dispose();
-
-			siteNavigationMenuEditor = null;
-		}
-
-		if (sidebar) {
-			sidebar.dispose();
-
-			sidebar = null;
-		}
+		sidebar = null;
+		siteNavigationMenuEditor = null;
+		siteNavigationMenuItemRemoveButtonClickHandler = null;
+		siteNavigationMenuItemRemoveButtonKeyupHandler = null;
+		showSiteNavigationMenuSettingsButtonClickHandler = null;
 
 		Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', handlePortletDestroy);
 		Liferay.detach('destroyPortlet', handlePortletDestroy);
@@ -346,35 +328,35 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			sidebar = _sidebar;
 
 			sidebar.on('hide', closeSidebar);
+
+			siteNavigationMenuEditor = new siteNavigationMenuEditorModule.default(
+				{
+					editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
+					namespace: '<portlet:namespace />'
+				}
+			);
+
+			siteNavigationMenuEditor.on('menuItemSelected', handleMenuItemSelected);
+
+			AUI().use(
+				['aui-base'],
+				function(A) {
+					siteNavigationMenuItemRemoveButtonClickHandler = A
+						.all('.site-navigation-menu-item__remove-icon')
+						.on('click', handleSiteNavigationMenuItemRemoveIconClick);
+
+					siteNavigationMenuItemRemoveButtonKeyupHandler = A
+						.all('.site-navigation-menu-item__remove-icon')
+						.on('keyup', handleSiteNavigationMenuItemRemoveIconKeyup);
+
+					showSiteNavigationMenuSettingsButtonClickHandler = A
+						.one('#<portlet:namespace />showSiteNavigationMenuSettings')
+						.on('click', handleShowSiteNavigationMenuSettingsButtonClick);
+				}
+			);
+
+			Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', handlePortletDestroy);
+			Liferay.on('destroyPortlet', handlePortletDestroy);
 		}
 	);
-
-	siteNavigationMenuEditor = new siteNavigationMenuEditorModule.default(
-		{
-			editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
-			namespace: '<portlet:namespace />'
-		}
-	);
-
-	siteNavigationMenuEditor.on('menuItemSelected', handleMenuItemSelected);
-
-	AUI().use(
-		['aui-base'],
-		function(A) {
-			siteNavigationMenuItemRemoveButtonClickHandler = A
-				.all('.site-navigation-menu-item__remove-icon')
-				.on('click', handleSiteNavigationMenuItemRemoveIconClick);
-
-			siteNavigationMenuItemRemoveButtonKeyupHandler = A
-				.all('.site-navigation-menu-item__remove-icon')
-				.on('keyup', handleSiteNavigationMenuItemRemoveIconKeyup);
-
-			showSiteNavigationMenuSettingsButtonClickHandler = A
-				.one('#<portlet:namespace />showSiteNavigationMenuSettings')
-				.on('click', handleShowSiteNavigationMenuSettingsButtonClick);
-		}
-	);
-
-	Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', handlePortletDestroy);
-	Liferay.on('destroyPortlet', handlePortletDestroy);
 </aui:script>

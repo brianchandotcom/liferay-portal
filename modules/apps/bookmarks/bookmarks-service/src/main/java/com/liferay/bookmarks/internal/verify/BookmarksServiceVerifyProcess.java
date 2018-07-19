@@ -14,13 +14,23 @@
 
 package com.liferay.bookmarks.internal.verify;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
@@ -42,6 +52,7 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		updateFolderAssets();
+		updateStagedPortletNames();
 		verifyTree();
 	}
 
@@ -50,6 +61,11 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 		BookmarksFolderLocalService bookmarksFolderLocalService) {
 
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	protected void updateFolderAssets() throws Exception {
@@ -83,6 +99,51 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	protected void updateStagedPortletNames() throws PortalException {
+		ActionableDynamicQuery groupActionableDynamicQuery =
+			_groupLocalService.getActionableDynamicQuery();
+
+		groupActionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property siteProperty = PropertyFactoryUtil.forName("site");
+
+				dynamicQuery.add(siteProperty.eq(Boolean.TRUE));
+			});
+
+		groupActionableDynamicQuery.setPerformActionMethod(
+			(ActionableDynamicQuery.PerformActionMethod<Group>)group -> {
+				UnicodeProperties typeSettingsProperties =
+					group.getTypeSettingsProperties();
+
+				if (typeSettingsProperties == null) {
+					return;
+				}
+
+				String propertyKey = _staging.getStagedPortletId(
+					BookmarksPortletKeys.BOOKMARKS);
+
+				String propertyValue = typeSettingsProperties.getProperty(
+					propertyKey);
+
+				if (Validator.isNull(propertyValue)) {
+					return;
+				}
+
+				typeSettingsProperties.remove(propertyKey);
+
+				propertyKey = _staging.getStagedPortletId(
+					BookmarksPortletKeys.BOOKMARKS_ADMIN);
+
+				typeSettingsProperties.put(propertyKey, propertyValue);
+
+				group.setTypeSettingsProperties(typeSettingsProperties);
+
+				_groupLocalService.updateGroup(group);
+			});
+
+		groupActionableDynamicQuery.performActions();
+	}
+
 	protected void verifyTree() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long[] companyIds =
@@ -98,8 +159,12 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 		BookmarksServiceVerifyProcess.class);
 
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;
+
+	@Reference
+	private Staging _staging;
 
 }

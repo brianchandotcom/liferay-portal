@@ -137,7 +137,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			classPK="<%= ddmStructure.getStructureId() %>"
 			ddmFormValues="<%= journalDisplayContext.getDDMFormValues(ddmStructure) %>"
 			ignoreRequestValue="<%= changeStructure %>"
-			requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
+			requestedLocale="<%= locale %>"
 		/>
 	</div>
 

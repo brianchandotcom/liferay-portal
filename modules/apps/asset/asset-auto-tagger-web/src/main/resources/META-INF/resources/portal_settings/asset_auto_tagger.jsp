@@ -23,3 +23,5 @@ AssetAutoTaggerConfiguration configuration = (AssetAutoTaggerConfiguration)reque
 <aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="<%= PortalSettingsAssetAutoTaggerConstants.ACTION_NAME %>" />
 
 <aui:input id="enabled" label="enabled" name='<%= PortalSettingsAssetAutoTaggerConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= configuration.enabled() %>" />
+
+<aui:input id="maximum-number-of-tags-per-asset" label="maximum-number-of-tags-per-asset" name='<%= PortalSettingsAssetAutoTaggerConstants.FORM_PARAMETER_NAMESPACE + "maximumNumberOfTagsPerAsset" %>' type="number" value="<%= configuration.maximumNumberOfTagsPerAsset() %>" />

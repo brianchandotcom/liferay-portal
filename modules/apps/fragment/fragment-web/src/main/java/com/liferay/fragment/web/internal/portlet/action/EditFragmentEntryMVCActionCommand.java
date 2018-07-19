@@ -18,6 +18,9 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -65,25 +68,20 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				_fragmentEntryService.updateFragmentEntry(
 					fragmentEntryId, name, css, html, js, status);
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			if (status == WorkflowConstants.ACTION_SAVE_DRAFT) {
-				redirect = _getSaveAndContinueRedirect(
+				String redirect = _getSaveAndContinueRedirect(
 					actionRequest, fragmentEntry);
+
+				jsonObject.put("redirect", redirect);
 			}
 
-			sendRedirect(actionRequest, actionResponse, redirect);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
 		catch (FragmentEntryContentException fece) {
 			hideDefaultErrorMessage(actionRequest);
-
-			actionResponse.setRenderParameter(
-				"mvcRenderCommandName", "/fragment/edit_fragment_entry");
-			actionResponse.setRenderParameter(
-				"fragmentEntryId", String.valueOf(fragmentEntryId));
-			actionResponse.setRenderParameter("cssContent", css);
-			actionResponse.setRenderParameter("jsContent", js);
-			actionResponse.setRenderParameter("htmlContent", html);
 
 			SessionErrors.add(actionRequest, fece.getClass(), fece);
 		}

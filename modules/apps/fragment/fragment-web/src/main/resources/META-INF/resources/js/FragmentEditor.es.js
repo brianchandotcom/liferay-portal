@@ -21,7 +21,10 @@ class FragmentEditor extends PortletBase {
 	 */
 
 	shouldUpdate(changes) {
-		return changes._html || changes._js || changes._css;
+		return changes._html ||
+			changes._js ||
+			changes._css ||
+			changes._saving;
 	}
 
 	/**
@@ -115,6 +118,8 @@ class FragmentEditor extends PortletBase {
 		const content = this.getContent();
 		const status = event.delegateTarget.value;
 
+		this._saving = true;
+
 		this.fetch(
 			this.urls.edit,
 			{
@@ -126,7 +131,30 @@ class FragmentEditor extends PortletBase {
 				name: this.name,
 				status
 			}
-		);
+		)
+			.then(
+				response => response.json()
+			)
+			.then(
+				response => {
+					const redirectURL = (
+						response.redirect ||
+						this.urls.redirect
+					);
+
+					if (Liferay.SPA) {
+						Liferay.SPA.app.navigate(redirectURL);
+					}
+					else {
+						location.href = redirectURL;
+					}
+				}
+			)
+			.catch (
+				() => {
+					this._saving = false;
+				}
+			);
 	}
 }
 
@@ -178,13 +206,15 @@ FragmentEditor.STATE = {
 	 * @memberOf FragmentEditor
 	 * @review
 	 * @type {{
-	 *  edit: !string
+	 *  edit: !string,
+	 *	redirect: !string
 	 * }}
 	 */
 
 	urls: Config.shapeOf(
 		{
-			edit: Config.string().required()
+			edit: Config.string().required(),
+			redirect: Config.string().required()
 		}
 	).required(),
 
@@ -246,7 +276,21 @@ FragmentEditor.STATE = {
 
 	_js: Config.string()
 		.internal()
-		.value('')
+		.value(''),
+
+	/**
+	 * If true, the fragment is being saved
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @private
+	 * @review
+	 * @type {bool}
+	 */
+
+	_saving: Config.bool()
+		.internal()
+		.value(false)
 };
 
 Soy.register(FragmentEditor, templates);

@@ -85,6 +85,7 @@ renderResponse.setTitle(title);
 				current: '<%= currentURL %>',
 				edit: '<%= editFragmentEntryURL %>',
 				preview: '<%= previewFragmentEntryURL %>',
+				redirect: '<%= fragmentDisplayContext.getRedirect() %>',
 				render: '<%= renderFragmentEntryURL %>'
 			}
 		},
@@ -93,7 +94,6 @@ renderResponse.setTitle(title);
 
 	function destroyFragmentEditor () {
 		fragmentEditor.dispose();
-		publishButtonClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', destroyFragmentEditor);
 	}

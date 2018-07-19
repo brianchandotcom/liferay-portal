@@ -26,6 +26,7 @@
 	{@param? _handleSaveButtonClick: any}
 	{@param? _html: string}
 	{@param? _js: string}
+	{@param? _saving: bool}
 
 	<div class="fragment-editor-container">
 		<div class="nav-bar-container">
@@ -43,13 +44,19 @@
 
 					<div class="btn-group btn-group-nowrap mt-1 pull-right">
 						{if $status == $allowedStatus.draft}
+							{let $draftButtonAttributes kind="attributes"}
+								class="btn btn-default"
+								type="button"
+								value="{$allowedStatus.draft}"
+								data-onclick="{$_handleSaveButtonClick}"
+
+								{if $_saving}
+									{sp}disabled
+								{/if}
+							{/let}
+
 							<div class="btn-group-item">
-								<button
-									class="btn btn-default"
-									type="button"
-									value="{$allowedStatus.draft}"
-									data-onclick="{$_handleSaveButtonClick}"
-								>
+								<button {$draftButtonAttributes}>
 									<span class="lfr-btn-label">
 										{msg desc=""}save-as-draft{/msg}
 									</span>
@@ -58,12 +65,18 @@
 						{/if}
 
 						<div class="btn-group-item">
-							<button
+							{let $publishButtonAttributes kind="attributes"}
 								class="btn btn-primary"
 								type="button"
 								value="{$allowedStatus.approved}"
 								data-onclick="{$_handleSaveButtonClick}"
-							>
+
+								{if $_saving}
+									{sp}disabled
+								{/if}
+							{/let}
+
+							<button {$publishButtonAttributes}>
 								<span class="lfr-btn-label">
 									{msg desc=""}publish{/msg}
 								</span>

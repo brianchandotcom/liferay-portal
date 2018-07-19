@@ -1674,13 +1674,24 @@ public class JournalDisplayContext {
 				add(
 					_getFilterNavigationDropdownItem(
 						isNavigationRecent(), "recent"));
+
+				StringBundler sb = new StringBundler(
+					isNavigationStructure() ? 4 : 1);
+
+				sb.append(LanguageUtil.get(_request, "structures"));
+
+				if (isNavigationStructure()) {
+					sb.append(StringPool.COLON);
+					sb.append(StringPool.SPACE);
+					sb.append(getDDMStructureName());
+				}
+
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(isNavigationStructure());
 						dropdownItem.putData(
 							"action", "openStructuresSelector");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "structures"));
+						dropdownItem.setLabel(sb.toString());
 					});
 			}
 		};

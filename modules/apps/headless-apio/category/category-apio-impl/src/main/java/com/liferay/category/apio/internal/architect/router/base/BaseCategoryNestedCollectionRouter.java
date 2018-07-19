@@ -21,11 +21,13 @@ import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
+import com.liferay.category.apio.internal.architect.form.LinkedCategoryForm;
 import com.liferay.category.apio.internal.architect.form.NestedCategoryForm;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -108,16 +110,16 @@ public abstract class BaseCategoryNestedCollectionRouter
 			Pagination pagination, long classPK)
 		throws PortalException {
 
-		long resporcePrimKey = getResourcePrimKey(classPK);
+		long resourcePrimKey = getResourcePrimKey(classPK);
 
 		long classNameId = classNameLocalService.getClassNameId(getClassName());
 
 		List<AssetCategory> assetCategories =
 			assetCategoryService.getCategories(
-				classNameId, resporcePrimKey, pagination.getStartPosition(),
+				classNameId, resourcePrimKey, pagination.getStartPosition(),
 				pagination.getEndPosition());
 		int count = assetCategoryService.getCategoriesCount(
-			classNameId, resporcePrimKey);
+			classNameId, resourcePrimKey);
 
 		return new PageItems<>(assetCategories, count);
 	}
@@ -125,6 +127,47 @@ public abstract class BaseCategoryNestedCollectionRouter
 	protected long getResourcePrimKey(long classPK) throws PortalException {
 		return classPK;
 	}
+
+	/**
+	 * Links an {@link AssetCategory} to an {@link AssetEntry} identified by the
+	 * provided ID.
+	 *
+	 * @param  classPK the {@link AssetEntry} ID
+	 * @param  linkedCategoryForm the form containing the category to link
+	 * @return the newly created {@link AssetCategory}
+	 */
+	protected AssetCategory linkAssetCategory(
+			long classPK, LinkedCategoryForm linkedCategoryForm)
+		throws PortalException {
+
+		long resourcePrimKey = getResourcePrimKey(classPK);
+
+		AssetEntry assetEntry = assetEntryLocalService.getEntry(
+			getClassName(), resourcePrimKey);
+
+		long categoryId = linkedCategoryForm.getCategoryId();
+
+		long[] categoryIds = ArrayUtil.append(
+			assetEntry.getCategoryIds(), categoryId);
+
+		assetEntryService.updateEntry(
+			assetEntry.getGroupId(), assetEntry.getCreateDate(), null,
+			assetEntry.getClassName(), resourcePrimKey,
+			assetEntry.getClassUuid(), assetEntry.getClassTypeId(), categoryIds,
+			assetEntry.getTagNames(), assetEntry.isListable(),
+			assetEntry.isVisible(), assetEntry.getStartDate(),
+			assetEntry.getEndDate(), assetEntry.getPublishDate(),
+			assetEntry.getExpirationDate(), assetEntry.getMimeType(),
+			assetEntry.getTitle(), assetEntry.getDescription(),
+			assetEntry.getSummary(), assetEntry.getUrl(),
+			assetEntry.getLayoutUuid(), assetEntry.getHeight(),
+			assetEntry.getWidth(), assetEntry.getPriority());
+
+		return assetCategoryLocalService.getCategory(categoryId);
+	}
+
+	@Reference
+	protected AssetCategoryLocalService assetCategoryLocalService;
 
 	@Reference
 	protected AssetCategoryService assetCategoryService;

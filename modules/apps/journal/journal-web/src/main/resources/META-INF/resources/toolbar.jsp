@@ -77,27 +77,15 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	</portlet:renderURL>
 
 	var openStructuresSelector = function() {
-		Liferay.Util.openDDMPortlet(
+		Liferay.Util.selectEntity(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-				classPK: <%= journalDisplayContext.getDDMStructurePrimaryKey() %>,
 				dialog: {
-					destroyOnHide: true
+					constrain: true,
+					modal: true
 				},
 				eventName: '<portlet:namespace />selectStructure',
-				groupId: <%= themeDisplay.getScopeGroupId() %>,
-				mvcPath: '/select_structure.jsp',
-				navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
-				refererPortletName: '<%= JournalPortletKeys.JOURNAL + ".filterStructure" %>',
-
-				<%
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-				%>
-
-				refererWebDAVToken: '<%= HtmlUtil.escapeJS(WebDAVUtil.getStorageToken(portlet)) %>',
-
-				showAncestorScopes: true,
-				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /></portlet:renderURL>'
 			},
 			function(event) {
 				var uri = '<%= viewDDMStructureArticlesURL %>';

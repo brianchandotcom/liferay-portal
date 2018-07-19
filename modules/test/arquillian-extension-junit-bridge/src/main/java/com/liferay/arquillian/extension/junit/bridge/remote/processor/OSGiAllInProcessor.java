@@ -73,9 +73,8 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			_addArquillianDependencies(javaArchive);
 
-			List<Archive<?>> auxiliaryArchives = _loadAuxiliaryArchives();
-
-			_handleAuxiliaryArchives(javaArchive, auxiliaryArchives, manifest);
+			List<Archive<?>> auxiliaryArchives = _loadAuxiliaryArchives(
+				javaArchive, manifest);
 
 			_cleanRepeatedImports(auxiliaryArchives, manifest);
 
@@ -188,12 +187,27 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		}
 	}
 
-	private void _handleAuxiliaryArchives(
-			JavaArchive javaArchive, Collection<Archive<?>> auxiliaryArchives,
-			Manifest manifest)
+	private List<Archive<?>> _loadAuxiliaryArchives(
+			JavaArchive javaArchive, Manifest manifest)
 		throws IOException {
 
-		for (Archive auxiliaryArchive : auxiliaryArchives) {
+		List<Archive<?>> archives = new ArrayList<>();
+
+		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
+
+		Collection<AuxiliaryArchiveAppender> archiveAppenders =
+			serviceLoader.all(AuxiliaryArchiveAppender.class);
+
+		for (AuxiliaryArchiveAppender archiveAppender : archiveAppenders) {
+			Archive<?> auxiliaryArchive =
+				archiveAppender.createAuxiliaryArchive();
+
+			if (auxiliaryArchive == null) {
+				continue;
+			}
+
+			archives.add(auxiliaryArchive);
+
 			Map<ArchivePath, Node> remoteLoadableExtensionMap =
 				auxiliaryArchive.getContent(
 					Filters.include(_REMOTE_LOADABLE_EXTENSION_FILE));
@@ -249,24 +263,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 				!bundleActivatorValue.isEmpty()) {
 
 				_addBundleActivator(javaArchive, bundleActivatorValue);
-			}
-		}
-	}
-
-	private List<Archive<?>> _loadAuxiliaryArchives() {
-		List<Archive<?>> archives = new ArrayList<>();
-
-		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
-
-		Collection<AuxiliaryArchiveAppender> archiveAppenders =
-			serviceLoader.all(AuxiliaryArchiveAppender.class);
-
-		for (AuxiliaryArchiveAppender archiveAppender : archiveAppenders) {
-			Archive<?> auxiliaryArchive =
-				archiveAppender.createAuxiliaryArchive();
-
-			if (auxiliaryArchive != null) {
-				archives.add(auxiliaryArchive);
 			}
 		}
 

@@ -16,6 +16,7 @@ package com.liferay.asset.auto.tagger.web.internal.servlet.taglib.ui;
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
+import com.liferay.asset.auto.tagger.web.internal.constants.FormNavigatorAssetAutoTaggerConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -23,13 +24,11 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true, property = "form.navigator.entry.order:Integer=90",
+	immediate = true, property = "form.navigator.entry.order:Integer=100",
 	service = FormNavigatorEntry.class
 )
 public class AssetAutoTaggerCompanySettingsFormNavigatorEntry
@@ -51,8 +50,8 @@ public class AssetAutoTaggerCompanySettingsFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return
-			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
+		return FormNavigatorAssetAutoTaggerConstants.
+			CATEGORY_KEY_COMPANY_SETTINGS_ASSET_AUTO_TAGGER;
 	}
 
 	@Override
@@ -62,15 +61,12 @@ public class AssetAutoTaggerCompanySettingsFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "asset-auto-tagging";
+		return "general";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, getKey());
+		return LanguageUtil.get(locale, getKey());
 	}
 
 	@Override

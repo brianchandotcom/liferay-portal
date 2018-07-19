@@ -81,8 +81,8 @@ public class LiferayWorkflowCapability
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if ((serviceContext.getWorkflowAction() ==
-			 	WorkflowConstants.ACTION_PUBLISH)) {
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH) {
 
 			DLFileVersion latestDLFileVersion =
 				_dlFileVersionServiceAdapter.getLatestFileVersion(

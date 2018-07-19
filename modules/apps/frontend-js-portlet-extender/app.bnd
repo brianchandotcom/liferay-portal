@@ -1,4 +1,4 @@
-Liferay-Releng-App-Description: The JS Portlet Extender is an OSGi bundle that serves as a bridge between traditional portlet and modern frontend development. It allows you to develop projects for Liferay Portal with pure JavaScript tooling (npm, gulp...) and still deploy them as portlets in your Liferay Portal instance.
+Liferay-Releng-App-Description: The JS Portlet Extender is an OSGi bundle that serves as a bridge between traditional portlet and modern frontend development. It lets you develop projects for Liferay Portal with pure JavaScript tooling (npm, gulp, etc.) and still deploy them as portlets in your Liferay Portal instance.
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} JS Portlet Extender
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category:

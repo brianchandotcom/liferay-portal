@@ -561,6 +561,8 @@ public class GitWorkingDirectory {
 				"git rev-parse --abbrev-ref " + branchName);
 
 			if (executionResult.getExitValue() != 0) {
+				System.out.println(executionResult.getStandardError());
+
 				if (required) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(

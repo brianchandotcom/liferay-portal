@@ -71,7 +71,8 @@ public abstract class BaseThemeFragmentBundleInstaller {
 						return null;
 					}
 
-					String location = bundle.getLocation() + "-fragment";
+					String location =
+						"theme-fragment:" + bundle.getSymbolicName();
 
 					Bundle fragmentBundle = bundleContext.getBundle(location);
 

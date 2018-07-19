@@ -300,8 +300,8 @@ public class SharepointServerResponseConverter {
 				StringPool.COLON + id;
 
 		String version = jsonObject.getString("VersionLabel");
-		String contentURL = _sharepointURLHelper.getAbsoluteURL(
-			jsonObject.getString("Url"));
+		String contentURL = _sharepointURLHelper.getFileVersionContentURL(
+			extRepositoryFileEntry, id);
 		Date createDate = _parseDate(jsonObject.getString("Created"));
 		String changeLog = jsonObject.getString("CheckInComment");
 		String mimeType = MimeTypesUtil.getContentType(

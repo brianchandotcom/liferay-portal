@@ -43,7 +43,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Carlos Sierra Andrés
  */
-@Ignore
 @RunAsClient
 @RunWith(Arquillian.class)
 public class TokenExpeditionTest extends BaseClientTestCase {

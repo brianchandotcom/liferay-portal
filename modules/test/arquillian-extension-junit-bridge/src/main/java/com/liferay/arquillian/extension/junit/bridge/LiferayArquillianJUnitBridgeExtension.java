@@ -20,8 +20,6 @@ import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActi
 import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActivatorsManagerImpl;
 import com.liferay.arquillian.container.osgi.remote.processor.service.ImportPackageManager;
 import com.liferay.arquillian.container.osgi.remote.processor.service.ImportPackageManagerImpl;
-import com.liferay.arquillian.container.osgi.remote.processor.service.ManifestManager;
-import com.liferay.arquillian.container.osgi.remote.processor.service.ManifestManagerImpl;
 import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.deployment.JUnitBridgeAuxiliaryArchiveAppender;
@@ -80,8 +78,6 @@ public class LiferayArquillianJUnitBridgeExtension
 				CommandServiceAuxiliaryAppender.class);
 			extensionBuilder.service(
 				ImportPackageManager.class, ImportPackageManagerImpl.class);
-			extensionBuilder.service(
-				ManifestManager.class, ManifestManagerImpl.class);
 			extensionBuilder.service(
 				BundleActivatorsManager.class,
 				BundleActivatorsManagerImpl.class);

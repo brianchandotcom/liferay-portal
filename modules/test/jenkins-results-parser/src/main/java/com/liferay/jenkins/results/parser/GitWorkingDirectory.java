@@ -561,10 +561,12 @@ public class GitWorkingDirectory {
 				"git rev-parse --abbrev-ref " + branchName);
 
 			if (executionResult.getExitValue() != 0) {
+				System.out.println(executionResult.getStandardError());
+
 				if (required) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
-							"Unable to find required local branch ",
+							"Unable to find currently checked out branch ",
 							branchName));
 				}
 
@@ -573,22 +575,21 @@ public class GitWorkingDirectory {
 
 			System.out.println(executionResult.getStandardOut());
 
-			branchName = executionResult.getStandardOut();
+			String currentBranchName = executionResult.getStandardOut();
 
-			branchName = branchName.trim();
+			currentBranchName = currentBranchName.trim();
 
-			if (branchName.isEmpty()) {
-				if (required) {
-					throw new RuntimeException(
-						JenkinsResultsParserUtil.combine(
-							"Unable to find required local branch ",
-							branchName));
-				}
+			if (currentBranchName.isEmpty()) {
+				System.out.println(executionResult.getStandardError());
 
-				return null;
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to find currently checked out branch ",
+						branchName));
 			}
 
-			return new Branch(this, branchName, null, getBranchSHA(branchName));
+			return new Branch(
+				this, currentBranchName, null, getBranchSHA(currentBranchName));
 		}
 
 		List<Branch> branches = getBranches(branchName, remote);

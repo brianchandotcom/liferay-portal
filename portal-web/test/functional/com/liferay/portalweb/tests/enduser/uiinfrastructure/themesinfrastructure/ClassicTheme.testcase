@@ -74,7 +74,7 @@
 			<var name="pageName" value="Classic Theme Page" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchHidden" />
+		<execute macro="SearchPortlets#viewSearchHidden" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Hello World" />

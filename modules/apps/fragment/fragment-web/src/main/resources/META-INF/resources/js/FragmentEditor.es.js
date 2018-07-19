@@ -112,20 +112,20 @@ class FragmentEditor extends PortletBase {
 	 */
 
 	_handleSaveButtonClick(event) {
-		const status = event.delegateTarget.value;
 		const content = this.getContent();
+		const status = event.delegateTarget.value;
 
 		this.fetch(
-			this.editFragmentEntryURL, 
-			Object.assign(
-				this.fragmentEntryData, 
-				{
-					status,
-					cssContent: content.css,
-					htmlContent: content.html,
-					jsContent: content.js
-				}
-			)
+			this.urls.edit,
+			{
+				cssContent: content.css,
+				fragmentCollectionId: this.fragmentCollectionId,
+				fragmentEntryId: this.fragmentEntryId,
+				htmlContent: content.html,
+				jsContent: content.js,
+				name: this.name,
+				status
+			}
 		);
 	}
 }
@@ -140,94 +140,53 @@ class FragmentEditor extends PortletBase {
 FragmentEditor.STATE = {
 
 	/**
-	 * Url for save draft or publish
+	 * Fragment collection id
+	 * @default undefined
 	 * @instance
 	 * @memberOf FragmentEditor
+	 * @review
 	 * @type {!string}
 	 */
 
-	editFragmentEntryURL: Config.string().required(),
+	fragmentCollectionId: Config.string().required(),
 
 	/**
-	 * Default FragmentEditor params for save draft or publish
+	 * Fragment entry id
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	fragmentEntryId: Config.string().required(),
+
+	/**
+	 * Fragment name
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	name: Config.string().required(),
+
+	/**
+	 * URLs used for communicating with backend
 	 * @instance
 	 * @memberOf FragmentEditor
 	 * @review
 	 * @type {{
-	 *  fragmentEntryId: !string,
-	 *  fragmentCollectionId: !string,
-	 *  fragmentEntryId: !string,
-	 *  redirect: !string,
-	 *  name: !string
+	 *  edit: !string
 	 * }}
 	 */
 
-	fragmentEntryData: Config.shapeOf({
-		fragmentCollectionId: Config.string().required(),
-		fragmentEntryId: Config.string().required(),
-		redirect: Config.string().required(),
-		name: Config.string().required()
-	}).required(),
-
-	/**
-	 * Initial HTML sent to the editor
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-
-	initialHTML: Config.string().required(),
-
-	/**
-	 * Initial CSS sent to the editor
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-
-	initialCSS: Config.string().required(),
-
-	/**
-	 * Initial JS sent to the editor
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-
-	initialJS: Config.string().required(),
-
-	/**
-	 * Preview fragment entry URL
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	previewFragmentEntryURL: Config.string().required(),
-
-	/**
-	 * Render fragment entry URL
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	renderFragmentEntryURL: Config.string().required(),
-
-	/**
-	 * Path of the available icons.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	spritemap: Config.string().required(),
+	urls: Config.shapeOf(
+		{
+			edit: Config.string().required()
+		}
+	).required(),
 
 	/**
 	 * Property that contains the updated CSS content of

@@ -222,16 +222,6 @@ FragmentPreview.STATE = {
 	js: Config.string().required(),
 
 	/**
-	 * Namespace of the portlet being used.
-	 * Necesary for getting the real inputs which interact with the server.
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-
-	namespace: Config.string().required(),
-
-	/**
 	 * Render fragment entry URL
 	 * @default undefined
 	 * @instance

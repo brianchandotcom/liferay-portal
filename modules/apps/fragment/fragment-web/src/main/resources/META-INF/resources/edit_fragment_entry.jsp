@@ -72,26 +72,21 @@ renderResponse.setTitle(title);
 				approved: '<%= WorkflowConstants.STATUS_APPROVED %>',
 				draft: '<%= WorkflowConstants.STATUS_DRAFT %>'
 			},
-			currentURL: '<%= currentURL %>',
-			editFragmentEntryURL: '<%= editFragmentEntryURL %>',
-			fragmentDisplayContextFragmentCollectionId: '<%= fragmentDisplayContext.getFragmentCollectionId() %>',
-			fragmentDisplayContextFragmentEntryId: '<%= fragmentDisplayContext.getFragmentEntryId() %>',
-			fragmentDisplayContextRedirect: '<%= fragmentDisplayContext.getRedirect() %>',
-			fragmentEntryStatus: '<%= fragmentEntry.getStatus() %>',
-			fragmentEntryData: {
-				fragmentCollectionId: '<%= fragmentDisplayContext.getFragmentCollectionId() %>',
-				fragmentEntryId: '<%= fragmentDisplayContext.getFragmentEntryId() %>',
-				redirect: '<%= fragmentDisplayContext.getRedirect() %>',
-				name: '<%= fragmentDisplayContext.getName() %>'
-			},
+			fragmentCollectionId: '<%= fragmentDisplayContext.getFragmentCollectionId() %>',
+			fragmentEntryId: '<%= fragmentDisplayContext.getFragmentEntryId() %>',
 			initialCSS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getCssContent()) %>',
 			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
 			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',
-			namespace: '<portlet:namespace />',
-			previewFragmentEntryURL: '<%= previewFragmentEntryURL %>',
-			renderFragmentEntryURL: '<%= renderFragmentEntryURL %>',
+			name: '<%= fragmentDisplayContext.getName() %>',
+			portletNamespace: '<portlet:namespace />',
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-			status: '<%= fragmentEntry.getStatus() %>'
+			status: '<%= fragmentEntry.getStatus() %>',
+			urls: {
+				current: '<%= currentURL %>',
+				edit: '<%= editFragmentEntryURL %>',
+				preview: '<%= previewFragmentEntryURL %>',
+				render: '<%= renderFragmentEntryURL %>'
+			}
 		},
 		wrapper
 	);

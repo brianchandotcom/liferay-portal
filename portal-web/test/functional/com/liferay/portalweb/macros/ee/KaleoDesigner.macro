@@ -514,12 +514,16 @@
 		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DRAFT_HISTORY_LATEST_VERSION_BUTTON" value1="Latest Version" />
 	</command>
 
-	<command name="redoDraft">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DRAFT_HISTORY_REDO_BUTTON" value1="Redo" />
-	</command>
-
 	<command name="removeNodeSettingsSection">
 		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_REMOVE_SECTION" value1="Remove" />
+	</command>
+
+	<command name="restoreDraft">
+		<var name="key_rowIndexNumber" value="${rowIndexNumber}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS_N" />
+
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#REVISION_HISTORY_RESTORE_BUTTON" value1="Restore" />
 	</command>
 
 	<command name="selectNode">
@@ -532,17 +536,38 @@
 
 	<command name="showDetails">
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="KaleoDesignerEditWorkflow#DRAFT_VERSION_HEADER" />
+			<condition function="IsElementNotPresent" locator1="Icon#INFO_ACTIVE" />
 			<then>
-				<execute function="Click" locator1="KaleoDesignerEditWorkflow#DETAILS_TOGGLE" />
+				<execute function="Click" locator1="Button#INFO" />
 			</then>
 		</if>
 
-		<execute function="AssertVisible" locator1="KaleoDesignerEditWorkflow#DRAFT_VERSION_HEADER" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="KaleoDesignerEditWorkflow#DETAILS_ACTIVE" />
+			<then>
+				<execute function="Click" locator1="KaleoDesignerEditWorkflow#DETAILS" />
+			</then>
+		</if>
+
+		<execute function="AssertVisible" locator1="KaleoDesignerEditWorkflow#DETAILS_ACTIVE" />
 	</command>
 
-	<command name="undoDraft">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DRAFT_HISTORY_UNDO_BUTTON" value1="Undo" />
+	<command name="showRevisionHistory">
+		<if>
+			<condition function="IsElementNotPresent" locator1="Icon#INFO_ACTIVE" />
+			<then>
+				<execute function="Click" locator1="Button#INFO" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="KaleoDesignerEditWorkflow#REVISION_HISTORY_ACTIVE" />
+			<then>
+				<execute function="Click" locator1="KaleoDesignerEditWorkflow#REVISION_HISTORY" />
+			</then>
+		</if>
+
+		<execute function="AssertVisible" locator1="KaleoDesignerEditWorkflow#REVISION_HISTORY_ACTIVE" />
 	</command>
 
 	<command name="viewButtons">
@@ -570,12 +595,6 @@
 		<var name="key_connectorLabel" value="${connectorLabel}" />
 
 		<execute function="AssertElementPresent" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR" />
-	</command>
-
-	<command name="viewDraftVersion">
-		<var name="key_draftVersion" value="${draftVersion}" />
-
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#DRAFT_VERSION" value1="${draftVersion}" />
 	</command>
 
 	<command name="viewExecutionType">
@@ -786,6 +805,12 @@
 		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
 
 		<execute function="Pause" locator1="1000" />
+	</command>
+
+	<command name="viewTotalModifications">
+		<var name="key_totalModifications" value="${totalModifications}" />
+
+		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#TOTAL_MODIFICATIONS" value1="${totalModifications} Revisions" />
 	</command>
 
 	<command name="viewViewTab">

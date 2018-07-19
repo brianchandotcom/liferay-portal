@@ -579,34 +579,6 @@
 		</execute>
 	</command>
 
-	<command name="reindexSearches">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute function="AssertClick" locator1="NavBar#RESOURCES" value1="Resources" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Clean Up Actions" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="ServerAdministrationResources#ACTIONS_TABLE_DESCRIPTION" value1="Reindex all search indexes.">
-			<var name="key_actionsDescription" value="Reindex all search indexes." />
-		</execute>
-
-		<execute function="AssertClick" locator1="ServerAdministrationResources#ACTIONS_TABLE_EXECUTE" value1="Execute">
-			<var name="key_actionsDescription" value="Reindex all search indexes." />
-		</execute>
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="Pause" locator1="10000" />
-	</command>
-
 	<command name="resetTestUserPassword">
 		<execute macro="SetupWizard#finishConfigurationPG" />
 

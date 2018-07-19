@@ -14,18 +14,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DRAFT_VERSION_HEADER</td>
-	<td>//span[contains(.,'Draft Version')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_VERSION</td>
-	<td>//span[contains(.,'Draft Version')]/../div[contains(.,'${key_draftVersion}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DETAILS_TOGGLE</td>
 	<td>//div[@id='kaleoDesignerSectionPanel']//a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS</td>
+	<td>//li[@class='tab']/a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_ACTIVE</td>
+	<td>//li[@class='tab active']/a[contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,24 +34,34 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVISION_HISTORY</td>
+	<td>//li[@class='tab']/a[contains(.,'Revision History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVISION_HISTORY_ACTIVE</td>
+	<td>//li[@class='tab active']/a[contains(.,'Revision History')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_KALEO_XML_TAB</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Source')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>TOTAL_MODIFICATIONS</td>
+	<td>//dl[contains(@class,'sidebar-dl')]/dd[contains(.,'${key_totalModifications} Revisions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
-<!-- DRAFT_HISTORY -->
+<!-- REVISION_HISTORY -->
 <tr>
-	<td>DRAFT_HISTORY_UNDO_BUTTON</td>
-	<td>//button[contains(@id,'undoButton')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_HISTORY_REDO_BUTTON</td>
-	<td>//button[contains(@id,'redoButton')]</td>
+	<td>REVISION_HISTORY_RESTORE_BUTTON</td>
+	<td>//span[contains(.,'Restore')]</td>
 	<td></td>
 </tr>
 <tr>

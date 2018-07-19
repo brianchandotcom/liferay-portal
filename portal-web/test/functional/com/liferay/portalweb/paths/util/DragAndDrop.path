@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>CALENDAR_EVENT</td>
-	<td>//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'Calendar')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PORTLET_HEADER</td>
 	<td>//h1[@class="portlet-title"]</td>
 	<td></td>

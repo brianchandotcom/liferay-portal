@@ -87,9 +87,6 @@ public abstract class BaseThemeFragmentBundleInstaller {
 						frameworkWiring.resolveBundles(
 							Collections.singleton(fragmentBundle));
 
-						frameworkWiring.refreshBundles(
-							Collections.singleton(bundle));
-
 						_trackedBundles.put(bundle, fragmentBundle);
 
 						return null;

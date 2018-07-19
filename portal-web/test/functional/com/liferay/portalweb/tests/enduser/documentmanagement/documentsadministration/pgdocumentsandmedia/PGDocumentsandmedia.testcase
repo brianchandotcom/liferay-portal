@@ -2262,11 +2262,11 @@
 			<var name="siteName" value="Site Name 1" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="DM Document Title" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoPG">
+		<execute macro="ClassicSearch#viewSearchNoPG">
 			<var name="searchAssetTitle" value="DM Document Title" />
 			<var name="searchAssetType" value="Document" />
 			<var name="searchNoResults" value="true" />

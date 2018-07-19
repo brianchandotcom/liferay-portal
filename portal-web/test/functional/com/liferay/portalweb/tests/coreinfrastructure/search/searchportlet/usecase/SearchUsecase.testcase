@@ -188,25 +188,25 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#configureScope">
+		<execute macro="ClassicSearch#configureScope">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Apple" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultsPG">
+		<execute macro="ClassicSearch#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="Apple" />
 			<var name="searchAssetType" value="Web Content Article" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultsPG">
+		<execute macro="ClassicSearch#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="Apple" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultsPG">
+		<execute macro="ClassicSearch#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="Apple" />
 			<var name="searchAssetType" value="Blogs Entry" />
 		</execute>
@@ -406,11 +406,11 @@
 			<var name="site" value="${siteName}" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="WC Title" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetTitle" value="WC Title" />
 			<var name="searchAssetType" value="Web Content Article" />
 		</execute>
@@ -498,11 +498,11 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Entry" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewUserFacetPG">
+		<execute macro="ClassicSearch#viewUserFacetPG">
 			<var name="facetFrequency" value="1" />
 			<var name="searchAssetSummary" value="Blogs Super Admin Entry Content" />
 			<var name="searchAssetTitle" value="Blogs Super Admin Entry Title" />
@@ -510,7 +510,7 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoPG">
+		<execute macro="ClassicSearch#viewSearchNoPG">
 			<var name="searchAssetSummary" value="Blogs User Entry Content" />
 			<var name="searchAssetTitle" value="Blogs User Entry Title" />
 			<var name="searchAssetType" value="Blogs Entry" />
@@ -518,7 +518,7 @@
 
 		<execute function="AssertClick" locator1="SearchResults#USER_FACET_ANY_USER" value1="Any User" />
 
-		<execute macro="SearchPortlet#viewUserFacetPG">
+		<execute macro="ClassicSearch#viewUserFacetPG">
 			<var name="facetFrequency" value="1" />
 			<var name="searchAssetSummary" value="Blogs User Entry Content" />
 			<var name="searchAssetTitle" value="Blogs User Entry Title" />
@@ -526,7 +526,7 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoPG">
+		<execute macro="ClassicSearch#viewSearchNoPG">
 			<var name="searchAssetSummary" value="Blogs Super Admin Entry Content" />
 			<var name="searchAssetTitle" value="Blogs Super Admin Entry Title" />
 			<var name="searchAssetType" value="Blogs Entry" />
@@ -536,13 +536,13 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#removeUserFacetDisplayPG" />
+		<execute macro="ClassicSearch#removeUserFacetDisplayPG" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Entry" />
 		</execute>
 
@@ -578,7 +578,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="WC Title" />
 		</execute>
 
@@ -701,7 +701,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm"><![CDATA["AssetContent"]]></var>
 		</execute>
 
@@ -717,15 +717,15 @@
 			<execute function="AssertElementNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" />
 		</for>
 
-		<execute macro="SearchPortlet#viewAssetTypeFacetPG">
+		<execute macro="ClassicSearch#viewAssetTypeFacetPG">
 			<var name="facetFrequency" value="1" />
 			<var name="searchAssetTitle" value="Wiki Page2 Title" />
 			<var name="searchAssetType" value="Wiki Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#unscopeAssetFacetPG" />
+		<execute macro="ClassicSearch#unscopeAssetFacetPG" />
 
-		<execute macro="SearchPortlet#gotoModifiedRangeFacetPG">
+		<execute macro="ClassicSearch#gotoModifiedRangeFacetPG">
 			<var name="searchModifiedRange" value="Past Month" />
 		</execute>
 
@@ -818,16 +818,16 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="portletId:com_liferay_users_admin_web_portlet_UsersAdminPortlet" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoPG">
+		<execute macro="ClassicSearch#viewSearchNoPG">
 			<var name="searchAssetTitle" value="Test Test" />
 			<var name="searchAssetType" value="User" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoPG">
+		<execute macro="ClassicSearch#viewSearchNoPG">
 			<var name="searchAssetTitle" value="Organization Name" />
 			<var name="searchAssetType" value="Organization" />
 		</execute>
@@ -1807,11 +1807,11 @@
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Liferay Alert" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Thread Subject" />
 			<var name="searchAssetType" value="Message Boards Message" />
 			<var name="searchAssetSummary"><![CDATA[<script>alert(123);</script>]]></var>
@@ -1836,27 +1836,27 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Document" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchAssetTitle">
+		<execute macro="ClassicSearch#viewSearchAssetTitle">
 			<var name="searchAssetTitle" value="DM Document Title 1" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Document" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchAssetTitle">
+		<execute macro="ClassicSearch#viewSearchAssetTitle">
 			<var name="searchAssetTitle" value="DM Document Title 1" />
 		</execute>
 
-		<execute macro="SearchPortlet#gotoSearchResultPG">
+		<execute macro="ClassicSearch#gotoSearchResultPG">
 			<var name="searchAssetTitle" value="DM Document Title 1" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchAssetDetailPage">
+		<execute macro="ClassicSearch#viewSearchAssetDetailPage">
 			<var name="searchAssetTitle" value="DM Document Title 1" />
 		</execute>
 	</command>
@@ -1908,22 +1908,22 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Web Content Article" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultsPG">
+		<execute macro="ClassicSearch#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="WebContent Title" />
 			<var name="searchAssetType" value="Web Content Article" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoLiveSite" />
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Web Content Article" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoAssetTitle">
+		<execute macro="ClassicSearch#viewSearchNoAssetTitle">
 			<var name="searchAssetTitle" value="WebContent Title" />
 		</execute>
 
@@ -1950,21 +1950,21 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Web Content Article" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoAssetTitle">
+		<execute macro="ClassicSearch#viewSearchNoAssetTitle">
 			<var name="searchAssetTitle" value="WebContent Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoLiveSite" />
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Web Content Article" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultsPG">
+		<execute macro="ClassicSearch#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="WebContent Title" />
 			<var name="searchAssetType" value="Web Content Article" />
 		</execute>
@@ -2048,19 +2048,19 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchClassicPG">
+		<execute macro="ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Test Test" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchAssetTitle">
+		<execute macro="ClassicSearch#viewSearchAssetTitle">
 			<var name="searchAssetTitle" value="Test Test" />
 		</execute>
 
-		<execute macro="SearchPortlet#gotoSearchResultPG">
+		<execute macro="ClassicSearch#gotoSearchResultPG">
 			<var name="searchAssetTitle" value="Test Test" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewUserSearchResultPG">
+		<execute macro="ClassicSearch#viewUserSearchResultPG">
 			<var name="pageName" value="Welcome" />
 			<var name="userName" value="Test Test" />
 		</execute>

@@ -12,7 +12,7 @@
 	</command>
 
 	<command name="configureScope">
-		<execute macro="SearchPortlet#gotoOptions">
+		<execute macro="ClassicSearch#gotoOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -88,7 +88,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="searchClassicPG">
+	<command name="search">
 		<execute function="AssertElementPresent" locator1="Search#CLASSIC_SEARCH_BAR" />
 
 		<execute function="Type" locator1="Search#CLASSIC_SEARCH_BAR" value1="${searchTerm}" />
@@ -108,7 +108,7 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#ASSET_TYPE_FACET_ASSET" value1="${searchAssetType}" />
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetSummary" value="${searchAssetSummary}" />
 			<var name="searchAssetTitle" value="${searchAssetTitle}" />
 			<var name="searchAssetType" value="${searchAssetType}" />
@@ -203,7 +203,7 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_USER_NAME" value1="${userLoginFullName}" />
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetSummary" value="${searchAssetSummary}" />
 			<var name="searchAssetTitle" value="${searchAssetTitle}" />
 			<var name="searchAssetType" value="${searchAssetType}" />

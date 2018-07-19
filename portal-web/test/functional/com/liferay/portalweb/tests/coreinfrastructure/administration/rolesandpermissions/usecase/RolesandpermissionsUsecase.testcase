@@ -710,11 +710,11 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<execute macro=" SearchPortlet#searchClassicPG">
+		<execute macro=" ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
@@ -743,11 +743,11 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 
-		<execute macro=" SearchPortlet#searchClassicPG">
+		<execute macro=" ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoPG">
+		<execute macro="ClassicSearch#viewSearchNoPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchNoResults" value="true" />
 			<var name="searchTerm" value="Test Document" />
@@ -770,11 +770,11 @@
 			<var name="dmDocumentTitle" value="Test Document" />
 		</execute>
 
-		<execute macro=" SearchPortlet#searchClassicPG">
+		<execute macro=" ClassicSearch#searchClassicPG">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
 		</execute>

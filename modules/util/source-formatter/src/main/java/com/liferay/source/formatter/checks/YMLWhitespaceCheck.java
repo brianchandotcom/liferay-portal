@@ -118,7 +118,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 			if (!nestedDefinitionIndent.equals(StringPool.BLANK)) {
 				nestedDefinitions = YMLSourceUtil.getDefinitions(
-					content, nestedDefinitionIndent);
+					definition, nestedDefinitionIndent);
 
 				String newDefinition = _formatDefinitions(
 					definition, nestedDefinitionIndent, level + 1);
@@ -130,8 +130,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			}
 
 			String newDefinition = _formatDefinition(
-				definition, nestedDefinitionIndent, level,
-				!nestedDefinitions.isEmpty());
+				definition, indent, level, !nestedDefinitions.isEmpty());
 
 			if (!newDefinition.equals(definition)) {
 				content = StringUtil.replaceFirst(

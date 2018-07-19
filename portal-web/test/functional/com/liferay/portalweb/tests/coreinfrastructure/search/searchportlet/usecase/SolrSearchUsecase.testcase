@@ -742,6 +742,66 @@
 		</for>
 	</command>
 
+	<command name="SearchGlobalTemplateSmoke" priority="5">
+		<description message="This is a use case for LPS-81931" />
+
+		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
+		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
+		<property name="portal.acceptance" value="false" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1 Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="inheritChanges" value="disable" />
+			<var name="pageName" value="Search Global Template Page" />
+			<var name="pageTemplateName" value="Search" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Search Global Template Page" />
+		</execute>
+
+		<for list="Category Facet,Folder Facet,Modified Facet,Search Bar,Search Options,Search Results,Tag Facet,Type Facet,User Facet" param="portlet">
+			<execute function="AssertElementPresent" locator1="Portlet#BODY">
+				<var name="key_portletName" value="${portlet}" />
+			</execute>
+		</for>
+
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Type Facet" />
+		</execute>
+
+		<for list="Category Facet,Folder Facet,Modified Facet,Search Bar,Search Options,Search Results,Tag Facet,User Facet" param="portlet">
+			<execute function="AssertElementPresent" locator1="Portlet#BODY">
+				<var name="key_portletName" value="${portlet}" />
+			</execute>
+		</for>
+
+		<execute macro="SearchBarPortlet#searchPG">
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="Blogs Entry 1 Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+	</command>
+
 	<command name="SearchTwiceScopeEverything" priority="5">
 		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
 		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />

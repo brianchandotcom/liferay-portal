@@ -573,11 +573,11 @@ public class GitWorkingDirectory {
 
 			System.out.println(executionResult.getStandardOut());
 
-			branchName = executionResult.getStandardOut();
+			String currentBranchName = executionResult.getStandardOut();
 
-			branchName = branchName.trim();
+			currentBranchName = currentBranchName.trim();
 
-			if (branchName.isEmpty()) {
+			if (currentBranchName.isEmpty()) {
 				if (required) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
@@ -588,7 +588,8 @@ public class GitWorkingDirectory {
 				return null;
 			}
 
-			return new Branch(this, branchName, null, getBranchSHA(branchName));
+			return new Branch(
+				this, currentBranchName, null, getBranchSHA(currentBranchName));
 		}
 
 		List<Branch> branches = getBranches(branchName, remote);

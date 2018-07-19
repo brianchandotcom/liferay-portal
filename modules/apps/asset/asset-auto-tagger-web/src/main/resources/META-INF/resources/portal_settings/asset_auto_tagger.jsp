@@ -20,6 +20,6 @@
 AssetAutoTaggerConfiguration configuration = (AssetAutoTaggerConfiguration)request.getAttribute(AssetAutoTaggerConfiguration.class.getName());
 %>
 
-<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/asset_auto_tagger" />
+<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="<%= PortalSettingsAssetAutoTaggerConstants.ACTION_NAME %>" />
 
 <aui:input id="enabled" label="enabled" name='<%= PortalSettingsAssetAutoTaggerConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= configuration.enabled() %>" />

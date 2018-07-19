@@ -237,7 +237,7 @@ public abstract class BaseTestPreparatorBundleActivator
 		return createOAuth2Application(
 			companyId, user, clientId, "oauthTestApplicationSecret",
 			availableGrants, availableScopes,
-			Collections.singletonList("http://localhost:8080"));
+			Collections.singletonList("http://redirecturi:8080"));
 	}
 
 	protected OAuth2Application createOAuth2Application(

@@ -763,7 +763,7 @@
 			<var name="pageName" value="Knowledge Base Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Child" />
 		</execute>
 
@@ -841,7 +841,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Knowledge" />
 		</execute>
 
@@ -888,7 +888,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Knowledge" />
 		</execute>
 
@@ -936,7 +936,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Knowledge Base" />
 		</execute>
 

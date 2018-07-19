@@ -90,7 +90,7 @@
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
@@ -297,7 +297,7 @@
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
@@ -324,7 +324,7 @@
 			<var name="searchScope" value="This Site" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
@@ -792,7 +792,7 @@
 			</execute>
 		</for>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="Blogs" />
 		</execute>
 
@@ -858,7 +858,7 @@
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
@@ -867,7 +867,7 @@
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
@@ -933,7 +933,7 @@
 			<var name="searchScope" value="This Site" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
@@ -954,7 +954,7 @@
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
@@ -1023,7 +1023,7 @@
 			<var name="searchScope" value="This Site" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
@@ -1038,7 +1038,7 @@
 			<var name="searchAssetType" value="User" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
@@ -1092,7 +1092,7 @@
 			<var name="aggregationField" value="version" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="WebContent" />
 		</execute>
 
@@ -1142,7 +1142,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="WebContent" />
 		</execute>
 
@@ -1407,7 +1407,7 @@
 			<var name="basicFacetSelection" value="true" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="apple" />
 		</execute>
 
@@ -1474,7 +1474,7 @@
 			<var name="searchURL" value="${testSearchURL}" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="test" />
 		</execute>
 
@@ -1545,7 +1545,7 @@
 			<var name="searchURL" value="${testSearchURL}" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="test" />
 		</execute>
 
@@ -1686,7 +1686,7 @@
 			<var name="searchURL" value="${testSearchURL}" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="organic" />
 		</execute>
 
@@ -1973,7 +1973,7 @@
 			<var name="searchScope" value="This Site" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchWidget">
 			<var name="searchTerm" value="Potato" />
 		</execute>
 

@@ -205,7 +205,15 @@
 		</if>
 	</command>
 
-	<command name="searchPG">
+	<command name="searchEmbedded">
+		<execute function="AssertElementPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
+
+		<execute function="Type" locator1="Search#EMBEDDED_SEARCH_BAR" value1="${searchTerm}" />
+
+		<execute function="KeyPress" locator1="Search#EMBEDDED_SEARCH_BAR" value1="\RETURN" />
+	</command>
+
+	<command name="searchWidget">
 		<execute function="Type" locator1="Search#SEARCH_BAR_WIDGET" value1="${searchTerm}" />
 
 		<execute function="KeyPress" locator1="Search#SEARCH_BAR_WIDGET" value1="\RETURN" />

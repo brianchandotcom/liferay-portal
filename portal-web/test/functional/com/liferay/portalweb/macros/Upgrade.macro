@@ -611,7 +611,7 @@
 	<command name="searchForAssetsAfterUpgrade">
 		<execute macro="Navigator#openURL" />
 
-		<!--<execute macro="SearchPortlet#searchPG">
+		<!--<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Web Content" />
 		</execute>
 
@@ -621,7 +621,7 @@
 			<var name="searchAssetType" value="Web Content Article" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Document1" />
 		</execute>
 
@@ -630,7 +630,7 @@
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Message Boards" />
 		</execute>
 
@@ -640,7 +640,7 @@
 			<var name="searchAssetType" value="Message Boards Message" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Wiki" />
 		</execute>
 
@@ -650,7 +650,7 @@
 			<var name="searchAssetType" value="Wiki Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchEmbedded">
 			<var name="searchTerm" value="Blogs" />
 		</execute>
 

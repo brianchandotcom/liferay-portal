@@ -580,12 +580,10 @@ public class GitWorkingDirectory {
 			currentBranchName = currentBranchName.trim();
 
 			if (currentBranchName.isEmpty()) {
-				if (required) {
-					throw new RuntimeException(
-						JenkinsResultsParserUtil.combine(
-							"Unable to find currently checked out branch ",
-							branchName));
-				}
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to find currently checked out branch ",
+						branchName));
 			}
 
 			return new Branch(

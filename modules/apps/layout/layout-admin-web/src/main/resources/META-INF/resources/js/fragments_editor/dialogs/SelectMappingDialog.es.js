@@ -19,7 +19,8 @@ const COMPATIBLE_TYPES = {
 		'ddm-integer',
 		'ddm-number',
 		'ddm-text-html',
-		'text'
+		'text',
+		'textarea'
 	],
 
 	image: [
@@ -33,7 +34,8 @@ const COMPATIBLE_TYPES = {
 		'ddm-integer',
 		'ddm-number',
 		'ddm-text-html',
-		'text'
+		'text',
+		'textarea'
 	],
 
 	text: [
@@ -41,7 +43,8 @@ const COMPATIBLE_TYPES = {
 		'ddm-decimal',
 		'ddm-integer',
 		'ddm-number',
-		'text'
+		'text',
+		'textarea'
 	]
 };
 

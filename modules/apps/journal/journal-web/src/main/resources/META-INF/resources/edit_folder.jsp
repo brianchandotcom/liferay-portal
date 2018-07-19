@@ -402,7 +402,7 @@ renderResponse.setTitle(title);
 	</c:if>
 </liferay-util:buffer>
 
-<aui:script>
+<aui:script use="liferay-search-container">
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.selectEntity(
 			{
@@ -415,36 +415,27 @@ renderResponse.setTitle(title);
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /></portlet:renderURL>'
 			},
 			function(event) {
-				<portlet:namespace />selectStructure(event.ddmstructureid, event.name);
+				var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
+
+				var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
+
+				<c:choose>
+					<c:when test="<%= workflowEnabled %>">
+						var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
+
+						workflowDefinitions = workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE/g, 'workflowDefinition' + event.ddmstructureid);
+
+						searchContainer.addRow([event.name, workflowDefinitions, ddmStructureLink], event.ddmstructureid);
+					</c:when>
+					<c:otherwise>
+						searchContainer.addRow([event.name, ddmStructureLink], event.ddmstructureid);
+					</c:otherwise>
+				</c:choose>
+
+				searchContainer.updateDataStore();
 			}
 		);
 	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectStructure',
-		function(ddmStructureId, ddmStructureName) {
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
-
-			var ddmStructureLink = '<a class="modify-link" data-rowId="' + ddmStructureId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
-
-			<c:choose>
-				<c:when test="<%= workflowEnabled %>">
-					var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
-
-					workflowDefinitions = workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE/g, 'workflowDefinition' + ddmStructureId);
-
-					searchContainer.addRow([ddmStructureName, workflowDefinitions, ddmStructureLink], ddmStructureId);
-				</c:when>
-				<c:otherwise>
-					searchContainer.addRow([ddmStructureName, ddmStructureLink], ddmStructureId);
-				</c:otherwise>
-			</c:choose>
-
-			searchContainer.updateDataStore();
-		},
-		['liferay-search-container']
-	);
 
 	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeInherit', '', ['<portlet:namespace />restrictionTypeDefinedDiv', '<portlet:namespace />restrictionTypeWorkflowDiv']);
 	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeDefined', '<portlet:namespace />restrictionTypeDefinedDiv', '<portlet:namespace />restrictionTypeWorkflowDiv');

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.users.admin.web.internal.CustomFieldsUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,7 +44,10 @@ public class OrganizationCustomFieldsFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Organization organization) {
-		if (organization != null) {
+		if ((organization != null) &&
+			CustomFieldsUtil.hasVisibleCustomFields(
+				organization.getCompanyId(), Organization.class)) {
+
 			return true;
 		}
 

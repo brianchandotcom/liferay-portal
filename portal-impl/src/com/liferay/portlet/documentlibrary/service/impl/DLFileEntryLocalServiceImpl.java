@@ -581,8 +581,8 @@ public class DLFileEntryLocalServiceImpl
 		String extension = dlFileEntry.getExtension();
 
 		if (Validator.isNotNull(extension)) {
-			sourceFileName = sourceFileName.concat(StringPool.PERIOD).concat(
-				extension);
+			sourceFileName = StringBundler.concat(
+				sourceFileName, StringPool.PERIOD, extension);
 		}
 
 		InputStream inputStream = DLStoreUtil.getFileAsStream(
@@ -1341,17 +1341,12 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("No DLFileEntry exists with the key {groupId=");
-		sb.append(groupId);
-		sb.append(", folderId=");
-		sb.append(folderId);
-		sb.append(", title=");
-		sb.append(title);
-		sb.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			StringBundler.concat(
+				"No DLFileEntry exists with the key {groupId=",
+				String.valueOf(groupId), ", folderId=",
+				String.valueOf(folderId), ", title=", title,
+				StringPool.CLOSE_CURLY_BRACE));
 	}
 
 	@Override

@@ -1260,9 +1260,7 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchNoPG">
-				<var name="searchAssetTitle" value="Blogs Entry Title" />
-				<var name="searchNoResults" value="true" />
+			<execute macro="SearchResultPortlet#viewNoSearchResults">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>
@@ -1321,9 +1319,7 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchNoPG">
-				<var name="searchAssetTitle" value="Blogs Entry Title" />
-				<var name="searchNoResults" value="true" />
+			<execute macro="SearchResultPortlet#viewNoSearchResults">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>
@@ -1382,9 +1378,7 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchNoPG">
-				<var name="searchAssetTitle" value="Blogs Entry Title" />
-				<var name="searchNoResults" value="true" />
+			<execute macro="SearchResultPortlet#viewNoSearchResults">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>
@@ -1447,9 +1441,7 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchNoPG">
-				<var name="searchAssetTitle" value="Blogs Entry Title" />
-				<var name="searchNoResults" value="true" />
+			<execute macro="SearchResultPortlet#viewNoSearchResults">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>

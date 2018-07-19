@@ -21,7 +21,6 @@ import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryService;
@@ -80,17 +79,17 @@ public abstract class BaseCategoryNestedCollectionRouter
 			nestedCategoryForm.getDescriptions(locale),
 			assetVocabulary.getVocabularyId(), null, new ServiceContext());
 
-		long resporcePrimKey = getResourcePrimKey(classPK);
+		long resourcePrimKey = getResourcePrimKey(classPK);
 
 		AssetEntry assetEntry = assetEntryLocalService.getEntry(
-			getClassName(), resporcePrimKey);
+			getClassName(), resourcePrimKey);
 
 		long[] categoryIds = ArrayUtil.append(
 			assetEntry.getCategoryIds(), assetCategory.getCategoryId());
 
 		assetEntryService.updateEntry(
 			assetEntry.getGroupId(), assetEntry.getCreateDate(), null,
-			assetEntry.getClassName(), resporcePrimKey,
+			assetEntry.getClassName(), resourcePrimKey,
 			assetEntry.getClassUuid(), assetEntry.getClassTypeId(), categoryIds,
 			assetEntry.getTagNames(), assetEntry.isListable(),
 			assetEntry.isVisible(), assetEntry.getStartDate(),
@@ -147,6 +146,9 @@ public abstract class BaseCategoryNestedCollectionRouter
 
 		long categoryId = linkedCategoryForm.getCategoryId();
 
+		AssetCategory assetCategory = assetCategoryService.getCategory(
+			categoryId);
+
 		long[] categoryIds = ArrayUtil.append(
 			assetEntry.getCategoryIds(), categoryId);
 
@@ -163,11 +165,8 @@ public abstract class BaseCategoryNestedCollectionRouter
 			assetEntry.getLayoutUuid(), assetEntry.getHeight(),
 			assetEntry.getWidth(), assetEntry.getPriority());
 
-		return assetCategoryLocalService.getCategory(categoryId);
+		return assetCategory;
 	}
-
-	@Reference
-	protected AssetCategoryLocalService assetCategoryLocalService;
 
 	@Reference
 	protected AssetCategoryService assetCategoryService;

@@ -279,12 +279,6 @@ public class DLReferencesExportImportContentProcessor
 			group = group.getLiveGroup();
 		}
 
-		if (group.isStaged() && !group.isStagedRemotely() &&
-			!group.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY)) {
-
-			return content;
-		}
-
 		StringBuilder sb = new StringBuilder(content);
 
 		String contextPath = _portal.getPathContext();

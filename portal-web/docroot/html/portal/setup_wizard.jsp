@@ -228,6 +228,9 @@
 					</aui:form>
 
 					<aui:script use="aui-base,aui-io-request,aui-loading-mask-deprecated">
+						var adminEmailAddress = A.one('#<portlet:namespace />adminEmailAddress');
+						var adminFirstName = A.one('#<portlet:namespace />adminFirstName');
+						var adminLastName = A.one('#<portlet:namespace />adminLastName');
 						var customDatabaseOptions = A.one('#customDatabaseOptions');
 						var customDatabaseOptionsLink = A.one('#customDatabaseOptionsLink');
 						var databaseSelector = A.one('#databaseType');
@@ -306,53 +309,63 @@
 						A.one('#fm').on(
 							'submit',
 							function(event) {
-								if (!adminFirstName.value || !adminLastName.value || !adminEmailAddress.value) {
-									return;
+								if (adminEmailAddress) {
+									adminEmailAddress = adminEmailAddress.val();
 								}
 
-								if (defaultDatabase.val() == 'true') {
-									startInstall();
-
-									command.val('<%= Constants.UPDATE %>');
-
-									submitForm(document.fm);
+								if (adminFirstName) {
+									adminFirstName = adminFirstName.val();
 								}
-								else {
-									command.val('<%= Constants.TEST %>');
 
-									A.io.request(
-										setupForm.get('action'),
-										{
-											after: {
-												failure: function(event, id, obj) {
-													loadingMask.hide();
+								if (adminLastName) {
+									adminLastName = adminLastName.val();
+								}
 
-													updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'error');
-												},
-												success: function(event, id, obj) {
-													command.val('<%= Constants.UPDATE %>');
+								if (adminEmailAddress != '' && adminFirstName != '' && adminLastName != '') {
+									if (defaultDatabase.val() == 'true') {
+										startInstall();
 
-													var responseData = this.get('responseData');
+										command.val('<%= Constants.UPDATE %>');
 
-													if (!responseData.success) {
-														updateMessage(responseData.message, 'error');
+										submitForm(document.fm);
+									}
+									else {
+										command.val('<%= Constants.TEST %>');
 
+										A.io.request(
+											setupForm.get('action'),
+											{
+												after: {
+													failure: function(event, id, obj) {
 														loadingMask.hide();
+
+														updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'error');
+													},
+													success: function(event, id, obj) {
+														command.val('<%= Constants.UPDATE %>');
+
+														var responseData = this.get('responseData');
+
+														if (!responseData.success) {
+															updateMessage(responseData.message, 'error');
+
+															loadingMask.hide();
+														}
+														else {
+															submitForm(document.fm);
+														}
 													}
-													else {
-														submitForm(document.fm);
-													}
+												},
+												dataType: 'JSON',
+												form: {
+													id: document.fm
+												},
+												on: {
+													start: startInstall
 												}
-											},
-											dataType: 'JSON',
-											form: {
-												id: document.fm
-											},
-											on: {
-												start: startInstall
 											}
-										}
-									);
+										);
+									}
 								}
 							}
 						);

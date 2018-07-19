@@ -49,7 +49,7 @@
 
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="XSL Content" />
-			<var name="configurationName" value="XSL Content Options" />
+			<var name="configurationName" value="Options" />
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 

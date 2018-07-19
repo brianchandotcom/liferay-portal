@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
 import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
@@ -103,6 +104,11 @@ public class SiteNavigationLanguagePortletDisplayTemplateHandler
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/site/navigation/language/web/portlet/template" +
 			"/dependencies/portlet-display-templates.xml";
+	}
+
+	@Reference(unbind = "-")
+	protected void setTemplateHandlerRegistry(
+		TemplateHandlerRegistry templateHandlerRegistry) {
 	}
 
 	@Reference

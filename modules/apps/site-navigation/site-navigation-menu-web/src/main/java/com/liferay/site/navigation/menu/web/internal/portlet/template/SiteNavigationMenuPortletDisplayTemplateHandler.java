@@ -18,6 +18,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.util.Portal;
@@ -138,6 +139,11 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 			"navigation-item", NavItem.class, "navItem");
 
 		return templateVariableGroup;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTemplateHandlerRegistry(
+		TemplateHandlerRegistry templateHandlerRegistry) {
 	}
 
 	@Reference

@@ -274,8 +274,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				queryTranslator = createElasticsearchQueryTranslator();
 				sortTranslator = new DefaultSortTranslator();
 				statsTranslator = new DefaultStatsTranslator();
-				searchHitDocumentTranslator =
-					new SearchHitDocumentTranslatorImpl();
 
 				setQuerySuggester(
 					createElasticsearchQuerySuggester(

@@ -16,8 +16,8 @@ package com.liferay.arquillian.extension.junit.bridge.remote.processor;
 
 import com.liferay.arquillian.container.osgi.remote.activator.ArquillianBundleActivator;
 import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActivatorsManager;
-import com.liferay.arquillian.container.osgi.remote.processor.service.ImportPackageManager;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -47,6 +47,7 @@ import org.jboss.arquillian.protocol.jmx.JMXTestRunner;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
+import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.asset.ArchiveAsset;
@@ -179,10 +180,51 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			Collection<Archive<?>> auxiliaryArchives, Manifest manifest)
 		throws IOException {
 
-		ImportPackageManager importPackageManager =
-			_importPackageManagerInstance.get();
+		Attributes mainAttributes = manifest.getMainAttributes();
 
-		importPackageManager.cleanRepeatedImports(manifest, auxiliaryArchives);
+		List<String> importPackages = StringUtil.split(
+			mainAttributes.getValue("Import-Package"));
+
+		boolean changed = false;
+
+		Iterator<String> iterator = importPackages.iterator();
+
+		packages:
+		while (iterator.hasNext()) {
+			String importPackage = iterator.next();
+
+			int index = importPackage.indexOf(CharPool.SEMICOLON);
+
+			if (index != -1) {
+				importPackage = importPackage.substring(0, index);
+			}
+
+			ArchivePath archivePath = ArchivePaths.create(
+				importPackage.replace(CharPool.PERIOD, CharPool.SLASH));
+
+			for (Archive<?> archive : auxiliaryArchives) {
+				if (archive.contains(archivePath)) {
+					iterator.remove();
+
+					changed = true;
+
+					continue packages;
+				}
+			}
+		}
+
+		if (changed) {
+			StringBundler sb = new StringBundler(importPackages.size());
+
+			for (String importPackage : importPackages) {
+				sb.append(importPackage);
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			mainAttributes.putValue("Import-Package", sb.toString());
+		}
 	}
 
 	private Manifest _getManifest(Archive<?> archive) throws IOException {
@@ -314,9 +356,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 	@Inject
 	private Instance<BundleActivatorsManager> _bundleActivatorsManagerInstance;
-
-	@Inject
-	private Instance<ImportPackageManager> _importPackageManagerInstance;
 
 	@Inject
 	private Instance<ServiceLoader> _serviceLoaderInstance;

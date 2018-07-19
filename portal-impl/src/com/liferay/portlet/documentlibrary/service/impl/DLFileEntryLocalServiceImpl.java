@@ -621,7 +621,7 @@ public class DLFileEntryLocalServiceImpl
 
 		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
 
-		List<DDMStructure> ddmStructures = null;
+		List<DDMStructure> ddmStructures;
 
 		if (fileEntryTypeId > 0) {
 			DLFileEntryType dlFileEntryType =
@@ -1416,7 +1416,7 @@ public class DLFileEntryLocalServiceImpl
 		long groupId, long userId, long repositoryId, long rootFolderId,
 		int start, int end, OrderByComparator<DLFileEntry> obc) {
 
-		List<Long> folderIds = null;
+		List<Long> folderIds;
 
 		if (repositoryId != 0) {
 			folderIds = dlFolderLocalService.getRepositoryFolderIds(

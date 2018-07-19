@@ -15,7 +15,6 @@
 package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -97,8 +96,7 @@ public class DLFileVersionUpdateTest extends BaseDLAppTestCase {
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		Assert.assertEquals(
-			DLFileEntryConstants.VERSION_DEFAULT, fileVersion.getVersion());
+		Assert.assertEquals("1.1", fileVersion.getVersion());
 		Assert.assertEquals(updateMimeType, fileVersion.getMimeType());
 		Assert.assertEquals(updateBytes.length, fileVersion.getSize());
 		Assert.assertEquals(

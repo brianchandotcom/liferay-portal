@@ -1044,7 +1044,7 @@
 			<var name="searchTerm" value="Record Text" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 			<var name="searchAssetType" value="Dynamic Data Lists Record" />
 		</execute>
@@ -1067,7 +1067,7 @@
 			<var name="searchTerm" value="123" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 			<var name="searchAssetType" value="Dynamic Data Lists Record" />
 		</execute>
@@ -1219,7 +1219,7 @@
 			<var name="searchTerm" value="Record Text" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 			<var name="searchAssetType" value="Dynamic Data Lists Record" />
 		</execute>

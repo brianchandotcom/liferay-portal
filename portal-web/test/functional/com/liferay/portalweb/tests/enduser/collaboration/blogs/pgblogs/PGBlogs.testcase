@@ -1244,7 +1244,7 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchResultPG">
+			<execute macro="SearchResultPortlet#viewSearchResults">
 				<var name="searchAssetTitle" value="Blogs Entry Title" />
 				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
@@ -1303,7 +1303,7 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchResultPG">
+			<execute macro="SearchResultPortlet#viewSearchResults">
 				<var name="searchAssetTitle" value="Blogs Entry Title" />
 				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
@@ -1362,7 +1362,7 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchResultPG">
+			<execute macro="SearchResultPortlet#viewSearchResults">
 				<var name="searchAssetTitle" value="Blogs Entry Title" />
 				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
@@ -1425,7 +1425,7 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchResultPG">
+			<execute macro="SearchResultPortlet#viewSearchResults">
 				<var name="searchAssetTitle" value="Blogs Entry Title" />
 				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />

@@ -767,7 +767,7 @@
 			<var name="searchTerm" value="Child" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetSummary" value="Knowledge Base Child Article Content" />
 			<var name="searchAssetTitle" value="Knowledge Base Child Article Title" />
 			<var name="searchAssetType" value="Knowledge Base Article" />
@@ -845,7 +845,7 @@
 			<var name="searchTerm" value="Knowledge" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetSummary" value="Knowledge Base Article 2 Content" />
 			<var name="searchAssetTitle" value="Knowledge Base Article 2 Title" />
 			<var name="searchAssetType" value="Knowledge Base Article" />
@@ -892,7 +892,7 @@
 			<var name="searchTerm" value="Knowledge" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetSummary" value="Knowledge Base Article Content" />
 			<var name="searchAssetTitle" value="Knowledge Base Article Title" />
 			<var name="searchAssetType" value="Knowledge Base Article" />
@@ -940,7 +940,7 @@
 			<var name="searchTerm" value="Knowledge Base" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetSummary" value="Knowledge Base Article's Content" />
 			<var name="searchAssetTitle" value="Knowledge Base Article" />
 			<var name="searchAssetType" value="Knowledge Base Article" />

@@ -304,6 +304,16 @@
 	.widget-metadata.categories {
 		margin-bottom: 1.5rem;
 	}
+
+	.widget-toolbar {
+		.taglib-ratings .btn + .btn {
+			margin-left: 0;
+		}
+
+		.autofit-col + .autofit-col {
+			padding-left: .5rem;
+		}
+	}
 }
 
 .firefox .portlet-blogs fieldset.input-container {

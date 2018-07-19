@@ -195,7 +195,7 @@
 									<@liferay_social_bookmarks["bookmarks"]
 										className="com.liferay.blogs.model.BlogsEntry"
 										classPK=curBlogEntry.getEntryId()
-										displayStyle="menu"
+										maxInlineItems=0
 										target="_blank"
 										title=blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry)
 										types=blogsPortletInstanceConfiguration.socialBookmarksTypes()

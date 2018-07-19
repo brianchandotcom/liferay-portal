@@ -39,10 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	immediate = true, property = "form.navigator.entry.order:Integer=90",
-	service = FormNavigatorEntry.class
-)
+@Component(immediate = true, service = FormNavigatorEntry.class)
 public class AssetAutoTaggerSitesFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<Group>
 	implements FormNavigatorEntry<Group> {

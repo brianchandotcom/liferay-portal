@@ -66,7 +66,7 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#addSearchPortlets">
+		<execute macro="SearchBarPortlet#addWidgets">
 			<var name="searchPortletList" value="Type Facet,Search Results,Search Bar" />
 		</execute>
 
@@ -76,16 +76,16 @@
 			<var name="portletName" value="Search Results" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureParameterNames">
+		<execute macro="SearchBarPortlet#configureWidgetParameterNames">
 			<var name="keywordsParameterName" value="keywordparameter" />
 			<var name="scopeParameterName" value="scopeparameter" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureScope">
+		<execute macro="SearchBarPortlet#configureWidgetScope">
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#selectScopeInput">
+		<execute macro="SearchBarPortlet#selectWidgetScopeInput">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
@@ -271,7 +271,7 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#addSearchPortlets">
+		<execute macro="SearchBarPortlet#addWidgets">
 			<var name="searchPortletList" value="Search Results,Search Bar" />
 		</execute>
 
@@ -281,19 +281,19 @@
 			<var name="portletName" value="Search Results" />
 		</execute>
 
-		<execute macro="SearchPortlet#configureScope">
+		<execute macro="SearchBarPortlet#configureEmbeddedScope">
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
-		<execute macro="SearchPortlet#selectScopeInput">
+		<execute macro="SearchBarPortlet#selectEmbeddedScopeInput">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureScope">
+		<execute macro="SearchBarPortlet#configureWidgetScope">
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#selectScopeInput">
+		<execute macro="SearchBarPortlet#selectWidgetScopeInput">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
@@ -316,11 +316,11 @@
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
-		<execute macro="SearchPortlet#selectScopeInput">
+		<execute macro="SearchBarPortlet#selectEmbeddedScopeInput">
 			<var name="searchScope" value="This Site" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#selectScopeInput">
+		<execute macro="SearchBarPortlet#selectWidgetScopeInput">
 			<var name="searchScope" value="This Site" />
 		</execute>
 
@@ -881,11 +881,11 @@
 			<var name="url" value="${portalURL}/web/guest/search" />
 		</execute>
 
-		<execute macro="SearchPortlet#configureScope">
+		<execute macro="SearchBarPortlet#configureEmbeddedScope">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureScope">
+		<execute macro="SearchBarPortlet#configureWidgetScope">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
@@ -956,11 +956,11 @@
 			<var name="url" value="${portalURL}/web/guest/search" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureScope">
+		<execute macro="SearchBarPortlet#configureWidgetScope">
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#selectScopeInput">
+		<execute macro="SearchBarPortlet#selectWidgetScopeInput">
 			<var name="searchScope" value="This Site" />
 		</execute>
 
@@ -981,7 +981,7 @@
 
 		<!-- LPS-80521 -->
 
-		<!-- <execute macro="SearchBarPortlet#selectScopeInput">
+		<!-- <execute macro="SearchBarPortlet#selectWidgetScopeInput">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
@@ -1050,7 +1050,7 @@
 			<var name="url" value="${portalURL}/web/guest/search" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureScope">
+		<execute macro="SearchBarPortlet#configureWidgetScope">
 			<var name="searchScope" value="This Site" />
 		</execute>
 
@@ -1416,7 +1416,7 @@
 			<var name="pageName" value="${searchPage}" />
 		</execute>
 
-		<execute macro="SearchPortlet#addSearchPortlets">
+		<execute macro="SearchBarPortlet#addWidgets">
 			<var name="searchPortletList" value="Search Options,Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar" />
 		</execute>
 
@@ -1426,11 +1426,11 @@
 			<var name="portletName" value="Search Results" />
 		</execute>
 
-		<execute macro="SearchPortlet#configureScope">
+		<execute macro="SearchBarPortlet#configureEmbeddedScope">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureScope">
+		<execute macro="SearchBarPortlet#configureWidgetScope">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
@@ -1992,16 +1992,16 @@
 			<var name="portletName" value="Search Bar" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureParameterNames">
+		<execute macro="SearchBarPortlet#configureWidgetParameterNames">
 			<var name="keywordsParameterName" value="keywordparameter" />
 			<var name="scopeParameterName" value="scopeparameter" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureScope">
+		<execute macro="SearchBarPortlet#configureWidgetScope">
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#selectScopeInput">
+		<execute macro="SearchBarPortlet#selectWidgetScopeInput">
 			<var name="searchScope" value="This Site" />
 		</execute>
 

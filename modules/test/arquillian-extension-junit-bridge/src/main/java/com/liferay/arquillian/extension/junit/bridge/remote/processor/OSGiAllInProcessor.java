@@ -31,13 +31,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.core.api.Instance;
@@ -48,7 +46,6 @@ import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.ArchivePaths;
-import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.asset.ArchiveAsset;
 import org.jboss.shrinkwrap.api.asset.Asset;
@@ -268,31 +265,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			archives.add(auxiliaryArchive);
 
-			Map<ArchivePath, Node> remoteLoadableExtensionMap =
-				auxiliaryArchive.getContent(
-					Filters.include(_REMOTE_LOADABLE_EXTENSION_FILE));
-
-			Collection<Node> remoteLoadableExtensions =
-				remoteLoadableExtensionMap.values();
-
-			if (remoteLoadableExtensions.size() > 1) {
-				throw new RuntimeException(
-					"The archive " + auxiliaryArchive.getName() +
-						" contains more than one RemoteLoadableExtension file");
-			}
-
-			if (remoteLoadableExtensions.size() == 1) {
-				Iterator<Node> remoteLoadableExtensionsIterator =
-					remoteLoadableExtensions.iterator();
-
-				Node remoteLoadableExtensionsNext =
-					remoteLoadableExtensionsIterator.next();
-
-				javaArchive.add(
-					remoteLoadableExtensionsNext.getAsset(),
-					_REMOTE_LOADABLE_EXTENSION_FILE);
-			}
-
 			String path = "extension/" + auxiliaryArchive.getName();
 
 			javaArchive.addAsResource(
@@ -349,10 +321,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 	private static final String _ACTIVATORS_FILE =
 		"/META-INF/services/" + BundleActivator.class.getCanonicalName();
-
-	private static final String _REMOTE_LOADABLE_EXTENSION_FILE =
-		"/META-INF/services/" +
-			RemoteLoadableExtension.class.getCanonicalName();
 
 	@Inject
 	private Instance<BundleActivatorsManager> _bundleActivatorsManagerInstance;

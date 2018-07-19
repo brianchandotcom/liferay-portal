@@ -379,8 +379,10 @@
 			<var name="searchTerm" value="Test Bookmark Name" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchAssetTitle">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="Test Bookmark Name" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchTerm" value="Test Bookmark Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -411,8 +413,10 @@
 			<var name="searchTerm"><![CDATA["Test Bookmark Name"]]></var>
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchAssetTitle">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="Test Bookmark Name" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchTerm"><![CDATA["Test Bookmark Name"]]></var>
 		</execute>
 	</command>
 </definition>

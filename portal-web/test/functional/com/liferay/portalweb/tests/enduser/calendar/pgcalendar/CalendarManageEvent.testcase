@@ -841,7 +841,7 @@
 			<var name="searchTerm" value="tag1" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="Calendar Event Title" />
 			<var name="searchAssetType" value="Calendar Event" />
 		</execute>

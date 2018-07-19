@@ -615,7 +615,7 @@
 			<var name="searchTerm" value="Web Content" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetSummary" value="Web Content Content" />
 			<var name="searchAssetTitle" value="Web Content Title" />
 			<var name="searchAssetType" value="Web Content Article" />
@@ -625,7 +625,7 @@
 			<var name="searchTerm" value="Document1" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="Document1" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
@@ -634,7 +634,7 @@
 			<var name="searchTerm" value="Message Boards" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetSummary" value="Message Boards Body" />
 			<var name="searchAssetTitle" value="Message Boards Subject" />
 			<var name="searchAssetType" value="Message Boards Message" />
@@ -644,7 +644,7 @@
 			<var name="searchTerm" value="Wiki" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetSummary" value="Wiki Front Page Content" />
 			<var name="searchAssetTitle" value="FrontPage" />
 			<var name="searchAssetType" value="Wiki Page" />
@@ -654,7 +654,7 @@
 			<var name="searchTerm" value="Blogs" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetSummary" value="Blogs Entry Content" />
 			<var name="searchAssetTitle" value="Blogs Entry Title" />
 			<var name="searchAssetType" value="Blogs Entry" />

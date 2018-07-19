@@ -852,7 +852,6 @@
 		</execute>
 
 		<execute macro="SearchPortlet#viewSearchAssetTitle">
-			<var name="searchAssetSummary" value="Entry Content 1" />
 			<var name="searchAssetTitle" value="Entry Title 1" />
 		</execute>
 
@@ -861,7 +860,6 @@
 		</execute>
 
 		<execute macro="SearchPortlet#viewSearchAssetTitle">
-			<var name="searchAssetSummary" value="Entry Content 3" />
 			<var name="searchAssetTitle" value="Entry Title 3" />
 		</execute>
 	</command>

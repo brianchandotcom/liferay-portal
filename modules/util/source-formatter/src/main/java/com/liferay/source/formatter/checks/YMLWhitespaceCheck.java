@@ -69,7 +69,13 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			return newDefinition;
 		}
 
-		String previousIndent = StringPool.BLANK;
+		String firstLine = lines[1];
+
+		String nestedIndent = firstLine.replaceAll("^(\\s+).+", "$1");
+
+		if (nestedIndent.equals(firstLine)) {
+			nestedIndent = StringPool.BLANK;
+		}
 
 		for (int j = 1; j < lines.length; j++) {
 			String line = lines[j];
@@ -84,21 +90,15 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 				curIndent = StringPool.BLANK;
 			}
 
-			if (curIndent.length() > previousIndent.length()) {
-				expectedIndent = expectedIndent + StringPool.FOUR_SPACES;
-			}
-			else if (curIndent.length() < previousIndent.length()) {
-				expectedIndent = StringUtil.replaceFirst(
-					expectedIndent, StringPool.FOUR_SPACES, StringPool.BLANK);
+			if (!curIndent.equals(nestedIndent)) {
+				continue;
 			}
 
-			if (!curIndent.equals(expectedIndent)) {
-				String s = expectedIndent + StringUtil.trimLeading(line);
+			String trimmedLine = StringUtil.trimLeading(line);
 
-				newDefinition = StringUtil.replaceFirst(newDefinition, line, s);
-			}
-
-			previousIndent = curIndent;
+			newDefinition = StringUtil.replaceFirst(
+				newDefinition, line,
+				expectedIndent + StringPool.FOUR_SPACES + trimmedLine);
 		}
 
 		return newDefinition;

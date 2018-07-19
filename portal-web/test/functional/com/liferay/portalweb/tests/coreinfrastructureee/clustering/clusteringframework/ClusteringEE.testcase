@@ -198,8 +198,7 @@
 			<var name="searchTerm" value="Entry2" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoPG">
-			<var name="searchNoResults" value="true" />
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
 			<var name="searchTerm" value="Entry2" />
 		</execute>
 	</command>

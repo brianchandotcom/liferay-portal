@@ -395,9 +395,7 @@
 			<var name="searchTerm" value="asdf" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoPG">
-			<var name="searchAssetTitle" value="Test Bookmark Name" />
-			<var name="searchNoResults" value="true" />
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
 			<var name="searchTerm" value="asdf" />
 		</execute>
 

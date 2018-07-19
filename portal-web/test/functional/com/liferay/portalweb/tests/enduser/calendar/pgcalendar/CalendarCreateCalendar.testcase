@@ -156,6 +156,8 @@
 			<var name="viewType" value="Day" />
 		</execute>
 
+		<execute macro="CalendarNavigator#gotoPreviousDay" />
+
 		<execute macro="CalendarEvent#addViaDayView">
 			<var name="eventBlock" value="true" />
 			<var name="eventTitle" value="Calendar Event Title1" />
@@ -163,9 +165,11 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Day" />
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
 		</execute>
+
+		<execute macro="CalendarNavigator#gotoPreviousDay" />
 
 		<execute macro="CalendarEvent#resizeViaEventBlock" />
 
@@ -175,8 +179,6 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="CalendarNavigator#gotoPreviousDay" />
-
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#editTitle">
@@ -184,8 +186,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="03:00 PM" />
-			<var name="startDateTime" value="12:00 PM" />
+			<var name="endDateTime" value="06:00 AM" />
+			<var name="startDateTime" value="03:00 AM" />
 		</execute>
 
 		<execute macro="CalendarEvent#publish" />
@@ -193,12 +195,6 @@
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
 		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Day" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoPreviousDay" />
 
 		<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
 

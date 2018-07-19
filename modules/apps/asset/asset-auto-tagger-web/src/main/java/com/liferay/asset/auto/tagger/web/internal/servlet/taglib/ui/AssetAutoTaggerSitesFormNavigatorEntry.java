@@ -46,7 +46,7 @@ public class AssetAutoTaggerSitesFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_GENERAL;
 	}
 
 	@Override

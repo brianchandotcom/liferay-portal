@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -71,9 +70,6 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		Layout layout = _layoutLocalService.fetchLayout(selPlid);
 
 		if (layout == null) {
@@ -95,17 +91,21 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		if (group.isStagingGroup() &&
 			!GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.MANAGE_STAGING) &&
+				themeDisplay.getPermissionChecker(), group,
+				ActionKeys.MANAGE_STAGING) &&
 			!GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.PUBLISH_STAGING)) {
+				themeDisplay.getPermissionChecker(), group,
+				ActionKeys.PUBLISH_STAGING)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, Group.class.getName(), group.getGroupId(),
-				ActionKeys.MANAGE_STAGING, ActionKeys.PUBLISH_STAGING);
+				themeDisplay.getPermissionChecker(), Group.class.getName(),
+				group.getGroupId(), ActionKeys.MANAGE_STAGING,
+				ActionKeys.PUBLISH_STAGING);
 		}
 
 		if (LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.DELETE)) {
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.DELETE)) {
 
 			LayoutType layoutType = layout.getLayoutType();
 

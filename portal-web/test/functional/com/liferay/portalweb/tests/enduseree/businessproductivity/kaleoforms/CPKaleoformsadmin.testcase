@@ -250,8 +250,8 @@
 
 		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitions" />
 
-		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
-			<var name="unpublishedWorkflowDefinitionTitle" value="Single Approver" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="Single Approver">
+			<var name="key_workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#reactivateInactiveWorkflowDefinition">
@@ -327,7 +327,7 @@
 		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitions" />
 
 		<for list="Single Approver,Workflow Definition Title" param="workflowDefinitionTitle">
-			<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitionsInUnpublishedTab">
+			<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="${workflowDefinitionTitle}">
 				<var name="unpublishedWorkflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 			</execute>
 		</for>

@@ -566,7 +566,7 @@ public class GitWorkingDirectory {
 				if (required) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
-							"Unable to find required local branch ",
+							"Unable to find currently checked out branch ",
 							branchName));
 				}
 
@@ -583,11 +583,9 @@ public class GitWorkingDirectory {
 				if (required) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
-							"Unable to find required local branch ",
+							"Unable to find currently checked out branch ",
 							branchName));
 				}
-
-				return null;
 			}
 
 			return new Branch(

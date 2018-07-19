@@ -406,6 +406,24 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="changeSiteLogo">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute function="Click" locator1="Icon#COG_PAGES" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Logo" />
+		</execute>
+
+		<execute macro="Page#uploadFileForLogo">
+			<var name="logoFile" value="${logoFile}" />
+		</execute>
+	</command>
+
 	<command name="configureCurrentLanguagesCP">
 		<var name="key_displaySettings" value="${displaySettings}" />
 

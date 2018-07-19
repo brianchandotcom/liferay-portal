@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>SEARCH_BUTTON</td>
-	<td>//input[@value='Search']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DNS_LOOKUP_FIELD</td>
 	<td>//input[@name='_com_liferay_network_utilities_web_portlet_NetworkUtilitiesPortlet_domain']</td>
 	<td></td>

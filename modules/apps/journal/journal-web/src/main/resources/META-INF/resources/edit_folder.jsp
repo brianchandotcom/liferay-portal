@@ -307,13 +307,7 @@ renderResponse.setTitle(title);
 								/>
 							</liferay-ui:search-container>
 
-							<liferay-ui:icon
-								cssClass="modify-link select-structure"
-								label="<%= true %>"
-								linkCssClass="btn btn-default"
-								message="choose-structure"
-								url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-							/>
+							<aui:button id="selectStructure" value="choose-structure" />
 						</div>
 					</c:if>
 
@@ -405,37 +399,40 @@ renderResponse.setTitle(title);
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
 
-	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true
+	$('#<portlet:namespace />selectStructure').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true
+					},
+					eventName: '<portlet:namespace />selectStructure',
+					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /></portlet:renderURL>'
 				},
-				eventName: '<portlet:namespace />selectStructure',
-				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /></portlet:renderURL>'
-			},
-			function(event) {
-				var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
+				function(event) {
+					var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
 
-				<c:choose>
-					<c:when test="<%= workflowEnabled %>">
-						var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
+					<c:choose>
+						<c:when test="<%= workflowEnabled %>">
+							var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
 
-						workflowDefinitions = workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE/g, 'workflowDefinition' + event.ddmstructureid);
+							workflowDefinitions = workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE/g, 'workflowDefinition' + event.ddmstructureid);
 
-						searchContainer.addRow([event.name, workflowDefinitions, ddmStructureLink], event.ddmstructureid);
-					</c:when>
-					<c:otherwise>
-						searchContainer.addRow([event.name, ddmStructureLink], event.ddmstructureid);
-					</c:otherwise>
-				</c:choose>
+							searchContainer.addRow([event.name, workflowDefinitions, ddmStructureLink], event.ddmstructureid);
+						</c:when>
+						<c:otherwise>
+							searchContainer.addRow([event.name, ddmStructureLink], event.ddmstructureid);
+						</c:otherwise>
+					</c:choose>
 
-				searchContainer.updateDataStore();
-			}
-		);
-	}
+					searchContainer.updateDataStore();
+				}
+			);
+		}
+	);
 
 	searchContainer.get('contentBox').delegate(
 		'click',

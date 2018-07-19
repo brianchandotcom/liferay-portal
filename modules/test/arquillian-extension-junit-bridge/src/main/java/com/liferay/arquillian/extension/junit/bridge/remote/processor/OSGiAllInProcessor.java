@@ -68,18 +68,18 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		JavaArchive javaArchive = (JavaArchive)archive;
 
 		try {
-			Manifest manifest = _getManifest(javaArchive);
-
 			_addTestClass(javaArchive, testClass);
 
-			_addOSGiImports(manifest);
-
 			_addArquillianDependencies(javaArchive);
+
+			Manifest manifest = _getManifest(javaArchive);
 
 			List<Archive<?>> auxiliaryArchives = _loadAuxiliaryArchives(
 				javaArchive, manifest);
 
 			_cleanRepeatedImports(auxiliaryArchives, manifest);
+
+			_addOSGiImports(manifest);
 
 			Attributes mainAttributes = manifest.getMainAttributes();
 

@@ -341,27 +341,15 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 <aui:script>
 	function <portlet:namespace />openStructureSelector() {
-		Liferay.Util.openDDMPortlet(
+		Liferay.Util.selectEntity(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
-				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey(): 0 %>,
 				dialog: {
-					destroyOnHide: true
+					constrain: true,
+					modal: true
 				},
 				eventName: '<portlet:namespace />selectStructure',
-				groupId: <%= themeDisplay.getSiteGroupId() %>,
-				mvcPath: '/select_structure.jsp',
-				navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
-				refererPortletName: '<%= JournalPortletKeys.JOURNAL + ".selectStructureFeed" %>',
-
-				<%
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-				%>
-
-				refererWebDAVToken: '<%= HtmlUtil.escapeJS(WebDAVUtil.getStorageToken(portlet)) %>',
-
-				showAncestorScopes: true,
-				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /></portlet:renderURL>'
 			},
 			function(event) {
 				if (confirm('<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-templates-and-available-feed-item-content") %>') && (document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value != event.structurekey)) {

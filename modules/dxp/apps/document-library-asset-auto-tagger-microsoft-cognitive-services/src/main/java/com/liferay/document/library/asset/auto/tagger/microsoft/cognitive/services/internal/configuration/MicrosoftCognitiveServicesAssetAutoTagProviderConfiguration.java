@@ -23,33 +23,27 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "documents-and-media")
 @Meta.OCD(
-	description = "microsoft-cognitive-services-auto-tag-provider-description",
+	description = "microsoft-cognitive-services-asset-auto-tag-provider-description",
 	id = "com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration",
 	localization = "content/Language",
-	name = "microsoft-cognitive-services-auto-tag-provider-configuration-name"
+	name = "microsoft-cognitive-services-asset-auto-tag-provider-configuration-name"
 )
 public interface MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration {
 
 	/**
 	 * Sets the API Key for the Computer Vision API V2.
-	 *
-	 * See https://azure.microsoft.com/en-us/try/cognitive-services/my-apis/?apiSlug=computer-services
 	 */
 	@Meta.AD(description = "api-key-description", name = "api-key")
 	public String apiKey();
 
 	/**
 	 * Sets the Computer Vision API V2 endpoint.
-	 *
-	 * For example: https://westcentralus.api.cognitive.microsoft.com/vision/v2.0
-	 *
-	 * See https://azure.microsoft.com/en-us/try/cognitive-services/my-apis/?apiSlug=computer-services
 	 */
 	@Meta.AD(description = "api-endpoint-description", name = "api-endpoint")
 	public String apiEndpoint();
 
 	/**
-	 * Enables auto tagging of images using Microsoft Cognitive Services API
+	 * Enables auto tagging of images using Microsoft Cognitive Services API.
 	 */
 	@Meta.AD(name = "enabled", required = false)
 	public boolean enabled();

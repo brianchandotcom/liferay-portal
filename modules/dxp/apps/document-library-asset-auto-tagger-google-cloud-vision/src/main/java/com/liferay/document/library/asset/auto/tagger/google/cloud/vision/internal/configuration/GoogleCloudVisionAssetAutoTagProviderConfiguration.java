@@ -23,24 +23,21 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "documents-and-media")
 @Meta.OCD(
+	description = "google-cloud-vision-asset-auto-tag-provider-description",
 	id = "com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderConfiguration",
 	localization = "content/Language",
-	name = "google-cloud-vision-auto-tag-provider-configuration-name"
+	name = "google-cloud-vision-asset-auto-tag-provider-configuration-name"
 )
 public interface GoogleCloudVisionAssetAutoTagProviderConfiguration {
 
 	/**
-	 * Sets the API Key for the cloud vision API.
-	 *
-	 * Billing must be enabled for this API to work.
-	 *
-	 * See https://cloud.google.com/docs/authentication/api-keys
+	 * Sets the API Key for Google Cloud Vision API.
 	 */
 	@Meta.AD(description = "api-key-description", name = "api-key")
 	public String apiKey();
 
 	/**
-	 * Enables auto tagging of images using Google Cloud Vision API
+	 * Enables auto tagging of images using Google Cloud Vision API.
 	 */
 	@Meta.AD(
 		description = "enabled-description", name = "enabled", required = false

@@ -19,6 +19,9 @@ package com.liferay.asset.auto.tagger.web.internal.constants;
  */
 public class PortalSettingsAssetAutoTaggerConstants {
 
+	public static final String ACTION_NAME =
+		"/portal_settings/asset_auto_tagger";
+
 	public static final String FORM_PARAMETER_NAMESPACE = "assetAutoTagger_";
 
 }

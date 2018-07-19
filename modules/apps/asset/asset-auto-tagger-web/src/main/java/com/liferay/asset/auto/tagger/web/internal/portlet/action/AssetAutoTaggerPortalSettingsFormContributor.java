@@ -45,7 +45,7 @@ public class AssetAutoTaggerPortalSettingsFormContributor
 
 	@Override
 	public Optional<String> getSaveMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/asset_auto_tagger");
+		return Optional.of(PortalSettingsAssetAutoTaggerConstants.ACTION_NAME);
 	}
 
 	@Override

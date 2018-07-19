@@ -23,12 +23,16 @@ String tabs1Param = randomNamespace + "tabs1";
 String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + id, null));
 
 List<String> filterCategoryKeys = new ArrayList<String>();
+List<String> filterCategoryLabels = new ArrayList<String>();
 
-for (String categoryKey : categoryKeys) {
+for (int i = 0; i < categoryKeys.length; i++) {
+	String categoryKey = categoryKeys[i];
+
 	List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
 
 	if (ListUtil.isNotEmpty(formNavigatorEntries)) {
 		filterCategoryKeys.add(categoryKey);
+		filterCategoryLabels.add(categoryLabels[i]);
 	}
 }
 %>
@@ -39,7 +43,7 @@ for (String categoryKey : categoryKeys) {
 	</c:when>
 	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
 		<liferay-ui:tabs
-			names="<%= StringUtil.merge(filterCategoryKeys) %>"
+			names="<%= StringUtil.merge(filterCategoryLabels) %>"
 			param="<%= tabs1Param %>"
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"

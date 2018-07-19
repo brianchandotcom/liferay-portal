@@ -120,7 +120,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		}
 	);
 
-	function destroyAddMenuItemClickHandler() {
+	var destroyAddMenuItemClickHandler = function() {
 		if (addMenuItemClickHandler) {
 			addMenuItemClickHandler.removeListener();
 
@@ -129,7 +129,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 		Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', destroyAddMenuItemClickHandler);
 		Liferay.detach('destroyPortlet', destroyAddMenuItemClickHandler);
-	}
+	};
 
 	Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', destroyAddMenuItemClickHandler);
 	Liferay.on('destroyPortlet', destroyAddMenuItemClickHandler);
@@ -144,7 +144,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	var siteNavigationMenuItemRemoveButtonClickHandler = null;
 	var siteNavigationMenuItemRemoveButtonKeyupHandler = null;
 
-	function closeSidebar () {
+	var closeSidebar = function() {
 		var saveChanges = !changed ? false : confirm(
 			'<liferay-ui:message key="you-have-unsaved-changes.-do-you-want-to-save-them" />'
 		);
@@ -179,9 +179,9 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		}
 
 		return false;
-	}
+	};
 
-	function handleMenuItemSelected(siteNavigationMenuItem) {
+	var handleMenuItemSelected = function(siteNavigationMenuItem) {
 		if (!closeSidebar()) {
 			return;
 		}
@@ -214,9 +214,9 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 				);
 			}
 		);
-	}
+	};
 
-	function handlePortletDestroy() {
+	var handlePortletDestroy = function() {
 		if (showSiteNavigationMenuSettingsButtonClickHandler) {
 			showSiteNavigationMenuSettingsButtonClickHandler.detach();
 
@@ -249,9 +249,9 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 		Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', handlePortletDestroy);
 		Liferay.detach('destroyPortlet', handlePortletDestroy);
-	}
+	};
 
-	function handleShowSiteNavigationMenuSettingsButtonClick(event) {
+	var handleShowSiteNavigationMenuSettingsButtonClick = function(event) {
 		if (!closeSidebar()) {
 			event.stopPropagation();
 
@@ -288,36 +288,36 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 				);
 			}
 		);
-	}
+	};
 
-	function handleSidebarBodyChange() {
+	var handleSidebarBodyChange = function() {
 		changed = true;
-	}
+	};
 
-	function handleSidebarCloseButtonClick() {
+	var handleSidebarCloseButtonClick = function() {
 		closeSidebar();
 		siteNavigationMenuItemModule.default.setSelected(null, false);
-	}
+	};
 
-	function handleSiteNavigationMenuItemRemoveIconClick(event) {
+	var handleSiteNavigationMenuItemRemoveIconClick = function(event) {
 		event.stopPropagation();
-	}
+	};
 
-	function handleSiteNavigationMenuItemRemoveIconKeyup(event) {
+	var handleSiteNavigationMenuItemRemoveIconKeyup = function(event) {
 		if (event.which === 32) {
 			event.preventDefault();
 			event.stopPropagation();
 			event.target.getDOMNode().click();
 		}
-	}
+	};
 
-	function openSidebar(title) {
+	var openSidebar = function(title) {
 		sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
-		sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><button class="btn btn-monospaced btn-unstyled" id="<portlet:namespace />sidebarHeaderButton" type="button"><span class="icon-monospaced"><aui:icon image="times" markupView="lexicon" /></span></button></div></div>'
+		sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><button class="btn btn-monospaced btn-unstyled" id="<portlet:namespace />sidebarHeaderButton" type="button"><span class="icon-monospaced"><aui:icon image="times" markupView="lexicon" /></span></button></div></div>';
 		sidebar.visible = true;
-	}
+	};
 
-	function setSidebarBody(content) {
+	var setSidebarBody = function(content) {
 		AUI().use(
 			['aui-base', 'aui-parse-content'],
 			function(A) {
@@ -336,7 +336,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 				}
 			}
 		);
-	}
+	};
 
 	Liferay.componentReady(
 		'<portlet:namespace />sidebar'

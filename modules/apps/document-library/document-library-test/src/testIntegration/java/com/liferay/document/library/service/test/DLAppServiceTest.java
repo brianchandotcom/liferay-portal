@@ -629,7 +629,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				fileEntry.getFileEntryId(), false,
 				RandomTestUtil.randomString(), serviceContext);
 
-			Assert.assertEquals(2, counter.get());
+			Assert.assertEquals(3, counter.get());
 		}
 
 	}

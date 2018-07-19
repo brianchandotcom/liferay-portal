@@ -243,8 +243,7 @@ public class DLFileVersionTest {
 			_fileVersion.getDescription(), _fileVersion.getChangeLog(), false,
 			_DATA_VERSION_1, _serviceContext);
 
-		Assert.assertEquals(
-			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
+		Assert.assertEquals("1.1", fileEntry.getVersion());
 	}
 
 	@Test

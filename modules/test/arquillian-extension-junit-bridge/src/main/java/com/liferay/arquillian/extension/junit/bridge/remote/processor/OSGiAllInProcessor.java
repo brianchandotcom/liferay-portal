@@ -17,15 +17,17 @@ package com.liferay.arquillian.extension.junit.bridge.remote.processor;
 import com.liferay.arquillian.container.osgi.remote.activator.ArquillianBundleActivator;
 import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActivatorsManager;
 import com.liferay.arquillian.container.osgi.remote.processor.service.ImportPackageManager;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -126,7 +128,8 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	}
 
 	private void _addManifestValues(
-		Manifest manifest, String attributeName, String... newAttributeValues) {
+		Manifest manifest, String attributeName,
+		List<String> newAttributeValues) {
 
 		Attributes mainAttributes = manifest.getMainAttributes();
 
@@ -135,22 +138,31 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		String attributeValuesString = mainAttributes.getValue(attributeName);
 
 		if (attributeValuesString != null) {
-			Collections.addAll(
-				attributeValues, StringUtil.split(attributeValuesString));
+			attributeValues.addAll(StringUtil.split(attributeValuesString));
 		}
 
-		if (Collections.addAll(attributeValues, newAttributeValues)) {
-			mainAttributes.putValue(
-				attributeName, StringUtil.merge(attributeValues));
+		if (attributeValues.addAll(newAttributeValues)) {
+			StringBundler sb = new StringBundler(attributeValues.size() * 2);
+
+			for (String attributeValue : attributeValues) {
+				sb.append(attributeValue);
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			mainAttributes.putValue(attributeName, sb.toString());
 		}
 	}
 
 	private void _addOSGiImports(Manifest manifest) {
 		_addManifestValues(
-			manifest, "Import-Package", "org.osgi.framework",
-			"javax.management", "javax.management.*", "javax.naming",
-			"javax.naming.*", "org.osgi.service.packageadmin",
-			"org.osgi.service.startlevel", "org.osgi.util.tracker");
+			manifest, "Import-Package",
+			Arrays.asList(
+				"org.osgi.framework", "javax.management", "javax.management.*",
+				"javax.naming", "javax.naming.*",
+				"org.osgi.service.packageadmin", "org.osgi.service.startlevel",
+				"org.osgi.util.tracker"));
 	}
 
 	private void _addTestClass(JavaArchive javaArchive, TestClass testClass) {
@@ -200,7 +212,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 		List<String> bundleClassPaths = new ArrayList<>();
 
-		bundleClassPaths.add(".");
+		bundleClassPaths.add(StringPool.PERIOD);
 
 		List<String> importPackages = new ArrayList<>();
 
@@ -258,7 +270,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			String value = mainAttributes.getValue("Import-package");
 
 			if (value != null) {
-				Collections.addAll(importPackages, StringUtil.split(value));
+				importPackages.addAll(StringUtil.split(value));
 			}
 
 			String bundleActivatorValue = mainAttributes.getValue(
@@ -271,13 +283,9 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			}
 		}
 
-		_addManifestValues(
-			manifest, "Bundle-ClassPath",
-			bundleClassPaths.toArray(new String[bundleClassPaths.size()]));
+		_addManifestValues(manifest, "Bundle-ClassPath", bundleClassPaths);
 
-		_addManifestValues(
-			manifest, "Import-Package",
-			importPackages.toArray(new String[importPackages.size()]));
+		_addManifestValues(manifest, "Import-Package", importPackages);
 
 		return archives;
 	}

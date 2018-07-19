@@ -20,7 +20,7 @@ import aQute.bnd.build.Workspace;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.petra.string.StringUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -102,14 +102,17 @@ public class BndDeploymentScenarioGenerator
 	private List<File> _getClassPathFiles() {
 		List<File> files = new ArrayList<>();
 
-		String[] fileNames = StringUtil.split(
+		List<String> fileNames = StringUtil.split(
 			System.getProperty("java.class.path"), File.pathSeparatorChar);
 
 		for (String fileName : fileNames) {
 			File file = new File(fileName);
 
-			if (file.isDirectory() || StringUtil.endsWith(fileName, ".zip") ||
-				StringUtil.endsWith(fileName, ".jar")) {
+			int length = fileName.length();
+
+			if (file.isDirectory() ||
+				fileName.regionMatches(true, length - 4, ".zip", 0, 4) ||
+				fileName.regionMatches(true, length - 4, ".jar", 0, 4)) {
 
 				files.add(file);
 			}

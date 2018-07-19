@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.provider;
+package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderConfiguration;

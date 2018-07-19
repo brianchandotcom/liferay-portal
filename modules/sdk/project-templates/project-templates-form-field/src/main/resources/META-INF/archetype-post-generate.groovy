@@ -31,14 +31,10 @@ if (!liferayVersion.startsWith("7.1")) {
 
 	List<String> filesToDelete = [".babelrc", ".npmbundlerrc", "package.json", "src/main/resources/META-INF/resources/${artifactId}.es.js"]
 
-	Path resourcePath
-
-	Path resourceFullPath
-
 	for (file in filesToDelete) {
-		resourcePath = Paths.get(file)
+		Path resourcePath = Paths.get(file)
 
-		resourceFullPath = projectPath.resolve(resourcePath)
+		Path resourceFullPath = projectPath.resolve(resourcePath)
 
 		Files.deleteIfExists resourceFullPath
 	}

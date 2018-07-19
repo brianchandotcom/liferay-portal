@@ -1403,10 +1403,9 @@ public class DLFileEntryLocalServiceImpl
 			return dlFileEntryPersistence.findByGroupId(
 				groupId, start, end, obc);
 		}
-		else {
-			return dlFileEntryPersistence.findByG_U(
-				groupId, userId, start, end, obc);
-		}
+
+		return dlFileEntryPersistence.findByG_U(
+			groupId, userId, start, end, obc);
 	}
 
 	@Override
@@ -1446,25 +1445,22 @@ public class DLFileEntryLocalServiceImpl
 				return dlFileEntryFinder.findByG_F(
 					groupId, folderIds, queryDefinition);
 			}
-			else {
-				return dlFileEntryFinder.findByG_U_F(
-					groupId, userId, folderIds, queryDefinition);
-			}
-		}
-		else {
-			List<Long> repositoryIds = new ArrayList<>();
 
-			repositoryIds.add(repositoryId);
-
-			if (userId <= 0) {
-				return dlFileEntryFinder.findByG_R_F(
-					groupId, repositoryIds, folderIds, queryDefinition);
-			}
-			else {
-				return dlFileEntryFinder.findByG_U_R_F(
-					groupId, userId, repositoryIds, folderIds, queryDefinition);
-			}
+			return dlFileEntryFinder.findByG_U_F(
+				groupId, userId, folderIds, queryDefinition);
 		}
+
+		List<Long> repositoryIds = new ArrayList<>();
+
+		repositoryIds.add(repositoryId);
+
+		if (userId <= 0) {
+			return dlFileEntryFinder.findByG_R_F(
+				groupId, repositoryIds, folderIds, queryDefinition);
+		}
+
+		return dlFileEntryFinder.findByG_U_R_F(
+			groupId, userId, repositoryIds, folderIds, queryDefinition);
 	}
 
 	@Override
@@ -1477,9 +1473,8 @@ public class DLFileEntryLocalServiceImpl
 		if (userId <= 0) {
 			return dlFileEntryPersistence.countByGroupId(groupId);
 		}
-		else {
-			return dlFileEntryPersistence.countByG_U(groupId, userId);
-		}
+
+		return dlFileEntryPersistence.countByG_U(groupId, userId);
 	}
 
 	/**
@@ -1555,9 +1550,8 @@ public class DLFileEntryLocalServiceImpl
 		if (dlFileEntryFinder.countByExtraSettings() > 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -1571,13 +1565,13 @@ public class DLFileEntryLocalServiceImpl
 		boolean hasLock = LockManagerUtil.hasLock(
 			userId, DLFileEntry.class.getName(), fileEntryId);
 
-		if (!hasLock &&
-			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+		if (hasLock ||
+			(folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-			hasLock = dlFolderLocalService.hasInheritableLock(folderId);
+			return hasLock;
 		}
 
-		return hasLock;
+		return dlFolderLocalService.hasInheritableLock(folderId);
 	}
 
 	@BufferedIncrement(
@@ -1932,34 +1926,34 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException {
 
 		try {
-			RenderedImage renderedImage = null;
-
 			Image largeImage = imageLocalService.getImage(largeImageId);
 
 			byte[] bytes = largeImage.getTextObj();
 
-			if (bytes != null) {
-				ImageBag imageBag = ImageToolUtil.read(bytes);
-
-				renderedImage = imageBag.getRenderedImage();
-
-				//validate(bytes);
+			if (bytes == null) {
+				return;
 			}
 
-			if (renderedImage != null) {
-				int height = PrefsPropsUtil.getInteger(
-					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT);
-				int width = PrefsPropsUtil.getInteger(
-					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH);
+			ImageBag imageBag = ImageToolUtil.read(bytes);
 
-				RenderedImage thumbnailRenderedImage = ImageToolUtil.scale(
-					renderedImage, height, width);
+			RenderedImage renderedImage = imageBag.getRenderedImage();
 
-				imageLocalService.updateImage(
-					smallImageId,
-					ImageToolUtil.getBytes(
-						thumbnailRenderedImage, largeImage.getType()));
+			if (renderedImage == null) {
+				return;
 			}
+
+			int height = PrefsPropsUtil.getInteger(
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT);
+			int width = PrefsPropsUtil.getInteger(
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH);
+
+			RenderedImage thumbnailRenderedImage = ImageToolUtil.scale(
+				renderedImage, height, width);
+
+			imageLocalService.updateImage(
+				smallImageId,
+				ImageToolUtil.getBytes(
+					thumbnailRenderedImage, largeImage.getType()));
 		}
 		catch (IOException ioe) {
 			throw new ImageSizeException(
@@ -2143,9 +2137,8 @@ public class DLFileEntryLocalServiceImpl
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -2778,30 +2771,34 @@ public class DLFileEntryLocalServiceImpl
 	protected void validateFileExtension(String extension)
 		throws PortalException {
 
-		if (Validator.isNotNull(extension)) {
-			int maxLength = ModelHintsUtil.getMaxLength(
-				DLFileEntry.class.getName(), "extension");
+		if (Validator.isNull(extension)) {
+			return;
+		}
 
-			if (extension.length() > maxLength) {
-				throw new FileExtensionException(
-					extension + " exceeds max length of " + maxLength);
-			}
+		int maxLength = ModelHintsUtil.getMaxLength(
+			DLFileEntry.class.getName(), "extension");
+
+		if (extension.length() > maxLength) {
+			throw new FileExtensionException(
+				extension + " exceeds max length of " + maxLength);
 		}
 	}
 
 	protected void validateFileExtension(String fileName, String extension)
 		throws PortalException {
 
-		if (Validator.isNotNull(extension)) {
-			int maxLength = ModelHintsUtil.getMaxLength(
-				DLFileEntry.class.getName(), "extension");
+		if (Validator.isNull(extension)) {
+			return;
+		}
 
-			if (extension.length() > maxLength) {
-				throw new FileExtensionException(
-					StringBundler.concat(
-						extension, " of file ", fileName,
-						" exceeds max length of ", String.valueOf(maxLength)));
-			}
+		int maxLength = ModelHintsUtil.getMaxLength(
+			DLFileEntry.class.getName(), "extension");
+
+		if (extension.length() > maxLength) {
+			throw new FileExtensionException(
+				StringBundler.concat(
+					extension, " of file ", fileName, " exceeds max length of ",
+					String.valueOf(maxLength)));
 		}
 	}
 

@@ -403,6 +403,8 @@ renderResponse.setTitle(title);
 </liferay-util:buffer>
 
 <aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
+
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.selectEntity(
 			{
@@ -415,8 +417,6 @@ renderResponse.setTitle(title);
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /></portlet:renderURL>'
 			},
 			function(event) {
-				var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
-
 				var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
 
 				<c:choose>
@@ -436,8 +436,6 @@ renderResponse.setTitle(title);
 			}
 		);
 	}
-
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
 
 	searchContainer.get('contentBox').delegate(
 		'click',

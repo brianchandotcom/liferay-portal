@@ -12,58 +12,40 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.verify;
+package com.liferay.wiki.internal.verify;
 
 import com.liferay.exportimport.kernel.staging.Staging;
-import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBThreadVerifiableModel;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.verify.VerifyAuditedModel;
-import com.liferay.portal.verify.VerifyGroupedModel;
 import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Zsolt Berentey
+ * @author Gergely Mathe
  */
 @Component(
-	immediate = true,
-	property = "verify.process.name=com.liferay.message.boards.service",
+	immediate = true, property = "verify.process.name=com.liferay.wiki.service",
 	service = VerifyProcess.class
 )
-public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
+public class WikiServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
 		updateStagedPortletNames();
-		verifyAuditedModels();
-		verifyGroupedModels();
 	}
 
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.message.boards.service)(release.schema.version=1.1.0))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
 	}
 
 	protected void updateStagedPortletNames() throws PortalException {
@@ -87,7 +69,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 				}
 
 				String propertyKey = _staging.getStagedPortletId(
-					MBPortletKeys.MESSAGE_BOARDS);
+					WikiPortletKeys.WIKI);
 
 				String propertyValue = typeSettingsProperties.getProperty(
 					propertyKey);
@@ -99,7 +81,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 				typeSettingsProperties.remove(propertyKey);
 
 				propertyKey = _staging.getStagedPortletId(
-					MBPortletKeys.MESSAGE_BOARDS_ADMIN);
+					WikiPortletKeys.WIKI_ADMIN);
 
 				typeSettingsProperties.put(propertyKey, propertyValue);
 
@@ -111,31 +93,9 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		groupActionableDynamicQuery.performActions();
 	}
 
-	protected void verifyAuditedModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_verifyAuditedModel.verify(
-				new MBDiscussionVerifiableModel(),
-				new MBThreadVerifiableModel(),
-				new MBThreadFlagVerifiableModel());
-		}
-	}
-
-	protected void verifyGroupedModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_verifyGroupedModel.verify(
-				new MBDiscussionVerifiableModel(),
-				new MBThreadFlagVerifiableModel());
-		}
-	}
-
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Staging _staging;
-
-	private final VerifyAuditedModel _verifyAuditedModel =
-		new VerifyAuditedModel();
-	private final VerifyGroupedModel _verifyGroupedModel =
-		new VerifyGroupedModel();
 
 }

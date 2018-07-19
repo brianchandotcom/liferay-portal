@@ -97,7 +97,7 @@ public class GrantAuthorizationCodePKCEKillSwitchTest
 				defaultCompanyId, user, "oauthTestApplicationCodePKCE", null,
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
 				Collections.singletonList("everything"),
-				Collections.singletonList("http://localhost:8080"));
+				Collections.singletonList("http://redirecturi:8080"));
 		}
 
 	}

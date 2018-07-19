@@ -108,7 +108,7 @@
 
 		<execute function="AssertTextEquals" locator1="Search#SEARCH_BAR_WIDGET" value1="Potato" />
 
-		<execute macro="SearchPortlet#viewSearchResultsPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="Potato Blog" />
 			<var name="searchAssetType" value="Blogs Entry" />
 		</execute>

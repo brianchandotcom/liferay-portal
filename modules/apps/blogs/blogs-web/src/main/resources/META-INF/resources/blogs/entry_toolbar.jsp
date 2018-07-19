@@ -17,10 +17,10 @@
 <%@ include file="/blogs/init.jsp" %>
 
 <%
-	BlogsEntry entry = (BlogsEntry)request.getAttribute("entry_toolbar.jsp-entry");
-	RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("view_entry_content.jsp-ratingsEntry");
-	RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_content.jsp-ratingsStats");
-	boolean showOnlyIcons = GetterUtil.getBoolean(request.getAttribute("entry_toolbar.jsp-showOnlyIcons"));
+BlogsEntry entry = (BlogsEntry)request.getAttribute("entry_toolbar.jsp-entry");
+RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("view_entry_content.jsp-ratingsEntry");
+RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_content.jsp-ratingsStats");
+boolean showOnlyIcons = GetterUtil.getBoolean(request.getAttribute("entry_toolbar.jsp-showOnlyIcons"));
 %>
 
 <div class="autofit-float autofit-row autofit-row-center widget-toolbar">

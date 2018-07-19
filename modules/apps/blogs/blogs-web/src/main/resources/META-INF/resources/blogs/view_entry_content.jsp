@@ -141,7 +141,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entr
 				</c:choose>
 
 				<%
-					request.setAttribute("entry_toolbar.jsp-entry", entry);
+				request.setAttribute("entry_toolbar.jsp-entry", entry);
 				%>
 
 				<liferay-util:include page="/blogs/entry_toolbar.jsp" servletContext="<%= application %>" />

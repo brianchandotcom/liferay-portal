@@ -104,8 +104,8 @@
 				<div class="card-row">
 
 					<%
-						request.setAttribute("entry_toolbar.jsp-entry", blogsEntry);
-						request.setAttribute("entry_toolbar.jsp-showOnlyIcons", Boolean.TRUE);
+					request.setAttribute("entry_toolbar.jsp-entry", blogsEntry);
+					request.setAttribute("entry_toolbar.jsp-showOnlyIcons", Boolean.TRUE);
 					%>
 
 					<liferay-util:include page="/blogs/entry_toolbar.jsp" servletContext="<%= application %>" />

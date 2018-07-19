@@ -216,7 +216,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 				<div class="col-md-8 mx-auto widget-mode-detail">
 
 					<%
-						request.setAttribute("entry_toolbar.jsp-entry", entry);
+					request.setAttribute("entry_toolbar.jsp-entry", entry);
 					%>
 
 					<liferay-util:include page="/blogs/entry_toolbar.jsp" servletContext="<%= application %>" />

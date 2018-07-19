@@ -1233,10 +1233,9 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public List<DLFileEntry> getFileEntries(
-			long groupId, long userId, List<Long> repositoryIds,
-			List<Long> folderIds, String[] mimeTypes,
-			QueryDefinition<DLFileEntry> queryDefinition)
-		throws Exception {
+		long groupId, long userId, List<Long> repositoryIds,
+		List<Long> folderIds, String[] mimeTypes,
+		QueryDefinition<DLFileEntry> queryDefinition) {
 
 		return dlFileEntryFinder.findByG_U_R_F_M(
 			groupId, userId, repositoryIds, folderIds, mimeTypes,
@@ -1245,9 +1244,8 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public List<DLFileEntry> getFileEntries(
-			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
-			QueryDefinition<DLFileEntry> queryDefinition)
-		throws Exception {
+		long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+		QueryDefinition<DLFileEntry> queryDefinition) {
 
 		return dlFileEntryFinder.findByG_U_F_M(
 			groupId, userId, folderIds, mimeTypes, queryDefinition);
@@ -1292,10 +1290,9 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public int getFileEntriesCount(
-			long groupId, long userId, List<Long> repositoryIds,
-			List<Long> folderIds, String[] mimeTypes,
-			QueryDefinition<DLFileEntry> queryDefinition)
-		throws Exception {
+		long groupId, long userId, List<Long> repositoryIds,
+		List<Long> folderIds, String[] mimeTypes,
+		QueryDefinition<DLFileEntry> queryDefinition) {
 
 		return dlFileEntryFinder.countByG_U_R_F_M(
 			groupId, userId, repositoryIds, folderIds, mimeTypes,
@@ -1304,9 +1301,8 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public int getFileEntriesCount(
-			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
-			QueryDefinition<DLFileEntry> queryDefinition)
-		throws Exception {
+		long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+		QueryDefinition<DLFileEntry> queryDefinition) {
 
 		return dlFileEntryFinder.countByG_U_F_M(
 			groupId, userId, folderIds, mimeTypes, queryDefinition);
@@ -1591,9 +1587,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
-	public boolean isFileEntryCheckedOut(long fileEntryId)
-		throws PortalException {
-
+	public boolean isFileEntryCheckedOut(long fileEntryId) {
 		DLFileVersion dlFileVersion = dlFileVersionPersistence.fetchByF_V(
 			fileEntryId, DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 

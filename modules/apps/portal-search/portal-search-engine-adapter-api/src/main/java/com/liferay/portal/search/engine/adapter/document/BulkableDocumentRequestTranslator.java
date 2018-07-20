@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
-
-import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
-
-import org.elasticsearch.action.search.SearchRequestBuilder;
+package com.liferay.portal.search.engine.adapter.document;
 
 /**
  * @author Michael C. Han
  */
-public interface CommonSearchRequestBuilderAssembler {
+public interface BulkableDocumentRequestTranslator<R, S, T, U> {
 
-	public void assemble(
-		SearchRequestBuilder searchRequestBuilder,
-		BaseSearchRequest<?> baseSearchRequest);
+	public R translate(
+		DeleteDocumentRequest deleteDocumentRequest,
+		U searchEngineAdapterRequest);
+
+	public S translate(
+		IndexDocumentRequest indexDocumentRequest,
+		U searchEngineAdapterRequest);
+
+	public T translate(
+		UpdateDocumentRequest updateDocumentRequest,
+		U searchEngineAdapterRequest);
 
 }

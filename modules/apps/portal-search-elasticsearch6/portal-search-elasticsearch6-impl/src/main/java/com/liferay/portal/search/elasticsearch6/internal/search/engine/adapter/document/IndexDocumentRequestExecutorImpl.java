@@ -14,23 +14,15 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document;
 
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
-import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
+import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 
-import java.io.IOException;
-
-import org.elasticsearch.action.index.IndexAction;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.delete.DeleteRequestBuilder;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.rest.RestStatus;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,58 +39,23 @@ public class IndexDocumentRequestExecutorImpl
 	public IndexDocumentResponse execute(
 		IndexDocumentRequest indexDocumentRequest) {
 
-		try {
-			IndexRequestBuilder indexRequestBuilder = createIndexRequestBuilder(
-				indexDocumentRequest);
-
-			IndexResponse indexResponse = indexRequestBuilder.get();
-
-			RestStatus restStatus = indexResponse.status();
-
-			IndexDocumentResponse indexDocumentResponse =
-				new IndexDocumentResponse(restStatus.getStatus());
-
-			return indexDocumentResponse;
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	protected IndexRequestBuilder createIndexRequestBuilder(
-			IndexDocumentRequest indexDocumentRequest)
-		throws IOException {
-
-		Client client = elasticsearchConnectionManager.getClient();
-
 		IndexRequestBuilder indexRequestBuilder =
-			IndexAction.INSTANCE.newRequestBuilder(client);
+			bulkableDocumentRequestTranslator.translate(
+				indexDocumentRequest, null);
 
-		Document document = indexDocumentRequest.getDocument();
+		IndexResponse indexResponse = indexRequestBuilder.get();
 
-		indexRequestBuilder.setId(document.getUID());
+		RestStatus restStatus = indexResponse.status();
 
-		indexRequestBuilder.setIndex(indexDocumentRequest.getIndexName());
+		IndexDocumentResponse indexDocumentResponse = new IndexDocumentResponse(
+			restStatus.getStatus());
 
-		if (indexDocumentRequest.isRefresh()) {
-			indexRequestBuilder.setRefreshPolicy(
-				WriteRequest.RefreshPolicy.IMMEDIATE);
-		}
-
-		indexRequestBuilder.setType(document.get(Field.TYPE));
-
-		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
-			new DefaultElasticsearchDocumentFactory();
-
-		String elasticsearchDocument =
-			elasticsearchDocumentFactory.getElasticsearchDocument(document);
-
-		indexRequestBuilder.setSource(elasticsearchDocument, XContentType.JSON);
-
-		return indexRequestBuilder;
+		return indexDocumentResponse;
 	}
 
-	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	protected BulkableDocumentRequestTranslator
+		<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
+			BulkRequestBuilder> bulkableDocumentRequestTranslator;
 
 }

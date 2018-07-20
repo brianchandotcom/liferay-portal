@@ -14,15 +14,15 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
 
-import org.elasticsearch.action.delete.DeleteAction;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.delete.DeleteRequestBuilder;
 import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.client.Client;
+import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.rest.RestStatus;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,8 +39,9 @@ public class DeleteDocumentRequestExecutorImpl
 	public DeleteDocumentResponse execute(
 		DeleteDocumentRequest deleteDocumentRequest) {
 
-		DeleteRequestBuilder deleteRequestBuilder = createDeleteRequestBuilder(
-			deleteDocumentRequest);
+		DeleteRequestBuilder deleteRequestBuilder =
+			bulkableDocumentRequestTranslator.translate(
+				deleteDocumentRequest, null);
 
 		DeleteResponse deleteResponse = deleteRequestBuilder.get();
 
@@ -52,28 +53,9 @@ public class DeleteDocumentRequestExecutorImpl
 		return deleteDocumentResponse;
 	}
 
-	protected DeleteRequestBuilder createDeleteRequestBuilder(
-		DeleteDocumentRequest deleteDocumentRequest) {
-
-		Client client = elasticsearchConnectionManager.getClient();
-
-		DeleteRequestBuilder deleteRequestBuilder =
-			DeleteAction.INSTANCE.newRequestBuilder(client);
-
-		deleteRequestBuilder.setId(deleteDocumentRequest.getUid());
-		deleteRequestBuilder.setIndex(deleteDocumentRequest.getIndexName());
-
-		if (deleteDocumentRequest.isRefresh()) {
-			deleteRequestBuilder.setRefreshPolicy(
-				WriteRequest.RefreshPolicy.IMMEDIATE);
-		}
-
-		deleteRequestBuilder.setType(deleteDocumentRequest.getType());
-
-		return deleteRequestBuilder;
-	}
-
-	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	protected BulkableDocumentRequestTranslator
+		<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
+			BulkRequestBuilder> bulkableDocumentRequestTranslator;
 
 }

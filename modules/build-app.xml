@@ -33,15 +33,7 @@
 		<antcall target="git-finalize" />
 	</target>
 
-	<target name="build-app-all">
-		<fail message="Please provide a comma delimited list of app names.${line.separator}(e.g. -Dapp.names=collaboration,forms-and-workflow,foundation,static,web-experience)">
-			<condition>
-				<not>
-					<isset property="app.names" />
-				</not>
-			</condition>
-		</fail>
-
+	<target depends="get-app-names" name="build-app-all">
 		<for list="${app.names}" param="app.name">
 			<sequential>
 				<antcall inheritall="false" target="build-app">
@@ -437,6 +429,41 @@
 		</exec>
 
 		<property name="app.git.id" value="app.git.id-${app.version}=${git.rev.parse.output}" />
+	</target>
+
+	<target depends="checkout-public-modules-releng" name="get-app-names" unless="app.names">
+		<pathconvert pathsep="${line.separator}" property="app.names.unfiltered">
+			<flattenmapper />
+			<path>
+				<dirset dir="${modules.dir}" includes="private/apps/*">
+					<present targetdir="${modules.dir}/.releng/private">
+						<mapper from="*" to="*${file.separator}app.properties" type="glob" />
+					</present>
+				</dirset>
+				<dirset dir="${modules.dir}" includes="apps/*">
+					<present targetdir="${modules.dir}/.releng">
+						<mapper from="*" to="*${file.separator}app.properties" type="glob" />
+					</present>
+				</dirset>
+			</path>
+		</pathconvert>
+
+		<property name="app.names.unfiltered.formatted" value="${app.names.unfiltered}${line.separator}" />
+
+		<loadfile property="app.names">
+			<filterchain>
+				<sortfilter />
+
+				<uniqfilter />
+
+				<tokenfilter delimoutput=",">
+					<stringtokenizer delims="${line.separator}" />
+				</tokenfilter>
+			</filterchain>
+			<propertyresource name="app.names.unfiltered.formatted" />
+		</loadfile>
+
+		<echo message="Apps that will be included in this run: ${app.names}" />
 	</target>
 
 	<target depends="init-build-app" name="get-app-properties">

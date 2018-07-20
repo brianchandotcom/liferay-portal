@@ -248,7 +248,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			}
 		);
 
-		siteNavigationMenuItemModule.default.setSelected(null, false);
+		siteNavigationMenuItemModule.default.unselectAll();
 
 		openSidebar('<%= HtmlUtil.escape(siteNavigationAdminDisplayContext.getSiteNavigationMenuName()) %>');
 

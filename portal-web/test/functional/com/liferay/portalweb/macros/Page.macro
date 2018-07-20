@@ -544,7 +544,7 @@
 
 	<command name="tearDownCP" summary="Delete all pages except the Welcome and Search Page">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

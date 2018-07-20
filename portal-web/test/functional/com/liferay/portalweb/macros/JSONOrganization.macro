@@ -25,7 +25,7 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">
@@ -74,7 +74,7 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">
@@ -86,12 +86,12 @@
 
 		<execute macro="JSONOrganization#getOrganizationName">
 			<var name="organizationId" value="${organizationId}" />
-			<return from="organizationName" name="organizationName" />
+			<return name="organizationName" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
 			<var name="userId" value="${userId}" />
-			<return from="userEmailAddress" name="userEmailAddress" />
+			<return name="userEmailAddress" />
 		</execute>
 
 		<echo>## Assigning a 'User' to an 'Organization' with the following info using JSONWS:</echo>
@@ -118,7 +118,7 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">
@@ -129,7 +129,7 @@
 
 		<execute macro="JSONOrganization#getOrganizationName">
 			<var name="organizationId" value="${organizationId}" />
-			<return from="organizationName" name="organizationName" />
+			<return name="organizationName" />
 		</execute>
 
 		<echo>## Deleting an 'Organization' with the following info using JSONWS:</echo>
@@ -180,12 +180,12 @@
 
 		<execute macro="JSONOrganization#getOrganizationIdByName">
 			<var name="organizationName" value="${organizationName}" />
-			<return from="organizationId" name="organizationId" />
+			<return name="organizationId" />
 		</execute>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<return from="userId" name="userId" />
+			<return name="userId" />
 		</execute>
 
 		<execute macro="JSONOrganization#_assignUserToOrganization">
@@ -206,7 +206,7 @@
 
 		<execute macro="JSONOrganization#getOrganizationIdByName">
 			<var name="organizationName" value="${organizationName}" />
-			<return from="organizationId" name="organizationId" />
+			<return name="organizationId" />
 		</execute>
 
 		<execute macro="JSONOrganization#_deleteOrganization">
@@ -225,11 +225,11 @@
 		</if>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">
@@ -271,7 +271,7 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">

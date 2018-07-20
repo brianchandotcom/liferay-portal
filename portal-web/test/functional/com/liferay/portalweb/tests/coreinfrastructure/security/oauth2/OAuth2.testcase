@@ -101,7 +101,7 @@
 		</execute>
 
 		<execute macro="OAuth2#editApplication">
-			<return from="newGeneratedClientSecret" name="newGeneratedClientSecret" />
+			<return name="newGeneratedClientSecret" />
 			<var name="applicationName" value="OAuth Application Edited" />
 			<var name="generateNewSecret" value="true" />
 		</execute>

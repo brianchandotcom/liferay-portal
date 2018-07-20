@@ -15,7 +15,7 @@
 		</execute>
 
 		<execute macro="SearchFacetPortlet#generateFacetCheckedURL">
-			<return from="updatedSearchURL" name="searchURL" />
+			<return name="searchURL" />
 			<var name="facetClass" value="${facetClass}" />
 			<var name="facetValue" value="${facetValue}" />
 			<var name="facetValueName" value="${facetValueName}" />
@@ -36,7 +36,7 @@
 				<var method="selenium#getText(SearchResults#FACET_PORTLET_CLEAR_PANEL_TITLE)" name="facetClearClass" />
 
 				<execute macro="SearchFacetPortlet#clearFacetAndViewURL">
-					<return from="updatedSearchURL" name="searchURL" />
+					<return name="searchURL" />
 					<var name="facetClass" value="${facetClearClass}" />
 					<var name="searchURL" value="${searchURL}" />
 				</execute>
@@ -73,7 +73,7 @@
 				</execute>
 
 				<execute macro="SearchFacetPortlet#generateFacetClearedURL">
-					<return from="updatedSearchURL" name="searchURL" />
+					<return name="searchURL" />
 					<var name="facetClass" value="${facetClass}" />
 					<var name="searchURL" value="${searchURL}" />
 				</execute>
@@ -146,7 +146,7 @@
 			</not>
 			<then>
 				<execute macro="SearchBarPortlet#getSearchTermURL">
-					<return from="searchURL" name="searchURL" />
+					<return name="searchURL" />
 					<var name="searchPage" value="${searchPage}" />
 					<var name="searchTerm" value="${searchTerm}" />
 				</execute>
@@ -157,7 +157,7 @@
 			<equals arg1="${facetClass}" arg2="type" />
 			<then>
 				<execute macro="SearchFacetPortlet#getFacetTypeValue">
-					<return from="facetTypeValue" name="facetValue" />
+					<return name="facetValue" />
 					<var name="facetTypeValueName" value="${facetValueName}" />
 				</execute>
 			</then>
@@ -228,7 +228,7 @@
 			<equals arg1="${facetClass}" arg2="type" />
 			<then>
 				<execute macro="SearchFacetPortlet#getFacetTypeValue">
-					<return from="facetTypeValue" name="facetValue" />
+					<return name="facetValue" />
 					<var name="facetTypeValueName" value="${facetValueName}" />
 				</execute>
 			</then>
@@ -343,7 +343,7 @@
 		</execute>
 
 		<execute macro="SearchFacetPortlet#generateFacetUncheckedURL">
-			<return from="updatedSearchURL" name="searchURL" />
+			<return name="searchURL" />
 			<var name="facetClass" value="${facetClass}" />
 			<var name="facetValue" value="${facetValue}" />
 			<var name="facetValueName" value="${facetValueName}" />

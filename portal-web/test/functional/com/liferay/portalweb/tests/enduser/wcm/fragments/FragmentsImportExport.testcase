@@ -88,7 +88,7 @@
 		</execute>
 
 		<execute macro="TestCase#getFileContent">
-			<return from="fileContent" name="htmlSnippet" />
+			<return name="htmlSnippet" />
 			<var name="fileName" value="fragment_button.html" />
 		</execute>
 
@@ -98,7 +98,7 @@
 		</execute>
 
 		<execute macro="TestCase#getFileContent">
-			<return from="fileContent" name="cssSnippet" />
+			<return name="cssSnippet" />
 			<var name="fileName" value="fragment_button.css" />
 		</execute>
 
@@ -108,7 +108,7 @@
 		</execute>
 
 		<execute macro="TestCase#getFileContent">
-			<return from="fileContent" name="javascriptSnippet" />
+			<return name="javascriptSnippet" />
 			<var name="fileName" value="fragment_button.js" />
 		</execute>
 

@@ -1,11 +1,11 @@
 <definition>
 	<command name="addMessage">
 		<execute macro="JSONMBMessage#getmessageId">
-			<return from="messageId" name="messageId" />
+			<return name="messageId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">

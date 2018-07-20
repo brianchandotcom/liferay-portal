@@ -69,7 +69,7 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">
@@ -131,7 +131,7 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">
@@ -143,12 +143,12 @@
 
 		<execute macro="JSONRole#getRoleName">
 			<var name="roleId" value="${roleId}" />
-			<return from="roleTitle" name="roleTitle" />
+			<return name="roleTitle" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
 			<var name="userId" value="${userId}" />
-			<return from="userEmailAddress" name="userEmailAddress" />
+			<return name="userEmailAddress" />
 		</execute>
 
 		<echo>## Assigning a 'User' to a 'Role' with the following info using JSONWS:</echo>
@@ -239,12 +239,12 @@
 
 		<execute macro="JSONRole#getRoleIdByName">
 			<var name="roleTitle" value="${roleTitle}" />
-			<return from="roleId" name="roleId" />
+			<return name="roleId" />
 		</execute>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<return from="userId" name="userId" />
+			<return name="userId" />
 		</execute>
 
 		<execute macro="JSONRole#_assignRoleToUser">
@@ -271,11 +271,11 @@
 		</if>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">
@@ -303,7 +303,7 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">

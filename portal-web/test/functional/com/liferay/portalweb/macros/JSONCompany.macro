@@ -1,7 +1,7 @@
 <definition>
 	<command name="getCompanyId" returns="companyId">
 		<execute macro="JSONCompany#getPortalInstanceName">
-			<return from="portalInstanceName" name="portalInstanceName" />
+			<return name="portalInstanceName" />
 		</execute>
 
 		<var name="curl">
@@ -31,7 +31,7 @@
 			</and>
 			<then>
 				<execute macro="JSONCompany#getPortalURL">
-					<return from="portalURL" name="portalURL" />
+					<return name="portalURL" />
 				</execute>
 
 				<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalInstanceName" />

@@ -283,7 +283,7 @@
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="Navigator#getCurrentURL">
-			<return from="currentURL" name="adminEditURL" />
+			<return name="adminEditURL" />
 		</execute>
 
 		<var name="maliciousURL">
@@ -322,7 +322,7 @@
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="Navigator#getCurrentURL">
-			<return from="currentURL" name="adminEditURL" />
+			<return name="adminEditURL" />
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">

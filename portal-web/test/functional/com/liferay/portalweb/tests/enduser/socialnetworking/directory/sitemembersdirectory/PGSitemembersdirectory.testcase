@@ -56,7 +56,7 @@
 
 	<command name="SearchSiteMembersDirectory" priority="3">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

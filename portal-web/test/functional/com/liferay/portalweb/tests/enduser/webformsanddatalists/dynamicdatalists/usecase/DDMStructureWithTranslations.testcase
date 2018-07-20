@@ -33,7 +33,7 @@
 		<execute macro="DDLDataDefinition#addCP" />
 
 		<execute macro="TestCase#getFileContent">
-			<return from="fileContent" name="sourceJSON" />
+			<return name="sourceJSON" />
 			<var name="fileName" value="complexDDMStructure.json" />
 		</execute>
 

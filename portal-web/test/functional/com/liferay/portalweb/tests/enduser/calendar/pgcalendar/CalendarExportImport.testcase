@@ -102,7 +102,7 @@
 
 	<command name="ImportCalendarAndViewEventComment" priority="5">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -190,7 +190,7 @@
 		<description message="This is a use case for LPS-53072." />
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

@@ -35,7 +35,7 @@
 		</execute>
 
 		<execute macro="OAuth2#inputApplicationValues">
-			<return from="newGeneratedClientSecret" name="newGeneratedClientSecret" />
+			<return name="newGeneratedClientSecret" />
 			<var name="applicationName" value="${newApplicationName}" />
 			<var name="callbackURI" value="${callbackURI}" />
 			<var name="checkboxCheckList" value="${checkboxCheckList}" />

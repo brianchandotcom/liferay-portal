@@ -25,7 +25,7 @@
 
 	<command name="_isLocalizedURL" returns="isLocalizedURL">
 		<execute macro="Navigator#getCurrentURL">
-			<return from="currentURL" name="currentURL" />
+			<return name="currentURL" />
 		</execute>
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
@@ -56,7 +56,7 @@
 
 	<command name="ensureLocaleURL">
 		<execute macro="Navigator#_isLocalizedURL">
-			<return from="isLocalizedURL" name="isLocalizedURL" />
+			<return name="isLocalizedURL" />
 			<var name="locale" value="${locale}" />
 		</execute>
 
@@ -64,7 +64,7 @@
 			<equals arg1="${isLocalizedURL}" arg2="false" />
 			<then>
 				<execute macro="Navigator#getCurrentURL">
-					<return from="currentURL" name="currentURL" />
+					<return name="currentURL" />
 				</execute>
 
 				<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

@@ -24,7 +24,7 @@
 			</or>
 			<then>
 				<execute macro="TestCase#getTestName">
-					<return from="testName" name="testName" />
+					<return name="testName" />
 				</execute>
 
 				<if>
@@ -80,7 +80,7 @@
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<execute macro="TestCase#getTestName">
-			<return from="testName" name="testName" />
+			<return name="testName" />
 		</execute>
 
 		<if>

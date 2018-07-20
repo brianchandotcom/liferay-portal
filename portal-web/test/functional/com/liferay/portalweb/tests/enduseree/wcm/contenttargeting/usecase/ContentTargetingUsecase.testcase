@@ -4733,7 +4733,7 @@
 		</execute>
 
 		<execute macro="TestCase#getTestName">
-			<return from="testName" name="testName" />
+			<return name="testName" />
 		</execute>
 
 		<execute macro="LAR#exportPortlet">

@@ -522,7 +522,7 @@
 		<description message="This is a use case for LPS-37209." />
 
 		<execute macro="TestCase#getFileContent">
-			<return from="fileContent" name="fileContent" />
+			<return name="fileContent" />
 			<var name="fileName" value="workflow_definition_task_timers.xml" />
 		</execute>
 

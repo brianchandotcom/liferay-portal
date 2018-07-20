@@ -24,7 +24,7 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<var name="curl">
@@ -43,7 +43,7 @@
 
 		<execute macro="JSONGroup#getGroupName">
 			<var name="groupId" value="${groupId}" />
-			<return from="groupName" name="groupName" />
+			<return name="groupName" />
 		</execute>
 
 		<echo>## Adding a 'Layout' with the following info using JSONWS:</echo>
@@ -80,7 +80,7 @@
 
 		<execute macro="JSONGroup#getGroupIdByName">
 			<var name="groupName" value="${groupName}" />
-			<return from="groupId" name="groupId" />
+			<return name="groupId" />
 		</execute>
 
 		<execute macro="JSONLayout#_addLayout">

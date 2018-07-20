@@ -111,6 +111,7 @@ page import="com.liferay.journal.web.internal.display.context.JournalFeedsDispla
 page import="com.liferay.journal.web.internal.display.context.JournalHistoryDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalMoveEntriesDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalSelectDDMStructureDisplayContext" %><%@
+page import="com.liferay.journal.web.internal.display.context.JournalSelectDDMTemplateDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalViewMoreMenuItemsDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.util.JournalWebRequestHelper" %><%@
 page import="com.liferay.journal.web.internal.portlet.JournalPortlet" %><%@

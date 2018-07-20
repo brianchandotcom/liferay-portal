@@ -400,7 +400,7 @@
 </tr>
 <tr>
 	<td>STAGED_CONTENT</td>
-	<td>//li[contains(.,'${key_contentName}')]//input</td>
+	<td>//label[contains(.,'${key_contentName}')]//input</td>
 	<td></td>
 </tr>
 <tr>

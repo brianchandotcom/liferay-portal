@@ -41,7 +41,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	@Override
 	public void assemble(
 		SearchRequestBuilder searchRequestBuilder,
-		BaseSearchRequest baseSearchRequest) {
+		BaseSearchRequest<?> baseSearchRequest) {
 
 		searchRequestBuilder.setIndices(baseSearchRequest.getIndexNames());
 

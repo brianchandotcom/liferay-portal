@@ -25,6 +25,6 @@ public interface CommonSearchRequestBuilderAssembler {
 
 	public void assemble(
 		SearchRequestBuilder searchRequestBuilder,
-		BaseSearchRequest baseSearchRequest);
+		BaseSearchRequest<?> baseSearchRequest);
 
 }

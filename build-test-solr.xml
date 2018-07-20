@@ -130,30 +130,25 @@ SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 				todir="${solr.dir}/server/solr/liferay/conf"
 			>
 				<fileset
-					dir="${solr.dir}/server/solr/configsets/data_driven_schema_configs/conf"
+					dir="${solr.dir}/server/solr/configsets/_default/conf"
 				>
 					<exclude name="solrconfig.xml" />
 				</fileset>
 
 				<fileset
-					dir="modules/apps/portal-search-solr/portal-search-solr/src/main/resources/META-INF/resources"
+					dir="modules/apps/portal-search-solr7/portal-search-solr7-impl/src/main/resources/META-INF/resources"
 				>
 					<include name="schema.xml" />
 					<include name="solrconfig.xml" />
 				</fileset>
 			</copy>
 
-			<replace
-				file="${solr.dir}/server/solr/liferay/conf/solrconfig.xml"
-			>
-				<replacetoken><![CDATA[<maxWarmingSearchers>2</maxWarmingSearchers>]]></replacetoken>
-				<replacevalue><![CDATA[<maxWarmingSearchers>5</maxWarmingSearchers>]]></replacevalue>
-			</replace>
-
 			<echo file="${solr.dir}/server/solr/liferay/core.properties">config=solrconfig.xml
 dataDir=data
 name=liferay
 schema=schema.xml</echo>
+
+			<echo append="true" file="${solr.dir}/bin/solr.in.sh">SOLR_ULIMIT_CHECKS=false</echo>
 		</sequential>
 	</macrodef>
 
@@ -269,7 +264,7 @@ schema=schema.xml</echo>
 	</macrodef>
 
 	<target name="deploy-solr">
-		<gradle-execute dir="modules/apps/portal-search-solr/portal-search-solr" task="deploy">
+		<gradle-execute dir="modules/apps/portal-search-solr7" task="deploy">
 			<arg value="clean" />
 		</gradle-execute>
 

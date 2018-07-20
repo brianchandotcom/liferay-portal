@@ -5,6 +5,7 @@
 1. [Class Descriptions](#class-descriptions)
 2. [Class Javadoc Tags](#class-javadoc-tags)
     - [@author tags](#author-tags)
+    - [@param tags](#param-tags)
     - [@see tags](#see-tags)
     - [@since tags](#since-tags)
     - [@deprecated tags](#deprecated-tags)
@@ -141,6 +142,25 @@ In the above example:
 ### @author tags
 
 Use `@author` tags for each author of the class, from first to most recent.
+
+### @param tags
+
+Use `@param` tags for a class'
+[generic type parameters](https://docs.oracle.com/javase/tutorial/java/generics/types.html).
+This is typically the only case where a class has parameters to document. 
+
+The parameter type name should keep its syntax when defined. For example, for
+this class:
+
+    public interface BinaryFunction<T> extends Function<T, BinaryFile> {
+
+you should define the generic type parameter like this:
+
+    @param <T> the model's type
+
+See the
+[`BinaryFunction`](https://github.com/liferay/liferay-portal/blob/7.1.0-ga1/modules/apps/apio-architect/apio-architect-api/src/main/java/com/liferay/apio/architect/alias/BinaryFunction.java#L28)
+class for the full example.
 
 ### @see tags
 
@@ -630,6 +650,11 @@ tags. Make sure to follow the following rules when using links in your Javadocs:
 - There are cases where you've specified the incorrect params, but IDE still
   recognizes the link. Always double check, because although IDE recognizes the
   method-- Javadoc errors could still be present.
+- You can link to an external URL by using the `<a>` HTML tag and `href`
+  attribute. For example, see the
+  [`Portal.java`](https://github.com/liferay/liferay-portal/blob/7.1.0-ga1/portal-kernel/src/com/liferay/portal/kernel/util/Portal.java#L303)
+  class. You should not use this linking method with any other Javadoc tags
+  (e.g., `@link` or `@see`).
 - `@link` examples:
 
     **Within same class:**

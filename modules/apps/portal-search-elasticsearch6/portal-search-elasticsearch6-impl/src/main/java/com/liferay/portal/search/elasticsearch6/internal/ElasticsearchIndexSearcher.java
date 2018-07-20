@@ -382,7 +382,12 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchResponse searchResponse = doSearch(
 			searchContext, query, start, end, false);
 
-		return processResponse(searchResponse, searchContext, query);
+		Hits hits = processResponse(
+			searchResponse, searchContext, query.getQueryConfig());
+
+		hits.setQuery(query);
+
+		return hits;
 	}
 
 	protected String[] getSelectedIndexNames(
@@ -436,11 +441,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	protected Hits processResponse(
 		SearchResponse searchResponse, SearchContext searchContext,
-		Query query) {
+		QueryConfig queryConfig) {
 
 		return searchResponseTranslator.translate(
 			searchResponse, searchContext.getFacets(),
-			searchContext.getGroupBy(), query, searchContext.getStats());
+			searchContext.getGroupBy(), searchContext.getStats(),
+			queryConfig.getAlternateUidFieldName(),
+			queryConfig.getHighlightFieldNames(), queryConfig.getLocale());
 	}
 
 	@Reference

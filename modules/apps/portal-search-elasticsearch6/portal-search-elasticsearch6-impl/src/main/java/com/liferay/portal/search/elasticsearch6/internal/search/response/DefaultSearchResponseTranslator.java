@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
-import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -64,21 +62,27 @@ public class DefaultSearchResponseTranslator
 	@Override
 	public Hits translate(
 		SearchResponse searchResponse, Map<String, Facet> facetMap,
-		GroupBy groupBy, Query query, Map<String, Stats> statsMap) {
+		GroupBy groupBy, Map<String, Stats> statsMap,
+		String alternateUidFieldName, String[] highlightFieldNames,
+		Locale locale) {
 
 		SearchHits searchHits = searchResponse.getHits();
 
 		Hits hits = new HitsImpl();
 
 		updateFacetCollectors(searchResponse, facetMap);
-		updateGroupedHits(searchResponse, groupBy, hits, query);
+		updateGroupedHits(
+			searchResponse, groupBy, hits, alternateUidFieldName,
+			highlightFieldNames, locale);
 		updateStatsResults(searchResponse, hits, statsMap);
 
 		TimeValue timeValue = searchResponse.getTook();
 
 		hits.setSearchTime((float)timeValue.getSecondsFrac());
 
-		return processSearchHits(searchHits, query, hits);
+		return processSearchHits(
+			searchHits, hits, alternateUidFieldName, highlightFieldNames,
+			locale);
 	}
 
 	protected void addSnippets(
@@ -107,7 +111,8 @@ public class DefaultSearchResponseTranslator
 	}
 
 	protected void addSnippets(
-		SearchHit hit, Document document, QueryConfig queryConfig) {
+		SearchHit hit, Document document, String[] highlightFieldNames,
+		Locale locale) {
 
 		Map<String, HighlightField> highlightFields = hit.getHighlightFields();
 
@@ -115,10 +120,8 @@ public class DefaultSearchResponseTranslator
 			return;
 		}
 
-		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
-			addSnippets(
-				document, highlightFields, highlightFieldName,
-				queryConfig.getLocale());
+		for (String highlightFieldName : highlightFieldNames) {
+			addSnippets(document, highlightFields, highlightFieldName, locale);
 		}
 	}
 
@@ -132,18 +135,20 @@ public class DefaultSearchResponseTranslator
 			aggregationsMap.get(FacetUtil.getAggregationName(facet)));
 	}
 
-	protected void populateUID(Document document, QueryConfig queryConfig) {
+	protected void populateUID(
+		Document document, String alternateUidFieldName) {
+
 		Field uidField = document.getField(Field.UID);
 
 		if (uidField != null) {
 			return;
 		}
 
-		if (Validator.isNull(queryConfig.getAlternateUidFieldName())) {
+		if (Validator.isNull(alternateUidFieldName)) {
 			return;
 		}
 
-		String uidValue = document.get(queryConfig.getAlternateUidFieldName());
+		String uidValue = document.get(alternateUidFieldName);
 
 		if (Validator.isNotNull(uidValue)) {
 			uidField = new Field(Field.UID, uidValue);
@@ -153,17 +158,18 @@ public class DefaultSearchResponseTranslator
 	}
 
 	protected Document processSearchHit(
-		SearchHit searchHit, QueryConfig queryConfig) {
+		SearchHit searchHit, String alternateUidFieldName) {
 
 		Document document = searchHitDocumentTranslator.translate(searchHit);
 
-		populateUID(document, queryConfig);
+		populateUID(document, alternateUidFieldName);
 
 		return document;
 	}
 
 	protected Hits processSearchHits(
-		SearchHits searchHits, Query query, Hits hits) {
+		SearchHits searchHits, Hits hits, String alternateUidFieldName,
+		String[] highlightFieldNames, Locale locale) {
 
 		List<Document> documents = new ArrayList<>();
 		List<Float> scores = new ArrayList<>();
@@ -173,19 +179,18 @@ public class DefaultSearchResponseTranslator
 
 			for (SearchHit searchHit : searchHitsArray) {
 				Document document = processSearchHit(
-					searchHit, query.getQueryConfig());
+					searchHit, alternateUidFieldName);
 
 				documents.add(document);
 
 				scores.add(searchHit.getScore());
 
-				addSnippets(searchHit, document, query.getQueryConfig());
+				addSnippets(searchHit, document, highlightFieldNames, locale);
 			}
 		}
 
 		hits.setDocs(documents.toArray(new Document[documents.size()]));
 		hits.setLength((int)searchHits.getTotalHits());
-		hits.setQuery(query);
 		hits.setQueryTerms(new String[0]);
 		hits.setScores(ArrayUtil.toFloatArray(scores));
 
@@ -213,7 +218,8 @@ public class DefaultSearchResponseTranslator
 
 	protected void updateGroupedHits(
 		SearchResponse searchResponse, GroupBy groupBy, Hits hits,
-		Query query) {
+		String alternateUidFieldName, String[] highlightFieldNames,
+		Locale locale) {
 
 		if (groupBy == null) {
 			return;
@@ -238,7 +244,9 @@ public class DefaultSearchResponseTranslator
 
 			Hits groupedHits = new HitsImpl();
 
-			processSearchHits(groupedSearchHits, query, groupedHits);
+			processSearchHits(
+				groupedSearchHits, groupedHits, alternateUidFieldName,
+				highlightFieldNames, locale);
 
 			groupedHits.setLength((int)groupedSearchHits.getTotalHits());
 

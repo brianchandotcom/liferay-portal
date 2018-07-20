@@ -435,14 +435,28 @@
 		<pathconvert pathsep="${line.separator}" property="app.names.unfiltered">
 			<flattenmapper />
 			<path>
-				<dirset dir="${modules.dir}" includes="private/apps/*">
+				<dirset
+					dir="${modules.dir}"
+					includes="private/apps/*"
+				>
 					<present targetdir="${modules.dir}/.releng/private">
-						<mapper from="*" to="*${file.separator}app.properties" type="glob" />
+						<mapper
+							from="*"
+							to="*${file.separator}app.properties"
+							type="glob"
+						/>
 					</present>
 				</dirset>
-				<dirset dir="${modules.dir}" includes="apps/*">
+				<dirset
+					dir="${modules.dir}"
+					includes="apps/*"
+				>
 					<present targetdir="${modules.dir}/.releng">
-						<mapper from="*" to="*${file.separator}app.properties" type="glob" />
+						<mapper
+							from="*"
+							to="*${file.separator}app.properties"
+							type="glob"
+						/>
 					</present>
 				</dirset>
 			</path>
@@ -450,7 +464,9 @@
 
 		<property name="app.names.unfiltered.formatted" value="${app.names.unfiltered}${line.separator}" />
 
-		<loadfile property="app.names">
+		<loadfile
+			property="app.names"
+		>
 			<filterchain>
 				<sortfilter />
 

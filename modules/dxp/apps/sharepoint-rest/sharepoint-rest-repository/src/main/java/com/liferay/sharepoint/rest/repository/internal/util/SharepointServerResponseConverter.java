@@ -200,13 +200,13 @@ public class SharepointServerResponseConverter {
 					snippet = GetterUtil.getString(
 						cellsResultJSONObject.getString("Value"));
 				}
-				else if (key.equals("IsDocument")) {
+				else if (key.equals("IsContainer")) {
 					if (cellsResultJSONObject.getBoolean("Value")) {
-						extRepositoryObjectType = ExtRepositoryObjectType.FILE;
-					}
-					else {
 						extRepositoryObjectType =
 							ExtRepositoryObjectType.FOLDER;
+					}
+					else {
+						extRepositoryObjectType = ExtRepositoryObjectType.FILE;
 					}
 				}
 				else if (key.equals("ParentLink")) {

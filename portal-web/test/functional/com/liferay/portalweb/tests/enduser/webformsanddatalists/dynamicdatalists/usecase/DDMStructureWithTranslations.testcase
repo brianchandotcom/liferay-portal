@@ -11,6 +11,20 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#configureCurrentLanguagesCP">
+			<var name="currentSiteLanguages" value="English (United States),Spanish (Spain),Portuguese (Brazil)" />
+			<var name="defaultSiteLanguage" value="Portuguese (Brazil)" />
+			<var name="displaySettings" value="Display Settings" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -82,16 +96,16 @@
 		<execute macro="DDLRecord#addCP" />
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="en-US Categoria" />
+			<var name="ddlRecordFieldData" value="pt-BR Categoria" />
 			<var name="fieldName" value="Categoria" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="en-US Pergunta" />
+			<var name="ddlRecordFieldData" value="pt-BR Pergunta" />
 			<var name="fieldName" value="Pergunta" />
 		</execute>
 
-		<for list="es-ES,pt-BR" param="language">
+		<for list="es-ES,en-US" param="language">
 			<execute macro="PortletEntry#changeLocale">
 				<var name="locale" value="${language}" />
 			</execute>
@@ -107,7 +121,7 @@
 			</execute>
 		</for>
 
-		<for list="en-US,es-ES,pt-BR" param="language">
+		<for list="pt-BR,en-US,es-ES," param="language">
 			<execute macro="PortletEntry#changeLocale">
 				<var name="locale" value="${language}" />
 			</execute>

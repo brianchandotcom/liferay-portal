@@ -772,18 +772,97 @@ public class JspServlet extends HttpServlet {
 		}
 
 		@Override
-		public URL getResource(String path) throws MalformedURLException {
-			return _getResource(path);
+		public URL getResource(String path) {
+			try {
+				if ((path == null) || path.equals(StringPool.BLANK)) {
+					return null;
+				}
+
+				if (path.charAt(0) != '/') {
+					path = '/' + path;
+				}
+
+				URL url = _getExtension(path);
+
+				if (url != null) {
+					return url;
+				}
+
+				url = _servletContext.getResource(path);
+
+				if (url != null) {
+					return url;
+				}
+
+				ClassLoader classLoader = _servletContext.getClassLoader();
+
+				url = classLoader.getResource(path);
+
+				if (url != null) {
+					return url;
+				}
+
+				if (!path.startsWith("/META-INF/")) {
+					url = _servletContext.getResource(
+						_DIR_NAME_RESOURCES.concat(path));
+				}
+
+				if (url != null) {
+					return url;
+				}
+
+				for (int i = 2; i < _allParticipatingBundles.length; i++) {
+					url = _allParticipatingBundles[i].getEntry(path);
+
+					if (url != null) {
+						return url;
+					}
+				}
+
+				return _jspBundle.getResource(path);
+			}
+			catch (MalformedURLException murle) {
+			}
+
+			return null;
 		}
 
 		@Override
 		public InputStream getResourceAsStream(String path) {
-			return _getResourceAsStream(path);
+			URL url = getResource(path);
+
+			if (url == null) {
+				return null;
+			}
+
+			try {
+				return url.openStream();
+			}
+			catch (IOException ioe) {
+				return null;
+			}
 		}
 
 		@Override
 		public Set<String> getResourcePaths(String path) {
-			return _getResourcePaths(path);
+			Set<String> paths = _servletContext.getResourcePaths(path);
+
+			Enumeration<URL> enumeration = _jspBundle.findEntries(
+				path, null, false);
+
+			if (enumeration != null) {
+				if ((paths == null) && enumeration.hasMoreElements()) {
+					paths = new HashSet<>();
+				}
+
+				while (enumeration.hasMoreElements()) {
+					URL url = enumeration.nextElement();
+
+					paths.add(url.getPath());
+				}
+			}
+
+			return paths;
 		}
 
 		@Override
@@ -917,97 +996,6 @@ public class JspServlet extends HttpServlet {
 			List<URL> urls = Collections.list(enumeration);
 
 			return urls.get(urls.size() - 1);
-		}
-
-		private URL _getResource(String path) {
-			try {
-				if ((path == null) || path.equals(StringPool.BLANK)) {
-					return null;
-				}
-
-				if (path.charAt(0) != '/') {
-					path = '/' + path;
-				}
-
-				URL url = _getExtension(path);
-
-				if (url != null) {
-					return url;
-				}
-
-				url = _servletContext.getResource(path);
-
-				if (url != null) {
-					return url;
-				}
-
-				ClassLoader classLoader = _servletContext.getClassLoader();
-
-				url = classLoader.getResource(path);
-
-				if (url != null) {
-					return url;
-				}
-
-				if (!path.startsWith("/META-INF/")) {
-					url = _servletContext.getResource(
-						_DIR_NAME_RESOURCES.concat(path));
-				}
-
-				if (url != null) {
-					return url;
-				}
-
-				for (int i = 2; i < _allParticipatingBundles.length; i++) {
-					url = _allParticipatingBundles[i].getEntry(path);
-
-					if (url != null) {
-						return url;
-					}
-				}
-
-				return _jspBundle.getResource(path);
-			}
-			catch (MalformedURLException murle) {
-			}
-
-			return null;
-		}
-
-		private InputStream _getResourceAsStream(String path) {
-			URL url = _getResource(path);
-
-			if (url == null) {
-				return null;
-			}
-
-			try {
-				return url.openStream();
-			}
-			catch (IOException ioe) {
-				return null;
-			}
-		}
-
-		private Set<String> _getResourcePaths(String path) {
-			Set<String> paths = _servletContext.getResourcePaths(path);
-
-			Enumeration<URL> enumeration = _jspBundle.findEntries(
-				path, null, false);
-
-			if (enumeration != null) {
-				if ((paths == null) && enumeration.hasMoreElements()) {
-					paths = new HashSet<>();
-				}
-
-				while (enumeration.hasMoreElements()) {
-					URL url = enumeration.nextElement();
-
-					paths.add(url.getPath());
-				}
-			}
-
-			return paths;
 		}
 
 		private final String _contextPath;

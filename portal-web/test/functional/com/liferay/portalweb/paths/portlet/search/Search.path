@@ -29,16 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FACET_CONFIGURE</td>
-	<td>//div[label[contains(.,'${key_facetName}')]]/following-sibling::div//a[contains(.,'Configure')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INCREMENTAL_SEARCH_SUGGESTION</td>
-	<td>//div[@class='yui3-aclist-content']//li[contains(@data-text,"${key_kbArticleTitle}")]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH_BAR_WIDGET</td>
 	<td>//input[not(ancestor::header[@id='banner'])][@title='Search']</td>
 	<td></td>

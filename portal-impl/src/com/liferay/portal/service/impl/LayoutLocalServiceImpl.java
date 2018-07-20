@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.LayoutComparator;
@@ -3330,6 +3331,31 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			}
 			catch (NumberFormatException nfe) {
 				throw new SitemapPagePriorityException(nfe);
+			}
+		}
+
+		boolean enableJavaScript =
+			PropsValues.
+				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT;
+
+		if (!enableJavaScript) {
+			UnicodeProperties layoutTypeSettingsProperties =
+				layout.getTypeSettingsProperties();
+
+			String oldJavaScript = layoutTypeSettingsProperties.getProperty(
+				"javascript");
+
+			String newJavaScript = typeSettingsProperties.getProperty(
+				"javascript");
+
+			if (!StringUtil.equals(oldJavaScript, newJavaScript)) {
+				if (Validator.isBlank(oldJavaScript)) {
+					typeSettingsProperties.remove("javascript");
+				}
+				else {
+					typeSettingsProperties.setProperty(
+						"javascript", oldJavaScript);
+				}
 			}
 		}
 	}

@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -104,6 +105,19 @@ public class PullRequest {
 		}
 
 		return true;
+	}
+
+	public void close() throws IOException {
+		if (Objects.equals(getState(), "open")) {
+			JSONObject postContentJSONObject = new JSONObject();
+
+			postContentJSONObject.put("state", "closed");
+
+			JenkinsResultsParserUtil.toString(
+				_jsonObject.getString("url"), postContentJSONObject.toString());
+		}
+
+		_jsonObject.put("state", "closed");
 	}
 
 	public List<Comment> getComments() {

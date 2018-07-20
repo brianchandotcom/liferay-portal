@@ -67,6 +67,30 @@ public class OAuth2ScopeGrantLocalServiceImpl
 		return oAuth2ScopeGrantPersistence.update(oAuth2ScopeGrant);
 	}
 
+	public Collection<LiferayOAuth2Scope> getFilteredLiferayOAuth2Scopes(
+		long oAuth2ApplicationScopeAliasesId,
+		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes) {
+
+		Collection<LiferayOAuth2Scope> resultLiferayOAuth2Scopes =
+			new ArrayList<>(liferayOAuth2Scopes.size());
+
+		List<OAuth2ScopeGrant> oAuth2ScopeGrants =
+			oAuth2ScopeGrantPersistence.findByOAuth2ApplicationScopeAliasesId(
+				oAuth2ApplicationScopeAliasesId);
+
+		for (LiferayOAuth2Scope liferayOAuth2Scope : liferayOAuth2Scopes) {
+			for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
+				if (_matches(oAuth2ScopeGrant, liferayOAuth2Scope)) {
+					resultLiferayOAuth2Scopes.add(liferayOAuth2Scope);
+
+					break;
+				}
+			}
+		}
+
+		return resultLiferayOAuth2Scopes;
+	}
+
 	public Collection<OAuth2ScopeGrant> getOAuth2ScopeGrants(
 		long oAuth2ApplicationScopeAliasesId, int start, int end,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
@@ -107,33 +131,12 @@ public class OAuth2ScopeGrantLocalServiceImpl
 			oAuth2ScopeGrants.size());
 
 		for (LiferayOAuth2Scope liferayOAuth2Scope : liferayOAuth2Scopes) {
-			Bundle bundle = liferayOAuth2Scope.getBundle();
-
-			String bundleSymbolicName = bundle.getSymbolicName();
-
 			for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
-				if (!Objects.equals(
-						oAuth2ScopeGrant.getApplicationName(),
-						liferayOAuth2Scope.getApplicationName())) {
+				if (_matches(oAuth2ScopeGrant, liferayOAuth2Scope)) {
+					resultOAuth2ScopeGrants.add(oAuth2ScopeGrant);
 
-					continue;
+					break;
 				}
-
-				if (!Objects.equals(
-						oAuth2ScopeGrant.getBundleSymbolicName(),
-						bundleSymbolicName)) {
-
-					continue;
-				}
-
-				if (!Objects.equals(
-						oAuth2ScopeGrant.getScope(),
-						liferayOAuth2Scope.getScope())) {
-
-					continue;
-				}
-
-				resultOAuth2ScopeGrants.add(oAuth2ScopeGrant);
 			}
 		}
 
@@ -141,6 +144,36 @@ public class OAuth2ScopeGrantLocalServiceImpl
 			oAuth2AuthorizationId, resultOAuth2ScopeGrants);
 
 		return resultOAuth2ScopeGrants;
+	}
+
+	private boolean _matches(
+		OAuth2ScopeGrant oAuth2ScopeGrant,
+		LiferayOAuth2Scope liferayOAuth2Scope) {
+
+		if (!Objects.equals(
+				oAuth2ScopeGrant.getApplicationName(),
+				liferayOAuth2Scope.getApplicationName())) {
+
+			return false;
+		}
+
+		if (!Objects.equals(
+				oAuth2ScopeGrant.getScope(), liferayOAuth2Scope.getScope())) {
+
+			return false;
+		}
+
+		Bundle bundle = liferayOAuth2Scope.getBundle();
+
+		String bundleSymbolicName = bundle.getSymbolicName();
+
+		if (!Objects.equals(
+				oAuth2ScopeGrant.getBundleSymbolicName(), bundleSymbolicName)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 }

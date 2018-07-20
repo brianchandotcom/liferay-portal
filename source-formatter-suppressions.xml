@@ -135,6 +135,9 @@
 		<suppress checks="JavaAPISignatureCheck" files="modules/private/apps/commerce/.*" />
 		<suppress checks="JavaConfigurationCategoryCheck" files="modules/private/.*" />
 		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/private/.*" />
+		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="modules/private/apio-architect/.*" />
+		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="modules/private/commerce/.*" />
+		<suppress checks="XMLLookAndFeelCompatibilityVersionCheck" files="modules/private/apio-architect/.*" />
 		<suppress checks="XMLLookAndFeelCompatibilityVersionCheck" files="modules/private/commerce/.*" />
 		<suppress checks="XMLServiceReferenceCheck" files="modules/private/.*" />
 	</source-check>

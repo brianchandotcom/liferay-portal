@@ -14,15 +14,21 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.web.internal.display.context.WorkflowNavigationDisplayContext;
 
 import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.Portlet;
+import javax.portlet.RenderRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adam Brandizzi
@@ -58,5 +64,25 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 	public List<String> getWorkflowPortletTabNames() {
 		return Arrays.asList(WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS);
 	}
+
+	@Override
+	protected void addRenderRequestAttributes(RenderRequest renderRequest) {
+		super.addRenderRequestAttributes(renderRequest);
+
+		WorkflowNavigationDisplayContext workflowNavigationDisplayContext =
+			new WorkflowNavigationDisplayContext(
+				renderRequest, resourceBundleLoader);
+
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_NAVIGATION_DISPLAY_CONTEXT,
+			workflowNavigationDisplayContext);
+	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)"
+	)
+	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 }

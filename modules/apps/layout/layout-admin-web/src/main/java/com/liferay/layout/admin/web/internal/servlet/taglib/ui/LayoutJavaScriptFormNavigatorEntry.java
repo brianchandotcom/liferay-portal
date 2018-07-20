@@ -16,21 +16,53 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
+import java.util.Dictionary;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
  */
-@Component(
-	property = "form.navigator.entry.order:Integer=90",
-	service = FormNavigatorEntry.class
-)
+@Component
 public class LayoutJavaScriptFormNavigatorEntry
 	extends BaseLayoutFormNavigatorEntry {
+
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		String layoutJavaScriptEnabled = PropsUtil.get(
+			PropsKeys.
+				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT);
+
+		if (!GetterUtil.getBoolean(layoutJavaScriptEnabled)) {
+			return;
+		}
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("form.navigator.entry.order", Integer.valueOf(90));
+
+		_serviceRegistration = bundleContext.registerService(
+			FormNavigatorEntry.class, this, properties);
+	}
+
+	@Deactivate
+	public void deactivate() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+	}
 
 	@Override
 	public String getCategoryKey() {
@@ -55,5 +87,7 @@ public class LayoutJavaScriptFormNavigatorEntry
 	protected String getJspPath() {
 		return "/layout/javascript.jsp";
 	}
+
+	private ServiceRegistration<FormNavigatorEntry> _serviceRegistration;
 
 }

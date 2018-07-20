@@ -16,6 +16,7 @@ package com.liferay.frontend.image.editor.capability.rotate.internal;
 
 import com.liferay.frontend.image.editor.capability.BaseImageEditorCapability;
 import com.liferay.frontend.image.editor.capability.ImageEditorCapability;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -25,6 +26,8 @@ import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Bruno Basto
@@ -44,8 +47,8 @@ public class ImageEditorCapabilityRotate extends BaseImageEditorCapability {
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
 
 		return ResourceBundleUtil.getString(resourceBundle, "rotate");
 	}
@@ -59,6 +62,13 @@ public class ImageEditorCapabilityRotate extends BaseImageEditorCapability {
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.capability.rotate)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.frontend.image.editor.capability.rotate)"

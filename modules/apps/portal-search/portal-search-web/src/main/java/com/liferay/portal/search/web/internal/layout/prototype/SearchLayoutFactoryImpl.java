@@ -29,12 +29,10 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.search.web.layout.prototype.SearchLayoutPrototypeCustomizer;
 
 import java.util.List;
@@ -199,18 +197,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	}
 
 	protected Map<Locale, String> getLocalizationMap(String key) {
-		Class<?> clazz = getClass();
-
-		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleUtil.getResourceBundleLoader(
-				"content.Language", clazz.getClassLoader());
-
-		AggregateResourceBundleLoader aggregateResourceBundleLoader =
-			new AggregateResourceBundleLoader(
-				resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
-
-		return ResourceBundleUtil.getLocalizationMap(
-			aggregateResourceBundleLoader, key);
+		return ResourceBundleUtil.getLocalizationMap(resourceBundleLoader, key);
 	}
 
 	protected Map<Locale, String> getLocalizationMap(
@@ -279,6 +266,13 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 	@Reference
 	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.portal.search.web)"
+	)
+	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

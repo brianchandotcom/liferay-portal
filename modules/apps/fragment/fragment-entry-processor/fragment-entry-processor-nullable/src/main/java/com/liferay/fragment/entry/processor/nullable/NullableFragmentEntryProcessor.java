@@ -19,12 +19,16 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eudaldo Alonso
@@ -45,8 +49,8 @@ public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
 		if (Validator.isNull(html)) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(Locale.getDefault());
 
 			String message = LanguageUtil.get(
 				resourceBundle, "html-content-must-not-be-empty");
@@ -54,5 +58,12 @@ public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 			throw new FragmentEntryContentException(message);
 		}
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.fragment.entry.processor.nullable)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

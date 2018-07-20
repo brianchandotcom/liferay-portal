@@ -3,14 +3,19 @@ package ${package}.portlet.configuration.icon;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author ${author}
@@ -27,8 +32,10 @@ public class ${className}PortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getLocale(portletRequest), getClass());
+		Locale locale = getLocale(portletRequest);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
 
 		return LanguageUtil.get(resourceBundle, "sample-link");
 	}
@@ -59,5 +66,12 @@ public class ${className}PortletConfigurationIcon
 	public boolean isUseDialog() {
 		return false;
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=${package})"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

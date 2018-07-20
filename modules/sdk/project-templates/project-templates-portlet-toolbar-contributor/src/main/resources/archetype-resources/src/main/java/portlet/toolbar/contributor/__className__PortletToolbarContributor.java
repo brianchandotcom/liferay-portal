@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -18,6 +19,9 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author ${author}
@@ -56,8 +60,10 @@ public class ${className}PortletToolbarContributor
 		menu.setMarkupView("lexicon");
 		menu.setMenuItems(menuItems);
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getLocale(portletRequest), getClass());
+		Locale locale = getLocale(portletRequest);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
 
 		menu.setMessage(LanguageUtil.get(resourceBundle, "list-of-links"));
 
@@ -76,5 +82,12 @@ public class ${className}PortletToolbarContributor
 
 		return themeDisplay.getLocale();
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=${package})"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

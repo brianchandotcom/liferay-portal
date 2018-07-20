@@ -20,14 +20,17 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pei-Jung Lan
@@ -61,14 +64,8 @@ public class CaptchaConfigurationModelListener
 	}
 
 	protected ResourceBundle getResourceBundle() {
-		if (_resourceBundle == null) {
-			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
-			return ResourceBundleUtil.getBundle(
-				"content.Language", locale, getClass());
-		}
-
-		return _resourceBundle;
+		return _resourceBundleLoader.loadResourceBundle(
+			LocaleThreadLocal.getThemeDisplayLocale());
 	}
 
 	protected void validateReCaptchaKeys(Dictionary<String, Object> properties)
@@ -94,6 +91,11 @@ public class CaptchaConfigurationModelListener
 		}
 	}
 
-	private ResourceBundle _resourceBundle;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.captcha.api)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

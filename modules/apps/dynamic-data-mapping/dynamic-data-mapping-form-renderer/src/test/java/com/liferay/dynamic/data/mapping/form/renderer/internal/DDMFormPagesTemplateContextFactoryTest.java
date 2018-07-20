@@ -68,6 +68,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 /**
  * @author Marcellus Tavares
@@ -500,10 +501,15 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				String.format(_HTML_WRAPPER, "tip"),
 				String.format(_HTML_WRAPPER, "option")));
 
+		DDMFormFieldTemplateContextContributor
+			ddmFormFieldTemplateContextContributor =
+				_ddmFormFieldTemplateContextContributorTestHelper.
+					createSelectDDMFormFieldTemplateContextContributor();
+
 		mockDDMFormFieldTypeServicesTracker(
-			"select",
-			_ddmFormFieldTemplateContextContributorTestHelper.
-				createSelectDDMFormFieldTemplateContextContributor());
+			"select", ddmFormFieldTemplateContextContributor);
+
+		setUpResourceBundleLoader(ddmFormFieldTemplateContextContributor);
 
 		// Dynamic data mapping form layout
 
@@ -968,6 +974,26 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(language);
+	}
+
+	protected void setUpResourceBundleLoader(
+			DDMFormFieldTemplateContextContributor
+				ddmFormFieldTemplateContextContributor)
+		throws Exception {
+
+		ResourceBundleLoader resourceBundleLoader = mock(
+			ResourceBundleLoader.class);
+		ResourceBundle resourceBundle = mock(ResourceBundle.class);
+
+		when(
+			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
+		Whitebox.setInternalState(
+			ddmFormFieldTemplateContextContributor, "resourceBundleLoader",
+			resourceBundleLoader);
 	}
 
 	protected void setUpResourceBundleLoaderUtil() {

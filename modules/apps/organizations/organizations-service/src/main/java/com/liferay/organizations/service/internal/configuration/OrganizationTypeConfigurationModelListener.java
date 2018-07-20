@@ -17,6 +17,7 @@ package com.liferay.organizations.service.internal.configuration;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -27,6 +28,8 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Drew Brokke
@@ -58,9 +61,8 @@ public class OrganizationTypeConfigurationModelListener
 	}
 
 	private ResourceBundle _getResourceBundle() {
-		return ResourceBundleUtil.getBundle(
-			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
-			getClass());
+		return _resourceBundleLoader.loadResourceBundle(
+			LocaleThreadLocal.getThemeDisplayLocale());
 	}
 
 	private void _validateNameExists(String name) throws Exception {
@@ -107,5 +109,12 @@ public class OrganizationTypeConfigurationModelListener
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.organizations.service)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

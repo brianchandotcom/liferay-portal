@@ -15,10 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.builder.internal.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +25,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Rafael Praxedes
@@ -105,17 +105,7 @@ public class DDMExpressionFunctionMetadataHelper {
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundleLoader portalResourceBundleLoader =
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
-
-		ResourceBundle portalResourceBundle =
-			portalResourceBundleLoader.loadResourceBundle(locale);
-
-		ResourceBundle portletResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			portletResourceBundle, portalResourceBundle);
+		return _resourceBundleLoader.loadResourceBundle(locale);
 	}
 
 	protected void populateMap(
@@ -231,5 +221,12 @@ public class DDMExpressionFunctionMetadataHelper {
 	private static final String _TYPE_TEXT = "text";
 
 	private static final String _TYPE_USER = "user";
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.dynamic.data.mapping.form.builder)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

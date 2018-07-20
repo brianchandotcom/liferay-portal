@@ -27,12 +27,10 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
 
@@ -43,6 +41,8 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adolfo Pérez
@@ -70,17 +70,11 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 			List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 
-		ResourceBundleLoader resourceBundleLoader =
-			new AggregateResourceBundleLoader(
-				ResourceBundleUtil.getResourceBundleLoader(
-					"content.Language", getClassLoader()),
-				LanguageResources.RESOURCE_BUNDLE_LOADER);
-
 		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
-			resourceBundleLoader, "layout-prototype-wiki-title");
+			_resourceBundleLoader, "layout-prototype-wiki-title");
 		Map<Locale, String> descriptionMap =
 			ResourceBundleUtil.getLocalizationMap(
-				resourceBundleLoader, "layout-prototype-wiki-description");
+				_resourceBundleLoader, "layout-prototype-wiki-description");
 
 		Layout layout = LayoutPrototypeHelperUtil.addLayoutPrototype(
 			_layoutPrototypeLocalService, companyId, defaultUserId, nameMap,
@@ -155,6 +149,13 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.wiki.layout.prototype)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 	private UserLocalService _userLocalService;
 

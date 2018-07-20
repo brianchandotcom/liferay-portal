@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -30,6 +30,9 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Julio Camarero
@@ -74,8 +77,9 @@ public class ToggleControlsTemplateContextContributor
 		contextObjects.put("show_toggle_controls", themeDisplay.isSignedIn());
 
 		if (themeDisplay.isSignedIn()) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLocale());
 
 			contextObjects.put(
 				"toggle_controls_text",
@@ -84,5 +88,12 @@ public class ToggleControlsTemplateContextContributor
 			contextObjects.put("toggle_controls_url", "javascript:;");
 		}
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

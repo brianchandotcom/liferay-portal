@@ -666,6 +666,12 @@ public class AssetPublisherConfigurationAction
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
+		if (layout.isSupportsEmbeddedPortlets() &&
+			layout.isPortletEmbedded(portletResource, layout.getGroupId())) {
+
+			return;
+		}
+
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {
 			HttpServletRequest request = portal.getHttpServletRequest(
 				actionRequest);

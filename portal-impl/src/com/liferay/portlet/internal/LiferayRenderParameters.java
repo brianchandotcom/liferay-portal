@@ -24,9 +24,9 @@ import javax.portlet.RenderParameters;
 public interface LiferayRenderParameters extends RenderParameters {
 
 	/**
-	 * Returns a set of public render parameter names.
+	 * Returns the public render parameter names.
 	 *
-	 * @return A set of public render parameter names.
+	 * @return the public render parameter names
 	 */
 	public Set<String> getPublicRenderParameterNames();
 

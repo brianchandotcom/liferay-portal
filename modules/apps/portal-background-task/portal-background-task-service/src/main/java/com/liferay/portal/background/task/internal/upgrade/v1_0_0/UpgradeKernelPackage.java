@@ -27,8 +27,8 @@ public class UpgradeKernelPackage
 	protected void doUpgrade() throws UpgradeException {
 		try {
 			upgradeLongTextTable(
-				"BackgroundTask", "taskContext", _CLASS_NAMES,
-				WildcardMode.SURROUND);
+				"BackgroundTask", "taskContext", "backgroundTaskId",
+				_CLASS_NAMES, WildcardMode.SURROUND);
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);

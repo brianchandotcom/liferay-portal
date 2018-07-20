@@ -55,8 +55,8 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				"ResourcePermission", "name", getClassNames(),
 				WildcardMode.SURROUND);
 			upgradeLongTextTable(
-				"UserNotificationEvent", "payload", getClassNames(),
-				WildcardMode.SURROUND);
+				"UserNotificationEvent", "payload", "userNotificationEventId",
+				getClassNames(), WildcardMode.SURROUND);
 
 			upgradeTable(
 				"ListType", "type_", getClassNames(), WildcardMode.TRAILING);
@@ -70,8 +70,8 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				"ResourcePermission", "name", getResourceNames(),
 				WildcardMode.LEADING);
 			upgradeLongTextTable(
-				"UserNotificationEvent", "payload", getResourceNames(),
-				WildcardMode.LEADING);
+				"UserNotificationEvent", "payload", "userNotificationEventId",
+				getResourceNames(), WildcardMode.LEADING);
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
@@ -84,6 +84,31 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 	protected String[][] getResourceNames() {
 		return _RESOURCE_NAMES;
+	}
+
+	protected void upgradeLongTextTable(
+			String columnName, String primaryKeyColumnName, String selectSQL,
+			String updateSQL, String[] name)
+		throws SQLException {
+
+		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(updateSQL))) {
+
+			while (rs.next()) {
+				ps2.setString(
+					1,
+					StringUtil.replace(
+						rs.getString(columnName), name[0], name[1]));
+
+				ps2.setLong(2, rs.getLong(primaryKeyColumnName));
+
+				ps2.addBatch();
+			}
+
+			ps2.executeBatch();
+		}
 	}
 
 	protected void upgradeLongTextTable(
@@ -110,6 +135,59 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			}
 
 			ps2.executeBatch();
+		}
+	}
+
+	protected void upgradeLongTextTable(
+			String tableName, String columnName, String primaryKeyColumnName,
+			String[][] names, WildcardMode wildcardMode)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() != DBType.SYBASE) {
+			upgradeTable(tableName, columnName, names, wildcardMode);
+
+			return;
+		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			StringBundler updateSB = new StringBundler(7);
+
+			updateSB.append("update ");
+			updateSB.append(tableName);
+			updateSB.append(" set ");
+			updateSB.append(columnName);
+			updateSB.append(" = ? where ");
+			updateSB.append(primaryKeyColumnName);
+			updateSB.append(" = ?");
+
+			String updateSQL = updateSB.toString();
+
+			StringBundler selectPrefixSB = new StringBundler(10);
+
+			selectPrefixSB.append("select ");
+			selectPrefixSB.append(columnName);
+			selectPrefixSB.append(", ");
+			selectPrefixSB.append(primaryKeyColumnName);
+			selectPrefixSB.append(" from ");
+			selectPrefixSB.append(tableName);
+			selectPrefixSB.append(" where ");
+			selectPrefixSB.append(columnName);
+			selectPrefixSB.append(" like '");
+			selectPrefixSB.append(wildcardMode.getLeadingWildcard());
+
+			String selectPrefix = selectPrefixSB.toString();
+
+			String selectPostfix =
+				wildcardMode.getTrailingWildcard() + StringPool.APOSTROPHE;
+
+			for (String[] name : names) {
+				upgradeLongTextTable(
+					columnName, primaryKeyColumnName,
+					selectPrefix.concat(name[0]).concat(selectPostfix),
+					updateSQL, name);
+			}
 		}
 	}
 

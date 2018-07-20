@@ -65,6 +65,32 @@ public class PullRequest {
 		refresh();
 	}
 
+	public Comment addComment(String body) {
+		body = body.replaceAll("\\\"", "\\\\\"");
+		body = body.replaceAll("(\\>)\\s+(\\<)", "$1$2");
+
+		JSONObject dataJSONObject = new JSONObject();
+
+		dataJSONObject.put("body", body);
+
+		JSONObject response = null;
+
+		try {
+			response = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.combine(
+					_jsonObject.getString("issue_url"), "/comments"),
+				dataJSONObject.toString());
+
+			return new Comment(response);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to post comment in GitHub pull request " +
+					getURL(),
+				ioe);
+		}
+	}
+
 	public boolean addLabel(Label label) {
 		if ((label == null) || hasLabel(label.getName())) {
 			return true;

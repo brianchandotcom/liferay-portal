@@ -163,31 +163,27 @@ const SiteNavigationMenuItem = {
 
 	/**
 	 * Mutates the given menuItem by changing it's status
-	 * to selected/unselected. Only a single menuItem can be
-	 * selected, so if selected is changed to true,
-	 * any other selected menuItem will be unselected.
+	 * to selected. Only a single menuItem can be
+	 * selected, so any other selected menuItem will be unselected.
 	 *
-	 * If no menuItem is specified it will get and unselect
-	 * an existing one.
-	 *
-	 * @param {HTMLElement} [menuItem=selectedMenuItem]
-	 * @param {boolean} [selected=false]
+	 * @param {!HTMLElement} menuItem
 	 */
 
-	setSelected: function(menuItem, selected = false) {
-		if (!menuItem || selected) {
-			const selectedMenuItem = toElement(`.${MENU_ITEM_SELECTED_CLASSNAME}`);
+	setSelected: function(menuItem) {
+		SiteNavigationMenuItem.unselectAll();
+		addClasses(menuItem, MENU_ITEM_SELECTED_CLASSNAME);
+	},
 
-			if (selectedMenuItem) {
-				SiteNavigationMenuItem.setSelected(selectedMenuItem, false);
-			}
-		}
+	/**
+	 * Mutates all selected menuItems and set their
+	 * status to unselected.
+	 */
 
-		if (selected) {
-			addClasses(menuItem, MENU_ITEM_SELECTED_CLASSNAME);
-		}
-		else if (menuItem) {
-			removeClasses(menuItem, MENU_ITEM_SELECTED_CLASSNAME);
+	unselectAll: function () {
+		const selectedMenuItem = toElement(`.${MENU_ITEM_SELECTED_CLASSNAME}`);
+
+		if (selectedMenuItem) {
+			removeClasses(selectedMenuItem, MENU_ITEM_SELECTED_CLASSNAME);
 		}
 	}
 };

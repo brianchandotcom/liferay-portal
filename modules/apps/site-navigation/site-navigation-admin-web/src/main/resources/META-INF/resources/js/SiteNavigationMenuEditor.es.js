@@ -161,7 +161,7 @@ class SiteNavigationMenuEditor extends State {
 	_handleDragStart(data, event) {
 		const menuItem = event.target.getActiveDrag();
 
-		SiteNavigationMenuItem.setSelected(menuItem, true);
+		SiteNavigationMenuItem.setSelected(menuItem);
 		SiteNavigationMenuItem.setDragging(menuItem, true);
 	}
 
@@ -210,7 +210,7 @@ class SiteNavigationMenuEditor extends State {
 			event.delegateTarget
 		);
 
-		SiteNavigationMenuItem.setSelected(menuItem, true);
+		SiteNavigationMenuItem.setSelected(menuItem);
 		this.emit('menuItemSelected', menuItem);
 	}
 
@@ -234,7 +234,7 @@ class SiteNavigationMenuEditor extends State {
 		let layoutModified = false;
 
 		if ((event.key === KEYS.ENTER) || (event.key === KEYS.SPACEBAR)) {
-			SiteNavigationMenuItem.setSelected(menuItem, true);
+			SiteNavigationMenuItem.setSelected(menuItem);
 			this.emit('menuItemSelected', menuItem);
 		}
 		else if (event.key === KEYS.ARROW_LEFT) {

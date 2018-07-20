@@ -63,18 +63,20 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolver
 		String previewURL = null;
 
 		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
-			previewURL = DLUtil.getPreviewURL(
+			previewURL = DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK, false, false);
 		}
 		else {
 			previewURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
-				themeDisplay, fileEntry, StringPool.BLANK, false);
+				themeDisplay, fileEntry, _IMAGE_PREVIEW_QUERY_STRING, false);
 		}
 
 		fileEntryJSONObject.put("url", previewURL);
 
 		return fileEntryJSONObject.toString();
 	}
+
+	private static final String _IMAGE_PREVIEW_QUERY_STRING = "&imagePreview=1";
 
 }

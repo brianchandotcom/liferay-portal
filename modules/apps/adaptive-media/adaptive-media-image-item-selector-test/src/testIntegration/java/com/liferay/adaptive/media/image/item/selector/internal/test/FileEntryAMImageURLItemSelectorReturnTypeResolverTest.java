@@ -120,7 +120,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		String defaultSource = jsonObject.getString("defaultSource");
 
 		Assert.assertEquals(
-			DLUtil.getPreviewURL(
+			DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			defaultSource);
@@ -165,7 +165,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		String defaultSource = jsonObject.getString("defaultSource");
 
 		Assert.assertEquals(
-			DLUtil.getPreviewURL(
+			DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			defaultSource);
@@ -214,7 +214,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		String defaultSource = jsonObject.getString("defaultSource");
 
 		Assert.assertEquals(
-			DLUtil.getPreviewURL(
+			DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			defaultSource);
@@ -255,7 +255,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		String defaultSource = jsonObject.getString("defaultSource");
 
 		Assert.assertEquals(
-			DLUtil.getPreviewURL(
+			DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			defaultSource);
@@ -296,7 +296,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		String defaultSource = jsonObject.getString("defaultSource");
 
 		Assert.assertEquals(
-			DLUtil.getPreviewURL(
+			DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			defaultSource);
@@ -337,7 +337,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		String defaultSource = jsonObject.getString("defaultSource");
 
 		Assert.assertEquals(
-			DLUtil.getPreviewURL(
+			DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			defaultSource);
@@ -378,7 +378,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		String defaultSource = jsonObject.getString("defaultSource");
 
 		Assert.assertEquals(
-			DLUtil.getPreviewURL(
+			DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			defaultSource);
@@ -419,7 +419,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		String defaultSource = jsonObject.getString("defaultSource");
 
 		Assert.assertEquals(
-			DLUtil.getPreviewURL(
+			DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			defaultSource);
@@ -460,7 +460,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		String defaultSource = jsonObject.getString("defaultSource");
 
 		Assert.assertEquals(
-			DLUtil.getPreviewURL(
+			DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			defaultSource);
@@ -501,7 +501,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		String defaultSource = jsonObject.getString("defaultSource");
 
 		Assert.assertEquals(
-			DLUtil.getPreviewURL(
+			DLUtil.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false),
 			defaultSource);

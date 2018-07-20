@@ -508,26 +508,41 @@ public class DLImpl implements DL {
 
 	@Override
 	public String getImagePreviewURL(
-			FileEntry fileEntry, FileVersion fileVersion,
-			ThemeDisplay themeDisplay)
-		throws Exception {
+		FileEntry fileEntry, FileVersion fileVersion,
+		ThemeDisplay themeDisplay) {
 
-		String previewQueryString = null;
+		return getImagePreviewURL(
+			fileEntry, fileVersion, themeDisplay, null, true, true);
+	}
+
+	@Override
+	public String getImagePreviewURL(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString, boolean appendVersion, boolean absoluteURL) {
+
+		String previewQueryString = queryString;
+
+		if (Validator.isNull(previewQueryString)) {
+			previewQueryString = StringPool.BLANK;
+		}
 
 		if (ImageProcessorUtil.isSupported(fileVersion.getMimeType())) {
-			previewQueryString = "&imagePreview=1";
+			previewQueryString = previewQueryString.concat("&imagePreview=1");
 		}
 		else if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
 			if (PDFProcessorUtil.hasImages(fileVersion)) {
-				previewQueryString = "&previewFileIndex=1";
+				previewQueryString = previewQueryString.concat(
+					"&previewFileIndex=1");
 			}
 			else if (VideoProcessorUtil.hasVideo(fileVersion)) {
-				previewQueryString = "&videoThumbnail=1";
+				previewQueryString = previewQueryString.concat(
+					"&videoThumbnail=1");
 			}
 		}
 
 		return getImageSrc(
-			fileEntry, fileVersion, themeDisplay, previewQueryString);
+			fileEntry, fileVersion, themeDisplay, previewQueryString,
+			appendVersion, absoluteURL);
 	}
 
 	@Override
@@ -1182,15 +1197,23 @@ public class DLImpl implements DL {
 	}
 
 	protected String getImageSrc(
-			FileEntry fileEntry, FileVersion fileVersion,
-			ThemeDisplay themeDisplay, String queryString)
-		throws Exception {
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString) {
+
+		return getImageSrc(
+			fileEntry, fileVersion, themeDisplay, queryString, true, true);
+	}
+
+	protected String getImageSrc(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString, boolean appendVersion, boolean absoluteURL) {
 
 		String thumbnailSrc = StringPool.BLANK;
 
 		if (Validator.isNotNull(queryString)) {
 			thumbnailSrc = getPreviewURL(
-				fileEntry, fileVersion, themeDisplay, queryString, true, true);
+				fileEntry, fileVersion, themeDisplay, queryString,
+				appendVersion, absoluteURL);
 		}
 
 		return thumbnailSrc;

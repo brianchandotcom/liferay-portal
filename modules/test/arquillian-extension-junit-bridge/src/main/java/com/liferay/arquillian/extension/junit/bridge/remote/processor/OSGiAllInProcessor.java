@@ -26,8 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -71,12 +71,14 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			Manifest manifest = _getManifest(javaArchive);
 
+			List<String> importPackages = new ArrayList<>();
+
 			List<Archive<?>> auxiliaryArchives = _loadAuxiliaryArchives(
-				javaArchive, manifest);
+				javaArchive, manifest, importPackages);
 
 			_cleanRepeatedImports(auxiliaryArchives, manifest);
 
-			_addOSGiImports(manifest);
+			_addOSGiImports(manifest, importPackages);
 
 			Attributes mainAttributes = manifest.getMainAttributes();
 
@@ -153,14 +155,16 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		}
 	}
 
-	private void _addOSGiImports(Manifest manifest) {
-		_addManifestValues(
-			manifest, "Import-Package",
-			Arrays.asList(
-				"org.osgi.framework", "javax.management", "javax.management.*",
-				"javax.naming", "javax.naming.*",
-				"org.osgi.service.packageadmin", "org.osgi.service.startlevel",
-				"org.osgi.util.tracker"));
+	private void _addOSGiImports(
+		Manifest manifest, List<String> importPackages) {
+
+		Collections.addAll(
+			importPackages, "org.osgi.framework", "javax.management",
+			"javax.management.*", "javax.naming", "javax.naming.*",
+			"org.osgi.service.packageadmin", "org.osgi.service.startlevel",
+			"org.osgi.util.tracker");
+
+		_addManifestValues(manifest, "Import-Package", importPackages);
 	}
 
 	private void _addTestClass(JavaArchive javaArchive, TestClass testClass) {
@@ -239,7 +243,8 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	}
 
 	private List<Archive<?>> _loadAuxiliaryArchives(
-			JavaArchive javaArchive, Manifest manifest)
+			JavaArchive javaArchive, Manifest manifest,
+			List<String> importPackages)
 		throws IOException {
 
 		List<Archive<?>> archives = new ArrayList<>();
@@ -252,8 +257,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		List<String> bundleClassPaths = new ArrayList<>();
 
 		bundleClassPaths.add(StringPool.PERIOD);
-
-		List<String> importPackages = new ArrayList<>();
 
 		for (AuxiliaryArchiveAppender archiveAppender : archiveAppenders) {
 			Archive<?> auxiliaryArchive =
@@ -298,8 +301,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		}
 
 		_addManifestValues(manifest, "Bundle-ClassPath", bundleClassPaths);
-
-		_addManifestValues(manifest, "Import-Package", importPackages);
 
 		return archives;
 	}

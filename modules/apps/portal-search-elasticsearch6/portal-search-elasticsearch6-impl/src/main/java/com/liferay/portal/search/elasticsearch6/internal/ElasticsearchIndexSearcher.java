@@ -48,7 +48,7 @@ import com.liferay.portal.search.elasticsearch6.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.groupby.GroupByTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.highlight.HighlighterTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
-import com.liferay.portal.search.elasticsearch6.internal.response.ResponseTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.sort.SortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.util.DocumentTypes;
@@ -438,8 +438,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchResponse searchResponse, SearchContext searchContext,
 		Query query) {
 
-		return
-			responseTranslator.translate(searchResponse, searchContext, query);
+		return searchResponseTranslator.translate(
+			searchResponse, searchContext.getFacets(),
+			searchContext.getGroupBy(), query, searchContext.getStats());
 	}
 
 	@Reference
@@ -467,7 +468,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	protected QueryTranslator<QueryBuilder> queryTranslator;
 
 	@Reference
-	protected ResponseTranslator responseTranslator;
+	protected SearchResponseTranslator searchResponseTranslator;
 
 	@Reference
 	protected SortTranslator sortTranslator;

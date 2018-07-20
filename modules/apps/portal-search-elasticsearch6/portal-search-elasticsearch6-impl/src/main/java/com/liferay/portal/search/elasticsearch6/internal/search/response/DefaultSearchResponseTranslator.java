@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.response;
+package com.liferay.portal.search.elasticsearch6.internal.search.response;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -58,21 +57,22 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(service = ResponseTranslator.class)
-public class DefaultResponseTranslator implements ResponseTranslator {
+@Component(service = SearchResponseTranslator.class)
+public class DefaultSearchResponseTranslator
+	implements SearchResponseTranslator {
 
 	@Override
 	public Hits translate(
-		SearchResponse searchResponse, SearchContext searchContext,
-		Query query) {
+		SearchResponse searchResponse, Map<String, Facet> facetMap,
+		GroupBy groupBy, Query query, Map<String, Stats> statsMap) {
 
 		SearchHits searchHits = searchResponse.getHits();
 
 		Hits hits = new HitsImpl();
 
-		updateFacetCollectors(searchContext, searchResponse);
-		updateGroupedHits(searchResponse, searchContext, query, hits);
-		updateStatsResults(searchContext, searchResponse, hits);
+		updateFacetCollectors(searchResponse, facetMap);
+		updateGroupedHits(searchResponse, groupBy, hits, query);
+		updateStatsResults(searchResponse, hits, statsMap);
 
 		TimeValue timeValue = searchResponse.getTook();
 
@@ -193,7 +193,7 @@ public class DefaultResponseTranslator implements ResponseTranslator {
 	}
 
 	protected void updateFacetCollectors(
-		SearchContext searchContext, SearchResponse searchResponse) {
+		SearchResponse searchResponse, Map<String, Facet> facetsMap) {
 
 		Aggregations aggregations = searchResponse.getAggregations();
 
@@ -202,8 +202,6 @@ public class DefaultResponseTranslator implements ResponseTranslator {
 		}
 
 		Map<String, Aggregation> aggregationsMap = aggregations.getAsMap();
-
-		Map<String, Facet> facetsMap = searchContext.getFacets();
 
 		for (Facet facet : facetsMap.values()) {
 			if (!facet.isStatic()) {
@@ -214,10 +212,8 @@ public class DefaultResponseTranslator implements ResponseTranslator {
 	}
 
 	protected void updateGroupedHits(
-		SearchResponse searchResponse, SearchContext searchContext, Query query,
-		Hits hits) {
-
-		GroupBy groupBy = searchContext.getGroupBy();
+		SearchResponse searchResponse, GroupBy groupBy, Hits hits,
+		Query query) {
 
 		if (groupBy == null) {
 			return;
@@ -251,9 +247,7 @@ public class DefaultResponseTranslator implements ResponseTranslator {
 	}
 
 	protected void updateStatsResults(
-		SearchContext searchContext, SearchResponse searchResponse, Hits hits) {
-
-		Map<String, Stats> statsMap = searchContext.getStats();
+		SearchResponse searchResponse, Hits hits, Map<String, Stats> statsMap) {
 
 		if (statsMap.isEmpty()) {
 			return;

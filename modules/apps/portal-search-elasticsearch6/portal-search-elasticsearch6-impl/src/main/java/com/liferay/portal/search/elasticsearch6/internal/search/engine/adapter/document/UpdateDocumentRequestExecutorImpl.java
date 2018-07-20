@@ -14,23 +14,15 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document;
 
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
-import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
+import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
 
-import java.io.IOException;
-
-import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.action.update.UpdateAction;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.delete.DeleteRequestBuilder;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.action.update.UpdateResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.rest.RestStatus;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,58 +39,23 @@ public class UpdateDocumentRequestExecutorImpl
 	public UpdateDocumentResponse execute(
 		UpdateDocumentRequest updateDocumentRequest) {
 
-		try {
-			UpdateRequestBuilder updateRequestBuilder =
-				createUpdateRequestBuilder(updateDocumentRequest);
-
-			UpdateResponse updateResponse = updateRequestBuilder.get();
-
-			RestStatus restStatus = updateResponse.status();
-
-			UpdateDocumentResponse updateDocumentResponse =
-				new UpdateDocumentResponse(restStatus.getStatus());
-
-			return updateDocumentResponse;
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	protected UpdateRequestBuilder createUpdateRequestBuilder(
-			UpdateDocumentRequest updateDocumentRequest)
-		throws IOException {
-
-		Client client = elasticsearchConnectionManager.getClient();
-
 		UpdateRequestBuilder updateRequestBuilder =
-			UpdateAction.INSTANCE.newRequestBuilder(client);
+			bulkableDocumentRequestTranslator.translate(
+				updateDocumentRequest, null);
 
-		Document document = updateDocumentRequest.getDocument();
+		UpdateResponse updateResponse = updateRequestBuilder.get();
 
-		updateRequestBuilder.setId(document.getUID());
+		RestStatus restStatus = updateResponse.status();
 
-		updateRequestBuilder.setIndex(updateDocumentRequest.getIndexName());
+		UpdateDocumentResponse updateDocumentResponse =
+			new UpdateDocumentResponse(restStatus.getStatus());
 
-		if (updateDocumentRequest.isRefresh()) {
-			updateRequestBuilder.setRefreshPolicy(
-				WriteRequest.RefreshPolicy.IMMEDIATE);
-		}
-
-		updateRequestBuilder.setType(document.get(Field.TYPE));
-
-		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
-			new DefaultElasticsearchDocumentFactory();
-
-		String elasticsearchDocument =
-			elasticsearchDocumentFactory.getElasticsearchDocument(document);
-
-		updateRequestBuilder.setDoc(elasticsearchDocument, XContentType.JSON);
-
-		return updateRequestBuilder;
+		return updateDocumentResponse;
 	}
 
-	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	protected BulkableDocumentRequestTranslator
+		<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
+			BulkRequestBuilder> bulkableDocumentRequestTranslator;
 
 }

@@ -12,19 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
+package com.liferay.portal.search.engine.adapter.document;
 
-import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
+import aQute.bnd.annotation.ProviderType;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import java.util.function.Consumer;
 
 /**
  * @author Michael C. Han
  */
-public interface CommonSearchRequestBuilderAssembler {
+@ProviderType
+public interface BulkableDocumentRequest<T> {
 
-	public void assemble(
-		SearchRequestBuilder searchRequestBuilder,
-		BaseSearchRequest<?> baseSearchRequest);
+	public void accept(Consumer<T> consumer);
 
 }

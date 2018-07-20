@@ -18,16 +18,24 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.search.Document;
 
+import java.util.function.Consumer;
+
 /**
  * @author Michael C. Han
  */
 @ProviderType
 public class IndexDocumentRequest
-	implements DocumentRequest<IndexDocumentResponse> {
+	implements BulkableDocumentRequest<IndexDocumentRequest>,
+			   DocumentRequest<IndexDocumentResponse> {
 
 	public IndexDocumentRequest(String indexName, Document document) {
 		_indexName = indexName;
 		_document = document;
+	}
+
+	@Override
+	public void accept(Consumer<IndexDocumentRequest> consumer) {
+		consumer.accept(this);
 	}
 
 	@Override

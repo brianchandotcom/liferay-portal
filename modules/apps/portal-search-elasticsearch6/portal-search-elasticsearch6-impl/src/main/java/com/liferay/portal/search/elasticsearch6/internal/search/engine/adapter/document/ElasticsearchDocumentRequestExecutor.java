@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document;
 
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
@@ -38,6 +40,13 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ElasticsearchDocumentRequestExecutor
 	implements DocumentRequestExecutor {
+
+	@Override
+	public BulkDocumentResponse executeBulkDocumentRequest(
+		BulkDocumentRequest bulkDocumentRequest) {
+
+		return bulkDocumentRequestExecutor.execute(bulkDocumentRequest);
+	}
 
 	@Override
 	public DeleteByQueryDocumentResponse executeDocumentRequest(
@@ -75,6 +84,9 @@ public class ElasticsearchDocumentRequestExecutor
 
 		return updateDocumentRequestExecutor.execute(updateDocumentRequest);
 	}
+
+	@Reference
+	protected BulkDocumentRequestExecutor bulkDocumentRequestExecutor;
 
 	@Reference
 	protected DeleteByQueryDocumentRequestExecutor

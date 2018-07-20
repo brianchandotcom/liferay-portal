@@ -16,17 +16,25 @@ package com.liferay.portal.search.engine.adapter.document;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.function.Consumer;
+
 /**
  * @author Michael C. Han
  */
 @ProviderType
 public class DeleteDocumentRequest
-	implements DocumentRequest<DeleteDocumentResponse> {
+	implements BulkableDocumentRequest<DeleteDocumentRequest>,
+			   DocumentRequest<DeleteDocumentResponse> {
 
 	public DeleteDocumentRequest(String indexName, String type, String uid) {
 		_indexName = indexName;
 		_type = type;
 		_uid = uid;
+	}
+
+	@Override
+	public void accept(Consumer<DeleteDocumentRequest> consumer) {
+		consumer.accept(this);
 	}
 
 	@Override

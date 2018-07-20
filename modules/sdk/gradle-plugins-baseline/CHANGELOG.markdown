@@ -82,9 +82,8 @@ project property `baseline.jar.report.only.dirty.packages`.
 ## 1.3.0 - 2018-06-28
 
 ### Added
-- [LPS-83067]: Allow to ignore excessive package version increase warnings by
-setting the property `ignoreExcessiveVersionIncreases` of `BaselineTask`
-instances to `true`.
+- [LPS-83067]: Ignore excessive package version increase warnings by setting the
+`BaselineTask`'s `ignoreExcessiveVersionIncreases` property to `true`.
 
 ### Changed
 - [LPS-83067]: Automatically ignore excessive package version increase warnings
@@ -104,6 +103,7 @@ when checking against older versions.
 [LPS-71118]: https://issues.liferay.com/browse/LPS-71118
 [LPS-71535]: https://issues.liferay.com/browse/LPS-71535
 [LPS-71728]: https://issues.liferay.com/browse/LPS-71728
+[LPS-72572]: https://issues.liferay.com/browse/LPS-72572
 [LPS-74110]: https://issues.liferay.com/browse/LPS-74110
 [LPS-76224]: https://issues.liferay.com/browse/LPS-76224
 [LPS-77350]: https://issues.liferay.com/browse/LPS-77350

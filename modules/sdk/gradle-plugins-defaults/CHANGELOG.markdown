@@ -3975,8 +3975,8 @@ version 1.3.0.
 ## 5.4.64 - 2018-07-02
 
 ### Added
-- [LPS-82976]: Set the system property `build.profile` to `portal-all` to only
-include projects containing one of the following marker files:
+- [LPS-82976]: Set the system property `build.profile` to `portal-all` so only
+projects containing one of the following marker files are included:
 	- `.lfrbuild-portal`
 	- `.lfrbuild-portal-all`
 	- `.lfrbuild-portal-all-private` when on private branches, or
@@ -4023,7 +4023,7 @@ version 2.2.5.
 ## 5.4.70 - 2018-07-09
 
 ### Fixed
-- [LPS-83300]: The system property `junit.code.coverage` was not being read.
+- [LPS-83300]: Ensure the system property `junit.code.coverage` is being read.
 
 ## 5.4.71 - 2018-07-10
 
@@ -4040,7 +4040,7 @@ to add new ticket ID prefixes for the `buildChangeLog` task.
 ## 5.4.72 - 2018-07-10
 
 ### Fixed
-- [LPS-82960]: Load `ci.properties` file to read `jira.project.keys`.
+- [LPS-82960]: Load the `ci.properties` file to read `jira.project.keys`.
 
 ## 5.4.73 - 2018-07-11
 

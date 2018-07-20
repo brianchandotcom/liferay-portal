@@ -87,89 +87,89 @@
 			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="WC WebContent Content" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="WC" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="WebContent" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="Content" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="WC1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="WC1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="WebContent1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="WebContent1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="Title1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="Title1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="Content1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="Content1" />
 		</execute>
 	</command>
@@ -241,46 +241,46 @@
 			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="Category Name" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="Category" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="Name" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="Category1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="Category1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="Name1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="Name1" />
 		</execute>
 	</command>
@@ -352,46 +352,46 @@
 			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;Category Name&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;Category&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;Name&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;Category1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="&quot;Category1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;Name1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="&quot;Name1&quot;" />
 		</execute>
 	</command>
@@ -430,116 +430,116 @@
 			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;WC WebContent Title&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;WC WebContent Content&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;WC&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;WebContent&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;Title&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;Content&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;WC WebContent&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;WebContent Title&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;WebContent Content&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;WC1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="&quot;WC1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;WebContent1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="&quot;WebContent1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;Title1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="&quot;Title1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;Content1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="&quot;Content1&quot;" />
 		</execute>
 	</command>
@@ -591,46 +591,46 @@
 			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="tag name" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="tag" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="name" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="tag1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="tag1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="name1" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="name1" />
 		</execute>
 	</command>
@@ -682,46 +682,46 @@
 			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;tag name&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;tag&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;name&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewResultsEntry">
+		<execute macro="WebContentSearchPortlet#viewResultsEntry">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;tag1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="&quot;tag1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#search">
+		<execute macro="WebContentSearchPortlet#search">
 			<var name="webContentSearchTerm" value="&quot;name1&quot;" />
 		</execute>
 
-		<execute macro="WebContentClassicSearch#viewNoResults">
+		<execute macro="WebContentSearchPortlet#viewNoResults">
 			<var name="webContentSearchTerm" value="&quot;name1&quot;" />
 		</execute>
 	</command>

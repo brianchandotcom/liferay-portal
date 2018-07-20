@@ -21,7 +21,7 @@ const NEST_THRESHOLD = 30;
  * @type {Object}
  */
 
-const SiteNavigationMenu = {
+const SiteNavigationMenuDOMHandler = {
 
 	/**
 	 * Gets the nearest menuItem element for the given originMenuItem
@@ -173,5 +173,5 @@ const SiteNavigationMenu = {
 	}
 };
 
-export {SiteNavigationMenu};
-export default SiteNavigationMenu;
+export {SiteNavigationMenuDOMHandler};
+export default SiteNavigationMenuDOMHandler;

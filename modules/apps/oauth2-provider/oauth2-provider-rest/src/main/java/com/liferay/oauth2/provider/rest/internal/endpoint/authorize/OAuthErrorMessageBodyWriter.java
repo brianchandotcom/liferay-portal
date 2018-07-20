@@ -14,41 +14,20 @@
 
 package com.liferay.oauth2.provider.rest.internal.endpoint.authorize;
 
-import com.liferay.oauth2.provider.rest.internal.endpoint.authorize.configuration.AuthorizeScreenConfiguration;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.io.IOException;
-import java.io.OutputStream;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.apache.cxf.rs.security.oauth2.common.OAuthError;
 import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marta Medio
@@ -58,19 +37,13 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.OAuth2.Application)",
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.name=OAuthErrorMessageBodyWriter"
-	}
+	},
+	service = MessageBodyWriter.class
 )
 @Produces("text/html")
 @Provider
 public class OAuthErrorMessageBodyWriter
-	implements MessageBodyWriter<OAuthError> {
-
-	public long getSize(
-		OAuthError oAuthError, Class<?> aClass, Type type,
-		Annotation[] annotations, MediaType mediaType) {
-
-		return -1L;
-	}
+	extends BaseMessageBodyWriter<OAuthError> {
 
 	@Override
 	public boolean isWriteable(
@@ -88,87 +61,12 @@ public class OAuthErrorMessageBodyWriter
 	}
 
 	@Override
-	public void writeTo(
-			OAuthError oAuthError, Class<?> aClass, Type type,
-			Annotation[] annotations, MediaType mediaType,
-			MultivaluedMap<String, Object> multivaluedMap,
-			OutputStream outputStream)
-		throws IOException, WebApplicationException {
-
-		HttpServletRequest httpServletRequest =
-			_messageContext.getHttpServletRequest();
-
-		String authorizeScreenURL = null;
-
-		try {
-			authorizeScreenURL = getAuthorizeScreenURL(
-				_portal.getCompanyId(httpServletRequest));
-		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get authorize screen configuration", ce);
-
-			throw new WebApplicationException(
-				Response.status(
-					Response.Status.INTERNAL_SERVER_ERROR
-				).build());
-		}
-
-		if (!_http.hasDomain(authorizeScreenURL)) {
-			String portalURL = _portal.getPortalURL(httpServletRequest);
-
-			authorizeScreenURL = portalURL + authorizeScreenURL;
-		}
-
+	protected String writeTo(OAuthError oAuthError, String authorizeScreenURL) {
 		authorizeScreenURL = setParameter(
 			authorizeScreenURL, OAuthConstants.ERROR_KEY,
 			oAuthError.getError());
 
-		_messageContext.put("http.request.redirected", Boolean.TRUE);
-
-		HttpServletResponse httpServletResponse =
-			_messageContext.getHttpServletResponse();
-
-		try {
-			httpServletResponse.sendRedirect(authorizeScreenURL);
-		}
-		catch (IOException ioe) {
-			throw new WebApplicationException(ioe);
-		}
+		return authorizeScreenURL;
 	}
-
-	protected String getAuthorizeScreenURL(long companyId)
-		throws ConfigurationException {
-
-		AuthorizeScreenConfiguration authorizeScreenConfiguration =
-			_configurationProvider.getConfiguration(
-				AuthorizeScreenConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					companyId, AuthorizeScreenConfiguration.class.getName()));
-
-		return authorizeScreenConfiguration.authorizeScreenURL();
-	}
-
-	protected String setParameter(String url, String name, String value) {
-		if (Validator.isBlank(value)) {
-			return url;
-		}
-
-		return _http.addParameter(url, "oauth2_" + name, value);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OAuthErrorMessageBodyWriter.class);
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private Http _http;
-
-	@Context
-	private MessageContext _messageContext;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -171,7 +171,7 @@
 </tr>
 <tr>
 	<td>HISTORY_VERSION_ANCHOR</td>
-	<td>//a[contains(@class,'layout-revision')]</td>
+	<td>//span[contains(@class,'layout-revision')]</td>
 	<td></td>
 </tr>
 <tr>

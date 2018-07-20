@@ -1,0 +1,558 @@
+{
+	"availableLanguageIds": [
+		"es_ES",
+		"en_US",
+		"pt_BR"
+	],
+	"defaultLanguageId": "pt_BR",
+	"fields": [
+		{
+			"label": {
+				"es_ES": "Categoria",
+				"en_US": "Category",
+				"pt_BR": "Categoria"
+			},
+			"predefinedValue": {
+				"es_ES": "",
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"style": {
+				"es_ES": "",
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"tip": {
+				"es_ES": "",
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"dataType": "string",
+			"indexType": "keyword",
+			"localizable": true,
+			"name": "Categoria",
+			"readOnly": false,
+			"repeatable": true,
+			"required": true,
+			"showLabel": true,
+			"type": "text",
+			"nestedFields": [
+				{
+					"label": {
+						"es_ES": "Pergunta",
+						"en_US": "Pergunta",
+						"pt_BR": "Pergunta"
+					},
+					"predefinedValue": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"style": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"tip": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"dataType": "string",
+					"indexType": "keyword",
+					"localizable": true,
+					"name": "Pergunta",
+					"readOnly": false,
+					"repeatable": true,
+					"required": true,
+					"showLabel": true,
+					"type": "text",
+					"nestedFields": [
+						{
+							"label": {
+								"es_ES": "Descrição - ES",
+								"en_US": "Description - EN",
+								"pt_BR": "Descrição - BR"
+							},
+							"predefinedValue": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"style": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"tip": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "DescricaoPergunta",
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"type": "ddm-text-html"
+						},
+						{
+							"label": {
+								"es_ES": "Botão de ver mais",
+								"en_US": "Botão de ver mais",
+								"pt_BR": "Botão de ver mais"
+							},
+							"predefinedValue": {
+								"es_ES": "Saiba Mais",
+								"en_US": "Saiba Mais",
+								"pt_BR": "Saiba Mais"
+							},
+							"style": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"tip": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"dataType": "string",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "BtVerMais",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text",
+							"nestedFields": [
+								{
+									"label": {
+										"es_ES": "Link",
+										"en_US": "Link",
+										"pt_BR": "Link"
+									},
+									"predefinedValue": {
+										"es_ES": "",
+										"en_US": "",
+										"pt_BR": ""
+									},
+									"style": {
+										"es_ES": "",
+										"en_US": "",
+										"pt_BR": ""
+									},
+									"tip": {
+										"es_ES": "",
+										"en_US": "",
+										"pt_BR": ""
+									},
+									"dataType": "string",
+									"indexType": "keyword",
+									"localizable": true,
+									"name": "Link",
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"type": "text"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"label": {
+				"es_ES": "Conteúdo do box de ajuda",
+				"en_US": "Conteúdo do box de ajuda",
+				"pt_BR": "Conteúdo do box de ajuda"
+			},
+			"predefinedValue": {
+				"es_ES": "",
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"style": {
+				"es_ES": "",
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"tip": {
+				"es_ES": "",
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"dataType": "string",
+			"indexType": "keyword",
+			"localizable": true,
+			"name": "ConteudoAjuda",
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"type": "textarea",
+			"nestedFields": [
+				{
+					"label": {
+						"es_ES": "Conteúdo para quem não encontrou ajuda",
+						"en_US": "Conteúdo para quem não encontrou ajuda",
+						"pt_BR": "Conteúdo para quem não encontrou ajuda"
+					},
+					"predefinedValue": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"style": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"tip": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"dataType": "",
+					"fieldNamespace": "ddm",
+					"indexType": "keyword",
+					"localizable": true,
+					"name": "ConteudoNegativo",
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"type": "ddm-separator",
+					"nestedFields": [
+						{
+							"label": {
+								"es_ES": "Titulo do Botão",
+								"en_US": "Titulo do Botão",
+								"pt_BR": "Titulo do Botão"
+							},
+							"predefinedValue": {
+								"es_ES": "Não",
+								"en_US": "Não",
+								"pt_BR": "Não"
+							},
+							"style": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"tip": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"dataType": "string",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "TituloBotaoNao",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						},
+						{
+							"label": {
+								"es_ES": "Placeholder do campo de pesquisa",
+								"en_US": "Placeholder do campo de pesquisa",
+								"pt_BR": "Placeholder do campo de pesquisa"
+							},
+							"predefinedValue": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"style": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"tip": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"dataType": "string",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "PlaceholderDoCampoDePesquisa",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						}
+					]
+				},
+				{
+					"label": {
+						"es_ES": "Conteúdo para quem encontrou ajuda",
+						"en_US": "Conteúdo para quem encontrou ajuda",
+						"pt_BR": "Conteúdo para quem encontrou ajuda"
+					},
+					"predefinedValue": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"style": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"tip": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"dataType": "",
+					"fieldNamespace": "ddm",
+					"indexType": "keyword",
+					"localizable": true,
+					"name": "ConteudoNao",
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"type": "ddm-separator",
+					"nestedFields": [
+						{
+							"label": {
+								"es_ES": "Titulo do Botão",
+								"en_US": "Titulo do Botão",
+								"pt_BR": "Titulo do Botão"
+							},
+							"predefinedValue": {
+								"es_ES": "Sim",
+								"en_US": "Sim",
+								"pt_BR": "Sim"
+							},
+							"style": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"tip": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"dataType": "string",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "TituloBotaoSim",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						},
+						{
+							"label": {
+								"es_ES": "Resposta para o feedback",
+								"en_US": "Resposta para o feedback",
+								"pt_BR": "Resposta para o feedback"
+							},
+							"predefinedValue": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"style": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"tip": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"dataType": "string",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "RespostaParaOFeedback",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						}
+					]
+				},
+				{
+					"label": {
+						"es_ES": "Conteúdo Sac",
+						"en_US": "Conteúdo Sac",
+						"pt_BR": "Conteúdo Sac"
+					},
+					"predefinedValue": {
+						"es_ES": "SAC",
+						"en_US": "SAC",
+						"pt_BR": "SAC"
+					},
+					"style": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"tip": {
+						"es_ES": "",
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"dataType": "string",
+					"indexType": "keyword",
+					"localizable": true,
+					"name": "ConteudoSac",
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"type": "text",
+					"nestedFields": [
+						{
+							"label": {
+								"es_ES": "Ligue para nós",
+								"en_US": "Ligue para nós",
+								"pt_BR": "Ligue para nós"
+							},
+							"predefinedValue": {
+								"es_ES": "Ligue para nós",
+								"en_US": "Ligue para nós",
+								"pt_BR": "Ligue para nós"
+							},
+							"style": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"tip": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"dataType": "string",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "Ligue",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text",
+							"nestedFields": [
+								{
+									"label": {
+										"es_ES": "Número",
+										"en_US": "Número",
+										"pt_BR": "Número"
+									},
+									"predefinedValue": {
+										"es_ES": "",
+										"en_US": "",
+										"pt_BR": ""
+									},
+									"style": {
+										"es_ES": "",
+										"en_US": "",
+										"pt_BR": ""
+									},
+									"tip": {
+										"es_ES": "",
+										"en_US": "",
+										"pt_BR": ""
+									},
+									"dataType": "string",
+									"indexType": "keyword",
+									"localizable": true,
+									"name": "NumeroLigue",
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"type": "text"
+								}
+							]
+						},
+						{
+							"label": {
+								"es_ES": "Deficientes auditivos",
+								"en_US": "Deficientes auditivos",
+								"pt_BR": "Deficientes auditivos"
+							},
+							"predefinedValue": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"style": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"tip": {
+								"es_ES": "",
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"dataType": "string",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "DeficientesAuditivos",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text",
+							"nestedFields": [
+								{
+									"label": {
+										"es_ES": "Número",
+										"en_US": "Número",
+										"pt_BR": "Número"
+									},
+									"predefinedValue": {
+										"es_ES": "",
+										"en_US": "",
+										"pt_BR": ""
+									},
+									"style": {
+										"es_ES": "",
+										"en_US": "",
+										"pt_BR": ""
+									},
+									"tip": {
+										"es_ES": "",
+										"en_US": "",
+										"pt_BR": ""
+									},
+									"dataType": "string",
+									"indexType": "keyword",
+									"localizable": true,
+									"name": "NumeroDeficientes",
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"type": "text"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

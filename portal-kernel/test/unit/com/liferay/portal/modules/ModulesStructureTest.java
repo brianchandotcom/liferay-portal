@@ -196,12 +196,14 @@ public class ModulesStructureTest {
 											"plugin\""));
 						}
 
-						Path buildExtGradlePath = dirPath.resolve(
-							"build-ext.gradle");
+						if (!liferaySpringBootDefaultsPlugin) {
+							Path buildExtGradlePath = dirPath.resolve(
+								"build-ext.gradle");
 
-						Assert.assertFalse(
-							"Forbidden " + buildExtGradlePath,
-							Files.deleteIfExists(buildExtGradlePath));
+							Assert.assertFalse(
+								"Forbidden " + buildExtGradlePath,
+								Files.deleteIfExists(buildExtGradlePath));
+						}
 					}
 
 					if (Files.exists(dirPath.resolve("package.json"))) {

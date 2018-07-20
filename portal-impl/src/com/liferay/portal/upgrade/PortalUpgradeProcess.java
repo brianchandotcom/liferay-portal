@@ -38,6 +38,29 @@ import java.util.TreeMap;
  */
 public class PortalUpgradeProcess extends UpgradeProcess {
 
+	public static Version getCurrentSchemaVersion(Connection connection)
+		throws SQLException {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select schemaVersion from Release_ where servletContextName " +
+					"= ?");) {
+
+			ps.setString(1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					String schemaVersion = rs.getString("schemaVersion");
+
+					if (Version.isVersion(schemaVersion)) {
+						return new Version(schemaVersion);
+					}
+				}
+			}
+		}
+
+		return new Version(0, 0, 0);
+	}
+
 	public static Version getLatestSchemaVersion() {
 		return _upgradeProcesses.lastKey();
 	}
@@ -91,29 +114,6 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		}
 
 		return false;
-	}
-
-	protected static Version getCurrentSchemaVersion(Connection connection)
-		throws SQLException {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select schemaVersion from Release_ where servletContextName " +
-					"= ?");) {
-
-			ps.setString(1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					String schemaVersion = rs.getString("schemaVersion");
-
-					if (Version.isVersion(schemaVersion)) {
-						return new Version(schemaVersion);
-					}
-				}
-			}
-		}
-
-		return new Version(0, 0, 0);
 	}
 
 	@Override

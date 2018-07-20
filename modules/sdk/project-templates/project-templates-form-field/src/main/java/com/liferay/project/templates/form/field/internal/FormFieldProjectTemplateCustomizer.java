@@ -42,21 +42,21 @@ public class FormFieldProjectTemplateCustomizer
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 
 		if (!liferayVersion.startsWith("7.1")) {
-			String name = projectTemplatesArgs.getName();
-
 			Path destinationDirPath = destinationDir.toPath();
+
+			String name = projectTemplatesArgs.getName();
 
 			Path projectDirPath = destinationDirPath.resolve(name);
 
-			List<String> filesToDelete = new ArrayList<>();
+			List<String> files = new ArrayList<>();
 
-			filesToDelete.add(".babelrc");
-			filesToDelete.add(".npmbundlerrc");
-			filesToDelete.add("package.json");
-			filesToDelete.add(
+			files.add(".babelrc");
+			files.add(".npmbundlerrc");
+			files.add("package.json");
+			files.add(
 				"src/main/resources/META-INF/resources/" + name + ".es.js");
 
-			for (String file : filesToDelete) {
+			for (String file : files) {
 				ProjectTemplateCustomizer.deleteFileInPath(
 					file, projectDirPath);
 			}

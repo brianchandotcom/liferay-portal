@@ -29,9 +29,9 @@ String liferayVersion = properties.get("liferayVersion")
 if (!liferayVersion.startsWith("7.1")) {
 	String artifactId = properties.get("artifactId")
 
-	List<String> filesToDelete = [".babelrc", ".npmbundlerrc", "package.json", "src/main/resources/META-INF/resources/${artifactId}.es.js"]
+	List<String> files = [".babelrc", ".npmbundlerrc", "package.json", "src/main/resources/META-INF/resources/${artifactId}.es.js"]
 
-	for (file in filesToDelete) {
+	for (file in files) {
 		Path resourcePath = Paths.get(file)
 
 		Path resourceFullPath = projectPath.resolve(resourcePath)

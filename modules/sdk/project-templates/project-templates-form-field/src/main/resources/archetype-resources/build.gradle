@@ -11,8 +11,8 @@
 }
 
 apply plugin: "com.liferay.plugin"
-#end
 
+#end
 dependencies {
 #if (${dependencyManagementEnabled} == "true")
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api"
@@ -50,8 +50,8 @@ wrapSoyAlloyTemplate {
 	namespace = "ddm"
 }
 #end
-
 #if (${projectType} != "workspace")
+
 repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"

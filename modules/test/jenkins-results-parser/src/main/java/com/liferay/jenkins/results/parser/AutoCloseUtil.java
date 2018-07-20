@@ -17,14 +17,12 @@ package com.liferay.jenkins.results.parser;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.tools.ant.Project;
 
 /**
  * @author Peter Yoo
@@ -32,20 +30,15 @@ import org.apache.tools.ant.Project;
 public class AutoCloseUtil {
 
 	public static boolean autoCloseOnCriticalBatchFailures(
-			Project project, Build topLevelBuild)
+			PullRequest pullRequest, Build topLevelBuild)
 		throws Exception {
 
-		String autoCloseCommentAvailable = project.getProperty(
-			"auto.close.comment.available");
-
-		if (autoCloseCommentAvailable.equals("true")) {
+		if (pullRequest.isAutoCloseCommentAvailable()) {
 			return false;
 		}
 
-		String githubReceiverUsername = project.getProperty(
-			"env.GITHUB_RECEIVER_USERNAME");
-		String githubSenderUsername = project.getProperty(
-			"env.GITHUB_SENDER_USERNAME");
+		String githubReceiverUsername = pullRequest.getOwnerUsername();
+		String githubSenderUsername = pullRequest.getSenderUsername();
 
 		if ((githubReceiverUsername == null) ||
 			(githubSenderUsername == null) ||
@@ -54,7 +47,7 @@ public class AutoCloseUtil {
 			return false;
 		}
 
-		List<AutoCloseRule> autoCloseRules = getAutoCloseRules(project);
+		List<AutoCloseRule> autoCloseRules = getAutoCloseRules(pullRequest);
 
 		for (AutoCloseRule autoCloseRule : autoCloseRules) {
 			List<Build> downstreamBuilds = topLevelBuild.getDownstreamBuilds(
@@ -73,20 +66,7 @@ public class AutoCloseUtil {
 				continue;
 			}
 
-			String repository = project.getProperty("repository");
-
-			Map<String, String> attributes = new HashMap<>();
-
-			attributes.put(
-				"pull.request.number",
-				project.getProperty("env.GITHUB_PULL_REQUEST_NUMBER"));
-			attributes.put("repository", repository);
-			attributes.put(
-				"username",
-				project.getProperty("env.GITHUB_RECEIVER_USERNAME"));
-
-			AntUtil.callMacrodef(
-				project, "close-github-pull-request", attributes);
+			pullRequest.close();
 
 			StringBuilder sb = new StringBuilder();
 
@@ -97,11 +77,11 @@ public class AutoCloseUtil {
 			sb.append("test:</p>");
 
 			sb.append("<ul><li><a href=\"");
-			sb.append(project.getProperty("env.BUILD_URL"));
+			sb.append(topLevelBuild.getBuildURL());
 			sb.append("\">");
 			sb.append(topLevelBuild.getJobName());
 			sb.append("</a></li></ul><p>@");
-			sb.append(project.getProperty("github.sender.username"));
+			sb.append(githubSenderUsername);
 			sb.append("</p><hr />");
 
 			sb.append("<h1>However, the pull request was closed.</h1>");
@@ -141,9 +121,6 @@ public class AutoCloseUtil {
 			sb.append("as a comment.</em></strong></p><pre>ci&#58;reopen");
 			sb.append("</pre><hr /><h3>Critical Failure Details:</h3>");
 
-			JenkinsResultsParserUtil.setBuildProperties(
-				project.getProperties());
-
 			for (Build failedDownstreamBuild : failedDownstreamBuilds) {
 				try {
 					sb.append(
@@ -158,9 +135,7 @@ public class AutoCloseUtil {
 				}
 			}
 
-			attributes.put("comment.body", sb.toString());
-
-			AntUtil.callMacrodef(project, "post-github-comment", attributes);
+			pullRequest.addComment(sb.toString());
 
 			return true;
 		}
@@ -169,22 +144,17 @@ public class AutoCloseUtil {
 	}
 
 	public static boolean autoCloseOnCriticalTestFailures(
-			Project project, Build topLevelBuild)
+			PullRequest pullRequest, Build topLevelBuild)
 		throws Exception {
 
-		String autoCloseCommentAvailable = project.getProperty(
-			"auto.close.comment.available");
-
-		if (autoCloseCommentAvailable.equals("true") ||
-			!isAutoCloseOnCriticalTestFailuresActive(project)) {
+		if (pullRequest.isAutoCloseCommentAvailable() ||
+			!isAutoCloseOnCriticalTestFailuresActive(pullRequest)) {
 
 			return false;
 		}
 
-		String githubReceiverUsername = project.getProperty(
-			"env.GITHUB_RECEIVER_USERNAME");
-		String githubSenderUsername = project.getProperty(
-			"env.GITHUB_SENDER_USERNAME");
+		String githubReceiverUsername = pullRequest.getOwnerUsername();
+		String githubSenderUsername = pullRequest.getSenderUsername();
 
 		if ((githubReceiverUsername == null) ||
 			(githubSenderUsername == null) ||
@@ -197,6 +167,9 @@ public class AutoCloseUtil {
 		List<String> jenkinsJobFailureURLs = new ArrayList<>();
 
 		List<Build> downstreamBuilds = topLevelBuild.getDownstreamBuilds(null);
+
+		Properties localLiferayJenkinsEEBuildProperties =
+			JenkinsResultsParserUtil.getLocalLiferayJenkinsEEBuildProperties();
 
 		for (Build downstreamBuild : downstreamBuilds) {
 			String batchName = downstreamBuild.getJobVariant();
@@ -223,8 +196,9 @@ public class AutoCloseUtil {
 				continue;
 			}
 
-			String subrepositoryPackageNames = project.getProperty(
-				"subrepository.package.names");
+			String subrepositoryPackageNames =
+				localLiferayJenkinsEEBuildProperties.getProperty(
+					"subrepository.package.names");
 
 			if (subrepositoryPackageNames != null) {
 				for (String subrepositoryPackageName :
@@ -269,18 +243,7 @@ public class AutoCloseUtil {
 		}
 
 		if (!jenkinsJobFailureURLs.isEmpty()) {
-			Map<String, String> attributes = new HashMap<>();
-
-			attributes.put(
-				"pull.request.number",
-				project.getProperty("env.GITHUB_PULL_REQUEST_NUMBER"));
-			attributes.put("repository", project.getProperty("repository"));
-			attributes.put(
-				"username",
-				project.getProperty("env.GITHUB_RECEIVER_USERNAME"));
-
-			AntUtil.callMacrodef(
-				project, "close-github-pull-request", attributes);
+			pullRequest.close();
 
 			StringBuilder sb = new StringBuilder();
 
@@ -290,11 +253,11 @@ public class AutoCloseUtil {
 			sb.append("link to check on the status of your test:</p>");
 
 			sb.append("<ul><li><a href=\"");
-			sb.append(project.getProperty("env.BUILD_URL"));
+			sb.append(topLevelBuild.getBuildURL());
 			sb.append("\">");
 			sb.append(topLevelBuild.getJobName());
 			sb.append("</a></li></ul>@");
-			sb.append(project.getProperty("github.sender.username"));
+			sb.append(githubSenderUsername);
 			sb.append("</p><hr />");
 
 			sb.append("<h1>However, the pull request was closed.</h1>");
@@ -317,9 +280,6 @@ public class AutoCloseUtil {
 			sb.append("as a comment.</em></strong></p><pre>ci&#58;reopen");
 			sb.append("</pre><hr /><h3>Critical Failure Details:</h3>");
 
-			JenkinsResultsParserUtil.setBuildProperties(
-				project.getProperties());
-
 			try {
 				sb.append(
 					Dom4JUtil.format(
@@ -332,9 +292,7 @@ public class AutoCloseUtil {
 				throw e;
 			}
 
-			attributes.put("comment.body", sb.toString());
-
-			AntUtil.callMacrodef(project, "post-github-comment", attributes);
+			pullRequest.addComment(sb.toString());
 
 			return true;
 		}
@@ -342,28 +300,33 @@ public class AutoCloseUtil {
 		return false;
 	}
 
-	public static List<AutoCloseRule> getAutoCloseRules(Project project)
+	public static List<AutoCloseRule> getAutoCloseRules(PullRequest pullRequest)
 		throws Exception {
 
 		List<AutoCloseRule> list = new ArrayList<>();
 
 		String propertyNameTemplate = JenkinsResultsParserUtil.combine(
-			"test.batch.names.auto.close[", project.getProperty("repository"),
-			"?]");
+			"test.batch.names.auto.close[",
+			pullRequest.getGitHubRemoteRepositoryName(), "?]");
 
 		String repositoryBranchAutoClosePropertyName =
 			propertyNameTemplate.replace(
-				"?", "-" + project.getProperty("branch.name"));
+				"?", "-" + pullRequest.getUpstreamBranchName());
 
-		String testBatchNamesAutoClose = project.getProperty(
-			repositoryBranchAutoClosePropertyName);
+		Properties localLiferayJenkinsEEBuildProperties =
+			JenkinsResultsParserUtil.getLocalLiferayJenkinsEEBuildProperties();
+
+		String testBatchNamesAutoClose =
+			localLiferayJenkinsEEBuildProperties.getProperty(
+				repositoryBranchAutoClosePropertyName);
 
 		if (testBatchNamesAutoClose == null) {
 			String repositoryAutoClosePropertyName =
 				propertyNameTemplate.replace("?", "");
 
-			testBatchNamesAutoClose = project.getProperty(
-				repositoryAutoClosePropertyName);
+			testBatchNamesAutoClose =
+				localLiferayJenkinsEEBuildProperties.getProperty(
+					repositoryAutoClosePropertyName);
 		}
 
 		if (testBatchNamesAutoClose != null) {
@@ -378,17 +341,24 @@ public class AutoCloseUtil {
 		return list;
 	}
 
-	public static boolean isAutoCloseBranch(Project project) {
-		String repository = project.getProperty("repository");
+	public static boolean isAutoCloseBranch(PullRequest pullRequest) {
+		String gitHubRemoteRepositoryName =
+			pullRequest.getGitHubRemoteRepositoryName();
 
-		String testBranchNamesAutoClose = project.getProperty(
-			"test.branch.names.auto.close[" + repository + "]");
+		Properties localLiferayJenkinsEEBuildProperties =
+			JenkinsResultsParserUtil.getLocalLiferayJenkinsEEBuildProperties();
+
+		String testBranchNamesAutoClose =
+			localLiferayJenkinsEEBuildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"test.branch.names.auto.close[", gitHubRemoteRepositoryName,
+					"]"));
 
 		if (testBranchNamesAutoClose == null) {
 			return false;
 		}
 
-		String branchName = project.getProperty("branch.name");
+		String branchName = pullRequest.getUpstreamBranchName();
 
 		List<String> testBranchNamesAutoCloseList = Arrays.asList(
 			testBranchNamesAutoClose.split(","));
@@ -397,11 +367,16 @@ public class AutoCloseUtil {
 	}
 
 	public static boolean isAutoCloseOnCriticalTestFailuresActive(
-		Project project) {
+		PullRequest pullRequest) {
 
-		String criticalTestBranchesString = project.getProperty(
-			"test.branch.names.critical.test[" +
-				project.getProperty("repository") + "]");
+		Properties localLiferayJenkinsEEBuildProperties =
+			JenkinsResultsParserUtil.getLocalLiferayJenkinsEEBuildProperties();
+
+		String criticalTestBranchesString =
+			localLiferayJenkinsEEBuildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"test.branch.names.critical.test[",
+					pullRequest.getGitHubRemoteRepositoryName(), "]"));
 
 		if ((criticalTestBranchesString == null) ||
 			criticalTestBranchesString.isEmpty()) {
@@ -413,7 +388,9 @@ public class AutoCloseUtil {
 			criticalTestBranchesString, ",");
 
 		for (String criticalTestBranch : criticalTestBranches) {
-			if (criticalTestBranch.equals(project.getProperty("branch.name"))) {
+			if (criticalTestBranch.equals(
+					pullRequest.getUpstreamBranchName())) {
+
 				return true;
 			}
 		}

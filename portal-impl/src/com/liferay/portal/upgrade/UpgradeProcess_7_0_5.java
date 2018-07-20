@@ -26,6 +26,8 @@ import com.liferay.portal.upgrade.v7_0_5.UpgradeMBMailingList;
 import com.liferay.portal.upgrade.v7_0_5.UpgradePortalPreferences;
 import com.liferay.portal.upgrade.v7_0_5.UpgradeUser;
 import com.liferay.portal.upgrade.v7_0_5.UpgradeVirtualHost;
+import com.liferay.portal.upgrade.v7_0_5.util.UserTable;
+import com.liferay.portal.upgrade.v7_0_5.util.VirtualHostTable;
 
 /**
  * @author Roberto Díaz
@@ -52,6 +54,19 @@ public class UpgradeProcess_7_0_5 extends UpgradeProcess {
 		upgrade(new UpgradeVirtualHost());
 
 		clearIndexesCache();
+	}
+
+	@Override
+	protected boolean skipUpgradeProcess() throws Exception {
+		if (hasColumnType(
+				UserTable.class, "emailAddress", "VARCHAR(254) null") &&
+			hasColumnType(
+				VirtualHostTable.class, "hostname", "VARCHAR(200) null")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

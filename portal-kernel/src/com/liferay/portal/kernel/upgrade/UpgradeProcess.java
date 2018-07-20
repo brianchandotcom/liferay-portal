@@ -82,12 +82,16 @@ public abstract class UpgradeProcess
 
 		String message = "Completed upgrade process ";
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Upgrading " + ClassUtil.getClassName(this));
-		}
-
 		try (Connection con = DataAccess.getConnection()) {
 			connection = con;
+
+			if (skipUpgradeProcess()) {
+				return;
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Upgrading " + ClassUtil.getClassName(this));
+			}
 
 			doUpgrade();
 		}
@@ -609,6 +613,10 @@ public abstract class UpgradeProcess
 		DBInspector dbInspector = new DBInspector(connection);
 
 		return dbInspector.normalizeName(name, databaseMetaData);
+	}
+
+	protected boolean skipUpgradeProcess() throws Exception {
+		return false;
 	}
 
 	protected void upgradeTable(String tableName, Object[][] tableColumns)

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools;
 
+import aQute.bnd.version.Version;
+
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -164,6 +166,8 @@ public class DBUpgrader {
 		}
 
 		try {
+			buildNumber = _getBuildNumberForMissedUpgradeProcesses(buildNumber);
+
 			StartupHelperUtil.upgradeProcess(buildNumber);
 		}
 		catch (Exception e) {
@@ -351,6 +355,23 @@ public class DBUpgrader {
 		throw new IllegalStateException(sb.toString());
 	}
 
+	private static int _getBuildNumberForMissedUpgradeProcesses(int buildNumber)
+		throws Exception {
+
+		if (buildNumber == ReleaseInfo.RELEASE_7_0_10_BUILD_NUMBER) {
+			try (Connection connection = DataAccess.getConnection()) {
+				Version schemaVersion =
+					PortalUpgradeProcess.getCurrentSchemaVersion(connection);
+
+				if (!schemaVersion.equals(_LATEST_PORTAL7010_SCHEMA_VERSION)) {
+					return ReleaseInfo.RELEASE_7_0_1_BUILD_NUMBER;
+				}
+			}
+		}
+
+		return buildNumber;
+	}
+
 	private static int _getReleaseState() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -450,6 +471,9 @@ public class DBUpgrader {
 			DataAccess.cleanUp(con, ps);
 		}
 	}
+
+	private static final Version _LATEST_PORTAL7010_SCHEMA_VERSION =
+		new Version("0.0.6");
 
 	private static final Log _log = LogFactoryUtil.getLog(DBUpgrader.class);
 

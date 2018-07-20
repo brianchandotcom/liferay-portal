@@ -31,6 +31,8 @@ public class DocumentRequestExecutorFixture {
 	public DocumentRequestExecutor createExecutor() {
 		return new ElasticsearchDocumentRequestExecutor() {
 			{
+				bulkDocumentRequestExecutor =
+					createBulkDocumentRequestExecutor();
 				deleteByQueryDocumentRequestExecutor =
 					createDeleteByQueryDocumentRequestExecutor();
 				deleteDocumentRequestExecutor =
@@ -41,6 +43,17 @@ public class DocumentRequestExecutorFixture {
 					createUpdateByQueryDocumentRequestExecutor();
 				updateDocumentRequestExecutor =
 					createUpdateDocumentRequestExecutor();
+			}
+		};
+	}
+
+	protected BulkDocumentRequestExecutor createBulkDocumentRequestExecutor() {
+		return new BulkDocumentRequestExecutorImpl() {
+			{
+				bulkableDocumentRequestTranslator =
+					createElasticsearchBulkableDocumentRequestTranslator();
+				elasticsearchConnectionManager =
+					_elasticsearchConnectionManager;
 			}
 		};
 	}
@@ -61,6 +74,17 @@ public class DocumentRequestExecutorFixture {
 
 		return new DeleteDocumentRequestExecutorImpl() {
 			{
+				bulkableDocumentRequestTranslator =
+					createElasticsearchBulkableDocumentRequestTranslator();
+			}
+		};
+	}
+
+	protected ElasticsearchBulkableDocumentRequestTranslator
+		createElasticsearchBulkableDocumentRequestTranslator() {
+
+		return new ElasticsearchBulkableDocumentRequestTranslator() {
+			{
 				elasticsearchConnectionManager =
 					_elasticsearchConnectionManager;
 			}
@@ -72,8 +96,8 @@ public class DocumentRequestExecutorFixture {
 
 		return new IndexDocumentRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				bulkableDocumentRequestTranslator =
+					createElasticsearchBulkableDocumentRequestTranslator();
 			}
 		};
 	}
@@ -94,8 +118,8 @@ public class DocumentRequestExecutorFixture {
 
 		return new UpdateDocumentRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				bulkableDocumentRequestTranslator =
+					createElasticsearchBulkableDocumentRequestTranslator();
 			}
 		};
 	}

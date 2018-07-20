@@ -111,31 +111,19 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		}
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	* #upgradeLongTextTable(String, String, String, String, String[])}
+	*/
+	@Deprecated
 	protected void upgradeLongTextTable(
 			String columnName, String selectSQL, String updateSQL,
 			String[] name)
 		throws SQLException {
 
-		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
-			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(updateSQL))) {
-
-			while (rs.next()) {
-				String oldValue = rs.getString(columnName);
-
-				String newValue = StringUtil.replace(
-					oldValue, name[0], name[1]);
-
-				ps2.setString(1, newValue);
-
-				ps2.setString(2, oldValue);
-
-				ps2.addBatch();
-			}
-
-			ps2.executeBatch();
-		}
+		throw new UnsupportedOperationException(
+			"This method is deprecated, please use upgradeLongTextTable(" +
+				"String, String, String, String, String[]) instead");
 	}
 
 	protected void upgradeLongTextTable(
@@ -191,55 +179,19 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		}
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	* #upgradeLongTextTable(String, String, String, String[][], WildcardMode)}
+	*/
+	@Deprecated
 	protected void upgradeLongTextTable(
 			String tableName, String columnName, String[][] names,
 			WildcardMode wildcardMode)
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() != DBType.SYBASE) {
-			upgradeTable(tableName, columnName, names, wildcardMode);
-
-			return;
-		}
-
-		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-			StringBundler updateSB = new StringBundler(7);
-
-			updateSB.append("update ");
-			updateSB.append(tableName);
-			updateSB.append(" set ");
-			updateSB.append(columnName);
-			updateSB.append(" = ? where ");
-			updateSB.append(columnName);
-			updateSB.append(" = ?");
-
-			String updateSQL = updateSB.toString();
-
-			StringBundler selectPrefixSB = new StringBundler(8);
-
-			selectPrefixSB.append("select ");
-			selectPrefixSB.append(columnName);
-			selectPrefixSB.append(" from ");
-			selectPrefixSB.append(tableName);
-			selectPrefixSB.append(" where ");
-			selectPrefixSB.append(columnName);
-			selectPrefixSB.append(" like '");
-			selectPrefixSB.append(wildcardMode.getLeadingWildcard());
-
-			String selectPrefix = selectPrefixSB.toString();
-
-			String selectPostfix =
-				wildcardMode.getTrailingWildcard() + StringPool.APOSTROPHE;
-
-			for (String[] name : names) {
-				String selectSQL = selectPrefix.concat(name[0]).concat(
-					selectPostfix);
-
-				upgradeLongTextTable(columnName, selectSQL, updateSQL, name);
-			}
-		}
+		throw new UnsupportedOperationException(
+			"This method is deprecated, please use upgradeLongTextTable(" +
+				"String, String, String, String[][], WildcardMode) instead");
 	}
 
 	protected void upgradeTable(

@@ -19,17 +19,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.servlet.delegate.ServletContextDelegate;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.servlet.JspFactorySwapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -47,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -59,16 +55,23 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterRegistration;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.ServletResponse;
+import javax.servlet.SessionCookieConfig;
+import javax.servlet.SessionTrackingMode;
+import javax.servlet.descriptor.JspConfigDescriptor;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -161,8 +164,7 @@ public class JspServlet extends HttpServlet {
 	public void init(final ServletConfig servletConfig)
 		throws ServletException {
 
-		final ServletContext servletContext = ServletContextDelegate.create(
-			servletConfig.getServletContext());
+		final ServletContext servletContext = servletConfig.getServletContext();
 
 		ClassLoader classLoader = servletContext.getClassLoader();
 
@@ -275,10 +277,7 @@ public class JspServlet extends HttpServlet {
 				}
 
 				private final ServletContext _jspServletContext =
-					(ServletContext)Proxy.newProxyInstance(
-						_jspBundleClassloader, _INTERFACES,
-						new JspServletContextInvocationHandler(
-							servletContext, _bundle));
+					new ServletContextWrapper(servletContext);
 
 			});
 
@@ -421,51 +420,6 @@ public class JspServlet extends HttpServlet {
 		return classNames.toArray(new String[classNames.size()]);
 	}
 
-	private static Map<Method, Method> _createContextAdapterMethods() {
-		Map<Method, Method> methods = new HashMap<>();
-
-		Method[] adapterMethods =
-			JspServletContextInvocationHandler.class.getDeclaredMethods();
-
-		for (Method adapterMethod : adapterMethods) {
-			String name = adapterMethod.getName();
-			Class<?>[] parameterTypes = adapterMethod.getParameterTypes();
-
-			try {
-				Method method = ServletContext.class.getMethod(
-					name, parameterTypes);
-
-				methods.put(method, adapterMethod);
-			}
-			catch (NoSuchMethodException nsme) {
-			}
-		}
-
-		try {
-			Method equalsMethod = Object.class.getMethod(
-				"equals", Object.class);
-
-			Method equalsHandlerMethod =
-				JspServletContextInvocationHandler.class.getMethod(
-					"equals", Object.class);
-
-			methods.put(equalsMethod, equalsHandlerMethod);
-
-			Method hashCodeMethod = Object.class.getMethod(
-				"hashCode", (Class<?>[])null);
-
-			Method hashCodeHandlerMethod =
-				JspServletContextInvocationHandler.class.getMethod(
-					"hashCode", (Class<?>[])null);
-
-			methods.put(hashCodeMethod, hashCodeHandlerMethod);
-		}
-		catch (NoSuchMethodException nsme) {
-		}
-
-		return methods;
-	}
-
 	private void _deleteOutdatedJspFiles(String dir, List<Path> paths) {
 		FileSystem fileSystem = FileSystems.getDefault();
 
@@ -487,23 +441,15 @@ public class JspServlet extends HttpServlet {
 
 	private static final String _INIT_PARAMETER_NAME_SCRATCH_DIR = "scratchdir";
 
-	private static final Class<?>[] _INTERFACES =
-		{JspServletContext.class, ServletContext.class};
-
 	private static final String _WORK_DIR = StringBundler.concat(
 		PropsValues.LIFERAY_HOME, File.separator, "work", File.separator);
 
-	private static final Map<Method, Method> _contextAdapterMethods;
 	private static final Properties _initParams = PropsUtil.getProperties(
 		"jsp.servlet.init.param.", true);
 	private static final Bundle _jspBundle = FrameworkUtil.getBundle(
 		JspServlet.class);
 	private static final Pattern _originalJspPattern = Pattern.compile(
 		"^(?<file>.*)(\\.(portal|original))(?<extension>\\.(jsp|jspf))$");
-
-	static {
-		_contextAdapterMethods = _createContextAdapterMethods();
-	}
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
@@ -620,14 +566,90 @@ public class JspServlet extends HttpServlet {
 
 	}
 
-	private class JspServletContextInvocationHandler
-		implements InvocationHandler, JspServletContext {
+	private class ServletContextWrapper
+		implements JspServletContext, ServletContext {
 
-		public JspServletContextInvocationHandler(
-			ServletContext servletContext, Bundle bundle) {
+		@Override
+		public FilterRegistration.Dynamic addFilter(
+			String filterName, Class<? extends Filter> filterClass) {
 
-			_servletContext = servletContext;
-			_bundle = bundle;
+			return _servletContext.addFilter(filterName, filterClass);
+		}
+
+		@Override
+		public FilterRegistration.Dynamic addFilter(
+			String filterName, Filter filter) {
+
+			return _servletContext.addFilter(filterName, filter);
+		}
+
+		@Override
+		public FilterRegistration.Dynamic addFilter(
+			String filterName, String className) {
+
+			return _servletContext.addFilter(filterName, className);
+		}
+
+		@Override
+		public void addListener(Class<? extends EventListener> listenerClass) {
+			_servletContext.addListener(listenerClass);
+		}
+
+		@Override
+		public void addListener(String className) {
+			_servletContext.addListener(className);
+		}
+
+		@Override
+		public <T extends EventListener> void addListener(T listener) {
+			_servletContext.addListener(listener);
+		}
+
+		@Override
+		public ServletRegistration.Dynamic addServlet(
+			String servletName, Class<? extends Servlet> servletClass) {
+
+			return _servletContext.addServlet(servletName, servletClass);
+		}
+
+		@Override
+		public ServletRegistration.Dynamic addServlet(
+			String servletName, Servlet servlet) {
+
+			return _servletContext.addServlet(servletName, servlet);
+		}
+
+		@Override
+		public ServletRegistration.Dynamic addServlet(
+			String servletName, String className) {
+
+			return _servletContext.addServlet(servletName, className);
+		}
+
+		@Override
+		public <T extends Filter> T createFilter(Class<T> clazz)
+			throws ServletException {
+
+			return _servletContext.createFilter(clazz);
+		}
+
+		@Override
+		public <T extends EventListener> T createListener(Class<T> clazz)
+			throws ServletException {
+
+			return _servletContext.createListener(clazz);
+		}
+
+		@Override
+		public <T extends Servlet> T createServlet(Class<T> clazz)
+			throws ServletException {
+
+			return _servletContext.createServlet(clazz);
+		}
+
+		@Override
+		public void declareRoles(String... roleNames) {
+			_servletContext.declareRoles(roleNames);
 		}
 
 		@Override
@@ -648,6 +670,177 @@ public class JspServlet extends HttpServlet {
 		}
 
 		@Override
+		public Object getAttribute(String name) {
+			return _servletContext.getAttribute(name);
+		}
+
+		@Override
+		public Enumeration<String> getAttributeNames() {
+			return _servletContext.getAttributeNames();
+		}
+
+		@Override
+		public ClassLoader getClassLoader() {
+			return _jspBundleClassloader;
+		}
+
+		@Override
+		public ServletContext getContext(String uripath) {
+			return _servletContext.getContext(uripath);
+		}
+
+		@Override
+		public String getContextPath() {
+			return _contextPath;
+		}
+
+		@Override
+		public Set<SessionTrackingMode> getDefaultSessionTrackingModes() {
+			return _servletContext.getDefaultSessionTrackingModes();
+		}
+
+		@Override
+		public int getEffectiveMajorVersion() {
+			return _servletContext.getEffectiveMajorVersion();
+		}
+
+		@Override
+		public int getEffectiveMinorVersion() {
+			return _servletContext.getEffectiveMinorVersion();
+		}
+
+		@Override
+		public Set<SessionTrackingMode> getEffectiveSessionTrackingModes() {
+			return _servletContext.getEffectiveSessionTrackingModes();
+		}
+
+		@Override
+		public FilterRegistration getFilterRegistration(String filterName) {
+			return _servletContext.getFilterRegistration(filterName);
+		}
+
+		@Override
+		public Map<String, ? extends FilterRegistration>
+			getFilterRegistrations() {
+
+			return _servletContext.getFilterRegistrations();
+		}
+
+		@Override
+		public String getInitParameter(String name) {
+			return _servletContext.getInitParameter(name);
+		}
+
+		@Override
+		public Enumeration<String> getInitParameterNames() {
+			return _servletContext.getInitParameterNames();
+		}
+
+		@Override
+		public JspConfigDescriptor getJspConfigDescriptor() {
+			return _servletContext.getJspConfigDescriptor();
+		}
+
+		@Override
+		public int getMajorVersion() {
+			return _servletContext.getMajorVersion();
+		}
+
+		@Override
+		public String getMimeType(String file) {
+			return _servletContext.getMimeType(file);
+		}
+
+		@Override
+		public int getMinorVersion() {
+			return _servletContext.getMinorVersion();
+		}
+
+		@Override
+		public RequestDispatcher getNamedDispatcher(String name) {
+			return _servletContext.getNamedDispatcher(name);
+		}
+
+		@Override
+		public String getRealPath(String path) {
+			return _servletContext.getRealPath(path);
+		}
+
+		@Override
+		public RequestDispatcher getRequestDispatcher(String path) {
+			return _servletContext.getRequestDispatcher(path);
+		}
+
+		@Override
+		public URL getResource(String path) throws MalformedURLException {
+			return _getResource(path);
+		}
+
+		@Override
+		public InputStream getResourceAsStream(String path) {
+			return _getResourceAsStream(path);
+		}
+
+		@Override
+		public Set<String> getResourcePaths(String path) {
+			return _getResourcePaths(path);
+		}
+
+		@Override
+		public String getServerInfo() {
+			return _servletContext.getServerInfo();
+		}
+
+		/**
+		 * @deprecated As of Judson (7.1.x)
+		 */
+		@Deprecated
+		@Override
+		public Servlet getServlet(String name) throws ServletException {
+			return _servletContext.getServlet(name);
+		}
+
+		@Override
+		public String getServletContextName() {
+			return _servletContextName;
+		}
+
+		/**
+		 * @deprecated As of Judson (7.1.x)
+		 */
+		@Deprecated
+		@Override
+		public Enumeration<String> getServletNames() {
+			return _servletContext.getServletNames();
+		}
+
+		@Override
+		public ServletRegistration getServletRegistration(String servletName) {
+			return _servletContext.getServletRegistration(servletName);
+		}
+
+		@Override
+		public Map<String, ? extends ServletRegistration>
+			getServletRegistrations() {
+
+			return _servletContext.getServletRegistrations();
+		}
+
+		/**
+		 * @deprecated As of Judson (7.1.x)
+		 */
+		@Deprecated
+		@Override
+		public Enumeration<Servlet> getServlets() {
+			return _servletContext.getServlets();
+		}
+
+		@Override
+		public SessionCookieConfig getSessionCookieConfig() {
+			return _servletContext.getSessionCookieConfig();
+		}
+
+		@Override
 		public ServletContext getWrappedServletContext() {
 			return _servletContext;
 		}
@@ -657,32 +850,57 @@ public class JspServlet extends HttpServlet {
 			return _servletContext.hashCode();
 		}
 
+		/**
+		 * @deprecated As of Judson (7.1.x)
+		 */
+		@Deprecated
 		@Override
-		public Object invoke(Object proxy, Method method, Object[] args)
-			throws Throwable {
+		public void log(Exception exception, String message) {
+			_servletContext.log(exception, message);
+		}
 
-			String methodName = method.getName();
+		@Override
+		public void log(String message) {
+			_servletContext.log(message);
+		}
 
-			if (methodName.equals("getClassLoader")) {
-				return _jspBundleClassloader;
-			}
-			else if (methodName.equals("getResource")) {
-				return _getResource((String)args[0]);
-			}
-			else if (methodName.equals("getResourceAsStream")) {
-				return _getResourceAsStream((String)args[0]);
-			}
-			else if (methodName.equals("getResourcePaths")) {
-				return _getResourcePaths((String)args[0]);
-			}
+		@Override
+		public void log(String message, Throwable throwable) {
+			_servletContext.log(message, throwable);
+		}
 
-			Method adapterMethod = _contextAdapterMethods.get(method);
+		@Override
+		public void removeAttribute(String name) {
+			_servletContext.removeAttribute(name);
+		}
 
-			if (adapterMethod != null) {
-				return adapterMethod.invoke(this, args);
-			}
+		@Override
+		public void setAttribute(String name, Object value) {
+			_servletContext.setAttribute(name, value);
+		}
 
-			return method.invoke(_servletContext, args);
+		@Override
+		public boolean setInitParameter(String name, String value) {
+			return _servletContext.setInitParameter(name, value);
+		}
+
+		@Override
+		public void setSessionTrackingModes(
+			Set<SessionTrackingMode> sessionTrackingModes) {
+
+			_servletContext.setSessionTrackingModes(sessionTrackingModes);
+		}
+
+		@Override
+		public String toString() {
+			return _servletContext.toString();
+		}
+
+		private ServletContextWrapper(ServletContext servletContext) {
+			_servletContext = servletContext;
+
+			_contextPath = servletContext.getContextPath();
+			_servletContextName = servletContext.getServletContextName();
 		}
 
 		private URL _getExtension(String path) {
@@ -797,8 +1015,9 @@ public class JspServlet extends HttpServlet {
 			return paths;
 		}
 
-		private final Bundle _bundle;
+		private final String _contextPath;
 		private final ServletContext _servletContext;
+		private final String _servletContextName;
 
 	}
 

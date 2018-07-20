@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -35,6 +34,8 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
+
+import java.net.HttpURLConnection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,7 +166,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 	}
 
 	private JSONObject _queryGoogleCloudVisionJSONObject(String jsonPayload)
-		throws IOException, JSONException {
+		throws IOException, PortalException {
 
 		Http.Options options = new Http.Options();
 
@@ -177,7 +178,18 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 				_googleCloudVisionConfiguration.apiKey());
 		options.setPost(true);
 
-		return JSONFactoryUtil.createJSONObject(_http.URLtoString(options));
+		String responseContent = _http.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+			throw new PortalException(
+				String.format(
+					"Request failed with status %d: %s",
+					response.getResponseCode(), responseContent));
+		}
+
+		return JSONFactoryUtil.createJSONObject(responseContent);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

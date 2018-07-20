@@ -26,7 +26,7 @@ const MENU_ITEM_SELECTED_CLASSNAME = `${MENU_ITEM_CLASSNAME}--selected`;
  * @type {Object}
  */
 
-const SiteNavigationMenuItem = {
+const SiteNavigationMenuItemDOMHandler = {
 
 	/**
 	 * Returns an array with the menuItem children of the given menuItem.
@@ -107,7 +107,7 @@ const SiteNavigationMenuItem = {
 		let siblings = [];
 
 		if (parentElement) {
-			siblings = SiteNavigationMenuItem.getChildren(
+			siblings = SiteNavigationMenuItemDOMHandler.getChildren(
 				parentElement
 			);
 		}
@@ -170,7 +170,7 @@ const SiteNavigationMenuItem = {
 	 */
 
 	setSelected: function(menuItem) {
-		SiteNavigationMenuItem.unselectAll();
+		SiteNavigationMenuItemDOMHandler.unselectAll();
 		addClasses(menuItem, MENU_ITEM_SELECTED_CLASSNAME);
 	},
 
@@ -194,7 +194,7 @@ export {
 	MENU_ITEM_CLASSNAME,
 	MENU_ITEM_DRAG_ICON_CLASSNAME,
 	MENU_ITEM_DRAGGING_CLASSNAME,
-	SiteNavigationMenuItem
+	SiteNavigationMenuItemDOMHandler
 };
 
-export default SiteNavigationMenuItem;
+export default SiteNavigationMenuItemDOMHandler;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -24,6 +26,9 @@ import com.liferay.portal.search.elasticsearch6.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentItemResponse;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
@@ -37,6 +42,7 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
@@ -89,6 +95,107 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		_documentFixture.tearDown();
 
 		_elasticsearchFixture.tearDown();
+	}
+
+	@Test
+	public void testExecuteBulkDocumentRequest() {
+		Document document = new DocumentImpl();
+
+		document.addKeyword(Field.TYPE, _MAPPING_NAME);
+		document.addKeyword(Field.UID, "1");
+		document.addKeyword(_FIELD_NAME, Boolean.TRUE.toString());
+
+		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
+			_INDEX_NAME, document);
+
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		bulkDocumentRequest.addBulkableDocumentRequest(indexDocumentRequest);
+
+		Document document2 = new DocumentImpl();
+
+		document2.addKeyword(Field.TYPE, _MAPPING_NAME);
+		document2.addKeyword(Field.UID, "2");
+		document2.addKeyword(_FIELD_NAME, Boolean.FALSE.toString());
+
+		IndexDocumentRequest indexDocumentRequest2 = new IndexDocumentRequest(
+			_INDEX_NAME, document2);
+
+		bulkDocumentRequest.addBulkableDocumentRequest(indexDocumentRequest2);
+
+		BulkDocumentResponse bulkDocumentResponse =
+			_searchEngineAdapter.execute(bulkDocumentRequest);
+
+		Assert.assertFalse(bulkDocumentResponse.hasErrors());
+
+		List<BulkDocumentItemResponse> bulkDocumentItemResponses =
+			bulkDocumentResponse.getBulkDocumentItemResponses();
+
+		Assert.assertEquals(
+			bulkDocumentItemResponses.toString(), 2,
+			bulkDocumentItemResponses.size());
+
+		BulkDocumentItemResponse bulkDocumentItemResponse1 =
+			bulkDocumentItemResponses.get(0);
+
+		Assert.assertEquals("1", bulkDocumentItemResponse1.getId());
+
+		BulkDocumentItemResponse bulkDocumentItemResponse2 =
+			bulkDocumentItemResponses.get(1);
+
+		Assert.assertEquals("2", bulkDocumentItemResponse2.getId());
+
+		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
+			_INDEX_NAME, _MAPPING_NAME, "1");
+
+		BulkDocumentRequest bulkDocumentRequest2 = new BulkDocumentRequest();
+
+		bulkDocumentRequest2.addBulkableDocumentRequest(deleteDocumentRequest);
+
+		Document document2Update = new DocumentImpl();
+
+		document2Update.addKeyword(Field.TYPE, _MAPPING_NAME);
+		document2Update.addKeyword(Field.UID, "2");
+		document2Update.addKeyword(_FIELD_NAME, Boolean.TRUE.toString());
+
+		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
+			_INDEX_NAME, "2", document2Update);
+
+		bulkDocumentRequest2.addBulkableDocumentRequest(updateDocumentRequest);
+
+		BulkDocumentResponse bulkDocumentResponse2 =
+			_searchEngineAdapter.execute(bulkDocumentRequest2);
+
+		Assert.assertFalse(bulkDocumentResponse2.hasErrors());
+
+		List<BulkDocumentItemResponse> bulkDocumentItemResponses2 =
+			bulkDocumentResponse2.getBulkDocumentItemResponses();
+
+		Assert.assertEquals(
+			bulkDocumentItemResponses2.toString(), 2,
+			bulkDocumentItemResponses2.size());
+
+		BulkDocumentItemResponse bulkDocumentItemResponse3 =
+			bulkDocumentItemResponses2.get(0);
+
+		Assert.assertEquals("1", bulkDocumentItemResponse3.getId());
+
+		BulkDocumentItemResponse bulkDocumentItemResponse4 =
+			bulkDocumentItemResponses2.get(1);
+
+		Assert.assertEquals("2", bulkDocumentItemResponse4.getId());
+
+		GetResponse getResponse1 = _getDocument("1");
+
+		Assert.assertFalse(getResponse1.isExists());
+
+		GetResponse getResponse2 = _getDocument("2");
+
+		Assert.assertTrue(getResponse2.isExists());
+
+		Map<String, Object> map2 = getResponse2.getSource();
+
+		Assert.assertEquals(Boolean.TRUE.toString(), map2.get(_FIELD_NAME));
 	}
 
 	@Ignore
@@ -286,6 +393,9 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 	private static final String _MAPPING_SOURCE =
 		"{\"properties\":{\"matchDocument\":{\"type\":\"boolean\"}}}";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ElasticsearchSearchEngineAdapterDocumentRequestTest.class);
 
 	private Client _client;
 	private final DocumentFixture _documentFixture = new DocumentFixture();

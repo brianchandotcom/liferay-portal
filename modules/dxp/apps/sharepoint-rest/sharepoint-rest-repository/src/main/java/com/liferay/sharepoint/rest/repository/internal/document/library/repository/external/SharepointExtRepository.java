@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointSearchConfiguration;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointFileEntry;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointModel;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointRootFolder;
@@ -73,10 +74,12 @@ public class SharepointExtRepository implements ExtRepository {
 
 	public SharepointExtRepository(
 		TokenStore tokenStore,
-		SharepointRepositoryConfiguration sharepointRepositoryConfiguration) {
+		SharepointRepositoryConfiguration sharepointRepositoryConfiguration,
+		SharepointSearchConfiguration sharepointSearchConfiguration) {
 
 		_tokenStore = tokenStore;
 		_sharepointRepositoryConfiguration = sharepointRepositoryConfiguration;
+		_sharepointSearchConfiguration = sharepointSearchConfiguration;
 	}
 
 	@Override
@@ -533,7 +536,9 @@ public class SharepointExtRepository implements ExtRepository {
 				typeSettingsProperties.getProperty("site-absolute-url"),
 				StringPool.DASH));
 
-		_sharepointURLHelper = new SharepointURLHelper(_siteAbsoluteURL);
+		_sharepointURLHelper = new SharepointURLHelper(
+			_siteAbsoluteURL,
+			_sharepointSearchConfiguration.sharepointResultsSourceId());
 
 		_sharepointServerResponseConverter =
 			new SharepointServerResponseConverter(
@@ -901,6 +906,7 @@ public class SharepointExtRepository implements ExtRepository {
 	private ExtRepositoryFolder _rootFolder;
 	private final SharepointRepositoryConfiguration
 		_sharepointRepositoryConfiguration;
+	private final SharepointSearchConfiguration _sharepointSearchConfiguration;
 	private SharepointServerResponseConverter
 		_sharepointServerResponseConverter;
 	private SharepointURLHelper _sharepointURLHelper;

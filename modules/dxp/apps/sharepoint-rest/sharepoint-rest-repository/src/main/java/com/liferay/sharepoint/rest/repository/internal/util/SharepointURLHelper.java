@@ -28,8 +28,9 @@ import java.util.Arrays;
  */
 public class SharepointURLHelper {
 
-	public SharepointURLHelper(String siteAbsoluteURL) {
+	public SharepointURLHelper(String siteAbsoluteURL, String resultsSourceId) {
 		_siteAbsoluteURL = siteAbsoluteURL;
+		_resultsSourceId = resultsSourceId;
 	}
 
 	public String getAbsoluteURL(String relativeURL) {
@@ -210,8 +211,8 @@ public class SharepointURLHelper {
 		return String.format(
 			"%s/_api/search/query?QueryText='%s'&SourceID='%s'&StartRow=%d&" +
 				"RowsPerPage=%d",
-			_siteAbsoluteURL, HtmlUtil.escapeURL(queryText),
-			_LOCAL_SHAREPOINT_RESULTS_SOURCE_ID, start, end - start);
+			_siteAbsoluteURL, HtmlUtil.escapeURL(queryText), _resultsSourceId,
+			start, end - start);
 	}
 
 	public String getUpdateFileURL(String extRepositoryFileEntryKey) {
@@ -237,9 +238,7 @@ public class SharepointURLHelper {
 			"Name", "ListItemAllFields/EffectiveBasePermissions",
 			"ServerRelativeUrl", "TimeCreated", "TimeLastModified"));
 
-	private static final String _LOCAL_SHAREPOINT_RESULTS_SOURCE_ID =
-		"8413cd39-2156-4e00-b54d-11efd9abdb89";
-
+	private final String _resultsSourceId;
 	private final String _siteAbsoluteURL;
 
 }

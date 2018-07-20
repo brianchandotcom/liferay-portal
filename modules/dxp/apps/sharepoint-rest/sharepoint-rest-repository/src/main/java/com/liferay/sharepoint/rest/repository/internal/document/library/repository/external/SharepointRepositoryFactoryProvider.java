@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointSearchConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,10 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 public class SharepointRepositoryFactoryProvider {
 
 	public SharepointRepositoryFactory createForConfiguration(
-		SharepointRepositoryConfiguration sharepointRepositoryConfiguration) {
+		SharepointRepositoryConfiguration sharepointRepositoryConfiguration,
+		SharepointSearchConfiguration sharepointSearchConfiguration) {
 
 		return new SharepointRepositoryFactory(
-			sharepointRepositoryConfiguration);
+			sharepointRepositoryConfiguration, sharepointSearchConfiguration);
 	}
 
 	@Reference
@@ -72,11 +74,12 @@ public class SharepointRepositoryFactoryProvider {
 	private class SharepointRepositoryFactory implements RepositoryFactory {
 
 		public SharepointRepositoryFactory(
-			SharepointRepositoryConfiguration
-				sharepointRepositoryConfiguration) {
+			SharepointRepositoryConfiguration sharepointRepositoryConfiguration,
+			SharepointSearchConfiguration sharepointSearchConfiguration) {
 
 			_sharepointRepositoryConfiguration =
 				sharepointRepositoryConfiguration;
+			_sharepointSearchConfiguration = sharepointSearchConfiguration;
 		}
 
 		@Override
@@ -102,7 +105,8 @@ public class SharepointRepositoryFactoryProvider {
 				new SharepointExtRepositoryAdapter(
 					new SharepointCachingExtRepository(
 						new SharepointExtRepository(
-							_tokenStore, _sharepointRepositoryConfiguration)));
+							_tokenStore, _sharepointRepositoryConfiguration,
+							_sharepointSearchConfiguration)));
 
 			sharepointExtRepositoryAdapter.setAssetEntryLocalService(
 				_assetEntryLocalService);
@@ -137,6 +141,8 @@ public class SharepointRepositoryFactoryProvider {
 
 		private final SharepointRepositoryConfiguration
 			_sharepointRepositoryConfiguration;
+		private final SharepointSearchConfiguration
+			_sharepointSearchConfiguration;
 
 	}
 

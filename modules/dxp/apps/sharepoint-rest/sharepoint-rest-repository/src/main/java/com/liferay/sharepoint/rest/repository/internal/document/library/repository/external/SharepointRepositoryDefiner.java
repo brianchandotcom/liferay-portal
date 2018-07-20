@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointSearchConfiguration;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.capability.SharepointRepositoryAuthorizationCapability;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryTokenBrokerFactory;
 
@@ -117,7 +118,8 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 
 		repositoryFactoryRegistry.setRepositoryFactory(
 			_repositoryFactoryProvider.createForConfiguration(
-				_sharepointRepositoryConfiguration));
+				_sharepointRepositoryConfiguration,
+				_sharepointSearchConfiguration));
 	}
 
 	@Activate
@@ -125,6 +127,8 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 		_sharepointRepositoryConfiguration =
 			ConfigurableUtil.createConfigurable(
 				SharepointRepositoryConfiguration.class, properties);
+		_sharepointSearchConfiguration = ConfigurableUtil.createConfigurable(
+			SharepointSearchConfiguration.class, properties);
 	}
 
 	@Reference
@@ -143,6 +147,8 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 	@Reference
 	private SharepointRepositoryTokenBrokerFactory
 		_sharepointRepositoryTokenBrokerFactory;
+
+	private SharepointSearchConfiguration _sharepointSearchConfiguration;
 
 	@Reference
 	private TokenStore _tokenStore;

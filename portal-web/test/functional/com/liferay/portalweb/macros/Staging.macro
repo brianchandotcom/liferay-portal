@@ -641,7 +641,7 @@
 		<if>
 			<isset var="enableOnPublicPages" />
 			<then>
-				<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLED_ON_PUBLIC_PAGES" />
+				<execute function="Click" locator1="Checkbox#ENABLED_ON_PUBLIC_PAGES" />
 
 				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 			</then>
@@ -650,7 +650,7 @@
 		<if>
 			<isset var="enableOnPrivatePages" />
 			<then>
-				<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLED_ON_PRIVATE_PAGES" />
+				<execute function="Click" locator1="Checkbox#ENABLED_ON_PRIVATE_PAGES" />
 
 				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 			</then>

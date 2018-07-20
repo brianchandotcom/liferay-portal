@@ -214,7 +214,7 @@
 		</execute>
 	</command>
 
-	<command name="getOrganizationIdByName" returns="organizationId">
+	<command name="getOrganizationIdByName">
 		<if>
 			<not>
 				<isset var="organizationName" />
@@ -257,10 +257,10 @@
 			<return name="organizationId" />
 		</execute>
 
-		<return name="organizationId" value="${organizationId}" />
+		<return value="${organizationId}" />
 	</command>
 
-	<command name="getOrganizationName" returns="organizationName">
+	<command name="getOrganizationName">
 		<if>
 			<not>
 				<isset var="organizationId" />
@@ -285,6 +285,6 @@
 			<return name="organizationName" />
 		</execute>
 
-		<return name="organizationName" value="${organizationName}" />
+		<return value="${organizationName}" />
 	</command>
 </definition>

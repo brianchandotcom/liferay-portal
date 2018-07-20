@@ -28,7 +28,7 @@
 		</execute>
 	</command>
 
-	<command name="editApplication" returns="newGeneratedClientSecret">
+	<command name="editApplication">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Edit" />
 			<var name="rowEntry" value="${applicationName}" />
@@ -56,7 +56,7 @@
 			</then>
 		</if>
 
-		<return name="newGeneratedClientSecret" value="${newGeneratedClientSecret}" />
+		<return value="${newGeneratedClientSecret}" />
 	</command>
 
 	<command name="editScopes">
@@ -194,7 +194,7 @@
 		<execute function="AssertElementPresent" locator1="OAuth2#ADMIN_RESOURCE_PANEL_EXPANDED" />
 	</command>
 
-	<command name="inputApplicationValues" returns="newGeneratedClientSecret">
+	<command name="inputApplicationValues">
 		<if>
 			<isset var="clientId" />
 			<then>
@@ -230,7 +230,7 @@
 
 						<var method="selenium#getElementValue(OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_FIELD)" name="newGeneratedClientSecret" />
 
-						<return name="newGeneratedClientSecret" value="newGeneratedClientSecret" />
+						<return value="newGeneratedClientSecret" />
 					</then>
 					<else>
 						<execute function="Click" locator1="OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_FIELD" />

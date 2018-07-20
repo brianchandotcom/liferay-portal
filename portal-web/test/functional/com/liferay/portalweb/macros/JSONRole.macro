@@ -253,7 +253,7 @@
 		</execute>
 	</command>
 
-	<command name="getRoleIdByName" returns="roleId">
+	<command name="getRoleIdByName">
 		<if>
 			<isset var="roleTitle" />
 			<then>
@@ -289,10 +289,10 @@
 			<return name="roleId" />
 		</execute>
 
-		<return name="roleId" value="${roleId}" />
+		<return value="${roleId}" />
 	</command>
 
-	<command name="getRoleName" returns="roleTitle">
+	<command name="getRoleName">
 		<if>
 			<not>
 				<isset var="roleId" />
@@ -317,6 +317,6 @@
 			<return name="roleTitle" />
 		</execute>
 
-		<return name="roleTitle" value="${roleTitle}" />
+		<return value="${roleTitle}" />
 	</command>
 </definition>

@@ -37,7 +37,7 @@
 		</execute>
 	</command>
 
-	<command name="getmessageId" returns="messageId">
+	<command name="getmessageId">
 
 		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
 
@@ -45,6 +45,6 @@
 
 		<var method="StringUtil#replace('${messageBoardsThreadURL}', '${portalURL}/web/guest/message-boards-page/-/message_boards/message/', '')" name="messageId" />
 
-		<return name="messageId" value="${messageId}" />
+		<return value="${messageId}" />
 	</command>
 </definition>

@@ -1,5 +1,5 @@
 <definition>
-	<command name="getFileContent" returns="fileContent">
+	<command name="getFileContent">
 		<var method="TestPropsUtil#get('test.base.dir.name')" name="baseDir" />
 		<var method="TestPropsUtil#get('test.dependencies.dir.name')" name="dependenciesDir" />
 
@@ -8,10 +8,10 @@
 			<return name="fileContent" />
 		</execute>
 
-		<return name="fileContent" value="${fileContent}" />
+		<return value="${fileContent}" />
 	</command>
 
-	<command name="getSiteName" returns="siteName">
+	<command name="getSiteName">
 		<var method="TestPropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
@@ -40,7 +40,7 @@
 						<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalURL" />
 						<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />
 
-						<return name="siteName" value="${portalURL}" />
+						<return value="${portalURL}" />
 					</then>
 					<else>
 						<var method="TestPropsUtil#get('test.run.environment')" name="testRunEnvironment" />
@@ -48,22 +48,22 @@
 						<if>
 							<equals arg1="${testRunEnvironment}" arg2="EE" />
 							<then>
-								<return name="siteName" value="Liferay DXP" />
+								<return value="Liferay DXP" />
 							</then>
 							<else>
-								<return name="siteName" value="Liferay" />
+								<return value="Liferay" />
 							</else>
 						</if>
 					</else>
 				</if>
 			</then>
 			<else>
-				<return name="siteName" value="${siteName}" />
+				<return value="${siteName}" />
 			</else>
 		</if>
 	</command>
 
-	<command name="getTestName" returns="testName">
+	<command name="getTestName">
 		<var method="TestPropsUtil#get('test.name')" name="namespacedTestName" />
 
 		<execute class="com.liferay.poshi.runner.PoshiRunnerStackTraceUtil" method="getCurrentNamespace">
@@ -72,7 +72,7 @@
 
 		<var method="StringUtil#replace('${namespacedTestName}', '${namespace}.', '')" name="testName" />
 
-		<return name="testName" value="${testName}" />
+		<return value="${testName}" />
 	</command>
 
 	<command name="setUpPortalInstance">

@@ -1,5 +1,5 @@
 <definition>
-	<command name="getCompanyId" returns="companyId">
+	<command name="getCompanyId">
 		<execute macro="JSONCompany#getPortalInstanceName">
 			<return name="portalInstanceName" />
 		</execute>
@@ -15,10 +15,10 @@
 			<return name="companyId" />
 		</execute>
 
-		<return name="companyId" value="${companyId}" />
+		<return value="${companyId}" />
 	</command>
 
-	<command name="getPortalInstanceName" returns="portalInstanceName">
+	<command name="getPortalInstanceName">
 		<var method="TestPropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
@@ -38,17 +38,17 @@
 
 				<var method="StringUtil#replace('${portalInstanceName}', ':8080', '')" name="portalInstanceName" />
 
-				<return name="portalInstanceName" value="${portalInstanceName}" />
+				<return value="${portalInstanceName}" />
 			</then>
 			<else>
-				<return name="portalInstanceName" value="localhost" />
+				<return value="localhost" />
 			</else>
 		</if>
 	</command>
 
-	<command name="getPortalURL" returns="portalURL">
+	<command name="getPortalURL">
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-		<return name="portalURL" value="${portalURL}" />
+		<return value="${portalURL}" />
 	</command>
 </definition>

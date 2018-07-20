@@ -206,10 +206,10 @@
 		</execute>
 	</command>
 
-	<command name="getFieldName" returns="fieldName">
+	<command name="getFieldName">
 		<var method="selenium#getElementValue(FormFields#FIELD_NAME_EDIT)" name="fieldName" />
 
-		<return name="fieldName" value="${fieldName}" />
+		<return value="${fieldName}" />
 	</command>
 
 	<command name="moveGridOptionsRow">

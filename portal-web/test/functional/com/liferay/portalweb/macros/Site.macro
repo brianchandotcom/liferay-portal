@@ -634,7 +634,7 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="getSiteId" returns="siteId">
+	<command name="getSiteId">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
@@ -645,7 +645,7 @@
 
 		<var method="selenium#getElementValue(SitesEditSite#SITE_ID)" name="siteId" />
 
-		<return name="siteId" value="${siteId}" />
+		<return value="${siteId}" />
 	</command>
 
 	<command name="gotoSiteViaMySitesPG">

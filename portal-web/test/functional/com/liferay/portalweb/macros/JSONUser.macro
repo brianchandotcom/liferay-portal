@@ -219,7 +219,7 @@
 		</execute>
 	</command>
 
-	<command name="getUserEmailAddress" returns="userEmailAddress">
+	<command name="getUserEmailAddress">
 		<if>
 			<not>
 				<isset var="userId" />
@@ -248,10 +248,10 @@
 			<return name="userEmailAddress" />
 		</execute>
 
-		<return name="userEmailAddress" value="${userEmailAddress}" />
+		<return value="${userEmailAddress}" />
 	</command>
 
-	<command name="getUserFirstName" returns="userFirstName">
+	<command name="getUserFirstName">
 		<if>
 			<not>
 				<isset var="userId" />
@@ -280,10 +280,10 @@
 			<return name="userFirstName" />
 		</execute>
 
-		<return name="userFirstName" value="${userFirstName}" />
+		<return value="${userFirstName}" />
 	</command>
 
-	<command name="getUserIdByEmailAddress" returns="userId">
+	<command name="getUserIdByEmailAddress">
 		<if>
 			<not>
 				<isset var="userEmailAddress" />
@@ -312,7 +312,7 @@
 			<return name="userId" />
 		</execute>
 
-		<return name="userId" value="${userId}" />
+		<return value="${userId}" />
 	</command>
 
 	<command name="tearDownByFirstName">

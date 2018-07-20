@@ -68,7 +68,7 @@
 		<execute macro="IFrame#closeFrame" />
 	</command>
 
-	<command name="getSearchTermURL" returns="searchURL">
+	<command name="getSearchTermURL">
 		<if>
 			<contains string="${searchPage}" substring=" " />
 			<then>
@@ -84,7 +84,7 @@
 
 		<var name="searchURL" value="${searchURL}${searchTerm}" />
 
-		<return name="searchURL" value="${searchURL}" />
+		<return value="${searchURL}" />
 	</command>
 
 	<command name="gotoOptions">

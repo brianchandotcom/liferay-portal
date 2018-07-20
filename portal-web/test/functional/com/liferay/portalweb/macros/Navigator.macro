@@ -23,7 +23,7 @@
 		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE" />
 	</command>
 
-	<command name="_isLocalizedURL" returns="isLocalizedURL">
+	<command name="_isLocalizedURL">
 		<execute macro="Navigator#getCurrentURL">
 			<return name="currentURL" />
 		</execute>
@@ -39,7 +39,7 @@
 			</then>
 		</if>
 
-		<return name="isLocalizedURL" value="${isLocalizedURL}" />
+		<return value="${isLocalizedURL}" />
 	</command>
 
 	<command name="closeSpecificWindow">
@@ -76,10 +76,10 @@
 		</if>
 	</command>
 
-	<command name="getCurrentURL" returns="currentURL">
+	<command name="getCurrentURL">
 		<var method="selenium#getLocation()" name="currentURL" />
 
-		<return name="currentURL" value="${currentURL}" />
+		<return value="${currentURL}" />
 	</command>
 
 	<command name="gotoBack">

@@ -386,7 +386,7 @@
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName}" />
 	</command>
 
-	<command name="getGroupIdFromHtmlSource" returns="groupId">
+	<command name="getGroupIdFromHtmlSource">
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<var method="selenium#getAttribute('//li[@class=\'control-menu-nav-item\']/a[contains(@data-qa-id,\'editLayout\')]@href')" name="pageURL" />
@@ -397,7 +397,7 @@
 
 		<echo>## * Group ID: ${groupId}</echo>
 
-		<return name="groupId" value="${groupId}" />
+		<return value="${groupId}" />
 	</command>
 
 	<command name="gotoChildPagePG">

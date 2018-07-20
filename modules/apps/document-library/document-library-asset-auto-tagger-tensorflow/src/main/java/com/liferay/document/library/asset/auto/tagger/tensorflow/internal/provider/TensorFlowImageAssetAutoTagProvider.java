@@ -53,7 +53,7 @@ public class TensorFlowImageAssetAutoTagProvider
 	implements AssetAutoTagProvider<FileEntry> {
 
 	@Override
-	public List<String> getTags(FileEntry fileEntry) {
+	public List<String> getTagNames(FileEntry fileEntry) {
 		if (!_tensorflowImageAutoTaggerConfiguration.enabled() ||
 			_isTemporary(fileEntry)) {
 

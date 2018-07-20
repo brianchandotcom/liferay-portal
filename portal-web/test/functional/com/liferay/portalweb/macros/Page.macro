@@ -1079,6 +1079,18 @@
 		</execute>
 	</command>
 
+	<command name="viewSiteLogo">
+		<if>
+			<equals arg1="${assertCustomLogoPresent}" arg2="true" />
+			<then>
+				<execute function="AssertElementPresent" locator1="Home#CUSTOM_LOGO" />
+			</then>
+			<else>
+				<execute function="AssertElementNotPresent" locator1="Home#CUSTOM_LOGO" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewSiteNameTranslationsPG">
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="locale" value="${locale}" />

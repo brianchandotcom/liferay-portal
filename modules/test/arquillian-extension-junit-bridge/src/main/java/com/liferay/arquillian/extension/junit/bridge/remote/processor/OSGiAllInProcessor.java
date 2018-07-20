@@ -27,11 +27,10 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.Attributes.Name;
 import java.util.jar.JarFile;
@@ -72,14 +71,15 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			Manifest manifest = _getManifest(javaArchive);
 
-			List<String> importPackages = new ArrayList<>();
+			Map<String, String> importPackages = _createImportPackages();
 
 			List<Archive<?>> auxiliaryArchives = _loadAuxiliaryArchives(
 				javaArchive, manifest, importPackages);
 
-			_cleanRepeatedImports(auxiliaryArchives, manifest);
+			_cleanRepeatedImports(auxiliaryArchives, manifest, importPackages);
 
-			_addOSGiImports(manifest, importPackages);
+			_setManifestValues(
+				manifest, _importPackageName, importPackages.values());
 
 			Attributes mainAttributes = manifest.getMainAttributes();
 
@@ -125,46 +125,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			javaArchive, _ACTIVATORS_FILE, bundleActivators);
 	}
 
-	private void _addManifestValues(
-		Manifest manifest, Name attributeName,
-		List<String> newAttributeValues) {
-
-		Attributes mainAttributes = manifest.getMainAttributes();
-
-		Set<String> attributeValues = new HashSet<>();
-
-		String attributeValuesString = mainAttributes.getValue(attributeName);
-
-		if (attributeValuesString != null) {
-			attributeValues.addAll(StringUtil.split(attributeValuesString));
-		}
-
-		if (attributeValues.addAll(newAttributeValues)) {
-			StringBundler sb = new StringBundler(attributeValues.size() * 2);
-
-			for (String attributeValue : attributeValues) {
-				sb.append(attributeValue);
-				sb.append(StringPool.COMMA);
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			mainAttributes.put(attributeName, sb.toString());
-		}
-	}
-
-	private void _addOSGiImports(
-		Manifest manifest, List<String> importPackages) {
-
-		Collections.addAll(
-			importPackages, "org.osgi.framework", "javax.management",
-			"javax.management.*", "javax.naming", "javax.naming.*",
-			"org.osgi.service.packageadmin", "org.osgi.service.startlevel",
-			"org.osgi.util.tracker");
-
-		_addManifestValues(manifest, _importPackageName, importPackages);
-	}
-
 	private void _addTestClass(JavaArchive javaArchive, TestClass testClass) {
 		Class<?> javaClass = testClass.getJavaClass();
 
@@ -176,26 +136,27 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	}
 
 	private void _cleanRepeatedImports(
-			Collection<Archive<?>> auxiliaryArchives, Manifest manifest)
+			Collection<Archive<?>> auxiliaryArchives, Manifest manifest,
+			Map<String, String> importPackages)
 		throws IOException {
 
 		Attributes mainAttributes = manifest.getMainAttributes();
 
-		List<String> importPackages = StringUtil.split(
+		List<String> originalImportPackages = StringUtil.split(
 			mainAttributes.getValue(_importPackageName));
 
-		boolean changed = false;
-
-		Iterator<String> iterator = importPackages.iterator();
+		Iterator<String> iterator = originalImportPackages.iterator();
 
 		packages:
 		while (iterator.hasNext()) {
-			String importPackage = iterator.next();
+			String originalImportPackage = iterator.next();
 
-			int index = importPackage.indexOf(CharPool.SEMICOLON);
+			String importPackage = originalImportPackage;
+
+			int index = originalImportPackage.indexOf(CharPool.SEMICOLON);
 
 			if (index != -1) {
-				importPackage = importPackage.substring(0, index);
+				importPackage = originalImportPackage.substring(0, index);
 			}
 
 			ArchivePath archivePath = ArchivePaths.create(
@@ -205,25 +166,22 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 				if (archive.contains(archivePath)) {
 					iterator.remove();
 
-					changed = true;
-
 					continue packages;
 				}
 			}
+
+			importPackages.put(importPackage, originalImportPackage);
+		}
+	}
+
+	private Map<String, String> _createImportPackages() {
+		Map<String, String> importPackages = new LinkedHashMap<>();
+
+		for (String importPackage : _OSGI_IMPORTS_PACKAGES) {
+			importPackages.put(importPackage, importPackage);
 		}
 
-		if (changed) {
-			StringBundler sb = new StringBundler(importPackages.size());
-
-			for (String importPackage : importPackages) {
-				sb.append(importPackage);
-				sb.append(StringPool.COMMA);
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			mainAttributes.put(_importPackageName, sb.toString());
-		}
+		return importPackages;
 	}
 
 	private Manifest _getManifest(Archive<?> archive) throws IOException {
@@ -242,7 +200,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 	private List<Archive<?>> _loadAuxiliaryArchives(
 			JavaArchive javaArchive, Manifest manifest,
-			List<String> importPackages)
+			Map<String, String> importPackages)
 		throws IOException {
 
 		List<Archive<?>> archives = new ArrayList<>();
@@ -282,10 +240,21 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			Attributes mainAttributes =
 				auxiliaryArchiveManifest.getMainAttributes();
 
-			String value = mainAttributes.getValue(_importPackageName);
+			String importPackageString = mainAttributes.getValue(
+				_importPackageName);
 
-			if (value != null) {
-				importPackages.addAll(StringUtil.split(value));
+			for (String newImportPackage :
+					StringUtil.split(importPackageString)) {
+
+				String importPackage = newImportPackage;
+
+				int index = newImportPackage.indexOf(CharPool.SEMICOLON);
+
+				if (index != -1) {
+					importPackage = newImportPackage.substring(0, index);
+				}
+
+				importPackages.put(importPackage, newImportPackage);
 			}
 
 			String bundleActivatorValue = mainAttributes.getValue(
@@ -298,7 +267,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			}
 		}
 
-		_addManifestValues(manifest, _bundleClassPathName, bundleClassPaths);
+		_setManifestValues(manifest, _bundleClassPathName, bundleClassPaths);
 
 		return archives;
 	}
@@ -318,8 +287,32 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			JarFile.MANIFEST_NAME);
 	}
 
+	private void _setManifestValues(
+		Manifest manifest, Name attributeName,
+		Collection<String> attributeValues) {
+
+		Attributes mainAttributes = manifest.getMainAttributes();
+
+		StringBundler sb = new StringBundler(attributeValues.size() * 2);
+
+		for (String attributeValue : attributeValues) {
+			sb.append(attributeValue);
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		mainAttributes.put(attributeName, sb.toString());
+	}
+
 	private static final String _ACTIVATORS_FILE =
 		"/META-INF/services/" + BundleActivator.class.getCanonicalName();
+
+	private static final String[] _OSGI_IMPORTS_PACKAGES = {
+		"org.osgi.framework", "javax.management", "javax.management.*",
+		"javax.naming", "javax.naming.*", "org.osgi.service.packageadmin",
+		"org.osgi.service.startlevel", "org.osgi.util.tracker"
+	};
 
 	private static final Name _bundleActivatorName = new Name(
 		"Bundle-Activator");

@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `946edcc08f6c`.*
+*This document has been reviewed through commit `ef156169d4fa`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -995,24 +995,24 @@ vulnerabilities.
 
 ---------------------------------------
 
-### Removed description html escaping in PortletDisplay
+### Removed Description HTML Escaping in PortletDisplay
 - **Date:** 2018-Jul-17
 - **JIRA Ticket:** LPS-83185
 
 #### What changed?
 
-The portlet description stored inside `PortletDisplay.java` is no longer escaped
+The portlet description stored in `PortletDisplay.java` is no longer escaped
 automatically.
 
 #### Who is affected?
 
-This affects anyone who relied on the value of the portlet description being
-already escaped and using it to generate some html. In that case, a small UI
-change might be observed as some characters might become unescaped.
+This affects anyone who relied on the portlet description's value already being
+escaped and used it to generate HTML. In that case, a small UI change might be
+observed as some characters could become unescaped.
 
 #### How should I update my code?
 
-If you were using the `portletDescription` value to generate some html, you
+If you were using the `portletDescription` value to generate HTML, you
 should escape it using the proper escape sequence using `HtmlUtil.escape`.
 
 #### Why was this change made?

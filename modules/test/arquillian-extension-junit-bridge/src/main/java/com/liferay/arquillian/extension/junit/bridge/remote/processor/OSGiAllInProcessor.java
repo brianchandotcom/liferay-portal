@@ -33,6 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.jar.Attributes;
+import java.util.jar.Attributes.Name;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
@@ -82,14 +83,11 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			Attributes mainAttributes = manifest.getMainAttributes();
 
-			Attributes.Name bundleActivatorName = new Attributes.Name(
-				"Bundle-Activator");
-
 			String bundleActivator = mainAttributes.getValue(
-				bundleActivatorName);
+				_bundleActivatorName);
 
 			mainAttributes.put(
-				bundleActivatorName,
+				_bundleActivatorName,
 				ArquillianBundleActivator.class.getCanonicalName());
 
 			_setManifest(javaArchive, manifest);
@@ -128,7 +126,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	}
 
 	private void _addManifestValues(
-		Manifest manifest, String attributeName,
+		Manifest manifest, Name attributeName,
 		List<String> newAttributeValues) {
 
 		Attributes mainAttributes = manifest.getMainAttributes();
@@ -151,7 +149,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			sb.setIndex(sb.index() - 1);
 
-			mainAttributes.putValue(attributeName, sb.toString());
+			mainAttributes.put(attributeName, sb.toString());
 		}
 	}
 
@@ -164,7 +162,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			"org.osgi.service.packageadmin", "org.osgi.service.startlevel",
 			"org.osgi.util.tracker");
 
-		_addManifestValues(manifest, "Import-Package", importPackages);
+		_addManifestValues(manifest, _importPackageName, importPackages);
 	}
 
 	private void _addTestClass(JavaArchive javaArchive, TestClass testClass) {
@@ -184,7 +182,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		Attributes mainAttributes = manifest.getMainAttributes();
 
 		List<String> importPackages = StringUtil.split(
-			mainAttributes.getValue("Import-Package"));
+			mainAttributes.getValue(_importPackageName));
 
 		boolean changed = false;
 
@@ -224,7 +222,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			sb.setIndex(sb.index() - 1);
 
-			mainAttributes.putValue("Import-Package", sb.toString());
+			mainAttributes.put(_importPackageName, sb.toString());
 		}
 	}
 
@@ -284,14 +282,14 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			Attributes mainAttributes =
 				auxiliaryArchiveManifest.getMainAttributes();
 
-			String value = mainAttributes.getValue("Import-package");
+			String value = mainAttributes.getValue(_importPackageName);
 
 			if (value != null) {
 				importPackages.addAll(StringUtil.split(value));
 			}
 
 			String bundleActivatorValue = mainAttributes.getValue(
-				"Bundle-Activator");
+				_bundleActivatorName);
 
 			if ((bundleActivatorValue != null) &&
 				!bundleActivatorValue.isEmpty()) {
@@ -300,7 +298,7 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			}
 		}
 
-		_addManifestValues(manifest, "Bundle-ClassPath", bundleClassPaths);
+		_addManifestValues(manifest, _bundleClassPathName, bundleClassPaths);
 
 		return archives;
 	}
@@ -322,6 +320,12 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 	private static final String _ACTIVATORS_FILE =
 		"/META-INF/services/" + BundleActivator.class.getCanonicalName();
+
+	private static final Name _bundleActivatorName = new Name(
+		"Bundle-Activator");
+	private static final Name _bundleClassPathName = new Name(
+		"Bundle-ClassPath");
+	private static final Name _importPackageName = new Name("Import-Package");
 
 	@Inject
 	private Instance<BundleActivatorsManager> _bundleActivatorsManagerInstance;

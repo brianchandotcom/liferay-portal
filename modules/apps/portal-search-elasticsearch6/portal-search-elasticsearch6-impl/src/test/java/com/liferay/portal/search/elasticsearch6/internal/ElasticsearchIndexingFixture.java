@@ -62,6 +62,8 @@ import com.liferay.portal.search.elasticsearch6.internal.query.StringQueryTransl
 import com.liferay.portal.search.elasticsearch6.internal.query.TermQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.query.TermRangeQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.query.WildcardQueryTranslatorImpl;
+import com.liferay.portal.search.elasticsearch6.internal.search.response.DefaultSearchResponseTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.sort.DefaultSortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.DefaultStatsTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.suggest.ElasticsearchSuggesterTranslator;
@@ -202,6 +204,16 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
+	protected SearchResponseTranslator createDefaultSearchResponseTranslator() {
+		return new DefaultSearchResponseTranslator() {
+			{
+				searchHitDocumentTranslator =
+					new SearchHitDocumentTranslatorImpl();
+				statsTranslator = new DefaultStatsTranslator();
+			}
+		};
+	}
+
 	protected QuerySuggester createElasticsearchQuerySuggester(
 		final ElasticsearchConnectionManager elasticsearchConnectionManager1,
 		final IndexNameBuilder indexNameBuilder1) {
@@ -272,6 +284,8 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				indexNameBuilder = indexNameBuilder1;
 				props = createProps();
 				queryTranslator = createElasticsearchQueryTranslator();
+				searchResponseTranslator =
+					createDefaultSearchResponseTranslator();
 				sortTranslator = new DefaultSortTranslator();
 				statsTranslator = new DefaultStatsTranslator();
 

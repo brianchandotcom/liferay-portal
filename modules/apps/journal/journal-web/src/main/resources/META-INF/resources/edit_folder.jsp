@@ -307,13 +307,7 @@ renderResponse.setTitle(title);
 								/>
 							</liferay-ui:search-container>
 
-							<liferay-ui:icon
-								cssClass="modify-link select-structure"
-								label="<%= true %>"
-								linkCssClass="btn btn-default"
-								message="choose-structure"
-								url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-							/>
+							<aui:button id="selectStructure" value="choose-structure" />
 						</div>
 					</c:if>
 
@@ -402,64 +396,43 @@ renderResponse.setTitle(title);
 	</c:if>
 </liferay-util:buffer>
 
-<aui:script>
-	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.openDDMPortlet(
-			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
-				dialog: {
-					destroyOnHide: true
-				},
-				eventName: '<portlet:namespace />selectStructure',
-				groupId: <%= scopeGroupId %>,
-				mvcPath: '/select_structure.jsp',
-				navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
-				refererPortletName: '<%= JournalPortletKeys.JOURNAL + ".selectStructureRestriction" %>',
-				showAncestorScopes: true,
-				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
-			},
-			function(event) {
-				<portlet:namespace />selectStructure(event.ddmstructureid, event.name);
-			}
-		);
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectStructure',
-		function(ddmStructureId, ddmStructureName) {
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
-
-			var ddmStructureLink = '<a class="modify-link" data-rowId="' + ddmStructureId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
-
-			<c:choose>
-				<c:when test="<%= workflowEnabled %>">
-					var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
-
-					workflowDefinitions = workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE/g, 'workflowDefinition' + ddmStructureId);
-
-					searchContainer.addRow([ddmStructureName, workflowDefinitions, ddmStructureLink], ddmStructureId);
-				</c:when>
-				<c:otherwise>
-					searchContainer.addRow([ddmStructureName, ddmStructureLink], ddmStructureId);
-				</c:otherwise>
-			</c:choose>
-
-			searchContainer.updateDataStore();
-		},
-		['liferay-search-container']
-	);
-
-	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeInherit', '', ['<portlet:namespace />restrictionTypeDefinedDiv', '<portlet:namespace />restrictionTypeWorkflowDiv']);
-	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeDefined', '<portlet:namespace />restrictionTypeDefinedDiv', '<portlet:namespace />restrictionTypeWorkflowDiv');
-
-	<c:if test="<%= !rootFolder %>">
-		Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeWorkflow', '<portlet:namespace />restrictionTypeWorkflowDiv', '<portlet:namespace />restrictionTypeDefinedDiv');
-	</c:if>
-</aui:script>
-
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
+
+	$('#<portlet:namespace />selectStructure').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true
+					},
+					eventName: '<portlet:namespace />selectStructure',
+					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /></portlet:renderURL>'
+				},
+				function(event) {
+					var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
+
+					<c:choose>
+						<c:when test="<%= workflowEnabled %>">
+							var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
+
+							workflowDefinitions = workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE/g, 'workflowDefinition' + event.ddmstructureid);
+
+							searchContainer.addRow([event.name, workflowDefinitions, ddmStructureLink], event.ddmstructureid);
+						</c:when>
+						<c:otherwise>
+							searchContainer.addRow([event.name, ddmStructureLink], event.ddmstructureid);
+						</c:otherwise>
+					</c:choose>
+
+					searchContainer.updateDataStore();
+				}
+			);
+		}
+	);
 
 	searchContainer.get('contentBox').delegate(
 		'click',
@@ -472,6 +445,15 @@ renderResponse.setTitle(title);
 		},
 		'.modify-link'
 	);
+</aui:script>
+
+<aui:script>
+	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeInherit', '', ['<portlet:namespace />restrictionTypeDefinedDiv', '<portlet:namespace />restrictionTypeWorkflowDiv']);
+	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeDefined', '<portlet:namespace />restrictionTypeDefinedDiv', '<portlet:namespace />restrictionTypeWorkflowDiv');
+
+	<c:if test="<%= !rootFolder %>">
+		Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeWorkflow', '<portlet:namespace />restrictionTypeWorkflowDiv', '<portlet:namespace />restrictionTypeDefinedDiv');
+	</c:if>
 </aui:script>
 
 <%

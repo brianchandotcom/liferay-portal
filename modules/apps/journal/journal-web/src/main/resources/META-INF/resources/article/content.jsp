@@ -32,20 +32,6 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 
 boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
-
-long folderId = journalDisplayContext.getFolderId();
-
-boolean searchRestriction = false;
-
-if (journalDisplayContext.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
-	searchRestriction = true;
-}
-
-if (!searchRestriction) {
-	folderId = JournalFolderLocalServiceUtil.getOverridedDDMStructuresFolderId(folderId);
-
-	searchRestriction = folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-}
 %>
 
 <liferay-ui:error-marker
@@ -184,22 +170,9 @@ if (!searchRestriction) {
 <aui:script use="liferay-journal-content">
 	new Liferay.Portlet.JournalContent(
 		{
-			'ddm.basePortletURL': '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
-			'ddm.classNameId': '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
-			'ddm.classPK': <%= ddmStructure.getPrimaryKey() %>,
-			'ddm.groupId': <%= groupId %>,
-			'ddm.refererPortletName': '<%= JournalPortletKeys.JOURNAL + ".selectStructure" %>',
-			'ddm.resourceClassNameId': '<%= ddmStructure.getClassNameId() %>',
-			'ddm.searchRestriction': <%= searchRestriction %>,
-			'ddm.searchRestrictionClassNameId': <%= ClassNameLocalServiceUtil.getClassNameId(JournalFolder.class) %>,
-			'ddm.searchRestrictionClassPK': <%= folderId %>,
-			'ddm.templateId': <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,
 			editStructure: '#<portlet:namespace />editDDMStructure',
 			editTemplate: '#<portlet:namespace />editDDMTemplate',
 			namespace: '<portlet:namespace />',
-			selectStructure: '#<portlet:namespace />selectStructure',
-			selectTemplate: '#<portlet:namespace />selectTemplate',
-			'strings.draft': '<liferay-ui:message key="draft" />',
 			'strings.editStructure': '<liferay-ui:message key="editing-the-current-structure-deletes-all-unsaved-content" />',
 			'strings.editTemplate': '<liferay-ui:message key="editing-the-current-template-deletes-all-unsaved-content" />',
 			'urls.editStructure': '<%= editStructureURL %>',

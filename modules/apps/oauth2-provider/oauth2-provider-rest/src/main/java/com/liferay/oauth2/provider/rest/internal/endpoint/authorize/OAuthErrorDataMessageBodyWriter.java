@@ -132,7 +132,7 @@ public class OAuthErrorDataMessageBodyWriter
 			authorizeScreenURL, OAuthConstants.REDIRECT_URI, redirect_uri);
 		authorizeScreenURL = setParameter(
 			authorizeScreenURL, OAuthConstants.ERROR_KEY,
-			OAuthConstants.INVALID_CLIENT);
+			oAuthError.getError());
 
 		_messageContext.put("http.request.redirected", Boolean.TRUE);
 

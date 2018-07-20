@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_6.UpgradeRepository;
 import com.liferay.portal.upgrade.v7_0_6.UpgradeThemeId;
+import com.liferay.portal.upgrade.v7_0_6.util.RepositoryTable;
 
 /**
  * @author Alberto Chaparro
@@ -35,6 +36,15 @@ public class UpgradeProcess_7_0_6 extends UpgradeProcess {
 		upgrade(new UpgradeThemeId());
 
 		clearIndexesCache();
+	}
+
+	@Override
+	protected boolean skipUpgradeProcess() throws Exception {
+		if (hasColumnType(RepositoryTable.class, "name", "VARCHAR(200) null")) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

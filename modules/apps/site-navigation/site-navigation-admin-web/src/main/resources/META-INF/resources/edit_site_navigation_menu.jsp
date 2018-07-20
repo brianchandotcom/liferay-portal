@@ -135,7 +135,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	Liferay.on('destroyPortlet', destroyAddMenuItemClickHandler);
 </aui:script>
 
-<aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule, site-navigation-menu-web/js/SiteNavigationMenuItem.es as siteNavigationMenuItemModule">
+<aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule, site-navigation-menu-web/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMHandlerModule">
 	var changed = false;
 	var showSiteNavigationMenuSettingsButtonClickHandler = null;
 	var sidebar = null;
@@ -248,7 +248,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			}
 		);
 
-		siteNavigationMenuItemModule.default.unselectAll();
+		siteNavigationMenuItemDOMHandlerModule.default.unselectAll();
 
 		openSidebar('<%= HtmlUtil.escape(siteNavigationAdminDisplayContext.getSiteNavigationMenuName()) %>');
 
@@ -278,7 +278,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 	var handleSidebarCloseButtonClick = function() {
 		closeSidebar();
-		siteNavigationMenuItemModule.default.setSelected(null, false);
+		siteNavigationMenuItemDOMHandlerModule.default.unselectAll();
 	};
 
 	var handleSiteNavigationMenuItemRemoveIconClick = function(event) {

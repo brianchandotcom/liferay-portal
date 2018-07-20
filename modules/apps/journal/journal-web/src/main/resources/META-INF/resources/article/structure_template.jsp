@@ -126,4 +126,36 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 			);
 		}
 	);
+
+	$('#<portlet:namespace />selectTemplate').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true
+					},
+					eventName: '<portlet:namespace />selectTemplate',
+					title: '<%= UnicodeLanguageUtil.get(request, "templates") %>',
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_template.jsp" /><portlet:param name="structureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>'
+				},
+				function(event) {
+					var ddmTemplateId = '<%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>';
+
+					if (document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value != '') {
+						ddmTemplateId = document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value;
+					}
+
+					if (ddmTemplateId != event.ddmtemplateid) {
+						if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>')) {
+							document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value = event.ddmtemplateid;
+
+							submitForm(document.<portlet:namespace />fm1, null, false, false);
+						}
+					}
+				}
+			);
+		}
+	);
 </aui:script>

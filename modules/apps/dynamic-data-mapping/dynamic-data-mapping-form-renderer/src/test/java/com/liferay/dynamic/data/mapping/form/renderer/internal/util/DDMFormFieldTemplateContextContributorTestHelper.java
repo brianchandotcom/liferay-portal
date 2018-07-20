@@ -15,13 +15,13 @@
 package com.liferay.dynamic.data.mapping.form.renderer.internal.util;
 
 import com.liferay.dynamic.data.mapping.form.field.type.internal.DDMFormFieldOptionsFactoryImpl;
-import com.liferay.dynamic.data.mapping.type.checkbox.multiple.internal.CheckboxMultipleDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.date.internal.DateDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.grid.internal.GridDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.numeric.internal.NumericDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.radio.internal.RadioDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.select.internal.SelectDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.text.internal.TextDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.checkbox.multiple.internal.CheckboxMultipleDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.date.internal.DateDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.grid.internal.GridDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.numeric.internal.NumericDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.radio.internal.RadioDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.select.internal.SelectDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.text.internal.TextDDMFormFieldTemplateContextContributor;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 

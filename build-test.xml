@@ -6193,6 +6193,9 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	<category name="org.apache.cxf.rs.security.oauth2.services.AbstractOAuthService">
 		<priority value="ERROR" />
 	</category>
+	<category name="com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider">
+		<priority value="ERROR" />
+	</category>
 </log4j:configuration>]]></echo>
 	</target>
 

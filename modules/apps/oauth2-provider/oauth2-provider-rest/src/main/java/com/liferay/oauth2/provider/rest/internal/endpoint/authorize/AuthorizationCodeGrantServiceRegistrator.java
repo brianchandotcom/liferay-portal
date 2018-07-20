@@ -24,11 +24,16 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import java.util.Dictionary;
 import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.rs.security.oauth2.common.Client;
+import org.apache.cxf.rs.security.oauth2.common.OAuthError;
 import org.apache.cxf.rs.security.oauth2.common.OOBAuthorizationResponse;
+import org.apache.cxf.rs.security.oauth2.provider.OAuthServiceException;
 import org.apache.cxf.rs.security.oauth2.provider.SubjectCreator;
 import org.apache.cxf.rs.security.oauth2.services.AuthorizationCodeGrantService;
+import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -75,6 +80,34 @@ public class AuthorizationCodeGrantServiceRegistrator {
 					return Response.status(
 						500
 					).build();
+				}
+
+				@Override
+				protected Client getClient(
+					String clientId, MultivaluedMap<String, String> params) {
+
+					try {
+						Client client = getValidClient(clientId, params);
+
+						if (client != null) {
+							return client;
+						}
+					}
+					catch (OAuthServiceException oase) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Unable to validate remote client", oase);
+						}
+
+						if (oase.getError() != null) {
+							reportInvalidRequestError(oase.getError(), null);
+						}
+					}
+
+					reportInvalidRequestError(
+						new OAuthError(OAuthConstants.INVALID_CLIENT), null);
+
+					return null;
 				}
 
 			};

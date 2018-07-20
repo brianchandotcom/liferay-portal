@@ -84,6 +84,10 @@ public class AssetAutoTaggerOSGiCommands {
 			assetEntry -> {
 				String[] oldAssetTagNames = assetEntry.getTagNames();
 
+				if (oldAssetTagNames.length > 0) {
+					return;
+				}
+
 				_assetAutoTagger.tag(assetEntry);
 
 				String[] newAssetTagNames = assetEntry.getTagNames();
@@ -104,10 +108,6 @@ public class AssetAutoTaggerOSGiCommands {
 			classNames,
 			assetEntry -> {
 				String[] oldAssetTagNames = assetEntry.getTagNames();
-
-				if (oldAssetTagNames.length > 0) {
-					return;
-				}
 
 				_assetAutoTagger.untag(assetEntry);
 

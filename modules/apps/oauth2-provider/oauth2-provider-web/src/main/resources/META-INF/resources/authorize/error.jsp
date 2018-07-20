@@ -18,4 +18,6 @@
 
 <liferay-ui:error-header />
 
+<liferay-ui:error key="clientIdInvalid" message="invalid-client-id" />
+
 <liferay-ui:error key="redirectURIMissing" message="missing-redirect-uri" />

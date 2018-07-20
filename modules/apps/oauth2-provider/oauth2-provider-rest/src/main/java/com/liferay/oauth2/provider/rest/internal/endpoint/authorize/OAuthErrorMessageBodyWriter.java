@@ -15,18 +15,13 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.authorize;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.authorize.configuration.AuthorizeScreenConfiguration;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -52,7 +47,6 @@ import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.apache.cxf.rs.security.oauth2.common.OAuthError;
 import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -63,12 +57,12 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.OAuth2.Application)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=OAuthErrorDataMessageBodyWriter"
+		"osgi.jaxrs.name=OAuthErrorMessageBodyWriter"
 	}
 )
 @Produces("text/html")
 @Provider
-public class OAuthErrorDataMessageBodyWriter
+public class OAuthErrorMessageBodyWriter
 	implements MessageBodyWriter<OAuthError> {
 
 	public long getSize(
@@ -125,11 +119,6 @@ public class OAuthErrorDataMessageBodyWriter
 			authorizeScreenURL = portalURL + authorizeScreenURL;
 		}
 
-		String redirect_uri = ParamUtil.get(
-			httpServletRequest, "redirect_uri", StringPool.BLANK);
-
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.REDIRECT_URI, redirect_uri);
 		authorizeScreenURL = setParameter(
 			authorizeScreenURL, OAuthConstants.ERROR_KEY,
 			oAuthError.getError());
@@ -147,13 +136,6 @@ public class OAuthErrorDataMessageBodyWriter
 		}
 	}
 
-	@Activate
-	protected void activate() {
-		_invokerFilterURIMaxLength = GetterUtil.getInteger(
-			_props.get(PropsKeys.INVOKER_FILTER_URI_MAX_LENGTH),
-			_invokerFilterURIMaxLength);
-	}
-
 	protected String getAuthorizeScreenURL(long companyId)
 		throws ConfigurationException {
 
@@ -166,10 +148,6 @@ public class OAuthErrorDataMessageBodyWriter
 		return authorizeScreenConfiguration.authorizeScreenURL();
 	}
 
-	protected String removeParameter(String url, String name) {
-		return _http.removeParameter(url, "oauth2_" + name);
-	}
-
 	protected String setParameter(String url, String name, String value) {
 		if (Validator.isBlank(value)) {
 			return url;
@@ -179,7 +157,7 @@ public class OAuthErrorDataMessageBodyWriter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OAuthErrorDataMessageBodyWriter.class);
+		OAuthErrorMessageBodyWriter.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
@@ -187,15 +165,10 @@ public class OAuthErrorDataMessageBodyWriter
 	@Reference
 	private Http _http;
 
-	private int _invokerFilterURIMaxLength = 4000;
-
 	@Context
 	private MessageContext _messageContext;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Props _props;
 
 }

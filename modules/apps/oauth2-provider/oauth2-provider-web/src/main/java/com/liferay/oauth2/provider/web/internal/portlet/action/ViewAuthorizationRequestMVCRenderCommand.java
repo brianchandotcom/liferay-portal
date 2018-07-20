@@ -79,18 +79,18 @@ public class ViewAuthorizationRequestMVCRenderCommand
 
 		Map<String, String> oAuth2Parameters = getOAuth2Parameters(request);
 
-		String redirectURI = oAuth2Parameters.get("redirect_uri");
+		String error = oAuth2Parameters.get("error");
 
-		if (Validator.isBlank(redirectURI)) {
-			SessionErrors.add(renderRequest, "redirectURIMissing");
+		if (StringUtil.equals(error, "invalid_client")) {
+			SessionErrors.add(renderRequest, "clientIdInvalid");
 
 			return "/authorize/error.jsp";
 		}
 
-		String error = oAuth2Parameters.get("error");
+		String redirectURI = oAuth2Parameters.get("redirect_uri");
 
-		if ("invalid_client".equals(error)) {
-			SessionErrors.add(renderRequest, "clientIdInvalid");
+		if (Validator.isBlank(redirectURI)) {
+			SessionErrors.add(renderRequest, "redirectURIMissing");
 
 			return "/authorize/error.jsp";
 		}

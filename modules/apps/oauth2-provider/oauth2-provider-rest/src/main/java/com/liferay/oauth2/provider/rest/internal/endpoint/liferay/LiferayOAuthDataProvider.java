@@ -623,7 +623,6 @@ public class LiferayOAuthDataProvider
 			}
 
 			return null;
-
 		}
 
 		return oAuth2Application;

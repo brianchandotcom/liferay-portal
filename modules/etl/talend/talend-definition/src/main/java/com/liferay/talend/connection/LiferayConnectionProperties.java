@@ -320,10 +320,10 @@ public class LiferayConnectionProperties
 	}
 
 	/**
-	 * Must be named "repositoryLocation" as Talend uses a reflection to get a
-	 * field named like this.
-	 *
-	 * @see https://github.com/Talend/tdi-studio-se/blob/125a8144597e5d5faa1f7001ce345cdfd6dc1fe3/main/plugins/org.talend.repository.generic/src/main/java/org/talend/repository/generic/ui/GenericConnWizard.java#L111
+	 * This must be named <code>repositoryLocation</code> since Talend uses
+	 * reflection to get a field named this. See <a
+	 * href="https://github.com/Talend/tdi-studio-se/blob/125a8144597e5d5faa1f7001ce345cdfd6dc1fe3/main/plugins/org.talend.repository.generic/src/main/java/org/talend/repository/generic/ui/GenericConnWizard.java#L111">here</a>
+	 * for more information.
 	 */
 	protected String repositoryLocation;
 

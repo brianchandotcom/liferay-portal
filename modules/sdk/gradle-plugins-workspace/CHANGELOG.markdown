@@ -228,8 +228,8 @@ version 3.2.5.
 3.12.48.
 
 ## 1.10.3 - 2018-06-28
-- [LPS-80660]: Support commonly used liferay versions in target platform
-version.
+- [LPS-80660]: Support commonly used Liferay Portal versions in the target
+platform version.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

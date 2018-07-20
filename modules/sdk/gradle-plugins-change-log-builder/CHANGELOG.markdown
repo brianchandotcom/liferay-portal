@@ -12,8 +12,8 @@ repositories.
 - [LPS-67573]: Make most methods private in order to reduce API surface.
 
 ### Fixed
-- [LPS-82857]: Avoid error when running that does not contain commits older than
-2 years.
+- [LPS-82857]: Avoid error when running the `buildChangeLog` task on Git
+branches that do not contain commits older than two years.
 
 ## 1.1.1 - 2018-07-10
 

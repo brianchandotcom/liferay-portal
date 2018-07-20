@@ -145,22 +145,23 @@ Use `@author` tags for each author of the class, from first to most recent.
 
 ### @param tags
 
-Use `@param` tags for a class'
+Use `@param` tags for a class or interface's
 [generic type parameters](https://docs.oracle.com/javase/tutorial/java/generics/types.html).
-This is typically the only case where a class has parameters to document. 
+This is typically the only case where a class/interface has parameters to
+document.
 
-The parameter type name should keep its syntax when defined. For example, for
-this class:
+The parameter type name should keep its syntax when defined. For example, this
+interface:
 
     public interface BinaryFunction<T> extends Function<T, BinaryFile> {
 
-you should define the generic type parameter like this:
+should define the generic type parameter like this:
 
     @param <T> the model's type
 
 See the
 [`BinaryFunction`](https://github.com/liferay/liferay-portal/blob/7.1.0-ga1/modules/apps/apio-architect/apio-architect-api/src/main/java/com/liferay/apio/architect/alias/BinaryFunction.java#L28)
-class for the full example.
+interface for the full example.
 
 ### @see tags
 

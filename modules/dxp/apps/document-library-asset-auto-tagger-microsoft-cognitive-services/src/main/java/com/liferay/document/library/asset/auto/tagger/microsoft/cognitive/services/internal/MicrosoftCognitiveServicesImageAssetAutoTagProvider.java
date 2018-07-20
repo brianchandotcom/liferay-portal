@@ -16,7 +16,6 @@ package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.servi
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -28,11 +27,16 @@ import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCap
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -118,21 +122,37 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 	private JSONObject _queryComputerVisionJSONObject(FileVersion fileVersion)
 		throws IOException, PortalException {
 
-		Http.Options options = new Http.Options();
+		URL url = new URL(
+			_microsoftCognitiveServicesConfiguration.apiEndpoint() + "/tag");
 
-		options.addHeader(
+		URLConnection connection = url.openConnection();
+
+		HttpURLConnection http = (HttpURLConnection)connection;
+
+		http.setRequestMethod("POST");
+		http.setDoOutput(true);
+
+		http.setRequestProperty("Content-Type", "application/octet-stream");
+		http.setRequestProperty(
 			"Ocp-Apim-Subscription-Key",
 			_microsoftCognitiveServicesConfiguration.apiKey());
-		options.addFilePart(
-			HtmlUtil.escape(fileVersion.getTitle()),
-			HtmlUtil.escape(fileVersion.getFileName()),
-			FileUtil.getBytes(fileVersion.getContentStream(false)),
-			fileVersion.getMimeType(), StringPool.UTF8);
-		options.setLocation(
-			_microsoftCognitiveServicesConfiguration.apiEndpoint() + "/tag");
-		options.setPost(true);
 
-		return JSONFactoryUtil.createJSONObject(_http.URLtoString(options));
+		try (OutputStream os = http.getOutputStream()) {
+			os.write(FileUtil.getBytes(fileVersion.getContentStream(false)));
+		}
+
+		http.getResponseMessage();
+
+		try (InputStream is = http.getInputStream()) {
+			return JSONFactoryUtil.createJSONObject(StringUtil.read(is));
+		}
+		catch (Exception e) {
+			try (InputStream is = http.getErrorStream()) {
+				_log.error(StringUtil.read(is));
+
+				throw e;
+			}
+		}
 	}
 
 	private static final int _MAX_SIZE = 4 * 1024 * 1024;

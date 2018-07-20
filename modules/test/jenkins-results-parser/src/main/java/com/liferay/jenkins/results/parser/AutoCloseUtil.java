@@ -37,12 +37,12 @@ public class AutoCloseUtil {
 			return false;
 		}
 
-		String githubReceiverUsername = pullRequest.getOwnerUsername();
-		String githubSenderUsername = pullRequest.getSenderUsername();
+		String gitHubReceiverUsername = pullRequest.getOwnerUsername();
+		String gitHubSenderUsername = pullRequest.getSenderUsername();
 
-		if ((githubReceiverUsername == null) ||
-			(githubSenderUsername == null) ||
-			githubReceiverUsername.equals(githubSenderUsername)) {
+		if ((gitHubReceiverUsername == null) ||
+			(gitHubSenderUsername == null) ||
+			gitHubReceiverUsername.equals(gitHubSenderUsername)) {
 
 			return false;
 		}
@@ -81,7 +81,7 @@ public class AutoCloseUtil {
 			sb.append("\">");
 			sb.append(topLevelBuild.getJobName());
 			sb.append("</a></li></ul><p>@");
-			sb.append(githubSenderUsername);
+			sb.append(gitHubSenderUsername);
 			sb.append("</p><hr />");
 
 			sb.append("<h1>However, the pull request was closed.</h1>");
@@ -153,12 +153,12 @@ public class AutoCloseUtil {
 			return false;
 		}
 
-		String githubReceiverUsername = pullRequest.getOwnerUsername();
-		String githubSenderUsername = pullRequest.getSenderUsername();
+		String gitHubReceiverUsername = pullRequest.getOwnerUsername();
+		String gitHubSenderUsername = pullRequest.getSenderUsername();
 
-		if ((githubReceiverUsername == null) ||
-			(githubSenderUsername == null) ||
-			githubReceiverUsername.equals(githubSenderUsername)) {
+		if ((gitHubReceiverUsername == null) ||
+			(gitHubSenderUsername == null) ||
+			gitHubReceiverUsername.equals(gitHubSenderUsername)) {
 
 			return false;
 		}
@@ -257,7 +257,7 @@ public class AutoCloseUtil {
 			sb.append("\">");
 			sb.append(topLevelBuild.getJobName());
 			sb.append("</a></li></ul>@");
-			sb.append(githubSenderUsername);
+			sb.append(gitHubSenderUsername);
 			sb.append("</p><hr />");
 
 			sb.append("<h1>However, the pull request was closed.</h1>");

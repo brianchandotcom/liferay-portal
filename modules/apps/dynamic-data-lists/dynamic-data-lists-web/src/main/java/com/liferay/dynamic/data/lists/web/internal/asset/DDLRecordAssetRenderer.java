@@ -29,10 +29,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
@@ -145,9 +147,20 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, DDLPortletKeys.DYNAMIC_DATA_LISTS,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL;
+
+		Group group = GroupLocalServiceUtil.fetchGroup(_record.getGroupId());
+
+		if (group.isCompany()) {
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, DDLPortletKeys.DYNAMIC_DATA_LISTS,
+				PortletRequest.RENDER_PHASE);
+		}
+		else {
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group, DDLPortletKeys.DYNAMIC_DATA_LISTS,
+				0, 0, PortletRequest.RENDER_PHASE);
+		}
 
 		portletURL.setParameter("mvcPath", "/edit_record.jsp");
 		portletURL.setParameter(

@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -147,9 +149,21 @@ public class CommentAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL editPortletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, CommentPortletKeys.COMMENT,
-			PortletRequest.RENDER_PHASE);
+		PortletURL editPortletURL;
+
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			_workflowableComment.getGroupId());
+
+		if (group.isCompany()) {
+			editPortletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, CommentPortletKeys.COMMENT,
+				PortletRequest.RENDER_PHASE);
+		}
+		else {
+			editPortletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group, CommentPortletKeys.COMMENT, 0, 0,
+				PortletRequest.RENDER_PHASE);
+		}
 
 		editPortletURL.setParameter(
 			"mvcRenderCommandName", "/discussion/edit_discussion");

@@ -20,11 +20,13 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.TrashHelper;
@@ -137,9 +139,21 @@ public class BookmarksFolderAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL;
+
+		Group group = GroupLocalServiceUtil.fetchGroup(_folder.getGroupId());
+
+		if (group.isCompany()) {
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN,
+				PortletRequest.RENDER_PHASE);
+		}
+		else {
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group,
+				BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE);
+		}
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/bookmarks/edit_folder");

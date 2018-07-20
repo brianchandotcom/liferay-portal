@@ -24,11 +24,13 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -132,9 +134,21 @@ public class CalendarBookingAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, CalendarPortletKeys.CALENDAR,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL;
+
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			_calendarBooking.getGroupId());
+
+		if (group.isCompany()) {
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, CalendarPortletKeys.CALENDAR,
+				PortletRequest.RENDER_PHASE);
+		}
+		else {
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group, CalendarPortletKeys.CALENDAR, 0,
+				0, PortletRequest.RENDER_PHASE);
+		}
 
 		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");
 		portletURL.setParameter(

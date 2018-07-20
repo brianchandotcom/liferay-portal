@@ -20,12 +20,14 @@ import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -145,9 +147,20 @@ public class MBMessageAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, MBPortletKeys.MESSAGE_BOARDS,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL;
+
+		Group group = GroupLocalServiceUtil.fetchGroup(_message.getGroupId());
+
+		if (group.isCompany()) {
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, MBPortletKeys.MESSAGE_BOARDS,
+				PortletRequest.RENDER_PHASE);
+		}
+		else {
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0,
+				0, PortletRequest.RENDER_PHASE);
+		}
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/edit_message");

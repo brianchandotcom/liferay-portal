@@ -1,4 +1,8 @@
 <definition>
+	<!--
+		For searches that do not use the search portlet (e.g. searches within the product menu), use the macros within Search.macro instead.'Embedded' refers to the search bar in the page header whereas 'Widget' refers to the search bar within the page.
+	 -->
+
 	<command name="addWidgets">
 		<if>
 			<condition function="IsNotVisible" locator1="ControlMenuAddPanel#CLOSE_ADD_PANEL" />

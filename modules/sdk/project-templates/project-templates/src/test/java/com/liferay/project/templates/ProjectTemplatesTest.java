@@ -684,7 +684,8 @@ public class ProjectTemplatesTest {
 			"Web-ContextPath: /dynamic-data-foobar-form-field");
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			"apply plugin: \"com.liferay.plugin\"");
+			"apply plugin: \"com.liferay.plugin\"",
+			"name: \"com.liferay.portal.kernel\", version: \"3.0.0");
 		_testContains(
 			gradleProjectDir, "package.json",
 			"\"name\": \"dynamic-data-foobar-form-field\"",
@@ -732,6 +733,9 @@ public class ProjectTemplatesTest {
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"form-field", "foobar", "com.test", "-DclassName=Foobar",
 			"-Dpackage=foobar", "-DliferayVersion=7.1");
+
+		_testContains(
+			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}

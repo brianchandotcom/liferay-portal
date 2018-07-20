@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.upload;
 
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +29,8 @@ import com.liferay.upload.UploadFileEntryHandler;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
@@ -38,6 +41,10 @@ public abstract class BaseMBUploadFileEntryHandler
 	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
 		throws IOException, PortalException {
 
+		dlValidator.validateFileSize(
+			uploadPortletRequest.getFileName(getParameterName()),
+			uploadPortletRequest.getSize(getParameterName()));
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -47,8 +54,6 @@ public abstract class BaseMBUploadFileEntryHandler
 		try (InputStream inputStream = getFileAsStream(uploadPortletRequest)) {
 			String tempFileName = TempFileEntryUtil.getTempFileName(
 				getFileName(uploadPortletRequest));
-
-			MBMessageService mbMessageService = getMBMessageService();
 
 			return mbMessageService.addTempAttachment(
 				themeDisplay.getScopeGroupId(), categoryId,
@@ -72,8 +77,12 @@ public abstract class BaseMBUploadFileEntryHandler
 		return uploadPortletRequest.getFileName(getParameterName());
 	}
 
-	protected abstract MBMessageService getMBMessageService();
-
 	protected abstract String getParameterName();
+
+	@Reference
+	protected DLValidator dlValidator;
+
+	@Reference
+	protected MBMessageService mbMessageService;
 
 }

@@ -14,10 +14,7 @@
 
 package com.liferay.message.boards.web.internal.upload;
 
-import com.liferay.message.boards.service.MBMessageService;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -27,16 +24,8 @@ public class TempAttachmentMBUploadFileEntryHandler
 	extends BaseMBUploadFileEntryHandler {
 
 	@Override
-	protected MBMessageService getMBMessageService() {
-		return _mbMessageService;
-	}
-
-	@Override
 	protected String getParameterName() {
 		return "file";
 	}
-
-	@Reference
-	private MBMessageService _mbMessageService;
 
 }

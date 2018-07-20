@@ -566,8 +566,7 @@ public class JspServlet extends HttpServlet {
 
 	}
 
-	private class ServletContextWrapper
-		implements JspServletContext, ServletContext {
+	private class ServletContextWrapper implements ServletContext {
 
 		@Override
 		public FilterRegistration.Dynamic addFilter(
@@ -660,10 +659,11 @@ public class JspServlet extends HttpServlet {
 
 			ServletContext servletContext = (ServletContext)obj;
 
-			if (obj instanceof JspServletContext) {
-				JspServletContext jspServletContext = (JspServletContext)obj;
+			if (obj instanceof ServletContextWrapper) {
+				ServletContextWrapper servletContextWrapper =
+					(ServletContextWrapper)obj;
 
-				servletContext = jspServletContext.getWrappedServletContext();
+				servletContext = servletContextWrapper._servletContext;
 			}
 
 			return servletContext.equals(_servletContext);
@@ -838,11 +838,6 @@ public class JspServlet extends HttpServlet {
 		@Override
 		public SessionCookieConfig getSessionCookieConfig() {
 			return _servletContext.getSessionCookieConfig();
-		}
-
-		@Override
-		public ServletContext getWrappedServletContext() {
-			return _servletContext;
 		}
 
 		@Override

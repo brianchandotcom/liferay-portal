@@ -237,14 +237,18 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	protected void addHighlights(
 		SearchRequestBuilder searchRequestBuilder, SearchContext searchContext,
-		QueryConfig queryConfig) {
+		Locale locale, String[] highlightFieldNames,
+		boolean highlightRequireFieldMatch, int highlightFragmentSize,
+		int highlightSnippetSize) {
 
 		boolean luceneSyntax = GetterUtil.getBoolean(
 			searchContext.getAttribute(
 				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX));
 
 		highlighterTranslator.translate(
-			searchRequestBuilder, queryConfig, luceneSyntax);
+			searchRequestBuilder, locale, highlightFieldNames,
+			highlightRequireFieldMatch, highlightFragmentSize,
+			highlightSnippetSize, luceneSyntax);
 	}
 
 	protected void addPagination(
@@ -325,7 +329,16 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				queryConfig.getLocale(), queryConfig.getHighlightFragmentSize(),
 				queryConfig.getHighlightSnippetSize(), start, end);
 
-			addHighlights(searchRequestBuilder, searchContext, queryConfig);
+			if (queryConfig.isHighlightEnabled()) {
+				addHighlights(
+					searchRequestBuilder, searchContext,
+					queryConfig.getLocale(),
+					queryConfig.getHighlightFieldNames(),
+					queryConfig.isHighlightRequireFieldMatch(),
+					queryConfig.getHighlightFragmentSize(),
+					queryConfig.getHighlightSnippetSize());
+			}
+
 			addPagination(searchRequestBuilder, start, end);
 			addPreference(searchRequestBuilder, searchContext);
 			addSelectedFields(searchRequestBuilder, queryConfig);

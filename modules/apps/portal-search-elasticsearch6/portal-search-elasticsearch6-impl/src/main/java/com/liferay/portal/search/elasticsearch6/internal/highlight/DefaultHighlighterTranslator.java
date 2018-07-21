@@ -15,8 +15,9 @@
 package com.liferay.portal.search.elasticsearch6.internal.highlight;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
+
+import java.util.Locale;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -31,49 +32,46 @@ public class DefaultHighlighterTranslator implements HighlighterTranslator {
 
 	@Override
 	public void translate(
-		SearchRequestBuilder searchRequestBuilder, QueryConfig queryConfig,
+		SearchRequestBuilder searchRequestBuilder, String[] highlightFieldNames,
+		boolean highlightEnabled, boolean highlightRequireFieldMatch,
+		Locale locale, int highlightFragmentSize, int highlightSnippetSize,
 		boolean luceneSyntax) {
 
-		if (!queryConfig.isHighlightEnabled()) {
+		if (!highlightEnabled) {
 			return;
 		}
 
 		HighlightBuilder highlightBuilder = new HighlightBuilder();
 
-		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
+		for (String highlightFieldName : highlightFieldNames) {
 			addHighlightedField(
-				highlightBuilder, queryConfig, highlightFieldName);
+				highlightBuilder, highlightFieldName, locale,
+				highlightFragmentSize, highlightSnippetSize);
 		}
 
 		highlightBuilder.postTags(HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 		highlightBuilder.preTags(HighlightUtil.HIGHLIGHT_TAG_OPEN);
 
-		boolean highlighterRequireFieldMatch =
-			queryConfig.isHighlightRequireFieldMatch();
-
 		if (luceneSyntax) {
-			highlighterRequireFieldMatch = false;
+			highlightRequireFieldMatch = false;
 		}
 
-		highlightBuilder.requireFieldMatch(highlighterRequireFieldMatch);
+		highlightBuilder.requireFieldMatch(highlightRequireFieldMatch);
 
 		searchRequestBuilder.highlighter(highlightBuilder);
 	}
 
 	protected void addHighlightedField(
-		HighlightBuilder highlightBuilder, QueryConfig queryConfig,
-		String fieldName) {
+		HighlightBuilder highlightBuilder, String fieldName, Locale locale,
+		int highlightFragmentSize, int highlightSnippetSize) {
 
 		highlightBuilder.field(
-			fieldName, queryConfig.getHighlightFragmentSize(),
-			queryConfig.getHighlightSnippetSize());
+			fieldName, highlightFragmentSize, highlightSnippetSize);
 
-		String localizedFieldName = Field.getLocalizedName(
-			queryConfig.getLocale(), fieldName);
+		String localizedFieldName = Field.getLocalizedName(locale, fieldName);
 
 		highlightBuilder.field(
-			localizedFieldName, queryConfig.getHighlightFragmentSize(),
-			queryConfig.getHighlightSnippetSize());
+			localizedFieldName, highlightFragmentSize, highlightSnippetSize);
 	}
 
 }

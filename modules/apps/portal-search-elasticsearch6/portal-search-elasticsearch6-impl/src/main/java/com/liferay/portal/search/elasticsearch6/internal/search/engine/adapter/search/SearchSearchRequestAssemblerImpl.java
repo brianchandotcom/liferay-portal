@@ -61,9 +61,15 @@ public class SearchSearchRequestAssemblerImpl
 
 		QueryConfig queryConfig = searchSearchRequest.getQueryConfig();
 
-		highlighterTranslator.translate(
-			searchRequestBuilder, queryConfig,
-			searchSearchRequest.isLuceneSyntax());
+		if (searchSearchRequest.isHighlightEnabled()) {
+			highlighterTranslator.translate(
+				searchRequestBuilder, searchSearchRequest.getLocale(),
+				searchSearchRequest.getHighlightFieldNames(),
+				searchSearchRequest.isHighlightRequireFieldMatch(),
+				searchSearchRequest.getHighlightFragmentSize(),
+				searchSearchRequest.getHighlightSnippetSize(),
+				searchSearchRequest.isLuceneSyntax());
+		}
 
 		addPagination(
 			searchRequestBuilder, searchSearchRequest.getStart(),

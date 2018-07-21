@@ -485,7 +485,10 @@
 	<target if="${core.apps}" name="get-app-names-core" unless="app.names">
 		<pathconvert pathsep="${line.separator}" property="app.names.unfiltered">
 			<path>
-				<fileset dir="." includes="apps/*/app.bnd,private/apps/*/app.bnd">
+				<fileset
+					dir="."
+					includes="apps/*/app.bnd,private/apps/*/app.bnd"
+				>
 					<contains casesensitive="false" ignorewhitespace="true" text="Liferay-Releng-Fix-Delivery-Method: core" />
 				</fileset>
 			</path>

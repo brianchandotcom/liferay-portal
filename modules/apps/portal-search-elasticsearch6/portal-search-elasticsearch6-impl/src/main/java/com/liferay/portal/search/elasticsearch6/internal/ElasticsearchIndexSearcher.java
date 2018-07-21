@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
@@ -53,6 +54,7 @@ import com.liferay.portal.search.elasticsearch6.internal.sort.SortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.util.DocumentTypes;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -217,17 +219,20 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected void addGroupBy(
-		SearchRequestBuilder searchRequestBuilder, SearchContext searchContext,
+		SearchRequestBuilder searchRequestBuilder, GroupBy groupBy,
+		Sort[] sorts, String[] selectedFieldNames, String[] highlightFieldNames,
+		boolean highlightEnabled, boolean highlightRequireFieldMatch,
+		Locale locale, int highlightFragmentSize, int highlightSnippetSize,
 		int start, int end) {
-
-		GroupBy groupBy = searchContext.getGroupBy();
 
 		if (groupBy == null) {
 			return;
 		}
 
 		groupByTranslator.translate(
-			searchRequestBuilder, searchContext, start, end);
+			searchRequestBuilder, groupBy, sorts, selectedFieldNames,
+			highlightFieldNames, highlightEnabled, highlightRequireFieldMatch,
+			locale, highlightFragmentSize, highlightSnippetSize, start, end);
 	}
 
 	protected void addHighlights(
@@ -311,7 +316,15 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			basicFacetSelection);
 
 		if (!count) {
-			addGroupBy(searchRequestBuilder, searchContext, start, end);
+			addGroupBy(
+				searchRequestBuilder, searchContext.getGroupBy(),
+				searchContext.getSorts(), queryConfig.getSelectedFieldNames(),
+				queryConfig.getHighlightFieldNames(),
+				queryConfig.isHighlightEnabled(),
+				queryConfig.isHighlightRequireFieldMatch(),
+				queryConfig.getLocale(), queryConfig.getHighlightFragmentSize(),
+				queryConfig.getHighlightSnippetSize(), start, end);
+
 			addHighlights(searchRequestBuilder, searchContext, queryConfig);
 			addPagination(searchRequestBuilder, start, end);
 			addPreference(searchRequestBuilder, searchContext);

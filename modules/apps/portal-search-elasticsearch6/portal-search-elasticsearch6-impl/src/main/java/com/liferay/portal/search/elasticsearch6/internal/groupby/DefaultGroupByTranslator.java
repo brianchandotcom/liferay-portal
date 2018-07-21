@@ -18,19 +18,17 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GeoDistanceSort;
 import com.liferay.portal.kernel.search.GroupBy;
-import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -57,11 +55,12 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 	@Override
 	public void translate(
-		SearchRequestBuilder searchRequestBuilder, SearchContext searchContext,
+		SearchRequestBuilder searchRequestBuilder, GroupBy groupBy,
+		Sort[] sorts, String[] selectedFieldNames, String[] highlightFieldNames,
+		boolean highlightEnabled, boolean highlightRequireFieldMatch,
+		Locale locale, int highlightFragmentSize, int highlightSnippetSize,
 		int start, int end) {
 
-		GroupBy groupBy = searchContext.getGroupBy();
-
 		TermsAggregationBuilder termsAggregationBuilder =
 			AggregationBuilders.terms(
 				GROUP_BY_AGGREGATION_PREFIX + groupBy.getField());
@@ -70,32 +69,9 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			groupBy.getField());
 
 		TopHitsAggregationBuilder topHitsAggregationBuilder = getTopHitsBuilder(
-			searchContext.getQueryConfig(), searchContext.getSorts(), start,
-			end, groupBy);
-
-		termsAggregationBuilder.subAggregation(topHitsAggregationBuilder);
-
-		searchRequestBuilder.addAggregation(termsAggregationBuilder);
-	}
-
-	@Override
-	public void translate(
-		SearchRequestBuilder searchRequestBuilder,
-		SearchSearchRequest searchSearchRequest) {
-
-		GroupBy groupBy = searchSearchRequest.getGroupBy();
-
-		TermsAggregationBuilder termsAggregationBuilder =
-			AggregationBuilders.terms(
-				GROUP_BY_AGGREGATION_PREFIX + groupBy.getField());
-
-		termsAggregationBuilder = termsAggregationBuilder.field(
-			groupBy.getField());
-
-		TopHitsAggregationBuilder topHitsAggregationBuilder = getTopHitsBuilder(
-			searchSearchRequest.getQueryConfig(),
-			searchSearchRequest.getSorts(), searchSearchRequest.getStart(),
-			searchSearchRequest.getSize(), groupBy);
+			groupBy, sorts, selectedFieldNames, highlightFieldNames,
+			highlightEnabled, highlightRequireFieldMatch, locale,
+			highlightFragmentSize, highlightSnippetSize, start, end);
 
 		termsAggregationBuilder.subAggregation(topHitsAggregationBuilder);
 
@@ -104,52 +80,43 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 	protected void addHighlightedField(
 		TopHitsAggregationBuilder topHitsAggregationBuilder,
-		HighlightBuilder highlightBuilder, QueryConfig queryConfig,
-		String fieldName) {
+		HighlightBuilder highlightBuilder, String fieldName, Locale locale,
+		int highlightFragmentSize, int highlightSnippetSize) {
 
 		highlightBuilder.field(
-			fieldName, queryConfig.getHighlightFragmentSize(),
-			queryConfig.getHighlightSnippetSize());
+			fieldName, highlightFragmentSize, highlightSnippetSize);
 
-		String localizedFieldName = Field.getLocalizedName(
-			queryConfig.getLocale(), fieldName);
+		String localizedFieldName = Field.getLocalizedName(locale, fieldName);
 
 		highlightBuilder.field(
-			localizedFieldName, queryConfig.getHighlightFragmentSize(),
-			queryConfig.getHighlightSnippetSize());
+			localizedFieldName, highlightFragmentSize, highlightSnippetSize);
 
 		topHitsAggregationBuilder.highlighter(highlightBuilder);
 	}
 
 	protected void addHighlights(
 		TopHitsAggregationBuilder topHitsAggregationBuilder,
-		QueryConfig queryConfig) {
-
-		if (!queryConfig.isHighlightEnabled()) {
-			return;
-		}
+		String[] highlightFieldNames, Locale locale, int highlightFragmentSize,
+		int highlightSnippetSize, boolean highlightRequireFieldMatch) {
 
 		HighlightBuilder highlightBuilder = new HighlightBuilder();
 
-		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
+		for (String highlightFieldName : highlightFieldNames) {
 			addHighlightedField(
-				topHitsAggregationBuilder, highlightBuilder, queryConfig,
-				highlightFieldName);
+				topHitsAggregationBuilder, highlightBuilder, highlightFieldName,
+				locale, highlightFragmentSize, highlightSnippetSize);
 		}
 
 		highlightBuilder.postTags(HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 		highlightBuilder.preTags(HighlightUtil.HIGHLIGHT_TAG_OPEN);
-		highlightBuilder.requireFieldMatch(
-			queryConfig.isHighlightRequireFieldMatch());
+		highlightBuilder.requireFieldMatch(highlightRequireFieldMatch);
 
 		topHitsAggregationBuilder.highlighter(highlightBuilder);
 	}
 
 	protected void addSelectedFields(
 		TopHitsAggregationBuilder topHitsAggregationBuilder,
-		QueryConfig queryConfig) {
-
-		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
+		String[] selectedFieldNames) {
 
 		if (ArrayUtil.isEmpty(selectedFieldNames)) {
 			topHitsAggregationBuilder.storedField(StringPool.STAR);
@@ -239,8 +206,11 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 	}
 
 	protected TopHitsAggregationBuilder getTopHitsBuilder(
-		QueryConfig queryConfig, Sort[] sorts, int start, int end,
-		GroupBy groupBy) {
+		GroupBy groupBy, Sort[] sorts, String[] selectedFieldNames,
+		String[] highlightFieldNames, boolean highlightEnabled,
+		boolean highlightRequireFieldMatch, Locale locale,
+		int highlightFragmentSize, int highlightSnippetSize, int start,
+		int end) {
 
 		TopHitsAggregationBuilder topHitsAggregationBuilder =
 			AggregationBuilders.topHits(TOP_HITS_AGGREGATION_NAME);
@@ -261,8 +231,14 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 		topHitsAggregationBuilder.size(groupBySize);
 
-		addHighlights(topHitsAggregationBuilder, queryConfig);
-		addSelectedFields(topHitsAggregationBuilder, queryConfig);
+		if (highlightEnabled) {
+			addHighlights(
+				topHitsAggregationBuilder, highlightFieldNames, locale,
+				highlightFragmentSize, highlightSnippetSize,
+				highlightRequireFieldMatch);
+		}
+
+		addSelectedFields(topHitsAggregationBuilder, selectedFieldNames);
 		addSorts(topHitsAggregationBuilder, sorts);
 
 		return topHitsAggregationBuilder;

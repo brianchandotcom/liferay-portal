@@ -95,11 +95,11 @@ public class SearchSearchRequestAssemblerImpl
 
 		groupByTranslator.translate(
 			searchRequestBuilder, groupBy, searchSearchRequest.getSorts(),
+			searchSearchRequest.getLocale(),
 			searchSearchRequest.getSelectedFieldNames(),
 			searchSearchRequest.getHighlightFieldNames(),
 			searchSearchRequest.isHighlightEnabled(),
 			searchSearchRequest.isHighlightRequireFieldMatch(),
-			searchSearchRequest.getLocale(),
 			searchSearchRequest.getHighlightFragmentSize(),
 			searchSearchRequest.getHighlightSnippetSize(),
 			searchSearchRequest.getStart(), searchSearchRequest.getSize());

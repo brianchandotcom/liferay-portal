@@ -56,10 +56,10 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 	@Override
 	public void translate(
 		SearchRequestBuilder searchRequestBuilder, GroupBy groupBy,
-		Sort[] sorts, String[] selectedFieldNames, String[] highlightFieldNames,
-		boolean highlightEnabled, boolean highlightRequireFieldMatch,
-		Locale locale, int highlightFragmentSize, int highlightSnippetSize,
-		int start, int end) {
+		Sort[] sorts, Locale locale, String[] selectedFieldNames,
+		String[] highlightFieldNames, boolean highlightEnabled,
+		boolean highlightRequireFieldMatch, int highlightFragmentSize,
+		int highlightSnippetSize, int start, int end) {
 
 		TermsAggregationBuilder termsAggregationBuilder =
 			AggregationBuilders.terms(
@@ -69,8 +69,8 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			groupBy.getField());
 
 		TopHitsAggregationBuilder topHitsAggregationBuilder = getTopHitsBuilder(
-			groupBy, sorts, selectedFieldNames, highlightFieldNames,
-			highlightEnabled, highlightRequireFieldMatch, locale,
+			groupBy, sorts, selectedFieldNames, locale,
+			highlightFieldNames, highlightEnabled, highlightRequireFieldMatch,
 			highlightFragmentSize, highlightSnippetSize, start, end);
 
 		termsAggregationBuilder.subAggregation(topHitsAggregationBuilder);
@@ -80,7 +80,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 	protected void addHighlightedField(
 		TopHitsAggregationBuilder topHitsAggregationBuilder,
-		HighlightBuilder highlightBuilder, String fieldName, Locale locale,
+		HighlightBuilder highlightBuilder, Locale locale, String fieldName,
 		int highlightFragmentSize, int highlightSnippetSize) {
 
 		highlightBuilder.field(
@@ -96,15 +96,16 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 	protected void addHighlights(
 		TopHitsAggregationBuilder topHitsAggregationBuilder,
-		String[] highlightFieldNames, Locale locale, int highlightFragmentSize,
+		Locale locale, String[] highlightFieldNames, int highlightFragmentSize,
 		int highlightSnippetSize, boolean highlightRequireFieldMatch) {
 
 		HighlightBuilder highlightBuilder = new HighlightBuilder();
 
 		for (String highlightFieldName : highlightFieldNames) {
 			addHighlightedField(
-				topHitsAggregationBuilder, highlightBuilder, highlightFieldName,
-				locale, highlightFragmentSize, highlightSnippetSize);
+				topHitsAggregationBuilder, highlightBuilder, locale,
+				highlightFieldName, highlightFragmentSize,
+				highlightSnippetSize);
 		}
 
 		highlightBuilder.postTags(HighlightUtil.HIGHLIGHT_TAG_CLOSE);
@@ -207,10 +208,9 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 	protected TopHitsAggregationBuilder getTopHitsBuilder(
 		GroupBy groupBy, Sort[] sorts, String[] selectedFieldNames,
-		String[] highlightFieldNames, boolean highlightEnabled,
-		boolean highlightRequireFieldMatch, Locale locale,
-		int highlightFragmentSize, int highlightSnippetSize, int start,
-		int end) {
+		Locale locale, String[] highlightFieldNames, boolean highlightEnabled,
+		boolean highlightRequireFieldMatch,  int highlightFragmentSize,
+		int highlightSnippetSize, int start, int end) {
 
 		TopHitsAggregationBuilder topHitsAggregationBuilder =
 			AggregationBuilders.topHits(TOP_HITS_AGGREGATION_NAME);
@@ -233,7 +233,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 		if (highlightEnabled) {
 			addHighlights(
-				topHitsAggregationBuilder, highlightFieldNames, locale,
+				topHitsAggregationBuilder, locale, highlightFieldNames,
 				highlightFragmentSize, highlightSnippetSize,
 				highlightRequireFieldMatch);
 		}

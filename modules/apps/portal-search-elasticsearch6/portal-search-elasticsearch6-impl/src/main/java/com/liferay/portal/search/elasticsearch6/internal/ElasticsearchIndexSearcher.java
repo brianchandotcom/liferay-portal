@@ -230,9 +230,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 
 		groupByTranslator.translate(
-			searchRequestBuilder, groupBy, sorts, selectedFieldNames,
+			searchRequestBuilder, groupBy, sorts, locale, selectedFieldNames,
 			highlightFieldNames, highlightEnabled, highlightRequireFieldMatch,
-			locale, highlightFragmentSize, highlightSnippetSize, start, end);
+			highlightFragmentSize, highlightSnippetSize, start, end);
 	}
 
 	protected void addHighlights(

@@ -32,9 +32,9 @@ public interface GroupByTranslator {
 
 	public void translate(
 		SearchRequestBuilder searchRequestBuilder, GroupBy groupBy,
-		Sort[] sorts, String[] selectedFieldNames, String[] highlightFieldNames,
-		boolean highlightEnabled, boolean highlightRequireFieldMatch,
-		Locale locale, int highlightFragmentSize, int highlightSnippetSize,
-		int start, int end);
+		Sort[] sorts, Locale locale, String[] selectedFieldNames,
+		String[] highlightFieldNames, boolean highlightEnabled,
+		boolean highlightRequireFieldMatch, int highlightFragmentSize,
+		int highlightSnippetSize, int start, int end);
 
 }

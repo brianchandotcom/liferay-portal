@@ -34,6 +34,8 @@
 	</target>
 
 	<target depends="get-app-names" name="build-app-all">
+		<echo message="Apps that will be included in this run: ${app.names}" />
+
 		<for list="${app.names}" param="app.name">
 			<sequential>
 				<antcall inheritall="false" target="build-app">
@@ -431,7 +433,7 @@
 		<property name="app.git.id" value="app.git.id-${app.version}=${git.rev.parse.output}" />
 	</target>
 
-	<target depends="checkout-public-modules-releng" name="get-app-names" unless="app.names">
+	<target depends="get-app-names-core" name="get-app-names" unless="app.names">
 		<pathconvert pathsep="${line.separator}" property="app.names.unfiltered">
 			<flattenmapper />
 			<path>
@@ -478,8 +480,28 @@
 			</filterchain>
 			<propertyresource name="app.names.unfiltered.formatted" />
 		</loadfile>
+	</target>
 
-		<echo message="Apps that will be included in this run: ${app.names}." />
+	<target if="${core.apps}" name="get-app-names-core" unless="app.names">
+		<pathconvert pathsep="${line.separator}" property="app.names.unfiltered">
+			<path>
+				<fileset dir="." includes="apps/*/app.bnd,private/apps/*/app.bnd">
+					<contains casesensitive="false" ignorewhitespace="true" text="Liferay-Releng-Fix-Delivery-Method: core" />
+				</fileset>
+			</path>
+		</pathconvert>
+
+		<loadfile
+			property="app.names"
+		>
+			<filterchain>
+				<tokenfilter delimoutput=",">
+					<replaceregex pattern=".+/(.+)/app.bnd" replace="\1" />
+					<stringtokenizer delims="${line.separator}" />
+				</tokenfilter>
+			</filterchain>
+			<propertyresource name="app.names.unfiltered" />
+		</loadfile>
 	</target>
 
 	<target depends="init-build-app" name="get-app-properties">

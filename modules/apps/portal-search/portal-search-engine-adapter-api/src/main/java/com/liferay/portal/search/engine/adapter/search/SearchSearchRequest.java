@@ -17,7 +17,6 @@ package com.liferay.portal.search.engine.adapter.search;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.search.GroupBy;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.Stats;
 
@@ -67,10 +66,6 @@ public class SearchSearchRequest
 		return _preference;
 	}
 
-	public QueryConfig getQueryConfig() {
-		return _queryConfig;
-	}
-
 	public String[] getSelectedFieldNames() {
 		return _selectedFieldNames;
 	}
@@ -104,7 +99,7 @@ public class SearchSearchRequest
 	}
 
 	public boolean isScoreEnabled() {
-		return _queryConfig.isScoreEnabled();
+		return _scoreEnabled;
 	}
 
 	public void putAllStats(Map<String, Stats> stats) {
@@ -158,7 +153,7 @@ public class SearchSearchRequest
 	}
 
 	public void setScoreEnabled(boolean scoreEnabled) {
-		_queryConfig.setScoreEnabled(scoreEnabled);
+		_scoreEnabled = scoreEnabled;
 	}
 
 	public void setSelectedFieldNames(String... selectedFieldNames) {
@@ -191,7 +186,6 @@ public class SearchSearchRequest
 	private Locale _locale;
 	private boolean _luceneSyntax;
 	private String _preference;
-	private final QueryConfig _queryConfig = new QueryConfig();
 	private boolean _scoreEnabled;
 	private String[] _selectedFieldNames;
 	private int _size;

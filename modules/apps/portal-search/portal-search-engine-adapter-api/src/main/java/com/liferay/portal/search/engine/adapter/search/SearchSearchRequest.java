@@ -67,8 +67,13 @@ public class SearchSearchRequest
 		return _preference;
 	}
 
+	/**
+	 * @deprecated since 1.1.0.  No direct replacement.
+	 * @return
+	 */
+	@Deprecated
 	public QueryConfig getQueryConfig() {
-		return _queryConfig;
+		throw new UnsupportedOperationException();
 	}
 
 	public String[] getSelectedFieldNames() {
@@ -104,7 +109,7 @@ public class SearchSearchRequest
 	}
 
 	public boolean isScoreEnabled() {
-		return _queryConfig.isScoreEnabled();
+		return _scoreEnabled;
 	}
 
 	public void putAllStats(Map<String, Stats> stats) {
@@ -158,7 +163,7 @@ public class SearchSearchRequest
 	}
 
 	public void setScoreEnabled(boolean scoreEnabled) {
-		_queryConfig.setScoreEnabled(scoreEnabled);
+		_scoreEnabled = scoreEnabled;
 	}
 
 	public void setSelectedFieldNames(String... selectedFieldNames) {
@@ -191,7 +196,6 @@ public class SearchSearchRequest
 	private Locale _locale;
 	private boolean _luceneSyntax;
 	private String _preference;
-	private final QueryConfig _queryConfig = new QueryConfig();
 	private boolean _scoreEnabled;
 	private String[] _selectedFieldNames;
 	private int _size;

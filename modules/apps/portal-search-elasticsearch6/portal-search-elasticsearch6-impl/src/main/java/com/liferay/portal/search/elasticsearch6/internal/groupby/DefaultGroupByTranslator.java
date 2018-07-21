@@ -69,9 +69,9 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			groupBy.getField());
 
 		TopHitsAggregationBuilder topHitsAggregationBuilder = getTopHitsBuilder(
-			groupBy, sorts, selectedFieldNames, locale,
-			highlightFieldNames, highlightEnabled, highlightRequireFieldMatch,
-			highlightFragmentSize, highlightSnippetSize, start, end);
+			groupBy, sorts, selectedFieldNames, locale, highlightFieldNames,
+			highlightEnabled, highlightRequireFieldMatch, highlightFragmentSize,
+			highlightSnippetSize, start, end);
 
 		termsAggregationBuilder.subAggregation(topHitsAggregationBuilder);
 
@@ -95,8 +95,8 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 	}
 
 	protected void addHighlights(
-		TopHitsAggregationBuilder topHitsAggregationBuilder,
-		Locale locale, String[] highlightFieldNames, int highlightFragmentSize,
+		TopHitsAggregationBuilder topHitsAggregationBuilder, Locale locale,
+		String[] highlightFieldNames, int highlightFragmentSize,
 		int highlightSnippetSize, boolean highlightRequireFieldMatch) {
 
 		HighlightBuilder highlightBuilder = new HighlightBuilder();
@@ -209,7 +209,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 	protected TopHitsAggregationBuilder getTopHitsBuilder(
 		GroupBy groupBy, Sort[] sorts, String[] selectedFieldNames,
 		Locale locale, String[] highlightFieldNames, boolean highlightEnabled,
-		boolean highlightRequireFieldMatch,  int highlightFragmentSize,
+		boolean highlightRequireFieldMatch, int highlightFragmentSize,
 		int highlightSnippetSize, int start, int end) {
 
 		TopHitsAggregationBuilder topHitsAggregationBuilder =

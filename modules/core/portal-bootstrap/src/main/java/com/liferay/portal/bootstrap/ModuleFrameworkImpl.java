@@ -1468,16 +1468,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Set<Bundle> fragmentBundles = new HashSet<>();
 
 		for (Bundle bundle : installedBundles) {
-			Dictionary<String, String> headers = bundle.getHeaders(
-				StringPool.BLANK);
-
-			String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
-
-			if (fragmentHost == null) {
-				continue;
+			if (_isFragmentBundle(bundle)) {
+				fragmentBundles.add(bundle);
 			}
-
-			fragmentBundles.add(bundle);
 		}
 
 		FrameworkWiring frameworkWiring = _framework.adapt(

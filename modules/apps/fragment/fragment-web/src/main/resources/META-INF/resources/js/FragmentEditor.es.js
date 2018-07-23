@@ -1,5 +1,6 @@
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 import templates from './FragmentEditor.soy';
@@ -137,6 +138,15 @@ class FragmentEditor extends PortletBase {
 			)
 			.then(
 				response => {
+					if (response.error) {
+						throw response.error;
+					}
+
+					return response;
+				}
+			)
+			.then(
+				response => {
 					const redirectURL = (
 						response.redirect ||
 						this.urls.redirect
@@ -150,9 +160,21 @@ class FragmentEditor extends PortletBase {
 					}
 				}
 			)
-			.catch (
-				() => {
+			.catch(
+				(error) => {
 					this._saving = false;
+
+					const message = typeof error === 'string' ?
+						error :
+						Liferay.Language.get('error');
+
+					openToast(
+						{
+							message,
+							title: Liferay.Language.get('error'),
+							type: 'danger'
+						}
+					);
 				}
 			);
 	}

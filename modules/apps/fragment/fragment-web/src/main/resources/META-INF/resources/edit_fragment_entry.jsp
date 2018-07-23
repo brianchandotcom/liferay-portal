@@ -31,56 +31,8 @@ if (WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus()) {
 renderResponse.setTitle(title);
 %>
 
-<portlet:actionURL name="/fragment/edit_fragment_entry" var="editFragmentEntryURL" />
-
-<div id="<portlet:namespace />fragmentEditor"></div>
-
-<liferay-portlet:renderURL plid="<%= fragmentDisplayContext.getRenderLayoutPlid() %>" var="renderFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/fragment/render_fragment_entry" />
-	<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentEntryId()) %>" />
-</liferay-portlet:renderURL>
-
-<liferay-portlet:renderURL plid="<%= fragmentDisplayContext.getRenderLayoutPlid() %>" var="previewFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/fragment/preview_fragment_entry" />
-</liferay-portlet:renderURL>
-
-<aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor">
-	var cssInput = document.getElementById('<portlet:namespace />cssContent');
-	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
-	var jsInput = document.getElementById('<portlet:namespace />jsContent');
-	var wrapper = document.getElementById('<portlet:namespace />fragmentEditor');
-
-	var fragmentEditor = new FragmentEditor.default(
-		{
-			allowedStatus: {
-				approved: '<%= WorkflowConstants.STATUS_APPROVED %>',
-				draft: '<%= WorkflowConstants.STATUS_DRAFT %>'
-			},
-			fragmentCollectionId: '<%= fragmentDisplayContext.getFragmentCollectionId() %>',
-			fragmentEntryId: '<%= fragmentDisplayContext.getFragmentEntryId() %>',
-			initialCSS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getCssContent()) %>',
-			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
-			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',
-			name: '<%= fragmentDisplayContext.getName() %>',
-			portletNamespace: '<portlet:namespace />',
-			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-			status: '<%= fragmentEntry.getStatus() %>',
-			urls: {
-				current: '<%= currentURL %>',
-				edit: '<%= editFragmentEntryURL %>',
-				preview: '<%= previewFragmentEntryURL %>',
-				redirect: '<%= fragmentDisplayContext.getRedirect() %>',
-				render: '<%= renderFragmentEntryURL %>'
-			}
-		},
-		wrapper
-	);
-
-	function destroyFragmentEditor () {
-		fragmentEditor.dispose();
-
-		Liferay.detach('destroyPortlet', destroyFragmentEditor);
-	}
-
-	Liferay.on('destroyPortlet', destroyFragmentEditor);
-</aui:script>
+<soy:component-renderer
+	context="<%= fragmentDisplayContext.getFragmentEditorDisplayContext() %>"
+	module="fragment-web/js/FragmentEditor.es"
+	templateNamespace="com.liferay.fragment.web.FragmentEditor.render"
+/>

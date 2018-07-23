@@ -23,6 +23,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.role.apio.identifier.RoleIdentifier;
 
@@ -74,10 +75,6 @@ public class RoleCollectionResource
 			"Role"
 		).identifier(
 			Role::getRoleId
-		).addBoolean(
-			"systemRole", Role::isSystem
-		).addBoolean(
-			"teamRole", Role::isTeam
 		).addDate(
 			"dateCreated", Role::getCreateDate
 		).addDate(
@@ -89,19 +86,21 @@ public class RoleCollectionResource
 		).addString(
 			"name", Role::getName
 		).addString(
-			"type", Role::getTypeLabel
+			"roleType", Role::getTypeLabel
 		).build();
 	}
 
 	private PageItems<Role> _getPageItems(
 		Pagination pagination, Company company) {
 
+		Integer[] roleTypes = {RoleConstants.TYPE_REGULAR};
+
 		List<Role> roles = _roleService.search(
-			company.getCompanyId(), null, null, null,
+			company.getCompanyId(), null, roleTypes, null,
 			pagination.getStartPosition(), pagination.getEndPosition(), null);
 
 		int count = _roleService.searchCount(
-			company.getCompanyId(), null, null, null);
+			company.getCompanyId(), null, roleTypes, null);
 
 		return new PageItems<>(roles, count);
 	}

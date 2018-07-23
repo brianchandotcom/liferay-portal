@@ -1,7 +1,7 @@
 dependencies {
 	compileInclude group: "com.liferay", name: "javax.servlet.jsp", version: "2.3.3-b02.LIFERAY-PATCHED-7"
 
-	compileOnly fileTree(dir: "lib-patch", exclude: "*-sources.jar", include: "*.jar")
+	compileOnly group: "com.liferay", name: "org.eclipse.equinox.http.servlet", version: "1.2.2.v20180613-2229-LIFERAY-CACHED"
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1.LIFERAY-PATCHED-1"
@@ -26,13 +26,9 @@ dependencies {
 }
 
 deployDependencies {
-	from(configurations.compileOnly) {
-		include "commons-fileupload-*.jar"
-		include "commons-io-*.jar"
-	}
+	from configurations.compileOnly
 
-	from("lib-patch") {
-		exclude "*-sources.jar"
-		include "org.eclipse.equinox.http.servlet-*.jar"
-	}
+	include "commons-fileupload-*.jar"
+	include "commons-io-*.jar"
+	include "org.eclipse.equinox.http.servlet-*.jar"
 }

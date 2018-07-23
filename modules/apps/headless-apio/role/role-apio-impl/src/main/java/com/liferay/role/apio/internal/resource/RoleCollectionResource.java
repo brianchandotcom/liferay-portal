@@ -74,10 +74,6 @@ public class RoleCollectionResource
 			"Role"
 		).identifier(
 			Role::getRoleId
-		).addBoolean(
-			"systemRole", Role::isSystem
-		).addBoolean(
-			"teamRole", Role::isTeam
 		).addDate(
 			"dateCreated", Role::getCreateDate
 		).addDate(

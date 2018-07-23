@@ -17,11 +17,11 @@ package com.liferay.portal.search.engine.adapter.search;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.search.GroupBy;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.Stats;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -38,16 +38,36 @@ public class SearchSearchRequest
 		return searchRequestExecutor.executeSearchRequest(this);
 	}
 
+	public String getAlternateUidFieldName() {
+		return _alternateUidFieldName;
+	}
+
 	public GroupBy getGroupBy() {
 		return _groupBy;
+	}
+
+	public String[] getHighlightFieldNames() {
+		return _highlightFieldNames;
+	}
+
+	public int getHighlightFragmentSize() {
+		return _highlightFragmentSize;
+	}
+
+	public int getHighlightSnippetSize() {
+		return _highlightSnippetSize;
+	}
+
+	public Locale getLocale() {
+		return _locale;
 	}
 
 	public String getPreference() {
 		return _preference;
 	}
 
-	public QueryConfig getQueryConfig() {
-		return _queryConfig;
+	public String[] getSelectedFieldNames() {
+		return _selectedFieldNames;
 	}
 
 	public int getSize() {
@@ -66,12 +86,20 @@ public class SearchSearchRequest
 		return _stats;
 	}
 
+	public boolean isHighlightEnabled() {
+		return _highlightEnabled;
+	}
+
+	public boolean isHighlightRequireFieldMatch() {
+		return _highlightRequireFieldMatch;
+	}
+
 	public boolean isLuceneSyntax() {
 		return _luceneSyntax;
 	}
 
 	public boolean isScoreEnabled() {
-		return _queryConfig.isScoreEnabled();
+		return _scoreEnabled;
 	}
 
 	public void putAllStats(Map<String, Stats> stats) {
@@ -82,8 +110,38 @@ public class SearchSearchRequest
 		_stats.putAll(stats);
 	}
 
+	public void setAlternateUidFieldName(String alternateUidFieldName) {
+		_alternateUidFieldName = alternateUidFieldName;
+	}
+
 	public void setGroupBy(GroupBy groupBy) {
 		_groupBy = groupBy;
+	}
+
+	public void setHighlightEnabled(boolean highlightEnabled) {
+		_highlightEnabled = highlightEnabled;
+	}
+
+	public void setHighlightFieldNames(String... highlightFieldNames) {
+		_highlightFieldNames = highlightFieldNames;
+	}
+
+	public void setHighlightFragmentSize(int highlightFragmentSize) {
+		_highlightFragmentSize = highlightFragmentSize;
+	}
+
+	public void setHighlightRequireFieldMatch(
+		boolean highlightRequireFieldMatch) {
+
+		_highlightRequireFieldMatch = highlightRequireFieldMatch;
+	}
+
+	public void setHighlightSnippetSize(int highlightSnippetSize) {
+		_highlightSnippetSize = highlightSnippetSize;
+	}
+
+	public void setLocale(Locale locale) {
+		_locale = locale;
 	}
 
 	public void setLuceneSyntax(boolean luceneSyntax) {
@@ -95,7 +153,11 @@ public class SearchSearchRequest
 	}
 
 	public void setScoreEnabled(boolean scoreEnabled) {
-		_queryConfig.setScoreEnabled(scoreEnabled);
+		_scoreEnabled = scoreEnabled;
+	}
+
+	public void setSelectedFieldNames(String... selectedFieldNames) {
+		_selectedFieldNames = selectedFieldNames;
 	}
 
 	public void setSize(int size) {
@@ -114,11 +176,18 @@ public class SearchSearchRequest
 		_stats = stats;
 	}
 
+	private String _alternateUidFieldName;
 	private GroupBy _groupBy;
+	private boolean _highlightEnabled;
+	private String[] _highlightFieldNames;
+	private int _highlightFragmentSize = 80;
+	private boolean _highlightRequireFieldMatch = true;
+	private int _highlightSnippetSize = 3;
+	private Locale _locale;
 	private boolean _luceneSyntax;
 	private String _preference;
-	private final QueryConfig _queryConfig = new QueryConfig();
 	private boolean _scoreEnabled;
+	private String[] _selectedFieldNames;
 	private int _size;
 	private Sort[] _sorts;
 	private int _start;

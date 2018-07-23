@@ -31,22 +31,6 @@ if (WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus()) {
 renderResponse.setTitle(title);
 %>
 
-<liferay-ui:error exception="<%= FragmentEntryContentException.class %>">
-
-	<%
-	FragmentEntryContentException fece = (FragmentEntryContentException)errorException;
-	%>
-
-	<c:choose>
-		<c:when test="<%= Validator.isNotNull(fece.getMessage()) %>">
-			<%= fece.getMessage() %>
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:message key="fragment-html-is-invalid" />
-		</c:otherwise>
-	</c:choose>
-</liferay-ui:error>
-
 <portlet:actionURL name="/fragment/edit_fragment_entry" var="editFragmentEntryURL" />
 
 <div id="<portlet:namespace />fragmentEditor"></div>

@@ -88,8 +88,8 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 					firstResponseJSONObject.getJSONArray("labelAnnotations");
 
 				if (labelAnnotationsJSONArray != null) {
-					for (int i =
-							 0; i < labelAnnotationsJSONArray.length(); i++) {
+					for (int i = ; i < labelAnnotationsJSONArray.length();
+							i++) {
 
 						JSONObject labelAnnotationJSONObject =
 							labelAnnotationsJSONArray.getJSONObject(i);

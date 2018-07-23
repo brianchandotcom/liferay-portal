@@ -39,7 +39,6 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.lang.reflect.Method;
@@ -672,34 +671,16 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		Project project = buildChangeLogTask.getProject();
 
-		File file = project.file("ci.properties");
+		String ticketIdPrefixes = GradleUtil.getProperty(
+			project, "jira.project.keys", (String)null);
 
-		if (!file.exists()) {
-			Project rootProject = project.getRootProject();
-
-			file = rootProject.file("ci.properties");
+		if (Validator.isNull(ticketIdPrefixes)) {
+			ticketIdPrefixes = GradleUtil.getProperty(
+				project.getRootProject(), "jira.project.keys", (String)null);
 		}
 
-		if (file.exists()) {
-			Properties properties = new Properties();
-
-			try (FileInputStream fileInputStream = new FileInputStream(file)) {
-				properties.load(fileInputStream);
-			}
-			catch (IOException ioe) {
-				Logger logger = buildChangeLogTask.getLogger();
-
-				if (logger.isWarnEnabled()) {
-					logger.warn(
-						"Unable to read ci.properties file from {}", file);
-				}
-			}
-
-			String keys = properties.getProperty("jira.project.keys");
-
-			if (Validator.isNotNull(keys)) {
-				buildChangeLogTask.ticketIdPrefixes(keys.split(","));
-			}
+		if (Validator.isNotNull(ticketIdPrefixes)) {
+			buildChangeLogTask.ticketIdPrefixes(ticketIdPrefixes.split(","));
 		}
 
 		buildChangeLogTask.setChangeLogFile(

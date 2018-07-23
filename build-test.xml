@@ -6316,6 +6316,8 @@ setup.wizard.enabled=false
 
 mail.session.jndi.name=
 
+module.framework.properties.initial.system.check.enabled=true
+
 sprite.root.dir=/tmp/sprite
 
 memory.scheduler.org.quartz.threadPool.threadCount=1

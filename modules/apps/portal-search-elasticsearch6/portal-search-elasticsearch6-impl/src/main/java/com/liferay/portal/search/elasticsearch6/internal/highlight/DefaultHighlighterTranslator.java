@@ -32,14 +32,10 @@ public class DefaultHighlighterTranslator implements HighlighterTranslator {
 
 	@Override
 	public void translate(
-		SearchRequestBuilder searchRequestBuilder, String[] highlightFieldNames,
-		boolean highlightEnabled, boolean highlightRequireFieldMatch,
-		Locale locale, int highlightFragmentSize, int highlightSnippetSize,
+		SearchRequestBuilder searchRequestBuilder, Locale locale,
+		String[] highlightFieldNames, boolean highlightRequireFieldMatch,
+		int highlightFragmentSize, int highlightSnippetSize,
 		boolean luceneSyntax) {
-
-		if (!highlightEnabled) {
-			return;
-		}
 
 		HighlightBuilder highlightBuilder = new HighlightBuilder();
 

@@ -208,6 +208,11 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Collection<LiferayOAuth2Scope> getFilteredLiferayOAuth2Scopes(
+		long oAuth2ApplicationScopeAliasesId,
+		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

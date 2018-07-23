@@ -16,11 +16,14 @@ package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 
 import org.tensorflow.DataType;
 import org.tensorflow.Graph;
+import org.tensorflow.OperationBuilder;
 import org.tensorflow.Output;
 import org.tensorflow.Tensor;
 import org.tensorflow.types.UInt8;
 
 /**
+ * Based on https://github.com/tensorflow/tensorflow/blob/master/tensorflow/java/src/main/java/org/tensorflow/examples/LabelImage.java
+ *
  * @author Alejandro Tardín
  */
 public class GraphBuilder {
@@ -29,79 +32,133 @@ public class GraphBuilder {
 		_graph = graph;
 	}
 
-	public <T, U> Output<U> cast(Output<T> value, Class<U> type) {
-		return _graph.opBuilder("Cast", "Cast")
-			.addInput(value)
-			.setAttr("DstT", DataType.fromClass(type))
-			.build()
-			.output(0);
+	public <T, U> Output<U> cast(Output<T> output, Class<U> type) {
+		OperationBuilder operationBuilder = _graph.opBuilder("Cast", "Cast");
+
+		return operationBuilder.addInput(
+			output
+		).setAttr(
+			"DstT", DataType.fromClass(type)
+		).build(
+		).output(
+			0
+		);
 	}
 
 	public Output<Float> constant(String name, float value) {
-		return this.constant(name, value, Float.class);
+		return constant(name, value, Float.class);
 	}
 
 	public Output<Integer> constant(String name, int value) {
-		return this.constant(name, value, Integer.class);
+		return constant(name, value, Integer.class);
 	}
 
 	public Output<Integer> constant(String name, int[] value) {
-		return this.constant(name, value, Integer.class);
+		return constant(name, value, Integer.class);
 	}
 
 	public <T> Output<T> constant(String name, Object value, Class<T> type) {
 		try (Tensor<T> tensor = Tensor.create(value, type)) {
-			return _graph.opBuilder("Const", name)
-				.setAttr("dtype", DataType.fromClass(type))
-				.setAttr("value", tensor)
-				.build()
-				.output(0);
+			OperationBuilder operationBuilder = _graph.opBuilder("Const", name);
+
+			return operationBuilder.setAttr(
+				"dtype", DataType.fromClass(type)
+			).setAttr(
+				"value", tensor
+			).build(
+			).output(
+				0
+			);
 		}
 	}
 
-	public Output<UInt8> decodeJpeg(Output<String> contents, long channels) {
-		return _graph.opBuilder("DecodeJpeg", "DecodeJpeg")
-			.addInput(contents)
-			.setAttr("channels", channels)
-			.build()
-			.output(0);
+	public Output<UInt8> decodeJpeg(
+		Output<String> contentsOutput, long channels) {
+
+		OperationBuilder operationBuilder = _graph.opBuilder(
+			"DecodeJpeg", "DecodeJpeg");
+
+		return operationBuilder.addInput(
+			contentsOutput
+		).setAttr(
+			"channels", channels
+		).build(
+		).output(
+			0
+		);
 	}
 
-	public Output<Float> div(Output<Float> x, Output<Float> y) {
-		return binaryOp("Div", x, y);
+	public Output<Float> div(Output<Float> output1, Output<Float> output2) {
+		return _binaryOp("Div", output1, output2);
 	}
 
-	public <T> Output<T> expandDims(Output<T> input, Output<Integer> dim) {
-		return binaryOp3("ExpandDims", input, dim);
+	public <T> Output<T> expandDims(
+		Output<T> output, Output<Integer> dimOutput) {
+
+		return _binaryOp3("ExpandDims", output, dimOutput);
 	}
 
 	public <T> Output<T> placeholder(String name, Class<T> type) {
-		return _graph.opBuilder("Placeholder", name)
-			.setAttr("dtype", DataType.fromClass(type))
-			.build()
-			.output(0);
+		OperationBuilder operationBuilder = _graph.opBuilder(
+			"Placeholder", name);
+
+		return operationBuilder.setAttr(
+			"dtype", DataType.fromClass(type)
+		).build(
+		).output(
+			0
+		);
+	}
+
+	public Output<Float> rename(Output<Float> output, String name) {
+		OperationBuilder operationBuilder = _graph.opBuilder("Identity", name);
+
+		return operationBuilder.addInput(
+			output
+		).build(
+		).output(
+			0
+		);
 	}
 
 	public <T> Output<Float> resizeBilinear(
-		Output<T> images, Output<Integer> size) {
+		Output<T> imagesOutput, Output<Integer> sizeOutput) {
 
-		return binaryOp3("ResizeBilinear", images, size);
+		return _binaryOp3("ResizeBilinear", imagesOutput, sizeOutput);
 	}
 
-	public <T> Output<T> sub(Output<T> x, Output<T> y) {
-		return binaryOp("Sub", x, y);
+	public <T> Output<T> sub(Output<T> output1, Output<T> output2) {
+		return _binaryOp("Sub", output1, output2);
 	}
 
-	private <T> Output<T> binaryOp(String type, Output<T> in1, Output<T> in2) {
-		return _graph.opBuilder(
-			type, type).addInput(in1).addInput(in2).build().output(0);
+	private <T> Output<T> _binaryOp(
+		String type, Output<T> output1, Output<T> output2) {
+
+		OperationBuilder operationBuilder = _graph.opBuilder(type, type);
+
+		return operationBuilder.addInput(
+			output1
+		).addInput(
+			output2
+		).build(
+		).output(
+			0
+		);
 	}
 
-	private <T, U, V> Output<T> binaryOp3(
-		String type, Output<U> in1, Output<V> in2) {
+	private <T, U, V> Output<T> _binaryOp3(
+		String type, Output<U> output1, Output<V> output2) {
 
-		return _graph.opBuilder(
-			type, type).addInput(in1).addInput(in2).build().output(0);
+		OperationBuilder operationBuilder = _graph.opBuilder(type, type);
+
+		return operationBuilder.addInput(
+			output1
+		).addInput(
+			output2
+		).build(
+		).output(
+			0
+		);
 	}
 
 	private final Graph _graph;

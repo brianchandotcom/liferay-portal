@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.provider;
+package com.liferay.document.library.asset.auto.tagger.tensorflow.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorflowImageAssetAutoTagProviderConfiguration;
@@ -54,28 +54,23 @@ public class TensorFlowImageAssetAutoTagProvider
 
 	@Override
 	public List<String> getTagNames(FileEntry fileEntry) {
-		if (!_tensorflowImageAutoTaggerConfiguration.enabled() ||
-			_isTemporary(fileEntry)) {
+		if (_tensorflowImageAutoTaggerConfiguration.enabled() &&
+			!_isTemporary(fileEntry)) {
 
-			return Collections.emptyList();
-		}
+			try {
+				FileVersion fileVersion = fileEntry.getFileVersion();
 
-		try {
-			FileVersion fileVersion = fileEntry.getFileVersion();
-
-			if (_accepts(fileVersion.getMimeType())) {
-				return _inceptionImageLabeler.label(
-					FileUtil.getBytes(fileVersion.getContentStream(false)));
+				if (_accepts(fileVersion.getMimeType())) {
+					return _inceptionImageLabeler.label(
+						FileUtil.getBytes(fileVersion.getContentStream(false)));
+				}
 			}
-			else {
-				return Collections.emptyList();
+			catch (IOException | PortalException e) {
+				_log.error(e, e);
 			}
 		}
-		catch (IOException | PortalException e) {
-			_log.error(e, e);
 
-			return Collections.emptyList();
-		}
+		return Collections.emptyList();
 	}
 
 	@Activate

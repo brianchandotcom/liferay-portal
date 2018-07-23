@@ -47,10 +47,11 @@ import org.tensorflow.Tensor;
 @Component(service = InceptionImageLabeler.class)
 public class InceptionImageLabeler {
 
-	public List<String> label(byte[] imageBytes) {
+	public List<String> label(byte[] imageBytes, float confidenceThreshold) {
 		float[] labelProbabilities = _getLabelProbabilities(imageBytes);
 
-		Stream<Integer> indexesStream = _bestIndexes(labelProbabilities);
+		Stream<Integer> indexesStream = _bestIndexes(
+			labelProbabilities, confidenceThreshold);
 
 		return indexesStream.map(
 			i -> _labels[i]
@@ -75,11 +76,13 @@ public class InceptionImageLabeler {
 		_imageLabelerGraph.close();
 	}
 
-	private Stream<Integer> _bestIndexes(float[] probabilities) {
+	private Stream<Integer> _bestIndexes(
+		float[] probabilities, float confidenceThreshold) {
+
 		List<Integer> bestIndexes = new ArrayList<>();
 
 		for (int i = 1; i < probabilities.length; ++i) {
-			if (probabilities[i] > .1) {
+			if (probabilities[i] > confidenceThreshold) {
 				bestIndexes.add(i);
 			}
 		}

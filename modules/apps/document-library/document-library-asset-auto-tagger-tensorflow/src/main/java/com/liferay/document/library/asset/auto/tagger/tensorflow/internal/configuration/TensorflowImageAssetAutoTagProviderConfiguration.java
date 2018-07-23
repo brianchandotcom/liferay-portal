@@ -37,4 +37,13 @@ public interface TensorflowImageAssetAutoTagProviderConfiguration {
 	)
 	public boolean enabled();
 
+	/**
+	 * Sets the confidenceThreshold for the returned tags
+	 */
+	@Meta.AD(
+		deflt = "0.1", description = "confidence-threshold-description",
+		name = "confidence-threshold", required = false
+	)
+	public float confidenceThreshold();
+
 }

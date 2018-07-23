@@ -87,10 +87,10 @@ into the Bndrun resolve operation.
 The plugin applies the [Target Platform](#target-platform-plugin) and the
 [`eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
 plugins to your project, and also adds a special `targetPlatformIDE`
-configuration, which is used to configure both the eclipse and idea plugin model
-in Gradle to add all target platform artifacts to the classpath so they are
-visible to both Eclipse and IntelliJ Java Model Search (for looking up sources
-to classes).
+configuration, which is used to configure both the `eclipse` and `idea` plugin
+model in Gradle to add all target platform artifacts to the classpath so they
+are visible to both Eclipse and IntelliJ Java Model Search (for looking up
+sources to classes).
 
 ## Project Extension
 

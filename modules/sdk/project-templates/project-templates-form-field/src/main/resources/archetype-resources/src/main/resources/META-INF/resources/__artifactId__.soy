@@ -1,3 +1,4 @@
+#if (${liferayVersion.startsWith("7.0")})
 {namespace ddm}
 
 /**
@@ -30,3 +31,67 @@
 		<input class="field form-control" id="{$name}" name="{$name}" {if $readOnly}readonly{/if} type="text" value="{$value}">
 	</div>
 {/template}
+#elseif (${liferayVersion.startsWith("7.1")})
+{namespace DDM${className}}
+
+/**
+ * Defines the delegated template for the form field.
+ */
+{deltemplate ddm.field variant="'${artifactId}'"}
+	{call .render data="all" /}
+{/deltemplate}
+
+/**
+ * Prints the form field.
+ */
+{template .render}
+	{@param name: string}
+	{@param pathThemeImages: string}
+	{@param value: ?}
+	{@param visible: bool}
+	{@param? dir: string}
+	{@param? label: string}
+	{@param? predefinedValue: string}
+	{@param? readOnly: bool}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? tip: string}
+
+	{let $displayValue: $value ? $value : $predefinedValue ? $predefinedValue : '' /}
+
+	<div class="form-group {$visible ? '' : 'hide'} ${artifactId}-form-field"
+		data-fieldname="{$name}">
+		{if $showLabel or $required}
+			<label for="{$name}">
+				{if $showLabel}
+					{$label}{sp}
+				{/if}
+
+				{if $required}
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+					</svg>
+				{/if}
+			</label>
+		{/if}
+
+		{if $showLabel}
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
+		{/if}
+
+		<div class="input-group">
+			<div class="input-group-item">
+				<input class="field form-control"
+					{if $dir}dir="{$dir}"{/if}
+					{if $readOnly}disabled{/if}
+					id="{$name}"
+					name="{$name}"
+					type="text"
+					value="{$value}">
+			</div>
+		</div>
+	</div>
+{/template}
+#end

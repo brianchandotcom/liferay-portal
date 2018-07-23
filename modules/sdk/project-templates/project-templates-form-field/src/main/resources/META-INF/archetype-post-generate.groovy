@@ -21,3 +21,21 @@ Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 Path buildGradlePath = projectPath.resolve("build.gradle")
 
 Files.deleteIfExists buildGradlePath
+
+Properties properties = request.properties
+
+String liferayVersion = properties.get("liferayVersion")
+
+if (!liferayVersion.startsWith("7.1")) {
+	String artifactId = properties.get("artifactId")
+
+	List<String> fileNames = [".babelrc", ".npmbundlerrc", "package.json", "src/main/resources/META-INF/resources/${artifactId}.es.js"]
+
+	for (fileName in fileNames) {
+		Path resourcePath = Paths.get(fileName)
+
+		Path resourceFullPath = projectPath.resolve(resourcePath)
+
+		Files.deleteIfExists resourceFullPath
+	}
+}

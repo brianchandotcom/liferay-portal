@@ -2,12 +2,15 @@ Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 Liferay-JS-Config: /META-INF/resources/config.js
-Web-ContextPath: /${artifactId}-form-field#if (${buildType} != "gradle")
+Web-ContextPath: /dynamic-data-${artifactId}-form-field#if (${buildType} != "gradle")
 
 #if (${liferayVersion.startsWith("7.1")})-contract: JavaPortlet,JavaServlet
 #end
 -jsp: *.jsp,*.jspf
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
+#if (${liferayVersion.startsWith("7.1")})
+-plugin.npm: com.liferay.ant.bnd.npm.NpmAnalyzerPlugin
+#end
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
 -plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin
 -sass: *#end

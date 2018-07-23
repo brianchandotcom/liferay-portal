@@ -36,7 +36,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 	<liferay-util:include page="/user/categorization.jsp" servletContext="<%= application %>" />
 </div>
 
-<c:if test="<%= CustomFieldsUtil.hasVisibleCustomFields(selUser.getCompanyId(), User.class) %>">
+<c:if test="<%= CustomFieldsUtil.hasVisibleCustomFields(company.getCompanyId(), User.class) %>">
 	<div class="sheet-section">
 		<h4 class="sheet-tertiary-title"><liferay-ui:message key="custom-fields" /></h4>
 

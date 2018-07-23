@@ -81,8 +81,8 @@ public class InceptionImageLabeler {
 
 		List<Integer> bestIndexes = new ArrayList<>();
 
-		for (int i = 1; i < probabilities.length; ++i) {
-			if (probabilities[i] > confidenceThreshold) {
+		for (int i = 0; i < probabilities.length; i++) {
+			if (probabilities[i] >= confidenceThreshold) {
 				bestIndexes.add(i);
 			}
 		}

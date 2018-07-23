@@ -15,8 +15,8 @@
 package com.liferay.portal.language.extender.internal;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.language.LanguageResources;
 
 import java.util.List;
 
@@ -77,17 +77,15 @@ public class LanguageExtender extends AbstractExtender {
 		_logger.log(Logger.LOG_ERROR, s, throwable);
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Override
 	protected void warn(Bundle bundle, String s, Throwable throwable) {
 		_logger.log(
 			Logger.LOG_WARNING,
 			StringBundler.concat("[", String.valueOf(bundle), "] ", s));
 	}
+
+	@Reference
+	private LanguageResources _languageResources;
 
 	private Logger _logger;
 

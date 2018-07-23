@@ -137,11 +137,11 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 		requestJSONObject.put("image", imageJSONObject);
 
+		JSONArray featuresJSONArray = JSONFactoryUtil.createJSONArray();
+
 		JSONObject featureJSONObject = JSONFactoryUtil.createJSONObject();
 
 		featureJSONObject.put("type", "LABEL_DETECTION");
-
-		JSONArray featuresJSONArray = JSONFactoryUtil.createJSONArray();
 
 		featuresJSONArray.put(featureJSONObject);
 

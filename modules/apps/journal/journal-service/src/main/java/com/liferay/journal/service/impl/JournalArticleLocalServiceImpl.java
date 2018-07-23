@@ -4230,18 +4230,31 @@ public class JournalArticleLocalServiceImpl
 	 * @param  end the upper bound of the range of web content articles to
 	 *         return (not inclusive)
 	 * @return the matching web content articles
+	 *
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *  		   #search(long groupId, List folderIds, Locale locale,
+	 *  		   int status, int start, int end)}
 	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> search(
 		long groupId, List<Long> folderIds, int status, int start, int end) {
 
+		Locale locale = LocaleUtil.getMostRelevantLocale();
+
+		return search(groupId, folderIds, locale, status, start, end);
+	}
+
+	@Override
+	public List<JournalArticle> search(
+		long groupId, List<Long> folderIds, Locale locale, int status,
+		int start, int end) {
+
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, null);
 
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
-
 		return journalArticleFinder.findByG_F_L(
-			groupId, folderIds, siteDefaultLocale, queryDefinition);
+			groupId, folderIds, locale, queryDefinition);
 	}
 
 	/**

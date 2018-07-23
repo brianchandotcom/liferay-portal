@@ -795,20 +795,16 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderId the primary key of the web content article folder
 	 * @return the matching web content articles
+	 *
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * 			   #getArticles(long groupId, long folderId, Locale locale)}
 	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> getArticles(long groupId, long folderId) {
-		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_ANY);
+		Locale locale = LocaleUtil.getMostRelevantLocale();
 
-		List<Long> folderIds = new ArrayList<>();
-
-		folderIds.add(folderId);
-
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
-
-		return journalArticleFinder.filterFindByG_F_L(
-			groupId, folderIds, siteDefaultLocale, queryDefinition);
+		return getArticles(groupId, folderId, locale);
 	}
 
 	/**
@@ -833,10 +829,48 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         return (not inclusive)
 	 * @param  obc the comparator to order the web content articles
 	 * @return the matching web content articles
+	 *
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * 			   #getArticles(long groupId, long folderId, Locale locale,
+	 * 			   int start, int end, OrderByComparator obc)}
 	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> getArticles(
 		long groupId, long folderId, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		Locale locale = LocaleUtil.getMostRelevantLocale();
+
+		return getArticles(groupId, folderId, locale, start, end, obc);
+	}
+
+	/**
+	 * Returns all the web content articles matching the group, folder and
+	 * locale.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  folderId the primary key of the web content article folder
+	 * @param  locale current locale
+	 * @return the matching web content articles
+	 */
+	public List<JournalArticle> getArticles(
+		long groupId, long folderId, Locale locale) {
+
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			WorkflowConstants.STATUS_ANY);
+
+		List<Long> folderIds = new ArrayList<>();
+
+		folderIds.add(folderId);
+
+		return journalArticleFinder.filterFindByG_F_L(
+			groupId, folderIds, locale, queryDefinition);
+	}
+
+	@Override
+	public List<JournalArticle> getArticles(
+		long groupId, long folderId, Locale locale, int start, int end,
 		OrderByComparator<JournalArticle> obc) {
 
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
@@ -846,10 +880,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		folderIds.add(folderId);
 
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
-
 		return journalArticleFinder.filterFindByG_F_L(
-			groupId, folderIds, siteDefaultLocale, queryDefinition);
+			groupId, folderIds, locale, queryDefinition);
 	}
 
 	/**

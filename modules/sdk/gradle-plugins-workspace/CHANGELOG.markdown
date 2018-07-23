@@ -232,6 +232,8 @@ version 3.2.5.
 ## 1.10.3 - 2018-06-28
 
 ### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.59.
 - [LPS-80660]: Support commonly used Liferay Portal versions in the target
 platform version.
 
@@ -289,6 +291,7 @@ version 1.1.0
 [LPS-78537]: https://issues.liferay.com/browse/LPS-78537
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
 [LPS-79453]: https://issues.liferay.com/browse/LPS-79453
+[LPS-79679]: https://issues.liferay.com/browse/LPS-79679
 [LPS-80222]: https://issues.liferay.com/browse/LPS-80222
 [LPS-80281]: https://issues.liferay.com/browse/LPS-80281
 [LPS-80517]: https://issues.liferay.com/browse/LPS-80517

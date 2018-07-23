@@ -815,6 +815,25 @@ public class JenkinsResultsParserUtil {
 		return getJobVariant(new JSONObject(json));
 	}
 
+	public static Properties getLocalLiferayJenkinsEEBuildProperties() {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		File localLiferayJenkinsEEBuildPropertiesFile = new File(
+			buildProperties.getProperty("base.repository.dir"),
+			combine(
+				"liferay-jenkins-ee", File.separator, "commands",
+				File.separator, "build.properties"));
+
+		return getProperties(localLiferayJenkinsEEBuildPropertiesFile);
+	}
+
 	public static String getLocalURL(String remoteURL) {
 		if (remoteURL.contains("${dependencies.url}")) {
 			remoteURL = fixFileName(remoteURL);

@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,6 +65,31 @@ public class PullRequest {
 		refresh();
 	}
 
+	public Comment addComment(String body) {
+		body = body.replaceAll("\\\"", "\\\\\"");
+		body = body.replaceAll("(\\>)\\s+(\\<)", "$1$2");
+
+		JSONObject dataJSONObject = new JSONObject();
+
+		dataJSONObject.put("body", body);
+
+		try {
+			JSONObject responseJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.combine(
+						_jsonObject.getString("issue_url"), "/comments"),
+					dataJSONObject.toString());
+
+			return new Comment(responseJSONObject);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to post comment in GitHub pull request " +
+					getURL(),
+				ioe);
+		}
+	}
+
 	public boolean addLabel(Label label) {
 		if ((label == null) || hasLabel(label.getName())) {
 			return true;
@@ -88,12 +114,13 @@ public class PullRequest {
 
 		jsonArray.put(label.getName());
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getGitHubRemoteRepositoryName(), getOwnerUsername(),
 			"issues/" + getNumber() + "/labels");
 
 		try {
-			JenkinsResultsParserUtil.toString(url, jsonArray.toString());
+			JenkinsResultsParserUtil.toString(
+				gitHubApiUrl, jsonArray.toString());
 		}
 		catch (IOException ioe) {
 			System.out.println("Unable to add label " + label.getName());
@@ -106,10 +133,23 @@ public class PullRequest {
 		return true;
 	}
 
+	public void close() throws IOException {
+		if (Objects.equals(getState(), "open")) {
+			JSONObject postContentJSONObject = new JSONObject();
+
+			postContentJSONObject.put("state", "closed");
+
+			JenkinsResultsParserUtil.toString(
+				_jsonObject.getString("url"), postContentJSONObject.toString());
+		}
+
+		_jsonObject.put("state", "closed");
+	}
+
 	public List<Comment> getComments() {
 		List<Comment> comments = new ArrayList<>();
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getGitHubRemoteRepositoryName(), getOwnerUsername(),
 			"issues/" + getNumber() + "/comments?page=");
 
@@ -118,7 +158,7 @@ public class PullRequest {
 		while (true) {
 			try {
 				JSONArray jsonArray = JenkinsResultsParserUtil.toJSONArray(
-					url + page);
+					gitHubApiUrl + page);
 
 				if (jsonArray.length() == 0) {
 					break;
@@ -284,11 +324,12 @@ public class PullRequest {
 		String path = JenkinsResultsParserUtil.combine(
 			"issues/", getNumber(), "/labels/", labelName);
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getGitHubRemoteRepositoryName(), getOwnerUsername(), path);
 
 		try {
-			JenkinsResultsParserUtil.toString(url, HttpRequestMethod.DELETE);
+			JenkinsResultsParserUtil.toString(
+				gitHubApiUrl, HttpRequestMethod.DELETE);
 
 			refresh();
 		}

@@ -110,6 +110,11 @@ public class UpstreamFailureUtil {
 
 			if (testResults.isEmpty()) {
 				String jobVariant = build.getJobVariant();
+
+				if (jobVariant == null) {
+					return false;
+				}
+
 				String result = build.getResult();
 
 				if (result == null) {

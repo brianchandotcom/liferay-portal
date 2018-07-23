@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.util.RepositoryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -99,6 +101,8 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 		long folderId = ParamUtil.getLong(resourceRequest, "folderId");
 
+		_checkFolder(folderId);
+
 		File file = null;
 
 		try {
@@ -155,9 +159,12 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				}
 
 				for (Folder folder : folders) {
-					zipFolder(
-						folder.getRepositoryId(), folder.getFolderId(),
-						StringPool.SLASH.concat(folder.getName()), zipWriter);
+					if (!_isExternalRepositoryFolder(folder)) {
+						zipFolder(
+							folder.getRepositoryId(), folder.getFolderId(),
+							StringPool.SLASH.concat(folder.getName()),
+							zipWriter);
+					}
 				}
 
 				file = zipWriter.getFile();
@@ -185,6 +192,8 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 		long repositoryId = ParamUtil.getLong(resourceRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(resourceRequest, "folderId");
+
+		_checkFolder(folderId);
 
 		File file = null;
 
@@ -267,6 +276,41 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				zipFileEntry(fileEntry, path, zipWriter);
 			}
 		}
+	}
+
+	private void _checkFolder(long folderId) throws PortalException {
+		if (_isExternalRepositoryFolder(folderId)) {
+			throw new InvalidRepositoryException(
+				"Tried to download Folder " + folderId +
+					" belonging to an external repository");
+		}
+	}
+
+	private boolean _isExternalRepositoryFolder(Folder folder) {
+		if ((folder.isMountPoint() ||
+			 (folder.getGroupId() != folder.getRepositoryId())) &&
+			RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isExternalRepositoryFolder(long folderId)
+		throws PortalException {
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return false;
+		}
+
+		Folder folder = _dlAppService.getFolder(folderId);
+
+		if (_isExternalRepositoryFolder(folder)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private DLAppService _dlAppService;

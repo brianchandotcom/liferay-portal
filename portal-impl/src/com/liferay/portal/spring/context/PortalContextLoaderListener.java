@@ -109,8 +109,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		PortalContextLoaderLifecycleThreadLocal.setDestroying(true);
-
 		ThreadLocalCacheManager.destroy();
 
 		if (_serviceWrapperRegistry != null) {
@@ -180,8 +178,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_arrayApplicationContext.close();
 		}
 		finally {
-			PortalContextLoaderLifecycleThreadLocal.setDestroying(false);
-
 			SecurityManagerUtil.destroy();
 		}
 	}
@@ -288,14 +284,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		ClassLoaderPool.register(_portalServletContextName, portalClassLoader);
 
-		PortalContextLoaderLifecycleThreadLocal.setInitializing(true);
-
-		try {
-			super.contextInitialized(servletContextEvent);
-		}
-		finally {
-			PortalContextLoaderLifecycleThreadLocal.setInitializing(false);
-		}
+		super.contextInitialized(servletContextEvent);
 
 		ApplicationContext applicationContext =
 			ContextLoader.getCurrentWebApplicationContext();

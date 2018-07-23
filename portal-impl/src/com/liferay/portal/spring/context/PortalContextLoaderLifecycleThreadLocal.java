@@ -18,7 +18,9 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class PortalContextLoaderLifecycleThreadLocal {
 
 	public static boolean isDestroying() {

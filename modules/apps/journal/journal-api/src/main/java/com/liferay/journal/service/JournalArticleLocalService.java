@@ -2269,10 +2269,18 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of web content articles to
 	return (not inclusive)
 	* @return the matching web content articles
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#search(long groupId, List folderIds, Locale locale,
+	int status, int start, int end)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> search(long groupId, List<Long> folderIds,
 		int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> search(long groupId, List<Long> folderIds,
+		Locale locale, int status, int start, int end);
 
 	/**
 	* Returns a range of all the web content articles in a single folder

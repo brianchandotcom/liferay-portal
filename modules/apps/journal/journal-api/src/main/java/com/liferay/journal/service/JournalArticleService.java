@@ -579,7 +579,10 @@ public interface JournalArticleService extends BaseService {
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
 	* @return the matching web content articles
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getArticles(long groupId, long folderId, Locale locale)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticles(long groupId, long folderId);
 
@@ -605,10 +608,31 @@ public interface JournalArticleService extends BaseService {
 	return (not inclusive)
 	* @param obc the comparator to order the web content articles
 	* @return the matching web content articles
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getArticles(long groupId, long folderId, Locale locale,
+	int start, int end, OrderByComparator obc)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticles(long groupId, long folderId,
 		int start, int end, OrderByComparator<JournalArticle> obc);
+
+	/**
+	* Returns all the web content articles matching the group, folder and
+	* locale.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param folderId the primary key of the web content article folder
+	* @param locale current locale
+	* @return the matching web content articles
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticles(long groupId, long folderId,
+		Locale locale);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticles(long groupId, long folderId,
+		Locale locale, int start, int end, OrderByComparator<JournalArticle> obc);
 
 	/**
 	* Returns an ordered range of all the web content articles matching the

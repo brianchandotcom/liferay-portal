@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SEARCH_BAR_WIDGET</td>
-	<td>//input[not(ancestor::header[@id='banner'])][@title='Search']</td>
+	<td>//input[not(ancestor::header[@id='banner'])][contains(@data-qa-id,'searchInput')]</td>
 	<td></td>
 </tr>
 <tr>

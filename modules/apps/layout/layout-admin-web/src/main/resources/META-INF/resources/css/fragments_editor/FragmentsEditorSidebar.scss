@@ -1,5 +1,9 @@
 @import "./variables";
 
+body:not(.has-contextual-sidebar) .contextual-sidebar-content {
+	padding-right: $contextualSidebarContentPadding;
+}
+
 .fragments-editor .contextual-sidebar.fragments-editor-sidebar {
 	height: calc(100vh - #{$controlMenuHeight} - #{$managementBarHeight});
 	margin-top: 2px;

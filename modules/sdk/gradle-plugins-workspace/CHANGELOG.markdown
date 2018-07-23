@@ -224,6 +224,8 @@ version 3.2.5.
 3.12.46.
 
 ## 1.10.2 - 2018-06-18
+
+### Changed
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.48.
 

@@ -9,6 +9,16 @@
 </thead>
 <tbody>
 <tr>
+	<td>DROPDOWN_MENU</td>
+	<td>//label[contains(.,'${key_fieldLabel}')]/parent::div//div[contains(@class,'option-selected')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN_MENU_OPTION</td>
+	<td>//a[contains(@class,'dropdown-item') and @title='${key_selectOption}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCOPED_CONFIGURATION_NAME</td>
 	<td>//a[contains(.,'${key_configurationScope}')]/following-sibling::div//a[contains(@class,'nav-link') and normalize-space(./text())='${key_configurationName}']</td>
 	<td></td>

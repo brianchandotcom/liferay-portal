@@ -79,6 +79,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 import java.util.Map;
+import java.util.concurrent.FutureTask;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -277,6 +278,31 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			SchedulerEngineHelper.class,
 			SingleDestinationMessageSenderFactory.class);
 
+		FutureTask<Void> springInitTask = new FutureTask<>(
+			() -> {
+				super.contextInitialized(servletContextEvent);
+
+				ApplicationContext applicationContext =
+					ContextLoader.getCurrentWebApplicationContext();
+
+				try {
+					BeanReferenceRefreshUtil.refresh(
+						applicationContext.getAutowireCapableBeanFactory());
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+
+				return null;
+			});
+
+		Thread springInitThread = new Thread(
+			springInitTask, "Portal Spring init thread");
+
+		springInitThread.setDaemon(true);
+
+		springInitThread.start();
+
 		try {
 			ModuleFrameworkUtilAdapter.registerContext(
 				_arrayApplicationContext);
@@ -289,17 +315,11 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			throw new RuntimeException(e);
 		}
 
-		super.contextInitialized(servletContextEvent);
-
-		ApplicationContext applicationContext =
-			ContextLoader.getCurrentWebApplicationContext();
-
 		try {
-			BeanReferenceRefreshUtil.refresh(
-				applicationContext.getAutowireCapableBeanFactory());
+			springInitTask.get();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new RuntimeException(e);
 		}
 
 		InitUtil.registerSpringInitialized();
@@ -318,6 +338,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		ServletContextPool.put(_portalServletContextName, servletContext);
+
+		ApplicationContext applicationContext =
+			ContextLoader.getCurrentWebApplicationContext();
 
 		BeanLocatorImpl beanLocatorImpl = new BeanLocatorImpl(
 			portalClassLoader, applicationContext);

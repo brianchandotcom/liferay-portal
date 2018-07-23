@@ -2227,7 +2227,8 @@ app.server.type=@{app.server.type}]]></echo>
 				<param name="database.type" value="@{database.type}" />
 			</antcall>
 
-			<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
+			<echo file="${app.server.classes.portal.dir}/system-ext.properties">com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=600000
+log.sanitizer.enabled=false</echo>
 
 			<ant dir="modules" inheritAll="false" target="build-app-lpkg-all">
 				<property name="app.server.parent.dir" value="${project.dir}/bundles" />

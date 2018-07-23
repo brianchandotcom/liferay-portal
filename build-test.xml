@@ -2785,7 +2785,8 @@ persisted.scheduler.org.quartz.threadPool.threadCount=1]]></echo>
 
 	<macrodef name="set-portal-impl-system-ext-properties">
 		<sequential>
-			<echo file="portal-impl/test/system-ext.properties">log.sanitizer.enabled=false</echo>
+			<echo file="portal-impl/test/system-ext.properties">com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=600000
+log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
@@ -8074,7 +8075,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	</target>
 
 	<target name="prepare-system-ext-properties">
-		<echo file="${app.server.classes.portal.dir}/system-ext.properties">liferay.mode=test
+		<echo file="${app.server.classes.portal.dir}/system-ext.properties">com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=600000
+liferay.mode=test
 log.sanitizer.enabled=false</echo>
 
 	</target>

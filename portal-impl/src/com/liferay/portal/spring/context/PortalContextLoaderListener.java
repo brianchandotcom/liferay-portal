@@ -246,17 +246,14 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			servletContext.setAttribute(
 				PortalApplicationContext.PARENT_APPLICATION_CONTEXT,
 				_arrayApplicationContext);
-
-			ModuleFrameworkUtilAdapter.registerContext(
-				_arrayApplicationContext);
-
-			ModuleFrameworkUtilAdapter.startFramework();
-
-			ModuleFrameworkUtilAdapter.startRuntime();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+
+		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+
+		ClassLoaderPool.register(_portalServletContextName, portalClassLoader);
 
 		ServiceDependencyManager serviceDependencyManager =
 			new ServiceDependencyManager();
@@ -280,9 +277,17 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			SchedulerEngineHelper.class,
 			SingleDestinationMessageSenderFactory.class);
 
-		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+		try {
+			ModuleFrameworkUtilAdapter.registerContext(
+				_arrayApplicationContext);
 
-		ClassLoaderPool.register(_portalServletContextName, portalClassLoader);
+			ModuleFrameworkUtilAdapter.startFramework();
+
+			ModuleFrameworkUtilAdapter.startRuntime();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
 		super.contextInitialized(servletContextEvent);
 

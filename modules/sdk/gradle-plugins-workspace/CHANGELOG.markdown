@@ -240,8 +240,14 @@ platform version.
 ## 1.10.4 - 2018-07-23
 
 ### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.78.
+- [LPS-77359]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.5.
+- [LPS-77875]: Update the [Liferay Portal Tools Bundle Support] dependency to
+version 3.2.6.
 - [LPS-82491]: Update the [Liferay Gradle Target Platform Plugin] dependency to
-version 1.1.0
+version 1.1.0.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -284,6 +290,7 @@ version 1.1.0
 [LPS-75479]: https://issues.liferay.com/browse/LPS-75479
 [LPS-76221]: https://issues.liferay.com/browse/LPS-76221
 [LPS-76271]: https://issues.liferay.com/browse/LPS-76271
+[LPS-77359]: https://issues.liferay.com/browse/LPS-77359
 [LPS-77425]: https://issues.liferay.com/browse/LPS-77425
 [LPS-77586]: https://issues.liferay.com/browse/LPS-77586
 [LPS-77875]: https://issues.liferay.com/browse/LPS-77875
@@ -297,4 +304,5 @@ version 1.1.0
 [LPS-80517]: https://issues.liferay.com/browse/LPS-80517
 [LPS-80660]: https://issues.liferay.com/browse/LPS-80660
 [LPS-80950]: https://issues.liferay.com/browse/LPS-80950
+[LPS-82491]: https://issues.liferay.com/browse/LPS-82491
 [LPS-82534]: https://issues.liferay.com/browse/LPS-82534

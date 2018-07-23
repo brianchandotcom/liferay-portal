@@ -14,11 +14,16 @@
 
 package com.liferay.arquillian.extension.junit.bridge;
 
+import com.liferay.arquillian.container.osgi.remote.bundleclasspath.BundleClassPathAuxiliaryAppender;
+import com.liferay.arquillian.container.osgi.remote.commandservice.CommandServiceAuxiliaryAppender;
+import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActivatorsManager;
+import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActivatorsManagerImpl;
 import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.deployment.JUnitBridgeAuxiliaryArchiveAppender;
 import com.liferay.arquillian.extension.junit.bridge.deployment.NoOpArchiveApplicationProcessor;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
+import com.liferay.arquillian.extension.junit.bridge.remote.processor.OSGiAllInProcessor;
 
 import java.net.URL;
 
@@ -29,7 +34,9 @@ import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
+import org.jboss.arquillian.container.test.spi.command.CommandService;
 import org.jboss.arquillian.junit.container.JUnitDeploymentAppender;
+import org.jboss.arquillian.protocol.jmx.JMXCommandService;
 
 /**
  * @author Shuyang Zhou
@@ -45,6 +52,11 @@ public class LiferayArquillianJUnitBridgeExtension
 		if (url == null) {
 			extensionBuilder.override(
 				ApplicationArchiveProcessor.class,
+				com.liferay.arquillian.container.osgi.remote.processor.
+					OSGiAllInProcessor.class,
+				OSGiAllInProcessor.class);
+			extensionBuilder.override(
+				ApplicationArchiveProcessor.class,
 				OSGiApplicationArchiveProcessor.class,
 				NoOpArchiveApplicationProcessor.class);
 			extensionBuilder.override(
@@ -56,6 +68,17 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.service(
 				DeploymentScenarioGenerator.class,
 				BndDeploymentScenarioGenerator.class);
+			extensionBuilder.service(
+				AuxiliaryArchiveAppender.class,
+				BundleClassPathAuxiliaryAppender.class);
+			extensionBuilder.service(
+				AuxiliaryArchiveAppender.class,
+				CommandServiceAuxiliaryAppender.class);
+			extensionBuilder.service(
+				BundleActivatorsManager.class,
+				BundleActivatorsManagerImpl.class);
+			extensionBuilder.service(
+				CommandService.class, JMXCommandService.class);
 		}
 		else {
 			extensionBuilder.observer(JUnitBridgeObserver.class);

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.highlight;
 
-import com.liferay.portal.kernel.search.QueryConfig;
+import java.util.Locale;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 
@@ -24,7 +24,9 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 public interface HighlighterTranslator {
 
 	public void translate(
-		SearchRequestBuilder searchRequestBuilder, QueryConfig queryConfig,
+		SearchRequestBuilder searchRequestBuilder, Locale locale,
+		String[] highlightFieldNames, boolean highlightRequireFieldMatch,
+		int highlightFragmentSize, int highlightSnippetSize,
 		boolean luceneSyntax);
 
 }

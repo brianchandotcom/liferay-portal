@@ -144,15 +144,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		_elasticsearchFixture.tearDown();
 	}
 
-	protected static DefaultFacetTranslator createDefaultFacetTranslator() {
-		return new DefaultFacetTranslator() {
-			{
-				facetProcessor = _facetProcessor;
-				filterTranslator = createElasticsearchFilterTranslator();
-			}
-		};
-	}
-
 	protected static ElasticsearchFilterTranslator
 		createElasticsearchFilterTranslator() {
 
@@ -200,6 +191,15 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				termQueryTranslator = new TermQueryTranslatorImpl();
 				termRangeQueryTranslator = new TermRangeQueryTranslatorImpl();
 				wildcardQueryTranslator = new WildcardQueryTranslatorImpl();
+			}
+		};
+	}
+
+	protected DefaultFacetTranslator createDefaultFacetTranslator() {
+		return new DefaultFacetTranslator() {
+			{
+				facetProcessor = _facetProcessor;
+				filterTranslator = createElasticsearchFilterTranslator();
 			}
 		};
 	}
@@ -359,11 +359,10 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 	}
 
-	private static FacetProcessor<SearchRequestBuilder> _facetProcessor =
-		new DefaultFacetProcessor();
-
 	private final long _companyId;
 	private final ElasticsearchFixture _elasticsearchFixture;
+	private FacetProcessor<SearchRequestBuilder> _facetProcessor =
+		new DefaultFacetProcessor();
 	private final IndexCreator _indexCreator;
 	private final IndexNameBuilder _indexNameBuilder =
 		new TestIndexNameBuilder();

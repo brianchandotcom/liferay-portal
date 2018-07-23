@@ -34,7 +34,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ViewRecaptchaEnabled" priority="4">
+	<command name="ViewRecaptchaEnabled" priority="4">
 		<property name="test.name.skip.portal.instance" value="Captcha#ViewRecaptchaEnabled" />
 
 		<var method="TestPropsUtil#get('recaptcha.private.key')" name="recaptchaPrivateKey" />
@@ -49,28 +49,28 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="CAPTCHA" />
+			<var name="configurationCategory" value="Security Tools" />
 			<var name="configurationName" value="CAPTCHA" />
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#editTextSetting">
-			<var name="settingName" value="maxChallenges" />
+			<var name="settingName" value="Maximum Challenges" />
 			<var name="settingValue" value="0" />
 		</execute>
 
-		<execute macro="FormFields#selectSelectOption">
-			<var name="fieldName" value="captchaEngine" />
+		<execute macro="SystemSettings#selectOptionSetting">
+			<var name="fieldName" value="CAPTCHA Engine" />
 			<var name="selectOption" value="reCAPTCHA" />
 		</execute>
 
 		<execute macro="SystemSettings#editTextAreaSetting">
-			<var name="settingName" value="reCaptchaPrivateKey" />
+			<var name="settingName" value="reCAPTCHA Private Key" />
 			<var name="settingValue" value="${recaptchaPrivateKey}" />
 		</execute>
 
 		<execute macro="SystemSettings#editTextAreaSetting">
-			<var name="settingName" value="reCaptchaPublicKey" />
+			<var name="settingName" value="reCAPTCHA Public Key" />
 			<var name="settingValue" value="${recaptchaPublicKey}" />
 		</execute>
 

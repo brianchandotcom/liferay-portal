@@ -165,8 +165,6 @@ public class DDMStructureLocalServiceImpl
 		structure.setStorageType(storageType);
 		structure.setType(type);
 
-		structure.setDDMForm(new DDMForm(ddmForm));
-
 		ddmStructurePersistence.update(structure);
 
 		// Resources
@@ -1590,8 +1588,6 @@ public class DDMStructureLocalServiceImpl
 		structureVersion.setStatusByUserName(user.getFullName());
 		structureVersion.setStatusDate(structure.getModifiedDate());
 
-		structureVersion.setDDMForm(structure.getDDMForm());
-
 		ddmStructureVersionPersistence.update(structureVersion);
 
 		return structureVersion;
@@ -1664,8 +1660,6 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersionUserName(user.getFullName());
 		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
 		structure.setDefinition(ddmFormJSONSerializer.serialize(ddmForm));
-
-		structure.setDDMForm(new DDMForm(ddmForm));
 
 		// Structure version
 

@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>RECAPTCHA_LABEL</td>
-	<td>//label[contains(@id,'recaptcha')]</td>
+	<td>//label[contains(@id,'recaptcha-anchor-label')]</td>
 	<td></td>
 </tr>
 </tbody>

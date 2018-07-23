@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>RECAPTCHA</td>
-	<td>//iframe[contains(@title,'recaptcha')]</td>
+	<td>//iframe[contains(@src,'recaptcha')]</td>
 	<td></td>
 </tr>
 <tr>

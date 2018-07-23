@@ -126,6 +126,16 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 		JSONObject requestJSONObject = JSONFactoryUtil.createJSONObject();
 
+		JSONArray featuresJSONArray = JSONFactoryUtil.createJSONArray();
+
+		JSONObject featureJSONObject = JSONFactoryUtil.createJSONObject();
+
+		featureJSONObject.put("type", "LABEL_DETECTION");
+
+		featuresJSONArray.put(featureJSONObject);
+
+		requestJSONObject.put("features", featuresJSONArray);
+
 		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
@@ -136,16 +146,6 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 				FileUtil.getBytes(fileVersion.getContentStream(false))));
 
 		requestJSONObject.put("image", imageJSONObject);
-
-		JSONArray featuresJSONArray = JSONFactoryUtil.createJSONArray();
-
-		JSONObject featureJSONObject = JSONFactoryUtil.createJSONObject();
-
-		featureJSONObject.put("type", "LABEL_DETECTION");
-
-		featuresJSONArray.put(featureJSONObject);
-
-		requestJSONObject.put("features", featuresJSONArray);
 
 		requestsJSONArray.put(requestJSONObject);
 

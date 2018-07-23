@@ -73,15 +73,14 @@ public class PullRequest {
 
 		dataJSONObject.put("body", body);
 
-		JSONObject response = null;
-
 		try {
-			response = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.combine(
-					_jsonObject.getString("issue_url"), "/comments"),
-				dataJSONObject.toString());
+			JSONObject responseJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.combine(
+						_jsonObject.getString("issue_url"), "/comments"),
+					dataJSONObject.toString());
 
-			return new Comment(response);
+			return new Comment(responseJSONObject);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(

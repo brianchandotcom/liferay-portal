@@ -28,13 +28,17 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -88,23 +92,38 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 					assetTagNames.removeAll(
 						Arrays.asList(assetEntry.getTagNames()));
 
-					List<AssetTag> assetTags = _assetTagLocalService.checkTags(
-						assetEntry.getUserId(), assetEntry.getGroupId(),
-						assetTagNames.toArray(new String[0]));
+					ServiceContext serviceContext = _getServiceContext(
+						assetEntry);
 
-					if (assetTags.isEmpty()) {
-						return null;
-					}
+					for (String assetTagName : assetTagNames) {
+						try {
+							AssetTag assetTag = _assetTagLocalService.fetchTag(
+								assetEntry.getGroupId(),
+								StringUtil.toLowerCase(assetTagName));
 
-					for (AssetTag assetTag : assetTags) {
-						_assetTagLocalService.addAssetEntryAssetTag(
-							assetEntry.getEntryId(), assetTag);
+							if (assetTag == null) {
+								assetTag = _assetTagLocalService.addTag(
+									assetEntry.getUserId(),
+									assetEntry.getGroupId(), assetTagName,
+									serviceContext);
+							}
 
-						_assetAutoTaggerEntryLocalService.
-							addAssetAutoTaggerEntry(assetEntry, assetTag);
+							_assetTagLocalService.addAssetEntryAssetTag(
+								assetEntry.getEntryId(), assetTag);
 
-						_assetTagLocalService.incrementAssetCount(
-							assetTag.getTagId(), assetEntry.getClassNameId());
+							_assetAutoTaggerEntryLocalService.
+								addAssetAutoTaggerEntry(assetEntry, assetTag);
+
+							_assetTagLocalService.incrementAssetCount(
+								assetTag.getTagId(),
+								assetEntry.getClassNameId());
+						}
+						catch (PortalException pe) {
+							_log.error(
+								String.format(
+									"Unable to add auto tag: %s", assetTagName),
+								pe);
+						}
 					}
 
 					_reindex(assetEntry);
@@ -223,6 +242,16 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		return assetTagNames;
 	}
 
+	private ServiceContext _getServiceContext(AssetEntry assetEntry) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(assetEntry.getGroupId());
+
+		return serviceContext;
+	}
+
 	private void _reindex(AssetEntry assetEntry) throws PortalException {
 		Indexer<Object> indexer = _indexerRegistry.getIndexer(
 			assetEntry.getClassName());
@@ -231,6 +260,9 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetAutoTaggerImpl.class);
 
 	private volatile AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
 

@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.GroupBy;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -59,22 +58,28 @@ public class SearchSearchRequestAssemblerImpl
 
 		addGroupBy(searchRequestBuilder, searchSearchRequest);
 
-		QueryConfig queryConfig = searchSearchRequest.getQueryConfig();
-
-		highlighterTranslator.translate(
-			searchRequestBuilder, queryConfig,
-			searchSearchRequest.isLuceneSyntax());
+		if (searchSearchRequest.isHighlightEnabled()) {
+			highlighterTranslator.translate(
+				searchRequestBuilder, searchSearchRequest.getLocale(),
+				searchSearchRequest.getHighlightFieldNames(),
+				searchSearchRequest.isHighlightRequireFieldMatch(),
+				searchSearchRequest.getHighlightFragmentSize(),
+				searchSearchRequest.getHighlightSnippetSize(),
+				searchSearchRequest.isLuceneSyntax());
+		}
 
 		addPagination(
 			searchRequestBuilder, searchSearchRequest.getStart(),
 			searchSearchRequest.getSize());
 		addPreference(searchRequestBuilder, searchSearchRequest);
-		addSelectedFields(searchRequestBuilder, queryConfig);
+		addSelectedFields(
+			searchRequestBuilder, searchSearchRequest.getSelectedFieldNames());
 
 		sortTranslator.translate(
 			searchRequestBuilder, searchSearchRequest.getSorts());
 
-		searchRequestBuilder.setTrackScores(queryConfig.isScoreEnabled());
+		searchRequestBuilder.setTrackScores(
+			searchSearchRequest.isScoreEnabled());
 	}
 
 	protected void addGroupBy(
@@ -87,7 +92,16 @@ public class SearchSearchRequestAssemblerImpl
 			return;
 		}
 
-		groupByTranslator.translate(searchRequestBuilder, searchSearchRequest);
+		groupByTranslator.translate(
+			searchRequestBuilder, groupBy, searchSearchRequest.getSorts(),
+			searchSearchRequest.getLocale(),
+			searchSearchRequest.getSelectedFieldNames(),
+			searchSearchRequest.getHighlightFieldNames(),
+			searchSearchRequest.isHighlightEnabled(),
+			searchSearchRequest.isHighlightRequireFieldMatch(),
+			searchSearchRequest.getHighlightFragmentSize(),
+			searchSearchRequest.getHighlightSnippetSize(),
+			searchSearchRequest.getStart(), searchSearchRequest.getSize());
 	}
 
 	protected void addPagination(
@@ -109,9 +123,8 @@ public class SearchSearchRequestAssemblerImpl
 	}
 
 	protected void addSelectedFields(
-		SearchRequestBuilder searchRequestBuilder, QueryConfig queryConfig) {
-
-		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
+		SearchRequestBuilder searchRequestBuilder,
+		String[] selectedFieldNames) {
 
 		if (ArrayUtil.isEmpty(selectedFieldNames)) {
 			searchRequestBuilder.addStoredField(StringPool.STAR);

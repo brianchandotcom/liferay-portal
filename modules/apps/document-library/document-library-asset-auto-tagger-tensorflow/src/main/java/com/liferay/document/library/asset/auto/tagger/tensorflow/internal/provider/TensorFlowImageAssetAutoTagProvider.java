@@ -72,9 +72,7 @@ public class TensorFlowImageAssetAutoTagProvider
 			}
 		}
 		catch (IOException | PortalException e) {
-			if (_log.isErrorEnabled()) {
-				_log.error(e, e);
-			}
+			_log.error(e, e);
 
 			return Collections.emptyList();
 		}

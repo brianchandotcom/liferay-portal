@@ -77,4 +77,14 @@
 			</else>
 		</if>
 	</command>
+
+	<command name="selectOptionSetting">
+		<execute function="Click" locator1="SystemSettings#DROPDOWN_MENU">
+			<var name="key_fieldLabel" value="${fieldName}" />
+		</execute>
+
+		<execute function="Click" locator1="SystemSettings#DROPDOWN_MENU_OPTION">
+			<var name="key_selectOption" value="${selectOption}" />
+		</execute>
+	</command>
 </definition>

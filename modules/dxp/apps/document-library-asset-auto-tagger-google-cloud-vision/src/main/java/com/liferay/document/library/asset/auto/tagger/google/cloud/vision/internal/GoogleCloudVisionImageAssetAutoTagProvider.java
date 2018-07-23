@@ -120,6 +120,10 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 	private String _getRequestJSONPayload(FileEntry fileEntry)
 		throws IOException, PortalException {
 
+		JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject();
+
+		JSONArray requestsJSONArray = JSONFactoryUtil.createJSONArray();
+
 		JSONObject requestJSONObject = JSONFactoryUtil.createJSONObject();
 
 		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
@@ -143,11 +147,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 		requestJSONObject.put("features", featuresJSONArray);
 
-		JSONArray requestsJSONArray = JSONFactoryUtil.createJSONArray();
-
 		requestsJSONArray.put(requestJSONObject);
-
-		JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject();
 
 		payloadJSONObject.put("requests", requestsJSONArray);
 

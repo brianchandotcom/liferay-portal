@@ -189,6 +189,8 @@
 /portal/juniversalchardet.jar
 /portal/jurt.jar
 /portal/kxml2.jar
+/portal/libtensorflow.jar
+/portal/libtensorflow_jni.jar
 /portal/liferay-icu4j.jar
 /portal/log4j.jar
 /portal/log4j-extras.jar
@@ -234,9 +236,6 @@
 /portal/spring-orm.jar
 /portal/spring-oxm.jar
 /portal/spring-tx.jar
-/portal/tensorflow.jar
-/portal/libtensorflow.jar
-/portal/libtensorflow_jni.jar
 /portal/spring-web.jar
 /portal/spring-webmvc.jar
 /portal/spring-webmvc-portlet.jar
@@ -250,6 +249,7 @@
 /portal/struts-taglib.jar
 /portal/struts-tiles.jar
 /portal/tagsoup.jar
+/portal/tensorflow.jar
 /portal/tika-core.jar
 /portal/tika-parsers.jar
 /portal/tomcat-jdbc.jar

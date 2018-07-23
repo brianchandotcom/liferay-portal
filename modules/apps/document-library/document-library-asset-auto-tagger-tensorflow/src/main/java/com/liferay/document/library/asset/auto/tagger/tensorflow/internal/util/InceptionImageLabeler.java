@@ -101,12 +101,13 @@ public class InceptionImageLabeler {
 	}
 
 	private float[] _getLabelProbabilities(byte[] imageBytes) {
-		try (Tensor<Float> image = _normalizeImage(imageBytes);
-			Tensor<Float> result = _getOutput(_imageLabelerGraph, image)) {
+		try (Tensor<Float> imageTensor = _normalizeImage(imageBytes);
+			Tensor<Float> resultTensor = _getOutputTensor(
+				_imageLabelerGraph, imageTensor)) {
 
-			long[] shape = result.shape();
+			long[] shape = resultTensor.shape();
 
-			if ((result.numDimensions() != 2) || (shape[0] != 1)) {
+			if ((resultTensor.numDimensions() != 2) || (shape[0] != 1)) {
 				throw new RuntimeException(
 					String.format(
 						"Expected model to produce a [1 N] shaped tensor " +
@@ -117,22 +118,24 @@ public class InceptionImageLabeler {
 
 			int numberOfLabels = (int)shape[1];
 
-			return result.copyTo(new float[1][numberOfLabels])[0];
+			return resultTensor.copyTo(new float[1][numberOfLabels])[0];
 		}
 	}
 
-	private Tensor<Float> _getOutput(Graph graph, Tensor<Float> input) {
+	private Tensor<Float> _getOutputTensor(
+		Graph graph, Tensor<Float> inputTensor) {
+
 		try (Session session = new Session(graph)) {
 			Session.Runner runner = session.runner();
 
-			runner = runner.feed("input", input);
+			runner = runner.feed("input", inputTensor);
 			runner = runner.fetch("output");
 
 			List<Tensor<?>> tensors = runner.run();
 
-			Tensor<?> tensor = tensors.get(0);
+			Tensor<?> resultTensor = tensors.get(0);
 
-			return tensor.expect(Float.class);
+			return resultTensor.expect(Float.class);
 		}
 	}
 
@@ -178,7 +181,7 @@ public class InceptionImageLabeler {
 
 	private Tensor<Float> _normalizeImage(byte[] imageBytes) {
 		try (Tensor tensor = Tensor.create(imageBytes, String.class)) {
-			return _getOutput(_imageNormalizerGraph, tensor);
+			return _getOutputTensor(_imageNormalizerGraph, tensor);
 		}
 	}
 

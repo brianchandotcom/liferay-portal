@@ -186,16 +186,23 @@ public class CompanyLocalServiceTest {
 		companyOrganzation = OrganizationLocalServiceUtil.fetchOrganization(
 			companyOrganzation.getOrganizationId());
 
-		Assert.assertNull(companyOrganzation);
+		Assert.assertNull(
+			"The company organization should delete with the company.",
+			companyOrganzation);
 
 		companyOrganizationGroup = GroupLocalServiceUtil.fetchGroup(
 			companyOrganizationGroup.getGroupId());
 
-		Assert.assertNull(companyOrganizationGroup);
+		Assert.assertNull(
+			"The company organization group should delete with the company.",
+			companyOrganizationGroup);
 
 		group = GroupLocalServiceUtil.fetchGroup(group.getGroupId());
 
-		Assert.assertNull(group);
+		Assert.assertNull(
+			"The company organization child group should delete with the " +
+				"company.",
+			group);
 	}
 
 	@Test

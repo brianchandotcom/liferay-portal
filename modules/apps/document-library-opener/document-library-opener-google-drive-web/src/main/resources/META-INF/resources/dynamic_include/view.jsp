@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,15 +12,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.document.library.opener.google.drive.constants;
+<%@ include file="/dynamic_include/init.jsp" %>
 
-/**
- * @author Adolfo Pérez
- */
-public class DLOpenerGoogleDriveConstants {
+<%
+DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoogleDriveFileReference)request.getAttribute(DLOpenerGoogleDriveWebKeys.DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE);
+%>
 
-	public static final String CHECK_OUT_IN_GOOGLE_DRIVE =
-		"checkOutInGoogleDrive";
-
-}
+<c:if test="<%= dlOpenerGoogleDriveFileReference != null %>">
+	<aui:script>
+		window.open('<%= dlOpenerGoogleDriveFileReference.getGoogleDocsEditURL() %>');
+	</aui:script>
+</c:if>

@@ -12,26 +12,25 @@
  * details.
  */
 
-package com.liferay.document.library.opener.google.drive;
+package com.liferay.document.library.opener.google.drive.web.internal.constants;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Constants;
 
 /**
  * @author Adolfo Pérez
  */
-public interface DLOpenerGoogleDriveDLHelper {
+public class DLOpenerGoogleDriveWebConstants {
 
-	public void cancelCheckOut(long fileEntryId) throws PortalException;
+	public static final String GOOGLE_DRIVE_CANCEL_CHECKOUT =
+		Constants.CANCEL_CHECKOUT;
 
-	public void checkInFileEntry(
-			long fileEntryId, boolean majorVersion, String changeLog)
-		throws PortalException;
+	public static final String GOOGLE_DRIVE_CHECKIN = Constants.CHECKIN;
 
-	public DLOpenerGoogleDriveFileReference checkOutFileEntry(long fileEntryId)
-		throws PortalException;
+	public static final String GOOGLE_DRIVE_CHECKOUT = Constants.CHECKOUT;
 
-	public DLOpenerGoogleDriveFileReference editInGoogleDrive(
-			long userId, long fileEntryId)
-		throws PortalException;
+	public static final String GOOGLE_DRIVE_EDIT = Constants.EDIT;
+
+	public static final String GOOGLE_DRIVE_SERVLET_PATH =
+		"/document_library/google/oauth2";
 
 }

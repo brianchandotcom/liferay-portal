@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -31,11 +32,13 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -218,13 +221,16 @@ public class PortletFileRepositoryTest {
 		PortletFileRepositoryUtil.getPortletFolder(_folder.getFolderId());
 	}
 
-	private FileEntry _addPortletFileEntry(String name) throws PortalException {
-		return PortletFileRepositoryUtil.addPortletFileEntry(
-			_group.getGroupId(), TestPropsValues.getUserId(),
-			User.class.getName(), TestPropsValues.getUserId(), _portletId,
-			_folder.getFolderId(),
-			RandomTestUtil.randomInputStream(TikaSafeRandomizerBumper.INSTANCE),
-			name, ContentTypes.APPLICATION_OCTET_STREAM, false);
+	private FileEntry _addPortletFileEntry(String name) throws Exception {
+		try (InputStream inputStream = new UnsyncByteArrayInputStream(
+				TestDataConstants.TEST_BYTE_ARRAY)) {
+
+			return PortletFileRepositoryUtil.addPortletFileEntry(
+				_group.getGroupId(), TestPropsValues.getUserId(),
+				User.class.getName(), TestPropsValues.getUserId(), _portletId,
+				_folder.getFolderId(), inputStream, name,
+				ContentTypes.APPLICATION_OCTET_STREAM, false);
+		}
 	}
 
 	private Folder _addPortletFolder(String name) throws PortalException {

@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -97,7 +98,6 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -237,8 +237,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 				adminUser.getUserId(), group.getGroupId(), folderId,
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 				RandomTestUtil.randomString(), StringPool.BLANK,
-				StringPool.BLANK,
-				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+				StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY,
 				serviceContext);
 
 			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(

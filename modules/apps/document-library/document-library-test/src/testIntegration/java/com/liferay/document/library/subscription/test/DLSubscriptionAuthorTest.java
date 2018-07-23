@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
@@ -61,8 +61,7 @@ public class DLSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			userId, group.getGroupId(), containerModelId,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
-			serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
 
 		return fileEntry.getFileEntryId();
 	}
@@ -106,8 +105,7 @@ public class DLSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 			userId, baseModelId, RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, false,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
-			serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
 	}
 
 }

@@ -21,13 +21,12 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 
 import java.io.Serializable;
 
@@ -57,8 +56,7 @@ public abstract class DLAppTestUtil {
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				userId, groupId, folderId, sourceFileName,
 				ContentTypes.TEXT_PLAIN, title, StringPool.BLANK,
-				StringPool.BLANK,
-				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+				StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY,
 				serviceContext);
 
 			if (approved) {

@@ -16,14 +16,35 @@ package com.liferay.portal.search.engine.adapter.index;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Michael C. Han
  */
 @ProviderType
-public interface IndexRequest<T extends IndexResponse> {
+public class AnalyzeIndexResponse implements IndexResponse {
 
-	public T accept(IndexRequestExecutor indexRequestExecutor);
+	public void addAnalysisIndexResponseTokens(
+		AnalysisIndexResponseToken analysisIndexResponseToken) {
 
-	public String[] getIndexNames();
+		_analysisIndexResponseTokens.add(analysisIndexResponseToken);
+	}
+
+	public String getAnalysisDetails() {
+		return _analysisDetails;
+	}
+
+	public List<AnalysisIndexResponseToken> getAnalysisIndexResponseTokens() {
+		return _analysisIndexResponseTokens;
+	}
+
+	public void setAnalysisDetails(String analysisDetails) {
+		_analysisDetails = analysisDetails;
+	}
+
+	private String _analysisDetails;
+	private final List<AnalysisIndexResponseToken>
+		_analysisIndexResponseTokens = new ArrayList<>();
 
 }

@@ -16,28 +16,34 @@ package com.liferay.portal.search.engine.adapter.index;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringPool;
+
 /**
- * @author Dylan Rebelak
+ * @author Michael C. Han
  */
 @ProviderType
-public interface IndexRequestExecutor {
+public class RefreshIndexRequest implements IndexRequest<RefreshIndexResponse> {
 
-	public AnalyzeIndexResponse executeIndexRequest(
-		AnalyzeIndexRequest analyzeIndexRequest);
+	public RefreshIndexRequest() {
+		_indexNames = StringPool.EMPTY_ARRAY;
+	}
 
-	public FlushIndexResponse executeIndexRequest(
-		FlushIndexRequest flushIndexRequest);
+	public RefreshIndexRequest(String... indexNames) {
+		_indexNames = indexNames;
+	}
 
-	public GetFieldMappingIndexResponse executeIndexRequest(
-		GetFieldMappingIndexRequest getFieldMappingIndexRequest);
+	@Override
+	public RefreshIndexResponse accept(
+		IndexRequestExecutor indexRequestExecutor) {
 
-	public GetMappingIndexResponse executeIndexRequest(
-		GetMappingIndexRequest getMappingIndexRequest);
+		return indexRequestExecutor.executeIndexRequest(this);
+	}
 
-	public PutMappingIndexResponse executeIndexRequest(
-		PutMappingIndexRequest putMappingIndexRequest);
+	@Override
+	public String[] getIndexNames() {
+		return _indexNames;
+	}
 
-	public RefreshIndexResponse executeIndexRequest(
-		RefreshIndexRequest refreshIndexRequest);
+	private final String[] _indexNames;
 
 }

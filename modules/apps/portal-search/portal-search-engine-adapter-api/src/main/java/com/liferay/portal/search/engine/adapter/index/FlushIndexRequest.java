@@ -16,23 +16,24 @@ package com.liferay.portal.search.engine.adapter.index;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringPool;
+
 /**
- * @author Dylan Rebelak
+ * @author Michael C. Han
  */
 @ProviderType
-public class PutMappingIndexRequest
-	implements IndexRequest<PutMappingIndexResponse> {
+public class FlushIndexRequest implements IndexRequest<FlushIndexResponse> {
 
-	public PutMappingIndexRequest(
-		String[] indexNames, String mappingName, String mapping) {
+	public FlushIndexRequest() {
+		_indexNames = StringPool.EMPTY_ARRAY;
+	}
 
+	public FlushIndexRequest(String... indexNames) {
 		_indexNames = indexNames;
-		_mappingName = mappingName;
-		_mapping = mapping;
 	}
 
 	@Override
-	public PutMappingIndexResponse accept(
+	public FlushIndexResponse accept(
 		IndexRequestExecutor indexRequestExecutor) {
 
 		return indexRequestExecutor.executeIndexRequest(this);
@@ -43,16 +44,24 @@ public class PutMappingIndexRequest
 		return _indexNames;
 	}
 
-	public String getMapping() {
-		return _mapping;
+	public boolean isForce() {
+		return _force;
 	}
 
-	public String getMappingName() {
-		return _mappingName;
+	public boolean isWaitIfOngoing() {
+		return _waitIfOngoing;
 	}
 
+	public void setForce(boolean force) {
+		_force = force;
+	}
+
+	public void setWaitIfOngoing(boolean waitIfOngoing) {
+		_waitIfOngoing = waitIfOngoing;
+	}
+
+	private boolean _force;
 	private final String[] _indexNames;
-	private final String _mapping;
-	private final String _mappingName;
+	private boolean _waitIfOngoing;
 
 }

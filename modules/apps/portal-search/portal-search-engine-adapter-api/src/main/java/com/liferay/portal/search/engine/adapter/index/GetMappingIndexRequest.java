@@ -40,7 +40,6 @@ public class GetMappingIndexRequest
 		return _indexNames;
 	}
 
-	@Override
 	public String getMappingName() {
 		return _mappingName;
 	}

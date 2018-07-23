@@ -264,7 +264,9 @@
 	<command name="_selectImportFile">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
-		<execute function="AssertClick" locator1="ExportImport#NAVIGATION_IMPORT" value1="Import" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Import" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Button#SELECT_FILE" />
 

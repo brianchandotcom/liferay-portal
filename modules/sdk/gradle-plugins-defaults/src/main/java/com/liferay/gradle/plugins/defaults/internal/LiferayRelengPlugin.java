@@ -669,15 +669,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	private void _configureTaskBuildChangeLog(
 		BuildChangeLogTask buildChangeLogTask, File destinationDir) {
 
-		Project project = buildChangeLogTask.getProject();
-
 		String ticketIdPrefixes = GradleUtil.getProperty(
-			project, "jira.project.keys", (String)null);
-
-		if (Validator.isNull(ticketIdPrefixes)) {
-			ticketIdPrefixes = GradleUtil.getProperty(
-				project.getRootProject(), "jira.project.keys", (String)null);
-		}
+			buildChangeLogTask.getProject(), "jira.project.keys", (String)null);
 
 		if (Validator.isNotNull(ticketIdPrefixes)) {
 			buildChangeLogTask.ticketIdPrefixes(ticketIdPrefixes.split(","));

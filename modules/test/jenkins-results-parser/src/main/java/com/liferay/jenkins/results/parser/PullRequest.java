@@ -114,12 +114,13 @@ public class PullRequest {
 
 		jsonArray.put(label.getName());
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getGitHubRemoteRepositoryName(), getOwnerUsername(),
 			"issues/" + getNumber() + "/labels");
 
 		try {
-			JenkinsResultsParserUtil.toString(url, jsonArray.toString());
+			JenkinsResultsParserUtil.toString(
+				gitHubApiUrl, jsonArray.toString());
 		}
 		catch (IOException ioe) {
 			System.out.println("Unable to add label " + label.getName());
@@ -148,7 +149,7 @@ public class PullRequest {
 	public List<Comment> getComments() {
 		List<Comment> comments = new ArrayList<>();
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getGitHubRemoteRepositoryName(), getOwnerUsername(),
 			"issues/" + getNumber() + "/comments?page=");
 
@@ -157,7 +158,7 @@ public class PullRequest {
 		while (true) {
 			try {
 				JSONArray jsonArray = JenkinsResultsParserUtil.toJSONArray(
-					url + page);
+					gitHubApiUrl + page);
 
 				if (jsonArray.length() == 0) {
 					break;
@@ -323,11 +324,12 @@ public class PullRequest {
 		String path = JenkinsResultsParserUtil.combine(
 			"issues/", getNumber(), "/labels/", labelName);
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getGitHubRemoteRepositoryName(), getOwnerUsername(), path);
 
 		try {
-			JenkinsResultsParserUtil.toString(url, HttpRequestMethod.DELETE);
+			JenkinsResultsParserUtil.toString(
+				gitHubApiUrl, HttpRequestMethod.DELETE);
 
 			refresh();
 		}

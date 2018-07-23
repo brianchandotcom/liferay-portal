@@ -21,6 +21,7 @@ import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.rmi.RemoteException;
@@ -479,7 +480,10 @@ public class JournalArticleServiceSoap {
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
 	* @return the matching web content articles
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getArticles(long groupId, long folderId, Locale locale)}
 	*/
+	@Deprecated
 	public static com.liferay.journal.model.JournalArticleSoap[] getArticles(
 		long groupId, long folderId) throws RemoteException {
 		try {
@@ -517,7 +521,11 @@ public class JournalArticleServiceSoap {
 	return (not inclusive)
 	* @param obc the comparator to order the web content articles
 	* @return the matching web content articles
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getArticles(long groupId, long folderId, Locale locale,
+	int start, int end, OrderByComparator obc)}
 	*/
+	@Deprecated
 	public static com.liferay.journal.model.JournalArticleSoap[] getArticles(
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc)
@@ -526,6 +534,49 @@ public class JournalArticleServiceSoap {
 			java.util.List<com.liferay.journal.model.JournalArticle> returnValue =
 				JournalArticleServiceUtil.getArticles(groupId, folderId, start,
 					end, obc);
+
+			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns all the web content articles matching the group, folder and
+	* locale.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param folderId the primary key of the web content article folder
+	* @param locale current locale
+	* @return the matching web content articles
+	*/
+	public static com.liferay.journal.model.JournalArticleSoap[] getArticles(
+		long groupId, long folderId, String locale) throws RemoteException {
+		try {
+			java.util.List<com.liferay.journal.model.JournalArticle> returnValue =
+				JournalArticleServiceUtil.getArticles(groupId, folderId,
+					LocaleUtil.fromLanguageId(locale));
+
+			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.journal.model.JournalArticleSoap[] getArticles(
+		long groupId, long folderId, String locale, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.journal.model.JournalArticle> returnValue =
+				JournalArticleServiceUtil.getArticles(groupId, folderId,
+					LocaleUtil.fromLanguageId(locale), start, end, obc);
 
 			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(returnValue);
 		}

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -597,8 +598,10 @@ public class JournalArticleFinderTest {
 
 		Assert.assertEquals(expectedCount, actualCount);
 
-		List<JournalArticle> articles = _journalArticleFinder.findByG_F(
-			groupId, folderIds, queryDefinition);
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		List<JournalArticle> articles = _journalArticleFinder.findByG_F_L(
+			groupId, folderIds, siteDefaultLocale, queryDefinition);
 
 		actualCount = articles.size();
 
@@ -627,8 +630,11 @@ public class JournalArticleFinderTest {
 			Collections.reverse(expectedArticles);
 		}
 
-		List<JournalArticle> actualArticles = _journalArticleFinder.findByG_F(
-			_group.getGroupId(), _folderIds, queryDefinition);
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		List<JournalArticle> actualArticles = _journalArticleFinder.findByG_F_L(
+			_group.getGroupId(), _folderIds, siteDefaultLocale,
+			queryDefinition);
 
 		Assert.assertEquals(expectedArticles, actualArticles);
 	}

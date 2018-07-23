@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -49,6 +50,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Brian Wing Shun Chan
@@ -88,6 +90,9 @@ public class JournalArticleFinderImpl
 
 	public static final String FIND_BY_G_F =
 		JournalArticleFinder.class.getName() + ".findByG_F";
+
+	public static final String FIND_BY_G_F_L =
+		JournalArticleFinder.class.getName() + ".findByG_F_L";
 
 	public static final String FIND_BY_G_C_S =
 		JournalArticleFinder.class.getName() + ".findByG_C_S";
@@ -376,12 +381,24 @@ public class JournalArticleFinderImpl
 			queryDefinition, true);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), use filterFindByG_F_L instead
+	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> filterFindByG_F(
 		long groupId, List<Long> folderIds,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_F(groupId, folderIds, queryDefinition, true);
+	}
+
+	@Override
+	public List<JournalArticle> filterFindByG_F_L(
+		long groupId, List<Long> folderIds, Locale locale,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_F_L(groupId, folderIds, locale, queryDefinition, true);
 	}
 
 	@Override
@@ -678,12 +695,25 @@ public class JournalArticleFinderImpl
 		throw new NoSuchArticleException(sb.toString());
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), use findByG_F_L instead
+	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> findByG_F(
 		long groupId, List<Long> folderIds,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_F(groupId, folderIds, queryDefinition, false);
+	}
+
+	@Override
+	public List<JournalArticle> findByG_F_L(
+		long groupId, List<Long> folderIds, Locale locale,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_F_L(
+			groupId, folderIds, locale, queryDefinition, false);
 	}
 
 	@Override
@@ -1158,6 +1188,62 @@ public class JournalArticleFinderImpl
 				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(queryDefinition.getStatus());
+
+			for (Long folderId : folderIds) {
+				qPos.add(folderId);
+			}
+
+			return (List<JournalArticle>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<JournalArticle> doFindByG_F_L(
+		long groupId, List<Long> folderIds, Locale locale,
+		QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(
+				getClass(), FIND_BY_G_F_L, queryDefinition, "JournalArticle");
+
+			sql = replaceStatusJoin(sql, queryDefinition);
+
+			sql = _customSQL.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			sql = StringUtil.replace(
+				sql, "[$FOLDER_ID$]",
+				getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(LocaleUtil.toLanguageId(locale));
 
 			qPos.add(groupId);
 			qPos.add(queryDefinition.getStatus());

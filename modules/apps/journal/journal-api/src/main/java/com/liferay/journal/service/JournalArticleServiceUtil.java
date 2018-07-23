@@ -652,7 +652,10 @@ public class JournalArticleServiceUtil {
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
 	* @return the matching web content articles
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getArticles(long groupId, long folderId, Locale locale)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticles(
 		long groupId, long folderId) {
 		return getService().getArticles(groupId, folderId);
@@ -680,11 +683,37 @@ public class JournalArticleServiceUtil {
 	return (not inclusive)
 	* @param obc the comparator to order the web content articles
 	* @return the matching web content articles
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getArticles(long groupId, long folderId, Locale locale,
+	int start, int end, OrderByComparator obc)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticles(
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
 		return getService().getArticles(groupId, folderId, start, end, obc);
+	}
+
+	/**
+	* Returns all the web content articles matching the group, folder and
+	* locale.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param folderId the primary key of the web content article folder
+	* @param locale current locale
+	* @return the matching web content articles
+	*/
+	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticles(
+		long groupId, long folderId, java.util.Locale locale) {
+		return getService().getArticles(groupId, folderId, locale);
+	}
+
+	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticles(
+		long groupId, long folderId, java.util.Locale locale, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
+		return getService()
+				   .getArticles(groupId, folderId, locale, start, end, obc);
 	}
 
 	/**

@@ -117,6 +117,10 @@ public interface JournalArticleFinder {
 		long groupId, java.util.List<Long> folderIds,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
 
+	public java.util.List<com.liferay.journal.model.JournalArticle> filterFindByG_F_L(
+		long groupId, java.util.List<Long> folderIds, java.util.Locale locale,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
+
 	public java.util.List<com.liferay.journal.model.JournalArticle> filterFindByG_C_S(
 		long groupId, long classNameId, String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
@@ -182,6 +186,10 @@ public interface JournalArticleFinder {
 
 	public java.util.List<com.liferay.journal.model.JournalArticle> findByG_F(
 		long groupId, java.util.List<Long> folderIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
+
+	public java.util.List<com.liferay.journal.model.JournalArticle> findByG_F_L(
+		long groupId, java.util.List<Long> folderIds, java.util.Locale locale,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.journal.model.JournalArticle> queryDefinition);
 
 	public java.util.List<com.liferay.journal.model.JournalArticle> findByG_C_S(

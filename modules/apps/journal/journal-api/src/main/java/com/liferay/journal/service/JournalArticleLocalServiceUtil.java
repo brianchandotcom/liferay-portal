@@ -2623,11 +2623,22 @@ public class JournalArticleLocalServiceUtil {
 	* @param end the upper bound of the range of web content articles to
 	return (not inclusive)
 	* @return the matching web content articles
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#search(long groupId, List folderIds, Locale locale,
+	int status, int start, int end)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.journal.model.JournalArticle> search(
 		long groupId, java.util.List<Long> folderIds, int status, int start,
 		int end) {
 		return getService().search(groupId, folderIds, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.journal.model.JournalArticle> search(
+		long groupId, java.util.List<Long> folderIds, java.util.Locale locale,
+		int status, int start, int end) {
+		return getService()
+				   .search(groupId, folderIds, locale, status, start, end);
 	}
 
 	/**

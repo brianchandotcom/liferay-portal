@@ -1427,6 +1427,8 @@
 	</command>
 
 	<command name="ViewContentInCustomOrganizationTypeSite" priority="4">
+		<property name="test.name.skip.portal.instance" value="UsersandorganizationsUsecase#ViewContentInCustomOrganizationTypeSite" />
+
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

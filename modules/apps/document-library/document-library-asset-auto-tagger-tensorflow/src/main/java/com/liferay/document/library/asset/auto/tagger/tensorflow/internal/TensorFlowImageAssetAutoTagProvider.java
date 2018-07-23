@@ -62,7 +62,9 @@ public class TensorFlowImageAssetAutoTagProvider
 
 				if (_accepts(fileVersion.getMimeType())) {
 					return _inceptionImageLabeler.label(
-						FileUtil.getBytes(fileVersion.getContentStream(false)));
+						FileUtil.getBytes(fileVersion.getContentStream(false)),
+						_tensorflowImageAutoTaggerConfiguration.
+							confidenceThreshold());
 				}
 			}
 			catch (IOException | PortalException e) {

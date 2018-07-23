@@ -68,7 +68,7 @@ public class SearchSearchRequest
 	}
 
 	/**
-	 * @deprecated since 1.1.0.  No direct replacement.
+	 * @deprecated As of Judson (7.1.x), since 1.1.0.  No direct replacement.
 	 * @return
 	 */
 	@Deprecated

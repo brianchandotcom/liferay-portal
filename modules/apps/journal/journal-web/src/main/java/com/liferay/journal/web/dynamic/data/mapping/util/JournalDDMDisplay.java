@@ -338,47 +338,14 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 			@Override
 			public String getURL(
-					LiferayPortletRequest liferayPortletRequest,
-					LiferayPortletResponse liferayPortletResponse)
-				throws Exception {
+                LiferayPortletRequest liferayPortletRequest,
+                LiferayPortletResponse liferayPortletResponse) {
 
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)liferayPortletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				Portlet portlet = portletLocalService.getPortletById(
-					portletDisplay.getId());
-
-				PortletURL portletURL = PortletURLFactoryUtil.create(
-					liferayPortletRequest,
-					PortletProviderUtil.getPortletId(
-						DDMStructure.class.getName(),
-						PortletProvider.Action.VIEW),
+				PortletURL portletURL = portal.getControlPanelPortletURL(
+					liferayPortletRequest, JournalPortletKeys.JOURNAL,
 					PortletRequest.RENDER_PHASE);
 
-				portletURL.setParameter("mvcPath", "/view.jsp");
-				portletURL.setParameter(
-					"backURL", themeDisplay.getURLCurrent());
-				portletURL.setParameter(
-					"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-				portletURL.setParameter(
-					"refererPortletName", JournalPortletKeys.JOURNAL);
-				portletURL.setParameter(
-					"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
-				portletURL.setParameter(
-					"scopeTitle",
-					getTitle(liferayPortletRequest, liferayPortletResponse));
-				portletURL.setParameter(
-					"showAncestorScopes",
-					String.valueOf(_journalWebConfiguration.
-						showAncestorScopesByDefault()));
-				portletURL.setParameter(
-					"showCacheableInput", Boolean.TRUE.toString());
-				portletURL.setParameter(
-					"showManageTemplates", Boolean.TRUE.toString());
+				portletURL.setParameter("mvcPath", "/view_structures.jsp");
 
 				return portletURL.toString();
 			}

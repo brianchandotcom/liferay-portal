@@ -97,7 +97,7 @@
 <!--USER_TOOLS-->
 <tr>
 	<td>USER_TOOLS_SELECT_BUTTON</td>
-	<td>//div[contains(@id,'userTools')]/button[contains(.,'Select')]</td>
+	<td>//button[contains(@id,'userTools') and normalize-space()='Select']</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,7 +108,7 @@
 <!--CONTENT_METADATA-->
 <tr>
 	<td>CONTENT_METADATA_SELECT</td>
-	<td>//div[contains(@id,'contentMetadata')]/button[contains(.,'Select')]</td>
+	<td>//button[contains(@id,'contentMetadata') and normalize-space()='Select']</td>
 	<td></td>
 </tr>
 </tbody>

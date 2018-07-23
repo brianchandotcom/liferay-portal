@@ -85,7 +85,7 @@ public class RoleCollectionResource
 		).addString(
 			"name", Role::getName
 		).addString(
-			"type", Role::getTypeLabel
+			"roleType", Role::getTypeLabel
 		).build();
 	}
 

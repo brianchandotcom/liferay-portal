@@ -1341,13 +1341,17 @@ public class ModulesStructureTest {
 				Assert.fail(sb.toString());
 			}
 
-			GradleDependency activeGradleDependency =
-				_getActiveGradleDependency(
-					gradleDependencies, gradleDependency);
+			if (!_isInGitRepoReadOnly(path) &&
+				!_isInPrivateModulesCheckoutDir(path)) {
 
-			Assert.assertEquals(
-				"Redundant dependency detected in " + path,
-				activeGradleDependency, gradleDependency);
+				GradleDependency activeGradleDependency =
+					_getActiveGradleDependency(
+						gradleDependencies, gradleDependency);
+
+				Assert.assertEquals(
+					"Redundant dependency detected in " + path,
+					activeGradleDependency, gradleDependency);
+			}
 		}
 	}
 

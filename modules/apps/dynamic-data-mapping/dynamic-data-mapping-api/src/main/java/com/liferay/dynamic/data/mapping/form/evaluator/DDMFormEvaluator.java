@@ -14,33 +14,25 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator;
 
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-
-import java.util.Locale;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Pablo Carvalho
+ * @author Leonardo Barros
  */
+@ProviderType
 public interface DDMFormEvaluator {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #evaluate(DDMFormEvaluatorContext)}
+	 * DDMFormEvaluator#evaluate(DDMFormEvaluatorEvaluateRequest)}
 	 */
 	@Deprecated
-	public default DDMFormEvaluationResult evaluate(
-			DDMForm ddmForm, DDMFormValues ddmFormValues, Locale locale)
-		throws DDMFormEvaluationException {
-
-		DDMFormEvaluatorContext ddmFormEvaluatorContext =
-			new DDMFormEvaluatorContext(ddmForm, ddmFormValues, locale);
-
-		return evaluate(ddmFormEvaluatorContext);
-	}
-
 	public DDMFormEvaluationResult evaluate(
 			DDMFormEvaluatorContext ddmFormEvaluatorContext)
 		throws DDMFormEvaluationException;
+
+	public DDMFormEvaluatorEvaluateResponse evaluate(
+		DDMFormEvaluatorEvaluateRequest ddmFormEvaluatorEvaluateRequest);
 
 }

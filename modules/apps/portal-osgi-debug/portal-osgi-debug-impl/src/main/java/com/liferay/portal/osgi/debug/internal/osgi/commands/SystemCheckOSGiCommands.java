@@ -113,12 +113,12 @@ public class SystemCheckOSGiCommands {
 				if (useSystemOut) {
 					System.out.println(
 						systemChecker.getName() +
-							" check result: No issue is found.");
+							" check result: No issues were found.");
 				}
 				else if (_log.isInfoEnabled()) {
 					_log.info(
 						systemChecker.getName() +
-							" check result: No issue is found.");
+							" check result: No issues were found.");
 				}
 			}
 			else {

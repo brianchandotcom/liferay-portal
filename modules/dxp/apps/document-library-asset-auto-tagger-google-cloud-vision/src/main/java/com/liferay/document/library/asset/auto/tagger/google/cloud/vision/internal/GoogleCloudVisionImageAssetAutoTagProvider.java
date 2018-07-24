@@ -151,9 +151,9 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 		Http.Options options = new Http.Options();
 
+		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 		options.setBody(
 			jsonPayload, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 		options.setLocation(
 			"https://vision.googleapis.com/v1/images:annotate?key=" +
 				_googleCloudVisionConfiguration.apiKey());

@@ -52,7 +52,7 @@ public class PostgreSQLDB extends BaseDB {
 		sb.append(" as on delete to ");
 		sb.append(tableName);
 		sb.append(" do also select case when exists(select 1 from ");
-		sb.append("pg_catalog.pg_largeobject where (loid = old.");
+		sb.append("pg_catalog.pg_largeobject_metadata where (oid = old.");
 		sb.append(columnName);
 		sb.append(")) then lo_unlink(old.");
 		sb.append(columnName);
@@ -78,7 +78,7 @@ public class PostgreSQLDB extends BaseDB {
 		sb.append(" and old.");
 		sb.append(columnName);
 		sb.append(" is not null do also select case when exists(select 1 ");
-		sb.append("from pg_catalog.pg_largeobject where (loid = old.");
+		sb.append("from pg_catalog.pg_largeobject_metadata where (oid = old.");
 		sb.append(columnName);
 		sb.append(")) then lo_unlink(old.");
 		sb.append(columnName);

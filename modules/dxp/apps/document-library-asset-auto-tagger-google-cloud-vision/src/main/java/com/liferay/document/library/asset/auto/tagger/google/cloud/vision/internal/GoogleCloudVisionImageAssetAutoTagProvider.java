@@ -107,12 +107,14 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 	private String _getPayloadJSON(FileEntry fileEntry) throws Exception {
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		return JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"requests",
 			JSONUtil.put(
 				JSONUtil.put(
 					"features",
-					JSONUtil.put(JSONUtil.put("type", "LABEL_DETECTION"))
+					JSONUtil.put(
+						JSONUtil.put("type", "LABEL_DETECTION")
+					)
 				).put(
 					"image",
 					JSONUtil.put(
@@ -122,7 +124,9 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 								fileVersion.getContentStream(false))))
 				)
 			)
-		).toString();
+		);
+
+		return jsonObject.toString();
 	}
 
 	private boolean _isSupportedFormat(FileEntry fileEntry) {

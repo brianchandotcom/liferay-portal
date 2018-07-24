@@ -140,8 +140,8 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		catch (Exception e) {
 			try (InputStream inputStream = httpURLConnection.getErrorStream()) {
 				throw new PortalException(
-					"Response code " + httpURLConnection.getResponseCode() + ":" +
-						StringUtil.read(inputStream),
+					"Response code " + httpURLConnection.getResponseCode() +
+						":" + StringUtil.read(inputStream),
 					e);
 			}
 		}

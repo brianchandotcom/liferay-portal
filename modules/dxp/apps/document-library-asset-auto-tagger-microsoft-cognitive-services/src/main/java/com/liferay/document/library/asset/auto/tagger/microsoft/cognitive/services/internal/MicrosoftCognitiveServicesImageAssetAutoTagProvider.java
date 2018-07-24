@@ -120,29 +120,29 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 
 		URLConnection connection = url.openConnection();
 
-		HttpURLConnection http = (HttpURLConnection)connection;
+		HttpURLConnection httpURLConnection = (HttpURLConnection)connection;
 
-		http.setDoOutput(true);
-		http.setRequestMethod("POST");
-		http.setRequestProperty("Content-Type", "application/octet-stream");
-		http.setRequestProperty(
+		httpURLConnection.setDoOutput(true);
+		httpURLConnection.setRequestMethod("POST");
+		httpURLConnection.setRequestProperty("Content-Type", "application/octet-stream");
+		httpURLConnection.setRequestProperty(
 			"Ocp-Apim-Subscription-Key",
 			_microsoftCognitiveServicesConfiguration.apiKey());
 
-		try (OutputStream outputStream = http.getOutputStream()) {
+		try (OutputStream outputStream = httpURLConnection.getOutputStream()) {
 			outputStream.write(
 				FileUtil.getBytes(fileVersion.getContentStream(false)));
 		}
 
-		http.getResponseMessage();
+		httpURLConnection.getResponseMessage();
 
-		try (InputStream inputStream = http.getInputStream()) {
+		try (InputStream inputStream = httpURLConnection.getInputStream()) {
 			return JSONFactoryUtil.createJSONObject(StringUtil.read(inputStream));
 		}
 		catch (Exception e) {
-			try (InputStream inputStream = http.getErrorStream()) {
+			try (InputStream inputStream = httpURLConnection.getErrorStream()) {
 				throw new PortalException(
-					"Response code " + http.getResponseCode()  + ":" +
+					"Response code " + httpURLConnection.getResponseCode()  + ":" +
 						StringUtil.read(inputStream),
 					e);
 			}

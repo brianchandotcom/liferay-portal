@@ -146,14 +146,14 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			TemporaryFileEntriesCapability.class);
 	}
 
-	private JSONObject _queryGoogleCloudVisionJSONObject(String jsonPayload)
+	private JSONObject _queryGoogleCloudVisionJSONObject(String payloadJSON)
 		throws IOException, PortalException {
 
 		Http.Options options = new Http.Options();
 
 		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 		options.setBody(
-			jsonPayload, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+			payloadJSON, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation(
 			"https://vision.googleapis.com/v1/images:annotate?key=" +
 				_googleCloudVisionConfiguration.apiKey());

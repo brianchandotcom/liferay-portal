@@ -424,7 +424,7 @@ public class DocumentumRepository
 					deleteFile(idfSession, idfDocument);
 				}
 				else if (extRepositoryObjectType ==
-							ExtRepositoryObjectType.FOLDER) {
+							 ExtRepositoryObjectType.FOLDER) {
 
 					IDfFolder idfFolder = (IDfFolder)idfSession.getObject(
 						idfId);
@@ -944,7 +944,7 @@ public class DocumentumRepository
 						}
 
 						for (int i = start; (i < end) && idfCollection.next();
-							i++) {
+								i++) {
 
 							IDfId idfId = idfCollection.getId(
 								Constants.R_OBJECT_ID);

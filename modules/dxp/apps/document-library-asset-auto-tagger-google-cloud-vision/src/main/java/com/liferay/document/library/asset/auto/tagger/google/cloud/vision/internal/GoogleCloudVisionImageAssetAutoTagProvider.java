@@ -108,38 +108,29 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 	private String _getRequestJSONPayload(FileEntry fileEntry)
 		throws IOException, PortalException {
 
-		JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject();
-
-		JSONArray requestsJSONArray = JSONFactoryUtil.createJSONArray();
-
-		JSONObject requestJSONObject = JSONFactoryUtil.createJSONObject();
-
-		JSONArray featuresJSONArray = JSONFactoryUtil.createJSONArray();
-
-		JSONObject featureJSONObject = JSONFactoryUtil.createJSONObject();
-
-		featureJSONObject.put("type", "LABEL_DETECTION");
-
-		featuresJSONArray.put(featureJSONObject);
-
-		requestJSONObject.put("features", featuresJSONArray);
-
-		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
-
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		imageJSONObject.put(
-			"content",
-			Base64.encode(
-				FileUtil.getBytes(fileVersion.getContentStream(false))));
-
-		requestJSONObject.put("image", imageJSONObject);
-
-		requestsJSONArray.put(requestJSONObject);
-
-		payloadJSONObject.put("requests", requestsJSONArray);
-
-		return payloadJSONObject.toString();
+		return JSONUtil.put(
+			"requests",
+			JSONUtil.put(
+				JSONUtil.put(
+					"features",
+					JSONUtil.put(
+						JSONUtil.put(
+							"type", "LABEL_DETECTION"
+						)
+					)
+				).put(
+					"image",
+					JSONUtil.put(
+						"content",
+						Base64.encode(
+							FileUtil.getBytes(
+								fileVersion.getContentStream(false)))
+					)
+				)
+			)
+		).toString();
 	}
 
 	private boolean _isFormatSupported(FileEntry fileEntry) {

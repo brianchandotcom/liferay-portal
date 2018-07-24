@@ -2846,7 +2846,7 @@
 			<var name="searchTerm" value="otherEntry" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewNoFormEntries" />
+		<execute macro="FormsAdmin#viewNoFormEntriesFound" />
 	</command>
 
 	<command name="SelectAndRemoveMultipleOptionsInSelectFromListField" priority="4">

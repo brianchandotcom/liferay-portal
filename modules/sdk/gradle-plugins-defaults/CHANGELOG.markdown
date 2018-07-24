@@ -4154,6 +4154,13 @@ the `buildChangeLog` task.
 - [LPS-82976]: Change marker file name from `.lfrbuild-portal-all` to
 `.lfrbuild-portal-deprecated`.
 
+## 5.4.90 - 2018-07-23
+
+### Changed
+- [LPS-82960]: Remove the logic that loaded the `ci.properties` file to read
+the `jira.project.keys`. This property should be set in the `gradle.properties`
+file.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

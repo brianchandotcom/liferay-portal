@@ -1396,7 +1396,7 @@
 
 		<execute macro="IFrame#selectTopFrame" />
 
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${templateName}">
 			<var name="key_rowEntry" value="${templateName}" />

@@ -41,8 +41,10 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -174,8 +176,9 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		GoogleCloudVisionImageAssetAutoTagProvider.class);
 
-	private static final List<String> _supportedFormats = Arrays.asList(
-		"JPEG", "JPG", "PNG", "GIF", "BMP", "WEBP", "RAW", "ICO");
+	private static final Set<String> _supportedFormats = new HashSet<>(
+		Arrays.asList(
+			"JPEG", "JPG", "PNG", "GIF", "BMP", "WEBP", "RAW", "ICO"));
 
 	private volatile GoogleCloudVisionAssetAutoTagProviderConfiguration
 		_googleCloudVisionConfiguration;

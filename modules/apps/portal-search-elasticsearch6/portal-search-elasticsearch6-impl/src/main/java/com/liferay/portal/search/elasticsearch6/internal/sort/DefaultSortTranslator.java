@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -58,7 +59,7 @@ public class DefaultSortTranslator implements SortTranslator {
 				continue;
 			}
 
-			String sortFieldName = Field.getSortFieldName(sort, "_score");
+			String sortFieldName = getSortFieldName(sort, "_score");
 
 			if (sortFieldNames.contains(sortFieldName)) {
 				continue;
@@ -120,6 +121,16 @@ public class DefaultSortTranslator implements SortTranslator {
 
 			searchRequestBuilder.addSort(sortBuilder);
 		}
+	}
+
+	protected String getSortFieldName(Sort sort, String scoreFieldName) {
+		String sortFieldName = sort.getFieldName();
+
+		if (Objects.equals(sortFieldName, Field.PRIORITY)) {
+			return sortFieldName;
+		}
+
+		return Field.getSortFieldName(sort, scoreFieldName);
 	}
 
 }

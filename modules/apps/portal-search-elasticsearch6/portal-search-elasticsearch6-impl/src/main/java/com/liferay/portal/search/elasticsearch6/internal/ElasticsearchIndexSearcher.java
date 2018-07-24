@@ -56,7 +56,6 @@ import com.liferay.portal.search.elasticsearch6.internal.util.DocumentTypes;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -440,16 +439,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 
 		return new String[] {DocumentTypes.LIFERAY};
-	}
-
-	protected String getSortFieldName(Sort sort, String scoreFieldName) {
-		String sortFieldName = sort.getFieldName();
-
-		if (Objects.equals(sortFieldName, Field.PRIORITY)) {
-			return sortFieldName;
-		}
-
-		return Field.getSortFieldName(sort, scoreFieldName);
 	}
 
 	protected boolean handle(Exception e) {

@@ -1139,7 +1139,9 @@
 		<if>
 			<isset var="localizationOption" />
 			<then>
-				<execute function="AssertClick" locator1="Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE" value1="${localizationOption}" />
+				<execute function="AssertClick" locator1="Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE" value1="${localizationOption}">
+					<var name="key_pageLocale" value="${localizationOption}" />
+				</execute>
 			</then>
 		</if>
 

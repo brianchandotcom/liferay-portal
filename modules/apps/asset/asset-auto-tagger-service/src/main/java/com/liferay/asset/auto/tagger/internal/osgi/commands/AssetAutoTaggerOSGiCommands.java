@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetAutoTaggerOSGiCommands {
 
 	public void tagAllUntagged(String... classNames) {
-		if (!_assetAutoTaggerConfiguration.enabled()) {
+		if (!_assetAutoTaggerConfiguration.isEnabled()) {
 			System.out.println("Asset auto tagger is disabled");
 
 			return;

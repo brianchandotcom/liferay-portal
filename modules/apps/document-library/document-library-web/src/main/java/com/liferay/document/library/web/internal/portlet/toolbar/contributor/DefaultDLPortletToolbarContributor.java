@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
+import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorContext;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -73,7 +74,9 @@ import org.osgi.service.component.annotations.Reference;
 	service =
 		{DLPortletToolbarContributor.class, PortletToolbarContributor.class}
 )
-public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
+public class DefaultDLPortletToolbarContributor
+	extends BasePortletToolbarContributor
+	implements DLPortletToolbarContributor {
 
 	public MenuItem getFileEntryTypeMenuItem(
 			PortletRequest portletRequest, Folder folder,
@@ -606,7 +609,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLPortletToolbarContributor.class);
+		DefaultDLPortletToolbarContributor.class);
 
 	private BaseModelPermissionChecker _baseModelPermissionChecker;
 	private DLFileEntryTypeService _dlFileEntryTypeService;

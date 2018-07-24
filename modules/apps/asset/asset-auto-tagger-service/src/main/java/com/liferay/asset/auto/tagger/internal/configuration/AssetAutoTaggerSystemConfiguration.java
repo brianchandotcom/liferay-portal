@@ -16,7 +16,6 @@ package com.liferay.asset.auto.tagger.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -28,8 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "asset-auto-tagger-configuration-name"
 )
-public interface AssetAutoTaggerSystemConfiguration
-	extends AssetAutoTaggerConfiguration {
+public interface AssetAutoTaggerSystemConfiguration {
 
 	/**
 	 * Enables asset auto tagging

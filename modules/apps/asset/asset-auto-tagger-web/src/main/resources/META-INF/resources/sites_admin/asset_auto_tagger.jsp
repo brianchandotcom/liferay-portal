@@ -20,4 +20,4 @@
 AssetAutoTaggerConfiguration configuration = (AssetAutoTaggerConfiguration)request.getAttribute(AssetAutoTaggerConfiguration.class.getName());
 %>
 
-<aui:input helpMessage="site-asset-auto-tagging-help" id="enabled" label="enabled" name="TypeSettingsProperties--assetAutoTaggingEnabled--" type="toggle-switch" value="<%= configuration.enabled() %>" />
+<aui:input helpMessage="site-asset-auto-tagging-help" id="enabled" label="enabled" name="TypeSettingsProperties--assetAutoTaggingEnabled--" type="toggle-switch" value="<%= configuration.isEnabled() %>" />

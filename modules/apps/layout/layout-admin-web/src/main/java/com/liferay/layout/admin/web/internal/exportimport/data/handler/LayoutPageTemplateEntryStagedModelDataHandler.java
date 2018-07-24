@@ -28,6 +28,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
@@ -93,6 +95,16 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 
 		_exportAssetDisplayPages(portletDataContext, layoutPageTemplateEntry);
 
+		if (layoutPageTemplateEntry.getLayoutPrototypeId() > 0) {
+			LayoutPrototype layoutPrototype =
+				_layoutPrototypeLocalService.getLayoutPrototype(
+					layoutPageTemplateEntry.getLayoutPrototypeId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layoutPageTemplateEntry, layoutPrototype,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+
 		Element entryElement = portletDataContext.getExportDataElement(
 			layoutPageTemplateEntry);
 
@@ -156,6 +168,35 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				layoutPageTemplateEntry.getUuid(),
 				portletDataContext.getScopeGroupId());
+
+		Element layoutPrototypeElement =
+			portletDataContext.getReferenceDataElement(
+				layoutPageTemplateEntry, LayoutPrototype.class,
+				layoutPageTemplateEntry.getLayoutPrototypeId());
+
+		if (layoutPrototypeElement != null) {
+			String layoutPrototypePath = layoutPrototypeElement.attributeValue(
+				"path");
+
+			LayoutPrototype layoutPrototype =
+				(LayoutPrototype)portletDataContext.getZipEntryAsObject(
+					layoutPrototypePath);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, layoutPrototype);
+
+			Map<Long, Long> layoutPrototypeIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					LayoutPrototype.class);
+
+			long layoutPrototypeId = MapUtil.getLong(
+				layoutPrototypeIds,
+				layoutPageTemplateEntry.getLayoutPrototypeId(),
+				layoutPageTemplateEntry.getLayoutPrototypeId());
+
+			importedLayoutPageTemplateEntry.setLayoutPrototypeId(
+				layoutPrototypeId);
+		}
 
 		if ((existingLayoutPageTemplateEntry == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
@@ -303,6 +344,9 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 	@Reference
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
+
+	@Reference
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Reference
 	private Portal _portal;

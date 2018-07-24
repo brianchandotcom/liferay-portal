@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
+import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorContext;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -73,7 +74,9 @@ import org.osgi.service.component.annotations.Reference;
 	service =
 		{DLPortletToolbarContributor.class, PortletToolbarContributor.class}
 )
-public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
+public class DefaultDLPortletToolbarContributor
+	extends BasePortletToolbarContributor
+	implements DLPortletToolbarContributor {
 
 	public MenuItem getFileEntryTypeMenuItem(
 			PortletRequest portletRequest, Folder folder,
@@ -499,30 +502,6 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		return menuItems;
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFolder)",
-		unbind = "-"
-	)
-	protected void setBaseModelPermissionChecker(
-		BaseModelPermissionChecker baseModelPermissionChecker) {
-
-		_baseModelPermissionChecker = baseModelPermissionChecker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileEntryTypeService(
-		DLFileEntryTypeService dlFileEntryTypeService) {
-
-		_dlFileEntryTypeService = dlFileEntryTypeService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLPortletToolbarContributorHelper(
-		DLPortletToolbarContributorHelper dlPortletToolbarContributorHelper) {
-
-		_dlPortletToolbarContributorHelper = dlPortletToolbarContributorHelper;
-	}
-
 	private long _getFolderId(Folder folder) {
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
@@ -606,13 +585,21 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLPortletToolbarContributor.class);
+		DefaultDLPortletToolbarContributor.class);
 
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFolder)"
+	)
 	private BaseModelPermissionChecker _baseModelPermissionChecker;
+
+	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;
+
 	private ServiceTrackerList
 		<DLPortletToolbarContributorContext, DLPortletToolbarContributorContext>
 			_dlPortletToolbarContributorContexts;
+
+	@Reference
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;
 

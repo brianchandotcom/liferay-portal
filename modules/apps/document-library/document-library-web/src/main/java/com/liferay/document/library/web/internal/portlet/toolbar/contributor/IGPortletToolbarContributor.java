@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
@@ -52,8 +53,12 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
+		DLPortletToolbarContributor dlPortletToolbarContributor =
+			_dlPortletToolbarContributorRegistry.
+				getDLPortletToolbarContributor();
+
 		List<MenuItem> portletTitleAddDocumentMenuItems =
-			_dlPortletToolbarContributor.getPortletTitleAddDocumentMenuItems(
+			dlPortletToolbarContributor.getPortletTitleAddDocumentMenuItems(
 				folder, themeDisplay, portletRequest);
 
 		menuItems.addAll(portletTitleAddDocumentMenuItems);
@@ -63,8 +68,12 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
+		DLPortletToolbarContributor dlPortletToolbarContributor =
+			_dlPortletToolbarContributorRegistry.
+				getDLPortletToolbarContributor();
+
 		MenuItem portletTitleAddFolderMenuItem =
-			_dlPortletToolbarContributor.getPortletTitleAddFolderMenuItem(
+			dlPortletToolbarContributor.getPortletTitleAddFolderMenuItem(
 				themeDisplay, portletRequest, folder);
 
 		if (portletTitleAddFolderMenuItem != null) {
@@ -76,8 +85,12 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
+		DLPortletToolbarContributor dlPortletToolbarContributor =
+			_dlPortletToolbarContributorRegistry.
+				getDLPortletToolbarContributor();
+
 		MenuItem portletTitleAddMultipleDocumentsMenuItem =
-			_dlPortletToolbarContributor.
+			dlPortletToolbarContributor.
 				getPortletTitleAddMultipleDocumentsMenuItem(
 					themeDisplay, portletRequest, folder);
 
@@ -115,23 +128,13 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		return menuItems;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLPortletToolbarContributor(
-		DLPortletToolbarContributor dlPortletToolbarContributor) {
-
-		_dlPortletToolbarContributor = dlPortletToolbarContributor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLPortletToolbarContributorHelper(
-		DLPortletToolbarContributorHelper dlPortletToolbarContributorHelper) {
-
-		_dlPortletToolbarContributorHelper = dlPortletToolbarContributorHelper;
-	}
-
-	private DLPortletToolbarContributor _dlPortletToolbarContributor;
+	@Reference
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;
+
+	@Reference
+	private DLPortletToolbarContributorRegistry
+		_dlPortletToolbarContributorRegistry;
 
 	@Reference
 	private Portal _portal;

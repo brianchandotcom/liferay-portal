@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_SPECIFIC_RESTRICTIONS_CHOOSE_STRUCTURE_BUTTON</td>
-  	<td>//span[contains(@class,'select-structure')]/a[contains(.,'Choose Structure')]</td>
+  	<td>//button[contains(@id,'selectStructure')]/span[contains(.,'Choose Structure')]</td>
   	<td></td>
 </tr>
 <tr>

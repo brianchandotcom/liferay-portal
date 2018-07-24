@@ -761,6 +761,131 @@
 		<execute macro="FormsAdmin#viewNoFormEntries" />
 	</command>
 
+	<command name="submitNewWorkflow">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#configureWorkflow">
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowResourceValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addWithWorkflow">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Subtitle" />
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="New Blog After Upgrade" />
+			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="New Blog After Upgrade" />
+			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="cards" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
+			<var name="workflowAssetTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryAsWorkflowAsset">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+	</command>
+
 	<command name="viewAssetPublisher">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher" />

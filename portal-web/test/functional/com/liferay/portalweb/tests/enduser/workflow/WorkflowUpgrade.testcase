@@ -21,6 +21,41 @@
 		</execute>
 	</set-up>
 
+	<command name="SubmitAndApproveWorkflowAfterUpgrade621015" priority="5">
+		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="portal.version" value="6.2.10.15" />
+
+		<execute macro="Upgrade#submitNewWorkflow" />
+	</command>
+
+	<command name="SubmitAndApproveWorkflowAfterUpgrade621021" priority="5">
+		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="portal.version" value="6.2.10.21" />
+
+		<execute macro="Upgrade#submitNewWorkflow" />
+	</command>
+
+	<command name="SubmitAndApproveWorkflowAfterUpgrade625" priority="5">
+		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="portal.version" value="6.2.5" />
+
+		<execute macro="Upgrade#submitNewWorkflow" />
+	</command>
+
+	<command name="SubmitAndApproveWorkflowAfterUpgrade70106" priority="5">
+		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="portal.version" value="7.0.10.6" />
+
+		<execute macro="Upgrade#submitNewWorkflow" />
+	</command>
+
+	<command name="SubmitAndApproveWorkflowAfterUpgrade704" priority="5">
+		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="portal.version" value="7.0.4" />
+
+		<execute macro="Upgrade#submitNewWorkflow" />
+	</command>
+
 	<command name="ViewWorkflowArchive612" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
 		<property name="portal.version" value="6.1.2" />

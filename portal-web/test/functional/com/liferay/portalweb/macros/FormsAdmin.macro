@@ -2,10 +2,10 @@
 	<var name="formDescription" value="Created Form Description" />
 	<var name="formName" value="Created Form Name" />
 
-	<command name="deleteForm">
+	<command name="deleteFormEntry">
 		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
 			<var name="menuItem" value="Delete" />
-			<var name="rowEntry" value="${formName}" />
+			<var name="rowEntry" value="${formEntryValue}" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />

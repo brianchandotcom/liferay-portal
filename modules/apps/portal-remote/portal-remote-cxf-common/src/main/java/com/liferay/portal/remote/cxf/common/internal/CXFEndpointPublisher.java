@@ -43,6 +43,7 @@ import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -171,11 +172,18 @@ public class CXFEndpointPublisher {
 
 			Bus bus = cxfBusFactory.createBus(_extensions);
 
+			ServiceReference<ServletContextHelper> serviceReference =
+				_servletContextHelperServiceRegistration.getReference();
+
+			String httpWhiteboardContextSelect =
+				"(service.id=" + serviceReference.getProperty("service.id") +
+					")";
+
 			properties = new Hashtable<>();
 
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-				contextName);
+				httpWhiteboardContextSelect);
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
 				CXFNonSpringServlet.class.getName());
@@ -206,7 +214,7 @@ public class CXFEndpointPublisher {
 
 				properties.put(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-					contextName);
+					httpWhiteboardContextSelect);
 				properties.put(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
 					AuthVerifierFilter.class.getName());
@@ -235,7 +243,7 @@ public class CXFEndpointPublisher {
 
 				properties.put(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-					contextName);
+					httpWhiteboardContextSelect);
 				properties.put(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
 					RemoteAccessFilter.class.getName());

@@ -1015,6 +1015,58 @@ release was successful.</echo>
 		</if>
 	</target>
 
+	<target name="generate-hypersonic-data">
+		<property location="dist/hypersonic.tmp" name="tmp.hypersonic.dir" />
+
+		<property location="${tmp.hypersonic.dir}/tomcat-${app.server.tomcat.version}/bin" name="tmp.app.server.tomcat.bin.dir" />
+
+		<copy
+			todir="${tmp.hypersonic.dir}"
+		>
+			<fileset
+				dir="${liferay.home}"
+			/>
+		</copy>
+
+		<chmod
+			perm="744"
+		>
+			<fileset
+				dir="${tmp.app.server.tomcat.bin.dir}"
+				includes="*.sh"
+			/>
+		</chmod>
+
+		<parallel>
+			<exec dir="${tmp.app.server.tomcat.bin.dir}" executable="sh">
+				<arg value="catalina.sh" />
+				<arg value="run" />
+			</exec>
+
+			<sequential>
+				<waitfor>
+					<http url="http://localhost:8080" />
+				</waitfor>
+
+				<sleep seconds="5" />
+
+				<exec dir="${tmp.app.server.tomcat.bin.dir}" executable="sh">
+					<arg value="shutdown.sh" />
+				</exec>
+			</sequential>
+		</parallel>
+
+		<copy
+			todir="dist/hypersonic"
+		>
+			<fileset
+				dir="${tmp.hypersonic.dir}/data/hypersonic"
+			/>
+		</copy>
+
+		<delete dir="${tmp.hypersonic.dir}" />
+	</target>
+
 	<target name="prepare-generated-files">
 		<antcall target="clean" />
 		<antcall target="start" />
@@ -3784,6 +3836,21 @@ plugins.includes=</echo>
 					/>
 				</zip>
 			</else>
+		</if>
+
+		<if>
+			<available file="dist/hypersonic" />
+			<then>
+				<zip
+					destfile="dist/${zip.executable.file}-${lp.version}.zip"
+					update="true"
+				>
+					<zipfileset
+						dir="dist/hypersonic"
+						prefix="liferay-portal-${lp.version}/${zip.executable.dir.name}/data"
+					/>
+				</zip>
+			</then>
 		</if>
 	</target>
 

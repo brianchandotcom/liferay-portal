@@ -49,6 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetAutoTaggerConfigurationFactoryImpl
 	implements AssetAutoTaggerConfigurationFactory {
 
+	@Override
 	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration() {
 		return new AssetAutoTaggerConfiguration() {
 

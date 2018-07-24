@@ -118,9 +118,8 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		URL url = new URL(
 			_microsoftCognitiveServicesConfiguration.apiEndpoint() + "/tag");
 
-		URLConnection connection = url.openConnection();
-
-		HttpURLConnection httpURLConnection = (HttpURLConnection)connection;
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
 
 		httpURLConnection.setDoOutput(true);
 		httpURLConnection.setRequestMethod("POST");

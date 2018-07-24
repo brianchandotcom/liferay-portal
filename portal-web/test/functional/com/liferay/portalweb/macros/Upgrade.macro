@@ -6,7 +6,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no lists." />
 
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 

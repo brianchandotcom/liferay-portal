@@ -55,11 +55,11 @@ task syncGitRepoReleases
 task tagAppReleases
 
 cherryPickArtifacts {
-	description = "Cherry-picks artifact commits from a release branch. Required properties: '-Psince', '-Puntil'."
+	description = "Cherry-picks 'apply' and 'prep next' artifact publishing commits from a release branch. Required properties: '-Psince', '-Puntil'."
 
 	doLast {
-		assert project.properties["since"] : "Please provide a value for the '-Psince' property"
-		assert project.properties["until"] : "Please provide a value for the '-Puntil' property"
+		assert project.properties["since"] : "Please provide a Git commit hash for the '-Psince' property"
+		assert project.properties["until"] : "Please provide a Git commit hash for the '-Puntil' property"
 
 		Commit sinceParentCommit = JGitUtil.resolveCommit(grgit.repository, since)
 
@@ -83,7 +83,7 @@ cherryPickArtifacts {
 }
 
 lockDependencyVersion {
-	description = "Replaces 'default' or project dependencies with a specific version. Required properties: '-PdependencyName', '-PdependencyVersion'."
+	description = "Replaces 'default' or project dependencies in all 'apps' and 'core' modules with a specific version, if compilation completes successfully. Required properties: '-PdependencyName', '-PdependencyVersion'."
 
 	doLast {
 		assert project.properties["dependencyName"] : "Please provide a value for the '-PdependencyName' property"
@@ -242,7 +242,7 @@ lockPrivateDependencyVersions {
 }
 
 prepareMajorIncrement {
-	description = "Prepares the build scripts of modules and portal artifacts to a major version increment."
+	description = "Prepares the build scripts of modules and portal artifacts to a major version increment, by increasing all versions to +1 major and converting all dependencies into project dependencies. This task must run from the master branch. Also, passing '-PreleaseDir=/data/liferay-portal-71x' causes the task not to increment the modules that already have a version greater than the one in /data/liferay-portal-71x."
 
 	doLast {
 		File releaseModulesDir = null

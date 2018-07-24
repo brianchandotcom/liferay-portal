@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.internal.model.listener;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -44,6 +45,12 @@ public class LayoutPrototypeModelListener
 	@Override
 	public void onAfterCreate(LayoutPrototype layoutPrototype)
 		throws ModelListenerException {
+
+		if (ExportImportThreadLocal.isStagingInProcess() ||
+			ExportImportThreadLocal.isImportInProcess()) {
+
+			return;
+		}
 
 		try {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =

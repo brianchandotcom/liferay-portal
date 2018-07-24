@@ -155,7 +155,9 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+		if (!portletDataContext.getBooleanParameter(
+				NAMESPACE, "page-templates")) {
+
 			return null;
 		}
 

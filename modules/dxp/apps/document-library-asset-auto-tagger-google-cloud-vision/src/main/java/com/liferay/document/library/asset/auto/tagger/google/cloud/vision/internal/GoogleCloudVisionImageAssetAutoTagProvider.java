@@ -67,7 +67,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 	@Override
 	public List<String> getTagNames(FileEntry fileEntry) {
 		if (!_googleCloudVisionConfiguration.enabled() ||
-			_isTemporary(fileEntry) || !_isFormatSupported(fileEntry)) {
+			_isTemporary(fileEntry) || !_isSupportedFormat(fileEntry)) {
 
 			return Collections.emptyList();
 		}
@@ -135,7 +135,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 		).toString();
 	}
 
-	private boolean _isFormatSupported(FileEntry fileEntry) {
+	private boolean _isSupportedFormat(FileEntry fileEntry) {
 		String extension = fileEntry.getExtension();
 
 		return _supportedFormats.contains(StringUtil.toUpperCase(extension));

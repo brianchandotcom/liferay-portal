@@ -165,9 +165,8 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
 			throw new PortalException(
-				String.format(
-					"Request failed with status %d: %s",
-					response.getResponseCode(), responseJSON));
+				"Response code " + response.getResponseCode() + ": " +
+					responseJSON);
 		}
 
 		return JSONFactoryUtil.createJSONObject(responseJSON);

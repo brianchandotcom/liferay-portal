@@ -17,6 +17,7 @@ package com.liferay.asset.auto.tagger.internal.osgi.commands;
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.AssetAutoTagger;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -24,7 +25,6 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -45,14 +45,12 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration",
 	immediate = true,
 	property = {
 		"osgi.command.function=tagAllUntagged",
@@ -63,7 +61,11 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetAutoTaggerOSGiCommands {
 
 	public void tagAllUntagged(String... classNames) {
-		if (!_assetAutoTaggerConfiguration.isEnabled()) {
+		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
+			_assetAutoTaggerConfigurationFactory.
+				getAssetAutoTaggerConfiguration();
+
+		if (!assetAutoTaggerConfiguration.isEnabled()) {
 			System.out.println("Asset auto tagger is disabled");
 
 			return;
@@ -127,8 +129,6 @@ public class AssetAutoTaggerOSGiCommands {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		modified(properties);
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, AssetAutoTagProvider.class, "model.class.name");
 	}
@@ -136,12 +136,6 @@ public class AssetAutoTaggerOSGiCommands {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		_assetAutoTaggerConfiguration = ConfigurableUtil.createConfigurable(
-			AssetAutoTaggerConfiguration.class, properties);
 	}
 
 	private void _forEachAssetEntry(
@@ -192,7 +186,9 @@ public class AssetAutoTaggerOSGiCommands {
 	@Reference
 	private AssetAutoTagger _assetAutoTagger;
 
-	private volatile AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
+	@Reference
+	private AssetAutoTaggerConfigurationFactory
+		_assetAutoTaggerConfigurationFactory;
 
 	@Reference
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;

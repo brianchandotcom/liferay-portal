@@ -6232,7 +6232,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 		<if>
 			<not>
-				<contains string="${testray.main.component.name}" substring="Elastic Search Impl" />
+				<contains string="${testray.main.component.name}" substring="Elasticsearch Impl" />
 			</not>
 			<then>
 				<prepare-elasticsearch-configuration />

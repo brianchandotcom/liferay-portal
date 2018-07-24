@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Modified;
 		"com.liferay.portlet.render-weight=50",
 		"javax.portlet.display-name=XSL Content",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + XSLContentPortletKeys.XSL_CONTENT,
 		"javax.portlet.resource-bundle=content.Language",

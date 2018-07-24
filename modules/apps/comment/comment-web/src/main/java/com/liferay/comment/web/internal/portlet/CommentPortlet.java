@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.icon=/icons/comment.png",
 		"javax.portlet.display-name=Comments",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.name=" + CommentPortletKeys.COMMENT,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest",

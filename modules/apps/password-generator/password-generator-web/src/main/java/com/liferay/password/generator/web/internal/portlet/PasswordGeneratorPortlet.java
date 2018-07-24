@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.render-weight=0",
 		"javax.portlet.display-name=Password Generator",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + PasswordGeneratorPortletKeys.PASSWORD_GENERATOR,
 		"javax.portlet.resource-bundle=content.Language",

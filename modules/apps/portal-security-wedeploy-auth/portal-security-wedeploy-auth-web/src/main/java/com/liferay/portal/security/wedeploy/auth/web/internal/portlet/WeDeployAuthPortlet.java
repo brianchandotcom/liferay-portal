@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.info.title=WeDeploy Auth",
 		"javax.portlet.init-param.clear-request-parameters=true",
 		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/wedeploy_auth/view.jsp",
 		"javax.portlet.name=" + WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
 		"javax.portlet.resource-bundle=content.Language",

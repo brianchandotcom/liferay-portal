@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Page Comments",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.add-process-action-success-action=false",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + PageCommentsPortletKeys.PAGE_COMMENTS,
 		"javax.portlet.resource-bundle=content.Language",

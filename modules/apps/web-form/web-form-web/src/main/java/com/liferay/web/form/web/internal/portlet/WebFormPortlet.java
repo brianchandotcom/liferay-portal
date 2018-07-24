@@ -92,7 +92,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Web Form",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + WebFormPortletKeys.WEB_FORM,
 		"javax.portlet.portlet-info.keywords=Web Form",

@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.exportimport.web.portlet.action",
 		"javax.portlet.init-param.mvc-command-names-default-views=exportLayoutsView",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/export/view.jsp",
 		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT,
 		"javax.portlet.resource-bundle=content.Language",

@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		"javax.portlet.display-name=Dynamic Data Lists Display",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view_selected_record_set.jsp",
 		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY,
 		"javax.portlet.resource-bundle=content.Language",

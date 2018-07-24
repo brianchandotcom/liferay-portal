@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Modified;
 		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.display-name=Chat", "javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + ChatPortletKeys.CHAT,
 		"javax.portlet.portlet-info.keywords=Chat",

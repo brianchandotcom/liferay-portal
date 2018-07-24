@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=My Sync Devices",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/devices.jsp",
 		"javax.portlet.name=" + SyncPortletKeys.SYNC_DEVICES_PORTLET,
 		"javax.portlet.resource-bundle=content.Language",

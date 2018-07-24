@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.always-display-default-configuration-icons=true",
 		"javax.portlet.init-param.mvc-command-names-default-views=/bookmarks/view",
 		"javax.portlet.init-param.portlet-title-based-navigation=false",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",

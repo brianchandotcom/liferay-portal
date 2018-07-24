@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Invite Members",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/invite_members/view.jsp",
 		"javax.portlet.name=" + InviteMembersPortletKeys.INVITE_MEMBERS,
 		"javax.portlet.resource-bundle=content.Language",

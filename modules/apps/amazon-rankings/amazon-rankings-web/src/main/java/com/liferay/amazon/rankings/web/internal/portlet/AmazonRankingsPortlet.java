@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.render-weight=0",
 		"javax.portlet.display-name=Amazon Rankings",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + AmazonRankingsPortletKeys.AMAZON_RANKINGS,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",

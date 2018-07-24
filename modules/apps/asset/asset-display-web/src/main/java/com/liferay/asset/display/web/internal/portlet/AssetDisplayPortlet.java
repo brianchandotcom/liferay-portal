@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Asset Display",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + AssetDisplayPortletKeys.ASSET_DISPLAY,
 		"javax.portlet.resource-bundle=content.Language",

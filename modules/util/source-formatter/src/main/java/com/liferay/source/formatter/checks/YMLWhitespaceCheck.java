@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.YMLSourceUtil;
@@ -38,13 +39,13 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		content = StringUtil.replace(
 			content, CharPool.TAB, StringPool.FOUR_SPACES);
 
-		content = _formatDefinitions(content, StringPool.BLANK, 0);
+		content = _formatDefinitions(fileName, content, StringPool.BLANK, 0);
 
 		return super.doProcess(fileName, absolutePath, content);
 	}
 
 	private String _formatDefinition(
-		String definition, String indent, int level,
+		String fileName, String definition, String indent, int level,
 		boolean hasNestedDefinitions) {
 
 		String expectedIndent = StringPool.BLANK;
@@ -71,6 +72,9 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 		String firstLine = lines[1];
 
+		String newNestedContent = StringPool.BLANK;
+		String oldNestedContent = StringPool.BLANK;
+
 		String nestedIndent = firstLine.replaceAll("^(\\s+).+", "$1");
 
 		if (nestedIndent.equals(firstLine)) {
@@ -79,6 +83,14 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 		for (int j = 1; j < lines.length; j++) {
 			String line = lines[j];
+
+			if (j > 1) {
+				newNestedContent = newNestedContent + StringPool.NEW_LINE;
+				oldNestedContent = oldNestedContent + StringPool.NEW_LINE;
+			}
+
+			newNestedContent = newNestedContent + line;
+			oldNestedContent = oldNestedContent + line;
 
 			if (Validator.isNull(line)) {
 				continue;
@@ -96,16 +108,31 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
-			newDefinition = StringUtil.replaceFirst(
-				newDefinition, line,
+			newNestedContent = StringUtil.replaceLast(
+				newNestedContent, line,
 				expectedIndent + StringPool.FOUR_SPACES + trimmedLine);
+		}
+
+		if (!newNestedContent.equals(oldNestedContent)) {
+			if (!_hasMapInsideList(lines)) {
+				newDefinition = StringUtil.replaceFirst(
+					newDefinition, oldNestedContent, newNestedContent);
+			}
+			else {
+				String message = StringBundler.concat(
+					"Incorrect whitespace, expected '",
+					expectedIndent + StringPool.FOUR_SPACES, "'\n",
+					oldNestedContent);
+
+				addMessage(fileName, message);
+			}
 		}
 
 		return newDefinition;
 	}
 
 	private String _formatDefinitions(
-		String content, String indent, int level) {
+		String fileName, String content, String indent, int level) {
 
 		List<String> definitions = YMLSourceUtil.getDefinitions(
 			content, indent);
@@ -121,7 +148,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 					definition, nestedDefinitionIndent);
 
 				String newDefinition = _formatDefinitions(
-					definition, nestedDefinitionIndent, level + 1);
+					fileName, definition, nestedDefinitionIndent, level + 1);
 
 				if (!newDefinition.equals(definition)) {
 					content = StringUtil.replaceFirst(
@@ -130,7 +157,8 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			}
 
 			String newDefinition = _formatDefinition(
-				definition, indent, level, !nestedDefinitions.isEmpty());
+				fileName, definition, indent, level,
+				!nestedDefinitions.isEmpty());
 
 			if (!newDefinition.equals(definition)) {
 				content = StringUtil.replaceFirst(
@@ -139,6 +167,28 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		}
 
 		return content;
+	}
+
+	private boolean _hasMapInsideList(String[] lines) {
+		if (lines.length <= 1) {
+			return false;
+		}
+
+		String trimmedFirstLine = StringUtil.trimLeading(lines[1]);
+
+		if (!trimmedFirstLine.startsWith(StringPool.DASH)) {
+			return false;
+		}
+
+		for (int j = 1; j < lines.length; j++) {
+			String trimmedLine = StringUtil.trimLeading(lines[j]);
+
+			if (trimmedLine.matches("\\w+:.*")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

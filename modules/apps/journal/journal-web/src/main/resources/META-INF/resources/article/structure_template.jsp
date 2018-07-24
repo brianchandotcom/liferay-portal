@@ -102,6 +102,7 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 						modal: true
 					},
 					eventName: '<portlet:namespace />selectStructure',
+					id: '<portlet:namespace />selectStructure',
 					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /><portlet:param name="searchRestriction" value="<%= String.valueOf(searchRestriction) %>" /><portlet:param name="searchRestrictionClassNameId" value="<%= String.valueOf(ClassNameLocalServiceUtil.getClassNameId(JournalFolder.class)) %>" /><portlet:param name="searchRestrictionClassPK" value="<%= String.valueOf(folderId) %>" /></portlet:renderURL>'
 				},
@@ -137,6 +138,7 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 						modal: true
 					},
 					eventName: '<portlet:namespace />selectTemplate',
+					id: '<portlet:namespace />selectTemplate',
 					title: '<%= UnicodeLanguageUtil.get(request, "templates") %>',
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_template.jsp" /><portlet:param name="structureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>'
 				},

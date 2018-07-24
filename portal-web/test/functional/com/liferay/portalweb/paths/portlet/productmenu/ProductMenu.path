@@ -266,7 +266,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_SCOPE</td>
-	<td>//div[contains(@class,'scope-selector')]/span</td>
+	<td>//div[contains(@class,'scope-selector')]//span[contains(@class,'scope-name')]</td>
 	<td></td>
 </tr>
 <tr>

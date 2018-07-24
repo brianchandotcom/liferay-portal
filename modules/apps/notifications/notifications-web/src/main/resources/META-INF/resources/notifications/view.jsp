@@ -119,7 +119,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 <aui:script sandbox="<%= true %>">
 	var deleteAllNotifications = function() {
-		var form = document.querySelector('#<portlet:namespace />fm');
+		var form = document.getElementById('<portlet:namespace />fm');
 
 		form.setAttribute('method', 'post');
 
@@ -127,7 +127,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	};
 
 	var markNotificationsAsRead = function() {
-		var form = document.querySelector('#<portlet:namespace />fm');
+		var form = document.getElementById('<portlet:namespace />fm');
 
 		form.setAttribute('method', 'post');
 
@@ -135,7 +135,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	};
 
 	var markNotificationsAsUnread = function() {
-		var form = document.querySelector('#<portlet:namespace />fm');
+		var form = document.getElementById('<portlet:namespace />fm');
 
 		form.setAttribute('method', 'post');
 

@@ -557,8 +557,7 @@ public class GitWorkingDirectory {
 
 		if (branchName.equals("HEAD") && (remote == null)) {
 			ExecutionResult executionResult = executeBashCommands(
-				_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT,
-				"git rev-parse --abbrev-ref " + branchName);
+				_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT, "git branch | grep \\*");
 
 			if (executionResult.getExitValue() != 0) {
 				System.out.println(executionResult.getStandardError());
@@ -575,6 +574,8 @@ public class GitWorkingDirectory {
 			System.out.println(executionResult.getStandardOut());
 
 			String currentBranchName = executionResult.getStandardOut();
+
+			currentBranchName = currentBranchName.replaceFirst("\\*\\s*", "");
 
 			currentBranchName = currentBranchName.trim();
 
@@ -740,7 +741,15 @@ public class GitWorkingDirectory {
 	public Branch getCurrentBranch() {
 		waitForIndexLock();
 
-		return getBranch("HEAD", null);
+		Branch currentBranch = getBranch("HEAD", null);
+
+		if (currentBranch == null) {
+			currentBranch = getBranch(getUpstreamBranchName(), null);
+
+			checkoutBranch(currentBranch, null);
+		}
+
+		return currentBranch;
 	}
 
 	public String getGitConfigProperty(String gitConfigPropertyName) {

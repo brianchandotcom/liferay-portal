@@ -1401,6 +1401,27 @@ public class GitWorkingDirectory {
 			return _sha;
 		}
 
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Branch\n     Name: ");
+			sb.append(_name);
+			sb.append("\n");
+
+			sb.append("     SHA:  ");
+			sb.append(_sha);
+			sb.append("\n");
+
+			if (_remote != null) {
+				sb.append("Remote: ");
+				sb.append(_remote.toString());
+				sb.append("\n");
+			}
+
+			return sb.toString();
+		}
+
 		private Branch(
 			GitWorkingDirectory gitWorkingDirectory, String name, Remote remote,
 			String sha) {

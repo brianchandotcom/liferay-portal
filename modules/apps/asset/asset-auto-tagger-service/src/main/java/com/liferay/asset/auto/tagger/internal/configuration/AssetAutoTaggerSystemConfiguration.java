@@ -42,7 +42,6 @@ public interface AssetAutoTaggerSystemConfiguration {
 	 * Specifies the maximum number of tags that can be added for a given asset
 	 */
 	@Meta.AD(
-		deflt = "-1",
 		description = "maximum-number-of-tags-per-asset-description",
 		name = "maximum-number-of-tags-per-asset", required = false
 	)

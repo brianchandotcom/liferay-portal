@@ -142,9 +142,8 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		catch (Exception e) {
 			try (InputStream inputStream = http.getErrorStream()) {
 				throw new PortalException(
-					String.format(
-						"Request failed with status %d: %s",
-						http.getResponseCode(), StringUtil.read(inputStream)),
+					"Response code " + http.getResponseCode()  + ":" +
+						StringUtil.read(inputStream),
 					e);
 			}
 		}

@@ -167,11 +167,11 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 				Integer maximumNumberOfTagsPerAsset1,
 				Integer maximumNumberOfTagsPerAsset2) {
 
-				if (maximumNumberOfTagsPerAsset1 == -1) {
+				if (maximumNumberOfTagsPerAsset1 == 0) {
 					return 1;
 				}
 
-				if (maximumNumberOfTagsPerAsset2 == -1) {
+				if (maximumNumberOfTagsPerAsset2 == 0) {
 					return -1;
 				}
 

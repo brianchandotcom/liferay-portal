@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
@@ -81,17 +82,7 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 
 			JSONArray tagsJSONArray = responseJSONObject.getJSONArray("tags");
 
-			List<String> tagNames = new ArrayList<>();
-
-			if (tagsJSONArray != null) {
-				for (int i = 0; i < tagsJSONArray.length(); i++) {
-					JSONObject tagJSONObject = tagsJSONArray.getJSONObject(i);
-
-					tagNames.add(tagJSONObject.getString("name"));
-				}
-			}
-
-			return tagNames;
+			return JSONUtil.toStringList(tagsJSONArray, "name");
 		}
 		catch (IOException | PortalException e) {
 			_log.error(e, e);
@@ -131,29 +122,29 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 
 		HttpURLConnection http = (HttpURLConnection)connection;
 
-		http.setRequestMethod("POST");
 		http.setDoOutput(true);
-
+		http.setRequestMethod("POST");
 		http.setRequestProperty("Content-Type", "application/octet-stream");
 		http.setRequestProperty(
 			"Ocp-Apim-Subscription-Key",
 			_microsoftCognitiveServicesConfiguration.apiKey());
 
-		try (OutputStream os = http.getOutputStream()) {
-			os.write(FileUtil.getBytes(fileVersion.getContentStream(false)));
+		try (OutputStream outputStream = http.getOutputStream()) {
+			outputStream.write(
+				FileUtil.getBytes(fileVersion.getContentStream(false)));
 		}
 
 		http.getResponseMessage();
 
-		try (InputStream is = http.getInputStream()) {
-			return JSONFactoryUtil.createJSONObject(StringUtil.read(is));
+		try (InputStream inputStream = http.getInputStream()) {
+			return JSONFactoryUtil.createJSONObject(StringUtil.read(inputStream));
 		}
 		catch (Exception e) {
-			try (InputStream is = http.getErrorStream()) {
+			try (InputStream inputStream = http.getErrorStream()) {
 				throw new PortalException(
 					String.format(
 						"Request failed with status %d: %s",
-						http.getResponseCode(), StringUtil.read(is)),
+						http.getResponseCode(), StringUtil.read(inputStream)),
 					e);
 			}
 		}

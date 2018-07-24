@@ -178,7 +178,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 	private static final Set<String> _supportedFormats = new HashSet<>(
 		Arrays.asList(
-			"JPEG", "JPG", "PNG", "GIF", "BMP", "WEBP", "RAW", "ICO"));
+			"BMP", "GIF", "ICO", "JPEG", "JPG", "PNG", "RAW", "WEBP"));
 
 	private volatile GoogleCloudVisionAssetAutoTagProviderConfiguration
 		_googleCloudVisionConfiguration;

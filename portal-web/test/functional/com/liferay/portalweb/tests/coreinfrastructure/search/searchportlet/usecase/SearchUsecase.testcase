@@ -97,6 +97,10 @@
 			<var name="facetValueName" value="Blogs Entry" />
 		</execute>
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Potato&amp;scopeparameter=everything&amp;type=com.liferay.blogs.model.BlogsEntry" />
+
 		<var method="selenium#getCurrentUrl()" name="searchURL" />
 
 		<execute macro="Navigator#openURL" />
@@ -1968,50 +1972,6 @@
 			<var name="searchAssetTitle" value="WebContent Title" />
 			<var name="searchAssetType" value="Web Content Article" />
 		</execute>
-	</command>
-
-	<command name="ViewURLChangesWithUpdatedSearchAndScopeParameters" priority="4">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
-		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search Bar" />
-		</execute>
-
-		<execute macro="SearchPortlets#configureWidgetParameterNames">
-			<var name="keywordsParameterName" value="keywordparameter" />
-			<var name="scopeParameterName" value="scopeparameter" />
-		</execute>
-
-		<execute macro="SearchPortlets#configureWidgetScope">
-			<var name="searchScope" value="Let the User Choose" />
-		</execute>
-
-		<execute macro="SearchPortlets#selectWidgetScopeInput">
-			<var name="searchScope" value="This Site" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchWidget">
-			<var name="searchTerm" value="Potato" />
-		</execute>
-
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Potato&amp;scopeparameter=this-site" />
 	</command>
 
 	<command name="ViewUserSearchResult" priority="5">

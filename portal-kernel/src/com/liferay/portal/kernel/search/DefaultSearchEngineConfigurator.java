@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.MessageBus;
+
 /**
  * @author Michael C. Han
  */
@@ -35,6 +38,13 @@ public class DefaultSearchEngineConfigurator
 	@Override
 	protected String getDefaultSearchEngineId() {
 		return _defaultSearchEngineId;
+	}
+
+	@Override
+	protected Class<?>[] getDependencies() {
+		return new Class<?>[] {
+			DestinationFactory.class, MessageBus.class, SearchEngineHelper.class
+		};
 	}
 
 	@Override

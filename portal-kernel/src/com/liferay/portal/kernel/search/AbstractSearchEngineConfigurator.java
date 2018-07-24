@@ -81,8 +81,7 @@ public abstract class AbstractSearchEngineConfigurator
 
 			});
 
-		serviceDependencyManager.registerDependencies(
-			DestinationFactory.class, MessageBus.class);
+		serviceDependencyManager.registerDependencies(getDependencies());
 	}
 
 	@Override
@@ -235,6 +234,10 @@ public abstract class AbstractSearchEngineConfigurator
 	}
 
 	protected abstract String getDefaultSearchEngineId();
+
+	protected Class<?>[] getDependencies() {
+		return new Class<?>[] {DestinationFactory.class, MessageBus.class};
+	}
 
 	protected abstract IndexSearcher getIndexSearcher();
 

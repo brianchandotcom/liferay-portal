@@ -94,13 +94,13 @@ public class WorkflowLogNestedCollectionResource
 		).addLinkedModel(
 			"task", WorkflowTaskIdentifier.class, WorkflowLog::getWorkflowTaskId
 		).addString(
-			"type", this::_getWorkflowLogType
-		).addString(
 			"commentLog", WorkflowLog::getComment
 		).addString(
 			"previousState", WorkflowLog::getPreviousState
 		).addString(
 			"state", WorkflowLog::getState
+		).addString(
+			"type", this::_getWorkflowLogType
 		).build();
 	}
 

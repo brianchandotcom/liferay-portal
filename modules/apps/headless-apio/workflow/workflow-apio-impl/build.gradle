@@ -11,6 +11,7 @@ dependencies {
 	compileOnly project(":apps:headless-apio:comment:comment-apio-api")
 	compileOnly project(":apps:headless-apio:media-object:media-object-apio-api")
 	compileOnly project(":apps:headless-apio:person:person-apio-api")
+	compileOnly project(":apps:headless-apio:role:role-apio-api")
 	compileOnly project(":apps:headless-apio:workflow:workflow-apio-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")

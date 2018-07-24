@@ -15,12 +15,9 @@
 package com.liferay.workflow.apio.internal.architect.resource;
 
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
-import com.liferay.apio.architect.resource.NestedCollectionResource;
+import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
-import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
@@ -44,26 +41,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose a WorkflowTask resources through
+ * Provides the information necessary to expose a WorkflowTask resource through
  * a web API. The resources are mapped from the internal model {@link
  * WorkflowTask}.
  *
  * @author Sarai Díaz
  * @review
  */
-@Component
-public class WorkflowTaskNestedCollectionResource
-	implements NestedCollectionResource
-		<WorkflowTask, Long, WorkflowTaskIdentifier, Long, PersonIdentifier> {
-
-	@Override
-	public NestedCollectionRoutes<WorkflowTask, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<WorkflowTask, Long, Long> builder) {
-
-		return builder.addGetter(
-			this::_getPageItems, Company.class
-		).build();
-	}
+@Component(immediate = true)
+public class WorkflowTaskItemResource
+	implements ItemResource<WorkflowTask, Long, WorkflowTaskIdentifier> {
 
 	@Override
 	public String getName() {
@@ -126,21 +113,6 @@ public class WorkflowTaskNestedCollectionResource
 
 	private Long _getLinkedModelId(WorkflowTask workflowTask) {
 		return GetterUtil.getLong(_getEntryClassPK(workflowTask));
-	}
-
-	private PageItems<WorkflowTask> _getPageItems(
-			Pagination pagination, long userId, Company company)
-		throws WorkflowException {
-
-		List<WorkflowTask> workflowTasks =
-			_workflowTaskManager.getWorkflowTasksByUser(
-				company.getCompanyId(), userId, null,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
-		int count = _workflowTaskManager.getWorkflowTaskCountByUser(
-			company.getCompanyId(), userId, null);
-
-		return new PageItems<>(workflowTasks, count);
 	}
 
 	private List<String> _getTaskTransitionsNames(WorkflowTask workflowTask) {

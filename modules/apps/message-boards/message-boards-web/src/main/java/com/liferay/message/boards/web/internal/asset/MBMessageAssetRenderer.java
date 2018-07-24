@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -147,20 +148,19 @@ public class MBMessageAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL;
-
 		Group group = GroupLocalServiceUtil.fetchGroup(_message.getGroupId());
 
 		if (group.isCompany()) {
-			portletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, MBPortletKeys.MESSAGE_BOARDS,
-				PortletRequest.RENDER_PHASE);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			group = themeDisplay.getScopeGroup();
 		}
-		else {
-			portletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0,
-				0, PortletRequest.RENDER_PHASE);
-		}
+
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/edit_message");

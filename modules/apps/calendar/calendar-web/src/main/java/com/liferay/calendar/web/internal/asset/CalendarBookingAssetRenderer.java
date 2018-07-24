@@ -31,10 +31,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 
@@ -134,21 +136,20 @@ public class CalendarBookingAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL;
-
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			_calendarBooking.getGroupId());
 
 		if (group.isCompany()) {
-			portletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, CalendarPortletKeys.CALENDAR,
-				PortletRequest.RENDER_PHASE);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			group = themeDisplay.getScopeGroup();
 		}
-		else {
-			portletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, group, CalendarPortletKeys.CALENDAR, 0,
-				0, PortletRequest.RENDER_PHASE);
-		}
+
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, group, CalendarPortletKeys.CALENDAR, 0, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");
 		portletURL.setParameter(

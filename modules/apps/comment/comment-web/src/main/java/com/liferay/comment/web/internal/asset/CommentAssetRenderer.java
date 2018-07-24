@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -149,28 +150,27 @@ public class CommentAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL editPortletURL;
-
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			_workflowableComment.getGroupId());
 
 		if (group.isCompany()) {
-			editPortletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, CommentPortletKeys.COMMENT,
-				PortletRequest.RENDER_PHASE);
-		}
-		else {
-			editPortletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, group, CommentPortletKeys.COMMENT, 0, 0,
-				PortletRequest.RENDER_PHASE);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			group = themeDisplay.getScopeGroup();
 		}
 
-		editPortletURL.setParameter(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, group, CommentPortletKeys.COMMENT, 0, 0,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
 			"mvcRenderCommandName", "/discussion/edit_discussion");
-		editPortletURL.setParameter(
+		portletURL.setParameter(
 			"commentId", String.valueOf(_workflowableComment.getCommentId()));
 
-		return editPortletURL;
+		return portletURL;
 	}
 
 	@Override

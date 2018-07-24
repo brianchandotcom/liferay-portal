@@ -27,9 +27,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
@@ -210,20 +212,19 @@ public class WikiPageAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL;
-
 		Group group = GroupLocalServiceUtil.fetchGroup(_page.getGroupId());
 
 		if (group.isCompany()) {
-			portletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, WikiPortletKeys.WIKI,
-				PortletRequest.RENDER_PHASE);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			group = themeDisplay.getScopeGroup();
 		}
-		else {
-			portletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, group, WikiPortletKeys.WIKI, 0, 0,
-				PortletRequest.RENDER_PHASE);
-		}
+
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, group, WikiPortletKeys.WIKI, 0, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));

@@ -273,20 +273,19 @@ public class JournalArticleAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL;
-
 		Group group = GroupLocalServiceUtil.fetchGroup(_article.getGroupId());
 
 		if (group.isCompany()) {
-			portletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, JournalPortletKeys.JOURNAL,
-				PortletRequest.RENDER_PHASE);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			group = themeDisplay.getScopeGroup();
 		}
-		else {
-			portletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, group, JournalPortletKeys.JOURNAL, 0, 0,
-				PortletRequest.RENDER_PHASE);
-		}
+
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, group, JournalPortletKeys.JOURNAL, 0, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter(

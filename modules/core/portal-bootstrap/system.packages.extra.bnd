@@ -337,8 +337,6 @@ Provide-Capability:\
 	@../../../lib/portal/jodd-servlet.jar,\
 	@../../../lib/portal/jodd-upload.jar,\
 	@../../../lib/portal/json-java.jar,\
-	@../../../lib/portal/libtensorflow.jar,\
-	@../../../lib/portal/libtensorflow_jni.jar,\
 	@../../../lib/portal/liferay-icu4j.jar,\
 	@../../../lib/portal/log4j-extras.jar,\
 	@../../../lib/portal/log4j.jar,\
@@ -363,7 +361,6 @@ Provide-Capability:\
 	@../../../lib/portal/struts-extras.jar,\
 	@../../../lib/portal/struts-taglib.jar,\
 	@../../../lib/portal/struts-tiles.jar,\
-	@../../../lib/portal/tensorflow.jar,\
 	@../../../lib/portal/tika-core.jar,\
 	@../../../lib/portal/tika-parsers.jar,\
 	@../../../lib/portal/xalan.jar,\

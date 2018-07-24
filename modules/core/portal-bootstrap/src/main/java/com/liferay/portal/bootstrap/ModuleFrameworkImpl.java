@@ -750,8 +750,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		extraProperties.setProperty(
-			Constants.FRAMEWORK_SYSTEMCAPABILITIES_EXTRA,
-			extraCapabilitiesParameters.toString());
+			Constants.FRAMEWORK_SYSTEMCAPABILITIES_EXTRA, provideCapability);
 
 		for (Map.Entry<Object, Object> entry : extraProperties.entrySet()) {
 			String key = (String)entry.getKey();

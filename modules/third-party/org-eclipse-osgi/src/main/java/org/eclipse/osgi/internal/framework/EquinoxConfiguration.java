@@ -196,6 +196,8 @@ public class EquinoxConfiguration implements EnvironmentInfo {
 
 	public static final String PROP_RESOLVER_REVISION_BATCH_SIZE = "equinox.resolver.revision.batch.size"; //$NON-NLS-1$
 
+	public static final String PROP_OSGI_HOME = "osgi.home";
+
 	public static final String PROP_DEFAULT_SUFFIX = ".default"; //$NON-NLS-1$
 	public static final Collection<String> PROP_WITH_ECLIPSE_STARTER_DEFAULTS = Collections.singletonList(PROP_COMPATIBILITY_BOOTDELEGATION);
 
@@ -540,6 +542,16 @@ public class EquinoxConfiguration implements EnvironmentInfo {
 		// Must ensure the check configuration property is set if in osgi.dev mode (bug 443340)
 		if (inCheckConfigurationMode && getConfiguration(PROP_CHECK_CONFIGURATION) == null) {
 			setConfiguration(PROP_CHECK_CONFIGURATION, "true"); //$NON-NLS-1$
+		}
+
+		if (getConfiguration(PROP_OSGI_HOME) == null) {
+			Location location = equinoxLocations.getInstallLocation();
+
+			URL url = location.getURL();
+
+			File file = new File(url.getPath());
+
+			setConfiguration(PROP_OSGI_HOME, file.getParent());
 		}
 	}
 

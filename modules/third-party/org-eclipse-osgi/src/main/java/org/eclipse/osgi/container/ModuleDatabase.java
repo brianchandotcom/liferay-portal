@@ -967,6 +967,13 @@ public class ModuleDatabase {
 			List<Module> modules = moduleDatabase.getModules();
 			out.writeInt(modules.size());
 
+			ModuleContainerAdaptor moduleContainerAdaptor =
+				moduleDatabase.adaptor;
+
+			out.writeUTF(
+				moduleContainerAdaptor.getProperty(
+					EquinoxConfiguration.PROP_OSGI_HOME));
+
 			Map<Object, Integer> objectTable = new HashMap<Object, Integer>();
 			for (Module module : modules) {
 				writeModule(module, moduleDatabase, out, objectTable);
@@ -1011,8 +1018,11 @@ public class ModuleDatabase {
 			int numModules = in.readInt();
 
 			Map<Integer, Object> objectTable = new HashMap<Integer, Object>();
+
+			String oldOsgiHome = in.readUTF();
+
 			for (int i = 0; i < numModules; i++) {
-				readModule(moduleDatabase, in, objectTable);
+				readModule(moduleDatabase, in, objectTable, oldOsgiHome);
 			}
 
 			moduleDatabase.revisionsTimeStamp.set(revisionsTimeStamp);
@@ -1091,10 +1101,21 @@ public class ModuleDatabase {
 			out.writeLong(module.getLastModified());
 		}
 
-		private static void readModule(ModuleDatabase moduleDatabase, DataInputStream in, Map<Integer, Object> objectTable) throws IOException {
+		private static void readModule(ModuleDatabase moduleDatabase, DataInputStream in, Map<Integer, Object> objectTable, String oldOsgiHome) throws IOException {
 			ModuleRevisionBuilder builder = new ModuleRevisionBuilder();
 			int moduleIndex = in.readInt();
 			String location = readString(in);
+
+			ModuleContainerAdaptor moduleContainerAdaptor =
+				moduleDatabase.adaptor;
+
+			String newOsgiHome = moduleContainerAdaptor.getProperty(
+				EquinoxConfiguration.PROP_OSGI_HOME);
+
+			if (!oldOsgiHome.equals(newOsgiHome)) {
+				location = location.replace(oldOsgiHome, newOsgiHome);
+			}
+
 			long id = in.readLong();
 			builder.setSymbolicName(readString(in));
 			builder.setVersion(readVersion(in));

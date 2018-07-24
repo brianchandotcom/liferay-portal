@@ -175,24 +175,12 @@ public class ServletContextHelperRegistrationImpl
 		_servletContextHelperServiceRegistration.setProperties(properties);
 	}
 
-	protected String createContextSelectFilterString() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append('(');
-		sb.append(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
-		sb.append('=');
-		sb.append(_servletContextName);
-		sb.append(')');
-
-		return sb.toString();
-	}
-
 	protected ServiceRegistration<?> createDefaultServlet() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			createContextSelectFilterString());
+			_servletContextName);
 
 		String prefix = "/META-INF/resources";
 
@@ -229,7 +217,7 @@ public class ServletContextHelperRegistrationImpl
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			createContextSelectFilterString());
+			_servletContextName);
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
 			JspServletWrapper.class.getName());
@@ -250,7 +238,7 @@ public class ServletContextHelperRegistrationImpl
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			createContextSelectFilterString());
+			_servletContextName);
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
 			PortletServlet.class.getName());
@@ -299,7 +287,7 @@ public class ServletContextHelperRegistrationImpl
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			createContextSelectFilterString());
+			_servletContextName);
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER,
 			Boolean.TRUE.toString());

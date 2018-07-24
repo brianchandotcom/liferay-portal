@@ -232,6 +232,10 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 				}
 			}
 			catch (ConfigurationException ce) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ce, ce);
+				}
+
 				return _assetAutoTaggerCompanyConfiguration.isEnabled();
 			}
 		}

@@ -29,6 +29,8 @@
 	</tear-down>
 
 	<command ignore="true" name="AssertSystemSettingsPropogateToModule" priority="3">
+		<!-- Ignoring test until LPS-65459 is resolved -->
+
 		<property name="test.name.skip.portal.instance" value="Elasticsearch6#AssertSystemSettingsPropogateToModule" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -54,11 +56,9 @@
 			<var name="url" value="http://localhost:9200" />
 		</execute>
 
-		<!-- LRQA-28998 -->
-
-		<!--<execute macro="Elasticsearch#viewClusterStatus">
+		<execute macro="Elasticsearch#viewClusterStatus">
 			<var name="clusterStatus" value="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;" />
-		</execute>-->
+		</execute>
 	</command>
 
 	<command name="ElasticsearchRemoteClusterSmokeTest" priority="5">

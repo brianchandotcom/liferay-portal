@@ -589,9 +589,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords" />
 	</command>
 
-	<command ignore="true" name="SearchEntriesByPortletsAndModifiedRangeFacet" priority="4">
-		<execute macro="Navigator#openURL" />
-
+	<command name="SearchEntriesByPortletsAndModifiedRangeFacet" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -983,9 +981,7 @@
 			<var name="searchAssetType" value="User" />
 		</execute>
 
-		<!-- LPS-80521 -->
-
-		<!-- <execute macro="SearchPortlets#selectWidgetScopeInput">
+		<execute macro="SearchPortlets#selectWidgetScopeInput">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
@@ -1003,7 +999,7 @@
 			<var name="searchAssetTitle" value="userfn2 userln2" />
 			<var name="searchAssetType" value="User" />
 			<var name="searchTerm" value="usersn" />
-		</execute> -->
+		</execute>
 	</command>
 
 	<command name="SearchTwiceScopeThisSite" priority="5">
@@ -1208,8 +1204,6 @@
 	<command name="SearchUsingNewSearchPortlets" priority="5">
 		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
 		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
-		<property name="portal.acceptance" value="false" />
-		<property name="portal.release" value="false" />
 
 		<var name="searchPage" value="Search Page" />
 
@@ -1848,14 +1842,6 @@
 			<var name="searchAssetTitle" value="DM Document Title 1" />
 		</execute>
 
-		<execute macro="ClassicSearch#search">
-			<var name="searchTerm" value="Document" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchAssetTitle">
-			<var name="searchAssetTitle" value="DM Document Title 1" />
-		</execute>
-
 		<execute macro="ClassicSearch#gotoSearchResultPG">
 			<var name="searchAssetTitle" value="DM Document Title 1" />
 		</execute>
@@ -1977,36 +1963,6 @@
 	<command name="ViewUserSearchResult" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="SearchUsecase#ViewUserSearchResult" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
-
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
-		</execute>
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="Test Test" />

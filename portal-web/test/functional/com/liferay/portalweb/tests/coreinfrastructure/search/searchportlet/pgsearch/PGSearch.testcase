@@ -270,6 +270,8 @@
 	</command>
 
 	<command ignore="true" name="SearchBlogsEntryCategoryQuotes" priority="4">
+		<!-- Ignoring test until LPS-73326 is resolved -->
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

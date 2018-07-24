@@ -159,7 +159,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 				_googleCloudVisionConfiguration.apiKey());
 		options.setPost(true);
 
-		String responseContent = _http.URLtoString(options);
+		String responseJSON = _http.URLtoString(options);
 
 		Http.Response response = options.getResponse();
 
@@ -167,10 +167,10 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			throw new PortalException(
 				String.format(
 					"Request failed with status %d: %s",
-					response.getResponseCode(), responseContent));
+					response.getResponseCode(), responseJSON));
 		}
 
-		return JSONFactoryUtil.createJSONObject(responseContent);
+		return JSONFactoryUtil.createJSONObject(responseJSON);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

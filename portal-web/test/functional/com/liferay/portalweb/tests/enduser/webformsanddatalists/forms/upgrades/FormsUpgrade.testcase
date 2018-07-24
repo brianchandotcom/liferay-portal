@@ -69,6 +69,7 @@
 
 	<command name="ViewAndDeleteFormEntryAfterUpgrade704" priority="5">
 		<property name="data.archive.type" value="data-archive-form-entry" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="7.0.4" />
 		<property name="testray.component.names" value="Forms" />
 

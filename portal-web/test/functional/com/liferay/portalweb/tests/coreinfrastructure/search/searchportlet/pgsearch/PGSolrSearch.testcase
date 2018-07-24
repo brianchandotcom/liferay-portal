@@ -8,23 +8,10 @@
 	<property name="solr.enabled" value="true" />
 	<property name="testray.main.component.name" value="Web Search" />
 
-	<var name="searchPageName" value="Test Page" />
-	<var name="searchPortletName" value="Search" />
-
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
 
 		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
 	</set-up>
 
 	<tear-down>
@@ -69,9 +56,7 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="Blogs Entry Title" />
@@ -231,9 +216,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="Category Name" />
@@ -321,9 +304,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="&quot;Category Name&quot;" />
@@ -403,9 +384,7 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="&quot;Blogs Entry Title&quot;" />
@@ -590,9 +569,7 @@
 			<var name="tagName" value="tag name" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="tag name" />
@@ -662,9 +639,7 @@
 			<var name="tagName" value="tag name" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="&quot;tag name&quot;" />
@@ -749,9 +724,7 @@
 			<var name="tagNameList" value="moon rocks" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="DM Document Title" />
@@ -893,9 +866,7 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="MB Thread Message Subject" />
@@ -1053,9 +1024,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="userfn userln" />
@@ -1152,9 +1121,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="users*" />
@@ -1197,9 +1164,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="WC WebContent Title" />
@@ -1337,9 +1302,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="Wiki Page Title" />

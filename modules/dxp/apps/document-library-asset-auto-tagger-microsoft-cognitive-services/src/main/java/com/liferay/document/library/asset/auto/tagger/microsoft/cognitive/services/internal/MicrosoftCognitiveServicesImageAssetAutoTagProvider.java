@@ -84,7 +84,7 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 
 			return JSONUtil.toStringList(tagsJSONArray, "name");
 		}
-		catch (IOException | PortalException e) {
+		catch (Exception e) {
 			_log.error(e, e);
 
 			return Collections.emptyList();
@@ -113,7 +113,7 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 	}
 
 	private JSONObject _queryComputerVisionJSONObject(FileVersion fileVersion)
-		throws IOException, PortalException {
+		throws Exception {
 
 		URL url = new URL(
 			_microsoftCognitiveServicesConfiguration.apiEndpoint() + "/tag");

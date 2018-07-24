@@ -92,7 +92,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 					labelAnnotationsJSONArray, "description");
 			}
 		}
-		catch (IOException | PortalException e) {
+		catch (Exception e) {
 			_log.error(e, e);
 		}
 
@@ -107,9 +107,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			properties);
 	}
 
-	private String _getPayloadJSON(FileEntry fileEntry)
-		throws IOException, PortalException {
-
+	private String _getPayloadJSON(FileEntry fileEntry) throws Exception {
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		return JSONUtil.put(
@@ -147,7 +145,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 	}
 
 	private JSONObject _queryGoogleCloudVisionJSONObject(String payloadJSON)
-		throws IOException, PortalException {
+		throws Exception {
 
 		Http.Options options = new Http.Options();
 

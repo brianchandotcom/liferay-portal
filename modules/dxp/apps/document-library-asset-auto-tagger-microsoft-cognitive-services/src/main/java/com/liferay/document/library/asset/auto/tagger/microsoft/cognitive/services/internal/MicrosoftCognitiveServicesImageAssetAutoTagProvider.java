@@ -41,8 +41,10 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -66,7 +68,7 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 	public List<String> getTagNames(FileEntry fileEntry) {
 		if (!_microsoftCognitiveServicesConfiguration.enabled() ||
 			_isTemporary(fileEntry) || (fileEntry.getSize() > _MAX_SIZE) ||
-			!_isFormatSupported(fileEntry)) {
+			!_isSupportedFormat(fileEntry)) {
 
 			return Collections.emptyList();
 		}
@@ -108,7 +110,7 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 				properties);
 	}
 
-	private boolean _isFormatSupported(FileEntry fileEntry) {
+	private boolean _isSupportedFormat(FileEntry fileEntry) {
 		String extension = fileEntry.getExtension();
 
 		return _supportedFormats.contains(StringUtil.toUpperCase(extension));
@@ -162,8 +164,9 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		MicrosoftCognitiveServicesImageAssetAutoTagProvider.class);
 
-	private static final List<String> _supportedFormats = Arrays.asList(
-		"JPEG", "JPG", "PNG", "GIF", "BMP");
+	private static final Set<String> _supportedFormats = new HashSet<>(
+		Arrays.asList(
+			"BMP", "GIF",  "JPEG", "JPG", "PNG"));
 
 	@Reference
 	private Http _http;

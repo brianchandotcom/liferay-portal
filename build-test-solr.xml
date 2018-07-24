@@ -58,32 +58,6 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-solr-logging">
-		<sequential>
-			<replace
-				file="${solr.dir}/server/solr/solr.xml"
-			>
-				<replacetoken><![CDATA[</solr>]]></replacetoken>
-				<replacevalue expandproperties="true"><![CDATA[
-	<logging>
-		<str name="enabled">true</str>
-		<watcher>
-			<int name="size">100</int>
-			<str name="threshold">INFO</str>
-		</watcher>
-	</logging>
-</solr>]]></replacevalue>
-			</replace>
-
-			<replace
-				file="${solr.dir}/server/resources/log4j.properties"
-			>
-				<replacetoken><![CDATA[WARN]]></replacetoken>
-				<replacevalue><![CDATA[INFO]]></replacevalue>
-			</replace>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="configure-solr-ssl-properties">
 		<sequential>
 			<if>
@@ -321,15 +295,6 @@ schema=schema.xml</echo>
 				<configure-liferay-solr-ssl-adapter-properties />
 
 				<configure-app-server-ssl-jvm-arguments />
-			</then>
-		</if>
-
-		<get-testcase-property property.name="solr.logging.info.level" />
-
-		<if>
-			<equals arg1="${solr.logging.info.level}" arg2="true" />
-			<then>
-				<configure-solr-logging />
 			</then>
 		</if>
 

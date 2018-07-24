@@ -6429,20 +6429,6 @@ hot.deploy.dependency.management.enabled=false</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="index.on.startup" />
-
-		<if>
-			<equals arg1="${index.on.startup}" arg2="false" />
-			<then>
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-				>
-					<replacetoken>index.on.startup=true</replacetoken>
-					<replacevalue>index.on.startup=false</replacevalue>
-				</replace>
-			</then>
-		</if>
-
 		<if>
 			<equals arg1="${java.security}" arg2="true" />
 			<then>

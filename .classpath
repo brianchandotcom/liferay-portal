@@ -226,6 +226,8 @@
 	<classpathentry kind="lib" path="lib/portal/juniversalchardet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jurt.jar"/>
 	<classpathentry kind="lib" path="lib/portal/kxml2.jar"/>
+	<classpathentry kind="lib" path="lib/portal/libtensorflow.jar"/>
+	<classpathentry kind="lib" path="lib/portal/libtensorflow_jni.jar"/>
 	<classpathentry kind="lib" path="lib/portal/liferay-icu4j.jar"/>
 	<classpathentry kind="lib" path="lib/portal/log4j.jar"/>
 	<classpathentry kind="lib" path="lib/portal/log4j-extras.jar"/>
@@ -285,6 +287,7 @@
 	<classpathentry kind="lib" path="lib/portal/struts-taglib.jar"/>
 	<classpathentry kind="lib" path="lib/portal/struts-tiles.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tagsoup.jar"/>
+	<classpathentry kind="lib" path="lib/portal/tensorflow.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tika-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tika-parsers.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tomcat-jdbc.jar"/>

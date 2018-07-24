@@ -1,0 +1,166 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
+
+import org.tensorflow.DataType;
+import org.tensorflow.Graph;
+import org.tensorflow.OperationBuilder;
+import org.tensorflow.Output;
+import org.tensorflow.Tensor;
+import org.tensorflow.types.UInt8;
+
+/**
+ * Based on https://github.com/tensorflow/tensorflow/blob/master/tensorflow/java/src/main/java/org/tensorflow/examples/LabelImage.java
+ *
+ * @author Alejandro Tardín
+ */
+public class GraphBuilder {
+
+	public GraphBuilder(Graph graph) {
+		_graph = graph;
+	}
+
+	public <T, U> Output<U> cast(Output<T> output, Class<U> type) {
+		OperationBuilder operationBuilder = _graph.opBuilder("Cast", "Cast");
+
+		return operationBuilder.addInput(
+			output
+		).setAttr(
+			"DstT", DataType.fromClass(type)
+		).build(
+		).output(
+			0
+		);
+	}
+
+	public Output<Float> constant(String name, float value) {
+		return constant(name, value, Float.class);
+	}
+
+	public Output<Integer> constant(String name, int value) {
+		return constant(name, value, Integer.class);
+	}
+
+	public Output<Integer> constant(String name, int[] value) {
+		return constant(name, value, Integer.class);
+	}
+
+	public <T> Output<T> constant(String name, Object value, Class<T> type) {
+		try (Tensor<T> tensor = Tensor.create(value, type)) {
+			OperationBuilder operationBuilder = _graph.opBuilder("Const", name);
+
+			return operationBuilder.setAttr(
+				"dtype", DataType.fromClass(type)
+			).setAttr(
+				"value", tensor
+			).build(
+			).output(
+				0
+			);
+		}
+	}
+
+	public Output<UInt8> decodeJpeg(
+		Output<String> contentsOutput, long channels) {
+
+		OperationBuilder operationBuilder = _graph.opBuilder(
+			"DecodeJpeg", "DecodeJpeg");
+
+		return operationBuilder.addInput(
+			contentsOutput
+		).setAttr(
+			"channels", channels
+		).build(
+		).output(
+			0
+		);
+	}
+
+	public Output<Float> div(Output<Float> output1, Output<Float> output2) {
+		return _binaryOp("Div", output1, output2);
+	}
+
+	public <T> Output<T> expandDims(
+		Output<T> output, Output<Integer> dimOutput) {
+
+		return _binaryOp3("ExpandDims", output, dimOutput);
+	}
+
+	public <T> Output<T> placeholder(String name, Class<T> type) {
+		OperationBuilder operationBuilder = _graph.opBuilder(
+			"Placeholder", name);
+
+		return operationBuilder.setAttr(
+			"dtype", DataType.fromClass(type)
+		).build(
+		).output(
+			0
+		);
+	}
+
+	public Output<Float> rename(Output<Float> output, String name) {
+		OperationBuilder operationBuilder = _graph.opBuilder("Identity", name);
+
+		return operationBuilder.addInput(
+			output
+		).build(
+		).output(
+			0
+		);
+	}
+
+	public <T> Output<Float> resizeBilinear(
+		Output<T> imagesOutput, Output<Integer> sizeOutput) {
+
+		return _binaryOp3("ResizeBilinear", imagesOutput, sizeOutput);
+	}
+
+	public <T> Output<T> sub(Output<T> output1, Output<T> output2) {
+		return _binaryOp("Sub", output1, output2);
+	}
+
+	private <T> Output<T> _binaryOp(
+		String type, Output<T> output1, Output<T> output2) {
+
+		OperationBuilder operationBuilder = _graph.opBuilder(type, type);
+
+		return operationBuilder.addInput(
+			output1
+		).addInput(
+			output2
+		).build(
+		).output(
+			0
+		);
+	}
+
+	private <T, U, V> Output<T> _binaryOp3(
+		String type, Output<U> output1, Output<V> output2) {
+
+		OperationBuilder operationBuilder = _graph.opBuilder(type, type);
+
+		return operationBuilder.addInput(
+			output1
+		).addInput(
+			output2
+		).build(
+		).output(
+			0
+		);
+	}
+
+	private final Graph _graph;
+
+}

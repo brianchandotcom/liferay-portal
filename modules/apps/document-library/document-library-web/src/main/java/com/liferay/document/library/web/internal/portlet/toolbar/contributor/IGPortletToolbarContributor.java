@@ -128,24 +128,11 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		return menuItems;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLPortletToolbarContributorHelper(
-		DLPortletToolbarContributorHelper dlPortletToolbarContributorHelper) {
-
-		_dlPortletToolbarContributorHelper = dlPortletToolbarContributorHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLPortletToolbarContributorRegistry(
-		DLPortletToolbarContributorRegistry
-			dlPortletToolbarContributorRegistry) {
-
-		_dlPortletToolbarContributorRegistry =
-			dlPortletToolbarContributorRegistry;
-	}
-
+	@Reference
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;
+
+	@Reference
 	private DLPortletToolbarContributorRegistry
 		_dlPortletToolbarContributorRegistry;
 

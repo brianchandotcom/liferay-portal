@@ -49,6 +49,28 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetAutoTaggerConfigurationFactoryImpl
 	implements AssetAutoTaggerConfigurationFactory {
 
+	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration() {
+		return new AssetAutoTaggerConfiguration() {
+
+			@Override
+			public int getMaximumNumberOfTagsPerAsset() {
+				return _assetAutoTaggerSystemConfiguration.
+					maximumNumberOfTagsPerAsset();
+			}
+
+			@Override
+			public boolean isAvailable() {
+				return true;
+			}
+
+			@Override
+			public boolean isEnabled() {
+				return _assetAutoTaggerSystemConfiguration.enabled();
+			}
+
+		};
+	}
+
 	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration(
 		Company company) {
 
@@ -58,7 +80,7 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 		catch (ConfigurationException ce) {
 			_log.error(ce, ce);
 
-			return _assetAutoTaggerSystemConfiguration;
+			return getAssetAutoTaggerConfiguration();
 		}
 	}
 
@@ -71,7 +93,7 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 		catch (PortalException pe) {
 			_log.error(pe, pe);
 
-			return _assetAutoTaggerSystemConfiguration;
+			return getAssetAutoTaggerConfiguration();
 		}
 	}
 
@@ -86,7 +108,7 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetAutoTaggerConfigurationFactoryImpl.class);
 
-	private volatile AssetAutoTaggerConfiguration
+	private volatile AssetAutoTaggerSystemConfiguration
 		_assetAutoTaggerSystemConfiguration;
 
 	@Reference
@@ -110,12 +132,14 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 		}
 
 		@Override
-		public boolean enabled() {
-			if (!_assetAutoTaggerSystemConfiguration.enabled()) {
-				return false;
-			}
-
-			return _assetAutoTaggerCompanyConfiguration.enabled();
+		public int getMaximumNumberOfTagsPerAsset() {
+			return Collections.min(
+				Arrays.asList(
+					_assetAutoTaggerSystemConfiguration.
+						maximumNumberOfTagsPerAsset(),
+					_assetAutoTaggerCompanyConfiguration.
+						maximumNumberOfTagsPerAsset()),
+				new MaximumNumberOfTagsPerAssetComparator());
 		}
 
 		@Override
@@ -124,14 +148,12 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 		}
 
 		@Override
-		public int maximumNumberOfTagsPerAsset() {
-			return Collections.min(
-				Arrays.asList(
-					_assetAutoTaggerSystemConfiguration.
-						maximumNumberOfTagsPerAsset(),
-					_assetAutoTaggerCompanyConfiguration.
-						maximumNumberOfTagsPerAsset()),
-				new MaximumNumberOfTagsPerAssetComparator());
+		public boolean isEnabled() {
+			if (!_assetAutoTaggerSystemConfiguration.enabled()) {
+				return false;
+			}
+
+			return _assetAutoTaggerCompanyConfiguration.enabled();
 		}
 
 		private AssetAutoTaggerCompanyConfiguration
@@ -175,9 +197,20 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 		}
 
 		@Override
-		public boolean enabled() {
+		public int getMaximumNumberOfTagsPerAsset() {
+			return _assetAutoTaggerCompanyConfiguration.
+				getMaximumNumberOfTagsPerAsset();
+		}
+
+		@Override
+		public boolean isAvailable() {
+			return _assetAutoTaggerCompanyConfiguration.isEnabled();
+		}
+
+		@Override
+		public boolean isEnabled() {
 			try {
-				if (!_assetAutoTaggerCompanyConfiguration.enabled()) {
+				if (!_assetAutoTaggerCompanyConfiguration.isEnabled()) {
 					return false;
 				}
 
@@ -198,19 +231,8 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 				}
 			}
 			catch (ConfigurationException ce) {
-				return _assetAutoTaggerCompanyConfiguration.enabled();
+				return _assetAutoTaggerCompanyConfiguration.isEnabled();
 			}
-		}
-
-		@Override
-		public boolean isAvailable() {
-			return _assetAutoTaggerCompanyConfiguration.enabled();
-		}
-
-		@Override
-		public int maximumNumberOfTagsPerAsset() {
-			return _assetAutoTaggerCompanyConfiguration.
-				maximumNumberOfTagsPerAsset();
 		}
 
 		private AssetAutoTaggerConfiguration

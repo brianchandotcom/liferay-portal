@@ -19,10 +19,10 @@ package com.liferay.asset.auto.tagger.configuration;
  */
 public interface AssetAutoTaggerConfiguration {
 
-	public boolean enabled();
+	public int getMaximumNumberOfTagsPerAsset();
 
 	public boolean isAvailable();
 
-	public int maximumNumberOfTagsPerAsset();
+	public boolean isEnabled();
 
 }

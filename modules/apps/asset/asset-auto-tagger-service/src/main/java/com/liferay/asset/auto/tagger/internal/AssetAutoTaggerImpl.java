@@ -68,7 +68,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 			AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
 				_getAssetAutoTaggerConfiguration(assetEntry);
 
-			if (assetAutoTaggerConfiguration.enabled() &&
+			if (assetAutoTaggerConfiguration.isEnabled() &&
 				assetEntry.isVisible() &&
 				ListUtil.isNotEmpty(
 					_getAssetAutoTagProviders(assetEntry.getClassName()))) {
@@ -105,7 +105,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 					String[] tagsArray = _getTagsArray(
 						assetTagNames,
 						assetAutoTaggerConfiguration.
-							maximumNumberOfTagsPerAsset());
+							getMaximumNumberOfTagsPerAsset());
 
 					List<AssetTag> assetTags = _assetTagLocalService.checkTags(
 						assetEntry.getUserId(), assetEntry.getGroupId(),

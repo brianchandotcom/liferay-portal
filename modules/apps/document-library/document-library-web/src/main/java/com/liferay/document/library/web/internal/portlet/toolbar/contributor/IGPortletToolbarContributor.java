@@ -53,8 +53,12 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
+		DLPortletToolbarContributor dlPortletToolbarContributor =
+			_dlPortletToolbarContributorRegistry.
+				getDLPortletToolbarContributor();
+
 		List<MenuItem> portletTitleAddDocumentMenuItems =
-			_dlPortletToolbarContributor.getPortletTitleAddDocumentMenuItems(
+			dlPortletToolbarContributor.getPortletTitleAddDocumentMenuItems(
 				folder, themeDisplay, portletRequest);
 
 		menuItems.addAll(portletTitleAddDocumentMenuItems);
@@ -64,8 +68,12 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
+		DLPortletToolbarContributor dlPortletToolbarContributor =
+			_dlPortletToolbarContributorRegistry.
+				getDLPortletToolbarContributor();
+
 		MenuItem portletTitleAddFolderMenuItem =
-			_dlPortletToolbarContributor.getPortletTitleAddFolderMenuItem(
+			dlPortletToolbarContributor.getPortletTitleAddFolderMenuItem(
 				themeDisplay, portletRequest, folder);
 
 		if (portletTitleAddFolderMenuItem != null) {
@@ -77,8 +85,12 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
+		DLPortletToolbarContributor dlPortletToolbarContributor =
+			_dlPortletToolbarContributorRegistry.
+				getDLPortletToolbarContributor();
+
 		MenuItem portletTitleAddMultipleDocumentsMenuItem =
-			_dlPortletToolbarContributor.
+			dlPortletToolbarContributor.
 				getPortletTitleAddMultipleDocumentsMenuItem(
 					themeDisplay, portletRequest, folder);
 
@@ -117,22 +129,25 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDLPortletToolbarContributor(
-		DLPortletToolbarContributor dlPortletToolbarContributor) {
-
-		_dlPortletToolbarContributor = dlPortletToolbarContributor;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDLPortletToolbarContributorHelper(
 		DLPortletToolbarContributorHelper dlPortletToolbarContributorHelper) {
 
 		_dlPortletToolbarContributorHelper = dlPortletToolbarContributorHelper;
 	}
 
-	private DLPortletToolbarContributor _dlPortletToolbarContributor;
+	@Reference(unbind = "-")
+	protected void setDLPortletToolbarContributorRegistry(
+		DLPortletToolbarContributorRegistry
+			dlPortletToolbarContributorRegistry) {
+
+		_dlPortletToolbarContributorRegistry =
+			dlPortletToolbarContributorRegistry;
+	}
+
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;
+	private DLPortletToolbarContributorRegistry
+		_dlPortletToolbarContributorRegistry;
 
 	@Reference
 	private Portal _portal;

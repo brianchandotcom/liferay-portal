@@ -19,9 +19,9 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
+import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributorRegistry;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
@@ -58,7 +58,8 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 		renderRequest.setAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
-			_dlPortletToolbarContributor);
+			_dlPortletToolbarContributorRegistry.
+				getDLPortletToolbarContributor());
 
 		try {
 			if (pingFolderRepository(renderRequest, renderResponse)) {
@@ -134,7 +135,8 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 	private DLFolderLocalService _dlFolderLocalService;
 
 	@Reference
-	private DLPortletToolbarContributor _dlPortletToolbarContributor;
+	private DLPortletToolbarContributorRegistry
+		_dlPortletToolbarContributorRegistry;
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;

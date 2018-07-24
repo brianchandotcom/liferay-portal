@@ -31,15 +31,12 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -123,7 +120,8 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 
 		httpURLConnection.setDoOutput(true);
 		httpURLConnection.setRequestMethod("POST");
-		httpURLConnection.setRequestProperty("Content-Type", "application/octet-stream");
+		httpURLConnection.setRequestProperty(
+			"Content-Type", "application/octet-stream");
 		httpURLConnection.setRequestProperty(
 			"Ocp-Apim-Subscription-Key",
 			_microsoftCognitiveServicesConfiguration.apiKey());
@@ -136,12 +134,13 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		httpURLConnection.getResponseMessage();
 
 		try (InputStream inputStream = httpURLConnection.getInputStream()) {
-			return JSONFactoryUtil.createJSONObject(StringUtil.read(inputStream));
+			return JSONFactoryUtil.createJSONObject(
+				StringUtil.read(inputStream));
 		}
 		catch (Exception e) {
 			try (InputStream inputStream = httpURLConnection.getErrorStream()) {
 				throw new PortalException(
-					"Response code " + httpURLConnection.getResponseCode()  + ":" +
+					"Response code " + httpURLConnection.getResponseCode() + ":" +
 						StringUtil.read(inputStream),
 					e);
 			}
@@ -154,8 +153,7 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		MicrosoftCognitiveServicesImageAssetAutoTagProvider.class);
 
 	private static final Set<String> _supportedFormats = new HashSet<>(
-		Arrays.asList(
-			"BMP", "GIF",  "JPEG", "JPG", "PNG"));
+		Arrays.asList("BMP", "GIF", "JPEG", "JPG", "PNG"));
 
 	@Reference
 	private Http _http;

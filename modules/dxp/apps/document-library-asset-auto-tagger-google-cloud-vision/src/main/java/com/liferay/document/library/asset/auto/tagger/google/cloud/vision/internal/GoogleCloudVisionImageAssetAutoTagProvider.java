@@ -34,11 +34,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.IOException;
-
 import java.net.HttpURLConnection;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -115,19 +112,14 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			JSONUtil.put(
 				JSONUtil.put(
 					"features",
-					JSONUtil.put(
-						JSONUtil.put(
-							"type", "LABEL_DETECTION"
-						)
-					)
+					JSONUtil.put(JSONUtil.put("type", "LABEL_DETECTION"))
 				).put(
 					"image",
 					JSONUtil.put(
 						"content",
 						Base64.encode(
 							FileUtil.getBytes(
-								fileVersion.getContentStream(false)))
-					)
+								fileVersion.getContentStream(false))))
 				)
 			)
 		).toString();

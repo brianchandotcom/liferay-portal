@@ -74,7 +74,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 		try {
 			JSONObject responseJSONObject = _queryGoogleCloudVisionJSONObject(
-				_getRequestJSONPayload(fileEntry));
+				_getPayloadJSON(fileEntry));
 
 			JSONArray responsesJSONArray = responseJSONObject.getJSONArray(
 				"responses");
@@ -107,7 +107,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			properties);
 	}
 
-	private String _getRequestJSONPayload(FileEntry fileEntry)
+	private String _getPayloadJSON(FileEntry fileEntry)
 		throws IOException, PortalException {
 
 		FileVersion fileVersion = fileEntry.getFileVersion();

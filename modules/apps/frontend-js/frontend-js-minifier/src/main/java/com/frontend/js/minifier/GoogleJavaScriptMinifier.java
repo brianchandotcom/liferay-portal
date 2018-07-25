@@ -77,10 +77,11 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 				try {
 					_clearThreadTraceMethod.invoke(null);
 				}
-				catch (Exception ex) {
+				catch (ReflectiveOperationException roe) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Failed to clear thread local for ThreadTrace", ex);
+							"Unable to clear thread local for ThreadTrace",
+							roe);
 					}
 				}
 			}
@@ -96,9 +97,9 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 				classLoader.loadClass("com.google.javascript.jscomp.Tracer"),
 				"clearThreadTrace");
 		}
-		catch (Exception ex) {
+		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to find clear ThreadTrace method", ex);
+				_log.warn("Unable to find clear ThreadTrace method", e);
 			}
 		}
 	}

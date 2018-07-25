@@ -343,17 +343,13 @@
 	</command>
 
 	<command name="viewNoSiteOrWorkflowLinksCP">
-		<var name="key_portletCategoryName" value="Configuration" />
-		<var name="key_siteTemplateName" value="Site Template Name" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="Site Template Name" />
-
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${siteTemplateName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="Site Template Name" />
 		</execute>
 
-		<execute macro="MenuItem#click">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Manage" />
+			<var name="rowEntry" value="Site Template Name" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#expandPanel">

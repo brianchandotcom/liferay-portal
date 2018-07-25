@@ -27,7 +27,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -215,21 +216,23 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 					return false;
 				}
 
-				String assetAutoTaggingEnabledProperty =
-					_group.getTypeSettingsProperty("assetAutoTaggingEnabled");
+				UnicodeProperties typeSettingsProperties =
+					_group.getTypeSettingsProperties();
 
-				if (Validator.isNotNull(assetAutoTaggingEnabledProperty)) {
-					return Boolean.valueOf(assetAutoTaggingEnabledProperty);
-				}
-				else {
-					AssetAutoTaggerGroupConfiguration
-						assetAutoTaggerGroupConfiguration =
-							_configurationProvider.getGroupConfiguration(
-								AssetAutoTaggerGroupConfiguration.class,
-								_group.getGroupId());
+				if (typeSettingsProperties.containsKey(
+						"assetAutoTaggingEnabled")) {
 
-					return assetAutoTaggerGroupConfiguration.enabled();
+					return GetterUtil.getBoolean(
+						typeSettingsProperties.get("assetAutoTaggingEnabled"));
 				}
+
+				AssetAutoTaggerGroupConfiguration
+					assetAutoTaggerGroupConfiguration =
+						_configurationProvider.getGroupConfiguration(
+							AssetAutoTaggerGroupConfiguration.class,
+							_group.getGroupId());
+
+				return assetAutoTaggerGroupConfiguration.enabled();
 			}
 			catch (ConfigurationException ce) {
 				if (_log.isDebugEnabled()) {

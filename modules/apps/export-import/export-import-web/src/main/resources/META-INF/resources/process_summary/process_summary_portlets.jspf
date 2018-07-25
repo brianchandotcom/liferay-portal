@@ -52,6 +52,14 @@
 
 		Map<String, Map<String, Long>> deletions = new HashMap<>();
 
+		if (portletIds.isEmpty()) {
+			List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
+
+			for (Portlet dataSiteLevelPortlet : dataSiteLevelPortlets) {
+				portletIds.add(dataSiteLevelPortlet.getPortletId());
+			}
+		}
+
 		for (String portletId : portletIds) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
@@ -105,6 +113,10 @@
 				}
 			}
 
+			if ((totalAdditions + totalDeletions) <= 0) {
+				continue;
+			}
+
 			currentAdditions.put("total", totalAdditions);
 
 			currentDeletions.put("total", totalDeletions);
@@ -132,6 +144,10 @@
 					Map<String, Long> currentAdditions = additions.get(portletTitle);
 
 					Map<String, Long> currentDeletions = deletions.get(portletTitle);
+
+					if ((currentAdditions == null) || (currentDeletions == null)) {
+						continue;
+					}
 				%>
 
 					<div class="process-summary-subsection">

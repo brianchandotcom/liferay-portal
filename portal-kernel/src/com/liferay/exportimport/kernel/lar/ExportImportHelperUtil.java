@@ -16,6 +16,7 @@ package com.liferay.exportimport.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -340,6 +341,15 @@ public class ExportImportHelperUtil {
 
 		return _exportImportHelper.isReferenceWithinExportScope(
 			portletDataContext, stagedModel);
+	}
+
+	public static void processBackgroundTaskManifestSummary(
+			long userId, long sourceGroupId, BackgroundTask backgroundTask,
+			File file)
+		throws PortalException {
+
+		_exportImportHelper.processBackgroundTaskManifestSummary(
+			userId, sourceGroupId, backgroundTask, file);
 	}
 
 	/**

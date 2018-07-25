@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -153,6 +155,13 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ExportImportHelperUtil.processBackgroundTaskManifestSummary(
+				serviceContext.getUserId(), sourceGroupId, backgroundTask,
+				file);
 		}
 		catch (Throwable t) {
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);

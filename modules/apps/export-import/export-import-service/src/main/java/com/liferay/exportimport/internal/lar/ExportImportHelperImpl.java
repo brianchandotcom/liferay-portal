@@ -17,6 +17,7 @@ package com.liferay.exportimport.internal.lar;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapConstants;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -35,6 +36,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -73,7 +75,9 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -93,12 +97,14 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -876,6 +882,64 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return false;
+	}
+
+	@Override
+	public void processBackgroundTaskManifestSummary(
+			long userId, long sourceGroupId, BackgroundTask backgroundTask,
+			File file)
+		throws PortalException {
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = TempFileEntryUtil.addTempFileEntry(
+				sourceGroupId, userId, ExportImportHelper.TEMP_FOLDER_NAME,
+				file.getName(), file, MimeTypesUtil.getContentType(file));
+
+			ManifestSummary manifestSummary = getManifestSummary(
+				userId, sourceGroupId, new HashMap<>(), fileEntry);
+
+			Map<String, Serializable> taskContextMap =
+				backgroundTask.getTaskContextMap();
+
+			HashMap<String, LongWrapper> modelAdditionCounters = new HashMap<>(
+				manifestSummary.getModelAdditionCounters());
+
+			taskContextMap.put(
+				ExportImportBackgroundTaskContextMapConstants.
+					MODEL_ADDITION_COUNTERS,
+				modelAdditionCounters);
+
+			HashMap<String, LongWrapper> modelDeletionCounters = new HashMap<>(
+				manifestSummary.getModelDeletionCounters());
+
+			taskContextMap.put(
+				ExportImportBackgroundTaskContextMapConstants.
+					MODEL_DELETION_COUNTERS,
+				modelDeletionCounters);
+
+			HashSet<String> manifestSummaryKeys = new HashSet<>(
+				manifestSummary.getManifestSummaryKeys());
+
+			taskContextMap.put(
+				ExportImportBackgroundTaskContextMapConstants.
+					MANIFEST_SUMMARY_KEYS,
+				manifestSummaryKeys);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to process manifest for the process summary " +
+						"screen");
+			}
+		}
+		finally {
+			if (fileEntry != null) {
+				TempFileEntryUtil.deleteTempFileEntry(
+					fileEntry.getFileEntryId());
+			}
+		}
 	}
 
 	/**

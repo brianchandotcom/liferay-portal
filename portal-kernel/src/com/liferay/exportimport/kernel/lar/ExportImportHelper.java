@@ -16,6 +16,7 @@ package com.liferay.exportimport.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -303,6 +304,11 @@ public interface ExportImportHelper {
 
 	public boolean isReferenceWithinExportScope(
 		PortletDataContext portletDataContext, StagedModel stagedModel);
+
+	public void processBackgroundTaskManifestSummary(
+			long userId, long sourceGroupId, BackgroundTask backgroundTask,
+			File file)
+		throws PortalException;
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by

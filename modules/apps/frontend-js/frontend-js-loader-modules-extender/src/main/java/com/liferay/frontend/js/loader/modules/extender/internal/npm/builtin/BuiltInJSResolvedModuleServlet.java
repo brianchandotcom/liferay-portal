@@ -14,8 +14,16 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.portal.kernel.util.MimeTypes;
+
+import java.net.URL;
+
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.Servlet;
 
@@ -37,13 +45,79 @@ import org.osgi.service.component.annotations.Reference;
 public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 
 	@Override
-	protected JSModule getJSModule(String moduleName) {
-		return _npmRegistry.getResolvedJSModule(moduleName);
+	protected MimeTypes getMimeTypes() {
+		return _mimeTypes;
+	}
+
+	@Override
+	protected URL getURL(String pathInfo) {
+		String identifier = pathInfo.substring(1);
+
+		String resolvedPackageId = ModuleNameUtil.getPackageName(identifier);
+
+		JSPackage jsPackage = _getResolvedJSPackage(resolvedPackageId);
+
+		if (jsPackage == null) {
+			return null;
+		}
+
+		String packagePath = ModuleNameUtil.getPackagePath(identifier);
+
+		return jsPackage.getResourceURL(packagePath);
+	}
+
+	private JSPackage _getResolvedJSPackage(String resolvedPackageId) {
+		String packageId = _resolvedPackageIdentifiersCache.get(
+			resolvedPackageId);
+
+		if (packageId != null) {
+			JSPackage jsPackage = _npmRegistry.getJSPackage(packageId);
+
+			if (jsPackage != null) {
+				return jsPackage;
+			}
+
+			_resolvedPackageIdentifiersCache.remove(resolvedPackageId);
+		}
+
+		Collection<JSPackage> resolvedJSPackages =
+			_npmRegistry.getResolvedJSPackages();
+
+		for (JSPackage resolvedJSPackage : resolvedJSPackages) {
+			if (resolvedPackageId.equals(resolvedJSPackage.getResolvedId())) {
+				_resolvedPackageIdentifiersCache.put(
+					resolvedPackageId, resolvedJSPackage.getId());
+
+				return resolvedJSPackage;
+			}
+		}
+
+		return null;
 	}
 
 	private static final long serialVersionUID = 2647715401054034600L;
 
 	@Reference
+	private MimeTypes _mimeTypes;
+
+	@Reference
 	private NPMRegistry _npmRegistry;
+
+	private LinkedHashMap<String, String> _resolvedPackageIdentifiersCache =
+		new LinkedHashMap<String, String>() {
+
+			@Override
+			protected boolean removeEldestEntry(Map.Entry eldest) {
+				Collection<JSPackage> resolvedJSPackages =
+					_npmRegistry.getResolvedJSPackages();
+
+				if (size() > resolvedJSPackages.size()) {
+					return true;
+				}
+
+				return false;
+			}
+
+		};
 
 }

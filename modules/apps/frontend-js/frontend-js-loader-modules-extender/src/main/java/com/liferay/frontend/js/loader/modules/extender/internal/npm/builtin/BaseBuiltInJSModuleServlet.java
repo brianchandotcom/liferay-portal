@@ -14,16 +14,15 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
-import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.StreamUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.servlet.ServletException;
+import java.net.URL;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,47 +37,43 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
+	protected abstract MimeTypes getMimeTypes();
+
 	/**
-	 * Returns the requested module. This is a template method that must be
-	 * implemented by subclasses to lookup the requested module.
+	 * Returns the requested resource. This is a template method that must be
+	 * implemented by subclasses to lookup the requested resource.
 	 *
-	 * @param  moduleName the module's name
+	 * @param  pathInfo the request's pathInfo
 	 * @return the {@link JSModule} object describing the module
 	 */
-	protected abstract JSModule getJSModule(String moduleName);
+	protected abstract URL getURL(String pathInfo);
 
 	@Override
 	protected void service(
 			HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
+		throws IOException {
 
-		JSModule jsModule = _resolveJSModule(request);
+		String pathInfo = request.getPathInfo();
 
-		if (jsModule == null) {
+		URL url = getURL(pathInfo);
+
+		if (url == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
 		}
 
-		String contentType = null;
-		InputStream inputStream = null;
+		_setContentType(response, url);
 
-		String pathInfo = request.getPathInfo();
+		_sendResource(response, url);
+	}
 
-		if (pathInfo.endsWith(".map")) {
-			contentType = ContentTypes.APPLICATION_JSON;
-			inputStream = jsModule.getSourceMapInputStream();
-		}
-		else {
-			contentType = ContentTypes.TEXT_JAVASCRIPT_UTF8;
-			inputStream = jsModule.getInputStream();
-		}
-
-		response.setContentType(contentType);
+	private void _sendResource(HttpServletResponse response, URL url)
+		throws IOException {
 
 		ServletOutputStream servletOutputStream = response.getOutputStream();
 
-		try {
+		try (InputStream inputStream = url.openStream()) {
 			StreamUtil.transfer(inputStream, servletOutputStream, false);
 		}
 		catch (Exception e) {
@@ -86,25 +81,22 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 				"Unable to read file");
 		}
-		finally {
-			inputStream.close();
-		}
 	}
 
-	private JSModule _resolveJSModule(HttpServletRequest request) {
-		String pathInfo = request.getPathInfo();
+	private void _setContentType(HttpServletResponse response, URL url) {
+		String file = url.getFile();
 
-		String identifier = pathInfo.substring(1);
-
-		if (pathInfo.endsWith(".map")) {
-			int index = identifier.lastIndexOf(StringPool.PERIOD);
-
-			identifier = identifier.substring(0, index);
+		if (file.endsWith(".js")) {
+			response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
 		}
+		else if (file.endsWith(".map")) {
+			response.setContentType(ContentTypes.APPLICATION_JSON);
+		}
+		else {
+			MimeTypes mimeTypes = getMimeTypes();
 
-		String moduleName = ModuleNameUtil.toModuleName(identifier);
-
-		return getJSModule(moduleName);
+			response.setContentType(mimeTypes.getContentType(file));
+		}
 	}
 
 }

@@ -1,7 +1,7 @@
 <definition component-name="portal-security">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Authentication" />
+	<property name="testray.main.component.name" value="LDAP" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
@@ -31,7 +31,7 @@
 		<property name="apacheds.blank.user.password.enabled" value="true" />
 		<property name="apacheds.enabled" value="true" />
 		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="AuthenticationUsecase#ImportLDAPUserWithBlankPassword" />
+		<property name="test.name.skip.portal.instance" value="LDAP#ImportLDAPUserWithBlankPassword" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -98,7 +98,7 @@
 		<description message="This is a use case for LPS-30529 and LPS-77948." />
 
 		<property name="apacheds.enabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="AuthenticationUsecase#ResetFieldsValueForImportedLDAPUser" />
+		<property name="test.name.skip.portal.instance" value="LDAP#ResetFieldsValueForImportedLDAPUser" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -213,7 +213,7 @@
 	<command name="ViewHiddenSecurityCredential" priority="4">
 		<description message="This is a use case for LPS-73381." />
 
-		<property name="test.name.skip.portal.instance" value="AuthenticationUsecase#ViewHiddenSecurityCredential" />
+		<property name="test.name.skip.portal.instance" value="LDAP#ViewHiddenSecurityCredential" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -229,6 +229,57 @@
 
 		<execute macro="SystemSettings#editSecurityCredential">
 			<var name="securityCredential" value="123456" />
+		</execute>
+	</command>
+
+	<command name="ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting" priority="3">
+		<property name="test.name.skip.portal.instance" value="LDAP#ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="LDAP" />
+			<var name="configurationName" value="Authentication" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
+		</execute>
+
+		<execute macro="FormFields#viewCheckboxNotChecked">
+			<var name="fieldName" value="enabled" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#configureLDAPSetting">
+			<var name="enableSettingList" value="enabled" />
+		</execute>
+
+		<!-- LPS-71630 -->
+		<execute macro="PortalSettings#configureLDAPSetting">
+			<var name="enableSettingList" value="enabled" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="LDAP" />
+			<var name="configurationName" value="Authentication" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
+		</execute>
+
+		<execute macro="FormFields#viewCheckboxNotChecked">
+			<var name="fieldName" value="enabled" />
 		</execute>
 	</command>
 </definition>

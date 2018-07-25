@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.radio.internal;
 
+import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldOptionsValidationTestCase;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
-import com.liferay.dynamic.data.mapping.type.BaseDDMFormFieldOptionsValidationTestCase;
 
 /**
  * @author Marcellus Tavares

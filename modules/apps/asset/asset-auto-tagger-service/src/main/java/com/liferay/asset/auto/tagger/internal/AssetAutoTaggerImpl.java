@@ -246,7 +246,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 		if (maximumNumberOfTagsPerAsset > 0) {
 			return ArrayUtil.subset(
-				tags.toArray(new String[0]), 0,
+				tags.toArray(new String[tags.size()]), 0,
 				Math.min(maximumNumberOfTagsPerAsset, tags.size()));
 		}
 		else {

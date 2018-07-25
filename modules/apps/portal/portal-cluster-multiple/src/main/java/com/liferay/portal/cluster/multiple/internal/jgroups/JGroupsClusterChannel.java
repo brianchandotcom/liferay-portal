@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cluster.multiple.internal.jgroups;
 
+import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.cluster.multiple.internal.ClusterChannel;
 import com.liferay.portal.cluster.multiple.internal.ClusterReceiver;
 import com.liferay.portal.cluster.multiple.internal.io.ClusterSerializationUtil;
@@ -39,7 +40,8 @@ public class JGroupsClusterChannel implements ClusterChannel {
 
 	public JGroupsClusterChannel(
 		String channelLogicName, String channelProperties, String clusterName,
-		ClusterReceiver clusterReceiver, InetAddress bindInetAddress) {
+		ClusterReceiver clusterReceiver, InetAddress bindInetAddress,
+		ClusterExecutorConfiguration clusterExecutorConfiguration) {
 
 		if (Validator.isNull(channelProperties)) {
 			throw new NullPointerException("Channel properties is null");

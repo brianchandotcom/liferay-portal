@@ -17,7 +17,7 @@ package com.liferay.asset.auto.tagger.web.internal.servlet.taglib.ui;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.web.internal.constants.FormNavigatorAssetAutoTaggerConstants;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
@@ -66,7 +66,7 @@ public class AssetAutoTaggerCompanySettingsFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getKey());
+		return _language.get(locale, getKey());
 	}
 
 	@Override
@@ -111,5 +111,8 @@ public class AssetAutoTaggerCompanySettingsFormNavigatorEntry
 	@Reference
 	private AssetAutoTaggerConfigurationFactory
 		_assetAutoTaggerConfigurationFactory;
+
+	@Reference
+	private Language _language;
 
 }

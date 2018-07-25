@@ -1,7 +1,8 @@
 <definition component-name="portal-security">
+	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="test.assert.warning.exceptions" value="true" />
-	<property name="testray.main.component.name" value="Security" />
+	<property name="testray.main.component.name" value="CAPTCHA" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />

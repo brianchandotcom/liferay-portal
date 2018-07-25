@@ -25,11 +25,12 @@
 		</if>
 	</tear-down>
 
-	<command name="ImportLDAPUserWithBlankPassword" priority="3">
+	<command name="ImportLDAPUserWithBlankPassword" priority="5">
 		<description message="This is a use case for LPS-65498." />
 
 		<property name="apacheds.blank.user.password.enabled" value="true" />
 		<property name="apacheds.enabled" value="true" />
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="AuthenticationUsecase#ImportLDAPUserWithBlankPassword" />
 
 		<execute macro="ProductMenu#gotoPortlet">

@@ -29,7 +29,10 @@ import org.tensorflow.Session;
 import org.tensorflow.Tensor;
 
 /**
+ * Based on https://github.com/tensorflow/tensorflow/blob/master/tensorflow/java/src/main/java/org/tensorflow/examples/LabelImage.java
+ *
  * @author Shuyang Zhou
+ * @author Alejandro Tardín
  */
 public class InceptionImageLabelerUtil {
 

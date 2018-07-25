@@ -166,7 +166,8 @@ public class StructuredContentNestedCollectionResource
 			fieldValuesBuilder -> fieldValuesBuilder.types(
 				"ContentFieldValue"
 			).addLinkedModel(
-				"file", MediaObjectIdentifier.class, this::_getFileEntryId
+				"mediaObject", MediaObjectIdentifier.class,
+				this::_getFileEntryId
 			).addLocalizedStringByLocale(
 				"value", this::_getLocalizedString
 			).addString(

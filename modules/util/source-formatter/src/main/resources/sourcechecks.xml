@@ -177,6 +177,7 @@
 			<property name="checkRegistryInTestClasses" value="false" />
 		</check>
 		<check name="JavaModuleInternalImportsCheck" />
+		<check name="JavaModuleJavaxPortletInitParamTemplatePathCheck" />
 		<check name="JavaModuleServiceProxyFactoryCheck" />
 		<check name="JavaModuleServiceReferenceCheck" />
 		<check name="JavaModuleTestCheck" />

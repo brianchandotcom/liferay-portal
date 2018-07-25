@@ -1,7 +1,7 @@
 <definition component-name="portal-security">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Security" />
+	<property name="testray.main.component.name" value="Login" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
@@ -45,7 +45,9 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute function="Pause" locator1="120000" />
+
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
+
 		<execute function="Refresh" />
 
 		<execute macro="Smoke#viewWelcomePage">
@@ -64,7 +66,9 @@
 		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
 
 		<execute function="Pause" locator1="120000" />
+
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+
 		<execute function="Refresh" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
@@ -98,7 +102,9 @@
 		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
 
 		<execute function="Pause" locator1="60000" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="WarningDue to inactivity, your session will expire" />
+
 		<execute function="Pause" locator1="60000" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />

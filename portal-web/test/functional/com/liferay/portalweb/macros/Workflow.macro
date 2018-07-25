@@ -92,13 +92,13 @@
 			<elseif>
 				<isset var="boardWorkflowTask" />
 				<then>
-					<execute macro="MenuItem#viewPresent">
+					<execute macro="MenuItem#click">
 						<var name="menuItem" value="Approve ${boardWorkflowTask}" />
 					</execute>
 				</then>
 			</elseif>
 			<else>
-				<execute macro="MenuItem#viewPresent">
+				<execute macro="MenuItem#click">
 					<var name="menuItem" value="Approve" />
 				</execute>
 			</else>

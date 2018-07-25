@@ -82,27 +82,24 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
+		<var name="menuItem" value="Approve" />
+
 		<if>
 			<isset var="workflowDefinitionTask" />
 			<then>
-				<var name="key_menuListOption" value="${workflowDefinitionTask}" />
-
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_MENULIST_OPTION" value1="${workflowDefinitionTask}" />
+				<var name="menuItem" value="${workflowDefinitionTask}" />
 			</then>
 			<elseif>
 				<isset var="boardWorkflowTask" />
 				<then>
-					<execute macro="MenuItem#click">
-						<var name="menuItem" value="Approve ${boardWorkflowTask}" />
-					</execute>
+					<var name="menuItem" value="Approve ${boardWorkflowTask}" />
 				</then>
 			</elseif>
-			<else>
-				<execute macro="MenuItem#click">
-					<var name="menuItem" value="Approve" />
-				</execute>
-			</else>
 		</if>
+
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${menuItem}" />
+		</execute>
 
 		<execute macro="IFrame#selectConfigurationFrame" />
 

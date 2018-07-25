@@ -53,7 +53,7 @@ public class ExportImportConfigurationFactory {
 		boolean privateLayout = ParamUtil.getBoolean(
 			portletRequest, "privateLayout");
 
-		Map<String, String[]> parameterMap = getDefaultPublishingParameters(
+		Map<String, String[]> parameterMap = _getPublishingParameters(
 			portletRequest);
 
 		return buildDefaultLocalPublishingExportImportConfiguration(
@@ -114,9 +114,8 @@ public class ExportImportConfigurationFactory {
 			portletRequest, "secureConnection");
 		long remoteGroupId = ParamUtil.getLong(portletRequest, "remoteGroupId");
 
-		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap();
+		Map<String, String[]> parameterMap = _getPublishingParameters(
+			portletRequest);
 
 		return buildDefaultRemotePublishingExportImportConfiguration(
 			themeDisplay.getUser(), sourceGroupId, privateLayout, remoteAddress,
@@ -201,6 +200,21 @@ public class ExportImportConfigurationFactory {
 				user.getUserId(),
 				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE,
 				publishLayoutRemoteSettingsMap);
+	}
+
+	private static Map<String, String[]> _getPublishingParameters(
+		final PortletRequest portletRequest) {
+
+		final Map<String, String[]> parameterMapFromRequest =
+			new LinkedHashMap<>(portletRequest.getParameterMap());
+
+		final Map<String, String[]> defaultParameterMap =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
+
+		parameterMapFromRequest.forEach(defaultParameterMap::putIfAbsent);
+
+		return defaultParameterMap;
 	}
 
 }

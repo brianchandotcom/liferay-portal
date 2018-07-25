@@ -23,7 +23,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -96,13 +98,26 @@ public class ConfigurableUtil {
 
 		Method[] declaredMethods = interfaceClass.getDeclaredMethods();
 
+		List<Method> bigStringMethods = new ArrayList<>();
+
+		for (Method method : declaredMethods) {
+			if (method.getReturnType() == String.class) {
+				String result = (String)method.invoke(configurable);
+
+				if ((result != null) && (result.length() > 65535)) {
+					bigStringMethods.add(method);
+				}
+			}
+		}
+
 		// Fields
 
 		for (Method method : declaredMethods) {
 			Class<?> returnType = method.getReturnType();
 
 			if (returnType.isPrimitive() || returnType.isEnum() ||
-				(returnType == String.class)) {
+				((returnType == String.class) &&
+				 !bigStringMethods.contains(method))) {
 
 				continue;
 			}
@@ -135,7 +150,8 @@ public class ConfigurableUtil {
 			Class<?> returnType = method.getReturnType();
 
 			if (returnType.isPrimitive() || returnType.isEnum() ||
-				(returnType == String.class)) {
+				((returnType == String.class) &&
+				 !bigStringMethods.contains(method))) {
 
 				continue;
 			}
@@ -175,7 +191,10 @@ public class ConfigurableUtil {
 
 			method.setAccessible(true);
 
-			if (returnType.isPrimitive() || (returnType == String.class)) {
+			if (returnType.isPrimitive() ||
+				((returnType == String.class) &&
+				 !bigStringMethods.contains(method))) {
+
 				Object result = method.invoke(configurable);
 
 				if (result == null) {

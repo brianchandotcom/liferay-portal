@@ -244,13 +244,15 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 	private String[] _getTagsArray(
 		Set<String> tags, int maximumNumberOfTagsPerAsset) {
 
+		String[] tagsArray = tags.toArray(new String[tags.size()]);
+
 		if (maximumNumberOfTagsPerAsset > 0) {
 			return ArrayUtil.subset(
-				tags.toArray(new String[tags.size()]), 0,
+				tagsArray, 0,
 				Math.min(maximumNumberOfTagsPerAsset, tags.size()));
 		}
 
-		return tags.toArray(new String[0]);
+		return tagsArray;
 	}
 
 	private void _reindex(AssetEntry assetEntry) throws PortalException {

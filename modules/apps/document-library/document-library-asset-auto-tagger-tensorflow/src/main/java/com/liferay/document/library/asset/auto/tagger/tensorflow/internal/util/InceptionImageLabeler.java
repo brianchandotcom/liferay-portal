@@ -14,30 +14,50 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.process.GetLabelProbabilitiesProcessCallable;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.process.TensorflowDaemonProcessCallable;
+import com.liferay.petra.process.ProcessChannel;
+import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.ProcessConfig.Builder;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.process.ProcessExecutor;
+import com.liferay.petra.process.ProcessLog.Level;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PortalClassPathUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.List;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-
-import org.tensorflow.Graph;
-import org.tensorflow.Output;
-import org.tensorflow.Session;
-import org.tensorflow.Tensor;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * https://github.com/tensorflow/tensorflow/blob/master/tensorflow/java/src/main/java/org/tensorflow/examples/LabelImage.java
@@ -64,16 +84,112 @@ public class InceptionImageLabeler {
 	protected void activate(BundleContext bundleContext) throws IOException {
 		Bundle bundle = bundleContext.getBundle();
 
-		_initializeLabelerGraph(bundle);
 		_initializeLabels(bundle);
 
-		_initializeImageNormalizerGraph();
+		_tensorflowWorkDir = bundle.getDataFile("tensorflow-workdir");
+
+		_tensorflowWorkDir.mkdirs();
+
+		_processConfig = _createProcessConfig(
+			bundle, _tensorflowWorkDir.toPath());
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_imageNormalizerGraph.close();
-		_imageLabelerGraph.close();
+		_stopProcess();
+
+		FileUtil.deltree(_tensorflowWorkDir);
+	}
+
+	private static String _createClassPath(Bundle bundle, Path tempPath)
+		throws IOException {
+
+		StringBundler sb = new StringBundler();
+
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		for (String filePath :
+				StringUtil.split(headers.get(Constants.BUNDLE_CLASSPATH))) {
+
+			if (filePath.equals(StringPool.PERIOD)) {
+				continue;
+			}
+
+			URL url = bundle.getEntry(filePath);
+
+			Path path = Paths.get(url.getFile());
+
+			try (InputStream inputStream = url.openStream()) {
+				Path targetPath = tempPath.resolve(path.getFileName());
+
+				sb.append(targetPath);
+
+				sb.append(File.pathSeparator);
+
+				Files.copy(inputStream, targetPath);
+			}
+		}
+
+		ProtectionDomain protectionDomain =
+			InceptionImageLabeler.class.getProtectionDomain();
+
+		CodeSource codeSource = protectionDomain.getCodeSource();
+
+		URL url = codeSource.getLocation();
+
+		sb.append(url.getPath());
+
+		sb.append(File.pathSeparator);
+
+		ProcessConfig portalProcessConfig =
+			PortalClassPathUtil.getPortalProcessConfig();
+
+		sb.append(portalProcessConfig.getBootstrapClassPath());
+
+		return sb.toString();
+	}
+
+	private static ProcessConfig _createProcessConfig(
+			Bundle bundle, Path tempPath)
+		throws IOException {
+
+		String classpath = _createClassPath(bundle, tempPath);
+
+		Builder builder = new Builder();
+
+		builder.setBootstrapClassPath(classpath);
+
+		builder.setProcessLogConsumer(
+			processLog -> {
+				if (Level.DEBUG == processLog.getLevel()) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							processLog.getMessage(), processLog.getThrowable());
+					}
+				}
+				else if (Level.INFO == processLog.getLevel()) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							processLog.getMessage(), processLog.getThrowable());
+					}
+				}
+				else if (Level.WARN == processLog.getLevel()) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							processLog.getMessage(), processLog.getThrowable());
+					}
+				}
+				else {
+					_log.error(
+						processLog.getMessage(), processLog.getThrowable());
+				}
+			});
+		builder.setReactClassLoader(
+			InceptionImageLabeler.class.getClassLoader());
+		builder.setRuntimeClassPath(classpath);
+
+		return builder.build();
 	}
 
 	private Stream<Integer> _bestIndexes(
@@ -101,74 +217,36 @@ public class InceptionImageLabeler {
 	}
 
 	private float[] _getLabelProbabilities(byte[] imageBytes) {
-		try (Tensor<Float> imageTensor = _normalizeImage(imageBytes);
-			Tensor<Float> resultTensor = _getOutputTensor(
-				_imageLabelerGraph, imageTensor)) {
+		ProcessChannel<String> processChannel = _processChannel;
 
-			long[] shape = resultTensor.shape();
+		if (processChannel == null) {
+			synchronized (this) {
+				if (_processChannel == null) {
+					try {
+						_processChannel = _processExecutor.execute(
+							_processConfig,
+							new TensorflowDaemonProcessCallable());
+					}
+					catch (ProcessException pe) {
+						ReflectionUtil.throwException(pe);
+					}
+				}
 
-			if ((resultTensor.numDimensions() != 2) || (shape[0] != 1)) {
-				throw new RuntimeException(
-					String.format(
-						"Expected model to produce a [1 N] shaped tensor " +
-							"where N is the number of labels, instead it " +
-								"produced one with shape %s",
-						Arrays.toString(shape)));
+				processChannel = _processChannel;
 			}
-
-			int numberOfLabels = (int)shape[1];
-
-			return resultTensor.copyTo(new float[1][numberOfLabels])[0];
 		}
-	}
 
-	private Tensor<Float> _getOutputTensor(
-		Graph graph, Tensor<Float> inputTensor) {
+		Future<float[]> future = processChannel.write(
+			new GetLabelProbabilitiesProcessCallable(imageBytes));
 
-		try (Session session = new Session(graph)) {
-			Session.Runner runner = session.runner();
-
-			runner = runner.feed("input", inputTensor);
-			runner = runner.fetch("output");
-
-			List<Tensor<?>> tensors = runner.run();
-
-			Tensor<?> resultTensor = tensors.get(0);
-
-			return resultTensor.expect(Float.class);
+		try {
+			return future.get();
 		}
-	}
+		catch (Exception e) {
+			_stopProcess();
 
-	private void _initializeImageNormalizerGraph() {
-		_imageNormalizerGraph = new Graph();
-
-		GraphBuilder builder = new GraphBuilder(_imageNormalizerGraph);
-
-		Output<String> input = builder.placeholder("input", String.class);
-
-		builder.rename(
-			builder.div(
-				builder.sub(
-					builder.resizeBilinear(
-						builder.expandDims(
-							builder.cast(
-								builder.decodeJpeg(input, 3), Float.class),
-							builder.constant("make_batch", 0)),
-						builder.constant("size", new int[] {224, 224})),
-					builder.constant("mean", 117F)),
-				builder.constant("scale", 1F)),
-			"output"
-		);
-	}
-
-	private void _initializeLabelerGraph(Bundle bundle) throws IOException {
-		byte[] graphDef = FileUtil.getBytes(
-			_getInputStream(
-				bundle, "META-INF/model/tensorflow_inception_graph.pb"));
-
-		_imageLabelerGraph = new Graph();
-
-		_imageLabelerGraph.importGraphDef(graphDef);
+			return ReflectionUtil.throwException(e);
+		}
 	}
 
 	private void _initializeLabels(Bundle bundle) throws IOException {
@@ -179,14 +257,26 @@ public class InceptionImageLabeler {
 					"META-INF/model/imagenet_comp_graph_label_strings.txt")));
 	}
 
-	private Tensor<Float> _normalizeImage(byte[] imageBytes) {
-		try (Tensor tensor = Tensor.create(imageBytes, String.class)) {
-			return _getOutputTensor(_imageNormalizerGraph, tensor);
+	private synchronized void _stopProcess() {
+		if (_processChannel != null) {
+			Future<?> future = _processChannel.getProcessNoticeableFuture();
+
+			future.cancel(true);
+
+			_processChannel = null;
 		}
 	}
 
-	private Graph _imageLabelerGraph;
-	private Graph _imageNormalizerGraph;
+	private static final Log _log = LogFactoryUtil.getLog(
+		InceptionImageLabeler.class);
+
 	private String[] _labels;
+	private volatile ProcessChannel<String> _processChannel;
+	private ProcessConfig _processConfig;
+
+	@Reference
+	private ProcessExecutor _processExecutor;
+
+	private File _tensorflowWorkDir;
 
 }

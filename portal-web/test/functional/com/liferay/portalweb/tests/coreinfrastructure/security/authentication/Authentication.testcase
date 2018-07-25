@@ -25,32 +25,6 @@
 		</if>
 	</tear-down>
 
-	<command name="TestLDAPConnectionAndEntries" priority="5">
-		<property name="apacheds.enabled" value="true" />
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="Authentication#TestLDAPConnectionAndEntries" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
-		<execute macro="PortalSettings#addLDAPServer">
-			<var name="LDAPServerName" value="ApacheDS Server" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
-		<execute macro="PortalSettings#editLDAPServer">
-			<var name="LDAPServerName" value="ApacheDS Server" />
-		</execute>
-
-		<execute macro="PortalSettings#testLDAPConnection" />
-	</command>
-
 	<command name="ViewAuthenticationCAS" priority="3">
 		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationCAS" />
 

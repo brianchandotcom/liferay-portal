@@ -4157,6 +4157,8 @@ the `buildChangeLog` task.
 ## 5.4.91 - 2018-07-24
 
 ### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.85.
 - [LPS-82960]: Remove the logic that loaded the `ci.properties` file to read
 the `jira.project.keys`. This property should be set in the `gradle.properties`
 file.

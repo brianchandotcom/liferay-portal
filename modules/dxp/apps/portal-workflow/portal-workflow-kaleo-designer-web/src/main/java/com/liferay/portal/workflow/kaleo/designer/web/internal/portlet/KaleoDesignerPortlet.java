@@ -102,7 +102,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Kaleo Designer Web",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/designer/",
 		"javax.portlet.init-param.view-template=/designer/view.jsp",
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER,
 		"javax.portlet.resource-bundle=content.Language",

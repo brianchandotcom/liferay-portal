@@ -47,7 +47,7 @@
 			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="web-id"
-			property="webId"
+			value="<%= HtmlUtil.escape(curCompany.getWebId()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text

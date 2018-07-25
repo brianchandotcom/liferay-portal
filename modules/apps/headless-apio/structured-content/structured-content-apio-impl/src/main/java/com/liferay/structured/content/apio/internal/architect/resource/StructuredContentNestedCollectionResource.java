@@ -37,11 +37,11 @@ import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifie
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
@@ -168,6 +168,9 @@ public class StructuredContentNestedCollectionResource
 			).addLinkedModel(
 				"mediaObject", MediaObjectIdentifier.class,
 				this::_getFileEntryId
+			).addLinkedModel(
+				"structuredContent", StructuredContentIdentifier.class,
+				this::_getStructuredContentId
 			).addLocalizedStringByLocale(
 				"value", this::_getLocalizedString
 			).addString(
@@ -229,32 +232,31 @@ public class StructuredContentNestedCollectionResource
 			journalArticle.getArticleResourceUuid(), new ServiceContext());
 	}
 
+	private FileEntry _getFileEntry(JSONObject jsonObject)
+		throws PortalException {
+
+		String uuid = jsonObject.getString("uuid");
+		long groupId = jsonObject.getLong("groupId");
+
+		return _dlAppService.getFileEntryByUuidAndGroupId(uuid, groupId);
+	}
+
 	private Long _getFileEntryId(DDMFormFieldValue ddmFormFieldValue) {
-		Value value = ddmFormFieldValue.getValue();
-
-		String valueString = value.getString(LocaleUtil.getDefault());
-
-		try {
-			if (_isJSONObject(valueString)) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					valueString);
-
-				String uuid = jsonObject.getString("uuid");
-				long groupId = jsonObject.getLong("groupId");
-
-				FileEntry fileEntry =
-					_dlAppService.getFileEntryByUuidAndGroupId(uuid, groupId);
-
-				return fileEntry.getFileEntryId();
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
-
-		return null;
+		return Try.fromFallible(
+			ddmFormFieldValue::getValue
+		).map(
+			value -> value.getString(LocaleUtil.getDefault())
+		).filter(
+			this::_isJSONObject
+		).map(
+			JSONFactoryUtil::createJSONObject
+		).map(
+			this::_getFileEntry
+		).map(
+			FileEntry::getFileEntryId
+		).orElse(
+			null
+		);
 	}
 
 	private List<DDMFormFieldValue> _getFormFieldValues(
@@ -275,6 +277,14 @@ public class StructuredContentNestedCollectionResource
 		nestedDDMFormFieldValues.addAll(ddmFormFieldValues);
 
 		return nestedDDMFormFieldValues;
+	}
+
+	private JournalArticle _getJournalArticle(JSONObject jsonObject)
+		throws PortalException {
+
+		long classPK = jsonObject.getLong("classPK");
+
+		return _journalArticleService.getLatestArticle(classPK);
 	}
 
 	private List<String> _getJournalArticleAssetTags(
@@ -398,6 +408,24 @@ public class StructuredContentNestedCollectionResource
 					journalArticleWrapper, ddmTemplate, locale))
 		).collect(
 			Collectors.toList()
+		);
+	}
+
+	private Long _getStructuredContentId(DDMFormFieldValue ddmFormFieldValue) {
+		return Try.fromFallible(
+			ddmFormFieldValue::getValue
+		).map(
+			value -> value.getString(LocaleUtil.getDefault())
+		).filter(
+			this::_isJSONObject
+		).map(
+			JSONFactoryUtil::createJSONObject
+		).map(
+			this::_getJournalArticle
+		).map(
+			JournalArticleModel::getId
+		).orElse(
+			null
 		);
 	}
 

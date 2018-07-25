@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -65,26 +64,20 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(ResourceBundleLoaderUtil.class)
 @RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	"com.liferay.portal.kernel.util.ResourceBundleLoaderUtil"
-)
 public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
 		setUpHtmlUtil();
 		setUpLanguageUtil();
-		setUpResourceBundleLoaderUtil();
+		setUpResourceBundleLoader();
 		setUpDDMFormTemplateContextFactoryUtil();
 	}
 
@@ -910,6 +903,12 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			ddmFormEvaluator, _ddmFormFieldTypeServicesTracker
 		);
 
+		field(
+			DDMFormEvaluatorImpl.class, "_resourceBundleLoader"
+		).set(
+			ddmFormEvaluator, _resourceBundleLoader
+		);
+
 		return ddmFormEvaluator;
 	}
 
@@ -976,37 +975,24 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		languageUtil.setLanguage(language);
 	}
 
+	protected void setUpResourceBundleLoader() {
+		ResourceBundle resourceBundle = mock(ResourceBundle.class);
+
+		when(
+			_resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+	}
+
 	protected void setUpResourceBundleLoader(
 			DDMFormFieldTemplateContextContributor
 				ddmFormFieldTemplateContextContributor)
 		throws Exception {
 
-		ResourceBundleLoader resourceBundleLoader = mock(
-			ResourceBundleLoader.class);
-		ResourceBundle resourceBundle = mock(ResourceBundle.class);
-
-		when(
-			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
-		).thenReturn(
-			resourceBundle
-		);
-
 		Whitebox.setInternalState(
 			ddmFormFieldTemplateContextContributor, "resourceBundleLoader",
-			resourceBundleLoader);
-	}
-
-	protected void setUpResourceBundleLoaderUtil() {
-		mockStatic(ResourceBundleLoaderUtil.class);
-
-		ResourceBundleLoader portalResourceBundleLoader = mock(
-			ResourceBundleLoader.class);
-
-		when(
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader()
-		).thenReturn(
-			portalResourceBundleLoader
-		);
+			_resourceBundleLoader);
 	}
 
 	protected void whenLanguageGet(
@@ -1033,5 +1019,8 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	private HttpServletRequest _request;
+
+	@Mock
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

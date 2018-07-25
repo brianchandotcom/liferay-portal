@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -60,7 +61,8 @@ public class DDMFormAssetRenderer
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMFormValuesMerger ddmFormValuesMerger,
 		ModelResourcePermission<DDMFormInstance>
-			ddmFormInstanceModelResourcePermission) {
+			ddmFormInstanceModelResourcePermission,
+		ResourceBundleLoader resourceBundleLoader) {
 
 		_formInstanceRecord = formInstanceRecord;
 		_formInstanceRecordVersion = formInstanceRecordVersion;
@@ -71,6 +73,7 @@ public class DDMFormAssetRenderer
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmFormInstanceModelResourcePermission =
 			ddmFormInstanceModelResourcePermission;
+		_resourceBundleLoader = resourceBundleLoader;
 
 		DDMFormInstance formInstance = null;
 
@@ -200,7 +203,8 @@ public class DDMFormAssetRenderer
 				new DDMFormViewFormInstanceRecordDisplayContext(
 					request, response, _ddmFormInstanceRecordLocalService,
 					_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
-					_ddmFormValuesFactory, _ddmFormValuesMerger);
+					_ddmFormValuesFactory, _ddmFormValuesMerger,
+					_resourceBundleLoader);
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -224,5 +228,6 @@ public class DDMFormAssetRenderer
 	private final DDMFormInstance _formInstance;
 	private final DDMFormInstanceRecord _formInstanceRecord;
 	private final DDMFormInstanceRecordVersion _formInstanceRecordVersion;
+	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

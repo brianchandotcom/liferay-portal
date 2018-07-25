@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -41,10 +41,12 @@ import java.util.ResourceBundle;
 public class OptionsDDMFormFieldContextHelper {
 
 	public OptionsDDMFormFieldContextHelper(
-		JSONFactory jsonFactory, DDMFormField ddmFormField, String value) {
+		JSONFactory jsonFactory, DDMFormField ddmFormField,
+		ResourceBundleLoader resourceBundleLoader, String value) {
 
 		_ddmForm = ddmFormField.getDDMForm();
 		_jsonFactory = jsonFactory;
+		_resourceBundleLoader = resourceBundleLoader;
 		_value = value;
 	}
 
@@ -124,10 +126,7 @@ public class OptionsDDMFormFieldContextHelper {
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		Class<?> clazz = getClass();
-
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+		return _resourceBundleLoader.loadResourceBundle(locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -135,6 +134,7 @@ public class OptionsDDMFormFieldContextHelper {
 
 	private final DDMForm _ddmForm;
 	private final JSONFactory _jsonFactory;
+	private final ResourceBundleLoader _resourceBundleLoader;
 	private final String _value;
 
 }

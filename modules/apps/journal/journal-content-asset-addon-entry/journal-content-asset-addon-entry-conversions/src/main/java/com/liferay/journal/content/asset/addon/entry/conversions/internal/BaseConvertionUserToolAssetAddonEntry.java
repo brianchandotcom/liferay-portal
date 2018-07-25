@@ -18,7 +18,6 @@ import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 
@@ -45,8 +44,7 @@ public abstract class BaseConvertionUserToolAssetAddonEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		ResourceBundle resourceBundle = getResourceBundle(locale);
 
 		return LanguageUtil.format(
 			resourceBundle, "download-as-x",
@@ -78,5 +76,7 @@ public abstract class BaseConvertionUserToolAssetAddonEntry
 
 		return super.isEnabled();
 	}
+
+	protected abstract ResourceBundle getResourceBundle(Locale locale);
 
 }

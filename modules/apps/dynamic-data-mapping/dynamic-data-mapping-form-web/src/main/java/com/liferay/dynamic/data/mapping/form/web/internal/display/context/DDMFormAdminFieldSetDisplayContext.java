@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -87,7 +88,8 @@ public class DDMFormAdminFieldSetDisplayContext
 		DDMFormRenderer formRenderer, DDMFormValuesFactory formValuesFactory,
 		DDMFormValuesMerger formValuesMerger,
 		DDMStructureLocalService structureLocalService,
-		DDMStructureService structureService, JSONFactory jsonFactory) {
+		DDMStructureService structureService, JSONFactory jsonFactory,
+		ResourceBundleLoader resourceBundleLoader) {
 
 		super(
 			renderRequest, renderResponse,
@@ -97,7 +99,7 @@ public class DDMFormAdminFieldSetDisplayContext
 			formInstanceVersionLocalService, formFieldTypeServicesTracker,
 			formFieldTypesJSONSerializer, formRenderer, formValuesFactory,
 			formValuesMerger, structureLocalService, structureService,
-			jsonFactory);
+			jsonFactory, resourceBundleLoader);
 
 		_fieldSetPermissionCheckerHelper = new FieldSetPermissionCheckerHelper(
 			formAdminRequestHelper);

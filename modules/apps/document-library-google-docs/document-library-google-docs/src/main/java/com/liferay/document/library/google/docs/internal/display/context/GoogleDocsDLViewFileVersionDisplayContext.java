@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -49,14 +50,16 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion,
-		GoogleDocsMetadataHelper googleDocsMetadataHelper) {
+		GoogleDocsMetadataHelper googleDocsMetadataHelper,
+		ResourceBundleLoader resourceBundleLoader) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
 		_googleDocsMetadataHelper = googleDocsMetadataHelper;
+		_resourceBundleLoader = resourceBundleLoader;
 
 		_googleDocsUIItemsProcessor = new GoogleDocsUIItemsProcessor(
-			request, googleDocsMetadataHelper);
+			request, googleDocsMetadataHelper, _resourceBundleLoader);
 	}
 
 	@Override
@@ -153,8 +156,8 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 			}
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", request.getLocale(), getClass());
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(request.getLocale());
 
 		printWriter.write("<div class=\"alert alert-info\">");
 		printWriter.write(
@@ -169,5 +172,6 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 
 	private final GoogleDocsMetadataHelper _googleDocsMetadataHelper;
 	private final GoogleDocsUIItemsProcessor _googleDocsUIItemsProcessor;
+	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

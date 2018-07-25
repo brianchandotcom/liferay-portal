@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera
@@ -84,7 +87,7 @@ public class GoogleDocsIGDisplayContextFactory
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsIGViewFileVersionDisplayContext(
 				parentIGViewFileVersionDisplayContext, request, response,
-				fileVersion, googleDocsMetadataHelper);
+				fileVersion, googleDocsMetadataHelper, _resourceBundleLoader);
 		}
 
 		return parentIGViewFileVersionDisplayContext;
@@ -133,6 +136,14 @@ public class GoogleDocsIGDisplayContextFactory
 	private DLAppService _dlAppService;
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.document.library.google.docs)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
+
 	private StorageEngine _storageEngine;
 
 }

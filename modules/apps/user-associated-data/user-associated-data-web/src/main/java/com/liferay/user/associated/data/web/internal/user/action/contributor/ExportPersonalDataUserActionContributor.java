@@ -14,9 +14,16 @@
 
 package com.liferay.user.associated.data.web.internal.user.action.contributor;
 
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.users.admin.user.action.contributor.UserActionContributor;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pei-Jung Lan
@@ -24,6 +31,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = UserActionContributor.class)
 public class ExportPersonalDataUserActionContributor
 	extends BaseUADUserActionContributor {
+
+	@Override
+	public ResourceBundle getResourceBundle(Locale locale) {
+		return _resourceBundleLoader.loadResourceBundle(locale);
+	}
 
 	@Override
 	protected String getKey() {
@@ -34,5 +46,12 @@ public class ExportPersonalDataUserActionContributor
 	protected String getMVCRenderCommandName() {
 		return "/view_uad_export_processes";
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.user.associated.data.web)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

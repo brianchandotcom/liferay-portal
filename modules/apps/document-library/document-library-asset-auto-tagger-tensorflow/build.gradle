@@ -3,7 +3,6 @@ import de.undercouch.gradle.tasks.download.Download
 apply plugin: "de.undercouch.download"
 
 task copyInceptionModel(type: Copy)
-task deployConfigs(type: Copy)
 task downloadInceptionModel(type: Download)
 
 sourceCompatibility = "1.8"
@@ -40,19 +39,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-process")
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
-}
-
-deploy {
-	finalizedBy deployConfigs
-}
-
-deployConfigs {
-	ext {
-		autoClean = false
-	}
-
-	from "configs"
-	into new File(liferay.liferayHome, "osgi/configs")
 }
 
 downloadInceptionModel {

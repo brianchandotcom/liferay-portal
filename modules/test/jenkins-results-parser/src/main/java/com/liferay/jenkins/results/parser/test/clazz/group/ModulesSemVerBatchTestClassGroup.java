@@ -40,73 +40,81 @@ public class ModulesSemVerBatchTestClassGroup
 		extends ModulesBatchTestClass {
 
 		protected static ModulesSemVerBatchTestClass getInstance(
-			File moduleBaseDir, File modulesDir) {
+			File moduleBaseDir, File modulesDir,
+			List<File> modulesProjectDirs) {
 
-			return new ModulesSemVerBatchTestClass(moduleBaseDir, modulesDir);
+			return new ModulesSemVerBatchTestClass(
+				moduleBaseDir, modulesDir, modulesProjectDirs);
 		}
 
 		protected ModulesSemVerBatchTestClass(
-			File moduleBaseDir, File modulesDir) {
+			File moduleBaseDir, File modulesDir,
+			List<File> modulesProjectDirs) {
 
 			super(moduleBaseDir);
-
-			final File baseDir = modulesDir;
-			final List<File> modulesProjectDirs = new ArrayList<>();
-			final Path moduleBaseDirPath = moduleBaseDir.toPath();
-
-			try {
-				Files.walkFileTree(
-					moduleBaseDirPath,
-					new SimpleFileVisitor<Path>() {
-
-						@Override
-						public FileVisitResult preVisitDirectory(
-							Path filePath, BasicFileAttributes attrs) {
-
-							if (filePath.equals(baseDir.toPath())) {
-								return FileVisitResult.CONTINUE;
-							}
-
-							String filePathString = filePath.toString();
-
-							if (filePathString.endsWith("-test")) {
-								return FileVisitResult.SKIP_SUBTREE;
-							}
-
-							File currentDirectory = filePath.toFile();
-
-							File bndBndFile = new File(
-								currentDirectory, "bnd.bnd");
-
-							File buildFile = new File(
-								currentDirectory, "build.gradle");
-
-							File lfrRelengIgnoreFile = new File(
-								currentDirectory, ".lfrbuild-releng-ignore");
-
-							if (buildFile.exists() && bndBndFile.exists() &&
-								!lfrRelengIgnoreFile.exists()) {
-
-								modulesProjectDirs.add(currentDirectory);
-
-								return FileVisitResult.SKIP_SUBTREE;
-							}
-
-							return FileVisitResult.CONTINUE;
-						}
-
-					});
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(
-					"Unable to get module marker files from " +
-						moduleBaseDir.getPath(),
-					ioe);
-			}
 
 			initTestMethods(modulesProjectDirs, modulesDir, "baseline");
 		}
 
+	}
+
+	protected static List<File> getModulesProjectDirs(
+		File moduleBaseDir, File modulesDir) {
+
+		final File baseDir = modulesDir;
+		final List<File> modulesProjectDirs = new ArrayList<>();
+		final Path moduleBaseDirPath = moduleBaseDir.toPath();
+
+		try {
+			Files.walkFileTree(
+				moduleBaseDirPath,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+						Path filePath, BasicFileAttributes attrs) {
+
+						if (filePath.equals(baseDir.toPath())) {
+							return FileVisitResult.CONTINUE;
+						}
+
+						String filePathString = filePath.toString();
+
+						if (filePathString.endsWith("-test")) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						File currentDirectory = filePath.toFile();
+
+						File bndBndFile = new File(currentDirectory, "bnd.bnd");
+
+						File buildFile = new File(
+							currentDirectory, "build.gradle");
+
+						File lfrRelengIgnoreFile = new File(
+							currentDirectory, ".lfrbuild-releng-ignore");
+
+						if (buildFile.exists() && bndBndFile.exists() &&
+							!lfrRelengIgnoreFile.exists()) {
+
+							modulesProjectDirs.add(currentDirectory);
+
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to get module marker files from " +
+					moduleBaseDir.getPath(),
+				ioe);
+		}
+
+		return modulesProjectDirs;
 	}
 
 	protected ModulesSemVerBatchTestClassGroup(
@@ -142,9 +150,14 @@ public class ModulesSemVerBatchTestClassGroup
 		}
 
 		for (File moduleDir : moduleDirsList) {
-			testClasses.add(
-				ModulesSemVerBatchTestClass.getInstance(
-					moduleDir, portalModulesBaseDir));
+			List<File> modulesProjectsDirs = getModulesProjectDirs(
+				moduleDir, portalModulesBaseDir);
+
+			if (!modulesProjectsDirs.isEmpty()) {
+				testClasses.add(
+					ModulesSemVerBatchTestClass.getInstance(
+						moduleDir, portalModulesBaseDir, modulesProjectsDirs));
+			}
 		}
 	}
 

@@ -55,11 +55,11 @@ task syncGitRepoReleases
 task tagAppReleases
 
 cherryPickArtifacts {
-	description = "Cherry-picks artifact commits from a release branch. Required properties: '-Psince', '-Puntil'."
+	description = "Cherry-picks 'apply' and 'prep next' artifact publishing commits from a release branch. Required properties: '-Psince', '-Puntil'."
 
 	doLast {
-		assert project.properties["since"] : "Please provide a value for the '-Psince' property"
-		assert project.properties["until"] : "Please provide a value for the '-Puntil' property"
+		assert project.properties["since"] : "Please provide a Git commit hash for the '-Psince' property"
+		assert project.properties["until"] : "Please provide a Git commit hash for the '-Puntil' property"
 
 		Commit sinceParentCommit = JGitUtil.resolveCommit(grgit.repository, since)
 
@@ -83,7 +83,7 @@ cherryPickArtifacts {
 }
 
 lockDependencyVersion {
-	description = "Replaces 'default' or project dependencies with a specific version. Required properties: '-PdependencyName', '-PdependencyVersion'."
+	description = "Replaces 'default' or project dependencies in all 'apps' and 'core' modules with a specific version, if compilation completes successfully. Required properties: '-PdependencyName', '-PdependencyVersion'."
 
 	doLast {
 		assert project.properties["dependencyName"] : "Please provide a value for the '-PdependencyName' property"
@@ -129,6 +129,8 @@ lockDependencyVersion {
 				return
 			}
 
+			// Update build.gradle
+
 			String buildGradle = buildGradleFile.text
 
 			String newBuildGradle = buildGradle.replaceFirst(dependencyPattern, dependencyReplacement)
@@ -138,6 +140,8 @@ lockDependencyVersion {
 			}
 
 			buildGradleFile.text = newBuildGradle
+
+			// Try to build module with the new dependency
 
 			String buildGradleRelativePath = String.valueOf(repositoryRootDirPath.relativize(buildGradleFile.toPath()))
 
@@ -150,6 +154,8 @@ lockDependencyVersion {
 
 				return
 			}
+
+			// Add build.gradle to Git index if build completed successfully
 
 			grgit.add patterns: [buildGradleRelativePath]
 
@@ -179,6 +185,8 @@ lockPrivateDependencyVersions {
 				return
 			}
 
+			// Replace one project dependency at a time
+
 			String buildGradle = buildGradleFile.text
 
 			List<String[]> buildGradleDependencies = buildGradle.findAll(/project\(":(.+)"\)/, {
@@ -190,9 +198,13 @@ lockPrivateDependencyVersions {
 			for (String[] buildGradleDependency in buildGradleDependencies) {
 				String dependencyPath = buildGradleDependency[1]
 
+				// Exclude project dependencies to private modules, since those are already available in the build
+
 				if (dependencyPath.startsWith("private:")) {
 					continue
 				}
+
+				// Look for the public module pointed by the project dependency
 
 				File dependencyDir = new File(projectDir, dependencyPath.replace(':' as char, File.separatorChar))
 
@@ -218,12 +230,16 @@ lockPrivateDependencyVersions {
 
 				String dependencyName = dependencyBndBndProperties.getProperty("Bundle-SymbolicName")
 
+				// Try to replace the project dependency with a module dependency having the lowest minor version possible, until compilation completes successfully
+
 				for (int i = 0; i <= versionNumber.minor; i++) {
 					VersionNumber dependencyVersionNumber = new VersionNumber(versionNumber.major, i, 0, null)
 
 					String newBuildGradle = buildGradle.replace(buildGradleDependency[0], "group: \"com.liferay\", name: \"${dependencyName}\", version: \"${dependencyVersionNumber}\"")
 
 					buildGradleFile.text = newBuildGradle
+
+					// Try to build the module with the new dependency, and revert the change if the compilation fails
 
 					if (!_executeGradle(moduleDir, ["classes", "testClasses", "testIntegrationClasses", "compileJSP", "formatSource"], [:], false)) {
 						println "Unable to lock dependency '${dependencyName}' version to ${dependencyVersion} in ${relativePath(moduleDir)}"
@@ -242,7 +258,7 @@ lockPrivateDependencyVersions {
 }
 
 prepareMajorIncrement {
-	description = "Prepares the build scripts of modules and portal artifacts to a major version increment."
+	description = "Prepares the build scripts of modules and portal artifacts to a major version increment, by increasing all versions to +1 major and converting all dependencies into project dependencies. This task must run from the master branch. Also, passing '-PreleaseDir=/data/liferay-portal-71x' causes the task not to increment the modules that already have a version greater than the one in /data/liferay-portal-71x."
 
 	doLast {
 		File releaseModulesDir = null
@@ -250,6 +266,8 @@ prepareMajorIncrement {
 		if (project.properties["releaseDir"]) {
 			releaseModulesDir = new File(releaseDir, "modules")
 		}
+
+		// Create a map of symbolic names and project paths
 
 		Map<String, String> moduleNamePathsMap = [
 			"com.liferay.portal.configuration.metatype": ":apps:static:portal-configuration:portal-configuration-metatype-api",
@@ -330,6 +348,8 @@ prepareMajorIncrement {
 				_exists(dir, it)
 			}
 
+			// Convert all module dependencies into project dependencies
+
 			content = content.replaceAll(/group: "com\.liferay", name: "(.+)", version: "\d.+"/) {
 				String dependency, String artifactName ->
 
@@ -355,6 +375,8 @@ prepareMajorIncrement {
 
 				return "project(\"${modulePath}\")"
 			}
+
+			// Convert all portal dependencies into 'default' dependencies
 
 			content = content.replaceAll(/group: "com\.liferay\.portal", name: "(.+)", version: "\d.+"/) {
 				String dependency, String artifactName ->
@@ -411,10 +433,15 @@ prepareMajorIncrement {
 				}
 
 				if (versionString.indexOf('.') == -1) {
+
+					// This is only for Ant plugins: during a major increment, the incremental version should go back to 1, since the complete version of an Ant plugin is [portal version].[incremental version]
+
 					newVersionString = "1"
 				}
 				else {
 					VersionNumber versionNumber = VersionNumber.parse(versionString)
+
+					// Skip increment if the module in the master branch already has a greater version than the one in the release branch
 
 					if (releaseModulesDir) {
 						String relativePath = FileUtil.relativize(dir, projectDir)
@@ -444,6 +471,9 @@ prepareMajorIncrement {
 						versionNumber = releaseModuleVersionNumber
 					}
 					else if ((versionNumber.minor == 0) && (versionNumber.micro == 0)) {
+
+						// If a module has version x.0.0, it means it has never been published
+
 						println "Skipping increment of version ${versionString} in ${dir}"
 
 						return all
@@ -460,6 +490,9 @@ prepareMajorIncrement {
 			}
 
 			if (oldVersionString && newVersionString) {
+
+				// Synchronize versions in package.json and package-lock.json
+
 				for (String jsonFileName in ["package.json", "package-lock.json"]) {
 					File jsonFile = new File(dir, jsonFileName)
 
@@ -477,6 +510,8 @@ prepareMajorIncrement {
 			versionFile.setText content, "UTF-8"
 		}
 
+		// Loop through all modules, converting module to project and 'default' dependencies, and incrementing the module versions
+
 		moduleNamePathsMap.each {
 			String bundleSymbolicName, String modulePath ->
 
@@ -487,6 +522,8 @@ prepareMajorIncrement {
 			convertToProjectDependenciesClosure moduleDir
 			incrementMajorVersionClosure moduleDir
 		}
+
+		// Increment the versions of the portal artifacts
 
 		File portalRootDir = projectDir.parentFile
 

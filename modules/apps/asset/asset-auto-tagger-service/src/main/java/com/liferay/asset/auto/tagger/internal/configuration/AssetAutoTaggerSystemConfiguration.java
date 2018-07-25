@@ -23,11 +23,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "assets")
 @Meta.OCD(
-	id = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerConfiguration",
+	id = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration",
 	localization = "content/Language",
 	name = "asset-auto-tagger-configuration-name"
 )
-public interface AssetAutoTaggerConfiguration {
+public interface AssetAutoTaggerSystemConfiguration {
 
 	/**
 	 * Enables asset auto tagging
@@ -37,5 +37,14 @@ public interface AssetAutoTaggerConfiguration {
 		required = false
 	)
 	public boolean enabled();
+
+	/**
+	 * Specifies the maximum number of tags that can be added for a given asset
+	 */
+	@Meta.AD(
+		description = "maximum-number-of-tags-per-asset-description",
+		name = "maximum-number-of-tags-per-asset", required = false
+	)
+	public int maximumNumberOfTagsPerAsset();
 
 }

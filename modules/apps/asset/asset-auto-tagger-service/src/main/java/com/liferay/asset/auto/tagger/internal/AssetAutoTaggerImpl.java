@@ -249,9 +249,8 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 				tags.toArray(new String[tags.size()]), 0,
 				Math.min(maximumNumberOfTagsPerAsset, tags.size()));
 		}
-		else {
-			return tags.toArray(new String[0]);
-		}
+
+		return tags.toArray(new String[0]);
 	}
 
 	private void _reindex(AssetEntry assetEntry) throws PortalException {

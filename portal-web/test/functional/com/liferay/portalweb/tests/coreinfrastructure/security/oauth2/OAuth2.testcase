@@ -1,8 +1,7 @@
 <definition component-name="portal-security">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="OAuth2" />
-	<property name="testray.main.component.name" value="Security" />
+	<property name="testray.main.component.name" value="OAuth 2" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />

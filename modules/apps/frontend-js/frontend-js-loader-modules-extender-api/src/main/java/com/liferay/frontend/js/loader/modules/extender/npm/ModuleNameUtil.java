@@ -119,7 +119,6 @@ public class ModuleNameUtil {
 	 * @param  moduleName the module's name
 	 * @return the package name or <code>null</code> if the module name is a
 	 *         reserved or local one
-	 * @review
 	 */
 	public static String getPackageName(String moduleName) {
 		if (isLocalModuleName(moduleName)) {
@@ -208,13 +207,15 @@ public class ModuleNameUtil {
 	 * @return the module's name
 	 */
 	public static String toModuleName(String fileName) {
-		if (isLocalModuleName(fileName)) {
-			fileName = fileName.substring(2);
-		}
-
 		int i = fileName.lastIndexOf(CharPool.PERIOD);
 
 		if (i == -1) {
+			return fileName;
+		}
+
+		String extension = fileName.substring(i);
+
+		if (!extension.equals(".js")) {
 			return fileName;
 		}
 

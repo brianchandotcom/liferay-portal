@@ -83,12 +83,31 @@ public class ModuleNameUtilTest {
 		Assert.assertEquals(
 			"a-package/a-folder/a-module",
 			ModuleNameUtil.toModuleName("a-package/a-folder/a-module.js"));
+	}
+
+	@Test
+	public void testToModuleNameWithNonJsExtensions() {
+		Assert.assertEquals(
+			"a-module.es", ModuleNameUtil.toModuleName("a-module.es"));
 
 		Assert.assertEquals(
-			"a-module", ModuleNameUtil.toModuleName("./a-module"));
+			"a-folder/a-module.es",
+			ModuleNameUtil.toModuleName("a-folder/a-module.es"));
+	}
+
+	@Test
+	public void testToModuleNameWithRelativePaths() {
+		Assert.assertEquals(
+			"./a-module", ModuleNameUtil.toModuleName("./a-module"));
 
 		Assert.assertEquals(
-			"a-module", ModuleNameUtil.toModuleName("./a-module.js"));
+			"./a-module", ModuleNameUtil.toModuleName("./a-module.js"));
+
+		Assert.assertEquals(
+			"../a-module", ModuleNameUtil.toModuleName("../a-module"));
+
+		Assert.assertEquals(
+			"../a-module", ModuleNameUtil.toModuleName("../a-module.js"));
 	}
 
 }

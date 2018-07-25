@@ -23,6 +23,7 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.petra.string.CharPool;
@@ -280,7 +281,8 @@ public class DLReferencesExportImportContentProcessor
 		}
 
 		if (group.isStaged() && !group.isStagedRemotely() &&
-			!group.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY)) {
+			!group.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) &&
+			ExportImportThreadLocal.isStagingInProcess()) {
 
 			return content;
 		}

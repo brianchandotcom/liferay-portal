@@ -105,9 +105,9 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 							<c:if test="<%= userCalendarResource != null %>">
 								<span class="calendar-list-item-arrow calendar-resource-arrow" data-calendarResourceId="<%= userCalendarResource.getCalendarResourceId() %>" tabindex="0"><i class="icon-caret-down"></i></span>
 							</c:if>
-
-							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />myCalendarList"></div>
 						</c:if>
+
+						<div class="calendar-portlet-calendar-list" id="<portlet:namespace />myCalendarList"></div>
 					</div>
 
 					<div class="calendar-portlet-list">

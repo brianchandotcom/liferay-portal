@@ -650,4 +650,28 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 	<portlet:namespace />refreshVisibleCalendarRenderingRules();
 	<portlet:namespace />refreshMiniCalendarSelectedDates();
+
+	var destroyMenus = function(event) {
+		window.<portlet:namespace />calendarListsMenu.destroy();
+		window.<portlet:namespace />colorPicker.destroy();
+
+		var myCalendarList = window.<portlet:namespace />myCalendarList;
+		var otherCalendarList = window.<portlet:namespace />otherCalendarList;
+		var siteCalendarList = window.<portlet:namespace />siteCalendarList;
+
+		if (myCalendarList && myCalendarList.simpleMenu) {
+			myCalendarList.simpleMenu.destroy();
+		}
+
+		if (otherCalendarList && otherCalendarList.simpleMenu) {
+			otherCalendarList.simpleMenu.destroy();
+		}
+
+		if (siteCalendarList && siteCalendarList.simpleMenu) {
+			siteCalendarList.simpleMenu.destroy();
+		}
+
+		Liferay.detach('destroyPortlet', destroyMenus);
+	};
+	Liferay.on('destroyPortlet', destroyMenus);
 </aui:script>

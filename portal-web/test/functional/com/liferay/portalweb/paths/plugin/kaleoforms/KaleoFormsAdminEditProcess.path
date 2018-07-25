@@ -205,12 +205,12 @@
 <!--FORMS_TABLE-->
 <tr>
 	<td>FORMS_TABLE_TASK</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_workflowTask}')]/td</td>
+	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_workflowTask}')]/td</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORMS_TABLE_FORM</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_workflowTask}')]//td[contains(@class,'form-column')]</td>
+	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_workflowTask}')]//td[contains(@class,'form-column')]</td>
 	<td></td>
 </tr>
 <tr>

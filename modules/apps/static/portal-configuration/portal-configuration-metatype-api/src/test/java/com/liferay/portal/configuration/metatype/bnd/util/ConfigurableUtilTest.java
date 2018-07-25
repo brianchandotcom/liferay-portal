@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.metatype.bnd.util;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
@@ -42,6 +43,12 @@ public class ConfigurableUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
+
+	@Test
+	public void testBigString() {
+		_testBigString(65535);
+		_testBigString(65536);
+	}
 
 	@AdviseWith(adviceClasses = ReflectionUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
@@ -152,6 +159,22 @@ public class ConfigurableUtilTest {
 		TestClass testClass = testConfiguration.testClass();
 
 		Assert.assertEquals("test.class", testClass.getName());
+	}
+
+	private void _testBigString(int length) {
+		StringBuilder stringBuilder = new StringBuilder(length);
+
+		for (int i = 0; i < length; i++) {
+			stringBuilder.append(CharPool.LOWER_CASE_A);
+		}
+
+		String bigString = stringBuilder.toString();
+
+		_assertTestConfiguration(
+			ConfigurableUtil.createConfigurable(
+				TestConfiguration.class,
+				Collections.singletonMap("testReqiredString", bigString)),
+			bigString);
 	}
 
 	private interface TestConfiguration {

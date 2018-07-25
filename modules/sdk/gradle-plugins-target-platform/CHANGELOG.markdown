@@ -13,7 +13,7 @@
 	- configurations added by [Liferay Gradle Plugins Test Integration]
 	- configurations added by the `java` plugin
 
-## 1.1.0 - 2018-07-23
+## 1.1.0 - 2018-07-17
 
 ### Added
 - [LPS-81530]: Add the ability to configure imported BOMs to manage Java

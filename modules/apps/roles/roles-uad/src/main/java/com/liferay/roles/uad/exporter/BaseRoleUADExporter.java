@@ -14,10 +14,11 @@
 
 package com.liferay.roles.uad.exporter;
 
+import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import com.liferay.roles.uad.constants.RolesUADConstants;
 

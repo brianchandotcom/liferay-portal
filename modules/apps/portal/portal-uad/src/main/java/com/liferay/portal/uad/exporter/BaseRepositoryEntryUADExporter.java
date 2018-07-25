@@ -14,10 +14,11 @@
 
 package com.liferay.portal.uad.exporter;
 
+import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.RepositoryEntry;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.uad.constants.PortalUADConstants;
 
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;

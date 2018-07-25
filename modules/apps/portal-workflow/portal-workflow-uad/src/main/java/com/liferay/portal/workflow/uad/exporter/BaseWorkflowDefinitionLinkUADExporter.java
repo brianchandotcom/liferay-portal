@@ -14,10 +14,11 @@
 
 package com.liferay.portal.workflow.uad.exporter;
 
+import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.workflow.uad.constants.PortalWorkflowUADConstants;
 
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;

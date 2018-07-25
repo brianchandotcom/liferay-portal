@@ -661,6 +661,231 @@
 		</execute> -->
 	</command>
 
+	<command name="submitNewWorkflow">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#configureWorkflow">
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowResourceValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addWithWorkflow">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Subtitle" />
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="New Blog After Upgrade" />
+			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="New Blog After Upgrade" />
+			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="cards" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
+			<var name="workflowAssetTitle" value="New Blog After Upgrade" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryAsWorkflowAsset">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="New Blog After Upgrade" />
+		</execute>
+	</command>
+
+	<command name="viewAndDeleteFormEntry">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="FormFields#viewParagraphField">
+			<var name="fieldTitle" value="Paragraph" />
+			<var name="fieldValue" value="Paragraph body text." />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdmin#viewFormTableEntry">
+			<var name="fieldLabel" value="Status" />
+			<var name="fieldValue" value="Approved" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewFormTableEntry">
+			<var name="fieldLabel" value="Checkbox" />
+			<var name="fieldValue" value="Yes" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewFormTableEntry">
+			<var name="fieldLabel" value="Multiple Selection" />
+			<var name="fieldValue" value="1, 2, 4" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormFields#viewParagraphField">
+			<var name="fieldTitle" value="Paragraph" />
+			<var name="fieldValue" value="Paragraph body text." />
+		</execute>
+
+		<execute macro="FormsAdmin#viewTextEntry">
+			<var name="fieldLabel" value="SingleLineText" />
+			<var name="fieldName" value="SingleLineText" />
+			<var name="fieldValue" value="Single Line Text" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewMultilineTextEntry">
+			<var name="fieldLabel" value="MultilineText" />
+			<var name="fieldName" value="MultilineText" />
+			<var name="fieldValue" value="Multiline Text" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewSelectEntry">
+			<var name="fieldLabel" value="Select" />
+			<var name="fieldName" value="Select" />
+			<var name="selectOption" value="Select 1" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewRadioEntry">
+			<var name="fieldLabel" value="Radio" />
+			<var name="fieldName" value="Radio" />
+			<var name="fieldValue" value="Option 1" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewDateEntry">
+			<var name="fieldLabel" value="Date" />
+			<var name="fieldName" value="Date" />
+			<var name="fieldValue" value="05/02/2016" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewCheckboxEntry">
+			<var name="fieldLabel" value="Checkbox" />
+			<var name="fieldName" value="Checkbox" />
+		</execute>
+
+		<execute macro="FormPortlet#clickNextPage" />
+
+		<execute macro="FormsAdmin#viewTextEntry">
+			<var name="fieldLabel" value="SingleLineText2" />
+			<var name="fieldName" value="SingleLineText2" />
+			<var name="fieldValue" value="SingleLineText2" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdmin#deleteFormEntry">
+			<var name="formEntryValue" value="Option 1" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewNoFormEntries" />
+	</command>
+
 	<command name="viewAssetPublisher">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher" />

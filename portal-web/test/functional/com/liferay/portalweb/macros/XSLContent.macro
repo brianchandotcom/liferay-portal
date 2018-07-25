@@ -27,7 +27,7 @@
 
 		<execute function="Click" locator1="Icon#INFO" />
 
-		<execute function="ClickNoError" locator1="Link#URL" />
+		<execute function="ClickNoError" locator1="DocumentsAndMediaDocument#DETAILS_URL" />
 
 		<execute function="Pause" locator1="5000" />
 	</command>

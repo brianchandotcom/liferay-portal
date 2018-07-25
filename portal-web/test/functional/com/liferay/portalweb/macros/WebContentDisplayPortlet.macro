@@ -405,6 +405,6 @@
 	<command name="viewRecycleBinMessage">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_3" value1="The Web Content article ${webContentTitle} was moved to the Recycle Bin" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_3" value1="The web content article ${webContentTitle} was moved to the Recycle Bin" />
 	</command>
 </definition>

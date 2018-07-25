@@ -25,79 +25,6 @@
 		</if>
 	</tear-down>
 
-	<command name="ViewAuthenticationCAS" priority="3">
-		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationCAS" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationCASCP" />
-	</command>
-
-	<command name="ViewAuthenticationGeneral" priority="3">
-		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationGeneral" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationGeneralCP" />
-	</command>
-
-	<command name="ViewAuthenticationLDAP" priority="5">
-		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationLDAP" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationLDAPCP" />
-	</command>
-
-	<command name="ViewAuthenticationNTLM" priority="3">
-		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationNTLM" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationNTLMCP" />
-	</command>
-
-	<command name="ViewAuthenticationOpenID" priority="3">
-		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationOpenID" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationOpenIDCP" />
-	</command>
-
-	<command name="ViewAuthenticationOpenSSO" priority="3">
-		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationOpenSSO" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationOpenSSOCP" />
-	</command>
-
 	<command name="ViewInstanceSettingEnableLDAPAuthNotAffectSystemSetting" priority="3">
 		<property name="test.name.skip.portal.instance" value="Authentication#ViewInstanceSettingEnableLDAPAuthNotAffectSystemSetting" />
 
@@ -147,5 +74,27 @@
 		<execute macro="FormFields#viewCheckboxNotChecked">
 			<var name="fieldName" value="enabled" />
 		</execute>
+	</command>
+
+	<command name="ViewInstanceSettingsAuthentication" priority="3">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewAuthenticationGeneralCP" />
+
+		<execute macro="PortalSettings#viewAuthenticationCASCP" />
+
+		<execute macro="PortalSettings#viewAuthenticationLDAPCP" />
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="PortalSettings#viewAuthenticationNTLMCP" />
+
+		<execute macro="PortalSettings#viewAuthenticationOpenIDCP" />
+
+		<execute macro="PortalSettings#viewAuthenticationOpenSSOCP" />
 	</command>
 </definition>

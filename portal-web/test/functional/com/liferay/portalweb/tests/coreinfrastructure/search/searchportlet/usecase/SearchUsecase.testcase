@@ -216,7 +216,9 @@
 		</execute>
 	</command>
 
-	<command name="SearchAssetsViaSearchBarWithDifferentScopes" priority="4">
+	<command name="SearchDifferentScopesViaSearchWidget" priority="4">
+		<description message="This test will assert that configurations set within the Embedded search bar will be used when searching via the Widget search bar" />
+
 		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
 		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
 		<property name="portal.acceptance" value="true" />
@@ -293,14 +295,6 @@
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchPortlets#configureWidgetScope">
-			<var name="searchScope" value="Let the User Choose" />
-		</execute>
-
-		<execute macro="SearchPortlets#selectWidgetScopeInput">
-			<var name="searchScope" value="Everything" />
-		</execute>
-
 		<execute macro="SearchPortlets#searchWidget">
 			<var name="searchTerm" value="Potato" />
 		</execute>
@@ -321,10 +315,6 @@
 		</execute>
 
 		<execute macro="SearchPortlets#selectEmbeddedScopeInput">
-			<var name="searchScope" value="This Site" />
-		</execute>
-
-		<execute macro="SearchPortlets#selectWidgetScopeInput">
 			<var name="searchScope" value="This Site" />
 		</execute>
 

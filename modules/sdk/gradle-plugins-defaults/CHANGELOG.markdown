@@ -4154,7 +4154,7 @@ the `buildChangeLog` task.
 - [LPS-82976]: Change marker file name from `.lfrbuild-portal-all` to
 `.lfrbuild-portal-deprecated`.
 
-## 5.4.90 - 2018-07-23
+## 5.4.91 - 2018-07-24
 
 ### Changed
 - [LPS-82960]: Remove the logic that loaded the `ci.properties` file to read

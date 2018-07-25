@@ -1395,7 +1395,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			</#if>
 		</#if>
 
-		<#if entity.localizedEntity?? && entity.versionEntity??>
+		<#if stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity??>
 			<#assign localizedEntity = entity.localizedEntity />
 
 			registerListener(new ${localizedEntity.name}VersionServiceListener());
@@ -1826,7 +1826,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		</#if>
 	</#if>
 
-	<#if entity.localizedEntity?? && entity.versionEntity??>
+	<#if stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity??>
 		<#assign
 			localizedEntity = entity.localizedEntity
 			versionEntity = entity.versionEntity

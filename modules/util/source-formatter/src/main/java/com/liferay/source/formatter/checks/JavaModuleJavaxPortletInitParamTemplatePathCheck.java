@@ -80,11 +80,29 @@ public class JavaModuleJavaxPortletInitParamTemplatePathCheck
 			return content;
 		}
 
-		String templatePath = _getTemplatePath(resourcesAbsolutePath);
+		String group = matcher.group(1);
+
+		if (!group.contains("=")) {
+			return content;
+		}
+
+		String[] array = group.split("=");
+
+		if (array.length != 2) {
+			return content;
+		}
+
+		String oldTemplatePath = StringUtil.trim(array[1]);
+
+		if (!oldTemplatePath.equals("/")) {
+			return content;
+		}
+
+		String newTemplatePath = _getTemplatePath(resourcesAbsolutePath);
 
 		return StringUtil.replaceFirst(
 			content, matcher.group(1),
-			"javax.portlet.init-param.template-path=" + templatePath);
+			"javax.portlet.init-param.template-path=" + newTemplatePath);
 	}
 
 	@Override

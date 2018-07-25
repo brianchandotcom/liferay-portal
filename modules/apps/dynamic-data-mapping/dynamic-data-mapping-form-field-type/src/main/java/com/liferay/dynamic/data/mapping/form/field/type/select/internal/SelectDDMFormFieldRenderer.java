@@ -55,7 +55,7 @@ public class SelectDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/select.soy");
+			"/META-INF/resources/select/select.soy");
 	}
 
 	@Override

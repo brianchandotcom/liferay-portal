@@ -56,7 +56,7 @@ public class CheckboxDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/checkbox.soy");
+			"/META-INF/resources/checkbox/checkbox.soy");
 	}
 
 	@Deactivate

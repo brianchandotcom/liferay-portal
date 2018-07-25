@@ -56,7 +56,7 @@ public class ParagraphDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/paragraph.soy");
+			"/META-INF/resources/paragraph/paragraph.soy");
 	}
 
 	@Deactivate

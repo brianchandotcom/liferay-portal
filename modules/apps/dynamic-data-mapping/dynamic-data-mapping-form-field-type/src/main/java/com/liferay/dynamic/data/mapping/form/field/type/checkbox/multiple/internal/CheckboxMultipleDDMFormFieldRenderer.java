@@ -57,7 +57,7 @@ public class CheckboxMultipleDDMFormFieldRenderer
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/checkbox-multiple.soy");
+			"/META-INF/resources/checkbox-multiple/checkbox-multiple.soy");
 	}
 
 	@Deactivate

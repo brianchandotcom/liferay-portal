@@ -55,7 +55,8 @@ public class DateDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_templateResource = getTemplateResource("/META-INF/resources/date.soy");
+		_templateResource = getTemplateResource(
+			"/META-INF/resources/date/date.soy");
 	}
 
 	@Deactivate

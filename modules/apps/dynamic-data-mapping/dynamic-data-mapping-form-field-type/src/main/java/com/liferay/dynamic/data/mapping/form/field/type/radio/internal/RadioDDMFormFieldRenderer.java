@@ -55,7 +55,7 @@ public class RadioDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/radio.soy");
+			"/META-INF/resources/radio/radio.soy");
 	}
 
 	@Override

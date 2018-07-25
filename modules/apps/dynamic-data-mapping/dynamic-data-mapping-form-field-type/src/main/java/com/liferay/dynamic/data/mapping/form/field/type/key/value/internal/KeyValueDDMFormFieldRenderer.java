@@ -56,7 +56,7 @@ public class KeyValueDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/key-value.soy");
+			"/META-INF/resources/key-value/key-value.soy");
 	}
 
 	@Deactivate

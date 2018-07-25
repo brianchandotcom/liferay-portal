@@ -55,7 +55,7 @@ public class DocumentLibraryDDMFormFieldRenderer
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/document-library.soy");
+			"/META-INF/resources/document-library/document-library.soy");
 	}
 
 	@Override

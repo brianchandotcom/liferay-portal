@@ -55,7 +55,7 @@ public class OptionsDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/options.soy");
+			"/META-INF/resources/options/options.soy");
 	}
 
 	@Override

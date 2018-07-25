@@ -56,7 +56,7 @@ public class NumericDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/numeric.soy");
+			"/META-INF/resources/numeric/numeric.soy");
 	}
 
 	@Deactivate

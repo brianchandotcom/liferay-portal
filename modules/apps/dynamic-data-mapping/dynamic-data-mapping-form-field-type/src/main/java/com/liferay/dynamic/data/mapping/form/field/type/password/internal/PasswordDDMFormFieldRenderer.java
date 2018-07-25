@@ -56,7 +56,7 @@ public class PasswordDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/password.soy");
+			"/META-INF/resources/password/password.soy");
 	}
 
 	@Deactivate

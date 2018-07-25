@@ -3,7 +3,7 @@
 		{
 			groups: {
 				'field-captcha': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/captcha/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -18,10 +18,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/captcha/'
 				},
 				'field-checkbox': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/checkbox/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -35,10 +35,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/checkbox/'
 				},
 				'field-checkbox-multiple': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/checkbox-multiple/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -52,10 +52,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/checkbox-multiple/'
 				},
 				'field-date': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/date/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -70,10 +70,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/date/'
 				},
 				'field-document-library': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/document-library/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -87,10 +87,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/document-library/'
 				},
 				'field-editor': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/editor/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -103,10 +103,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/editor/'
 				},
 				'field-fieldset': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/fieldset/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -128,10 +128,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/fieldset/'
 				},
 				'field-grid': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/grid/',
 					combine: Liferay.AUI.getCombine(),
 					filter: LiferayAUI.getFilterConfig(),
 					modules: {
@@ -145,10 +145,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/grid/'
 				},
 				'field-key-value': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/key-value/',
 					combine: Liferay.AUI.getCombine(),
 					filter: LiferayAUI.getFilterConfig(),
 					modules: {
@@ -164,10 +164,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/key-value/'
 				},
 				'field-numeric': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/numeric/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -183,10 +183,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/numeric/'
 				},
 				'field-options': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/options/',
 					combine: Liferay.AUI.getCombine(),
 					filter: LiferayAUI.getFilterConfig(),
 					modules: {
@@ -202,10 +202,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/options/'
 				},
 				'field-paragraph': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/paragraph/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -219,10 +219,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/paragraph/'
 				},
 				'field-password': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/password/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -236,10 +236,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/password/'
 				},
 				'field-radio': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/radio/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -253,10 +253,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/radio/'
 				},
 				'field-select': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/select/',
 					combine: Liferay.AUI.getCombine(),
 					filter: LiferayAUI.getFilterConfig(),
 					modules: {
@@ -280,10 +280,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/select/'
 				},
 				'field-text': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/text/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -302,10 +302,10 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/text/'
 				},
 				'field-validation': {
-					base: MODULE_PATH + '/',
+					base: MODULE_PATH + '/validation/',
 					combine: Liferay.AUI.getCombine(),
 					filter: LiferayAUI.getFilterConfig(),
 					modules: {
@@ -319,7 +319,7 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/validation/'
 				}
 			}
 		}

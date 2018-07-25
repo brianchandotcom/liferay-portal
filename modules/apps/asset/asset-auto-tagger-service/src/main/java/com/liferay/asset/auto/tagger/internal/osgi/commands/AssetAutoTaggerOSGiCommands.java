@@ -148,9 +148,8 @@ public class AssetAutoTaggerOSGiCommands {
 
 			if (!ArrayUtil.isEmpty(classNames)) {
 				actionableDynamicQuery.setAddCriteriaMethod(
-					dynamicQuery -> {
-						dynamicQuery.add(_getClassNameIdCriterion(classNames));
-					});
+					dynamicQuery -> dynamicQuery.add(
+						_getClassNameIdCriterion(classNames)));
 			}
 
 			actionableDynamicQuery.setPerformActionMethod(

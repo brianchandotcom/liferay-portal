@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal.util;
 
-import com.liferay.dynamic.data.mapping.form.field.type.internal.DDMFormFieldOptionsFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.field.type.checkbox.multiple.internal.CheckboxMultipleDDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.date.internal.DateDDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.grid.internal.GridDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.DDMFormFieldOptionsFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.field.type.numeric.internal.NumericDDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.radio.internal.RadioDDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.select.internal.SelectDDMFormFieldTemplateContextContributor;

@@ -133,7 +133,7 @@
 				'field-grid': {
 					base: MODULE_PATH + '/grid/',
 					combine: Liferay.AUI.getCombine(),
-					filter: LiferayAUI.getFilterConfig(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-grid': {
 							condition: {
@@ -150,7 +150,7 @@
 				'field-key-value': {
 					base: MODULE_PATH + '/key-value/',
 					combine: Liferay.AUI.getCombine(),
-					filter: LiferayAUI.getFilterConfig(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-key-value': {
 							condition: {
@@ -188,7 +188,7 @@
 				'field-options': {
 					base: MODULE_PATH + '/options/',
 					combine: Liferay.AUI.getCombine(),
-					filter: LiferayAUI.getFilterConfig(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-options': {
 							condition: {
@@ -258,7 +258,7 @@
 				'field-select': {
 					base: MODULE_PATH + '/select/',
 					combine: Liferay.AUI.getCombine(),
-					filter: LiferayAUI.getFilterConfig(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-select': {
 							condition: {
@@ -307,7 +307,7 @@
 				'field-validation': {
 					base: MODULE_PATH + '/validation/',
 					combine: Liferay.AUI.getCombine(),
-					filter: LiferayAUI.getFilterConfig(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-validation': {
 							condition: {

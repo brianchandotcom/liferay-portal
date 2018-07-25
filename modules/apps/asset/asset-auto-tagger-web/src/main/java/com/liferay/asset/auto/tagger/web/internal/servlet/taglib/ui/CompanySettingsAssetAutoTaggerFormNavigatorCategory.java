@@ -15,15 +15,17 @@
 package com.liferay.asset.auto.tagger.web.internal.servlet.taglib.ui;
 
 import com.liferay.asset.auto.tagger.web.internal.constants.FormNavigatorAssetAutoTaggerConstants;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -45,10 +47,18 @@ public class CompanySettingsAssetAutoTaggerFormNavigatorCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, getKey());
+		return _language.get(resourceBundle, getKey());
 	}
+
+	@Reference
+	private Language _language;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.asset.auto.tagger.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

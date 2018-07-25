@@ -24,15 +24,19 @@ import com.google.javascript.jscomp.JSError;
 import com.google.javascript.jscomp.MessageFormatter;
 import com.google.javascript.jscomp.SourceFile;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.minifier.JavaScriptMinifier;
 
+import java.lang.reflect.Method;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -46,26 +50,58 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 	@Override
 	public String compress(String resourceName, String content) {
-		Compiler compiler = new Compiler(new LogErrorManager(resourceName));
+		try {
+			Compiler compiler = new Compiler(new LogErrorManager(resourceName));
 
-		compiler.disableThreads();
+			compiler.disableThreads();
 
-		SourceFile sourceFile = SourceFile.fromCode(resourceName, content);
+			SourceFile sourceFile = SourceFile.fromCode(resourceName, content);
 
-		CompilerOptions compilerOptions = new CompilerOptions();
+			CompilerOptions compilerOptions = new CompilerOptions();
 
-		CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(
-			compilerOptions);
+			CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(
+				compilerOptions);
 
-		compilerOptions.setEmitUseStrict(false);
-		compilerOptions.setLanguageIn(
-			CompilerOptions.LanguageMode.ECMASCRIPT_NEXT);
+			compilerOptions.setEmitUseStrict(false);
+			compilerOptions.setLanguageIn(
+				CompilerOptions.LanguageMode.ECMASCRIPT_NEXT);
 
-		compiler.compile(
-			SourceFile.fromCode("extern", StringPool.BLANK), sourceFile,
-			compilerOptions);
+			compiler.compile(
+				SourceFile.fromCode("extern", StringPool.BLANK), sourceFile,
+				compilerOptions);
 
-		return compiler.toSource();
+			return compiler.toSource();
+		}
+		finally {
+			if (_clearThreadTraceMethod != null) {
+				try {
+					_clearThreadTraceMethod.invoke(null);
+				}
+				catch (ReflectiveOperationException roe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to clear thread local for ThreadTrace",
+							roe);
+					}
+				}
+			}
+		}
+	}
+
+	@Activate
+	protected void activate() {
+		try {
+			ClassLoader classLoader = Compiler.class.getClassLoader();
+
+			_clearThreadTraceMethod = ReflectionUtil.getDeclaredMethod(
+				classLoader.loadClass("com.google.javascript.jscomp.Tracer"),
+				"clearThreadTrace");
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to find clear ThreadTrace method", e);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -77,6 +113,8 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 			"JSC_GOOG_MODULE_IN_NON_MODULE", "JSC_INVALID_PARAM",
 			"JSC_JSDOC_IN_BLOCK_COMMENT", "JSC_JSDOC_MISSING_BRACES_WARNING",
 			"JSC_MISPLACED_ANNOTATION"));
+
+	private Method _clearThreadTraceMethod;
 
 	private static class SimpleMessageFormatter implements MessageFormatter {
 

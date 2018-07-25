@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
 
@@ -148,10 +149,31 @@ public class JavaModuleJavaxPortletInitParamTemplatePathCheck
 			String path = StringUtil.replaceFirst(
 				jspDirName, resourcesAbsolutePath, StringPool.BLANK);
 
-			templatePath = templatePath + path + "/,";
+			path = path + StringPool.FORWARD_SLASH;
+
+			if (Validator.isNull(templatePath)) {
+				templatePath = path;
+			}
+
+			if (!path.contains(templatePath)) {
+				int x = templatePath.lastIndexOf(StringPool.SLASH);
+
+				int y = templatePath.lastIndexOf(StringPool.SLASH, x - 1);
+
+				while (y != -1) {
+					templatePath = templatePath.substring(0, y + 1);
+
+					if (path.contains(templatePath)) {
+						break;
+					}
+
+					y = templatePath.lastIndexOf(
+						StringPool.FORWARD_SLASH, y - 1);
+				}
+			}
 		}
 
-		return templatePath.substring(0, templatePath.length() - 1);
+		return templatePath;
 	}
 
 	private final Pattern _pattern = Pattern.compile(

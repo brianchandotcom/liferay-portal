@@ -90,7 +90,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Search Results",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/search/results/view.jsp",
 		"javax.portlet.name=" + SearchResultsPortletKeys.SEARCH_RESULTS,
 		"javax.portlet.resource-bundle=content.Language",

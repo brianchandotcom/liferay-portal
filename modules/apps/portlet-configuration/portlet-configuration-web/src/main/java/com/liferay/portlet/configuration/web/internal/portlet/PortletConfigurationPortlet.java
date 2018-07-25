@@ -113,7 +113,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Portlet Configuration",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/edit_configuration.jsp",
 		"javax.portlet.name=" + PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
 		"javax.portlet.resource-bundle=content.Language",

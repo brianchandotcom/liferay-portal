@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Trash",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + TrashPortletKeys.TRASH,
 		"javax.portlet.resource-bundle=content.Language",

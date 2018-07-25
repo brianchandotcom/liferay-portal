@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.edit-guest-template=/edit.jsp",
 		"javax.portlet.init-param.edit-template=/edit.jsp",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + CurrencyConverterPortletKeys.CURRENCY_CONVERTER,
 		"javax.portlet.portlet-mode=text/html;edit,edit-guest",

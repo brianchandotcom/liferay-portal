@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Hello Soy Portlet",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=View",
 		"javax.portlet.name=hello_soy_portlet",
 		"javax.portlet.resource-bundle=content.Language",

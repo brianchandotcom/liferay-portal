@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Search Bar",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/search/bar/view.jsp",
 		"javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR,
 		"javax.portlet.resource-bundle=content.Language",

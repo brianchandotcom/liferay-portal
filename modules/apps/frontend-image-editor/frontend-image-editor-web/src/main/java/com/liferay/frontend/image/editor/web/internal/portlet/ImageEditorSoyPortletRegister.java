@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Image Editor",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.name=" + ImageEditorPortletKeys.IMAGE_EDITOR,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",

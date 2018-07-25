@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Search Options",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/search/options/view.jsp",
 		"javax.portlet.name=" + SearchOptionsPortletKeys.SEARCH_OPTIONS,
 		"javax.portlet.resource-bundle=content.Language",

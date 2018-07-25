@@ -498,8 +498,13 @@ public class LiferayPortlet extends GenericPortlet {
 
 		validPaths = getPaths(rootPath, extension);
 
-		validPaths.addAll(
-			getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), extension));
+		if (!rootPath.equals(StringPool.SLASH) &&
+			!rootPath.equals("/META-INF/") &&
+			!rootPath.equals("/META-INF/resources/")) {
+
+			validPaths.addAll(
+				getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), extension));
+		}
 
 		Collections.addAll(
 			validPaths, StringUtil.split(getInitParameter("valid-paths")));

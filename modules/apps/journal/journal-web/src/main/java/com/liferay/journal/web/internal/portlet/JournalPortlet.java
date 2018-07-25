@@ -186,7 +186,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Web Content",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.journal.web.portlet.action",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 		"javax.portlet.resource-bundle=content.Language",

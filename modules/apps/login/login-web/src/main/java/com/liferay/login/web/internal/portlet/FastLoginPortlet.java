@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.add-process-action-success-action=false",
 		"javax.portlet.init-param.config-template=/configuration.jsp",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/login.jsp",
 		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
 		"javax.portlet.resource-bundle=content.Language",

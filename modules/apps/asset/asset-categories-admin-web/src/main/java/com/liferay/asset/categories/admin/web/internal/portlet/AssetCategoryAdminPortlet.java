@@ -93,7 +93,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Asset Category Admin",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",

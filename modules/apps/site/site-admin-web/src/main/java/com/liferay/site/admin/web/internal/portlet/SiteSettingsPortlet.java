@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Site Settings",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/edit_site.jsp",
 		"javax.portlet.name=" + SiteAdminPortletKeys.SITE_SETTINGS,
 		"javax.portlet.resource-bundle=content.Language",

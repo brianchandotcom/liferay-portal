@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.info.short-title=Polls Display",
 		"javax.portlet.info.title=Polls Display",
 		"javax.portlet.init-param.config-template=/polls_display/configuration.jsp",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/polls_display/view.jsp",
 		"javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY,
 		"javax.portlet.resource-bundle=content.Language",

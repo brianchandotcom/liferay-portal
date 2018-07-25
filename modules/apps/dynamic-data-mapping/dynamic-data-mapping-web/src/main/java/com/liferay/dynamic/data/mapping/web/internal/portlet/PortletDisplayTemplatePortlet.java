@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Modified;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.always-send-redirect=true",
 		"javax.portlet.init-param.refererWebDAVToken=application_display_template",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view_template.jsp",
 		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE,
 		"javax.portlet.resource-bundle=content.Language",

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.info.keywords=Polls",
 		"javax.portlet.info.short-title=Polls",
 		"javax.portlet.info.title=Polls",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-action=/polls/view",
 		"javax.portlet.init-param.view-template=/polls/view.jsp",
 		"javax.portlet.name=" + PollsPortletKeys.POLLS,

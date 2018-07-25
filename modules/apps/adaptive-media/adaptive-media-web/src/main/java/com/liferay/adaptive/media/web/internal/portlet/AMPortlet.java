@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.always-send-redirect=true",
 		"javax.portlet.init-param.mvc-command-names-default-views=/adaptive_media/view",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.name=" + AMPortletKeys.ADAPTIVE_MEDIA,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",

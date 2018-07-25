@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Tree Menu",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/tree_menu/view.jsp",
 		"javax.portlet.name=" + WikiNavigationPortletKeys.TREE_MENU,
 		"javax.portlet.resource-bundle=content.Language",

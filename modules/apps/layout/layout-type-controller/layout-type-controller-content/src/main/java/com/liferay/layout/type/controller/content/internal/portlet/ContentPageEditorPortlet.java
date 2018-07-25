@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.display-name=Content Page Editor",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"javax.portlet.supports.mime-type=text/html"

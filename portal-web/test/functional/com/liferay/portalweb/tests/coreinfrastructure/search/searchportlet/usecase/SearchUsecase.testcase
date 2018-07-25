@@ -1907,6 +1907,24 @@
 			<var name="searchAssetTitle" value="WebContent Title" />
 		</execute>
 
+		<!-- LPS-83060 -->
+
+		<!-- <execute macro="ClassicSearch#configureScope">
+			<var name="searchScope" value="Everything" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoAssetTitle">
+			<var name="searchAssetTitle" value="WebContent Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#configureScope">
+			<var name="searchScope" value="This Site" />
+		</execute> -->
+
 		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />

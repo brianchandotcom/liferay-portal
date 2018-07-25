@@ -15,7 +15,7 @@
 		<execute macro="ImageEditor#_saveFile" />
 	</command>
 
-	<command name="cancel Changes">
+	<command name="cancelChanges">
 		<execute function="AssertClick" locator1="Button#CANCEL_EFFECTS" value1="Cancel" />
 	</command>
 

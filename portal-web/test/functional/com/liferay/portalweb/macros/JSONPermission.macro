@@ -1,16 +1,16 @@
 <definition>
 	<command name="editPermission">
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
 		<execute macro="JSONRole#getRoleIdByName">
+			<return name="roleId" />
 			<var name="roleTitle" value="${roleTitle}" />
-			<return from="roleId" name="roleId" />
 		</execute>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<if>
@@ -35,11 +35,11 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
-			<return from="groupId" name="groupId" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/resourcepermission/${method} \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
@@ -49,7 +49,7 @@
 				-d primKey=${primKey} \
 				-d roleId=${roleId} \
 				-d actionId=${resourceAction}
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />

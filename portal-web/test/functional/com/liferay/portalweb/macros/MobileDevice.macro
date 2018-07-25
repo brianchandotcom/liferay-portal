@@ -44,8 +44,6 @@
 	</command>
 
 	<command name="assertRedirectActionPG">
-		<execute macro-mobile="MobileNavigator#clickReorderButton" />
-
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />

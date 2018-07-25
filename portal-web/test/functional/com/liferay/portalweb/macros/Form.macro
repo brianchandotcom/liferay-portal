@@ -226,10 +226,10 @@
 		</execute>
 	</command>
 
-	<command name="getPublishedFormPublicURL" returns="publicURL">
+	<command name="getPublishedFormPublicURL">
 		<var method="selenium#getElementValue(Form#PUBLISH_FORM_PUBLIC_URL)" name="publicURL" />
 
-		<return name="publicURL" value="${publicURL}" />
+		<return value="${publicURL}" />
 	</command>
 
 	<command name="gotoAddElementSet">

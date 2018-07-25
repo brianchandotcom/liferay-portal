@@ -4469,7 +4469,7 @@
 		<var name="character20"><![CDATA[|]]></var>
 		<var name="character21"><![CDATA[;]]></var>
 		<var name="character22"><![CDATA[:]]></var>
-		<var name="character23"><![CDATA[']]></var>
+		<var name="character23" value="'" />
 		<var name="character24"><![CDATA["]]></var>
 		<var name="character25"><![CDATA[>]]></var>
 		<var name="character26"><![CDATA[<]]></var>

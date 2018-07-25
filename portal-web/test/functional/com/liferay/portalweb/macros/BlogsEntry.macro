@@ -1170,7 +1170,7 @@
 			<isset var="tagNameList" />
 			<then>
 				<for list="${tagNameList}" param="tagName">
-					<var method="StringUtil#lowerCase('${tagName}')" name="${tagName}" />
+					<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
 
 					<var name="key_tagName" value="${tagName}" />
 

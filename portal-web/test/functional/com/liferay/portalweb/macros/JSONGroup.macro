@@ -3,13 +3,9 @@
 		<if>
 			<isset var="groupDescription" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${groupDescription}" />
-					<arg value="UTF-8" />
-					<return name="groupDescriptionEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${groupDescription}')" name="groupDescriptionEncoded" />
 
-				<var name="groupDescriptionMap">{"en_US":"${groupDescriptionEncoded}"}</var>
+				<var name="groupDescriptionMap"><![CDATA[{"en_US":"${groupDescriptionEncoded}"}]]></var>
 			</then>
 			<else>
 				<var name="groupDescriptionMap" value="{}" />
@@ -19,13 +15,9 @@
 		<if>
 			<isset var="groupName" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${groupName}" />
-					<arg value="UTF-8" />
-					<return name="groupNameEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${groupName}')" name="groupNameEncoded" />
 
-				<var name="groupNameMap">{"en_US":"${groupNameEncoded}"}</var>
+				<var name="groupNameMap"><![CDATA[{"en_US":"${groupNameEncoded}"}]]></var>
 			</then>
 			<else>
 				<fail message="Please set 'groupName'." />
@@ -33,10 +25,10 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/group/add-group \
 				-u test@liferay.com:test \
 				-d parentGroupId=0 \
@@ -50,24 +42,20 @@
 				-d site=true \
 				-d inheritContent=false \
 				-d active=true
-		</var>
+		]]></var>
 
-		<echo>## Adding a 'Group' with the following info using JSONWS:</echo>
+		<echo message="## Adding a 'Group' with the following info using JSONWS:" />
 
 		<if>
 			<isset var="groupDescription" />
 			<then>
-				<echo>## * Group Description: ${groupDescription}</echo>
+				<echo message="## * Group Description: ${groupDescription}" />
 			</then>
 		</if>
 
-		<echo>## * Group Name: ${groupName}</echo>
+		<echo message="## * Group Name: ${groupName}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$['groupId']" />
-			<return name="groupId" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$[\'groupId\']')" name="groupId" />
 	</command>
 
 	<command name="_assignGroupRoleToUser">
@@ -99,45 +87,41 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/usergrouprole/add-user-group-roles \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d groupId=${groupId} \
 				-d userIds=${userId}
-		</var>
+		]]></var>
 
 		<execute macro="JSONGroup#getGroupName">
+			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
-			<return from="groupName" name="groupName" />
 		</execute>
 
 		<execute macro="JSONRole#getRoleName">
+			<return name="roleTitle" />
 			<var name="roleId" value="${roleId}" />
-			<return from="roleTitle" name="roleTitle" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
+			<return name="userEmailAddress" />
 			<var name="userId" value="${userId}" />
-			<return from="userEmailAddress" name="userEmailAddress" />
 		</execute>
 
-		<echo>## Assign a 'Group Role' to a 'User' with the following info using JSONWS:</echo>
+		<echo message="## Assign a 'Group Role' to a 'User' with the following info using JSONWS:" />
 
-		<echo>## * Group Name: ${groupName}</echo>
+		<echo message="## * Group Name: ${groupName}" />
 
-		<echo>## * Role Name: ${roleTitle}</echo>
+		<echo message="## * Role Name: ${roleTitle}" />
 
-		<echo>## * User Email Address: ${userEmailAddress}</echo>
+		<echo message="## * User Email Address: ${userEmailAddress}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="temp" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
 	<command name="_assignUserToGroup">
@@ -160,37 +144,33 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/add-group-users \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d userIds=${userId}
-		</var>
+		]]></var>
 
 		<execute macro="JSONGroup#getGroupName">
+			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
-			<return from="groupName" name="groupName" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
+			<return name="userEmailAddress" />
 			<var name="userId" value="${userId}" />
-			<return from="userEmailAddress" name="userEmailAddress" />
 		</execute>
 
-		<echo>## Assigning a 'User' to an 'Group' with the following info using JSONWS:</echo>
+		<echo message="## Assigning a 'User' to an 'Group' with the following info using JSONWS:" />
 
-		<echo>## * Group Name: ${groupName}</echo>
+		<echo message="## * Group Name: ${groupName}" />
 
-		<echo>## * User Email Address: ${userEmailAddress}</echo>
+		<echo message="## * User Email Address: ${userEmailAddress}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="temp" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
 	<command name="_deleteGroup">
@@ -204,29 +184,25 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupName">
+			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
-			<return from="groupName" name="groupName" />
 		</execute>
 
-		<echo>## Deleting a 'Group' with the following info using JSONWS:</echo>
+		<echo message="## Deleting a 'Group' with the following info using JSONWS:" />
 
-		<echo>## * Group Name: ${groupName}</echo>
+		<echo message="## * Group Name: ${groupName}" />
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/group/delete-group \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
-		</var>
+		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="temp" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
 	<command name="addGroup">
@@ -274,18 +250,18 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
-			<return from="groupId" name="groupId" />
 		</execute>
 
 		<execute macro="JSONRole#getRoleIdByName">
+			<return name="roleId" />
 			<var name="roleTitle" value="${roleTitle}" />
-			<return from="roleId" name="roleId" />
 		</execute>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
+			<return name="userId" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<return from="userId" name="userId" />
 		</execute>
 
 		<execute macro="JSONGroup#_assignGroupRoleToUser">
@@ -315,13 +291,13 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
-			<return from="groupId" name="groupId" />
 		</execute>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
+			<return name="userId" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<return from="userId" name="userId" />
 		</execute>
 
 		<execute macro="JSONGroup#_assignUserToGroup">
@@ -341,8 +317,8 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
-			<return from="groupId" name="groupId" />
 		</execute>
 
 		<execute macro="JSONGroup#_deleteGroup">
@@ -350,7 +326,7 @@
 		</execute>
 	</command>
 
-	<command name="getGroupIdByName" returns="groupId">
+	<command name="getGroupIdByName">
 		<if>
 			<not>
 				<isset var="groupName" />
@@ -361,42 +337,28 @@
 		</if>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/true \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']" />
-			<return name="groupId" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$.[?(@[\'nameCurrentValue\'] == \'${groupName}\')][\'groupId\']')" name="groupId" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${groupId}" />
-			<arg value="[&quot;" />
-			<arg value="" />
-			<return name="groupId" />
-		</execute>
+		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${groupId}" />
-			<arg value="&quot;]" />
-			<arg value="" />
-			<return name="groupId" />
-		</execute>
+		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
 
-		<return name="groupId" value="${groupId}" />
+		<return value="${groupId}" />
 	</command>
 
-	<command name="getGroupName" returns="groupName">
+	<command name="getGroupName">
 		<if>
 			<not>
 				<isset var="groupId" />
@@ -407,24 +369,20 @@
 		</if>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/group/get-group/group-id/${groupId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['nameCurrentValue']" />
-			<return name="groupName" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'nameCurrentValue\']')" name="groupName" />
 
-		<return name="groupName" value="${groupName}" />
+		<return value="${groupName}" />
 	</command>
 </definition>

@@ -1,5 +1,5 @@
 <definition>
-	<!--There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns. -->
+	<!-- There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns. -->
 
 	<command name="addActionCP">
 		<var name="key_userAction" value="${userAction}" />

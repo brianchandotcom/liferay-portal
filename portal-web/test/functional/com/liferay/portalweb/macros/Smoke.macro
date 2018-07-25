@@ -3,7 +3,7 @@
 	<var name="userLastName" value="Test" />
 
 	<command name="runSmoke" summary-ignore="true">
-		<task macro-summary="Ensure that the super admin can add a Blank Site">
+		<task summary="Ensure that the super admin can add a Blank Site">
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Sites" />
 				<var name="panel" value="Control Panel" />
@@ -84,7 +84,7 @@
 
 		<var name="portlet" value="Web Content" />
 
-		<task macro-summary="ProductMenu#gotoSitesContent">
+		<task summary="Navigate to Product Menu > Sites > Content > ${portlet}">
 			<execute macro="Navigator#openSiteURL">
 				<var name="siteName" value="Site Name" />
 			</execute>

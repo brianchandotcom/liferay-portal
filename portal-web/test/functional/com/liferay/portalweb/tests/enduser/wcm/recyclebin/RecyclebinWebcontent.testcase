@@ -100,7 +100,7 @@
 
 	<command name="MoveFolderWithWebContentToRecycleBin" priority="3">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -195,7 +195,7 @@
 
 	<command name="RecycleWebContentViaDeleteIcon" priority="3">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -409,7 +409,7 @@
 
 	<command name="ViewDuplicateAssetNamesInRecycleBin" priority="3">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -516,7 +516,7 @@
 
 	<command name="ViewDuplicateFolderNamesInRecycleBin" priority="4">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

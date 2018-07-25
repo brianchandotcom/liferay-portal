@@ -12,11 +12,7 @@
 		<if>
 			<isset var="userFirstName" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${userFirstName}" />
-					<arg value="UTF-8" />
-					<return name="userFirstNameEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${userFirstName}')" name="userFirstNameEncoded" />
 			</then>
 			<else>
 				<fail message="Please set 'userFirstName'." />
@@ -26,11 +22,7 @@
 		<if>
 			<isset var="userLastName" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${userLastName}" />
-					<arg value="UTF-8" />
-					<return name="userLastNameEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${userLastName}')" name="userLastNameEncoded" />
 			</then>
 			<else>
 				<fail message="Please set 'userLastName'." />
@@ -47,14 +39,14 @@
 		</if>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/add-user \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
@@ -82,25 +74,21 @@
 				-d roleIds= \
 				-d userGroupIds= \
 				-d sendEmail=true
-		</var>
+		]]></var>
 
-		<echo>## Adding a 'User' with the following info using JSONWS:</echo>
+		<echo message="## Adding a 'User' with the following info using JSONWS:" />
 
-		<echo>## * Company ID: ${companyId}</echo>
+		<echo message="## * Company ID: ${companyId}" />
 
-		<echo>## * Email Address: ${userEmailAddress}</echo>
+		<echo message="## * Email Address: ${userEmailAddress}" />
 
-		<echo>## * First Name: ${userFirstName}</echo>
+		<echo message="## * First Name: ${userFirstName}" />
 
-		<echo>## * Last Name: ${userLastName}</echo>
+		<echo message="## * Last Name: ${userLastName}" />
 
-		<echo>## * Screen Name: ${userScreenName}</echo>
+		<echo message="## * Screen Name: ${userScreenName}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$['userId']" />
-			<return name="userId" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$[\'userId\']')" name="userId" />
 	</command>
 
 	<command name="_deleteUser">
@@ -114,29 +102,25 @@
 		</if>
 
 		<execute macro="JSONUser#getUserEmailAddress">
+			<return name="userEmailAddress" />
 			<var name="userId" value="${userId}" />
-			<return from="userEmailAddress" name="userEmailAddress" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/delete-user \
 				-u test@liferay.com:test \
 				-d userId=${userId}
-		</var>
+		]]></var>
 
-		<echo>## Deleting a 'User' with the following info using JSONWS:</echo>
+		<echo message="## Deleting a 'User' with the following info using JSONWS:" />
 
-		<echo>## * Email Address: ${userEmailAddress}</echo>
+		<echo message="## * Email Address: ${userEmailAddress}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="" />
-			<return name="temporary" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '')" name="temporary" />
 	</command>
 
 	<command name="addUser">
@@ -195,8 +179,8 @@
 		</if>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
+			<return name="userId" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<return from="userId" name="userId" />
 		</execute>
 
 		<execute macro="JSONUser#_deleteUser">
@@ -219,7 +203,7 @@
 		</execute>
 	</command>
 
-	<command name="getUserEmailAddress" returns="userEmailAddress">
+	<command name="getUserEmailAddress">
 		<if>
 			<not>
 				<isset var="userId" />
@@ -230,28 +214,24 @@
 		</if>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['emailAddress']" />
-			<return name="userEmailAddress" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'emailAddress\']')" name="userEmailAddress" />
 
-		<return name="userEmailAddress" value="${userEmailAddress}" />
+		<return value="${userEmailAddress}" />
 	</command>
 
-	<command name="getUserFirstName" returns="userFirstName">
+	<command name="getUserFirstName">
 		<if>
 			<not>
 				<isset var="userId" />
@@ -262,28 +242,24 @@
 		</if>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['firstName']" />
-			<return name="userFirstName" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'firstName\']')" name="userFirstName" />
 
-		<return name="userFirstName" value="${userFirstName}" />
+		<return value="${userFirstName}" />
 	</command>
 
-	<command name="getUserIdByEmailAddress" returns="userId">
+	<command name="getUserIdByEmailAddress">
 		<if>
 			<not>
 				<isset var="userEmailAddress" />
@@ -294,25 +270,21 @@
 		</if>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/${userEmailAddress} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['userId']" />
-			<return name="userId" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'userId\']')" name="userId" />
 
-		<return name="userId" value="${userId}" />
+		<return value="${userId}" />
 	</command>
 
 	<command name="tearDownByFirstName">
@@ -326,60 +298,37 @@
 		</if>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-company-users-count/company-id/${companyId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="userCount" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$')" name="userCount" />
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-company-users/company-id/${companyId}/start/0/end/${userCount} \
 				-u test@liferay.com:test \
-		</var>
+		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$..['userId']" />
-			<return name="userIds" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$..[\'userId\']')" name="userIds" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${userIds}" />
-			<arg value="[" />
-			<arg value="" />
-			<return name="userIds" />
-		</execute>
+		<var method="StringUtil#replace('${userIds}', '[', '')" name="userIds" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${userIds}" />
-			<arg value="]" />
-			<arg value="" />
-			<return name="userIds" />
-		</execute>
+		<var method="StringUtil#replace('${userIds}', ']', '')" name="userIds" />
 
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
-			<arg value="${userIds}" />
-			<arg value="&quot;" />
-			<arg value="" />
-			<return name="userIds" />
-		</execute>
+		<var method="StringUtil#replace('${userIds}', '&quot;', '')" name="userIds" />
 
 		<for list="${userIds}" param="userId">
 			<execute macro="JSONUser#getUserFirstName">
+				<return name="currentUserFirstName" />
 				<var name="userId" value="${userId}" />
-				<return from="userFirstName" name="currentUserFirstName" />
 			</execute>
 
 			<if>

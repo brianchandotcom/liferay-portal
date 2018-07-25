@@ -22,7 +22,7 @@
 
 				<var method="MathUtil#sum('${pauseCount}', '1')" name="pauseCount" />
 
-				<echo>Pause count: ${pauseCount}</echo>
+				<echo message="Pause count: ${pauseCount}" />
 			</then>
 		</while>
 

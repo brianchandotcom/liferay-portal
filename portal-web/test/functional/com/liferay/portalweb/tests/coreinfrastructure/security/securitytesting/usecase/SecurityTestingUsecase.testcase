@@ -122,7 +122,7 @@
 		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="Page#getGroupIdFromHtmlSource">
-			<return from="groupId" name="groupId" />
+			<return name="groupId" />
 		</execute>
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

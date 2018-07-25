@@ -12,11 +12,7 @@
 		<if>
 			<isset var="layoutName" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${layoutName}" />
-					<arg value="UTF-8" />
-					<return name="layoutNameEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${layoutName}')" name="layoutNameEncoded" />
 			</then>
 			<else>
 				<fail message="Please set 'layoutName'." />
@@ -24,10 +20,10 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/layout/add-layout \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
@@ -39,24 +35,20 @@
 				-d type=portlet \
 				-d hidden=false \
 				-d friendlyURL=
-		</var>
+		]]></var>
 
 		<execute macro="JSONGroup#getGroupName">
+			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
-			<return from="groupName" name="groupName" />
 		</execute>
 
-		<echo>## Adding a 'Layout' with the following info using JSONWS:</echo>
+		<echo message="## Adding a 'Layout' with the following info using JSONWS:" />
 
-		<echo>## * Group Name: ${groupName}</echo>
+		<echo message="## * Group Name: ${groupName}" />
 
-		<echo>## * Layout Name: ${layoutName}</echo>
+		<echo message="## * Layout Name: ${layoutName}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$['layoutId']" />
-			<return name="layoutId" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$[\'layoutId\']')" name="layoutId" />
 	</command>
 
 	<command name="addLayoutByGroupName">
@@ -79,8 +71,8 @@
 		</if>
 
 		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
-			<return from="groupId" name="groupId" />
 		</execute>
 
 		<execute macro="JSONLayout#_addLayout">

@@ -2874,7 +2874,7 @@
 		<property name="testray.component.names" value="Permissions,Roles,Users and Organizations,Web Content Administration" />
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

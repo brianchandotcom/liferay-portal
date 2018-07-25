@@ -466,7 +466,7 @@
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -700,7 +700,7 @@
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -978,7 +978,7 @@
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration,Training" />
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

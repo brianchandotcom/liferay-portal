@@ -86,7 +86,7 @@
 		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
 
 		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publishedFormPublicURL" />
+			<return name="publishedFormPublicURL" />
 			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
 		</execute>
 

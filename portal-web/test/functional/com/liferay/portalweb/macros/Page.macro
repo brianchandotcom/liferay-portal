@@ -386,7 +386,7 @@
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName}" />
 	</command>
 
-	<command name="getGroupIdFromHtmlSource" returns="groupId">
+	<command name="getGroupIdFromHtmlSource">
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<var method="selenium#getAttribute('//li[@class=\'control-menu-nav-item\']/a[contains(@data-qa-id,\'editLayout\')]@href')" name="pageURL" />
@@ -395,9 +395,9 @@
 
 		<var method="StringUtil#extractFirst('${partialPageURL}', '&amp;')" name="groupId" />
 
-		<echo>## * Group ID: ${groupId}</echo>
+		<echo message="## * Group ID: ${groupId}" />
 
-		<return name="groupId" value="${groupId}" />
+		<return value="${groupId}" />
 	</command>
 
 	<command name="gotoChildPagePG">
@@ -544,7 +544,7 @@
 
 	<command name="tearDownCP" summary="Delete all pages except the Welcome and Search Page">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

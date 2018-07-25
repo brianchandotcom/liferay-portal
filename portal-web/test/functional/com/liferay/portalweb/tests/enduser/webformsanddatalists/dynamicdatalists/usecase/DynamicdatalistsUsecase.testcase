@@ -1592,7 +1592,7 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute macro="Navigator#getCurrentURL">
-			<return from="currentURL" name="adminViewURL" />
+			<return name="adminViewURL" />
 			<var name="adminViewURL" value="${adminViewURL}" />
 		</execute>
 
@@ -1605,7 +1605,7 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute macro="Navigator#getCurrentURL">
-			<return from="currentURL" name="adminEditURL" />
+			<return name="adminEditURL" />
 			<var name="adminEditURL" value="${adminEditURL}" />
 		</execute>
 
@@ -1832,7 +1832,7 @@
 
 	<command name="AssertUserCannotDeleteEntryAfterPermissionRemoved" priority="4">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -3193,7 +3193,7 @@
 		</execute>
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

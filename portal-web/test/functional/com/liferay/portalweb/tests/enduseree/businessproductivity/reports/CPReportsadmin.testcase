@@ -619,7 +619,7 @@
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

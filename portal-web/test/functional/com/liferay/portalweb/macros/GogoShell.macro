@@ -1,5 +1,5 @@
 <definition>
-	<command name="getModuleID" returns="moduleID">
+	<command name="getModuleID">
 		<execute macro="GogoShell#listModuleStatus">
 			<var name="moduleName" value="${moduleName}" />
 		</execute>
@@ -10,7 +10,7 @@
 
 		<var method="StringUtil#extractFirst('${partialModuleStatusOutput}', '|')" name="moduleID" />
 
-		<return name="moduleID" value="${moduleID}" />
+		<return value="${moduleID}" />
 	</command>
 
 	<command name="listModuleStatus">

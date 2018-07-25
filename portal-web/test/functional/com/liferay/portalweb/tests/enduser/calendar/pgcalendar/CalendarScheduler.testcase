@@ -156,7 +156,7 @@
 		<property name="test.name.skip.portal.instance" value="CalendarScheduler#ViewDisplayedSiteCalendarEventsAsGuest" />
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

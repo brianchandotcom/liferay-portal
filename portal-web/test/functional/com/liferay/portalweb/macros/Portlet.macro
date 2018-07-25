@@ -116,8 +116,6 @@
 			</then>
 		</if>
 
-		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
-
 		<if>
 			<condition function="IsNotVisible" locator1="ControlMenuAddPanel#CLOSE_ADD_PANEL" />
 			<then>
@@ -134,7 +132,7 @@
 
 		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
 
-		<execute macro-desktop="Portlet#_clickAddPortlet" macro-mobile="Portlet#_mobileClickAddPortlet">
+		<execute macro="Portlet#_clickAddPortlet">
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
@@ -160,7 +158,7 @@
 
 				<var method="MathUtil#sum('${shutdownPauseCount}', '1')" name="shutdownPauseCount" />
 
-				<echo>Shutdown pause count: ${shutdownPauseCount}</echo>
+				<echo message="Shutdown pause count: ${shutdownPauseCount}" />
 			</then>
 		</while>
 	</command>
@@ -184,7 +182,7 @@
 
 				<var method="MathUtil#sum('${startupPauseCount}', '1')" name="startupPauseCount" />
 
-				<echo>Startup pause count: ${startupPauseCount}</echo>
+				<echo message="Startup pause count: ${startupPauseCount}" />
 			</then>
 		</while>
 	</command>

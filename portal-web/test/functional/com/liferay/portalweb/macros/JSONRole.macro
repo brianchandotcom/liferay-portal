@@ -3,13 +3,9 @@
 		<if>
 			<isset var="roleDescription" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${roleDescription}" />
-					<arg value="UTF-8" />
-					<return name="roleDescriptionEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${roleDescription}')" name="roleDescriptionEncoded" />
 
-				<var name="roleDescriptionMap">{"en_US":"${roleDescriptionEncoded}"}</var>
+				<var name="roleDescriptionMap"><![CDATA[{"en_US":"${roleDescriptionEncoded}"}]]></var>
 			</then>
 			<else>
 				<var name="roleDescriptionMap" value="{}" />
@@ -19,11 +15,7 @@
 		<if>
 			<isset var="roleTitle" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${roleTitle}" />
-					<arg value="UTF-8" />
-					<return name="roleTitleEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${roleTitle}')" name="roleTitleEncoded" />
 			</then>
 			<else>
 				<fail message="Please set 'roleTitle'." />
@@ -33,13 +25,9 @@
 		<if>
 			<isset var="roleKey" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${roleKey}" />
-					<arg value="UTF-8" />
-					<return name="roleKeyEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${roleKey}')" name="roleKeyEncoded" />
 
-				<var name="roleKeyMap">{"en_US":"${roleKeyEncoded}"}</var>
+				<var name="roleKeyMap"><![CDATA[{"en_US":"${roleKeyEncoded}"}]]></var>
 			</then>
 			<else>
 				<var name="roleKeyMap" value="{}" />
@@ -69,10 +57,10 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/role/add-role \
 				-u test@liferay.com:test \
 				-d className=com.liferay.portal.kernel.model.Role \
@@ -82,33 +70,29 @@
 				-d descriptionMap=${roleDescriptionMap} \
 				-d type=${roleTypeId} \
 				-d subtype=
-		</var>
+		]]></var>
 
-		<echo>## Adding a 'Role' with the following info using JSONWS:</echo>
+		<echo message="## Adding a 'Role' with the following info using JSONWS:" />
 
 		<if>
 			<isset var="roleDescription" />
 			<then>
-				<echo>## * Role Description: ${roleDescription}</echo>
+				<echo message="## * Role Description: ${roleDescription}" />
 			</then>
 		</if>
 
-		<echo>## * Role Name: ${roleTitle}</echo>
+		<echo message="## * Role Name: ${roleTitle}" />
 
 		<if>
 			<isset var="roleKey" />
 			<then>
-				<echo>## * Role Title: ${roleKey}</echo>
+				<echo message="## * Role Title: ${roleKey}" />
 			</then>
 		</if>
 
-		<echo>## * Role Type: ${roleType}</echo>
+		<echo message="## * Role Type: ${roleType}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="temp" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
 	<command name="_assignRoleToUser">
@@ -131,37 +115,33 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/add-role-users \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d userIds=${userId}
-		</var>
+		]]></var>
 
 		<execute macro="JSONRole#getRoleName">
+			<return name="roleTitle" />
 			<var name="roleId" value="${roleId}" />
-			<return from="roleTitle" name="roleTitle" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
+			<return name="userEmailAddress" />
 			<var name="userId" value="${userId}" />
-			<return from="userEmailAddress" name="userEmailAddress" />
 		</execute>
 
-		<echo>## Assigning a 'User' to a 'Role' with the following info using JSONWS:</echo>
+		<echo message="## Assigning a 'User' to a 'Role' with the following info using JSONWS:" />
 
-		<echo>## * Role Name: ${roleTitle}</echo>
+		<echo message="## * Role Name: ${roleTitle}" />
 
-		<echo>## * User Email Address: ${userEmailAddress}</echo>
+		<echo message="## * User Email Address: ${userEmailAddress}" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-			<arg value="$" />
-			<return name="temp" />
-		</execute>
+		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
 	<command name="addOrganizationRole">
@@ -238,13 +218,13 @@
 		</if>
 
 		<execute macro="JSONRole#getRoleIdByName">
+			<return name="roleId" />
 			<var name="roleTitle" value="${roleTitle}" />
-			<return from="roleId" name="roleId" />
 		</execute>
 
 		<execute macro="JSONUser#getUserIdByEmailAddress">
+			<return name="userId" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<return from="userId" name="userId" />
 		</execute>
 
 		<execute macro="JSONRole#_assignRoleToUser">
@@ -253,15 +233,11 @@
 		</execute>
 	</command>
 
-	<command name="getRoleIdByName" returns="roleId">
+	<command name="getRoleIdByName">
 		<if>
 			<isset var="roleTitle" />
 			<then>
-				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${roleTitle}" />
-					<arg value="UTF-8" />
-					<return name="roleTitleEncoded" />
-				</execute>
+				<var method="URLUtil#encodeUTF8('${roleTitle}')" name="roleTitleEncoded" />
 
 				<var method="StringUtil#replace('${roleTitleEncoded}','+','%20')" name="roleTitleEncoded" />
 			</then>
@@ -271,28 +247,24 @@
 		</if>
 
 		<execute macro="JSONCompany#getCompanyId">
-			<return from="companyId" name="companyId" />
+			<return name="companyId" />
 		</execute>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/role/get-role/company-id/${companyId}/name/${roleTitleEncoded} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['roleId']" />
-			<return name="roleId" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'roleId\']')" name="roleId" />
 
-		<return name="roleId" value="${roleId}" />
+		<return value="${roleId}" />
 	</command>
 
-	<command name="getRoleName" returns="roleTitle">
+	<command name="getRoleName">
 		<if>
 			<not>
 				<isset var="roleId" />
@@ -303,20 +275,16 @@
 		</if>
 
 		<execute macro="JSONCompany#getPortalURL">
-			<return from="portalURL" name="portalURL" />
+			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/role/get-role/role-id/${roleId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
-			<arg value="${curl}" />
-			<arg value="$['name']" />
-			<return name="roleTitle" />
-		</execute>
+		<var method="JSONCurlUtil#get('${curl}', '$[\'name\']')" name="roleTitle" />
 
-		<return name="roleTitle" value="${roleTitle}" />
+		<return value="${roleTitle}" />
 	</command>
 </definition>

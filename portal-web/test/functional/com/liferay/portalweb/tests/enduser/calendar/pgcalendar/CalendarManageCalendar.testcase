@@ -71,7 +71,7 @@
 
 	<command name="ChangeCalendarTypeForAllDayEvent" priority="3">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -97,7 +97,7 @@
 
 	<command name="ChangeCalendarTypeForRegularEvent" priority="4">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -123,7 +123,7 @@
 
 	<command name="ChangeCalendarTypeForRepeatingEvent" priority="4">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -151,7 +151,7 @@
 
 	<command name="ChangeColorCalendarSiteCalendarsEventRegular" priority="3">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -359,7 +359,7 @@
 
 	<command name="EditCalendarCurrentSiteCalendars" priority="3">
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -481,7 +481,7 @@
 		<property name="test.name.skip.portal.instance" value="Calendar#SearchForOtherCalendars" />
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -818,7 +818,7 @@
 		<description message="This is a use case for LPS-69884." />
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

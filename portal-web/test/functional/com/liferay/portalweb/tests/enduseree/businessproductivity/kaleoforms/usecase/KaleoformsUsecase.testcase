@@ -1571,7 +1571,7 @@
 		<property name="test.name.skip.portal.instance" value="KaleoformsUsecase#AssignRolePermissionsSubmitProcessPG" />
 
 		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
+			<return name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

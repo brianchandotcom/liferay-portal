@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">SearchResults</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>FACET_VALUE_REMOVE</td>
-	<td>//span[contains(.,'${key_searchFacetValue}')]/a[contains(@class,'icon-remove')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSET_TYPE_FACET-->
 <tr>
 	<td>ASSET_TYPE_FACET_SEARCH_ASSETS_BOX</td>
@@ -138,11 +128,6 @@
 	<td></td>
 </tr>
 <!--RESULTS_TABLE-->
-<tr>
-	<td>RESULTS_TABLE_GENERIC</td>
-	<td>//div[contains(@class,'lfr-search-container')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>RESULTS_TABLE_NUMBER</td>
 	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[1]</td>

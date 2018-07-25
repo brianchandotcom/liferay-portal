@@ -1240,11 +1240,11 @@
 				<var name="pageName" value="Search Page" />
 			</execute>
 
-			<execute macro="SearchPortlet#searchPG">
+			<execute macro="SearchPortlets#searchEmbedded">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchResultPG">
+			<execute macro="SearchResultPortlet#viewSearchResults">
 				<var name="searchAssetTitle" value="Blogs Entry Title" />
 				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
@@ -1256,13 +1256,11 @@
 				<var name="pageName" value="Search Page" />
 			</execute>
 
-			<execute macro="SearchPortlet#searchPG">
+			<execute macro="SearchPortlets#searchEmbedded">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchNoPG">
-				<var name="searchAssetTitle" value="Blogs Entry Title" />
-				<var name="searchNoResults" value="true" />
+			<execute macro="SearchResultPortlet#viewNoSearchResults">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>
@@ -1301,11 +1299,11 @@
 				<var name="pageName" value="Search Page" />
 			</execute>
 
-			<execute macro="SearchPortlet#searchPG">
+			<execute macro="SearchPortlets#searchEmbedded">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchResultPG">
+			<execute macro="SearchResultPortlet#viewSearchResults">
 				<var name="searchAssetTitle" value="Blogs Entry Title" />
 				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
@@ -1317,13 +1315,11 @@
 				<var name="pageName" value="Search Page" />
 			</execute>
 
-			<execute macro="SearchPortlet#searchPG">
+			<execute macro="SearchPortlets#searchEmbedded">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchNoPG">
-				<var name="searchAssetTitle" value="Blogs Entry Title" />
-				<var name="searchNoResults" value="true" />
+			<execute macro="SearchResultPortlet#viewNoSearchResults">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>
@@ -1362,11 +1358,11 @@
 				<var name="pageName" value="Search Page" />
 			</execute>
 
-			<execute macro="SearchPortlet#searchPG">
+			<execute macro="SearchPortlets#searchEmbedded">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchResultPG">
+			<execute macro="SearchResultPortlet#viewSearchResults">
 				<var name="searchAssetTitle" value="Blogs Entry Title" />
 				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
@@ -1378,13 +1374,11 @@
 				<var name="pageName" value="Search Page" />
 			</execute>
 
-			<execute macro="SearchPortlet#searchPG">
+			<execute macro="SearchPortlets#searchEmbedded">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchNoPG">
-				<var name="searchAssetTitle" value="Blogs Entry Title" />
-				<var name="searchNoResults" value="true" />
+			<execute macro="SearchResultPortlet#viewNoSearchResults">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>
@@ -1427,11 +1421,11 @@
 				<var name="pageName" value="Search Page" />
 			</execute>
 
-			<execute macro="SearchPortlet#searchPG">
+			<execute macro="SearchPortlets#searchEmbedded">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchResultPG">
+			<execute macro="SearchResultPortlet#viewSearchResults">
 				<var name="searchAssetTitle" value="Blogs Entry Title" />
 				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
@@ -1443,13 +1437,11 @@
 				<var name="pageName" value="Search Page" />
 			</execute>
 
-			<execute macro="SearchPortlet#searchPG">
+			<execute macro="SearchPortlets#searchEmbedded">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="SearchPortlet#viewSearchNoPG">
-				<var name="searchAssetTitle" value="Blogs Entry Title" />
-				<var name="searchNoResults" value="true" />
+			<execute macro="SearchResultPortlet#viewNoSearchResults">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>

@@ -847,21 +847,19 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="blue" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchAssetTitle">
-			<var name="searchAssetSummary" value="Entry Content 1" />
+		<execute macro="ClassicSearch#viewSearchAssetTitle">
 			<var name="searchAssetTitle" value="Entry Title 1" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="yellow" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchAssetTitle">
-			<var name="searchAssetSummary" value="Entry Content 3" />
+		<execute macro="ClassicSearch#viewSearchAssetTitle">
 			<var name="searchAssetTitle" value="Entry Title 3" />
 		</execute>
 	</command>

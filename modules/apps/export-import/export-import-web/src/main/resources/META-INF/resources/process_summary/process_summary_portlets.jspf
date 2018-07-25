@@ -88,7 +88,7 @@
 
 				String controlClass = control.getClassName();
 
-				if (modelAdditionCounters.containsKey(controlClass)) {
+				if (Validator.isNotNull(modelAdditionCounters) && modelAdditionCounters.containsKey(controlClass)) {
 					Long value = modelAdditionCounters.get(controlClass).getValue();
 
 					currentAdditions.put(controlLabel, value);
@@ -96,7 +96,7 @@
 					totalAdditions += value;
 				}
 
-				if (modelDeletionCounters.containsKey(controlClass)) {
+				if (Validator.isNotNull(modelDeletionCounters) && modelDeletionCounters.containsKey(controlClass)) {
 					Long value = modelDeletionCounters.get(controlClass).getValue();
 
 					currentDeletions.put(controlLabel, value);

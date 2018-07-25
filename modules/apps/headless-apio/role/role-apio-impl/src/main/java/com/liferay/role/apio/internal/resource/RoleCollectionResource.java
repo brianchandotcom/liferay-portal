@@ -96,7 +96,10 @@ public class RoleCollectionResource
 	private PageItems<Role> _getPageItems(
 		Pagination pagination, Company company) {
 
-		Integer[] roleTypes = {RoleConstants.TYPE_REGULAR};
+		Integer[] roleTypes = {
+			RoleConstants.TYPE_ORGANIZATION, RoleConstants.TYPE_REGULAR,
+			RoleConstants.TYPE_SITE
+		};
 
 		List<Role> roles = _roleService.search(
 			company.getCompanyId(), null, roleTypes, null,

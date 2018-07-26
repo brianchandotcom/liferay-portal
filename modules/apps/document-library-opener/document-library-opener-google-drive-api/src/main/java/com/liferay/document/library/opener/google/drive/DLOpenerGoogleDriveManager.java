@@ -17,7 +17,6 @@ package com.liferay.document.library.opener.google.drive;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
-import java.io.File;
 import java.io.IOException;
 
 /**

@@ -23,13 +23,19 @@
 			<else>
 				<execute macro="BlogsEntry#tearDownCP" />
 
-				<execute macro="WikiPage#tearDownCP" />
+				<execute macro="MessageboardsThread#tearDownCP" />
+
+				<execute macro="User#tearDownCP" />
 
 				<execute macro="WebContent#tearDownCP" />
 
 				<execute macro="DMDocument#tearDownCP" />
 
-				<execute macro="User#tearDownCP" />
+				<execute macro="WikiPage#tearDownCP" />
+
+				<execute macro="Vocabulary#tearDownCP" />
+
+				<execute macro="Tag#tearDownCP" />
 
 				<execute macro="Page#tearDownCP" />
 			</else>
@@ -119,6 +125,707 @@
 		<execute function="AssertChecked" locator1="Checkbox#ANY_CHECKBOX">
 			<var name="checkboxName" value="Blogs Entry" />
 		</execute>
+	</command>
+
+	<command name="SearchBlogsEntry" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Blogs Entry Content" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Blogs Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Blogs Content" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Blogs1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Blogs1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Entry1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Entry1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Title1" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryCategory" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithCategory">
+			<var name="categoryName" value="Category Name" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Category Name" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Category" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Name" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Category1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Category1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Name1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Name1" />
+		</execute>
+	</command>
+
+	<command ignore="true" name="SearchBlogsEntryCategoryQuotes" priority="4">
+		<!-- Ignoring test until LPS-73326 is resolved -->
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithCategory">
+			<var name="categoryName" value="Category Name" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Category Name&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Category&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Name&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Category Name1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;Category Name1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Category1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;Category1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Name1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;Name1&quot;" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryQuotes" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Blogs Entry Title&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Entry Title&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Title&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Blogs Entry Content&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Blogs Entry&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Blogs&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Entry Content&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Entry&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Content&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Blogs Content&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;Blogs Content&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Blogs1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;Blogs1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Entry1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;Entry1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Title1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;Title1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Content1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;Content1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Blogs Entry Title1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;Blogs Entry Title1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;Blogs Entry Content1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;Blogs Entry Content1&quot;" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryTag" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithTag">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="tag name" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="tag" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="name" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="tag1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="tag1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="name1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="name1" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryTagQuotes" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithTag">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;tag name&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;tag&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;name&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;tag name1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;tag name1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;tag1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;tag1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="&quot;name1&quot;" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="&quot;name1&quot;" />
+		</execute>
+	</command>
+
+	<command name="SearchDeletedWebContent" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="WC Title" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords" />
 	</command>
 
 	<command name="SearchDifferentScopesViaNewSite" priority="4">
@@ -367,346 +1074,8 @@
 		</execute>
 	</command>
 
-	<command name="SearchByPermission" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Content" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#addAllMembersCP" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="ClassicSearch#search">
-			<var name="searchTerm" value="WC Title" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchResultPG">
-			<var name="searchAssetTitle" value="WC Title" />
-			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
-	</command>
-
-	<command name="SearchByUserFacet" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Super Admin Entry Content" />
-			<var name="entryTitle" value="Blogs Super Admin Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs User Entry Content" />
-			<var name="entryTitle" value="Blogs User Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="ClassicSearch#search">
-			<var name="searchTerm" value="Entry" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewUserFacetPG">
-			<var name="facetFrequency" value="1" />
-			<var name="searchAssetSummary" value="Blogs Super Admin Entry Content" />
-			<var name="searchAssetTitle" value="Blogs Super Admin Entry Title" />
-			<var name="searchAssetType" value="Blogs Entry" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchNoPG">
-			<var name="searchAssetSummary" value="Blogs User Entry Content" />
-			<var name="searchAssetTitle" value="Blogs User Entry Title" />
-			<var name="searchAssetType" value="Blogs Entry" />
-		</execute>
-
-		<execute function="AssertClick" locator1="SearchResults#USER_FACET_ANY_USER" value1="Any User" />
-
-		<execute macro="ClassicSearch#viewUserFacetPG">
-			<var name="facetFrequency" value="1" />
-			<var name="searchAssetSummary" value="Blogs User Entry Content" />
-			<var name="searchAssetTitle" value="Blogs User Entry Title" />
-			<var name="searchAssetType" value="Blogs Entry" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchNoPG">
-			<var name="searchAssetSummary" value="Blogs Super Admin Entry Content" />
-			<var name="searchAssetTitle" value="Blogs Super Admin Entry Title" />
-			<var name="searchAssetType" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="ClassicSearch#removeUserFacetDisplayPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="ClassicSearch#search">
-			<var name="searchTerm" value="Entry" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="SearchResults#USER_FACET_ANY_USER" />
-	</command>
-
-	<command name="SearchDeletedWebContent" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Content" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#moveToRecycleBinCP">
-			<var name="assetType" value="Web Content Article" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ClassicSearch#search">
-			<var name="searchTerm" value="WC Title" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords" />
-	</command>
-
-	<command name="SearchEntriesByPortletsAndModifiedRangeFacet" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry1 AssetContent" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent1 Content" />
-			<var name="webContentTitle" value="WC WebContent1 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent2 AssetContent" />
-			<var name="webContentTitle" value="WC WebContent2 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesCP" />
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page1 Content" />
-			<var name="wikiPageTitle" value="Wiki Page1 Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesCP" />
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page2 AssetContent" />
-			<var name="wikiPageTitle" value="Wiki Page2 Title" />
-		</execute>
+	<command name="SearchDocumentsAndMediaDocument" priority="5">
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -717,53 +1086,125 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document AssetContent Description " />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentSize" value="22k" />
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentSize" value="0k" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="tagNameList" value="moon rocks" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ClassicSearch#search">
-			<var name="searchTerm"><![CDATA["AssetContent"]]></var>
+			<var name="searchTerm" value="DM Document Title" />
 		</execute>
 
-		<for list="Blogs Entry1 Title,WC WebContent2 Title,Wiki Page2 Title,DM Document Title" param="searchAssetTitle">
-			<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
-
-			<execute function="AssertTextEquals" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
-		</for>
-
-		<for list="Blogs Entry2 Title,WC WebContent1 Title,Wiki Page1 Title" param="searchAssetTitle">
-			<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
-
-			<execute function="AssertElementNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" />
-		</for>
-
-		<execute macro="ClassicSearch#viewAssetTypeFacetPG">
-			<var name="facetFrequency" value="1" />
-			<var name="searchAssetTitle" value="Wiki Page2 Title" />
-			<var name="searchAssetType" value="Wiki Page" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<execute macro="ClassicSearch#unscopeAssetFacetPG" />
-
-		<execute macro="ClassicSearch#gotoModifiedRangeFacetPG">
-			<var name="searchModifiedRange" value="Past Month" />
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="DM" />
 		</execute>
 
-		<for list="Blogs Entry1 Title,WC WebContent2 Title,Wiki Page2 Title,DM Document Title" param="searchAssetTitle">
-			<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
 
-			<execute function="AssertTextEquals" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
-		</for>
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Document" />
+		</execute>
 
-		<for list="Blogs Entry2 Title,WC WebContent1 Title,Wiki Page1 Title" param="searchAssetTitle">
-			<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
 
-			<execute function="AssertElementNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" />
-		</for>
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="DM Document" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="DM Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Document Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="moon rocks" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="ClassicSearch#addTagFacet">
+			<var name="tagName" value="moon rocks" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="DM1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="DM1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Document1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Document1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Title1" />
+		</execute>
 	</command>
 
 	<command name="SearchGlobalTemplateSmoke" priority="5">
@@ -826,6 +1267,162 @@
 		</execute>
 	</command>
 
+	<command name="SearchMessageBoardsThread" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="MB Thread Message Body" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="MB" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Thread" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Message" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Subject" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Body" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="MB1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="MB1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Thread1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Thread1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Message1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Message1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Subject1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Subject1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Body1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Body1" />
+		</execute>
+	</command>
+
 	<command name="SearchPortletIdAfterLogout" priority="5">
 		<description message="This is a use case for LPS-25877." />
 
@@ -857,21 +1454,10 @@
 		</execute>
 	</command>
 
-	<command name="SearchTwiceScopeEverything" priority="5">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
-		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
+	<command name="SearchUser" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return name="siteName" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -881,72 +1467,94 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<execute macro="Navigator#openURL" />
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/guest/search" />
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="userfn userln" />
 		</execute>
 
-		<execute macro="SearchPortlets#configureEmbeddedScope">
-			<var name="searchScope" value="Everything" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchAssetType" value="User" />
 		</execute>
 
-		<execute macro="SearchPortlets#configureWidgetScope">
-			<var name="searchScope" value="Everything" />
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="userfn" />
 		</execute>
 
-		<execute macro="SearchPortlets#searchEmbedded">
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="userln" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
-			<var name="resultsList" value="userfn1 userln1/User,userfn2 userln2/User" />
-			<var name="searchTerm" value="usersn" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchAssetType" value="User" />
 		</execute>
 
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="usersn" />
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="userfn1" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
-			<var name="resultsList" value="userfn1 userln1/User,userfn2 userln2/User" />
-			<var name="searchTerm" value="usersn" />
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetTitle" value="userfn userln" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="userln1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="userln1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="usersn1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="usersn1" />
 		</execute>
 	</command>
 
-	<command name="SearchTwiceScopeLetUserChoose" priority="5">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
-		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
+	<command name="SearchUserWildcard" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return name="siteName" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -956,89 +1564,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/guest/search" />
-		</execute>
-
-		<execute macro="SearchPortlets#configureWidgetScope">
-			<var name="searchScope" value="Let the User Choose" />
-		</execute>
-
-		<execute macro="SearchPortlets#selectWidgetScopeInput">
-			<var name="searchScope" value="This Site" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchWidget">
-			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="userfn1 userln1" />
-			<var name="searchAssetType" value="User" />
-			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
-			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchAssetType" value="User" />
-		</execute>
-
-		<execute macro="SearchPortlets#selectWidgetScopeInput">
-			<var name="searchScope" value="Everything" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchWidget">
-			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="userfn1 userln1" />
-			<var name="searchAssetType" value="User" />
-			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchAssetType" value="User" />
-			<var name="searchTerm" value="usersn" />
-		</execute>
-	</command>
-
-	<command name="SearchTwiceScopeThisSite" priority="5">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
-		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1047,62 +1576,28 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="users*" />
 		</execute>
 
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/guest/search" />
-		</execute>
-
-		<execute macro="SearchPortlets#configureWidgetScope">
-			<var name="searchScope" value="This Site" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="userfn1 userln1" />
-			<var name="searchAssetType" value="User" />
-			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
-			<var name="searchAssetTitle" value="userfn2 userln2" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn userln" />
 			<var name="searchAssetType" value="User" />
 		</execute>
 
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="usersn" />
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="userf*" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="userfn1 userln1" />
-			<var name="searchAssetType" value="User" />
-			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
-			<var name="searchAssetTitle" value="userfn2 userln2" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn userln" />
 			<var name="searchAssetType" value="User" />
 		</execute>
 	</command>
@@ -1799,6 +2294,273 @@
 		</execute>
 	</command>
 
+	<command name="SearchWebContent" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="WC WebContent Content" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="WC" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="WC1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="WC1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="WebContent1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="WebContent1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Content1" />
+		</execute>
+	</command>
+
+	<command name="SearchWikiPage" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
+
+		<execute macro="WikiPage#addPG">
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Wiki Page Content" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Wiki" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Page" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Wiki1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Wiki1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Page1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Page1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Content1" />
+		</execute>
+	</command>
+
 	<command name="SearchXSSAsset" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
@@ -1842,35 +2604,6 @@
 
 		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
 		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-	</command>
-
-	<command name="ViewSearchResultForLongURL" priority="4">
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description 1" />
-			<var name="dmDocumentTitle" value="DM Document Title 1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ClassicSearch#search">
-			<var name="searchTerm" value="Document" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchAssetTitle">
-			<var name="searchAssetTitle" value="DM Document Title 1" />
-		</execute>
-
-		<execute macro="ClassicSearch#gotoSearchResultPG">
-			<var name="searchAssetTitle" value="DM Document Title 1" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchAssetDetailPage">
-			<var name="searchAssetTitle" value="DM Document Title 1" />
-		</execute>
 	</command>
 
 	<command name="ViewStagedAndLiveContentInSearchResults" priority="4">

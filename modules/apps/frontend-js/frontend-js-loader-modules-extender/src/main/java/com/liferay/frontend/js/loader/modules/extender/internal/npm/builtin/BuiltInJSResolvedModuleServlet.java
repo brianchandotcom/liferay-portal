@@ -53,9 +53,9 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 	protected URL getURL(String pathInfo) {
 		String identifier = pathInfo.substring(1);
 
-		String resolvedJSPackageId = ModuleNameUtil.getPackageName(identifier);
+		String packageName = ModuleNameUtil.getPackageName(identifier);
 
-		JSPackage jsPackage = _getResolvedJSPackage(resolvedJSPackageId);
+		JSPackage jsPackage = _getJSPackage(packageName);
 
 		if (jsPackage == null) {
 			return null;
@@ -66,29 +66,26 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 		return jsPackage.getResourceURL(packagePath);
 	}
 
-	private JSPackage _getResolvedJSPackage(String resolvedJSPackageId) {
-		String packageId = _resolvedPackageIdentifiersCache.get(
-			resolvedJSPackageId);
+	private JSPackage _getJSPackage(String packageName) {
+		String jsPackageId = _jsPackageIdsCache.get(packageName);
 
-		if (packageId != null) {
-			JSPackage jsPackage = _npmRegistry.getJSPackage(packageId);
+		if (jsPackageId != null) {
+			JSPackage jsPackage = _npmRegistry.getJSPackage(jsPackageId);
 
 			if (jsPackage != null) {
 				return jsPackage;
 			}
 
-			_resolvedPackageIdentifiersCache.remove(resolvedJSPackageId);
+			_jsPackageIdsCache.remove(packageName);
 		}
 
-		Collection<JSPackage> resolvedJSPackages =
-			_npmRegistry.getResolvedJSPackages();
+		Collection<JSPackage> jsPackages = _npmRegistry.getResolvedJSPackages();
 
-		for (JSPackage resolvedJSPackage : resolvedJSPackages) {
-			if (resolvedJSPackageId.equals(resolvedJSPackage.getResolvedId())) {
-				_resolvedPackageIdentifiersCache.put(
-					resolvedJSPackageId, resolvedJSPackage.getId());
+		for (JSPackage jsPackage : jsPackages) {
+			if (packageName.equals(jsPackage.getResolvedId())) {
+				_jsPackageIdsCache.put(packageName, jsPackage.getId());
 
-				return resolvedJSPackage;
+				return jsPackage;
 			}
 		}
 
@@ -103,15 +100,15 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 	@Reference
 	private NPMRegistry _npmRegistry;
 
-	private LinkedHashMap<String, String> _resolvedPackageIdentifiersCache =
+	private LinkedHashMap<String, String> _jsPackageIdsCache =
 		new LinkedHashMap<String, String>() {
 
 			@Override
 			protected boolean removeEldestEntry(Map.Entry eldest) {
-				Collection<JSPackage> resolvedJSPackages =
+				Collection<JSPackage> jsPackages =
 					_npmRegistry.getResolvedJSPackages();
 
-				if (size() > resolvedJSPackages.size()) {
+				if (size() > jsPackages.size()) {
 					return true;
 				}
 

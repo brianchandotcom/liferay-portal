@@ -215,7 +215,7 @@ public class ModuleNameUtil {
 			return fileName;
 		}
 
-		return fileName.substring(0, i);
+		return FileUtil.stripExtension(fileName);
 	}
 
 	private static final Set<String> _reservedModuleNames = new HashSet<>(

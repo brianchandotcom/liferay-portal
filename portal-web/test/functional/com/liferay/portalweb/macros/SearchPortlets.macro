@@ -264,11 +264,20 @@
 		</if>
 	</command>
 
+	<command name="viewResultDetails">
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${searchAssetTitle}" />
+	</command>
+
 	<command name="viewSearchHidden">
 		<execute function="AssertElementNotPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
 	</command>
 
 	<command name="viewSearchResultWithNoPermissions">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords: ${searchTerm}." />
+	</command>
+
+	<command name="viewUserResultDetails">
+		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_1" value1="${pageName}" />
 	</command>
 </definition>

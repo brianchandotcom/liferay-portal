@@ -48,6 +48,12 @@ public class DefaultTextExportImportContentProcessor
 					exportReferencedContent, escapeContent);
 
 		content =
+			_journalFeedReferencesExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, stagedModel, content,
+					exportReferencedContent, escapeContent);
+
+		content =
 			_layoutReferencesExportImportContentProcessor.
 				replaceExportContentReferences(
 					portletDataContext, stagedModel, content,
@@ -79,6 +85,11 @@ public class DefaultTextExportImportContentProcessor
 					portletDataContext, stagedModel, content);
 
 		content =
+			_journalFeedReferencesExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, stagedModel, content);
+
+		content =
 			_layoutReferencesExportImportContentProcessor.
 				replaceImportContentReferences(
 					portletDataContext, stagedModel, content);
@@ -96,6 +107,8 @@ public class DefaultTextExportImportContentProcessor
 
 		_dlReferencesExportImportContentProcessor.validateContentReferences(
 			groupId, content);
+		_journalFeedReferencesExportImportContentProcessor.
+			validateContentReferences(groupId, content);
 		_layoutReferencesExportImportContentProcessor.validateContentReferences(
 			groupId, content);
 		_linksToLayoutsExportImportContentProcessor.validateContentReferences(
@@ -105,6 +118,10 @@ public class DefaultTextExportImportContentProcessor
 	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
+
+	@Reference(target = "(content.processor.type=JournalFeedReferences)")
+	private ExportImportContentProcessor<String>
+		_journalFeedReferencesExportImportContentProcessor;
 
 	@Reference(target = "(content.processor.type=LayoutReferences)")
 	private ExportImportContentProcessor<String>

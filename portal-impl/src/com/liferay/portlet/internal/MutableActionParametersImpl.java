@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.internal;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.portlet.MutableActionParameters;
@@ -24,6 +25,10 @@ import javax.portlet.MutableActionParameters;
 public class MutableActionParametersImpl
 	extends BaseMutablePortletParameters<MutableActionParameters>
 	implements LiferayMutablePortletParameters, MutableActionParameters {
+
+	public MutableActionParametersImpl() {
+		this(new LinkedHashMap<>());
+	}
 
 	public MutableActionParametersImpl(Map<String, String[]> parameterMap) {
 		super(parameterMap, MutableActionParametersImpl::new);

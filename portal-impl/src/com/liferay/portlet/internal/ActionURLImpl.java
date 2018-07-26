@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.Portlet;
 
 import javax.portlet.ActionURL;
 import javax.portlet.MimeResponse;
-import javax.portlet.MutableActionParameters;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,14 +40,6 @@ public class ActionURLImpl extends PortletURLImpl implements ActionURL {
 		String lifecycle, MimeResponse.Copy copy) {
 
 		super(portletRequest, portlet, layout, lifecycle, copy);
-	}
-
-	@Override
-	public MutableActionParameters getActionParameters() {
-
-		// TODO
-
-		throw new UnsupportedOperationException();
 	}
 
 }

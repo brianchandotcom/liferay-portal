@@ -17,6 +17,7 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.model.DLFileRank;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -474,6 +475,34 @@ public interface DLAppLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, long, String, String, String, String, String, DLVersionNumberIncrease, byte[], ServiceContext)}
+	*/
+	@Deprecated
+	public FileEntry updateFileEntry(long userId, long fileEntryId,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		byte[] bytes, ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, long, String, String, String, String, String, DLVersionNumberIncrease, File, ServiceContext)}
+	*/
+	@Deprecated
+	public FileEntry updateFileEntry(long userId, long fileEntryId,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion, File file,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, long, String, String, String, String, String, boolean, InputStream, long, ServiceContext)}
+	*/
+	@Deprecated
+	public FileEntry updateFileEntry(long userId, long fileEntryId,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		InputStream is, long size, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
 	* Updates a file entry and associated metadata based on a byte array
 	* object. If the file data is <code>null</code>, then only the associated
 	* metadata (i.e., <code>title</code>, <code>description</code>, and
@@ -497,7 +526,8 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param description the file's new description
 	* @param changeLog the file's version change log (optionally
 	<code>null</code>)
-	* @param majorVersion whether the new file version is a major version
+	* @param dlVersionNumberIncrease the kind of version number increase to
+	apply for these changes.
 	* @param bytes the file's data (optionally <code>null</code>)
 	* @param serviceContext the service context to be applied. Can set the
 	asset category IDs, asset tag names, and expando bridge
@@ -509,8 +539,9 @@ public interface DLAppLocalService extends BaseLocalService {
 	*/
 	public FileEntry updateFileEntry(long userId, long fileEntryId,
 		String sourceFileName, String mimeType, String title,
-		String description, String changeLog, boolean majorVersion,
-		byte[] bytes, ServiceContext serviceContext) throws PortalException;
+		String description, String changeLog,
+		DLVersionNumberIncrease dlVersionNumberIncrease, byte[] bytes,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates a file entry and associated metadata based on a {@link File}
@@ -536,7 +567,8 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param description the file's new description
 	* @param changeLog the file's version change log (optionally
 	<code>null</code>)
-	* @param majorVersion whether the new file version is a major version
+	* @param dlVersionNumberIncrease the kind of version number increase to
+	apply for these changes.
 	* @param file the file's data (optionally <code>null</code>)
 	* @param serviceContext the service context to be applied. Can set the
 	asset category IDs, asset tag names, and expando bridge
@@ -548,7 +580,8 @@ public interface DLAppLocalService extends BaseLocalService {
 	*/
 	public FileEntry updateFileEntry(long userId, long fileEntryId,
 		String sourceFileName, String mimeType, String title,
-		String description, String changeLog, boolean majorVersion, File file,
+		String description, String changeLog,
+		DLVersionNumberIncrease dlVersionNumberIncrease, File file,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -575,7 +608,8 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param description the file's new description
 	* @param changeLog the file's version change log (optionally
 	<code>null</code>)
-	* @param majorVersion whether the new file version is a major version
+	* @param dlVersionNumberIncrease the kind of version number increase to
+	apply for these changes.
 	* @param is the file's data (optionally <code>null</code>)
 	* @param size the file's size (optionally <code>0</code>)
 	* @param serviceContext the service context to be applied. Can set the
@@ -588,9 +622,9 @@ public interface DLAppLocalService extends BaseLocalService {
 	*/
 	public FileEntry updateFileEntry(long userId, long fileEntryId,
 		String sourceFileName, String mimeType, String title,
-		String description, String changeLog, boolean majorVersion,
-		InputStream is, long size, ServiceContext serviceContext)
-		throws PortalException;
+		String description, String changeLog,
+		DLVersionNumberIncrease dlVersionNumberIncrease, InputStream is,
+		long size, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates a file rank to the existing file entry. This method is only

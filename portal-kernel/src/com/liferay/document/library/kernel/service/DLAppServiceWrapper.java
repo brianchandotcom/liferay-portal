@@ -286,6 +286,19 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #checkInFileEntry(long, DLVersionNumberIncrease, String, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public void checkInFileEntry(long fileEntryId, boolean majorVersion,
+		String changeLog,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppService.checkInFileEntry(fileEntryId, majorVersion, changeLog,
+			serviceContext);
+	}
+
+	/**
 	* Checks in the file entry. If a user has not checked out the specified
 	* file entry, invoking this method will result in no changes.
 	*
@@ -301,19 +314,21 @@ public class DLAppServiceWrapper implements DLAppService,
 	* </p>
 	*
 	* @param fileEntryId the primary key of the file entry to check in
-	* @param majorVersion whether the new file version is a major version
+	* @param dlVersionNumberIncrease the kind of version number increase to
+	apply for these changes.
 	* @param changeLog the file's version change log
 	* @param serviceContext the service context to be applied
 	* @see #cancelCheckOut(long)
 	* @see #checkOutFileEntry(long, ServiceContext)
 	*/
 	@Override
-	public void checkInFileEntry(long fileEntryId, boolean majorVersion,
+	public void checkInFileEntry(long fileEntryId,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
 		String changeLog,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppService.checkInFileEntry(fileEntryId, majorVersion, changeLog,
-			serviceContext);
+		_dlAppService.checkInFileEntry(fileEntryId, dlVersionNumberIncrease,
+			changeLog, serviceContext);
 	}
 
 	/**
@@ -1830,6 +1845,54 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, String, String, String, String, String, DLVersionNumberIncrease, byte[], ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		byte[] bytes,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.updateFileEntry(fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, bytes,
+			serviceContext);
+	}
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, String, String, String, String, String, DLVersionNumberIncrease, File, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.File file,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.updateFileEntry(fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, file,
+			serviceContext);
+	}
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, String, String, String, String, String, DLVersionNumberIncrease, InputStream, long, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.InputStream is, long size,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.updateFileEntry(fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, is, size,
+			serviceContext);
+	}
+
+	/**
 	* Updates a file entry and associated metadata based on a byte array
 	* object. If the file data is <code>null</code>, then only the associated
 	* metadata (i.e., <code>title</code>, <code>description</code>, and
@@ -1852,7 +1915,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param description the file's new description
 	* @param changeLog the file's version change log (optionally
 	<code>null</code>)
-	* @param majorVersion whether the new file version is a major version
+	* @param dlVersionNumberIncrease the kind of version number increase to
+	apply for these changes.
 	* @param bytes the file's data (optionally <code>null</code>)
 	* @param serviceContext the service context to be applied. Can set the
 	asset category IDs, asset tag names, and expando bridge
@@ -1865,13 +1929,14 @@ public class DLAppServiceWrapper implements DLAppService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
 		long fileEntryId, String sourceFileName, String mimeType, String title,
-		String description, String changeLog, boolean majorVersion,
+		String description, String changeLog,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
 		byte[] bytes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.updateFileEntry(fileEntryId, sourceFileName,
-			mimeType, title, description, changeLog, majorVersion, bytes,
-			serviceContext);
+			mimeType, title, description, changeLog, dlVersionNumberIncrease,
+			bytes, serviceContext);
 	}
 
 	/**
@@ -1897,7 +1962,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param description the file's new description
 	* @param changeLog the file's version change log (optionally
 	<code>null</code>)
-	* @param majorVersion whether the new file version is a major version
+	* @param dlVersionNumberIncrease the kind of version number increase to
+	apply for these changes.
 	* @param file the file's data (optionally <code>null</code>)
 	* @param serviceContext the service context to be applied. Can set the
 	asset category IDs, asset tag names, and expando bridge
@@ -1910,13 +1976,14 @@ public class DLAppServiceWrapper implements DLAppService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
 		long fileEntryId, String sourceFileName, String mimeType, String title,
-		String description, String changeLog, boolean majorVersion,
+		String description, String changeLog,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
 		java.io.File file,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.updateFileEntry(fileEntryId, sourceFileName,
-			mimeType, title, description, changeLog, majorVersion, file,
-			serviceContext);
+			mimeType, title, description, changeLog, dlVersionNumberIncrease,
+			file, serviceContext);
 	}
 
 	/**
@@ -1942,7 +2009,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param description the file's new description
 	* @param changeLog the file's version change log (optionally
 	<code>null</code>)
-	* @param majorVersion whether the new file version is a major version
+	* @param dlVersionNumberIncrease the kind of version number increase to
+	apply for these changes.
 	* @param is the file's data (optionally <code>null</code>)
 	* @param size the file's size (optionally <code>0</code>)
 	* @param serviceContext the service context to be applied. Can set the
@@ -1956,15 +2024,20 @@ public class DLAppServiceWrapper implements DLAppService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
 		long fileEntryId, String sourceFileName, String mimeType, String title,
-		String description, String changeLog, boolean majorVersion,
+		String description, String changeLog,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
 		java.io.InputStream is, long size,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.updateFileEntry(fileEntryId, sourceFileName,
-			mimeType, title, description, changeLog, majorVersion, is, size,
-			serviceContext);
+			mimeType, title, description, changeLog, dlVersionNumberIncrease,
+			is, size, serviceContext);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x),  As of Judson (7.1.x), replaced by {@link #updateFileEntryAndCheckIn(long, String, String, String, String, String, DLVersionNumberIncrease, File, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
 		long fileEntryId, String sourceFileName, String mimeType, String title,
@@ -1977,6 +2050,10 @@ public class DLAppServiceWrapper implements DLAppService,
 			majorVersion, file, serviceContext);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntryAndCheckIn(long, String, String, String, String, String, DLVersionNumberIncrease, InputStream, long, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
 		long fileEntryId, String sourceFileName, String mimeType, String title,
@@ -1987,6 +2064,32 @@ public class DLAppServiceWrapper implements DLAppService,
 		return _dlAppService.updateFileEntryAndCheckIn(fileEntryId,
 			sourceFileName, mimeType, title, description, changeLog,
 			majorVersion, is, size, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
+		java.io.File file,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.updateFileEntryAndCheckIn(fileEntryId,
+			sourceFileName, mimeType, title, description, changeLog,
+			dlVersionNumberIncrease, file, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
+		java.io.InputStream is, long size,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.updateFileEntryAndCheckIn(fileEntryId,
+			sourceFileName, mimeType, title, description, changeLog,
+			dlVersionNumberIncrease, is, size, serviceContext);
 	}
 
 	/**

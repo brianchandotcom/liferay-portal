@@ -23,14 +23,6 @@ public class RemoteGitBranch extends BaseGitBranch {
 		return _remoteRepository;
 	}
 
-	public String getRepositoryName() {
-		return _remoteRepository.getName();
-	}
-
-	public String getRepositoryUsername() {
-		return _remoteRepository.getUsername();
-	}
-
 	@Override
 	public String toString() {
 		RemoteRepository remoteRepository = getRemoteRepository();

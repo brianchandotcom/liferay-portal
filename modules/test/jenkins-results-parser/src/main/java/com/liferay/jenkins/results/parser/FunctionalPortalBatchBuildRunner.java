@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Properties;
+
 /**
  * @author Michael Hashimoto
  */
@@ -26,8 +28,12 @@ public class FunctionalPortalBatchBuildRunner extends PortalBatchBuildRunner {
 	}
 
 	private void _setPortalBuildProperties() {
-		portalBuildProperties.put("jsp.precompile", "on");
-		portalBuildProperties.put("jsp.precompile.parallel", "on");
+		Properties properties = new Properties();
+
+		properties.put("jsp.precompile", "on");
+		properties.put("jsp.precompile.parallel", "on");
+
+		portalRepositoryPropertiesFiles.setBuildProperties(properties);
 	}
 
 }

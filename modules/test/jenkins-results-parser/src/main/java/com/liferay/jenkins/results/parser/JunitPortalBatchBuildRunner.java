@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.Properties;
+
 /**
  * @author Michael Hashimoto
  */
@@ -63,9 +65,13 @@ public class JunitPortalBatchBuildRunner extends PortalBatchBuildRunner {
 			File otherPortalRepositoryDir =
 				otherPortalLocalRepository.getDirectory();
 
-			portalBuildProperties.put(
+			Properties properties = new Properties();
+
+			properties.put(
 				"release.versions.test.other.dir",
 				otherPortalRepositoryDir.toString());
+
+			portalRepositoryPropertiesFiles.setBuildProperties(properties);
 		}
 	}
 

@@ -66,7 +66,6 @@ public class PullRequest {
 	}
 
 	public Comment addComment(String body) {
-		body = body.replaceAll("\\\"", "\\\\\"");
 		body = body.replaceAll("(\\>)\\s+(\\<)", "$1$2");
 
 		JSONObject dataJSONObject = new JSONObject();

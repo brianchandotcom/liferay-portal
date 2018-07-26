@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL</td>
-	<td>//label[contains(.,'${key_contentName}')]//span[contains(@class,'custom-control-label-text')]</td>
+	<td>//label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>

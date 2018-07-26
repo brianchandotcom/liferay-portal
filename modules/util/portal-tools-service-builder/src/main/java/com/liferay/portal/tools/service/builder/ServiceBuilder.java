@@ -4434,16 +4434,13 @@ public class ServiceBuilder {
 			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
-	private Properties _getCompatProperties(String version) {
+	private Properties _getCompatProperties(String version) throws IOException {
 		Properties properties = new Properties();
 
 		try (InputStream is = ServiceBuilder.class.getResourceAsStream(
 				"dependencies/" + version + "/compatibility.properties")) {
 
 			properties.load(is);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
 		}
 
 		return properties;

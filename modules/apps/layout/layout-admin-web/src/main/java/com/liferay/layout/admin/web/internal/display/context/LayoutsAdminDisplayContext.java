@@ -946,8 +946,9 @@ public class LayoutsAdminDisplayContext {
 		if (isShowConfigureAction(layout)) {
 			jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
 
-			if (layout.getParentLayoutId() ==
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+			if ((layout.getParentLayoutId() ==
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) &&
+				(_getHomePagePlid(isPrivatePages()) != layout.getPlid())) {
 
 				jsonObject.put(
 					"markAsHomePageLayoutURL",

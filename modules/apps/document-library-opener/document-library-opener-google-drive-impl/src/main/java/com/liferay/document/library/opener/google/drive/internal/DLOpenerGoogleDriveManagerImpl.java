@@ -93,6 +93,43 @@ public class DLOpenerGoogleDriveManagerImpl
 	}
 
 	@Override
+	public DLOpenerGoogleDriveFileReference create(
+			long userId, FileEntry fileEntry)
+		throws PortalException {
+
+		try {
+			com.google.api.services.drive.model.File file =
+				new com.google.api.services.drive.model.File();
+
+			file.setMimeType(
+				DLOpenerGoogleDriveMimeTypes.
+					APPLICATION_VND_GOOGLE_APPS_DOCUMENT);
+			file.setName(fileEntry.getTitle());
+
+			Drive drive = new Drive.Builder(
+				_netHttpTransport, _jsonFactory, _getCredential(userId)
+			).build();
+
+			Drive.Files driveFiles = drive.files();
+
+			Drive.Files.Create driveFilesCreate = driveFiles.create(file);
+
+			com.google.api.services.drive.model.File uploadedFile =
+				driveFilesCreate.execute();
+
+			_dlOpenerFileEntryReferenceLocalService.
+				addDLOpenerFileEntryReference(
+					userId, uploadedFile.getId(), fileEntry);
+
+			return new DLOpenerGoogleDriveFileReference(
+				uploadedFile.getId(), fileEntry.getFileEntryId());
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
+		}
+	}
+
+	@Override
 	public void delete(long userId, FileEntry fileEntry)
 		throws PortalException {
 

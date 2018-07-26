@@ -30,6 +30,7 @@ import com.liferay.portlet.PublicRenderParametersPool;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -98,7 +99,7 @@ public abstract class StateAwareResponseImpl
 
 		for (String parameterName : parameterNames) {
 			if (!_mutableRenderParameters.isPublic(parameterName) ||
-				 _mutableRenderParameters.isMutated(parameterName)) {
+				_mutableRenderParameters.isMutated(parameterName)) {
 
 				renderParameterMap.put(
 					parameterName,
@@ -146,10 +147,6 @@ public abstract class StateAwareResponseImpl
 
 		_calledSetRenderParameter = false;
 
-		Set<String> publicRenderParameterNames = new LinkedHashSet<>();
-		RenderParameters renderParameters =
-			portletRequestImpl.getRenderParameters();
-
 		// Since Portlet 3.0 ActionURLs can contain private render parameters,
 		// it is necessary to populate the render parameter map with the render
 		// parameters found in the request.
@@ -158,7 +155,16 @@ public abstract class StateAwareResponseImpl
 
 		PortletApp portletApp = portlet.getPortletApp();
 
-		if (portletApp.getSpecMajorVersion() == 3) {
+		if (portletApp.getSpecMajorVersion() < 3) {
+			_mutableRenderParameters = new MutableRenderParametersImpl(
+				_params, Collections.emptySet());
+		}
+		else {
+			Set<String> publicRenderParameterNames = new LinkedHashSet<>();
+
+			RenderParameters renderParameters =
+				portletRequestImpl.getRenderParameters();
+
 			Set<String> renderParametersNames = renderParameters.getNames();
 
 			for (String renderParameterName : renderParametersNames) {
@@ -170,10 +176,10 @@ public abstract class StateAwareResponseImpl
 					renderParameterName,
 					renderParameters.getValues(renderParameterName));
 			}
-		}
 
-		_mutableRenderParameters = new MutableRenderParametersImpl(
-			_params, publicRenderParameterNames);
+			_mutableRenderParameters = new MutableRenderParametersImpl(
+				_params, publicRenderParameterNames);
+		}
 	}
 
 	public boolean isCalledSetRenderParameter() {

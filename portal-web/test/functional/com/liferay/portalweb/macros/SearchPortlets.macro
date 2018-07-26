@@ -34,13 +34,24 @@
 	</command>
 
 	<command name="configureDestination">
-		<execute function="Click" locator1="Search#SETUP_DESTINATION" />
+		<execute macro="SearchPortlets#gotoEmbeddedOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<if>
 			<isset var="destinationPage" />
 			<then>
+				<if>
+					<contains string="${destinationPage}" substring=" " />
+					<then>
+						<var method="StringUtil#replace('${destinationPage}', ' ', '-')" name="destinationPage" />
+					</then>
+				</if>
+
+				<var method="StringUtil#toLowerCase('${destinationPage}')" name="destinationPage" />
+
 				<execute function="Type" locator1="SearchBarConfiguration#DESTINATION_PAGE" value1="${destinationPage}" />
 			</then>
 		</if>

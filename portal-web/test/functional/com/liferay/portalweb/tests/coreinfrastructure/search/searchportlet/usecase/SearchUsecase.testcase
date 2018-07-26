@@ -121,7 +121,12 @@
 		</execute>
 	</command>
 
-	<command name="SearchAssetsScopeEverythingAcrossMultipleSites" priority="4">
+	<command name="SearchDifferentScopesViaNewSite" priority="4">
+		<description message="This test will set up a search page and search on a newly added site. It will also use different scopes to assert search results for assets from multiple sites" />
+
+		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
+		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />
@@ -190,29 +195,56 @@
 			<var name="entryTitle" value="Apple" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ClassicSearch#configureScope">
-			<var name="searchScope" value="Everything" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="ClassicSearch#search">
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Site 3 Home Page" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="inheritChanges" value="disable" />
+			<var name="pageName" value="Search Page" />
+			<var name="pageTemplateName" value="Search" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site 3 Home Page" />
+			<var name="siteName" value="Site Name 3" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureDestination">
+			<var name="destinationPage" value="Search Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="Apple" />
 		</execute>
 
-		<execute macro="ClassicSearch#viewSearchResultsPG">
-			<var name="searchAssetTitle" value="Apple" />
-			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchResultsPG">
-			<var name="searchAssetTitle" value="Apple" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchResultsPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="Apple" />
 			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="Apple/Web Content Article,Apple/Document" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureEmbeddedScope">
+			<var name="searchScope" value="Everything" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="Apple/Web Content Article,Apple/Document,Apple/Blogs Entry" />
+			<var name="searchTerm" value="Apple" />
 		</execute>
 	</command>
 

@@ -58,11 +58,6 @@
 	<td>//div[contains(@class,'portlet-options')]/a[contains(@id,'_SearchPortlet') and @title='Options']</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SETUP_DESTINATION</td>
-	<td>//a[.='Set up its destination to make it visible.']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

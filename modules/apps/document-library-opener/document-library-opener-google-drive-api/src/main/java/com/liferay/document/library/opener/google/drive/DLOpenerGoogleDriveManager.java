@@ -29,6 +29,10 @@ public interface DLOpenerGoogleDriveManager {
 			long userId, FileEntry fileEntry)
 		throws PortalException;
 
+	public DLOpenerGoogleDriveFileReference create(
+			long userId, FileEntry fileEntry)
+		throws PortalException;
+
 	public void delete(long userId, FileEntry fileEntry) throws PortalException;
 
 	public String getAuthorizationURL(String state, String redirectUri);

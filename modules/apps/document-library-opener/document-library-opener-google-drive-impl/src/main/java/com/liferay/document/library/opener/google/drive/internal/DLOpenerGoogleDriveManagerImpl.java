@@ -85,7 +85,8 @@ public class DLOpenerGoogleDriveManagerImpl
 					userId, uploadedFile.getId(), fileEntry);
 
 			return new DLOpenerGoogleDriveFileReference(
-				uploadedFile.getId(), fileEntry.getFileEntryId());
+				uploadedFile.getId(), fileEntry.getFileEntryId(),
+				fileEntry.getTitle());
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
@@ -122,7 +123,8 @@ public class DLOpenerGoogleDriveManagerImpl
 					userId, uploadedFile.getId(), fileEntry);
 
 			return new DLOpenerGoogleDriveFileReference(
-				uploadedFile.getId(), fileEntry.getFileEntryId());
+				uploadedFile.getId(), fileEntry.getFileEntryId(),
+				fileEntry.getTitle());
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
@@ -239,7 +241,8 @@ public class DLOpenerGoogleDriveManagerImpl
 			_checkCredential(userId);
 
 			return new DLOpenerGoogleDriveFileReference(
-				googleDriveFileId, fileEntry.getFileEntryId());
+				googleDriveFileId, fileEntry.getFileEntryId(),
+				fileEntry.getTitle());
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);

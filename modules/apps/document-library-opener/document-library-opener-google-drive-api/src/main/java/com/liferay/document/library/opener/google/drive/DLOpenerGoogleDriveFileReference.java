@@ -22,10 +22,11 @@ import com.liferay.petra.string.StringBundler;
 public class DLOpenerGoogleDriveFileReference {
 
 	public DLOpenerGoogleDriveFileReference(
-		String googleDriveFileId, long fileEntryId) {
+		String googleDriveFileId, long fileEntryId, String title) {
 
 		_googleDriveFileId = googleDriveFileId;
 		_fileEntryId = fileEntryId;
+		_title = title;
 	}
 
 	public long getFileEntryId() {
@@ -42,7 +43,12 @@ public class DLOpenerGoogleDriveFileReference {
 		return _googleDriveFileId;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
 	private final long _fileEntryId;
 	private final String _googleDriveFileId;
+	private final String _title;
 
 }

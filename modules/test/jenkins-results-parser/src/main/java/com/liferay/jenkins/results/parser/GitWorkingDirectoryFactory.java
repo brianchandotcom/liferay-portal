@@ -75,6 +75,21 @@ public class GitWorkingDirectoryFactory {
 		}
 	}
 
+	public static GitWorkingDirectory newGitWorkingDirectory(
+		String upstreamBranchName, String repositoryDirPath) {
+
+		return newGitWorkingDirectory(
+			upstreamBranchName, new File(repositoryDirPath), null);
+	}
+
+	public static GitWorkingDirectory newGitWorkingDirectory(
+		String upstreamBranchName, String repositoryDirPath,
+		String repositoryName) {
+
+		return newGitWorkingDirectory(
+			upstreamBranchName, new File(repositoryDirPath), repositoryName);
+	}
+
 	private static final Map<String, GitWorkingDirectory>
 		_gitWorkingDirectories = new HashMap<>();
 

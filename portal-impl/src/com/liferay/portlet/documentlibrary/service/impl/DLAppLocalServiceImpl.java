@@ -556,15 +556,15 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			return localRepository.getFileEntry(folderId, title);
 		}
 		catch (NoSuchFileEntryException nsfee) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsfee, nsfee);
+			if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				throw nsfee;
 			}
+
+			LocalRepository localRepository =
+				repositoryProvider.getFolderLocalRepository(folderId);
+
+			return localRepository.getFileEntry(folderId, title);
 		}
-
-		LocalRepository localRepository =
-			repositoryProvider.getFolderLocalRepository(folderId);
-
-		return localRepository.getFileEntry(folderId, title);
 	}
 
 	/**

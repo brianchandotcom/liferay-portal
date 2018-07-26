@@ -110,6 +110,17 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 			serviceContext.getUserId(), fileEntry);
 	}
 
+	private DLOpenerGoogleDriveFileReference _checkOutGoogleDriveFileEntry(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
+
+		return _dlOpenerGoogleDriveManager.checkOut(
+			serviceContext.getUserId(),
+			_dlAppService.getFileEntry(fileEntryId));
+	}
+
 	private void _executeCommand(ActionRequest actionRequest, long fileEntryId)
 		throws PortalException {
 
@@ -167,16 +178,23 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals(
 					 DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT)) {
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
+			try {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
 
-			_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
-
-			_saveDLOpenerGoogleDriveFileReference(
-				actionRequest,
-				_dlOpenerGoogleDriveManager.checkOut(
-					serviceContext.getUserId(),
-					_dlAppService.getFileEntry(fileEntryId)));
+				_saveDLOpenerGoogleDriveFileReference(
+					actionRequest,
+					TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> _checkOutGoogleDriveFileEntry(
+							fileEntryId, serviceContext)));
+			}
+			catch (PortalException pe) {
+				throw pe;
+			}
+			catch (Throwable throwable) {
+				throw new PortalException(throwable);
+			}
 		}
 		else if (cmd.equals(
 					 DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT)) {

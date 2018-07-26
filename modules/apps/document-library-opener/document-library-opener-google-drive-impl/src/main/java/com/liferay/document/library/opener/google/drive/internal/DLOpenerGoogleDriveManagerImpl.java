@@ -160,28 +160,6 @@ public class DLOpenerGoogleDriveManagerImpl
 		return _oAuth2Manager.getAuthorizationURL(state, redirectUri);
 	}
 
-	private File _getContentFile(long userId, FileEntry fileEntry) {
-		try {
-			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory, _getCredential(userId)
-			).build();
-
-			Drive.Files driveFiles = drive.files();
-
-			Drive.Files.Export driveFilesExport = driveFiles.export(
-				_getGoogleDriveFileId(fileEntry), fileEntry.getMimeType());
-
-			try (InputStream is =
-					driveFilesExport.executeMediaAsInputStream()) {
-
-				return FileUtil.createTempFile(is);
-			}
-		}
-		catch (IOException | PortalException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	@Override
 	public boolean hasValidCredential(long userId) throws IOException {
 		Credential credential = _oAuth2Manager.getCredential(userId);
@@ -256,6 +234,28 @@ public class DLOpenerGoogleDriveManagerImpl
 		throws IOException, PrincipalException {
 
 		_getCredential(userId);
+	}
+
+	private File _getContentFile(long userId, FileEntry fileEntry) {
+		try {
+			Drive drive = new Drive.Builder(
+				_netHttpTransport, _jsonFactory, _getCredential(userId)
+			).build();
+
+			Drive.Files driveFiles = drive.files();
+
+			Drive.Files.Export driveFilesExport = driveFiles.export(
+				_getGoogleDriveFileId(fileEntry), fileEntry.getMimeType());
+
+			try (InputStream is =
+					driveFilesExport.executeMediaAsInputStream()) {
+
+				return FileUtil.createTempFile(is);
+			}
+		}
+		catch (IOException | PortalException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private Credential _getCredential(long userId)

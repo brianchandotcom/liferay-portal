@@ -75,9 +75,9 @@ public class LocalRepository extends BaseRepository {
 
 		_upstreamBranchName = upstreamBranchName;
 
-		Properties repositoryProperties = _getRepositoryProperties();
+		Properties repositoryProperties = _getProperties();
 
-		String repositoryPropertyKey = getRepositoryPropertyKey();
+		String repositoryPropertyKey = getRepositoryDirPropertyKey();
 
 		if (repositoryProperties.containsKey(repositoryPropertyKey)) {
 			directory = new File(
@@ -96,9 +96,9 @@ public class LocalRepository extends BaseRepository {
 					" at ", directory.toString()));
 		}
 
-		File dotGit = new File(directory, ".git");
+		File dotGitFile = new File(directory, ".git");
 
-		if (!dotGit.exists()) {
+		if (!dotGitFile.exists()) {
 			throw new IllegalArgumentException(
 				directory + " is not a valid repository");
 		}
@@ -116,7 +116,7 @@ public class LocalRepository extends BaseRepository {
 		return _propertiesFilesMap.get(filePath);
 	}
 
-	protected String getRepositoryPropertyKey() {
+	protected String getRepositoryDirPropertyKey() {
 		return JenkinsResultsParserUtil.combine(
 			"repository.dir[", name, "/" + getUpstreamBranchName(), "]");
 	}
@@ -135,20 +135,19 @@ public class LocalRepository extends BaseRepository {
 
 	protected final File directory;
 
-	private static Properties _getRepositoryProperties() {
-		if (_repositoryProperties != null) {
-			return _repositoryProperties;
+	private static Properties _getProperties() {
+		if (_properties != null) {
+			return _properties;
 		}
 
-		File repositoryPropertiesFile = new File("repository.properties");
+		File propertiesFile = new File("repository.properties");
 
-		_repositoryProperties = JenkinsResultsParserUtil.getProperties(
-			repositoryPropertiesFile);
+		_properties = JenkinsResultsParserUtil.getProperties(propertiesFile);
 
-		return _repositoryProperties;
+		return _properties;
 	}
 
-	private static Properties _repositoryProperties;
+	private static Properties _properties;
 
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();

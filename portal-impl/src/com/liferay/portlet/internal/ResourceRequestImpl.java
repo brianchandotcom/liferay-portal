@@ -75,6 +75,11 @@ public class ResourceRequestImpl
 		return _portletAsyncContext;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * 	           RenderState#getRenderParameters()}
+	 */
+	@Deprecated
 	@Override
 	public Map<String, String[]> getPrivateRenderParameterMap() {
 		Map<String, String[]> privateRenderParameters = new HashMap<>();

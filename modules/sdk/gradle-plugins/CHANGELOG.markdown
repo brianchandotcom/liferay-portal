@@ -5232,6 +5232,14 @@ version 2.1.53.
 - [LPS-83761]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.236.
 
+## 3.12.88 - 2018-07-25
+
+### Changed
+- [LPS-83705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.219.
+- [LPS-83705]: Update the [Liferay Source Formatter] dependency to version
+1.0.692.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -5655,5 +5663,6 @@ version 1.0.236.
 [LPS-83483]: https://issues.liferay.com/browse/LPS-83483
 [LPS-83520]: https://issues.liferay.com/browse/LPS-83520
 [LPS-83576]: https://issues.liferay.com/browse/LPS-83576
+[LPS-83705]: https://issues.liferay.com/browse/LPS-83705
 [LPS-83761]: https://issues.liferay.com/browse/LPS-83761
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -62,56 +62,6 @@ public class GitWorkingDirectory {
 		return userName.substring(0, userName.indexOf("/"));
 	}
 
-	public GitWorkingDirectory(
-			String upstreamBranchName, String workingDirectoryPath)
-		throws IOException {
-
-		this(upstreamBranchName, workingDirectoryPath, null);
-	}
-
-	public GitWorkingDirectory(
-			String upstreamBranchName, String workingDirectoryPath,
-			String repositoryName)
-		throws IOException {
-
-		setWorkingDirectory(workingDirectoryPath);
-
-		_upstreamBranchName = upstreamBranchName;
-
-		Remote upstreamTempRemote = getRemote("upstream-temp");
-
-		if (upstreamTempRemote != null) {
-			removeRemote(upstreamTempRemote);
-		}
-
-		waitForIndexLock();
-
-		if ((repositoryName == null) || repositoryName.equals("")) {
-			repositoryName = loadRepositoryName();
-		}
-
-		_repositoryName = repositoryName;
-
-		if (_publicOnlyRepositoryNames.contains(_repositoryName)) {
-			setUpstreamRemoteToPublicRepository();
-		}
-		else {
-			if (_privateOnlyRepositoryNames.contains(_repositoryName)) {
-				setUpstreamRemoteToPrivateRepository();
-			}
-			else {
-				if (upstreamBranchName.equals("master")) {
-					setUpstreamRemoteToPublicRepository();
-				}
-				else {
-					setUpstreamRemoteToPrivateRepository();
-				}
-			}
-		}
-
-		_repositoryUsername = loadRepositoryUsername();
-	}
-
 	public Remote addRemote(
 		boolean force, String remoteName, String remoteURL) {
 
@@ -1587,6 +1537,56 @@ public class GitWorkingDirectory {
 		private final String _repositoryName;
 		private final String _username;
 
+	}
+
+	protected GitWorkingDirectory(
+			String upstreamBranchName, String workingDirectoryPath)
+		throws IOException {
+
+		this(upstreamBranchName, workingDirectoryPath, null);
+	}
+
+	protected GitWorkingDirectory(
+			String upstreamBranchName, String workingDirectoryPath,
+			String repositoryName)
+		throws IOException {
+
+		setWorkingDirectory(workingDirectoryPath);
+
+		_upstreamBranchName = upstreamBranchName;
+
+		Remote upstreamTempRemote = getRemote("upstream-temp");
+
+		if (upstreamTempRemote != null) {
+			removeRemote(upstreamTempRemote);
+		}
+
+		waitForIndexLock();
+
+		if ((repositoryName == null) || repositoryName.equals("")) {
+			repositoryName = loadRepositoryName();
+		}
+
+		_repositoryName = repositoryName;
+
+		if (_publicOnlyRepositoryNames.contains(_repositoryName)) {
+			setUpstreamRemoteToPublicRepository();
+		}
+		else {
+			if (_privateOnlyRepositoryNames.contains(_repositoryName)) {
+				setUpstreamRemoteToPrivateRepository();
+			}
+			else {
+				if (upstreamBranchName.equals("master")) {
+					setUpstreamRemoteToPublicRepository();
+				}
+				else {
+					setUpstreamRemoteToPrivateRepository();
+				}
+			}
+		}
+
+		_repositoryUsername = loadRepositoryUsername();
 	}
 
 	protected ExecutionResult executeBashCommands(

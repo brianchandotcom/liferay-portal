@@ -101,7 +101,13 @@
 			<var name="pageName" value="Staging Test Page" />
 		</execute>
 
-		<execute macro="JSONUser#addUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -136,7 +142,13 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="JSONUser#addUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="usereacr@liferay.com" />
 			<var name="userFirstName" value="userfncr" />
 			<var name="userLastName" value="userlncr" />
@@ -188,7 +200,13 @@
 			<var name="userScreenName" value="usersncr" />
 		</execute>
 
-		<execute macro="JSONUser#addUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="usereaoa@liferay.com" />
 			<var name="userFirstName" value="userfnoa" />
 			<var name="userLastName" value="userlnoa" />

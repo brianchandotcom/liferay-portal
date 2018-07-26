@@ -130,7 +130,13 @@
 			</execute>
 		</for>
 
-		<execute macro="JSONUser#addUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -282,7 +288,13 @@
 
 		<execute macro="Role#addStagingAdminRole" />
 
-		<execute macro="JSONUser#addUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -491,7 +503,13 @@
 
 		<execute macro="Role#addStagingAdminRole" />
 
-		<execute macro="JSONUser#addUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -854,7 +872,13 @@
 
 		<execute macro="Role#addStagingAdminRole" />
 
-		<execute macro="JSONUser#addUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -1186,7 +1210,13 @@
 			</execute>
 		</for>
 
-		<execute macro="JSONUser#addUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="contentcreator@liferay.com" />
 			<var name="userFirstName" value="userfncreator" />
 			<var name="userLastName" value="creator" />
@@ -1257,7 +1287,13 @@
 			<var name="roleTitle" value="Staging Admin" />
 		</execute>
 
-		<execute macro="JSONUser#addUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="contentapprover@liferay.com" />
 			<var name="userFirstName" value="userfnapprover" />
 			<var name="userLastName" value="approver" />
@@ -1477,7 +1513,13 @@
 
 		<execute macro="Role#addStagingAdminRole" />
 
-		<execute macro="JSONUser#addUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />

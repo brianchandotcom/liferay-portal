@@ -132,13 +132,6 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en_US" />
-			<var name="textIcon" value="English-United States" />
-		</execute>
-
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/language-test-page" />
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="locale" value="es_ES" />
 			<var name="textIcon" value="español-España" />
 		</execute>
@@ -192,13 +185,6 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en_US" />
-			<var name="textIcon" value="English-United States" />
-		</execute>
-
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/language-test-page" />
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="locale" value="es_ES" />
 			<var name="textIcon" value="español-España" />
 		</execute>
@@ -250,13 +236,6 @@
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Language Test Page" />
 		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en_US" />
-			<var name="textIcon" value="English-United States" />
-		</execute>
-
-		<execute function="AssertLocation" value1="${portalURL}/en/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="locale" value="es_ES" />

@@ -328,7 +328,7 @@
 
 		<for list="Single Approver,Workflow Definition Title" param="workflowDefinitionTitle">
 			<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="${workflowDefinitionTitle}">
-				<var name="unpublishedWorkflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+				<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 			</execute>
 		</for>
 

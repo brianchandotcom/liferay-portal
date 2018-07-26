@@ -316,7 +316,7 @@
 		</execute>
 
 		<execute macro="Page#viewSiteNameTranslationsPG">
-			<var name="locale" value="en-US" />
+			<var name="locale" value="en-us" />
 			<var name="siteName" value="Site Name" />
 			<var name="textIcon" value="English-United States" />
 		</execute>

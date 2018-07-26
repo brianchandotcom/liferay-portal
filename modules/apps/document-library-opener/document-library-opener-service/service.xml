@@ -25,6 +25,7 @@
 
 		<column name="referenceKey" type="String" uad-nonanomizable="true" />
 		<column name="fileEntryId" type="long" uad-nonanomizable="true" />
+		<column name="type" type="int" />
 
 		<!-- Finder methods -->
 

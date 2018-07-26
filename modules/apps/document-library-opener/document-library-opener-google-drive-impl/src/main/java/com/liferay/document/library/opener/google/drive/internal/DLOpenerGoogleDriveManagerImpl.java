@@ -86,7 +86,7 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			return new DLOpenerGoogleDriveFileReference(
 				uploadedFile.getId(), fileEntry.getFileEntryId(),
-				fileEntry.getTitle(), () -> getContentFile(userId, fileEntry));
+				fileEntry.getTitle(), () -> _getContentFile(userId, fileEntry));
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
@@ -124,7 +124,7 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			return new DLOpenerGoogleDriveFileReference(
 				uploadedFile.getId(), fileEntry.getFileEntryId(),
-				fileEntry.getTitle(), () -> getContentFile(userId, fileEntry));
+				fileEntry.getTitle(), () -> _getContentFile(userId, fileEntry));
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
@@ -160,7 +160,7 @@ public class DLOpenerGoogleDriveManagerImpl
 		return _oAuth2Manager.getAuthorizationURL(state, redirectUri);
 	}
 
-	public File getContentFile(long userId, FileEntry fileEntry) {
+	private File _getContentFile(long userId, FileEntry fileEntry) {
 		try {
 			Drive drive = new Drive.Builder(
 				_netHttpTransport, _jsonFactory, _getCredential(userId)
@@ -239,7 +239,7 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			return new DLOpenerGoogleDriveFileReference(
 				googleDriveFileId, fileEntry.getFileEntryId(),
-				fileEntry.getTitle(), () -> getContentFile(userId, fileEntry));
+				fileEntry.getTitle(), () -> _getContentFile(userId, fileEntry));
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);

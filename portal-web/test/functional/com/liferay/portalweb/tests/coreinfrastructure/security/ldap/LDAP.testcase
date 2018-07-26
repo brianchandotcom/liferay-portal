@@ -210,7 +210,7 @@
 		</execute> -->
 	</command>
 
-	<command name="ViewHiddenSecurityCredential" priority="4">
+	<command ignore="true" name="ViewHiddenSecurityCredential" priority="4">
 		<description message="This is a use case for LPS-73381." />
 
 		<property name="test.name.skip.portal.instance" value="LDAP#ViewHiddenSecurityCredential" />

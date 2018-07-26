@@ -183,12 +183,7 @@ public abstract class StateAwareResponseImpl
 	}
 
 	public boolean isCalledSetRenderParameter() {
-		LiferayMutablePortletParameters liferayMutablePortletParameters =
-			_mutableRenderParameters;
-
-		if (_calledSetRenderParameter ||
-			liferayMutablePortletParameters.isMutated()) {
-
+		if (_calledSetRenderParameter || _mutableRenderParameters.isMutated()) {
 			return true;
 		}
 

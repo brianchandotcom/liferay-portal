@@ -98,8 +98,7 @@ public abstract class StateAwareResponseImpl
 
 		for (String parameterName : parameterNames) {
 			if (!_mutableRenderParameters.isPublic(parameterName) ||
-				(_mutableRenderParameters.isPublic(parameterName) &&
-				 _mutableRenderParameters.isMutated(parameterName))) {
+				 _mutableRenderParameters.isMutated(parameterName)) {
 
 				renderParameterMap.put(
 					parameterName,

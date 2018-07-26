@@ -43,66 +43,58 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys
 	request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
 	request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
 	request.setAttribute("edit_message.jsp-category", category);
-	request.setAttribute("edit_message.jsp-editable", Boolean.TRUE);
+	request.setAttribute("edit_message.jsp-editable", !thread.isInTrash());
 	request.setAttribute("edit_message.jsp-message", message);
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
 
 	<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
-
-	<%
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD, Boolean.TRUE.toString());
-	%>
-
 </c:if>
 
-<c:if test="<%= message.getMessageId() != treeWalker.getRoot().getMessageId() %>">
+<%
+List messages = treeWalker.getMessages();
+int[] range = treeWalker.getChildrenRange(message);
 
-	<%
-	List messages = treeWalker.getMessages();
-	int[] range = treeWalker.getChildrenRange(message);
+depth++;
 
-	depth++;
+MBMessageIterator mbMessageIterator = new MBMessageIterator(messages, range[0], range[1]);
 
-	MBMessageIterator mbMessageIterator = new MBMessageIterator(messages, range[0], range[1]);
+while (mbMessageIterator.hasNext()) {
+	MBMessage curMessage = mbMessageIterator.next();
 
-	while (mbMessageIterator.hasNext()) {
-		MBMessage curMessage = mbMessageIterator.next();
-
-		if (!MBUtil.isViewableMessage(themeDisplay, curMessage, message)) {
-			continue;
-		}
-
-		boolean lastChildNode = false;
-
-		if (!mbMessageIterator.hasNext()) {
-			lastChildNode = true;
-		}
-
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(depth));
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-	%>
-
-		<div class="card-tab message-container">
-			<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
-		</div>
-
-	<%
+	if (!MBUtil.isViewableMessage(themeDisplay, curMessage, message)) {
+		continue;
 	}
+
+	boolean lastChildNode = false;
+
+	if (!mbMessageIterator.hasNext()) {
+		lastChildNode = true;
+	}
+
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(depth));
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
+%>
+
+	<div class="card-tab message-container">
+		<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
+	</div>
+
+<%
+}
+%>
+
+<c:if test="<%= !thread.isLocked() && !message.isDraft() && MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) %>">
+
+	<%
+	MBMessage curMessage = message;
+	long replyToMessageId = message.getMessageId();
 	%>
 
-	<c:if test="<%= !thread.isLocked() && !message.isDraft() && MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) %>">
-
-		<%
-		MBMessage curMessage = message;
-		long replyToMessageId = message.getMessageId();
-		%>
-
-		<%@ include file="/message_boards/edit_message_quick.jspf" %>
-	</c:if>
+	<%@ include file="/message_boards/edit_message_quick.jspf" %>
 </c:if>

@@ -68,7 +68,7 @@ if (portletTitleBasedNavigation) {
 					message="<%= StringPool.BLANK %>"
 					showWhenSingleIcon="<%= true %>"
 				>
-					<c:if test="<%= !thread.isLocked() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) %>">
+					<c:if test="<%= !thread.isLocked() && !thread.isInTrash() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) %>">
 
 						<%
 						MBMessage rootMessage = null;
@@ -97,7 +97,7 @@ if (portletTitleBasedNavigation) {
 						/>
 					</c:if>
 
-					<c:if test="<%= enableRSS && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
+					<c:if test="<%= enableRSS && !thread.isInTrash() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
 						<liferay-rss:rss
 							delta="<%= rssDelta %>"
 							displayStyle="<%= rssDisplayStyle %>"
@@ -106,7 +106,7 @@ if (portletTitleBasedNavigation) {
 						/>
 					</c:if>
 
-					<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.SUBSCRIBE) && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
+					<c:if test="<%= !thread.isInTrash() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.SUBSCRIBE) && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
 						<c:choose>
 							<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), MBThread.class.getName(), message.getThreadId()) %>">
 								<portlet:actionURL name="/message_boards/edit_message" var="unsubscribeURL">
@@ -135,7 +135,7 @@ if (portletTitleBasedNavigation) {
 						</c:choose>
 					</c:if>
 
-					<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.LOCK_THREAD) %>">
+					<c:if test="<%= !thread.isInTrash() && MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.LOCK_THREAD) %>">
 						<c:choose>
 							<c:when test="<%= thread.isLocked() %>">
 								<portlet:actionURL name="/message_boards/edit_message" var="unlockThreadURL">
@@ -164,7 +164,7 @@ if (portletTitleBasedNavigation) {
 						</c:choose>
 					</c:if>
 
-					<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.MOVE_THREAD) %>">
+					<c:if test="<%= !thread.isInTrash() && MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.MOVE_THREAD) %>">
 						<portlet:renderURL var="editThreadURL">
 							<portlet:param name="mvcRenderCommandName" value="/message_boards/move_thread" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -221,19 +221,15 @@ if (portletTitleBasedNavigation) {
 	<div class="card-tab-group message-container" id="<portlet:namespace />messageContainer">
 
 		<%
-		boolean viewableThread = false;
-
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, treeWalker.getRoot());
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD, Boolean.FALSE.toString());
+		request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
+		request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
+		request.setAttribute("edit_message.jsp-category", category);
+		request.setAttribute("edit_message.jsp-editable", Boolean.TRUE);
+		request.setAttribute("edit_message.jsp-message", message);
+		request.setAttribute("edit_message.jsp-thread", thread);
 		%>
 
-		<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
 
 		<%
 		int index = 0;
@@ -266,7 +262,6 @@ if (portletTitleBasedNavigation) {
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD, Boolean.FALSE.toString());
 		%>
 
 			<div class="card-tab message-container">
@@ -311,11 +306,7 @@ if (portletTitleBasedNavigation) {
 		</aui:form>
 	</c:if>
 
-	<%
-	viewableThread = GetterUtil.getBoolean((String)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD));
-	%>
-
-	<c:if test="<%= !viewableThread %>">
+	<c:if test="<%= !MBUtil.isViewableMessage(themeDisplay, rootMessage) %>">
 		<div class="alert alert-danger">
 			<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
 		</div>

@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.trash;
 
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,12 +41,15 @@ public class MBThreadTrashRendererFactory implements TrashRendererFactory {
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		MBThreadTrashRenderer mbThreadTrashRenderer = new MBThreadTrashRenderer(
-			thread);
+			thread, _assetHelper);
 
 		mbThreadTrashRenderer.setServletContext(_servletContext);
 
 		return mbThreadTrashRenderer;
 	}
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;

@@ -14,6 +14,8 @@
 
 package com.liferay.message.boards.web.internal.trash;
 
+import com.liferay.asset.constants.AssetWebKeys;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
@@ -42,11 +44,15 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 	public static final String TYPE = "message_thread";
 
-	public MBThreadTrashRenderer(MBThread thread) throws PortalException {
+	public MBThreadTrashRenderer(MBThread thread, AssetHelper assetHelper)
+		throws PortalException {
+
 		_thread = thread;
 
 		_rootMessage = MBMessageLocalServiceUtil.getMBMessage(
 			thread.getRootMessageId());
+
+		_assetHelper = assetHelper;
 	}
 
 	@Override
@@ -66,7 +72,7 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
-		return "/message_boards/view_thread_tree.jsp";
+		return "/message_boards/view_message_content.jsp";
 	}
 
 	@Override
@@ -99,7 +105,7 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 		MBMessageDisplay messageDisplay =
 			MBMessageServiceUtil.getMessageDisplay(
-				_rootMessage.getMessageId(), WorkflowConstants.STATUS_ANY);
+				_rootMessage.getMessageId(), WorkflowConstants.STATUS_IN_TRASH);
 
 		request.setAttribute(
 			WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY, messageDisplay);
@@ -124,9 +130,12 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD,
 			messageDisplay.getThread());
 
+		request.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
+
 		return super.include(request, response, template);
 	}
 
+	private final AssetHelper _assetHelper;
 	private final MBMessage _rootMessage;
 	private final MBThread _thread;
 

@@ -15,22 +15,20 @@
 package com.liferay.jenkins.results.parser;
 
 /**
- * @author Peter Yoo
+ * @author Michael Hashimoto
  */
-public class BaseRepository {
+public class GitBranchFactory {
 
-	public BaseRepository(String name) {
-		if ((name == null) || name.isEmpty()) {
-			throw new IllegalArgumentException("Name is null");
-		}
+	public static LocalGitBranch newLocalGitBranch(
+		LocalRepository localRepository, String name, String sha) {
 
-		this.name = name;
+		return new LocalGitBranch(localRepository, name, sha);
 	}
 
-	public String getName() {
-		return name;
-	}
+	public static RemoteGitBranch newRemoteGitBranch(
+		RemoteRepository remoteRepository, String name, String sha) {
 
-	protected final String name;
+		return new RemoteGitBranch(remoteRepository, name, sha);
+	}
 
 }

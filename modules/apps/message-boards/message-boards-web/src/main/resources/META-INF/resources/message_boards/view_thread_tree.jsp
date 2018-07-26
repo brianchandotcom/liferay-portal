@@ -49,11 +49,6 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys
 	%>
 
 	<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
-
-	<%
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD, Boolean.TRUE.toString());
-	%>
-
 </c:if>
 
 <%

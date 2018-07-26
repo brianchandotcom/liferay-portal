@@ -262,7 +262,6 @@ if (portletTitleBasedNavigation) {
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD, Boolean.FALSE.toString());
 		%>
 
 			<div class="card-tab message-container">
@@ -307,11 +306,7 @@ if (portletTitleBasedNavigation) {
 		</aui:form>
 	</c:if>
 
-	<%
-	boolean viewableThread = GetterUtil.getBoolean((String)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD));
-	%>
-
-	<c:if test="<%= !viewableThread %>">
+	<c:if test="<%= !MBUtil.isViewableMessage(themeDisplay, rootMessage) %>">
 		<div class="alert alert-danger">
 			<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
 		</div>

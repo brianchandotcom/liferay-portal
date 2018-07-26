@@ -128,7 +128,7 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 				groupId, privateLayout, copyLayout.getParentLayoutId(), nameMap,
 				new HashMap<>(), new HashMap<>(), copyLayout.getKeywordsMap(),
 				copyLayout.getRobotsMap(), copyLayout.getType(),
-				typeSettingsProperties.toString(), false, new HashMap<>(),
+				copyTypeSettingsProperties.toString(), false, new HashMap<>(),
 				serviceContext);
 
 			LayoutTypePortlet layoutTypePortlet =

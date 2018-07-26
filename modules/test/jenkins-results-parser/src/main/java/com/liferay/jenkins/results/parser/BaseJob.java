@@ -58,6 +58,6 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected String jobName;
-	protected Properties jobProperties;
+	protected final Properties jobProperties = new Properties();
 
 }

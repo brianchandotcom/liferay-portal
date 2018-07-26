@@ -27,7 +27,7 @@ public abstract class BaseJob implements Job {
 
 	@Override
 	public String getJobName() {
-		return jobName;
+		return _jobName;
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected BaseJob(String jobName) {
-		this.jobName = jobName;
+		_jobName = jobName;
 	}
 
 	protected Set<String> getSetFromString(String string) {
@@ -57,7 +57,8 @@ public abstract class BaseJob implements Job {
 		return set;
 	}
 
-	protected String jobName;
 	protected final Properties jobProperties = new Properties();
+
+	private final String _jobName;
 
 }

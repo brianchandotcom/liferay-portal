@@ -29,7 +29,7 @@ public abstract class RepositoryJob extends BaseJob {
 			return _branchName;
 		}
 
-		Matcher matcher = _jobNamePattern.matcher(jobName);
+		Matcher matcher = _jobNamePattern.matcher(getJobName());
 
 		if (matcher.find()) {
 			_branchName = matcher.group("branchName");

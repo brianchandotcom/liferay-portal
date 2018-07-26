@@ -16,6 +16,9 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory.Remote;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Peter Yoo
  */
@@ -24,22 +27,34 @@ public class RepositoryFactory {
 	public static LocalRepository getLocalRepository(
 		String repositoryName, String upstreamBranchName) {
 
+		String key = repositoryName + "/" + upstreamBranchName;
+
+		if (_localRepositories.containsKey(key)) {
+			return _localRepositories.get(key);
+		}
+
+		LocalRepository localRepository;
+
 		if (repositoryName.startsWith("com-liferay-")) {
-			return new SubrepositoryLocalRepository(
+			localRepository = new SubrepositoryLocalRepository(
+				repositoryName, upstreamBranchName);
+		}
+		else if (repositoryName.startsWith("liferay-plugins")) {
+			localRepository = new PluginsLocalRepository(
+				repositoryName, upstreamBranchName);
+		}
+		else if (repositoryName.startsWith("liferay-portal")) {
+			localRepository = new PortalLocalRepository(
+				repositoryName, upstreamBranchName);
+		}
+		else {
+			localRepository = new LocalRepository(
 				repositoryName, upstreamBranchName);
 		}
 
-		if (repositoryName.startsWith("liferay-plugins")) {
-			return new PluginsLocalRepository(
-				repositoryName, upstreamBranchName);
-		}
+		_localRepositories.put(key, localRepository);
 
-		if (repositoryName.startsWith("liferay-portal")) {
-			return new PortalLocalRepository(
-				repositoryName, upstreamBranchName);
-		}
-
-		return new LocalRepository(repositoryName, upstreamBranchName);
+		return _localRepositories.get(key);
 	}
 
 	public static RemoteRepository getRemoteRepository(Remote remote) {
@@ -61,5 +76,8 @@ public class RepositoryFactory {
 
 		return new RemoteRepository(hostname, repositoryName, username);
 	}
+
+	private static final Map<String, LocalRepository> _localRepositories =
+		new HashMap<>();
 
 }

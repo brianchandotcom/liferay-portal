@@ -80,6 +80,8 @@
 
 		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
 
+		<execute function="Click" locator1="TextInput#SUBJECT" />
+
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
 		<if>

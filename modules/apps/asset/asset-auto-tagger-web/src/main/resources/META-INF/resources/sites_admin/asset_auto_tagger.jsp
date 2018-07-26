@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetAutoTaggerConfiguration configuration = (AssetAutoTaggerConfiguration)request.getAttribute(AssetAutoTaggerConfiguration.class.getName());
+AssetAutoTaggerConfiguration assetAutoTaggerConfiguration = (AssetAutoTaggerConfiguration)request.getAttribute(AssetAutoTaggerConfiguration.class.getName());
 %>
 
-<aui:input helpMessage="site-asset-auto-tagging-help" id="enabled" label="enabled" name="TypeSettingsProperties--assetAutoTaggingEnabled--" type="toggle-switch" value="<%= configuration.isEnabled() %>" />
+<aui:input helpMessage="site-asset-auto-tagging-help" id="enabled" label="enabled" name="TypeSettingsProperties--assetAutoTaggingEnabled--" type="toggle-switch" value="<%= assetAutoTaggerConfiguration.isEnabled() %>" />

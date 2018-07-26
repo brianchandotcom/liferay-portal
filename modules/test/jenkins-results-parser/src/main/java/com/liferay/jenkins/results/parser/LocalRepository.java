@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -54,6 +56,16 @@ public class LocalRepository extends BaseRepository {
 		gitWorkingDirectory.clean();
 	}
 
+	public void writeRepositoryPropertiesFiles() {
+		for (Map.Entry<String, Properties> entry :
+				_propertiesFilesMap.entrySet()) {
+
+			JenkinsResultsParserUtil.writePropertiesFile(
+				new File(getDirectory(), entry.getKey()), entry.getValue(),
+				true);
+		}
+	}
+
 	protected LocalRepository(String name, String upstreamBranchName) {
 		super(name);
 
@@ -63,9 +75,9 @@ public class LocalRepository extends BaseRepository {
 
 		_upstreamBranchName = upstreamBranchName;
 
-		Properties repositoryProperties = _getRepositoryProperties();
+		Properties repositoryProperties = _getProperties();
 
-		String repositoryPropertyKey = getRepositoryPropertyKey();
+		String repositoryPropertyKey = getRepositoryDirPropertyKey();
 
 		if (repositoryProperties.containsKey(repositoryPropertyKey)) {
 			directory = new File(
@@ -84,9 +96,9 @@ public class LocalRepository extends BaseRepository {
 					" at ", directory.toString()));
 		}
 
-		File dotGit = new File(directory, ".git");
+		File dotGitFile = new File(directory, ".git");
 
-		if (!dotGit.exists()) {
+		if (!dotGitFile.exists()) {
 			throw new IllegalArgumentException(
 				directory + " is not a valid repository");
 		}
@@ -100,29 +112,45 @@ public class LocalRepository extends BaseRepository {
 		return getName();
 	}
 
-	protected String getRepositoryPropertyKey() {
+	protected Properties getProperties(String filePath) {
+		return _propertiesFilesMap.get(filePath);
+	}
+
+	protected String getRepositoryDirPropertyKey() {
 		return JenkinsResultsParserUtil.combine(
 			"repository.dir[", name, "/" + getUpstreamBranchName(), "]");
 	}
 
-	protected final File directory;
-
-	private static Properties _getRepositoryProperties() {
-		if (_repositoryProperties != null) {
-			return _repositoryProperties;
+	protected void setProperties(String filePath, Properties properties) {
+		if (!_propertiesFilesMap.containsKey(filePath)) {
+			_propertiesFilesMap.put(filePath, new Properties());
 		}
 
-		File repositoryPropertiesFile = new File("repository.properties");
+		Properties fileProperties = _propertiesFilesMap.get(filePath);
 
-		_repositoryProperties = JenkinsResultsParserUtil.getProperties(
-			repositoryPropertiesFile);
+		fileProperties.putAll(properties);
 
-		return _repositoryProperties;
+		_propertiesFilesMap.put(filePath, fileProperties);
 	}
 
-	private static Properties _repositoryProperties;
+	protected final File directory;
+
+	private static Properties _getProperties() {
+		if (_properties != null) {
+			return _properties;
+		}
+
+		File propertiesFile = new File("repository.properties");
+
+		_properties = JenkinsResultsParserUtil.getProperties(propertiesFile);
+
+		return _properties;
+	}
+
+	private static Properties _properties;
 
 	private final GitWorkingDirectory _gitWorkingDirectory;
+	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();
 	private final String _upstreamBranchName;
 
 }

@@ -39,21 +39,6 @@ import org.json.JSONObject;
  */
 public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
-	public PortalGitWorkingDirectory(
-			String upstreamBranchName, String workingDirectoryPath)
-		throws IOException {
-
-		super(upstreamBranchName, workingDirectoryPath);
-	}
-
-	public PortalGitWorkingDirectory(
-			String upstreamBranchName, String workingDirectoryPath,
-			String repositoryName)
-		throws IOException {
-
-		super(upstreamBranchName, workingDirectoryPath, repositoryName);
-	}
-
 	public List<File> getModifiedModuleDirsList() throws IOException {
 		return getModifiedModuleDirsList(null, null);
 	}
@@ -240,6 +225,21 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		}
 
 		return npmModuleDirsList;
+	}
+
+	protected PortalGitWorkingDirectory(
+			String upstreamBranchName, String workingDirectoryPath)
+		throws IOException {
+
+		super(upstreamBranchName, workingDirectoryPath);
+	}
+
+	protected PortalGitWorkingDirectory(
+			String upstreamBranchName, String workingDirectoryPath,
+			String repositoryName)
+		throws IOException {
+
+		super(upstreamBranchName, workingDirectoryPath, repositoryName);
 	}
 
 	@Override

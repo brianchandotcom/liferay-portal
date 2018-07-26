@@ -70,9 +70,10 @@ public class CentralSubrepository {
 
 		String tempBranchName = "temp-" + System.currentTimeMillis();
 
-		GitWorkingDirectory gitWorkingDirectory = new GitWorkingDirectory(
-			_subrepositoryUpstreamBranchName, _subrepositoryDirectory,
-			_subrepositoryName);
+		GitWorkingDirectory gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				_subrepositoryUpstreamBranchName, _subrepositoryDirectory,
+				_subrepositoryName);
 
 		GitWorkingDirectory.Branch localUpstreamBranch = null;
 		GitWorkingDirectory.Branch tempBranch = null;

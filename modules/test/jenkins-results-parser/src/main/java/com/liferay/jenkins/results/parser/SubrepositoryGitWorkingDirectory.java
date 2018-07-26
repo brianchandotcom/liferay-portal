@@ -22,14 +22,14 @@ import java.io.IOException;
  */
 public class SubrepositoryGitWorkingDirectory extends GitWorkingDirectory {
 
-	public SubrepositoryGitWorkingDirectory(
+	protected SubrepositoryGitWorkingDirectory(
 			String upstreamBranchName, String workingDirectoryPath)
 		throws IOException {
 
 		super(upstreamBranchName, workingDirectoryPath);
 	}
 
-	public SubrepositoryGitWorkingDirectory(
+	protected SubrepositoryGitWorkingDirectory(
 			String upstreamBranchName, String workingDirectoryPath,
 			String repositoryName)
 		throws IOException {

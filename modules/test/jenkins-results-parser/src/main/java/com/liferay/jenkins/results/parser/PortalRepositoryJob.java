@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.Set;
 
@@ -71,21 +70,17 @@ public abstract class PortalRepositoryJob
 	protected PortalRepositoryJob(String jobName) {
 		super(jobName);
 
-		try {
-			gitWorkingDirectory =
-				JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
-					getBranchName());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		gitWorkingDirectory =
+			JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
+				getBranchName());
 
 		setRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 
 		checkRepositoryDir();
 
-		jobProperties = JenkinsResultsParserUtil.getProperties(
-			new File(repositoryDir, "test.properties"));
+		jobProperties.putAll(
+			JenkinsResultsParserUtil.getProperties(
+				new File(repositoryDir, "test.properties")));
 	}
 
 }

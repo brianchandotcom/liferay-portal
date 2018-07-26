@@ -15,28 +15,24 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.IOException;
+
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
  */
-public class GitBisectToolJob extends PortalRepositoryJob {
+public class GitBisectToolJob extends BaseJob implements PortalTestClassJob {
 
 	public GitBisectToolJob(String jobName, String portalBranchName) {
 		super(jobName);
 
-		try {
-			_jenkinsGitWorkingDirectory =
-				JenkinsResultsParserUtil.getJenkinsGitWorkingDirectory();
+		_jenkinsGitWorkingDirectory =
+			JenkinsResultsParserUtil.getJenkinsGitWorkingDirectory();
 
-			_portalGitWorkingDirectory =
-				JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
-					portalBranchName);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to create a Git working directory", ioe);
-		}
+		_portalGitWorkingDirectory =
+			JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
+				portalBranchName);
 
 		jobProperties.putAll(
 			JenkinsResultsParserUtil.getProperties(
@@ -49,6 +45,16 @@ public class GitBisectToolJob extends PortalRepositoryJob {
 				new File(
 					_jenkinsGitWorkingDirectory.getWorkingDirectory(),
 					"commands/dependencies/git-bisect-tool.properties")));
+	}
+
+	@Override
+	public Set<String> getBatchNames() {
+		return Collections.emptySet();
+	}
+
+	@Override
+	public Set<String> getDistTypes() {
+		return Collections.emptySet();
 	}
 
 	public GitWorkingDirectory getJenkinsGitWorkingDirectory() {

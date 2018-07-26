@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
 
-	public PluginsGitWorkingDirectory(
+	protected PluginsGitWorkingDirectory(
 			String portalUpstreamBranchName, String workingDirectoryPath)
 		throws IOException {
 
@@ -31,7 +31,7 @@ public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
 			workingDirectoryPath);
 	}
 
-	public PluginsGitWorkingDirectory(
+	protected PluginsGitWorkingDirectory(
 			String portalUpstreamBranchName, String workingDirectoryPath,
 			String repositoryName)
 		throws IOException {

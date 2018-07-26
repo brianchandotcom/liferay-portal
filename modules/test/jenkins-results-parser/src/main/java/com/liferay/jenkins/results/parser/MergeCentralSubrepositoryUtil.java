@@ -41,7 +41,7 @@ public class MergeCentralSubrepositoryUtil {
 		throws IOException {
 
 		GitWorkingDirectory centralGitWorkingDirectory =
-			new GitWorkingDirectory(
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				centralUpstreamBranchName, centralWorkingDirectory);
 
 		File modulesDir = new File(

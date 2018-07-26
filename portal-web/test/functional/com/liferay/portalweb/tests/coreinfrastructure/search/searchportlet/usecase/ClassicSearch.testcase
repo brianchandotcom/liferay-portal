@@ -350,7 +350,6 @@
 		<execute macro="ClassicSearch#viewSearchNoPG">
 			<var name="searchAssetSummary" value="Blogs User Entry Content" />
 			<var name="searchAssetTitle" value="Blogs User Entry Title" />
-			<var name="searchAssetType" value="Blogs Entry" />
 		</execute>
 
 		<execute function="AssertClick" locator1="SearchResults#USER_FACET_ANY_USER" value1="Any User" />
@@ -366,7 +365,6 @@
 		<execute macro="ClassicSearch#viewSearchNoPG">
 			<var name="searchAssetSummary" value="Blogs Super Admin Entry Content" />
 			<var name="searchAssetTitle" value="Blogs Super Admin Entry Title" />
-			<var name="searchAssetType" value="Blogs Entry" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -387,9 +385,6 @@
 	</command>
 
 	<command name="SearchTwiceScopeEverything" priority="5">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
-		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -428,43 +423,42 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<execute macro="Navigator#openURL" />
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/guest/search" />
-		</execute>
-
-		<execute macro="SearchPortlets#configureEmbeddedScope">
+		<execute macro="ClassicSearch#configureScope">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchPortlets#configureWidgetScope">
-			<var name="searchScope" value="Everything" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
-			<var name="resultsList" value="userfn1 userln1/User,userfn2 userln2/User" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn1 userln1" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn2 userln2" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="usersn" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn1 userln1" />
+			<var name="searchAssetType" value="User" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
-			<var name="resultsList" value="userfn1 userln1/User,userfn2 userln2/User" />
-			<var name="searchTerm" value="usersn" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn2 userln2" />
+			<var name="searchAssetType" value="User" />
 		</execute>
 	</command>
 
 	<command name="SearchTwiceScopeLetUserChoose" priority="5">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
-		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -503,60 +497,78 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<execute macro="Navigator#openURL" />
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/guest/search" />
-		</execute>
-
-		<execute macro="SearchPortlets#configureWidgetScope">
+		<execute macro="ClassicSearch#configureScope">
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
-		<execute macro="SearchPortlets#selectWidgetScopeInput">
+		<execute macro="ClassicSearch#selectScopeInput">
 			<var name="searchScope" value="This Site" />
 		</execute>
 
-		<execute macro="SearchPortlets#searchWidget">
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetTitle" value="userfn2 userln2" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
-			<var name="searchAssetTitle" value="userfn2 userln2" />
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
 		</execute>
 
-		<execute macro="SearchPortlets#selectWidgetScopeInput">
+		<execute macro="ClassicSearch#viewSearchNoPG">
+			<var name="searchAssetTitle" value="userfn2 userln2" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ClassicSearch#selectScopeInput">
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchPortlets#searchWidget">
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn2 userln2" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
+		<execute macro="ClassicSearch#viewSearchResultPG">
+			<var name="searchAssetTitle" value="userfn1 userln1" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetTitle" value="userfn2 userln2" />
 			<var name="searchAssetType" value="User" />
-			<var name="searchTerm" value="usersn" />
 		</execute>
 	</command>
 
 	<command name="SearchTwiceScopeThisSite" priority="5">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
-		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -595,44 +607,36 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<execute macro="Navigator#openURL" />
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/guest/search" />
-		</execute>
-
-		<execute macro="SearchPortlets#configureWidgetScope">
+		<execute macro="ClassicSearch#configureScope">
 			<var name="searchScope" value="This Site" />
 		</execute>
 
-		<execute macro="SearchPortlets#searchEmbedded">
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
-			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
+		<execute macro="ClassicSearch#viewSearchNoPG">
 			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchAssetType" value="User" />
 		</execute>
 
-		<execute macro="SearchPortlets#searchEmbedded">
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
-			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
+		<execute macro="ClassicSearch#viewSearchNoPG">
 			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchAssetType" value="User" />
 		</execute>
 	</command>
 
@@ -652,8 +656,9 @@
 			<var name="searchTerm" value="Document" />
 		</execute>
 
-		<execute macro="ClassicSearch#viewSearchAssetTitle">
+		<execute macro="ClassicSearch#viewSearchResultPG">
 			<var name="searchAssetTitle" value="DM Document Title 1" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 
 		<execute macro="ClassicSearch#gotoSearchResultPG">

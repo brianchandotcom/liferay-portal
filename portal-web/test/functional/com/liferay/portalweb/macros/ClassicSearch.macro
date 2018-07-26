@@ -84,6 +84,21 @@
 		<execute function="KeyPress" locator1="Search#CLASSIC_SEARCH_BAR" value1="\RETURN" />
 	</command>
 
+	<command name="selectScopeInput">
+		<if>
+			<or>
+				<equals arg1="${searchScope}" arg2="Everything" />
+				<equals arg1="${searchScope}" arg2="This Site" />
+			</or>
+			<then>
+				<execute function="Select" locator1="Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT" value1="${searchScope}" />
+			</then>
+			<else>
+				<fail message="Invalid search scope. Must be (Everything|This Site)." />
+			</else>
+		</if>
+	</command>
+
 	<command name="unscopeAssetFacetPG">
 		<execute function="Click" locator1="SearchResults#ASSET_TYPE_FACET_ANY_ASSET" />
 	</command>
@@ -141,20 +156,6 @@
 	</command>
 
 	<command name="viewSearchResultPG">
-		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#ASSET_ENTRY_TABLE_TYPE" value1="${searchAssetType}" />
-
-		<if>
-			<isset var="searchAssetSummary" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewSearchResultsPG">
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 		<var name="key_searchAssetType" value="${searchAssetType}" />
 

@@ -7,5 +7,6 @@ create table DLOpenerFileEntryReference (
 	createDate DATE null,
 	modifiedDate DATE null,
 	referenceKey VARCHAR(75) null,
-	fileEntryId LONG
+	fileEntryId LONG,
+	type_ INTEGER
 );

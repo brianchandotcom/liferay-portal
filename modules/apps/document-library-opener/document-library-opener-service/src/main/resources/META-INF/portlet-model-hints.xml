@@ -11,5 +11,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="referenceKey" type="String" />
 		<field name="fileEntryId" type="long" />
+		<field name="type" type="int" />
 	</model>
 </model-hints>

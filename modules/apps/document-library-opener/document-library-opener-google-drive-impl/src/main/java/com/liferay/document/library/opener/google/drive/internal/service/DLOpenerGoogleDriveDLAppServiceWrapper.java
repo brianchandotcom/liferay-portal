@@ -121,7 +121,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		try {
 			updateFileEntry(
 				fileEntry.getFileEntryId(), fileEntry.getFileName(),
-				fileEntry.getMimeType(), fileEntry.getTitle(),
+				fileEntry.getMimeType(),
+				dlOpenerGoogleDriveFileReference.getTitle(),
 				fileEntry.getDescription(), StringPool.BLANK, false, file,
 				serviceContext);
 		}

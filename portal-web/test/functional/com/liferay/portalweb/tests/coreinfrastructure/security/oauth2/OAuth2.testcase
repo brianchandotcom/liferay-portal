@@ -204,7 +204,7 @@
 
 		<var name="curl"><![CDATA[
 			${portalURL}/o/oauth2/token \
-				--data grant_type=client_credentials&amp;client_id=${generatedClientId}&amp;client_secret=${generatedClientSecret}
+				--data grant_type=client_credentials&client_id=${generatedClientId}&client_secret=${generatedClientSecret}
 		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">

@@ -43,6 +43,14 @@ public class RemoteRepository extends BaseRepository {
 
 		super(repositoryName);
 
+		if ((hostname == null) || hostname.isEmpty()) {
+			throw new IllegalArgumentException("hostname is null");
+		}
+
+		if ((username == null) || username.isEmpty()) {
+			throw new IllegalArgumentException("username is null");
+		}
+
 		this.hostname = hostname;
 		this.username = username;
 	}

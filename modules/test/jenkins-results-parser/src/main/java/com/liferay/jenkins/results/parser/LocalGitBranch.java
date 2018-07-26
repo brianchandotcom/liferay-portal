@@ -50,6 +50,10 @@ public class LocalGitBranch extends BaseGitBranch {
 
 		super(name, sha);
 
+		if (localRepository == null) {
+			throw new IllegalArgumentException("localRepository is null");
+		}
+
 		_localRepository = localRepository;
 	}
 

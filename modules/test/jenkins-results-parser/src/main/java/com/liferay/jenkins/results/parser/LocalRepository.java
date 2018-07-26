@@ -57,6 +57,10 @@ public class LocalRepository extends BaseRepository {
 	protected LocalRepository(String name, String upstreamBranchName) {
 		super(name);
 
+		if ((upstreamBranchName == null) || upstreamBranchName.isEmpty()) {
+			throw new IllegalArgumentException("upstreamBranchName is null");
+		}
+
 		_upstreamBranchName = upstreamBranchName;
 
 		Properties repositoryProperties = _getRepositoryProperties();

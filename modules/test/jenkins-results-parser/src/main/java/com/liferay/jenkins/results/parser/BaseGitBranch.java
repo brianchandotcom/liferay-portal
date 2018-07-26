@@ -28,6 +28,14 @@ public abstract class BaseGitBranch {
 	}
 
 	protected BaseGitBranch(String name, String sha) {
+		if ((name == null) || name.isEmpty()) {
+			throw new IllegalArgumentException("name is null");
+		}
+
+		if ((sha == null) || sha.isEmpty()) {
+			throw new IllegalArgumentException("sha is null");
+		}
+
 		_name = name;
 		_sha = sha;
 	}

@@ -20,7 +20,7 @@ package com.liferay.jenkins.results.parser;
 public class BaseRepository {
 
 	public BaseRepository(String name) {
-		if (name == null) {
+		if ((name == null) || name.isEmpty()) {
 			throw new IllegalArgumentException("Name is null");
 		}
 

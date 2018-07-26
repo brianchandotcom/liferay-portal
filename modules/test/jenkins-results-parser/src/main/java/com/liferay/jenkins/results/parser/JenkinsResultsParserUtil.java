@@ -752,15 +752,11 @@ public class JenkinsResultsParserUtil {
 		return Float.parseFloat(matcher.group(1));
 	}
 
-	public static GitWorkingDirectory getJenkinsGitWorkingDirectory()
-		throws IOException {
+	public static GitWorkingDirectory getJenkinsGitWorkingDirectory() {
+		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
+			"liferay-jenkins-ee", "master");
 
-		Properties buildProperties = getBuildProperties();
-
-		String workingDirectoryPath = buildProperties.getProperty(
-			"base.repository.dir") + "/liferay-jenkins-ee";
-
-		return new GitWorkingDirectory("master", workingDirectoryPath);
+		return localRepository.getGitWorkingDirectory();
 	}
 
 	public static List<JenkinsMaster> getJenkinsMasters(
@@ -972,22 +968,21 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static PortalGitWorkingDirectory getPortalGitWorkingDirectory(
-			String portalBranchName)
-		throws IOException {
+		String portalBranchName) {
 
-		Properties buildProperties = getBuildProperties();
-
-		String workingDirectoryPath =
-			buildProperties.getProperty("base.repository.dir") +
-				"/liferay-portal";
+		String portalRepositoryName = "liferay-portal";
 
 		if (!portalBranchName.equals("master")) {
-			workingDirectoryPath = combine(
-				workingDirectoryPath, "-", portalBranchName);
+			portalRepositoryName += "-ee";
 		}
 
-		return new PortalGitWorkingDirectory(
-			portalBranchName, workingDirectoryPath);
+		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
+			portalRepositoryName, portalBranchName);
+
+		GitWorkingDirectory gitWorkingDirectory =
+			localRepository.getGitWorkingDirectory();
+
+		return (PortalGitWorkingDirectory)gitWorkingDirectory;
 	}
 
 	public static Properties getProperties(File... propertiesFiles) {

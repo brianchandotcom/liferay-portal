@@ -55,7 +55,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -224,6 +223,11 @@ public class CustomSQLImpl implements CustomSQL {
 					return null;
 				}
 
+				CustomSQLContainer customSQLContainer = new CustomSQLContainer(
+					classLoader);
+
+				_containerPool.put(classLoader, customSQLContainer);
+
 				return classLoader;
 			}
 
@@ -232,7 +236,7 @@ public class CustomSQLImpl implements CustomSQL {
 				Bundle bundle, BundleEvent bundleEvent,
 				ClassLoader classLoader) {
 
-				_sqlPool.remove(classLoader);
+				_containerPool.remove(classLoader);
 			}
 
 		};
@@ -278,13 +282,14 @@ public class CustomSQLImpl implements CustomSQL {
 
 	@Override
 	public String get(Class<?> clazz, String id) {
-		Map<String, String> sqls = _sqlPool.get(FrameworkUtil.getBundle(clazz));
+		CustomSQLContainer customSQLContainer = _containerPool.get(
+			clazz.getClassLoader());
 
-		if (sqls == null) {
-			sqls = _loadCustomSQL(clazz.getClassLoader());
+		if (customSQLContainer != null) {
+			return customSQLContainer.get(id);
 		}
 
-		return sqls.get(id);
+		return null;
 	}
 
 	@Override
@@ -892,8 +897,6 @@ public class CustomSQLImpl implements CustomSQL {
 		try {
 			_read(classLoader, "custom-sql/default.xml", sqls);
 			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
-
-			_sqlPool.put(classLoader, sqls);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -964,6 +967,8 @@ public class CustomSQLImpl implements CustomSQL {
 	private static final Log _log = LogFactoryUtil.getLog(CustomSQLImpl.class);
 
 	private BundleTracker<ClassLoader> _bundleTracker;
+	private final Map<ClassLoader, CustomSQLContainer> _containerPool =
+		new ConcurrentHashMap<>();
 	private String _functionIsNotNull;
 	private String _functionIsNull;
 
@@ -973,8 +978,6 @@ public class CustomSQLImpl implements CustomSQL {
 	@Reference
 	private Portal _portal;
 
-	private final Map<ClassLoader, Map<String, String>> _sqlPool =
-		new ConcurrentHashMap<>();
 	private boolean _vendorDB2;
 	private boolean _vendorHSQL;
 	private boolean _vendorInformix;
@@ -982,5 +985,28 @@ public class CustomSQLImpl implements CustomSQL {
 	private boolean _vendorOracle;
 	private boolean _vendorPostgreSQL;
 	private boolean _vendorSybase;
+
+	private class CustomSQLContainer {
+
+		public String get(String id) {
+			Map<String, String> tempSqlPool = _sqlPool;
+
+			if (tempSqlPool == null) {
+				tempSqlPool = _loadCustomSQL(_classLoader);
+
+				_sqlPool = tempSqlPool;
+			}
+
+			return tempSqlPool.get(id);
+		}
+
+		private CustomSQLContainer(ClassLoader classLoader) {
+			_classLoader = classLoader;
+		}
+
+		private final ClassLoader _classLoader;
+		private volatile Map<String, String> _sqlPool;
+
+	}
 
 }

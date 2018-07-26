@@ -462,38 +462,13 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		StringBundler sb, String entityAlias,
 		OrderByComparator<T> orderByComparator, boolean sqlQuery) {
 
-		sb.append(ORDER_BY_CLAUSE);
+		com.liferay.petra.string.StringBundler petraSB =
+			new com.liferay.petra.string.StringBundler(sb.getStrings());
 
-		String[] orderByFields = orderByComparator.getOrderByFields();
+		petraSB.setIndex(sb.index());
 
-		int length = orderByFields.length;
-
-		if ((_databaseOrderByMaxColumns > 0) &&
-			(_databaseOrderByMaxColumns < length)) {
-
-			length = _databaseOrderByMaxColumns;
-		}
-
-		for (int i = 0; i < length; i++) {
-			sb.append(getColumnName(entityAlias, orderByFields[i], sqlQuery));
-
-			if ((i + 1) < length) {
-				if (orderByComparator.isAscending(orderByFields[i])) {
-					sb.append(ORDER_BY_ASC_HAS_NEXT);
-				}
-				else {
-					sb.append(ORDER_BY_DESC_HAS_NEXT);
-				}
-			}
-			else {
-				if (orderByComparator.isAscending(orderByFields[i])) {
-					sb.append(ORDER_BY_ASC);
-				}
-				else {
-					sb.append(ORDER_BY_DESC);
-				}
-			}
-		}
+		appendOrderByComparator(
+			petraSB, entityAlias, orderByComparator, sqlQuery);
 	}
 
 	protected ClassLoader getClassLoader() {

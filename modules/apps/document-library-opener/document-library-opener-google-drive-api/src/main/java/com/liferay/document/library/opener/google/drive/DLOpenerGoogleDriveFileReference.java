@@ -17,6 +17,7 @@ package com.liferay.document.library.opener.google.drive;
 import com.liferay.petra.string.StringBundler;
 
 import java.io.File;
+
 import java.util.function.Supplier;
 
 /**
@@ -25,12 +26,12 @@ import java.util.function.Supplier;
 public class DLOpenerGoogleDriveFileReference {
 
 	public DLOpenerGoogleDriveFileReference(
-		String googleDriveFileId, long fileEntryId, String title,
-		Supplier<File> fileSupplier) {
+		String googleDriveFileId, long fileEntryId,
+		Supplier<String> titleSupplier, Supplier<File> fileSupplier) {
 
 		_googleDriveFileId = googleDriveFileId;
 		_fileEntryId = fileEntryId;
-		_title = title;
+		_titleSupplier = titleSupplier;
 		_fileSupplier = fileSupplier;
 	}
 
@@ -53,12 +54,12 @@ public class DLOpenerGoogleDriveFileReference {
 	}
 
 	public String getTitle() {
-		return _title;
+		return _titleSupplier.get();
 	}
 
 	private final long _fileEntryId;
 	private final Supplier<File> _fileSupplier;
 	private final String _googleDriveFileId;
-	private final String _title;
+	private final Supplier<String> _titleSupplier;
 
 }

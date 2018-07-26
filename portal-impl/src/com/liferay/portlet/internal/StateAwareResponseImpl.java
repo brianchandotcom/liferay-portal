@@ -338,12 +338,14 @@ public abstract class StateAwareResponseImpl
 
 			for (Map.Entry<String, String[]> entry : params.entrySet()) {
 				String key = entry.getKey();
-				String[] value = entry.getValue();
 
 				if (key == null) {
 					throw new IllegalArgumentException();
 				}
-				else if (value == null) {
+
+				String[] value = entry.getValue();
+
+				if (value == null) {
 					throw new IllegalArgumentException();
 				}
 

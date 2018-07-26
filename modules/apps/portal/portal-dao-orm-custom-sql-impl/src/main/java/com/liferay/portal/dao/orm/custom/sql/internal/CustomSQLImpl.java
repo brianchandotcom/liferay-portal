@@ -56,10 +56,12 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.SynchronousBundleListener;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.BundleTracker;
 
 /**
  * @author Brian Wing Shun Chan
@@ -93,7 +95,7 @@ public class CustomSQLImpl implements CustomSQL {
 		"CONVERT(VARCHAR,?) IS NULL";
 
 	@Activate
-	public void activate() throws SQLException {
+	public void activate(BundleContext bundleContext) throws SQLException {
 		_portal.initCustomSQL();
 
 		Connection con = DataAccess.getConnection();
@@ -203,23 +205,36 @@ public class CustomSQLImpl implements CustomSQL {
 			DataAccess.cleanUp(con);
 		}
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+		_bundleTracker = new BundleTracker<Bundle>(
+			bundleContext, Bundle.ACTIVE, null) {
 
-		BundleContext bundleContext = bundle.getBundleContext();
+			@Override
+			public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-		bundleContext.addBundleListener(
-			new SynchronousBundleListener() {
+				ClassLoader classLoader = bundleWiring.getClassLoader();
 
-				@Override
-				public void bundleChanged(BundleEvent bundleEvent) {
-					if ((bundleEvent.getType() == BundleEvent.UNINSTALLED) ||
-						(bundleEvent.getType() == BundleEvent.UPDATED)) {
+				if ((classLoader.getResource("custom-sql/default.xml") ==
+						null) &&
+					(classLoader.getResource(
+						"META-INF/custom-sql/default.xml") == null)) {
 
-						_sqlPool.remove(bundleEvent.getBundle());
-					}
+					return null;
 				}
 
-			});
+				return bundle;
+			}
+
+			@Override
+			public void removedBundle(
+				Bundle bundle, BundleEvent bundleEvent, Bundle trackedBundle) {
+
+				_sqlPool.remove(trackedBundle);
+			}
+
+		};
+
+		_bundleTracker.open();
 	}
 
 	@Override
@@ -251,6 +266,11 @@ public class CustomSQLImpl implements CustomSQL {
 		}
 
 		return sql.concat(criteria);
+	}
+
+	@Deactivate
+	public void deactive() {
+		_bundleTracker.close();
 	}
 
 	@Override
@@ -942,6 +962,7 @@ public class CustomSQLImpl implements CustomSQL {
 
 	private static final Log _log = LogFactoryUtil.getLog(CustomSQLImpl.class);
 
+	private BundleTracker<Bundle> _bundleTracker;
 	private String _functionIsNotNull;
 	private String _functionIsNull;
 

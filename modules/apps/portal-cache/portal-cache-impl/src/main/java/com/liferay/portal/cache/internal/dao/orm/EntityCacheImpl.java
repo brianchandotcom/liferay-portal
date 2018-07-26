@@ -74,9 +74,7 @@ public class EntityCacheImpl
 
 		PortalCache<?, ?> portalCache = getPortalCache(clazz);
 
-		if (portalCache != null) {
-			portalCache.removeAll();
-		}
+		portalCache.removeAll();
 	}
 
 	@Override

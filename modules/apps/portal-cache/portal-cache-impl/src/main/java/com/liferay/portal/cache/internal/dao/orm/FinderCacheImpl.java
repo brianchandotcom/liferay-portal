@@ -82,9 +82,7 @@ public class FinderCacheImpl
 
 		PortalCache<?, ?> portalCache = _getPortalCache(className);
 
-		if (portalCache != null) {
-			portalCache.removeAll();
-		}
+		portalCache.removeAll();
 	}
 
 	@Override

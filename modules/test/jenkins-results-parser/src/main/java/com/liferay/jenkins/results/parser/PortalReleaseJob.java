@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Set;
@@ -31,23 +30,18 @@ public class PortalReleaseJob
 
 		_portalBranchName = portalBranchName;
 
-		try {
-			_jenkinsGitWorkingDirectory =
-				JenkinsResultsParserUtil.getJenkinsGitWorkingDirectory();
+		_jenkinsGitWorkingDirectory =
+			JenkinsResultsParserUtil.getJenkinsGitWorkingDirectory();
 
-			_portalGitWorkingDirectory =
-				JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
-					portalBranchName);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to create a Git working directory", ioe);
-		}
+		_portalGitWorkingDirectory =
+			JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
+				portalBranchName);
 
-		jobProperties = JenkinsResultsParserUtil.getProperties(
-			new File(
-				_portalGitWorkingDirectory.getWorkingDirectory(),
-				"test.properties"));
+		jobProperties.putAll(
+			JenkinsResultsParserUtil.getProperties(
+				new File(
+					_portalGitWorkingDirectory.getWorkingDirectory(),
+					"test.properties")));
 
 		jobProperties.putAll(
 			JenkinsResultsParserUtil.getProperties(

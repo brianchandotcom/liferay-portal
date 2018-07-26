@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.Set;
 
@@ -28,21 +27,14 @@ public class PortalUpstreamJob
 	public PortalUpstreamJob(String jobName) {
 		super(jobName);
 
-		try {
-			GitWorkingDirectory jenkinsGitWorkingDirectory =
-				JenkinsResultsParserUtil.getJenkinsGitWorkingDirectory();
+		GitWorkingDirectory jenkinsGitWorkingDirectory =
+			JenkinsResultsParserUtil.getJenkinsGitWorkingDirectory();
 
-			jobProperties.putAll(
-				JenkinsResultsParserUtil.getProperties(
-					new File(
-						jenkinsGitWorkingDirectory.getWorkingDirectory(),
-						"commands/dependencies" +
-							"/test-upstream-batch.properties")));
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to create a Git working directory", ioe);
-		}
+		jobProperties.putAll(
+			JenkinsResultsParserUtil.getProperties(
+				new File(
+					jenkinsGitWorkingDirectory.getWorkingDirectory(),
+					"commands/dependencies/test-upstream-batch.properties")));
 	}
 
 	@Override

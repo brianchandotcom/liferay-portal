@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,18 +49,8 @@ public abstract class RepositoryJob extends BaseJob {
 
 		checkRepositoryDir();
 
-		try {
-			gitWorkingDirectory = new GitWorkingDirectory(
-				getBranchName(), repositoryDir.getAbsolutePath());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to create Git working directory for branch ",
-					getBranchName(), " in repository ",
-					repositoryDir.getAbsolutePath()),
-				ioe);
-		}
+		gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(
+			getBranchName(), repositoryDir.getAbsolutePath());
 
 		return gitWorkingDirectory;
 	}

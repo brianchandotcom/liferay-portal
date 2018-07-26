@@ -48,23 +48,17 @@ public class PortalBatchBuildRunner extends BatchBuildRunner {
 
 		portalLocalRepository = (PortalLocalRepository)primaryLocalRepository;
 
-		portalRepositoryPropertiesFiles = new PortalRepositoryPropertiesFiles(
-			primaryLocalRepository);
-
 		_setPortalJobBuildProperties();
 	}
 
 	protected void writeRepositoryProperties() {
-		portalRepositoryPropertiesFiles.writeRepositoryPropertiesFiles();
+		portalLocalRepository.writeRepositoryPropertiesFiles();
 	}
 
 	protected final PortalLocalRepository portalLocalRepository;
-	protected final PortalRepositoryPropertiesFiles
-		portalRepositoryPropertiesFiles;
 
 	private void _setPortalJobBuildProperties() {
-		portalRepositoryPropertiesFiles.setBuildProperties(
-			getPortalJobBuildProperties());
+		portalLocalRepository.setBuildProperties(getPortalJobBuildProperties());
 	}
 
 }

@@ -71,7 +71,7 @@ public class JunitPortalBatchBuildRunner extends PortalBatchBuildRunner {
 				"release.versions.test.other.dir",
 				otherPortalRepositoryDir.toString());
 
-			portalRepositoryPropertiesFiles.setBuildProperties(properties);
+			portalLocalRepository.setBuildProperties(properties);
 		}
 	}
 

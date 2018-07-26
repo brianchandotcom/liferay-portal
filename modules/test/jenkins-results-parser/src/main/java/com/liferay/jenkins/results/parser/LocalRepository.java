@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -52,6 +54,16 @@ public class LocalRepository extends BaseRepository {
 		gitWorkingDirectory.reset("--hard HEAD");
 
 		gitWorkingDirectory.clean();
+	}
+
+	public void writeRepositoryPropertiesFiles() {
+		for (Map.Entry<String, Properties> entry :
+				_propertiesFilesMap.entrySet()) {
+
+			JenkinsResultsParserUtil.writePropertiesFile(
+				new File(getDirectory(), entry.getKey()), entry.getValue(),
+				true);
+		}
 	}
 
 	protected LocalRepository(String name, String upstreamBranchName) {
@@ -100,9 +112,25 @@ public class LocalRepository extends BaseRepository {
 		return getName();
 	}
 
+	protected Properties getProperties(String filePath) {
+		return _propertiesFilesMap.get(filePath);
+	}
+
 	protected String getRepositoryPropertyKey() {
 		return JenkinsResultsParserUtil.combine(
 			"repository.dir[", name, "/" + getUpstreamBranchName(), "]");
+	}
+
+	protected void setProperties(String filePath, Properties properties) {
+		if (!_propertiesFilesMap.containsKey(filePath)) {
+			_propertiesFilesMap.put(filePath, new Properties());
+		}
+
+		Properties fileProperties = _propertiesFilesMap.get(filePath);
+
+		fileProperties.putAll(properties);
+
+		_propertiesFilesMap.put(filePath, fileProperties);
 	}
 
 	protected final File directory;
@@ -123,6 +151,7 @@ public class LocalRepository extends BaseRepository {
 	private static Properties _repositoryProperties;
 
 	private final GitWorkingDirectory _gitWorkingDirectory;
+	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();
 	private final String _upstreamBranchName;
 
 }

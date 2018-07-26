@@ -33,7 +33,7 @@ public class FunctionalPortalBatchBuildRunner extends PortalBatchBuildRunner {
 		properties.put("jsp.precompile", "on");
 		properties.put("jsp.precompile.parallel", "on");
 
-		portalRepositoryPropertiesFiles.setBuildProperties(properties);
+		portalLocalRepository.setBuildProperties(properties);
 	}
 
 }

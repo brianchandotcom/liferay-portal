@@ -14,11 +14,15 @@
 
 package com.liferay.document.library.service.test;
 
+import static com.liferay.document.library.service.test.DLAppServiceTest.addFileEntry;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,7 +31,10 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.documentlibrary.service.test.BaseDLAppTestCase;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
@@ -93,6 +100,40 @@ public class DLAppLocalServiceTest {
 
 		@DeleteAfterTestRun
 		private Group _group;
+
+	}
+
+	@RunWith(Arquillian.class)
+	public static class WhenGettingAFileEntry extends BaseDLAppTestCase {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new LiferayIntegrationTestRule();
+
+		@Test(expected = NoSuchFileEntryException.class)
+		public void shouldFailIfNotPresentInRootFolder() throws Exception {
+			DLAppLocalServiceUtil.getFileEntry(
+				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString());
+		}
+
+		@Test
+		public void shouldReturnItIfExistsInRootFolder() throws Exception {
+			FileEntry fileEntry1 = DLAppLocalServiceUtil.addFileEntry(
+				group.getGroupId(), group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString(),
+				ContentTypes.APPLICATION_OCTET_STREAM, new byte[0],
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+			FileEntry fileEntry2 = DLAppLocalServiceUtil.getFileEntry(
+				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				fileEntry1.getTitle());
+
+			Assert.assertEquals(
+				fileEntry1.getFileEntryId(), fileEntry2.getFileEntryId());
+		}
 
 	}
 

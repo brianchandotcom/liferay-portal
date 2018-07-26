@@ -15,6 +15,7 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin;
 
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.StreamUtil;
 
@@ -86,10 +87,12 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 	private void _setContentType(HttpServletResponse response, URL url) {
 		String file = url.getFile();
 
-		if (file.endsWith(".js")) {
+		String extension = FileUtil.getExtension(file);
+
+		if (extension.equals(".js")) {
 			response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
 		}
-		else if (file.endsWith(".map")) {
+		else if (extension.equals(".map")) {
 			response.setContentType(ContentTypes.APPLICATION_JSON);
 		}
 		else {

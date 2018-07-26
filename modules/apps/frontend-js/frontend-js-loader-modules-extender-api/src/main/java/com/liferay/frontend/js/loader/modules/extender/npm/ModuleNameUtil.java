@@ -17,6 +17,7 @@ package com.liferay.frontend.js.loader.modules.extender.npm;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.FileUtil;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -91,6 +92,7 @@ public class ModuleNameUtil {
 	 * @param  jsPackage the NPM package
 	 * @param  moduleName the module's name
 	 * @return the module ID
+	 * @review
 	 */
 	public static String getModuleId(JSPackage jsPackage, String moduleName) {
 		StringBundler sb = new StringBundler(3);
@@ -207,13 +209,7 @@ public class ModuleNameUtil {
 	 * @return the module's name
 	 */
 	public static String toModuleName(String fileName) {
-		int i = fileName.lastIndexOf(CharPool.PERIOD);
-
-		if (i == -1) {
-			return fileName;
-		}
-
-		String extension = fileName.substring(i);
+		String extension = FileUtil.getExtension(fileName);
 
 		if (!extension.equals(".js")) {
 			return fileName;

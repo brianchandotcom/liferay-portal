@@ -53,9 +53,9 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 	protected URL getURL(String pathInfo) {
 		String identifier = pathInfo.substring(1);
 
-		String resolvedPackageId = ModuleNameUtil.getPackageName(identifier);
+		String resolvedJSPackageId = ModuleNameUtil.getPackageName(identifier);
 
-		JSPackage jsPackage = _getResolvedJSPackage(resolvedPackageId);
+		JSPackage jsPackage = _getResolvedJSPackage(resolvedJSPackageId);
 
 		if (jsPackage == null) {
 			return null;
@@ -66,9 +66,9 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 		return jsPackage.getResourceURL(packagePath);
 	}
 
-	private JSPackage _getResolvedJSPackage(String resolvedPackageId) {
+	private JSPackage _getResolvedJSPackage(String resolvedJSPackageId) {
 		String packageId = _resolvedPackageIdentifiersCache.get(
-			resolvedPackageId);
+			resolvedJSPackageId);
 
 		if (packageId != null) {
 			JSPackage jsPackage = _npmRegistry.getJSPackage(packageId);
@@ -77,16 +77,16 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 				return jsPackage;
 			}
 
-			_resolvedPackageIdentifiersCache.remove(resolvedPackageId);
+			_resolvedPackageIdentifiersCache.remove(resolvedJSPackageId);
 		}
 
 		Collection<JSPackage> resolvedJSPackages =
 			_npmRegistry.getResolvedJSPackages();
 
 		for (JSPackage resolvedJSPackage : resolvedJSPackages) {
-			if (resolvedPackageId.equals(resolvedJSPackage.getResolvedId())) {
+			if (resolvedJSPackageId.equals(resolvedJSPackage.getResolvedId())) {
 				_resolvedPackageIdentifiersCache.put(
-					resolvedPackageId, resolvedJSPackage.getId());
+					resolvedJSPackageId, resolvedJSPackage.getId());
 
 				return resolvedJSPackage;
 			}

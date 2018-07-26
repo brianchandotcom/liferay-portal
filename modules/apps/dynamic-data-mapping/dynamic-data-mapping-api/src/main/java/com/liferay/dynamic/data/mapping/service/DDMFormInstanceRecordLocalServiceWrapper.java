@@ -333,9 +333,10 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 
 	@Override
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues(
-		long ddmStorageId)
+		long storageId, com.liferay.dynamic.data.mapping.model.DDMForm ddmForm)
 		throws com.liferay.dynamic.data.mapping.exception.StorageException {
-		return _ddmFormInstanceRecordLocalService.getDDMFormValues(ddmStorageId);
+		return _ddmFormInstanceRecordLocalService.getDDMFormValues(storageId,
+			ddmForm);
 	}
 
 	@Override

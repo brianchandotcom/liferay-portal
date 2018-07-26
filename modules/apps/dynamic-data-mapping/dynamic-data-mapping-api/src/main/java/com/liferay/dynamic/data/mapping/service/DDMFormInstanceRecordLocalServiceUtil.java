@@ -315,9 +315,9 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues(
-		long ddmStorageId)
+		long storageId, com.liferay.dynamic.data.mapping.model.DDMForm ddmForm)
 		throws com.liferay.dynamic.data.mapping.exception.StorageException {
-		return getService().getDDMFormValues(ddmStorageId);
+		return getService().getDDMFormValues(storageId, ddmForm);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(

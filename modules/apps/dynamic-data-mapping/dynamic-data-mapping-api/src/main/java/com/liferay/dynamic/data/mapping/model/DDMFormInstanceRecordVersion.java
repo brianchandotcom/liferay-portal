@@ -57,8 +57,11 @@ public interface DDMFormInstanceRecordVersion
 			}
 		};
 
+	public DDMForm getDDMForm()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
-		throws com.liferay.dynamic.data.mapping.exception.StorageException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public DDMFormInstance getFormInstance()
 		throws com.liferay.portal.kernel.exception.PortalException;

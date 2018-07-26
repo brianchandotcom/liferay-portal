@@ -19,16 +19,31 @@ import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordGroupIdExcep
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.internal.notification.DDMFormEmailNotificationSender;
-import com.liferay.dynamic.data.mapping.internal.storage.StorageEngineAccessor;
+import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterDeleteRequest;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetRequest;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,6 +66,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -101,11 +117,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		ddmFormInstanceRecord.setVersionUserId(user.getUserId());
 		ddmFormInstanceRecord.setVersionUserName(user.getFullName());
 
-		StorageEngine storageEngine = storageEngineAccessor.getStorageEngine();
-
-		long ddmStorageId = storageEngine.create(
-			ddmFormInstance.getCompanyId(), ddmFormInstance.getStructureId(),
-			ddmFormValues, serviceContext);
+		long ddmStorageId = createDDMContent(
+			ddmFormInstanceId, ddmFormValues, serviceContext);
 
 		ddmFormInstanceRecord.setStorageId(ddmStorageId);
 
@@ -169,16 +182,17 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmFormInstanceRecordVersionPersistence.findByFormInstanceRecordId(
 				ddmFormInstanceRecord.getFormInstanceRecordId());
 
-		StorageEngine storageEngine = storageEngineAccessor.getStorageEngine();
-
 		for (DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion :
 				ddmFormInstanceRecordVersions) {
 
 			ddmFormInstanceRecordVersionPersistence.remove(
 				ddmFormInstanceRecordVersion);
 
-			storageEngine.deleteByClass(
-				ddmFormInstanceRecordVersion.getStorageId());
+			long storageId = ddmFormInstanceRecordVersion.getStorageId();
+
+			deleteStorage(storageId);
+
+			ddmStorageLinkLocalService.deleteClassStorageLink(storageId);
 
 			deleteWorkflowInstanceLink(
 				ddmFormInstanceRecord.getCompanyId(),
@@ -231,12 +245,21 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	@Override
-	public DDMFormValues getDDMFormValues(long ddmStorageId)
+	public DDMFormValues getDDMFormValues(long storageId, DDMForm ddmForm)
 		throws StorageException {
 
-		StorageEngine storageEngine = storageEngineAccessor.getStorageEngine();
+		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter();
 
-		return storageEngine.getDDMFormValues(ddmStorageId);
+		DDMStorageAdapterGetRequest.Builder builder =
+			DDMStorageAdapterGetRequest.Builder.newBuilder(storageId, ddmForm);
+
+		DDMStorageAdapterGetRequest ddmStorageAdapterGetRequest =
+			builder.build();
+
+		DDMStorageAdapterGetResponse ddmStorageAdapterGetResponse =
+			ddmStorageAdapter.get(ddmStorageAdapterGetRequest);
+
+		return ddmStorageAdapterGetResponse.getDDMFormValues();
 	}
 
 	@Override
@@ -308,10 +331,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			return;
 		}
 
-		StorageEngine storageEngine = storageEngineAccessor.getStorageEngine();
-
-		DDMFormValues ddmFormValues = storageEngine.getDDMFormValues(
-			ddmFormInstanceRecordVersion.getStorageId());
+		DDMFormValues ddmFormValues = getDDMFormValues(
+			ddmFormInstanceRecordVersion.getStorageId(),
+			ddmFormInstanceRecordVersion.getDDMForm());
 
 		serviceContext.setCommand(Constants.REVERT);
 
@@ -348,6 +370,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
+		validate(ddmFormValues, serviceContext);
+
 		User user = userLocalService.getUser(userId);
 
 		DDMFormInstanceRecord ddmFormInstanceRecord =
@@ -360,8 +384,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		ddmFormInstanceRecord = ddmFormInstanceRecordPersistence.update(
 			ddmFormInstanceRecord);
 
-		StorageEngine storageEngine = storageEngineAccessor.getStorageEngine();
-
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 			ddmFormInstanceRecord.getLatestFormInstanceRecordVersion();
 
@@ -369,9 +391,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmFormInstanceRecord.getFormInstance();
 
 		if (ddmFormInstanceRecordVersion.isApproved()) {
-			long ddmStorageId = storageEngine.create(
-				ddmFormInstance.getCompanyId(),
-				ddmFormInstance.getStructureId(), ddmFormValues,
+			long ddmStorageId = createDDMContent(
+				ddmFormInstance.getFormInstanceId(), ddmFormValues,
 				serviceContext);
 
 			String version = getNextVersion(
@@ -383,9 +404,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				WorkflowConstants.STATUS_DRAFT, version);
 		}
 		else {
-			storageEngine.update(
-				ddmFormInstanceRecordVersion.getStorageId(), ddmFormValues,
-				serviceContext);
+			updateDDMContent(
+				ddmFormInstanceRecordVersion, ddmFormValues, serviceContext);
 
 			String version = ddmFormInstanceRecordVersion.getVersion();
 
@@ -402,8 +422,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmFormInstanceRecordVersionPersistence.remove(
 				ddmFormInstanceRecordVersion);
 
-			storageEngine.deleteByClass(
-				ddmFormInstanceRecordVersion.getStorageId());
+			deleteStorage(ddmFormInstanceRecordVersion.getStorageId());
 
 			return ddmFormInstanceRecord;
 		}
@@ -542,6 +561,59 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return ddmFormInstanceRecordVersion;
 	}
 
+	protected long createDDMContent(
+			long ddmFormInstanceId, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		validate(ddmFormValues, serviceContext);
+
+		DDMStorageAdapterSaveRequest.Builder builder =
+			DDMStorageAdapterSaveRequest.Builder.newBuilder(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				ddmFormValues);
+
+		DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest =
+			builder.withUuid(
+				serviceContext.getUuid()
+			).withClassName(
+				DDMStorageLink.class.getName()
+			).build();
+
+		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter();
+
+		DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
+			ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
+
+		long primaryKey = ddmStorageAdapterSaveResponse.getPrimaryKey();
+
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstanceLocalService.getDDMFormInstance(ddmFormInstanceId);
+
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
+
+		DDMStructureVersion ddmStructureVersion =
+			ddmStructure.getLatestStructureVersion();
+
+		ddmStorageLinkLocalService.addStorageLink(
+			portal.getClassNameId(DDMContent.class.getName()), primaryKey,
+			ddmStructureVersion.getStructureVersionId(), serviceContext);
+
+		return primaryKey;
+	}
+
+	protected void deleteStorage(long storageId) throws StorageException {
+		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter();
+
+		DDMStorageAdapterDeleteRequest.Builder builder =
+			DDMStorageAdapterDeleteRequest.Builder.newBuilder(storageId);
+
+		DDMStorageAdapterDeleteRequest ddmStorageAdapterDeleteRequest =
+			builder.build();
+
+		ddmStorageAdapter.delete(ddmStorageAdapterDeleteRequest);
+	}
+
 	protected void deleteWorkflowInstanceLink(
 			long companyId, long groupId, long ddmFormInstanceRecordVersionId)
 		throws PortalException {
@@ -556,6 +628,11 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			indexerRegistry.nullSafeGetIndexer(DDMFormInstanceRecord.class);
 
 		return indexer;
+	}
+
+	protected DDMStorageAdapter getDDMStorageAdapter() {
+		return ddmStorageAdapterTracker.getDDMStorageAdapter(
+			StorageType.JSON.toString());
 	}
 
 	protected List<DDMFormInstanceRecord> getFormInstanceRecords(Hits hits)
@@ -654,12 +731,12 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			return false;
 		}
 
-		StorageEngine storageEngine = storageEngineAccessor.getStorageEngine();
-
-		DDMFormValues lastDDMFormValues = storageEngine.getDDMFormValues(
-			lastDDMFormInstanceRecordVersion.getStorageId());
-		DDMFormValues latestDDMFormValues = storageEngine.getDDMFormValues(
-			latestDDMFormInstanceRecordVersion.getStorageId());
+		DDMFormValues lastDDMFormValues = getDDMFormValues(
+			lastDDMFormInstanceRecordVersion.getStorageId(),
+			lastDDMFormInstanceRecordVersion.getDDMForm());
+		DDMFormValues latestDDMFormValues = getDDMFormValues(
+			latestDDMFormInstanceRecordVersion.getStorageId(),
+			latestDDMFormInstanceRecordVersion.getDDMForm());
 
 		if (!lastDDMFormValues.equals(latestDDMFormValues)) {
 			return false;
@@ -740,6 +817,28 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		}
 	}
 
+	protected void updateDDMContent(
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
+			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+		throws PortalException {
+
+		validate(ddmFormValues, serviceContext);
+
+		DDMStorageAdapterSaveRequest.Builder builder =
+			DDMStorageAdapterSaveRequest.Builder.newBuilder(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				ddmFormValues);
+
+		DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest =
+			builder.withPrimaryKey(
+				ddmFormInstanceRecordVersion.getStorageId()
+			).build();
+
+		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter();
+
+		ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
+	}
+
 	protected void updateFormInstanceRecordVersion(
 		User user, DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
 		int status, String version, ServiceContext serviceContext) {
@@ -757,6 +856,20 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmFormInstanceRecordVersion);
 	}
 
+	protected void validate(
+			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+		throws PortalException {
+
+		boolean validateDDMFormValues = GetterUtil.getBoolean(
+			serviceContext.getAttribute("validateDDMFormValues"), true);
+
+		if (!validateDDMFormValues) {
+			return;
+		}
+
+		ddmFormValuesValidator.validate(ddmFormValues);
+	}
+
 	protected void validate(long groupId, DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
@@ -770,11 +883,23 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	@ServiceReference(type = DDMFormEmailNotificationSender.class)
 	protected DDMFormEmailNotificationSender ddmFormEmailNotificationSender;
 
+	@ServiceReference(type = DDMFormValuesValidator.class)
+	protected DDMFormValuesValidator ddmFormValuesValidator;
+
+	@ServiceReference(type = DDMStorageAdapterTracker.class)
+	protected DDMStorageAdapterTracker ddmStorageAdapterTracker;
+
+	@BeanReference(type = DDMStorageLinkLocalService.class)
+	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;
+
+	@BeanReference(type = DDMStructureLocalService.class)
+	protected DDMStructureLocalService ddmStructureLocalService;
+
 	@ServiceReference(type = IndexerRegistry.class)
 	protected IndexerRegistry indexerRegistry;
 
-	@ServiceReference(type = StorageEngineAccessor.class)
-	protected StorageEngineAccessor storageEngineAccessor;
+	@ServiceReference(type = Portal.class)
+	protected Portal portal;
 
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.COMPANY_ID, Field.ENTRY_CLASS_PK, Field.UID};

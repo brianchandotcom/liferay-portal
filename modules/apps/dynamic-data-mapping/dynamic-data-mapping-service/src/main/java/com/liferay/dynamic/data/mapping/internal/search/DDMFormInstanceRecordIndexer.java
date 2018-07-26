@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -239,8 +238,8 @@ public class DDMFormInstanceRecordIndexer
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
-		DDMFormValues ddmFormValues = storageEngine.getDDMFormValues(
-			ddmFormInstanceRecordVersion.getStorageId());
+		DDMFormValues ddmFormValues =
+			ddmFormInstanceRecordVersion.getDDMFormValues();
 
 		addContent(ddmFormInstanceRecordVersion, ddmFormValues, document);
 
@@ -299,8 +298,8 @@ public class DDMFormInstanceRecordIndexer
 			Locale locale)
 		throws Exception {
 
-		DDMFormValues ddmFormValues = storageEngine.getDDMFormValues(
-			ddmFormInstanceRecordVersion.getStorageId());
+		DDMFormValues ddmFormValues =
+			ddmFormInstanceRecordVersion.getDDMFormValues();
 
 		if (ddmFormValues == null) {
 			return StringPool.BLANK;
@@ -433,9 +432,6 @@ public class DDMFormInstanceRecordIndexer
 
 	@Reference
 	protected SearchPermissionChecker searchPermissionChecker;
-
-	@Reference
-	protected StorageEngine storageEngine;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordIndexer.class);

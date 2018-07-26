@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -144,22 +143,22 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 	}
 
 	protected void exportDDMFormValues(
-			PortletDataContext portletDataContext, DDMFormInstanceRecord record,
-			Element recordElement)
+			PortletDataContext portletDataContext,
+			DDMFormInstanceRecord ddmFormInstanceRecord, Element recordElement)
 		throws Exception {
 
 		String ddmFormValuesPath = ExportImportPathUtil.getModelPath(
-			record, "ddm-form-values.json");
+			ddmFormInstanceRecord, "ddm-form-values.json");
 
 		recordElement.addAttribute("ddm-form-values-path", ddmFormValuesPath);
 
-		DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
-			record.getStorageId());
+		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
 
 		ddmFormValues =
 			_ddmFormValuesExportImportContentProcessor.
 				replaceExportContentReferences(
-					portletDataContext, record, ddmFormValues, true, false);
+					portletDataContext, ddmFormInstanceRecord, ddmFormValues,
+					true, false);
 
 		portletDataContext.addZipEntry(
 			ddmFormValuesPath,
@@ -198,56 +197,6 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 		return _ddmFormInstanceRecordStagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormInstanceLocalService(
-		DDMFormInstanceLocalService ddmFormInstanceLocalService) {
-
-		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)",
-		unbind = "-"
-	)
-	protected void setDDMFormInstanceRecordStagedModelRepository(
-		DDMFormInstanceRecordStagedModelRepository
-			ddmFormInstanceRecordStagedModelRepository) {
-
-		_ddmFormInstanceRecordStagedModelRepository =
-			ddmFormInstanceRecordStagedModelRepository;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)",
-		unbind = "-"
-	)
-	protected void setDDMFormValuesExportImportContentProcessor(
-		ExportImportContentProcessor<DDMFormValues>
-			ddmFormValuesExportImportContentProcessor) {
-
-		_ddmFormValuesExportImportContentProcessor =
-			ddmFormValuesExportImportContentProcessor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesJSONDeserializer(
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
-
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesJSONSerializer(
-		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer) {
-
-		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStorageEngine(StorageEngine storageEngine) {
-		_storageEngine = storageEngine;
-	}
-
 	@Override
 	protected void validateExport(
 			PortletDataContext portletDataContext, DDMFormInstanceRecord record)
@@ -277,13 +226,27 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 		}
 	}
 
+	@Reference(service = DDMFormInstanceLocalService.class)
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+
+	@Reference(
+		service = DDMFormInstanceRecordStagedModelRepository.class,
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)"
+	)
 	private DDMFormInstanceRecordStagedModelRepository
 		_ddmFormInstanceRecordStagedModelRepository;
+
+	@Reference(
+		service = ExportImportContentProcessor.class,
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)"
+	)
 	private ExportImportContentProcessor<DDMFormValues>
 		_ddmFormValuesExportImportContentProcessor;
+
+	@Reference(service = DDMFormValuesJSONDeserializer.class)
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+
+	@Reference(service = DDMFormValuesJSONSerializer.class)
 	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
-	private StorageEngine _storageEngine;
 
 }

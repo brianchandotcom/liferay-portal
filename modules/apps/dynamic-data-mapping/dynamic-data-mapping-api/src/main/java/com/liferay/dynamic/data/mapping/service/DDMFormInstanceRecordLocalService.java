@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
@@ -290,7 +291,7 @@ public interface DDMFormInstanceRecordLocalService extends BaseLocalService,
 	public int getDDMFormInstanceRecordsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMFormValues getDDMFormValues(long ddmStorageId)
+	public DDMFormValues getDDMFormValues(long storageId, DDMForm ddmForm)
 		throws StorageException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
@@ -35,6 +36,13 @@ import java.util.List;
  */
 @ProviderType
 public class DDMFormInstanceImpl extends DDMFormInstanceBaseImpl {
+
+	@Override
+	public DDMForm getDDMForm() throws PortalException {
+		DDMStructure ddmStructure = getStructure();
+
+		return ddmStructure.getDDMForm();
+	}
 
 	@Override
 	public List<DDMFormInstanceRecord> getFormInstanceRecords() {

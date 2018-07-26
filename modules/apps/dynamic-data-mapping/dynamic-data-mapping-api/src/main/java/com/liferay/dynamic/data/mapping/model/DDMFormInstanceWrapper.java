@@ -215,6 +215,12 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	}
 
 	@Override
+	public DDMForm getDDMForm()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmFormInstance.getDDMForm();
+	}
+
+	@Override
 	public String getDefaultLanguageId() {
 		return _ddmFormInstance.getDefaultLanguageId();
 	}

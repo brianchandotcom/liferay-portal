@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -76,8 +75,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			DDMFormInstance formInstance,
 			DDMFormInstanceRecordLocalService formInstanceRecordLocalService,
-			DDMFormFieldTypeServicesTracker formFieldTypeServicesTracker,
-			StorageEngine storageEngine)
+			DDMFormFieldTypeServicesTracker formFieldTypeServicesTracker)
 		throws PortalException {
 
 		_renderRequest = renderRequest;
@@ -85,7 +83,6 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		_ddmFormInstance = formInstance;
 		_ddmFormInstanceRecordLocalService = formInstanceRecordLocalService;
 		_ddmFormFieldTypeServicesTracker = formFieldTypeServicesTracker;
-		_storageEngine = storageEngine;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -176,8 +173,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		DDMFormInstanceRecordVersion formInstanceRecordVersion =
 			formInstanceRecord.getFormInstanceRecordVersion();
 
-		return _storageEngine.getDDMFormValues(
-			formInstanceRecordVersion.getStorageId());
+		return formInstanceRecordVersion.getDDMFormValues();
 	}
 
 	public String getDisplayStyle() {
@@ -589,6 +585,5 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		_ddmFormInstanceRecordLocalService;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final StorageEngine _storageEngine;
 
 }

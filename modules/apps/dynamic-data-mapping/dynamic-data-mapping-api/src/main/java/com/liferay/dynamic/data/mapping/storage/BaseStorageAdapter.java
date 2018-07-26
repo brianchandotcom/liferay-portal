@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
  * @author Eduardo Lundgren
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public abstract class BaseStorageAdapter implements StorageAdapter {
 
 	@Override

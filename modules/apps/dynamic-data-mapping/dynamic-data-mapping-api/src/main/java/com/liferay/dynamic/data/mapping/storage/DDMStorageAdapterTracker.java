@@ -14,12 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.storage;
 
+import aQute.bnd.annotation.ProviderType;
+
+import java.util.Set;
+
 /**
- * @author Eduardo Lundgren
- * @author Brian Wing Shun Chan
- * @author Marcellus Tavares
- * @deprecated As of Judson (7.1.x), with no direct replacement
+ * @author Leonardo Barros
  */
-@Deprecated
-public interface StorageEngine extends StorageAdapter {
+@ProviderType
+public interface DDMStorageAdapterTracker {
+
+	public DDMStorageAdapter getDDMStorageAdapter(String type);
+
+	public Set<String> getDDMStorageAdapterTypes();
+
 }

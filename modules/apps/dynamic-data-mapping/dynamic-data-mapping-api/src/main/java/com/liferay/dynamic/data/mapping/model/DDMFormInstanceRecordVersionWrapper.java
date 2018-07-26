@@ -207,8 +207,14 @@ public class DDMFormInstanceRecordVersionWrapper
 	}
 
 	@Override
+	public DDMForm getDDMForm()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmFormInstanceRecordVersion.getDDMForm();
+	}
+
+	@Override
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
-		throws com.liferay.dynamic.data.mapping.exception.StorageException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmFormInstanceRecordVersion.getDDMFormValues();
 	}
 

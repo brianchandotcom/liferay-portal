@@ -16,11 +16,14 @@ package com.liferay.dynamic.data.mapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -32,9 +35,21 @@ public class DDMFormInstanceRecordVersionImpl
 	extends DDMFormInstanceRecordVersionBaseImpl {
 
 	@Override
-	public DDMFormValues getDDMFormValues() throws StorageException {
+	public DDMForm getDDMForm() throws PortalException {
+		DDMFormInstanceVersion ddmFormInstanceVersion =
+			DDMFormInstanceVersionLocalServiceUtil.getFormInstanceVersion(
+				getFormInstanceId(), getFormInstanceVersion());
+
+		DDMStructureVersion ddmStructureVersion =
+			ddmFormInstanceVersion.getStructureVersion();
+
+		return ddmStructureVersion.getDDMForm();
+	}
+
+	@Override
+	public DDMFormValues getDDMFormValues() throws PortalException {
 		return DDMFormInstanceRecordLocalServiceUtil.getDDMFormValues(
-			getStorageId());
+			getStorageId(), getDDMForm());
 	}
 
 	@Override

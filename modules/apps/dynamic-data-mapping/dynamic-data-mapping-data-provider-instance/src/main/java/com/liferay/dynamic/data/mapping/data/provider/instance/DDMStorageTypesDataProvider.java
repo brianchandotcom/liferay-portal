@@ -16,12 +16,10 @@ package com.liferay.dynamic.data.mapping.data.provider.instance;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseOutput;
-import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
-import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.ArrayList;
@@ -43,38 +41,27 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 
 	@Override
 	public List<KeyValuePair> getData(
-			DDMDataProviderContext ddmDataProviderContext)
-		throws DDMDataProviderException {
+		DDMDataProviderContext ddmDataProviderContext) {
 
 		return Collections.emptyList();
 	}
 
 	@Override
 	public DDMDataProviderResponse getData(
-			DDMDataProviderRequest ddmDataProviderRequest)
-		throws DDMDataProviderException {
+		DDMDataProviderRequest ddmDataProviderRequest) {
 
-		List<KeyValuePair> data = new ArrayList<>();
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
-		StorageAdapter storageAdapter =
-			_storageAdapterRegistry.getDefaultStorageAdapter();
-
-		String storageTypeDefault = storageAdapter.getStorageType();
-
-		data.add(new KeyValuePair(storageTypeDefault, storageTypeDefault));
-
-		Set<String> storageTypes = _storageAdapterRegistry.getStorageTypes();
+		Set<String> storageTypes =
+			ddmStorageAdapterTracker.getDDMStorageAdapterTypes();
 
 		for (String storageType : storageTypes) {
-			if (storageType.equals(storageTypeDefault)) {
-				continue;
-			}
-
-			data.add(new KeyValuePair(storageType, storageType));
+			keyValuePairs.add(new KeyValuePair(storageType, storageType));
 		}
 
 		return DDMDataProviderResponse.of(
-			DDMDataProviderResponseOutput.of("Default-Output", "list", data));
+			DDMDataProviderResponseOutput.of(
+				"Default-Output", "list", keyValuePairs));
 	}
 
 	@Override
@@ -83,6 +70,6 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 	}
 
 	@Reference
-	private StorageAdapterRegistry _storageAdapterRegistry;
+	protected DDMStorageAdapterTracker ddmStorageAdapterTracker;
 
 }

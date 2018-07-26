@@ -55,6 +55,9 @@ public interface DDMFormInstance extends DDMFormInstanceModel, PersistedModel {
 			}
 		};
 
+	public DDMForm getDDMForm()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.List<DDMFormInstanceRecord> getFormInstanceRecords();
 
 	public DDMFormInstanceVersion getFormInstanceVersion(String version)

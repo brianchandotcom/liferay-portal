@@ -182,6 +182,7 @@ public abstract class StateAwareResponseImpl
 		}
 	}
 
+	@Override
 	public boolean isCalledSetRenderParameter() {
 		if (_calledSetRenderParameter || _mutableRenderParameters.isMutated()) {
 			return true;

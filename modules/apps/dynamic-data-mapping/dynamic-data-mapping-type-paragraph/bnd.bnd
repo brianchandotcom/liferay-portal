@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Dynamic Data Mapping Type Paragraph
-Bundle-SymbolicName: com.liferay.dynamic.data.mapping.type.paragraph
-Bundle-Version: 4.0.0
-Liferay-JS-Config: /META-INF/resources/config.js
-Web-ContextPath: /dynamic-data-mapping-type-paragraph

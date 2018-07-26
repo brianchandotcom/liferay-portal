@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Dynamic Data Mapping Type Password
-Bundle-SymbolicName: com.liferay.dynamic.data.mapping.type.password
-Bundle-Version: 3.0.0
-Liferay-JS-Config: /META-INF/resources/config.js
-Web-ContextPath: /dynamic-data-mapping-type-password

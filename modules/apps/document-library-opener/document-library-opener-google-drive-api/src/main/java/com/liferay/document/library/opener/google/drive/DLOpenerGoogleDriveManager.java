@@ -37,9 +37,6 @@ public interface DLOpenerGoogleDriveManager {
 
 	public String getAuthorizationURL(String state, String redirectUri);
 
-	public File getContentFile(long userId, FileEntry fileEntry)
-		throws PortalException;
-
 	public boolean hasValidCredential(long userId) throws IOException;
 
 	public boolean isGoogleDriveFile(FileEntry fileEntry);

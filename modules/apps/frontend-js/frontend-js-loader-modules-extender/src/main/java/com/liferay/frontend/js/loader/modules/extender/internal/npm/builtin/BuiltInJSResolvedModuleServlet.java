@@ -94,12 +94,6 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 
 	private static final long serialVersionUID = 2647715401054034600L;
 
-	@Reference
-	private MimeTypes _mimeTypes;
-
-	@Reference
-	private NPMRegistry _npmRegistry;
-
 	private LinkedHashMap<String, String> _jsPackageIdsCache =
 		new LinkedHashMap<String, String>() {
 
@@ -116,5 +110,11 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 			}
 
 		};
+
+	@Reference
+	private MimeTypes _mimeTypes;
+
+	@Reference
+	private NPMRegistry _npmRegistry;
 
 }

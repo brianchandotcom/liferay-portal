@@ -1492,20 +1492,22 @@ public class GitWorkingDirectory {
 		return null;
 	}
 
-	public void rebase(
-		boolean abortOnFail, Branch sourceBranch, Branch targetBranch) {
+	public LocalGitBranch rebase(
+		boolean abortOnFail, LocalGitBranch baseLocalGitBranch,
+		LocalGitBranch localGitBranch) {
 
 		List<String> branchNamesContainingSHA = getBranchNamesContainingSHA(
-			sourceBranch.getSHA());
+			baseLocalGitBranch.getSHA());
 
-		if (branchNamesContainingSHA.contains(targetBranch.getName())) {
-			checkoutBranch(targetBranch);
+		if (branchNamesContainingSHA.contains(localGitBranch.getName())) {
+			checkoutLocalGitBranch(localGitBranch);
 
 			return;
 		}
 
 		String rebaseCommand = JenkinsResultsParserUtil.combine(
-			"git rebase ", sourceBranch.getName(), " ", targetBranch.getName());
+			"git rebase ", baseLocalGitBranch.getName(), " ",
+			localGitBranch.getName());
 
 		ExecutionResult executionResult = executeBashCommands(
 			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, rebaseCommand);
@@ -1517,10 +1519,12 @@ public class GitWorkingDirectory {
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to rebase ", targetBranch.getName(), " to ",
-					sourceBranch.getName(), "\n",
+					"Unable to rebase ", localGitBranch.getName(), " to ",
+					baseLocalGitBranch.getName(), "\n",
 					executionResult.getStandardError()));
 		}
+
+		return getCurrentLocalGitBranch();
 	}
 
 	public void rebaseAbort() {

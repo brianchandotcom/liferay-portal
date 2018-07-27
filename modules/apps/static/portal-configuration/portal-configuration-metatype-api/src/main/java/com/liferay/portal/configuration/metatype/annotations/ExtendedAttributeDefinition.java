@@ -39,4 +39,6 @@ public @interface ExtendedAttributeDefinition {
 
 	public String[] descriptionArguments() default {};
 
+	public String[] nameArguments() default {};
+
 }

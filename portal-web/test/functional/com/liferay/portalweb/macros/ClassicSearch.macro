@@ -1,10 +1,4 @@
 <definition>
-	<command name="addTagFacet">
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_TAGS" value1="${tagName}">
-			<var name="key_tagName" value="${tagName}" />
-		</execute>
-	</command>
-
 	<command name="configureScope">
 		<execute macro="ClassicSearch#gotoOptions">
 			<var name="portletOption" value="Configuration" />
@@ -120,18 +114,6 @@
 
 	<command name="viewSearchAssetDetailPage">
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${searchAssetTitle}" />
-	</command>
-
-	<command name="viewSearchAssetTitle">
-		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
-
-		<execute function="AssertTextEquals" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
-	</command>
-
-	<command name="viewSearchNoAssetTitle">
-		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
-
-		<execute function="AssertTextNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 	</command>
 
 	<command name="viewSearchNoPG">

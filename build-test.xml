@@ -5453,16 +5453,6 @@ go]]></replacevalue>
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${test.pacl}" arg2="true" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="portlets" />
-					<property name="plugins.includes" value="chat-portlet,flash-portlet,portal-compat-hook,sample-service-builder-portlet,test-pacl-portlet" />
-				</ant>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="theme.plugins.includes" />
 
 		<if>

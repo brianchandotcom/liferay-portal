@@ -33,6 +33,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -746,8 +747,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 						destFileEntry.getFileEntryId(),
 						destFileEntry.getTitle(), destFileEntry.getMimeType(),
 						destFileEntry.getTitle(),
-						destFileEntry.getDescription(), changeLog, false, file,
-						serviceContext);
+						destFileEntry.getDescription(), changeLog,
+						DLVersionNumberIncrease.MINOR, file, serviceContext);
 
 					_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 
@@ -764,7 +765,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			_dlAppService.updateFileEntry(
 				fileEntry.getFileEntryId(), title, fileEntry.getMimeType(),
-				title, description, changeLog, false, file, serviceContext);
+				title, description, changeLog, DLVersionNumberIncrease.MINOR,
+				file, serviceContext);
 
 			if (fileEntry.getFolderId() != newParentFolderId) {
 				fileEntry = _dlAppService.moveFileEntry(
@@ -862,7 +864,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 				_dlAppService.updateFileEntry(
 					fileEntryId, title, contentType, title, description,
-					changeLog, false, file, serviceContext);
+					changeLog, DLVersionNumberIncrease.MINOR, file,
+					serviceContext);
 			}
 			catch (NoSuchFileEntryException nsfee) {
 				if (_log.isDebugEnabled()) {

@@ -17,6 +17,7 @@ package com.liferay.frontend.image.editor.integration.document.library.internal.
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringPool;
@@ -163,8 +164,8 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 		fileEntry = _dlAppService.updateFileEntry(
 			fileEntryId, sourceFileName, contentType, fileEntry.getTitle(),
-			fileEntry.getDescription(), StringPool.BLANK, false, inputStream,
-			size, serviceContext);
+			fileEntry.getDescription(), StringPool.BLANK,
+			DLVersionNumberIncrease.MINOR, inputStream, size, serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

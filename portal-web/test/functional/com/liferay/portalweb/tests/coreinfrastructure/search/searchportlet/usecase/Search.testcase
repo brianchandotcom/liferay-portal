@@ -1826,7 +1826,7 @@
 			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchFacetPortlet#configureSearchOptions">
+		<execute macro="SearchPortlets#configureSearchOptions">
 			<var name="allowEmptySearches" value="true" />
 			<var name="basicFacetSelection" value="true" />
 		</execute>

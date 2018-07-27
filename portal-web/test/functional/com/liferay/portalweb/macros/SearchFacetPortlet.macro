@@ -108,37 +108,6 @@
 		<execute macro="IFrame#closeFrame" />
 	</command>
 
-	<command name="configureSearchOptions">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Search Options" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<if>
-			<equals arg1="${allowEmptySearches}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
-					<var name="checkboxName" value="Allow Empty Searches" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${basicFacetSelection}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
-					<var name="checkboxName" value="Basic Facet Selection" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="IFrame#closeFrame" />
-	</command>
-
 	<command name="generateFacetCheckedURL">
 		<if>
 			<not>

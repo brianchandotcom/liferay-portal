@@ -1140,26 +1140,26 @@ public class LayoutsAdminDisplayContext {
 			layoutColumnsJSONArray.put(layoutSetBranchesJSONArray);
 		}
 
-		layoutColumnsJSONArray.put(_getLayoutsJSONArray(0, isPrivatePages()));
+		JSONArray pagesJSONArray = _getLayoutsJSONArray(0, isPrivatePages());
 
 		if (getSelPlid() == LayoutConstants.DEFAULT_PLID) {
+			layoutColumnsJSONArray.put(pagesJSONArray);
+
 			return layoutColumnsJSONArray;
 		}
 
 		Layout selLayout = getSelLayout();
 
-		if (selLayout == null) {
-			return layoutColumnsJSONArray;
-		}
-
-		List<Layout> layouts = selLayout.getAncestors();
+		List<Layout> layouts = ListUtil.copy(selLayout.getAncestors());
 
 		Collections.reverse(layouts);
+
+		layouts.add(selLayout);
 
 		for (Layout layout : layouts) {
 			layoutColumnsJSONArray.put(
 				_getLayoutsJSONArray(
-					layout.getLayoutId(), selLayout.isPrivateLayout()));
+					layout.getParentLayoutId(), selLayout.isPrivateLayout()));
 		}
 
 		layoutColumnsJSONArray.put(

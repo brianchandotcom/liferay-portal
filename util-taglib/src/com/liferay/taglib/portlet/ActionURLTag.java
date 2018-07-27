@@ -39,7 +39,6 @@ import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -339,17 +338,9 @@ public class ActionURLTag
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(portletResponse);
 
-		LiferayPortletConfig liferayPortletConfig =
-			(LiferayPortletConfig)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		PortletContext portletContext =
-			liferayPortletConfig.getPortletContext();
-
-		if ((portletContext.getEffectiveMajorVersion() == 3) &&
-			(((copyCurrentRenderParameters != null) &&
-			  copyCurrentRenderParameters) ||
-			 lifecycle.equals(PortletRequest.RESOURCE_PHASE))) {
+		if (((copyCurrentRenderParameters != null) &&
+			 copyCurrentRenderParameters) ||
+			lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
 
 			return liferayPortletResponse.createLiferayPortletURL(
 				plid, portletName, lifecycle, MimeResponse.Copy.ALL);

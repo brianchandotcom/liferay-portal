@@ -17,44 +17,27 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DDMStructure structure = (DDMStructure)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
+String redirect = ParamUtil.getString(request, "redirect");
 
-DDMStructureVersion structureVersion = structure.getStructureVersion();
+long structureId = ParamUtil.getLong(request, "structureId");
 
-long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-long classPK = BeanParamUtil.getLong(structure, request, "structureId");
+DDMStructure structure = DDMStructureLocalServiceUtil.fetchStructure(structureId);
 
-boolean copyFormTemplates = ParamUtil.getBoolean(request, "copyFormTemplates");
-boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplates");
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
-boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+renderResponse.setTitle(LanguageUtil.format(request, "copy-x", structure.getName(locale), false));
 %>
 
-<portlet:actionURL name="copyStructure" var="copyStructureURL">
+<portlet:actionURL name="/journal/copy_structure" var="copyStructureURL">
 	<portlet:param name="mvcPath" value="/copy_structure.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= copyStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>" />
-	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
-	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
-	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(scopeClassNameId) %>" />
-	<aui:input name="status" type="hidden" value="<%= structureVersion.getStatus() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="structureId" type="hidden" value="<%= String.valueOf(structure.getStructureId()) %>" />
 
 	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
-
-	<c:if test="<%= showBackURL %>">
-
-		<%
-		String title = LanguageUtil.format(request, "copy-x", ddmDisplay.getStructureName(locale), false);
-
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK));
-
-		renderResponse.setTitle(title);
-		%>
-
-	</c:if>
 
 	<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
 
@@ -64,19 +47,13 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
 			<aui:input name="description" />
 
-			<c:if test="<%= Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-				<aui:input checked="<%= copyFormTemplates %>" label='<%= Validator.isNull(templateTypeValue) ? "copy-form-templates" : "copy-templates" %>' name="copyFormTemplates" type="checkbox" />
-			</c:if>
-
-			<c:if test="<%= Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
-				<aui:input checked="<%= copyDisplayTemplates %>" label='<%= Validator.isNull(templateTypeValue) ? "copy-display-templates" : "copy-templates" %>' name="copyDisplayTemplates" type="checkbox" />
-			</c:if>
+			<aui:input label="copy-templates" name="copyTemplates" type="checkbox" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button type="submit" value="copy" />
 
-		<aui:button href="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

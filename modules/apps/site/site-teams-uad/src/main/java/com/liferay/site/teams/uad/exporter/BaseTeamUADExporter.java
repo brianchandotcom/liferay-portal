@@ -14,10 +14,11 @@
 
 package com.liferay.site.teams.uad.exporter;
 
+import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.service.TeamLocalService;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import com.liferay.site.teams.uad.constants.SiteTeamsUADConstants;
 

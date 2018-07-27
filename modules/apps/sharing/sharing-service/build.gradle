@@ -11,4 +11,5 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:sharing:sharing-api")
+	compileOnly project(":core:petra:petra-string")
 }

@@ -5,10 +5,10 @@ import ${apiPackagePath}.model.${entity.name};
 <#if entity.hasLocalService() && entity.hasEntityColumns()>
 	import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
 
+	import ${serviceBuilder.getCompatProperty("StringBundler")};
 	import com.liferay.portal.kernel.exception.PortalException;
 	import com.liferay.portal.kernel.exception.SystemException;
 	import com.liferay.portal.kernel.model.TreeModel;
-	import com.liferay.portal.kernel.util.StringBundler;
 
 	import java.util.ArrayList;
 	import java.util.List;

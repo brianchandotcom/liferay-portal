@@ -7,11 +7,10 @@ import ${apiPackagePath}.model.${entity.name};
 </#if>
 
 import aQute.bnd.annotation.ProviderType;
-
+import ${serviceBuilder.getCompatProperty("StringBundler")};
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Externalizable;
 import java.io.IOException;

@@ -393,14 +393,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	protected void appendOrderByComparator(
-		StringBundler sb, String entityAlias,
+		com.liferay.petra.string.StringBundler sb, String entityAlias,
 		OrderByComparator<T> orderByComparator) {
 
 		appendOrderByComparator(sb, entityAlias, orderByComparator, false);
 	}
 
 	protected void appendOrderByComparator(
-		StringBundler sb, String entityAlias,
+		com.liferay.petra.string.StringBundler sb, String entityAlias,
 		OrderByComparator<T> orderByComparator, boolean sqlQuery) {
 
 		sb.append(ORDER_BY_CLAUSE);
@@ -435,6 +435,40 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				}
 			}
 		}
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #appendOrderByComparator(
+	 *             com.liferay.petra.string.Stringbundler, String,
+	 *             OrderByComparator<T>)}
+	 */
+	@Deprecated
+	protected void appendOrderByComparator(
+		StringBundler sb, String entityAlias,
+		OrderByComparator<T> orderByComparator) {
+
+		appendOrderByComparator(sb, entityAlias, orderByComparator, false);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #appendOrderByComparator(
+	 *             com.liferay.petra.string.Stringbundler, String,
+	 *             OrderByComparator<T>, boolean)}
+	 */
+	@Deprecated
+	protected void appendOrderByComparator(
+		StringBundler sb, String entityAlias,
+		OrderByComparator<T> orderByComparator, boolean sqlQuery) {
+
+		com.liferay.petra.string.StringBundler petraSB =
+			new com.liferay.petra.string.StringBundler(sb.getStrings());
+
+		petraSB.setIndex(sb.index());
+
+		appendOrderByComparator(
+			petraSB, entityAlias, orderByComparator, sqlQuery);
 	}
 
 	protected ClassLoader getClassLoader() {

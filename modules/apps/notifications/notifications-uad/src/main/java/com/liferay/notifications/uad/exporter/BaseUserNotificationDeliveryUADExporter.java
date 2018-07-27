@@ -16,10 +16,11 @@ package com.liferay.notifications.uad.exporter;
 
 import com.liferay.notifications.uad.constants.NotificationsUADConstants;
 
+import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 

@@ -94,6 +94,16 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		_updateFileEntryFromGoogleDrive(fileEntry, serviceContext);
 
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				fetchDLOpenerFileEntryReference(fileEntry);
+
+		if (dlOpenerFileEntryReference.getType() ==
+				DLOpenerFileEntryReferenceConstants.TYPE_NEW) {
+
+			dlVersionNumberIncrease = DLVersionNumberIncrease.NONE;
+		}
+
 		super.checkInFileEntry(
 			fileEntryId, dlVersionNumberIncrease, changeLog, serviceContext);
 
@@ -142,7 +152,7 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 				fileEntry.getMimeType(),
 				dlOpenerGoogleDriveFileReference.getTitle(),
 				fileEntry.getDescription(), StringPool.BLANK,
-				DLVersionNumberIncrease.MINOR, file, serviceContext);
+				DLVersionNumberIncrease.NONE, file, serviceContext);
 		}
 		finally {
 			if (file != null) {

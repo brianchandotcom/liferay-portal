@@ -86,7 +86,7 @@ public class LegacyDataArchive {
 			JenkinsResultsParserUtil.copy(
 				generatedArchiveFile, _legacyDataArchiveFile);
 
-			_legacyGitWorkingDirectory.stageFileInCurrentBranch(
+			_legacyGitWorkingDirectory.stageFileInCurrentLocalGitBranch(
 				_legacyDataArchiveFile.getCanonicalPath());
 		}
 	}

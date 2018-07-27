@@ -4181,6 +4181,12 @@ file.
 - [LPS-83705]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.88.
 
+## 5.4.95 - 2018-07-25
+
+### Changed
+- [LPS-83920]: Skip replacements of the `updateFileVersions` task for projects in
+the `aspectj` directory.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public
@@ -4626,6 +4632,7 @@ file.
 [LPS-83576]: https://issues.liferay.com/browse/LPS-83576
 [LPS-83705]: https://issues.liferay.com/browse/LPS-83705
 [LPS-83761]: https://issues.liferay.com/browse/LPS-83761
+[LPS-83920]: https://issues.liferay.com/browse/LPS-83920
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

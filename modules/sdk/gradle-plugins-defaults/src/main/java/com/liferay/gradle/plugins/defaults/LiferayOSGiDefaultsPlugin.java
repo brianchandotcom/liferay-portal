@@ -419,7 +419,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final Jar jarTLDDocTask = _addTaskJarTLDDoc(project);
 
 		final ReplaceRegexTask updateFileVersionsTask =
-			_addTaskUpdateFileVersions(project);
+			_addTaskUpdateFileVersions(project, portalRootDir);
 		final ReplaceRegexTask updateVersionTask = _addTaskUpdateVersion(
 			project);
 
@@ -1273,7 +1273,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return replaceRegexTask;
 	}
 
-	private ReplaceRegexTask _addTaskUpdateFileVersions(final Project project) {
+	private ReplaceRegexTask _addTaskUpdateFileVersions(
+		final Project project, final File portalRootDir) {
+
 		final ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
 
@@ -1292,6 +1294,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						GradlePluginsDefaultsUtil.isTestProject(
 							file.getParentFile())) {
 
+						return content;
+					}
+
+					File modulesDir = new File(portalRootDir, "modules");
+
+					String relativePath = FileUtil.relativize(file, modulesDir);
+
+					if (relativePath.startsWith("aspectj" + File.separator)) {
 						return content;
 					}
 

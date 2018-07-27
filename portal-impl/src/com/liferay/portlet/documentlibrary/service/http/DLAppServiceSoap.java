@@ -168,6 +168,25 @@ public class DLAppServiceSoap {
 	}
 
 	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #checkInFileEntry(long, DLVersionNumberIncrease, String, ServiceContext)}
+	*/
+	@Deprecated
+	public static void checkInFileEntry(long fileEntryId, boolean majorVersion,
+		String changeLog,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			DLAppServiceUtil.checkInFileEntry(fileEntryId, majorVersion,
+				changeLog, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Checks in the file entry. If a user has not checked out the specified
 	* file entry, invoking this method will result in no changes.
 	*
@@ -183,19 +202,21 @@ public class DLAppServiceSoap {
 	* </p>
 	*
 	* @param fileEntryId the primary key of the file entry to check in
-	* @param majorVersion whether the new file version is a major version
+	* @param dlVersionNumberIncrease the kind of version number increase to
+	apply for these changes.
 	* @param changeLog the file's version change log
 	* @param serviceContext the service context to be applied
 	* @see #cancelCheckOut(long)
 	* @see #checkOutFileEntry(long, ServiceContext)
 	*/
-	public static void checkInFileEntry(long fileEntryId, boolean majorVersion,
+	public static void checkInFileEntry(long fileEntryId,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
 		String changeLog,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			DLAppServiceUtil.checkInFileEntry(fileEntryId, majorVersion,
-				changeLog, serviceContext);
+			DLAppServiceUtil.checkInFileEntry(fileEntryId,
+				dlVersionNumberIncrease, changeLog, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -2095,6 +2116,30 @@ public class DLAppServiceSoap {
 	}
 
 	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, String, String, String, String, String, DLVersionNumberIncrease, byte[], ServiceContext)}
+	*/
+	@Deprecated
+	public static com.liferay.portal.kernel.repository.model.FileEntrySoap updateFileEntry(
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		byte[] bytes,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.repository.model.FileEntry returnValue = DLAppServiceUtil.updateFileEntry(fileEntryId,
+					sourceFileName, mimeType, title, description, changeLog,
+					majorVersion, bytes, serviceContext);
+
+			return com.liferay.portal.kernel.repository.model.FileEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Updates a file entry and associated metadata based on a byte array
 	* object. If the file data is <code>null</code>, then only the associated
 	* metadata (i.e., <code>title</code>, <code>description</code>, and
@@ -2117,7 +2162,8 @@ public class DLAppServiceSoap {
 	* @param description the file's new description
 	* @param changeLog the file's version change log (optionally
 	<code>null</code>)
-	* @param majorVersion whether the new file version is a major version
+	* @param dlVersionNumberIncrease the kind of version number increase to
+	apply for these changes.
 	* @param bytes the file's data (optionally <code>null</code>)
 	* @param serviceContext the service context to be applied. Can set the
 	asset category IDs, asset tag names, and expando bridge
@@ -2129,14 +2175,15 @@ public class DLAppServiceSoap {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap updateFileEntry(
 		long fileEntryId, String sourceFileName, String mimeType, String title,
-		String description, String changeLog, boolean majorVersion,
+		String description, String changeLog,
+		com.liferay.document.library.kernel.model.DLVersionNumberIncrease dlVersionNumberIncrease,
 		byte[] bytes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.FileEntry returnValue = DLAppServiceUtil.updateFileEntry(fileEntryId,
 					sourceFileName, mimeType, title, description, changeLog,
-					majorVersion, bytes, serviceContext);
+					dlVersionNumberIncrease, bytes, serviceContext);
 
 			return com.liferay.portal.kernel.repository.model.FileEntrySoap.toSoapModel(returnValue);
 		}

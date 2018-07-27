@@ -429,24 +429,32 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void fetch(Branch localBranch, boolean noTags, Branch remoteBranch) {
-		if ((remoteBranch.getSHA() != null) &&
-			localSHAExists(remoteBranch.getSHA())) {
+	public LocalGitBranch fetch(
+		LocalGitBranch localGitBranch, boolean noTags,
+		RemoteGitBranch remoteGitBranch) {
 
-			System.out.println(
-				remoteBranch.getSHA() + " already exists in repository");
-
-			if (localBranch != null) {
-				createLocalBranch(
-					localBranch.getName(), true, remoteBranch.getSHA());
-			}
-
-			return;
+		if (remoteGitBranch == null) {
+			throw new RuntimeException("Remote git branch is null");
 		}
 
-		Remote remote = remoteBranch.getRemote();
+		String remoteBranchSHA = remoteGitBranch.getSHA();
 
-		String remoteURL = remote.getRemoteURL();
+		if (localSHAExists(remoteBranchSHA)) {
+			System.out.println(
+				remoteBranchSHA + " already exists in repository");
+
+			if (localGitBranch != null) {
+				return createLocalGitBranch(
+					localGitBranch.getName(), true, remoteBranchSHA);
+			}
+
+			return null;
+		}
+
+		RemoteRepository remoteRepository =
+			remoteGitBranch.getRemoteRepository();
+
+		String remoteURL = remoteRepository.getRemoteURL();
 
 		if (JenkinsResultsParserUtil.isCINode()) {
 			if (remoteURL.contains("github-dev.liferay.com")) {
@@ -456,39 +464,23 @@ public class GitWorkingDirectory {
 			}
 
 			if (remoteURL.contains("github.com:liferay/")) {
-				remoteURL = remoteURL.replace(
+				String gitHubDevRemoteURL = remoteURL.replace(
 					"github.com:liferay/", "github-dev.liferay.com:liferay/");
 
-				Remote gitHubDevRemote = null;
+				RemoteGitBranch gitHubDevRemoteGitBranch = getRemoteGitBranch(
+					remoteGitBranch.getName(), gitHubDevRemoteURL);
 
-				try {
-					gitHubDevRemote = addRemote(
-						true, "github-dev-remote", remoteURL);
+				if (gitHubDevRemoteGitBranch != null) {
+					fetch(null, noTags, gitHubDevRemoteGitBranch);
 
-					Branch localGitRemoteBranch = getBranch(
-						remoteBranch.getName(), gitHubDevRemote);
-
-					if (localGitRemoteBranch != null) {
-						fetch(localBranch, noTags, localGitRemoteBranch);
-
-						String upstreamBranchSHA = remoteBranch.getSHA();
-
-						if (localSHAExists(upstreamBranchSHA)) {
-							if (!upstreamBranchSHA.equals(
-									localGitRemoteBranch.getSHA())) {
-
-								createLocalBranch(
-									localBranch.getName(), true,
-									remoteBranch.getSHA());
-							}
-
-							return;
+					if (localSHAExists(remoteBranchSHA)) {
+						if (localGitBranch != null) {
+							return createLocalGitBranch(
+								localGitBranch.getName(), true,
+								remoteBranchSHA);
 						}
-					}
-				}
-				finally {
-					if (gitHubDevRemote != null) {
-						removeRemote(gitHubDevRemote);
+
+						return null;
 					}
 				}
 			}
@@ -502,17 +494,17 @@ public class GitWorkingDirectory {
 			sb.append(" --no-tags ");
 		}
 
-		sb.append(remote.getName());
+		sb.append(remoteURL);
 
-		String remoteBranchName = remoteBranch.getName();
+		String remoteBranchName = remoteGitBranch.getName();
 
 		if ((remoteBranchName != null) && !remoteBranchName.isEmpty()) {
 			sb.append(" ");
 			sb.append(remoteBranchName);
 
-			if (localBranch != null) {
+			if (localGitBranch != null) {
 				sb.append(":");
-				sb.append(localBranch.getName());
+				sb.append(localGitBranch.getName());
 			}
 		}
 
@@ -524,22 +516,83 @@ public class GitWorkingDirectory {
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to fetch remote branch ", remoteBranch.getName(),
-					"\n", executionResult.getStandardError()));
+					"Unable to fetch remote branch ", remoteBranchName, "\n",
+					executionResult.getStandardError()));
 		}
 
 		System.out.println(
 			"Fetch completed in " +
 				JenkinsResultsParserUtil.toDurationString(
 					System.currentTimeMillis() - start));
+
+		if (localSHAExists(remoteBranchSHA) && (localGitBranch != null)) {
+			return createLocalGitBranch(
+				localGitBranch.getName(), true, remoteBranchSHA);
+		}
+
+		return null;
 	}
 
-	public void fetch(Branch localBranch, Branch remoteBranch) {
-		fetch(localBranch, true, remoteBranch);
+	public LocalGitBranch fetch(
+		LocalGitBranch localGitBranch, RemoteGitBranch remoteGitBranch) {
+
+		return fetch(localGitBranch, true, remoteGitBranch);
 	}
 
 	public void fetch(Remote remote) {
-		fetch(null, new Branch(this, null, remote, null));
+		fetch(remote.getRemoteURL());
+	}
+
+	public LocalGitBranch fetch(RemoteGitBranch remoteGitBranch) {
+		return fetch(null, true, remoteGitBranch);
+	}
+
+	public void fetch(RemoteRepository remoteRepository) {
+		fetch(remoteRepository.getRemoteURL());
+	}
+
+	public void fetch(String remoteURL) {
+		fetch(remoteURL, true);
+	}
+
+	public void fetch(String remoteURL, boolean noTags) {
+		if (remoteURL == null) {
+			throw new RuntimeException("Remote url is null");
+		}
+
+		Matcher remoteURLMatcher = _remoteURLPattern.matcher(remoteURL);
+
+		if (!remoteURLMatcher.find()) {
+			throw new RuntimeException("Invalid remote url " + remoteURL);
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git fetch --progress -v -f ");
+
+		if (noTags) {
+			sb.append(" --no-tags ");
+		}
+
+		sb.append(remoteURL);
+		sb.append("refs/heads/*:refs/remotes/origin/*");
+
+		long start = System.currentTimeMillis();
+
+		ExecutionResult executionResult = executeBashCommands(
+			3, _RETRY_DELAY, 1000 * 60 * 30, sb.toString());
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to fetch from remote url ", remoteURL, "\n",
+					executionResult.getStandardError()));
+		}
+
+		System.out.println(
+			"Fetch completed in " +
+				JenkinsResultsParserUtil.toDurationString(
+					System.currentTimeMillis() - start));
 	}
 
 	public List<String> getBranchNamesContainingSHA(String sha) {

@@ -745,19 +745,21 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 						GradleUtil.getTaskPrefixedProperty(
 							task, "ignore.project.prefixes");
 
-					if (ignoreProjectPrefixes != null) {
-						Project project = task.getProject();
+					if (Validator.isNull(ignoreProjectPrefixes)) {
+						return true;
+					}
 
-						String projectName = project.getName();
+					Project project = task.getProject();
 
-						for (String prefix : ignoreProjectPrefixes.split(",")) {
-							if (prefix.isEmpty()) {
-								continue;
-							}
+					String projectName = project.getName();
 
-							if (projectName.startsWith(prefix)) {
-								return false;
-							}
+					for (String prefix : ignoreProjectPrefixes.split(",")) {
+						if (prefix.isEmpty()) {
+							continue;
+						}
+
+						if (projectName.startsWith(prefix)) {
+							return false;
 						}
 					}
 

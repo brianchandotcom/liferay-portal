@@ -47,6 +47,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
@@ -735,6 +737,36 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		if (Boolean.parseBoolean(force)) {
 			return;
 		}
+
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					String ignoreProjectRegex =
+						GradleUtil.getTaskPrefixedProperty(
+							task, "ignore.project.regex");
+
+					if (Validator.isNull(ignoreProjectRegex)) {
+						return true;
+					}
+
+					Project project = task.getProject();
+
+					String projectName = project.getName();
+
+					Pattern pattern = Pattern.compile(ignoreProjectRegex);
+
+					Matcher matcher = pattern.matcher(projectName);
+
+					if (!matcher.find()) {
+						return true;
+					}
+
+					return false;
+				}
+
+			});
 
 		task.onlyIf(
 			new Spec<Task>() {

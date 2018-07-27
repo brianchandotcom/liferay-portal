@@ -75,32 +75,36 @@ public class CentralSubrepository {
 				_subrepositoryUpstreamBranchName, _subrepositoryDirectory,
 				_subrepositoryName);
 
-		GitWorkingDirectory.Branch localUpstreamBranch = null;
-		GitWorkingDirectory.Branch tempBranch = null;
+		LocalGitBranch upstreamLocalGitBranch = null;
+		LocalGitBranch tempLocalGitBranch = null;
 
 		try {
-			tempBranch = gitWorkingDirectory.createLocalBranch(tempBranchName);
+			tempLocalGitBranch = gitWorkingDirectory.createLocalGitBranch(
+				tempBranchName);
 
-			gitWorkingDirectory.checkoutBranch(tempBranch);
+			gitWorkingDirectory.checkoutLocalGitBranch(tempLocalGitBranch);
 
 			GitWorkingDirectory.Remote upstreamRemote =
 				gitWorkingDirectory.getRemote("upstream");
 
-			localUpstreamBranch = gitWorkingDirectory.getBranch(
-				_subrepositoryUpstreamBranchName, null, true);
+			upstreamLocalGitBranch = gitWorkingDirectory.getLocalGitBranch(
+				_subrepositoryUpstreamBranchName, true);
 
 			gitWorkingDirectory.fetch(
-				localUpstreamBranch,
-				gitWorkingDirectory.getBranch(
+				upstreamLocalGitBranch,
+				gitWorkingDirectory.getRemoteGitBranch(
 					_subrepositoryUpstreamBranchName, upstreamRemote, true));
 		}
 		finally {
-			if ((localUpstreamBranch != null) && (tempBranch != null) &&
-				gitWorkingDirectory.branchExists(tempBranch.getName(), null)) {
+			if ((upstreamLocalGitBranch != null) &&
+				(tempLocalGitBranch != null) &&
+				gitWorkingDirectory.localGitBranchExists(
+					tempLocalGitBranch.getName())) {
 
-				gitWorkingDirectory.checkoutBranch(localUpstreamBranch);
+				gitWorkingDirectory.checkoutLocalGitBranch(
+					upstreamLocalGitBranch);
 
-				gitWorkingDirectory.deleteBranch(tempBranch);
+				gitWorkingDirectory.deleteLocalGitBranch(tempLocalGitBranch);
 			}
 		}
 

@@ -1685,7 +1685,7 @@ passthrough=&quot;true&quot;</echo>
 			<local name="patching.tool.name" />
 			<local name="patching.tool.version" />
 
-			<mirrors-get
+			<get
 				dest="${basedir}"
 				src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}"
 			/>

@@ -188,14 +188,6 @@ public class GitWorkingDirectory {
 	}
 
 	public void clean() {
-		clean(null);
-	}
-
-	public void clean(File workingDirectory) {
-		if (workingDirectory == null) {
-			workingDirectory = _workingDirectory;
-		}
-
 		ExecutionResult executionResult = executeBashCommands(
 			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, "git clean -dfx");
 
@@ -724,45 +716,6 @@ public class GitWorkingDirectory {
 		return _gitDirectory;
 	}
 
-	public String getGitHubFileURL(Branch branch, File file) {
-		return getGitHubFileURL(
-			branch.getName(), branch.getRemote(), file, true);
-	}
-
-	public String getGitHubFileURL(
-		String branchName, Remote branchRemote, File file, boolean verify) {
-
-		String relativePath = JenkinsResultsParserUtil.getPathRelativeTo(
-			file, getWorkingDirectory());
-
-		String remoteURL = branchRemote.getRemoteURL();
-
-		if (!remoteURL.contains("git@github.com:")) {
-			throw new RuntimeException(
-				remoteURL + " does not point to a GitHub repository");
-		}
-
-		if (verify) {
-			String command = JenkinsResultsParserUtil.combine(
-				"git cat-file -e ", branchRemote.getName(), "/", branchName,
-				" ", relativePath);
-
-			ExecutionResult executionResult = executeBashCommands(
-				_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT, command);
-
-			if (executionResult.getExitValue() != 0) {
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						relativePath, " does not exist in ",
-						branchRemote.getName(), "/", branchName));
-			}
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			"https://github.com/", getGitHubUserName(branchRemote), "/",
-			getRepositoryName(), "/tree/", branchName, "/", relativePath);
-	}
-
 	public File getJavaFileFromFullClassName(String fullClassName) {
 		if (_javaDirPaths == null) {
 			List<File> javaFiles = JenkinsResultsParserUtil.findFiles(
@@ -1171,6 +1124,10 @@ public class GitWorkingDirectory {
 		return getRemoteGitBranches(null, remoteRepository.getRemoteURL());
 	}
 
+	public List<RemoteGitBranch> getRemoteGitBranches(String remoteURL) {
+		return getRemoteGitBranches(null, remoteURL);
+	}
+
 	public List<RemoteGitBranch> getRemoteGitBranches(
 		String remoteBranchName, Remote remote) {
 
@@ -1240,10 +1197,6 @@ public class GitWorkingDirectory {
 				" branches at " + remoteURL + ".");
 
 		return remoteGitBranches;
-	}
-
-	public List<RemoteGitBranch> getRemoteGitBranches(String remoteURL) {
-		return getRemoteGitBranches(null, remoteURL);
 	}
 
 	public Set<String> getRemoteNames() {
@@ -1494,7 +1447,7 @@ public class GitWorkingDirectory {
 		if (branchNamesContainingSHA.contains(localGitBranch.getName())) {
 			checkoutLocalGitBranch(localGitBranch);
 
-			return;
+			return localGitBranch;
 		}
 
 		String rebaseCommand = JenkinsResultsParserUtil.combine(

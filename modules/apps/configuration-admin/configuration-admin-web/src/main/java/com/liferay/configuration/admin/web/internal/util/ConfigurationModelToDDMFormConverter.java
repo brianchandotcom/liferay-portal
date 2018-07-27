@@ -23,9 +23,14 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -319,19 +324,47 @@ public class ConfigurationModelToDDMFormConverter {
 	protected void setDDMFormFieldTip(
 		AttributeDefinition attributeDefinition, DDMFormField ddmFormField) {
 
+		ExtendedAttributeDefinition extendedAttributeDefinition =
+			_configurationModel.getExtendedAttributeDefinition(
+				attributeDefinition.getID());
+
 		LocalizedValue tip = new LocalizedValue(_locale);
 
-		tip.addString(_locale, translate(attributeDefinition.getDescription()));
+		Map<String, String> extensionAttributes =
+			extendedAttributeDefinition.getExtensionAttributes(
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedAttributeDefinition.XML_NAMESPACE);
+
+		List<String> descriptionArguments = StringUtil.split(
+			extensionAttributes.get("description-arguments"));
+
+		tip.addString(
+			_locale,
+			translate(
+				attributeDefinition.getDescription(), descriptionArguments));
 
 		ddmFormField.setTip(tip);
 	}
 
 	protected String translate(String key) {
+		return translate(key, Collections.emptyList());
+	}
+
+	protected String translate(String key, List<String> arguments) {
 		if ((_resourceBundle == null) || (key == null)) {
 			return key;
 		}
 
-		String value = LanguageUtil.get(_resourceBundle, key);
+		String value;
+
+		if (ListUtil.isEmpty(arguments)) {
+			value = LanguageUtil.get(_resourceBundle, key);
+		}
+		else {
+			value = LanguageUtil.format(
+				_resourceBundle, key,
+				arguments.toArray(new String[arguments.size()]));
+		}
 
 		if (value == null) {
 			return key;

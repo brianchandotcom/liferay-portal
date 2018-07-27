@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.metatype.definitions.annotations.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 
@@ -133,11 +134,21 @@ public class AnnotationsExtendedObjectClassDefinition
 
 			map.put("category", extendedObjectClassDefinition.category());
 			map.put(
+				"description-arguments",
+				String.join(
+					StringPool.COMMA,
+					extendedObjectClassDefinition.descriptionArguments()));
+			map.put(
 				"factoryInstanceLabelAttribute",
 				extendedObjectClassDefinition.factoryInstanceLabelAttribute());
 			map.put(
 				"generateUI",
 				Boolean.toString(extendedObjectClassDefinition.generateUI()));
+			map.put(
+				"name-arguments",
+				String.join(
+					StringPool.COMMA,
+					extendedObjectClassDefinition.nameArguments()));
 
 			ExtendedObjectClassDefinition.Scope scope =
 				extendedObjectClassDefinition.scope();

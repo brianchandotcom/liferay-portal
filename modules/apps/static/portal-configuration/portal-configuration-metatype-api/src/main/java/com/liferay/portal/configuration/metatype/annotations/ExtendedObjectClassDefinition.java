@@ -42,9 +42,13 @@ public @interface ExtendedObjectClassDefinition {
 
 	public String category() default "";
 
+	public String[] descriptionArguments() default {};
+
 	public String factoryInstanceLabelAttribute() default "";
 
 	public boolean generateUI() default true;
+
+	public String[] nameArguments() default {};
 
 	public Scope scope() default Scope.SYSTEM;
 

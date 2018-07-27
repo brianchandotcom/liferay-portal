@@ -1397,38 +1397,39 @@ public class GitWorkingDirectory {
 		return commits;
 	}
 
-	public boolean pushToRemote(boolean force, Branch remoteBranch) {
-		Branch currentBranch = getCurrentBranch();
-
-		if (currentBranch == null) {
-			Remote remote = remoteBranch.getRemote();
-
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to push current branch to remote branch ",
-					remoteBranch.getName(), " on ", remote.getName(),
-					" because the current branch is invalid"));
-		}
-
-		return pushToRemote(force, currentBranch, remoteBranch);
-	}
-
-	public boolean pushToRemote(
-		boolean force, Branch localBranch, Branch remoteBranch) {
-
-		return pushToRemote(
-			force, localBranch, remoteBranch.getName(),
-			remoteBranch.getRemote());
-	}
-
-	public boolean pushToRemote(
-		boolean force, Branch localBranch, String remoteBranchName,
+	public RemoteGitBranch pushToRemote(
+		boolean force, LocalGitBranch localGitBranch, String remoteBranchName,
 		Remote remote) {
 
-		String localBranchName = "";
+		return pushToRemote(
+			force, localGitBranch, remoteBranchName, remote.getRemoteURL());
+	}
 
-		if (localBranch != null) {
-			localBranchName = localBranch._name;
+	public RemoteGitBranch pushToRemote(
+		boolean force, LocalGitBranch localGitBranch, String remoteBranchName,
+		RemoteRepository remoteRepository) {
+
+		return pushToRemote(
+			force, localGitBranch, remoteBranchName,
+			remoteRepository.getRemoteURL());
+	}
+
+	public RemoteGitBranch pushToRemote(
+		boolean force, LocalGitBranch localGitBranch, String remoteBranchName,
+		String remoteURL) {
+
+		if (localGitBranch == null) {
+			throw new RuntimeException("Local git branch is null");
+		}
+
+		if (remoteURL == null) {
+			throw new RuntimeException("Remote url is null");
+		}
+
+		Matcher remoteURLMatcher = _remoteURLPattern.matcher(remoteURL);
+
+		if (!remoteURLMatcher.find()) {
+			throw new RuntimeException("Invalid remote url " + remoteURL);
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -1439,35 +1440,28 @@ public class GitWorkingDirectory {
 			sb.append("-f ");
 		}
 
-		sb.append(remote.getName());
+		sb.append(remoteURL);
 		sb.append(" ");
-		sb.append(localBranchName);
-		sb.append(":");
-		sb.append(remoteBranchName);
+		sb.append(localGitBranch.getName());
+
+		if (remoteBranchName != null) {
+			sb.append(":");
+			sb.append(remoteBranchName);
+		}
 
 		try {
 			executeBashCommands(
 				_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, sb.toString());
 		}
 		catch (RuntimeException re) {
-			return false;
+			return null;
 		}
 
-		return true;
-	}
-
-	public boolean pushToRemote(boolean force, Remote remote) {
-		Branch currentBranch = getCurrentBranch();
-
-		if (currentBranch == null) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to push current branch to remote branch ",
-					"because the current branch is invalid"));
+		if (remoteBranchName != null) {
+			return getRemoteGitBranch(remoteBranchName, remoteURL);
 		}
 
-		return pushToRemote(
-			force, currentBranch, currentBranch.getName(), remote);
+		return null;
 	}
 
 	public void rebase(

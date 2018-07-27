@@ -35,45 +35,41 @@ public class GitWorkingDirectoryFactory {
 
 		String repositoryDirName = repositoryDir.getName();
 
-		String key = JenkinsResultsParserUtil.combine(
-			repositoryDirName, "_", upstreamBranchName);
-
-		if (_gitWorkingDirectories.containsKey(key)) {
-			return _gitWorkingDirectories.get(key);
+		if (_gitWorkingDirectories.containsKey(repositoryDirName)) {
+			return _gitWorkingDirectories.get(repositoryDirName);
 		}
 
 		try {
+			GitWorkingDirectory gitWorkingDirectory = null;
 			String repositoryDirPath = repositoryDir.getCanonicalPath();
 
 			if (repositoryDirName.startsWith("com-liferay-")) {
-				_gitWorkingDirectories.put(
-					key,
-					new SubrepositoryGitWorkingDirectory(
-						upstreamBranchName, repositoryDirPath, repositoryName));
+				gitWorkingDirectory = new SubrepositoryGitWorkingDirectory(
+					upstreamBranchName, repositoryDirPath, repositoryName);
 			}
 			else if (repositoryDirName.startsWith("liferay-plugins")) {
-				_gitWorkingDirectories.put(
-					key,
-					new PluginsGitWorkingDirectory(
-						upstreamBranchName, repositoryDirPath, repositoryName));
+				gitWorkingDirectory = new PluginsGitWorkingDirectory(
+					upstreamBranchName, repositoryDirPath, repositoryName);
 			}
 			else if (repositoryDirName.startsWith("liferay-portal")) {
-				_gitWorkingDirectories.put(
-					key,
-					new PortalGitWorkingDirectory(
-						upstreamBranchName, repositoryDirPath, repositoryName));
+				gitWorkingDirectory = new PortalGitWorkingDirectory(
+					upstreamBranchName, repositoryDirPath, repositoryName);
 			}
 			else {
-				_gitWorkingDirectories.put(
-					key,
-					new GitWorkingDirectory(
-						upstreamBranchName, repositoryDirPath, repositoryName));
+				gitWorkingDirectory = new GitWorkingDirectory(
+					upstreamBranchName, repositoryDirPath, repositoryName);
 			}
 
-			return _gitWorkingDirectories.get(key);
+			_gitWorkingDirectories.put(repositoryDirName, gitWorkingDirectory);
+
+			return gitWorkingDirectory;
 		}
 		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to create git working directory for directory ",
+					repositoryDir.getPath()),
+				ioe);
 		}
 	}
 

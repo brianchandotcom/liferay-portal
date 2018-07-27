@@ -12,26 +12,31 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.io.exporter;
+package com.liferay.dynamic.data.mapping.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Map;
-import java.util.Set;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Marcellus Tavares
- * @deprecated As of Judson (7.1.x), replaced by {@link
- * DDMFormInstanceRecordWriterTracker}
+ * @author Brian Wing Shun Chan
  */
-@Deprecated
 @ProviderType
-public interface DDMExporterFactory {
+public class FormInstanceRecordExporterException extends PortalException {
 
-	public Set<String> getAvailableFormats();
+	public FormInstanceRecordExporterException() {
+	}
 
-	public Map<String, String> getAvailableFormatsMap();
+	public FormInstanceRecordExporterException(String msg) {
+		super(msg);
+	}
 
-	public DDMFormExporter getDDMFormExporter(String format);
+	public FormInstanceRecordExporterException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public FormInstanceRecordExporterException(Throwable cause) {
+		super(cause);
+	}
 
 }

@@ -17,8 +17,9 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
-import com.liferay.dynamic.data.mapping.io.exporter.DDMExporterFactory;
-import com.liferay.dynamic.data.mapping.io.exporter.DDMFormExporter;
+import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporter;
+import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterRequest;
+import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterResponse;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.petra.string.CharPool;
@@ -82,36 +83,30 @@ public class ExportFormInstanceMVCResourceCommand
 			return;
 		}
 
+		DDMFormInstanceRecordExporterRequest.Builder builder =
+			DDMFormInstanceRecordExporterRequest.Builder.newBuilder(
+				formInstanceId, fileExtension);
+
+		DDMFormInstanceRecordExporterRequest
+			ddmFormInstanceRecordExporterRequest = builder.withLocale(
+				themeDisplay.getLocale()
+			).withStatus(
+				WorkflowConstants.STATUS_APPROVED
+			).build();
+
+		DDMFormInstanceRecordExporterResponse
+			ddmFormInstanceRecordExporterResponse =
+				_ddmFormInstanceRecordExporter.export(
+					ddmFormInstanceRecordExporterRequest);
+
 		String fileName =
 			formInstance.getName(themeDisplay.getLocale()) + CharPool.PERIOD +
 				fileExtension;
 
-		DDMFormExporter exporter = _ddmExporterFactory.getDDMFormExporter(
-			fileExtension);
-
-		exporter.setLocale(themeDisplay.getLocale());
-
-		byte[] bytes = exporter.export(
-			formInstanceId, WorkflowConstants.STATUS_APPROVED);
-
-		String contentType = MimeTypesUtil.getContentType(fileName);
-
 		PortletResponseUtil.sendFile(
-			resourceRequest, resourceResponse, fileName, bytes, contentType);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLExporterFactory(
-		DDMExporterFactory ddmExporterFactory) {
-
-		_ddmExporterFactory = ddmExporterFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormInstanceService(
-		DDMFormInstanceService formInstanceService) {
-
-		_formInstanceService = formInstanceService;
+			resourceRequest, resourceResponse, fileName,
+			ddmFormInstanceRecordExporterResponse.getContent(),
+			MimeTypesUtil.getContentType(fileName));
 	}
 
 	protected void unsetDDMFormWebConfigurationActivator(
@@ -120,7 +115,8 @@ public class ExportFormInstanceMVCResourceCommand
 		_ddmFormWebConfigurationActivator = null;
 	}
 
-	private DDMExporterFactory _ddmExporterFactory;
+	@Reference
+	private DDMFormInstanceRecordExporter _ddmFormInstanceRecordExporter;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
@@ -131,6 +127,7 @@ public class ExportFormInstanceMVCResourceCommand
 	private volatile DDMFormWebConfigurationActivator
 		_ddmFormWebConfigurationActivator;
 
+	@Reference
 	private DDMFormInstanceService _formInstanceService;
 
 }

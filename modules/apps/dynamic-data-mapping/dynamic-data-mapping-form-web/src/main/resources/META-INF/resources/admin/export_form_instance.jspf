@@ -37,15 +37,15 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 	<aui:select label="file-extension" name="fileExtension">
 
 		<%
-		Map<String, String> availableExportFormats = ddmFormAdminDisplayContext.getAvailableExportFormats();
+		Map<String, String> availableExportExtensions = ddmFormAdminDisplayContext.getAvailableExportExtensions();
 
-		for (Map.Entry<String, String> entry : availableExportFormats.entrySet()) {
-			if (Objects.equals(entry.getValue(), "csv") && csvExportDisabled) {
+		for (Map.Entry<String, String> entry : availableExportExtensions.entrySet()) {
+			if (Objects.equals(entry.getKey(), "csv") && csvExportDisabled) {
 				continue;
 			}
 		%>
 
-			<aui:option value="<%= entry.getValue() %>"><%= entry.getKey() %></aui:option>
+			<aui:option value="<%= entry.getKey() %>"><%= entry.getValue() %></aui:option>
 
 		<%
 		}

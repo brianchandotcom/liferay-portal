@@ -16,22 +16,17 @@ package com.liferay.dynamic.data.mapping.io.exporter;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Map;
-import java.util.Set;
+import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordExporterException;
 
 /**
- * @author Marcellus Tavares
- * @deprecated As of Judson (7.1.x), replaced by {@link
- * DDMFormInstanceRecordWriterTracker}
+ * @author Leonardo Barros
  */
-@Deprecated
 @ProviderType
-public interface DDMExporterFactory {
+public interface DDMFormInstanceRecordExporter {
 
-	public Set<String> getAvailableFormats();
-
-	public Map<String, String> getAvailableFormatsMap();
-
-	public DDMFormExporter getDDMFormExporter(String format);
+	public DDMFormInstanceRecordExporterResponse export(
+			DDMFormInstanceRecordExporterRequest
+				ddmFormInstanceRecordExporterRequest)
+		throws FormInstanceRecordExporterException;
 
 }

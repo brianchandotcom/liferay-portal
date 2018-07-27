@@ -722,6 +722,7 @@
 		<exception>ContentName</exception>
 		<exception>DataProviderInstanceName</exception>
 		<exception>FormInstanceName</exception>
+		<exception>FormInstanceRecordExporter</exception>
 		<exception>FormInstanceRecordGroupId</exception>
 		<exception>FormInstanceSettingsRedirectURL</exception>
 		<exception>FormInstanceStructureId</exception>

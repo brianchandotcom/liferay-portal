@@ -60,7 +60,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		Matcher matcher = _externalVersionPattern.matcher(
 			targetPlatformVersion);
 
-		String repositoryVersion = null;
+		String normalizedTargetPlatformVersion = null;
 
 		if (matcher.matches()) {
 			StringBuilder sb = new StringBuilder();
@@ -87,10 +87,11 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 					"Invalid version property value", nfe);
 			}
 
-			repositoryVersion = _fixBadVersionNumbers(sb.toString());
+			normalizedTargetPlatformVersion = _fixBadVersionNumbers(
+				sb.toString());
 		}
 		else {
-			repositoryVersion = targetPlatformVersion;
+			normalizedTargetPlatformVersion = targetPlatformVersion;
 		}
 
 		GradleUtil.applyPlugin(project, TargetPlatformIDEPlugin.class);
@@ -99,8 +100,10 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		_configureTargetPlatform(project);
 		_configureTargetPlatformIDE(project);
 
-		_addDependenciesTargetPlatformBoms(project, repositoryVersion);
-		_addDependenciesTargetPlatformDistro(project, repositoryVersion);
+		_addDependenciesTargetPlatformBoms(
+			project, normalizedTargetPlatformVersion);
+		_addDependenciesTargetPlatformDistro(
+			project, normalizedTargetPlatformVersion);
 	}
 
 	private TargetPlatformRootProjectConfigurator() {
@@ -109,15 +112,25 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 	private void _addDependenciesTargetPlatformBoms(
 		Project project, String targetPlatformVersion) {
 
+		Matcher dxpVersion = _dxpVersionPattern.matcher(targetPlatformVersion);
+
+		final String artifactId;
+
+		if (dxpVersion.matches()) {
+			artifactId = _ARTIFACT_ID_RELEASE_DXP_BOM;
+		}
+		else {
+			artifactId = _ARTIFACT_ID_RELEASE_PORTAL_BOM;
+		}
+
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			"com.liferay", "com.liferay.ce.portal.bom", targetPlatformVersion);
+			_GROUP_ID_PORTAL, artifactId, targetPlatformVersion);
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			"com.liferay", "com.liferay.ce.portal.compile.only",
-			targetPlatformVersion);
+			_GROUP_ID_PORTAL, artifactId, targetPlatformVersion);
 	}
 
 	private void _addDependenciesTargetPlatformDistro(
@@ -132,12 +145,23 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
+					Matcher dxpMatcher = _dxpVersionPattern.matcher(
+						targetPlatformVersion);
+
+					final String artifactId;
+
+					if (dxpMatcher.matches()) {
+						artifactId = _ARTIFACT_ID_RELEASE_DXP_DISTRO;
+					}
+					else {
+						artifactId = _ARTIFACT_ID_RELEASE_PORTAL_DISTRO;
+					}
+
 					GradleUtil.addDependency(
 						project,
 						TargetPlatformPlugin.
 							TARGET_PLATFORM_DISTRO_CONFIGURATION_NAME,
-						"com.liferay", "com.liferay.ce.portal.distro",
-						targetPlatformVersion);
+						_GROUP_ID_PORTAL, artifactId, targetPlatformVersion);
 				}
 
 			});
@@ -208,6 +232,23 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		return version;
 	}
+
+	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM =
+		"release.dxp.bom";
+
+	private static final String _ARTIFACT_ID_RELEASE_DXP_DISTRO =
+		"release.dxp.distro";
+
+	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM =
+		"release.portal.bom";
+
+	private static final String _ARTIFACT_ID_RELEASE_PORTAL_DISTRO =
+		"release.portal.distro";
+
+	private static final String _GROUP_ID_PORTAL = "com.liferay.portal";
+
+	private static final Pattern _dxpVersionPattern = Pattern.compile(
+		"7\\.[0-2]\\.1[0-9](\\.[0-9]+)?");
 
 	private final Pattern _externalVersionPattern = Pattern.compile(
 		"([0-9]+)\\.([0-9]+)-([A-Za-z]+)([0-9]+)");

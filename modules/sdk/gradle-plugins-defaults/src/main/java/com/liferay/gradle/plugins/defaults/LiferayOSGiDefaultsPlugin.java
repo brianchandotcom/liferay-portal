@@ -1287,7 +1287,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			new Closure<String>(project) {
 
 				@SuppressWarnings("unused")
-				public String doCall(String content, File file) {
+				public String doCall(String content, File file)
+					throws IOException {
+
 					String fileName = file.getName();
 
 					if (!fileName.equals("build.gradle") ||
@@ -1297,12 +1299,26 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return content;
 					}
 
-					File modulesDir = new File(portalRootDir, "modules");
+					Path portalRootPath = portalRootDir.toPath();
 
-					String relativePath = FileUtil.relativize(file, modulesDir);
+					File parentFile = file.getParentFile();
 
-					if (relativePath.startsWith("aspectj" + File.separator)) {
-						return content;
+					while (parentFile != null) {
+						Path parentPath = parentFile.toPath();
+
+						if (Files.isSameFile(parentPath, portalRootPath)) {
+							break;
+						}
+
+						File relengSkipUpdateFileVersionsFile = new File(
+							parentFile,
+							".lfrbuild-releng-skip-update-file-versions");
+
+						if (relengSkipUpdateFileVersionsFile.exists()) {
+							return content;
+						}
+
+						parentFile = parentFile.getParentFile();
 					}
 
 					GitRepo contentGitRepo = GitRepo.getGitRepo(

@@ -70,8 +70,7 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 				newGitWorkingDirectory(
 					portalGitWorkingDirectory.getUpstreamBranchName(),
 					JenkinsResultsParserUtil.getProperty(
-						portalReleaseProperties, "lp.plugins.dir"),
-					"liferay-plugins-ee");
+						portalReleaseProperties, "lp.plugins.dir"));
 
 		excludesPathMatchers.addAll(
 			getPathMatchers(

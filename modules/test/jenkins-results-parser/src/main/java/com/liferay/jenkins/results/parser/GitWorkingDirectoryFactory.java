@@ -41,21 +41,22 @@ public class GitWorkingDirectoryFactory {
 		}
 
 		try {
+			String repositoryDirName = repositoryDir.getName();
 			String repositoryDirPath = repositoryDir.getCanonicalPath();
 
-			if (repositoryName.startsWith("com-liferay-")) {
+			if (repositoryDirName.startsWith("com-liferay-")) {
 				_gitWorkingDirectories.put(
 					key,
 					new SubrepositoryGitWorkingDirectory(
 						upstreamBranchName, repositoryDirPath, repositoryName));
 			}
-			else if (repositoryName.startsWith("liferay-plugins")) {
+			else if (repositoryDirName.startsWith("liferay-plugins")) {
 				_gitWorkingDirectories.put(
 					key,
 					new PluginsGitWorkingDirectory(
 						upstreamBranchName, repositoryDirPath, repositoryName));
 			}
-			else if (repositoryName.startsWith("liferay-portal")) {
+			else if (repositoryDirName.startsWith("liferay-portal")) {
 				_gitWorkingDirectories.put(
 					key,
 					new PortalGitWorkingDirectory(

@@ -33,27 +33,33 @@ renderResponse.setTitle(LanguageUtil.format(request, "copy-x", structure.getName
 	<portlet:param name="mvcPath" value="/copy_structure.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= copyStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= copyStructureURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="structureId" type="hidden" value="<%= String.valueOf(structure.getStructureId()) %>" />
 
-	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 
-	<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
+		<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input name="name" />
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<aui:input name="name" />
 
-			<aui:input name="description" />
+				<aui:input name="description" />
 
-			<aui:input label="copy-templates" name="copyTemplates" type="checkbox" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+				<aui:input label="copy-templates" name="copyTemplates" type="checkbox" />
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" value="copy" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

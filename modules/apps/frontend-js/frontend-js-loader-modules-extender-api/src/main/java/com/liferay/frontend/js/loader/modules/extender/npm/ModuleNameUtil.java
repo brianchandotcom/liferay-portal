@@ -17,6 +17,7 @@ package com.liferay.frontend.js.loader.modules.extender.npm;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.FileUtil;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -91,6 +92,7 @@ public class ModuleNameUtil {
 	 * @param  jsPackage the NPM package
 	 * @param  moduleName the module's name
 	 * @return the module ID
+	 * @review
 	 */
 	public static String getModuleId(JSPackage jsPackage, String moduleName) {
 		StringBundler sb = new StringBundler(3);
@@ -119,7 +121,6 @@ public class ModuleNameUtil {
 	 * @param  moduleName the module's name
 	 * @return the package name or <code>null</code> if the module name is a
 	 *         reserved or local one
-	 * @review
 	 */
 	public static String getPackageName(String moduleName) {
 		if (isLocalModuleName(moduleName)) {
@@ -208,17 +209,13 @@ public class ModuleNameUtil {
 	 * @return the module's name
 	 */
 	public static String toModuleName(String fileName) {
-		if (isLocalModuleName(fileName)) {
-			fileName = fileName.substring(2);
-		}
+		String extension = FileUtil.getExtension(fileName);
 
-		int i = fileName.lastIndexOf(CharPool.PERIOD);
-
-		if (i == -1) {
+		if (!extension.equals("js")) {
 			return fileName;
 		}
 
-		return fileName.substring(0, i);
+		return FileUtil.stripExtension(fileName);
 	}
 
 	private static final Set<String> _reservedModuleNames = new HashSet<>(

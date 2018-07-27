@@ -14,8 +14,13 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.MimeTypes;
+
+import java.net.URL;
 
 import javax.servlet.Servlet;
 
@@ -37,11 +42,42 @@ import org.osgi.service.component.annotations.Reference;
 public class BuiltInJSModuleServlet extends BaseBuiltInJSModuleServlet {
 
 	@Override
-	protected JSModule getJSModule(String moduleName) {
-		return _npmRegistry.getJSModule(moduleName);
+	protected MimeTypes getMimeTypes() {
+		return _mimeTypes;
+	}
+
+	@Override
+	protected URL getURL(String pathInfo) {
+		String identifier = pathInfo.substring(1);
+
+		int i = identifier.indexOf(StringPool.SLASH);
+
+		if (i == -1) {
+			return null;
+		}
+
+		String bundleId = identifier.substring(0, i);
+
+		identifier = identifier.substring(i + 1);
+
+		String packageName = ModuleNameUtil.getPackageName(identifier);
+
+		JSPackage jsPackage = _npmRegistry.getJSPackage(
+			bundleId + StringPool.SLASH + packageName);
+
+		if (jsPackage == null) {
+			return null;
+		}
+
+		String packagePath = ModuleNameUtil.getPackagePath(identifier);
+
+		return jsPackage.getResourceURL(packagePath);
 	}
 
 	private static final long serialVersionUID = -8753225208295935344L;
+
+	@Reference
+	private MimeTypes _mimeTypes;
 
 	@Reference
 	private NPMRegistry _npmRegistry;

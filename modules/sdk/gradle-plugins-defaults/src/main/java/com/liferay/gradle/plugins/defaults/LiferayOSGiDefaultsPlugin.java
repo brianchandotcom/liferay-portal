@@ -419,7 +419,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final Jar jarTLDDocTask = _addTaskJarTLDDoc(project);
 
 		final ReplaceRegexTask updateFileVersionsTask =
-			_addTaskUpdateFileVersions(project, portalRootDir);
+			_addTaskUpdateFileVersions(project);
 		final ReplaceRegexTask updateVersionTask = _addTaskUpdateVersion(
 			project);
 
@@ -1273,9 +1273,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return replaceRegexTask;
 	}
 
-	private ReplaceRegexTask _addTaskUpdateFileVersions(
-		final Project project, final File portalRootDir) {
-
+	private ReplaceRegexTask _addTaskUpdateFileVersions(final Project project) {
 		final ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
 
@@ -1287,9 +1285,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			new Closure<String>(project) {
 
 				@SuppressWarnings("unused")
-				public String doCall(String content, File file)
-					throws IOException {
-
+				public String doCall(String content, File file) {
 					String fileName = file.getName();
 
 					if (!fileName.equals("build.gradle") ||
@@ -1299,26 +1295,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return content;
 					}
 
-					Path portalRootPath = portalRootDir.toPath();
+					File markerFile = GradleUtil.getRootDir(
+						file.getParentFile(),
+						".lfrbuild-releng-skip-update-file-versions");
 
-					File parentFile = file.getParentFile();
-
-					while (parentFile != null) {
-						Path parentPath = parentFile.toPath();
-
-						if (Files.isSameFile(parentPath, portalRootPath)) {
-							break;
-						}
-
-						File relengSkipUpdateFileVersionsFile = new File(
-							parentFile,
-							".lfrbuild-releng-skip-update-file-versions");
-
-						if (relengSkipUpdateFileVersionsFile.exists()) {
-							return content;
-						}
-
-						parentFile = parentFile.getParentFile();
+					if (markerFile != null) {
+						return content;
 					}
 
 					GitRepo contentGitRepo = GitRepo.getGitRepo(

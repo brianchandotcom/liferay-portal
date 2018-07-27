@@ -88,7 +88,8 @@ AUI.add(
 
 						instance._eventHandles = [
 							Do.after('_afterGet', instance._srcNode, 'get', instance),
-							Do.after('_afterVal', instance._srcNode, 'val', instance)
+							Do.after('_afterVal', instance._srcNode, 'val', instance),
+							Liferay.on('inputLocalized:localeChanged', instance._onLocaleChangedHandler, instance)
 						];
 
 						var nativeEditor = instance.getNativeEditor();
@@ -428,6 +429,22 @@ AUI.add(
 						if (event.data.keyCode === KEY_ENTER) {
 							event.cancel();
 						}
+					},
+
+					_onLocaleChangedHandler: function(event) {
+						var instance = this;
+
+						var contentsLanguage = event.item.getAttribute('data-value');
+						var contentsLanguageName = contentsLanguage.substr(0, 2).replace('iw', 'he');
+
+						var contentsLanguageDir = CKEDITOR.lang.rtl[contentsLanguageName] ? 'rtl' : 'ltr';
+
+						var nativeEditor = instance.getNativeEditor();
+
+						var editable = nativeEditor.editable();
+
+						editable.changeAttr('dir', contentsLanguageDir);
+						editable.changeAttr('lang', contentsLanguage);
 					},
 
 					_onSetData: function(event) {

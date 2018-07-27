@@ -19,6 +19,11 @@
 	.alloy-editor {
 		cursor: text;
 		overflow: hidden;
+		text-align: start;
+
+		&[dir="rtl"] + .alloy-editor-icon {
+			left: 8px;
+		}
 
 		&.alloy-editor-placeholder {
 			&:before {

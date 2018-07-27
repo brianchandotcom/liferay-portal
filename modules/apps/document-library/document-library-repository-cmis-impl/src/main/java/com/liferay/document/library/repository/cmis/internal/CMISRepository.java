@@ -33,6 +33,7 @@ import com.liferay.document.library.repository.cmis.internal.model.CMISFileEntry
 import com.liferay.document.library.repository.cmis.internal.model.CMISFileVersion;
 import com.liferay.document.library.repository.cmis.internal.model.CMISFolder;
 import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
@@ -64,7 +65,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -588,8 +588,8 @@ public class CMISRepository extends BaseCmisRepository {
 		catch (CmisObjectNotFoundException confe) {
 			throw new NoSuchFileEntryException(
 				StringBundler.concat(
-					"No CMIS file entry with {folderId=",
-					String.valueOf(folderId), ", title=", title, "}"),
+					"No CMIS file entry with {folderId=", folderId, ", title=",
+					title, "}"),
 				confe);
 		}
 		catch (PortalException | SystemException e) {
@@ -603,8 +603,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 		throw new NoSuchFileEntryException(
 			StringBundler.concat(
-				"No CMIS file entry with {folderId=", String.valueOf(folderId),
-				", title=", title, "}"));
+				"No CMIS file entry with {folderId=", folderId, ", title=",
+				title, "}"));
 	}
 
 	@Override
@@ -698,8 +698,8 @@ public class CMISRepository extends BaseCmisRepository {
 		catch (CmisObjectNotFoundException confe) {
 			throw new NoSuchFolderException(
 				StringBundler.concat(
-					"No CMIS folder with {parentFolderId=",
-					String.valueOf(parentFolderId), ", name=", name, "}"),
+					"No CMIS folder with {parentFolderId=", parentFolderId,
+					", name=", name, "}"),
 				confe);
 		}
 		catch (PortalException | SystemException e) {
@@ -713,8 +713,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 		throw new NoSuchFolderException(
 			StringBundler.concat(
-				"No CMIS folder with {parentFolderId=",
-				String.valueOf(parentFolderId), ", name=", name, "}"));
+				"No CMIS folder with {parentFolderId=", parentFolderId,
+				", name=", name, "}"));
 	}
 
 	@Override
@@ -970,7 +970,7 @@ public class CMISRepository extends BaseCmisRepository {
 			throw new RepositoryException(
 				StringBundler.concat(
 					"Unable to initialize CMIS session for repository with ",
-					"{repositoryId=", String.valueOf(getRepositoryId()), "}"),
+					"{repositoryId=", getRepositoryId(), "}"),
 				e);
 		}
 	}

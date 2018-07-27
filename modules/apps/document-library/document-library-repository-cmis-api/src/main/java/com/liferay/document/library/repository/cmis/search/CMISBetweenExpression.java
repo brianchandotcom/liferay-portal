@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.repository.cmis.search;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Mika Koivisto

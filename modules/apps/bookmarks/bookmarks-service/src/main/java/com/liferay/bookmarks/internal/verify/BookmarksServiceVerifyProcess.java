@@ -16,11 +16,11 @@ package com.liferay.bookmarks.internal.verify;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
@@ -72,8 +72,7 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 						_log.warn(
 							StringBundler.concat(
 								"Unable to update asset for folder ",
-								String.valueOf(folder.getFolderId()), ": ",
-								e.getMessage()));
+								folder.getFolderId(), ": ", e.getMessage()));
 					}
 				}
 			}

@@ -16,8 +16,8 @@ package com.liferay.blogs.demo.data.creator.internal;
 
 import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreator;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 
 		String titlePath = StringBundler.concat(
 			"com/liferay/blogs/demo/data/creator/internal/dependencies",
-			"/creative/commons/content_", String.valueOf(index), ".txt");
+			"/creative/commons/content_", index, ".txt");
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
@@ -87,7 +87,7 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 
 		String titlePath = StringBundler.concat(
 			"com/liferay/blogs/demo/data/creator/internal/dependencies",
-			"/creative/commons/subtitle_", String.valueOf(index), ".txt");
+			"/creative/commons/subtitle_", index, ".txt");
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
@@ -97,7 +97,7 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 
 		String titlePath = StringBundler.concat(
 			"com/liferay/blogs/demo/data/creator/internal/dependencies",
-			"/creative/commons/title_", String.valueOf(index), ".txt");
+			"/creative/commons/title_", index, ".txt");
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}

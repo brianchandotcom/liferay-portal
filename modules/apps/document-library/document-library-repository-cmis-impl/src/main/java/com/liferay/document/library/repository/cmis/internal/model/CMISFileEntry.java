@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.repository.cmis.internal.CMISRepository;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
@@ -189,8 +189,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 		throw new NoSuchFileVersionException(
 			StringBundler.concat(
-				"No CMIS file version with {fileEntryId=",
-				String.valueOf(getFileEntryId()), ", version=", version, "}"));
+				"No CMIS file version with {fileEntryId=", getFileEntryId(),
+				", version=", version, "}"));
 	}
 
 	@Override
@@ -239,8 +239,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 		throw new NoSuchFileVersionException(
 			StringBundler.concat(
-				"No CMIS file version with {fileEntryId=",
-				String.valueOf(getFileEntryId()), ", version=", version, "}"));
+				"No CMIS file version with {fileEntryId=", getFileEntryId(),
+				", version=", version, "}"));
 	}
 
 	@Override

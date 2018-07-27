@@ -15,8 +15,8 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.flat;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.model.JSBundleAdapter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.net.URL;
 

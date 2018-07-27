@@ -16,7 +16,7 @@ package com.liferay.frontend.js.top.head.extender.internal;
 
 import com.liferay.frontend.js.top.head.extender.TopHeadResources;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.ArrayList;
 import java.util.Collection;

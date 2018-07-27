@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -79,7 +79,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 				_log.debug(
 					StringBundler.concat(
-						"Deleting ", String.valueOf(size),
+						"Deleting ", size,
 						" file entry metadatas with mismatched company IDs"));
 			}
 
@@ -214,8 +214,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 			_log.debug(
 				StringBundler.concat(
-					"Processing ", String.valueOf(count),
-					" file versions with mime types: ",
+					"Processing ", count, " file versions with mime types: ",
 					StringUtil.merge(originalMimeTypes, StringPool.COMMA)));
 		}
 
@@ -345,8 +344,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 						_log.warn(
 							StringBundler.concat(
 								"Unable to update asset for file entry ",
-								String.valueOf(dlFileEntry.getFileEntryId()),
-								": ", e.getMessage()));
+								dlFileEntry.getFileEntryId(), ": ",
+								e.getMessage()));
 					}
 				}
 			}
@@ -380,8 +379,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 						_log.warn(
 							StringBundler.concat(
 								"Unable to update asset for folder ",
-								String.valueOf(dlFolder.getFolderId()), ": ",
-								e.getMessage()));
+								dlFolder.getFolderId(), ": ", e.getMessage()));
 					}
 				}
 			}

@@ -18,11 +18,11 @@ import com.liferay.fragment.demo.data.creator.FragmentEntryDemoDataCreator;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -101,7 +101,7 @@ public class FragmentEntryDemoDataCreatorImpl
 
 		String contentPath = StringBundler.concat(
 			"com/liferay/fragment/demo/data/creator/internal/dependencies",
-			"/fragment", String.valueOf(index), "/", fileName);
+			"/fragment", index, "/", fileName);
 
 		return StringUtil.read(clazz.getClassLoader(), contentPath, false);
 	}

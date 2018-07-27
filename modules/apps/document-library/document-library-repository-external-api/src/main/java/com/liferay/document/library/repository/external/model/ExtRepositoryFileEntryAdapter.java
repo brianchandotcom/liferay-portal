@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
 import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -138,8 +138,8 @@ public class ExtRepositoryFileEntryAdapter
 
 		throw new NoSuchFileVersionException(
 			StringBundler.concat(
-				"No file version with {fileEntryId=",
-				String.valueOf(getFileEntryId()), ", version: ", version, "}"));
+				"No file version with {fileEntryId=", getFileEntryId(),
+				", version: ", version, "}"));
 	}
 
 	@Override

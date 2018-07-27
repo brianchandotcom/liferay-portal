@@ -15,12 +15,12 @@
 package com.liferay.bookmarks.web.internal.search;
 
 import com.liferay.admin.kernel.util.PortalProductMenuApplicationType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.RowMover;
 import com.liferay.portal.kernel.dao.search.RowMoverDropTarget;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.trash.model.TrashEntry;
 
 /**

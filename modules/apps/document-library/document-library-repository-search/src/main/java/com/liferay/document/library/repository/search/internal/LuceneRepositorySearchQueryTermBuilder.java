@@ -15,6 +15,7 @@
 package com.liferay.document.library.repository.search.internal;
 
 import com.liferay.document.library.repository.search.util.KeywordsUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -237,9 +237,8 @@ public class LuceneRepositorySearchQueryTermBuilder
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Ignoring unknown query type ",
-						String.valueOf(query.getClass()), " with query ",
-						String.valueOf(query)));
+						"Ignoring unknown query type ", query.getClass(),
+						" with query ", query));
 			}
 		}
 	}

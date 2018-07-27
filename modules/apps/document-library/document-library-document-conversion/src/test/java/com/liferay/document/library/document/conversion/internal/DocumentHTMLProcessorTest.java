@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.document.conversion.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 

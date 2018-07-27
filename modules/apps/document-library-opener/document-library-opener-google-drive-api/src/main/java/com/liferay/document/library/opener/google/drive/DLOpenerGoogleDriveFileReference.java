@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.opener.google.drive;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Adolfo Pérez

@@ -19,6 +19,7 @@ import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.document.library.file.rank.service.base.DLFileRankLocalServiceBaseImpl;
 import com.liferay.document.library.file.rank.util.comparator.FileRankCreateDateComparator;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
@@ -62,10 +62,8 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Add failed, fetch {companyId=",
-						String.valueOf(companyId), ", userId=",
-						String.valueOf(userId), ", fileEntryId=",
-						String.valueOf(fileEntryId), "}"));
+						"Add failed, fetch {companyId=", companyId, ", userId=",
+						userId, ", fileEntryId=", fileEntryId, "}"));
 			}
 
 			dlFileRank = dlFileRankPersistence.fetchByC_U_F(
@@ -212,10 +210,9 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Update failed, fetch {companyId=",
-							String.valueOf(companyId), ", userId=",
-							String.valueOf(userId), ", fileEntryId=",
-							String.valueOf(fileEntryId), "}"));
+							"Update failed, fetch {companyId=", companyId,
+							", userId=", userId, ", fileEntryId=", fileEntryId,
+							"}"));
 				}
 			}
 		}

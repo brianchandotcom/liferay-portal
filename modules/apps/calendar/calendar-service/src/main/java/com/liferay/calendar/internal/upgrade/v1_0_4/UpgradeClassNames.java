@@ -14,9 +14,9 @@
 
 package com.liferay.calendar.internal.upgrade.v1_0_4;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 

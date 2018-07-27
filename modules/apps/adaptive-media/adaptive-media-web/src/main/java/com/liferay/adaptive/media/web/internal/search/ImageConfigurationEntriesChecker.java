@@ -15,11 +15,11 @@
 package com.liferay.adaptive.media.web.internal.search;
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import javax.servlet.http.HttpServletRequest;
 

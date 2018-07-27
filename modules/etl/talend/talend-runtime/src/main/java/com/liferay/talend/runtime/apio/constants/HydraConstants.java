@@ -24,6 +24,8 @@ public interface HydraConstants {
 
 	public interface FieldNames {
 
+		public static final String COLLECTION = "collection";
+
 		public static final String DESCRIPTION = "description";
 
 		public static final String EXPECTS = "expects";
@@ -32,6 +34,8 @@ public interface HydraConstants {
 
 		public static final String LAST = "last";
 
+		public static final String MANAGES = "manages";
+
 		public static final String MEMBER = "member";
 
 		public static final String METHOD = "method";
@@ -39,6 +43,8 @@ public interface HydraConstants {
 		public static final String NEXT = "next";
 
 		public static final String NUMBER_OF_ITEMS = "numberOfItems";
+
+		public static final String OBJECT = "object";
 
 		public static final String OPERATION = "operation";
 
@@ -71,6 +77,8 @@ public interface HydraConstants {
 		public static final String CLASS = "Class";
 
 		public static final String COLLECTION = "Collection";
+
+		public static final String ENTRY_POINT = "EntryPoint";
 
 		public static final String PARTIAL_COLLECTION_VIEW =
 			"PartialCollectionView";

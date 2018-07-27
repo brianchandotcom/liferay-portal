@@ -21,8 +21,6 @@ import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 
 import java.io.IOException;
 
-import java.util.Iterator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,28 +72,7 @@ public abstract class ApioBaseResponse implements ApioResponse {
 	}
 
 	protected static boolean hasValueOf(String value, JsonNode jsonNode) {
-		if (jsonNode.isArray()) {
-			Iterator<JsonNode> iterator = jsonNode.elements();
-
-			while (iterator.hasNext()) {
-				JsonNode entryJsonNode = iterator.next();
-
-				String entry = entryJsonNode.asText();
-
-				if (entry.equals(value)) {
-					return true;
-				}
-			}
-		}
-		else if (jsonNode.isValueNode()) {
-			String entry = jsonNode.asText();
-
-			if (entry.equals(value)) {
-				return true;
-			}
-		}
-
-		return false;
+		return ApioUtils.hasValueOf(value, jsonNode);
 	}
 
 	protected JsonNode findJsonNode(JsonNode resource, String nodeName) {

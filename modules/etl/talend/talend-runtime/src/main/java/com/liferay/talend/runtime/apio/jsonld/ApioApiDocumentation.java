@@ -65,11 +65,10 @@ public class ApioApiDocumentation extends ApioBaseResponse {
 		for (final JsonNode jsonNode : supportedClassesJsonNode) {
 			JsonNode typeJsonNode = jsonNode.path(JSONLDConstants.TYPE);
 
-			String type = typeJsonNode.asText();
-
-			if (!type.equals(FieldTypes.CLASS)) {
+			if (!hasValueOf(FieldTypes.CLASS, typeJsonNode)) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Skipping unexpected type: " + type);
+					_log.debug(
+						"Skipping unexpected type: " + typeJsonNode.toString());
 				}
 
 				continue;

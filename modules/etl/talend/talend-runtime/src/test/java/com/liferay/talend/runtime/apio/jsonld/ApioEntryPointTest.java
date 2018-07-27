@@ -16,65 +16,81 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 
 import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * @author Zoltán Takács
  */
-public class ApioUtilsTest {
+public class ApioEntryPointTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		String json = read("SampleSingleModelResource.json");
+		String json = read("SampleEntryPoint.json");
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		JsonNode jsonNode = objectMapper.readTree(json);
 
-		_apioJsonLDResource = new ApioSingleModel(jsonNode);
+		_apioEntryPoint = new ApioEntryPoint(jsonNode);
 	}
 
 	@Test
-	public void testGetTypeCoercionTermKeys() {
-		JsonNode contextJsonNode = _apioJsonLDResource.getContextJsonNode();
+	public void testGetRootEndpointMap1() {
+		Map<String, String> rootEndpointMap =
+			_apioEntryPoint.getRootEndpointMap();
 
-		List<String> typeCoercionTermKeys = ApioUtils.getTypeCoercionTermKeys(
-			contextJsonNode);
-
-		Assert.assertThat(typeCoercionTermKeys.size(), equalTo(2));
-
+		Assert.assertThat(rootEndpointMap.size(), equalTo(2));
 		Assert.assertThat(
-			typeCoercionTermKeys, hasItems("blogPosts", "folder"));
+			rootEndpointMap.values(), hasItems("BlogPosting", "Person"));
 	}
 
 	@Test
-	public void testHasValueOf() {
-		JsonNode typeJsonNode = _apioJsonLDResource.getTypeJsonNode();
+	public void testGetRootEndpointMap2() {
+		Map<String, String> rootEndpointMap =
+			_apioEntryPoint.getRootEndpointMap();
 
+		Assert.assertThat(rootEndpointMap.size(), equalTo(2));
 		Assert.assertThat(
-			ApioUtils.hasValueOf("WebSite", typeJsonNode), is(true));
-		Assert.assertThat(
-			ApioUtils.hasValueOf("BlogPosting", typeJsonNode), is(false));
+			rootEndpointMap.keySet(),
+			hasItems(
+				"http://localhost:9000/p/blog-postings",
+				"http://localhost:9000/p/people"));
 	}
 
 	@Test
-	public void testIsSingleModel() {
-		Assert.assertThat(_apioJsonLDResource.isSingleModel(), is(true));
+	public void testWrongType() throws Exception {
+		expectedException.expect(IOException.class);
+		expectedException.expectMessage(
+			"The type of the given resource is not an instance of EntryPoint");
+
+		String json = read("SampleResource.json");
+
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		JsonNode jsonNode = objectMapper.readTree(json);
+
+		new ApioEntryPoint(jsonNode);
 	}
+
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 
 	protected static String read(String fileName) throws Exception {
 		Class<?> clazz = ApioResourceCollectionTest.class;
@@ -86,6 +102,6 @@ public class ApioUtilsTest {
 		return new String(bytes);
 	}
 
-	private static ApioSingleModel _apioJsonLDResource;
+	private static ApioEntryPoint _apioEntryPoint;
 
 }

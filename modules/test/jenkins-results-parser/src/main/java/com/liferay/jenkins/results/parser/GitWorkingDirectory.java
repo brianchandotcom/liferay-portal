@@ -99,11 +99,13 @@ public class GitWorkingDirectory {
 		return false;
 	}
 
-	public void checkoutBranch(Branch branch) {
-		checkoutBranch(branch, "-f");
+	public void checkoutLocalGitBranch(LocalGitBranch localGitBranch) {
+		checkoutLocalGitBranch(localGitBranch, "-f");
 	}
 
-	public void checkoutBranch(Branch branch, String options) {
+	public void checkoutLocalGitBranch(
+		LocalGitBranch localGitBranch, String options) {
+
 		waitForIndexLock();
 
 		StringBuilder sb = new StringBuilder();
@@ -115,7 +117,7 @@ public class GitWorkingDirectory {
 			sb.append(" ");
 		}
 
-		String branchName = branch.getName();
+		String branchName = localGitBranch.getName();
 
 		sb.append(branchName);
 
@@ -163,10 +165,11 @@ public class GitWorkingDirectory {
 			timeout++;
 
 			if (timeout >= 59) {
-				Branch currentBranch = getCurrentBranch();
+				LocalGitBranch currentLocalGitBranch =
+					getCurrentLocalGitBranch();
 
-				if ((currentBranch != null) &&
-					branchName.equals(currentBranch.getName())) {
+				if ((currentLocalGitBranch != null) &&
+					branchName.equals(currentLocalGitBranch.getName())) {
 
 					return;
 				}
@@ -2164,6 +2167,10 @@ public class GitWorkingDirectory {
 	private static final List<String> _publicOnlyRepositoryNames =
 		_getBuildPropertyAsList(
 			"git.working.directory.public.only.repository.names");
+	private static final Pattern _remoteURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"git@(?<hostname>[^:]+):(?<username>[^/]+)/",
+			"(?<repositoryName>[^\\.]+)(.git)?"));
 
 	private File _gitDirectory;
 	private Set<String> _javaDirPaths;
@@ -2171,9 +2178,5 @@ public class GitWorkingDirectory {
 	private final String _repositoryUsername;
 	private final String _upstreamBranchName;
 	private File _workingDirectory;
-	private static final Pattern _remoteURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"git@(?<hostname>[^:]+):(?<username>[^/]+)/",
-			"(?<repositoryName>[^\\.]+)(.git)?"));
 
 }

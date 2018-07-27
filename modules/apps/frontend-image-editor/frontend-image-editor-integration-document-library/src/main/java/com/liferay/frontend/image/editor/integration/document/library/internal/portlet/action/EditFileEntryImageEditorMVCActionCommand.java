@@ -56,6 +56,8 @@ import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Ambrin Chaudhary
@@ -197,9 +199,10 @@ public class EditFileEntryImageEditorMVCActionCommand
 	private Portal _portal;
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.integration.document.library)",
-		unbind = "-"
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.integration.document.library)"
 	)
-	private ResourceBundleLoader _resourceBundleLoader;
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -44,6 +44,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eudaldo Alonso
@@ -126,9 +128,11 @@ public class SiteNavigationMenuItemItemSelectorView
 				}));
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(bundle.symbolic.name=com.liferay.site.navigation.item.selector.web)"
 	)
-	private ResourceBundleLoader _resourceBundleLoader;
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.navigation.item.selector.web)"

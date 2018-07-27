@@ -23,6 +23,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alejandro Tardín
@@ -53,8 +55,12 @@ public abstract class BaseJournalUserNotificationDefinition
 		return _description;
 	}
 
-	@Reference(target = "(bundle.symbolic.name=com.liferay.journal.web)")
-	protected ResourceBundleLoader resourceBundleLoader;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.journal.web)"
+	)
+	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 	private final String _description;
 

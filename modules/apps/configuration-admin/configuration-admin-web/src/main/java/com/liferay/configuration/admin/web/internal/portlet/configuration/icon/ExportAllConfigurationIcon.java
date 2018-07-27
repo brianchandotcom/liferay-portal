@@ -31,6 +31,8 @@ import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jorge Ferrer
@@ -86,8 +88,10 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 	private Portal _portal;
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(bundle.symbolic.name=com.liferay.configuration.admin.web)"
 	)
-	private ResourceBundleLoader _resourceBundleLoader;
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -31,14 +31,12 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.language.LanguageResources;
 
 import java.util.ResourceBundle;
 
@@ -48,6 +46,8 @@ import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jonathan Lee
@@ -228,17 +228,6 @@ public class InviteMembersUserNotificationHandler
 		_memberRequestLocalService = memberRequestLocalService;
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.invitation.invite.members.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = new AggregateResourceBundleLoader(
-			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
-	}
-
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
@@ -257,7 +246,13 @@ public class InviteMembersUserNotificationHandler
 	@Reference
 	private Portal _portal;
 
-	private ResourceBundleLoader _resourceBundleLoader;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.invitation.invite.members.web)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
+
 	private UserLocalService _userLocalService;
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;

@@ -32,6 +32,8 @@ import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jürgen Kappler
@@ -79,9 +81,10 @@ public class LayoutPageTemplateEntryExceptionRequestHandler {
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)",
-		unbind = "-"
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)"
 	)
-	private ResourceBundleLoader _resourceBundleLoader;
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

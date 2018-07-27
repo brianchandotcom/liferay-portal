@@ -15,9 +15,7 @@
 package com.liferay.wiki.engine.text.internal;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.model.WikiPage;
@@ -31,6 +29,8 @@ import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jorge Ferrer
@@ -87,17 +87,6 @@ public class TextEngine extends BaseWikiEngine {
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.wiki.engine.text)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = new AggregateResourceBundleLoader(
-			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
-	}
-
-	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.text)",
 		unbind = "-"
 	)
@@ -105,7 +94,13 @@ public class TextEngine extends BaseWikiEngine {
 		_servletContext = servletContext;
 	}
 
-	private ResourceBundleLoader _resourceBundleLoader;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.wiki.engine.text)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
+
 	private ServletContext _servletContext;
 
 }

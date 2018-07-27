@@ -35,6 +35,8 @@ import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jonathan Lee
@@ -123,16 +125,6 @@ public class MicroblogsUserNotificationHandler
 		_microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.microblogs.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
@@ -143,7 +135,13 @@ public class MicroblogsUserNotificationHandler
 	@Reference
 	private Portal _portal;
 
-	private ResourceBundleLoader _resourceBundleLoader;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.microblogs.web)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
+
 	private UserLocalService _userLocalService;
 
 }

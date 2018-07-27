@@ -40,6 +40,8 @@ import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adam Brandizzi
@@ -104,16 +106,6 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 		return "/definition/view.jsp";
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		this.resourceBundleLoader = resourceBundleLoader;
-	}
-
 	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)",
@@ -145,7 +137,12 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
 	}
 
-	protected ResourceBundleLoader resourceBundleLoader;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)"
+	)
+	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 	@Reference
 	protected UserLocalService userLocalService;

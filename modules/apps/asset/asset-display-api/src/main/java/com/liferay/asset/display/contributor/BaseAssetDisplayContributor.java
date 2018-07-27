@@ -141,7 +141,7 @@ public abstract class BaseAssetDisplayContributor<T>
 	protected abstract void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader);
 
-	protected ResourceBundleLoader resourceBundleLoader;
+	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 	private Map<String, Object> _getDefaultParameterMap(
 		AssetEntry assetEntry, Locale locale) {

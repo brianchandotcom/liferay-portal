@@ -36,6 +36,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Juergen Kappler
@@ -144,9 +146,11 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 	private Portal _portal;
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(bundle.symbolic.name=com.liferay.site.navigation.lang)"
 	)
-	private ResourceBundleLoader _resourceBundleLoader;
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 	private volatile SiteNavigationMenuWebTemplateConfiguration
 		_siteNavigationMenuWebTemplateConfiguration;

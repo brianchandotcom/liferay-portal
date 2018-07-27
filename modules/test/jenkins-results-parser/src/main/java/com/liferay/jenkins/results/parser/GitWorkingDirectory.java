@@ -413,6 +413,25 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	public void displayLog() {
+		displayLog(1);
+	}
+
+	public void displayLog(int logNumber) {
+		String command = "git log -n " + logNumber;
+
+		ExecutionResult executionResult = executeBashCommands(
+			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 3, command);
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException("Unable to display log");
+		}
+
+		System.out.println();
+		System.out.println(executionResult.getStandardOut());
+		System.out.println();
+	}
+
 	public LocalGitBranch fetch(
 		LocalGitBranch localGitBranch, boolean noTags,
 		RemoteGitBranch remoteGitBranch) {

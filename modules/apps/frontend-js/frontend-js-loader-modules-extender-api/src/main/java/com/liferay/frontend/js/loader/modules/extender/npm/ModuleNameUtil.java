@@ -211,7 +211,7 @@ public class ModuleNameUtil {
 	public static String toModuleName(String fileName) {
 		String extension = FileUtil.getExtension(fileName);
 
-		if (!extension.equals(".js")) {
+		if (!extension.equals("js")) {
 			return fileName;
 		}
 

@@ -30,6 +30,15 @@
 	<target depends="dist-module-artifacts,update-app-marketplace-version,write-app-change-log,zip-app-sources" name="build-app">
 		<delete file="${dist.dir}/ticket.list.tmp" />
 
+		<condition property="git.finalize">
+			<and>
+				<isset property="app.ticket.list" />
+				<not>
+					<istrue value="${override.git.finalize}" />
+				</not>
+			</and>
+		</condition>
+
 		<antcall target="git-finalize" />
 	</target>
 
@@ -40,7 +49,6 @@
 			<sequential>
 				<antcall inheritall="false" target="build-app">
 					<param name="app.name" value="@{app.name}" />
-					<param name="git.finalize" value="true" />
 				</antcall>
 			</sequential>
 		</for>

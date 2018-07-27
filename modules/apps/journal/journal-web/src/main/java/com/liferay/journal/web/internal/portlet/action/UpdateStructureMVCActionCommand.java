@@ -14,68 +14,48 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Leonardo Barros
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING,
-		"mvc.command.name=updateStructure"
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"mvc.command.name=/journal/update_structure"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateStructureMVCActionCommand extends DDMBaseMVCActionCommand {
+public class UpdateStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMStructure structure = updateStructure(actionRequest);
-
-		addSuccessMessage(actionRequest, actionResponse);
-
-		setRedirectAttribute(actionRequest, structure);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
-	protected DDMStructure updateStructure(ActionRequest actionRequest)
-		throws Exception {
-
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
+		long structureId = ParamUtil.getLong(actionRequest, "structureId");
 		long parentStructureId = ParamUtil.getLong(
 			actionRequest, "parentStructureId",
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
@@ -91,12 +71,15 @@ public class UpdateStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
-		return _ddmStructureService.updateStructure(
-			classPK, parentStructureId, nameMap, descriptionMap, ddmForm,
+		_ddmStructureService.updateStructure(
+			structureId, parentStructureId, nameMap, descriptionMap, ddmForm,
 			ddmFormLayout, serviceContext);
 	}
 
+	@Reference
 	private DDM _ddm;
+
+	@Reference
 	private DDMStructureService _ddmStructureService;
 
 }

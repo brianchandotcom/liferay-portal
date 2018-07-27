@@ -14,8 +14,9 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -27,17 +28,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING,
-		"mvc.command.name=deleteStructure"
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"mvc.command.name=/journal/delete_structure"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteStructureMVCActionCommand extends DDMBaseMVCActionCommand {
+public class DeleteStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -46,7 +47,7 @@ public class DeleteStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 
 		long[] deleteStructureIds = null;
 
-		long structureId = ParamUtil.getLong(actionRequest, "classPK");
+		long structureId = ParamUtil.getLong(actionRequest, "structureId");
 
 		if (structureId > 0) {
 			deleteStructureIds = new long[] {structureId};
@@ -59,8 +60,6 @@ public class DeleteStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 		for (long deleteStructureId : deleteStructureIds) {
 			_ddmStructureService.deleteStructure(deleteStructureId);
 		}
-
-		setRedirectAttribute(actionRequest);
 	}
 
 	@Reference(unbind = "-")

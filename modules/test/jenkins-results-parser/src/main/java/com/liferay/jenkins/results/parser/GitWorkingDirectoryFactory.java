@@ -33,15 +33,16 @@ public class GitWorkingDirectoryFactory {
 				"Directory path not found " + repositoryDir);
 		}
 
+		String repositoryDirName = repositoryDir.getName();
+
 		String key = JenkinsResultsParserUtil.combine(
-			repositoryName, "_", upstreamBranchName);
+			repositoryDirName, "_", upstreamBranchName);
 
 		if (_gitWorkingDirectories.containsKey(key)) {
 			return _gitWorkingDirectories.get(key);
 		}
 
 		try {
-			String repositoryDirName = repositoryDir.getName();
 			String repositoryDirPath = repositoryDir.getCanonicalPath();
 
 			if (repositoryDirName.startsWith("com-liferay-")) {

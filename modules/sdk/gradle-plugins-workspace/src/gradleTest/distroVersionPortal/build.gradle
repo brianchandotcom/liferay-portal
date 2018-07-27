@@ -1,0 +1,28 @@
+task runGradleTest
+
+allprojects {
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+runGradleTest {
+	doLast {
+		ResolvedConfiguration resolvedConfiguration = configurations.targetPlatformDistro.resolvedConfiguration
+
+		assert resolvedConfiguration.hasError()
+
+		String errorMessage
+
+		try {
+			resolvedConfiguration.rethrowFailure()
+		}
+		catch (Exception e) {
+			errorMessage = e.cause.message
+		}
+
+		assert errorMessage.contains("release.portal.distro")
+	}
+}

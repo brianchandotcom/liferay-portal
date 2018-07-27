@@ -230,20 +230,18 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_portalCacheManagerConfiguration =
 			configurationObjectValuePair.getValue();
 
-		if (_stopCacheManagerTimer) {
-			FailSafeTimer failSafeTimer = _cacheManager.getTimer();
+		FailSafeTimer failSafeTimer = _cacheManager.getTimer();
 
-			failSafeTimer.cancel();
+		failSafeTimer.cancel();
 
-			try {
-				Field cacheManagerTimerField = ReflectionUtil.getDeclaredField(
-					CacheManager.class, "cacheManagerTimer");
+		try {
+			Field cacheManagerTimerField = ReflectionUtil.getDeclaredField(
+				CacheManager.class, "cacheManagerTimer");
 
-				cacheManagerTimerField.set(_cacheManager, null);
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+			cacheManagerTimerField.set(_cacheManager, null);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 
 		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
@@ -270,10 +268,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 						ManagementService managementService =
 							new ManagementService(
-								_cacheManager, mBeanServer,
-								_registerCacheManager, _registerCaches,
-								_registerCacheConfigurations,
-								_registerCacheStatistics);
+								_cacheManager, mBeanServer, true, true, true,
+								true);
 
 						managementService.init();
 
@@ -415,11 +411,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private ServiceTracker<MBeanServer, ManagementService>
 		_mBeanServerServiceTracker;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
-	private boolean _registerCacheConfigurations = true;
-	private boolean _registerCacheManager = true;
-	private boolean _registerCaches = true;
-	private boolean _registerCacheStatistics = true;
-	private boolean _stopCacheManagerTimer = true;
 	private boolean _usingDefault;
 
 	private class PortalCacheConfiguratorSettingsServiceTrackerCustomizer

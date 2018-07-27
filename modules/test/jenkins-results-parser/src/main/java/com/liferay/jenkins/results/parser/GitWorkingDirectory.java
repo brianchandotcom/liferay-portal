@@ -897,9 +897,9 @@ public class GitWorkingDirectory {
 
 		List<File> modifiedFiles = new ArrayList<>();
 
-		Branch currentBranch = getCurrentBranch();
+		LocalGitBranch currentLocalGitBranch = getCurrentLocalGitBranch();
 
-		if (currentBranch == null) {
+		if (currentLocalGitBranch == null) {
 			throw new RuntimeException(
 				"Unable to determine the current branch");
 		}
@@ -910,11 +910,12 @@ public class GitWorkingDirectory {
 
 		sb.append(
 			_getMergeBaseCommitSHA(
-				currentBranch, getBranch(_upstreamBranchName, null, true)));
+				currentLocalGitBranch,
+				getLocalGitBranch(getUpstreamBranchName(), true)));
 
 		if (!checkUnstagedFiles) {
 			sb.append(" ");
-			sb.append(currentBranch.getSHA());
+			sb.append(currentLocalGitBranch.getSHA());
 		}
 
 		if ((grepPredicateString != null) && !grepPredicateString.isEmpty()) {
@@ -1597,7 +1598,7 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void stageFileInCurrentBranch(String fileName) {
+	public void stageFileInCurrentLocalGitBranch(String fileName) {
 		String command = "git stage " + fileName;
 
 		ExecutionResult result = executeBashCommands(

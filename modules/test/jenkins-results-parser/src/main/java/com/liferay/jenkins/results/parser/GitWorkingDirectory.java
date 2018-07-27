@@ -498,105 +498,6 @@ public class GitWorkingDirectory {
 		fetch(null, new Branch(this, null, remote, null));
 	}
 
-	public Branch getBranch(String branchName, Remote remote) {
-		return getBranch(branchName, remote, false);
-	}
-
-	public Branch getBranch(
-		String branchName, Remote remote, boolean required) {
-
-		if (branchName.equals("HEAD") && (remote == null)) {
-			ExecutionResult executionResult = executeBashCommands(
-				_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT, "git branch | grep \\*");
-
-			if (executionResult.getExitValue() != 0) {
-				System.out.println(executionResult.getStandardError());
-
-				if (required) {
-					throw new RuntimeException(
-						JenkinsResultsParserUtil.combine(
-							"Unable to find checked out branch ", branchName));
-				}
-
-				return null;
-			}
-
-			System.out.println(executionResult.getStandardOut());
-
-			String currentBranchName = executionResult.getStandardOut();
-
-			currentBranchName = currentBranchName.replaceFirst("\\*\\s*", "");
-
-			currentBranchName = currentBranchName.trim();
-
-			if (currentBranchName.isEmpty()) {
-				System.out.println(executionResult.getStandardError());
-
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"Unable to find checked out branch ", branchName));
-			}
-
-			return new Branch(
-				this, currentBranchName, null, getBranchSHA(currentBranchName));
-		}
-
-		List<Branch> branches = getBranches(branchName, remote);
-
-		for (Branch branch : branches) {
-			if (branchName.equals(branch.getName())) {
-				return branch;
-			}
-		}
-
-		if (required) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to find required branch ", branchName,
-					" from remote URL " + remote.getRemoteURL()));
-		}
-
-		return null;
-	}
-
-	public List<Branch> getBranches(String branchName, Remote remote) {
-		if (remote == null) {
-			List<String> localBranchNames = getLocalBranchNames();
-
-			List<Branch> localBranches = new ArrayList<>(
-				localBranchNames.size());
-
-			if (branchName != null) {
-				if (localBranchNames.contains(branchName)) {
-					localBranches.add(
-						new Branch(
-							this, branchName, null, getBranchSHA(branchName)));
-				}
-
-				return localBranches;
-			}
-
-			for (String localBranchName : localBranchNames) {
-				localBranches.add(
-					new Branch(
-						this, localBranchName, null,
-						getBranchSHA(localBranchName)));
-			}
-
-			return localBranches;
-		}
-
-		return getRemoteBranches(branchName, remote);
-	}
-
-	public List<String> getBranchNames(Remote remote) {
-		if (remote == null) {
-			return getLocalBranchNames();
-		}
-
-		return getRemoteBranchNames(remote);
-	}
-
 	public List<String> getBranchNamesContainingSHA(String sha) {
 		ExecutionResult executionResult = executeBashCommands(
 			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 2,
@@ -889,6 +790,70 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	public LocalGitBranch getLocalGitBranch(String branchName) {
+		return getLocalGitBranch(branchName, false);
+	}
+
+	public LocalGitBranch getLocalGitBranch(
+		String branchName, boolean required) {
+
+		List<LocalGitBranch> localGitBranches = getLocalGitBranches(branchName);
+
+		for (LocalGitBranch localGitBranch : localGitBranches) {
+			if (branchName.equals(localGitBranch.getName())) {
+				return localGitBranch;
+			}
+		}
+
+		if (required) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to find required branch ", branchName, " from ",
+					String.valueOf(getWorkingDirectory())));
+		}
+
+		return null;
+	}
+
+	public List<LocalGitBranch> getLocalGitBranches(String branchName) {
+		List<String> localBranchNames = getLocalBranchNames();
+
+		List<LocalGitBranch> localGitBranches = new ArrayList<>(
+			localBranchNames.size());
+
+		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
+			getRepositoryName(), getUpstreamBranchName());
+
+		if (branchName != null) {
+			if (localBranchNames.contains(branchName)) {
+				localGitBranches.add(
+					GitBranchFactory.newLocalGitBranch(
+						localRepository, branchName,
+						getLocalBranchSHA(branchName)));
+			}
+			else {
+				LocalGitBranch currentLocalGitBranch =
+					getCurrentLocalGitBranch();
+
+				localGitBranches.add(
+					GitBranchFactory.newLocalGitBranch(
+						localRepository, branchName,
+						currentLocalGitBranch.getSHA()));
+			}
+
+			return localGitBranches;
+		}
+
+		for (String localBranchName : localBranchNames) {
+			localGitBranches.add(
+				GitBranchFactory.newLocalGitBranch(
+					localRepository, localBranchName,
+					getLocalBranchSHA(localBranchName)));
+		}
+
+		return localGitBranches;
+	}
+
 	public List<File> getModifiedFilesList() {
 		return getModifiedFilesList(null, false);
 	}
@@ -973,6 +938,171 @@ public class GitWorkingDirectory {
 		}
 
 		return remote;
+	}
+
+	public List<String> getRemoteBranchNames(Remote remote) {
+		return getRemoteBranchNames(remote.getRemoteURL());
+	}
+
+	public List<String> getRemoteBranchNames(
+		RemoteRepository remoteRepository) {
+
+		return getRemoteBranchNames(remoteRepository.getRemoteURL());
+	}
+
+	public List<String> getRemoteBranchNames(String remoteURL) {
+		List<String> remoteBranchNames = new ArrayList<>();
+
+		List<RemoteGitBranch> remoteGitBranches = getRemoteGitBranches(
+			remoteURL);
+
+		for (RemoteGitBranch remoteGitBranch : remoteGitBranches) {
+			remoteBranchNames.add(remoteGitBranch.getName());
+		}
+
+		return remoteBranchNames;
+	}
+
+	public RemoteGitBranch getRemoteGitBranch(
+		String remoteBranchName, Remote remote) {
+
+		return getRemoteGitBranch(
+			remoteBranchName, remote.getRemoteURL(), false);
+	}
+
+	public RemoteGitBranch getRemoteGitBranch(
+		String remoteBranchName, Remote remote, boolean required) {
+
+		return getRemoteGitBranch(
+			remoteBranchName, remote.getRemoteURL(), required);
+	}
+
+	public RemoteGitBranch getRemoteGitBranch(
+		String remoteBranchName, RemoteRepository remoteRepository) {
+
+		return getRemoteGitBranch(
+			remoteBranchName, remoteRepository.getRemoteURL(), false);
+	}
+
+	public RemoteGitBranch getRemoteGitBranch(
+		String remoteBranchName, RemoteRepository remoteRepository,
+		boolean required) {
+
+		return getRemoteGitBranch(
+			remoteBranchName, remoteRepository.getRemoteURL(), required);
+	}
+
+	public RemoteGitBranch getRemoteGitBranch(
+		String remoteBranchName, String remoteURL) {
+
+		return getRemoteGitBranch(remoteBranchName, remoteURL, false);
+	}
+
+	public RemoteGitBranch getRemoteGitBranch(
+		String remoteBranchName, String remoteURL, boolean required) {
+
+		List<RemoteGitBranch> remoteGitBranches = getRemoteGitBranches(
+			remoteBranchName, remoteURL);
+
+		for (RemoteGitBranch remoteGitBranch : remoteGitBranches) {
+			if (remoteBranchName.equals(remoteGitBranch.getName())) {
+				return remoteGitBranch;
+			}
+		}
+
+		if (required) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to find required branch ", remoteBranchName,
+					" from remote URL ", remoteURL));
+		}
+
+		return null;
+	}
+
+	public List<RemoteGitBranch> getRemoteGitBranches(Remote remote) {
+		return getRemoteGitBranches(null, remote.getRemoteURL());
+	}
+
+	public List<RemoteGitBranch> getRemoteGitBranches(
+		RemoteRepository remoteRepository) {
+
+		return getRemoteGitBranches(null, remoteRepository.getRemoteURL());
+	}
+
+	public List<RemoteGitBranch> getRemoteGitBranches(
+		String remoteBranchName, Remote remote) {
+
+		return getRemoteGitBranches(remoteBranchName, remote.getRemoteURL());
+	}
+
+	public List<RemoteGitBranch> getRemoteGitBranches(
+		String remoteBranchName, RemoteRepository remoteRepository) {
+
+		return getRemoteGitBranches(
+			remoteBranchName, remoteRepository.getRemoteURL());
+	}
+
+	public List<RemoteGitBranch> getRemoteGitBranches(
+		String remoteBranchName, String remoteURL) {
+
+		Matcher remoteURLMatcher = _remoteURLPattern.matcher(remoteURL);
+
+		if (!remoteURLMatcher.find()) {
+			throw new RuntimeException("Invalid remote url " + remoteURL);
+		}
+
+		String command = null;
+
+		if (remoteBranchName != null) {
+			command = JenkinsResultsParserUtil.combine(
+				"git ls-remote -h ", remoteURL, " ", remoteBranchName);
+		}
+		else {
+			command = JenkinsResultsParserUtil.combine(
+				"git ls-remote -h ", remoteURL);
+		}
+
+		ExecutionResult executionResult = executeBashCommands(
+			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, command);
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get remote branches from ", remoteURL, "\n",
+					executionResult.getStandardError()));
+		}
+
+		String input = executionResult.getStandardOut();
+
+		List<RemoteGitBranch> remoteGitBranches = new ArrayList<>();
+
+		RemoteRepository remoteRepository =
+			RepositoryFactory.getRemoteRepository(
+				remoteURLMatcher.group("hostname"),
+				remoteURLMatcher.group("repositoryName"),
+				remoteURLMatcher.group("username"));
+
+		for (String line : input.split("\n")) {
+			Matcher gitLsRemoteMatcher = _gitLsRemotePattern.matcher(line);
+
+			if (gitLsRemoteMatcher.find()) {
+				remoteGitBranches.add(
+					GitBranchFactory.newRemoteGitBranch(
+						remoteRepository, gitLsRemoteMatcher.group("name"),
+						gitLsRemoteMatcher.group("sha")));
+			}
+		}
+
+		System.out.println(
+			"getRemoteGitBranches found " + remoteGitBranches.size() +
+				" branches at " + remoteURL + ".");
+
+		return remoteGitBranches;
+	}
+
+	public List<RemoteGitBranch> getRemoteGitBranches(String remoteURL) {
+		return getRemoteGitBranches(null, remoteURL);
 	}
 
 	public Set<String> getRemoteNames() {
@@ -1649,77 +1779,6 @@ public class GitWorkingDirectory {
 			"Real Git directory could not be found in " + gitFile.getPath());
 	}
 
-	protected List<Branch> getRemoteBranches(String branchName, Remote remote) {
-		String command = null;
-
-		if (branchName != null) {
-			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", remote.getName(), " ", branchName);
-		}
-		else {
-			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", remote.getName());
-		}
-
-		ExecutionResult executionResult = executeBashCommands(
-			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, command);
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get remote branches from ", remote.toString(),
-					"\n", executionResult.getStandardError()));
-		}
-
-		String input = executionResult.getStandardOut();
-
-		List<Branch> branches = new ArrayList<>();
-
-		for (String line : input.split("\n")) {
-			Matcher matcher = _gitLsRemotePattern.matcher(line);
-
-			if (matcher.find()) {
-				branches.add(
-					new Branch(
-						this, matcher.group("name"), remote,
-						matcher.group("sha")));
-			}
-		}
-
-		System.out.println(
-			"getRemoteBranches found " + branches.size() + " branches.");
-
-		return branches;
-	}
-
-	protected List<String> getRemoteBranchNames(Remote remote) {
-		ExecutionResult executionResult = executeBashCommands(
-			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10,
-			JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", remote.getName()));
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get remote branches from ", remote.getName(),
-					"\n", executionResult.getStandardError()));
-		}
-
-		String input = executionResult.getStandardOut();
-
-		List<String> branchNames = new ArrayList<>();
-
-		for (String line : input.split("\n")) {
-			Matcher matcher = _gitLsRemotePattern.matcher(line);
-
-			if (matcher.find()) {
-				branchNames.add(matcher.group("name"));
-			}
-		}
-
-		return branchNames;
-	}
-
 	protected Remote getUpstreamRemote() {
 		Map<String, Remote> remotes = getRemotes();
 
@@ -2062,5 +2121,9 @@ public class GitWorkingDirectory {
 	private final String _repositoryUsername;
 	private final String _upstreamBranchName;
 	private File _workingDirectory;
+	private static final Pattern _remoteURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"git@(?<hostname>[^:]+):(?<username>[^/]+)/",
+			"(?<repositoryName>[^\\.]+)(.git)?"));
 
 }

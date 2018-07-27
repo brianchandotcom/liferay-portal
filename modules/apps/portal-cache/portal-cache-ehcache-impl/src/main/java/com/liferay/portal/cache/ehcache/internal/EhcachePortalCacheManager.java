@@ -182,10 +182,10 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			_mBeanServerServiceTracker.close();
 		}
 
-		if (_serviceTracker != null) {
-			_serviceTracker.close();
+		if (_configuratorSettingsServiceTracker != null) {
+			_configuratorSettingsServiceTracker.close();
 
-			_serviceTracker = null;
+			_configuratorSettingsServiceTracker = null;
 		}
 	}
 
@@ -207,10 +207,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			")(", PortalCacheManager.PORTAL_CACHE_MANAGER_NAME, "=",
 			getPortalCacheManagerName(), "))");
 
-		_serviceTracker = ServiceTrackerFactory.open(
+		_configuratorSettingsServiceTracker = ServiceTrackerFactory.open(
 			bundleContext, filterString,
-			new PortalCacheConfiguratorSettingsServiceTrackerCustomizer(
-				bundleContext));
+			new PortalCacheConfiguratorSettingsServiceTrackerCustomizer());
 	}
 
 	@Override
@@ -433,6 +432,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	private CacheManager _cacheManager;
 	private String _configFile;
+	private ServiceTracker<?, ?> _configuratorSettingsServiceTracker;
 	private String _defaultConfigFile;
 	private ServiceTracker<MBeanServer, ManagementService>
 		_mBeanServerServiceTracker;
@@ -441,7 +441,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;
 	private boolean _registerCacheStatistics = true;
-	private ServiceTracker _serviceTracker;
 	private boolean _stopCacheManagerTimer = true;
 	private boolean _usingDefault;
 
@@ -455,7 +454,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				serviceReference) {
 
 			PortalCacheConfiguratorSettings portalCacheConfiguratorSettings =
-				_bundleContext.getService(serviceReference);
+				bundleContext.getService(serviceReference);
 
 			reconfigure(portalCacheConfiguratorSettings);
 
@@ -473,16 +472,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			ServiceReference<PortalCacheConfiguratorSettings> serviceReference,
 			PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
 
-			_bundleContext.ungetService(serviceReference);
+			bundleContext.ungetService(serviceReference);
 		}
-
-		private PortalCacheConfiguratorSettingsServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
-		private final BundleContext _bundleContext;
 
 	}
 

@@ -632,52 +632,6 @@ public class GitWorkingDirectory {
 		return branchNamesList;
 	}
 
-	public String getBranchSHA(String localBranchName) {
-		ExecutionResult executionResult = executeBashCommands(
-			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 2,
-			"git rev-parse " + localBranchName);
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to determine SHA of branch ", localBranchName, "\n",
-					executionResult.getStandardError()));
-		}
-
-		return executionResult.getStandardOut();
-	}
-
-	public String getBranchSHA(String branchName, Remote remote) {
-		if (remote == null) {
-			return getBranchSHA(branchName);
-		}
-
-		String command = JenkinsResultsParserUtil.combine(
-			"git ls-remote -h ", remote.getName(), " ", branchName);
-
-		ExecutionResult executionResult = executeBashCommands(
-			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, command);
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get remote branch SHA ", remote.toString(), " ",
-					branchName, "\n", executionResult.getStandardError()));
-		}
-
-		String input = executionResult.getStandardOut();
-
-		for (String line : input.split("\n")) {
-			Matcher matcher = _gitLsRemotePattern.matcher(line);
-
-			if (matcher.find()) {
-				return matcher.group("sha");
-			}
-		}
-
-		return null;
-	}
-
 	public String getCurrentBranchName() {
 		return getCurrentBranchName(false);
 	}
@@ -841,6 +795,25 @@ public class GitWorkingDirectory {
 		}
 
 		return null;
+	}
+
+	public String getLocalBranchSHA(String localBranchName) {
+		if (localBranchName == null) {
+			throw new RuntimeException("Local branch name is null");
+		}
+
+		ExecutionResult executionResult = executeBashCommands(
+			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 2,
+			"git rev-parse " + localBranchName);
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to determine SHA of branch ", localBranchName, "\n",
+					executionResult.getStandardError()));
+		}
+
+		return executionResult.getStandardOut();
 	}
 
 	public Branch getLocalRebasedPullRequestBranch(PullRequest pullRequest) {
@@ -1082,6 +1055,61 @@ public class GitWorkingDirectory {
 		}
 
 		return remoteBranchNames;
+	}
+
+	public String getRemoteBranchSHA(String remoteBranchName, Remote remote) {
+		return getRemoteBranchSHA(remoteBranchName, remote.getRemoteURL());
+	}
+
+	public String getRemoteBranchSHA(
+		String remoteBranchName, RemoteRepository remoteRepository) {
+
+		return getRemoteBranchSHA(
+			remoteBranchName, remoteRepository.getRemoteURL());
+	}
+
+	public String getRemoteBranchSHA(
+		String remoteBranchName, String remoteURL) {
+
+		if (remoteBranchName == null) {
+			throw new RuntimeException("Remote branch name is null");
+		}
+
+		if (remoteURL == null) {
+			throw new RuntimeException("Remote url is null");
+		}
+
+		Matcher remoteURLMatcher = _remoteURLPattern.matcher(remoteURL);
+
+		if (!remoteURLMatcher.find()) {
+			throw new RuntimeException("Invalid remote url " + remoteURL);
+		}
+
+		String command = JenkinsResultsParserUtil.combine(
+			"git ls-remote -h ", remoteURL, " ", remoteBranchName);
+
+		ExecutionResult executionResult = executeBashCommands(
+			_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, command);
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get remote branch SHA ", remoteURL, " ",
+					remoteBranchName, "\n",
+					executionResult.getStandardError()));
+		}
+
+		String input = executionResult.getStandardOut();
+
+		for (String line : input.split("\n")) {
+			Matcher matcher = _gitLsRemotePattern.matcher(line);
+
+			if (matcher.find()) {
+				return matcher.group("sha");
+			}
+		}
+
+		return null;
 	}
 
 	public RemoteGitBranch getRemoteGitBranch(

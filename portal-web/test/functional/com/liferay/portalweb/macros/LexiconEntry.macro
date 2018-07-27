@@ -148,7 +148,7 @@
 	</command>
 
 	<command name="openEntryMenu">
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
 			<var name="key_rowEntry" value="${rowEntry}" />
 		</execute>
 	</command>

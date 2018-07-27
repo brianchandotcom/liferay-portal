@@ -14,8 +14,7 @@
 
 package com.liferay.portal.verify.test;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.verify.VerifyException;
@@ -29,8 +28,6 @@ import java.sql.Connection;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import javax.naming.NamingException;
 
 import javax.sql.DataSource;
 
@@ -47,19 +44,22 @@ public abstract class BaseVerifyProcessTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_pacl = ReflectionTestUtil.getFieldValue(DataAccess.class, "_pacl");
+		_dataSource = InfrastructureUtil.getDataSource();
 
-		ReflectionTestUtil.setFieldValue(
-			DataAccess.class, "_pacl", new PACLWrapper(_pacl));
+		InfrastructureUtil infrastructureUtil = new InfrastructureUtil();
+
+		infrastructureUtil.setDataSource(
+			(DataSource)ProxyUtil.newProxyInstance(
+				ClassLoader.getSystemClassLoader(),
+				new Class<?>[] {DataSource.class},
+				new DataSourceInvocationHandler(_dataSource)));
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		if (_pacl == null) {
-			throw new NullPointerException();
-		}
+		InfrastructureUtil infrastructureUtil = new InfrastructureUtil();
 
-		ReflectionTestUtil.setFieldValue(DataAccess.class, "_pacl", _pacl);
+		infrastructureUtil.setDataSource(_dataSource);
 	}
 
 	@Test
@@ -102,9 +102,9 @@ public abstract class BaseVerifyProcessTestCase {
 
 	protected abstract VerifyProcess getVerifyProcess();
 
+	private DataSource _dataSource;
 	private final Queue<ObjectValuePair<Connection, Exception>>
 		_objectValuePairs = new ConcurrentLinkedQueue<>();
-	private DataAccess.PACL _pacl;
 
 	private class DataSourceInvocationHandler implements InvocationHandler {
 
@@ -134,35 +134,6 @@ public abstract class BaseVerifyProcessTestCase {
 		}
 
 		private final Object _instance;
-
-	}
-
-	private class PACLWrapper implements DataAccess.PACL {
-
-		@Override
-		public DataSource getDataSource() {
-			return _wrapDataSource(_pacl.getDataSource());
-		}
-
-		@Override
-		public DataSource getDataSource(String location)
-			throws NamingException {
-
-			return _wrapDataSource(_pacl.getDataSource(location));
-		}
-
-		private PACLWrapper(DataAccess.PACL pacl) {
-			_pacl = pacl;
-		}
-
-		private DataSource _wrapDataSource(DataSource dataSource) {
-			return (DataSource)ProxyUtil.newProxyInstance(
-				ClassLoader.getSystemClassLoader(),
-				new Class<?>[] {DataSource.class},
-				new DataSourceInvocationHandler(dataSource));
-		}
-
-		private final DataAccess.PACL _pacl;
 
 	}
 

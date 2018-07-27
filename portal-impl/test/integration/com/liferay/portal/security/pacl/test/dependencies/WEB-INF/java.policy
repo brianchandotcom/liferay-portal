@@ -1,6 +1,0 @@
-grant {
-	permission java.lang.RuntimePermission "loadLibrary.test_b";
-	permission java.net.NetPermission "specifyStreamHandler";
-	permission java.net.SocketPermission "localhost:1024-", "connect, resolve";
-	permission java.util.PropertyPermission "com.liferay.portal.kernel.security.SecureRandomUtil.buffer.size", "read";
-};

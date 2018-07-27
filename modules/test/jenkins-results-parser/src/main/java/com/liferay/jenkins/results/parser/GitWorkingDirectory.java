@@ -607,18 +607,50 @@ public class GitWorkingDirectory {
 		return null;
 	}
 
-	public Branch getCurrentBranch() {
+	public String getCurrentBranchName() {
+		return getCurrentBranchName(false);
+	}
+
+	public String getCurrentBranchName(boolean required) {
 		waitForIndexLock();
 
-		Branch currentBranch = getBranch("HEAD", null);
+		ExecutionResult executionResult = executeBashCommands(
+			_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT, "git branch | grep \\*");
 
-		if (currentBranch == null) {
-			currentBranch = getBranch(getUpstreamBranchName(), null);
+		if (executionResult.getExitValue() != 0) {
+			System.out.println(executionResult.getStandardError());
 
-			checkoutBranch(currentBranch, null);
+			if (required) {
+				throw new RuntimeException(
+					"Unable to find required local branch HEAD");
+			}
+
+			return null;
 		}
 
-		return currentBranch;
+		String currentBranchName = executionResult.getStandardOut();
+
+		currentBranchName = currentBranchName.replaceFirst("\\*\\s*", "");
+
+		return currentBranchName.trim();
+	}
+
+	public LocalGitBranch getCurrentLocalGitBranch() {
+		String currentBranchName = getCurrentBranchName();
+
+		if (currentBranchName != null) {
+			LocalGitBranch currentLocalGitBranch = getLocalGitBranch(
+				currentBranchName);
+
+			return currentLocalGitBranch;
+		}
+
+		LocalGitBranch currentLocalGitBranch = getLocalGitBranch(
+			getUpstreamBranchName());
+
+		checkoutLocalGitBranch(currentLocalGitBranch);
+
+		return currentLocalGitBranch;
 	}
 
 	public String getGitConfigProperty(String gitConfigPropertyName) {

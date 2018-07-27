@@ -14,7 +14,10 @@
 
 package com.liferay.portal.configuration.metatype.definitions.annotations.internal;
 
-import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
+
+import java.lang.reflect.Method;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,13 +30,40 @@ import org.osgi.service.metatype.AttributeDefinition;
  * @author Iván Zaera
  */
 public class AnnotationsExtendedAttributeDefinition
-	implements ExtendedAttributeDefinition {
+	implements com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition {
 
 	public AnnotationsExtendedAttributeDefinition(
 		Class<?> configurationBeanClass,
 		AttributeDefinition attributeDefinition) {
 
 		_attributeDefinition = attributeDefinition;
+
+		if (configurationBeanClass == null) {
+			return;
+		}
+
+		try {
+			Method method = configurationBeanClass.getMethod(
+				attributeDefinition.getID());
+
+			ExtendedAttributeDefinition extendedAttributeDefinition =
+				method.getAnnotation(ExtendedAttributeDefinition.class);
+
+			if (extendedAttributeDefinition != null) {
+				Map<String, String> map = new HashMap<>();
+
+				map.put(
+					"description-arguments",
+					String.join(
+						StringPool.COMMA,
+						extendedAttributeDefinition.descriptionArguments()));
+
+				_extensionAttributes.put(
+					ExtendedAttributeDefinition.XML_NAMESPACE, map);
+			}
+		}
+		catch (NoSuchMethodException nsme) {
+		}
 	}
 
 	@Override

@@ -140,7 +140,21 @@ name = HtmlUtil.escapeJS(name);
 		return data;
 	};
 
-	var eventHandles = [];
+	var onLocaleChangedHandler = function(event) {
+		var contentsLanguage = event.item.getAttribute('data-value');
+		var contentsLanguageName = contentsLanguage.substr(0, 2).replace('iw', 'he');
+
+		var contentsLanguageDir = CKEDITOR.lang.rtl[contentsLanguageName] ? 'rtl' : 'ltr';
+
+		var nativeEditor = window['<%= name %>'].getNativeEditor();
+
+		nativeEditor.config.contentsLanguage = contentsLanguage;
+		nativeEditor.config.contentsLangDirection = contentsLanguageDir;
+	};
+
+	var eventHandles = [
+		Liferay.on('inputLocalized:localeChanged', onLocaleChangedHandler)
+	];
 
 	window['<%= name %>'] = {
 		create: function() {

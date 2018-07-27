@@ -99,28 +99,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_defaultConfigFile = defaultConfigFile;
 	}
 
-	public void setRegisterCacheConfigurations(
-		boolean registerCacheConfigurations) {
-
-		_registerCacheConfigurations = registerCacheConfigurations;
-	}
-
-	public void setRegisterCacheManager(boolean registerCacheManager) {
-		_registerCacheManager = registerCacheManager;
-	}
-
-	public void setRegisterCaches(boolean registerCaches) {
-		_registerCaches = registerCaches;
-	}
-
-	public void setRegisterCacheStatistics(boolean registerCacheStatistics) {
-		_registerCacheStatistics = registerCacheStatistics;
-	}
-
-	public void setStopCacheManagerTimer(boolean stopCacheManagerTimer) {
-		_stopCacheManagerTimer = stopCacheManagerTimer;
-	}
-
 	protected Ehcache createEhcache(
 		String portalCacheName, CacheConfiguration cacheConfiguration) {
 

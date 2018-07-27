@@ -103,6 +103,12 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 				DLFileEntry dlFileEntry, String actionId)
 			throws PortalException {
 
+			if (_dlFileEntryModelResourcePermission.contains(
+					permissionChecker, dlFileEntry, actionId)) {
+
+				return true;
+			}
+
 			if (SharingEntryActionKey.isSupportedActionId(actionId)) {
 				SharingEntryActionKey sharingEntryActionKey =
 					SharingEntryActionKey.parseFromActionId(actionId);
@@ -117,8 +123,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 				}
 			}
 
-			return _dlFileEntryModelResourcePermission.contains(
-				permissionChecker, dlFileEntry, actionId);
+			return false;
 		}
 
 		private SharingDLFileEntryModelPermissionLogic(

@@ -76,13 +76,19 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
+import com.liferay.portal.kernel.model.adapter.StagedWorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -96,6 +102,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
@@ -260,6 +269,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			_addUserUuid(element, auditedModel.getUserUuid());
 		}
+
+		_addWorkflowDefinitionLink(classedModel);
 
 		addZipEntry(path, classedModel);
 	}
@@ -1580,6 +1591,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 		}
 
+		_importWorkflowDefinitionLink(newClassedModel);
+
 		importLocks(
 			clazz, String.valueOf(primaryKeyObj),
 			String.valueOf(newPrimaryKeyObj));
@@ -2888,6 +2901,113 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	private void _addUserUuid(Element element, String userUuid) {
 		element.addAttribute("user-uuid", userUuid);
+	}
+
+	private void _addWorkflowDefinitionLink(ClassedModel classedModel)
+		throws PortletDataException {
+
+		if (classedModel instanceof StagedGroupedModel ||
+			classedModel instanceof WorkflowedModel) {
+
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)classedModel;
+
+			String className = ExportImportClassedModelUtil.getClassName(
+				stagedGroupedModel);
+			long classPK = ExportImportClassedModelUtil.getClassPK(
+				stagedGroupedModel);
+
+			WorkflowDefinitionLink workflowDefinitionLink =
+				WorkflowDefinitionLinkLocalServiceUtil.
+					fetchWorkflowDefinitionLink(
+						stagedGroupedModel.getCompanyId(),
+						stagedGroupedModel.getGroupId(), className, classPK,
+						-1);
+
+			if (workflowDefinitionLink != null) {
+				StagedWorkflowDefinitionLink stagedWorkflowDefinitionLink =
+					ModelAdapterUtil.adapt(
+						workflowDefinitionLink, WorkflowDefinitionLink.class,
+						StagedWorkflowDefinitionLink.class);
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					this, stagedWorkflowDefinitionLink);
+			}
+		}
+	}
+
+	private void _importWorkflowDefinitionLink(ClassedModel classedModel)
+		throws PortletDataException {
+
+		Element stagedWorkflowDefinitionLinkElements =
+			getImportDataGroupElement(StagedWorkflowDefinitionLink.class);
+
+		for (Element stagedWorkflowDefinitionLinkElement :
+				stagedWorkflowDefinitionLinkElements.elements()) {
+
+			String displayName =
+				stagedWorkflowDefinitionLinkElement.attributeValue(
+					"display-name");
+
+			WorkflowDefinition workflowDefinition = null;
+
+			try {
+				workflowDefinition =
+					WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
+						getCompanyId(), displayName);
+			}
+			catch (WorkflowException we) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Could not find workflow definition with name " +
+							displayName,
+						we);
+				}
+
+				return;
+			}
+
+			Element referencesElement =
+				stagedWorkflowDefinitionLinkElement.element("references");
+
+			List<Element> referenceElements = referencesElement.elements(
+				"reference");
+
+			for (Element referenceElement : referenceElements) {
+				String className = referenceElement.attributeValue(
+					"class-name");
+				long classPK = GetterUtil.getLong(
+					referenceElement.attributeValue("class-pk"));
+
+				WorkflowDefinitionLink workflowDefinitionLink =
+					WorkflowDefinitionLinkLocalServiceUtil.
+						fetchWorkflowDefinitionLink(
+							getCompanyId(), getScopeGroupId(), className,
+							classPK, -1);
+
+				if ((workflowDefinition != null) &&
+					(workflowDefinitionLink == null)) {
+
+					try {
+						long importedClassPK = GetterUtil.getLong(
+							classedModel.getPrimaryKeyObj());
+
+						PermissionChecker permissionChecker =
+							PermissionThreadLocal.getPermissionChecker();
+
+						WorkflowDefinitionLinkLocalServiceUtil.
+							addWorkflowDefinitionLink(
+								permissionChecker.getUserId(), getCompanyId(),
+								getScopeGroupId(), className, importedClassPK,
+								-1, workflowDefinition.getName(),
+								workflowDefinition.getVersion());
+					}
+					catch (PortalException pe) {
+						throw new PortletDataException(pe.getMessage(), pe);
+					}
+				}
+			}
+		}
 	}
 
 	private static final Class<?>[] _XSTREAM_DEFAULT_ALLOWED_TYPES = {

@@ -87,8 +87,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 					"Invalid version property value", nfe);
 			}
 
-			normalizedTargetPlatformVersion = _fixBadVersionNumbers(
-				sb.toString());
+			normalizedTargetPlatformVersion = sb.toString();
 		}
 		else {
 			normalizedTargetPlatformVersion = targetPlatformVersion;
@@ -223,14 +222,6 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		targetPlatformIDEExtension.includeGroups(
 			"com.liferay", "com.liferay.portal");
-	}
-
-	private String _fixBadVersionNumbers(String version) {
-		if (version.equals("7.0.6")) {
-			return "7.0.6.1";
-		}
-
-		return version;
 	}
 
 	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM =

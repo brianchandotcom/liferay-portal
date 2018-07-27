@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADVANCED_SEARCH_CONFIGURATION</td>
+	<td>//textarea[contains(@id,'searchConfiguration')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BASIC_DISPLAY_SITE_FACET_CHECKBOX</td>
 	<td>//input[contains(@id,'displayScopeFacet')]</td>
 	<td></td>
@@ -44,8 +49,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_CONFIGURATION</td>
-	<td>//textarea[contains(@id,'searchConfiguration')]</td>
+	<td>DESTINATION_PAGE</td>
+	<td>//input[contains(@name,'destination')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEYWORDS_PARAMETER_NAME</td>
+	<td>//input[contains(@name,'keywordsParameterName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_PARAMETER_NAME</td>
+	<td>//input[contains(@name,'scopeParameterName')]</td>
 	<td></td>
 </tr>
 <tr>

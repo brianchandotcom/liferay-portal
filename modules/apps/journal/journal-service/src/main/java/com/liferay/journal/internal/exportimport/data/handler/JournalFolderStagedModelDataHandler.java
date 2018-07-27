@@ -170,6 +170,11 @@ public class JournalFolderStagedModelDataHandler
 				serviceContext);
 		}
 
+		importedFolder.setRestrictionType(folder.getRestrictionType());
+
+		importedFolder = _journalFolderLocalService.updateJournalFolder(
+			importedFolder);
+
 		importFolderDDMStructures(portletDataContext, folder, importedFolder);
 
 		portletDataContext.importClassedModel(folder, importedFolder);

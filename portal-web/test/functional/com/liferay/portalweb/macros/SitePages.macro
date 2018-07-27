@@ -99,7 +99,7 @@
 			</not>
 			<then>
 				<execute macro="Navigator#gotoNavNested">
-					<var name="navItem" value="Global Templates" />
+					<var name="navNested" value="Global Templates" />
 				</execute>
 
 				<var name="rowEntry" value="${pageTemplateName}" />

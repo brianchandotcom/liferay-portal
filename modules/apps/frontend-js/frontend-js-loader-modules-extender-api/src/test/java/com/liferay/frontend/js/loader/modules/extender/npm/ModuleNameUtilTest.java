@@ -14,13 +14,22 @@
 
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.util.FileImpl;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Iván Zaera Avellón
  */
 public class ModuleNameUtilTest {
+
+	@Before
+	public void setUp() {
+		new FileUtil().setFile(new FileImpl());
+	}
 
 	@Test
 	public void testGetPackageName() {
@@ -36,6 +45,29 @@ public class ModuleNameUtilTest {
 			ModuleNameUtil.getPackageName("a-package/a-folder/a-module.js"));
 
 		Assert.assertNull(ModuleNameUtil.getPackageName("./a-module"));
+	}
+
+	@Test
+	public void testGetPackageNameNoModule() throws Exception {
+		String packageName = ModuleNameUtil.getPackageName("mypackage");
+
+		Assert.assertEquals("mypackage", packageName);
+	}
+
+	@Test
+	public void testGetPackageNameScoped() throws Exception {
+		String packageName = ModuleNameUtil.getPackageName(
+			"@myscope/mypackage/lib/mymodule");
+
+		Assert.assertEquals("@myscope/mypackage", packageName);
+	}
+
+	@Test
+	public void testGetPackageNameScopedNoModule() throws Exception {
+		String packageName = ModuleNameUtil.getPackageName(
+			"@myscope/mypackage");
+
+		Assert.assertEquals("@myscope/mypackage", packageName);
 	}
 
 	@Test
@@ -61,6 +93,29 @@ public class ModuleNameUtilTest {
 	}
 
 	@Test
+	public void testGetPackagePathNoModule() throws Exception {
+		String packagePath = ModuleNameUtil.getPackagePath("mypackage");
+
+		Assert.assertNull(packagePath);
+	}
+
+	@Test
+	public void testGetPackagePathScoped() throws Exception {
+		String packagePath = ModuleNameUtil.getPackagePath(
+			"@myscope/mypackage/lib/mymodule");
+
+		Assert.assertEquals("lib/mymodule", packagePath);
+	}
+
+	@Test
+	public void testGetPackagePathScopedNoModule() throws Exception {
+		String packagePath = ModuleNameUtil.getPackagePath(
+			"@myscope/mypackage");
+
+		Assert.assertNull(packagePath);
+	}
+
+	@Test
 	public void testToModuleName() {
 		Assert.assertEquals(
 			"a-module", ModuleNameUtil.toModuleName("a-module"));
@@ -83,12 +138,31 @@ public class ModuleNameUtilTest {
 		Assert.assertEquals(
 			"a-package/a-folder/a-module",
 			ModuleNameUtil.toModuleName("a-package/a-folder/a-module.js"));
+	}
+
+	@Test
+	public void testToModuleNameWithNonJsExtensions() {
+		Assert.assertEquals(
+			"a-module.es", ModuleNameUtil.toModuleName("a-module.es"));
 
 		Assert.assertEquals(
-			"a-module", ModuleNameUtil.toModuleName("./a-module"));
+			"a-folder/a-module.es",
+			ModuleNameUtil.toModuleName("a-folder/a-module.es"));
+	}
+
+	@Test
+	public void testToModuleNameWithRelativePaths() {
+		Assert.assertEquals(
+			"./a-module", ModuleNameUtil.toModuleName("./a-module"));
 
 		Assert.assertEquals(
-			"a-module", ModuleNameUtil.toModuleName("./a-module.js"));
+			"./a-module", ModuleNameUtil.toModuleName("./a-module.js"));
+
+		Assert.assertEquals(
+			"../a-module", ModuleNameUtil.toModuleName("../a-module"));
+
+		Assert.assertEquals(
+			"../a-module", ModuleNameUtil.toModuleName("../a-module.js"));
 	}
 
 }

@@ -47,6 +47,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
@@ -741,11 +743,11 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					String ignoreProjectPrefixes =
+					String ignoreProjectRegex =
 						GradleUtil.getTaskPrefixedProperty(
-							task, "ignore.project.prefixes");
+							task, "ignore.project.regex");
 
-					if (Validator.isNull(ignoreProjectPrefixes)) {
+					if (Validator.isNull(ignoreProjectRegex)) {
 						return true;
 					}
 
@@ -753,17 +755,15 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 					String projectName = project.getName();
 
-					for (String prefix : ignoreProjectPrefixes.split(",")) {
-						if (prefix.isEmpty()) {
-							continue;
-						}
+					Pattern pattern = Pattern.compile(ignoreProjectRegex);
 
-						if (projectName.startsWith(prefix)) {
-							return false;
-						}
+					Matcher matcher = pattern.matcher(projectName);
+
+					if (!matcher.find()) {
+						return true;
 					}
 
-					return true;
+					return false;
 				}
 
 			});

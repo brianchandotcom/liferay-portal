@@ -741,6 +741,36 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
+					String ignoreProjectPrefixes =
+						GradleUtil.getTaskPrefixedProperty(
+							task, "ignore.project.prefixes");
+
+					if (ignoreProjectPrefixes != null) {
+						Project project = task.getProject();
+
+						String projectName = project.getName();
+
+						for (String prefix : ignoreProjectPrefixes.split(",")) {
+							if (prefix.isEmpty()) {
+								continue;
+							}
+
+							if (projectName.startsWith(prefix)) {
+								return false;
+							}
+						}
+					}
+
+					return true;
+				}
+
+			});
+
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
 					File relengIgnoreDir = GradleUtil.getRootDir(
 						task.getProject(), RELENG_IGNORE_FILE_NAME);
 

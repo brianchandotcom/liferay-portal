@@ -115,7 +115,7 @@
 		<if>
 			<available file="bnd.bnd" />
 			<then>
-				<prepare-portal-target-platform-pom />
+				<generate-pom-info />
 
 				<manifest-helper />
 

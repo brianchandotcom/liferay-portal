@@ -1077,7 +1077,7 @@ information.
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-portal-target-platform-pom">
+	<macrodef name="generate-pom-info">
 		<sequential>
 			<property name="artifact.name" value="${ant.project.name}" />
 

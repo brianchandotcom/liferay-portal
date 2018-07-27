@@ -64,7 +64,7 @@
 			<var name="larFileName" value="CustomExport" />
 		</execute>
 
-		<execute function="MouseOver" locator1="Portlet#HEADER" />
+		<execute function="Refresh" />
 
 		<execute macro="LAR#viewProcessesInListView" />
 

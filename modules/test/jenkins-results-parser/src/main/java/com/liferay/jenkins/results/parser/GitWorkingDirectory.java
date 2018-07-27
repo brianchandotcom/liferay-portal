@@ -242,26 +242,43 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public Branch createLocalBranch(String branchName) {
-		return createLocalBranch(branchName, false, null);
+	public LocalGitBranch createLocalGitBranch(LocalGitBranch localGitBranch) {
+		return createLocalGitBranch(
+			localGitBranch.getName(), false, localGitBranch.getSHA());
 	}
 
-	public Branch createLocalBranch(
-		String branchName, boolean force, String startPoint) {
+	public LocalGitBranch createLocalGitBranch(
+		LocalGitBranch localGitBranch, boolean force) {
 
-		Branch currentBranch = getCurrentBranch();
+		return createLocalGitBranch(
+			localGitBranch.getName(), force, localGitBranch.getSHA());
+	}
 
-		Branch tempBranch = null;
+	public LocalGitBranch createLocalGitBranch(String localBranchName) {
+		return createLocalGitBranch(localBranchName, false, null);
+	}
+
+	public LocalGitBranch createLocalGitBranch(
+		String localBranchName, boolean force) {
+
+		return createLocalGitBranch(localBranchName, force, null);
+	}
+
+	public LocalGitBranch createLocalGitBranch(
+		String localBranchName, boolean force, String startPoint) {
+
+		LocalGitBranch currentLocalGitBranch = getCurrentLocalGitBranch();
+
+		LocalGitBranch tempLocalGitBranch = null;
 
 		try {
-			if ((currentBranch == null) ||
-				branchName.equals(currentBranch.getName())) {
+			if ((currentLocalGitBranch == null) ||
+				localBranchName.equals(currentLocalGitBranch.getName())) {
 
-				String tempBranchName = "temp-" + System.currentTimeMillis();
+				tempLocalGitBranch = createLocalGitBranch(
+					"temp-" + System.currentTimeMillis());
 
-				tempBranch = createLocalBranch(tempBranchName);
-
-				checkoutBranch(tempBranch);
+				checkoutLocalGitBranch(tempLocalGitBranch);
 			}
 
 			StringBuilder sb = new StringBuilder();
@@ -272,7 +289,7 @@ public class GitWorkingDirectory {
 				sb.append("-f ");
 			}
 
-			sb.append(branchName);
+			sb.append(localBranchName);
 
 			if (startPoint != null) {
 				sb.append(" ");
@@ -285,19 +302,20 @@ public class GitWorkingDirectory {
 			if (executionResult.getExitValue() != 0) {
 				throw new RuntimeException(
 					JenkinsResultsParserUtil.combine(
-						"Unable to create local branch ", branchName, " at ",
-						startPoint, "\n", executionResult.getStandardError()));
+						"Unable to create local branch ", localBranchName,
+						" at ", startPoint, "\n",
+						executionResult.getStandardError()));
 			}
 		}
 		finally {
-			if (tempBranch != null) {
-				checkoutBranch(currentBranch);
+			if (tempLocalGitBranch != null) {
+				checkoutLocalGitBranch(currentLocalGitBranch);
 
-				deleteBranch(tempBranch);
+				deleteLocalGitBranch(tempLocalGitBranch);
 			}
 		}
 
-		return getBranch(branchName, null, true);
+		return getLocalGitBranch(localBranchName, true);
 	}
 
 	public String createPullRequest(

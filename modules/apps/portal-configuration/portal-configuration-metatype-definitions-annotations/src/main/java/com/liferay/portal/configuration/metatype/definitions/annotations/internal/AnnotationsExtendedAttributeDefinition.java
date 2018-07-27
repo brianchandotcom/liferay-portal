@@ -58,6 +58,12 @@ public class AnnotationsExtendedAttributeDefinition
 						StringPool.COMMA,
 						extendedAttributeDefinition.descriptionArguments()));
 
+				map.put(
+					"name-arguments",
+					String.join(
+						StringPool.COMMA,
+						extendedAttributeDefinition.nameArguments()));
+
 				_extensionAttributes.put(
 					ExtendedAttributeDefinition.XML_NAMESPACE, map);
 			}

@@ -265,9 +265,16 @@ public class ConfigurationModelToDDMFormConverter {
 	protected void setDDMFormFieldLabel(
 		AttributeDefinition attributeDefinition, DDMFormField ddmFormField) {
 
+		Map<String, String> extensionAttributes = _getExtensionAttributes(
+			attributeDefinition);
+
+		List<String> nameArguments = StringUtil.split(
+			extensionAttributes.get("name-arguments"));
+
 		LocalizedValue label = new LocalizedValue(_locale);
 
-		label.addString(_locale, translate(attributeDefinition.getName()));
+		label.addString(
+			_locale, translate(attributeDefinition.getName(), nameArguments));
 
 		ddmFormField.setLabel(label);
 	}
@@ -324,19 +331,13 @@ public class ConfigurationModelToDDMFormConverter {
 	protected void setDDMFormFieldTip(
 		AttributeDefinition attributeDefinition, DDMFormField ddmFormField) {
 
-		ExtendedAttributeDefinition extendedAttributeDefinition =
-			_configurationModel.getExtendedAttributeDefinition(
-				attributeDefinition.getID());
-
-		LocalizedValue tip = new LocalizedValue(_locale);
-
-		Map<String, String> extensionAttributes =
-			extendedAttributeDefinition.getExtensionAttributes(
-				com.liferay.portal.configuration.metatype.annotations.
-					ExtendedAttributeDefinition.XML_NAMESPACE);
+		Map<String, String> extensionAttributes = _getExtensionAttributes(
+			attributeDefinition);
 
 		List<String> descriptionArguments = StringUtil.split(
 			extensionAttributes.get("description-arguments"));
+
+		LocalizedValue tip = new LocalizedValue(_locale);
 
 		tip.addString(
 			_locale,
@@ -371,6 +372,18 @@ public class ConfigurationModelToDDMFormConverter {
 		}
 
 		return value;
+	}
+
+	private Map<String, String> _getExtensionAttributes(
+		AttributeDefinition attributeDefinition) {
+
+		ExtendedAttributeDefinition extendedAttributeDefinition =
+			_configurationModel.getExtendedAttributeDefinition(
+				attributeDefinition.getID());
+
+		return extendedAttributeDefinition.getExtensionAttributes(
+			com.liferay.portal.configuration.metatype.annotations.
+				ExtendedAttributeDefinition.XML_NAMESPACE);
 	}
 
 	private final ConfigurationModel _configurationModel;

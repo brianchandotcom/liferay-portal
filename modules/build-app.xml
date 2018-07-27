@@ -49,7 +49,6 @@
 			<sequential>
 				<antcall inheritall="false" target="build-app">
 					<param name="app.name" value="@{app.name}" />
-					<param name="git.finalize" value="true" />
 				</antcall>
 			</sequential>
 		</for>

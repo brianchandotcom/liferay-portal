@@ -1337,62 +1337,6 @@ public class GitWorkingDirectory {
 		throw new RuntimeException("Unable to run: git status");
 	}
 
-	public static class Branch {
-
-		public String getName() {
-			return _name;
-		}
-
-		public Remote getRemote() {
-			return _remote;
-		}
-
-		public String getSHA() {
-			return _sha;
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Branch\n     Name: ");
-			sb.append(_name);
-			sb.append("\n");
-
-			sb.append("     SHA:  ");
-			sb.append(_sha);
-			sb.append("\n");
-
-			if (_remote != null) {
-				sb.append("Remote: ");
-				sb.append(_remote.toString());
-				sb.append("\n");
-			}
-
-			return sb.toString();
-		}
-
-		private Branch(
-			GitWorkingDirectory gitWorkingDirectory, String name, Remote remote,
-			String sha) {
-
-			_name = name;
-			_remote = remote;
-
-			if ((name != null) && (sha == null)) {
-				_sha = gitWorkingDirectory.getBranchSHA(name, remote);
-			}
-			else {
-				_sha = sha;
-			}
-		}
-
-		private final String _name;
-		private final Remote _remote;
-		private final String _sha;
-
-	}
-
 	public static class Remote implements Comparable<Remote> {
 
 		@Override

@@ -1602,7 +1602,295 @@
 		</execute>
 	</command>
 
-	<command name="SearchUsingNewSearchPortlets" priority="5">
+	<command name="SearchWebContent" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WC WebContent Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WC" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WC1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="WC1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WebContent1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="WebContent1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+	</command>
+
+	<command name="SearchWikiPage" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
+
+		<execute macro="WikiPage#addPG">
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Wiki Page Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Wiki" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Page" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Wiki1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Wiki1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Page1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Page1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+	</command>
+
+	<command name="SearchXSSAsset" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Liferay Alert" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="Thread Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchAssetSummary"><![CDATA[<script>alert(123);</script>]]></var>
+		</execute>
+
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;<span class="highlight">alert</span>(123);&lt;/script&gt;]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
+	</command>
+
+	<command name="ViewMultipleFacetURLs" priority="5">
 		<var name="searchPage" value="Search Page" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2169,294 +2457,6 @@
 			<var name="resultsList" value="apple/Web Content Article" />
 			<var name="searchTerm" value="organic" />
 		</execute>
-	</command>
-
-	<command name="SearchWebContent" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="WC WebContent Content" />
-			<var name="searchAssetTitle" value="WC WebContent Title" />
-			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="WC WebContent Content" />
-			<var name="searchAssetTitle" value="WC WebContent Title" />
-			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="WC" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="WC WebContent Content" />
-			<var name="searchAssetTitle" value="WC WebContent Title" />
-			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="WebContent" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="WC WebContent Content" />
-			<var name="searchAssetTitle" value="WC WebContent Title" />
-			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Title" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="WC WebContent Content" />
-			<var name="searchAssetTitle" value="WC WebContent Title" />
-			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Content" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="WC WebContent Content" />
-			<var name="searchAssetTitle" value="WC WebContent Title" />
-			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="WC1" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewNoSearchResults">
-			<var name="searchTerm" value="WC1" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="WebContent1" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewNoSearchResults">
-			<var name="searchTerm" value="WebContent1" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Title1" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewNoSearchResults">
-			<var name="searchTerm" value="Title1" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Content1" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewNoSearchResults">
-			<var name="searchTerm" value="Content1" />
-		</execute>
-	</command>
-
-	<command name="SearchWikiPage" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#addPG">
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Wiki Page Content" />
-			<var name="searchAssetTitle" value="Wiki Page Title" />
-			<var name="searchAssetType" value="Wiki Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Wiki Page Content" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Wiki Page Content" />
-			<var name="searchAssetTitle" value="Wiki Page Title" />
-			<var name="searchAssetType" value="Wiki Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Wiki" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Wiki Page Content" />
-			<var name="searchAssetTitle" value="Wiki Page Title" />
-			<var name="searchAssetType" value="Wiki Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Page" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Wiki Page Content" />
-			<var name="searchAssetTitle" value="Wiki Page Title" />
-			<var name="searchAssetType" value="Wiki Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Title" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Wiki Page Content" />
-			<var name="searchAssetTitle" value="Wiki Page Title" />
-			<var name="searchAssetType" value="Wiki Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Content" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Wiki Page Content" />
-			<var name="searchAssetTitle" value="Wiki Page Title" />
-			<var name="searchAssetType" value="Wiki Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Wiki1" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewNoSearchResults">
-			<var name="searchTerm" value="Wiki1" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Page1" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewNoSearchResults">
-			<var name="searchTerm" value="Page1" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Title1" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewNoSearchResults">
-			<var name="searchTerm" value="Title1" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Content1" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewNoSearchResults">
-			<var name="searchTerm" value="Content1" />
-		</execute>
-	</command>
-
-	<command name="SearchXSSAsset" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Liferay Alert" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Thread Subject" />
-			<var name="searchAssetType" value="Message Boards Message" />
-			<var name="searchAssetSummary"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;<span class="highlight">alert</span>(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
 	<command name="ViewSearchResultDetails" priority="5">

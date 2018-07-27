@@ -91,14 +91,6 @@ public class GitWorkingDirectory {
 		return getRemote(remoteName);
 	}
 
-	public boolean branchExists(String branchName, Remote remote) {
-		if (getBranch(branchName, remote) != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public void checkoutLocalGitBranch(LocalGitBranch localGitBranch) {
 		checkoutLocalGitBranch(localGitBranch, "-f");
 	}
@@ -1364,6 +1356,14 @@ public class GitWorkingDirectory {
 		return true;
 	}
 
+	public boolean localGitBranchExists(String branchName) {
+		if (getLocalGitBranch(branchName) != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean localSHAExists(String sha) {
 		String command = "git cat-file -t " + sha;
 
@@ -1513,6 +1513,25 @@ public class GitWorkingDirectory {
 
 	public boolean remoteExists(String remoteName) {
 		if (getRemote(remoteName) != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean remoteGitBranchExists(String branchName, Remote remote) {
+		return remoteGitBranchExists(branchName, remote.getRemoteURL());
+	}
+
+	public boolean remoteGitBranchExists(
+		String branchName, RemoteRepository remoteRepository) {
+
+		return remoteGitBranchExists(
+			branchName, remoteRepository.getRemoteURL());
+	}
+
+	public boolean remoteGitBranchExists(String branchName, String remoteURL) {
+		if (getRemoteGitBranch(branchName, remoteURL) != null) {
 			return true;
 		}
 

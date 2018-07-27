@@ -1301,14 +1301,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					String relativePath = FileUtil.relativize(file, modulesDir);
 
-					int x = relativePath.indexOf(File.separatorChar);
-
-					if (x != -1) {
-						String dirName = relativePath.substring(0, x);
-
-						if (dirName.equals("aspectj")) {
-							return content;
-						}
+					if (relativePath.startsWith("aspectj" + File.separator)) {
+						return content;
 					}
 
 					GitRepo contentGitRepo = GitRepo.getGitRepo(

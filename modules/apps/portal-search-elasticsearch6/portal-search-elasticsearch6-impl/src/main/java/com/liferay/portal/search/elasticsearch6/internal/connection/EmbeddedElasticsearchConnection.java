@@ -246,10 +246,6 @@ public class EmbeddedElasticsearchConnection
 		settingsBuilder.put("transport.type", "netty4");
 	}
 
-	protected void configurePACLTestRule() {
-		settingsBuilder.put("node.max_local_storage_nodes", "2");
-	}
-
 	protected void configurePaths() {
 		String liferayHome = props.get(PropsKeys.LIFERAY_HOME);
 
@@ -298,8 +294,6 @@ public class EmbeddedElasticsearchConnection
 		}
 
 		settingsBuilder.put("monitor.jvm.gc.enabled", StringPool.FALSE);
-
-		configurePACLTestRule();
 	}
 
 	@Override

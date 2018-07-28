@@ -15,8 +15,8 @@
 package com.liferay.util.dao.orm;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Props;
@@ -45,16 +45,12 @@ public class CustomSQLTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Field paclField = ReflectionUtil.getDeclaredField(
-			DataAccess.class, "_pacl");
+		InfrastructureUtil infrastructureUtil = new InfrastructureUtil();
 
-		_pacl = (DataAccess.PACL)paclField.get(null);
-
-		paclField.set(
-			null,
-			ProxyUtil.newProxyInstance(
+		infrastructureUtil.setDataSource(
+			(DataSource)ProxyUtil.newProxyInstance(
 				ClassLoader.getSystemClassLoader(),
-				new Class<?>[] {DataAccess.PACL.class},
+				new Class<?>[] {DataSource.class},
 				new InvocationHandler() {
 
 					@Override
@@ -62,27 +58,7 @@ public class CustomSQLTest {
 							Object proxy, Method method, Object[] args)
 						throws Throwable {
 
-						String methodName = method.getName();
-
-						if (!methodName.equals("getDataSource")) {
-							return "test";
-						}
-
-						return ProxyUtil.newProxyInstance(
-							ClassLoader.getSystemClassLoader(),
-							new Class<?>[] {DataSource.class},
-							new InvocationHandler() {
-
-								@Override
-								public Object invoke(
-										Object proxy, Method method,
-										Object[] args)
-									throws Throwable {
-
-									return null;
-								}
-
-							});
+						return null;
 					}
 
 				}));
@@ -134,11 +110,6 @@ public class CustomSQLTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		Field paclField = ReflectionUtil.getDeclaredField(
-			DataAccess.class, "_pacl");
-
-		paclField.set(null, _pacl);
-
 		Field portalField = ReflectionUtil.getDeclaredField(
 			PortalUtil.class, "_portal");
 
@@ -271,7 +242,6 @@ public class CustomSQLTest {
 
 	private static final long _USER_ID = 1234L;
 
-	private static DataAccess.PACL _pacl;
 	private static Portal _portal;
 	private static Props _props;
 

@@ -1295,11 +1295,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return content;
 					}
 
-					File markerFile = GradleUtil.getRootDir(
+					File markerDir = GradleUtil.getRootDir(
 						file.getParentFile(),
 						".lfrbuild-releng-skip-update-file-versions");
 
-					if (markerFile != null) {
+					if (markerDir != null) {
 						return content;
 					}
 

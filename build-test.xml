@@ -9544,13 +9544,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</else>
 		</if>
 
-		<if>
-			<equals arg1="${app.server.type}" arg2="tomcat" />
-			<then>
-				<ant antfile="build-dist.xml" target="update-java-security-tomcat" />
-			</then>
-		</if>
-
 		<antcall target="check-inet-address" />
 
 		<get-testcase-property property.name="database.jndi.enabled" />

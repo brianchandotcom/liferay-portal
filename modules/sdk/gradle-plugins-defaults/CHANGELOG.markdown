@@ -4184,8 +4184,8 @@ file.
 ## 5.4.95 - 2018-07-25
 
 ### Changed
-- [LPS-83920]: Skip replacements of the `updateFileVersions` task for projects in
-the `aspectj` directory.
+- [LPS-83920]: Skip replacements of the `updateFileVersions` task for projects
+in the `aspectj` directory.
 
 ## 5.4.96 - 2018-07-27
 

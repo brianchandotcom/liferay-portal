@@ -346,6 +346,40 @@ public class LocalGitSyncUtil {
 			"-", senderSHA);
 	}
 
+	protected static List<RemoteGitBranch> getCacheRemoteGitBranches(
+		GitWorkingDirectory gitWorkingDirectory,
+		GitWorkingDirectory.Remote remote) {
+
+		List<RemoteGitBranch> cacheRemoteGitBranches = new ArrayList<>();
+
+		Map<String, RemoteGitBranch> remoteGitBranches = new HashMap<>();
+
+		for (RemoteGitBranch remoteGitBranch :
+				gitWorkingDirectory.getRemoteGitBranches(remote)) {
+
+			remoteGitBranches.put(remoteGitBranch.getName(), remoteGitBranch);
+		}
+
+		for (Map.Entry<String, RemoteGitBranch> entry :
+				remoteGitBranches.entrySet()) {
+
+			String remoteBranchName = entry.getKey();
+
+			if (remoteBranchName.matches(_cacheBranchPattern.pattern())) {
+				if (hasTimestampBranch(remoteBranchName, remoteGitBranches)) {
+					cacheRemoteGitBranches.add(entry.getValue());
+				}
+				else {
+					deleteCacheRemoteGitBranch(
+						remoteBranchName, gitWorkingDirectory,
+						remoteGitBranches);
+				}
+			}
+		}
+
+		return cacheRemoteGitBranches;
+	}
+
 	protected static String getGitHubRemoteURL(
 		String repositoryName, String userName) {
 
@@ -390,41 +424,6 @@ public class LocalGitSyncUtil {
 
 		return remotes.get(
 			JenkinsResultsParserUtil.getRandomValue(0, remotes.size() - 1));
-	}
-
-	protected static List<GitWorkingDirectory.Branch> getRemoteCacheBranches(
-		GitWorkingDirectory gitWorkingDirectory,
-		GitWorkingDirectory.Remote remote) {
-
-		List<GitWorkingDirectory.Branch> remoteCacheBranches =
-			new ArrayList<>();
-
-		Map<String, GitWorkingDirectory.Branch> remoteBranches =
-			new HashMap<>();
-
-		for (GitWorkingDirectory.Branch remoteBranch :
-				gitWorkingDirectory.getRemoteBranches(null, remote)) {
-
-			remoteBranches.put(remoteBranch.getName(), remoteBranch);
-		}
-
-		for (Map.Entry<String, GitWorkingDirectory.Branch> entry :
-				remoteBranches.entrySet()) {
-
-			String remoteBranchName = entry.getKey();
-
-			if (remoteBranchName.matches(_cacheBranchPattern.pattern())) {
-				if (hasTimestampBranch(remoteBranchName, remoteBranches)) {
-					remoteCacheBranches.add(entry.getValue());
-				}
-				else {
-					deleteRemoteCacheBranch(
-						remoteBranchName, gitWorkingDirectory, remoteBranches);
-				}
-			}
-		}
-
-		return remoteCacheBranches;
 	}
 
 	protected static boolean hasTimestampBranch(

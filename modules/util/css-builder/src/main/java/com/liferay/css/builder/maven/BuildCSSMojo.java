@@ -67,6 +67,16 @@ public class BuildCSSMojo extends AbstractMojo {
 				}
 			}
 
+			for (org.apache.maven.artifact.Artifact artifact :
+					_pluginDescriptor.getArtifacts()) {
+
+				String artifactId = artifact.getArtifactId();
+
+				if (artifactId.equals("com.liferay.frontend.css.common")) {
+					_cssBuilderArgs.setImportDir(artifact.getFile());
+				}
+			}
+
 			if (_buildContext.isIncremental()) {
 				Scanner scanner = _buildContext.newScanner(_projectBaseDir);
 

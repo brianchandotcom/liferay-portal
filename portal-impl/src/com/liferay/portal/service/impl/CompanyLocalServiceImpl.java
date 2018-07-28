@@ -427,7 +427,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			// Default admin
 
-			if (userPersistence.countByCompanyId(companyId) == 1) {
+			if (userPersistence.countByCompanyId(companyId) == 0) {
 				String emailAddress =
 					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
 

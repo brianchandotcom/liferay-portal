@@ -719,7 +719,7 @@ public class LocalGitSyncUtil {
 		}
 	}
 
-	protected static void updateCacheBranchTimestamp(
+	protected static void updateCacheRemoteGitBranchTimestamp(
 		final String cacheBranchName,
 		final GitWorkingDirectory gitWorkingDirectory,
 		List<GitWorkingDirectory.Remote> localGitRemotes) {
@@ -729,20 +729,18 @@ public class LocalGitSyncUtil {
 		GitWorkingDirectory.Remote localGitRemote = getRandomRemote(
 			localGitRemotes);
 
-		List<GitWorkingDirectory.Branch> remoteCacheBranches =
-			getRemoteCacheBranches(gitWorkingDirectory, localGitRemote);
+		List<RemoteGitBranch> cacheRemoteGitBranches =
+			getCacheRemoteGitBranches(gitWorkingDirectory, localGitRemote);
 
 		boolean updated = false;
 
-		for (GitWorkingDirectory.Branch remoteCacheBranch :
-				remoteCacheBranches) {
-
-			String remoteCacheBranchName = remoteCacheBranch.getName();
+		for (RemoteGitBranch cacheRemoteGitBranch : cacheRemoteGitBranches) {
+			String cacheRemoteBranchName = cacheRemoteGitBranch.getName();
 
 			Matcher matcher = _cacheBranchPattern.matcher(
-				remoteCacheBranchName);
+				cacheRemoteBranchName);
 
-			if (!remoteCacheBranchName.contains(cacheBranchName) ||
+			if (!cacheRemoteBranchName.contains(cacheBranchName) ||
 				!matcher.matches()) {
 
 				continue;
@@ -756,7 +754,7 @@ public class LocalGitSyncUtil {
 
 			if (updated) {
 				pushToAllRemotes(
-					true, gitWorkingDirectory, null, remoteCacheBranchName,
+					true, gitWorkingDirectory, null, cacheRemoteBranchName,
 					localGitRemotes);
 
 				continue;
@@ -766,7 +764,7 @@ public class LocalGitSyncUtil {
 			long existingTimestamp = Long.parseLong(lastBlock);
 
 			if ((currentTimestamp - existingTimestamp) <
-					(1000 * 60 * 60 * 24)) {
+					_BRANCH_UPDATE_AGE_MILLIS) {
 
 				return;
 			}
@@ -777,48 +775,52 @@ public class LocalGitSyncUtil {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"\nUpdating cache branch timestamp from ",
-					remoteCacheBranchName, "to ", newTimestampBranchName));
+					cacheRemoteBranchName, "to ", newTimestampBranchName));
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Updating existing timestamp for branch ",
-					remoteCacheBranchName, " to ", newTimestampBranchName));
+					cacheRemoteBranchName, " to ", newTimestampBranchName));
 
-			GitWorkingDirectory.Branch currentBranch =
-				gitWorkingDirectory.getCurrentBranch();
+			LocalGitBranch currentLocalGitBranch =
+				gitWorkingDirectory.getCurrentLocalGitBranch();
 
-			if (currentBranch == null) {
-				currentBranch = gitWorkingDirectory.getBranch(
-					gitWorkingDirectory.getUpstreamBranchName(), null, true);
+			if (currentLocalGitBranch == null) {
+				currentLocalGitBranch = gitWorkingDirectory.getLocalGitBranch(
+					gitWorkingDirectory.getUpstreamBranchName(), true);
 			}
 
-			GitWorkingDirectory.Branch newTimestampBranch =
-				gitWorkingDirectory.createLocalBranch(newTimestampBranchName);
+			LocalGitBranch newTimestampLocalGitBranch =
+				gitWorkingDirectory.createLocalGitBranch(
+					newTimestampBranchName);
 
-			gitWorkingDirectory.fetch(newTimestampBranch, remoteCacheBranch);
+			gitWorkingDirectory.fetch(
+				newTimestampLocalGitBranch, cacheRemoteGitBranch);
 
 			try {
 				pushToAllRemotes(
-					true, gitWorkingDirectory, newTimestampBranch,
+					true, gitWorkingDirectory, newTimestampLocalGitBranch,
 					newTimestampBranchName, localGitRemotes);
 				pushToAllRemotes(
-					true, gitWorkingDirectory, null, remoteCacheBranchName,
+					true, gitWorkingDirectory, null, cacheRemoteBranchName,
 					localGitRemotes);
 
 				updated = true;
 			}
 			finally {
-				if ((currentBranch != null) &&
-					gitWorkingDirectory.branchExists(
-						currentBranch.getName(), null)) {
+				if ((currentLocalGitBranch != null) &&
+					gitWorkingDirectory.localGitBranchExists(
+						currentLocalGitBranch.getName())) {
 
-					gitWorkingDirectory.checkoutBranch(currentBranch);
+					gitWorkingDirectory.checkoutLocalGitBranch(
+						currentLocalGitBranch);
 				}
 				else {
 					checkoutUpstreamLocalGitBranch(gitWorkingDirectory, null);
 				}
 
-				gitWorkingDirectory.deleteBranch(newTimestampBranch);
+				gitWorkingDirectory.deleteLocalGitBranch(
+					newTimestampLocalGitBranch);
 			}
 		}
 
@@ -939,6 +941,8 @@ public class LocalGitSyncUtil {
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =
 		1000 * 60 * 60 * 24 * 2;
+
+	private static final long _BRANCH_UPDATE_AGE_MILLIS = 1000 * 60 * 60 * 24;
 
 	private static final Pattern _cacheBranchPattern = Pattern.compile(
 		"cache(-([^-]+))+");

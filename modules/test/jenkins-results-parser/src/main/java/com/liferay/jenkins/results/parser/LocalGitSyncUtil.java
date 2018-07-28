@@ -75,40 +75,38 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static void cacheBranch(
-		GitWorkingDirectory gitWorkingDirectory,
-		GitWorkingDirectory.Branch localBranch,
+		GitWorkingDirectory gitWorkingDirectory, LocalGitBranch localGitBranch,
 		GitWorkingDirectory.Remote remote, long timestamp) {
 
 		gitWorkingDirectory.pushToRemote(
-			true, localBranch, localBranch.getName(), remote);
+			true, localGitBranch, localGitBranch.getName(), remote);
 
 		gitWorkingDirectory.pushToRemote(
-			true, localBranch,
+			true, localGitBranch,
 			JenkinsResultsParserUtil.combine(
-				localBranch.getName(), "-", String.valueOf(timestamp)),
+				localGitBranch.getName(), "-", String.valueOf(timestamp)),
 			remote);
 	}
 
 	protected static void cacheBranches(
 		final GitWorkingDirectory gitWorkingDirectory,
-		final GitWorkingDirectory.Branch localBranch,
+		final LocalGitBranch localGitBranch,
 		List<GitWorkingDirectory.Remote> localGitRemotes,
 		final String upstreamUsername) {
 
-		String localBranchName = localBranch.getName();
-		GitWorkingDirectory.Branch currentBranch =
-			gitWorkingDirectory.getCurrentBranch();
+		String currentBranchName = gitWorkingDirectory.getCurrentBranchName();
+		String localBranchName = localGitBranch.getName();
 
-		if ((currentBranch == null) ||
-			!localBranchName.equals(currentBranch.getName())) {
+		if ((currentBranchName == null) ||
+			!currentBranchName.equals(localBranchName)) {
 
-			gitWorkingDirectory.checkoutBranch(localBranch, "-f");
+			gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch, "-f");
 		}
 
 		final long start = System.currentTimeMillis();
 
-		final GitWorkingDirectory.Branch upstreamBranch =
-			gitWorkingDirectory.getBranch(
+		final RemoteGitBranch upstreamRemoteGitBranch =
+			gitWorkingDirectory.getRemoteGitBranch(
 				gitWorkingDirectory.getUpstreamBranchName(),
 				gitWorkingDirectory.getRemote("upstream"), true);
 
@@ -122,17 +120,17 @@ public class LocalGitSyncUtil {
 				@Override
 				public Object call() {
 					cacheBranch(
-						gitWorkingDirectory, localBranch, localGitRemote,
+						gitWorkingDirectory, localGitBranch, localGitRemote,
 						start);
 
 					if (upstreamUsername.equals("liferay")) {
-						GitWorkingDirectory.Branch localUpstreamBranch =
-							gitWorkingDirectory.getBranch(
-								upstreamBranch.getName(), null, true);
+						LocalGitBranch upstreamLocalGitBranch =
+							gitWorkingDirectory.getLocalGitBranch(
+								upstreamRemoteGitBranch.getName(), true);
 
 						gitWorkingDirectory.pushToRemote(
-							true, localUpstreamBranch, upstreamBranch.getName(),
-							localGitRemote);
+							true, upstreamLocalGitBranch,
+							upstreamRemoteGitBranch.getName(), localGitRemote);
 					}
 
 					return null;

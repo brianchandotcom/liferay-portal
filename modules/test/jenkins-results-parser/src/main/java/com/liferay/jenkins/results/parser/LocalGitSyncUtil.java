@@ -220,7 +220,7 @@ public class LocalGitSyncUtil {
 		}
 	}
 
-	protected static void deleteExpiredCacheBranches(
+	protected static void deleteExpiredRemoteGitBranches(
 		GitWorkingDirectory gitWorkingDirectory,
 		GitWorkingDirectory.Remote remote, long timestamp) {
 
@@ -228,23 +228,22 @@ public class LocalGitSyncUtil {
 		int deleteCount = 0;
 		long oldestBranchAge = Long.MIN_VALUE;
 
-		Map<String, GitWorkingDirectory.Branch> remoteBranches =
-			new HashMap<>();
+		Map<String, RemoteGitBranch> remoteGitBranches = new HashMap<>();
 
-		for (GitWorkingDirectory.Branch remoteBranch :
-				gitWorkingDirectory.getRemoteBranches(null, remote)) {
+		for (RemoteGitBranch remoteGitBranch :
+				gitWorkingDirectory.getRemoteGitBranches(remote)) {
 
-			remoteBranches.put(remoteBranch.getName(), remoteBranch);
+			remoteGitBranches.put(remoteGitBranch.getName(), remoteGitBranch);
 		}
 
-		List<GitWorkingDirectory.Branch> expiredBranches = new ArrayList<>();
+		List<RemoteGitBranch> expiredRemoteGitBranches = new ArrayList<>();
 
-		for (Map.Entry<String, GitWorkingDirectory.Branch> entry :
-				remoteBranches.entrySet()) {
+		for (Map.Entry<String, RemoteGitBranch> entry :
+				remoteGitBranches.entrySet()) {
 
-			GitWorkingDirectory.Branch remoteBranch = entry.getValue();
+			RemoteGitBranch remoteGitBranch = entry.getValue();
 
-			String remoteBranchName = remoteBranch.getName();
+			String remoteBranchName = remoteGitBranch.getName();
 
 			Matcher matcher = _cacheBranchPattern.matcher(remoteBranchName);
 
@@ -262,17 +261,18 @@ public class LocalGitSyncUtil {
 				long branchAge = timestamp - remoteBranchTimestamp;
 
 				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
-					String remoteRepositoryBaseBranchName =
+					String repositoryBaseRemoteBranchName =
 						remoteBranchName.replace("-" + lastBlock, "");
 
-					GitWorkingDirectory.Branch remoteRepositoryBaseCacheBranch =
-						remoteBranches.get(remoteRepositoryBaseBranchName);
+					RemoteGitBranch repositoryBaseRemoteGitBranch =
+						remoteGitBranches.get(repositoryBaseRemoteBranchName);
 
-					if (remoteRepositoryBaseCacheBranch != null) {
-						expiredBranches.add(remoteRepositoryBaseCacheBranch);
+					if (repositoryBaseRemoteGitBranch != null) {
+						expiredRemoteGitBranches.add(
+							repositoryBaseRemoteGitBranch);
 					}
 
-					expiredBranches.add(remoteBranch);
+					expiredRemoteGitBranches.add(remoteGitBranch);
 
 					deleteCount++;
 				}
@@ -284,10 +284,10 @@ public class LocalGitSyncUtil {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Deleting ", String.valueOf(expiredBranches.size()),
+				"Deleting ", String.valueOf(expiredRemoteGitBranches.size()),
 				" branches from ", remote.getName()));
 
-		gitWorkingDirectory.deleteBranches(expiredBranches);
+		gitWorkingDirectory.deleteRemoteGitBranches(expiredRemoteGitBranches);
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
@@ -299,7 +299,7 @@ public class LocalGitSyncUtil {
 				" old."));
 	}
 
-	protected static void deleteExpiredCacheBranches(
+	protected static void deleteExpiredRemoteGitBranches(
 		final GitWorkingDirectory gitWorkingDirectory,
 		List<GitWorkingDirectory.Remote> localGitRemotes) {
 
@@ -314,7 +314,7 @@ public class LocalGitSyncUtil {
 
 				@Override
 				public Object call() {
-					deleteExpiredCacheBranches(
+					deleteExpiredRemoteGitBranches(
 						gitWorkingDirectory, localGitRemote, start);
 
 					return null;

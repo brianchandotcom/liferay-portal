@@ -918,7 +918,7 @@
 		</subant>
 	</target>
 
-	<target depends="get-app-version,get-artifact-versions-previous-release" if="app.ticket.list" name="update-app-marketplace-version" unless="${build.app.from.changelog}">
+	<target depends="get-app-change-log,get-app-version,get-artifact-versions-previous-release" if="app.ticket.list" name="update-app-marketplace-version" unless="${build.app.from.changelog}">
 		<echo message="app.version.previous.release = ${app.version.previous.release}" />
 
 		<echo message="app.version = ${app.version}" />
@@ -982,7 +982,7 @@
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="icon-url=https://www.liferay.com/web/guest/marketplace/-/mp/asset/icon/71985553" />
 	</target>
 
-	<target depends="dist-module-artifacts" if="app.ticket.list" name="zip-app-sources">
+	<target depends="dist-module-artifacts,get-app-change-log" if="app.ticket.list" name="zip-app-sources">
 		<zip
 			basedir="${dist.dir}/sources"
 			destfile="${dist.dir}/${app.name}-${app.version}-sources.zip"

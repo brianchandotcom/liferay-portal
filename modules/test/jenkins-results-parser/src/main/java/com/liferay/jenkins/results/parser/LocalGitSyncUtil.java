@@ -153,14 +153,14 @@ public class LocalGitSyncUtil {
 				JenkinsResultsParserUtil.toDurationString(duration));
 	}
 
-	protected static void checkoutUpstreamBranch(
+	protected static void checkoutUpstreamLocalGitBranch(
 		GitWorkingDirectory gitWorkingDirectory, String upstreamBranchSHA) {
 
-		GitWorkingDirectory.Branch localUpstreamBranch =
-			updateLocalUpstreamBranch(gitWorkingDirectory, upstreamBranchSHA);
+		LocalGitBranch upstreamLocalGitBranch = updateUpstreamLocalGitBranch(
+			gitWorkingDirectory, upstreamBranchSHA);
 
-		if (localUpstreamBranch != null) {
-			gitWorkingDirectory.checkoutBranch(localUpstreamBranch);
+		if (upstreamLocalGitBranch != null) {
+			gitWorkingDirectory.checkoutLocalGitBranch(upstreamLocalGitBranch);
 		}
 	}
 
@@ -696,7 +696,7 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.checkoutBranch(originalBranch);
 				}
 				else {
-					checkoutUpstreamBranch(
+					checkoutUpstreamLocalGitBranch(
 						gitWorkingDirectory, upstreamBranchSHA);
 				}
 
@@ -816,7 +816,7 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.checkoutBranch(currentBranch);
 				}
 				else {
-					checkoutUpstreamBranch(gitWorkingDirectory, null);
+					checkoutUpstreamLocalGitBranch(gitWorkingDirectory, null);
 				}
 
 				gitWorkingDirectory.deleteBranch(newTimestampBranch);

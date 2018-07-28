@@ -2886,6 +2886,30 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateTheme71() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"theme", "theme-test", "--liferayVersion", "7.1");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"name: \"com.liferay.gradle.plugins.theme.builder\"",
+			"apply plugin: \"com.liferay.portal.tools.theme.builder\"");
+		_testContains(
+			gradleProjectDir,
+			"src/main/webapp/WEB-INF/liferay-plugin-package.properties",
+			"name=theme-test");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"theme", "theme-test", "com.test", "-DliferayVersion=7.1");
+
+		_testContains(
+			mavenProjectDir, "pom.xml",
+			"com.liferay.portal.tools.theme.builder");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test
 	public void testBuildTemplateThemeContributorCustom() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme-contributor", "my-contributor-custom", "--contributor-type",
@@ -4074,6 +4098,18 @@ public class ProjectTemplatesTest {
 		return result.output;
 	}
 
+	private static List<String> _sanitizeLines(List<String> lines) {
+		List<String> sanitizedLines = new ArrayList<>();
+
+		for (String line : lines) {
+			line = line.replaceAll("\\?t=[0-9]+", "");
+
+			sanitizedLines.add(line);
+		}
+
+		return sanitizedLines;
+	}
+
 	private static void _testArchetyper(
 			File parentDir, File destinationDir, File projectDir, String name,
 			String groupId, String template, List<String> args)
@@ -4469,6 +4505,17 @@ public class ProjectTemplatesTest {
 						List<String> lines2 = StringTestUtil.readLines(
 							inputStream2);
 
+						lines1 = _sanitizeLines(lines1);
+						lines2 = _sanitizeLines(lines2);
+
+						Patch<String> diff = DiffUtils.diff(lines1, lines2);
+
+						List<Delta<String>> deltas = diff.getDeltas();
+
+						if (deltas.isEmpty()) {
+							continue;
+						}
+
 						message.append(System.lineSeparator());
 
 						message.append("--- ");
@@ -4479,9 +4526,7 @@ public class ProjectTemplatesTest {
 						message.append(zipArchiveEntry2.getName());
 						message.append(System.lineSeparator());
 
-						Patch<String> diff = DiffUtils.diff(lines1, lines2);
-
-						for (Delta<String> delta : diff.getDeltas()) {
+						for (Delta<String> delta : deltas) {
 							message.append('\t');
 							message.append(delta.getOriginal());
 							message.append(System.lineSeparator());

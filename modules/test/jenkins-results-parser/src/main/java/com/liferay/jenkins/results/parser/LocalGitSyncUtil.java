@@ -183,6 +183,43 @@ public class LocalGitSyncUtil {
 		}
 	}
 
+	protected static void deleteCacheLocalGitBranches(
+		String excludeBranchName, GitWorkingDirectory gitWorkingDirectory) {
+
+		for (String localBranchName :
+				gitWorkingDirectory.getLocalBranchNames()) {
+
+			if (localBranchName.matches(_cacheBranchPattern.pattern()) &&
+				!localBranchName.equals(excludeBranchName)) {
+
+				gitWorkingDirectory.deleteLocalGitBranch(localBranchName);
+			}
+		}
+	}
+
+	protected static void deleteCacheRemoteGitBranch(
+		String cacheBranchName, GitWorkingDirectory gitWorkingDirectory,
+		Map<String, RemoteGitBranch> remoteBranches) {
+
+		List<RemoteGitBranch> cacheRemoteGitBranches = new ArrayList<>(2);
+
+		for (Map.Entry<String, RemoteGitBranch> entry :
+				remoteBranches.entrySet()) {
+
+			String remoteBranchName = entry.getKey();
+
+			if (!remoteBranchName.startsWith(cacheBranchName)) {
+				continue;
+			}
+
+			cacheRemoteGitBranches.add(entry.getValue());
+		}
+
+		if (!cacheRemoteGitBranches.isEmpty()) {
+			gitWorkingDirectory.deleteRemoteGitBranches(cacheRemoteGitBranches);
+		}
+	}
+
 	protected static void deleteExpiredCacheBranches(
 		GitWorkingDirectory gitWorkingDirectory,
 		GitWorkingDirectory.Remote remote, long timestamp) {
@@ -298,44 +335,6 @@ public class LocalGitSyncUtil {
 		System.out.println(
 			"Expired cache branches deleted in " +
 				JenkinsResultsParserUtil.toDurationString(duration));
-	}
-
-	protected static void deleteLocalCacheBranches(
-		String excludeBranchName, GitWorkingDirectory gitWorkingDirectory) {
-
-		for (String localBranchName :
-				gitWorkingDirectory.getLocalBranchNames()) {
-
-			if (localBranchName.matches(_cacheBranchPattern.pattern()) &&
-				!localBranchName.equals(excludeBranchName)) {
-
-				gitWorkingDirectory.deleteBranch(localBranchName, null);
-			}
-		}
-	}
-
-	protected static void deleteRemoteCacheBranch(
-		String cacheBranchName, GitWorkingDirectory gitWorkingDirectory,
-		Map<String, GitWorkingDirectory.Branch> remoteBranches) {
-
-		List<GitWorkingDirectory.Branch> remoteCacheBranches = new ArrayList<>(
-			2);
-
-		for (Map.Entry<String, GitWorkingDirectory.Branch> entry :
-				remoteBranches.entrySet()) {
-
-			String remoteBranchName = entry.getKey();
-
-			if (!remoteBranchName.startsWith(cacheBranchName)) {
-				continue;
-			}
-
-			remoteCacheBranches.add(entry.getValue());
-		}
-
-		if (!remoteCacheBranches.isEmpty()) {
-			gitWorkingDirectory.deleteBranches(remoteCacheBranches);
-		}
 	}
 
 	protected static String getCacheBranchName(

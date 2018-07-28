@@ -73,6 +73,21 @@ public class BuildThemeMojo extends AbstractMojo {
 				}
 			}
 
+			for (org.apache.maven.artifact.Artifact artifact :
+					_pluginDescriptor.getArtifacts()) {
+
+				String artifactId = artifact.getArtifactId();
+
+				if (artifactId.equals("com.liferay.frontend.theme.styled")) {
+					_themeBuilderArgs.setParentDir(artifact.getFile());
+				}
+				else if (artifactId.equals(
+							 "com.liferay.frontend.theme.unstyled")) {
+
+					_themeBuilderArgs.setUnstyledDir(artifact.getFile());
+				}
+			}
+
 			ThemeBuilder themeBuilder = new ThemeBuilder(_themeBuilderArgs);
 
 			themeBuilder.build();

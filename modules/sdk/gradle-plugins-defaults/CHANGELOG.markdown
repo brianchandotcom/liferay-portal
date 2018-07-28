@@ -4184,8 +4184,8 @@ file.
 ## 5.4.95 - 2018-07-25
 
 ### Changed
-- [LPS-83920]: Skip replacements of the `updateFileVersions` task for projects in
-the `aspectj` directory.
+- [LPS-83920]: Skip replacements of the `updateFileVersions` task for projects
+in the `aspectj` directory.
 
 ## 5.4.96 - 2018-07-27
 
@@ -4193,6 +4193,13 @@ the `aspectj` directory.
 - [LPS-83929]: Add the ability to exclude certain projects from executing the
 `writeArtifactPublishCommands` task by setting the property
 `writeArtifactPublishCommands.ignore.project.regex`.
+
+## 5.4.97 - 2018-07-27
+
+### Added
+- [LPS-83920]: Skip replacements of the `updateFileVersions` task if a
+`.lfrbuild-releng-skip-update-file-versions` marker file is found in a parent
+directory.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

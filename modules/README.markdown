@@ -123,6 +123,7 @@ File Name | Description
 --------- | -----------
 `.lfrbuild-release-src` | Includes the app's source code in the DXP release, when added to the root of an app.
 `.lfrbuild-releng-ignore` | Ignores checking the module for staleness, so the module is never publishable. A *stale* module has code that is different from the latest published release. If a `.lfrbuild-releng-ignore` file is added to a parent directory, the whole subtree is be ignored.
+`.lfrbuild-releng-skip-update-file-versions` | Prevents the `updateFileVersions` task from converting project dependencies into module dependencies. If a `.lfrbuild-releng-skip-update-file-versions` file is added to a parent directory, the whole subtree is skipped.
 
 ### Themes
 

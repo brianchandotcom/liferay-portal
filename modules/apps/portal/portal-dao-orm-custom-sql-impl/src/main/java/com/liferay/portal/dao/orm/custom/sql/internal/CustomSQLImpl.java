@@ -891,20 +891,6 @@ public class CustomSQLImpl implements CustomSQL {
 		return sb.toString();
 	}
 
-	private Map<String, String> _loadCustomSQL(ClassLoader classLoader) {
-		Map<String, String> sqls = new HashMap<>();
-
-		try {
-			_read(classLoader, "custom-sql/default.xml", sqls);
-			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return sqls;
-	}
-
 	private void _read(
 			ClassLoader classLoader, String source, Map<String, String> sqls)
 		throws Exception {
@@ -992,7 +978,17 @@ public class CustomSQLImpl implements CustomSQL {
 			Map<String, String> tempSqlPool = _sqlPool;
 
 			if (tempSqlPool == null) {
-				tempSqlPool = _loadCustomSQL(_classLoader);
+				tempSqlPool = new HashMap<>();
+
+				try {
+					_read(_classLoader, "custom-sql/default.xml", tempSqlPool);
+					_read(
+						_classLoader, "META-INF/custom-sql/default.xml",
+						tempSqlPool);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 
 				_sqlPool = tempSqlPool;
 			}

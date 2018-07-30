@@ -40,20 +40,30 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 		<liferay-frontend:horizontal-card
 			actionJsp="/site_navigation_menu_item_action.jsp"
 			actionJspServletContext="<%= application %>"
-			text="<%= title %>"
-			url="javascript:;"
 		>
-			<div class="site-navigation-menu-item__drag-icon">
-				<liferay-ui:icon
-					icon="drag"
-					markupView="lexicon"
-				/>
-			</div>
-
 			<liferay-frontend:horizontal-card-col>
-				<liferay-frontend:horizontal-card-icon
-					icon="<%= siteNavigationMenuItemType.getIcon() %>"
-				/>
+				<div class="card-row">
+					<div class="autofit-col site-navigation-menu-item__drag-icon">
+						<liferay-ui:icon
+							icon="drag"
+							markupView="lexicon"
+						/>
+					</div>
+
+					<div class="autofit-col autofit-col-expand autofit-col-gutters">
+						<h4 class="list-group-title">
+							<span class="text-truncate">
+								<a href="javascript:;">
+									<%= HtmlUtil.escape(title) %>
+								</a>
+							</span>
+						</h4>
+
+						<h6 class="list-group-subtitle text-truncate">
+							<%= HtmlUtil.escape(siteNavigationMenuItemType.getSubtitle(siteNavigationMenuItem, locale)) %>
+						</h6>
+					</div>
+				</div>
 			</liferay-frontend:horizontal-card-col>
 		</liferay-frontend:horizontal-card>
 	</div>

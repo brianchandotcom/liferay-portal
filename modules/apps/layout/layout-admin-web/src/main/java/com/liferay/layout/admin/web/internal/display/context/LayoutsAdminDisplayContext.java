@@ -1033,15 +1033,14 @@ public class LayoutsAdminDisplayContext {
 		return breadcrumbEntryJSONObject;
 	}
 
-	private JSONObject _getFirstColumn(boolean privatePages)
+	private JSONObject _getFirstColumn(boolean privatePages, boolean active)
 		throws PortalException {
 
 		JSONObject pagesJSONObject = JSONFactoryUtil.createJSONObject();
 
 		pagesJSONObject.put(
 			"actionURLs", _getFirstColumnActionURLsJSONObject(privatePages));
-		pagesJSONObject.put(
-			"active", privatePages ? isPrivatePages() : isPublicPages());
+		pagesJSONObject.put("active", active);
 		pagesJSONObject.put("hasChild", true);
 		pagesJSONObject.put("plid", LayoutConstants.DEFAULT_PLID);
 		pagesJSONObject.put("title", _getTitle(privatePages));
@@ -1116,14 +1115,28 @@ public class LayoutsAdminDisplayContext {
 
 		JSONArray firstColumnJSONArray = JSONFactoryUtil.createJSONArray();
 
+		Layout selLayout = getSelLayout();
+
 		if (LayoutLocalServiceUtil.hasLayouts(getSelGroup(), false) &&
 			isShowPublicPages()) {
 
-			firstColumnJSONArray.put(_getFirstColumn(false));
+			boolean active = isPublicPages();
+
+			if (selLayout != null) {
+				active = selLayout.isPublicLayout();
+			}
+
+			firstColumnJSONArray.put(_getFirstColumn(false, active));
 		}
 
 		if (LayoutLocalServiceUtil.hasLayouts(getSelGroup(), true)) {
-			firstColumnJSONArray.put(_getFirstColumn(true));
+			boolean active = isPrivatePages();
+
+			if (selLayout != null) {
+				active = selLayout.isPrivateLayout();
+			}
+
+			firstColumnJSONArray.put(_getFirstColumn(true, active));
 		}
 
 		layoutColumnsJSONArray.put(firstColumnJSONArray);
@@ -1135,8 +1148,6 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		JSONArray pagesJSONArray = _getLayoutsJSONArray(0, isPrivatePages());
-
-		Layout selLayout = getSelLayout();
 
 		if (selLayout == null) {
 			layoutColumnsJSONArray.put(pagesJSONArray);

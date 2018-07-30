@@ -98,13 +98,16 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
+		String currentURL = _portal.getCurrentURL(request);
+
 		editPageURL.setParameter("mvcRenderCommandName", "/layout/edit_layout");
-		editPageURL.setParameter("backURL", _portal.getCurrentURL(request));
+		editPageURL.setParameter("backURL", currentURL);
 		editPageURL.setParameter(
 			"groupId", String.valueOf(layout.getGroupId()));
 		editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
 		editPageURL.setParameter(
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+		editPageURL.setParameter("redirect", currentURL);
 
 		values.put("editPageURL", editPageURL.toString());
 

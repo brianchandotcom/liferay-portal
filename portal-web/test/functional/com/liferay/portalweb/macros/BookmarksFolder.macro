@@ -4,8 +4,8 @@
 	<command name="addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
-			<var name="key_menuItem" value="Folder" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Folder" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -27,8 +27,8 @@
 	<command name="addNullCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
-			<var name="key_menuItem" value="Folder" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Folder" />
 		</execute>
 
 		<execute macro="Button#clickSave" />
@@ -48,8 +48,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
-			<var name="key_menuItem" value="Subfolder" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subfolder" />
 		</execute>
 
 		<execute macro="Button#clickSave" />
@@ -64,8 +64,8 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
-			<var name="key_menuItem" value="Folder" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Folder" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -93,8 +93,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
-			<var name="key_menuItem" value="Subfolder" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subfolder" />
 		</execute>
 
 		<var name="key_folderName" value="${subfolderName}" />
@@ -122,8 +122,8 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
-			<var name="key_menuItem" value="Subfolder" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subfolder" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -149,8 +149,8 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to Recycle Bin">
-			<var name="key_menuItem" value="Move to Recycle Bin" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Move to Recycle Bin" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />

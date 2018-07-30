@@ -1464,8 +1464,8 @@
 		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
-			<var name="key_menuItem" value="Manage Templates" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage Templates" />
 		</execute>
 
 		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />

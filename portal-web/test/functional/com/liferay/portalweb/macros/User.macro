@@ -16,8 +16,8 @@
 	<command name="activateCP">
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Inactive">
-			<var name="key_menuItem" value="Inactive" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Inactive" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -782,8 +782,8 @@
 			<else>
 				<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
 
-				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-					<var name="key_menuItem" value="Impersonate User" />
+				<execute macro="MenuItem#viewNotPresent">
+					<var name="menuItem" value="Impersonate User" />
 				</execute>
 			</else>
 		</if>
@@ -958,8 +958,8 @@
 	<command name="deleteCP">
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Inactive">
-			<var name="key_menuItem" value="Inactive" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Inactive" />
 		</execute>
 
 		<if>
@@ -1070,8 +1070,8 @@
 
 		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Select" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${languageName}" />
@@ -1430,8 +1430,8 @@
 
 		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Impersonate User">
-			<var name="key_menuItem" value="Impersonate User" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Impersonate User" />
 		</execute>
 
 		<execute function="SelectWindow" locator1="title=Welcome - ${siteName}" />
@@ -2003,8 +2003,8 @@
 
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Active">
-			<var name="key_menuItem" value="Active" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Active" />
 		</execute>
 
 		<if>
@@ -2022,8 +2022,8 @@
 
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Inactive">
-			<var name="key_menuItem" value="Inactive" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Inactive" />
 		</execute>
 
 		<if>
@@ -2049,8 +2049,8 @@
 
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Active">
-			<var name="key_menuItem" value="Active" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Active" />
 		</execute>
 
 		<execute macro="User#searchCP">
@@ -2072,8 +2072,8 @@
 
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Inactive">
-			<var name="key_menuItem" value="Inactive" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Inactive" />
 		</execute>
 
 		<if>

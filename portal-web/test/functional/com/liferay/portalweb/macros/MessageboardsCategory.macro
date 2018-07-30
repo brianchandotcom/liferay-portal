@@ -4,8 +4,8 @@
 	<command name="addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Category">
-			<var name="key_menuItem" value="Category" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Category" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -73,8 +73,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subcategory">
-			<var name="key_menuItem" value="Subcategory" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subcategory" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -95,8 +95,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subcategory">
-			<var name="key_menuItem" value="Subcategory" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subcategory" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -190,7 +190,9 @@
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
-		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${categoryName}" />
+		</execute>
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
@@ -203,10 +205,12 @@
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
-		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${categoryName}" />
+		</execute>
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -260,10 +264,12 @@
 		<var method="StringUtil#replace('${roleTitle}', ' ', '-')" name="key_roleTitle" />
 		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
 
-		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${categoryName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
@@ -282,10 +288,12 @@
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
-		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${categoryName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
-			<var name="key_menuItem" value="Subscribe" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subscribe" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

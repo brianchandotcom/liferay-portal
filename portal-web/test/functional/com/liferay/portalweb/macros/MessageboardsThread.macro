@@ -5,8 +5,8 @@
 	<command name="addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
-			<var name="key_menuItem" value="Thread" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Thread" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
@@ -24,8 +24,8 @@
 	<command name="addCPWithAttachment">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
-			<var name="key_menuItem" value="Thread" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Thread" />
 		</execute>
 
 		<execute function="Click" locator1="TextInput#SUBJECT" />
@@ -268,8 +268,8 @@
 	<command name="addWithWorkflowCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
-			<var name="key_menuItem" value="Thread" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Thread" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
@@ -306,12 +306,12 @@
 	</command>
 
 	<command name="banUser">
-		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
-			<var name="key_threadReplyBody" value="${threadReplyBody}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadReplyBody}" />
 		</execute>
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Ban This User">
-			<var name="key_menuItem" value="Ban This User" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Ban This User" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -335,8 +335,8 @@
 			<var name="key_threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubjectEdit}" />
@@ -354,10 +354,12 @@
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
-		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadSubject}" />
+		</execute>
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to Recycle Bin">
-			<var name="key_menuItem" value="Move to Recycle Bin" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Move to Recycle Bin" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
@@ -423,8 +425,8 @@
 			<var name="key_threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<if>
@@ -490,8 +492,8 @@
 
 		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -561,32 +563,32 @@
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Lock">
-			<var name="key_menuItem" value="Lock" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Lock" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="markAsAnswerCP">
-		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
-			<var name="key_threadReplyBody" value="${threadReplyBody}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadReplyBody}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Mark as an Answer">
-			<var name="key_menuItem" value="Mark as an Answer" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Mark as an Answer" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
 
 	<command name="markAsAnswerPG">
-		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
-			<var name="key_threadReplyBody" value="${threadReplyBody}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadReplyBody}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Mark as an Answer">
-			<var name="key_menuItem" value="Mark as an Answer" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Mark as an Answer" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
@@ -597,12 +599,12 @@
 			<var name="key_categoryName" value="${categoryName1}" />
 		</execute>
 
-		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS">
-			<var name="key_threadSubject" value="${threadSubject}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadSubject}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
-			<var name="key_menuItem" value="Move" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Move" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
@@ -657,8 +659,8 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
-			<var name="key_menuItem" value="Move" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Move" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
@@ -751,12 +753,12 @@
 	<command name="removeViewPermissionsPG">
 		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
 
-		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS">
-			<var name="key_threadSubject" value="${threadSubject}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadSubject}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
@@ -955,8 +957,8 @@
 	<command name="splitThreadPG">
 		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS_REPLY_CARD" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Split Thread">
-			<var name="key_menuItem" value="Split Thread" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Split Thread" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Click OK to create a new thread with the following messages." />
@@ -1024,8 +1026,8 @@
 	<command name="viewAnonymousPostingCheckboxCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
-			<var name="key_menuItem" value="Thread" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Thread" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Checkbox#ANONYMOUS" />
@@ -1179,8 +1181,8 @@
 	<command name="viewMarkAsQuestionCheckedCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
-			<var name="key_menuItem" value="Thread" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Thread" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="Button#PUBLISH" />
@@ -1199,8 +1201,8 @@
 	<command name="viewMarkAsQuestionNotCheckedCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
-			<var name="key_menuItem" value="Thread" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Thread" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="Button#PUBLISH" />
@@ -1225,8 +1227,8 @@
 	<command name="viewNoAnonymousPostingCheckboxCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
-			<var name="key_menuItem" value="Thread" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Thread" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Checkbox#ANONYMOUS" />

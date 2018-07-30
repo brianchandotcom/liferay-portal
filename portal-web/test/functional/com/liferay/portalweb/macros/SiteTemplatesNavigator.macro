@@ -1,11 +1,11 @@
 <definition>
 	<command name="gotoManageSiteTemplates">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteTemplateName}" />
+		</execute>
 
-		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage">
-			<var name="key_menuItem" value="Manage" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Manage" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#openProductMenu" />

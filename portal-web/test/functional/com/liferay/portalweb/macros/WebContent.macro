@@ -1274,8 +1274,8 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="20 Entries" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${itemsPerPage}">
-			<var name="key_menuItem" value="${itemsPerPage}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${itemsPerPage}" />
 		</execute>
 	</command>
 
@@ -1435,8 +1435,8 @@
 			<var name="key_rowEntry" value="${webContentTitle}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
-			<var name="key_menuItem" value="Subscribe" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subscribe" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

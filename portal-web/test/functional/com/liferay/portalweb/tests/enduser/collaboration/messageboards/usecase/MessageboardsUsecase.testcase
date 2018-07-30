@@ -1905,8 +1905,9 @@
 		<var name="key_threadSubject" value="MB Thread Message Subject" />
 
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
-			<var name="key_menuItem" value="Subscribe" />
+
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Subscribe" />
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="MB Category Name" />
@@ -1920,16 +1921,17 @@
 		</execute>
 
 		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
-			<var name="key_menuItem" value="Unsubscribe" />
+
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Unsubscribe" />
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="MB Thread Message Subject" />
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
-			<var name="key_menuItem" value="Unsubscribe" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Unsubscribe" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1954,8 +1956,8 @@
 
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Subscribe" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Subscribe" />
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="MB Category Name" />
@@ -1967,16 +1969,16 @@
 		</execute>
 
 		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Unsubscribe" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Unsubscribe" />
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="MB Thread Message Subject" />
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
-			<var name="key_menuItem" value="Unsubscribe" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Unsubscribe" />
 		</execute>
 	</command>
 

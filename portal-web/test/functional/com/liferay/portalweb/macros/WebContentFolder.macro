@@ -10,8 +10,8 @@
 			</condition>
 
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
-					<var name="key_menuItem" value="Folder" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Folder" />
 				</execute>
 			</then>
 		</if>
@@ -47,8 +47,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
-			<var name="key_menuItem" value="Subfolder" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Subfolder" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -84,13 +84,13 @@
 		<if>
 			<equals arg1="${subfolder}" arg2="false" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-					<var name="key_menuItem" value="Subfolder" />
+				<execute macro="MenuItem#viewNotPresent">
+					<var name="menuItem" value="Subfolder" />
 				</execute>
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
-					<var name="key_menuItem" value="Subfolder" />
+				<execute macro="MenuItem#viewPresent">
+					<var name="menuItem" value="Subfolder" />
 				</execute>
 			</else>
 		</if>
@@ -172,8 +172,8 @@
 
 		<execute function="Click" locator1="WC#ENTRY_LIST_MENULIST_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 	</command>
 

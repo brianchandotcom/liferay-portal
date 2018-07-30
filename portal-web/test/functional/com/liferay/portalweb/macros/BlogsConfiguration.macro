@@ -99,8 +99,8 @@
 			<then>
 				<execute function="Click#mouseOverClick" locator1="Portlet#OPTIONS_ICON" />
 
-				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-					<var name="key_menuItem" value="Permissions" />
+				<execute macro="MenuItem#viewNotPresent">
+					<var name="menuItem" value="Permissions" />
 				</execute>
 			</then>
 		</if>
@@ -159,8 +159,8 @@
 			<then>
 				<execute function="Click#mouseOverClick" locator1="Portlet#OPTIONS_ICON" />
 
-				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-					<var name="key_menuItem" value="Permissions" />
+				<execute macro="MenuItem#viewNotPresent">
+					<var name="menuItem" value="Permissions" />
 				</execute>
 
 				<if>
@@ -169,14 +169,14 @@
 					</condition>
 
 					<then>
-						<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
-							<var name="key_menuItem" value="Configuration" />
+						<execute macro="MenuItem#click">
+							<var name="menuItem" value="Configuration" />
 						</execute>
 
 						<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-						<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-							<var name="key_menuItem" value="Permissions" />
+						<execute macro="MenuItem#viewNotPresent">
+							<var name="menuItem" value="Permissions" />
 						</execute>
 					</then>
 				</if>
@@ -200,8 +200,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 	</command>
 

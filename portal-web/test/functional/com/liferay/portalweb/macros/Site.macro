@@ -9,10 +9,12 @@
 			<var name="searchTerm" value="${siteName}" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Activate">
-			<var name="key_menuItem" value="Activate" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Activate" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -515,10 +517,12 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteName}" />
+		</execute>
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Deactivate">
-			<var name="key_menuItem" value="Deactivate" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Deactivate" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
@@ -545,10 +549,12 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteName}" />
+		</execute>
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -734,8 +740,8 @@
 					<var name="key_itemName" value="${siteName}" />
 				</execute>
 
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-					<var name="key_rowEntry" value="${siteName}" />
+				<execute macro="LexiconEntry#openEntryMenu">
+					<var name="rowEntry" value="${siteName}" />
 				</execute>
 
 				<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Leave">
@@ -781,8 +787,8 @@
 			<var name="key_itemName" value="${siteName}" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${siteName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteName}" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Join">
@@ -885,10 +891,12 @@
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
-		<execute function="Click" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${userGroupName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign Site Roles">
-			<var name="key_menuItem" value="Assign Site Roles" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Assign Site Roles" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -1293,7 +1301,9 @@
 			<var name="searchTerm" value="${siteName}" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${siteName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Child Site">
 			<var name="key_menuItem" value="Add Child Site" />

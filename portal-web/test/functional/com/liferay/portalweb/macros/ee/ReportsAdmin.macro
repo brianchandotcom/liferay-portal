@@ -20,9 +20,13 @@
 	<command name="addReportEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${reportsDefinitionName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Add Report" />
+		</execute>
 
 		<execute function="Select" locator1="ReportsAdminEditReportEntry#REPORT_FORMAT_SELECT" value1="${reportFormat}" />
 
@@ -46,9 +50,13 @@
 	<command name="addScheduleEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${reportsDefinitionName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_ADD_SCHEDULE" value1="Add Schedule" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Add Schedule" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="ReportsAdminEditScheduleEntry#START_DATE_TIME_FIELD" />
 
@@ -158,10 +166,12 @@
 
 		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 
-		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${reportsFileName}" />
+		</execute>
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -175,7 +185,9 @@
 
 		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 
-		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${reportsFileName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DELIVER_REPORT" value1="Deliver Report" />
 
@@ -194,7 +206,9 @@
 
 		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 
-		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${reportsFileName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
 
@@ -319,8 +333,8 @@ Sincerely,<br />
 			<then>
 				<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
 
-				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-					<var name="key_menuItem" value="Delete" />
+				<execute macro="MenuItem#clickNoError">
+					<var name="menuItem" value="Delete" />
 				</execute>
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -373,8 +387,8 @@ Sincerely,<br />
 			<then>
 				<execute function="Click" locator1="ReportsAdmin#SOURCES_SOURCE_TABLE_ACTIONS_1" />
 
-				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-					<var name="key_menuItem" value="Delete" />
+				<execute macro="MenuItem#clickNoError">
+					<var name="menuItem" value="Delete" />
 				</execute>
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />

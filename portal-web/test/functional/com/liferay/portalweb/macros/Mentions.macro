@@ -53,8 +53,8 @@
 	<command name="addMentionViaMessageBoardThread">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
-			<var name="key_menuItem" value="Thread" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Thread" />
 		</execute>
 
 		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
@@ -73,8 +73,8 @@
 	<command name="addMentionViaMessageBoardThreadEdit">
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />

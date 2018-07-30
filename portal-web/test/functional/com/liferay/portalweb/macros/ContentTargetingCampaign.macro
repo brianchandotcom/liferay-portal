@@ -62,8 +62,8 @@
 
 		<execute function="Click" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="${menulistContent}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${menulistContent}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_CONTENT" />
@@ -352,8 +352,8 @@
 			<var name="key_rowEntry" value="${reportName}" />
 		</execute>
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 	</command>
 
@@ -429,8 +429,8 @@
 		<if>
 			<isset var="userSegmentSelect" />
 			<then>
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-					<var name="key_menuItem" value="Edit" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Edit" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="EditCampaign#CAMPAIGN_USER_SEGMENT_APPLIED" value1="${userSegmentSelect}" />

@@ -9,8 +9,8 @@
 
 		<execute function="AssertClick" locator1="ControlMenuAddPanel#ADD_NEW_DROPDOWN" value1="Add New" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${assetType}">
-			<var name="key_menuItem" value="${assetType}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${assetType}" />
 		</execute>
 	</command>
 

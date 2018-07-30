@@ -432,8 +432,8 @@
 
 		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -510,10 +510,12 @@
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
-		<execute function="Click" locator1="StagingManageVariations#SITE_PAGES_VARIATIONS_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${sitePagesVariationName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Type" locator1="StagingManageVariations#MANAGE_VARIATION" value1="${sitePagesVariationName} Edit" />
@@ -681,8 +683,8 @@
 	<command name="navigateToStagingMenuItem">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Staging">
-			<var name="key_menuItem" value="Staging" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Staging" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
@@ -1153,8 +1155,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Publish Templates">
-			<var name="key_menuItem" value="Publish Templates" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Publish Templates" />
 		</execute>
 
 		<var name="key_publishTemplateName" value="${publishTemplateName}" />

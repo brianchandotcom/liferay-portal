@@ -22,8 +22,8 @@
 
 		<var name="key_itemsPerPage" value="${itemsPerPage}" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${itemsPerPage}">
-			<var name="key_menuItem" value="${itemsPerPage}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${itemsPerPage}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="TestSearchPagination#SEARCH_RESULTS" value1="Showing 1 - 5 of 15 results." />

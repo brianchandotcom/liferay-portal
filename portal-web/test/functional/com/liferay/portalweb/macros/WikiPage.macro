@@ -504,13 +504,15 @@
 
 		<execute function="AssertClick" locator1="NavBar#DETAILS" value1="Details" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Versions">
-			<var name="key_menuItem" value="Versions" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Versions" />
 		</execute>
 
 		<var name="key_wikiPageVersion" value="${wikiPageVersionNew}" />
 
-		<execute function="Click" locator1="Wiki#COMPARE_VERSIONS_VERSION_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${wikiPageVersionNew}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Wiki#HISTORY_ACTIVITIES_TABLE_COMPARE_TO_LINK" value1="Compare to..." />
 
@@ -608,8 +610,8 @@
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Copy">
-			<var name="key_menuItem" value="Copy" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Copy" />
 		</execute>
 
 		<execute macro="AlloyEditor#addTitle">
@@ -730,10 +732,12 @@
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${entryComment}" />
 
-		<execute function="Click" locator1="Comments#COMMENT_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${entryComment}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Type#typeEditor" locator1="Comments#EDIT_COMMENT_FIELD" value1="${entryCommentEdit}" />
@@ -758,12 +762,12 @@
 	</command>
 
 	<command name="editPageCP">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${wikiPageTitle}" />
+		</execute>
 
-		<execute function="Click" locator1="Wiki#DESCRIPTIVE_VIEW_ACTIONS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Click" locator1="AlloyEditor#EDITOR">
@@ -784,8 +788,8 @@
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute macro="AlloyEditor#addContent">
@@ -824,8 +828,8 @@
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="HTML" />
@@ -952,9 +956,9 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute function="Click" locator1="Wiki#DESCRIPTIVE_VIEW_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
@@ -1110,10 +1114,12 @@
 		<var name="key_wikiPageRevision" value="1.0" />
 		<var name="key_wikiPageTitle" value="${wikiPage2Title}" />
 
-		<execute function="Click" locator1="Wiki#HISTORY_VERSIONS_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${wikiPage2Title}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Revert">
-			<var name="key_menuItem" value="Revert" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Revert" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -1138,10 +1144,12 @@
 		<var name="key_wikiPageRevision" value="${wikiPageRevisionOld}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="Click" locator1="Wiki#HISTORY_VERSIONS_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${wikiPageTitle}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Revert">
-			<var name="key_menuItem" value="Revert" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Revert" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

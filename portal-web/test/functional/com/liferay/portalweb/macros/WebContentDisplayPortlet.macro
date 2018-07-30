@@ -158,8 +158,8 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit Template">
-			<var name="key_menuItem" value="Edit Template" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit Template" />
 		</execute>
 	</command>
 
@@ -274,8 +274,8 @@
 
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="${parentSiteName}">
-			<var name="key_menuItem" value="${parentSiteName}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${parentSiteName}" />
 		</execute>
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />

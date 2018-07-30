@@ -117,8 +117,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
-			<var name="key_menuItem" value="Thread" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Thread" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="CKEditor Entry Subject" />

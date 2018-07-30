@@ -1,11 +1,11 @@
 <definition>
 	<command name="deactivateAppCP">
-		<var name="key_appName" value="${appName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${appName}" />
+		</execute>
 
-		<execute function="Click" locator1="AppManager#APP_ACTIONS" />
-
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Deactivate">
-			<var name="key_menuItem" value="Deactivate" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Deactivate" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
@@ -25,12 +25,12 @@
 	</command>
 
 	<command name="uninstallAppCP">
-		<var name="key_appName" value="${appName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${appName}" />
+		</execute>
 
-		<execute function="Click" locator1="AppManager#APP_ACTIONS" />
-
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Uninstall">
-			<var name="key_menuItem" value="Uninstall" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Uninstall" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -43,8 +43,8 @@
 
 		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Upload">
-			<var name="key_menuItem" value="Upload" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Upload" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

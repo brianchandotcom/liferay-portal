@@ -72,8 +72,8 @@
 
 		<var name="key_menuItem" value="${contentType}" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${contentType}">
-			<var name="key_menuItem" value="${contentType}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${contentType}" />
 		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -105,9 +105,9 @@
 
 				<execute function="ClickNoError" locator1="ContentTargeting#OTHERWISE_PANEL_SELECT_CONTENT" />
 
-				<var name="key_menuItem" value="${otherwiseContentType}" />
-
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="${otherwiseContentType}" />
+				</execute>
 
 				<execute function="SelectFrame" value1="relative=top" />
 

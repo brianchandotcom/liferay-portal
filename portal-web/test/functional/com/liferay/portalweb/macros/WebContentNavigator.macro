@@ -28,8 +28,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Web Content">
-			<var name="key_menuItem" value="Basic Web Content" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Basic Web Content" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="TextInput#TITLE" />
@@ -78,13 +78,13 @@
 			</condition>
 
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${structureName}">
-					<var name="key_menuItem" value="${structureName}" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="${structureName}" />
 				</execute>
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="More">
-					<var name="key_menuItem" value="More" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="More" />
 				</execute>
 
 				<execute macro="IFrame#selectConfigurationFrame" />
@@ -116,8 +116,8 @@
 			<var name="webContentTitleEscapeCharacter" value="${webContentTitleEscapeCharacter}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Icon#BACK" />
@@ -139,8 +139,8 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
-			<var name="key_menuItem" value="${menuItem}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${menuItem}" />
 		</execute>
 
 		<execute macro="IFrame#selectEditAssetFrame" />
@@ -176,14 +176,14 @@
 			</condition>
 
 			<then>
-				<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Showing ${pageMod} Elements">
-					<var name="key_menuItem" value="Showing ${pageMod} Elements" />
+				<execute macro="MenuItem#viewPresent">
+					<var name="menuItem" value="Showing ${pageMod} Elements" />
 				</execute>
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="More">
-			<var name="key_menuItem" value="More" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="More" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -195,8 +195,8 @@
 			<var name="webContentTitleEscapeCharacter" value="${webContentTitleEscapeCharacter}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Preview">
-			<var name="key_menuItem" value="Preview" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Preview" />
 		</execute>
 	</command>
 

@@ -5,10 +5,12 @@
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
 
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${assetName}" />
+		</execute>
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -102,10 +104,12 @@
 
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${assetName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
-			<var name="key_menuItem" value="Restore" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Restore" />
 		</execute>
 
 		<if>
@@ -139,12 +143,12 @@
 	</command>
 
 	<command name="restoreOverwriteCP">
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS">
-			<var name="key_assetName" value="${assetName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${assetName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
-			<var name="key_menuItem" value="Restore" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Restore" />
 		</execute>
 
 		<execute macro="Alert#viewErrorMessage">
@@ -162,10 +166,12 @@
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
 
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${assetName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
-			<var name="key_menuItem" value="Restore" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Restore" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="An entry with name ${assetName} already exists." />
@@ -245,14 +251,16 @@
 
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
-
-		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Restore" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${assetName}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Restore" />
+		</execute>
+
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Delete" />
 		</execute>
 	</command>
 

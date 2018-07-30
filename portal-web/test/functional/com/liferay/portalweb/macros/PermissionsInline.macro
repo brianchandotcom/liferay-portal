@@ -134,8 +134,8 @@
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -148,8 +148,8 @@
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -165,16 +165,12 @@
 			<var name="key_threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
-			<var name="key_threadReplyBody" value="${threadReplyBody}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${threadReplyBody}" />
 		</execute>
 
-		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
-			<var name="key_threadReplyBody" value="${threadReplyBody}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -262,12 +258,12 @@
 			<var name="portlet" value="User Groups" />
 		</execute>
 
-		<execute function="Click" locator1="UserGroups#USER_GROUP_TABLE_ACTIONS">
-			<var name="key_userGroupName" value="${userGroupName}" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${userGroupName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="User Group Pages Permissions">
-			<var name="key_menuItem" value="User Group Pages Permissions" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="User Group Pages Permissions" />
 		</execute>
 	</command>
 

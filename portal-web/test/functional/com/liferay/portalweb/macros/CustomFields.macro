@@ -32,10 +32,12 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="Click" locator1="CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${resourceName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<if>
@@ -70,8 +72,8 @@
 					<then>
 						<execute function="AssertClick" locator1="CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_ACTIONS_GENERIC" value1="Actions" />
 
-						<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-							<var name="key_menuItem" value="Delete" />
+						<execute macro="MenuItem#clickNoError">
+							<var name="menuItem" value="Delete" />
 						</execute>
 
 						<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />

@@ -98,8 +98,8 @@
 
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -274,16 +274,16 @@
 	<command name="viewFavoriteStructureViaPlusButton">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="More">
-			<var name="key_menuItem" value="More" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="More" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="FAVORITES">
-			<var name="key_menuItem" value="favorites" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="favorites" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="${structureName}">
-			<var name="key_menuItem" value="${structureName}" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="${structureName}" />
 		</execute>
 	</command>
 

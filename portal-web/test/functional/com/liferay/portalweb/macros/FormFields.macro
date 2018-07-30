@@ -11,8 +11,8 @@
 	<command name="changeFieldType">
 		<execute function="Click" locator1="FormFields#CHANGE_FIELD_TYPE_BUTTON" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${selectOption}">
-			<var name="key_menuItem" value="${selectOption}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${selectOption}" />
 		</execute>
 	</command>
 

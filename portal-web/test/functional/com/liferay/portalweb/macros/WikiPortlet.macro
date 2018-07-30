@@ -42,8 +42,8 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
-			<var name="key_menuItem" value="Unsubscribe" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Unsubscribe" />
 		</execute>
 	</command>
 
@@ -56,20 +56,22 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<var name="key_wikiNodeName" value="Main" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="Main" />
+		</execute>
 
-		<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_DROPDOWN" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
-			<var name="key_menuItem" value="Unsubscribe" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Unsubscribe" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_DROPDOWN" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="Main" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
-			<var name="key_menuItem" value="Subscribe" />
+		<execute macro="MenuItem#viewPresent">
+			<var name="menuItem" value="Subscribe" />
 		</execute>
 	</command>
 

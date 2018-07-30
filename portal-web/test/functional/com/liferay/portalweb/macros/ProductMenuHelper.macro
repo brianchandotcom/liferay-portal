@@ -5,13 +5,13 @@
 		<if>
 			<equals arg1="${sitePagePrivacy}" arg2="Private" />
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Private Page">
-					<var name="key_menuItem" value="Add Private Page" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Add Private Page" />
 				</execute>
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Public Page">
-					<var name="key_menuItem" value="Add Public Page" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Add Public Page" />
 				</execute>
 			</else>
 		</if>

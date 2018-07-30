@@ -5,6 +5,12 @@
 		</execute>
 	</command>
 
+	<command name="clickNoError">
+		<execute function="ClickNoError" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+
 	<command name="viewNotPresent">
 		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="${menuItem}" />

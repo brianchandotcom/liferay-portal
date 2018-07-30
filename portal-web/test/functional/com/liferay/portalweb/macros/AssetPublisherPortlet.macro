@@ -4,8 +4,8 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${assetType}">
-			<var name="key_menuItem" value="${assetType}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${assetType}" />
 		</execute>
 
 		<execute macro="IFrame#selectConfigurationFrame" />
@@ -20,8 +20,8 @@
 
 		<execute function="AssertClick" locator1="Configuration#SCOPE_SELECT" value1="Select" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Other Site...">
-			<var name="key_menuItem" value="Other Site..." />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Other Site..." />
 		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -45,8 +45,8 @@
 			<then>
 				<execute function="Click" locator1="Configuration#SCOPE_SELECT" />
 
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Global">
-					<var name="key_menuItem" value="Global" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Global" />
 				</execute>
 			</then>
 		</if>
@@ -56,8 +56,8 @@
 			<then>
 				<execute function="Click" locator1="Configuration#SCOPE_SELECT" />
 
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Other Site...">
-					<var name="key_menuItem" value="Other Site..." />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Other Site..." />
 				</execute>
 
 				<execute function="SelectFrame" value1="relative=top" />
@@ -75,8 +75,8 @@
 			<then>
 				<execute function="Click" locator1="Configuration#SCOPE_SELECT" />
 
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
-					<var name="key_menuItem" value="Current Site" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Current Site" />
 				</execute>
 			</then>
 		</if>
@@ -528,13 +528,13 @@
 		<if>
 			<equals arg1="${siteName}" arg2="Global" />
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${siteName}">
-					<var name="key_menuItem" value="${siteName}" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="${siteName}" />
 				</execute>
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Other Site...">
-					<var name="key_menuItem" value="Other Site..." />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Other Site..." />
 				</execute>
 
 				<execute function="SelectFrame" value1="relative=top" />
@@ -664,8 +664,8 @@
 			<var name="key_assetTitle" value="${assetTitle}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit ${assetTitle}">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute macro="IFrame#selectEditAssetFrame" />
@@ -978,8 +978,8 @@
 					<var name="key_menuItem" value="Global" />
 				</execute>
 
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Other Site...">
-					<var name="key_menuItem" value="Other Site..." />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Other Site..." />
 				</execute>
 
 				<execute function="SelectFrame" value1="relative=top" />
@@ -1020,8 +1020,8 @@
 							</execute>
 						</then>
 						<else>
-							<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-								<var name="key_menuItem" value="OTHER_SITE" />
+							<execute macro="MenuItem#viewNotPresent">
+								<var name="menuItem" value="OTHER_SITE" />
 							</execute>
 						</else>
 					</if>

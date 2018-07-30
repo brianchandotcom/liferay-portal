@@ -12,8 +12,8 @@
 
 		<execute function="Click" locator1="Notifications#NOTIFICATIONS_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Notifications#NOTIFICATIONS_CONTENT" />
@@ -22,8 +22,8 @@
 	<command name="goToFilterValues">
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="${filterValues}">
-			<var name="key_menuItem" value="${filterValues}" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${filterValues}" />
 		</execute>
 	</command>
 

@@ -62,8 +62,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
-			<var name="key_menuItem" value="Bookmark" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Bookmark" />
 		</execute>
 
 		<if>
@@ -101,8 +101,8 @@
 	<command name="addIncorrectURLCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
-			<var name="key_menuItem" value="Bookmark" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Bookmark" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -125,8 +125,8 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
-			<var name="key_menuItem" value="Bookmark" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Bookmark" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -149,8 +149,8 @@
 	<command name="addNullCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
-			<var name="key_menuItem" value="Bookmark" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Bookmark" />
 		</execute>
 
 		<if>
@@ -184,8 +184,8 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
-			<var name="key_menuItem" value="Bookmark" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Bookmark" />
 		</execute>
 
 		<if>
@@ -262,8 +262,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
-			<var name="key_menuItem" value="Bookmark" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Bookmark" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -292,8 +292,8 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
-			<var name="key_menuItem" value="Bookmark" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Bookmark" />
 		</execute>
 
 		<if>
@@ -621,8 +621,8 @@
 	<command name="viewNoCategoryCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
-			<var name="key_menuItem" value="Bookmark" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Bookmark" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">

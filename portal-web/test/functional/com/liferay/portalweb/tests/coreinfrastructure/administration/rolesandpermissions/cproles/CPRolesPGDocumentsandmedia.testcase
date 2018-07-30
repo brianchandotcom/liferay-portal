@@ -178,8 +178,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Basic Document" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Basic Document" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -255,8 +255,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Basic Document" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Basic Document" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -312,8 +312,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Basic Document" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Basic Document" />
 		</execute>
 	</command>
 
@@ -368,8 +368,8 @@
 			<var name="key_dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Move to Recycle Bin" />
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Move to Recycle Bin" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

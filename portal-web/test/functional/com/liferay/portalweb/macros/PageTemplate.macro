@@ -51,10 +51,12 @@
 	<command name="deleteCP">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${pageTemplateName}" />
+		</execute>
 
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -126,15 +128,20 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<var name="key_pageTemplateName" value="Page Template Name" />
+		<var name="pageTemplateName" value="Page Template Name" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
-			<then>
-				<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
+			<condition function="IsElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+				<var name="rowEntry" value="${pageTemplateName}" />
+			</condition>
 
-				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-					<var name="key_menuItem" value="Delete" />
+			<then>
+				<execute macro="LexiconEntry#openEntryMenu">
+					<var name="rowEntry" value="${pageTemplateName}" />
+				</execute>
+
+				<execute macro="MenuItem#clickNoError">
+					<var name="menuItem" value="Delete" />
 				</execute>
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />

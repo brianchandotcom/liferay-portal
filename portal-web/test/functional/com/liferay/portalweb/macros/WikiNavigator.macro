@@ -4,16 +4,16 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Page">
-			<var name="key_menuItem" value="Add Page" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Add Page" />
 		</execute>
 	</command>
 
 	<command name="gotoAllPagesCP">
 		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="All Pages">
-			<var name="key_menuItem" value="All Pages" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="All Pages" />
 		</execute>
 	</command>
 
@@ -67,13 +67,13 @@
 		<if>
 			<equals arg1="${isOrphanPage}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Orphan Pages">
-					<var name="key_menuItem" value="Orphan Pages" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Orphan Pages" />
 				</execute>
 			</then>
 			<else>
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="All Pages">
-					<var name="key_menuItem" value="All Pages" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="All Pages" />
 				</execute>
 			</else>
 		</if>
@@ -100,8 +100,8 @@
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Copy">
-			<var name="key_menuItem" value="Copy" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Copy" />
 		</execute>
 	</command>
 
@@ -110,8 +110,8 @@
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
 		</execute>
 	</command>
 
@@ -124,8 +124,8 @@
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
-			<var name="key_menuItem" value="Move" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Move" />
 		</execute>
 	</command>
 

@@ -45,9 +45,9 @@
 		<if>
 			<isset var="portletOption" />
 			<then>
-				<var name="key_menuItem" value="${portletOption}" />
-
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="${portletOption}" />
+				</execute>
 			</then>
 		</if>
 	</command>
@@ -63,8 +63,8 @@
 
 		<execute function="Click" locator1="Search#SEARCH_PORTLET_OPTIONS_WRENCH" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
-			<var name="key_menuItem" value="Configuration" />
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Configuration" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />

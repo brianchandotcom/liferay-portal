@@ -86,12 +86,12 @@ public class FragmentDisplayContext {
 
 		_itemSelector = (ItemSelector)request.getAttribute(
 			FragmentWebKeys.ITEM_SELECTOR);
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -100,7 +100,7 @@ public class FragmentDisplayContext {
 							_renderResponse.createRenderURL(),
 							"mvcRenderCommandName",
 							"/fragment/edit_fragment_collection", "redirect",
-							themeDisplay.getURLCurrent());
+							_themeDisplay.getURLCurrent());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "collection"));
 					});
@@ -116,9 +116,6 @@ public class FragmentDisplayContext {
 	}
 
 	public List<DropdownItem> getCollectionsDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -129,8 +126,8 @@ public class FragmentDisplayContext {
 					});
 
 				if (FragmentPermission.contains(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getScopeGroupId(),
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getScopeGroupId(),
 						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
 					add(
@@ -194,14 +191,11 @@ public class FragmentDisplayContext {
 			return _fragmentCollectionId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long defaultFragmentCollectionId = 0;
 
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
-				themeDisplay.getScopeGroupId(), 0, 1);
+				_themeDisplay.getScopeGroupId(), 0, 1);
 
 		if (ListUtil.isNotEmpty(fragmentCollections)) {
 			FragmentCollection fragmentCollection = fragmentCollections.get(0);
@@ -218,9 +212,6 @@ public class FragmentDisplayContext {
 
 	public SoyContext getFragmentEditorDisplayContext() throws Exception {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		SoyContext allowedStatusSoyContext =
 			SoyContextFactoryUtil.createSoyContext();
@@ -243,7 +234,7 @@ public class FragmentDisplayContext {
 
 		soyContext.put(
 			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
@@ -251,7 +242,7 @@ public class FragmentDisplayContext {
 
 		SoyContext urlsSoycontext = SoyContextFactoryUtil.createSoyContext();
 
-		urlsSoycontext.put("current", themeDisplay.getURLCurrent());
+		urlsSoycontext.put("current", _themeDisplay.getURLCurrent());
 
 		PortletURL editActionURL = _renderResponse.createActionURL();
 
@@ -282,9 +273,6 @@ public class FragmentDisplayContext {
 			return _fragmentEntriesSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-fragments");
 
@@ -304,24 +292,24 @@ public class FragmentDisplayContext {
 
 		if (_isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				_themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
 				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+					_themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
 					_getKeywords());
 		}
 		else {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				_themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
 				fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId());
+					_themeDisplay.getScopeGroupId(), getFragmentCollectionId());
 		}
 
 		fragmentEntriesSearchContainer.setResults(fragmentEntries);
@@ -344,9 +332,6 @@ public class FragmentDisplayContext {
 	}
 
 	public List<DropdownItem> getFragmentEntryActionItemsDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -360,8 +345,8 @@ public class FragmentDisplayContext {
 					});
 
 				if (FragmentPermission.contains(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getScopeGroupId(),
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getScopeGroupId(),
 						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
 					add(
@@ -419,13 +404,10 @@ public class FragmentDisplayContext {
 	}
 
 	public String getFragmentEntrySearchActionURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL searchActionURL = _renderResponse.createRenderURL();
 
 		searchActionURL.setParameter("mvcRenderCommandName", "/fragment/view");
-		searchActionURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		searchActionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 		searchActionURL.setParameter(
 			"fragmentCollectionId", String.valueOf(getFragmentCollectionId()));
 
@@ -486,9 +468,6 @@ public class FragmentDisplayContext {
 	}
 
 	public PortletURL getItemSelectorURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL uploadURL = _renderResponse.createActionURL();
 
 		uploadURL.setParameter(
@@ -498,7 +477,7 @@ public class FragmentDisplayContext {
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				FragmentPortletKeys.FRAGMENT, uploadURL.toString(),
-				LanguageUtil.get(themeDisplay.getLocale(), "fragments"),
+				LanguageUtil.get(_themeDisplay.getLocale(), "fragments"),
 				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
 				_fragmentPortletConfiguration.thumbnailExtensions());
 
@@ -580,11 +559,8 @@ public class FragmentDisplayContext {
 	}
 
 	public long getRenderLayoutPlid() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-			themeDisplay.getScopeGroupId(), false,
+			_themeDisplay.getScopeGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		if (renderLayout != null) {
@@ -592,14 +568,14 @@ public class FragmentDisplayContext {
 		}
 
 		renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-			themeDisplay.getScopeGroupId(), true,
+			_themeDisplay.getScopeGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		if (renderLayout != null) {
 			return renderLayout.getPlid();
 		}
 
-		return themeDisplay.getPlid();
+		return _themeDisplay.getPlid();
 	}
 
 	public boolean isDisabledFragmentEntriesManagementBar() {
@@ -759,5 +735,6 @@ public class FragmentDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private final ThemeDisplay _themeDisplay;
 
 }

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Kernel Utilities Compat
+Bundle-SymbolicName: com.liferay.portal.kernel.util.compat
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.kernel.util

@@ -21,7 +21,6 @@ import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.staging.taglib.servlet.taglib.base.BaseCssTag;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**

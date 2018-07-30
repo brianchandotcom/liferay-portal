@@ -248,7 +248,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			}
 		);
 
-		siteNavigationMenuItemDOMHandlerModule.default.unselectAll();
+		siteNavigationMenuItemDOMHandlerModule.unselectAll();
 
 		openSidebar('<%= HtmlUtil.escape(siteNavigationAdminDisplayContext.getSiteNavigationMenuName()) %>');
 
@@ -278,7 +278,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 	var handleSidebarCloseButtonClick = function() {
 		closeSidebar();
-		siteNavigationMenuItemDOMHandlerModule.default.unselectAll();
+		siteNavigationMenuItemDOMHandlerModule.unselectAll();
 	};
 
 	var handleSiteNavigationMenuItemRemoveIconClick = function(event) {

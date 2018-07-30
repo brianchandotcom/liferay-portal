@@ -4193,6 +4193,12 @@ file.
 - [LPS-83920]: Skip replacements of the `updateFileVersions` task for projects
 in the `aspectj` directory.
 
+## 5.4.97 - 2018-07-27
+
+### Changed
+- [LPS-78938]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.90.
+
 ## 5.4.98 - 2018-07-27
 
 ### Added
@@ -4571,6 +4577,7 @@ directory.
 [LPS-78854]: https://issues.liferay.com/browse/LPS-78854
 [LPS-78901]: https://issues.liferay.com/browse/LPS-78901
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
+[LPS-78938]: https://issues.liferay.com/browse/LPS-78938
 [LPS-78971]: https://issues.liferay.com/browse/LPS-78971
 [LPS-79131]: https://issues.liferay.com/browse/LPS-79131
 [LPS-79191]: https://issues.liferay.com/browse/LPS-79191

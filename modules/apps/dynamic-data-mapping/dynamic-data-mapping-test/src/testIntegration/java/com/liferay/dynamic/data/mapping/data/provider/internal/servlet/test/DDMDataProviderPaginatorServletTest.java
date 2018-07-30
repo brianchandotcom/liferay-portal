@@ -57,7 +57,6 @@ import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,7 +87,6 @@ public class DDMDataProviderPaginatorServletTest {
 		setUpDDMDataProviderPaginatorServlet();
 	}
 
-	@Ignore
 	@Test
 	public void testPagination() throws Exception {
 		try (CaptureAppender captureAppender =
@@ -111,7 +109,6 @@ public class DDMDataProviderPaginatorServletTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testPaginationToDifferentPagesShouldBeDifferent()
 		throws Exception {
@@ -143,7 +140,6 @@ public class DDMDataProviderPaginatorServletTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testPaginationToSamePageShouldBeEquals() throws Exception {
 		DDMDataProviderInstance ddmDataProviderInstance =

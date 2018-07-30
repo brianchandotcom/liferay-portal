@@ -105,7 +105,7 @@ public class SiteNavigationMenuServiceImpl
 		long groupId, String keywords, int start, int end,
 		OrderByComparator orderByComparator) {
 
-		return siteNavigationMenuPersistence.filterFindByG_N(
+		return siteNavigationMenuPersistence.filterFindByG_LikeN(
 			groupId, _customSQL.keywords(keywords, WildcardMode.SURROUND)[0],
 			start, end, orderByComparator);
 	}
@@ -117,7 +117,7 @@ public class SiteNavigationMenuServiceImpl
 
 	@Override
 	public int getSiteNavigationMenusCount(long groupId, String keywords) {
-		return siteNavigationMenuPersistence.filterCountByG_N(
+		return siteNavigationMenuPersistence.filterCountByG_LikeN(
 			groupId, _customSQL.keywords(keywords, WildcardMode.SURROUND)[0]);
 	}
 

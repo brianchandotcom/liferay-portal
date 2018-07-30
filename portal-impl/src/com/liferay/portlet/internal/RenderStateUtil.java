@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
-import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portlet.RenderParametersPool;
 
 import java.util.Collections;
@@ -90,10 +89,12 @@ public class RenderStateUtil {
 		HttpServletRequest request, Layout layout, Portlet portlet,
 		String lifecycle, MimeResponse.Copy copy) {
 
-		return DoPrivilegedUtil.wrap(
+		LiferayPortletURLPrivilegedAction liferayPortletURLPrivilegedAction =
 			new LiferayPortletURLPrivilegedAction(
 				portlet.getPortletId(), lifecycle, copy, layout, portlet,
-				request));
+				request);
+
+		return liferayPortletURLPrivilegedAction.run();
 	}
 
 	private static String _createRenderURL(

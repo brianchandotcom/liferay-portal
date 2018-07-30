@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
-import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLListenerFactory;
 import com.liferay.portlet.RenderParametersPool;
@@ -61,7 +60,6 @@ import java.io.Serializable;
 import java.io.Writer;
 
 import java.security.Key;
-import java.security.PrivilegedAction;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -698,7 +696,9 @@ public class PortletURLImpl
 			return _toString;
 		}
 
-		_toString = DoPrivilegedUtil.wrap(new ToStringPrivilegedAction());
+		_callPortletURLGenerationListener();
+
+		_toString = generateToString();
 
 		return _toString;
 	}
@@ -1279,16 +1279,5 @@ public class PortletURLImpl
 	private String _toString;
 	private boolean _windowStateRestoreCurrentView;
 	private String _windowStateString;
-
-	private class ToStringPrivilegedAction implements PrivilegedAction<String> {
-
-		@Override
-		public String run() {
-			_callPortletURLGenerationListener();
-
-			return generateToString();
-		}
-
-	}
 
 }

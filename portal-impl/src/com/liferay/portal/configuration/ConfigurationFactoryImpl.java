@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.security.lang.DoPrivilegedUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,9 +29,8 @@ public class ConfigurationFactoryImpl implements ConfigurationFactory {
 	public Configuration getConfiguration(
 		ClassLoader classLoader, String name) {
 
-		return DoPrivilegedUtil.wrap(
-			new ConfigurationImpl(
-				classLoader, name, CompanyConstants.SYSTEM, null));
+		return new ConfigurationImpl(
+			classLoader, name, CompanyConstants.SYSTEM, null);
 	}
 
 }

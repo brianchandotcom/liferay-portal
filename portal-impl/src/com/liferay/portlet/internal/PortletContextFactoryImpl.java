@@ -17,7 +17,6 @@ package com.liferay.portlet.internal;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.PortletContextFactory;
-import com.liferay.portal.security.lang.DoPrivilegedUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,7 +53,7 @@ public class PortletContextFactoryImpl implements PortletContextFactory {
 		}
 
 		if (portletContext != null) {
-			return DoPrivilegedUtil.wrap(portletContext);
+			return portletContext;
 		}
 
 		PortletApp portletApp = portlet.getPortletApp();
@@ -67,17 +66,14 @@ public class PortletContextFactoryImpl implements PortletContextFactory {
 
 		portletContexts.put(portlet.getPortletId(), portletContext);
 
-		return DoPrivilegedUtil.wrap(portletContext);
+		return portletContext;
 	}
 
 	@Override
 	public PortletContext createUntrackedInstance(
 		Portlet portlet, ServletContext servletContext) {
 
-		PortletContext portletContext = new PortletContextImpl(
-			portlet, servletContext);
-
-		return DoPrivilegedUtil.wrap(portletContext);
+		return new PortletContextImpl(portlet, servletContext);
 	}
 
 	@Override

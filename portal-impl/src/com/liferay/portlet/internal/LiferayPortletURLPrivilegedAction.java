@@ -31,8 +31,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Constructor;
 
-import java.security.PrivilegedAction;
-
 import java.util.Map;
 
 import javax.portlet.MimeResponse;
@@ -47,8 +45,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-public class LiferayPortletURLPrivilegedAction
-	implements PrivilegedAction<LiferayPortletURL> {
+public class LiferayPortletURLPrivilegedAction {
 
 	public LiferayPortletURLPrivilegedAction(
 		long plid, String portletName, String lifecycle, MimeResponse.Copy copy,
@@ -93,7 +90,6 @@ public class LiferayPortletURLPrivilegedAction
 		_requestPlid = 0;
 	}
 
-	@Override
 	public LiferayPortletURL run() {
 		if (_request != null) {
 			return PortletURLFactoryUtil.create(

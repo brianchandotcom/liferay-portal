@@ -49,6 +49,9 @@ public class BuildThemeMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
+			Artifact styledArtifact = null;
+			Artifact unstyledArtifact = null;
+
 			for (ComponentDependency componentDependency :
 					_pluginDescriptor.getDependencies()) {
 
@@ -59,33 +62,42 @@ public class BuildThemeMojo extends AbstractMojo {
 					ThemeBuilder.STYLED.equals(
 						_themeBuilderArgs.getParentName())) {
 
-					Artifact artifact = _resolveArtifact(componentDependency);
-
-					_themeBuilderArgs.setParentDir(artifact.getFile());
+					styledArtifact = _resolveArtifact(componentDependency);
 				}
 				else if (artifactId.equals(
 							 "com.liferay.frontend.theme.unstyled") &&
 						 (_themeBuilderArgs.getUnstyledDir() == null)) {
 
-					Artifact artifact = _resolveArtifact(componentDependency);
-
-					_themeBuilderArgs.setUnstyledDir(artifact.getFile());
+					unstyledArtifact = _resolveArtifact(componentDependency);
 				}
 			}
 
-			for (org.apache.maven.artifact.Artifact artifact :
+			for (org.apache.maven.artifact.Artifact mavenArtifact :
 					_pluginDescriptor.getArtifacts()) {
 
-				String artifactId = artifact.getArtifactId();
+				String artifactId = mavenArtifact.getArtifactId();
 
-				if (artifactId.equals("com.liferay.frontend.theme.styled")) {
-					_themeBuilderArgs.setParentDir(artifact.getFile());
+				if (artifactId.equals("com.liferay.frontend.theme.styled") &&
+					(_themeBuilderArgs.getParentDir() == null) &&
+					ThemeBuilder.STYLED.equals(
+						_themeBuilderArgs.getParentName())) {
+
+					styledArtifact = _resolveArtifact(mavenArtifact);
 				}
 				else if (artifactId.equals(
-							 "com.liferay.frontend.theme.unstyled")) {
+							 "com.liferay.frontend.theme.unstyled") &&
+						 (_themeBuilderArgs.getUnstyledDir() == null)) {
 
-					_themeBuilderArgs.setUnstyledDir(artifact.getFile());
+					unstyledArtifact = _resolveArtifact(mavenArtifact);
 				}
+			}
+
+			if (styledArtifact != null) {
+				_themeBuilderArgs.setParentDir(styledArtifact.getFile());
+			}
+
+			if (unstyledArtifact != null) {
+				_themeBuilderArgs.setUnstyledDir(unstyledArtifact.getFile());
 			}
 
 			ThemeBuilder themeBuilder = new ThemeBuilder(_themeBuilderArgs);
@@ -146,13 +158,8 @@ public class BuildThemeMojo extends AbstractMojo {
 		_themeBuilderArgs.setUnstyledDir(unstyledDir);
 	}
 
-	private Artifact _resolveArtifact(ComponentDependency componentDependency)
+	private Artifact _resolveArtifact(Artifact artifact)
 		throws ArtifactResolutionException {
-
-		Artifact artifact = new DefaultArtifact(
-			componentDependency.getGroupId(),
-			componentDependency.getArtifactId(), componentDependency.getType(),
-			componentDependency.getVersion());
 
 		ArtifactRequest artifactRequest = new ArtifactRequest();
 
@@ -169,6 +176,28 @@ public class BuildThemeMojo extends AbstractMojo {
 			_repositorySystemSession, artifactRequest);
 
 		return artifactResult.getArtifact();
+	}
+
+	private Artifact _resolveArtifact(ComponentDependency componentDependency)
+		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			componentDependency.getGroupId(),
+			componentDependency.getArtifactId(), componentDependency.getType(),
+			componentDependency.getVersion());
+
+		return _resolveArtifact(artifact);
+	}
+
+	private Artifact _resolveArtifact(
+			org.apache.maven.artifact.Artifact mavenArtifact)
+		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			mavenArtifact.getGroupId(), mavenArtifact.getArtifactId(),
+			mavenArtifact.getType(), mavenArtifact.getVersion());
+
+		return _resolveArtifact(artifact);
 	}
 
 	/**

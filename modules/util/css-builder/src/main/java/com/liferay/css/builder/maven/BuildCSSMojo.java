@@ -53,6 +53,8 @@ public class BuildCSSMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
+			Artifact artifact = null;
+
 			for (ComponentDependency componentDependency :
 					_pluginDescriptor.getDependencies()) {
 
@@ -61,20 +63,26 @@ public class BuildCSSMojo extends AbstractMojo {
 				if (artifactId.equals("com.liferay.frontend.css.common") &&
 					(_cssBuilderArgs.getImportDir() == null)) {
 
-					Artifact artifact = _resolveArtifact(componentDependency);
+					artifact = _resolveArtifact(componentDependency);
 
 					_cssBuilderArgs.setImportDir(artifact.getFile());
 				}
 			}
 
-			for (org.apache.maven.artifact.Artifact artifact :
+			for (org.apache.maven.artifact.Artifact mavenArtifact :
 					_pluginDescriptor.getArtifacts()) {
 
-				String artifactId = artifact.getArtifactId();
+				String artifactId = mavenArtifact.getArtifactId();
 
-				if (artifactId.equals("com.liferay.frontend.css.common")) {
-					_cssBuilderArgs.setImportDir(artifact.getFile());
+				if (artifactId.equals("com.liferay.frontend.css.common") &&
+					(_cssBuilderArgs.getImportDir() == null)) {
+
+					artifact = _resolveArtifact(mavenArtifact);
 				}
+			}
+
+			if (artifact != null) {
+				_cssBuilderArgs.setImportDir(artifact.getFile());
 			}
 
 			if (_buildContext.isIncremental()) {
@@ -196,13 +204,8 @@ public class BuildCSSMojo extends AbstractMojo {
 		}
 	}
 
-	private Artifact _resolveArtifact(ComponentDependency componentDependency)
+	private Artifact _resolveArtifact(Artifact artifact)
 		throws ArtifactResolutionException {
-
-		Artifact artifact = new DefaultArtifact(
-			componentDependency.getGroupId(),
-			componentDependency.getArtifactId(), componentDependency.getType(),
-			componentDependency.getVersion());
 
 		ArtifactRequest artifactRequest = new ArtifactRequest();
 
@@ -219,6 +222,28 @@ public class BuildCSSMojo extends AbstractMojo {
 			_repositorySystemSession, artifactRequest);
 
 		return artifactResult.getArtifact();
+	}
+
+	private Artifact _resolveArtifact(ComponentDependency componentDependency)
+		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			componentDependency.getGroupId(),
+			componentDependency.getArtifactId(), componentDependency.getType(),
+			componentDependency.getVersion());
+
+		return _resolveArtifact(artifact);
+	}
+
+	private Artifact _resolveArtifact(
+			org.apache.maven.artifact.Artifact mavenArtifact)
+		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			mavenArtifact.getGroupId(), mavenArtifact.getArtifactId(),
+			mavenArtifact.getType(), mavenArtifact.getVersion());
+
+		return _resolveArtifact(artifact);
 	}
 
 	/**

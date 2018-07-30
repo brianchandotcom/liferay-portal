@@ -14,7 +14,9 @@ dependencies {
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:headless-apio:content-space:content-space-apio-api")
 	compileOnly project(":apps:headless-apio:forms:forms-apio-api")
+	compileOnly project(":apps:headless-apio:media-object:media-object-apio-api")
 	compileOnly project(":apps:headless-apio:person:person-apio-api")
 	compileOnly project(":apps:headless-apio:portal:portal-apio-api")
 	compileOnly project(":apps:headless-apio:structure:structure-apio-api")
+	compileOnly project(":apps:headless-apio:structured-content:structured-content-apio-api")
 }

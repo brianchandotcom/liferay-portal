@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.Map;
 
 /**
@@ -41,9 +39,6 @@ public class WorkflowEngineManagerUtil {
 	}
 
 	public static WorkflowEngineManager getWorkflowEngineManager() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			WorkflowEngineManagerUtil.class);
-
 		return _workflowEngineManager;
 	}
 
@@ -53,8 +48,6 @@ public class WorkflowEngineManagerUtil {
 
 	public void setWorkflowEngineManager(
 		WorkflowEngineManager workflowEngineManager) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_workflowEngineManager = workflowEngineManager;
 	}

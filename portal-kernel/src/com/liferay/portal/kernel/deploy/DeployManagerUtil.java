@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.deploy;
 
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.List;
 import java.util.Properties;
@@ -39,8 +38,6 @@ public class DeployManagerUtil {
 	}
 
 	public static DeployManager getDeployManager() {
-		PortalRuntimePermission.checkGetBeanProperty(DeployManagerUtil.class);
-
 		return _deployManager;
 	}
 
@@ -90,8 +87,6 @@ public class DeployManagerUtil {
 	}
 
 	public static void reset() {
-		PortalRuntimePermission.checkSetBeanProperty(DeployManagerUtil.class);
-
 		_deployManager = null;
 	}
 
@@ -100,8 +95,6 @@ public class DeployManagerUtil {
 	}
 
 	public void setDeployManager(DeployManager deployManager) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_deployManager = deployManager;
 	}
 

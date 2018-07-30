@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -42,15 +41,10 @@ public class CommonPermissionUtil {
 	}
 
 	public static CommonPermission getCommonPermission() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			CommonPermissionUtil.class);
-
 		return _commonPermission;
 	}
 
 	public void setCommonPermission(CommonPermission commonPermission) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_commonPermission = commonPermission;
 	}
 

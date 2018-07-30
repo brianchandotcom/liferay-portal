@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -192,8 +191,6 @@ public class SitesUtil {
 	}
 
 	public static Sites getSites() {
-		PortalRuntimePermission.checkGetBeanProperty(SitesUtil.class);
-
 		return _sites;
 	}
 
@@ -331,8 +328,6 @@ public class SitesUtil {
 	}
 
 	public void setSites(Sites sites) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_sites = sites;
 	}
 

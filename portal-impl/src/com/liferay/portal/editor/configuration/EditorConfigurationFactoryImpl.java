@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -65,15 +64,11 @@ public class EditorConfigurationFactoryImpl
 	public void setEditorConfigProvider(
 		EditorConfigProvider editorConfigProvider) {
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_editorConfigProvider = editorConfigProvider;
 	}
 
 	public void setEditorOptionsProvider(
 		EditorOptionsProvider editorOptionsProvider) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_editorOptionsProvider = editorOptionsProvider;
 	}

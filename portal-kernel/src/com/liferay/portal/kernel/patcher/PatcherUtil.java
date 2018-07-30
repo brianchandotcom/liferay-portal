@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.patcher;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.io.File;
 
 import java.util.Properties;
@@ -43,8 +41,6 @@ public class PatcherUtil {
 	}
 
 	public static Patcher getPatcher() {
-		PortalRuntimePermission.checkGetBeanProperty(Patcher.class);
-
 		return _patcher;
 	}
 
@@ -85,8 +81,6 @@ public class PatcherUtil {
 	}
 
 	public void setPatcher(Patcher patcher) {
-		PortalRuntimePermission.checkGetBeanProperty(Patcher.class);
-
 		_patcher = patcher;
 	}
 

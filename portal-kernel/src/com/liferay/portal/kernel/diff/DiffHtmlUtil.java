@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.diff;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.io.Reader;
 
 /**
@@ -34,8 +32,6 @@ public class DiffHtmlUtil {
 	}
 
 	public static DiffHtml getDiffHtml() {
-		PortalRuntimePermission.checkGetBeanProperty(DiffHtmlUtil.class);
-
 		return _diffHtml;
 	}
 
@@ -44,8 +40,6 @@ public class DiffHtmlUtil {
 	}
 
 	public void setDiffHtml(DiffHtml diffHtml) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_diffHtml = diffHtml;
 	}
 

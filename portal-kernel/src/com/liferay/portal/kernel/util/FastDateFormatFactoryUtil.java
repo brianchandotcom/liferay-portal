@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.text.Format;
 
 import java.util.Locale;
@@ -62,9 +60,6 @@ public class FastDateFormatFactoryUtil {
 	}
 
 	public static FastDateFormatFactory getFastDateFormatFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			FastDateFormatFactoryUtil.class);
-
 		return _fastDateFormatFactory;
 	}
 
@@ -108,8 +103,6 @@ public class FastDateFormatFactoryUtil {
 
 	public void setFastDateFormatFactory(
 		FastDateFormatFactory fastDateFormatFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_fastDateFormatFactory = fastDateFormatFactory;
 	}

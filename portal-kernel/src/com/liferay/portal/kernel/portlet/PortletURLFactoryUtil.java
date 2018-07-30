@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
@@ -129,15 +128,10 @@ public class PortletURLFactoryUtil {
 	}
 
 	public static PortletURLFactory getPortletURLFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletURLFactoryUtil.class);
-
 		return _portletURLFactory;
 	}
 
 	public void setPortletURLFactory(PortletURLFactory portletURLFactory) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_portletURLFactory = portletURLFactory;
 	}
 

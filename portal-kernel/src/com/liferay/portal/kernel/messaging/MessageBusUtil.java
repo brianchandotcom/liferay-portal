@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -58,8 +57,6 @@ public class MessageBusUtil {
 	 */
 	@Deprecated
 	public static MessageBusUtil getInstance() {
-		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
-
 		return new MessageBusUtil();
 	}
 
@@ -156,14 +153,10 @@ public class MessageBusUtil {
 	}
 
 	public static void shutdown() {
-		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
-
 		_messageBus.shutdown();
 	}
 
 	public static void shutdown(boolean force) {
-		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
-
 		_messageBus.shutdown(force);
 	}
 

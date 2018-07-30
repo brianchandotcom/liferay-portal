@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.process;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.io.Serializable;
 
 /**
@@ -29,14 +27,10 @@ public class ProcessExecutorUtil {
 			ProcessConfig processConfig, ProcessCallable<T> processCallable)
 		throws ProcessException {
 
-		PortalRuntimePermission.checkGetBeanProperty(ProcessExecutorUtil.class);
-
 		return _processExecutor.execute(processConfig, processCallable);
 	}
 
 	public void setProcessExecutor(ProcessExecutor processExecutor) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_processExecutor = processExecutor;
 	}
 

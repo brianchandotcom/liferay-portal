@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 
 import java.io.IOException;
@@ -125,8 +124,6 @@ public class HttpUtil {
 	}
 
 	public static Http getHttp() {
-		PortalRuntimePermission.checkGetBeanProperty(HttpUtil.class);
-
 		return _http;
 	}
 
@@ -386,8 +383,6 @@ public class HttpUtil {
 	}
 
 	public void setHttp(Http http) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_http = http;
 	}
 

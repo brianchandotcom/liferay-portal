@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.Tuple;
 
 import java.io.InputStream;
@@ -48,8 +47,6 @@ public class ModelHintsUtil {
 	}
 
 	public static ModelHints getModelHints() {
-		PortalRuntimePermission.checkGetBeanProperty(ModelHintsUtil.class);
-
 		return _modelHints;
 	}
 
@@ -108,8 +105,6 @@ public class ModelHintsUtil {
 	}
 
 	public void setModelHints(ModelHints modelHints) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_modelHints = modelHints;
 	}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -56,9 +55,6 @@ public class BackgroundTaskStatusRegistryUtil {
 
 	private static BackgroundTaskStatusRegistry
 		_getBackgroundTaskStatusRegistry() {
-
-		PortalRuntimePermission.checkGetBeanProperty(
-			BackgroundTaskStatusRegistryUtil.class);
 
 		return _backgroundTaskStatusRegistry;
 	}

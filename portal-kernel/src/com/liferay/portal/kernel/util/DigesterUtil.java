@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.io.InputStream;
 
 import java.nio.ByteBuffer;
@@ -122,14 +120,10 @@ public class DigesterUtil {
 	}
 
 	public static Digester getDigester() {
-		PortalRuntimePermission.checkGetBeanProperty(DigesterUtil.class);
-
 		return _digester;
 	}
 
 	public void setDigester(Digester digester) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_digester = digester;
 	}
 

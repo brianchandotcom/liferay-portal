@@ -15,7 +15,6 @@
 package com.liferay.social.kernel.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -47,8 +46,6 @@ public class SocialRequestPermissionUtil {
 
 	public void setSocialRequestPermission(
 		SocialRequestPermission socialRequestPermission) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_socialRequestPermission = socialRequestPermission;
 	}

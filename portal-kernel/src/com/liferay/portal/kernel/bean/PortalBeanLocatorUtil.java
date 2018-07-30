@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.bean;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.Map;
 
@@ -28,9 +27,6 @@ import java.util.Map;
 public class PortalBeanLocatorUtil {
 
 	public static BeanLocator getBeanLocator() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortalBeanLocatorUtil.class);
-
 		return _beanLocator;
 	}
 
@@ -101,9 +97,6 @@ public class PortalBeanLocatorUtil {
 	}
 
 	public static void setBeanLocator(BeanLocator beanLocator) {
-		PortalRuntimePermission.checkSetBeanProperty(
-			PortalBeanLocatorUtil.class);
-
 		if (_log.isDebugEnabled()) {
 			if (beanLocator == null) {
 				_log.debug("Setting BeanLocator " + beanLocator);

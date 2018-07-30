@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.spring.orm;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 /**
  * @author Shuyang Zhou
  */
@@ -27,8 +25,6 @@ public class LastSessionRecorderHelperUtil {
 
 	public void setLastSessionRecorderHelper(
 		LastSessionRecorderHelper lastSessionRecorderHelper) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_lastSessionRecorderHelper = lastSessionRecorderHelper;
 	}

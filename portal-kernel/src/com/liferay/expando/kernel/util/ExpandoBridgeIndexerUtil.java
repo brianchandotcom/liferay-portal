@@ -16,7 +16,6 @@ package com.liferay.expando.kernel.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
  * @author Raymond Augé
@@ -43,16 +42,11 @@ public class ExpandoBridgeIndexerUtil {
 	}
 
 	public static ExpandoBridgeIndexer getExpandoBridgeIndexer() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			ExpandoBridgeIndexerUtil.class);
-
 		return _expandoBridgeIndexer;
 	}
 
 	public void setExpandoBridgeIndexer(
 		ExpandoBridgeIndexer expandoBridgeIndexer) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_expandoBridgeIndexer = expandoBridgeIndexer;
 	}

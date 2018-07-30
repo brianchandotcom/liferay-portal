@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.microsofttranslator;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -38,9 +37,6 @@ public class MicrosoftTranslatorFactoryUtil {
 	}
 
 	public static MicrosoftTranslatorFactory getMicrosoftTranslatorFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			MicrosoftTranslatorFactoryUtil.class);
-
 		return _microsoftTranslatorFactory;
 	}
 

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -56,8 +55,6 @@ public class FacebookConnectUtil {
 	}
 
 	public static FacebookConnect getFacebookConnect() {
-		PortalRuntimePermission.checkGetBeanProperty(FacebookConnectUtil.class);
-
 		return _instance._serviceTracker.getService();
 	}
 

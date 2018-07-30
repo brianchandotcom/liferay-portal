@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
@@ -61,8 +60,6 @@ public class SettingsFactoryUtil {
 	}
 
 	public static SettingsFactory getSettingsFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(SettingsFactoryUtil.class);
-
 		return _settingsFactories.get(0);
 	}
 

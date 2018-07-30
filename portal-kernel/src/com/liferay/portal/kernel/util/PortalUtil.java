@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -1431,8 +1430,6 @@ public class PortalUtil {
 	}
 
 	public static Portal getPortal() {
-		PortalRuntimePermission.checkGetBeanProperty(PortalUtil.class);
-
 		return _portal;
 	}
 
@@ -2454,8 +2451,6 @@ public class PortalUtil {
 	}
 
 	public void setPortal(Portal portal) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_portal = portal;
 	}
 

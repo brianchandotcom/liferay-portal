@@ -17,7 +17,6 @@ package com.liferay.mobile.device.rules.action;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.Collection;
 import java.util.List;
@@ -48,9 +47,6 @@ public class ActionHandlerManagerUtil {
 	}
 
 	public static ActionHandlerManager getActionHandlerManager() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			ActionHandlerManagerUtil.class);
-
 		return _instance._getActionHandlerManager();
 	}
 

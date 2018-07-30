@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.dao.db;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -44,8 +42,6 @@ public class DBManagerUtil {
 	}
 
 	public static DBManager getDBManager() {
-		PortalRuntimePermission.checkGetBeanProperty(DBManagerUtil.class);
-
 		return _dbManager;
 	}
 
@@ -79,8 +75,6 @@ public class DBManagerUtil {
 	}
 
 	public static void setDBManager(DBManager dbManager) {
-		PortalRuntimePermission.checkSetBeanProperty(DBManagerUtil.class);
-
 		_dbManager = dbManager;
 	}
 

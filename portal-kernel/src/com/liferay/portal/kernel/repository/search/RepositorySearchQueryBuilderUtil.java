@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.repository.search;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -35,9 +34,6 @@ public class RepositorySearchQueryBuilderUtil {
 
 	public static RepositorySearchQueryBuilder
 		getRepositorySearchQueryBuilder() {
-
-		PortalRuntimePermission.checkGetBeanProperty(
-			RepositorySearchQueryBuilderUtil.class);
 
 		return _instance._serviceTracker.getService();
 	}

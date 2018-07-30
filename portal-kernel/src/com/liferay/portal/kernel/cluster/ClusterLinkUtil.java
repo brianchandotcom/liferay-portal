@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.cluster;
 
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -63,8 +62,6 @@ public class ClusterLinkUtil {
 	}
 
 	private static ClusterLink _getClusterLink() {
-		PortalRuntimePermission.checkGetBeanProperty(ClusterLinkUtil.class);
-
 		return _clusterLink;
 	}
 

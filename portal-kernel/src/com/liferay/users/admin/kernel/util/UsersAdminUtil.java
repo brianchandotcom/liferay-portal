@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -273,8 +272,6 @@ public class UsersAdminUtil {
 	}
 
 	public static UsersAdmin getUsersAdmin() {
-		PortalRuntimePermission.checkGetBeanProperty(UsersAdminUtil.class);
-
 		return _usersAdmin;
 	}
 
@@ -345,8 +342,6 @@ public class UsersAdminUtil {
 	}
 
 	public void setUsersAdmin(UsersAdmin usersAdmin) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_usersAdmin = usersAdmin;
 	}
 

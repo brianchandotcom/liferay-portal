@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.resiliency.spi;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.rmi.RemoteException;
 
 import java.util.Set;
@@ -46,8 +44,6 @@ public class SPIRegistryUtil {
 	}
 
 	public static SPIRegistry getSPIRegistry() {
-		PortalRuntimePermission.checkGetBeanProperty(SPIRegistryUtil.class);
-
 		return _spiRegistry;
 	}
 
@@ -70,8 +66,6 @@ public class SPIRegistryUtil {
 	}
 
 	public void setSPIRegistry(SPIRegistry spiRegistry) {
-		PortalRuntimePermission.checkSetBeanProperty(SPIRegistryUtil.class);
-
 		_spiRegistry = spiRegistry;
 	}
 

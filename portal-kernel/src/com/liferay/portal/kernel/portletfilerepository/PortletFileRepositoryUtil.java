@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -290,9 +289,6 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static PortletFileRepository getPortletFileRepository() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletFileRepositoryUtil.class);
-
 		return _portletFileRepository;
 	}
 
@@ -376,8 +372,6 @@ public class PortletFileRepositoryUtil {
 
 	public void setPortletFileRepository(
 		PortletFileRepository portletFileRepository) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_portletFileRepository = portletFileRepository;
 	}

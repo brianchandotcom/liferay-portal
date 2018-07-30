@@ -14,16 +14,12 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class PortalClassLoaderUtil {
 
 	public static ClassLoader getClassLoader() {
-		PortalRuntimePermission.checkGetClassLoader("portal");
-
 		return _classLoader;
 	}
 
@@ -36,9 +32,6 @@ public class PortalClassLoaderUtil {
 	}
 
 	public static void setClassLoader(ClassLoader classLoader) {
-		PortalRuntimePermission.checkSetBeanProperty(
-			PortalClassLoaderUtil.class);
-
 		_classLoader = classLoader;
 	}
 

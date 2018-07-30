@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Map;
@@ -138,9 +137,6 @@ public class PortletPreferencesFactoryUtil {
 	}
 
 	public static PortletPreferencesFactory getPortletPreferencesFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletPreferencesFactoryUtil.class);
-
 		return _portletPreferencesFactory;
 	}
 
@@ -283,8 +279,6 @@ public class PortletPreferencesFactoryUtil {
 
 	public void setPortletPreferencesFactory(
 		PortletPreferencesFactory portletPreferencesFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_portletPreferencesFactory = portletPreferencesFactory;
 	}

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -140,9 +139,6 @@ public class WorkflowDefinitionManagerUtil {
 	}
 
 	public static WorkflowDefinitionManager getWorkflowDefinitionManager() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			WorkflowDefinitionManagerUtil.class);
-
 		return _workflowDefinitionManager;
 	}
 
@@ -220,8 +216,6 @@ public class WorkflowDefinitionManagerUtil {
 
 	public void setWorkflowDefinitionManager(
 		WorkflowDefinitionManager workflowDefinitionManager) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_workflowDefinitionManager = workflowDefinitionManager;
 	}

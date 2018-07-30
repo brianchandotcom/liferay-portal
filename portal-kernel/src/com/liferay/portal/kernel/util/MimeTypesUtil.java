@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.io.File;
 import java.io.InputStream;
 
@@ -109,8 +107,6 @@ public class MimeTypesUtil {
 	}
 
 	public static MimeTypes getMimeTypes() {
-		PortalRuntimePermission.checkGetBeanProperty(MimeTypesUtil.class);
-
 		return _mimeTypes;
 	}
 
@@ -119,8 +115,6 @@ public class MimeTypesUtil {
 	}
 
 	public void setMimeTypes(MimeTypes mimeTypes) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_mimeTypes = mimeTypes;
 	}
 

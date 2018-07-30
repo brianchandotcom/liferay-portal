@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.util.Map;
@@ -63,8 +62,6 @@ public class BeanLocatorImpl implements BeanLocator {
 
 	@Override
 	public ClassLoader getClassLoader() {
-		PortalRuntimePermission.checkGetClassLoader(_paclServletContextName);
-
 		return _classLoader;
 	}
 
@@ -125,9 +122,6 @@ public class BeanLocatorImpl implements BeanLocator {
 	 * This method ensures the calls stack is the proper length.
 	 */
 	protected <T> Map<String, T> doLocate(Class<T> clazz) throws Exception {
-		PortalRuntimePermission.checkGetBeanProperty(
-			_paclServletContextName, clazz);
-
 		return _applicationContext.getBeansOfType(clazz);
 	}
 
@@ -137,8 +131,6 @@ public class BeanLocatorImpl implements BeanLocator {
 		}
 
 		if (name.equals("portletClassLoader")) {
-			PortalRuntimePermission.checkGetClassLoader(
-				_paclServletContextName);
 		}
 
 		Object bean = null;

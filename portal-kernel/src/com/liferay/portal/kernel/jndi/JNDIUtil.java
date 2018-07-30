@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.jndi;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.naming.Context;
@@ -36,8 +35,6 @@ public class JNDIUtil {
 
 	private static Object _lookup(Context context, String location)
 		throws NamingException {
-
-		PortalRuntimePermission.checkGetBeanProperty(JNDIUtil.class);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Lookup " + location);

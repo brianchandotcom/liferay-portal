@@ -16,7 +16,6 @@ package com.liferay.mobile.device.rules.rule;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Collection;
@@ -41,9 +40,6 @@ public class RuleGroupProcessorUtil {
 	}
 
 	public static RuleGroupProcessor getRuleGroupProcessor() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			RuleGroupProcessorUtil.class);
-
 		return _instance._getRuleGroupProcessor();
 	}
 

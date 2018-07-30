@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.portal.kernel.security.pacl.PACLConstants;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,28 +23,18 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortletBagPool {
 
 	public static PortletBag get(String portletId) {
-		PortalRuntimePermission.checkPortletBagPool(portletId);
-
 		return _portletBagPool.get(portletId);
 	}
 
 	public static void put(String portletId, PortletBag portletBag) {
-		PortalRuntimePermission.checkPortletBagPool(portletId);
-
 		_portletBagPool.put(portletId, portletBag);
 	}
 
 	public static PortletBag remove(String portletId) {
-		PortalRuntimePermission.checkPortletBagPool(portletId);
-
 		return _portletBagPool.remove(portletId);
 	}
 
 	public static void reset() {
-		PortalRuntimePermission.checkPortletBagPool(
-			PACLConstants.
-				PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL_ALL_PORTLETS);
-
 		_portletBagPool.clear();
 	}
 

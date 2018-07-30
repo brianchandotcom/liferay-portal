@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import javax.portlet.PortletContext;
 
@@ -44,16 +43,11 @@ public class PortletContextFactoryUtil {
 	}
 
 	public static PortletContextFactory getPortletContextFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletContextFactoryUtil.class);
-
 		return _portletContextFactory;
 	}
 
 	public void setPortletContextFactory(
 		PortletContextFactory portletContextFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_portletContextFactory = portletContextFactory;
 	}

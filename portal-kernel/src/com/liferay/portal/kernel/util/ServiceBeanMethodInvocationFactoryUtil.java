@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.lang.reflect.Method;
 
 /**
@@ -26,9 +24,6 @@ public class ServiceBeanMethodInvocationFactoryUtil {
 
 	public static ServiceBeanMethodInvocationFactory
 		getServiceBeanMethodInvocationFactory() {
-
-		PortalRuntimePermission.checkGetBeanProperty(
-			ServiceBeanMethodInvocationFactoryUtil.class);
 
 		return _serviceBeanMethodInvocationFactory;
 	}
@@ -44,8 +39,6 @@ public class ServiceBeanMethodInvocationFactoryUtil {
 
 	public void setServiceBeanMethodInvocationFactory(
 		ServiceBeanMethodInvocationFactory serviceBeanMethodInvocationFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_serviceBeanMethodInvocationFactory =
 			serviceBeanMethodInvocationFactory;

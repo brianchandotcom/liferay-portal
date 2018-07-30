@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.bean;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.HashMap;
@@ -28,9 +27,6 @@ import java.util.Map;
 public class PortletBeanLocatorUtil {
 
 	public static BeanLocator getBeanLocator(String servletContextName) {
-		PortalRuntimePermission.checkGetBeanProperty(
-			servletContextName, PortletBeanLocatorUtil.class);
-
 		return _beanLocators.get(servletContextName);
 	}
 
@@ -54,9 +50,6 @@ public class PortletBeanLocatorUtil {
 
 	public static void setBeanLocator(
 		String servletContextName, BeanLocator beanLocator) {
-
-		PortalRuntimePermission.checkSetBeanProperty(
-			servletContextName, PortletBeanLocatorUtil.class);
 
 		if (_log.isDebugEnabled()) {
 			if (beanLocator != null) {

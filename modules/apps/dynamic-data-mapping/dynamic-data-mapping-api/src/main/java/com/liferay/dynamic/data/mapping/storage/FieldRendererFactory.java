@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.storage;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.Map;
 
 /**
@@ -34,8 +32,6 @@ public class FieldRendererFactory {
 	}
 
 	public void setFieldRenderers(Map<String, FieldRenderer> fieldRenderers) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_fieldRenderers = fieldRenderers;
 	}
 

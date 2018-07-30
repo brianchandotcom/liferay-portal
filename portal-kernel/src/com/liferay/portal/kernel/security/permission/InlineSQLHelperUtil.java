@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.security.permission;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class InlineSQLHelperUtil {
 
 	public static InlineSQLHelper getInlineSQLHelper() {
-		PortalRuntimePermission.checkGetBeanProperty(InlineSQLHelperUtil.class);
-
 		return _inlineSQLPermission;
 	}
 

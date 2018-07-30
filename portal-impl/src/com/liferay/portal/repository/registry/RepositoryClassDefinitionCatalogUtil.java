@@ -14,7 +14,6 @@
 
 package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 
@@ -47,9 +46,6 @@ public class RepositoryClassDefinitionCatalogUtil {
 	public static RepositoryClassDefinitionCatalog
 		getRepositoryClassDefinitionCatalog() {
 
-		PortalRuntimePermission.checkGetBeanProperty(
-			RepositoryClassDefinitionCatalogUtil.class);
-
 		return _repositoryClassDefinitionCatalog;
 	}
 
@@ -71,8 +67,6 @@ public class RepositoryClassDefinitionCatalogUtil {
 
 	public void setRepositoryClassDefinitionCatalog(
 		RepositoryClassDefinitionCatalog repositoryClassDefinitionCatalog) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_repositoryClassDefinitionCatalog = repositoryClassDefinitionCatalog;
 	}

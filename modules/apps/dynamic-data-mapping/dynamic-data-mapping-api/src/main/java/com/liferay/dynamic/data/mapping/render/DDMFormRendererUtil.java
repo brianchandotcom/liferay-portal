@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.render;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
  * @author Marcellus Tavares
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class DDMFormRendererUtil {
 
 	public static DDMFormRenderer getDDMFormRenderer() {
-		PortalRuntimePermission.checkGetBeanProperty(DDMFormRendererUtil.class);
-
 		return _ddmFormRenderer;
 	}
 
@@ -39,8 +36,6 @@ public class DDMFormRendererUtil {
 	}
 
 	public void setDDMFormRenderer(DDMFormRenderer ddmFormRenderer) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_ddmFormRenderer = ddmFormRenderer;
 	}
 

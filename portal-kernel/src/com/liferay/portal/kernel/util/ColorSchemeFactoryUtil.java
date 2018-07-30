@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.model.ColorScheme;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
  * @author Vilmos Papp
@@ -38,9 +37,6 @@ public class ColorSchemeFactoryUtil {
 	}
 
 	public static ColorSchemeFactory getColorSchemeFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			ColorSchemeFactoryUtil.class);
-
 		return _colorSchemeFactory;
 	}
 
@@ -53,8 +49,6 @@ public class ColorSchemeFactoryUtil {
 	}
 
 	public void setColorSchemeFactory(ColorSchemeFactory colorSchemeFactory) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_colorSchemeFactory = colorSchemeFactory;
 	}
 

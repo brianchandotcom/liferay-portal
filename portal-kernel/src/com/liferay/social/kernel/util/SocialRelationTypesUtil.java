@@ -14,8 +14,6 @@
 
 package com.liferay.social.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.List;
 
 /**
@@ -28,9 +26,6 @@ public class SocialRelationTypesUtil {
 	}
 
 	public static SocialRelationTypes getSocialRelationTypes() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			SocialRelationTypesUtil.class);
-
 		return _socialRelationTypes;
 	}
 
@@ -48,8 +43,6 @@ public class SocialRelationTypesUtil {
 
 	public void setSocialRelationTypes(
 		SocialRelationTypes socialRelationTypes) {
-
-		PortalRuntimePermission.checkSetBeanProperty(SocialRelationTypes.class);
 
 		_socialRelationTypes = socialRelationTypes;
 	}

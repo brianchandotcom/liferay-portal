@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,8 +84,6 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 				_log.error("Unable find model for " + clazz);
 			}
 
-			PortalRuntimePermission.checkDynamicQuery(clazz);
-
 			return clazz;
 		}
 
@@ -110,8 +107,6 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 				_log.error("Unable find model " + implClassName, e1);
 			}
 		}
-
-		PortalRuntimePermission.checkDynamicQuery(implClass);
 
 		return implClass;
 	}

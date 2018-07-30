@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
@@ -27,9 +25,6 @@ public class DirectRequestDispatcherFactoryUtil {
 
 	public static DirectRequestDispatcherFactory
 		getDirectRequestDispatcherFactory() {
-
-		PortalRuntimePermission.checkGetBeanProperty(
-			DirectRequestDispatcherFactoryUtil.class);
 
 		return _directRequestDispatcherFactory;
 	}
@@ -50,8 +45,6 @@ public class DirectRequestDispatcherFactoryUtil {
 
 	public void setDirectRequestDispatcherFactory(
 		DirectRequestDispatcherFactory directRequestDispatcherFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_directRequestDispatcherFactory = directRequestDispatcherFactory;
 	}

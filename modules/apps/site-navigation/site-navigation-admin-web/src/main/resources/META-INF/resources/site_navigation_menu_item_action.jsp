@@ -27,7 +27,7 @@ long siteNavigationMenuItemId = GetterUtil.getLong(request.getAttribute("edit_si
 
 <liferay-ui:icon
 	icon="times-circle"
-	linkCssClass="icon-monospaced text-default"
+	linkCssClass="icon-monospaced site-navigation-menu-item__remove-icon text-default"
 	markupView="lexicon"
 	url="<%= deleteURL %>"
 />

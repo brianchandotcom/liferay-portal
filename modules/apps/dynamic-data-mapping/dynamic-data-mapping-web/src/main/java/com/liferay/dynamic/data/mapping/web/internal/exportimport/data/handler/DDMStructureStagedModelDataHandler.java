@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
@@ -229,6 +230,9 @@ public class DDMStructureStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			structureElement, ExportImportPathUtil.getModelPath(structure),
 			structure);
+
+		portletDataContext.addPermissions(
+			getResourceName(structure), structure.getPrimaryKey());
 	}
 
 	@Override
@@ -383,6 +387,10 @@ public class DDMStructureStagedModelDataHandler
 
 		portletDataContext.importClassedModel(structure, importedStructure);
 
+		portletDataContext.importPermissions(
+			getResourceName(structure), structure.getPrimaryKey(),
+			importedStructure.getPrimaryKey());
+
 		structureKeys.put(
 			structure.getStructureKey(), importedStructure.getStructureKey());
 	}
@@ -533,6 +541,13 @@ public class DDMStructureStagedModelDataHandler
 		}
 	}
 
+	protected String getResourceName(DDMStructure structure)
+		throws PortalException {
+
+		return ddmPermissionSupport.getStructureModelResourceName(
+			structure.getClassName());
+	}
+
 	protected void importDDMDataProviderInstances(
 			PortletDataContext portletDataContext, Element structureElement,
 			DDMForm ddmForm)
@@ -661,6 +676,9 @@ public class DDMStructureStagedModelDataHandler
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
+
+	@Reference
+	protected DDMPermissionSupport ddmPermissionSupport;
 
 	@Reference
 	protected JSONFactory jsonFactory;

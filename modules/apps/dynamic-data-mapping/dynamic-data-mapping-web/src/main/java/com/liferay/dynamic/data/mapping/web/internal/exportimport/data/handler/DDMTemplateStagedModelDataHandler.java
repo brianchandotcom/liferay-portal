@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.web.internal.exportimport.data.handler;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.web.internal.exportimport.content.processor.DDMTemplateExportImportContentProcessor;
@@ -268,6 +269,9 @@ public class DDMTemplateStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			templateElement, ExportImportPathUtil.getModelPath(template),
 			template);
+
+		portletDataContext.addPermissions(
+			getResourceName(template), template.getPrimaryKey());
 	}
 
 	@Override
@@ -441,6 +445,10 @@ public class DDMTemplateStagedModelDataHandler
 
 			portletDataContext.importClassedModel(template, importedTemplate);
 
+			portletDataContext.importPermissions(
+				getResourceName(template), template.getPrimaryKey(),
+				importedTemplate.getPrimaryKey());
+
 			Map<String, String> ddmTemplateKeys =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 					DDMTemplate.class + ".ddmTemplateKey");
@@ -492,6 +500,13 @@ public class DDMTemplateStagedModelDataHandler
 		return null;
 	}
 
+	protected String getResourceName(DDMTemplate template)
+		throws PortalException {
+
+		return ddmPermissionSupport.getTemplateModelResourceName(
+			template.getResourceClassName());
+	}
+
 	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
@@ -524,6 +539,9 @@ public class DDMTemplateStagedModelDataHandler
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
+
+	@Reference
+	protected DDMPermissionSupport ddmPermissionSupport;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMTemplateStagedModelDataHandler.class);

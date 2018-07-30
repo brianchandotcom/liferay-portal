@@ -105,6 +105,7 @@
 		<reference entity="SiteNavigationMenu" package-path="com.liferay.site.navigation" />
 	</entity>
 	<exceptions>
+		<exception>DuplicateSiteNavigationMenu</exception>
 		<exception>InvalidSiteNavigationMenuItemOrder</exception>
 		<exception>InvalidSiteNavigationMenuItemType</exception>
 		<exception>SiteNavigationMenuItemName</exception>

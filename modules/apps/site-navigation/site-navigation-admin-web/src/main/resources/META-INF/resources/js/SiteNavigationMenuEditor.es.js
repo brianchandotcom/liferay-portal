@@ -2,7 +2,12 @@ import {dom} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import State, {Config} from 'metal-state';
 
-import SiteNavigationMenuDOMHandler from './SiteNavigationMenuDOMHandler.es';
+import {
+	getNearestMenuItem,
+	insertAtPosition,
+	isOver,
+	shouldBeNested
+} from './SiteNavigationMenuDOMHandler.es';
 
 import {
 	MENU_ITEM_CLASSNAME,
@@ -107,7 +112,7 @@ class SiteNavigationMenuEditor extends State {
 		const placeholderMenuItem = data.placeholder;
 		const sourceMenuItem = data.source;
 
-		const nearestMenuItem = SiteNavigationMenuDOMHandler.getNearestMenuItem(
+		const nearestMenuItem = getNearestMenuItem(
 			sourceMenuItem,
 			placeholderMenuItem
 		);
@@ -117,18 +122,18 @@ class SiteNavigationMenuEditor extends State {
 			sourceMenuItem && SiteNavigationMenuItemDOMHandler.isMenuItem(sourceMenuItem) &&
 			nearestMenuItem && SiteNavigationMenuItemDOMHandler.isMenuItem(nearestMenuItem)
 		) {
-			const nested = SiteNavigationMenuDOMHandler.shouldBeNested(
+			const nested = shouldBeNested(
 				placeholderMenuItem,
 				nearestMenuItem
 			);
 
-			const over = SiteNavigationMenuDOMHandler.isOver(
+			const over = isOver(
 				placeholderMenuItem,
 				nearestMenuItem
 			);
 
 			if (!over && nested) {
-				SiteNavigationMenuDOMHandler.insertAtPosition(
+				insertAtPosition(
 					nearestMenuItem,
 					sourceMenuItem,
 					0
@@ -141,7 +146,7 @@ class SiteNavigationMenuEditor extends State {
 
 				const nearestMenuItemIndex = SiteNavigationMenuItemDOMHandler.getChildren(nearestMenuItemParent).indexOf(nearestMenuItem) + (over ? 0 : 1);
 
-				SiteNavigationMenuDOMHandler.insertAtPosition(
+				insertAtPosition(
 					nearestMenuItemParent,
 					sourceMenuItem,
 					nearestMenuItemIndex
@@ -247,7 +252,7 @@ class SiteNavigationMenuEditor extends State {
 			);
 
 			if (menuItemParentIndex !== -1) {
-				SiteNavigationMenuDOMHandler.insertAtPosition(
+				insertAtPosition(
 					menuItemGrandParent,
 					menuItem,
 					menuItemParentIndex + 1
@@ -257,7 +262,7 @@ class SiteNavigationMenuEditor extends State {
 			layoutModified = true;
 		}
 		else if (event.key === KEYS.ARROW_UP && menuItemIndex > 0) {
-			SiteNavigationMenuDOMHandler.insertAtPosition(
+			insertAtPosition(
 				menuItemParent,
 				menuItem,
 				menuItemIndex - 1
@@ -269,7 +274,7 @@ class SiteNavigationMenuEditor extends State {
 			const previousSibling = SiteNavigationMenuItemDOMHandler
 				.getSiblings(menuItem)[menuItemIndex - 1];
 
-			SiteNavigationMenuDOMHandler.insertAtPosition(
+			insertAtPosition(
 				previousSibling,
 				menuItem,
 				Infinity
@@ -278,7 +283,7 @@ class SiteNavigationMenuEditor extends State {
 			layoutModified = true;
 		}
 		else if (event.key === KEYS.ARROW_DOWN) {
-			SiteNavigationMenuDOMHandler.insertAtPosition(
+			insertAtPosition(
 				menuItemParent,
 				menuItem,
 				menuItemIndex + 2

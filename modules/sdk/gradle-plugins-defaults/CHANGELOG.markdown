@@ -4181,18 +4181,16 @@ file.
 - [LPS-83705]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.88.
 
-## 5.4.95 - 2018-07-25
-
-### Changed
-- [LPS-83920]: Skip replacements of the `updateFileVersions` task for projects
-in the `aspectj` directory.
-
 ## 5.4.96 - 2018-07-27
 
 ### Added
 - [LPS-83929]: Add the ability to exclude certain projects from executing the
 `writeArtifactPublishCommands` task by setting the property
 `writeArtifactPublishCommands.ignore.project.regex`.
+
+### Changed
+- [LPS-83920]: Skip replacements of the `updateFileVersions` task for projects
+in the `aspectj` directory.
 
 ## 5.4.97 - 2018-07-27
 

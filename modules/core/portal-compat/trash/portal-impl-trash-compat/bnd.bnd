@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Impl Trash Compat
+Bundle-SymbolicName: com.liferay.portal.impl.trash.compat
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portlet.trash,\
+	com.liferay.portlet.trash.model.impl,\
+	com.liferay.portlet.trash.service.base,\
+	com.liferay.portlet.trash.service.impl,\
+	com.liferay.portlet.trash.service.persistence.impl

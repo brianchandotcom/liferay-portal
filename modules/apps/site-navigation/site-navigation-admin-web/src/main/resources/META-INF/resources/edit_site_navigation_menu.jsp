@@ -264,7 +264,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 						}
 					);
 				},
-				'.site-navigation-menu-item .lfr-card-title-text a'
+				'.site-navigation-menu-item a'
 			);
 
 			A.one('#<portlet:namespace />showSiteNavigationMenuSettings').on(

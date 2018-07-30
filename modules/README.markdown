@@ -175,7 +175,7 @@ closure arguments.
 ### `gradle.properties`
 
 The following settings are available to you in the `gradle.properties` file of a
-Liferay subrepository (e.g., [com-liferay-journal](https://github.com/liferay/com-liferay-journal/blob/master/gradle.properties)).
+Liferay subrepository (e.g., [com-liferay-apio-architect](https://github.com/liferay/com-liferay-apio-architect)).
 
 Property Name | Mandatory | Description
 ------------- | --------- | -----------

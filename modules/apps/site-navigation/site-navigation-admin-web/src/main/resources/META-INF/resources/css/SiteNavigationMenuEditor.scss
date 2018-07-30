@@ -1,4 +1,19 @@
+@import "mixins";
+
 @import "mixins/site_navigation_menu_item_states";
+
+$controlBarDesktopHeight: 120px;
+
+body.has-control-menu .contextual-sidebar {
+	margin-top: 1px;
+}
+
+@include sm {
+	body.has-control-menu .contextual-sidebar {
+		height: calc(100vh - #{$controlBarDesktopHeight});
+		top: $controlBarDesktopHeight;
+	}
+}
 
 .site-navigation-menu-item {
 	box-sizing: border-box;
@@ -15,11 +30,13 @@
 		outline: 2px dashed #65B6F0;
 	}
 
-	&--selected > &__content .card {
+	&--selected > &__content .card,
+	&.dragging > &__content .card {
 		background-color: #F0F5FF;
 	}
 
 	&__content {
+		cursor: pointer;
 		max-width: 100%;
 		position: relative;
 		width: 40ch;
@@ -39,19 +56,17 @@
 		visibility: visible;
 	}
 
-	&:focus {
+	&:focus,
+	&.dragging {
 		@include site-navigation-menu-item-focus;
 	}
 
-	&:focus-within {
+	&__content:focus-within {
 		@include site-navigation-menu-item-focus;
 	}
 
-	&__content:focus > .card {
-		@include site-navigation-menu-item-card-focus;
-	}
-
-	&__content:focus-within > .card {
+	&:focus > &__content > .card,
+	&.dragging > &__content > .card {
 		@include site-navigation-menu-item-card-focus;
 	}
 

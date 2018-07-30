@@ -69,17 +69,26 @@ public class SerializableObjectWrapperTest {
 
 	@Test
 	public void testHashCode() throws Exception {
+		SerializableObjectWrapper anotherTestSerializableObjectWrapper =
+			new SerializableObjectWrapper(_ANOTHER_TEST_SERIALIZABLE);
+
 		Assert.assertNotEquals(
 			_testSerializableObjectWrapper.hashCode(),
-			new SerializableObjectWrapper(
-				_ANOTHER_TEST_SERIALIZABLE).hashCode());
+			anotherTestSerializableObjectWrapper.hashCode());
+
+		SerializableObjectWrapper testSerializableObjectWrapper =
+			new SerializableObjectWrapper(_TEST_SERIALIZABLE);
 
 		Assert.assertEquals(
 			_testSerializableObjectWrapper.hashCode(),
-			new SerializableObjectWrapper(_TEST_SERIALIZABLE).hashCode());
+			testSerializableObjectWrapper.hashCode());
+
+		SerializableObjectWrapper cloneSerializableObjectWrapper =
+			_getDeserializedObject(_testSerializableObjectWrapper);
+
 		Assert.assertEquals(
 			_testSerializableObjectWrapper.hashCode(),
-			_getDeserializedObject(_testSerializableObjectWrapper).hashCode());
+			cloneSerializableObjectWrapper.hashCode());
 	}
 
 	@Test

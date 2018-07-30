@@ -120,7 +120,7 @@
 				{if $layoutColumnItem.actionURLs['configureURL']}
 					<div class="flex-col">
 						<div class="quick-action-menu">
-							<a class="btn btn-link p-1" href="{$layoutColumnItem.actionURLs['configureURL']}">
+							<a class="btn btn-link p-1" href="{$layoutColumnItem.actionURLs['configureURL']}" title="{msg desc=""}configure{/msg}">
 								{call .lexiconIcon}
 									{param name: 'cog' /}
 									{param pathThemeImages: $pathThemeImages /}
@@ -133,7 +133,7 @@
 				{if $layoutColumnItem.actionURLs['addURL']}
 					<div class="flex-col">
 						<div class="quick-action-menu">
-							<a class="btn btn-link p-1" href="{$layoutColumnItem.actionURLs['addURL']}">
+							<a class="btn btn-link p-1" href="{$layoutColumnItem.actionURLs['addURL']}" title="{msg desc=""}add-page{/msg}">
 								{call .lexiconIcon}
 									{param name: 'plus' /}
 									{param pathThemeImages: $pathThemeImages /}
@@ -153,6 +153,7 @@
 							class="btn btn-link p-1"
 							data-toggle="dropdown"
 							type="button"
+							title="{msg desc=""}show-actions{/msg}"
 						>
 							{call .lexiconIcon}
 								{param name: 'ellipsis-v' /}
@@ -248,7 +249,7 @@
 
 			{if $layoutColumnItem.hasChild}
 				<div class="flex-col">
-					<a class="btn btn-link p-1" href="{$layoutColumnItem.url}">
+					<a class="btn btn-link p-1" href="{$layoutColumnItem.url}" title="{msg desc=""}show-pages{/msg}">
 						{call .lexiconIcon}
 							{param name: 'angle-right' /}
 							{param pathThemeImages: $pathThemeImages /}

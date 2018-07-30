@@ -3323,50 +3323,50 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateWorkspaceWith70() throws Exception {
-		File workspaceProjectDir = _buildTemplateWithMaven(
+		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferayVersion", "7.0");
+
+		_testContains(
+			gradleWorkspaceProjectDir, "gradle.properties", true,
+			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.0.*");
+
+		File gradleProperties = new File(
+			gradleWorkspaceProjectDir, "gradle.properties");
+
+		_testFindProperty(
+			gradleProperties.toPath(), "liferay.workspace.bundle.url");
+
+		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
 			WorkspaceUtil.WORKSPACE, "withportlet", "com.test",
 			"-DliferayVersion=7.0");
 
 		_testContains(
-			workspaceProjectDir, "pom.xml", "<liferay.workspace.bundle.url>",
-			"liferay.com/portal/7.0.");
-
-		workspaceProjectDir = _buildTemplateWithGradle(
-			WorkspaceUtil.WORKSPACE, "withportlet", "--liferayVersion", "7.0");
-
-		_testContains(
-			workspaceProjectDir, "gradle.properties", true,
-			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.0.*");
-
-		File gradleProperties = new File(
-			workspaceProjectDir, "gradle.properties");
-
-		_testFindProperty(
-			gradleProperties.toPath(), "liferay.workspace.bundle.url");
+			mavenWorkspaceProjectDir, "pom.xml",
+			"<liferay.workspace.bundle.url>", "liferay.com/portal/7.0.");
 	}
 
 	@Test
 	public void testBuildTemplateWorkspaceWith71() throws Exception {
-		File workspaceProjectDir = _buildTemplateWithMaven(
+		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferayVersion", "7.1");
+
+		_testContains(
+			gradleWorkspaceProjectDir, "gradle.properties", true,
+			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.1.0-.*");
+
+		File gradleProperties = new File(
+			gradleWorkspaceProjectDir, "gradle.properties");
+
+		_testFindProperty(
+			gradleProperties.toPath(), "liferay.workspace.bundle.url");
+
+		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
 			WorkspaceUtil.WORKSPACE, "withportlet", "com.test",
 			"-DliferayVersion=7.1");
 
 		_testContains(
-			workspaceProjectDir, "pom.xml", "<liferay.workspace.bundle.url>",
-			"liferay.com/portal/7.1.0-");
-
-		workspaceProjectDir = _buildTemplateWithGradle(
-			WorkspaceUtil.WORKSPACE, "withportlet", "--liferayVersion", "7.1");
-
-		_testContains(
-			workspaceProjectDir, "gradle.properties", true,
-			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.1.0-.*");
-
-		File gradleProperties = new File(
-			workspaceProjectDir, "gradle.properties");
-
-		_testFindProperty(
-			gradleProperties.toPath(), "liferay.workspace.bundle.url");
+			mavenWorkspaceProjectDir, "pom.xml",
+			"<liferay.workspace.bundle.url>", "liferay.com/portal/7.1.0-");
 	}
 
 	@Test

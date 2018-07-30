@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Bean Portlet CDI Extension
+Bundle-SymbolicName: com.liferay.bean.portlet.cdi.extension
+Bundle-Version: 1.0.0

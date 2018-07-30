@@ -21,7 +21,8 @@ import {
 	MENU_ITEM_CONTENT_CLASSNAME,
 	MENU_ITEM_DRAG_ICON_CLASSNAME,
 	setDragging,
-	setSelected
+	setSelected,
+	unselectAll
 } from './SiteNavigationMenuItemDOMHandler.es';
 
 const KEYS = {
@@ -82,6 +83,11 @@ class SiteNavigationMenuEditor extends State {
 			`.${MENU_ITEM_CLASSNAME}`,
 			'keyup',
 			this._handleItemKeyUp.bind(this)
+		);
+
+		this.on(
+			'selectedMenuItemChanged',
+			this._handleSelectedMenuItemChanged.bind(this)
 		);
 	}
 
@@ -174,7 +180,8 @@ class SiteNavigationMenuEditor extends State {
 	_handleDragStart(data, event) {
 		const menuItem = event.target.getActiveDrag();
 
-		setSelected(menuItem);
+		this.selectedMenuItem = menuItem;
+
 		setDragging(menuItem, true);
 	}
 
@@ -222,8 +229,7 @@ class SiteNavigationMenuEditor extends State {
 			event.delegateTarget
 		);
 
-		setSelected(menuItem);
-		this.emit('menuItemSelected', menuItem);
+		this.selectedMenuItem = menuItem;
 	}
 
 	/**
@@ -245,8 +251,7 @@ class SiteNavigationMenuEditor extends State {
 		let layoutModified = false;
 
 		if ((event.key === KEYS.ENTER) || (event.key === KEYS.SPACEBAR)) {
-			setSelected(menuItem);
-			this.emit('menuItemSelected', menuItem);
+			this.selectedMenuItem = menuItem;
 		}
 		else if (event.key === KEYS.ARROW_LEFT) {
 			const menuItemParentIndex = getSiblings(menuItemParent)
@@ -327,6 +332,21 @@ class SiteNavigationMenuEditor extends State {
 	}
 
 	/**
+	 * Handle selectedMenuItem property change
+	 * @param {{newVal: HTMLElement|null}} event
+	 * @private
+	 * @review
+	 */
+
+	_handleSelectedMenuItemChanged(event) {
+		unselectAll();
+
+		if (event.newVal) {
+			setSelected(event.newVal);
+		}
+	}
+
+	/**
 	 * Send layout information to the server and returns a promise
 	 * that resolves after finishing.
 	 * @param {{
@@ -396,6 +416,18 @@ SiteNavigationMenuEditor.STATE = {
 	 */
 
 	namespace: Config.string().required(),
+
+	/**
+	 * Selected menuItem DOM element
+	 *
+	 * @default null
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @review
+	 * @type {HTMLElement}
+	 */
+
+	selectedMenuItem: Config.object().value(null),
 
 	/**
 	 * Internal DragDrop instance.

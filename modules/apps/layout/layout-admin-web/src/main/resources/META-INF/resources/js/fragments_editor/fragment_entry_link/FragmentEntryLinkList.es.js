@@ -92,6 +92,17 @@ class FragmentEntryLinkList extends Component {
 FragmentEntryLinkList.STATE = {
 
 	/**
+	 * CSS class for the fragments drop target.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	dropTargetClass: Config.string(),
+
+	/**
 	 * List of fragment instances being used, the order
 	 * of the elements in this array defines their position.
 	 * @default []

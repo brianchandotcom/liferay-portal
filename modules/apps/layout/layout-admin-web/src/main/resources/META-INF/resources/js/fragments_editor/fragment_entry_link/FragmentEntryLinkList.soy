@@ -12,6 +12,7 @@
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param translating: bool}
+	{@param? dropTargetClass: string}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
@@ -36,6 +37,7 @@
 
 	{let $entryLinksClasses kind="text"}
 		fragment-entry-link-list
+		{sp}{$dropTargetClass}
 
 		{if $translating}
 			{sp}translating

@@ -314,6 +314,12 @@
 
 		<check name="LanguageKeysCheck" />
 	</source-processor>
+	<source-processor name="LFRBuildSourceProcessor">
+		<check name="LFRBuildContentCheck">
+			<property name="nonemptyMarkerFileNames" value=".lfrbuild-lowest-major-version" />
+		</check>
+		<check name="LFRBuildReadmeCheck" />
+	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">
 		<check name="MarkdownFileExtensionCheck" />
 		<check name="MarkdownStylingCheck" />

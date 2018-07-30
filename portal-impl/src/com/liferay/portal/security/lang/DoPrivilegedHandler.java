@@ -34,7 +34,9 @@ import java.util.Objects;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class DoPrivilegedHandler
 	implements DoPrivilegedBean, InvocationHandler {
 

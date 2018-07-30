@@ -317,6 +317,7 @@
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.memory.compat.jar"/>
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.message.boards.compat.jar"/>
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.util.compat.jar"/>
+	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.util.java.compat.jar"/>
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.util.taglib.compat.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

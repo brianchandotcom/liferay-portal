@@ -173,6 +173,15 @@ public class StructuredContentNestedCollectionResource
 				this::_getStructuredContentId
 			).addLocalizedStringByLocale(
 				"value", this::_getLocalizedString
+			).addNested(
+				"geo", this::_getGeoJSONObject,
+				geoBuilder -> geoBuilder.types(
+					"GeoCoordinates"
+				).addNumber(
+					"latitude", jsonObject -> jsonObject.getDouble("latitude")
+				).addNumber(
+					"longitude", jsonObject -> jsonObject.getDouble("longitude")
+				).build()
 			).addString(
 				"name", DDMFormFieldValue::getName
 			).build()
@@ -277,6 +286,22 @@ public class StructuredContentNestedCollectionResource
 		nestedDDMFormFieldValues.addAll(ddmFormFieldValues);
 
 		return nestedDDMFormFieldValues;
+	}
+
+	private JSONObject _getGeoJSONObject(DDMFormFieldValue ddmFormFieldValue) {
+		return Try.fromFallible(
+			ddmFormFieldValue::getValue
+		).map(
+			value -> value.getString(LocaleUtil.getDefault())
+		).filter(
+			this::_isJSONObject
+		).filter(
+			string -> string.contains("latitude")
+		).map(
+			JSONFactoryUtil::createJSONObject
+		).orElse(
+			null
+		);
 	}
 
 	private JournalArticle _getJournalArticle(JSONObject jsonObject)

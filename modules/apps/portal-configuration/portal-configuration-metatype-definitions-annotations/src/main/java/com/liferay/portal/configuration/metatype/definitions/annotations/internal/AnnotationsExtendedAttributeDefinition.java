@@ -36,39 +36,11 @@ public class AnnotationsExtendedAttributeDefinition
 		Class<?> configurationBeanClass,
 		AttributeDefinition attributeDefinition) {
 
+		_configurationBeanClass = configurationBeanClass;
 		_attributeDefinition = attributeDefinition;
 
-		if (configurationBeanClass == null) {
-			return;
-		}
-
-		try {
-			Method method = configurationBeanClass.getMethod(
-				attributeDefinition.getID());
-
-			ExtendedAttributeDefinition extendedAttributeDefinition =
-				method.getAnnotation(ExtendedAttributeDefinition.class);
-
-			if (extendedAttributeDefinition != null) {
-				Map<String, String> map = new HashMap<>();
-
-				map.put(
-					"description-arguments",
-					String.join(
-						StringPool.COMMA,
-						extendedAttributeDefinition.descriptionArguments()));
-
-				map.put(
-					"name-arguments",
-					String.join(
-						StringPool.COMMA,
-						extendedAttributeDefinition.nameArguments()));
-
-				_extensionAttributes.put(
-					ExtendedAttributeDefinition.XML_NAMESPACE, map);
-			}
-		}
-		catch (NoSuchMethodException nsme) {
+		if (configurationBeanClass != null) {
+			processExtendedMetatypeFields();
 		}
 	}
 
@@ -133,7 +105,44 @@ public class AnnotationsExtendedAttributeDefinition
 		return _attributeDefinition.validate(value);
 	}
 
+	protected void processExtendedMetatypeFields() {
+		ExtendedAttributeDefinition extendedAttributeDefinition =
+			_getExtendedAttributeDefinition();
+
+		if (extendedAttributeDefinition != null) {
+			Map<String, String> map = new HashMap<>();
+
+			map.put(
+				"description-arguments",
+				String.join(
+					StringPool.COMMA,
+					extendedAttributeDefinition.descriptionArguments()));
+
+			map.put(
+				"name-arguments",
+				String.join(
+					StringPool.COMMA,
+					extendedAttributeDefinition.nameArguments()));
+
+			_extensionAttributes.put(
+				ExtendedAttributeDefinition.XML_NAMESPACE, map);
+		}
+	}
+
+	private ExtendedAttributeDefinition _getExtendedAttributeDefinition() {
+		try {
+			Method method = _configurationBeanClass.getMethod(
+				_attributeDefinition.getID());
+
+			return method.getAnnotation(ExtendedAttributeDefinition.class);
+		}
+		catch (NoSuchMethodException nsme) {
+			return null;
+		}
+	}
+
 	private final AttributeDefinition _attributeDefinition;
+	private final Class<?> _configurationBeanClass;
 	private final Map<String, Map<String, String>> _extensionAttributes =
 		new HashMap<>();
 

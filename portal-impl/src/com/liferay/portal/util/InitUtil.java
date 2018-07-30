@@ -44,8 +44,6 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
-import com.liferay.portal.security.lang.DoPrivilegedUtil;
-import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.registry.Registry;
@@ -148,32 +146,18 @@ public class InitUtil {
 
 		SanitizerLogWrapper.init();
 
-		// Security manager
-
-		SecurityManagerUtil.init();
-
-		if (SecurityManagerUtil.ENABLED) {
-			com.liferay.portal.kernel.util.PropsUtil.setProps(
-				DoPrivilegedUtil.wrap(
-					com.liferay.portal.kernel.util.PropsUtil.getProps()));
-
-			LogFactoryUtil.setLogFactory(
-				DoPrivilegedUtil.wrap(LogFactoryUtil.getLogFactory()));
-		}
-
 		// Configuration factory
 
 		ConfigurationFactoryUtil.setConfigurationFactory(
-			DoPrivilegedUtil.wrap(new ConfigurationFactoryImpl()));
+			new ConfigurationFactoryImpl());
 
 		// Data source factory
 
-		DataSourceFactoryUtil.setDataSourceFactory(
-			DoPrivilegedUtil.wrap(new DataSourceFactoryImpl()));
+		DataSourceFactoryUtil.setDataSourceFactory(new DataSourceFactoryImpl());
 
 		// DB manager
 
-		DBManagerUtil.setDBManager(DoPrivilegedUtil.wrap(new DBManagerImpl()));
+		DBManagerUtil.setDBManager(new DBManagerImpl());
 
 		// ROME
 

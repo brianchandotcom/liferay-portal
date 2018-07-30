@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.security.lang.DoPrivilegedUtil;
-
-import java.security.PrivilegedAction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,24 +38,26 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 	public DynamicQuery forClass(Class<?> clazz) {
 		clazz = getImplClass(clazz, null);
 
-		return DoPrivilegedUtil.wrap(
-			new DynamicQueryPrivilegedAction(clazz, null));
+		return new DynamicQueryImpl(DetachedCriteria.forClass(clazz));
 	}
 
 	@Override
 	public DynamicQuery forClass(Class<?> clazz, ClassLoader classLoader) {
 		clazz = getImplClass(clazz, classLoader);
 
-		return DoPrivilegedUtil.wrap(
-			new DynamicQueryPrivilegedAction(clazz, null));
+		return new DynamicQueryImpl(DetachedCriteria.forClass(clazz));
 	}
 
 	@Override
 	public DynamicQuery forClass(Class<?> clazz, String alias) {
 		clazz = getImplClass(clazz, null);
 
-		return DoPrivilegedUtil.wrap(
-			new DynamicQueryPrivilegedAction(clazz, alias));
+		if (alias != null) {
+			return new DynamicQueryImpl(
+				DetachedCriteria.forClass(clazz, alias));
+		}
+
+		return new DynamicQueryImpl(DetachedCriteria.forClass(clazz));
 	}
 
 	@Override
@@ -67,8 +66,12 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
 		clazz = getImplClass(clazz, classLoader);
 
-		return DoPrivilegedUtil.wrap(
-			new DynamicQueryPrivilegedAction(clazz, alias));
+		if (alias != null) {
+			return new DynamicQueryImpl(
+				DetachedCriteria.forClass(clazz, alias));
+		}
+
+		return new DynamicQueryImpl(DetachedCriteria.forClass(clazz));
 	}
 
 	protected Class<?> getImplClass(Class<?> clazz, ClassLoader classLoader) {
@@ -146,28 +149,5 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
 	private final ClassLoader _portalClassLoader =
 		DynamicQueryFactoryImpl.class.getClassLoader();
-
-	private static class DynamicQueryPrivilegedAction
-		implements PrivilegedAction<DynamicQuery> {
-
-		public DynamicQueryPrivilegedAction(Class<?> clazz, String alias) {
-			_clazz = clazz;
-			_alias = alias;
-		}
-
-		@Override
-		public DynamicQuery run() {
-			if (_alias != null) {
-				return new DynamicQueryImpl(
-					DetachedCriteria.forClass(_clazz, _alias));
-			}
-
-			return new DynamicQueryImpl(DetachedCriteria.forClass(_clazz));
-		}
-
-		private final String _alias;
-		private final Class<?> _clazz;
-
-	}
 
 }

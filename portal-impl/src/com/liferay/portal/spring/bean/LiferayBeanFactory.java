@@ -14,7 +14,6 @@
 
 package com.liferay.portal.spring.bean;
 
-import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator;
 
@@ -45,7 +44,6 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 
 		if ((beanPostProcessor instanceof
 				InstantiationAwareBeanPostProcessor) &&
-			!(beanPostProcessor instanceof DoPrivilegedFactory) &&
 			!(beanPostProcessor instanceof DynamicProxyCreator) &&
 			!(beanPostProcessor instanceof ServiceBeanAutoProxyCreator)) {
 

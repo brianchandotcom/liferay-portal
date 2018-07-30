@@ -37,7 +37,9 @@ import org.springframework.context.ApplicationContextAware;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class DoPrivilegedFactory
 	extends InstantiationAwareBeanPostProcessorAdapter
 	implements ApplicationContextAware {

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 
 import javax.sql.DataSource;
@@ -85,7 +84,7 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	@Override
 	protected Session wrapSession(org.hibernate.Session session) {
-		return DoPrivilegedUtil.wrapWhenActive(super.wrapSession(session));
+		return super.wrapSession(session);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsValues;
 
@@ -51,7 +50,7 @@ public class ModuleFrameworkAdapterHelper {
 			if (FileUtil.getFile() == null) {
 				FileUtil fileUtil = new FileUtil();
 
-				fileUtil.setFile(DoPrivilegedUtil.wrap(new FileImpl()));
+				fileUtil.setFile(new FileImpl());
 			}
 
 			_classLoader = new ModuleFrameworkClassLoader(

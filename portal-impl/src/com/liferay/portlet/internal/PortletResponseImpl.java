@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.lang.DoPrivilegedUtil;
 
 import java.io.Writer;
 
@@ -296,11 +295,13 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			_portletSetup = getPortletSetup(themeDisplay, layout, portletName);
 		}
 
-		return DoPrivilegedUtil.wrap(
+		LiferayPortletURLPrivilegedAction liferayPortletURLPrivilegedAction =
 			new LiferayPortletURLPrivilegedAction(
 				plid, portletName, lifecycle, copy, includeLinkToLayoutUuid,
 				layout, getPortlet(), _portletSetup, portletRequestImpl, this,
-				_plid, _constructors));
+				_plid, _constructors);
+
+		return liferayPortletURLPrivilegedAction.run();
 	}
 
 	@Override

@@ -797,6 +797,17 @@ FragmentsEditor.STATE = {
 	deleteFragmentEntryLinkURL: Config.string().required(),
 
 	/**
+	 * CSS class for the fragments drop target.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	dropTargetClass: Config.string().value('dropTarget'),
+
+	/**
 	 * URL for updating a distinct fragment entries of the editor.
 	 * @default undefined
 	 * @instance

@@ -1100,6 +1100,13 @@ war.path=${app.server.portal.dir}/</echo>
 			<update-gradle-properties />
 
 			<if>
+				<contains string="${env.CI_TEST_SUITE}" substring="poshi" />
+				<then>
+					<propertycopy from="test.poshi.runner.local.release[${env.CI_TEST_SUITE}]" name="test.poshi.runner.local.release" override="true" />
+				</then>
+			</if>
+
+			<if>
 				<equals arg1="${test.poshi.runner.local.release}" arg2="true" />
 				<then>
 					<gradle-execute dir="${test.poshi.runner.src.dir}" task="deploy" />

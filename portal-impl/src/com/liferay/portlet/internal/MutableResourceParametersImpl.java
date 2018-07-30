@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.portlet.MutableResourceParameters;
@@ -25,10 +24,6 @@ import javax.portlet.MutableResourceParameters;
 public class MutableResourceParametersImpl
 	extends BaseMutablePortletParameters<MutableResourceParameters>
 	implements LiferayMutablePortletParameters, MutableResourceParameters {
-
-	public MutableResourceParametersImpl() {
-		this(new LinkedHashMap<>());
-	}
 
 	public MutableResourceParametersImpl(Map<String, String[]> parameterMap) {
 		super(parameterMap, MutableResourceParametersImpl::new);

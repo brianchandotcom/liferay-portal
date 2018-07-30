@@ -1114,11 +1114,13 @@ public class PortletURLImpl
 		_secure = PortalUtil.isSecure(request);
 
 		if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-			_mutableActionParameters = new MutableActionParametersImpl();
+			_mutableActionParameters = new MutableActionParametersImpl(
+				new LinkedHashMap<>());
 		}
 		else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
 			_copyCurrentRenderParameters = true;
-			_mutableResourceParameters = new MutableResourceParametersImpl();
+			_mutableResourceParameters = new MutableResourceParametersImpl(
+				new LinkedHashMap<>());
 		}
 
 		_initMutableRenderParameters();

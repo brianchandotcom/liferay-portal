@@ -134,6 +134,8 @@ public class BlogPostingNestedCollectionResource
 		).addString(
 			"articleBody", BlogsEntry::getContent
 		).addString(
+			"caption", BlogsEntry::getCoverImageCaption
+		).addString(
 			"description", BlogsEntry::getDescription
 		).addString(
 			"fileFormat", blogsEntry -> "text/html"

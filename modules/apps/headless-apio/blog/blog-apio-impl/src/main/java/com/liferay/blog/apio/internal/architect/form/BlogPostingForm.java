@@ -76,7 +76,7 @@ public class BlogPostingForm {
 		).addOptionalString(
 			"description", BlogPostingForm::_setDescription
 		).addOptionalString(
-			"semanticUrl", BlogPostingForm::_setSemanticUrl
+			"friendlyUrlPath", BlogPostingForm::_setFriendlyURLPath
 		).addOptionalStringList(
 			"keywords", BlogPostingForm::_setKeywords
 		).addRequiredString(
@@ -162,6 +162,22 @@ public class BlogPostingForm {
 	}
 
 	/**
+	 * Returns the blog posting's friendly URL if present. Returns an empty
+	 * {@code String} otherwise.
+	 *
+	 * @return the blog posting's friendly URL if present; an empty {@code
+	 *         String} otherwise
+	 * @review
+	 */
+	public String getFriendlyURLPath() {
+		return Optional.ofNullable(
+			_friendlyURLPath
+		).orElse(
+			""
+		);
+	}
+
+	/**
 	 * Returns the blog posting's headline
 	 *
 	 * @return the blog posting's headline
@@ -218,22 +234,6 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's semantic URL if present. Returns an empty
-	 * {@code String} otherwise.
-	 *
-	 * @return the blog posting's semantic URL if present; an empty {@code
-	 *         String} otherwise
-	 * @review
-	 */
-	public String getSemanticUrl() {
-		return Optional.ofNullable(
-			_semanticUrl
-		).orElse(
-			""
-		);
-	}
-
-	/**
 	 * Returns the service context related with this form
 	 *
 	 * @param  groupId the group ID
@@ -286,6 +286,10 @@ public class BlogPostingForm {
 		_displayDate = displayDate;
 	}
 
+	private void _setFriendlyURLPath(String friendlyURLPath) {
+		_friendlyURLPath = friendlyURLPath;
+	}
+
 	private void _setHeadline(String headline) {
 		_headline = headline;
 	}
@@ -306,21 +310,17 @@ public class BlogPostingForm {
 		_modifiedDate = modifiedDate;
 	}
 
-	private void _setSemanticUrl(String semanticUrl) {
-		_semanticUrl = semanticUrl;
-	}
-
 	private String _alternativeHeadline;
 	private String _articleBody;
 	private Date _createDate;
 	private Long _creatorId;
 	private String _description;
 	private Date _displayDate;
+	private String _friendlyURLPath;
 	private String _headline;
 	private String _imageCaption;
 	private Long _imageId;
 	private List<String> _keywords;
 	private Date _modifiedDate;
-	private String _semanticUrl;
 
 }

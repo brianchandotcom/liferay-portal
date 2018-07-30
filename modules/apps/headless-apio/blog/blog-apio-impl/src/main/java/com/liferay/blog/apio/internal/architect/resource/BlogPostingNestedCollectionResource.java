@@ -138,6 +138,8 @@ public class BlogPostingNestedCollectionResource
 		).addString(
 			"fileFormat", blogsEntry -> "text/html"
 		).addString(
+			"friendlyUrlPath", BlogsEntry::getUrlTitle
+		).addString(
 			"headline", BlogsEntry::getTitle
 		).addStringList(
 			"keywords", this::_getBlogsEntryAssetTags
@@ -160,10 +162,11 @@ public class BlogPostingNestedCollectionResource
 		return _blogsEntryLocalService.addEntry(
 			userId, blogPostingForm.getHeadline(),
 			blogPostingForm.getAlternativeHeadline(),
-			blogPostingForm.getSemanticUrl(), blogPostingForm.getDescription(),
-			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
-			true, true, new String[0], blogPostingForm.getImageCaption(),
-			imageSelector, null, serviceContext);
+			blogPostingForm.getFriendlyURLPath(),
+			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
+			blogPostingForm.getDisplayDate(), true, true, new String[0],
+			blogPostingForm.getImageCaption(), imageSelector, null,
+			serviceContext);
 	}
 
 	private List<String> _getBlogsEntryAssetTags(BlogsEntry blogsEntry) {
@@ -203,10 +206,11 @@ public class BlogPostingNestedCollectionResource
 		return _blogsEntryLocalService.updateEntry(
 			userId, blogsEntryId, blogPostingForm.getHeadline(),
 			blogPostingForm.getAlternativeHeadline(),
-			blogPostingForm.getSemanticUrl(), blogPostingForm.getDescription(),
-			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
-			true, true, new String[0], blogPostingForm.getImageCaption(),
-			imageSelector, null, serviceContext);
+			blogPostingForm.getFriendlyURLPath(),
+			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
+			blogPostingForm.getDisplayDate(), true, true, new String[0],
+			blogPostingForm.getImageCaption(), imageSelector, null,
+			serviceContext);
 	}
 
 	@Reference

@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
-import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
@@ -155,32 +154,26 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		closeDataSource("liferayDataSourceImpl");
 
+		super.contextDestroyed(servletContextEvent);
+
 		try {
-			super.contextDestroyed(servletContextEvent);
-
-			try {
-				ModuleFrameworkUtilAdapter.stopRuntime();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-
-			try {
-				ModuleFrameworkUtilAdapter.stopFramework(
-					PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-
-			ModuleFrameworkUtilAdapter.unregisterContext(
-				_arrayApplicationContext);
-
-			_arrayApplicationContext.close();
+			ModuleFrameworkUtilAdapter.stopRuntime();
 		}
-		finally {
-			SecurityManagerUtil.destroy();
+		catch (Exception e) {
+			_log.error(e, e);
 		}
+
+		try {
+			ModuleFrameworkUtilAdapter.stopFramework(
+				PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		ModuleFrameworkUtilAdapter.unregisterContext(_arrayApplicationContext);
+
+		_arrayApplicationContext.close();
 	}
 
 	@Override

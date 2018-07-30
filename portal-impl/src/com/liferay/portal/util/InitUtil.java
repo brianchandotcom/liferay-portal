@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
-import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.registry.Registry;
@@ -146,10 +145,6 @@ public class InitUtil {
 		// Log sanitizer
 
 		SanitizerLogWrapper.init();
-
-		// Security manager
-
-		SecurityManagerUtil.init();
 
 		// Configuration factory
 

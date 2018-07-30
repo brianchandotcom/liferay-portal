@@ -2459,6 +2459,29 @@
 		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
+	<command name="ViewSearchResultDetails" priority="5">
+		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="SearchUsecase#ViewSearchResultDetails" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Test Test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="Test Test" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="SearchPortlets#gotoResultDetails">
+			<var name="searchAssetTitle" value="Test Test" />
+		</execute>
+
+		<execute macro="SearchPortlets#viewUserResultDetails">
+			<var name="pageName" value="Welcome" />
+			<var name="userName" value="Test Test" />
+		</execute>
+	</command>
+
 	<command name="ViewStagedAndLiveContentInSearchResults" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
@@ -2588,29 +2611,6 @@
 		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="WebContent Title" />
 			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
-	</command>
-
-	<command name="ViewUserSearchResult" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="SearchUsecase#ViewUserSearchResult" />
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Test Test" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Test Test" />
-			<var name="searchAssetType" value="User" />
-		</execute>
-
-		<execute macro="SearchPortlets#gotoResultDetails">
-			<var name="searchAssetTitle" value="Test Test" />
-		</execute>
-
-		<execute macro="SearchPortlets#viewUserResultDetails">
-			<var name="pageName" value="Welcome" />
-			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 </definition>

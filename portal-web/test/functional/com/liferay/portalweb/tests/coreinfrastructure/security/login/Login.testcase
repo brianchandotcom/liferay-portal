@@ -418,6 +418,8 @@
 	</command>
 
 	<command name="ViewInstanceSettingsAuthentication" priority="3">
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />

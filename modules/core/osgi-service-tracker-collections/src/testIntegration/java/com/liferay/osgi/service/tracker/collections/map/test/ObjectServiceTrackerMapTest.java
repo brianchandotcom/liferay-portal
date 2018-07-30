@@ -224,6 +224,52 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceWithChangingServiceRanking() {
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			createServiceTrackerMap(_bundleContext);
+
+		TrackedOne trackedOne1 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1, 3);
+
+		TrackedOne trackedOne2 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
+			trackedOne2, 2);
+
+		TrackedOne trackedOne3 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
+			trackedOne3, 1);
+
+		Assert.assertEquals(
+			trackedOne1, serviceTrackerMap.getService("aTarget"));
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("service.ranking", 0);
+		properties.put("target", "aTarget");
+
+		serviceRegistration1.setProperties(properties);
+
+		Assert.assertEquals(
+			trackedOne2, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration2.unregister();
+
+		Assert.assertEquals(
+			trackedOne3, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration3.unregister();
+
+		Assert.assertEquals(
+			trackedOne1, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration1.unregister();
+	}
+
+	@Test
 	public void testGetServiceWithCustomComparator() {
 		ServiceReferenceMapper<String, TrackedOne>
 			propertyServiceReferenceMapper =

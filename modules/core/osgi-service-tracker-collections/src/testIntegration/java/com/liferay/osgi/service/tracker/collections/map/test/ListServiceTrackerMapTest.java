@@ -247,6 +247,69 @@ public class ListServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceWithChangingServiceRanking() {
+		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			createServiceTrackerMap(_bundleContext);
+
+		TrackedOne trackedOne1 = new TrackedOne();
+
+		registerService(trackedOne1, 1);
+
+		TrackedOne trackedOne3 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration = registerService(
+			trackedOne3, 3);
+
+		TrackedOne trackedOne2 = new TrackedOne();
+
+		registerService(trackedOne2, 2);
+
+		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(services.toString(), 3, services.size());
+
+		Iterator<? extends TrackedOne> iterator = services.iterator();
+
+		Assert.assertEquals(trackedOne3, iterator.next());
+		Assert.assertEquals(trackedOne2, iterator.next());
+		Assert.assertEquals(trackedOne1, iterator.next());
+
+		Hashtable<String, Object> properties = new Hashtable<>();
+
+		properties.put("service.ranking", 0);
+		properties.put("target", "aTarget");
+
+		serviceRegistration.setProperties(properties);
+
+		services = serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(services.toString(), 3, services.size());
+
+		iterator = services.iterator();
+
+		Assert.assertEquals(trackedOne2, iterator.next());
+		Assert.assertEquals(trackedOne1, iterator.next());
+		Assert.assertEquals(trackedOne3, iterator.next());
+
+		properties = new Hashtable<>();
+
+		properties.put("service.ranking", 3);
+		properties.put("target", "aTarget");
+
+		serviceRegistration.setProperties(properties);
+
+		services = serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(services.toString(), 3, services.size());
+
+		iterator = services.iterator();
+
+		Assert.assertEquals(trackedOne3, iterator.next());
+		Assert.assertEquals(trackedOne2, iterator.next());
+		Assert.assertEquals(trackedOne1, iterator.next());
+	}
+
+	@Test
 	public void testGetServiceWithCustomComparatorReturningZero() {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, TrackedOne.class, null,

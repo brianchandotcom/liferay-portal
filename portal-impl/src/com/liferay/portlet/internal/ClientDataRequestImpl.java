@@ -172,6 +172,15 @@ public abstract class ClientDataRequestImpl
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String name = entry.getKey();
 
+			// If the parameter name is not a public/private render parameter,
+			// then regard it as an action parameter (during an ActionRequest)
+			// or as a resource parameter (during a ResourceRequest). Also,
+			// if the parameter name is prefixed with the portlet namespace in
+			// the original request, then regard it as an action or resource
+			// parameter (even if it has the same name as a public render
+			// parameter). See: TCK V3PortletParametersTests_SPEC11_3_getNames
+			// and V3PortletParametersTests_SPEC11_4_getNames.
+
 			if (renderParameterNames.contains(name)) {
 				String[] values = servletRequestParameterMap.get(
 					portletNamespace.concat(name));

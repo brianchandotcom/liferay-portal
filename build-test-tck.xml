@@ -112,7 +112,9 @@ com/sun/ts/tests/portlet/api/javax_portlet/ActionRequest/URLClient.java#GetAuthT
 com/sun/ts/tests/portlet/api/javax_portlet/EventRequest/SpecURLClient.java#GetAuthTypeWithoutProtectionTest
 com/sun/ts/tests/portlet/api/javax_portlet/PortletContext/URLClient.java#GetMajorVersionTest
 com/sun/ts/tests/portlet/api/javax_portlet/PortletURLListener/SpecURLClient.java#IsPortletURLInPortletURLGenerationListenerTest
-com/sun/ts/tests/portlet/api/javax_portlet/ResourceRequest/SpecURLClient.java#GetAuthTypeWithoutProtectionTest</echo>
+com/sun/ts/tests/portlet/api/javax_portlet/ResourceRequest/SpecURLClient.java#GetAuthTypeWithoutProtectionTest
+com/sun/ts/tests/portlet/api/javax_portlet/ResourceServing/CheckResourceURLNotChangePortletModeTestPortlet.java#CheckResourceURLNotChangePortletModeTest
+com/sun/ts/tests/portlet/ee/taglib/ResourceURLAppendParameterTestPortlet.java#ResourceURLAppendParameterTest</echo>
 
 		<echo append="true" file="tools/tck/bin/build.properties">
 

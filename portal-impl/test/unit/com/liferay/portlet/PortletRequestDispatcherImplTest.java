@@ -204,11 +204,6 @@ public class PortletRequestDispatcherImplTest {
 			return _portlet;
 		}
 
-		@Override
-		public boolean isPrivateRequestAttributes() {
-			return false;
-		}
-
 		private TestPortletRequest(String contextPath, Portlet portlet) {
 			_contextPath = contextPath;
 			_portlet = portlet;

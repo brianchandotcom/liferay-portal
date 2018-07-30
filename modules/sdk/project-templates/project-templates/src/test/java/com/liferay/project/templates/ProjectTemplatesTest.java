@@ -3333,7 +3333,7 @@ public class ProjectTemplatesTest {
 		File gradleProperties = new File(
 			gradleWorkspaceProjectDir, "gradle.properties");
 
-		_testFindProperty(
+		_testPropertyExists(
 			gradleProperties.toPath(), "liferay.workspace.bundle.url");
 
 		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
@@ -3357,7 +3357,7 @@ public class ProjectTemplatesTest {
 		File gradleProperties = new File(
 			gradleWorkspaceProjectDir, "gradle.properties");
 
-		_testFindProperty(
+		_testPropertyExists(
 			gradleProperties.toPath(), "liferay.workspace.bundle.url");
 
 		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
@@ -4349,23 +4349,6 @@ public class ProjectTemplatesTest {
 		Assert.assertNotNull("Missing " + name, zipFile.getEntry(name));
 	}
 
-	private static void _testFindProperty(Path path, String property)
-		throws Exception {
-
-		boolean foundProperty = false;
-
-		try (Stream<String> stream = Files.lines(path)) {
-			foundProperty = stream.filter(
-				line -> line.contains(property)
-			).anyMatch(
-				line -> !line.contains('#' + property) &&
-				 !line.trim().startsWith("#")
-			);
-		}
-
-		Assert.assertTrue(foundProperty);
-	}
-
 	private static File _testNotContains(
 			File dir, String fileName, boolean regex, String... strings)
 		throws IOException {
@@ -4386,6 +4369,21 @@ public class ProjectTemplatesTest {
 		Assert.assertFalse("Unexpected " + fileName, file.exists());
 
 		return file;
+	}
+
+	private static void _testPropertyExists(Path path, String property)
+		throws Exception {
+
+		try (Stream<String> stream = Files.lines(path)) {
+			boolean foundProperty = stream.filter(
+				line -> line.contains(property)
+			).anyMatch(
+				line -> !line.contains('#' + property) &&
+				 !line.trim().startsWith("#")
+			);
+
+			Assert.assertTrue(foundProperty);
+		}
 	}
 
 	private static File _testStartsWith(

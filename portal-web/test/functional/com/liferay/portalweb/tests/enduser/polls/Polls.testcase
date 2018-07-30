@@ -303,6 +303,8 @@
 			<var name="pollsQuestionChoice" value="Red" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />

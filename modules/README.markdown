@@ -80,7 +80,7 @@ File Name | Description
 `.lfrbuild-deploy-wsdd` | Deploys the WSDD fragment JAR file when deploying the OSGi module.
 `.lfrbuild-lowest-major-version` | Declares the lowest major version of the released artifact to use in the semantic versioning check.
 `.lfrbuild-portal-deprecated` | Marks the module as deprecated and skip deployment during the `ant all` execution. `-test` modules never have this file.
-`.lfrbuild-portal-pre` | Builds the module, during the `ant compile` execution, in the `tmp/lib-pre` directory before building `portal-kernel`, `portal-impl`, etc.
+`.lfrbuild-portal-pre` | Builds the module during the `ant compile` execution in the `tmp/lib-pre` directory before building `portal-kernel`, `portal-impl`, etc.
 `.lfrbuild-portal-private` | Deploys the module during the `ant all` execution in a private branch. `-test` modules never have this file.
 `.lfrbuild-portal-public` | Deploys the module during the `ant all` execution in a public branch. `-test` modules never have this file.
 `.lfrbuild-portal` | Deploys the module during the `ant all` execution. `-test` modules never have this file.
@@ -122,7 +122,7 @@ File Name | Description
 File Name | Description
 --------- | -----------
 `.lfrbuild-release-src` | Includes the app's source code in the DXP release, when added to the root of an app.
-`.lfrbuild-releng-ignore` | Ignores checking the module for staleness, so the module is never publishable. A *stale* module has code that is different from the latest published release. If a `.lfrbuild-releng-ignore` file is added to a parent directory, the whole subtree is be ignored.
+`.lfrbuild-releng-ignore` | Ignores checking the module for stale artifacts. An artifact is *stale* when the module has code that is different from the latest published release. This module can never be published. If a `.lfrbuild-releng-ignore` file is added to a parent directory, the whole subtree is ignored.
 `.lfrbuild-releng-skip-update-file-versions` | Prevents the `updateFileVersions` task from converting project dependencies into module dependencies. If a `.lfrbuild-releng-skip-update-file-versions` file is added to a parent directory, the whole subtree is skipped.
 
 ### Themes
@@ -175,7 +175,7 @@ closure arguments.
 ### `gradle.properties`
 
 The following settings are available to you in the `gradle.properties` file of a
-Liferay subrepository (e.g., [com-liferay-journal](https://github.com/liferay/com-liferay-journal/blob/master/gradle.properties)).
+Liferay subrepository (e.g., [com-liferay-apio-architect](https://github.com/liferay/com-liferay-apio-architect)).
 
 Property Name | Mandatory | Description
 ------------- | --------- | -----------

@@ -40,6 +40,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
@@ -127,7 +128,9 @@ public class InceptionImageLabeler {
 
 				sb.append(File.pathSeparator);
 
-				Files.copy(inputStream, targetPath);
+				Files.copy(
+					inputStream, targetPath,
+					StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
 

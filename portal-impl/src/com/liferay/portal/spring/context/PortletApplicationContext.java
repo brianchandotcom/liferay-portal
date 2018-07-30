@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.util.PropsValues;
@@ -132,10 +131,12 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 			clazz.getName(), new RootBeanDefinition(clazz));
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected void injectExplicitBeans(
 		BeanDefinitionRegistry beanDefinitionRegistry) {
-
-		injectExplicitBean(DoPrivilegedFactory.class, beanDefinitionRegistry);
 	}
 
 	@Override
@@ -147,11 +148,6 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 		if (configLocations == null) {
 			return;
 		}
-
-		BeanDefinitionRegistry beanDefinitionRegistry =
-			xmlBeanDefinitionReader.getBeanFactory();
-
-		injectExplicitBeans(beanDefinitionRegistry);
 
 		for (String configLocation : configLocations) {
 			try {

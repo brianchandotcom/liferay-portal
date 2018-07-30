@@ -1,0 +1,12 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:blogs:blogs-api")
+	testIntegrationCompile project(":apps:blogs:blogs-test-util")
+	testIntegrationCompile project(":apps:message-boards:message-boards-api")
+	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
+	testIntegrationCompile project(":apps:subscription:subscription-api")
+	testIntegrationCompile project(":apps:trash:trash-api")
+	testIntegrationCompile project(":apps:trash:trash-test-util")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

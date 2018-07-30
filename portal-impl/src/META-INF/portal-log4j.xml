@@ -116,10 +116,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.dao.jdbc.pacl.PACLDataSource">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.dao.jdbc.pool">
 		<priority value="ERROR" />
 	</category>
@@ -142,10 +138,6 @@
 
 	<category name="com.liferay.portal.deploy.hot.HookHotDeployListener">
 		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.deploy.hot.PACLHotDeployListener">
-		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.deploy.hot.PluginPackageHotDeployListener">
@@ -258,14 +250,6 @@
 
 	<category name="com.liferay.portal.image.SpriteProcessorImpl">
 		<priority value="WARN" />
-	</category>
-
-	<category name="com.liferay.portal.jndi.pacl.PACLInitialContextFactory">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.jndi.pacl.PACLInitialContextFactoryBuilder">
-		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl">
@@ -490,94 +474,6 @@
 
 	<category name="com.liferay.portal.security.lang.PortalSecurityManager">
 		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.BasePACLPolicy">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.GeneratingPACLPolicy">
-		<priority value="DEBUG" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.PACLAdvice">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.PACLBeanHandler">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.PACLClassUtil">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.PACLPolicyManager">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.BaseChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.BaseReflectChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.DefaultAcceptChecker">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.DefaultRejectChecker">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.FileChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.MBeanChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.NetChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.PortalHookChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.PortalMessageBusChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.PortalRuntimeChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.PortalServiceChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.ReflectChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.RuntimeChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.SQLChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.SecurityChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.SocketChecker">
-		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.security.permission.AdvancedPermissionChecker">

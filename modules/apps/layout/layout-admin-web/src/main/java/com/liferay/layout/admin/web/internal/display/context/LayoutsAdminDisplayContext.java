@@ -1142,13 +1142,13 @@ public class LayoutsAdminDisplayContext {
 
 		JSONArray pagesJSONArray = _getLayoutsJSONArray(0, isPrivatePages());
 
-		if (getSelPlid() == LayoutConstants.DEFAULT_PLID) {
+		Layout selLayout = getSelLayout();
+
+		if (selLayout == null) {
 			layoutColumnsJSONArray.put(pagesJSONArray);
 
 			return layoutColumnsJSONArray;
 		}
-
-		Layout selLayout = getSelLayout();
 
 		List<Layout> layouts = ListUtil.copy(selLayout.getAncestors());
 

@@ -64,6 +64,8 @@
 			<var name="larFileName" value="CustomExport" />
 		</execute>
 
+		<execute function="Refresh" />
+
 		<execute macro="LAR#viewProcessesInListView" />
 
 		<execute macro="LAR#filterCompletedProcesses" />

@@ -21,6 +21,7 @@ tmp/lib-pre/com.liferay.petra.process.jar
 tmp/lib-pre/com.liferay.petra.reflect.jar
 tmp/lib-pre/com.liferay.petra.string.jar
 tmp/lib-pre/com.liferay.petra.xml.jar
+tmp/lib-pre/com.liferay.portal.impl.blogs.compat.jar
 tmp/lib-pre/com.liferay.portal.impl.document.library.compat.jar
 tmp/lib-pre/com.liferay.portal.impl.message.boards.compat.jar
 tmp/lib-pre/com.liferay.portal.kernel.blogs.compat.jar

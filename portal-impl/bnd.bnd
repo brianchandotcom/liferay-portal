@@ -79,6 +79,7 @@ Export-Package:\
 Import-Package: *
 Include-Resource:\
 	classes,\
+	@../tmp/lib-pre/com.liferay.portal.impl.blogs.compat.jar,\
 	@../tmp/lib-pre/com.liferay.portal.impl.document.library.compat.jar,\
 	@../tmp/lib-pre/com.liferay.portal.impl.message.boards.compat.jar
 Liferay-Service: true

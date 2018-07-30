@@ -22,12 +22,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.apache.maven.project.MavenProject;
 
-import org.codehaus.plexus.component.repository.ComponentDependency;
 import org.codehaus.plexus.util.Scanner;
 
 import org.eclipse.aether.RepositorySystem;
@@ -55,29 +54,15 @@ public class BuildCSSMojo extends AbstractMojo {
 		try {
 			Artifact artifact = null;
 
-			for (ComponentDependency componentDependency :
-					_pluginDescriptor.getDependencies()) {
-
-				String artifactId = componentDependency.getArtifactId();
+			for (Dependency dependency : _project.getDependencies()) {
+				String artifactId = dependency.getArtifactId();
 
 				if (artifactId.equals("com.liferay.frontend.css.common") &&
 					(_cssBuilderArgs.getImportDir() == null)) {
 
-					artifact = _resolveArtifact(componentDependency);
+					artifact = _resolveArtifact(dependency);
 
 					_cssBuilderArgs.setImportDir(artifact.getFile());
-				}
-			}
-
-			for (org.apache.maven.artifact.Artifact mavenArtifact :
-					_pluginDescriptor.getArtifacts()) {
-
-				String artifactId = mavenArtifact.getArtifactId();
-
-				if (artifactId.equals("com.liferay.frontend.css.common") &&
-					(_cssBuilderArgs.getImportDir() == null)) {
-
-					artifact = _resolveArtifact(mavenArtifact);
 				}
 			}
 
@@ -224,24 +209,12 @@ public class BuildCSSMojo extends AbstractMojo {
 		return artifactResult.getArtifact();
 	}
 
-	private Artifact _resolveArtifact(ComponentDependency componentDependency)
+	private Artifact _resolveArtifact(Dependency dependency)
 		throws ArtifactResolutionException {
 
 		Artifact artifact = new DefaultArtifact(
-			componentDependency.getGroupId(),
-			componentDependency.getArtifactId(), componentDependency.getType(),
-			componentDependency.getVersion());
-
-		return _resolveArtifact(artifact);
-	}
-
-	private Artifact _resolveArtifact(
-			org.apache.maven.artifact.Artifact mavenArtifact)
-		throws ArtifactResolutionException {
-
-		Artifact artifact = new DefaultArtifact(
-			mavenArtifact.getGroupId(), mavenArtifact.getArtifactId(),
-			mavenArtifact.getType(), mavenArtifact.getVersion());
+			dependency.getGroupId(), dependency.getArtifactId(),
+			dependency.getType(), dependency.getVersion());
 
 		return _resolveArtifact(artifact);
 	}
@@ -252,13 +225,6 @@ public class BuildCSSMojo extends AbstractMojo {
 	private BuildContext _buildContext;
 
 	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();
-
-	/**
-	 * @parameter default-value="${plugin}"
-	 * @readonly
-	 * @required
-	 */
-	private PluginDescriptor _pluginDescriptor;
 
 	/**
 	 * @parameter property="project"

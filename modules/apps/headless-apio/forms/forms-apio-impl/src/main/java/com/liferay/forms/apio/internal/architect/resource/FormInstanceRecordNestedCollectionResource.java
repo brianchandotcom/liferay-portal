@@ -25,6 +25,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -43,11 +44,14 @@ import com.liferay.forms.apio.internal.architect.locale.AcceptLocale;
 import com.liferay.forms.apio.internal.helper.UploadFileHelper;
 import com.liferay.forms.apio.internal.model.ServiceContextWrapper;
 import com.liferay.forms.apio.internal.util.FormInstanceRecordResourceUtil;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
 
 import java.util.List;
 
@@ -133,6 +137,18 @@ public class FormInstanceRecordNestedCollectionResource
 			"fieldValues", this::_getFieldValues,
 			fieldValuesBuilder -> fieldValuesBuilder.types(
 				"FormFieldValue"
+			).addLinkedModel(
+				"mediaObject", MediaObjectIdentifier.class,
+				ddmFormFieldValue -> Try.fromFallible(
+					ddmFormFieldValue::getValue
+				).map(
+					value -> value.getString(LocaleUtil.getDefault())
+				).map(
+					string -> StructuredContentUtil.getFileEntryId(
+						string, _dlAppService)
+				).orElse(
+					null
+				)
 			).addLocalizedStringByLocale(
 				"value", getLocalizedString(DDMFormFieldValue::getValue)
 			).addString(
@@ -231,6 +247,9 @@ public class FormInstanceRecordNestedCollectionResource
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)"

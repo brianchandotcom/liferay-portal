@@ -1,3 +1,4 @@
 Bundle-Name: Liferay Forms Apio Implementation
 Bundle-SymbolicName: com.liferay.forms.apio.impl
 Bundle-Version: 2.0.0
+-conditionalpackage: com.liferay.structured.content.apio.architect.util

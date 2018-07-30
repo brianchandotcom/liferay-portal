@@ -118,26 +118,33 @@ public class AnnotationsExtendedAttributeDefinition
 	}
 
 	private void _processExtendedMetatypeFields() {
-		ExtendedAttributeDefinition extendedAttributeDefinition =
-			_getExtendedAttributeDefinition();
+		try {
+			Method method = _configurationBeanClass.getMethod(
+				_attributeDefinition.getID());
 
-		if (extendedAttributeDefinition != null) {
-			Map<String, String> map = new HashMap<>();
+			ExtendedAttributeDefinition extendedAttributeDefinition =
+				method.getAnnotation(ExtendedAttributeDefinition.class);
 
-			map.put(
-				"description-arguments",
-				String.join(
-					StringPool.COMMA,
-					extendedAttributeDefinition.descriptionArguments()));
+			if (extendedAttributeDefinition != null) {
+				Map<String, String> map = new HashMap<>();
 
-			map.put(
-				"name-arguments",
-				String.join(
-					StringPool.COMMA,
-					extendedAttributeDefinition.nameArguments()));
+				map.put(
+					"description-arguments",
+					String.join(
+						StringPool.COMMA,
+						extendedAttributeDefinition.descriptionArguments()));
 
-			_extensionAttributes.put(
-				ExtendedAttributeDefinition.XML_NAMESPACE, map);
+				map.put(
+					"name-arguments",
+					String.join(
+						StringPool.COMMA,
+						extendedAttributeDefinition.nameArguments()));
+
+				_extensionAttributes.put(
+					ExtendedAttributeDefinition.XML_NAMESPACE, map);
+			}
+		}
+		catch (NoSuchMethodException nsme) {
 		}
 	}
 

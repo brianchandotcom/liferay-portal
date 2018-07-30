@@ -16,7 +16,6 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portlet.internal.PortletRequestImpl;
 import com.liferay.portlet.internal.PortletResponseImpl;
 
@@ -38,14 +37,7 @@ public class LiferayPortletUtil {
 		}
 
 		while (!(portletRequest instanceof PortletRequestImpl)) {
-			if (portletRequest instanceof DoPrivilegedBean) {
-				DoPrivilegedBean doPrivilegedBean =
-					(DoPrivilegedBean)portletRequest;
-
-				portletRequest =
-					(PortletRequest)doPrivilegedBean.getActualBean();
-			}
-			else if (portletRequest instanceof PortletRequestWrapper) {
+			if (portletRequest instanceof PortletRequestWrapper) {
 				PortletRequestWrapper portletRequestWrapper =
 					(PortletRequestWrapper)portletRequest;
 

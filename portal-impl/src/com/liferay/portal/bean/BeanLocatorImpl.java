@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.security.lang.DoPrivilegedBean;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -168,12 +167,6 @@ public class BeanLocatorImpl implements BeanLocator {
 		}
 
 		if (bean == null) {
-			return bean;
-		}
-
-		if (bean instanceof DoPrivilegedBean) {
-			PortalRuntimePermission.checkGetBeanProperty(bean.getClass());
-
 			return bean;
 		}
 

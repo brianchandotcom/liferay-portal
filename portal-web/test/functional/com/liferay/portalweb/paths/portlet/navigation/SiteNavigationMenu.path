@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ITEM_LINK</td>
-	<td>//div[contains(@class,'card')]//a[normalize-space()='${key_itemName}']</td>
+	<td>//div[contains(@class,'card')]//span[normalize-space()='${key_itemName}']</td>
 	<td></td>
 </tr>
 <tr>

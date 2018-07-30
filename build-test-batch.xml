@@ -1546,6 +1546,7 @@ app.server.type=@{app.server.type}]]></echo>
 										<include name="private/apps/*" />
 										<exclude name="${build.exclude.dirs}" />
 										<exclude name="apps/static" />
+										<exclude name="apps/sync" />
 										<present targetdir="modules">
 											<mapper
 												from="*"

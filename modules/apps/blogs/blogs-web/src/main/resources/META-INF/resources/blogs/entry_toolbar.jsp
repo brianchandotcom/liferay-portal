@@ -20,7 +20,9 @@
 BlogsEntry entry = (BlogsEntry)request.getAttribute("entry_toolbar.jsp-entry");
 RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("view_entry_content.jsp-ratingsEntry");
 RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_content.jsp-ratingsStats");
-boolean showOnlyIcons = GetterUtil.getBoolean(request.getAttribute("entry_toolbar.jsp-showOnlyIcons"));
+
+boolean showFlags = ParamUtil.getBoolean(request, "showFlags");
+boolean showOnlyIcons = ParamUtil.getBoolean(request, "showOnlyIcons");
 %>
 
 <div class="autofit-float autofit-row autofit-row-center widget-toolbar">
@@ -66,7 +68,7 @@ boolean showOnlyIcons = GetterUtil.getBoolean(request.getAttribute("entry_toolba
 		</div>
 	</c:if>
 
-	<c:if test="<%= blogsPortletInstanceConfiguration.enableFlags() && blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) %>">
+	<c:if test="<%= blogsPortletInstanceConfiguration.enableFlags() && showFlags %>">
 		<div class="autofit-col">
 			<div class="flags">
 				<liferay-flags:flags

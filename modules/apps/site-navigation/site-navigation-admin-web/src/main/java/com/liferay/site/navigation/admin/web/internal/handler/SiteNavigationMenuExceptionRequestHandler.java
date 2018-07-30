@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 
 import javax.portlet.ActionRequest;
@@ -48,7 +49,10 @@ public class SiteNavigationMenuExceptionRequestHandler {
 
 		String errorMessage = "an-unexpected-error-occurred";
 
-		if (pe instanceof SiteNavigationMenuNameException) {
+		if (pe instanceof DuplicateSiteNavigationMenuException) {
+			errorMessage = "please-enter-a-unique-name";
+		}
+		else if (pe instanceof SiteNavigationMenuNameException) {
 			errorMessage = "please-enter-a-valid-name";
 		}
 

@@ -40,7 +40,7 @@ public class AnnotationsExtendedAttributeDefinition
 		_attributeDefinition = attributeDefinition;
 
 		if (configurationBeanClass != null) {
-			processExtendedMetatypeFields();
+			_processExtendedMetatypeFields();
 		}
 	}
 
@@ -105,7 +105,19 @@ public class AnnotationsExtendedAttributeDefinition
 		return _attributeDefinition.validate(value);
 	}
 
-	protected void processExtendedMetatypeFields() {
+	private ExtendedAttributeDefinition _getExtendedAttributeDefinition() {
+		try {
+			Method method = _configurationBeanClass.getMethod(
+				_attributeDefinition.getID());
+
+			return method.getAnnotation(ExtendedAttributeDefinition.class);
+		}
+		catch (NoSuchMethodException nsme) {
+			return null;
+		}
+	}
+
+	private void _processExtendedMetatypeFields() {
 		ExtendedAttributeDefinition extendedAttributeDefinition =
 			_getExtendedAttributeDefinition();
 
@@ -126,18 +138,6 @@ public class AnnotationsExtendedAttributeDefinition
 
 			_extensionAttributes.put(
 				ExtendedAttributeDefinition.XML_NAMESPACE, map);
-		}
-	}
-
-	private ExtendedAttributeDefinition _getExtendedAttributeDefinition() {
-		try {
-			Method method = _configurationBeanClass.getMethod(
-				_attributeDefinition.getID());
-
-			return method.getAnnotation(ExtendedAttributeDefinition.class);
-		}
-		catch (NoSuchMethodException nsme) {
-			return null;
 		}
 	}
 

@@ -42,10 +42,10 @@ public class AnnotationsExtendedObjectClassDefinition
 
 		_objectClassDefinition = objectClassDefinition;
 
-		loadConfigurationBeanClass(bundle);
+		_loadConfigurationBeanClass(bundle);
 
 		if (_configurationBeanClass != null) {
-			processExtendedMetatypeFields();
+			_processExtendedMetatypeFields();
 		}
 	}
 
@@ -111,7 +111,7 @@ public class AnnotationsExtendedObjectClassDefinition
 		return _objectClassDefinition.getName();
 	}
 
-	protected void loadConfigurationBeanClass(Bundle bundle) {
+	private void _loadConfigurationBeanClass(Bundle bundle) {
 		try {
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -124,7 +124,7 @@ public class AnnotationsExtendedObjectClassDefinition
 		}
 	}
 
-	protected void processExtendedMetatypeFields() {
+	private void _processExtendedMetatypeFields() {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
 			_configurationBeanClass.getAnnotation(
 				ExtendedObjectClassDefinition.class);

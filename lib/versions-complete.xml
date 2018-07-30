@@ -2576,18 +2576,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.pacl.jar!jsqlparser.jar</file-name>
-				<version>0.9.3</version>
-				<project-name>JSQLParser library</project-name>
-				<project-url>https://github.com/JSQLParser/JSqlParser</project-url>
-				<licenses>
-					<license>
-						<license-name>GNU Library or Lesser General Public License (LGPL) V2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.security.sso.cas.impl.jar!cas-client-core.jar</file-name>
 				<version>3.1.12</version>
 				<project-name>JA-SIG CAS Client for Java - Core</project-name>

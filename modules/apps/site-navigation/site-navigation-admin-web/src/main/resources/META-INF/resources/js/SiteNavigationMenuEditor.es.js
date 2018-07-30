@@ -10,10 +10,18 @@ import {
 } from './SiteNavigationMenuDOMHandler.es';
 
 import {
+	getChildren,
+	getFromContentElement,
+	getFromId,
+	getId,
+	getParent,
+	getSiblings,
+	isMenuItem,
 	MENU_ITEM_CLASSNAME,
 	MENU_ITEM_CONTENT_CLASSNAME,
 	MENU_ITEM_DRAG_ICON_CLASSNAME,
-	SiteNavigationMenuItemDOMHandler
+	setDragging,
+	setSelected
 } from './SiteNavigationMenuItemDOMHandler.es';
 
 const KEYS = {
@@ -118,9 +126,9 @@ class SiteNavigationMenuEditor extends State {
 		);
 
 		if (
-			placeholderMenuItem && SiteNavigationMenuItemDOMHandler.isMenuItem(placeholderMenuItem) &&
-			sourceMenuItem && SiteNavigationMenuItemDOMHandler.isMenuItem(sourceMenuItem) &&
-			nearestMenuItem && SiteNavigationMenuItemDOMHandler.isMenuItem(nearestMenuItem)
+			placeholderMenuItem && isMenuItem(placeholderMenuItem) &&
+			sourceMenuItem && isMenuItem(sourceMenuItem) &&
+			nearestMenuItem && isMenuItem(nearestMenuItem)
 		) {
 			const nested = shouldBeNested(
 				placeholderMenuItem,
@@ -140,11 +148,11 @@ class SiteNavigationMenuEditor extends State {
 				);
 			}
 			else {
-				const nearestMenuItemParent = SiteNavigationMenuItemDOMHandler.getParent(
+				const nearestMenuItemParent = getParent(
 					nearestMenuItem
 				);
 
-				const nearestMenuItemIndex = SiteNavigationMenuItemDOMHandler.getChildren(nearestMenuItemParent).indexOf(nearestMenuItem) + (over ? 0 : 1);
+				const nearestMenuItemIndex = getChildren(nearestMenuItemParent).indexOf(nearestMenuItem) + (over ? 0 : 1);
 
 				insertAtPosition(
 					nearestMenuItemParent,
@@ -166,8 +174,8 @@ class SiteNavigationMenuEditor extends State {
 	_handleDragStart(data, event) {
 		const menuItem = event.target.getActiveDrag();
 
-		SiteNavigationMenuItemDOMHandler.setSelected(menuItem);
-		SiteNavigationMenuItemDOMHandler.setDragging(menuItem, true);
+		setSelected(menuItem);
+		setDragging(menuItem, true);
 	}
 
 	/**
@@ -182,14 +190,13 @@ class SiteNavigationMenuEditor extends State {
 		event.preventDefault();
 
 		const menuItem = data.source;
-		const menuItemId = SiteNavigationMenuItemDOMHandler.getId(menuItem);
+		const menuItemId = getId(menuItem);
 
-		const menuItemIndex = SiteNavigationMenuItemDOMHandler
-			.getSiblings(menuItem)
+		const menuItemIndex = getSiblings(menuItem)
 			.indexOf(menuItem);
 
-		const menuItemParentId = SiteNavigationMenuItemDOMHandler.getId(
-			SiteNavigationMenuItemDOMHandler.getParent(menuItem)
+		const menuItemParentId = getId(
+			getParent(menuItem)
 		);
 
 		this._updateParentAndOrder(
@@ -200,7 +207,7 @@ class SiteNavigationMenuEditor extends State {
 			}
 		);
 
-		SiteNavigationMenuItemDOMHandler.setDragging(menuItem, false);
+		setDragging(menuItem, false);
 	}
 
 	/**
@@ -211,11 +218,11 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemClick(event) {
-		const menuItem = SiteNavigationMenuItemDOMHandler.getFromContentElement(
+		const menuItem = getFromContentElement(
 			event.delegateTarget
 		);
 
-		SiteNavigationMenuItemDOMHandler.setSelected(menuItem);
+		setSelected(menuItem);
 		this.emit('menuItemSelected', menuItem);
 	}
 
@@ -230,24 +237,22 @@ class SiteNavigationMenuEditor extends State {
 		event.stopPropagation();
 
 		const menuItem = event.delegateTarget;
-		const menuItemIndex = SiteNavigationMenuItemDOMHandler
-			.getSiblings(menuItem)
+		const menuItemIndex = getSiblings(menuItem)
 			.indexOf(menuItem);
 
-		const menuItemParent = SiteNavigationMenuItemDOMHandler.getParent(menuItem);
+		const menuItemParent = getParent(menuItem);
 
 		let layoutModified = false;
 
 		if ((event.key === KEYS.ENTER) || (event.key === KEYS.SPACEBAR)) {
-			SiteNavigationMenuItemDOMHandler.setSelected(menuItem);
+			setSelected(menuItem);
 			this.emit('menuItemSelected', menuItem);
 		}
 		else if (event.key === KEYS.ARROW_LEFT) {
-			const menuItemParentIndex = SiteNavigationMenuItemDOMHandler
-				.getSiblings(menuItemParent)
+			const menuItemParentIndex = getSiblings(menuItemParent)
 				.indexOf(menuItemParent);
 
-			const menuItemGrandParent = SiteNavigationMenuItemDOMHandler.getParent(
+			const menuItemGrandParent = getParent(
 				menuItemParent
 			);
 
@@ -271,8 +276,7 @@ class SiteNavigationMenuEditor extends State {
 			layoutModified = true;
 		}
 		else if (event.key === KEYS.ARROW_RIGHT && menuItemIndex > 0) {
-			const previousSibling = SiteNavigationMenuItemDOMHandler
-				.getSiblings(menuItem)[menuItemIndex - 1];
+			const previousSibling = getSiblings(menuItem)[menuItemIndex - 1];
 
 			insertAtPosition(
 				previousSibling,
@@ -293,18 +297,17 @@ class SiteNavigationMenuEditor extends State {
 		}
 
 		if (layoutModified) {
-			const siteNavigationMenuItemId = SiteNavigationMenuItemDOMHandler.getId(
+			const siteNavigationMenuItemId = getId(
 				menuItem
 			);
 
 			this._updateParentAndOrder(
 				{
-					dragOrder: SiteNavigationMenuItemDOMHandler
-						.getSiblings(menuItem)
+					dragOrder: getSiblings(menuItem)
 						.indexOf(menuItem),
 
-					parentId: SiteNavigationMenuItemDOMHandler.getId(
-						SiteNavigationMenuItemDOMHandler.getParent(menuItem)
+					parentId: getId(
+						getParent(menuItem)
 					),
 
 					siteNavigationMenuItemId
@@ -313,7 +316,7 @@ class SiteNavigationMenuEditor extends State {
 
 			requestAnimationFrame(
 				() => {
-					const modifiedMenuItem = SiteNavigationMenuItemDOMHandler.getFromId(
+					const modifiedMenuItem = getFromId(
 						siteNavigationMenuItemId
 					);
 

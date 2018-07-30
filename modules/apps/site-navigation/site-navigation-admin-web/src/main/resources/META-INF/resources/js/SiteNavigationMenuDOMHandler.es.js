@@ -2,10 +2,12 @@ import {contains, hasClass, toElement} from 'metal-dom';
 import position from 'metal-position';
 
 import {
+	getChildren,
+	getId,
+	isMenuItem,
 	MENU_CONTAINER_CLASSNAME,
 	MENU_ITEM_CLASSNAME,
-	MENU_ITEM_DRAGGING_CLASSNAME,
-	SiteNavigationMenuItemDOMHandler
+	MENU_ITEM_DRAGGING_CLASSNAME
 } from './SiteNavigationMenuItemDOMHandler.es';
 
 /**
@@ -29,7 +31,7 @@ const NEST_THRESHOLD = 30;
 
 const getNearestMenuItem = function(originMenuItem, placeholder) {
 	const container = toElement(`.${MENU_CONTAINER_CLASSNAME}`);
-	const originMenuItemId = SiteNavigationMenuItemDOMHandler.getId(originMenuItem);
+	const originMenuItemId = getId(originMenuItem);
 	const originMenuItemRegion = position.getRegion(placeholder);
 
 	return Array.prototype
@@ -40,7 +42,7 @@ const getNearestMenuItem = function(originMenuItem, placeholder) {
 			menuItem => (
 				(contains(container, menuItem)) &&
 				(!contains(originMenuItem, menuItem)) &&
-				(SiteNavigationMenuItemDOMHandler.getId(menuItem) !== originMenuItemId) &&
+				(getId(menuItem) !== originMenuItemId) &&
 				(!hasClass(menuItem, MENU_ITEM_DRAGGING_CLASSNAME))
 			)
 		)
@@ -83,7 +85,7 @@ const getNearestMenuItem = function(originMenuItem, placeholder) {
  */
 
 const insertAtPosition = function(parentMenuItem, menuItem, position) {
-	const children = SiteNavigationMenuItemDOMHandler.getChildren(parentMenuItem);
+	const children = getChildren(parentMenuItem);
 
 	if (position >= children.length) {
 		parentMenuItem.appendChild(menuItem);
@@ -104,7 +106,7 @@ const insertAtPosition = function(parentMenuItem, menuItem, position) {
 const insertAtTop = function(menuItem) {
 	const container = toElement(`.${MENU_CONTAINER_CLASSNAME}`);
 
-	const children = SiteNavigationMenuItemDOMHandler.getChildren(container);
+	const children = getChildren(container);
 
 	if (children.length) {
 		container.insertBefore(
@@ -143,18 +145,17 @@ const isOver = function(menuItemA, menuItemB) {
 const shouldBeNested = (menuItem, parentMenuItem) => {
 	let nested = false;
 
-	if (SiteNavigationMenuItemDOMHandler.isMenuItem(parentMenuItem)) {
+	if (isMenuItem(parentMenuItem)) {
 		const menuItemRegion = position.getRegion(menuItem);
 		const parentMenuItemRegion = position.getRegion(parentMenuItem);
 
 		const nestedInParent = menuItemRegion.left >
 			(parentMenuItemRegion.left + NEST_THRESHOLD);
 
-		const parentWithChildren = SiteNavigationMenuItemDOMHandler
-			.getChildren(parentMenuItem)
+		const parentWithChildren = getChildren(parentMenuItem)
 			.filter(
-				childMenuItem => SiteNavigationMenuItemDOMHandler.getId(childMenuItem) !==
-				SiteNavigationMenuItemDOMHandler.getId(menuItem)
+				childMenuItem => getId(childMenuItem) !==
+				getId(menuItem)
 			)
 			.length > 0;
 

@@ -252,6 +252,13 @@ public class LayoutReferencesExportImportContentProcessor
 
 			String url = content.substring(beginPos + offset, endPos);
 
+			int pos = url.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+
+			if (pos != -1) {
+				url = url.substring(0, pos);
+				endPos = beginPos + offset + pos;
+			}
+
 			if (url.endsWith(StringPool.SLASH)) {
 				url = url.substring(0, url.length() - 1);
 			}
@@ -281,7 +288,7 @@ public class LayoutReferencesExportImportContentProcessor
 					continue;
 				}
 
-				int pos = url.indexOf(StringPool.SLASH, 1);
+				pos = url.indexOf(StringPool.SLASH, 1);
 
 				String localePath = StringPool.BLANK;
 

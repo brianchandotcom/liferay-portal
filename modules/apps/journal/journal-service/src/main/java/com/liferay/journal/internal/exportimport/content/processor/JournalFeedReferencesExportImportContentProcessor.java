@@ -220,8 +220,9 @@ public class JournalFeedReferencesExportImportContentProcessor
 
 				String path = ExportImportPathUtil.getModelPath(journalFeed);
 
-				StringBundler exportedReferenceSB = new StringBundler(3);
+				StringBundler exportedReferenceSB = new StringBundler(4);
 
+				exportedReferenceSB.append(Portal.FRIENDLY_URL_SEPARATOR);
 				exportedReferenceSB.append("[$journalfeed-reference=");
 				exportedReferenceSB.append(path);
 				exportedReferenceSB.append("$]");
@@ -290,7 +291,11 @@ public class JournalFeedReferencesExportImportContentProcessor
 					groupId, className, classPK);
 			}
 
-			if (!content.contains("[$journalfeed-reference=" + path + "$]")) {
+			String exportedReference = StringBundler.concat(
+				Portal.FRIENDLY_URL_SEPARATOR, "[$journalfeed-reference=", path,
+				"$]");
+
+			if (!content.contains(exportedReference)) {
 				continue;
 			}
 
@@ -328,10 +333,6 @@ public class JournalFeedReferencesExportImportContentProcessor
 			long journalFeedId = MapUtil.getLong(
 				journalFeedIds, classPK, classPK);
 
-			int beginPos = content.indexOf("[$journalfeed-reference=" + path);
-
-			int endPos = content.indexOf("$]", beginPos) + 2;
-
 			JournalFeed importedJournalFeed = null;
 
 			try {
@@ -346,22 +347,6 @@ public class JournalFeedReferencesExportImportContentProcessor
 					_log.warn(pe.getMessage());
 				}
 
-				if (content.startsWith("[#journalfeed-reference=", endPos)) {
-					int prefixPos =
-						endPos + "[#journalfeed-reference=".length();
-
-					int postfixPos = content.indexOf("#]", prefixPos);
-
-					String originalReference = content.substring(
-						prefixPos, postfixPos);
-
-					String exportedReference = content.substring(
-						beginPos, postfixPos + 2);
-
-					content = StringUtil.replace(
-						content, exportedReference, originalReference);
-				}
-
 				continue;
 			}
 
@@ -369,14 +354,6 @@ public class JournalFeedReferencesExportImportContentProcessor
 				_JOURNAL_FEED_FRIENDLY_URL,
 				String.valueOf(importedJournalFeed.getGroupId()), "/",
 				importedJournalFeed.getFeedId());
-
-			String exportedReference = "[$journalfeed-reference=" + path + "$]";
-
-			if (content.startsWith("[#journalfeed-reference=", endPos)) {
-				endPos = content.indexOf("#]", beginPos) + 2;
-
-				exportedReference = content.substring(beginPos, endPos);
-			}
 
 			content = StringUtil.replace(content, exportedReference, url);
 		}

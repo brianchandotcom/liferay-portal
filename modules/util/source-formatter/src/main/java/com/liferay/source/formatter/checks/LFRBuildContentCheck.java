@@ -47,7 +47,7 @@ public class LFRBuildContentCheck extends BaseFileCheck {
 
 	private boolean _isNonemptyMarkerFileName(String fileName) {
 		for (String nonemptyMarkerFileName : _nonemptyMarkerFileNames) {
-			if (nonemptyMarkerFileName.endsWith(fileName)) {
+			if (fileName.endsWith(nonemptyMarkerFileName)) {
 				return true;
 			}
 		}

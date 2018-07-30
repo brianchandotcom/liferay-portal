@@ -35,11 +35,13 @@
 		</execute>
 	</command>
 
-	<command name="ViewRecaptchaEnabled" priority="4">
+	<command ignore="true" name="ViewRecaptchaEnabled" priority="4">
 		<property name="test.name.skip.portal.instance" value="Captcha#ViewRecaptchaEnabled" />
 
 		<var method="TestPropsUtil#get('recaptcha.private.key')" name="recaptchaPrivateKey" />
 		<var method="TestPropsUtil#get('recaptcha.public.key')" name="recaptchaPublicKey" />
+
+		<!-- LRQA-42641 -->
 
 		<execute macro="User#firstLoginPG" />
 

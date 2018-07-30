@@ -38,9 +38,9 @@ boolean processInProgress = (allProgressBarCountersTotal > 0) && (!Objects.equal
 					<strong><liferay-ui:message key="please-wait-as-the-publication-processes-on-the-remote-site" /></strong>
 				</div>
 			</c:when>
-			<c:when test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
+			<c:when test="<%= Validator.isNotNull(shortenedStagedModelName) && Validator.isNotNull(localizedStagedModelType) %>">
 				<div class="progress-current-item">
-					<liferay-ui:message key="publishing" /><%= StringPool.TRIPLE_PERIOD %><%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= HtmlUtil.escape(stagedModelName) %></em>
+					<liferay-ui:message key="publishing" /><%= StringPool.TRIPLE_PERIOD %><%= localizedStagedModelType %> <em><%= HtmlUtil.escape(shortenedStagedModelName) %></em>
 				</div>
 			</c:when>
 		</c:choose>

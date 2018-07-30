@@ -27,8 +27,8 @@ if (backgroundTask.isInProgress()) {
 }
 
 String cmd = null;
-String stagedModelName = null;
-String stagedModelType = null;
+String shortenedStagedModelName = null;
+String localizedStagedModelType = null;
 
 long allProgressBarCountersTotal = 0;
 int percentage = 100;
@@ -56,7 +56,17 @@ if (backgroundTaskStatus != null) {
 		percentage = Math.round((float)currentProgressBarCountersTotal / allProgressBarCountersTotal * base);
 	}
 
-	stagedModelName = (String)backgroundTaskStatus.getAttribute("stagedModelName");
-	stagedModelType = (String)backgroundTaskStatus.getAttribute("stagedModelType");
+	String stagedModelName = (String)backgroundTaskStatus.getAttribute("stagedModelName");
+	String stagedModelType = (String)backgroundTaskStatus.getAttribute("stagedModelType");
+
+	shortenedStagedModelName = stagedModelName;
+
+	if (Validator.isNotNull(stagedModelName) && (stagedModelName.length() > (20 + StringPool.TRIPLE_PERIOD.length()))) {
+		shortenedStagedModelName = StringPool.TRIPLE_PERIOD + stagedModelName.substring(stagedModelName.length() - 20);
+	}
+
+	if (Validator.isNotNull(stagedModelType)) {
+		localizedStagedModelType = ResourceActionsUtil.getModelResource(locale, stagedModelType);
+	}
 }
 %>

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
+import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -101,7 +102,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		// Site navigation menu
 
-		validate(name);
+		validate(groupId, name);
 
 		User user = userLocalService.getUser(userId);
 
@@ -253,7 +254,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		long groupId, String keywords, int start, int end,
 		OrderByComparator orderByComparator) {
 
-		return siteNavigationMenuPersistence.findByG_N(
+		return siteNavigationMenuPersistence.findByG_LikeN(
 			groupId, _customSQL.keywords(keywords, WildcardMode.SURROUND)[0],
 			start, end, orderByComparator);
 	}
@@ -265,7 +266,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 	@Override
 	public int getSiteNavigationMenusCount(long groupId, String keywords) {
-		return siteNavigationMenuPersistence.countByG_N(
+		return siteNavigationMenuPersistence.countByG_LikeN(
 			groupId, _customSQL.keywords(keywords, WildcardMode.SURROUND)[0]);
 	}
 
@@ -317,12 +318,12 @@ public class SiteNavigationMenuLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(name);
-
 		User user = userLocalService.getUser(userId);
 
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
 			siteNavigationMenuId);
+
+		validate(siteNavigationMenu.getGroupId(), name);
 
 		siteNavigationMenu.setUserId(userId);
 		siteNavigationMenu.setUserName(user.getFullName());
@@ -333,7 +334,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		return siteNavigationMenuPersistence.update(siteNavigationMenu);
 	}
 
-	protected void validate(String name) throws PortalException {
+	protected void validate(long groupId, String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new SiteNavigationMenuNameException();
 		}
@@ -344,6 +345,13 @@ public class SiteNavigationMenuLocalServiceImpl
 		if (name.length() > nameMaxLength) {
 			throw new SiteNavigationMenuNameException(
 				"Maximum length of name exceeded");
+		}
+
+		SiteNavigationMenu siteNavigationMenu =
+			siteNavigationMenuPersistence.fetchByG_N(groupId, name);
+
+		if (siteNavigationMenu != null) {
+			throw new DuplicateSiteNavigationMenuException(name);
 		}
 	}
 

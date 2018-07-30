@@ -33,7 +33,11 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_N" return-type="Collection">
+		<finder name="G_N" return-type="SiteNavigationMenu" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="G_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
 		</finder>
@@ -105,6 +109,7 @@
 		<reference entity="SiteNavigationMenu" package-path="com.liferay.site.navigation" />
 	</entity>
 	<exceptions>
+		<exception>DuplicateSiteNavigationMenu</exception>
 		<exception>InvalidSiteNavigationMenuItemOrder</exception>
 		<exception>InvalidSiteNavigationMenuItemType</exception>
 		<exception>SiteNavigationMenuItemName</exception>

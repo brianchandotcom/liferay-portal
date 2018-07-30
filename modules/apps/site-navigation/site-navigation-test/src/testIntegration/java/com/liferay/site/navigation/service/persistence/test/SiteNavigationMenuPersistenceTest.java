@@ -223,6 +223,15 @@ public class SiteNavigationMenuPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_LikeN() throws Exception {
+		_persistence.countByG_LikeN(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_LikeN(0L, "null");
+
+		_persistence.countByG_LikeN(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByG_T() throws Exception {
 		_persistence.countByG_T(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
@@ -484,6 +493,14 @@ public class SiteNavigationMenuPersistenceTest {
 				existingSiteNavigationMenu.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingSiteNavigationMenu,
 				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(
+				existingSiteNavigationMenu.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSiteNavigationMenu,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingSiteNavigationMenu.getName(),
+				ReflectionTestUtil.invoke(existingSiteNavigationMenu,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected SiteNavigationMenu addSiteNavigationMenu()

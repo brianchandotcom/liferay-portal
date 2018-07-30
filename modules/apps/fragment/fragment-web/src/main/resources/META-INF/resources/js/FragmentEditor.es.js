@@ -160,7 +160,7 @@ class FragmentEditor extends PortletBase {
 					}
 				}
 			)
-			.catch(
+			.catch (
 				(error) => {
 					this._saving = false;
 

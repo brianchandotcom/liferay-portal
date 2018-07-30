@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="MissingEmptyLineCheck" files="/modules/apps/fragment/fragment-web/src/main/java/com/liferay/fragment/web/internal/display/context/FragmentDisplayContext\.java" />
+	</checkstyle>
+</suppressions>

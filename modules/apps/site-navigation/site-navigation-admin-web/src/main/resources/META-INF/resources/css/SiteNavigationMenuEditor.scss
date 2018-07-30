@@ -44,9 +44,6 @@ body.has-control-menu .contextual-sidebar {
 
 	&__drag-icon {
 		cursor: move;
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
 		visibility: hidden;
 		z-index: 1;
 	}

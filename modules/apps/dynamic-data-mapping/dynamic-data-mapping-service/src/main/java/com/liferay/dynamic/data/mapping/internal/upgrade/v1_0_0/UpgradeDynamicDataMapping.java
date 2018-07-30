@@ -1322,7 +1322,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			PreparedStatement ps3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMTemplate set script = ? where templateId = ?");
+					"update DDMTemplate set script = ?, language = ? where " +
+						"templateId = ?");
 			PreparedStatement ps4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, sb.toString());
@@ -1375,11 +1376,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					ddmForm = updateDDMFormFields(ddmForm);
 
 					updatedScript = toJSON(ddmForm);
+
+					language = "json";
 				}
 
 				if (!script.equals(updatedScript)) {
 					ps3.setString(1, updatedScript);
-					ps3.setLong(2, templateId);
+					ps3.setString(2, language);
+					ps3.setLong(3, templateId);
 
 					ps3.addBatch();
 				}

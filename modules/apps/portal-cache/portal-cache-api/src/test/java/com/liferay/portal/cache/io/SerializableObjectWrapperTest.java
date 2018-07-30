@@ -45,27 +45,26 @@ public class SerializableObjectWrapperTest {
 
 	@Test
 	public void testEquals() throws Exception {
-		Assert.assertFalse(
-			_testSerializableObjectWrapper.equals(_TEST_SERIALIZABLE));
-		Assert.assertFalse(
-			_testSerializableObjectWrapper.equals(
-				new SerializableObjectWrapper(_ANOTHER_TEST_SERIALIZABLE)));
+		Assert.assertNotEquals(
+			_testSerializableObjectWrapper, _TEST_SERIALIZABLE);
+		Assert.assertNotEquals(
+			_testSerializableObjectWrapper,
+			new SerializableObjectWrapper(_ANOTHER_TEST_SERIALIZABLE));
 
-		Assert.assertTrue(
-			_testSerializableObjectWrapper.equals(
-				_testSerializableObjectWrapper));
-		Assert.assertTrue(
-			_testSerializableObjectWrapper.equals(
-				new SerializableObjectWrapper(_TEST_SERIALIZABLE)));
-		Assert.assertTrue(
-			_testSerializableObjectWrapper.equals(
-				_getDeserializedObject(_testSerializableObjectWrapper)));
-		Assert.assertTrue(
-			_getDeserializedObject(_testSerializableObjectWrapper).equals(
-				_testSerializableObjectWrapper));
-		Assert.assertTrue(
-			_getDeserializedObject(_testSerializableObjectWrapper).equals(
-				_getDeserializedObject(_testSerializableObjectWrapper)));
+		Assert.assertEquals(
+			_testSerializableObjectWrapper, _testSerializableObjectWrapper);
+		Assert.assertEquals(
+			_testSerializableObjectWrapper,
+			new SerializableObjectWrapper(_TEST_SERIALIZABLE));
+		Assert.assertEquals(
+			_testSerializableObjectWrapper,
+			_getDeserializedObject(_testSerializableObjectWrapper));
+		Assert.assertEquals(
+			_getDeserializedObject(_testSerializableObjectWrapper),
+			_testSerializableObjectWrapper);
+		Assert.assertEquals(
+			_getDeserializedObject(_testSerializableObjectWrapper),
+			_getDeserializedObject(_testSerializableObjectWrapper));
 	}
 
 	@Test

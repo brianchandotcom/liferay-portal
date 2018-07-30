@@ -1261,7 +1261,7 @@ public class LayoutsAdminDisplayContext {
 				_getHomePagePlid(privateLayout) == layout.getPlid());
 
 			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
-				getSelGroup(), isPrivatePages(), layout.getLayoutId());
+				getSelGroup(), layout.isPrivateLayout(), layout.getLayoutId());
 
 			layoutJSONObject.put("hasChild", childLayoutsCount > 0);
 

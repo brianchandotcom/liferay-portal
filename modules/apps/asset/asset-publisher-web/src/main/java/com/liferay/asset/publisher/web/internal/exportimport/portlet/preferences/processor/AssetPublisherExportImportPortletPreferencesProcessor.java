@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.model.adapter.StagedGroup;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.io.Serializable;
 
@@ -267,11 +268,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			AssetRendererFactory assetRendererFactory =
 				assetRenderer.getAssetRendererFactory();
 
-			Group group = _groupLocalService.getGroup(assetEntry.getGroupId());
-
 			if ((assetRendererFactory != null) &&
 				ExportImportThreadLocal.isStagingInProcess() &&
-				!group.isStagedPortlet(assetRendererFactory.getPortletId())) {
+				!_stagingGroupHelper.isStagedPortlet(
+					assetEntry.getGroupId(),
+					assetRendererFactory.getPortletId())) {
 
 				continue;
 			}
@@ -1379,5 +1380,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	private LayoutLocalService _layoutLocalService;
 	private OrganizationLocalService _organizationLocalService;
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

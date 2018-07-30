@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.io;
 
-import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;

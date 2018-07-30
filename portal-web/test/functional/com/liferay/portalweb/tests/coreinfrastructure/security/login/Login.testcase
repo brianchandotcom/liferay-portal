@@ -191,10 +191,12 @@
 		<execute macro="Smoke#viewWelcomePage" />
 	</command>
 
-	<command name="LoginWithSpanishOnlyEnabledLocale" priority="5">
+	<command ignore="true" name="LoginWithSpanishOnlyEnabledLocale" priority="5">
 		<description message="This is a use case for LPS-72398." />
 
 		<property name="test.name.skip.portal.instance" value="Login#LoginWithSpanishOnlyEnabledLocale" />
+
+		<!-- LPS-78681 -->
 
 		<execute macro="User#firstLoginPG" />
 
@@ -418,6 +420,8 @@
 	</command>
 
 	<command name="ViewInstanceSettingsAuthentication" priority="3">
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />

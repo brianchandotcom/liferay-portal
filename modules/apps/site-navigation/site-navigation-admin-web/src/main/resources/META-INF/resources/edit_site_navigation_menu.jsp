@@ -181,8 +181,10 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		return !saveChanges;
 	};
 
-	var handleMenuItemSelected = function(siteNavigationMenuItem) {
-		if (!closeSidebar()) {
+	var handleSelectedMenuItemChanged = function(changes) {
+		const siteNavigationMenuItem = changes.newVal;
+
+		if (!closeSidebar() || !siteNavigationMenuItem) {
 			return;
 		}
 
@@ -336,7 +338,10 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 				}
 			);
 
-			siteNavigationMenuEditor.on('menuItemSelected', handleMenuItemSelected);
+			siteNavigationMenuEditor.on(
+				'selectedMenuItemChanged',
+				handleSelectedMenuItemChanged
+			);
 
 			AUI().use(
 				['aui-base'],

@@ -4181,25 +4181,39 @@ file.
 - [LPS-83705]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.88.
 
-## 5.4.95 - 2018-07-25
+## 5.4.95 - 2018-07-27
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.89.
+
+## 5.4.96 - 2018-07-27
 
 ### Changed
 - [LPS-83920]: Skip replacements of the `updateFileVersions` task for projects
 in the `aspectj` directory.
 
-## 5.4.96 - 2018-07-27
-
-### Added
-- [LPS-83929]: Add the ability to exclude certain projects from executing the
-`writeArtifactPublishCommands` task by setting the property
-`writeArtifactPublishCommands.ignore.project.regex`.
-
 ## 5.4.97 - 2018-07-27
+
+### Changed
+- [LPS-78938]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.90.
+
+## 5.4.98 - 2018-07-27
 
 ### Added
 - [LPS-83920]: Skip replacements of the `updateFileVersions` task if a
 `.lfrbuild-releng-skip-update-file-versions` marker file is found in a parent
 directory.
+- [LPS-83929]: Add the ability to exclude certain projects from executing the
+`writeArtifactPublishCommands` task by setting the property
+`writeArtifactPublishCommands.ignore.project.regex`.
+
+## 5.4.99 - 2018-07-30
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.91.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4569,6 +4583,7 @@ directory.
 [LPS-78854]: https://issues.liferay.com/browse/LPS-78854
 [LPS-78901]: https://issues.liferay.com/browse/LPS-78901
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
+[LPS-78938]: https://issues.liferay.com/browse/LPS-78938
 [LPS-78971]: https://issues.liferay.com/browse/LPS-78971
 [LPS-79131]: https://issues.liferay.com/browse/LPS-79131
 [LPS-79191]: https://issues.liferay.com/browse/LPS-79191

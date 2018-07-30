@@ -7,6 +7,14 @@
 		</execute>
 	</command>
 
+	<command name="changeExportDisplayStyle">
+		<execute function="Click#clickNoMouseOverNoWaitForVisible" locator1="Icon#CURRENT_DISPLAY_STYLE" />
+
+		<execute function="Click#clickNoMouseOverNoWaitForVisible" locator1="MenuItem#ANY_MENU_ITEM">
+			<var method="StringUtil#upperCaseFirstLetter('${displayStyle}')" name="key_menuItem" />
+		</execute>
+	</command>
+
 	<command name="delete">
 		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
 			<var name="menuItem" value="Delete" />

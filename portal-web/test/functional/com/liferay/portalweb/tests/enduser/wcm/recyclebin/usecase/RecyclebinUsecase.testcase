@@ -1040,11 +1040,15 @@
 			<var name="multipleAssets" value="true" />
 		</execute>
 
+		<execute function="Refresh" />
+
 		<execute macro="RecycleBin#restoreCP">
 			<var name="assetName" value="Wiki Page Title" />
 			<var name="assetRestoreLocation" value="Wiki Node" />
 			<var name="assetType" value="Wiki Page" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />

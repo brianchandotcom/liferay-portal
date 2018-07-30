@@ -781,6 +781,11 @@
 	<command name="ViewWebContentViaAPAsGuestWithViewPermission" priority="5">
 		<description message="This is a use case for LPS-49853." />
 
+		<execute macro="TestCase#getSiteName">
+			<return name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -791,7 +796,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="roleTitle" value="Guest" />
-			<var name="siteNameScope" value="Liferay" />
+			<var name="siteNameScope" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -804,7 +809,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_VIEW_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="roleTitle" value="Guest" />
-			<var name="siteNameScope" value="Liferay" />
+			<var name="siteNameScope" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

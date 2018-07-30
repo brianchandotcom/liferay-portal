@@ -562,13 +562,63 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	public int filterCountByGroupId(long groupId);
 
 	/**
+	* Returns the site navigation menu where groupId = &#63; and name = &#63; or throws a {@link NoSuchMenuException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the matching site navigation menu
+	* @throws NoSuchMenuException if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu findByG_N(long groupId, String name)
+		throws NoSuchMenuException;
+
+	/**
+	* Returns the site navigation menu where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu fetchByG_N(long groupId, String name);
+
+	/**
+	* Returns the site navigation menu where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu fetchByG_N(long groupId, String name,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the site navigation menu where groupId = &#63; and name = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the site navigation menu that was removed
+	*/
+	public SiteNavigationMenu removeByG_N(long groupId, String name)
+		throws NoSuchMenuException;
+
+	/**
+	* Returns the number of site navigation menus where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the number of matching site navigation menus
+	*/
+	public int countByG_N(long groupId, String name);
+
+	/**
 	* Returns all the site navigation menus where groupId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
 	* @param name the name
 	* @return the matching site navigation menus
 	*/
-	public java.util.List<SiteNavigationMenu> findByG_N(long groupId,
+	public java.util.List<SiteNavigationMenu> findByG_LikeN(long groupId,
 		String name);
 
 	/**
@@ -584,7 +634,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param end the upper bound of the range of site navigation menus (not inclusive)
 	* @return the range of matching site navigation menus
 	*/
-	public java.util.List<SiteNavigationMenu> findByG_N(long groupId,
+	public java.util.List<SiteNavigationMenu> findByG_LikeN(long groupId,
 		String name, int start, int end);
 
 	/**
@@ -601,7 +651,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching site navigation menus
 	*/
-	public java.util.List<SiteNavigationMenu> findByG_N(long groupId,
+	public java.util.List<SiteNavigationMenu> findByG_LikeN(long groupId,
 		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu> orderByComparator);
 
@@ -620,7 +670,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching site navigation menus
 	*/
-	public java.util.List<SiteNavigationMenu> findByG_N(long groupId,
+	public java.util.List<SiteNavigationMenu> findByG_LikeN(long groupId,
 		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu> orderByComparator,
 		boolean retrieveFromCache);
@@ -634,7 +684,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @return the first matching site navigation menu
 	* @throws NoSuchMenuException if a matching site navigation menu could not be found
 	*/
-	public SiteNavigationMenu findByG_N_First(long groupId, String name,
+	public SiteNavigationMenu findByG_LikeN_First(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu> orderByComparator)
 		throws NoSuchMenuException;
 
@@ -646,7 +696,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	*/
-	public SiteNavigationMenu fetchByG_N_First(long groupId, String name,
+	public SiteNavigationMenu fetchByG_LikeN_First(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu> orderByComparator);
 
 	/**
@@ -658,7 +708,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @return the last matching site navigation menu
 	* @throws NoSuchMenuException if a matching site navigation menu could not be found
 	*/
-	public SiteNavigationMenu findByG_N_Last(long groupId, String name,
+	public SiteNavigationMenu findByG_LikeN_Last(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu> orderByComparator)
 		throws NoSuchMenuException;
 
@@ -670,7 +720,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	*/
-	public SiteNavigationMenu fetchByG_N_Last(long groupId, String name,
+	public SiteNavigationMenu fetchByG_LikeN_Last(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu> orderByComparator);
 
 	/**
@@ -683,7 +733,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @return the previous, current, and next site navigation menu
 	* @throws NoSuchMenuException if a site navigation menu with the primary key could not be found
 	*/
-	public SiteNavigationMenu[] findByG_N_PrevAndNext(
+	public SiteNavigationMenu[] findByG_LikeN_PrevAndNext(
 		long siteNavigationMenuId, long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu> orderByComparator)
 		throws NoSuchMenuException;
@@ -695,8 +745,8 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param name the name
 	* @return the matching site navigation menus that the user has permission to view
 	*/
-	public java.util.List<SiteNavigationMenu> filterFindByG_N(long groupId,
-		String name);
+	public java.util.List<SiteNavigationMenu> filterFindByG_LikeN(
+		long groupId, String name);
 
 	/**
 	* Returns a range of all the site navigation menus that the user has permission to view where groupId = &#63; and name LIKE &#63;.
@@ -711,8 +761,8 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param end the upper bound of the range of site navigation menus (not inclusive)
 	* @return the range of matching site navigation menus that the user has permission to view
 	*/
-	public java.util.List<SiteNavigationMenu> filterFindByG_N(long groupId,
-		String name, int start, int end);
+	public java.util.List<SiteNavigationMenu> filterFindByG_LikeN(
+		long groupId, String name, int start, int end);
 
 	/**
 	* Returns an ordered range of all the site navigation menus that the user has permissions to view where groupId = &#63; and name LIKE &#63;.
@@ -728,8 +778,8 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching site navigation menus that the user has permission to view
 	*/
-	public java.util.List<SiteNavigationMenu> filterFindByG_N(long groupId,
-		String name, int start, int end,
+	public java.util.List<SiteNavigationMenu> filterFindByG_LikeN(
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu> orderByComparator);
 
 	/**
@@ -742,7 +792,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @return the previous, current, and next site navigation menu
 	* @throws NoSuchMenuException if a site navigation menu with the primary key could not be found
 	*/
-	public SiteNavigationMenu[] filterFindByG_N_PrevAndNext(
+	public SiteNavigationMenu[] filterFindByG_LikeN_PrevAndNext(
 		long siteNavigationMenuId, long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu> orderByComparator)
 		throws NoSuchMenuException;
@@ -753,7 +803,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param groupId the group ID
 	* @param name the name
 	*/
-	public void removeByG_N(long groupId, String name);
+	public void removeByG_LikeN(long groupId, String name);
 
 	/**
 	* Returns the number of site navigation menus where groupId = &#63; and name LIKE &#63;.
@@ -762,7 +812,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param name the name
 	* @return the number of matching site navigation menus
 	*/
-	public int countByG_N(long groupId, String name);
+	public int countByG_LikeN(long groupId, String name);
 
 	/**
 	* Returns the number of site navigation menus that the user has permission to view where groupId = &#63; and name LIKE &#63;.
@@ -771,7 +821,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @param name the name
 	* @return the number of matching site navigation menus that the user has permission to view
 	*/
-	public int filterCountByG_N(long groupId, String name);
+	public int filterCountByG_LikeN(long groupId, String name);
 
 	/**
 	* Returns all the site navigation menus where groupId = &#63; and type = &#63;.

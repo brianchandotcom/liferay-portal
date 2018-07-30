@@ -164,6 +164,19 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
+	public String getSubtitle(
+		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		if (layout.isPublicLayout()) {
+			return LanguageUtil.get(locale, "public-pages");
+		}
+
+		return LanguageUtil.get(locale, "private-pages");
+	}
+
+	@Override
 	public String getTarget(SiteNavigationMenuItem siteNavigationMenuItem) {
 		Layout layout = _getLayout(siteNavigationMenuItem);
 

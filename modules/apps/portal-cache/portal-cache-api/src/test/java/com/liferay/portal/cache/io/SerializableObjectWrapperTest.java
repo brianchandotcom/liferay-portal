@@ -58,13 +58,13 @@ public class SerializableObjectWrapperTest {
 			new SerializableObjectWrapper(_TEST_SERIALIZABLE));
 		Assert.assertEquals(
 			_testSerializableObjectWrapper,
-			_getDeserializedObject(_testSerializableObjectWrapper));
+			_cloneBySerialization(_testSerializableObjectWrapper));
 		Assert.assertEquals(
-			_getDeserializedObject(_testSerializableObjectWrapper),
+			_cloneBySerialization(_testSerializableObjectWrapper),
 			_testSerializableObjectWrapper);
 		Assert.assertEquals(
-			_getDeserializedObject(_testSerializableObjectWrapper),
-			_getDeserializedObject(_testSerializableObjectWrapper));
+			_cloneBySerialization(_testSerializableObjectWrapper),
+			_cloneBySerialization(_testSerializableObjectWrapper));
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class SerializableObjectWrapperTest {
 			testSerializableObjectWrapper.hashCode());
 
 		SerializableObjectWrapper cloneSerializableObjectWrapper =
-			_getDeserializedObject(_testSerializableObjectWrapper);
+			_cloneBySerialization(_testSerializableObjectWrapper);
 
 		Assert.assertEquals(
 			_testSerializableObjectWrapper.hashCode(),
@@ -100,7 +100,7 @@ public class SerializableObjectWrapperTest {
 		Assert.assertEquals(
 			_TEST_SERIALIZABLE,
 			SerializableObjectWrapper.unwrap(
-				_getDeserializedObject(_testSerializableObjectWrapper)));
+				_cloneBySerialization(_testSerializableObjectWrapper)));
 
 		Assert.assertEquals(
 			_TEST_SERIALIZABLE,
@@ -143,7 +143,7 @@ public class SerializableObjectWrapperTest {
 
 			Assert.assertNull(
 				SerializableObjectWrapper.unwrap(
-					_getDeserializedObject(_testSerializableObjectWrapper)));
+					_cloneBySerialization(_testSerializableObjectWrapper)));
 
 			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
@@ -158,7 +158,7 @@ public class SerializableObjectWrapperTest {
 		}
 	}
 
-	private SerializableObjectWrapper _getDeserializedObject(
+	private SerializableObjectWrapper _cloneBySerialization(
 			SerializableObjectWrapper serializableObjectWrapper)
 		throws Exception {
 

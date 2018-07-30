@@ -98,6 +98,12 @@ public interface SiteNavigationMenuItemType {
 		return StringPool.BLANK;
 	}
 
+	public default String getSubtitle(
+		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
+
+		return getLabel(locale);
+	}
+
 	public default String getTarget(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 

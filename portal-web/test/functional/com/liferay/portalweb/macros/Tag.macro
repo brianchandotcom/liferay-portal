@@ -2,6 +2,8 @@
 	<command name="_addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
+		<execute function="AssertElementPresent" locator1="TextInput#NAME" />
+
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${tagName}" />
 		</execute>

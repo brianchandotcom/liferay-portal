@@ -17,7 +17,6 @@ package com.liferay.blogs.linkback;
 import com.liferay.blogs.internal.linkback.LinkbackConsumerImpl;
 import com.liferay.blogs.web.internal.util.BlogsUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -41,7 +40,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({BlogsUtil.class, PortalSocketPermission.class})
+@PrepareForTest(BlogsUtil.class)
 @RunWith(PowerMockRunner.class)
 public class LinkbackConsumerTest extends PowerMockito {
 

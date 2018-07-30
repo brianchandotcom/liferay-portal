@@ -219,7 +219,9 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 					request.setAttribute("entry_toolbar.jsp-entry", entry);
 					%>
 
-					<liferay-util:include page="/blogs/entry_toolbar.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/blogs/entry_toolbar.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="showFlags" value="<%= Boolean.TRUE.toString() %>" />
+					</liferay-util:include>
 				</div>
 			</div>
 

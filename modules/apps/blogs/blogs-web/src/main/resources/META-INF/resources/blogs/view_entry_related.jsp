@@ -106,10 +106,11 @@ BlogsEntry blogsEntry = (BlogsEntry)request.getAttribute("view_entry_related.jsp
 
 					<%
 					request.setAttribute("entry_toolbar.jsp-entry", blogsEntry);
-					request.setAttribute("entry_toolbar.jsp-showOnlyIcons", Boolean.TRUE);
 					%>
 
-					<liferay-util:include page="/blogs/entry_toolbar.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/blogs/entry_toolbar.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="showOnlyIcons" value="<%= Boolean.TRUE.toString() %>" />
+					</liferay-util:include>
 				</div>
 			</div>
 		</div>

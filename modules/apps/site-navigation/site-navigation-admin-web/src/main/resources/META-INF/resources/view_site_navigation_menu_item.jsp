@@ -27,6 +27,8 @@ SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTy
 
 String title = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale);
 
+String subtitle = siteNavigationMenuItemType.getSubtitle(siteNavigationMenuItem, locale);
+
 Map<String, Object> data = new HashMap<String, Object>();
 
 data.put("site-navigation-menu-item-id", siteNavigationMenuItemId);
@@ -40,14 +42,31 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 		<liferay-frontend:horizontal-card
 			actionJsp="/site_navigation_menu_item_action.jsp"
 			actionJspServletContext="<%= application %>"
-			text="<%= title %>"
 		>
-			<div class="site-navigation-menu-item__drag-icon">
-				<liferay-ui:icon
-					icon="drag"
-					markupView="lexicon"
-				/>
-			</div>
+			<liferay-frontend:horizontal-card-col>
+				<div class="card-row">
+					<div class="autofit-col site-navigation-menu-item__drag-icon">
+						<liferay-ui:icon
+							icon="drag"
+							markupView="lexicon"
+						/>
+					</div>
+
+					<div class="autofit-col autofit-col-expand autofit-col-gutters">
+						<h4 class="list-group-title">
+								<span class="text-truncate">
+									<a href="javascript:;">
+										<%= HtmlUtil.escape(title) %>
+									</a>
+								</span>
+						</h4>
+
+						<h6 class="list-group-subtitle text-truncate">
+							<%= HtmlUtil.escape(subtitle) %>
+						</h6>
+					</div>
+				</div>
+			</liferay-frontend:horizontal-card-col>
 		</liferay-frontend:horizontal-card>
 	</div>
 

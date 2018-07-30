@@ -17,16 +17,16 @@ class SidebarAvailableFragments extends Component {
 	 * @param {{
 	 *   itemId: !string,
 	 *   itemName: !string
-	 * }} data
+	 * }} event
 	 * @private
 	 */
 
-	_handleEntryClick(data) {
+	_handleEntryClick(event) {
 		this.emit(
 			'collectionEntryClick',
 			{
-				fragmentEntryId: data.itemId,
-				fragmentName: data.itemName
+				fragmentEntryId: event.itemId,
+				fragmentName: event.itemName
 			}
 		);
 	}

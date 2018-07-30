@@ -54,7 +54,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -182,6 +184,8 @@ public class StructuredContentNestedCollectionResource
 				).addNumber(
 					"longitude", jsonObject -> jsonObject.getDouble("longitude")
 				).build()
+			).addRelativeURL(
+				"link", this::_getLink
 			).addString(
 				"name", DDMFormFieldValue::getName
 			).build()
@@ -364,6 +368,39 @@ public class StructuredContentNestedCollectionResource
 		return new JournalArticleWrapper(journalArticle, themeDisplay);
 	}
 
+	private String _getLayoutLink(JSONObject jsonObject)
+		throws PortalException {
+
+		Long layoutId = Long.valueOf(jsonObject.getString("layoutId"));
+
+		Long groupId = Long.valueOf(jsonObject.getString("groupId"));
+
+		boolean privateLayout = jsonObject.getBoolean("privateLayout");
+
+		Layout layoutByUuidAndGroupId = _layoutLocalService.getLayout(
+			groupId, privateLayout, layoutId);
+
+		return layoutByUuidAndGroupId.getFriendlyURL();
+	}
+
+	private String _getLink(DDMFormFieldValue ddmFormFieldValue) {
+		return Try.fromFallible(
+			ddmFormFieldValue::getValue
+		).map(
+			value -> value.getString(LocaleUtil.getDefault())
+		).filter(
+			this::_isJSONObject
+		).filter(
+			string -> string.contains("layoutId")
+		).map(
+			JSONFactoryUtil::createJSONObject
+		).map(
+			this::_getLayoutLink
+		).orElse(
+			null
+		);
+	}
+
 	private String _getLocalizedString(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
@@ -516,5 +553,8 @@ public class StructuredContentNestedCollectionResource
 
 	@Reference
 	private JournalContent _journalContent;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

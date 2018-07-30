@@ -4,8 +4,10 @@
  * Renders a FragmentPreview
  */
 {template .render}
-	{@param previewFragmentEntryURL: string}
 	{@param spritemap: string}
+	{@param urls: [
+		preview: string
+	]}
 	{@param? _currentPreviewSize: string}
 	{@param? _handlePreviewLoaded: any}
 	{@param? _handlePreviewSizeButtonClick: any}
@@ -81,7 +83,7 @@
 				class="fragment-preview__content"
 				data-onload="{$_handlePreviewLoaded}"
 				ref="previewFrame"
-				src="{$previewFragmentEntryURL}"
+				src="{$urls.preview}"
 			></iframe>
 		</div>
 	</div>

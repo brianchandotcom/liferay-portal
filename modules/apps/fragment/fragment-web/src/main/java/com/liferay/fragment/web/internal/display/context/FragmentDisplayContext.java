@@ -24,6 +24,7 @@ import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
+import com.liferay.fragment.web.internal.util.SoyContextFactoryUtil;
 import com.liferay.fragment.web.util.FragmentPortletUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -38,6 +39,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -48,15 +51,19 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.template.soy.utils.SoyContext;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,12 +86,12 @@ public class FragmentDisplayContext {
 
 		_itemSelector = (ItemSelector)request.getAttribute(
 			FragmentWebKeys.ITEM_SELECTOR);
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -93,7 +100,7 @@ public class FragmentDisplayContext {
 							_renderResponse.createRenderURL(),
 							"mvcRenderCommandName",
 							"/fragment/edit_fragment_collection", "redirect",
-							themeDisplay.getURLCurrent());
+							_themeDisplay.getURLCurrent());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "collection"));
 					});
@@ -109,9 +116,6 @@ public class FragmentDisplayContext {
 	}
 
 	public List<DropdownItem> getCollectionsDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -122,8 +126,8 @@ public class FragmentDisplayContext {
 					});
 
 				if (FragmentPermission.contains(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getScopeGroupId(),
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getScopeGroupId(),
 						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
 					add(
@@ -187,14 +191,11 @@ public class FragmentDisplayContext {
 			return _fragmentCollectionId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long defaultFragmentCollectionId = 0;
 
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
-				themeDisplay.getScopeGroupId(), 0, 1);
+				_themeDisplay.getScopeGroupId(), 0, 1);
 
 		if (ListUtil.isNotEmpty(fragmentCollections)) {
 			FragmentCollection fragmentCollection = fragmentCollections.get(0);
@@ -209,13 +210,68 @@ public class FragmentDisplayContext {
 		return _fragmentCollectionId;
 	}
 
+	public SoyContext getFragmentEditorDisplayContext() throws Exception {
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		SoyContext allowedStatusSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		allowedStatusSoyContext.put(
+			"approved", String.valueOf(WorkflowConstants.STATUS_APPROVED));
+		allowedStatusSoyContext.put(
+			"draft", String.valueOf(WorkflowConstants.STATUS_DRAFT));
+
+		soyContext.put("allowedStatus", allowedStatusSoyContext);
+
+		soyContext.put("fragmentCollectionId", getFragmentCollectionId());
+		soyContext.put("fragmentEntryId", getFragmentEntryId());
+		soyContext.put("initialCSS", getCssContent());
+		soyContext.put("initialHTML", getHtmlContent());
+		soyContext.put("initialJS", getJsContent());
+		soyContext.put("name", getName());
+
+		soyContext.put("portletNamespace", _renderResponse.getNamespace());
+
+		soyContext.put(
+			"spritemap",
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		soyContext.put("status", String.valueOf(fragmentEntry.getStatus()));
+
+		SoyContext urlsSoycontext = SoyContextFactoryUtil.createSoyContext();
+
+		urlsSoycontext.put("current", _themeDisplay.getURLCurrent());
+
+		PortletURL editActionURL = _renderResponse.createActionURL();
+
+		editActionURL.setParameter(
+			ActionRequest.ACTION_NAME, "/fragment/edit_fragment_entry");
+
+		urlsSoycontext.put("edit", editActionURL.toString());
+
+		urlsSoycontext.put(
+			"preview",
+			_getFragmentEntryRenderURL(
+				fragmentEntry, "/fragment/preview_fragment_entry",
+				LiferayWindowState.POP_UP));
+		urlsSoycontext.put("redirect", getRedirect());
+		urlsSoycontext.put(
+			"render",
+			_getFragmentEntryRenderURL(
+				fragmentEntry, "/fragment/render_fragment_entry",
+				LiferayWindowState.POP_UP));
+
+		soyContext.put("urls", urlsSoycontext);
+
+		return soyContext;
+	}
+
 	public SearchContainer getFragmentEntriesSearchContainer() {
 		if (_fragmentEntriesSearchContainer != null) {
 			return _fragmentEntriesSearchContainer;
 		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-fragments");
@@ -236,24 +292,24 @@ public class FragmentDisplayContext {
 
 		if (_isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				_themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
 				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+					_themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
 					_getKeywords());
 		}
 		else {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				_themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
 				fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId());
+					_themeDisplay.getScopeGroupId(), getFragmentCollectionId());
 		}
 
 		fragmentEntriesSearchContainer.setResults(fragmentEntries);
@@ -276,9 +332,6 @@ public class FragmentDisplayContext {
 	}
 
 	public List<DropdownItem> getFragmentEntryActionItemsDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -292,8 +345,8 @@ public class FragmentDisplayContext {
 					});
 
 				if (FragmentPermission.contains(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getScopeGroupId(),
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getScopeGroupId(),
 						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
 					add(
@@ -351,13 +404,10 @@ public class FragmentDisplayContext {
 	}
 
 	public String getFragmentEntrySearchActionURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL searchActionURL = _renderResponse.createRenderURL();
 
 		searchActionURL.setParameter("mvcRenderCommandName", "/fragment/view");
-		searchActionURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		searchActionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 		searchActionURL.setParameter(
 			"fragmentCollectionId", String.valueOf(getFragmentCollectionId()));
 
@@ -418,9 +468,6 @@ public class FragmentDisplayContext {
 	}
 
 	public PortletURL getItemSelectorURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL uploadURL = _renderResponse.createActionURL();
 
 		uploadURL.setParameter(
@@ -430,7 +477,7 @@ public class FragmentDisplayContext {
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				FragmentPortletKeys.FRAGMENT, uploadURL.toString(),
-				LanguageUtil.get(themeDisplay.getLocale(), "fragments"),
+				LanguageUtil.get(_themeDisplay.getLocale(), "fragments"),
 				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
 				_fragmentPortletConfiguration.thumbnailExtensions());
 
@@ -465,6 +512,22 @@ public class FragmentDisplayContext {
 		return _jsContent;
 	}
 
+	public String getName() {
+		if (Validator.isNotNull(_name)) {
+			return _name;
+		}
+
+		_name = ParamUtil.getString(_request, "name");
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if ((fragmentEntry != null) && Validator.isNull(_name)) {
+			_name = fragmentEntry.getName();
+		}
+
+		return _name;
+	}
+
 	public String getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
@@ -496,11 +559,8 @@ public class FragmentDisplayContext {
 	}
 
 	public long getRenderLayoutPlid() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-			themeDisplay.getScopeGroupId(), false,
+			_themeDisplay.getScopeGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		if (renderLayout != null) {
@@ -508,14 +568,14 @@ public class FragmentDisplayContext {
 		}
 
 		renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-			themeDisplay.getScopeGroupId(), true,
+			_themeDisplay.getScopeGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		if (renderLayout != null) {
 			return renderLayout.getPlid();
 		}
 
-		return themeDisplay.getPlid();
+		return _themeDisplay.getPlid();
 	}
 
 	public boolean isDisabledFragmentEntriesManagementBar() {
@@ -570,6 +630,25 @@ public class FragmentDisplayContext {
 					});
 			}
 		};
+	}
+
+	private String _getFragmentEntryRenderURL(
+			FragmentEntry fragmentEntry, String mvcRenderCommandName,
+			WindowState windowState)
+		throws Exception {
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			_request, FragmentPortletKeys.FRAGMENT,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
+		portletURL.setParameter(
+			"fragmentEntryId",
+			String.valueOf(fragmentEntry.getFragmentEntryId()));
+
+		portletURL.setWindowState(windowState);
+
+		return portletURL.toString();
 	}
 
 	private String _getKeywords() {
@@ -650,10 +729,12 @@ public class FragmentDisplayContext {
 	private final ItemSelector _itemSelector;
 	private String _jsContent;
 	private String _keywords;
+	private String _name;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private final ThemeDisplay _themeDisplay;
 
 }

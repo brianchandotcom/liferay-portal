@@ -18,10 +18,12 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -60,33 +62,28 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		String html = ParamUtil.getString(actionRequest, "htmlContent");
 		int status = ParamUtil.getInteger(actionRequest, "status");
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 		try {
 			FragmentEntry fragmentEntry =
 				_fragmentEntryService.updateFragmentEntry(
 					fragmentEntryId, name, css, html, js, status);
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 			if (status == WorkflowConstants.ACTION_SAVE_DRAFT) {
-				redirect = _getSaveAndContinueRedirect(
+				String redirect = _getSaveAndContinueRedirect(
 					actionRequest, fragmentEntry);
-			}
 
-			sendRedirect(actionRequest, actionResponse, redirect);
+				jsonObject.put("redirect", redirect);
+			}
 		}
 		catch (FragmentEntryContentException fece) {
 			hideDefaultErrorMessage(actionRequest);
 
-			actionResponse.setRenderParameter(
-				"mvcRenderCommandName", "/fragment/edit_fragment_entry");
-			actionResponse.setRenderParameter(
-				"fragmentEntryId", String.valueOf(fragmentEntryId));
-			actionResponse.setRenderParameter("cssContent", css);
-			actionResponse.setRenderParameter("jsContent", js);
-			actionResponse.setRenderParameter("htmlContent", html);
-
-			SessionErrors.add(actionRequest, fece.getClass(), fece);
+			jsonObject.put("error", fece.getLocalizedMessage());
 		}
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
 	private String _getSaveAndContinueRedirect(

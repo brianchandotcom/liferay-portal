@@ -1,6 +1,7 @@
-import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 import templates from './FragmentEditor.soy';
 import './FragmentPreview.es';
@@ -13,7 +14,7 @@ import './SourceEditor.es';
  * @review
  */
 
-class FragmentEditor extends Component {
+class FragmentEditor extends PortletBase {
 
 	/**
 	 * @inheritDoc
@@ -21,8 +22,30 @@ class FragmentEditor extends Component {
 	 */
 
 	shouldUpdate(changes) {
-		return changes._html || changes._js || changes._css;
+		return changes._html ||
+			changes._js ||
+			changes._css ||
+			changes._saving;
 	}
+
+	/**
+	 * Returns content
+	 * @public
+	 * @return {{
+	 *   css: string,
+	 *   html: string,
+	 *   js: string,
+	 * }}
+	 * @review
+	 */
+
+	getContent() {
+		return ({
+			css: this._css,
+			html: this._html,
+			js: this._js
+		});
+	};
 
 	/**
 	 * Returns true when HTML content is valid, false otherwise.
@@ -43,11 +66,7 @@ class FragmentEditor extends Component {
 	_handleContentChanged() {
 		this.emit(
 			'contentChanged',
-			{
-				css: this._css,
-				html: this._html,
-				js: this._js
-			}
+			this.getContent()
 		);
 	}
 
@@ -88,6 +107,77 @@ class FragmentEditor extends Component {
 		this._js = event.content;
 		this._handleContentChanged();
 	}
+
+	/**
+	 * Save the fragment content
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+
+	_handleSaveButtonClick(event) {
+		const content = this.getContent();
+		const status = event.delegateTarget.value;
+
+		this._saving = true;
+
+		this.fetch(
+			this.urls.edit,
+			{
+				cssContent: content.css,
+				fragmentCollectionId: this.fragmentCollectionId,
+				fragmentEntryId: this.fragmentEntryId,
+				htmlContent: content.html,
+				jsContent: content.js,
+				name: this.name,
+				status
+			}
+		)
+			.then(
+				response => response.json()
+			)
+			.then(
+				response => {
+					if (response.error) {
+						throw response.error;
+					}
+
+					return response;
+				}
+			)
+			.then(
+				response => {
+					const redirectURL = (
+						response.redirect ||
+						this.urls.redirect
+					);
+
+					if (Liferay.SPA) {
+						Liferay.SPA.app.navigate(redirectURL);
+					}
+					else {
+						location.href = redirectURL;
+					}
+				}
+			)
+			.catch(
+				(error) => {
+					this._saving = false;
+
+					const message = typeof error === 'string' ?
+						error :
+						Liferay.Language.get('error');
+
+					openToast(
+						{
+							message,
+							title: Liferay.Language.get('error'),
+							type: 'danger'
+						}
+					);
+				}
+			);
+	}
 }
 
 /**
@@ -100,35 +190,7 @@ class FragmentEditor extends Component {
 FragmentEditor.STATE = {
 
 	/**
-	 * Initial HTML sent to the editor
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-
-	initialHTML: Config.string().required(),
-
-	/**
-	 * Initial CSS sent to the editor
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-
-	initialCSS: Config.string().required(),
-
-	/**
-	 * Initial JS sent to the editor
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-
-	initialJS: Config.string().required(),
-
-	/**
-	 * Namespace of the portlet being used.
-	 * Necesary for getting the real inputs which interact with the server.
+	 * Fragment collection id
 	 * @default undefined
 	 * @instance
 	 * @memberOf FragmentEditor
@@ -136,10 +198,10 @@ FragmentEditor.STATE = {
 	 * @type {!string}
 	 */
 
-	namespace: Config.string().required(),
+	fragmentCollectionId: Config.string().required(),
 
 	/**
-	 * Preview fragment entry URL
+	 * Fragment entry id
 	 * @default undefined
 	 * @instance
 	 * @memberOf FragmentEditor
@@ -147,10 +209,10 @@ FragmentEditor.STATE = {
 	 * @type {!string}
 	 */
 
-	previewFragmentEntryURL: Config.string().required(),
+	fragmentEntryId: Config.string().required(),
 
 	/**
-	 * Render fragment entry URL
+	 * Fragment name
 	 * @default undefined
 	 * @instance
 	 * @memberOf FragmentEditor
@@ -158,18 +220,25 @@ FragmentEditor.STATE = {
 	 * @type {!string}
 	 */
 
-	renderFragmentEntryURL: Config.string().required(),
+	name: Config.string().required(),
 
 	/**
-	 * Path of the available icons.
-	 * @default undefined
+	 * URLs used for communicating with backend
 	 * @instance
 	 * @memberOf FragmentEditor
 	 * @review
-	 * @type {!string}
+	 * @type {{
+	 *  edit: !string,
+	 *	redirect: !string
+	 * }}
 	 */
 
-	spritemap: Config.string().required(),
+	urls: Config.shapeOf(
+		{
+			edit: Config.string().required(),
+			redirect: Config.string().required()
+		}
+	).required(),
 
 	/**
 	 * Property that contains the updated CSS content of
@@ -229,7 +298,21 @@ FragmentEditor.STATE = {
 
 	_js: Config.string()
 		.internal()
-		.value('')
+		.value(''),
+
+	/**
+	 * If true, the fragment is being saved
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @private
+	 * @review
+	 * @type {bool}
+	 */
+
+	_saving: Config.bool()
+		.internal()
+		.value(false)
 };
 
 Soy.register(FragmentEditor, templates);

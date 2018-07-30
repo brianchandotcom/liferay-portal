@@ -132,7 +132,7 @@ class FragmentPreview extends PortletBase {
 			this._loading = true;
 
 			this.fetch(
-				this.renderFragmentEntryURL,
+				this.urls.render,
 				{
 					css: this.css,
 					html: this.html,
@@ -222,36 +222,6 @@ FragmentPreview.STATE = {
 	js: Config.string().required(),
 
 	/**
-	 * Namespace of the portlet being used.
-	 * Necesary for getting the real inputs which interact with the server.
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-
-	namespace: Config.string().required(),
-
-	/**
-	 * Render fragment entry URL
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-
-	previewFragmentEntryURL: Config.string().required(),
-
-	/**
-	 * Render fragment entry URL
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-
-	renderFragmentEntryURL: Config.string().required(),
-
-	/**
 	 * Path of the available icons.
 	 * @instance
 	 * @memberOf FragmentEditor
@@ -259,6 +229,22 @@ FragmentPreview.STATE = {
 	 */
 
 	spritemap: Config.string().required(),
+
+	/**
+	 * URLs used for communicating with backend
+	 * @instance
+	 * @memberOf FragmentPreview
+	 * @review
+	 * @type {{
+	 *  render: !string
+	 * }}
+	 */
+
+	urls: Config.shapeOf(
+		{
+			render: Config.string().required()
+		}
+	).required(),
 
 	/**
 	 * Ratio of the preview being rendered.

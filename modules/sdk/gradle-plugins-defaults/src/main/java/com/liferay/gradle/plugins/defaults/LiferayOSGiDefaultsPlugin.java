@@ -1034,6 +1034,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			});
 
+		task.setDescription(
+			"Generate maven pom.properties and pom.xml for this jar artifact.");
 		task.setGroup(BasePlugin.BUILD_GROUP);
 
 		return task;

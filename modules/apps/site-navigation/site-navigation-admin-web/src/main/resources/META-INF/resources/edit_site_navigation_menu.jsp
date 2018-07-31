@@ -25,7 +25,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuName());
 %>
 
-<nav class="management-bar management-bar-light navbar navbar-expand-md">
+<nav class="management-bar management-bar-light navbar navbar-expand-md site-navigation-management-bar">
 	<div class="container">
 		<ul class="navbar-nav"></ul>
 
@@ -54,7 +54,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	<liferay-ui:message arguments='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' key="please-enter-a-name-with-fewer-than-x-characters" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
-<div class="container-fluid-1280 contextual-sidebar-content">
+<div class="container-fluid-1280 contextual-sidebar-content site-navigation-content">
 	<div class="lfr-search-container-wrapper site-navigation-menu-container">
 
 		<%

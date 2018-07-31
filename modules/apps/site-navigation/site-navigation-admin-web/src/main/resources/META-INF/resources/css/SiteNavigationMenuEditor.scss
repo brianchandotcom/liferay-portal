@@ -3,9 +3,15 @@
 @import "mixins/site_navigation_menu_item_states";
 
 $controlBarDesktopHeight: 120px;
+$managementBarHeight: 4rem;
+$managementBarMarginBottom: 1.25rem;
 
 body.has-control-menu .contextual-sidebar {
 	margin-top: 1px;
+}
+
+body.open .site-navigation-management-bar {
+	width: calc(100vw - 320px);
 }
 
 @include sm {
@@ -13,6 +19,19 @@ body.has-control-menu .contextual-sidebar {
 		height: calc(100vh - #{$controlBarDesktopHeight});
 		top: $controlBarDesktopHeight;
 	}
+}
+
+.site-navigation-content {
+	top: $managementBarHeight + $managementBarMarginBottom;
+}
+
+.site-navigation-management-bar {
+	position: fixed;
+	transition: ease 0.5s;
+	transition-property: left, width;
+	width: 100vw;
+	will-change: left, width;
+	z-index: 1;
 }
 
 .site-navigation-menu-item {

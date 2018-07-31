@@ -16,74 +16,29 @@ package com.liferay.portal.configuration.metatype.annotations;
 
 import aQute.bnd.annotation.xml.XMLAttribute;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author Iván Zaera
+ * @author Alejandro Tardín
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @XMLAttribute(
-	embedIn = "*", namespace = ExtendedObjectClassDefinition.XML_NAMESPACE,
-	prefix = ExtendedObjectClassDefinition.XML_ATTRIBUTE_PREFIX
+	embedIn = "*", namespace = ExtendedAttributeDefinition.XML_NAMESPACE,
+	prefix = ExtendedAttributeDefinition.XML_ATTRIBUTE_PREFIX
 )
-public @interface ExtendedObjectClassDefinition {
+public @interface ExtendedAttributeDefinition {
 
 	public static final String XML_ATTRIBUTE_PREFIX = "cf";
 
 	public static final String XML_NAMESPACE =
 		"http://www.liferay.com/xsd/liferay-configuration-admin_1_0_0.xsd";
 
-	public String category() default "";
-
 	public String[] descriptionArguments() default {};
 
-	public String factoryInstanceLabelAttribute() default "";
-
-	public boolean generateUI() default true;
-
 	public String[] nameArguments() default {};
-
-	public Scope scope() default Scope.SYSTEM;
-
-	public String settingsId() default "";
-
-	public enum Scope {
-
-		COMPANY("company"), GROUP("group"),
-		PORTLET_INSTANCE("portlet-instance"), SYSTEM("system");
-
-		public boolean equals(String value) {
-			return _value.equals(value);
-		}
-
-		public String getDelimiterString() {
-			return StringBundler.concat(_SEPARATOR, name(), _SEPARATOR);
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Scope(String value) {
-			_value = value;
-		}
-
-		private static final String _SEPARATOR = StringPool.DOUBLE_UNDERLINE;
-
-		private final String _value;
-
-	}
 
 }

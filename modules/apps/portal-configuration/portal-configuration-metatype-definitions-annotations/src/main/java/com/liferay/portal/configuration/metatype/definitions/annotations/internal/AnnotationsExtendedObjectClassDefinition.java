@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.metatype.definitions.annotations.intern
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,10 +42,10 @@ public class AnnotationsExtendedObjectClassDefinition
 
 		_objectClassDefinition = objectClassDefinition;
 
-		loadConfigurationBeanClass(bundle);
+		_loadConfigurationBeanClass(bundle);
 
 		if (_configurationBeanClass != null) {
-			processExtendedMetatypeFields();
+			_processExtendedMetatypeFields();
 		}
 	}
 
@@ -110,7 +111,7 @@ public class AnnotationsExtendedObjectClassDefinition
 		return _objectClassDefinition.getName();
 	}
 
-	protected void loadConfigurationBeanClass(Bundle bundle) {
+	private void _loadConfigurationBeanClass(Bundle bundle) {
 		try {
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -123,7 +124,7 @@ public class AnnotationsExtendedObjectClassDefinition
 		}
 	}
 
-	protected void processExtendedMetatypeFields() {
+	private void _processExtendedMetatypeFields() {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
 			_configurationBeanClass.getAnnotation(
 				ExtendedObjectClassDefinition.class);
@@ -133,11 +134,19 @@ public class AnnotationsExtendedObjectClassDefinition
 
 			map.put("category", extendedObjectClassDefinition.category());
 			map.put(
+				"description-arguments",
+				StringUtil.merge(
+					extendedObjectClassDefinition.descriptionArguments()));
+			map.put(
 				"factoryInstanceLabelAttribute",
 				extendedObjectClassDefinition.factoryInstanceLabelAttribute());
 			map.put(
 				"generateUI",
 				Boolean.toString(extendedObjectClassDefinition.generateUI()));
+			map.put(
+				"name-arguments",
+				StringUtil.merge(
+					extendedObjectClassDefinition.nameArguments()));
 
 			ExtendedObjectClassDefinition.Scope scope =
 				extendedObjectClassDefinition.scope();

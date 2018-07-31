@@ -100,6 +100,16 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return _extendedObjectClassDefinition.getDescription();
 	}
 
+	public String[] getDescriptionArguments() {
+		Map<String, String> extensionAttributes =
+			_extendedObjectClassDefinition.getExtensionAttributes(
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
+
+		return StringUtil.split(
+			extensionAttributes.get("description-arguments"));
+	}
+
 	public ExtendedAttributeDefinition getExtendedAttributeDefinition(
 		String id) {
 
@@ -179,6 +189,15 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	@Override
 	public String getName() {
 		return _extendedObjectClassDefinition.getName();
+	}
+
+	public String[] getNameArguments() {
+		Map<String, String> extensionAttributes =
+			_extendedObjectClassDefinition.getExtensionAttributes(
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
+
+		return StringUtil.split(extensionAttributes.get("name-arguments"));
 	}
 
 	public String getScope() {

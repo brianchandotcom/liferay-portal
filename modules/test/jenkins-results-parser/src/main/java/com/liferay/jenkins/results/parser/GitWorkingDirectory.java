@@ -437,7 +437,7 @@ public class GitWorkingDirectory {
 		RemoteGitBranch remoteGitBranch) {
 
 		if (remoteGitBranch == null) {
-			throw new RuntimeException("Remote git branch is null");
+			throw new IllegalArgumentException("Remote git branch is null");
 		}
 
 		String remoteBranchSHA = remoteGitBranch.getSHA();
@@ -560,13 +560,14 @@ public class GitWorkingDirectory {
 
 	public void fetch(String remoteURL, boolean noTags) {
 		if (remoteURL == null) {
-			throw new RuntimeException("Remote url is null");
+			throw new IllegalArgumentException("Remote url is null");
 		}
 
 		Matcher remoteURLMatcher = _remoteURLPattern.matcher(remoteURL);
 
 		if (!remoteURLMatcher.find()) {
-			throw new RuntimeException("Invalid remote url " + remoteURL);
+			throw new IllegalArgumentException(
+				"Invalid remote url " + remoteURL);
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -771,7 +772,7 @@ public class GitWorkingDirectory {
 
 	public String getLocalBranchSHA(String localBranchName) {
 		if (localBranchName == null) {
-			throw new RuntimeException("Local branch name is null");
+			throw new IllegalArgumentException("Local branch name is null");
 		}
 
 		ExecutionResult executionResult = executeBashCommands(
@@ -1036,17 +1037,18 @@ public class GitWorkingDirectory {
 		String remoteBranchName, String remoteURL) {
 
 		if (remoteBranchName == null) {
-			throw new RuntimeException("Remote branch name is null");
+			throw new IllegalArgumentException("Remote branch name is null");
 		}
 
 		if (remoteURL == null) {
-			throw new RuntimeException("Remote url is null");
+			throw new IllegalArgumentException("Remote url is null");
 		}
 
 		Matcher remoteURLMatcher = _remoteURLPattern.matcher(remoteURL);
 
 		if (!remoteURLMatcher.find()) {
-			throw new RuntimeException("Invalid remote url " + remoteURL);
+			throw new IllegalArgumentException(
+				"Invalid remote url " + remoteURL);
 		}
 
 		String command = JenkinsResultsParserUtil.combine(
@@ -1166,7 +1168,8 @@ public class GitWorkingDirectory {
 		Matcher remoteURLMatcher = _remoteURLPattern.matcher(remoteURL);
 
 		if (!remoteURLMatcher.find()) {
-			throw new RuntimeException("Invalid remote url " + remoteURL);
+			throw new IllegalArgumentException(
+				"Invalid remote url " + remoteURL);
 		}
 
 		String command = null;
@@ -1411,17 +1414,18 @@ public class GitWorkingDirectory {
 		String remoteURL) {
 
 		if (localGitBranch == null) {
-			throw new RuntimeException("Local git branch is null");
+			throw new IllegalArgumentException("Local git branch is null");
 		}
 
 		if (remoteURL == null) {
-			throw new RuntimeException("Remote url is null");
+			throw new IllegalArgumentException("Remote url is null");
 		}
 
 		Matcher remoteURLMatcher = _remoteURLPattern.matcher(remoteURL);
 
 		if (!remoteURLMatcher.find()) {
-			throw new RuntimeException("Invalid remote url " + remoteURL);
+			throw new IllegalArgumentException(
+				"Invalid remote url " + remoteURL);
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -1863,7 +1867,7 @@ public class GitWorkingDirectory {
 		Matcher matcher = _gitLogEntityPattern.matcher(gitLogEntity);
 
 		if (!matcher.matches()) {
-			throw new RuntimeException("Unable to find Git SHA");
+			throw new IllegalArgumentException("Unable to find Git SHA");
 		}
 
 		String gitHubUserName = getGitHubUserName(getRemote("upstream"));
@@ -1913,7 +1917,7 @@ public class GitWorkingDirectory {
 			return new File(matcher.group(1));
 		}
 
-		throw new RuntimeException(
+		throw new IllegalArgumentException(
 			"Real Git directory could not be found in " + gitFile.getPath());
 	}
 

@@ -284,7 +284,7 @@
 	</command>
 
 	<command name="getAssetId">
-		<var method="selenium#getAttribute('//table[contains(@class,\'table-list\')]//tr[contains(.,\'${assetName}\')]/td[1]//input@value')" name="assetId" />
+		<var method="selenium#getAttribute('//table[contains(@class,\'table\')]//tr[contains(.,\'${assetName}\')]/td[1]//input@value')" name="assetId" />
 
 		<return value="${assetId}" />
 	</command>

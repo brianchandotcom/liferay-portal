@@ -690,6 +690,72 @@
 		</execute>
 	</command>
 
+	<command name="StagingPageLogo" priority="3">
+		<execute macro="Page#viewDefaultLogoPG" />
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
+
+		<execute macro="Page#changeLayoutLogo">
+			<var name="logoFile" value="Document_2.png" />
+			<var name="pageName" value="Staging Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#viewLayoutLogoPG">
+			<var name="assertLayoutLogoPresent" value="true" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="contentDateRange" value="All" />
+			<var name="uncheckContentNameList" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#viewDefaultLogoPG" />
+
+		<execute macro="Page#viewSiteLogo" />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#viewLayoutLogoPG">
+			<var name="assertLayoutLogoPresent" value="true" />
+		</execute>
+	</command>
+
 	<command name="StagingPortletPublishContentCount" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

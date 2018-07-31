@@ -265,7 +265,8 @@ public class LocalGitSyncUtil {
 						remoteGitBranchName.replace("-" + lastBlock, "");
 
 					RemoteGitBranch repositoryBaseRemoteGitBranch =
-						remoteGitBranches.get(repositoryBaseRemoteGitBranchName);
+						remoteGitBranches.get(
+							repositoryBaseRemoteGitBranchName);
 
 					if (repositoryBaseRemoteGitBranch != null) {
 						expiredRemoteGitBranches.add(
@@ -366,7 +367,9 @@ public class LocalGitSyncUtil {
 			String remoteGitBranchName = entry.getKey();
 
 			if (remoteGitBranchName.matches(_cacheBranchPattern.pattern())) {
-				if (hasTimestampBranch(remoteGitBranchName, remoteGitBranches)) {
+				if (hasTimestampBranch(
+						remoteGitBranchName, remoteGitBranches)) {
+
 					cacheRemoteGitBranches.add(entry.getValue());
 				}
 				else {

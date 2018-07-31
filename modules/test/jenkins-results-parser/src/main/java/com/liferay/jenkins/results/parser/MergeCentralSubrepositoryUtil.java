@@ -274,20 +274,25 @@ public class MergeCentralSubrepositoryUtil {
 
 		if (_upstreamRemoteGitBranchNames == null) {
 			_upstreamRemoteGitBranchNames =
-				centralGitWorkingDirectory.getRemoteGitBranchNames(upstreamRemote);
+				centralGitWorkingDirectory.getRemoteGitBranchNames(
+					upstreamRemote);
 		}
 
 		String mergeBranchNamePrefix = mergeBranchName.substring(
 			0, mergeBranchName.lastIndexOf("-"));
 
-		for (String upstreamRemoteGitBranchName : _upstreamRemoteGitBranchNames) {
+		for (String upstreamRemoteGitBranchName :
+				_upstreamRemoteGitBranchNames) {
+
 			if (upstreamRemoteGitBranchName.equals(mergeBranchName) &&
 				!centralSubrepository.isSubrepositoryUpstreamCommitMerged()) {
 
 				continue;
 			}
 
-			if (!upstreamRemoteGitBranchName.startsWith(mergeBranchNamePrefix)) {
+			if (!upstreamRemoteGitBranchName.startsWith(
+					mergeBranchNamePrefix)) {
+
 				continue;
 			}
 

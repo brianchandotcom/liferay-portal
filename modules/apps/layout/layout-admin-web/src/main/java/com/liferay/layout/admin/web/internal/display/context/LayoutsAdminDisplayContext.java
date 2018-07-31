@@ -1046,16 +1046,15 @@ public class LayoutsAdminDisplayContext {
 		pagesJSONObject.put("plid", LayoutConstants.DEFAULT_PLID);
 		pagesJSONObject.put("title", _getTitle(privatePages));
 
-		PortletURL privatePagesURL = getPortletURL();
+		PortletURL pagesURL = getPortletURL();
 
-		privatePagesURL.setParameter(
+		pagesURL.setParameter(
 			"navigation", privatePages ? "private-pages" : "public-pages");
-		privatePagesURL.setParameter(
+		pagesURL.setParameter(
 			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
-		privatePagesURL.setParameter(
-			"privateLayout", String.valueOf(privatePages));
+		pagesURL.setParameter("privateLayout", String.valueOf(privatePages));
 
-		pagesJSONObject.put("url", privatePagesURL.toString());
+		pagesJSONObject.put("url", pagesURL.toString());
 
 		return pagesJSONObject;
 	}

@@ -75,28 +75,16 @@
 	{@param pathThemeImages: string}
 	{@param? enabled: bool}
 
+	{let $emptyMessage: $message == '' /}
+
 	{let $wrapperAttributes kind="attributes"}
-		{if not $label and $message != ''}
+		{if not $label and not $emptyMessage}
 			class="lfr-portal-tooltip"
 			title="{$message}"
 		{/if}
 	{/let}
 
 	<span {$wrapperAttributes}>
-		{let $icon kind="html"}
-			<svg class="lexicon-icon">
-				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-empty"></use>
-			</svg>
-		{/let}
-
-		{if $enabled}
-			<button aria-label="{$message}" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm" data-onclick="_handleFlagButtonClick" type="button">
-				{$icon}
-			</button>
-		{else}
-			{$icon}
-		{/if}
-
 		{let $spanAttributes kind="attributes"}
 			class="taglib-text
 				{if not $label}
@@ -105,7 +93,22 @@
 			"
 		{/let}
 
-		<span {$spanAttributes}>{$message}</span>
+		<button
+			aria-label="{$message}"
+			class="btn btn-outline-borderless btn-outline-secondary btn-sm{if $emptyMessage} btn-monospaced{/if}"
+			data-onclick="_handleFlagButtonClick"
+			type="button"
+			{if not $enabled}disabled{/if}
+		>
+			<span {if not $emptyMessage}class="inline-item inline-item-before"{/if}>
+				<svg class="lexicon-icon">
+					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-empty"></use>
+				</svg>
+			</span>
+			{if not $emptyMessage}
+				<span {$spanAttributes}>{$message}</span>
+			{/if}
+		</button>
 	</span>
 {/template}
 

@@ -40,10 +40,12 @@ public class MultiVMPoolInvocationHandler implements InvocationHandler {
 
 		String methodName = method.getName();
 
-		if (methodName.equals("getPortalCache")) {
+		if (methodName.equals("getPortalCache") && (args != null) &&
+			(args.length > 0) && (args[0] instanceof String)) {
+
 			return ProxyUtil.newProxyInstance(
 				_classLoader, new Class<?>[] {PortalCache.class},
-				new PortalCacheInvocationHandler(_serialized));
+				new PortalCacheInvocationHandler((String)args[0], _serialized));
 		}
 
 		if (methodName.equals("getPortalCacheManager")) {

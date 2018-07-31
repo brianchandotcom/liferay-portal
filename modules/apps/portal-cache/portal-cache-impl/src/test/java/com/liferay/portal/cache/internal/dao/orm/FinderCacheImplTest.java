@@ -16,12 +16,14 @@ package com.liferay.portal.cache.internal.dao.orm;
 
 import com.liferay.portal.cache.key.HashCodeHexStringCacheKeyGenerator;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -77,6 +79,37 @@ public class FinderCacheImplTest {
 			true, true, FinderCacheImplTest.class,
 			FinderCacheImplTest.class.getName(), "test",
 			new String[] {String.class.getName()});
+	}
+
+	@Test
+	public void testNotifyPortalCacheRemovedPortalCacheName() {
+		FinderCacheImpl finderCacheImpl = new FinderCacheImpl();
+
+		finderCacheImpl.setMultiVMPool(
+			(MultiVMPool)ProxyUtil.newProxyInstance(
+				_classLoader, new Class<?>[] {MultiVMPool.class},
+				new MultiVMPoolInvocationHandler(_classLoader, true)));
+		finderCacheImpl.setProps(_props);
+
+		finderCacheImpl.activate();
+
+		PortalCache<Serializable, Serializable> portalCache =
+			ReflectionTestUtil.invoke(
+				finderCacheImpl, "_getPortalCache",
+				new Class<?>[] {String.class},
+				FinderCacheImplTest.class.getName());
+
+		Map<String, PortalCache<Serializable, Serializable>> portalCaches =
+			ReflectionTestUtil.getFieldValue(finderCacheImpl, "_portalCaches");
+
+		Assert.assertEquals(portalCaches.toString(), 1, portalCaches.size());
+		Assert.assertSame(
+			portalCache, portalCaches.get(FinderCacheImplTest.class.getName()));
+
+		finderCacheImpl.notifyPortalCacheRemoved(
+			portalCache.getPortalCacheName());
+
+		Assert.assertTrue(portalCaches.toString(), portalCaches.isEmpty());
 	}
 
 	@Test

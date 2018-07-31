@@ -165,7 +165,12 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 				String name2 = _getPropertyValue(dependency2, "name");
 
 				if ((name1 != null) && name1.equals(name2)) {
-					return 0;
+					int length1 = dependency1.length();
+					int length2 = dependency2.length();
+
+					if (length1 == length2) {
+						return 0;
+					}
 				}
 			}
 

@@ -38,6 +38,7 @@
 
 	<command name="SubmitAndApproveWorkflowAfterUpgrade625" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.2.5" />
 
 		<execute macro="Upgrade#submitNewWorkflow" />
@@ -60,6 +61,7 @@
 
 	<command name="ViewWorkflowArchive612" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.1.2" />
 
 		<execute macro="Upgrade#approveWorkflow" />
@@ -92,6 +94,7 @@
 
 	<command name="ViewWorkflowArchive625" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.2.5" />
 
 		<execute macro="Upgrade#approveWorkflow" />

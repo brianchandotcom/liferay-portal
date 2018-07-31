@@ -29,6 +29,7 @@
 		<description message="This is a use case for LPS-73277." />
 
 		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.2.5" />
 		<property name="setup.wizard.enabled" value="true" />
 

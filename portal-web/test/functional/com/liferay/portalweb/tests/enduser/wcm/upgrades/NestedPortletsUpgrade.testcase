@@ -24,6 +24,7 @@
 
 	<command name="ViewNestedPortletsArchive612" priority="5">
 		<property name="data.archive.type" value="data-archive-nested-portlets" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.1.2" />
 
 		<execute macro="Upgrade#viewNestedPortlets" />
@@ -52,6 +53,7 @@
 
 	<command name="ViewNestedPortletsArchive625" priority="5">
 		<property name="data.archive.type" value="data-archive-nested-portlets" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.2.5" />
 
 		<execute macro="Upgrade#viewNestedPortlets" />
@@ -79,6 +81,7 @@
 		<description message="This is a use case for LPS-66141." />
 
 		<property name="data.archive.type" value="data-archive-staging-nested-portlets" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.2.5" />
 
 		<execute macro="Upgrade#viewStagingNestedPortlets" />

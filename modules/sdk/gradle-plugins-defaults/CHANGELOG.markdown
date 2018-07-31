@@ -4244,6 +4244,12 @@ OSGi modules.
 - [LPS-84055]: Automatically exclude Git ignored projects from executing the
 `writeArtifactPublishCommands` task.
 
+## 5.5.0 - 2018-08-01
+
+## Added
+
+- [LPS-83168]: Generate Maven pom info for OSGi modules.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4684,6 +4690,7 @@ OSGi modules.
 [LPS-82976]: https://issues.liferay.com/browse/LPS-82976
 [LPS-83067]: https://issues.liferay.com/browse/LPS-83067
 [LPS-83104]: https://issues.liferay.com/browse/LPS-83104
+[LPS-83168]: https://issues.liferay.com/browse/LPS-83168
 [LPS-83220]: https://issues.liferay.com/browse/LPS-83220
 [LPS-83300]: https://issues.liferay.com/browse/LPS-83300
 [LPS-83483]: https://issues.liferay.com/browse/LPS-83483

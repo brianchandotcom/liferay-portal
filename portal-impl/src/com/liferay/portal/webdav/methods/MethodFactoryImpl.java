@@ -32,18 +32,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class MethodFactoryImpl implements MethodFactory {
 
-	public MethodFactoryImpl() throws Exception {
-		for (String methodName : Method.SUPPORTED_METHOD_NAMES) {
-			addMethod(methodName);
-		}
-	}
-
 	@Override
 	public Method create(HttpServletRequest request) throws WebDAVException {
 		String method = request.getMethod();
 
-		Method methodImpl = (Method)_methods.get(
-			StringUtil.toUpperCase(method));
+		Map<String, Object> methods = MethodHolder._methods;
+
+		Method methodImpl = (Method)methods.get(StringUtil.toUpperCase(method));
 
 		if (methodImpl == null) {
 			throw new WebDAVException(
@@ -53,22 +48,40 @@ public class MethodFactoryImpl implements MethodFactory {
 		return methodImpl;
 	}
 
-	protected void addMethod(String methodName) throws Exception {
-		String defaultClassName = methodName.substring(1);
+	private static class MethodHolder {
 
-		defaultClassName = StringUtil.toLowerCase(defaultClassName);
-		defaultClassName = methodName.substring(0, 1) + defaultClassName;
-		defaultClassName =
-			"com.liferay.portal.webdav.methods." + defaultClassName +
-				"MethodImpl";
+		private static final Map<String, Object> _methods = new HashMap<>();
 
-		String className = GetterUtil.getString(
-			PropsUtil.get(MethodFactoryImpl.class.getName() + "." + methodName),
-			defaultClassName);
+		static {
+			try {
+				for (String methodName : Method.SUPPORTED_METHOD_NAMES) {
+					String defaultClassName = methodName.substring(1);
 
-		_methods.put(methodName, InstanceFactory.newInstance(className));
+					defaultClassName = StringUtil.toLowerCase(defaultClassName);
+					defaultClassName =
+						methodName.substring(0, 1) + defaultClassName;
+					defaultClassName =
+						"com.liferay.portal.webdav.methods." +
+							defaultClassName + "MethodImpl";
+
+					String className = GetterUtil.getString(
+						PropsUtil.get(
+							MethodFactoryImpl.class.getName() + "." +
+								methodName),
+						defaultClassName);
+
+					_methods.put(
+						methodName,
+						InstanceFactory.newInstance(
+							MethodFactoryImpl.class.getClassLoader(),
+							className));
+				}
+			}
+			catch (Exception e) {
+				throw new ExceptionInInitializerError(e);
+			}
+		}
+
 	}
-
-	private final Map<String, Object> _methods = new HashMap<>();
 
 }

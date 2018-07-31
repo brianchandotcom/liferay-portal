@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryService;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.Portal;
@@ -176,7 +176,7 @@ public class OrganizationCollectionResource
 		return Try.success(
 			organization.getGroupId()
 		).map(
-			_groupLocalService::getGroup
+			_groupService::getGroup
 		).filter(
 			Group::isSite
 		).map(
@@ -190,7 +190,7 @@ public class OrganizationCollectionResource
 	private CountryService _countryService;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private GroupService _groupService;
 
 	@Reference
 	private OrganizationService _organizationService;

@@ -12,6 +12,17 @@ import templates from './LayoutColumn.soy';
 class LayoutColumn extends Component {
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	rendered() {
+		if (this.refs.active) {
+			this.refs.active.scrollIntoView();
+		}
+	}
+
+	/**
      * Handle copy layout click in order to show simple input modal.
      * @param {Event} event
      * @private

@@ -81,7 +81,15 @@
 		{/if}
 	{/let}
 
-	<li class="{$listGroupItemClasses}">
+	{let $listGroupItemAttributes kind="attributes"}
+		class="{$listGroupItemClasses}"
+
+		{if $layoutColumnItem.active}
+			ref="active"
+		{/if}
+	{/let}
+
+	<li {$listGroupItemAttributes}>
 		{if $layoutColumnItem.plid != '0'}
 			<div class="autofit-col flex-col">
 				<div class="custom-checkbox custom-control">

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.TempAttributesServletRequest;
 import com.liferay.portal.kernel.struts.LastPath;
@@ -56,7 +55,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Tomas Polesovsky
  * @author Raymond Augé
  */
-@DoPrivileged
 @ProviderType
 public class SecurityPortletContainerWrapper implements PortletContainer {
 

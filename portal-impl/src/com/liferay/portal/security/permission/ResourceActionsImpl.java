@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
@@ -83,7 +82,6 @@ import org.apache.struts.util.RequestUtils;
  * @author Daeyoung Song
  * @author Raymond Augé
  */
-@DoPrivileged
 public class ResourceActionsImpl implements ResourceActions {
 
 	public ResourceActionsImpl() {

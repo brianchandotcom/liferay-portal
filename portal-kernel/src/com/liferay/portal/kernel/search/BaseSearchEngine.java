@@ -20,14 +20,12 @@ import com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl;
 import com.liferay.portal.kernel.search.generic.BooleanQueryFactoryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryFactoryImpl;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Bruno Farache
  * @author Carlos Sierra Andrés
  * @author Marcellus Tavares
  */
-@DoPrivileged
 public class BaseSearchEngine implements SearchEngine {
 
 	/**

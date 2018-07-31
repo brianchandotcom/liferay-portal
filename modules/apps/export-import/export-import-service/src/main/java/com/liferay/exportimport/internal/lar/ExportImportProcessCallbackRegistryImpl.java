@@ -17,7 +17,6 @@ package com.liferay.exportimport.internal.lar;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.concurrent.Callable;
 
@@ -27,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Daniel Kocsis
  */
 @Component(immediate = true)
-@DoPrivileged
+
 @ProviderType
 public class ExportImportProcessCallbackRegistryImpl
 	implements ExportImportProcessCallbackRegistry {

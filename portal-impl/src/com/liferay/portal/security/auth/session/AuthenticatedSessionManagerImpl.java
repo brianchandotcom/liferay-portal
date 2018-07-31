@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStoreUtil;
 import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -65,7 +64,6 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Tomas Polesovsky
  */
-@DoPrivileged
 public class AuthenticatedSessionManagerImpl
 	implements AuthenticatedSessionManager {
 

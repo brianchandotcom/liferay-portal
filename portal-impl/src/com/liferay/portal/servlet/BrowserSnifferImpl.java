@@ -16,7 +16,6 @@ package com.liferay.portal.servlet;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserMetadata;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -33,7 +32,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Eduardo Lundgren
  * @author Nate Cavanaugh
  */
-@DoPrivileged
 public class BrowserSnifferImpl implements BrowserSniffer {
 
 	@Override

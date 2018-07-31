@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.security.auth;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,7 +27,6 @@ import java.util.Set;
  * @author Peter Borkuti
  * @author Tomas Polesovsky
  */
-@DoPrivileged
 public abstract class AbstractPortletRequestWhitelist
 	implements PortletRequestWhitelist {
 

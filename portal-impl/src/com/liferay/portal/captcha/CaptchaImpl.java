@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -40,7 +39,6 @@ import javax.servlet.http.HttpServletResponse;
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated
-@DoPrivileged
 public class CaptchaImpl implements Captcha {
 
 	@Override

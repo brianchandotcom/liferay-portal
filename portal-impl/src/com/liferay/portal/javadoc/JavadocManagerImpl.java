@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.javadoc.JavadocMethod;
 import com.liferay.portal.kernel.javadoc.JavadocMethodImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,7 +49,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * @author Igor Spasic
  */
-@DoPrivileged
 public class JavadocManagerImpl implements JavadocManager {
 
 	@Override

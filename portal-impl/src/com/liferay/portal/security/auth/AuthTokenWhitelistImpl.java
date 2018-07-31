@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.BaseAuthTokenWhitelist;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,7 +33,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Raymond Augé
  * @author Tomas Polesovsky
  */
-@DoPrivileged
 public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 
 	public AuthTokenWhitelistImpl() {

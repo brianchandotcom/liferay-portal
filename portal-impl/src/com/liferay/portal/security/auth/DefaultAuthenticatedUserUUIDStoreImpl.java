@@ -15,7 +15,6 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStore;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.Collections;
 import java.util.Set;
@@ -26,7 +25,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated
-@DoPrivileged
 public class DefaultAuthenticatedUserUUIDStoreImpl
 	implements AuthenticatedUserUUIDStore {
 

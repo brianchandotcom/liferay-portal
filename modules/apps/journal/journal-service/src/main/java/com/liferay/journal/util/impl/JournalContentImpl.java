@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -67,7 +66,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael Young
  */
 @Component(service = {IdentifiableOSGiService.class, JournalContent.class})
-@DoPrivileged
 public class JournalContentImpl
 	implements IdentifiableOSGiService, JournalContent {
 

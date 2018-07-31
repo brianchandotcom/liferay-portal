@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.db.DBManager;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -57,7 +56,6 @@ import org.hibernate.dialect.SybaseDialect;
  * @author Alexander Chow
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 @SuppressWarnings("deprecation")
 public class DBManagerImpl implements DBManager {
 

@@ -21,12 +21,10 @@ import com.liferay.portal.kernel.oauth.OAuthRequest;
 import com.liferay.portal.kernel.oauth.Token;
 import com.liferay.portal.kernel.oauth.Verb;
 import com.liferay.portal.kernel.oauth.Verifier;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class OAuthFactoryImpl implements OAuthFactory {
 
 	@Override

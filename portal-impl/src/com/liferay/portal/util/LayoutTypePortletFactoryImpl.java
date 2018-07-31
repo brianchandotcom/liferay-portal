@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.LayoutTypePortletFactory;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.model.impl.LayoutTypeURLImpl;
@@ -26,7 +25,6 @@ import com.liferay.portal.model.impl.LayoutTypeURLImpl;
 /**
  * @author Raymond Augé
  */
-@DoPrivileged
 public class LayoutTypePortletFactoryImpl implements LayoutTypePortletFactory {
 
 	@Override

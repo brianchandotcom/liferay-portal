@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.HashCode;
 import com.liferay.portal.kernel.util.HashCodeFactory;
 
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.util.HashCodeFactory;
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated
-@DoPrivileged
 public class HashCodeFactoryImpl implements HashCodeFactory {
 
 	@Override

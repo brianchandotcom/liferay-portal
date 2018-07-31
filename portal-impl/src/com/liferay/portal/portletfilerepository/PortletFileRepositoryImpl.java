@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -70,7 +69,6 @@ import java.util.List;
  * @author Eudaldo Alonso
  * @author Alexander Chow
  */
-@DoPrivileged
 public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override

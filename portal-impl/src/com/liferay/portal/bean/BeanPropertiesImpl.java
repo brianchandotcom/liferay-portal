@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,7 +46,6 @@ import jodd.typeconverter.Convert;
 /**
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class BeanPropertiesImpl implements BeanProperties {
 
 	@Override

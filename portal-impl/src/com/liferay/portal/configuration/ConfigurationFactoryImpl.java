@@ -17,12 +17,10 @@ package com.liferay.portal.configuration;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class ConfigurationFactoryImpl implements ConfigurationFactory {
 
 	@Override

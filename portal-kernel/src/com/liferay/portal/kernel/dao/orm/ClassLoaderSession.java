@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 
 import java.io.Serializable;
@@ -25,7 +24,6 @@ import java.sql.Connection;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class ClassLoaderSession implements Session {
 
 	public ClassLoaderSession(Session session, ClassLoader classLoader) {

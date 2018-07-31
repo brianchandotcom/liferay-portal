@@ -15,13 +15,11 @@
 package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.kernel.dao.orm.PortalCustomSQL;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class PortalCustomSQLImpl implements PortalCustomSQL {
 
 	@Override

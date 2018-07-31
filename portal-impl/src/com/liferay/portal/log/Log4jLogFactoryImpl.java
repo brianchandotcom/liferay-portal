@@ -16,14 +16,12 @@ package com.liferay.portal.log;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactory;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import org.apache.log4j.LogManager;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class Log4jLogFactoryImpl implements LogFactory {
 
 	@Override

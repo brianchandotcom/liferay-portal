@@ -105,10 +105,10 @@ public class OrganizationCollectionResource
 			).build()
 		).addRelatedCollection(
 			"members", PersonIdentifier.class
-		).addRelativeURL(
-			"logo", this::_getLogoURL
 		).addRelatedCollection(
 			"addresses", AddressIdentifier.class
+		).addRelativeURL(
+			"logo", this::_getLogoURL
 		).addString(
 			"comments", OrganizationModel::getComments
 		).addString(

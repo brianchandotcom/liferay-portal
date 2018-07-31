@@ -28,7 +28,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
@@ -41,7 +40,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
-import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
@@ -302,7 +300,7 @@ public class StructuredContentNestedCollectionResource
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());
 
-		return ListUtil.toList(assetTags, AssetTagModel::getName);
+		return ListUtil.toList(assetTags, AssetTag::getName);
 	}
 
 	private List<DDMFormFieldValue> _getJournalArticleDDMFormFieldValues(
@@ -462,7 +460,7 @@ public class StructuredContentNestedCollectionResource
 		).map(
 			this::_getJournalArticle
 		).map(
-			JournalArticleModel::getId
+			JournalArticle::getId
 		).orElse(
 			null
 		);

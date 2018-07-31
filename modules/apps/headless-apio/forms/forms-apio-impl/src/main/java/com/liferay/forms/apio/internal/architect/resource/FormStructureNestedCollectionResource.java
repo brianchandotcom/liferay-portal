@@ -23,7 +23,6 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -80,7 +79,7 @@ public class FormStructureNestedCollectionResource
 		Representor.FirstStep<DDMStructure> bidirectionalModelStep =
 			ddmStructureFirstStep.addBidirectionalModel(
 				"contentSpace", "formStructures", ContentSpaceIdentifier.class,
-				DDMStructureModel::getGroupId);
+				DDMStructure::getGroupId);
 
 		return bidirectionalModelStep.build();
 	}

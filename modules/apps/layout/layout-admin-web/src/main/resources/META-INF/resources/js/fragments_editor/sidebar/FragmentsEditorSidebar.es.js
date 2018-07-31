@@ -190,6 +190,17 @@ class FragmentsEditorSidebar extends Component {
 FragmentsEditorSidebar.STATE = {
 
 	/**
+	 * CSS class for the fragments drop target.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	dropTargetClass: Config.string(),
+
+	/**
 	 * Tabs being shown in sidebar
 	 * @default undefined
 	 * @instance

@@ -5,9 +5,9 @@
  */
 {template .render}
 	{@param availableLanguages: ?}
+	{@param classPK: ?}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
-	{@param classPK: ?}
 	{@param fragmentCollections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
@@ -23,10 +23,11 @@
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
+	{@param? dropTargetClass: string}
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
 	{@param? _handleEditableChanged: any}
-	{@param? _handleFragmentCollectionEntryClick: any}
+	{@param? _handleFragmentEntryClick: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
@@ -96,8 +97,9 @@
 		{/call}
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
+			{param dropTargetClass: $dropTargetClass /}
 			{param events: [
-				'collectionEntryClick': $_handleFragmentCollectionEntryClick,
+				'fragmentEntryClick': $_handleFragmentEntryClick,
 				'fragmentRemoveButtonClick': $_handleFragmentRemove,
 				'hide': $_handleHideContextualSidebar,
 				'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
@@ -117,6 +119,7 @@
 			{call com.liferay.layout.admin.web.FragmentEntryLinkList.render}
 				{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 				{param defaultLanguageId: $defaultLanguageId /}
+				{param dropTargetClass: $dropTargetClass ?: '' /}
 				{param events: [
 					'editableChanged': $_handleEditableChanged,
 					'mappeableFieldClicked': $_handleMappeableFieldClicked,

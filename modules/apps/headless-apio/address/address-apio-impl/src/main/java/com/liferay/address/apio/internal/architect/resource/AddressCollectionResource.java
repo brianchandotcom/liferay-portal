@@ -69,15 +69,15 @@ public class AddressCollectionResource
 		).addString(
 			"city", Address::getCity
 		).addString(
+			"postalCode", Address::getZip
+		).addString(
+			"region", this::_getRegion
+		).addString(
 			"street1", Address::getStreet1
 		).addString(
 			"street2", Address::getStreet2
 		).addString(
 			"street3", Address::getStreet3
-		).addString(
-			"zip", Address::getZip
-		).addString(
-			"region", this::_getRegion
 		).addString(
 			"type",
 			address -> {

@@ -14,6 +14,7 @@
 
 package com.liferay.organization.apio.internal.architect.resource;
 
+import com.liferay.address.apio.architect.identifier.AddressIdentifier;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -26,6 +27,7 @@ import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationModel;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.GroupService;
@@ -105,6 +107,8 @@ public class OrganizationCollectionResource
 			"members", PersonIdentifier.class
 		).addRelativeURL(
 			"logo", this::_getLogoURL
+		).addRelatedCollection(
+			"addresses", AddressIdentifier.class
 		).addString(
 			"comments", OrganizationModel::getComments
 		).addString(

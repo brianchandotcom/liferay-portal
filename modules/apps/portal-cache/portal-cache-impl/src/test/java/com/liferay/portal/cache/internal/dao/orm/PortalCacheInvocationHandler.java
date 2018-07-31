@@ -33,7 +33,10 @@ import java.util.Map;
  */
 public class PortalCacheInvocationHandler implements InvocationHandler {
 
-	public PortalCacheInvocationHandler(boolean serialized) {
+	public PortalCacheInvocationHandler(
+		String portalCacheName, boolean serialized) {
+
+		_portalCacheName = portalCacheName;
 		_serialized = serialized;
 	}
 
@@ -54,6 +57,10 @@ public class PortalCacheInvocationHandler implements InvocationHandler {
 			}
 
 			return _map.get(args[0]);
+		}
+
+		if (methodName.equals("getPortalCacheName")) {
+			return _portalCacheName;
 		}
 
 		if (methodName.equals("put")) {
@@ -79,6 +86,7 @@ public class PortalCacheInvocationHandler implements InvocationHandler {
 	}
 
 	private final Map<Serializable, Object> _map = new HashMap<>();
+	private final String _portalCacheName;
 	private final boolean _serialized;
 
 }

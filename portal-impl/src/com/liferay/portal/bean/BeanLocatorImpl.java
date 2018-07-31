@@ -106,10 +106,17 @@ public class BeanLocatorImpl implements BeanLocator {
 		}
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setPACLServletContextName(String paclServletContextName) {
-		_paclServletContextName = paclServletContextName;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public interface PACL {
 
 		public Object getBean(Object bean, ClassLoader classLoader);
@@ -128,11 +135,6 @@ public class BeanLocatorImpl implements BeanLocator {
 			_log.debug("Locating " + name);
 		}
 
-		if (name.equals("portletClassLoader")) {
-		}
-
-		Object bean = null;
-
 		if (name.endsWith(VELOCITY_SUFFIX)) {
 			Object velocityBean = _velocityBeans.get(name);
 
@@ -150,37 +152,18 @@ public class BeanLocatorImpl implements BeanLocator {
 				_velocityBeans.put(name, velocityBean);
 			}
 
-			bean = velocityBean;
-		}
-		else {
-			bean = _applicationContext.getBean(name);
+			return velocityBean;
 		}
 
-		if (bean == null) {
-			return bean;
-		}
-
-		return _pacl.getBean(bean, _classLoader);
+		return _applicationContext.getBean(name);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BeanLocatorImpl.class);
 
-	private static final PACL _pacl = new NoPACL();
-
 	private ApplicationContext _applicationContext;
 	private final ClassLoader _classLoader;
-	private String _paclServletContextName;
 	private final Map<String, Object> _velocityBeans =
 		new ConcurrentHashMap<>();
-
-	private static class NoPACL implements PACL {
-
-		@Override
-		public Object getBean(Object bean, ClassLoader classLoader) {
-			return bean;
-		}
-
-	}
 
 }

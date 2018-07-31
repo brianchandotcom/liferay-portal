@@ -41,22 +41,20 @@ public class PortalBeanLocatorUtil {
 
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = _pacl.getContextClassLoader(
-			currentThread);
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassLoader beanClassLoader = _pacl.getBeanLocatorClassLoader(
-			beanLocator);
+		ClassLoader beanClassLoader = beanLocator.getClassLoader();
 
 		try {
 			if (contextClassLoader != beanClassLoader) {
-				_pacl.setContextClassLoader(currentThread, beanClassLoader);
+				currentThread.setContextClassLoader(beanClassLoader);
 			}
 
 			return beanLocator.locate(clazz);
 		}
 		finally {
 			if (contextClassLoader != beanClassLoader) {
-				_pacl.setContextClassLoader(currentThread, contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -72,22 +70,20 @@ public class PortalBeanLocatorUtil {
 
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = _pacl.getContextClassLoader(
-			currentThread);
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassLoader beanClassLoader = _pacl.getBeanLocatorClassLoader(
-			beanLocator);
+		ClassLoader beanClassLoader = beanLocator.getClassLoader();
 
 		try {
 			if (contextClassLoader != beanClassLoader) {
-				_pacl.setContextClassLoader(currentThread, beanClassLoader);
+				currentThread.setContextClassLoader(beanClassLoader);
 			}
 
 			return beanLocator.locate(name);
 		}
 		finally {
 			if (contextClassLoader != beanClassLoader) {
-				_pacl.setContextClassLoader(currentThread, contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -109,6 +105,10 @@ public class PortalBeanLocatorUtil {
 		_beanLocator = beanLocator;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public interface PACL {
 
 		public ClassLoader getBeanLocatorClassLoader(BeanLocator beanLocator);
@@ -124,27 +124,5 @@ public class PortalBeanLocatorUtil {
 		PortalBeanLocatorUtil.class);
 
 	private static BeanLocator _beanLocator;
-	private static final PACL _pacl = new NoPACL();
-
-	private static class NoPACL implements PACL {
-
-		@Override
-		public ClassLoader getBeanLocatorClassLoader(BeanLocator beanLocator) {
-			return beanLocator.getClassLoader();
-		}
-
-		@Override
-		public ClassLoader getContextClassLoader(Thread currentThread) {
-			return currentThread.getContextClassLoader();
-		}
-
-		@Override
-		public void setContextClassLoader(
-			Thread currentThread, ClassLoader classLoader) {
-
-			currentThread.setContextClassLoader(classLoader);
-		}
-
-	}
 
 }

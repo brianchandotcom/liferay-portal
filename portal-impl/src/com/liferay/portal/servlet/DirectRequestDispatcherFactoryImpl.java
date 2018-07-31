@@ -64,6 +64,10 @@ public class DirectRequestDispatcherFactoryImpl
 		return getRequestDispatcher(servletContext, path);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public interface PACL {
 
 		public RequestDispatcher getRequestDispatcher(
@@ -113,19 +117,15 @@ public class DirectRequestDispatcherFactoryImpl
 
 			requestDispatcher = servletContext.getRequestDispatcher(path);
 
-			requestDispatcher = new DirectServletPathRegisterDispatcher(
+			return new DirectServletPathRegisterDispatcher(
 				path, requestDispatcher);
 		}
-		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Servlet found for " + fullPath);
-			}
 
-			requestDispatcher = new DirectRequestDispatcher(
-				servlet, path, queryString);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Servlet found for " + fullPath);
 		}
 
-		return _pacl.getRequestDispatcher(servletContext, requestDispatcher);
+		return new DirectRequestDispatcher(servlet, path, queryString);
 	}
 
 	private static final String _EQUINOX_REQUEST_CLASS_NAME =
@@ -134,8 +134,6 @@ public class DirectRequestDispatcherFactoryImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DirectRequestDispatcherFactoryImpl.class);
-
-	private static final PACL _pacl = new NoPACL();
 
 	/**
 	 * See LPS-79937. We need to protect against redispatch from the module
@@ -181,18 +179,6 @@ public class DirectRequestDispatcherFactoryImpl
 		}
 
 		private final RequestDispatcher _requestDispatcher;
-
-	}
-
-	private static class NoPACL implements PACL {
-
-		@Override
-		public RequestDispatcher getRequestDispatcher(
-			ServletContext servletContext,
-			RequestDispatcher requestDispatcher) {
-
-			return requestDispatcher;
-		}
 
 	}
 

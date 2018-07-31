@@ -14,17 +14,17 @@
 		<com.liferay.css.builder.outputDir>${project.build.directory}/build-css</com.liferay.css.builder.outputDir>
 		<com.liferay.portal.tools.theme.builder.outputDir>target/build-theme</com.liferay.portal.tools.theme.builder.outputDir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-#if (${liferayVersion.startsWith("7.0")})	
-    	<com.liferay.frontend.css.common.version>2.0.3</com.liferay.frontend.css.common.version>
+#if (${liferayVersion.startsWith("7.0")})
+		<com.liferay.frontend.css.common.version>2.0.3</com.liferay.frontend.css.common.version>
 #elseif (${liferayVersion.startsWith("7.1")})
-    	<com.liferay.frontend.css.common.version>3.0.1</com.liferay.frontend.css.common.version>
+		<com.liferay.frontend.css.common.version>3.0.1</com.liferay.frontend.css.common.version>
 #end
-#if (${liferayVersion.startsWith("7.0")})	    
+#if (${liferayVersion.startsWith("7.0")})
 		<com.liferay.frontend.theme.styled.version>2.0.13</com.liferay.frontend.theme.styled.version>
 #elseif (${liferayVersion.startsWith("7.1")})
 		<com.liferay.frontend.theme.styled.version>3.0.4</com.liferay.frontend.theme.styled.version>
 #end
-#if (${liferayVersion.startsWith("7.0")})	    
+#if (${liferayVersion.startsWith("7.0")})
 		<com.liferay.frontend.theme.unstyled.version>2.0.13</com.liferay.frontend.theme.unstyled.version>
 #elseif (${liferayVersion.startsWith("7.1")})
 		<com.liferay.frontend.theme.unstyled.version>3.0.4</com.liferay.frontend.theme.unstyled.version>
@@ -97,25 +97,27 @@
 			</plugin>
 		</plugins>
 	</build>
-	
 	<dependencies>
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.frontend.css.common</artifactId>
 			<version>${com.liferay.frontend.css.common.version}</version>
 			<scope>provided</scope>
+#if (false)<!--ignore-->#end
 		</dependency>
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.frontend.theme.styled</artifactId>
 			<version>${com.liferay.frontend.theme.styled.version}</version>
 			<scope>provided</scope>
+#if (false)<!--ignore-->#end
 		</dependency>
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.frontend.theme.unstyled</artifactId>
 			<version>${com.liferay.frontend.theme.unstyled.version}</version>
 			<scope>provided</scope>
+#if (false)<!--ignore-->#end
 		</dependency>
 	</dependencies>
 </project>

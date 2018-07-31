@@ -31,6 +31,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.junit.Assert;
 
+import org.w3c.dom.Comment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -66,7 +67,29 @@ public class XMLTestUtil {
 			Node node = nodeList.item(i);
 
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				elements.add((Element)node);
+				Element celement = (Element)node;
+
+				boolean ignoreNode = false;
+
+				NodeList cnodeList = celement.getChildNodes();
+
+				for (int j = 0; j < cnodeList.getLength(); j++) {
+					Node cnode = cnodeList.item(j);
+
+					if (cnode.getNodeType() == Node.COMMENT_NODE) {
+						Comment comment = (Comment)cnode;
+
+						if (comment.getData().equals("ignore")) {
+							ignoreNode = true;
+
+							break;
+						}
+					}
+				}
+
+				if (!ignoreNode) {
+					elements.add(celement);
+				}
 			}
 		}
 

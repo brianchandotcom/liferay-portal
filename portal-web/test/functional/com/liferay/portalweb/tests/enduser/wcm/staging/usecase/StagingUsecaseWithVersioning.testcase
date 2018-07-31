@@ -735,7 +735,7 @@
 
 		<execute macro="Page#viewDefaultLogoPG" />
 
-		<execute macro="Page#viewSiteLogo" />
+		<execute macro="Page#viewDefaultLogoPG" />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
@@ -899,7 +899,7 @@
 
 		<execute macro="Site#changeSiteLogo">
 			<var name="logoFile" value="Document_2.png" />
-			<var name="page" value="Staging Test Page" />
+			<var name="pageName" value="Staging Test Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -930,7 +930,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#viewSiteLogo" />
+		<execute macro="Page#viewDefaultLogoPG" />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
@@ -946,9 +946,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#viewSiteLogo">
-			<var name="assertCustomLogoPresent" value="true" />
-		</execute>
+		<execute macro="Page#viewCustomLogoPG" />
 	</command>
 
 	<command name="StagingSiteVariationIncompletePage" priority="5">

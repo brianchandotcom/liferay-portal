@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 
@@ -27,7 +26,6 @@ import java.util.TimeZone;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
-@DoPrivileged
 public class CalendarFactoryImpl implements CalendarFactory {
 
 	@Override

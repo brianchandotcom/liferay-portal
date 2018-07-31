@@ -15,7 +15,6 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.model.ModelHintsCallback;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
@@ -30,7 +29,6 @@ import org.dom4j.io.SAXReader;
 /**
  * @author Raymond Augé
  */
-@DoPrivileged
 public class DefaultModelHintsImpl extends BaseModelHintsImpl {
 
 	@Override

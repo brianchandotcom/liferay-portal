@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.notifications.ChannelListener;
 import com.liferay.portal.kernel.notifications.DuplicateChannelHubException;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.UnknownChannelHubException;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
@@ -43,7 +42,6 @@ import java.util.concurrent.ConcurrentMap;
  * @author Brian Wing Shun
  * @author Shuyang Zhou
  */
-@DoPrivileged
 public class ChannelHubManagerImpl implements ChannelHubManager {
 
 	@Override

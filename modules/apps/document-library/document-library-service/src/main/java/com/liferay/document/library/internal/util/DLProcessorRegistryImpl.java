@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -56,7 +55,6 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.document.library.configuration.DLFileEntryConfiguration",
 	immediate = true, service = DLProcessorRegistry.class
 )
-@DoPrivileged
 public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	@Activate

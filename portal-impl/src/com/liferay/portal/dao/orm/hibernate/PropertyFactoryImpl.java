@@ -16,12 +16,10 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactory;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class PropertyFactoryImpl implements PropertyFactory {
 
 	@Override

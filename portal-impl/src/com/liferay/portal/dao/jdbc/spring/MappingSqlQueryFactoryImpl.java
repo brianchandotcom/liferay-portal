@@ -18,14 +18,12 @@ import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactory;
 import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import javax.sql.DataSource;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class MappingSqlQueryFactoryImpl implements MappingSqlQueryFactory {
 
 	@Override

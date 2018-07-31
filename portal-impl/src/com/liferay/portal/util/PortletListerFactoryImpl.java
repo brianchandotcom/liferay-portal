@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PortletLister;
 import com.liferay.portal.kernel.util.PortletListerFactory;
 
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.util.PortletListerFactory;
  * @author Dennis Ju
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class PortletListerFactoryImpl implements PortletListerFactory {
 
 	@Override

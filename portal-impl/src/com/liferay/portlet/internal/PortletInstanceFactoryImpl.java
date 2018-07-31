@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletContextFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -47,7 +46,6 @@ import javax.servlet.ServletContext;
  * @author Shuyang Zhou
  * @author Neil Griffin
  */
-@DoPrivileged
 public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 	public void afterPropertiesSet() throws Exception {

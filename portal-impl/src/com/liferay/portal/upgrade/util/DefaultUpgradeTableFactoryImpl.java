@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.util;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactory;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactory;
 /**
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class DefaultUpgradeTableFactoryImpl implements UpgradeTableFactory {
 
 	@Override

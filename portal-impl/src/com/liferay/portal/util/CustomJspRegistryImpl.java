@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CustomJspRegistry;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -28,7 +27,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Ryan Park
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class CustomJspRegistryImpl implements CustomJspRegistry {
 
 	public CustomJspRegistryImpl() {

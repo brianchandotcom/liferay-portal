@@ -17,7 +17,6 @@ package com.liferay.portal.util;
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,7 +35,6 @@ import java.util.regex.Pattern;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@DoPrivileged
 @OSGiBeanProperties(property = "service.ranking:Integer=100")
 public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 

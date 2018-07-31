@@ -15,7 +15,6 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.FastDateFormatConstants;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -35,7 +34,6 @@ import org.apache.commons.lang.time.FastDateFormat;
 /**
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class FastDateFormatFactoryImpl implements FastDateFormatFactory {
 
 	@Override

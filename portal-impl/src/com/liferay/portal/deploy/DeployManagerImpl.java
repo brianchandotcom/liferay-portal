@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.plugin.RequiredPluginPackageException;
 import com.liferay.portal.kernel.plugin.Version;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -44,7 +43,6 @@ import java.util.Properties;
  * @author Brian Wing Shun Chan
  * @author Ryan Park
  */
-@DoPrivileged
 public class DeployManagerImpl implements DeployManager {
 
 	public DeployManagerImpl() {

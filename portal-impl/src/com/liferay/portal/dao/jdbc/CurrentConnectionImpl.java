@@ -15,7 +15,6 @@
 package com.liferay.portal.dao.jdbc;
 
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.spring.hibernate.SpringHibernateThreadLocalUtil;
 
 import java.sql.Connection;
@@ -27,7 +26,6 @@ import org.springframework.jdbc.datasource.ConnectionHolder;
 /**
  * @author Shuyang Zhou
  */
-@DoPrivileged
 public class CurrentConnectionImpl implements CurrentConnection {
 
 	@Override

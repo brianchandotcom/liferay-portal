@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -38,7 +37,6 @@ import org.hibernate.criterion.Restrictions;
 /**
  * @author Raymond Augé
  */
-@DoPrivileged
 public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 	public void afterPropertiesSet() {

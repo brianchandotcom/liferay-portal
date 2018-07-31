@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -68,7 +67,6 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Shuyang Zhou
  */
 @Component(immediate = true, service = SettingsLocatorHelper.class)
-@DoPrivileged
 public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	@Override

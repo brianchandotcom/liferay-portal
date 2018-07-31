@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
@@ -58,7 +57,6 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Jorge Ferrer
  */
 @Component(immediate = true, service = SettingsFactory.class)
-@DoPrivileged
 public class SettingsFactoryImpl implements SettingsFactory {
 
 	public SettingsFactoryImpl() {

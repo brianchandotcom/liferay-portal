@@ -16,13 +16,11 @@ package com.liferay.portlet.expando.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portlet.expando.model.impl.ExpandoBridgeImpl;
 
 /**
  * @author Raymond Augé
  */
-@DoPrivileged
 public class ExpandoBridgeFactoryImpl implements ExpandoBridgeFactory {
 
 	@Override

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -105,7 +104,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Andrius Vitkauskas
  * @author Eduardo Lundgren
  */
-@DoPrivileged
 public class LanguageImpl implements Language, Serializable {
 
 	public void afterPropertiesSet() {

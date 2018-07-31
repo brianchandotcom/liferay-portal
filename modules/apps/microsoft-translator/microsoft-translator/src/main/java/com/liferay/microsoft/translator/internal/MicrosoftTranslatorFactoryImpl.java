@@ -18,7 +18,6 @@ import com.liferay.microsoft.translator.internal.configuration.MicrosoftTranslat
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactory;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.Map;
 
@@ -34,7 +33,6 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.microsoft.translator.internal.configuration.MicrosoftTranslatorConfiguration",
 	immediate = true, service = MicrosoftTranslatorFactory.class
 )
-@DoPrivileged
 public class MicrosoftTranslatorFactoryImpl
 	implements MicrosoftTranslatorFactory {
 

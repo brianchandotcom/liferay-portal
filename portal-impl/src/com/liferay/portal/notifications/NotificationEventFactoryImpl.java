@@ -17,13 +17,11 @@ package com.liferay.portal.notifications;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEventFactory;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Edward Han
  * @author Brian Wing Shun Chan
  */
-@DoPrivileged
 public class NotificationEventFactoryImpl implements NotificationEventFactory {
 
 	@Override

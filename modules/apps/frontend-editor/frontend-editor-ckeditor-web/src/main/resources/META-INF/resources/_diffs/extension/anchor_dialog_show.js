@@ -4,14 +4,16 @@ ckEditor.on(
 		var dialog = event.data.definition.dialog;
 
 		if (dialog.getName() === 'anchor') {
-			var originalGetValueOfFn = dialog.getValueOf.bind(dialog);
+			var originalFn = dialog.getValueOf.bind(dialog);
 
-			dialog.getValueOf = function(a, b) {
-				var originalValue = originalGetValueOfFn(a, b);
+			dialog.getValueOf = function(pageId, elementId) {
+				var value = originalFn(pageId, elementId);
 
-				var modifiedValue = originalValue.split(' ').join('_');
+				if (pageId === 'info' && elementId === 'txtName') {
+					value = value.replace(/ /g, '_');
+				}
 
-				return modifiedValue;
+				return value;
 			};
 		}
 	}

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -974,12 +975,12 @@ public class CustomSQLImpl implements CustomSQL {
 	private class CustomSQLContainer {
 
 		public String get(String id) {
-			Map<String, String> sqlPool = _sqlPool;
+			ObjectValuePair<Map<String, String>, Boolean> objectValuePair =
+				_objectValuePair;
 
-			boolean sqlLoadError = _sqlLoadError;
-
-			if (sqlPool == null) {
-				sqlPool = new HashMap<>();
+			if (objectValuePair == null) {
+				Map<String, String> sqlPool = new HashMap<>();
+				boolean sqlLoadError = false;
 
 				try {
 					_read(_classLoader, "custom-sql/default.xml", sqlPool);
@@ -989,14 +990,16 @@ public class CustomSQLImpl implements CustomSQL {
 				}
 				catch (Exception e) {
 					sqlLoadError = true;
+
 					_log.error(e, e);
 				}
 
-				_sqlLoadError = sqlLoadError;
-				_sqlPool = sqlPool;
+				objectValuePair = new ObjectValuePair<>(sqlPool, sqlLoadError);
+
+				_objectValuePair = objectValuePair;
 			}
 
-			if (sqlLoadError && _log.isWarnEnabled()) {
+			if (objectValuePair.getValue() && _log.isWarnEnabled()) {
 				Bundle bundle = FrameworkUtil.getBundle(
 					_classLoader.getClass());
 
@@ -1005,18 +1008,18 @@ public class CustomSQLImpl implements CustomSQL {
 						", please check default.xml files");
 			}
 
+			Map<String, String> sqlPool = objectValuePair.getKey();
+
 			return sqlPool.get(id);
 		}
 
 		private CustomSQLContainer(ClassLoader classLoader) {
 			_classLoader = classLoader;
-
-			_sqlLoadError = false;
 		}
 
 		private final ClassLoader _classLoader;
-		private volatile boolean _sqlLoadError;
-		private volatile Map<String, String> _sqlPool;
+		private volatile ObjectValuePair<Map<String, String>, Boolean>
+			_objectValuePair;
 
 	}
 

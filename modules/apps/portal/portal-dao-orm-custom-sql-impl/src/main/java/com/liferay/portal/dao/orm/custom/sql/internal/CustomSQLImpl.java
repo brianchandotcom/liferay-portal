@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -216,16 +218,21 @@ public class CustomSQLImpl implements CustomSQL {
 
 				ClassLoader classLoader = bundleWiring.getClassLoader();
 
-				if ((classLoader.getResource("custom-sql/default.xml") ==
-						null) &&
-					(classLoader.getResource(
-						"META-INF/custom-sql/default.xml") == null)) {
+				URL sourceURL = classLoader.getResource(
+					"custom-sql/default.xml");
 
+				if (sourceURL == null) {
+					sourceURL = classLoader.getResource(
+						"META-INF/custom-sql/default.xml");
+				}
+
+				if (sourceURL == null) {
 					return null;
 				}
 
 				_customSQLContainerPool.put(
-					classLoader, new CustomSQLContainer(classLoader));
+					classLoader,
+					new CustomSQLContainer(classLoader, sourceURL));
 
 				return classLoader;
 			}
@@ -891,16 +898,12 @@ public class CustomSQLImpl implements CustomSQL {
 	}
 
 	private void _read(
-			ClassLoader classLoader, String source, Map<String, String> sqls)
+			ClassLoader classLoader, URL sourceURL, Map<String, String> sqls)
 		throws Exception {
 
-		try (InputStream is = classLoader.getResourceAsStream(source)) {
-			if (is == null) {
-				return;
-			}
-
+		try (InputStream is = sourceURL.openStream()) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Loading " + source);
+				_log.debug("Loading " + sourceURL);
 			}
 
 			Document document = UnsecureSAXReaderUtil.read(is);
@@ -911,7 +914,9 @@ public class CustomSQLImpl implements CustomSQL {
 				String file = sqlElement.attributeValue("file");
 
 				if (Validator.isNotNull(file)) {
-					_read(classLoader, file, sqls);
+					URL fileURL = classLoader.getResource(file);
+
+					_read(classLoader, fileURL, sqls);
 				}
 				else {
 					String id = sqlElement.attributeValue("id");
@@ -982,10 +987,7 @@ public class CustomSQLImpl implements CustomSQL {
 				Exception exception = null;
 
 				try {
-					_read(_classLoader, "custom-sql/default.xml", sqlPool);
-					_read(
-						_classLoader, "META-INF/custom-sql/default.xml",
-						sqlPool);
+					_read(_classLoader, _sourceURL, sqlPool);
 				}
 				catch (Exception e) {
 					exception = e;
@@ -1009,13 +1011,15 @@ public class CustomSQLImpl implements CustomSQL {
 			return sqlPool.get(id);
 		}
 
-		private CustomSQLContainer(ClassLoader classLoader) {
+		private CustomSQLContainer(ClassLoader classLoader, URL sourceURL) {
 			_classLoader = classLoader;
+			_sourceURL = sourceURL;
 		}
 
 		private final ClassLoader _classLoader;
 		private volatile ObjectValuePair<Map<String, String>, Exception>
 			_objectValuePair;
+		private final URL _sourceURL;
 
 	}
 

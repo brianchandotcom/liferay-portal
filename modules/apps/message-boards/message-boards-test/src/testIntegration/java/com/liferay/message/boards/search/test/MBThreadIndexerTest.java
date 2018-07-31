@@ -19,6 +19,7 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -136,9 +136,8 @@ public class MBThreadIndexerTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Reindexing message boards threads for message board ",
-					"category ID ",
-					String.valueOf(MBCategoryConstants.DISCUSSION_CATEGORY_ID),
-					" and group ID ", String.valueOf(group.getGroupId())),
+					"category ID ", MBCategoryConstants.DISCUSSION_CATEGORY_ID,
+					" and group ID ", group.getGroupId()),
 				loggingEvent.getMessage());
 		}
 	}
@@ -186,9 +185,8 @@ public class MBThreadIndexerTest {
 				StringBundler.concat(
 					"Reindexing message boards threads for message board ",
 					"category ID ",
-					String.valueOf(
-						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID),
-					" and group ID ", String.valueOf(group.getGroupId())),
+					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+					" and group ID ", group.getGroupId()),
 				loggingEvent.getMessage());
 		}
 	}

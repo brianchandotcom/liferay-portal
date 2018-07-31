@@ -15,8 +15,8 @@
 package com.liferay.network.utilities.web.internal.util;
 
 import com.liferay.network.utilities.web.internal.model.Whois;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;

@@ -16,8 +16,8 @@ package com.liferay.knowledge.base.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Brian Wing Shun Chan
@@ -68,7 +68,7 @@ public class KBArticleUrlTitleException extends PortalException {
 			super(
 				StringBundler.concat(
 					"URL title ", urlTitle, " must have fewer than ",
-					String.valueOf(urlTitleMaxSize), " characters"));
+					urlTitleMaxSize, " characters"));
 		}
 
 	}

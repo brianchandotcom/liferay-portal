@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.impl;
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -58,8 +58,8 @@ public class MBStatsUserLocalServiceImpl
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Add failed, fetch {groupId=", String.valueOf(groupId),
-						", userId=", String.valueOf(userId), "}"));
+						"Add failed, fetch {groupId=", groupId, ", userId=",
+						userId, "}"));
 			}
 
 			statsUser = mbStatsUserPersistence.fetchByG_U(

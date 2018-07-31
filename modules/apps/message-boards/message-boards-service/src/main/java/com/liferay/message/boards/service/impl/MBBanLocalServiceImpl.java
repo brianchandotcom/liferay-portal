@@ -18,6 +18,7 @@ import com.liferay.message.boards.exception.BannedUserException;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.base.MBBanLocalServiceBaseImpl;
 import com.liferay.message.boards.util.MBUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
 
@@ -142,9 +142,8 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Auto expiring ban ",
-							String.valueOf(ban.getBanId()), " on user ",
-							String.valueOf(ban.getBanUserId())));
+							"Auto expiring ban ", ban.getBanId(), " on user ",
+							ban.getBanUserId()));
 				}
 
 				mbBanPersistence.remove(ban);

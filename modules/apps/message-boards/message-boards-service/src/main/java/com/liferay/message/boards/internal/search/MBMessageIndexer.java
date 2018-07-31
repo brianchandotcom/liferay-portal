@@ -23,6 +23,7 @@ import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -61,7 +62,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -415,8 +415,7 @@ public class MBMessageIndexer
 		catch (Exception e) {
 			_log.error(
 				StringBundler.concat(
-					"Unable to parse message ",
-					String.valueOf(message.getMessageId()), ": ",
+					"Unable to parse message ", message.getMessageId(), ": ",
 					e.getMessage()),
 				e);
 		}
@@ -503,8 +502,7 @@ public class MBMessageIndexer
 			_log.debug(
 				StringBundler.concat(
 					"Reindexing message boards messages for message board ",
-					"category ID ", String.valueOf(categoryId),
-					" and group ID ", String.valueOf(groupId)));
+					"category ID ", categoryId, " and group ID ", groupId));
 		}
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =

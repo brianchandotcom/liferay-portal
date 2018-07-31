@@ -26,6 +26,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.email.apio.architect.identifier.EmailIdentifier;
 import com.liferay.organization.apio.architect.identifier.OrganizationIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.service.OrgLaborService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
@@ -189,9 +189,8 @@ public class OrganizationCollectionResource
 			logoId -> logoId != 0
 		).map(
 			logoId -> StringBundler.concat(
-				_portal.getPathImage(), "/organization_logo?img_id=",
-				String.valueOf(logoId), "&t=",
-				WebServerServletTokenUtil.getToken(logoId))
+				_portal.getPathImage(), "/organization_logo?img_id=", logoId,
+				"&t=", WebServerServletTokenUtil.getToken(logoId))
 		).orElse(
 			null
 		);

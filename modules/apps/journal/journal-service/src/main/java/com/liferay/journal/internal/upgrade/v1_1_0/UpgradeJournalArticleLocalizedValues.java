@@ -14,6 +14,7 @@
 
 package com.liferay.journal.internal.upgrade.v1_1_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
@@ -195,8 +195,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 		_log.warn(
 			StringBundler.concat(
-				"Truncated the ", columnName, " value for article ",
-				String.valueOf(articleId), " because it is too long"));
+				"Truncated the ", columnName, " value for article ", articleId,
+				" because it is too long"));
 	}
 
 	private static final int _MAX_LENGTH_DESCRIPTION = 4000;

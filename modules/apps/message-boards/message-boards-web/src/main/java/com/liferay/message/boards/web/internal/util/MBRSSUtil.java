@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.web.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Sergio González

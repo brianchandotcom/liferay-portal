@@ -19,12 +19,12 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -126,7 +126,7 @@ public class JournalArticleDemoDataCreatorImpl
 
 		String contentPath = StringBundler.concat(
 			"com/liferay/journal/demo/data/creator/internal/dependencies",
-			"/article", String.valueOf(index), "/content.txt");
+			"/article", index, "/content.txt");
 
 		String content = StringUtil.read(
 			clazz.getClassLoader(), contentPath, false);
@@ -141,7 +141,7 @@ public class JournalArticleDemoDataCreatorImpl
 
 		String descriptionPath = StringBundler.concat(
 			"com/liferay/journal/demo/data/creator/internal/dependencies",
-			"/article", String.valueOf(index), "/description.txt");
+			"/article", index, "/description.txt");
 
 		String description = StringUtil.read(
 			clazz.getClassLoader(), descriptionPath, false);
@@ -190,7 +190,7 @@ public class JournalArticleDemoDataCreatorImpl
 
 		String titlePath = StringBundler.concat(
 			"com/liferay/journal/demo/data/creator/internal/dependencies",
-			"/article", String.valueOf(index), "/title.txt");
+			"/article", index, "/title.txt");
 
 		String title = StringUtil.read(
 			clazz.getClassLoader(), titlePath, false);

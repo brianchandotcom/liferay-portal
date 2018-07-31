@@ -16,10 +16,10 @@ package com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider;
 
 import com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Map;
 

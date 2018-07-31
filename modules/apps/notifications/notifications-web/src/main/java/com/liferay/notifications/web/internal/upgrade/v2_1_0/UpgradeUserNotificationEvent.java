@@ -14,6 +14,7 @@
 
 package com.liferay.notifications.web.internal.upgrade.v2_1_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,8 +84,7 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 			runSQL(
 				StringBundler.concat(
 					"update UserNotificationEvent set deliveryType = ",
-					String.valueOf(
-						UserNotificationDeliveryConstants.TYPE_WEBSITE),
+					UserNotificationDeliveryConstants.TYPE_WEBSITE,
 					" where deliveryType = 0 or deliveryType is null"));
 
 			while (rs.next()) {

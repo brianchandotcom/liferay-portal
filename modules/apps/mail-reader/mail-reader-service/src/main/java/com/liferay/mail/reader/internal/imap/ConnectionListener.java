@@ -14,9 +14,9 @@
 
 package com.liferay.mail.reader.internal.imap;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import javax.mail.event.ConnectionEvent;
 
@@ -36,8 +36,7 @@ public class ConnectionListener implements javax.mail.event.ConnectionListener {
 
 			_log.debug(
 				StringBundler.concat(
-					"Closed ", _service, " after ", String.valueOf(uptime),
-					"seconds"));
+					"Closed ", _service, " after ", uptime, "seconds"));
 		}
 	}
 
@@ -48,8 +47,7 @@ public class ConnectionListener implements javax.mail.event.ConnectionListener {
 
 			_log.debug(
 				StringBundler.concat(
-					"Disconnected ", _service, " after ",
-					String.valueOf(uptime), "seconds"));
+					"Disconnected ", _service, " after ", uptime, "seconds"));
 		}
 	}
 

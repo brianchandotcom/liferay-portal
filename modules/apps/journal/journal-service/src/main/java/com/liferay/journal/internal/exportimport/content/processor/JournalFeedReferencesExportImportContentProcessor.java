@@ -26,6 +26,7 @@ import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -351,9 +351,8 @@ public class JournalFeedReferencesExportImportContentProcessor
 			}
 
 			String url = StringBundler.concat(
-				_JOURNAL_FEED_FRIENDLY_URL,
-				String.valueOf(importedJournalFeed.getGroupId()), "/",
-				importedJournalFeed.getFeedId());
+				_JOURNAL_FEED_FRIENDLY_URL, importedJournalFeed.getGroupId(),
+				"/", importedJournalFeed.getFeedId());
 
 			content = StringUtil.replace(content, exportedReference, url);
 		}

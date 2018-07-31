@@ -17,6 +17,7 @@ package com.liferay.journal.internal.upgrade.v1_1_0;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.ResultSet;
 import java.sql.Statement;

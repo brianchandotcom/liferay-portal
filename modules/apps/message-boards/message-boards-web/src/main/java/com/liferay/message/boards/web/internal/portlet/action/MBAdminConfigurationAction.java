@@ -16,6 +16,7 @@ package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -101,16 +101,13 @@ public class MBAdminConfigurationAction
 			for (int j = 0; j < 10; j++) {
 				String name = ParamUtil.getString(
 					actionRequest,
-					StringBundler.concat(
-						"priorityName", String.valueOf(j), "_", languageId));
+					StringBundler.concat("priorityName", j, "_", languageId));
 				String image = ParamUtil.getString(
 					actionRequest,
-					StringBundler.concat(
-						"priorityImage", String.valueOf(j), "_", languageId));
+					StringBundler.concat("priorityImage", j, "_", languageId));
 				double value = ParamUtil.getDouble(
 					actionRequest,
-					StringBundler.concat(
-						"priorityValue", String.valueOf(j), "_", languageId));
+					StringBundler.concat("priorityValue", j, "_", languageId));
 
 				if (Validator.isNotNull(name) || Validator.isNotNull(image) ||
 					(value != 0.0)) {
@@ -118,7 +115,7 @@ public class MBAdminConfigurationAction
 					priorities.add(
 						StringBundler.concat(
 							name, StringPool.PIPE, image, StringPool.PIPE,
-							String.valueOf(value)));
+							value));
 				}
 			}
 

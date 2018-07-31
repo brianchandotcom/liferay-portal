@@ -18,8 +18,8 @@ import com.liferay.mobile.device.rules.web.internal.rule.group.action.LayoutTemp
 import com.liferay.mobile.device.rules.web.internal.rule.group.action.SimpleRedirectActionHandler;
 import com.liferay.mobile.device.rules.web.internal.rule.group.action.SiteRedirectActionHandler;
 import com.liferay.mobile.device.rules.web.internal.rule.group.action.ThemeModificationActionHandler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Tom Wang

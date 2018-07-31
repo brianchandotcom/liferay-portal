@@ -15,11 +15,11 @@
 package com.liferay.microsoft.translator.internal;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;

@@ -26,6 +26,7 @@ import com.liferay.mail.reader.service.AttachmentLocalServiceUtil;
 import com.liferay.mail.reader.service.FolderLocalServiceUtil;
 import com.liferay.mail.reader.service.MessageLocalServiceUtil;
 import com.liferay.petra.mail.InternetAddressUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -676,10 +676,9 @@ public class IMAPAccessor {
 
 			_log.debug(
 				StringBundler.concat(
-					"Downloaded ", String.valueOf(jxMessages.length),
-					" messages from folder ", jxFolder.getFullName(),
-					" completed in ", String.valueOf(stopWatch.getTime()),
-					" ms"));
+					"Downloaded ", jxMessages.length, " messages from folder ",
+					jxFolder.getFullName(), " completed in ",
+					stopWatch.getTime(), " ms"));
 		}
 	}
 

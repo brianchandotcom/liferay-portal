@@ -106,6 +106,8 @@ public class DDMFormXSDDeserializerTest
 		SAXReaderImpl unsecureSAXReader = new SAXReaderImpl();
 
 		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
+
+		saxReaderUtil.setUnsecureSAXReader(unsecureSAXReader);
 	}
 
 	private final DDMFormXSDDeserializer _ddmFormXSDDeserializer =

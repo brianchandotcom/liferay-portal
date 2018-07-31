@@ -122,7 +122,7 @@ public class SAXReaderUtil {
 
 	public static SAXReader getSAXReader() {
 		if (!_XML_SECURITY_ENABLED) {
-			return UnsecureSAXReaderUtil.getSAXReader();
+			return _unsecureSAXReader;
 		}
 
 		return _saxReader;
@@ -222,9 +222,14 @@ public class SAXReaderUtil {
 		_saxReader = saxReader;
 	}
 
+	public void setUnsecureSAXReader(SAXReader unsecureSAXReader) {
+		_unsecureSAXReader = unsecureSAXReader;
+	}
+
 	private static final boolean _XML_SECURITY_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.XML_SECURITY_ENABLED));
 
 	private static SAXReader _saxReader;
+	private static SAXReader _unsecureSAXReader;
 
 }

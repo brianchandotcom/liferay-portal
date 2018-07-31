@@ -90,6 +90,8 @@ public class WabProcessorTest {
 		SAXReaderImpl unsecureSAXReader = new SAXReaderImpl();
 
 		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
+
+		saxReaderUtil.setUnsecureSAXReader(unsecureSAXReader);
 	}
 
 	@Test

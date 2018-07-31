@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -130,11 +131,14 @@ public class ToolDependencies {
 
 		saxReaderUtil.setSAXReader(secureSAXReader);
 
+		SecureXMLFactoryProvider secureXMLFactoryProvider =
+			new SecureXMLFactoryProviderImpl();
+
 		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
 			new SecureXMLFactoryProviderUtil();
 
 		secureXMLFactoryProviderUtil.setSecureXMLFactoryProvider(
-			new SecureXMLFactoryProviderImpl());
+			secureXMLFactoryProvider);
 
 		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
 			new UnsecureSAXReaderUtil();
@@ -143,12 +147,15 @@ public class ToolDependencies {
 
 		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
 
-		// DefaultModelHintsImpl requires SecureXMLFactoryProviderUtil
+		saxReaderUtil.setUnsecureSAXReader(unsecureSAXReader);
 
 		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
 
 		DefaultModelHintsImpl defaultModelHintsImpl =
 			new DefaultModelHintsImpl();
+
+		defaultModelHintsImpl.setSecureXMLFactoryProvider(
+			secureXMLFactoryProvider);
 
 		defaultModelHintsImpl.afterPropertiesSet();
 
@@ -178,6 +185,9 @@ public class ToolDependencies {
 		ResourceActionsUtil resourceActionsUtil = new ResourceActionsUtil();
 
 		ResourceActionsImpl resourceActionsImpl = new ResourceActionsImpl();
+
+		resourceActionsImpl.setUnsecureSAXReader(
+			UnsecureSAXReaderUtil.getSAXReader());
 
 		resourceActionsImpl.afterPropertiesSet();
 

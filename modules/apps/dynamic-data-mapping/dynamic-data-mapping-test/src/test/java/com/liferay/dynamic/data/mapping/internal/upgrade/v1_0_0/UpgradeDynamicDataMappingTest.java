@@ -951,6 +951,8 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		SAXReaderImpl unsecureSAXReader = new SAXReaderImpl();
 
 		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
+
+		saxReaderUtil.setUnsecureSAXReader(unsecureSAXReader);
 	}
 
 	protected void setUpSecureXMLFactoryProviderUtil() {

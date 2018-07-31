@@ -14,8 +14,8 @@
 
 package com.liferay.portal.configuration.metatype.definitions.annotations.internal;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
 
@@ -130,14 +130,12 @@ public class AnnotationsExtendedAttributeDefinition
 
 				map.put(
 					"description-arguments",
-					String.join(
-						StringPool.COMMA,
+					StringUtil.merge(
 						extendedAttributeDefinition.descriptionArguments()));
 
 				map.put(
 					"name-arguments",
-					String.join(
-						StringPool.COMMA,
+					StringUtil.merge(
 						extendedAttributeDefinition.nameArguments()));
 
 				_extensionAttributes.put(

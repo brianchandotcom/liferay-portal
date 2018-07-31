@@ -503,7 +503,7 @@ AUI.add(
 							for (var key in instance._actions) {
 								var action = instance._actions[key];
 
-								if (key.match('-action') && action.get('type') === 'jump-to-page') {
+								if (key.match('-action') && action && action.get('type') === 'jump-to-page') {
 									action.conditionChange(instance._getConditionSelectedFieldsPage());
 								}
 							}

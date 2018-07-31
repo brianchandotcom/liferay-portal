@@ -106,6 +106,8 @@ public class OrganizationCollectionResource
 		).addRelativeURL(
 			"logo", this::_getLogoURL
 		).addString(
+			"comments", OrganizationModel::getComments
+		).addString(
 			"name", Organization::getName
 		).build();
 	}

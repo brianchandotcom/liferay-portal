@@ -1997,6 +1997,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 
+		<execute function="AssertElementPresent" locator1="Icon#INFO" />
 		<execute function="Click" locator1="Icon#INFO" />
 
 		<if>

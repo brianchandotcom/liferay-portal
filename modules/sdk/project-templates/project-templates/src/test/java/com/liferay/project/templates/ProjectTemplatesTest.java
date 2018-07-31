@@ -3329,11 +3329,11 @@ public class ProjectTemplatesTest {
 			gradleWorkspaceProjectDir, "gradle.properties", true,
 			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.0.*");
 
-		File gradleProperties = new File(
+		File gradlePropertiesFile = new File(
 			gradleWorkspaceProjectDir, "gradle.properties");
 
 		_testPropertyKeyExists(
-			gradleProperties.toPath(), "liferay.workspace.bundle.url");
+			gradlePropertiesFile.toPath(), "liferay.workspace.bundle.url");
 
 		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
 			WorkspaceUtil.WORKSPACE, "withportlet", "com.test",

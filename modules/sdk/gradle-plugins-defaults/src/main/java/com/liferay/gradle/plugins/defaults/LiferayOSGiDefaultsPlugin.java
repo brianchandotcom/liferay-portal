@@ -256,8 +256,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String DOWNLOAD_COMPILED_JSP_TASK_NAME =
 		"downloadCompiledJSP";
 
-	public static final String GENERATE_POM_INFO_TASK_NAME = "generatePomInfo";
-
 	public static final String INSTALL_CACHE_TASK_NAME = "installCache";
 
 	public static final String JAR_JAVADOC_TASK_NAME = "jarJavadoc";
@@ -400,7 +398,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_addTaskCopyLibs(project);
 
-		_addTaskGeneratePomInfo(project);
+		Task generatePomInfoTask = _addTaskGeneratePomInfo(project);
 
 		Copy deployDependenciesTask = _addTaskDeployDependencies(
 			project, liferayExtension);
@@ -445,7 +443,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
 		_configureSourceSetMain(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
-		_configureTaskJar(project, testProject);
+		_configureTaskJar(project, testProject, generatePomInfoTask);
 		_configureTaskJavadoc(project, portalRootDir);
 		_configureTaskTest(project);
 		_configureTaskTestIntegration(project);
@@ -961,7 +959,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private Task _addTaskGeneratePomInfo(final Project project) {
-		Task task = project.task(GENERATE_POM_INFO_TASK_NAME);
+		Task task = project.task(_GENERATE_POM_INFO_TASK_NAME);
 
 		task.doLast(
 			new Action<Task>() {
@@ -995,9 +993,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						new Closure<MavenPom>(project) {
 
 							@SuppressWarnings("unused")
-							public MavenPom doCall(MavenPom pom) {
+							public MavenPom doCall(MavenPom mavenPom) {
 								Conf2ScopeMappingContainer scopeMappings =
-									pom.getScopeMappings();
+									mavenPom.getScopeMappings();
 
 								Configuration compileOnlyConfiguration =
 									GradleUtil.getConfiguration(
@@ -1010,32 +1008,32 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 									compileOnlyConfiguration,
 									Conf2ScopeMappingContainer.PROVIDED);
 
-								pom.setGroupId(groupId);
-								pom.setArtifactId(artifactId);
+								mavenPom.setGroupId(groupId);
+								mavenPom.setArtifactId(artifactId);
 
-								pom.writeTo(infoPath + "/pom.xml");
+								mavenPom.writeTo(infoPath + "/pom.xml");
 
-								return pom;
+								return mavenPom;
 							}
 
 						});
 
-					File file = new File(infoPath + "/pom.properties");
+					File file = new File(infoPath, "pom.properties");
 
-					Properties pomProperties = new Properties();
+					Properties properties = new Properties();
 
-					pomProperties.setProperty("groupId", groupId);
-					pomProperties.setProperty("artifactId", artifactId);
-					pomProperties.setProperty(
+					properties.setProperty("artifactId", artifactId);
+					properties.setProperty("groupId", groupId);
+					properties.setProperty(
 						"version", String.valueOf(project.getVersion()));
 
-					FileUtil.writeProperties(file, pomProperties);
+					FileUtil.writeProperties(file, properties);
 				}
 
 			});
 
 		task.setDescription(
-			"Generate maven pom.properties and pom.xml for this jar artifact.");
+			"Generates Maven pom.properties and pom.xml for this jar.");
 		task.setGroup(BasePlugin.BUILD_GROUP);
 
 		return task;
@@ -3038,10 +3036,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskJar(Project project, boolean testProject) {
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+	private void _configureTaskJar(
+		Project project, boolean testProject, Object... jarDependencies) {
 
-		jar.dependsOn(GENERATE_POM_INFO_TASK_NAME);
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		if (testProject) {
 			jar.dependsOn(JavaPlugin.TEST_CLASSES_TASK_NAME);
@@ -3053,6 +3051,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			jar.dependsOn(sourceSet.getClassesTaskName());
 		}
 
+		jar.dependsOn(jarDependencies);
 		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 	}
 
@@ -4255,6 +4254,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private static final String _CACHE_COMMIT_MESSAGE = "FAKE GRADLE CACHE";
 
 	private static final char _DEPENDENCY_KEY_SEPARATOR = '/';
+
+	private static final String _GENERATE_POM_INFO_TASK_NAME =
+		"generatePomInfo";
 
 	private static final String _GROUP = "com.liferay";
 

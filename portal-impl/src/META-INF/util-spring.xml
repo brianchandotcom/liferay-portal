@@ -184,6 +184,13 @@
 	<bean class="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil" id="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil">
 		<property name="rawMetadataProcessor" ref="com.liferay.portal.kernel.metadata.RawMetadataProcessor" />
 	</bean>
+	<bean class="com.liferay.portal.kernel.model.ModelHintsUtil" id="com.liferay.portal.kernel.model.ModelHintsUtil">
+		<property name="modelHints">
+			<bean class="com.liferay.portal.model.DefaultModelHintsImpl">
+				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
+			</bean>
+		</property>
+	</bean>
 	<bean class="com.liferay.portal.kernel.oauth.OAuthFactoryUtil" id="com.liferay.portal.kernel.oauth.OAuthFactoryUtil">
 		<property name="OAuthFactory">
 			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />

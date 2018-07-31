@@ -10,13 +10,6 @@
 >
 	<bean class="com.liferay.portal.kernel.internal.security.permission.resource.ModelResourcePermissionDefinitionTracker" id="com.liferay.portal.kernel.internal.security.permission.resource.ModelResourcePermissionDefinitionTracker" />
 	<bean class="com.liferay.portal.kernel.internal.security.permission.resource.PortletResourcePermissionDefinitionTracker" id="com.liferay.portal.kernel.internal.security.permission.resource.PortletResourcePermissionDefinitionTracker" />
-	<bean class="com.liferay.portal.kernel.model.ModelHintsUtil" id="com.liferay.portal.kernel.model.ModelHintsUtil">
-		<property name="modelHints">
-			<bean class="com.liferay.portal.model.DefaultModelHintsImpl">
-				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
-			</bean>
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.security.auth.AuthTokenUtil" id="com.liferay.portal.kernel.security.auth.AuthTokenUtil" />
 	<bean class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" id="com.liferay.portal.kernel.security.auth.AuthTokenWhitelist" />
 	<bean class="com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStoreUtil" id="com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStoreUtil">

@@ -40,7 +40,6 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 		<liferay-frontend:horizontal-card
 			actionJsp="/site_navigation_menu_item_action.jsp"
 			actionJspServletContext="<%= application %>"
-			text=""
 		>
 			<liferay-frontend:horizontal-card-col>
 				<div class="card-row">

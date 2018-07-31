@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuException;
+import com.liferay.site.navigation.exception.RequiredPrimaryNavigationException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -178,6 +179,20 @@ public class SiteNavigationMenuLocalServiceImpl
 	public SiteNavigationMenu deleteSiteNavigationMenu(
 			SiteNavigationMenu siteNavigationMenu)
 		throws PortalException {
+
+		SiteNavigationMenu primarySiteNavigationMenu =
+			fetchPrimarySiteNavigationMenu(siteNavigationMenu.getGroupId());
+
+		int siteNavigationMenuCount = getSiteNavigationMenusCount(
+			siteNavigationMenu.getGroupId());
+
+		if ((primarySiteNavigationMenu != null) &&
+			(siteNavigationMenuCount > 1) &&
+			(primarySiteNavigationMenu.getSiteNavigationMenuId() ==
+				siteNavigationMenu.getSiteNavigationMenuId())) {
+
+			throw new RequiredPrimaryNavigationException();
+		}
 
 		// Site navigation menu
 
@@ -397,7 +412,19 @@ public class SiteNavigationMenuLocalServiceImpl
 	}
 
 	private void _updateOldSiteNavigationMenuType(
-		SiteNavigationMenu siteNavigationMenu, int type) {
+			SiteNavigationMenu siteNavigationMenu, int type)
+		throws PortalException {
+
+		SiteNavigationMenu primarySiteNavigationMenu =
+			fetchPrimarySiteNavigationMenu(siteNavigationMenu.getGroupId());
+
+		if ((primarySiteNavigationMenu != null) &&
+			(primarySiteNavigationMenu.getSiteNavigationMenuId() ==
+				siteNavigationMenu.getSiteNavigationMenuId()) &&
+			(type != SiteNavigationConstants.TYPE_PRIMARY)) {
+
+			throw new RequiredPrimaryNavigationException();
+		}
 
 		if (type == SiteNavigationConstants.TYPE_DEFAULT) {
 			return;

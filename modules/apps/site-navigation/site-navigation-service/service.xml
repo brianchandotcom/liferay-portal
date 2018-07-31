@@ -112,6 +112,7 @@
 		<exception>DuplicateSiteNavigationMenu</exception>
 		<exception>InvalidSiteNavigationMenuItemOrder</exception>
 		<exception>InvalidSiteNavigationMenuItemType</exception>
+		<exception>RequiredPrimaryNavigation</exception>
 		<exception>SiteNavigationMenuItemName</exception>
 		<exception>SiteNavigationMenuName</exception>
 	</exceptions>

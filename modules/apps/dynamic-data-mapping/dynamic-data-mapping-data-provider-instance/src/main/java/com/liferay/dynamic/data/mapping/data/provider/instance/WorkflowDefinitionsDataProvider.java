@@ -15,27 +15,21 @@
 package com.liferay.dynamic.data.mapping.data.provider.instance;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseOutput;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,39 +47,32 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 
 	@Override
-	public List<KeyValuePair> getData(
-			DDMDataProviderContext ddmDataProviderContext)
-		throws DDMDataProviderException {
-
-		return Collections.emptyList();
-	}
-
-	@Override
 	public DDMDataProviderResponse getData(
 			DDMDataProviderRequest ddmDataProviderRequest)
 		throws DDMDataProviderException {
 
-		List<KeyValuePair> data = new ArrayList<>();
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
-		Locale locale = getLocale(
-			ddmDataProviderRequest.getHttpServletRequest());
+		Locale locale = ddmDataProviderRequest.getLocale();
 
-		data.add(
+		keyValuePairs.add(
 			new KeyValuePair(
 				"no-workflow", LanguageUtil.get(locale, "no-workflow")));
 
-		if (_workflowDefinitionManager == null) {
-			return DDMDataProviderResponse.of(
-				DDMDataProviderResponseOutput.of(
-					"Default-Output", "list", data));
+		DDMDataProviderResponse.Builder builder =
+			DDMDataProviderResponse.Builder.newBuilder();
+
+		if (workflowDefinitionManager == null) {
+			builder = builder.withOutput("Default-Output", keyValuePairs);
+
+			return builder.build();
 		}
 
 		try {
-			long companyId = getCompanyId(
-				ddmDataProviderRequest.getHttpServletRequest());
+			long companyId = ddmDataProviderRequest.getCompanyId();
 
 			List<WorkflowDefinition> workflowDefinitions =
-				_workflowDefinitionManager.getActiveWorkflowDefinitions(
+				workflowDefinitionManager.getActiveWorkflowDefinitions(
 					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			String languageId = LocaleUtil.toLanguageId(locale);
@@ -95,17 +82,18 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 					workflowDefinition.getName() + StringPool.AT +
 						workflowDefinition.getVersion();
 
-				data.add(
+				keyValuePairs.add(
 					new KeyValuePair(
 						value, workflowDefinition.getTitle(languageId)));
 			}
+
+			builder = builder.withOutput("Default-Output", keyValuePairs);
 		}
 		catch (WorkflowException we) {
 			throw new DDMDataProviderException(we);
 		}
 
-		return DDMDataProviderResponse.of(
-			DDMDataProviderResponseOutput.of("Default-Output", "list", data));
+		return builder.build();
 	}
 
 	@Override
@@ -113,23 +101,12 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 		throw new UnsupportedOperationException();
 	}
 
-	protected long getCompanyId(HttpServletRequest httpServletRequest) {
-		return _portal.getCompanyId(httpServletRequest);
-	}
-
-	protected Locale getLocale(HttpServletRequest httpServletRequest) {
-		return _portal.getLocale(httpServletRequest);
-	}
-
-	@Reference
-	private Portal _portal;
-
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(proxy.bean=false)"
 	)
-	private volatile WorkflowDefinitionManager _workflowDefinitionManager;
+	protected volatile WorkflowDefinitionManager workflowDefinitionManager;
 
 }

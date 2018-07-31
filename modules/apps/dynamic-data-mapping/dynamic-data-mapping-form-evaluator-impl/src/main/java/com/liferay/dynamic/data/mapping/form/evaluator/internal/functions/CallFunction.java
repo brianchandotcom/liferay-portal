@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInvoker;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseOutput;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -35,7 +35,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,7 +48,8 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 		DDMDataProviderInvoker ddmDataProviderInvoker,
 		Map<String, List<DDMFormFieldEvaluationResult>>
 			ddmFormFieldEvaluationResults,
-		HttpServletRequest httpServletRequest, JSONFactory jsonFactory) {
+		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
+		Portal portal) {
 
 		super(ddmFormFieldEvaluationResults);
 
@@ -56,6 +57,7 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 		_ddmFormFieldEvaluationResults = ddmFormFieldEvaluationResults;
 		_httpServletRequest = httpServletRequest;
 		_jsonFactory = jsonFactory;
+		_portal = portal;
 	}
 
 	@Override
@@ -71,12 +73,30 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 		String resultMapExpression = String.valueOf(parameters[2]);
 
 		try {
-			DDMDataProviderRequest ddmDataProviderRequest =
-				new DDMDataProviderRequest(
-					ddmDataProviderInstanceUUID, _httpServletRequest);
+			DDMDataProviderRequest.Builder builder =
+				DDMDataProviderRequest.Builder.newBuilder();
 
-			addDDMDataProviderRequestParameters(
-				ddmDataProviderRequest, paramsExpression);
+			builder = builder.withDDMDataProviderId(
+				ddmDataProviderInstanceUUID
+			).withCompanyId(
+				_portal.getCompanyId(_httpServletRequest)
+			).withGroupId(
+				_portal.getScopeGroupId(_httpServletRequest)
+			).withLocale(
+				_portal.getLocale(_httpServletRequest)
+			).withParameter(
+				"httpServletRequest", _httpServletRequest
+			);
+
+			Map<String, String> parameterMap = extractParameters(
+				paramsExpression);
+
+			for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+				builder = builder.withParameter(
+					entry.getKey(), entry.getValue());
+			}
+
+			DDMDataProviderRequest ddmDataProviderRequest = builder.build();
 
 			DDMDataProviderResponse ddmDataProviderResponse =
 				_ddmDataProviderInvoker.invoke(ddmDataProviderRequest);
@@ -95,17 +115,6 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 		}
 
 		return true;
-	}
-
-	protected void addDDMDataProviderRequestParameters(
-		DDMDataProviderRequest ddmDataProviderRequest,
-		String paramsExpression) {
-
-		Map<String, String> parameters = extractParameters(paramsExpression);
-
-		if (!parameters.isEmpty()) {
-			ddmDataProviderRequest.queryString(parameters);
-		}
 	}
 
 	protected void extractDDMFormFieldValue(
@@ -277,26 +286,24 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 			String ddmFormFieldName = entry.getKey();
 			String outputName = entry.getValue();
 
-			DDMDataProviderResponseOutput ddmDataProviderResponseOutput =
-				ddmDataProviderResponse.get(outputName);
-
-			if (ddmDataProviderResponseOutput == null) {
+			if (!ddmDataProviderResponse.hasOutput(outputName)) {
 				continue;
 			}
 
-			if (Objects.equals(
-					ddmDataProviderResponseOutput.getType(), "list")) {
+			Optional<List<KeyValuePair>> keyValuePairsOptional =
+				ddmDataProviderResponse.getOutput(outputName, List.class);
 
-				List<KeyValuePair> options =
-					ddmDataProviderResponseOutput.getValue(List.class);
-
-				setDDMFormFieldOptions(ddmFormFieldName, options);
+			if (keyValuePairsOptional.isPresent()) {
+				setDDMFormFieldOptions(
+					ddmFormFieldName, keyValuePairsOptional.get());
 			}
 			else {
-				String value = ddmDataProviderResponseOutput.getValue(
-					String.class);
+				Optional<String> valueOptional =
+					ddmDataProviderResponse.getOutput(outputName, String.class);
 
-				setDDMFormFieldValue(ddmFormFieldName, value);
+				if (valueOptional.isPresent()) {
+					setDDMFormFieldValue(ddmFormFieldName, valueOptional.get());
+				}
 			}
 		}
 	}
@@ -308,5 +315,6 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 		_ddmFormFieldEvaluationResults;
 	private final HttpServletRequest _httpServletRequest;
 	private final JSONFactory _jsonFactory;
+	private final Portal _portal;
 
 }

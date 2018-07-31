@@ -15,15 +15,12 @@
 package com.liferay.dynamic.data.mapping.data.provider.instance;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseOutput;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -40,13 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMStorageTypesDataProvider implements DDMDataProvider {
 
 	@Override
-	public List<KeyValuePair> getData(
-		DDMDataProviderContext ddmDataProviderContext) {
-
-		return Collections.emptyList();
-	}
-
-	@Override
 	public DDMDataProviderResponse getData(
 		DDMDataProviderRequest ddmDataProviderRequest) {
 
@@ -59,9 +49,12 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 			keyValuePairs.add(new KeyValuePair(storageType, storageType));
 		}
 
-		return DDMDataProviderResponse.of(
-			DDMDataProviderResponseOutput.of(
-				"Default-Output", "list", keyValuePairs));
+		DDMDataProviderResponse.Builder builder =
+			DDMDataProviderResponse.Builder.newBuilder();
+
+		builder.withOutput("Default-Output", keyValuePairs);
+
+		return builder.build();
 	}
 
 	@Override

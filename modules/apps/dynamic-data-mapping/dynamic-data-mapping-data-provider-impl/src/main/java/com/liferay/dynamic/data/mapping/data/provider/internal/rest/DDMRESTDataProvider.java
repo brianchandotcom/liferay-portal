@@ -18,26 +18,32 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInstanceSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse.Status;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseOutput;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseStatus;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.io.Serializable;
 
 import java.net.ConnectException;
 
@@ -47,8 +53,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletRequest;
 
 import jodd.http.HttpException;
 import jodd.http.HttpRequest;
@@ -64,31 +75,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Override
-	public List<KeyValuePair> getData(
-			DDMDataProviderContext ddmDataProviderContext)
-		throws DDMDataProviderException {
-
-		try {
-			DDMDataProviderRequest ddmDataProviderRequest =
-				createDDMDataProviderRequest(ddmDataProviderContext);
-
-			DDMDataProviderResponse ddmDataProviderResponse = doGetData(
-				ddmDataProviderRequest);
-
-			DDMDataProviderResponseOutput ddmDataProviderResponseOutput =
-				ddmDataProviderResponse.get("Default-Output");
-
-			List<KeyValuePair> results = ddmDataProviderResponseOutput.getValue(
-				List.class);
-
-			return results;
-		}
-		catch (Exception e) {
-			throw new DDMDataProviderException(e);
-		}
-	}
-
-	@Override
 	public DDMDataProviderResponse getData(
 			DDMDataProviderRequest ddmDataProviderRequest)
 		throws DDMDataProviderException {
@@ -100,8 +86,12 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			Throwable cause = he.getCause();
 
 			if (cause instanceof ConnectException) {
-				return DDMDataProviderResponse.error(
-					Status.SERVICE_UNAVAILABLE);
+				DDMDataProviderResponse.Builder builder =
+					DDMDataProviderResponse.Builder.newBuilder();
+
+				return builder.withStatus(
+					DDMDataProviderResponseStatus.SERVICE_UNAVAILABLE
+				).build();
 			}
 			else {
 				throw new DDMDataProviderException(he);
@@ -135,23 +125,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return url;
 	}
 
-	protected DDMDataProviderRequest createDDMDataProviderRequest(
-		DDMDataProviderContext ddmDataProviderContext) {
-
-		DDMDataProviderRequest ddmDataProviderRequest =
-			new DDMDataProviderRequest(null, null);
-
-		ddmDataProviderRequest.setDDMDataProviderContext(
-			ddmDataProviderContext);
-
-		// Backwards compatibility
-
-		ddmDataProviderRequest.queryString(
-			ddmDataProviderContext.getParameters());
-
-		return ddmDataProviderRequest;
-	}
-
 	protected DDMDataProviderResponse createDDMDataProviderResponse(
 		DocumentContext documentContext,
 		DDMDataProviderRequest ddmDataProviderRequest,
@@ -160,14 +133,14 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		DDMDataProviderOutputParametersSettings[] outputParameterSettingsArray =
 			ddmRESTDataProviderSettings.outputParameters();
 
+		DDMDataProviderResponse.Builder builder =
+			DDMDataProviderResponse.Builder.newBuilder();
+
 		if ((outputParameterSettingsArray == null) ||
 			(outputParameterSettingsArray.length == 0)) {
 
-			return DDMDataProviderResponse.of();
+			return builder.build();
 		}
-
-		List<DDMDataProviderResponseOutput> ddmDataProviderResponseOutputs =
-			new ArrayList<>();
 
 		for (DDMDataProviderOutputParametersSettings outputParameterSettings :
 				outputParameterSettingsArray) {
@@ -180,20 +153,13 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				String value = documentContext.read(
 					normalizePath(path), String.class);
 
-				if (value != null) {
-					ddmDataProviderResponseOutputs.add(
-						DDMDataProviderResponseOutput.of(name, "text", value));
-				}
+				builder = builder.withOutput(name, value);
 			}
 			else if (Objects.equals(type, "number")) {
 				Number value = documentContext.read(
 					normalizePath(path), Number.class);
 
-				if (value != null) {
-					ddmDataProviderResponseOutputs.add(
-						DDMDataProviderResponseOutput.of(
-							name, "number", value));
-				}
+				builder = builder.withOutput(name, value);
 			}
 			else if (Objects.equals(type, "list")) {
 				String[] paths = StringUtil.split(path, CharPool.SEMICOLON);
@@ -225,39 +191,58 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				}
 
 				if (ddmRESTDataProviderSettings.pagination()) {
+					Optional<String> paginationStartOptional =
+						ddmDataProviderRequest.getParameter(
+							"paginationStart", String.class);
+
 					int start = Integer.valueOf(
-						ddmDataProviderRequest.getParameter("paginationStart"));
+						paginationStartOptional.orElse("1"));
+
+					Optional<String> paginationEndOptional =
+						ddmDataProviderRequest.getParameter(
+							"paginationEnd", String.class);
 
 					int end = Integer.valueOf(
-						ddmDataProviderRequest.getParameter("paginationEnd"));
+						paginationEndOptional.orElse("10"));
 
 					if (keyValuePairs.size() > (end - start)) {
-						keyValuePairs = ListUtil.subList(
+						List<KeyValuePair> sublist = ListUtil.subList(
 							keyValuePairs, start, end);
+
+						builder = builder.withOutput(name, sublist);
 					}
 				}
-
-				ddmDataProviderResponseOutputs.add(
-					DDMDataProviderResponseOutput.of(
-						name, "list", keyValuePairs));
+				else {
+					builder = builder.withOutput(name, keyValuePairs);
+				}
 			}
 		}
 
-		int size = ddmDataProviderResponseOutputs.size();
-
-		return DDMDataProviderResponse.of(
-			ddmDataProviderResponseOutputs.toArray(
-				new DDMDataProviderResponseOutput[size]));
+		return builder.build();
 	}
 
 	protected DDMDataProviderResponse doGetData(
-		DDMDataProviderRequest ddmDataProviderRequest) {
+			DDMDataProviderRequest ddmDataProviderRequest)
+		throws Exception {
 
-		DDMDataProviderContext ddmDataProviderContext =
-			ddmDataProviderRequest.getDDMDataProviderContext();
+		preparePermissionThreadLocal(ddmDataProviderRequest);
+
+		Optional<DDMDataProviderInstance> ddmDataProviderInstance =
+			fetchDDMDataProviderInstance(
+				ddmDataProviderRequest.getDDMDataProviderId());
+
+		if (!ddmDataProviderInstance.isPresent()) {
+			DDMDataProviderResponse.Builder builder =
+				DDMDataProviderResponse.Builder.newBuilder();
+
+			return builder.withStatus(
+				DDMDataProviderResponseStatus.SERVICE_UNAVAILABLE
+			).build();
+		}
 
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
-			ddmDataProviderContext.getSettingsInstance(
+			ddmDataProviderInstanceSettings.getSettings(
+				ddmDataProviderInstance.get(),
 				DDMRESTDataProviderSettings.class);
 
 		HttpRequest httpRequest = HttpRequest.get(
@@ -280,13 +265,13 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		String cacheKey = getCacheKey(httpRequest);
 
-		DDMRESTDataProviderResult ddmRESTDataProviderResult = _portalCache.get(
+		DDMDataProviderResponse ddmDataProviderResponse = _portalCache.get(
 			cacheKey);
 
-		if ((ddmRESTDataProviderResult != null) &&
+		if ((ddmDataProviderResponse != null) &&
 			ddmRESTDataProviderSettings.cacheable()) {
 
-			return ddmRESTDataProviderResult.getDDMDataProviderResponse();
+			return ddmDataProviderResponse;
 		}
 
 		HttpResponse httpResponse = httpRequest.send();
@@ -294,18 +279,34 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		DocumentContext documentContext = JsonPath.parse(
 			httpResponse.bodyText());
 
-		DDMDataProviderResponse ddmDataProviderResponse =
-			createDDMDataProviderResponse(
-				documentContext, ddmDataProviderRequest,
-				ddmRESTDataProviderSettings);
+		ddmDataProviderResponse = createDDMDataProviderResponse(
+			documentContext, ddmDataProviderRequest,
+			ddmRESTDataProviderSettings);
 
 		if (ddmRESTDataProviderSettings.cacheable()) {
-			_portalCache.put(
-				cacheKey,
-				new DDMRESTDataProviderResult(ddmDataProviderResponse));
+			_portalCache.put(cacheKey, ddmDataProviderResponse);
 		}
 
 		return ddmDataProviderResponse;
+	}
+
+	protected Optional<DDMDataProviderInstance> fetchDDMDataProviderInstance(
+			String ddmDataProviderInstanceId)
+		throws PortalException {
+
+		DDMDataProviderInstance ddmDataProviderInstance =
+			ddmDataProviderInstanceService.fetchDataProviderInstanceByUuid(
+				ddmDataProviderInstanceId);
+
+		if ((ddmDataProviderInstance == null) &&
+			Validator.isNumber(ddmDataProviderInstanceId)) {
+
+			ddmDataProviderInstance =
+				ddmDataProviderInstanceService.fetchDataProviderInstance(
+					Long.valueOf(ddmDataProviderInstanceId));
+		}
+
+		return Optional.ofNullable(ddmDataProviderInstance);
 	}
 
 	protected String getCacheKey(HttpRequest httpRequest) {
@@ -316,7 +317,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		DDMDataProviderRequest ddmDataProviderRequest,
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
 
-		Map<String, String> parameters = ddmDataProviderRequest.getParameters();
+		Map<String, Object> parameters = ddmDataProviderRequest.getParameters();
 
 		Map<String, String> pathParameters = new HashMap<>();
 
@@ -328,7 +329,8 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 			if (parameters.containsKey(parameterName)) {
 				pathParameters.put(
-					parameterName, parameters.get(parameterName));
+					parameterName,
+					GetterUtil.getString(parameters.get(parameterName)));
 			}
 		}
 
@@ -342,21 +344,28 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		Map<String, String> pathParameters = getPathParameters(
 			ddmDataProviderRequest, ddmRESTDataProviderSettings);
 
+		Map<String, Object> parametersMap =
+			ddmDataProviderRequest.getParameters();
+
+		Set<Entry<String, Object>> entrySet = parametersMap.entrySet();
+
+		Stream<Entry<String, Object>> entryStream = entrySet.stream();
+
+		Map<String, String> parameters = new HashMap<>();
+
+		entryStream.forEach(
+			entry -> parameters.put(
+				entry.getKey(), String.valueOf(entry.getValue())));
+
 		return MapUtil.filter(
-			ddmDataProviderRequest.getParameters(),
-			new PredicateFilter<Entry<String, String>>() {
-
-				@Override
-				public boolean filter(Entry<String, String> parameter) {
-					return !pathParameters.containsKey(parameter.getKey());
-				}
-
-			});
+			parameters,
+			parameter -> !pathParameters.containsKey(parameter.getKey()));
 	}
 
 	protected String normalizePath(String path) {
-		if (StringUtil.startsWith(path, StringPool.PERIOD) ||
-			StringUtil.startsWith(path, StringPool.DOLLAR)) {
+		if (StringUtil.startsWith(path, StringPool.DOLLAR) ||
+			StringUtil.startsWith(path, StringPool.PERIOD) ||
+			StringUtil.startsWith(path, StringPool.STAR)) {
 
 			return path;
 		}
@@ -364,10 +373,38 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return StringPool.PERIOD.concat(path);
 	}
 
+	protected void preparePermissionThreadLocal(
+			DDMDataProviderRequest ddmDataProviderRequest)
+		throws Exception {
+
+		if (PermissionThreadLocal.getPermissionChecker() == null) {
+			Optional<HttpServletRequest> httpServletRequestOptional =
+				ddmDataProviderRequest.getParameter(
+					"httpServletRequest", HttpServletRequest.class);
+
+			if (httpServletRequestOptional.isPresent()) {
+				HttpServletRequest httpServletRequest =
+					httpServletRequestOptional.get();
+
+				User user = portal.getUser(httpServletRequest);
+
+				if (user == null) {
+					user = userLocalService.getDefaultUser(
+						portal.getCompanyId(httpServletRequest));
+				}
+
+				PermissionChecker permissionChecker =
+					PermissionCheckerFactoryUtil.create(user);
+
+				PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			}
+		}
+	}
+
 	@Reference(unbind = "-")
 	protected void setMultiVMPool(MultiVMPool multiVMPool) {
 		_portalCache =
-			(PortalCache<String, DDMRESTDataProviderResult>)
+			(PortalCache<String, DDMDataProviderResponse>)
 				multiVMPool.getPortalCache(DDMRESTDataProvider.class.getName());
 	}
 
@@ -377,18 +414,37 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		HttpRequest httpRequest) {
 
 		if (ddmRESTDataProviderSettings.filterable()) {
-			httpRequest.query(
-				ddmRESTDataProviderSettings.filterParameterName(),
-				ddmDataProviderRequest.getParameter("filterParameterValue"));
+			Optional<String> filterParameterValue =
+				ddmDataProviderRequest.getParameter(
+					"filterParameterValue", String.class);
+
+			if (filterParameterValue.isPresent()) {
+				httpRequest.query(
+					ddmRESTDataProviderSettings.filterParameterName(),
+					filterParameterValue.get());
+			}
 		}
 
 		if (ddmRESTDataProviderSettings.pagination()) {
-			httpRequest.query(
-				ddmRESTDataProviderSettings.paginationEndParameterName(),
-				ddmDataProviderRequest.getParameter("paginationStart"));
-			httpRequest.query(
-				ddmRESTDataProviderSettings.paginationEndParameterName(),
-				ddmDataProviderRequest.getParameter("paginationEnd"));
+			Optional<String> paginationStart =
+				ddmDataProviderRequest.getParameter(
+					"paginationStart", String.class);
+
+			if (paginationStart.isPresent()) {
+				httpRequest.query(
+					ddmRESTDataProviderSettings.paginationStartParameterName(),
+					paginationStart.get());
+			}
+
+			Optional<String> paginationEnd =
+				ddmDataProviderRequest.getParameter(
+					"paginationEnd", String.class);
+
+			if (paginationEnd.isPresent()) {
+				httpRequest.query(
+					ddmRESTDataProviderSettings.paginationEndParameterName(),
+					paginationEnd.get());
+			}
 		}
 
 		httpRequest.query(
@@ -396,23 +452,19 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				ddmDataProviderRequest, ddmRESTDataProviderSettings));
 	}
 
+	@Reference
+	protected DDMDataProviderInstanceService ddmDataProviderInstanceService;
+
+	@Reference
+	protected DDMDataProviderInstanceSettings ddmDataProviderInstanceSettings;
+
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected UserLocalService userLocalService;
+
 	private final Pattern _pathParameterPattern = Pattern.compile("\\{(.*)\\}");
-	private PortalCache<String, DDMRESTDataProviderResult> _portalCache;
-
-	private static class DDMRESTDataProviderResult implements Serializable {
-
-		public DDMRESTDataProviderResult(
-			DDMDataProviderResponse ddmDataProviderResponse) {
-
-			_ddmDataProviderResponse = ddmDataProviderResponse;
-		}
-
-		public DDMDataProviderResponse getDDMDataProviderResponse() {
-			return _ddmDataProviderResponse;
-		}
-
-		private final DDMDataProviderResponse _ddmDataProviderResponse;
-
-	}
+	private PortalCache<String, DDMDataProviderResponse> _portalCache;
 
 }

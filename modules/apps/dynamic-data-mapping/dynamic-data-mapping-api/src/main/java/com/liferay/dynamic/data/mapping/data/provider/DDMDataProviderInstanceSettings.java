@@ -14,39 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.data.provider;
 
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+
 /**
- * @author Marcellus Tavares
+ * @author Leonardo Barros
  */
-public class DDMDataProviderResponseOutput {
+public interface DDMDataProviderInstanceSettings {
 
-	public static DDMDataProviderResponseOutput of(
-		String name, String type, Object value) {
-
-		return new DDMDataProviderResponseOutput(name, type, value);
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public String getType() {
-		return _type;
-	}
-
-	public <T> T getValue(Class<T> valueType) {
-		return valueType.cast(_value);
-	}
-
-	private DDMDataProviderResponseOutput(
-		String name, String type, Object value) {
-
-		_name = name;
-		_type = type;
-		_value = value;
-	}
-
-	private final String _name;
-	private final String _type;
-	private final Object _value;
+	public <T> T getSettings(
+		DDMDataProviderInstance ddmDataProviderInstance, Class<T> clazz);
 
 }

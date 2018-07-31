@@ -16,11 +16,9 @@ package com.liferay.dynamic.data.mapping.data.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseOutput;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -32,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -76,21 +75,22 @@ public class DDMDataProviderTest {
 		DDMDataProvider testDataProvider =
 			_ddmDataProviderTracker.getDDMDataProviderByInstanceId("test");
 
-		DDMDataProviderRequest ddmDataProviderRequest =
-			new DDMDataProviderRequest(null, null);
+		DDMDataProviderRequest.Builder builder =
+			DDMDataProviderRequest.Builder.newBuilder();
+
+		DDMDataProviderRequest ddmDataProviderRequest = builder.build();
 
 		DDMDataProviderResponse ddmDataProviderResponse =
 			testDataProvider.getData(ddmDataProviderRequest);
 
-		DDMDataProviderResponseOutput ddmDataProviderResponseOutput =
-			ddmDataProviderResponse.get("Default-Output");
+		Optional<List<KeyValuePair>> keyValuePairsOptional =
+			ddmDataProviderResponse.getOutput("Default-Output", List.class);
 
-		Assert.assertNotNull(ddmDataProviderResponseOutput);
+		Assert.assertTrue(keyValuePairsOptional.isPresent());
 
-		List<KeyValuePair> data = ddmDataProviderResponseOutput.getValue(
-			List.class);
+		List<KeyValuePair> keyValuePairs = keyValuePairsOptional.get();
 
-		Assert.assertEquals(data.toString(), 2, data.size());
+		Assert.assertEquals(keyValuePairs.toString(), 2, keyValuePairs.size());
 	}
 
 	protected static void setUpDDMDataProviderTracker() {
@@ -117,16 +117,21 @@ public class DDMDataProviderTest {
 	private static class DDMTestDataProvider implements DDMDataProvider {
 
 		@Override
-		public List<KeyValuePair> getData(
-				DDMDataProviderContext ddmDataProviderContext)
+		public DDMDataProviderResponse getData(
+				DDMDataProviderRequest ddmDataProviderRequest)
 			throws DDMDataProviderException {
 
-			List<KeyValuePair> data = new ArrayList<>();
+			DDMDataProviderResponse.Builder builder =
+				DDMDataProviderResponse.Builder.newBuilder();
 
-			data.add(new KeyValuePair("1", "A"));
-			data.add(new KeyValuePair("2", "B"));
+			List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
-			return data;
+			keyValuePairs.add(new KeyValuePair("1", "A"));
+			keyValuePairs.add(new KeyValuePair("2", "B"));
+
+			return builder.withOutput(
+				"Default-Output", keyValuePairs
+			).build();
 		}
 
 		@Override

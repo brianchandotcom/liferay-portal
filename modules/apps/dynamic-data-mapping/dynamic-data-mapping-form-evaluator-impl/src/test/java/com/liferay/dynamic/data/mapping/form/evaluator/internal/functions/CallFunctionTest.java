@@ -19,6 +19,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.util.PortalImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +51,8 @@ public class CallFunctionTest {
 			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
 
 		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, _jsonFactory);
+			null, ddmFormFieldEvaluationResults, null, _jsonFactory,
+			new PortalImpl());
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
@@ -85,7 +87,8 @@ public class CallFunctionTest {
 			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
 
 		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, _jsonFactory);
+			null, ddmFormFieldEvaluationResults, null, _jsonFactory,
+			new PortalImpl());
 
 		Assert.assertEquals(
 			"test", callFunction.getDDMFormFieldValue("field0"));
@@ -105,7 +108,8 @@ public class CallFunctionTest {
 			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
 
 		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, _jsonFactory);
+			null, ddmFormFieldEvaluationResults, null, _jsonFactory,
+			new PortalImpl());
 
 		Assert.assertEquals(
 			"test", callFunction.getDDMFormFieldValue("field0"));
@@ -123,7 +127,8 @@ public class CallFunctionTest {
 			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
 
 		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, _jsonFactory);
+			null, ddmFormFieldEvaluationResults, null, _jsonFactory,
+			new PortalImpl());
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
@@ -152,7 +157,8 @@ public class CallFunctionTest {
 				ddmFormFieldEvaluationResult1, ddmFormFieldEvaluationResult2));
 
 		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, _jsonFactory);
+			null, ddmFormFieldEvaluationResults, null, _jsonFactory,
+			new PortalImpl());
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.registry.BasicRegistryImpl;
@@ -40,14 +39,11 @@ public class ResourceActionsTest {
 	public void setUp() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
-		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
-			new UnsecureSAXReaderUtil();
-
-		unsecureSAXReaderUtil.setSAXReader(new SAXReaderImpl());
-
 		ResourceActionsUtil resourceActionsUtil = new ResourceActionsUtil();
 
 		ResourceActionsImpl resourceActionsImpl = new ResourceActionsImpl();
+
+		resourceActionsImpl.setUnsecureSAXReader(new SAXReaderImpl());
 
 		ReflectionTestUtil.setFieldValue(
 			resourceActionsImpl, "portletLocalService",

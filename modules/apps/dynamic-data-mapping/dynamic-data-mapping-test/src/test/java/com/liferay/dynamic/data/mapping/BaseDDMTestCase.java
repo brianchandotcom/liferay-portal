@@ -841,6 +841,8 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		SAXReaderImpl unsecureSAXReader = new SAXReaderImpl();
 
 		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
+
+		saxReaderUtil.setUnsecureSAXReader(unsecureSAXReader);
 	}
 
 	protected void whenLanguageGet(

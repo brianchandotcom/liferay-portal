@@ -65,6 +65,8 @@ public class SPIConfigurationTest {
 		SAXReaderImpl unsecureSAXReader = new SAXReaderImpl();
 
 		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
+
+		saxReaderUtil.setUnsecureSAXReader(unsecureSAXReader);
 	}
 
 	@Test

@@ -16,7 +16,6 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.model.ModelHintsCallback;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider;
-import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,12 +42,15 @@ public class DefaultModelHintsImpl extends BaseModelHintsImpl {
 
 	@Override
 	public SAXReader getSAXReader() {
-		SecureXMLFactoryProvider secureXMLFactoryProvider =
-			SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider();
-
 		return SAXReaderFactory.getSAXReader(
-			secureXMLFactoryProvider.newXMLReader(),
+			_secureXMLFactoryProvider.newXMLReader(),
 			PropsValues.XML_VALIDATION_ENABLED, false);
+	}
+
+	public void setSecureXMLFactoryProvider(
+		SecureXMLFactoryProvider secureXMLFactoryProvider) {
+
+		_secureXMLFactoryProvider = secureXMLFactoryProvider;
 	}
 
 	public class RuntimeModelHintsCallback implements ModelHintsCallback {
@@ -67,5 +69,6 @@ public class DefaultModelHintsImpl extends BaseModelHintsImpl {
 
 	private final ModelHintsCallback _modelHintsCallback =
 		new RuntimeModelHintsCallback();
+	private SecureXMLFactoryProvider _secureXMLFactoryProvider;
 
 }

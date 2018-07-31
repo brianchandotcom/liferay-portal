@@ -22,13 +22,13 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.security.permission.ResourceActionsImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.PreparedStatement;
@@ -84,17 +84,15 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		throws UpgradeException {
 
 		try {
-			ResourceActionsImpl resourceActionsImpl = new ResourceActionsImpl();
-
 			Class<?> clazz = getClass();
 
 			ClassLoader classLoader = clazz.getClassLoader();
 
 			for (String config : PropsValues.RESOURCE_ACTIONS_CONFIGS) {
-				resourceActionsImpl.read(null, classLoader, config);
+				ResourceActionsUtil.read(null, classLoader, config);
 			}
 
-			return resourceActionsImpl.getModelResourceGuestUnsupportedActions(
+			return ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
 				_CALENDAR_RESOURCE_NAME);
 		}
 		catch (Exception e) {

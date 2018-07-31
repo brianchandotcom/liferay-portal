@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentType;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
@@ -652,7 +652,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	public void read(String servletContextName, InputStream inputStream)
 		throws Exception {
 
-		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
+		Document document = _unsecureSAXReader.read(inputStream, true);
 
 		_read(servletContextName, document, null);
 	}
@@ -697,6 +697,10 @@ public class ResourceActionsImpl implements ResourceActions {
 				}
 			}
 		}
+	}
+
+	public void setUnsecureSAXReader(SAXReader unsecureSAXReader) {
+		_unsecureSAXReader = unsecureSAXReader;
 	}
 
 	@BeanReference(type = PortletLocalService.class)
@@ -1065,7 +1069,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			_log.debug("Loading " + source);
 		}
 
-		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
+		Document document = _unsecureSAXReader.read(inputStream, true);
 
 		DocumentType documentType = document.getDocumentType();
 
@@ -1449,6 +1453,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	private final ServiceTrackerList<ResourceBundleLoader>
 		_resourceBundleLoaders;
 	private final Set<String> _rootModelResources = new HashSet<>();
+	private SAXReader _unsecureSAXReader;
 
 	private static class ModelResourceActionsBag {
 

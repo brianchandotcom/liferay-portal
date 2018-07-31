@@ -272,27 +272,27 @@ public class MergeCentralSubrepositoryUtil {
 		GitWorkingDirectory.Remote upstreamRemote =
 			centralGitWorkingDirectory.getRemote("upstream");
 
-		if (_upstreamRemoteBranchNames == null) {
-			_upstreamRemoteBranchNames =
-				centralGitWorkingDirectory.getRemoteBranchNames(upstreamRemote);
+		if (_upstreamRemoteGitBranchNames == null) {
+			_upstreamRemoteGitBranchNames =
+				centralGitWorkingDirectory.getRemoteGitBranchNames(upstreamRemote);
 		}
 
 		String mergeBranchNamePrefix = mergeBranchName.substring(
 			0, mergeBranchName.lastIndexOf("-"));
 
-		for (String upstreamRemoteBranchName : _upstreamRemoteBranchNames) {
-			if (upstreamRemoteBranchName.equals(mergeBranchName) &&
+		for (String upstreamRemoteGitBranchName : _upstreamRemoteGitBranchNames) {
+			if (upstreamRemoteGitBranchName.equals(mergeBranchName) &&
 				!centralSubrepository.isSubrepositoryUpstreamCommitMerged()) {
 
 				continue;
 			}
 
-			if (!upstreamRemoteBranchName.startsWith(mergeBranchNamePrefix)) {
+			if (!upstreamRemoteGitBranchName.startsWith(mergeBranchNamePrefix)) {
 				continue;
 			}
 
 			centralGitWorkingDirectory.deleteRemoteGitBranch(
-				upstreamRemoteBranchName, upstreamRemote);
+				upstreamRemoteGitBranchName, upstreamRemote);
 		}
 	}
 
@@ -439,6 +439,6 @@ public class MergeCentralSubrepositoryUtil {
 	private static final Pattern _githubRemotePattern = Pattern.compile(
 		"git@github.com:[-\\w]+\\/(?<subrepositoryName>[-\\w]+)\\.git");
 	private static JSONArray _pullsJSONArray;
-	private static List<String> _upstreamRemoteBranchNames;
+	private static List<String> _upstreamRemoteGitBranchNames;
 
 }

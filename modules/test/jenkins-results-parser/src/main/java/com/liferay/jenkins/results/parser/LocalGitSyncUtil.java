@@ -95,10 +95,10 @@ public class LocalGitSyncUtil {
 		final String upstreamUsername) {
 
 		String currentBranchName = gitWorkingDirectory.getCurrentBranchName();
-		String localBranchName = localGitBranch.getName();
+		String localGitBranchName = localGitBranch.getName();
 
 		if ((currentBranchName == null) ||
-			!currentBranchName.equals(localBranchName)) {
+			!currentBranchName.equals(localGitBranchName)) {
 
 			gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch, "-f");
 		}
@@ -186,29 +186,29 @@ public class LocalGitSyncUtil {
 	protected static void deleteCacheLocalGitBranches(
 		String excludeBranchName, GitWorkingDirectory gitWorkingDirectory) {
 
-		for (String localBranchName :
-				gitWorkingDirectory.getLocalBranchNames()) {
+		for (String localGitBranchName :
+				gitWorkingDirectory.getLocalGitBranchNames()) {
 
-			if (localBranchName.matches(_cacheBranchPattern.pattern()) &&
-				!localBranchName.equals(excludeBranchName)) {
+			if (localGitBranchName.matches(_cacheBranchPattern.pattern()) &&
+				!localGitBranchName.equals(excludeBranchName)) {
 
-				gitWorkingDirectory.deleteLocalGitBranch(localBranchName);
+				gitWorkingDirectory.deleteLocalGitBranch(localGitBranchName);
 			}
 		}
 	}
 
 	protected static void deleteCacheRemoteGitBranch(
 		String cacheBranchName, GitWorkingDirectory gitWorkingDirectory,
-		Map<String, RemoteGitBranch> remoteBranches) {
+		Map<String, RemoteGitBranch> remoteGitBranches) {
 
 		List<RemoteGitBranch> cacheRemoteGitBranches = new ArrayList<>(2);
 
 		for (Map.Entry<String, RemoteGitBranch> entry :
-				remoteBranches.entrySet()) {
+				remoteGitBranches.entrySet()) {
 
-			String remoteBranchName = entry.getKey();
+			String remoteGitBranchName = entry.getKey();
 
-			if (!remoteBranchName.startsWith(cacheBranchName)) {
+			if (!remoteGitBranchName.startsWith(cacheBranchName)) {
 				continue;
 			}
 
@@ -243,9 +243,9 @@ public class LocalGitSyncUtil {
 
 			RemoteGitBranch remoteGitBranch = entry.getValue();
 
-			String remoteBranchName = remoteGitBranch.getName();
+			String remoteGitBranchName = remoteGitBranch.getName();
 
-			Matcher matcher = _cacheBranchPattern.matcher(remoteBranchName);
+			Matcher matcher = _cacheBranchPattern.matcher(remoteGitBranchName);
 
 			if (!matcher.matches()) {
 				continue;
@@ -256,16 +256,16 @@ public class LocalGitSyncUtil {
 			if (lastBlock.matches("\\d+")) {
 				branchCount++;
 
-				long remoteBranchTimestamp = Long.parseLong(lastBlock);
+				long remoteGitBranchTimestamp = Long.parseLong(lastBlock);
 
-				long branchAge = timestamp - remoteBranchTimestamp;
+				long branchAge = timestamp - remoteGitBranchTimestamp;
 
 				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
-					String repositoryBaseRemoteBranchName =
-						remoteBranchName.replace("-" + lastBlock, "");
+					String repositoryBaseRemoteGitBranchName =
+						remoteGitBranchName.replace("-" + lastBlock, "");
 
 					RemoteGitBranch repositoryBaseRemoteGitBranch =
-						remoteGitBranches.get(repositoryBaseRemoteBranchName);
+						remoteGitBranches.get(repositoryBaseRemoteGitBranchName);
 
 					if (repositoryBaseRemoteGitBranch != null) {
 						expiredRemoteGitBranches.add(
@@ -363,15 +363,15 @@ public class LocalGitSyncUtil {
 		for (Map.Entry<String, RemoteGitBranch> entry :
 				remoteGitBranches.entrySet()) {
 
-			String remoteBranchName = entry.getKey();
+			String remoteGitBranchName = entry.getKey();
 
-			if (remoteBranchName.matches(_cacheBranchPattern.pattern())) {
-				if (hasTimestampBranch(remoteBranchName, remoteGitBranches)) {
+			if (remoteGitBranchName.matches(_cacheBranchPattern.pattern())) {
+				if (hasTimestampBranch(remoteGitBranchName, remoteGitBranches)) {
 					cacheRemoteGitBranches.add(entry.getValue());
 				}
 				else {
 					deleteCacheRemoteGitBranch(
-						remoteBranchName, gitWorkingDirectory,
+						remoteGitBranchName, gitWorkingDirectory,
 						remoteGitBranches);
 				}
 			}
@@ -430,8 +430,8 @@ public class LocalGitSyncUtil {
 		String cacheBranchName,
 		Map<String, RemoteGitBranch> remoteGitBranches) {
 
-		for (String remoteBranchName : remoteGitBranches.keySet()) {
-			Matcher matcher = _cacheBranchPattern.matcher(remoteBranchName);
+		for (String remoteGitBranchName : remoteGitBranches.keySet()) {
+			Matcher matcher = _cacheBranchPattern.matcher(remoteGitBranchName);
 
 			if (matcher.matches()) {
 				String lastBlock = matcher.group(2);
@@ -446,12 +446,12 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static boolean isRemoteGitBranch(
-		String remoteBranchName, GitWorkingDirectory gitWorkingDirectory,
+		String remoteGitBranchName, GitWorkingDirectory gitWorkingDirectory,
 		List<GitWorkingDirectory.Remote> remotes) {
 
 		for (GitWorkingDirectory.Remote remote : remotes) {
 			if (gitWorkingDirectory.remoteGitBranchExists(
-					remoteBranchName, remote)) {
+					remoteGitBranchName, remote)) {
 
 				continue;
 			}
@@ -464,16 +464,16 @@ public class LocalGitSyncUtil {
 
 	protected static Map<GitWorkingDirectory.Remote, Boolean> pushToAllRemotes(
 		final boolean force, final GitWorkingDirectory gitWorkingDirectory,
-		final LocalGitBranch localGitBranch, final String remoteBranchName,
+		final LocalGitBranch localGitBranch, final String remoteGitBranchName,
 		final List<GitWorkingDirectory.Remote> remotes) {
 
 		if (localGitBranch != null) {
-			String localBranchName = localGitBranch.getName();
+			String localGitBranchName = localGitBranch.getName();
 			LocalGitBranch currentLocalGitBranch =
 				gitWorkingDirectory.getCurrentLocalGitBranch();
 
 			if ((currentLocalGitBranch == null) ||
-				!localBranchName.equals(currentLocalGitBranch.getName())) {
+				!localGitBranchName.equals(currentLocalGitBranch.getName())) {
 
 				gitWorkingDirectory.checkoutLocalGitBranch(
 					localGitBranch, "-f");
@@ -496,7 +496,7 @@ public class LocalGitSyncUtil {
 				public Boolean call() {
 					RemoteGitBranch remoteGitBranch =
 						gitWorkingDirectory.pushToRemote(
-							force, localGitBranch, remoteBranchName, remote);
+							force, localGitBranch, remoteGitBranchName, remote);
 
 					Boolean result = Boolean.valueOf(remoteGitBranch != null);
 
@@ -520,7 +520,7 @@ public class LocalGitSyncUtil {
 		if (localGitBranch == null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Deleted ", remoteBranchName, " on ",
+					"Deleted ", remoteGitBranchName, " on ",
 					String.valueOf(remotes.size()), " git nodes in ",
 					JenkinsResultsParserUtil.toDurationString(duration)));
 		}
@@ -528,7 +528,7 @@ public class LocalGitSyncUtil {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Pushed ", localGitBranch.getName(), " to ",
-					remoteBranchName, " on ", String.valueOf(remotes.size()),
+					remoteGitBranchName, " on ", String.valueOf(remotes.size()),
 					" git nodes in ",
 					JenkinsResultsParserUtil.toDurationString(duration)));
 		}
@@ -735,12 +735,12 @@ public class LocalGitSyncUtil {
 		boolean updated = false;
 
 		for (RemoteGitBranch cacheRemoteGitBranch : cacheRemoteGitBranches) {
-			String cacheRemoteBranchName = cacheRemoteGitBranch.getName();
+			String cacheRemoteGitBranchName = cacheRemoteGitBranch.getName();
 
 			Matcher matcher = _cacheBranchPattern.matcher(
-				cacheRemoteBranchName);
+				cacheRemoteGitBranchName);
 
-			if (!cacheRemoteBranchName.contains(cacheBranchName) ||
+			if (!cacheRemoteGitBranchName.contains(cacheBranchName) ||
 				!matcher.matches()) {
 
 				continue;
@@ -754,7 +754,7 @@ public class LocalGitSyncUtil {
 
 			if (updated) {
 				pushToAllRemotes(
-					true, gitWorkingDirectory, null, cacheRemoteBranchName,
+					true, gitWorkingDirectory, null, cacheRemoteGitBranchName,
 					localGitRemotes);
 
 				continue;
@@ -775,12 +775,12 @@ public class LocalGitSyncUtil {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"\nUpdating cache branch timestamp from ",
-					cacheRemoteBranchName, "to ", newTimestampBranchName));
+					cacheRemoteGitBranchName, "to ", newTimestampBranchName));
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Updating existing timestamp for branch ",
-					cacheRemoteBranchName, " to ", newTimestampBranchName));
+					cacheRemoteGitBranchName, " to ", newTimestampBranchName));
 
 			LocalGitBranch currentLocalGitBranch =
 				gitWorkingDirectory.getCurrentLocalGitBranch();
@@ -802,7 +802,7 @@ public class LocalGitSyncUtil {
 					true, gitWorkingDirectory, newTimestampLocalGitBranch,
 					newTimestampBranchName, localGitRemotes);
 				pushToAllRemotes(
-					true, gitWorkingDirectory, null, cacheRemoteBranchName,
+					true, gitWorkingDirectory, null, cacheRemoteGitBranchName,
 					localGitRemotes);
 
 				updated = true;

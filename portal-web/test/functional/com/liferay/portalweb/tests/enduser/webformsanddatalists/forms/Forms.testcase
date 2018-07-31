@@ -220,6 +220,16 @@
 
 		<execute macro="Form#closeSidebar" />
 
+		<execute macro="FormsAdminNavigator#gotoEditField">
+			<var name="fieldName" value="TextFieldRequired" />
+		</execute>
+
+		<execute macro="FormFields#getFieldName">
+			<return name="fieldName1" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
 		<execute macro="Form#addTranslation">
 			<var name="localizedLanguage" value="Chinese (China)" />
 		</execute>
@@ -244,16 +254,6 @@
 
 		<execute macro="FormFields#viewSwitcherChecked">
 			<var name="fieldName" value="repeatable" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="FormsAdminNavigator#gotoEditField">
-			<var name="fieldName" value="TextFieldRequired" />
-		</execute>
-
-		<execute macro="FormFields#getFieldName">
-			<return name="fieldName1" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />

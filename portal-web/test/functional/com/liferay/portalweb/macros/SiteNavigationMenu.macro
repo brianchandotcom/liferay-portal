@@ -86,7 +86,9 @@
 		<if>
 			<condition function="IsNotVisible" locator1="SiteNavigationMenu#SIDEBAR" />
 			<then>
-				<execute function="Click" locator1="Icon#COG" />
+				<execute function="Click" locator1="Icon#COG_PAGE">
+					<var name="key_pageName" value="${pageName}" />
+				</execute>
 			</then>
 		</if>
 

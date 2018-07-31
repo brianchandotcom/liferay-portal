@@ -32,11 +32,11 @@
 			</then>
 		</if>
 
-		<var name="key_itemName" value="${appName}" />
+		<var name="key_appName" value="${appName}" />
 
 		<while>
 			<not>
-				<condition function="IsElementPresent#isElementPresentAfterWait" locator1="ListGroupItem#ITEM_NAME_LINK" />
+				<condition function="IsElementPresent#isElementPresentAfterWait" locator1="AppManager#APP_NAME" />
 			</not>
 			<then>
 				<execute function="Click" locator1="Pagination#NEXT_LINK" />

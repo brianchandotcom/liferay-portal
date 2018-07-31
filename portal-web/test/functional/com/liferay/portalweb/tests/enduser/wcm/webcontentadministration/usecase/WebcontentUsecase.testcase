@@ -922,6 +922,8 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Blank Site Name" />
 		</execute>

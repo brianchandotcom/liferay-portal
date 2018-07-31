@@ -603,6 +603,8 @@
 	</command>
 
 	<command name="ExportImportThemeSettings" priority="4">
+		<property name="osgi.app.includes" value="frontend-theme-fjord" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />

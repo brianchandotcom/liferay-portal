@@ -184,26 +184,6 @@
 		</execute>
 	</command>
 
-	<command name="changeSiteLogoViaPageCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute function="Click" locator1="Icon#COG">
-			<var name="key_pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Logo" />
-		</execute>
-
-		<execute macro="Page#uploadFileForLogo">
-			<var name="logoFile" value="${logoFile}" />
-		</execute>
-	</command>
-
 	<command name="deleteFriendlyURLPG">
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="General" />
@@ -1077,18 +1057,6 @@
 		<execute function="AssertElementPresent" locator1="SitePagesEditPage#LAYOUT_CARD_SELECTED">
 			<var name="key_columnName" value="${columnName}" />
 		</execute>
-	</command>
-
-	<command name="viewSiteLogo">
-		<if>
-			<equals arg1="${assertCustomLogoPresent}" arg2="true" />
-			<then>
-				<execute function="AssertElementPresent" locator1="Home#CUSTOM_LOGO" />
-			</then>
-			<else>
-				<execute function="AssertElementNotPresent" locator1="Home#CUSTOM_LOGO" />
-			</else>
-		</if>
 	</command>
 
 	<command name="viewSiteNameTranslationsPG">

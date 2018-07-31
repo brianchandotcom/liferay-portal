@@ -164,7 +164,8 @@ public class LayoutsAdminDisplayContext {
 
 		breadcrumbEntriesJSONArray.put(
 			_getBreadcrumbEntryJSONObject(
-				LayoutConstants.DEFAULT_PLID, _getTitle(isPrivatePages())));
+				LayoutConstants.DEFAULT_PLID, isPrivatePages(),
+				_getTitle(isPrivatePages())));
 
 		if (getSelPlid() == LayoutConstants.DEFAULT_PLID) {
 			return breadcrumbEntriesJSONArray;
@@ -183,13 +184,13 @@ public class LayoutsAdminDisplayContext {
 		for (Layout layout : layouts) {
 			breadcrumbEntriesJSONArray.put(
 				_getBreadcrumbEntryJSONObject(
-					layout.getPlid(),
+					layout.getPlid(), layout.isPrivateLayout(),
 					layout.getName(_themeDisplay.getLocale())));
 		}
 
 		breadcrumbEntriesJSONArray.put(
 			_getBreadcrumbEntryJSONObject(
-				selLayout.getPlid(),
+				selLayout.getPlid(), selLayout.isPrivateLayout(),
 				selLayout.getName(_themeDisplay.getLocale())));
 
 		return breadcrumbEntriesJSONArray;
@@ -1014,7 +1015,9 @@ public class LayoutsAdminDisplayContext {
 		return _activeLayoutSetBranchId;
 	}
 
-	private JSONObject _getBreadcrumbEntryJSONObject(long plid, String title) {
+	private JSONObject _getBreadcrumbEntryJSONObject(
+		long plid, boolean privateLayout, String title) {
+
 		JSONObject breadcrumbEntryJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
@@ -1023,6 +1026,7 @@ public class LayoutsAdminDisplayContext {
 		PortletURL portletURL = getPortletURL();
 
 		portletURL.setParameter("selPlid", String.valueOf(plid));
+		portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 		breadcrumbEntryJSONObject.put("url", portletURL.toString());
 
@@ -1042,14 +1046,15 @@ public class LayoutsAdminDisplayContext {
 		pagesJSONObject.put("plid", LayoutConstants.DEFAULT_PLID);
 		pagesJSONObject.put("title", _getTitle(privatePages));
 
-		PortletURL privatePagesURL = getPortletURL();
+		PortletURL pagesURL = getPortletURL();
 
-		privatePagesURL.setParameter(
+		pagesURL.setParameter(
 			"navigation", privatePages ? "private-pages" : "public-pages");
-		privatePagesURL.setParameter(
+		pagesURL.setParameter(
 			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
+		pagesURL.setParameter("privateLayout", String.valueOf(privatePages));
 
-		pagesJSONObject.put("url", privatePagesURL.toString());
+		pagesJSONObject.put("url", pagesURL.toString());
 
 		return pagesJSONObject;
 	}
@@ -1182,6 +1187,9 @@ public class LayoutsAdminDisplayContext {
 			portletURL.setParameter(
 				"layoutSetBranchId",
 				String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
+			portletURL.setParameter(
+				"privateLayout",
+				String.valueOf(layoutSetBranch.isPrivateLayout()));
 
 			jsonObject.put("url", portletURL.toString());
 
@@ -1263,6 +1271,8 @@ public class LayoutsAdminDisplayContext {
 				portletURL.setParameter(
 					"layoutSetBranchId",
 					String.valueOf(_getActiveLayoutSetBranchId()));
+				portletURL.setParameter(
+					"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
 				layoutJSONObject.put("url", portletURL.toString());
 			}

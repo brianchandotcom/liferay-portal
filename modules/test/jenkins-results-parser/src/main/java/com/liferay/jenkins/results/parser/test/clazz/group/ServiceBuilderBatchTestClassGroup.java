@@ -63,6 +63,32 @@ public class ServiceBuilderBatchTestClassGroup
 			getPortalGitWorkingDirectory();
 
 		if (testRelevantChanges) {
+			List<File> modifiedPortalToolsServiceBuilderFiles =
+				portalGitWorkingDirectory.getModifiedFilesList(
+					"portal-tools-service-builder");
+
+			if (!modifiedPortalToolsServiceBuilderFiles.isEmpty()) {
+				_buildServiceFull = true;
+
+				return;
+			}
+
+			List<File> modifiedPortalImplFiles =
+				portalGitWorkingDirectory.getModifiedFilesList("portal-impl/");
+
+			if (!modifiedPortalImplFiles.isEmpty()) {
+				_buildServiceCore = true;
+			}
+			else {
+				List<File> modifiedPortalKernelFiles =
+					portalGitWorkingDirectory.getModifiedFilesList(
+						"portal-kernel/");
+
+				if (!modifiedPortalKernelFiles.isEmpty()) {
+					_buildServiceCore = true;
+				}
+			}
+
 			List<File> modifiedModuleDirsList =
 				portalGitWorkingDirectory.getModifiedModuleDirsList(
 					excludesPathMatchers, includesPathMatchers);
@@ -80,10 +106,11 @@ public class ServiceBuilderBatchTestClassGroup
 			}
 		}
 		else {
-			moduleDirsList.addAll(
-				portalGitWorkingDirectory.getModuleDirsList(
-					excludesPathMatchers, includesPathMatchers));
+			_buildServiceFull = true;
 		}
 	}
+
+	private boolean _buildServiceCore;
+	private boolean _buildServiceFull;
 
 }

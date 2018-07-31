@@ -101,9 +101,6 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		BeanLocatorImpl beanLocatorImpl = new BeanLocatorImpl(
 			classLoader, applicationContext);
 
-		beanLocatorImpl.setPACLServletContextName(
-			servletContext.getServletContextName());
-
 		try {
 			Class<?> beanLocatorUtilClass = Class.forName(
 				"com.liferay.util.bean.PortletBeanLocatorUtil", true,

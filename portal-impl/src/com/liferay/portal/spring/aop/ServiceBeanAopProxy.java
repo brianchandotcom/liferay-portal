@@ -124,12 +124,8 @@ public class ServiceBeanAopProxy
 
 	@Override
 	public Object getProxy(ClassLoader classLoader) {
-		InvocationHandler invocationHandler = _pacl.getInvocationHandler(
-			this, _advisedSupport);
-
 		return ProxyUtil.newProxyInstance(
-			classLoader, _advisedSupport.getProxiedInterfaces(),
-			invocationHandler);
+			classLoader, _advisedSupport.getProxiedInterfaces(), this);
 	}
 
 	@Override
@@ -145,6 +141,10 @@ public class ServiceBeanAopProxy
 		return serviceBeanMethodInvocation.proceed();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public interface PACL {
 
 		public InvocationHandler getInvocationHandler(
@@ -177,23 +177,9 @@ public class ServiceBeanAopProxy
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceBeanAopProxy.class);
 
-	private static final PACL _pacl = new NoPACL();
-
 	private final AdvisedSupport _advisedSupport;
 	private final List<MethodInterceptor> _classLevelMethodInterceptors;
 	private final List<MethodInterceptor> _fullMethodInterceptors;
 	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
-
-	private static class NoPACL implements PACL {
-
-		@Override
-		public InvocationHandler getInvocationHandler(
-			InvocationHandler invocationHandler,
-			AdvisedSupport advisedSupport) {
-
-			return invocationHandler;
-		}
-
-	}
 
 }

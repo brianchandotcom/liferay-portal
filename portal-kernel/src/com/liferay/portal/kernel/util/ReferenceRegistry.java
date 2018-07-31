@@ -32,8 +32,9 @@ public class ReferenceRegistry {
 		Class<?> clazz, Object object, String fieldName) {
 
 		try {
-			ReferenceEntry referenceEntry = _pacl.getReferenceEntry(
-				clazz, object, fieldName);
+			Field field = clazz.getDeclaredField(fieldName);
+
+			ReferenceEntry referenceEntry = new ReferenceEntry(object, field);
 
 			_referenceEntries.add(referenceEntry);
 		}
@@ -83,6 +84,10 @@ public class ReferenceRegistry {
 		_referenceEntries.clear();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public interface PACL {
 
 		public ReferenceEntry getReferenceEntry(
@@ -94,22 +99,7 @@ public class ReferenceRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReferenceRegistry.class);
 
-	private static final PACL _pacl = new NoPACL();
 	private static final Set<ReferenceEntry> _referenceEntries =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
-
-	private static class NoPACL implements PACL {
-
-		@Override
-		public ReferenceEntry getReferenceEntry(
-				Class<?> clazz, Object object, String fieldName)
-			throws NoSuchFieldException, SecurityException {
-
-			Field field = clazz.getDeclaredField(fieldName);
-
-			return new ReferenceEntry(object, field);
-		}
-
-	}
 
 }

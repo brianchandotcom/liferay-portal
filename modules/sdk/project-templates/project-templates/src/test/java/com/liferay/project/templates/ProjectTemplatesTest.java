@@ -63,7 +63,6 @@ import java.util.concurrent.Callable;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -3333,7 +3332,7 @@ public class ProjectTemplatesTest {
 		File gradleProperties = new File(
 			gradleWorkspaceProjectDir, "gradle.properties");
 
-		_testPropertyExists(
+		_testPropertyKeyExists(
 			gradleProperties.toPath(), "liferay.workspace.bundle.url");
 
 		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
@@ -3357,7 +3356,7 @@ public class ProjectTemplatesTest {
 		File gradleProperties = new File(
 			gradleWorkspaceProjectDir, "gradle.properties");
 
-		_testPropertyExists(
+		_testPropertyKeyExists(
 			gradleProperties.toPath(), "liferay.workspace.bundle.url");
 
 		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
@@ -4371,18 +4370,17 @@ public class ProjectTemplatesTest {
 		return file;
 	}
 
-	private static void _testPropertyExists(Path path, String property)
+	private static void _testPropertyKeyExists(Path path, String key)
 		throws Exception {
 
-		try (Stream<String> stream = Files.lines(path)) {
-			boolean foundProperty = stream.filter(
-				line -> line.contains(property)
-			).anyMatch(
-				line -> !line.contains('#' + property) &&
-				 !line.trim().startsWith("#")
-			);
+		try (InputStream inputStream = Files.newInputStream(path)) {
+			Properties properties = new Properties();
 
-			Assert.assertTrue(foundProperty);
+			properties.load(inputStream);
+
+			Object value = properties.get(key);
+
+			Assert.assertNotNull(value);
 		}
 	}
 

@@ -29,6 +29,14 @@ import java.util.List;
 public class ServiceBuilderBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
+	public boolean isBuildServiceCore() {
+		return _buildServiceCore;
+	}
+
+	public boolean isBuildServiceFull() {
+		return _buildServiceFull;
+	}
+
 	public static class ServiceBuilderBatchTestClass
 		extends ModulesBatchTestClass {
 

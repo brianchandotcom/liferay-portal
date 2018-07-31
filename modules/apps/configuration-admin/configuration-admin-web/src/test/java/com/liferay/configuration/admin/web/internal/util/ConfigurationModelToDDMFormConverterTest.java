@@ -65,6 +65,11 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
+			ExtendedObjectClassDefinition.ALL);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
 			ExtendedObjectClassDefinition.REQUIRED);
 
 		whenGetCardinality(extendedAttributeDefinition, 0);
@@ -107,6 +112,11 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 
 		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
 			ExtendedAttributeDefinition.class);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
+			ExtendedObjectClassDefinition.ALL);
 
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
@@ -158,6 +168,11 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
+			ExtendedObjectClassDefinition.ALL);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
 			ExtendedObjectClassDefinition.OPTIONAL);
 
 		whenGetCardinality(extendedAttributeDefinition, 0);
@@ -196,6 +211,11 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 
 		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
 			ExtendedAttributeDefinition.class);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
+			ExtendedObjectClassDefinition.ALL);
 
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
@@ -266,6 +286,11 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 
 		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
 			ExtendedAttributeDefinition.class);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
+			ExtendedObjectClassDefinition.ALL);
 
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,

@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 import java.util.Set;
@@ -150,12 +151,16 @@ public class ManagementService implements CacheManagerEventListener {
 			return StringPool.BLANK;
 		}
 
-		name = name.replace(CharPool.COMMA, CharPool.PERIOD);
-		name = name.replace(CharPool.COLON, CharPool.PERIOD);
-		name = name.replace(CharPool.EQUAL, CharPool.PERIOD);
-		name = name.replace(CharPool.NEW_LINE, CharPool.PERIOD);
-
-		return name;
+		return StringUtil.replace(
+			name,
+			new char[] {
+				CharPool.COMMA, CharPool.COLON, CharPool.EQUAL,
+				CharPool.NEW_LINE
+			},
+			new char[] {
+				CharPool.PERIOD, CharPool.PERIOD, CharPool.PERIOD,
+				CharPool.PERIOD
+			});
 	}
 
 	private static ObjectName _getObjectName(CacheManager cacheManager) {

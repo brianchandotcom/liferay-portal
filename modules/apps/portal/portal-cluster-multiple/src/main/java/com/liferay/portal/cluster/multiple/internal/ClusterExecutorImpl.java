@@ -62,9 +62,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -374,9 +376,32 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			}
 		}
 
-		_log.error("Unable to get cluster node with address " + address);
+		if (!_isMasterAddress(address)) {
+			return null;
+		}
 
-		return null;
+		CompletableFuture<ClusterNode> completableFuture =
+			_masterNodeCompletableFuture;
+
+		if (completableFuture == null) {
+			completableFuture = new CompletableFuture<>();
+
+			_masterNodeCompletableFuture = completableFuture;
+		}
+
+		try {
+			return completableFuture.get(
+				clusterExecutorConfiguration.clusterNodeAddressTimeout(),
+				TimeUnit.MILLISECONDS);
+		}
+		catch (Exception e) {
+			_log.error("Unable to get cluster node with address " + address);
+
+			return null;
+		}
+		finally {
+			_masterNodeCompletableFuture = null;
+		}
 	}
 
 	protected InetSocketAddress getConfiguredPortalInetSocketAddress(
@@ -552,8 +577,19 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	protected boolean memberJoined(ClusterNodeStatus clusterNodeStatus) {
-		ClusterNodeStatus oldClusterNodeStatus = _clusterNodeStatuses.put(
+		ClusterNodeStatus oldClusterNodeStatus;
+
+		oldClusterNodeStatus = _clusterNodeStatuses.put(
 			clusterNodeStatus.getClusterNodeId(), clusterNodeStatus);
+
+		if (_isMasterAddress(clusterNodeStatus.getAddress())) {
+			CompletableFuture<ClusterNode> completableFuture =
+				_masterNodeCompletableFuture;
+
+			if (completableFuture != null) {
+				completableFuture.complete(clusterNodeStatus.getClusterNode());
+			}
+		}
 
 		if (oldClusterNodeStatus != null) {
 			if (!oldClusterNodeStatus.equals(clusterNodeStatus)) {
@@ -646,6 +682,14 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	protected volatile ClusterExecutorConfiguration
 		clusterExecutorConfiguration;
 
+	private boolean _isMasterAddress(Address address) {
+		ClusterReceiver clusterReceiver = _clusterChannel.getClusterReceiver();
+
+		Address coordinatorAddress = clusterReceiver.getCoordinatorAddress();
+
+		return coordinatorAddress.equals(address);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterExecutorImpl.class);
 
@@ -662,6 +706,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private ClusterNodeStatus _localClusterNodeStatus;
+	private CompletableFuture<ClusterNode> _masterNodeCompletableFuture = null;
 	private PortalExecutorManager _portalExecutorManager;
 	private Props _props;
 	private ServiceRegistration<PortalInetSocketAddressEventListener>

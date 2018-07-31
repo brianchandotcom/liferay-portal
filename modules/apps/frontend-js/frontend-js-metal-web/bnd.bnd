@@ -32,6 +32,7 @@ Liferay-JS-Submodules-Bridge:\
 	metal-state,\
 	metal-storage,\
 	metal-structs,\
+	metal-throttle,\
 	metal-toggler,\
 	metal-uri,\
 	metal-useragent

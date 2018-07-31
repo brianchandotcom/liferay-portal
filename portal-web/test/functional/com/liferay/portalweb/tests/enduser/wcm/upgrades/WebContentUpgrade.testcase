@@ -56,6 +56,7 @@
 		<description message="This is a use case for LPS-75561." />
 
 		<property name="data.archive.type" value="data-archive-pages-administration" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.2.5" />
 
 		<execute macro="Navigator#openURL" />
@@ -69,6 +70,7 @@
 
 	<command name="ViewWebContentArchive612" priority="5">
 		<property name="data.archive.type" value="data-archive-web-content-draft" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.1.2" />
 
 		<execute macro="Upgrade#addWCStructureAndTemplate" />
@@ -105,6 +107,7 @@
 
 	<command name="ViewWebContentArchive625" priority="5">
 		<property name="data.archive.type" value="data-archive-web-content-draft" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.2.5" />
 
 		<execute macro="Upgrade#addWCStructureAndTemplate" />

@@ -24,6 +24,7 @@
 
 	<command name="ViewDroolsInAppManagerAfterUpgrade612" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="osgi.modules.includes" value="calevent" />
 		<property name="portal.version" value="6.1.2" />
 
@@ -54,6 +55,7 @@
 
 	<command name="ViewDroolsInAppManagerAfterUpgrade625" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.2.5" />
 
 		<execute macro="Upgrade#ViewDroolsAppManager" />

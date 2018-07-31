@@ -24,6 +24,7 @@
 
 	<command name="ViewAssetPublisherArchive612" priority="5">
 		<property name="data.archive.type" value="data-archive-asset-publisher" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.1.2" />
 
 		<execute macro="Upgrade#viewAssetPublisher" />
@@ -52,6 +53,7 @@
 
 	<command name="ViewAssetPublisherArchive625" priority="5">
 		<property name="data.archive.type" value="data-archive-asset-publisher" />
+		<property name="database.types" value="mariadb,mysql,postgresql" />
 		<property name="portal.version" value="6.2.5" />
 
 		<execute macro="Upgrade#viewAssetPublisher" />

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.deploy.auto;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +29,6 @@ public class AutoDeployUtil {
 	}
 
 	public static AutoDeployUtil getInstance() {
-		PortalRuntimePermission.checkGetBeanProperty(AutoDeployUtil.class);
-
 		return _instance;
 	}
 

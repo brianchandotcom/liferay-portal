@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.image;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Future;
@@ -56,8 +54,6 @@ public class ImageMagickUtil {
 	}
 
 	public static ImageMagick getImageMagick() {
-		PortalRuntimePermission.checkGetBeanProperty(ImageMagickUtil.class);
-
 		return _imageMagick;
 	}
 
@@ -103,8 +99,6 @@ public class ImageMagickUtil {
 	}
 
 	public void setImageMagick(ImageMagick imageMagick) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_imageMagick = imageMagick;
 	}
 

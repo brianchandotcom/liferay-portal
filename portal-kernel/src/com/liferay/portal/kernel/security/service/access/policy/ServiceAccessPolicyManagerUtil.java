@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.security.service.access.policy;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -58,9 +57,6 @@ public class ServiceAccessPolicyManagerUtil {
 	}
 
 	public static ServiceAccessPolicyManager getServiceAccessPolicyManager() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			ServiceAccessPolicyManagerUtil.class);
-
 		return _instance._serviceTracker.getService();
 	}
 

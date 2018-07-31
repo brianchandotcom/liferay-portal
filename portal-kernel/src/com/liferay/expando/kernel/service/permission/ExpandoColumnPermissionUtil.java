@@ -16,7 +16,6 @@ package com.liferay.expando.kernel.service.permission;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -82,8 +81,6 @@ public class ExpandoColumnPermissionUtil {
 
 	public void setExpandoColumnPermission(
 		ExpandoColumnPermission expandoColumnPermission) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_expandoColumnPermission = expandoColumnPermission;
 	}

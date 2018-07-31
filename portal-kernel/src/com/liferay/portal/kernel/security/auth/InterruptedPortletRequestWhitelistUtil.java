@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.security.auth;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.Set;
 
 /**
@@ -26,9 +24,6 @@ public class InterruptedPortletRequestWhitelistUtil {
 
 	public static PortletRequestWhitelist
 		getInterruptedPortletRequestWhitelist() {
-
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletRequestWhitelist.class);
 
 		return _interruptedPortletRequestWhitelist;
 	}
@@ -62,8 +57,6 @@ public class InterruptedPortletRequestWhitelistUtil {
 
 	public void setInterruptedPortletRequestWhitelist(
 		PortletRequestWhitelist whitelist) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_interruptedPortletRequestWhitelist = whitelist;
 	}

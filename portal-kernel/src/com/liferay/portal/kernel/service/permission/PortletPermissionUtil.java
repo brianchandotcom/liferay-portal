@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Collection;
@@ -270,9 +269,6 @@ public class PortletPermissionUtil {
 	}
 
 	public static PortletPermission getPortletPermission() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletPermissionUtil.class);
-
 		return _portletPermission;
 	}
 
@@ -333,8 +329,6 @@ public class PortletPermissionUtil {
 	}
 
 	public void setPortletPermission(PortletPermission portletPermission) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_portletPermission = portletPermission;
 	}
 

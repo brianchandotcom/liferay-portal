@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -60,16 +59,11 @@ public class LayoutSetBranchPermissionUtil {
 	}
 
 	public static LayoutSetBranchPermission getLayoutSetBranchPermission() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			LayoutSetBranchPermissionUtil.class);
-
 		return _layoutSetBranchPermission;
 	}
 
 	public void setLayoutSetBranchPermission(
 		LayoutSetBranchPermission layoutSetBranchPermission) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_layoutSetBranchPermission = layoutSetBranchPermission;
 	}

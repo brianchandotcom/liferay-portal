@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -139,8 +138,6 @@ public class TrashUtil {
 	}
 
 	public static Trash getTrash() {
-		PortalRuntimePermission.checkGetBeanProperty(TrashUtil.class);
-
 		return _trash;
 	}
 
@@ -191,8 +188,6 @@ public class TrashUtil {
 	}
 
 	public void setTrash(Trash trash) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_trash = trash;
 	}
 

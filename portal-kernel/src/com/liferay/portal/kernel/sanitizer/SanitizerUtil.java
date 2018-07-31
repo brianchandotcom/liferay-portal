@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.sanitizer;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
@@ -137,8 +136,6 @@ public class SanitizerUtil {
 			Map<String, Object> options)
 		throws SanitizerException {
 
-		PortalRuntimePermission.checkGetBeanProperty(SanitizerUtil.class);
-
 		for (Sanitizer sanitizer : _sanitizers) {
 			bytes = sanitizer.sanitize(
 				companyId, groupId, userId, className, classPK, contentType,
@@ -159,8 +156,6 @@ public class SanitizerUtil {
 			InputStream inputStream, OutputStream outputStream,
 			Map<String, Object> options)
 		throws SanitizerException {
-
-		PortalRuntimePermission.checkGetBeanProperty(SanitizerUtil.class);
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -189,8 +184,6 @@ public class SanitizerUtil {
 			long classPK, String contentType, String[] modes, String content,
 			Map<String, Object> options)
 		throws SanitizerException {
-
-		PortalRuntimePermission.checkGetBeanProperty(SanitizerUtil.class);
 
 		for (Sanitizer sanitizer : _sanitizers) {
 			content = sanitizer.sanitize(

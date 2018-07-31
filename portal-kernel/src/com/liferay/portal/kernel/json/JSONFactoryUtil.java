@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.json;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.List;
 
 /**
@@ -90,8 +88,6 @@ public class JSONFactoryUtil {
 	}
 
 	public static JSONFactory getJSONFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(JSONFactoryUtil.class);
-
 		return _jsonFactory;
 	}
 
@@ -145,8 +141,6 @@ public class JSONFactoryUtil {
 	}
 
 	public void setJSONFactory(JSONFactory jsonFactory) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_jsonFactory = jsonFactory;
 	}
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.fabric.server;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.concurrent.Future;
 
 /**
@@ -24,8 +22,6 @@ import java.util.concurrent.Future;
 public class FabricServerUtil {
 
 	public static FabricServer getFabricServer() {
-		PortalRuntimePermission.checkGetBeanProperty(FabricServerUtil.class);
-
 		return _fabricServer;
 	}
 
@@ -38,8 +34,6 @@ public class FabricServerUtil {
 	}
 
 	public void setFabricServer(FabricServer fabricServer) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_fabricServer = fabricServer;
 	}
 

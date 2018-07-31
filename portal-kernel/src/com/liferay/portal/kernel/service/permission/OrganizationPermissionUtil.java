@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -70,16 +69,11 @@ public class OrganizationPermissionUtil {
 	}
 
 	public static OrganizationPermission getOrganizationPermission() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			OrganizationPermissionUtil.class);
-
 		return _organizationPermission;
 	}
 
 	public void setOrganizationPermission(
 		OrganizationPermission organizationPermission) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_organizationPermission = organizationPermission;
 	}

@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.List;
 
@@ -114,14 +113,10 @@ public class RepositoryProviderUtil {
 	}
 
 	public static RepositoryProvider getRepositoryProvider() {
-		PortalRuntimePermission.checkGetBeanProperty(RepositoryProvider.class);
-
 		return _repositoryProvider;
 	}
 
 	public void setRepositoryProvider(RepositoryProvider repositoryProvider) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_repositoryProvider = repositoryProvider;
 	}
 

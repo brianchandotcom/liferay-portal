@@ -14,7 +14,6 @@
 
 package com.liferay.social.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.social.kernel.model.SocialActivityDefinition;
 
 import java.util.List;
@@ -64,9 +63,6 @@ public class SocialConfigurationUtil {
 	}
 
 	public static SocialConfiguration getSocialConfiguration() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			SocialConfigurationUtil.class);
-
 		return _socialConfiguration;
 	}
 
@@ -84,8 +80,6 @@ public class SocialConfigurationUtil {
 
 	public void setSocialConfiguration(
 		SocialConfiguration socialConfiguration) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_socialConfiguration = socialConfiguration;
 	}

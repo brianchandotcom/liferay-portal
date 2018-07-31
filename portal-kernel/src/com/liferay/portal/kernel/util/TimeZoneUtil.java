@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.Map;
 import java.util.TimeZone;
@@ -40,8 +39,6 @@ public class TimeZoneUtil {
 	}
 
 	public static TimeZoneUtil getInstance() {
-		PortalRuntimePermission.checkGetBeanProperty(TimeZoneUtil.class);
-
 		return new TimeZoneUtil();
 	}
 
@@ -58,8 +55,6 @@ public class TimeZoneUtil {
 	}
 
 	public static void setDefault(String timeZoneId) {
-		PortalRuntimePermission.checkSetBeanProperty(TimeZoneUtil.class);
-
 		if (Validator.isNotNull(timeZoneId)) {
 			_timeZone = TimeZone.getTimeZone(timeZoneId);
 		}

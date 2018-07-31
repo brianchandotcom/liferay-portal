@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.render;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 /**
  * @author Marcellus Tavares
  */
@@ -34,16 +32,11 @@ public class DDMFormFieldValueRendererRegistryUtil {
 	public static DDMFormFieldValueRendererRegistry
 		getDDMFormFieldValueRendererRegistry() {
 
-		PortalRuntimePermission.checkGetBeanProperty(
-			DDMFormFieldValueRendererRegistryUtil.class);
-
 		return _ddmFormFieldValueRendererRegistry;
 	}
 
 	public void setDDMFormFieldValueRendererRegistry(
 		DDMFormFieldValueRendererRegistry ddmFormFieldValueRendererRegistry) {
-
-		PortalRuntimePermission.checkGetBeanProperty(getClass());
 
 		_ddmFormFieldValueRendererRegistry = ddmFormFieldValueRendererRegistry;
 	}

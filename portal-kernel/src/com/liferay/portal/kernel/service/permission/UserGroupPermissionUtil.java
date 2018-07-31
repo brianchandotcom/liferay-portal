@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -41,16 +40,11 @@ public class UserGroupPermissionUtil {
 	}
 
 	public static UserGroupPermission getUserGroupPermission() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			UserGroupPermissionUtil.class);
-
 		return _userGroupPermission;
 	}
 
 	public void setUserGroupPermission(
 		UserGroupPermission userGroupPermission) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_userGroupPermission = userGroupPermission;
 	}

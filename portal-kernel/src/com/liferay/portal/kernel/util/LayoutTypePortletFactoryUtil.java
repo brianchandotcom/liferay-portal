@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
  * @author Raymond Augé
@@ -28,16 +27,11 @@ public class LayoutTypePortletFactoryUtil {
 	}
 
 	public static LayoutTypePortletFactory getLayoutTypePortletFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			LayoutTypePortletFactoryUtil.class);
-
 		return _layoutTypePortletFactory;
 	}
 
 	public void setLayoutTypePortletFactory(
 		LayoutTypePortletFactory layoutTypePortletFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_layoutTypePortletFactory = layoutTypePortletFactory;
 	}

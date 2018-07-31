@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.social;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.Date;
 
@@ -65,9 +64,6 @@ public class SocialActivityManagerUtil {
 	public static <T extends ClassedModel & GroupedModel>
 		SocialActivityManager<T> getSocialActivityManager() {
 
-		PortalRuntimePermission.checkGetBeanProperty(
-			SocialActivityManagerUtil.class);
-
 		return (SocialActivityManager<T>)_socialActivityManager;
 	}
 
@@ -83,8 +79,6 @@ public class SocialActivityManagerUtil {
 	public <T extends ClassedModel & GroupedModel>
 		void setSocialActivityManager(
 			SocialActivityManager<T> socialActivityManager) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_socialActivityManager = socialActivityManager;
 	}

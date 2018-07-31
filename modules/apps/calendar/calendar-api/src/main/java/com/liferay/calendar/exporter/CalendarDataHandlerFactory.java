@@ -15,7 +15,6 @@
 package com.liferay.calendar.exporter;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,8 +41,6 @@ public class CalendarDataHandlerFactory {
 
 	public void setCalendarDataHandlers(
 		Map<String, CalendarDataHandler> calendarDataHandlers) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_calendarDataHandlers = new HashMap<>();
 

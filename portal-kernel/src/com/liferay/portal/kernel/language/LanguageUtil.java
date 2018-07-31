@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -223,8 +222,6 @@ public class LanguageUtil {
 	}
 
 	public static Language getLanguage() {
-		PortalRuntimePermission.checkGetBeanProperty(LanguageUtil.class);
-
 		return _language;
 	}
 
@@ -360,8 +357,6 @@ public class LanguageUtil {
 	}
 
 	public void setLanguage(Language language) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_language = language;
 	}
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.webdav.methods;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.List;
 
 /**
@@ -36,9 +34,6 @@ public class MethodFactoryRegistryUtil {
 	}
 
 	public static MethodFactoryRegistry getMethodFactoryRegistry() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			MethodFactoryRegistryUtil.class);
-
 		return _methodFactoryRegistry;
 	}
 
@@ -52,8 +47,6 @@ public class MethodFactoryRegistryUtil {
 
 	public void setMethodFactoryRegistry(
 		MethodFactoryRegistry methodFactoryRegistry) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_methodFactoryRegistry = methodFactoryRegistry;
 	}

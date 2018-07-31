@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.security.auth.session;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -30,9 +29,6 @@ import javax.servlet.http.HttpSession;
 public class AuthenticatedSessionManagerUtil {
 
 	public static AuthenticatedSessionManager getAuthenticatedSessionManager() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			AuthenticatedSessionManagerUtil.class);
-
 		return _instance._serviceTracker.getService();
 	}
 

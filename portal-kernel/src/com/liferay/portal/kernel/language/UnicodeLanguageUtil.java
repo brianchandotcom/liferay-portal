@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.language;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -183,14 +181,10 @@ public class UnicodeLanguageUtil {
 	}
 
 	public static UnicodeLanguage getUnicodeLanguage() {
-		PortalRuntimePermission.checkGetBeanProperty(UnicodeLanguageUtil.class);
-
 		return _unicodeLanguage;
 	}
 
 	public void setUnicodeLanguage(UnicodeLanguage unicodeLanguage) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_unicodeLanguage = unicodeLanguage;
 	}
 

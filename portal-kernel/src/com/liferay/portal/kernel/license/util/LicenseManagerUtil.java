@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.license.util;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.license.LicenseInfo;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.List;
 import java.util.Map;
@@ -50,8 +49,6 @@ public class LicenseManagerUtil {
 	}
 
 	public static LicenseManager getLicenseManager() {
-		PortalRuntimePermission.checkGetBeanProperty(LicenseManagerUtil.class);
-
 		return _licenseManager;
 	}
 
@@ -80,8 +77,6 @@ public class LicenseManagerUtil {
 	}
 
 	public void setLicenseManager(LicenseManager licenseManager) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_licenseManager = licenseManager;
 	}
 

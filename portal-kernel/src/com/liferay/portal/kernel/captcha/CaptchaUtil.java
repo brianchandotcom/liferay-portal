@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.captcha;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -48,8 +47,6 @@ public class CaptchaUtil {
 	}
 
 	public static Captcha getCaptcha() {
-		PortalRuntimePermission.checkGetBeanProperty(CaptchaUtil.class);
-
 		if (_serviceTrackerMap == null) {
 			return null;
 		}
@@ -86,8 +83,6 @@ public class CaptchaUtil {
 	}
 
 	public void setCaptcha(Captcha captcha) throws Exception {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		Class<?> clazz = captcha.getClass();
 
 		_captchaSettings.setCaptchaEngine(clazz.getName());

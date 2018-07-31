@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 /**
  * @author Jorge Ferrer
  * @author Dennis Ju
@@ -28,16 +26,11 @@ public class PortletListerFactoryUtil {
 	}
 
 	public static PortletListerFactory getPortletListerFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletListerFactoryUtil.class);
-
 		return _portletListerFactory;
 	}
 
 	public void setPortletListerFactory(
 		PortletListerFactory portletListerFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_portletListerFactory = portletListerFactory;
 	}

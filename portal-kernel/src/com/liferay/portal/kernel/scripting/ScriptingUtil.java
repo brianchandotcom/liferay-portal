@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.scripting;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Map;
@@ -99,8 +98,6 @@ public class ScriptingUtil {
 	}
 
 	private static Scripting _getScripting() {
-		PortalRuntimePermission.checkGetBeanProperty(ScriptingUtil.class);
-
 		return _scripting;
 	}
 

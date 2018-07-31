@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.log;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -60,14 +58,10 @@ public class LogFactoryUtil {
 	}
 
 	public static LogFactory getLogFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(LogFactoryUtil.class);
-
 		return _logFactory;
 	}
 
 	public static void setLogFactory(LogFactory logFactory) {
-		PortalRuntimePermission.checkSetBeanProperty(LogFactoryUtil.class);
-
 		for (Map.Entry<String, LogWrapper> entry : _logWrappers.entrySet()) {
 			String name = entry.getKey();
 

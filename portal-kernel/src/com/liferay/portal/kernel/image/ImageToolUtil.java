@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.model.Image;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -183,8 +182,6 @@ public class ImageToolUtil {
 	}
 
 	public static ImageTool getImageTool() {
-		PortalRuntimePermission.checkGetBeanProperty(ImageToolUtil.class);
-
 		return _imageTool;
 	}
 
@@ -285,8 +282,6 @@ public class ImageToolUtil {
 	}
 
 	public void setImageTool(ImageTool imageTool) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_imageTool = imageTool;
 	}
 

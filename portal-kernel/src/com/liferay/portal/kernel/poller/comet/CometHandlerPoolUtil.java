@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.poller.comet;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 /**
  * @author Edward Han
  * @author Raymond Augé
@@ -37,9 +35,6 @@ public class CometHandlerPoolUtil {
 	}
 
 	public static CometHandlerPool getCometHandlerPool() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			CometHandlerPoolUtil.class);
-
 		return _cometHandlerPool;
 	}
 
@@ -51,8 +46,6 @@ public class CometHandlerPoolUtil {
 	}
 
 	public void setCometHandlerPool(CometHandlerPool cometHandlerPool) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_cometHandlerPool = cometHandlerPool;
 	}
 

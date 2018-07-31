@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.workflow.comparator;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -191,16 +190,11 @@ public class WorkflowComparatorFactoryUtil {
 	}
 
 	public static WorkflowComparatorFactory getWorkflowComparatorFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			WorkflowComparatorFactoryUtil.class);
-
 		return _workflowComparatorFactory;
 	}
 
 	public void setWorkflowComparatorFactory(
 		WorkflowComparatorFactory workflowComparatorFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_workflowComparatorFactory = workflowComparatorFactory;
 	}

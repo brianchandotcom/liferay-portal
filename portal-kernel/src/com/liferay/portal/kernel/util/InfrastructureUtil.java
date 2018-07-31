@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import javax.mail.Session;
@@ -30,60 +29,38 @@ import javax.sql.DataSource;
 public class InfrastructureUtil {
 
 	public static DataSource getDataSource() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class, "dataSource");
-
 		return _dataSource;
 	}
 
 	public static DynamicDataSourceTargetSource
 		getDynamicDataSourceTargetSource() {
 
-		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class, "dynamicDataSourceTargetSource");
-
 		return _dynamicDataSourceTargetSource;
 	}
 
 	public static Session getMailSession() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class, "mailSession");
-
 		return _mailSession;
 	}
 
 	public static Object getTransactionManager() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class, "transactionManager");
-
 		return _transactionManager;
 	}
 
 	public void setDataSource(DataSource dataSource) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass(), "dataSource");
-
 		_dataSource = dataSource;
 	}
 
 	public void setDynamicDataSourceTargetSource(
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource) {
 
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "dynamicDataSourceTargetSource");
-
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
 	}
 
 	public void setMailSession(Session mailSession) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass(), "mailSession");
-
 		_mailSession = mailSession;
 	}
 
 	public void setTransactionManager(Object transactionManager) {
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "transactionManager");
-
 		_transactionManager = transactionManager;
 	}
 

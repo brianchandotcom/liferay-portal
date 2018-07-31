@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -228,8 +227,6 @@ public class WebDAVUtil {
 	}
 
 	public static WebDAVUtil getInstance() {
-		PortalRuntimePermission.checkGetBeanProperty(WebDAVUtil.class);
-
 		return _instance;
 	}
 

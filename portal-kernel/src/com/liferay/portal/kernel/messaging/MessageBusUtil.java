@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
-import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -59,8 +57,6 @@ public class MessageBusUtil {
 	 */
 	@Deprecated
 	public static MessageBusUtil getInstance() {
-		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
-
 		return new MessageBusUtil();
 	}
 
@@ -75,8 +71,6 @@ public class MessageBusUtil {
 	public static void registerMessageListener(
 		String destinationName, MessageListener messageListener) {
 
-		PortalMessageBusPermission.checkListen(destinationName);
-
 		_messageBus.registerMessageListener(destinationName, messageListener);
 	}
 
@@ -85,14 +79,10 @@ public class MessageBusUtil {
 	}
 
 	public static void sendMessage(String destinationName, Message message) {
-		PortalMessageBusPermission.checkSend(destinationName);
-
 		_messageBus.sendMessage(destinationName, message);
 	}
 
 	public static void sendMessage(String destinationName, Object payload) {
-		PortalMessageBusPermission.checkSend(destinationName);
-
 		Message message = new Message();
 
 		message.setPayload(payload);
@@ -104,8 +94,6 @@ public class MessageBusUtil {
 			String destinationName, Message message)
 		throws MessageBusException {
 
-		PortalMessageBusPermission.checkSend(destinationName);
-
 		SynchronousMessageSender synchronousMessageSender =
 			SingleDestinationMessageSenderFactoryUtil.
 				getSynchronousMessageSender(_synchronousMessageSenderMode);
@@ -116,8 +104,6 @@ public class MessageBusUtil {
 	public static Object sendSynchronousMessage(
 			String destinationName, Message message, long timeout)
 		throws MessageBusException {
-
-		PortalMessageBusPermission.checkSend(destinationName);
 
 		SynchronousMessageSender synchronousMessageSender =
 			SingleDestinationMessageSenderFactoryUtil.
@@ -145,8 +131,6 @@ public class MessageBusUtil {
 			String responseDestinationName)
 		throws MessageBusException {
 
-		PortalMessageBusPermission.checkSend(destinationName);
-
 		Message message = new Message();
 
 		message.setResponseDestinationName(responseDestinationName);
@@ -160,8 +144,6 @@ public class MessageBusUtil {
 			String responseDestinationName, long timeout)
 		throws MessageBusException {
 
-		PortalMessageBusPermission.checkSend(destinationName);
-
 		Message message = new Message();
 
 		message.setResponseDestinationName(responseDestinationName);
@@ -171,21 +153,15 @@ public class MessageBusUtil {
 	}
 
 	public static void shutdown() {
-		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
-
 		_messageBus.shutdown();
 	}
 
 	public static void shutdown(boolean force) {
-		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
-
 		_messageBus.shutdown(force);
 	}
 
 	public static boolean unregisterMessageListener(
 		String destinationName, MessageListener messageListener) {
-
-		PortalMessageBusPermission.checkListen(destinationName);
 
 		return _messageBus.unregisterMessageListener(
 			destinationName, messageListener);

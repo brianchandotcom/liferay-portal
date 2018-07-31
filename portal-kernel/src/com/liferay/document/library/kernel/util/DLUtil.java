@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -78,8 +77,6 @@ public class DLUtil {
 	}
 
 	public static DL getDL() {
-		PortalRuntimePermission.checkGetBeanProperty(DLUtil.class);
-
 		return _dl;
 	}
 
@@ -404,8 +401,6 @@ public class DLUtil {
 	}
 
 	public void setDL(DL dl) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_dl = dl;
 	}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.model.portlet;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import javax.portlet.PortletRequest;
@@ -40,9 +39,6 @@ public class PortletDependencyFactoryUtil {
 	}
 
 	public static PortletDependencyFactory getPortletDependencyFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletDependencyFactoryUtil.class);
-
 		return _portletDependencyFactory;
 	}
 

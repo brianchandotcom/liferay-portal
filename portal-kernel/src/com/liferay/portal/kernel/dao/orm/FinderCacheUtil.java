@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
@@ -37,8 +36,6 @@ public class FinderCacheUtil {
 	}
 
 	public static FinderCache getFinderCache() {
-		PortalRuntimePermission.checkGetBeanProperty(FinderCacheUtil.class);
-
 		return _finderCache;
 	}
 

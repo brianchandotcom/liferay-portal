@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Account;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -59,15 +58,10 @@ public class AccountPermissionUtil {
 	}
 
 	public static AccountPermission getAccountPermission() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			AccountPermissionUtil.class);
-
 		return _accountPermission;
 	}
 
 	public void setAccountPermission(AccountPermission accountPermission) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_accountPermission = accountPermission;
 	}
 

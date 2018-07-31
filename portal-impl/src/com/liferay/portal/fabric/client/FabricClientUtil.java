@@ -14,8 +14,6 @@
 
 package com.liferay.portal.fabric.client;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.concurrent.Future;
 
 /**
@@ -32,14 +30,10 @@ public class FabricClientUtil {
 	}
 
 	public static FabricClient getFabricClient() {
-		PortalRuntimePermission.checkGetBeanProperty(FabricClientUtil.class);
-
 		return _fabricClient;
 	}
 
 	public void setFabricClient(FabricClient fabricClient) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_fabricClient = fabricClient;
 	}
 

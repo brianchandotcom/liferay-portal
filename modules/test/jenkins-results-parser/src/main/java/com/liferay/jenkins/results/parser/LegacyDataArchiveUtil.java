@@ -36,11 +36,12 @@ public class LegacyDataArchiveUtil {
 		_generatedArchiveDirectory = generatedArchiveDirectory;
 		_legacyGitWorkingDirectory = legacyGitWorkingDirectory;
 
-		GitWorkingDirectory.Branch localUpstreamBranch =
-			_legacyGitWorkingDirectory.getBranch(
-				_legacyGitWorkingDirectory.getUpstreamBranchName(), null);
+		LocalGitBranch upstreamLocalGitBranch =
+			_legacyGitWorkingDirectory.getLocalGitBranch(
+				_legacyGitWorkingDirectory.getUpstreamBranchName());
 
-		_legacyGitWorkingDirectory.checkoutBranch(localUpstreamBranch);
+		_legacyGitWorkingDirectory.checkoutLocalGitBranch(
+			upstreamLocalGitBranch);
 
 		_legacyGitWorkingDirectory.reset("--hard");
 
@@ -54,25 +55,24 @@ public class LegacyDataArchiveUtil {
 			_getLegacyDataArchivePortalVersions();
 	}
 
-	public GitWorkingDirectory.Branch createDataArchiveBranch()
-		throws IOException {
-
+	public LocalGitBranch createDataArchiveLocalGitBranch() throws IOException {
 		String dataArchiveBranchName = JenkinsResultsParserUtil.combine(
 			"data-archive-", String.valueOf(System.currentTimeMillis()));
 
-		_localDataArchiveBranch = _legacyGitWorkingDirectory.getBranch(
-			dataArchiveBranchName, null);
+		_dataArchiveLocalGitBranch =
+			_legacyGitWorkingDirectory.getLocalGitBranch(dataArchiveBranchName);
 
-		if (_localDataArchiveBranch != null) {
-			_legacyGitWorkingDirectory.deleteBranch(
-				_legacyGitWorkingDirectory.getBranch(
-					dataArchiveBranchName, null));
+		if (_dataArchiveLocalGitBranch != null) {
+			_legacyGitWorkingDirectory.deleteLocalGitBranch(
+				_dataArchiveLocalGitBranch);
 		}
 
-		_localDataArchiveBranch = _legacyGitWorkingDirectory.createLocalBranch(
-			dataArchiveBranchName);
+		_dataArchiveLocalGitBranch =
+			_legacyGitWorkingDirectory.createLocalGitBranch(
+				dataArchiveBranchName);
 
-		_legacyGitWorkingDirectory.checkoutBranch(_localDataArchiveBranch);
+		_legacyGitWorkingDirectory.checkoutLocalGitBranch(
+			_dataArchiveLocalGitBranch);
 
 		for (LegacyDataArchivePortalVersion legacyDataArchivePortalVersion :
 				_legacyDataArchivePortalVersions) {
@@ -87,26 +87,25 @@ public class LegacyDataArchiveUtil {
 			}
 		}
 
-		GitWorkingDirectory.Remote upstreamRemote =
-			_legacyGitWorkingDirectory.getRemote("upstream");
+		RemoteGitBranch remoteGitBranch =
+			_legacyGitWorkingDirectory.pushToRemote(
+				true, _dataArchiveLocalGitBranch, dataArchiveBranchName,
+				_legacyGitWorkingDirectory.getUpstreamRemote());
 
-		if (!_legacyGitWorkingDirectory.pushToRemote(
-				true, _localDataArchiveBranch, dataArchiveBranchName,
-				upstreamRemote)) {
-
+		if (remoteGitBranch == null) {
 			throw new RuntimeException(
 				"Unable to push data archive branch to upstream");
 		}
 
-		return _localDataArchiveBranch;
+		return _dataArchiveLocalGitBranch;
 	}
 
 	public Properties getBuildProperties() {
 		return _buildProperties;
 	}
 
-	public GitWorkingDirectory.Branch getDataArchiveBranch() {
-		return _localDataArchiveBranch;
+	public LocalGitBranch getDataArchiveBranch() {
+		return _dataArchiveLocalGitBranch;
 	}
 
 	public File getGeneratedArchiveDirectory() {
@@ -172,11 +171,11 @@ public class LegacyDataArchiveUtil {
 	}
 
 	private final Properties _buildProperties;
+	private LocalGitBranch _dataArchiveLocalGitBranch;
 	private final File _generatedArchiveDirectory;
 	private final List<LegacyDataArchivePortalVersion>
 		_legacyDataArchivePortalVersions;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;
-	private GitWorkingDirectory.Branch _localDataArchiveBranch;
 	private final List<String> _portalVersions;
 
 }

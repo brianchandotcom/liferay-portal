@@ -36,6 +36,10 @@ public abstract class BaseGitBranch {
 			throw new IllegalArgumentException("SHA is null");
 		}
 
+		if (!sha.matches("[0-9a-f]{7,40}")) {
+			throw new IllegalArgumentException("SHA is invalid");
+		}
+
 		_name = name;
 		_sha = sha;
 	}

@@ -93,24 +93,24 @@ public class MergeCentralSubrepositoryUtil {
 					GitWorkingDirectory.Remote upstreamRemote =
 						centralGitWorkingDirectory.getRemote("upstream");
 
-					if (!centralGitWorkingDirectory.branchExists(
+					if (!centralGitWorkingDirectory.remoteGitBranchExists(
 							mergeBranchName, upstreamRemote)) {
 
-						GitWorkingDirectory.Branch topLevelBranch =
-							centralGitWorkingDirectory.getBranch(
-								topLevelBranchName, null, true);
+						LocalGitBranch topLevelLocalGitBranch =
+							centralGitWorkingDirectory.getLocalGitBranch(
+								topLevelBranchName, true);
 
-						GitWorkingDirectory.Branch mergeBranch =
-							_createMergeBranch(
+						LocalGitBranch mergeLocalGitBranch =
+							_createMergeLocalGitBranch(
 								centralGitWorkingDirectory, mergeBranchName,
-								topLevelBranch);
+								topLevelLocalGitBranch);
 
 						_commitCiMergeFile(
 							centralGitWorkingDirectory, centralSubrepository,
 							gitrepoFile);
 
-						_pushMergeBranchToRemote(
-							centralGitWorkingDirectory, mergeBranch,
+						_pushMergeLocalGitBranchToRemote(
+							centralGitWorkingDirectory, mergeLocalGitBranch,
 							receiverUserName);
 					}
 
@@ -174,33 +174,36 @@ public class MergeCentralSubrepositoryUtil {
 				ciMergeFilePath),
 			subrepositoryUpstreamCommit);
 
-		centralGitWorkingDirectory.stageFileInCurrentBranch(ciMergeFilePath);
+		centralGitWorkingDirectory.stageFileInCurrentLocalGitBranch(
+			ciMergeFilePath);
 
 		centralGitWorkingDirectory.commitStagedFilesToCurrentBranch(
 			"Create " + ciMergeFilePath + ".");
 	}
 
-	private static GitWorkingDirectory.Branch _createMergeBranch(
+	private static LocalGitBranch _createMergeLocalGitBranch(
 		GitWorkingDirectory centralGitWorkingDirectory, String mergeBranchName,
-		GitWorkingDirectory.Branch topLevelBranch) {
+		LocalGitBranch topLevelLocalGitBranch) {
 
 		centralGitWorkingDirectory.reset("--hard");
 
-		centralGitWorkingDirectory.checkoutBranch(topLevelBranch);
+		centralGitWorkingDirectory.checkoutLocalGitBranch(
+			topLevelLocalGitBranch);
 
-		GitWorkingDirectory.Branch mergeBranch =
-			centralGitWorkingDirectory.getBranch(mergeBranchName, null);
+		LocalGitBranch mergeLocalGitBranch =
+			centralGitWorkingDirectory.getLocalGitBranch(mergeBranchName);
 
-		if (mergeBranch != null) {
-			centralGitWorkingDirectory.deleteBranch(mergeBranch);
+		if (mergeLocalGitBranch != null) {
+			centralGitWorkingDirectory.deleteLocalGitBranch(
+				mergeLocalGitBranch);
 		}
 
-		mergeBranch = centralGitWorkingDirectory.createLocalBranch(
+		mergeLocalGitBranch = centralGitWorkingDirectory.createLocalGitBranch(
 			mergeBranchName);
 
-		centralGitWorkingDirectory.checkoutBranch(mergeBranch);
+		centralGitWorkingDirectory.checkoutLocalGitBranch(mergeLocalGitBranch);
 
-		return mergeBranch;
+		return mergeLocalGitBranch;
 	}
 
 	private static void _createMergePullRequest(
@@ -269,27 +272,32 @@ public class MergeCentralSubrepositoryUtil {
 		GitWorkingDirectory.Remote upstreamRemote =
 			centralGitWorkingDirectory.getRemote("upstream");
 
-		if (_upstreamRemoteBranchNames == null) {
-			_upstreamRemoteBranchNames =
-				centralGitWorkingDirectory.getRemoteBranchNames(upstreamRemote);
+		if (_upstreamRemoteGitBranchNames == null) {
+			_upstreamRemoteGitBranchNames =
+				centralGitWorkingDirectory.getRemoteGitBranchNames(
+					upstreamRemote);
 		}
 
 		String mergeBranchNamePrefix = mergeBranchName.substring(
 			0, mergeBranchName.lastIndexOf("-"));
 
-		for (String upstreamRemoteBranchName : _upstreamRemoteBranchNames) {
-			if (upstreamRemoteBranchName.equals(mergeBranchName) &&
+		for (String upstreamRemoteGitBranchName :
+				_upstreamRemoteGitBranchNames) {
+
+			if (upstreamRemoteGitBranchName.equals(mergeBranchName) &&
 				!centralSubrepository.isSubrepositoryUpstreamCommitMerged()) {
 
 				continue;
 			}
 
-			if (!upstreamRemoteBranchName.startsWith(mergeBranchNamePrefix)) {
+			if (!upstreamRemoteGitBranchName.startsWith(
+					mergeBranchNamePrefix)) {
+
 				continue;
 			}
 
-			centralGitWorkingDirectory.deleteBranch(
-				upstreamRemoteBranchName, upstreamRemote);
+			centralGitWorkingDirectory.deleteRemoteGitBranch(
+				upstreamRemoteGitBranchName, upstreamRemote);
 		}
 	}
 
@@ -408,9 +416,9 @@ public class MergeCentralSubrepositoryUtil {
 		return properties;
 	}
 
-	private static void _pushMergeBranchToRemote(
+	private static void _pushMergeLocalGitBranchToRemote(
 		GitWorkingDirectory centralGitWorkingDirectory,
-		GitWorkingDirectory.Branch mergeBranch, String receiverUserName) {
+		LocalGitBranch mergeLocalGitBranch, String receiverUserName) {
 
 		String centralRepositoryName =
 			centralGitWorkingDirectory.getRepositoryName();
@@ -425,7 +433,8 @@ public class MergeCentralSubrepositoryUtil {
 
 		try {
 			centralGitWorkingDirectory.pushToRemote(
-				false, mergeBranch, mergeBranch.getName(), originRemote);
+				false, mergeLocalGitBranch, mergeLocalGitBranch.getName(),
+				originRemote);
 		}
 		finally {
 			centralGitWorkingDirectory.removeRemote(originRemote);
@@ -435,6 +444,6 @@ public class MergeCentralSubrepositoryUtil {
 	private static final Pattern _githubRemotePattern = Pattern.compile(
 		"git@github.com:[-\\w]+\\/(?<subrepositoryName>[-\\w]+)\\.git");
 	private static JSONArray _pullsJSONArray;
-	private static List<String> _upstreamRemoteBranchNames;
+	private static List<String> _upstreamRemoteGitBranchNames;
 
 }

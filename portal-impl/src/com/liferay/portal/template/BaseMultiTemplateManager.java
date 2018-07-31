@@ -14,7 +14,6 @@
 
 package com.liferay.portal.template;
 
-import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateResource;
 
@@ -30,7 +29,6 @@ import java.util.Map;
  */
 public abstract class BaseMultiTemplateManager extends BaseTemplateManager {
 
-	@NotPrivileged
 	@Override
 	public Template getTemplate(
 		List<TemplateResource> templateResources, boolean restricted) {
@@ -38,7 +36,6 @@ public abstract class BaseMultiTemplateManager extends BaseTemplateManager {
 		return getTemplate(templateResources, null, restricted);
 	}
 
-	@NotPrivileged
 	@Override
 	public Template getTemplate(
 		List<TemplateResource> templateResources,
@@ -66,7 +63,6 @@ public abstract class BaseMultiTemplateManager extends BaseTemplateManager {
 		return new PrivilegedTemplateWrapper(accessControlContext, template);
 	}
 
-	@NotPrivileged
 	@Override
 	public Template getTemplate(
 		TemplateResource templateResource, boolean restricted) {
@@ -75,7 +71,6 @@ public abstract class BaseMultiTemplateManager extends BaseTemplateManager {
 			Collections.singletonList(templateResource), null, restricted);
 	}
 
-	@NotPrivileged
 	@Override
 	public Template getTemplate(
 		TemplateResource templateResource,

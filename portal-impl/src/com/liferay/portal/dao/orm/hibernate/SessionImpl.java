@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
@@ -39,7 +38,6 @@ public class SessionImpl implements Session {
 		_session = session;
 	}
 
-	@NotPrivileged
 	@Override
 	public void clear() throws ORMException {
 		try {
@@ -50,7 +48,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public Connection close() throws ORMException {
 		try {
@@ -61,7 +58,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public boolean contains(Object object) throws ORMException {
 		try {
@@ -141,7 +137,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public void delete(Object object) throws ORMException {
 		try {
@@ -152,7 +147,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public void evict(Object object) throws ORMException {
 		try {
@@ -163,7 +157,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public void flush() throws ORMException {
 		try {
@@ -174,7 +167,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public Object get(Class<?> clazz, Serializable id) throws ORMException {
 		try {
@@ -185,7 +177,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public Object get(Class<?> clazz, Serializable id, LockMode lockMode)
 		throws ORMException {
@@ -201,13 +192,11 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public Object getWrappedSession() {
 		return _session;
 	}
 
-	@NotPrivileged
 	@Override
 	public boolean isDirty() throws ORMException {
 		try {
@@ -218,7 +207,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public Object load(Class<?> clazz, Serializable id) throws ORMException {
 		try {
@@ -229,7 +217,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public Object merge(Object object) throws ORMException {
 		try {
@@ -240,7 +227,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public Serializable save(Object object) throws ORMException {
 		try {
@@ -251,7 +237,6 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@NotPrivileged
 	@Override
 	public void saveOrUpdate(Object object) throws ORMException {
 		try {

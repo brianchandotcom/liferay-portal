@@ -14,7 +14,6 @@
 
 package com.liferay.portal.template;
 
-import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateResource;
 
@@ -29,7 +28,6 @@ import java.util.Map;
  */
 public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
 
-	@NotPrivileged
 	@Override
 	public Template getTemplate(
 		List<TemplateResource> templateResources, boolean restricted) {
@@ -37,7 +35,6 @@ public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
 		return getTemplate(templateResources, null, restricted);
 	}
 
-	@NotPrivileged
 	@Override
 	public Template getTemplate(
 		List<TemplateResource> templateResources,
@@ -47,7 +44,6 @@ public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
 			"Template type does not support multi templates");
 	}
 
-	@NotPrivileged
 	@Override
 	public Template getTemplate(
 		TemplateResource templateResource, boolean restricted) {
@@ -55,7 +51,6 @@ public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
 		return getTemplate(templateResource, null, restricted);
 	}
 
-	@NotPrivileged
 	@Override
 	public Template getTemplate(
 		TemplateResource templateResource,

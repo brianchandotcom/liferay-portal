@@ -4373,15 +4373,13 @@ public class ProjectTemplatesTest {
 	private static void _testPropertyKeyExists(Path path, String key)
 		throws Exception {
 
-		try (InputStream inputStream = Files.newInputStream(path)) {
-			Properties properties = new Properties();
+		Properties properties = FileTestUtil.readProperties(path);
 
-			properties.load(inputStream);
+		Object property = properties.getProperty(key);
 
-			Object value = properties.get(key);
-
-			Assert.assertNotNull(value);
-		}
+		Assert.assertNotNull(
+			"Expected key " + key + " to exist in properties " + path,
+			property);
 	}
 
 	private static File _testStartsWith(

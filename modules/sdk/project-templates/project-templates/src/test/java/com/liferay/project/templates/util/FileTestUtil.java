@@ -154,6 +154,16 @@ public class FileTestUtil {
 		return sb.toString();
 	}
 
+	public static Properties readProperties(Path path) throws IOException {
+		try (InputStream inputStream = Files.newInputStream(path)) {
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			return properties;
+		}
+	}
+
 	public static Properties readProperties(String name) throws IOException {
 		Properties properties = new Properties();
 

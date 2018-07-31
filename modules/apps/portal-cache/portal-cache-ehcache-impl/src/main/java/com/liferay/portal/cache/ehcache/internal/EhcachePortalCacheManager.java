@@ -156,14 +156,14 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	protected void doDestroy() {
 		_cacheManager.shutdown();
 
-		if (_mBeanServerServiceTracker != null) {
-			_mBeanServerServiceTracker.close();
-		}
-
 		if (_configuratorSettingsServiceTracker != null) {
 			_configuratorSettingsServiceTracker.close();
 
 			_configuratorSettingsServiceTracker = null;
+		}
+
+		if (_mBeanServerServiceTracker != null) {
+			_mBeanServerServiceTracker.close();
 		}
 	}
 

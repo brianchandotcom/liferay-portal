@@ -8,6 +8,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean class="com.liferay.portlet.documentlibrary.store.DLStoreImpl" id="com.liferay.document.library.kernel.store.DLStore" />
+	<bean class="com.liferay.portlet.documentlibrary.util.DLFileVersionPolicyImpl" destroy-method="destroy" id="com.liferay.document.library.kernel.util.DLFileVersionPolicy" />
 	<bean class="com.liferay.document.library.kernel.util.DLUtil" id="com.liferay.document.library.kernel.util.DLUtil">
 		<property name="DL">
 			<bean class="com.liferay.portlet.documentlibrary.util.DLImpl" destroy-method="destroy" />

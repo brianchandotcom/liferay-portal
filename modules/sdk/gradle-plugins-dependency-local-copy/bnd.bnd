@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Gradle Plugins Dependency Local Copy
+Bundle-SymbolicName: com.liferay.gradle.plugins.dependency.local.copy
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.gradle.plugins.dependency.local.copy

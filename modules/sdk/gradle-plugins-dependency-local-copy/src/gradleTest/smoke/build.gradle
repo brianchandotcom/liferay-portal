@@ -1,0 +1,48 @@
+import com.liferay.gradle.util.FileUtil
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":bar:jar"
+
+	doLast {
+		assert FileUtil.exists(rootProject, "bar/build/local-copy/baz/baz.jar")
+		assert !FileUtil.exists(rootProject, "bar/build/local-copy/baz/guava-25.1-jre.jar")
+
+		assert FileUtil.exists(rootProject, "bar/build/local-copy/foo/foo.jar")
+		assert FileUtil.exists(rootProject, "bar/build/local-copy/foo/hibernate-core-5.3.3.Final.jar")
+	}
+}
+
+subprojects {
+	apply plugin: "com.liferay.dependency.local.copy"
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+project(":bar") {
+	apply plugin: "application"
+
+	dependencies {
+		compile group: "local.copy", name: ":baz", transitive: false
+		compile group: "local.copy", name: ":foo"
+	}
+
+	mainClassName = "com.github.ithildir.bar.Bar"
+}
+
+project(":baz") {
+	dependencies {
+		compile group: "com.google.guava", name: "guava", version: "25.1-jre"
+	}
+}
+
+project(":foo") {
+	dependencies {
+		compile group: "org.hibernate", name: "hibernate-core", version: "5.3.3.Final"
+	}
+}

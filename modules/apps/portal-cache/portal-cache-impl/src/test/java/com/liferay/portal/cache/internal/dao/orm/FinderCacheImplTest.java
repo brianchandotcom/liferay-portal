@@ -14,9 +14,7 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
-import com.liferay.portal.cache.internal.MultiVMPoolImpl;
 import com.liferay.portal.cache.key.HashCodeHexStringCacheKeyGenerator;
-import com.liferay.portal.cache.test.util.TestPortalCacheManager;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
@@ -85,58 +83,31 @@ public class FinderCacheImplTest {
 
 	@Test
 	public void testNotifyPortalCacheRemovedPortalCacheName() {
-		String groupKeyPrefix = ReflectionTestUtil.getFieldValue(
-			FinderCacheImpl.class, "_GROUP_KEY_PREFIX");
+		FinderCacheImpl finderCacheImpl = new FinderCacheImpl();
 
-		String portalCacheName = groupKeyPrefix.concat(
-			FinderCacheImplTest.class.getName());
-
-		TestPortalCacheManager testPortalCacheManager =
-			TestPortalCacheManager.createTestPortalCacheManager(
-				"TestPortalCacheManager");
-
-		MultiVMPool multiVMPool = new MultiVMPoolImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			multiVMPool, "_portalCacheManager", testPortalCacheManager);
-
-		FinderCacheImpl finderCacheImpl = new FinderCacheImpl() {
-
-			@Override
-			public void notifyPortalCacheRemoved(
-				String notifiedPortalCacheName) {
-
-				Assert.assertEquals(portalCacheName, notifiedPortalCacheName);
-
-				super.notifyPortalCacheRemoved(notifiedPortalCacheName);
-			}
-
-		};
-
-		EntityCacheImpl entityCacheImpl = new EntityCacheImpl();
-
-		entityCacheImpl.setMultiVMPool(multiVMPool);
-
-		finderCacheImpl.setEntityCache(entityCacheImpl);
-
-		finderCacheImpl.setMultiVMPool(multiVMPool);
-
+		finderCacheImpl.setMultiVMPool(
+			(MultiVMPool)ProxyUtil.newProxyInstance(
+				_classLoader, new Class<?>[] {MultiVMPool.class},
+				new MultiVMPoolInvocationHandler(_classLoader, true)));
 		finderCacheImpl.setProps(_props);
 
 		finderCacheImpl.activate();
 
-		List<Serializable> values = new ArrayList<>();
-
-		finderCacheImpl.putResult(_finderPath, _KEY1, values, true);
+		PortalCache<Serializable, Serializable> portalCache =
+			ReflectionTestUtil.invoke(
+				finderCacheImpl, "_getPortalCache",
+				new Class<?>[] {String.class},
+				FinderCacheImplTest.class.getName());
 
 		Map<String, PortalCache<Serializable, Serializable>> portalCaches =
 			ReflectionTestUtil.getFieldValue(finderCacheImpl, "_portalCaches");
 
-		Assert.assertNotNull(
-			portalCaches.toString(),
-			portalCaches.get(FinderCacheImplTest.class.getName()));
+		Assert.assertEquals(portalCaches.toString(), 1, portalCaches.size());
+		Assert.assertSame(
+			portalCache, portalCaches.get(FinderCacheImplTest.class.getName()));
 
-		testPortalCacheManager.removePortalCache(portalCacheName);
+		finderCacheImpl.notifyPortalCacheRemoved(
+			portalCache.getPortalCacheName());
 
 		Assert.assertTrue(portalCaches.toString(), portalCaches.isEmpty());
 	}

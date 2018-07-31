@@ -14,8 +14,6 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
-import com.liferay.portal.cache.internal.MultiVMPoolImpl;
-import com.liferay.portal.cache.test.util.TestPortalCacheManager;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -53,49 +51,28 @@ public class EntityCacheImplTest {
 
 	@Test
 	public void testNotifyPortalCacheRemovedPortalCacheName() {
-		String groupKeyPrefix = ReflectionTestUtil.getFieldValue(
-			EntityCacheImpl.class, "_GROUP_KEY_PREFIX");
+		EntityCacheImpl entityCacheImpl = new EntityCacheImpl();
 
-		String portalCacheName = groupKeyPrefix.concat(
-			EntityCacheImplTest.class.getName());
-
-		TestPortalCacheManager testPortalCacheManager =
-			TestPortalCacheManager.createTestPortalCacheManager(
-				"TestPortalCacheManager");
-
-		MultiVMPool multiVMPool = new MultiVMPoolImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			multiVMPool, "_portalCacheManager", testPortalCacheManager);
-
-		EntityCacheImpl entityCacheImpl = new EntityCacheImpl() {
-
-			@Override
-			public void notifyPortalCacheRemoved(
-				String notifiedPortalCacheName) {
-
-				Assert.assertEquals(portalCacheName, notifiedPortalCacheName);
-
-				super.notifyPortalCacheRemoved(notifiedPortalCacheName);
-			}
-
-		};
-
-		entityCacheImpl.setMultiVMPool(multiVMPool);
+		entityCacheImpl.setMultiVMPool(
+			(MultiVMPool)ProxyUtil.newProxyInstance(
+				_classLoader, new Class<?>[] {MultiVMPool.class},
+				new MultiVMPoolInvocationHandler(_classLoader, true)));
 		entityCacheImpl.setProps(_props);
 
 		entityCacheImpl.activate();
 
-		entityCacheImpl.getPortalCache(EntityCacheImplTest.class);
+		PortalCache<?, ?> portalCache = entityCacheImpl.getPortalCache(
+			EntityCacheImplTest.class);
 
 		Map<String, PortalCache<Serializable, Serializable>> portalCaches =
 			ReflectionTestUtil.getFieldValue(entityCacheImpl, "_portalCaches");
 
-		Assert.assertNotNull(
-			portalCaches.toString(),
-			portalCaches.get(EntityCacheImplTest.class.getName()));
+		Assert.assertEquals(portalCaches.toString(), 1, portalCaches.size());
+		Assert.assertSame(
+			portalCache, portalCaches.get(EntityCacheImplTest.class.getName()));
 
-		testPortalCacheManager.removePortalCache(portalCacheName);
+		entityCacheImpl.notifyPortalCacheRemoved(
+			portalCache.getPortalCacheName());
 
 		Assert.assertTrue(portalCaches.toString(), portalCaches.isEmpty());
 	}

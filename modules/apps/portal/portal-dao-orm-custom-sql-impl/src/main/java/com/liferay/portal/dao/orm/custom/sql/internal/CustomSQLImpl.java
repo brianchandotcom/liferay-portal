@@ -224,7 +224,7 @@ public class CustomSQLImpl implements CustomSQL {
 					return null;
 				}
 
-				_containerPool.put(
+				_customSQLContainerPool.put(
 					classLoader, new CustomSQLContainer(classLoader));
 
 				return classLoader;
@@ -235,7 +235,7 @@ public class CustomSQLImpl implements CustomSQL {
 				Bundle bundle, BundleEvent bundleEvent,
 				ClassLoader classLoader) {
 
-				_containerPool.remove(classLoader);
+				_customSQLContainerPool.remove(classLoader);
 			}
 
 		};
@@ -281,7 +281,7 @@ public class CustomSQLImpl implements CustomSQL {
 
 	@Override
 	public String get(Class<?> clazz, String id) {
-		CustomSQLContainer customSQLContainer = _containerPool.get(
+		CustomSQLContainer customSQLContainer = _customSQLContainerPool.get(
 			clazz.getClassLoader());
 
 		if (customSQLContainer != null) {
@@ -952,7 +952,7 @@ public class CustomSQLImpl implements CustomSQL {
 	private static final Log _log = LogFactoryUtil.getLog(CustomSQLImpl.class);
 
 	private BundleTracker<ClassLoader> _bundleTracker;
-	private final Map<ClassLoader, CustomSQLContainer> _containerPool =
+	private final Map<ClassLoader, CustomSQLContainer> _customSQLContainerPool =
 		new ConcurrentHashMap<>();
 	private String _functionIsNotNull;
 	private String _functionIsNull;
@@ -974,29 +974,29 @@ public class CustomSQLImpl implements CustomSQL {
 	private class CustomSQLContainer {
 
 		public String get(String id) {
-			Map<String, String> tempSqlPool = _sqlPool;
+			Map<String, String> sqlPool = _sqlPool;
 
-			boolean tempSqlLoadError = _sqlLoadError;
+			boolean sqlLoadError = _sqlLoadError;
 
-			if (tempSqlPool == null) {
-				tempSqlPool = new HashMap<>();
+			if (sqlPool == null) {
+				sqlPool = new HashMap<>();
 
 				try {
-					_read(_classLoader, "custom-sql/default.xml", tempSqlPool);
+					_read(_classLoader, "custom-sql/default.xml", sqlPool);
 					_read(
 						_classLoader, "META-INF/custom-sql/default.xml",
-						tempSqlPool);
+						sqlPool);
 				}
 				catch (Exception e) {
-					tempSqlLoadError = true;
+					sqlLoadError = true;
 					_log.error(e, e);
 				}
 
-				_sqlLoadError = tempSqlLoadError;
-				_sqlPool = tempSqlPool;
+				_sqlLoadError = sqlLoadError;
+				_sqlPool = sqlPool;
 			}
 
-			if (tempSqlLoadError && _log.isWarnEnabled()) {
+			if (sqlLoadError && _log.isWarnEnabled()) {
 				Bundle bundle = FrameworkUtil.getBundle(
 					_classLoader.getClass());
 
@@ -1005,7 +1005,7 @@ public class CustomSQLImpl implements CustomSQL {
 						", please check default.xml files");
 			}
 
-			return tempSqlPool.get(id);
+			return sqlPool.get(id);
 		}
 
 		private CustomSQLContainer(ClassLoader classLoader) {

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
@@ -40,8 +41,23 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					group.getGroupId());
 
 			for (SiteNavigationMenu siteNavigationMenu : siteNavigationMenus) {
+				if (siteNavigationMenu.getType() ==
+						SiteNavigationConstants.TYPE_PRIMARY) {
+
+					continue;
+				}
+
 				_siteNavigationMenuLocalService.deleteSiteNavigationMenu(
 					siteNavigationMenu);
+			}
+
+			SiteNavigationMenu primarySiteNavigationMenu =
+				_siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(
+					group.getGroupId());
+
+			if (primarySiteNavigationMenu != null) {
+				_siteNavigationMenuLocalService.deleteSiteNavigationMenu(
+					primarySiteNavigationMenu);
 			}
 		}
 		catch (Exception e) {

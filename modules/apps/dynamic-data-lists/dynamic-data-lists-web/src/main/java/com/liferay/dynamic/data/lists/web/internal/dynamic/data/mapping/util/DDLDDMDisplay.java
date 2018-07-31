@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -32,6 +33,8 @@ import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eduardo Garcia
@@ -111,7 +114,19 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 		return true;
 	}
 
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return resourceBundleLoader;
+	}
+
 	@Reference
 	protected Portal portal;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.dynamic.data.lists.web)"
+	)
+	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 }

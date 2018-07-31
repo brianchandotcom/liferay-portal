@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,8 @@ import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eduardo Garcia
@@ -98,6 +101,11 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 		return true;
 	}
 
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
 	private final DDMDisplayTabItem _defaultTabItem =
 		(liferayPortletRequest, liferayPortletResponse) -> {
 			ResourceBundle resourceBundle = getResourceBundle(
@@ -112,5 +120,12 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Reference
 	private DocumentTypesDDMDisplayTabItem _documentTypesDDMDisplayTabItem;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.document.library.web)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

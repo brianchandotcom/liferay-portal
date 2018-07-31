@@ -509,14 +509,9 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByBundleSymbolicName(
-					bundle.getSymbolicName());
-
 		ResourceBundle ddmDisplayResourceBundle = null;
+
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
 
 		if (resourceBundleLoader != null) {
 			ddmDisplayResourceBundle = resourceBundleLoader.loadResourceBundle(
@@ -540,6 +535,14 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return new AggregateResourceBundle(
 			ddmDisplayResourceBundle, baseDDMDisplayResourceBundle,
 			portalResourceBundleLoader.loadResourceBundle(locale));
+	}
+
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		return ResourceBundleLoaderUtil.
+			getResourceBundleLoaderByBundleSymbolicName(
+				bundle.getSymbolicName());
 	}
 
 	protected String getViewTemplatesURL(

@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
@@ -62,6 +63,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eduardo Garcia
@@ -207,6 +210,11 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 			JournalWebConfiguration.class, properties);
 	}
 
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return resourceBundleLoader;
+	}
+
 	protected DDMDisplayTabItem getTemplatesTabItem() {
 		return new DDMDisplayTabItem() {
 
@@ -302,6 +310,13 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 	@Reference
 	protected PortletLocalService portletLocalService;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.journal.web)"
+	)
+	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 	private DDMDisplayTabItem _getFeedsTabItem() {
 		return new DDMDisplayTabItem() {

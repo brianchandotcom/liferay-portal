@@ -274,10 +274,8 @@ public class EntityCacheImpl
 	@Override
 	public void notifyPortalCacheRemoved(String portalCacheName) {
 		if (portalCacheName.startsWith(_GROUP_KEY_PREFIX)) {
-			String className = portalCacheName.substring(
-				_GROUP_KEY_PREFIX.length());
-
-			_portalCaches.remove(className);
+			_portalCaches.remove(
+				portalCacheName.substring(_GROUP_KEY_PREFIX.length()));
 		}
 	}
 

@@ -266,7 +266,7 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 
-	_handleFragmentCollectionEntryClick(event) {
+	_handleFragmentEntryClick(event) {
 		if (!this._dirty) {
 			this._dirty = true;
 

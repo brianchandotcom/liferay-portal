@@ -13,7 +13,7 @@ class SidebarAvailableFragments extends Component {
 
 	/**
 	 * Callback that is executed when a fragment entry is clicked.
-	 * It propagates a collectionEntryClick event with the fragment information.
+	 * It propagates a fragmentEntryClick event with the fragment information.
 	 * @param {{
 	 *   itemId: !string,
 	 *   itemName: !string
@@ -23,7 +23,7 @@ class SidebarAvailableFragments extends Component {
 
 	_handleEntryClick(event) {
 		this.emit(
-			'collectionEntryClick',
+			'fragmentEntryClick',
 			{
 				fragmentEntryId: event.itemId,
 				fragmentName: event.itemName

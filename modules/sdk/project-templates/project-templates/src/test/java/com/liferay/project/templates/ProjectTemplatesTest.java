@@ -4551,7 +4551,7 @@ public class ProjectTemplatesTest {
 			realChange = true;
 		}
 
-		Assert.assertFalse(message.toString(), realChange);
+		Assert.assertFalse(message.toString() + differences, realChange);
 	}
 
 	private static void _writeServiceClass(File projectDir) throws IOException {

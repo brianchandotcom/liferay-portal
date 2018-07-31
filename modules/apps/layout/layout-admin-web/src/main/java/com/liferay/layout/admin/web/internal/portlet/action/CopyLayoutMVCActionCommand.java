@@ -173,6 +173,13 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
+			redirectURL.setParameter(
+				"navigation", privateLayout ? "private-pages" : "public-pages");
+			redirectURL.setParameter(
+				"selPlid", String.valueOf(copyLayout.getParentPlid()));
+			redirectURL.setParameter(
+				"privateLayout", String.valueOf(privateLayout));
+
 			jsonObject.put("redirectURL", redirectURL.toString());
 
 			JSONPortletResponseUtil.writeJSON(

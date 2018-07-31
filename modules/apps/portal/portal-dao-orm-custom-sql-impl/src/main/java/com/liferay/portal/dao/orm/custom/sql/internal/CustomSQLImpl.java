@@ -224,10 +224,8 @@ public class CustomSQLImpl implements CustomSQL {
 					return null;
 				}
 
-				CustomSQLContainer customSQLContainer = new CustomSQLContainer(
-					classLoader);
-
-				_containerPool.put(classLoader, customSQLContainer);
+				_containerPool.put(
+					classLoader, new CustomSQLContainer(classLoader));
 
 				return classLoader;
 			}

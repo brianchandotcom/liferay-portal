@@ -14,61 +14,108 @@
 
 package com.liferay.dynamic.data.mapping.data.provider;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 /**
  * @author Leonardo Barros
  */
-public class DDMDataProviderRequest {
+public final class DDMDataProviderRequest {
 
-	public DDMDataProviderRequest(
-		String ddmDataProviderInstanceId,
-		HttpServletRequest httpServletRequest) {
-
-		_ddmDataProviderInstanceId = ddmDataProviderInstanceId;
-		_httpServletRequest = httpServletRequest;
+	public long getCompanyId() {
+		return _companyId;
 	}
 
-	public DDMDataProviderContext getDDMDataProviderContext() {
-		return _ddmDataProviderContext;
+	public String getDDMDataProviderId() {
+		return _ddmDataProviderId;
 	}
 
-	public String getDDMDataProviderInstanceId() {
-		return _ddmDataProviderInstanceId;
+	public long getGroupId() {
+		return _groupId;
 	}
 
-	public HttpServletRequest getHttpServletRequest() {
-		return _httpServletRequest;
+	public Locale getLocale() {
+		return _locale;
 	}
 
-	public String getParameter(String name) {
-		return _parameters.get(name);
+	public <T> Optional<T> getParameter(String name, Class<?> clazz) {
+		Object value = _parameters.get(name);
+
+		if (value == null) {
+			return Optional.empty();
+		}
+
+		Class<?> valueClass = value.getClass();
+
+		if (clazz.isAssignableFrom(valueClass)) {
+			return Optional.of((T)value);
+		}
+
+		return Optional.empty();
 	}
 
-	public Map<String, String> getParameters() {
-		return _parameters;
+	public Map<String, Object> getParameters() {
+		return Collections.unmodifiableMap(_parameters);
 	}
 
-	public void queryString(Map<String, String> parameters) {
-		_parameters.putAll(parameters);
+	public static class Builder {
+
+		public static Builder newBuilder() {
+			return new Builder();
+		}
+
+		public DDMDataProviderRequest build() {
+			return _ddmDataProviderRequest;
+		}
+
+		public Builder withCompanyId(long companyId) {
+			_ddmDataProviderRequest._companyId = companyId;
+
+			return this;
+		}
+
+		public Builder withDDMDataProviderId(String ddmDataProviderId) {
+			_ddmDataProviderRequest._ddmDataProviderId = ddmDataProviderId;
+
+			return this;
+		}
+
+		public Builder withGroupId(long groupId) {
+			_ddmDataProviderRequest._groupId = groupId;
+
+			return this;
+		}
+
+		public Builder withLocale(Locale locale) {
+			_ddmDataProviderRequest._locale = locale;
+
+			return this;
+		}
+
+		public Builder withParameter(String name, Object value) {
+			_ddmDataProviderRequest._parameters.put(name, value);
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private final DDMDataProviderRequest _ddmDataProviderRequest =
+			new DDMDataProviderRequest();
+
 	}
 
-	public void queryString(String name, String value) {
-		_parameters.put(name, value);
+	private DDMDataProviderRequest() {
 	}
 
-	public void setDDMDataProviderContext(
-		DDMDataProviderContext ddmDataProviderContext) {
-
-		_ddmDataProviderContext = ddmDataProviderContext;
-	}
-
-	private DDMDataProviderContext _ddmDataProviderContext;
-	private final String _ddmDataProviderInstanceId;
-	private final HttpServletRequest _httpServletRequest;
-	private final Map<String, String> _parameters = new HashMap<>();
+	private long _companyId;
+	private String _ddmDataProviderId;
+	private long _groupId;
+	private Locale _locale;
+	private final Map<String, Object> _parameters = new HashMap<>();
 
 }

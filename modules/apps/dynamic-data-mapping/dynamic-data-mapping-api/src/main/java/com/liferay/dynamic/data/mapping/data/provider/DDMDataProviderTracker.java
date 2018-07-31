@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.mapping.data.provider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -40,31 +38,12 @@ public class DDMDataProviderTracker {
 		return _ddmDataProviderInstanceIdTrackerMap.getService(instanceId);
 	}
 
-	public List<DDMDataProviderContextContributor>
-		getDDMDataProviderContextContributors(String type) {
-
-		List<DDMDataProviderContextContributor>
-			ddmDataProviderContextContributors =
-				_ddmDataProviderContextContributorTrackerMap.getService(type);
-
-		if (ddmDataProviderContextContributors != null) {
-			return ddmDataProviderContextContributors;
-		}
-
-		return Collections.emptyList();
-	}
-
 	public Set<String> getDDMDataProviderTypes() {
 		return _ddmDataProviderTypeTrackerMap.keySet();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_ddmDataProviderContextContributorTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, DDMDataProviderContextContributor.class,
-				"ddm.data.provider.type");
-
 		_ddmDataProviderInstanceIdTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMDataProvider.class,
@@ -77,15 +56,11 @@ public class DDMDataProviderTracker {
 
 	@Deactivate
 	protected void deactivate() {
-		_ddmDataProviderContextContributorTrackerMap.close();
-
 		_ddmDataProviderInstanceIdTrackerMap.close();
 
 		_ddmDataProviderTypeTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, List<DDMDataProviderContextContributor>>
-		_ddmDataProviderContextContributorTrackerMap;
 	private ServiceTrackerMap<String, DDMDataProvider>
 		_ddmDataProviderInstanceIdTrackerMap;
 	private ServiceTrackerMap<String, DDMDataProvider>

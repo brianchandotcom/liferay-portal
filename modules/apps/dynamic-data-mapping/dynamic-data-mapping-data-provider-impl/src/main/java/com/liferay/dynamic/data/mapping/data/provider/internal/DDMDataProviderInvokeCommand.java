@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.data.provider.internal;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProviderSettings;
@@ -33,32 +32,25 @@ public class DDMDataProviderInvokeCommand
 	extends HystrixCommand<DDMDataProviderResponse> {
 
 	public DDMDataProviderInvokeCommand(
-		String ddmDataProviderInstanceName, DDMDataProvider ddmDataProvider,
-		DDMDataProviderRequest ddmDataProviderRequest) {
+		String nameCurrentValue, DDMDataProvider ddmDataProvider,
+		DDMDataProviderRequest ddmDataProviderRequest,
+		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
 
 		super(
 			Setter.withGroupKey(_hystrixCommandGroupKey).andCommandKey(
 				HystrixCommandKey.Factory.asKey(
-					"DDMDataProviderInvokeCommand#" +
-						ddmDataProviderInstanceName)).
+					"DDMDataProviderInvokeCommand#" + nameCurrentValue)).
 				andCommandPropertiesDefaults(
 					HystrixCommandProperties.Setter().
 						withExecutionTimeoutInMilliseconds(
-							getTimeout(ddmDataProviderRequest))));
+							getTimeout(ddmRESTDataProviderSettings))));
 
 		_ddmDataProvider = ddmDataProvider;
 		_ddmDataProviderRequest = ddmDataProviderRequest;
 	}
 
 	protected static int getTimeout(
-		DDMDataProviderRequest ddmDataProviderRequest) {
-
-		DDMDataProviderContext ddmDataProviderContext =
-			ddmDataProviderRequest.getDDMDataProviderContext();
-
-		DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
-			ddmDataProviderContext.getSettingsInstance(
-				DDMRESTDataProviderSettings.class);
+		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
 
 		int timeout = GetterUtil.getInteger(
 			ddmRESTDataProviderSettings.timeout());

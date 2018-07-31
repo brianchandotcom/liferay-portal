@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -81,7 +82,8 @@ public class DDMFormEvaluatorHelper {
 		DDMExpressionFactory ddmExpressionFactory,
 		DDMFormEvaluatorContext ddmFormEvaluatorContext,
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
-		JSONFactory jsonFactory, RoleLocalService roleLocalService,
+		JSONFactory jsonFactory, Portal portal,
+		RoleLocalService roleLocalService,
 		UserGroupRoleLocalService userGroupRoleLocalService,
 		UserLocalService userLocalService) {
 
@@ -89,6 +91,7 @@ public class DDMFormEvaluatorHelper {
 		_ddmExpressionFactory = ddmExpressionFactory;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 		_jsonFactory = jsonFactory;
+		_portal = portal;
 		_roleLocalService = roleLocalService;
 		_userGroupRoleLocalService = userGroupRoleLocalService;
 		_userLocalService = userLocalService;
@@ -421,7 +424,7 @@ public class DDMFormEvaluatorHelper {
 			"call",
 			new CallFunction(
 				_ddmDataProviderInvoker, _ddmFormFieldEvaluationResultsMap,
-				_request, _jsonFactory));
+				_request, _jsonFactory, _portal));
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
 			"getValue",
 			new GetValueFunction(
@@ -679,6 +682,7 @@ public class DDMFormEvaluatorHelper {
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
 	private final Map<Integer, Integer> _pageFlow = new HashMap<>();
+	private final Portal _portal;
 	private final HttpServletRequest _request;
 	private final ResourceBundle _resourceBundle;
 	private final RoleLocalService _roleLocalService;

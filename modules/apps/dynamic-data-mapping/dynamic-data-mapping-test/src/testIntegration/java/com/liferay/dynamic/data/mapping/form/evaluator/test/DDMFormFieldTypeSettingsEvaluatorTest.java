@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.registry.Registry;
@@ -51,6 +52,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Leonardo Barros
@@ -416,6 +419,12 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 			new DDMFormEvaluatorContext(ddmForm, ddmFormValues, LocaleUtil.US);
 
 		ddmFormEvaluatorContext.addProperty("groupId", 1L);
+
+		MockHttpServletRequest request = new MockHttpServletRequest();
+
+		request.setAttribute(WebKeys.COMPANY_ID, 1L);
+
+		ddmFormEvaluatorContext.addProperty("request", request);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			ddmFormEvaluator.evaluate(ddmFormEvaluatorContext);

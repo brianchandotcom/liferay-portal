@@ -14,61 +14,81 @@
 
 package com.liferay.dynamic.data.mapping.data.provider;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.io.Serializable;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Leonardo Barros
  */
-public class DDMDataProviderResponse {
+public final class DDMDataProviderResponse implements Serializable {
 
-	public static DDMDataProviderResponse error(Status status) {
-		return new DDMDataProviderResponse(status, Collections.emptyList());
+	public <T> Optional<T> getOutput(String name, Class<?> clazz) {
+		Object value = _ddmDataProviderResponseOutputs.get(name);
+
+		if (value == null) {
+			return null;
+		}
+
+		Class<?> valueClass = value.getClass();
+
+		if (clazz.isAssignableFrom(valueClass)) {
+			return Optional.of((T)value);
+		}
+
+		return Optional.empty();
 	}
 
-	public static DDMDataProviderResponse of(
-		DDMDataProviderResponseOutput... ddmDataProviderResponseOutputs) {
-
-		return new DDMDataProviderResponse(
-			Status.OK, Arrays.asList(ddmDataProviderResponseOutputs));
+	public DDMDataProviderResponseStatus getStatus() {
+		return _ddmDataProviderResponseStatus;
 	}
 
-	public DDMDataProviderResponseOutput get(String name) {
-		return _dataMap.get(name);
+	public boolean hasOutput(String output) {
+		return _ddmDataProviderResponseOutputs.containsKey(output);
 	}
 
-	public Map<String, DDMDataProviderResponseOutput> getDataMap() {
-		return Collections.unmodifiableMap(_dataMap);
+	public static class Builder {
+
+		public static Builder newBuilder() {
+			return new Builder();
+		}
+
+		public DDMDataProviderResponse build() {
+			return _ddmDataProviderResponse;
+		}
+
+		public Builder withOutput(String name, Object value) {
+			_ddmDataProviderResponse._ddmDataProviderResponseOutputs.put(
+				name, value);
+
+			return this;
+		}
+
+		public Builder withStatus(
+			DDMDataProviderResponseStatus ddmDataProviderResponseStatus) {
+
+			_ddmDataProviderResponse._ddmDataProviderResponseStatus =
+				ddmDataProviderResponseStatus;
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private DDMDataProviderResponse _ddmDataProviderResponse =
+			new DDMDataProviderResponse();
+
 	}
 
-	public Status getStatus() {
-		return _status;
+	private DDMDataProviderResponse() {
 	}
 
-	public enum Status {
-
-		OK, SERVICE_UNAVAILABLE, SHORTCIRCUIT, TIMEOUT, UNAUTHORIZED,
-		UNKNOWN_ERROR
-
-	}
-
-	private DDMDataProviderResponse(
-		Status status,
-		List<DDMDataProviderResponseOutput> ddmDataProviderResponseOutputs) {
-
-		_status = status;
-
-		ddmDataProviderResponseOutputs.forEach(
-			ddmDataProviderResponseOutput -> _dataMap.put(
-				ddmDataProviderResponseOutput.getName(),
-				ddmDataProviderResponseOutput));
-	}
-
-	private final Map<String, DDMDataProviderResponseOutput> _dataMap =
+	private Map<String, Object> _ddmDataProviderResponseOutputs =
 		new HashMap<>();
-	private final Status _status;
+	private DDMDataProviderResponseStatus _ddmDataProviderResponseStatus =
+		DDMDataProviderResponseStatus.OK;
 
 }

@@ -48,6 +48,12 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 
 		StreamUtil.transfer(
 			entryURL.openStream(), response.getOutputStream(), false);
+
+		entryURL = bundle.getEntry(
+			"/META-INF/resources/ckeditor/extension/anchor_dialog_show.js");
+
+		StreamUtil.transfer(
+			entryURL.openStream(), response.getOutputStream(), false);
 	}
 
 	@Override

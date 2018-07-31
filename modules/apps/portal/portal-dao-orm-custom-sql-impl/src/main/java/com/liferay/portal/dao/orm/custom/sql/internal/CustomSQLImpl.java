@@ -56,7 +56,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -975,12 +974,12 @@ public class CustomSQLImpl implements CustomSQL {
 	private class CustomSQLContainer {
 
 		public String get(String id) {
-			ObjectValuePair<Map<String, String>, Boolean> objectValuePair =
+			ObjectValuePair<Map<String, String>, Exception> objectValuePair =
 				_objectValuePair;
 
 			if (objectValuePair == null) {
 				Map<String, String> sqlPool = new HashMap<>();
-				boolean sqlLoadError = false;
+				Exception exception = null;
 
 				try {
 					_read(_classLoader, "custom-sql/default.xml", sqlPool);
@@ -989,23 +988,20 @@ public class CustomSQLImpl implements CustomSQL {
 						sqlPool);
 				}
 				catch (Exception e) {
-					sqlLoadError = true;
+					exception = e;
 
 					_log.error(e, e);
 				}
 
-				objectValuePair = new ObjectValuePair<>(sqlPool, sqlLoadError);
+				objectValuePair = new ObjectValuePair<>(sqlPool, exception);
 
 				_objectValuePair = objectValuePair;
 			}
 
-			if (objectValuePair.getValue() && _log.isWarnEnabled()) {
-				Bundle bundle = FrameworkUtil.getBundle(
-					_classLoader.getClass());
+			Exception exception = objectValuePair.getValue();
 
-				_log.warn(
-					bundle.getSymbolicName() + " sql loaded with exception" +
-						", please check default.xml files");
+			if (exception != null) {
+				_log.error(exception, exception);
 			}
 
 			Map<String, String> sqlPool = objectValuePair.getKey();
@@ -1018,7 +1014,7 @@ public class CustomSQLImpl implements CustomSQL {
 		}
 
 		private final ClassLoader _classLoader;
-		private volatile ObjectValuePair<Map<String, String>, Boolean>
+		private volatile ObjectValuePair<Map<String, String>, Exception>
 			_objectValuePair;
 
 	}

@@ -107,6 +107,9 @@ AUI.add(
 						instance._createDataProviderList().render(fieldsListContainer);
 
 						instance._fillDataProvidersSelectField();
+
+						fieldMessageContainer.show();
+						fieldsListContainer.show();
 					},
 
 					_afterDataProviderChange: function(event) {

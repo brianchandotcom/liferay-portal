@@ -56,8 +56,11 @@ AUI.add(
 
 						var fieldsListContainer = instance.get('boundingBox').one('.target-' + index);
 
+						instance.hideMessageField(index);
 						instance._createSourceField().render(fieldsListContainer);
 						instance._createTargetField().render(fieldsListContainer);
+
+						fieldsListContainer.show();
 					},
 
 					_clearTargetValue: function() {

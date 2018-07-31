@@ -100,6 +100,7 @@ AUI.add(
 
 						expressionField.getInputNode().setAttribute('disabled');
 
+						instance.hideMessageField(index);
 						instance._createTargetField().render(calculateContainer.one('.' + CSS_CALCULATE_CONTAINER_FIELDS));
 					},
 

@@ -4370,15 +4370,16 @@ public class ProjectTemplatesTest {
 		return file;
 	}
 
-	private static void _testPropertyKeyExists(Path path, String key)
+	private static void _testPropertyKeyExists(File file, String key)
 		throws Exception {
 
-		Properties properties = FileTestUtil.readProperties(path);
+		Properties properties = FileTestUtil.readProperties(file);
 
-		Object property = properties.getProperty(key);
+		String property = properties.getProperty(key);
 
 		Assert.assertNotNull(
-			"Expected key " + key + " to exist in properties " + path,
+			"Expected key " + key + " to exist in properties " +
+				file.getAbsolutePath(),
 			property);
 	}
 

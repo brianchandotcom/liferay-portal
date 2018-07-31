@@ -15,6 +15,7 @@
 package com.liferay.project.templates.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -154,8 +155,8 @@ public class FileTestUtil {
 		return sb.toString();
 	}
 
-	public static Properties readProperties(Path path) throws IOException {
-		try (InputStream inputStream = Files.newInputStream(path)) {
+	public static Properties readProperties(File file) throws IOException {
+		try (InputStream inputStream = Files.newInputStream(file.toPath())) {
 			Properties properties = new Properties();
 
 			properties.load(inputStream);

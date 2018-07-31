@@ -29,6 +29,28 @@ import java.util.List;
 public class ServiceBuilderBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
+	public static class ServiceBuilderBatchTestClass
+		extends ModulesBatchTestClass {
+
+		protected static ServiceBuilderBatchTestClass getInstance(
+			File moduleBaseDir, File modulesDir,
+			List<File> modulesProjectDirs) {
+
+			return new ServiceBuilderBatchTestClass(
+				moduleBaseDir, modulesDir, modulesProjectDirs);
+		}
+
+		protected ServiceBuilderBatchTestClass(
+			File moduleBaseDir, File modulesDir,
+			List<File> modulesProjectDirs) {
+
+			super(moduleBaseDir);
+
+			initTestMethods(modulesProjectDirs, modulesDir, "buildService");
+		}
+
+	}
+
 	protected ServiceBuilderBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 

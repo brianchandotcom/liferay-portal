@@ -26,7 +26,9 @@ import java.net.URL;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class PortalSocketPermission {
 
 	public static void checkConnect(Http.Options options) {

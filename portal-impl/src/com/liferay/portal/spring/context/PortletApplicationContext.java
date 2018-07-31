@@ -52,13 +52,24 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 public class PortletApplicationContext extends XmlWebApplicationContext {
 
 	public static ClassLoader getBeanClassLoader() {
-		return _pacl.getBeanClassLoader();
+		ClassLoader beanClassLoader =
+			AggregateClassLoader.getAggregateClassLoader(
+				new ClassLoader[] {
+					PortletClassLoaderUtil.getClassLoader(),
+					ClassLoaderUtil.getPortalClassLoader()
+				});
+
+		return new FilterClassLoader(beanClassLoader);
 	}
 
 	public PortletApplicationContext() {
 		setClassLoader(getBeanClassLoader());
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public interface PACL {
 
 		public ClassLoader getBeanClassLoader();
@@ -170,23 +181,5 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletApplicationContext.class);
-
-	private static final PACL _pacl = new NoPACL();
-
-	private static class NoPACL implements PACL {
-
-		@Override
-		public ClassLoader getBeanClassLoader() {
-			ClassLoader beanClassLoader =
-				AggregateClassLoader.getAggregateClassLoader(
-					new ClassLoader[] {
-						PortletClassLoaderUtil.getClassLoader(),
-						ClassLoaderUtil.getPortalClassLoader()
-					});
-
-			return new FilterClassLoader(beanClassLoader);
-		}
-
-	}
 
 }

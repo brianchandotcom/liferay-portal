@@ -24,19 +24,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.url.ServletContextURLContainer;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,9 +65,10 @@ public class HotDeployImpl implements HotDeploy {
 	public synchronized void fireDeployEvent(
 		final HotDeployEvent hotDeployEvent) {
 
-		PortalLifecycleUtil.register(
-			new HotDeployPortalLifecycle(hotDeployEvent),
-			PortalLifecycle.METHOD_INIT);
+		ServletContext servletContext = hotDeployEvent.getServletContext();
+
+		ServletContextPool.put(
+			servletContext.getServletContextName(), servletContext);
 
 		if (_capturePrematureEvents) {
 
@@ -128,8 +123,6 @@ public class HotDeployImpl implements HotDeploy {
 		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
 
 		TemplateManagerUtil.destroy(classLoader);
-
-		_pacl.unregister(classLoader);
 
 		RequiredPluginsUtil.startCheckingRequiredPlugins();
 	}
@@ -188,6 +181,10 @@ public class HotDeployImpl implements HotDeploy {
 		_hotDeployListeners.clear();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public interface PACL {
 
 		public void initPolicy(
@@ -334,72 +331,9 @@ public class HotDeployImpl implements HotDeploy {
 
 	private static final Log _log = LogFactoryUtil.getLog(HotDeployImpl.class);
 
-	private static final PACL _pacl = new NoPACL();
-
 	private boolean _capturePrematureEvents = true;
 	private final Queue<HotDeployEvent> _dependentHotDeployEvents;
 	private final Set<String> _deployedServletContextNames;
 	private final List<HotDeployListener> _hotDeployListeners;
-
-	private static class HotDeployPortalLifecycle extends BasePortalLifecycle {
-
-		public HotDeployPortalLifecycle(HotDeployEvent hotDeployEvent) {
-			_servletContext = hotDeployEvent.getServletContext();
-			_classLoader = hotDeployEvent.getContextClassLoader();
-
-			ServletContextPool.put(
-				_servletContext.getServletContextName(), _servletContext);
-		}
-
-		@Override
-		protected void doPortalDestroy() {
-		}
-
-		@Override
-		protected void doPortalInit() throws Exception {
-			Properties properties = null;
-
-			String propertiesString = HttpUtil.URLtoString(
-				_servletContext.getResource(
-					"/WEB-INF/liferay-plugin-package.properties"));
-
-			if (propertiesString != null) {
-				properties = PropertiesUtil.load(propertiesString);
-			}
-			else {
-				properties = new Properties();
-			}
-
-			File tempDir = (File)_servletContext.getAttribute(
-				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
-
-			properties.put(
-				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR,
-				tempDir.getAbsolutePath());
-
-			_pacl.initPolicy(
-				_servletContext.getServletContextName(),
-				new ServletContextURLContainer(_servletContext), _classLoader,
-				properties);
-		}
-
-		private final ClassLoader _classLoader;
-		private final ServletContext _servletContext;
-
-	}
-
-	private static class NoPACL implements PACL {
-
-		@Override
-		public void initPolicy(
-			String contextName, URLContainer urlContainer,
-			ClassLoader classLoader, Properties properties) {
-		}
-
-		@Override
-		public void unregister(ClassLoader classLoader) {
-		}
-
-	}
 
 }

@@ -201,7 +201,10 @@ public class TemplateContextHelper {
 	}
 
 	public TemplateControlContext getTemplateControlContext() {
-		return _pacl.getTemplateControlContext();
+		ClassLoader contextClassLoader =
+			ClassLoaderUtil.getContextClassLoader();
+
+		return new TemplateControlContext(null, contextClassLoader);
 	}
 
 	public void prepare(
@@ -366,6 +369,10 @@ public class TemplateContextHelper {
 		_helperUtilitiesMaps.remove(classLoader);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public interface PACL {
 
 		public TemplateControlContext getTemplateControlContext();
@@ -874,21 +881,7 @@ public class TemplateContextHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateContextHelper.class);
 
-	private static final PACL _pacl = new NoPACL();
-
 	private final Map<ClassLoader, Map<String, Object>[]> _helperUtilitiesMaps =
 		new ConcurrentHashMap<>();
-
-	private static class NoPACL implements PACL {
-
-		@Override
-		public TemplateControlContext getTemplateControlContext() {
-			ClassLoader contextClassLoader =
-				ClassLoaderUtil.getContextClassLoader();
-
-			return new TemplateControlContext(null, contextClassLoader);
-		}
-
-	}
 
 }

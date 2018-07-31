@@ -4987,6 +4987,14 @@
 			<var name="fieldName" value="UploadField" />
 		</execute>
 
+		<execute function="Type" locator1="FormFields#UPLOAD_FIELD" value1="Cannot Input, Upload Field">
+			<var name="key_fieldName" value="UploadField" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="FormFields#UPLOAD_FIELD" value1="">
+			<var name="key_fieldName" value="UploadField" />
+		</execute>
+
 		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
 
 		<execute macro="ItemSelector#uploadFile">
@@ -5054,6 +5062,16 @@
 		</execute>
 
 		<execute macro="FormFields#viewRequiredAsterisk" />
+
+		<execute macro="FormPortlet#submitWithValidationError" />
+
+		<execute function="Type" locator1="FormFields#DATE_FIELD" value1="Invalid Value, Date Field">
+			<var name="key_fieldName" value="DateField" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="FormFields#DATE_FIELD" value1="__/__/____">
+			<var name="key_fieldName" value="DateField" />
+		</execute>
 
 		<execute macro="FormPortlet#submitWithValidationError" />
 

@@ -248,7 +248,7 @@
 	<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub" id="com.liferay.portal.kernel.service.ResourceActionLocalService">
 		<constructor-arg type="java.lang.Class" value="com.liferay.portal.kernel.service.ResourceActionLocalService" />
 	</bean>
-	<bean class="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" depends-on="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" id="com.liferay.portal.kernel.service.ServiceComponentLocalService" />
+	<bean class="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" id="com.liferay.portal.kernel.service.ServiceComponentLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentFinderImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentFinder" parent="basePersistence" />
 	<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub" id="com.liferay.portal.kernel.service.UserLocalService">

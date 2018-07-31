@@ -3,7 +3,8 @@
 		"metal-dom": "^2.0.0",
 		"metal-drag-drop": "~3.0.1",
 		"metal-position": "^2.1.0",
-		"metal-state": "^2.13.2"
+		"metal-state": "^2.13.2",
+		"metal-throttle": "^3.0.0"
 	},
 	"devDependencies": {
 		"check-source-formatting": "^2.0.10",

@@ -3958,6 +3958,26 @@ public class ProjectTemplatesTest {
 
 		final String repositoryUrl = mavenExecutor.getRepositoryUrl();
 
+		if (projectDir.getPath().contains("workspace")) {
+			File buildFile = new File(projectDir, "build.gradle");
+
+			Path buildFilePath = buildFile.toPath();
+
+			String content = FileUtil.read(buildFilePath);
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(content);
+			sb.append("allprojects {\n");
+			sb.append("repositories {");
+			sb.append("mavenLocal()}}");
+
+			content = sb.toString();
+
+			Files.write(
+				buildFilePath, content.getBytes(StandardCharsets.UTF_8));
+		}
+
 		Files.walkFileTree(
 			projectDir.toPath(),
 			new SimpleFileVisitor<Path>() {

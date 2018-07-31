@@ -1,4 +1,5 @@
 apply plugin: "com.liferay.alloy.taglib"
+apply plugin: "com.liferay.lang.merger"
 
 buildTaglibs {
 	componentsXmlFiles "liferay-ddm.xml"

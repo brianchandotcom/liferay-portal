@@ -81,7 +81,7 @@ public class WebSiteCollectionResource
 		).identifier(
 			Group::getGroupId
 		).addBidirectionalModel(
-			"interactionService", "webSites", WebSiteIdentifier.class,
+			"webSite", "webSites", WebSiteIdentifier.class,
 			this::_getParentGroupId
 		).addBoolean(
 			"active", Group::isActive

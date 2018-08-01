@@ -17,6 +17,7 @@
 	{@param signedIn: bool}
 	{@param title: string}
 	{@param? _handleCloseDialogClick: any}
+	{@param? _handleFlagButtonClick: any}
 	{@param? _handleReasonChange: any}
 	{@param? _handleReportButtonClick: any}
 	{@param? _reportDialogOpen: bool}
@@ -39,6 +40,7 @@
 
 	<div {$containerAttributes}>
 		{call .flagIcon}
+			{param _handleFlagButtonClick: $_handleFlagButtonClick /}
 			{param enabled: $enabled /}
 			{param label: $label /}
 			{param message: $message /}
@@ -73,6 +75,7 @@
 	{@param label: bool}
 	{@param message: string}
 	{@param pathThemeImages: string}
+	{@param? _handleFlagButtonClick: any}
 	{@param? enabled: bool}
 
 	{let $emptyMessage: $message == '' /}
@@ -85,30 +88,17 @@
 	{/let}
 
 	<span {$wrapperAttributes}>
-		{let $spanAttributes kind="attributes"}
-			class="taglib-text
-				{if not $label}
-					{sp}hide-accessible
-				{/if}
-			"
-		{/let}
-
-		<button
-			aria-label="{$message}"
-			class="btn btn-outline-borderless btn-outline-secondary btn-sm{if $emptyMessage} btn-monospaced{/if}"
-			data-onclick="_handleFlagButtonClick"
-			type="button"
-			{if not $enabled}disabled{/if}
-		>
-			<span {if not $emptyMessage}class="inline-item inline-item-before"{/if}>
-				<svg class="lexicon-icon">
-					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-empty"></use>
-				</svg>
-			</span>
-			{if not $emptyMessage}
-				<span {$spanAttributes}>{$message}</span>
-			{/if}
-		</button>
+		{call ClayButton.render}
+			{param elementClasses: 'btn-outline-borderless btn-outline-secondary' /}
+			{param events: ['click': $_handleFlagButtonClick] /}
+			{param disabled: not $enabled /}
+			{param icon: 'flag-empty' /}
+			{param label: $emptyMessage ? null : $message /}
+			{param monospaced: $emptyMessage /}
+			{param size: 'sm' /}
+			{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+			{param type: 'button' /}
+		{/call}
 	</span>
 {/template}
 

@@ -12,4 +12,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 
 	soyCompile project(":apps:frontend-js:frontend-js-web")
+	soyCompile project(":apps:frontend-taglib:frontend-taglib-clay")
 }

@@ -4233,6 +4233,11 @@ directory.
 - [LPS-84027]: Fix error when using the [Gradle Dependency Management] plugin in
 OSGi modules.
 
+## 5.4.103 - 2018-08-01
+
+### Added
+- [LPS-84027]: Add support for `SPRING_BOOT_JAVA_OPTS` environment variable.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
-import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
@@ -274,17 +273,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		FutureTask<Void> springInitTask = new FutureTask<>(
 			() -> {
 				super.contextInitialized(servletContextEvent);
-
-				ApplicationContext applicationContext =
-					ContextLoader.getCurrentWebApplicationContext();
-
-				try {
-					BeanReferenceRefreshUtil.refresh(
-						applicationContext.getAutowireCapableBeanFactory());
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
 
 				return null;
 			});

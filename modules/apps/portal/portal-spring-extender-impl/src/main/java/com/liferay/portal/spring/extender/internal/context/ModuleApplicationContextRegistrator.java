@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisher;
 import com.liferay.portal.spring.extender.internal.bundle.CompositeResourceLoaderBundle;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
@@ -61,8 +59,6 @@ public class ModuleApplicationContextRegistrator {
 
 			_registerBeanLocator(
 				_extendeeBundle, configurableApplicationContext);
-
-			_refreshBeanFactory(configurableApplicationContext);
 
 			_serviceConfigurator.initServices(
 				new ModuleResourceLoader(_extendeeBundle),
@@ -142,20 +138,6 @@ public class ModuleApplicationContextRegistrator {
 		moduleApplicationContext.refresh();
 
 		return moduleApplicationContext;
-	}
-
-	private void _refreshBeanFactory(ApplicationContext applicationContext) {
-		try {
-			BeanReferenceRefreshUtil.refresh(
-				applicationContext.getAutowireCapableBeanFactory());
-		}
-		catch (Exception e) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to refresh ", applicationContext.getDisplayName(),
-					". This may result in memory leaks on multiple ",
-					"redeployments."));
-		}
 	}
 
 	private void _registerBeanLocator(

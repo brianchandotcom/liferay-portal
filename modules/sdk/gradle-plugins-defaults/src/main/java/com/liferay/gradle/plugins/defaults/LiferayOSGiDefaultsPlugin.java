@@ -988,7 +988,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					sb.append('/');
 					sb.append(artifactId);
 
-					final String infoPath = sb.toString();
+					final String dirName = sb.toString();
 
 					mavenPluginConvention.pom(
 						new Closure<MavenPom>(project) {
@@ -1013,14 +1013,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 								mavenPom.setArtifactId(artifactId);
 								mavenPom.setGroupId(groupId);
 
-								mavenPom.writeTo(infoPath + "/pom.xml");
+								mavenPom.writeTo(dirName + "/pom.xml");
 
 								return mavenPom;
 							}
 
 						});
 
-					File file = new File(infoPath, "pom.properties");
+					File file = new File(dirName, "pom.properties");
 
 					Properties properties = new Properties();
 

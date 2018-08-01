@@ -1,4 +1,43 @@
 <definition>
+	<command name="_addFragment">
+		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<execute macro="JSONFragment#getCollectionIdByName">
+			<return name="collectionId" />
+			<var name="collectionName" value="${collectionName}" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<if>
+			<not>
+				<isset var="collectionId" />
+			</not>
+			<then>
+				<fail message="Please set 'collectionId'." />
+			</then>
+		</if>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/fragment.fragmententry/add-fragment-entry \
+   			-u test@liferay.com:test \
+   			-d groupId=${groupId} \
+  			-d fragmentCollectionId=${collectionId} \
+  			-d name=${name} \
+  			-d status=0
+		]]></var>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+	</command>
+
 	<command name="_addFragmentCollection">
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
@@ -31,6 +70,32 @@
 		</execute>
 	</command>
 
+	<command name="addFragment">
+		<if>
+			<not>
+				<isset var="name" />
+			</not>
+			<then>
+				<fail message="Please set 'name'." />
+			</then>
+		</if>
+		<if>
+			<not>
+				<isset var="collectionName" />
+			</not>
+			<then>
+				<fail message="Please set 'collectionName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONFragment#_addFragment">
+			<var name="collectionName" value="${collectionName}" />
+			<var name="fragmentFile" value="${fragmentFile}" />
+			<var name="groupName" value="${groupName}" />
+			<var name="name" value="${name}" />
+		</execute>
+	</command>
+
 	<command name="addFragmentCollection">
 		<if>
 			<not>
@@ -45,5 +110,46 @@
 			<var name="groupName" value="${groupName}" />
 			<var name="name" value="${name}" />
 		</execute>
+	</command>
+
+	<command name="getCollectionIdByName">
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<if>
+			<not>
+				<isset var="collectionName" />
+			</not>
+			<then>
+				<fail message="Please set 'collectionName'." />
+			</then>
+		</if>
+		<if>
+			<not>
+				<isset var="groupId" />
+			</not>
+			<then>
+				<fail message="Please set 'groupId'." />
+			</then>
+		</if>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
+			-u test@liferay.com:test \
+ 			-d groupId=${groupId} \
+ 			-d name=${collectionName} \
+ 			-d <CURL_DATA[start=-1]CURL_DATA> \
+ 			-d <CURL_DATA[end=-1]CURL_DATA> \
+ 			-d -orderByComparator=
+		]]></var>
+
+		<var method="JSONCurlUtil#post('${curl}', '$..fragmentCollectionId')" name="collectionId" />
+
+		<var method="StringUtil#replace('${collectionId}', '[&quot;', '')" name="collectionId" />
+
+		<var method="StringUtil#replace('${collectionId}', '&quot;]', '')" name="collectionId" />
+
+		<return value="${collectionId}" />
 	</command>
 </definition>

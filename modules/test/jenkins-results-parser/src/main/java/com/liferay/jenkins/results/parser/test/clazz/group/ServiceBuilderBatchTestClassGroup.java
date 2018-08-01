@@ -21,6 +21,7 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,14 @@ public class ServiceBuilderBatchTestClassGroup
 			initTestMethods(modulesProjectDirs, modulesDir, "buildService");
 		}
 
+	}
+
+	protected static List<File> getModulesProjectDirs(File modulesDir) {
+		final List<File> modulesProjectDirs = new ArrayList<>();
+
+		modulesProjectDirs.add(modulesDir);
+
+		return modulesProjectDirs;
 	}
 
 	protected ServiceBuilderBatchTestClassGroup(
@@ -110,6 +119,21 @@ public class ServiceBuilderBatchTestClassGroup
 
 				if (!bndBndFiles.isEmpty() && !serviceXmlFiles.isEmpty()) {
 					moduleDirsList.add(modifiedModuleDir);
+				}
+			}
+
+			File portalModulesBaseDir = new File(
+				portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
+			for (File moduleDir : moduleDirsList) {
+				List<File> modulesProjectsDirs = getModulesProjectDirs(
+					moduleDir);
+
+				if (!modulesProjectsDirs.isEmpty()) {
+					testClasses.add(
+						ServiceBuilderBatchTestClass.getInstance(
+							moduleDir, portalModulesBaseDir,
+							modulesProjectsDirs));
 				}
 			}
 		}

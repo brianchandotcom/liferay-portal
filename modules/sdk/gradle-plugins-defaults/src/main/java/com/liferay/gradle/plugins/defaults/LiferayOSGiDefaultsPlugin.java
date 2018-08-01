@@ -380,6 +380,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Task baselineTask = GradleUtil.getTask(
 			project, BaselinePlugin.BASELINE_TASK_NAME);
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 		Task syncVersionsTask = _addTaskSyncVersions(project);
 
 		baselineTask.finalizedBy(syncVersionsTask);
@@ -414,7 +415,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				LiferayBasePlugin.DEPLOY_TASK_NAME);
 		}
 
-		Task generatePomInfoTask = _addTaskGeneratePomInfo(project);
 		final Jar jarJSPsTask = _addTaskJarJSP(project);
 		final Jar jarJavadocTask = _addTaskJarJavadoc(project);
 		final Jar jarJSDocTask = _addTaskJarJSDoc(project);
@@ -444,7 +444,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
 		_configureSourceSetMain(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
-		_configureTaskJar(project, testProject, generatePomInfoTask);
+		_configureTaskJar(jar, testProject);
 		_configureTaskJavadoc(project, portalRootDir);
 		_configureTaskTest(project);
 		_configureTaskTestIntegration(project);
@@ -459,6 +459,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_addTaskUpdateFileSnapshotVersions(project);
 
 		if (publishing) {
+			Task generatePomInfoTask = _addTaskGeneratePomInfo(project);
+
+			jar.dependsOn(generatePomInfoTask);
+
 			_configureTasksEnabledIfStaleSnapshot(
 				project, testProject, MavenPlugin.INSTALL_TASK_NAME,
 				BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
@@ -3037,22 +3041,17 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskJar(
-		Project project, boolean testProject, Object... jarDependencies) {
-
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
+	private void _configureTaskJar(Jar jar, boolean testProject) {
 		if (testProject) {
 			jar.dependsOn(JavaPlugin.TEST_CLASSES_TASK_NAME);
 
 			SourceSet sourceSet = GradleUtil.getSourceSet(
-				project,
+				jar.getProject(),
 				TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
 
 			jar.dependsOn(sourceSet.getClassesTaskName());
 		}
 
-		jar.dependsOn(jarDependencies);
 		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 	}
 

@@ -4215,6 +4215,12 @@ directory.
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.91.
 
+## 5.4.100 - 2018-07-31
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.92.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

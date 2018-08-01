@@ -142,9 +142,7 @@ name = HtmlUtil.escapeJS(name);
 
 	var onLocaleChangedHandler = function(event) {
 		var contentsLanguage = event.item.getAttribute('data-value');
-		var contentsLanguageName = contentsLanguage.substr(0, 2).replace('iw', 'he');
-
-		var contentsLanguageDir = CKEDITOR.lang.rtl[contentsLanguageName] ? 'rtl' : 'ltr';
+		var contentsLanguageDir = event.target.Language.direction[contentsLanguage];
 
 		var nativeEditor = window['<%= name %>'].getNativeEditor();
 

@@ -19,6 +19,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
@@ -59,6 +60,26 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override
+	public PortletPreferences deleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		return _blogsAdminPortletDataHandler.deleteData(
+			portletDataContext, portletId, portletPreferences);
+	}
+
+	@Override
+	public String exportData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		return _blogsAdminPortletDataHandler.exportData(
+			portletDataContext, portletId, portletPreferences);
+	}
+
+	@Override
 	public String getNamespace() {
 		return _blogsAdminPortletDataHandler.getNamespace();
 	}
@@ -71,6 +92,26 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getServiceName() {
 		return _blogsAdminPortletDataHandler.getServiceName();
+	}
+
+	@Override
+	public PortletPreferences importData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, String data)
+		throws PortletDataException {
+
+		return _blogsAdminPortletDataHandler.importData(
+			portletDataContext, portletId, portletPreferences, data);
+	}
+
+	@Override
+	public void prepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		_blogsAdminPortletDataHandler.prepareManifestSummary(
+			portletDataContext, portletPreferences);
 	}
 
 	@Activate
@@ -90,47 +131,9 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		setStagingControls(getExportControls());
 	}
 
-	@Override
-	protected PortletPreferences doDeleteData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _blogsAdminPortletDataHandler.doDeleteData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected String doExportData(
-			final PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _blogsAdminPortletDataHandler.doExportData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected PortletPreferences doImportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
-		throws Exception {
-
-		return _blogsAdminPortletDataHandler.doImportData(
-			portletDataContext, portletId, portletPreferences, data);
-	}
-
-	@Override
-	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		_blogsAdminPortletDataHandler.doPrepareManifestSummary(
-			portletDataContext, portletPreferences);
-	}
-
-	@Reference
-	private BlogsAdminPortletDataHandler _blogsAdminPortletDataHandler;
+	@Reference(
+		target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN + ")"
+	)
+	private PortletDataHandler _blogsAdminPortletDataHandler;
 
 }

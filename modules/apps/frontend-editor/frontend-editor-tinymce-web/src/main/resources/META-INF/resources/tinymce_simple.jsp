@@ -271,7 +271,6 @@ name = HtmlUtil.escapeJS(name);
 		}
 	};
 
-
 	<c:if test="<%= autoCreate %>">
 		window['<%= name %>'].initEditor();
 	</c:if>

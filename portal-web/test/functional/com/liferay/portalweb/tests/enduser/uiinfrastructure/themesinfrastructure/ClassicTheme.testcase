@@ -43,10 +43,6 @@
 
 		<execute macro="Theme#configureLookAndFeelSpecificLook" />
 
-		<execute macro="Theme#configureLookAndFeelBulletStyle">
-			<var name="bulletStyle" value="Arrows" />
-		</execute>
-
 		<execute macro="Theme#configureLookAndFeelShowHeaderSearch">
 			<var name="showHeaderSearch" value="false" />
 		</execute>
@@ -64,10 +60,6 @@
 
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Look and Feel" />
-		</execute>
-
-		<execute macro="Theme#viewBulletStyle">
-			<var name="bulletStyle" value="Arrows" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

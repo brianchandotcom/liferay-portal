@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -42,6 +43,8 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -55,11 +58,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.SynchronousBundleListener;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.BundleTracker;
 
 /**
  * @author Brian Wing Shun Chan
@@ -93,7 +97,7 @@ public class CustomSQLImpl implements CustomSQL {
 		"CONVERT(VARCHAR,?) IS NULL";
 
 	@Activate
-	public void activate() throws SQLException {
+	public void activate(BundleContext bundleContext) throws SQLException {
 		_portal.initCustomSQL();
 
 		Connection con = DataAccess.getConnection();
@@ -203,23 +207,47 @@ public class CustomSQLImpl implements CustomSQL {
 			DataAccess.cleanUp(con);
 		}
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+		_bundleTracker = new BundleTracker<ClassLoader>(
+			bundleContext, Bundle.ACTIVE, null) {
 
-		BundleContext bundleContext = bundle.getBundleContext();
+			@Override
+			public ClassLoader addingBundle(
+				Bundle bundle, BundleEvent bundleEvent) {
 
-		bundleContext.addBundleListener(
-			new SynchronousBundleListener() {
+				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-				@Override
-				public void bundleChanged(BundleEvent bundleEvent) {
-					if ((bundleEvent.getType() == BundleEvent.UNINSTALLED) ||
-						(bundleEvent.getType() == BundleEvent.UPDATED)) {
+				ClassLoader classLoader = bundleWiring.getClassLoader();
 
-						_sqlPool.remove(bundleEvent.getBundle());
-					}
+				URL sourceURL = classLoader.getResource(
+					"custom-sql/default.xml");
+
+				if (sourceURL == null) {
+					sourceURL = classLoader.getResource(
+						"META-INF/custom-sql/default.xml");
 				}
 
-			});
+				if (sourceURL == null) {
+					return null;
+				}
+
+				_customSQLContainerPool.put(
+					classLoader,
+					new CustomSQLContainer(classLoader, sourceURL));
+
+				return classLoader;
+			}
+
+			@Override
+			public void removedBundle(
+				Bundle bundle, BundleEvent bundleEvent,
+				ClassLoader classLoader) {
+
+				_customSQLContainerPool.remove(classLoader);
+			}
+
+		};
+
+		_bundleTracker.open();
 	}
 
 	@Override
@@ -253,15 +281,21 @@ public class CustomSQLImpl implements CustomSQL {
 		return sql.concat(criteria);
 	}
 
+	@Deactivate
+	public void deactive() {
+		_bundleTracker.close();
+	}
+
 	@Override
 	public String get(Class<?> clazz, String id) {
-		Map<String, String> sqls = _sqlPool.get(FrameworkUtil.getBundle(clazz));
+		CustomSQLContainer customSQLContainer = _customSQLContainerPool.get(
+			clazz.getClassLoader());
 
-		if (sqls == null) {
-			sqls = _loadCustomSQL(clazz);
+		if (customSQLContainer != null) {
+			return customSQLContainer.get(id);
 		}
 
-		return sqls.get(id);
+		return null;
 	}
 
 	@Override
@@ -863,35 +897,13 @@ public class CustomSQLImpl implements CustomSQL {
 		return sb.toString();
 	}
 
-	private Map<String, String> _loadCustomSQL(Class<?> clazz) {
-		Map<String, String> sqls = new HashMap<>();
-
-		try {
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			_read(classLoader, "custom-sql/default.xml", sqls);
-			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
-
-			_sqlPool.put(FrameworkUtil.getBundle(clazz), sqls);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return sqls;
-	}
-
 	private void _read(
-			ClassLoader classLoader, String source, Map<String, String> sqls)
+			ClassLoader classLoader, URL sourceURL, Map<String, String> sqls)
 		throws Exception {
 
-		try (InputStream is = classLoader.getResourceAsStream(source)) {
-			if (is == null) {
-				return;
-			}
-
+		try (InputStream is = sourceURL.openStream()) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Loading " + source);
+				_log.debug("Loading " + sourceURL);
 			}
 
 			Document document = UnsecureSAXReaderUtil.read(is);
@@ -902,7 +914,9 @@ public class CustomSQLImpl implements CustomSQL {
 				String file = sqlElement.attributeValue("file");
 
 				if (Validator.isNotNull(file)) {
-					_read(classLoader, file, sqls);
+					URL fileURL = classLoader.getResource(file);
+
+					_read(classLoader, fileURL, sqls);
 				}
 				else {
 					String id = sqlElement.attributeValue("id");
@@ -942,6 +956,9 @@ public class CustomSQLImpl implements CustomSQL {
 
 	private static final Log _log = LogFactoryUtil.getLog(CustomSQLImpl.class);
 
+	private BundleTracker<ClassLoader> _bundleTracker;
+	private final Map<ClassLoader, CustomSQLContainer> _customSQLContainerPool =
+		new ConcurrentHashMap<>();
 	private String _functionIsNotNull;
 	private String _functionIsNull;
 
@@ -951,8 +968,6 @@ public class CustomSQLImpl implements CustomSQL {
 	@Reference
 	private Portal _portal;
 
-	private final Map<Bundle, Map<String, String>> _sqlPool =
-		new ConcurrentHashMap<>();
 	private boolean _vendorDB2;
 	private boolean _vendorHSQL;
 	private boolean _vendorInformix;
@@ -960,5 +975,52 @@ public class CustomSQLImpl implements CustomSQL {
 	private boolean _vendorOracle;
 	private boolean _vendorPostgreSQL;
 	private boolean _vendorSybase;
+
+	private class CustomSQLContainer {
+
+		public String get(String id) {
+			ObjectValuePair<Map<String, String>, Exception> objectValuePair =
+				_objectValuePair;
+
+			if (objectValuePair == null) {
+				Map<String, String> sqlPool = new HashMap<>();
+				Exception exception = null;
+
+				try {
+					_read(_classLoader, _sourceURL, sqlPool);
+				}
+				catch (Exception e) {
+					exception = e;
+
+					_log.error(e, e);
+				}
+
+				objectValuePair = new ObjectValuePair<>(sqlPool, exception);
+
+				_objectValuePair = objectValuePair;
+			}
+
+			Exception exception = objectValuePair.getValue();
+
+			if (exception != null) {
+				_log.error(exception, exception);
+			}
+
+			Map<String, String> sqlPool = objectValuePair.getKey();
+
+			return sqlPool.get(id);
+		}
+
+		private CustomSQLContainer(ClassLoader classLoader, URL sourceURL) {
+			_classLoader = classLoader;
+			_sourceURL = sourceURL;
+		}
+
+		private final ClassLoader _classLoader;
+		private volatile ObjectValuePair<Map<String, String>, Exception>
+			_objectValuePair;
+		private final URL _sourceURL;
+
+	}
 
 }

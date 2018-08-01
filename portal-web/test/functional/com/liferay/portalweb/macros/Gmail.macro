@@ -208,26 +208,6 @@
 		<execute function="AssertTextEquals" locator1="Gmail#SUCCESS_MESSAGE" value1="Your message has been sent." />
 	</command>
 
-	<command name="tearDown">
-		<execute macro="Gmail#login">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userPassword" value="${userPassword}" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<while>
-			<condition function="IsElementPresent" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_GENERIC" />
-			<then>
-				<execute function="Check" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_GENERIC" />
-
-				<execute function="Click" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_DELETE_BUTTON" />
-
-				<execute function="Pause" locator1="3000" />
-			</then>
-		</while>
-	</command>
-
 	<command name="viewMail">
 		<execute macro="Gmail#gotoMail">
 			<var name="emailFromUserName" value="${emailFromUserName}" />
@@ -258,11 +238,5 @@
 				<execute function="AssertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_ATTACHMENT" value1="${gmailMessageAttachment}" />
 			</then>
 		</if>
-	</command>
-
-	<command name="viewMailNotPresent">
-		<var name="key_gmailAssetType" value="${gmailAssetType}" />
-
-		<execute function="AssertElementNotPresent" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE" />
 	</command>
 </definition>

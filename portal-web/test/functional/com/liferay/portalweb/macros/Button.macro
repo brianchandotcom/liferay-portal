@@ -27,12 +27,6 @@
 		</execute>
 	</command>
 
-	<command name="clickConfirm">
-		<execute macro="Button#click">
-			<var name="button" value="Confirm" />
-		</execute>
-	</command>
-
 	<command name="clickDelete">
 		<execute macro="Button#click">
 			<var name="button" value="Delete" />

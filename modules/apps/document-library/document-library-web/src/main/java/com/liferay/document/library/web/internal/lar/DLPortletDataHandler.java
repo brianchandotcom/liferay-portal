@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.lar;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.exportimport.data.handler.DLExportableRepositoryPublisher;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
@@ -29,8 +28,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.util.PropsValues;
 
@@ -39,7 +36,6 @@ import javax.portlet.PortletPreferences;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -168,25 +164,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		setPublishToLiveByDefault(PropsValues.DL_PUBLISH_TO_LIVE_BY_DEFAULT);
 		setRank(90);
 		setStagingControls(getExportControls());
-
-		_dlExportableRepositoryPublishers = ServiceTrackerListFactory.open(
-			bundleContext, DLExportableRepositoryPublisher.class);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_dlExportableRepositoryPublishers != null) {
-			_dlExportableRepositoryPublishers.close();
-		}
 	}
 
 	@Reference(
 		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN + ")"
 	)
 	private PortletDataHandler _dlAdminPortletDataHandler;
-
-	private ServiceTrackerList
-		<DLExportableRepositoryPublisher, DLExportableRepositoryPublisher>
-			_dlExportableRepositoryPublishers;
 
 }

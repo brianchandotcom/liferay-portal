@@ -3333,7 +3333,7 @@ public class ProjectTemplatesTest {
 			gradleWorkspaceProjectDir, "gradle.properties");
 
 		_testPropertyKeyExists(
-			gradlePropertiesFile.toPath(), "liferay.workspace.bundle.url");
+			gradlePropertiesFile, "liferay.workspace.bundle.url");
 
 		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
 			WorkspaceUtil.WORKSPACE, "withportlet", "com.test",
@@ -3357,7 +3357,7 @@ public class ProjectTemplatesTest {
 			gradleWorkspaceProjectDir, "gradle.properties");
 
 		_testPropertyKeyExists(
-			gradlePropertiesFile.toPath(), "liferay.workspace.bundle.url");
+			gradlePropertiesFile, "liferay.workspace.bundle.url");
 
 		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
 			WorkspaceUtil.WORKSPACE, "withportlet", "com.test",

@@ -38,13 +38,15 @@
 		title="{$title}"
 	{/let}
 
+	{let $spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+
 	<div {$containerAttributes}>
 		{call .flagIcon}
 			{param _handleFlagButtonClick: $_handleFlagButtonClick /}
 			{param enabled: $enabled /}
 			{param label: $label /}
 			{param message: $message /}
-			{param pathThemeImages: $pathThemeImages /}
+			{param spritemap: $spritemap /}
 		{/call}
 
 		{if $_reportDialogOpen}
@@ -63,6 +65,7 @@
 				{param reasons: $reasons /}
 				{param reporterEmailAddress: $reporterEmailAddress /}
 				{param signedIn: $signedIn /}
+				{param spritemap: $spritemap /}
 			{/call}
 		{/if}
 	</div>
@@ -74,7 +77,7 @@
 {template .flagIcon}
 	{@param label: bool}
 	{@param message: string}
-	{@param pathThemeImages: string}
+	{@param spritemap: string}
 	{@param? _handleFlagButtonClick: any}
 	{@param? enabled: bool}
 
@@ -96,7 +99,7 @@
 			{param label: $emptyMessage ? null : $message /}
 			{param monospaced: $emptyMessage /}
 			{param size: 'sm' /}
-			{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+			{param spritemap: $spritemap /}
 			{param type: 'button' /}
 		{/call}
 	</span>
@@ -113,6 +116,7 @@
 	{@param portletNamespace: string}
 	{@param reasons: ?}
 	{@param signedIn: bool}
+	{@param spritemap: string}
 	{@param? _handleCloseDialogClick: any}
 	{@param? _handleReasonChange: any}
 	{@param? _handleReportButtonClick: any}
@@ -166,7 +170,7 @@
 
 		{param ref: 'modal' /}
 
-		{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+		{param spritemap: $spritemap /}
 	{/call}
 {/template}
 

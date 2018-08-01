@@ -18,17 +18,18 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.JavaConstructor;
 import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.parser.JavaVariable;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -50,10 +51,11 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -77,10 +79,6 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String className = nameAST.getText();
-
 		FileContents fileContents = getFileContents();
 
 		String fileName = StringUtil.replace(
@@ -95,85 +93,397 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		List<String> importNames = DetailASTUtil.getImportNames(detailAST);
 		String packageName = _getPackageName(detailAST);
 
-		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.METHOD_CALL);
+		_checkDeprecatedConstructorsUsage(
+			detailAST, packageName, importNames, directoryPath);
+		_checkDeprecatedFieldsUsage(
+			detailAST, packageName, importNames, directoryPath);
+		_checkDeprecatedTypesUsage(
+			detailAST, packageName, importNames, directoryPath);
 
-		outerLoop:
-		for (DetailAST methodCallAST : methodCallASTList) {
-			if (_hasDeprecatedParent(methodCallAST)) {
+		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+
+		String className = nameAST.getText();
+
+		_checkDeprecatedMethodsUsage(
+			detailAST, className, packageName, importNames, directoryPath);
+	}
+
+	private ClassInfo _addExtendedClassInfo(
+		ClassInfo classInfo, ClassInfo extendedClassInfo,
+		boolean forceDeprecated) {
+
+		for (JavaTerm javaConstructor :
+				extendedClassInfo.getJavaConstructors(true)) {
+
+			classInfo.addJavaTerm(javaConstructor, true);
+		}
+
+		for (JavaTerm javaConstructor :
+				extendedClassInfo.getJavaConstructors(false)) {
+
+			if (forceDeprecated) {
+				classInfo.addJavaTerm(javaConstructor, true);
+			}
+			else {
+				classInfo.addJavaTerm(javaConstructor, false);
+			}
+		}
+
+		for (JavaTerm javaMethod : extendedClassInfo.getJavaMethods(true)) {
+			classInfo.addJavaTerm(javaMethod, true);
+		}
+
+		for (JavaTerm javaMethod : extendedClassInfo.getJavaMethods(false)) {
+			if (forceDeprecated) {
+				classInfo.addJavaTerm(javaMethod, true);
+			}
+			else {
+				classInfo.addJavaTerm(javaMethod, false);
+			}
+		}
+
+		for (String fieldName : extendedClassInfo.getFieldNames(true)) {
+			classInfo.addFieldName(fieldName, true);
+		}
+
+		for (String fieldName : extendedClassInfo.getFieldNames(false)) {
+			if (forceDeprecated) {
+				classInfo.addFieldName(fieldName, true);
+			}
+			else {
+				classInfo.addFieldName(fieldName, false);
+			}
+		}
+
+		if (extendedClassInfo.isInheritsThirdParty()) {
+			classInfo.setInheritsThirdParty(true);
+		}
+
+		return classInfo;
+	}
+
+	private void _checkDeprecatedConstructorsUsage(
+		DetailAST detailAST, String packageName, List<String> importNames,
+		String directoryPath) {
+
+		List<DetailAST> literalNewASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.LITERAL_NEW);
+
+		for (DetailAST literalNewAST : literalNewASTList) {
+			if (_hasDeprecatedParent(literalNewAST)) {
 				continue;
 			}
 
-			String methodName = DetailASTUtil.getMethodName(methodCallAST);
+			DetailAST lparenAST = literalNewAST.findFirstToken(
+				TokenTypes.LPAREN);
 
-			Tuple javaMethodsTuple = _getJavaMethodsTuple(
-				methodCallAST, className, packageName, importNames,
-				directoryPath);
-
-			if (javaMethodsTuple == null) {
+			if (lparenAST == null) {
 				continue;
 			}
 
-			boolean inheritsThirdParty = (boolean)javaMethodsTuple.getObject(1);
+			String constructorName = _getConstructorName(literalNewAST);
+
+			DetailAST firstChildAST = literalNewAST.getFirstChild();
+
+			String fullyQualifiedClassName = null;
+
+			if (firstChildAST.getType() == TokenTypes.DOT) {
+				FullIdent fullIdent = FullIdent.createFullIdent(firstChildAST);
+
+				fullyQualifiedClassName = fullIdent.getText();
+			}
+			else {
+				fullyQualifiedClassName = _getFullyQualifiedClassName(
+					constructorName, packageName, importNames);
+			}
+
+			if ((fullyQualifiedClassName == null) ||
+				!fullyQualifiedClassName.startsWith("com.liferay.")) {
+
+				continue;
+			}
+
+			ClassInfo classInfo = _getClassInfo(
+				fullyQualifiedClassName, packageName, directoryPath);
+
+			if (classInfo == null) {
+				continue;
+			}
+
+			if (classInfo.isDeprecatedClass()) {
+				log(
+					literalNewAST.getLineNo(), _MSG_DEPRECATED_CONSTRUCTOR_CALL,
+					constructorName);
+			}
 
 			List<String> parameterTypeNames = _getParameterTypeNames(
-				methodCallAST);
+				literalNewAST);
 
-			if (inheritsThirdParty &&
+			if (classInfo.isInheritsThirdParty() &&
 				parameterTypeNames.contains(_TYPE_UNKNOWN)) {
 
 				continue;
 			}
 
-			boolean deprecated = false;
+			if (_containsMatch(
+					constructorName, parameterTypeNames,
+					classInfo.getJavaConstructors(true)) &&
+				!_containsMatch(
+					constructorName, parameterTypeNames,
+					classInfo.getJavaConstructors(false))) {
 
-			List<JavaMethod> javaMethods =
-				(List<JavaMethod>)javaMethodsTuple.getObject(0);
+				log(
+					literalNewAST.getLineNo(), _MSG_DEPRECATED_CONSTRUCTOR_CALL,
+					constructorName);
+			}
+		}
+	}
 
-			innerLoop:
-			for (JavaMethod javaMethod : javaMethods) {
-				List<JavaParameter> parameters = _getParameters(javaMethod);
+	private void _checkDeprecatedFieldsUsage(
+		DetailAST detailAST, String packageName, List<String> importNames,
+		String directoryPath) {
 
-				if (!methodName.equals(javaMethod.getName()) ||
-					(parameterTypeNames.size() != parameters.size())) {
+		List<DetailAST> dotASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.DOT);
 
-					continue;
-				}
-
-				if (!javaMethod.hasAnnotation("Deprecated")) {
-					continue outerLoop;
-				}
-
-				for (int i = 0; i < parameterTypeNames.size(); i++) {
-					JavaParameter parameter = parameters.get(i);
-
-					String parameterTypeName1 = parameter.getParameterType();
-
-					int pos = parameterTypeName1.indexOf("<");
-
-					if (pos != -1) {
-						parameterTypeName1 = parameterTypeName1.substring(
-							0, pos);
-					}
-
-					String parameterTypeName2 = parameterTypeNames.get(i);
-
-					if (!parameterTypeName1.equals(parameterTypeName2) &&
-						!parameterTypeName2.equals(_TYPE_UNKNOWN)) {
-
-						continue innerLoop;
-					}
-				}
-
-				deprecated = true;
+		for (DetailAST dotAST : dotASTList) {
+			if (_hasDeprecatedParent(dotAST)) {
+				continue;
 			}
 
-			if (deprecated) {
+			DetailAST parentAST = dotAST.getParent();
+
+			if ((parentAST.getType() == TokenTypes.DOT) ||
+				(parentAST.getType() == TokenTypes.LITERAL_NEW) ||
+				(parentAST.getType() == TokenTypes.METHOD_CALL)) {
+
+				continue;
+			}
+
+			FullIdent fullIdent = FullIdent.createFullIdent(dotAST);
+
+			Matcher matcher = _fieldNamePattern.matcher(fullIdent.getText());
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String fullyQualifiedClassName = null;
+
+			if (matcher.group(2) != null) {
+				fullyQualifiedClassName = matcher.group(1);
+			}
+			else {
+				fullyQualifiedClassName = _getFullyQualifiedClassName(
+					matcher.group(3), packageName, importNames);
+			}
+
+			if ((fullyQualifiedClassName == null) ||
+				!fullyQualifiedClassName.startsWith("com.liferay.")) {
+
+				continue;
+			}
+
+			ClassInfo classInfo = _getClassInfo(
+				fullyQualifiedClassName, packageName, directoryPath);
+
+			if (classInfo == null) {
+				continue;
+			}
+
+			List<String> deprecatedFieldNames = classInfo.getFieldNames(true);
+
+			String fieldName = matcher.group(4);
+
+			if (deprecatedFieldNames.contains(fieldName)) {
+				log(dotAST.getLineNo(), _MSG_DEPRECATED_FIELD_CALL, fieldName);
+			}
+		}
+	}
+
+	private void _checkDeprecatedMethodsUsage(
+		DetailAST detailAST, String className, String packageName,
+		List<String> importNames, String directoryPath) {
+
+		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_CALL);
+
+		for (DetailAST methodCallAST : methodCallASTList) {
+			if (_hasDeprecatedParent(methodCallAST)) {
+				continue;
+			}
+
+			String fullyQualifiedClassName = _getFullyQualifiedClassName(
+				methodCallAST, className, packageName, importNames);
+
+			if ((fullyQualifiedClassName == null) ||
+				!fullyQualifiedClassName.startsWith("com.liferay.")) {
+
+				continue;
+			}
+
+			ClassInfo classInfo = _getClassInfo(
+				fullyQualifiedClassName, packageName, directoryPath);
+
+			if (classInfo == null) {
+				continue;
+			}
+
+			String methodName = DetailASTUtil.getMethodName(methodCallAST);
+
+			if (classInfo.isDeprecatedClass()) {
+				log(
+					methodCallAST.getLineNo(), _MSG_DEPRECATED_METHOD_CALL,
+					methodName);
+			}
+
+			List<String> parameterTypeNames = _getParameterTypeNames(
+				methodCallAST);
+
+			if (classInfo.isInheritsThirdParty() &&
+				parameterTypeNames.contains(_TYPE_UNKNOWN)) {
+
+				continue;
+			}
+
+			if (_containsMatch(
+					methodName, parameterTypeNames,
+					classInfo.getJavaMethods(true)) &&
+				!_containsMatch(
+					methodName, parameterTypeNames,
+					classInfo.getJavaMethods(false))) {
+
 				log(
 					methodCallAST.getLineNo(), _MSG_DEPRECATED_METHOD_CALL,
 					methodName);
 			}
 		}
+	}
+
+	private void _checkDeprecatedTypesUsage(
+		DetailAST detailAST, String packageName, List<String> importNames,
+		String directoryPath) {
+
+		List<DetailAST> detailASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.EXTENDS_CLAUSE,
+			TokenTypes.IMPLEMENTS_CLAUSE, TokenTypes.TYPE,
+			TokenTypes.TYPE_ARGUMENT);
+
+		for (DetailAST curDetailAST : detailASTList) {
+			_checkDeprecatedTypeUsage(
+				curDetailAST, packageName, importNames, directoryPath);
+		}
+
+		detailASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.LITERAL_CLASS, TokenTypes.LITERAL_THIS);
+
+		for (DetailAST curDetailAST : detailASTList) {
+			DetailAST parentAST = curDetailAST.getParent();
+
+			if (parentAST.getType() != TokenTypes.DOT) {
+				continue;
+			}
+
+			DetailAST previousSiblingAST = curDetailAST.getPreviousSibling();
+
+			if (previousSiblingAST != null) {
+				_checkDeprecatedTypeUsage(
+					parentAST, packageName, importNames, directoryPath);
+			}
+		}
+	}
+
+	private void _checkDeprecatedTypeUsage(
+		DetailAST detailAST, String packageName, List<String> importNames,
+		String directoryPath) {
+
+		if (_hasDeprecatedParent(detailAST)) {
+			return;
+		}
+
+		DetailAST firstChildAST = detailAST.getFirstChild();
+
+		if (firstChildAST == null) {
+			return;
+		}
+
+		String className = null;
+		String fullyQualifiedClassName = null;
+
+		if (firstChildAST.getType() == TokenTypes.IDENT) {
+			className = firstChildAST.getText();
+
+			fullyQualifiedClassName = _getFullyQualifiedClassName(
+				className, packageName, importNames);
+		}
+		else if (firstChildAST.getType() == TokenTypes.DOT) {
+			FullIdent fullIdent = FullIdent.createFullIdent(firstChildAST);
+
+			className = fullIdent.getText();
+
+			fullyQualifiedClassName = className;
+		}
+
+		if ((fullyQualifiedClassName == null) ||
+			!fullyQualifiedClassName.startsWith("com.liferay.")) {
+
+			return;
+		}
+
+		ClassInfo classInfo = _getClassInfo(
+			fullyQualifiedClassName, packageName, directoryPath);
+
+		if ((classInfo != null) && classInfo.isDeprecatedClass()) {
+			log(detailAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL, className);
+		}
+	}
+
+	private boolean _containsMatch(
+		String name, List<String> parameterTypeNames,
+		List<JavaTerm> javaTerms) {
+
+		outerLoop:
+		for (JavaTerm javaTerm : javaTerms) {
+			if (!name.equals(javaTerm.getName())) {
+				continue;
+			}
+
+			List<JavaParameter> parameters = _getParameters(javaTerm);
+
+			if (parameters.size() != parameterTypeNames.size()) {
+				continue;
+			}
+
+			for (int i = 0; i < parameterTypeNames.size(); i++) {
+				JavaParameter parameter = parameters.get(i);
+
+				String parameterTypeName1 = parameter.getParameterType();
+
+				int pos = parameterTypeName1.indexOf("<");
+
+				if (pos != -1) {
+					parameterTypeName1 = parameterTypeName1.substring(0, pos);
+				}
+
+				pos = parameterTypeName1.lastIndexOf(".");
+
+				if (pos != -1) {
+					parameterTypeName1 = parameterTypeName1.substring(pos + 1);
+				}
+
+				String parameterTypeName2 = parameterTypeNames.get(i);
+
+				if (!parameterTypeName1.equals(parameterTypeName2) &&
+					!parameterTypeName2.equals(_TYPE_UNKNOWN)) {
+
+					continue outerLoop;
+				}
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private synchronized Map<String, String> _getBundleSymbolicNamesMap()
@@ -241,6 +551,144 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		}
 
 		return _bundleSymbolicNamesMap;
+	}
+
+	private ClassInfo _getClassInfo(File file) {
+		ClassInfo classInfo = new ClassInfo();
+
+		try {
+			String content = FileUtil.read(file);
+
+			JavaClass javaClass = JavaClassParser.parseJavaClass(
+				SourceUtil.getAbsolutePath(file), content);
+
+			boolean deprecatedClass = javaClass.hasAnnotation("Deprecated");
+
+			classInfo.setDeprecatedClass(deprecatedClass);
+
+			for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+				if (deprecatedClass || javaTerm.hasAnnotation("Deprecated")) {
+					classInfo.addJavaTerm(javaTerm, true);
+				}
+				else {
+					classInfo.addJavaTerm(javaTerm, false);
+				}
+			}
+
+			for (String extendedClassName : javaClass.getExtendedClassNames()) {
+				String fullyQualifiedName = null;
+
+				if (extendedClassName.matches("([a-z]\\w*\\.){2,}[A-Z]\\w*")) {
+					fullyQualifiedName = extendedClassName;
+				}
+				else {
+					for (String importName : javaClass.getImports()) {
+						if (importName.endsWith("." + extendedClassName)) {
+							fullyQualifiedName = importName;
+
+							break;
+						}
+					}
+				}
+
+				ClassInfo extendedClassInfo = null;
+
+				if (fullyQualifiedName != null) {
+					extendedClassInfo = _getClassInfo(fullyQualifiedName);
+				}
+				else {
+					fullyQualifiedName =
+						javaClass.getPackageName() + "." + extendedClassName;
+
+					String absolutePath = SourceUtil.getAbsolutePath(file);
+
+					int x = absolutePath.lastIndexOf("/");
+
+					String directoryPath = absolutePath.substring(0, x + 1);
+
+					extendedClassInfo = _getClassInfo(
+						fullyQualifiedName, javaClass.getPackageName(),
+						directoryPath);
+				}
+
+				classInfo = _addExtendedClassInfo(
+					classInfo, extendedClassInfo, deprecatedClass);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return classInfo;
+	}
+
+	private ClassInfo _getClassInfo(String fullyQualifiedName) {
+		return _getClassInfo(fullyQualifiedName, null, null);
+	}
+
+	private ClassInfo _getClassInfo(
+		String fullyQualifiedName, String packageName, String directoryPath) {
+
+		ClassInfo classInfo = _classInfoMap.get(fullyQualifiedName);
+
+		if (classInfo != null) {
+			return classInfo;
+		}
+
+		classInfo = new ClassInfo();
+
+		File file = null;
+
+		if ((packageName != null) &&
+			fullyQualifiedName.startsWith(packageName)) {
+
+			int y = fullyQualifiedName.lastIndexOf(".");
+
+			String fileName =
+				directoryPath + fullyQualifiedName.substring(y + 1) + ".java";
+
+			file = new File(fileName);
+
+			if (!file.exists()) {
+				file = null;
+			}
+		}
+
+		if (file == null) {
+			file = _getFile(fullyQualifiedName);
+		}
+
+		if (file != null) {
+			classInfo = _getClassInfo(file);
+		}
+		else {
+			classInfo.setInheritsThirdParty(true);
+		}
+
+		_classInfoMap.put(fullyQualifiedName, classInfo);
+
+		return classInfo;
+	}
+
+	private String _getConstructorName(DetailAST literalNewAST) {
+		DetailAST identAST = literalNewAST.findFirstToken(TokenTypes.IDENT);
+
+		if (identAST != null) {
+			return identAST.getText();
+		}
+
+		DetailAST dotAST = literalNewAST.findFirstToken(TokenTypes.DOT);
+
+		if (dotAST == null) {
+			return null;
+		}
+
+		identAST = dotAST.findFirstToken(TokenTypes.IDENT);
+
+		if (identAST != null) {
+			return identAST.getText();
+		}
+
+		return null;
 	}
 
 	private File _getFile(String fullyQualifiedName) {
@@ -315,18 +763,23 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		return null;
 	}
 
-	private Tuple _getJavaMethodsTuple(
+	private String _getFullyQualifiedClassName(
 		DetailAST methodCallAST, String className, String packageName,
-		List<String> importNames, String directoryPath) {
+		List<String> importNames) {
 
 		DetailAST firstChildAST = methodCallAST.getFirstChild();
 
 		if (firstChildAST.getType() == TokenTypes.IDENT) {
-			return _getJavaMethodsTuple(
-				packageName + "." + className, directoryPath);
+			return packageName + "." + className;
 		}
 
 		firstChildAST = firstChildAST.getFirstChild();
+
+		if (firstChildAST.getType() == TokenTypes.DOT) {
+			FullIdent fullIdent = FullIdent.createFullIdent(firstChildAST);
+
+			return fullIdent.getText();
+		}
 
 		if (firstChildAST.getType() != TokenTypes.IDENT) {
 			return null;
@@ -342,132 +795,23 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			}
 		}
 
+		return _getFullyQualifiedClassName(s, packageName, importNames);
+	}
+
+	private String _getFullyQualifiedClassName(
+		String className, String packageName, List<String> importNames) {
+
+		if (className == null) {
+			return null;
+		}
+
 		for (String importName : importNames) {
-			if (importName.endsWith("." + s)) {
-				return _getJavaMethodsTuple(importName, null);
+			if (importName.endsWith("." + className)) {
+				return importName;
 			}
 		}
 
-		return _getJavaMethodsTuple(packageName + "." + s, directoryPath);
-	}
-
-	private Tuple _getJavaMethodsTuple(File file) {
-		boolean inheritsThirdParty = false;
-		List<JavaMethod> javaMethods = new ArrayList<>();
-
-		try {
-			String content = FileUtil.read(file);
-
-			JavaClass javaClass = JavaClassParser.parseJavaClass(
-				SourceUtil.getAbsolutePath(file), content);
-
-			for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-				if (javaTerm.isJavaMethod()) {
-					JavaMethod javaMethod = (JavaMethod)javaTerm;
-
-					javaMethods.add(javaMethod);
-				}
-			}
-
-			List<String> inheritedClassNames =
-				javaClass.getExtendedClassNames();
-
-			inheritedClassNames.addAll(javaClass.getImplementedClassNames());
-
-			for (String inheritedClassName : inheritedClassNames) {
-				String fullyQualifiedName = null;
-
-				if (inheritedClassName.matches("([a-z]\\w*\\.){2,}[A-Z]\\w*")) {
-					fullyQualifiedName = inheritedClassName;
-				}
-				else {
-					for (String importName : javaClass.getImports()) {
-						if (importName.endsWith("." + inheritedClassName)) {
-							fullyQualifiedName = importName;
-
-							break;
-						}
-					}
-				}
-
-				Tuple inheritedJavaMethodsTuple = null;
-
-				if (fullyQualifiedName != null) {
-					inheritedJavaMethodsTuple = _getJavaMethodsTuple(
-						fullyQualifiedName, null);
-				}
-				else {
-					fullyQualifiedName =
-						javaClass.getPackageName() + "." + inheritedClassName;
-
-					String absolutePath = SourceUtil.getAbsolutePath(file);
-
-					int x = absolutePath.lastIndexOf("/");
-
-					String directoryPath = absolutePath.substring(0, x + 1);
-
-					inheritedJavaMethodsTuple = _getJavaMethodsTuple(
-						fullyQualifiedName, directoryPath);
-				}
-
-				List<JavaMethod> inheritedJavaMethods =
-					(List<JavaMethod>)inheritedJavaMethodsTuple.getObject(0);
-
-				javaMethods.addAll(inheritedJavaMethods);
-
-				if (!inheritsThirdParty) {
-					inheritsThirdParty =
-						(boolean)inheritedJavaMethodsTuple.getObject(1);
-				}
-			}
-		}
-		catch (Exception e) {
-			return null;
-		}
-
-		return new Tuple(javaMethods, inheritsThirdParty);
-	}
-
-	private Tuple _getJavaMethodsTuple(
-		String fullyQualifiedName, String directoryPath) {
-
-		Tuple javaMethodsTuple = _javaMethodsTupleMap.get(fullyQualifiedName);
-
-		if (javaMethodsTuple != null) {
-			return javaMethodsTuple;
-		}
-
-		File file = null;
-
-		if (directoryPath != null) {
-			int y = fullyQualifiedName.lastIndexOf(".");
-
-			String fileName =
-				directoryPath + fullyQualifiedName.substring(y + 1) + ".java";
-
-			file = new File(fileName);
-
-			if (!file.exists()) {
-				return new Tuple(Collections.emptyList(), true);
-			}
-		}
-		else {
-			file = _getFile(fullyQualifiedName);
-		}
-
-		if (file == null) {
-			return new Tuple(Collections.emptyList(), true);
-		}
-
-		javaMethodsTuple = _getJavaMethodsTuple(file);
-
-		if (javaMethodsTuple == null) {
-			return null;
-		}
-
-		_javaMethodsTupleMap.put(fullyQualifiedName, javaMethodsTuple);
-
-		return javaMethodsTuple;
+		return packageName + "." + className;
 	}
 
 	private File _getModuleFile(
@@ -535,16 +879,27 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		}
 	}
 
-	private List<JavaParameter> _getParameters(JavaMethod method) {
-		JavaSignature signature = method.getSignature();
+	private List<JavaParameter> _getParameters(JavaTerm javaTerm) {
+		JavaSignature signature = null;
+
+		if (javaTerm instanceof JavaMethod) {
+			JavaMethod javaMethod = (JavaMethod)javaTerm;
+
+			signature = javaMethod.getSignature();
+		}
+		else {
+			JavaConstructor javaConstructor = (JavaConstructor)javaTerm;
+
+			signature = javaConstructor.getSignature();
+		}
 
 		return signature.getParameters();
 	}
 
-	private List<String> _getParameterTypeNames(DetailAST methodCallAST) {
+	private List<String> _getParameterTypeNames(DetailAST detailAST) {
 		List<String> parameterTypeNames = new ArrayList<>();
 
-		DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
+		DetailAST elistAST = detailAST.findFirstToken(TokenTypes.ELIST);
 
 		List<DetailAST> exprASTList = DetailASTUtil.getAllChildTokens(
 			elistAST, false, TokenTypes.EXPR);
@@ -556,7 +911,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 				String parameterName = firstChildAST.getText();
 
 				String parameterTypeName = DetailASTUtil.getVariableTypeName(
-					methodCallAST, parameterName, false);
+					detailAST, parameterName, false);
 
 				if (Validator.isNotNull(parameterTypeName)) {
 					parameterTypeNames.add(parameterTypeName);
@@ -630,8 +985,17 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 	private static final FileSystem _FILE_SYSTEM = FileSystems.getDefault();
 
+	private static final String _MSG_DEPRECATED_CONSTRUCTOR_CALL =
+		"constructor.call.deprecated";
+
+	private static final String _MSG_DEPRECATED_FIELD_CALL =
+		"field.call.deprecated";
+
 	private static final String _MSG_DEPRECATED_METHOD_CALL =
 		"method.call.deprecated";
+
+	private static final String _MSG_DEPRECATED_TYPE_CALL =
+		"type.call.deprecated";
 
 	private static final PathMatcher _PATH_MATCHER =
 		_FILE_SYSTEM.getPathMatcher("glob:**/bnd.bnd");
@@ -655,8 +1019,101 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 	private static final String _TYPE_UNKNOWN = "unknown";
 
+	private static final Pattern _fieldNamePattern = Pattern.compile(
+		"((.*\\.)?([A-Z]\\w+))\\.(\\w+)");
+
 	private Map<String, String> _bundleSymbolicNamesMap;
-	private final Map<String, Tuple> _javaMethodsTupleMap = new HashMap<>();
+	private final Map<String, ClassInfo> _classInfoMap = new HashMap<>();
 	private String _rootDirName;
+
+	private class ClassInfo {
+
+		public void addFieldName(String fieldName, boolean deprecated) {
+			if (deprecated) {
+				_deprecatedFieldNames.add(fieldName);
+			}
+			else {
+				_fieldNames.add(fieldName);
+			}
+		}
+
+		public void addJavaTerm(JavaTerm javaTerm, boolean deprecated) {
+			if (javaTerm instanceof JavaConstructor) {
+				if (deprecated) {
+					_deprecatedJavaConstructors.add(javaTerm);
+				}
+				else {
+					_javaConstructors.add(javaTerm);
+				}
+			}
+			else if (javaTerm instanceof JavaMethod) {
+				if (deprecated) {
+					_deprecatedJavaMethods.add(javaTerm);
+				}
+				else {
+					_javaMethods.add(javaTerm);
+				}
+			}
+			else if (javaTerm instanceof JavaVariable) {
+				if (deprecated) {
+					_deprecatedFieldNames.add(javaTerm.getName());
+				}
+				else {
+					_fieldNames.add(javaTerm.getName());
+				}
+			}
+		}
+
+		public List<String> getFieldNames(boolean deprecated) {
+			if (deprecated) {
+				return _deprecatedFieldNames;
+			}
+
+			return _fieldNames;
+		}
+
+		public List<JavaTerm> getJavaConstructors(boolean deprecated) {
+			if (deprecated) {
+				return _deprecatedJavaConstructors;
+			}
+
+			return _javaConstructors;
+		}
+
+		public List<JavaTerm> getJavaMethods(boolean deprecated) {
+			if (deprecated) {
+				return _deprecatedJavaMethods;
+			}
+
+			return _javaMethods;
+		}
+
+		public boolean isDeprecatedClass() {
+			return _deprecatedClass;
+		}
+
+		public boolean isInheritsThirdParty() {
+			return _inheritsThirdPary;
+		}
+
+		public void setDeprecatedClass(boolean deprecatedClass) {
+			_deprecatedClass = deprecatedClass;
+		}
+
+		public void setInheritsThirdParty(boolean inheritsThirdPary) {
+			_inheritsThirdPary = inheritsThirdPary;
+		}
+
+		private boolean _deprecatedClass;
+		private final List<String> _deprecatedFieldNames = new ArrayList<>();
+		private final List<JavaTerm> _deprecatedJavaConstructors =
+			new ArrayList<>();
+		private final List<JavaTerm> _deprecatedJavaMethods = new ArrayList<>();
+		private final List<String> _fieldNames = new ArrayList<>();
+		private boolean _inheritsThirdPary;
+		private final List<JavaTerm> _javaConstructors = new ArrayList<>();
+		private final List<JavaTerm> _javaMethods = new ArrayList<>();
+
+	}
 
 }

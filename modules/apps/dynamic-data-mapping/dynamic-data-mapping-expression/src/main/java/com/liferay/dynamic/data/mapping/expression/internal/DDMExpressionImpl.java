@@ -23,8 +23,6 @@ import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpression
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.math.MathContext;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -158,14 +156,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	@Override
 	public void setLongVariableValue(String variableName, Long variableValue) {
 		setVariableValue(variableName, variableValue.doubleValue());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void setMathContext(MathContext mathContext) {
 	}
 
 	@Override

@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
 
-import java.math.MathContext;
-
 import java.util.Map;
 
 /**
@@ -53,12 +51,6 @@ public interface DDMExpression<T> {
 		String variableName, Integer variableValue);
 
 	public void setLongVariableValue(String variableName, Long variableValue);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setMathContext(MathContext mathContext);
 
 	public void setNumberVariableValue(
 		String variableName, Number variableValue);

@@ -314,7 +314,7 @@
 
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-company-users/company-id/${companyId}/start/0/end/${userCount} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:test
 		]]></var>
 
 		<var method="JSONCurlUtil#get('${curl}', '$..[\'userId\']')" name="userIds" />

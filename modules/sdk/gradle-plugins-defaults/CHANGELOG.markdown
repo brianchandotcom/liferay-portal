@@ -4247,8 +4247,8 @@ OSGi modules.
 ## 5.5.0 - 2018-08-01
 
 ## Added
-
-- [LPS-83168]: Generate Maven pom info for OSGi modules.
+- [LPS-83168]: Embed `pom.properties` and `pom.xml` when publishing OSGi modules
+to Maven.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin

@@ -66,6 +66,26 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override
+	public PortletPreferences deleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		return _wikiAdminPortletDataHandler.deleteData(
+			portletDataContext, portletId, portletPreferences);
+	}
+
+	@Override
+	public String exportData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		return _wikiAdminPortletDataHandler.exportData(
+			portletDataContext, portletId, portletPreferences);
+	}
+
+	@Override
 	public String getNamespace() {
 		return _wikiAdminPortletDataHandler.getNamespace();
 	}
@@ -88,6 +108,16 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 		return _wikiAdminPortletDataHandler.importData(
 			portletDataContext, portletId, portletPreferences, data);
+	}
+
+	@Override
+	public void prepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		_wikiAdminPortletDataHandler.prepareManifestSummary(
+			portletDataContext, portletPreferences);
 	}
 
 	@Activate
@@ -114,46 +144,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			WikiPageDisplay.class.getName());
 	}
 
-	@Override
-	protected PortletPreferences doDeleteData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _wikiAdminPortletDataHandler.doDeleteData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected String doExportData(
-			final PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _wikiAdminPortletDataHandler.doExportData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected PortletPreferences doImportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
-		throws Exception {
-
-		return _wikiAdminPortletDataHandler.doImportData(
-			portletDataContext, portletId, portletPreferences, data);
-	}
-
-	@Override
-	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		_wikiAdminPortletDataHandler.doPrepareManifestSummary(
-			portletDataContext, portletPreferences);
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
@@ -164,7 +154,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 	private PortalCache<?, ?> _portalCache;
 
-	@Reference
-	private WikiAdminPortletDataHandler _wikiAdminPortletDataHandler;
+	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN + ")")
+	private PortletDataHandler _wikiAdminPortletDataHandler;
 
 }

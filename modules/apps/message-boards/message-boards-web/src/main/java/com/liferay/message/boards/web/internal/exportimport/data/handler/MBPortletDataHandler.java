@@ -17,6 +17,7 @@ package com.liferay.message.boards.web.internal.exportimport.data.handler;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -61,6 +62,26 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override
+	public PortletPreferences deleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		return _mbAdminPortletDataHandler.deleteData(
+			portletDataContext, portletId, portletPreferences);
+	}
+
+	@Override
+	public String exportData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		return _mbAdminPortletDataHandler.exportData(
+			portletDataContext, portletId, portletPreferences);
+	}
+
+	@Override
 	public String getNamespace() {
 		return _mbAdminPortletDataHandler.getNamespace();
 	}
@@ -73,6 +94,26 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getServiceName() {
 		return _mbAdminPortletDataHandler.getServiceName();
+	}
+
+	@Override
+	public PortletPreferences importData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, String data)
+		throws PortletDataException {
+
+		return _mbAdminPortletDataHandler.importData(
+			portletDataContext, portletId, portletPreferences, data);
+	}
+
+	@Override
+	public void prepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		_mbAdminPortletDataHandler.prepareManifestSummary(
+			portletDataContext, portletPreferences);
 	}
 
 	@Activate
@@ -103,47 +144,9 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		setStagingControls(getExportControls());
 	}
 
-	@Override
-	protected PortletPreferences doDeleteData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _mbAdminPortletDataHandler.doDeleteData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected String doExportData(
-			final PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _mbAdminPortletDataHandler.doExportData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected PortletPreferences doImportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
-		throws Exception {
-
-		return _mbAdminPortletDataHandler.doImportData(
-			portletDataContext, portletId, portletPreferences, data);
-	}
-
-	@Override
-	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		_mbAdminPortletDataHandler.doPrepareManifestSummary(
-			portletDataContext, portletPreferences);
-	}
-
-	@Reference
-	private MBAdminPortletDataHandler _mbAdminPortletDataHandler;
+	@Reference(
+		target = "(javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN + ")"
+	)
+	private PortletDataHandler _mbAdminPortletDataHandler;
 
 }

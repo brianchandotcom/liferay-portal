@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
@@ -70,6 +71,26 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override
+	public PortletPreferences deleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		return _dlAdminPortletDataHandler.deleteData(
+			portletDataContext, portletId, portletPreferences);
+	}
+
+	@Override
+	public String exportData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		return _dlAdminPortletDataHandler.exportData(
+			portletDataContext, portletId, portletPreferences);
+	}
+
+	@Override
 	public String getNamespace() {
 		return _dlAdminPortletDataHandler.getNamespace();
 	}
@@ -85,9 +106,29 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public PortletPreferences importData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, String data)
+		throws PortletDataException {
+
+		return _dlAdminPortletDataHandler.importData(
+			portletDataContext, portletId, portletPreferences, data);
+	}
+
+	@Override
 	public boolean isSupportsDataStrategyMirrorWithOverwriting() {
 		return _dlAdminPortletDataHandler.
 			isSupportsDataStrategyMirrorWithOverwriting();
+	}
+
+	@Override
+	public void prepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		_dlAdminPortletDataHandler.prepareManifestSummary(
+			portletDataContext, portletPreferences);
 	}
 
 	@Activate
@@ -139,48 +180,10 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		}
 	}
 
-	@Override
-	protected PortletPreferences doDeleteData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _dlAdminPortletDataHandler.doDeleteData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected String doExportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _dlAdminPortletDataHandler.doExportData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected PortletPreferences doImportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
-		throws Exception {
-
-		return _dlAdminPortletDataHandler.doImportData(
-			portletDataContext, portletId, portletPreferences, data);
-	}
-
-	@Override
-	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		_dlAdminPortletDataHandler.doPrepareManifestSummary(
-			portletDataContext, portletPreferences);
-	}
-
-	@Reference
-	private DLAdminPortletDataHandler _dlAdminPortletDataHandler;
+	@Reference(
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN + ")"
+	)
+	private PortletDataHandler _dlAdminPortletDataHandler;
 
 	private ServiceTrackerList
 		<DLExportableRepositoryPublisher, DLExportableRepositoryPublisher>

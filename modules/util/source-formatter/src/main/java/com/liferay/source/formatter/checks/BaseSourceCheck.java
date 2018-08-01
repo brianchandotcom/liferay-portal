@@ -393,6 +393,23 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _pluginsInsideModulesDirectoryNames;
 	}
 
+	protected String getPortalBranchName() {
+		String value = SourceFormatterUtil.getPropertyValue(
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
+
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		if (!value.contains(StringPool.COMMA)) {
+			return value;
+		}
+
+		String[] portalBranchNames = StringUtil.split(value);
+
+		return portalBranchNames[0];
+	}
+
 	protected String getPortalContent(String fileName) throws IOException {
 		return getPortalContent(fileName, false);
 	}
@@ -401,11 +418,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			String fileName, boolean forceRetrieveFromGit)
 		throws IOException {
 
-		String portalBranchName = SourceFormatterUtil.getPropertyValue(
-			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
-
 		return getPortalContent(
-			fileName, portalBranchName, forceRetrieveFromGit);
+			fileName, getPortalBranchName(), forceRetrieveFromGit);
 	}
 
 	protected String getPortalContent(String fileName, String portalBranchName)
@@ -504,10 +518,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected InputStream getPortalInputStream(String fileName)
 		throws IOException {
 
-		String portalBranchName = SourceFormatterUtil.getPropertyValue(
-			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
-
-		return getPortalInputStream(fileName, portalBranchName);
+		return getPortalInputStream(fileName, getPortalBranchName());
 	}
 
 	protected InputStream getPortalInputStream(

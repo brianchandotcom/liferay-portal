@@ -179,18 +179,26 @@ public class JavaClassParser {
 			String javaTermContent, String indent, int lineNumber)
 		throws IOException, ParseException {
 
+		String s = javaTermContent;
+
+		if (javaTermContent.startsWith(indent + "/*")) {
+			int pos = javaTermContent.indexOf("*/");
+
+			s = javaTermContent.substring(pos);
+		}
+
 		Pattern pattern = Pattern.compile(
 			"(\n|^)" + indent +
 				"(private|protected|public|static)[ \n].*?[{;]\n",
 			Pattern.DOTALL);
 
-		Matcher matcher = pattern.matcher(javaTermContent);
+		Matcher matcher = pattern.matcher(s);
 
 		if (!matcher.find()) {
 			return null;
 		}
 
-		String s = javaTermContent.substring(matcher.end(1), matcher.end() - 1);
+		s = s.substring(matcher.end(1), matcher.end() - 1);
 
 		s = StringUtil.replace(
 			s, new String[] {"\t", "(\n", "\n", " synchronized "},
@@ -340,7 +348,7 @@ public class JavaClassParser {
 		}
 
 		if (s.startsWith("extends")) {
-			javaClass.addExtendedClassNames(s.substring(7));
+			javaClass.addExtendedClassNames(StringUtil.split(s.substring(7)));
 		}
 
 		return javaClass;

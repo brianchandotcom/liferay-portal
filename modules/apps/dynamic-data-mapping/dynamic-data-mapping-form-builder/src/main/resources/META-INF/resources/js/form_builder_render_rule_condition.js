@@ -47,7 +47,7 @@ AUI.add(
 
 				instance._renderFirstOperand(index, condition, contentBox.one('.condition-if-' + index));
 				instance._renderOperator(index, condition, contentBox.one('.condition-operator-' + index));
-				instance._renderSecondOperandType(index, condition, contentBox.one('.condition-the-' + index));
+				instance._renderSecondOperandType(index, condition, contentBox.one('.condition-type-' + index));
 				instance._renderSecondOperandInput(index, condition, contentBox.one('.condition-type-value-' + index));
 				instance._renderSecondOperandSelectField(index, condition, contentBox.one('.condition-type-value-' + index));
 				instance._renderSecondOperandSelectOptions(index, condition, contentBox.one('.condition-type-value-options-' + index));

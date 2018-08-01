@@ -1,0 +1,49 @@
+<definition>
+	<command name="_addFragmentCollection">
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<if>
+			<not>
+				<isset var="groupId" />
+			</not>
+			<then>
+				<fail message="Please set 'groupId'." />
+			</then>
+		</if>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d name=${name} \
+			  -d description=
+		]]></var>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+	</command>
+
+	<command name="addFragmentCollection">
+		<if>
+			<not>
+				<isset var="name" />
+			</not>
+			<then>
+				<fail message="Please set 'name'." />
+			</then>
+		</if>
+
+		<execute macro="JSONFragment#_addFragmentCollection">
+			<var name="groupName" value="${groupName}" />
+			<var name="name" value="${name}" />
+		</execute>
+	</command>
+</definition>

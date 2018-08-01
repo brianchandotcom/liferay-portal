@@ -42,9 +42,9 @@
 			<var name="portlet" value="Page Fragments" />
 		</execute>
 
-		<execute macro="Fragment#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="JSONFragment#addFragmentCollection">
+			<var name="groupName" value="Test Site Name" />
+			<var name="name" value="Test Collection" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -132,15 +132,15 @@
 	<command name="DeleteFragment" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="JSONFragment#addFragmentCollection">
+			<var name="groupName" value="Test Site Name" />
+			<var name="name" value="Collection Name" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Page Fragments" />
-		</execute>
-
-		<execute macro="Fragment#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -183,15 +183,15 @@
 	<command name="DeleteFragmentCollection" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="JSONFragment#addFragmentCollection">
+			<var name="groupName" value="Test Site Name" />
+			<var name="name" value="Collection Name" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Page Fragments" />
-		</execute>
-
-		<execute macro="Fragment#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
 		</execute>
 
 		<execute macro="Collection#deleteCollection">
@@ -210,15 +210,15 @@
 	</command>
 
 	<command name="RenameFragment" priority="4">
+		<execute macro="JSONFragment#addFragmentCollection">
+			<var name="groupName" value="Test Site Name" />
+			<var name="name" value="Collection Name" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Page Fragments" />
-		</execute>
-
-		<execute macro="Fragment#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -266,15 +266,15 @@
 	</command>
 
 	<command name="ViewCannotDeleteFragmentInUse" priority="5">
+		<execute macro="JSONFragment#addFragmentCollection">
+			<var name="groupName" value="Test Site Name" />
+			<var name="name" value="Collection Name" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Page Fragments" />
-		</execute>
-
-		<execute macro="Fragment#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -339,15 +339,15 @@
 	</command>
 
 	<command name="ViewEmptyFragmentCannotBePublished" priority="4">
+		<execute macro="JSONFragment#addFragmentCollection">
+			<var name="groupName" value="Test Site Name" />
+			<var name="name" value="Collection Name" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Page Fragments" />
-		</execute>
-
-		<execute macro="Fragment#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -380,15 +380,15 @@
 	</command>
 
 	<command name="ViewOnlyDraftFragmentsCanBeSaved" priority="4">
+		<execute macro="JSONFragment#addFragmentCollection">
+			<var name="groupName" value="Test Site Name" />
+			<var name="name" value="Collection Name" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Page Fragments" />
-		</execute>
-
-		<execute macro="Fragment#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">

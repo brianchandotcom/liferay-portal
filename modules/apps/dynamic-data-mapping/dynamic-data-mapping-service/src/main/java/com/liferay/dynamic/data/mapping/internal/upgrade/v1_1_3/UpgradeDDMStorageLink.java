@@ -37,7 +37,7 @@ public class UpgradeDDMStorageLink extends UpgradeProcess {
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select DDMStorageLink.structureId, ",
+					"select distinct DDMStorageLink.structureId, ",
 					"TEMP_TABLE.structureVersionId from DDMStorageLink inner ",
 					"join (select structureId, max(structureVersionId) as ",
 					"structureVersionId from DDMStructureVersion group by ",

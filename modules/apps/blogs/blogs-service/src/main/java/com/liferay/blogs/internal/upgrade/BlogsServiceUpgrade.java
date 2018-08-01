@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.internal.upgrade;
 
+import com.liferay.blogs.internal.upgrade.v1_0_0.UpgradeBlogs;
 import com.liferay.blogs.internal.upgrade.v1_1_0.UpgradeClassNames;
 import com.liferay.blogs.internal.upgrade.v1_1_0.UpgradeFriendlyURL;
 import com.liferay.blogs.internal.upgrade.v1_1_1.UpgradeUrlTitle;
@@ -31,7 +32,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.1", "1.0.0", new UpgradeClassNames());
+		registry.register(
+			"0.0.1", "1.0.0", new UpgradeBlogs(), new UpgradeClassNames());
 
 		registry.register(
 			"1.0.0", "1.1.0",

@@ -251,18 +251,20 @@ public class ListServiceTrackerMapTest {
 		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 			createServiceTrackerMap(_bundleContext);
 
-		TrackedOne trackedOne1 = new TrackedOne();
+		TrackedOne trackedOne2 = new TrackedOne();
 
-		registerService(trackedOne1, 1);
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
+			trackedOne2, 0);
 
 		TrackedOne trackedOne3 = new TrackedOne();
 
-		ServiceRegistration<TrackedOne> serviceRegistration = registerService(
-			trackedOne3, 3);
+		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
+			trackedOne3, 1);
 
-		TrackedOne trackedOne2 = new TrackedOne();
+		TrackedOne trackedOne1 = new TrackedOne();
 
-		registerService(trackedOne2, 2);
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1, -1);
 
 		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
 
@@ -276,10 +278,10 @@ public class ListServiceTrackerMapTest {
 
 		Hashtable<String, Object> properties = new Hashtable<>();
 
-		properties.put("service.ranking", 0);
+		properties.put("service.ranking", -2);
 		properties.put("target", "aTarget");
 
-		serviceRegistration.setProperties(properties);
+		serviceRegistration3.setProperties(properties);
 
 		services = serviceTrackerMap.getService("aTarget");
 
@@ -293,10 +295,10 @@ public class ListServiceTrackerMapTest {
 
 		properties = new Hashtable<>();
 
-		properties.put("service.ranking", 3);
+		properties.put("service.ranking", 1);
 		properties.put("target", "aTarget");
 
-		serviceRegistration.setProperties(properties);
+		serviceRegistration3.setProperties(properties);
 
 		services = serviceTrackerMap.getService("aTarget");
 
@@ -307,6 +309,27 @@ public class ListServiceTrackerMapTest {
 		Assert.assertEquals(trackedOne3, iterator.next());
 		Assert.assertEquals(trackedOne2, iterator.next());
 		Assert.assertEquals(trackedOne1, iterator.next());
+
+		properties = new Hashtable<>();
+
+		properties.put("target", "aTarget");
+
+		serviceRegistration2.setProperties(properties);
+		serviceRegistration3.setProperties(properties);
+
+		services = serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(services.toString(), 3, services.size());
+
+		iterator = services.iterator();
+
+		Assert.assertEquals(trackedOne2, iterator.next());
+		Assert.assertEquals(trackedOne3, iterator.next());
+		Assert.assertEquals(trackedOne1, iterator.next());
+
+		serviceRegistration1.unregister();
+		serviceRegistration2.unregister();
+		serviceRegistration3.unregister();
 	}
 
 	@Test

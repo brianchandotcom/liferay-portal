@@ -318,7 +318,7 @@ name = HtmlUtil.escapeJS(name);
 			var instance = this;
 
 			this.contentsLanguage = event.item.getAttribute('data-value');
-			this.contentsLanguageDir = event.target.Language.direction[this.contentsLanguage];
+			this.contentsLanguageDir = Liferay.Language.direction[this.contentsLanguage];
 		}
 	};
 

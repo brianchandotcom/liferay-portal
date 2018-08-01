@@ -435,7 +435,7 @@ AUI.add(
 						var instance = this;
 
 						var contentsLanguage = event.item.getAttribute('data-value');
-						var contentsLanguageDir = event.target.Language.direction[contentsLanguage];
+						var contentsLanguageDir = Liferay.Language.direction[contentsLanguage];
 
 						var nativeEditor = instance.getNativeEditor();
 

@@ -19,7 +19,7 @@
 				-d anonymous=true \
 				-d priority=0 \
 				-d allowPingbacks=true \
-				-d entryURL='javascript:alert(3)'
+				-d entryURL=javascript:alert(3)
 		]]></var>
 
 		<echo message="## Adding a 'Message' with the following info using JSONWS:" />

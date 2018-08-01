@@ -43,19 +43,10 @@
 	</tear-down>
 
 	<command name="SolrSmokeTest" priority="4">
+		<description message="This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
+
 		<property name="test.name.skip.portal.instance" value="Solr#SolrSmokeTest" />
 
-		<!-- <description message="This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
-
-		<execute macro="Solr#viewAdminDashboard">
-			<var name="solrVersion" value="5.2.1" />
-		</execute>
-
-		<execute macro="Solr#viewLiferayCoreAdminDashboard">
-			<var name="coreName" value="liferay" />
-			<var name="solrVersion" value="5.2.1" />
-		</execute>
--->
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -297,27 +288,5 @@
 			<var name="searchAssetTitle" value="Apple" />
 			<var name="searchAssetType" value="Message Boards Message" />
 		</execute>
-	</command>
-
-	<command ignore="true" name="ViewReindexAllSearchIndexesLoggingInSolrAdmin" priority="4">
-		<property name="index.on.startup" value="false" />
-		<property name="solr.logging.info.level" value="true" />
-		<property name="test.name.skip.portal.instance" value="Solr#ViewReindexAllSearchIndexesLoggingInSolrAdmin" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
-
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8983/solr/#/~logging" />
-		</execute>
-
-		<execute macro="Solr#viewLoggerNameInSolrAdminLogging" />
 	</command>
 </definition>

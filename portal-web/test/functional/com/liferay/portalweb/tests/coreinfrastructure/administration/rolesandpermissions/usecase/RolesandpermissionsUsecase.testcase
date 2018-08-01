@@ -710,7 +710,7 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<execute macro=" ClassicSearch#search">
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
@@ -743,7 +743,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 
-		<execute macro=" ClassicSearch#search">
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
@@ -770,7 +770,7 @@
 			<var name="dmDocumentTitle" value="Test Document" />
 		</execute>
 
-		<execute macro=" ClassicSearch#search">
+		<execute macro="ClassicSearch#search">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 

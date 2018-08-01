@@ -34,14 +34,25 @@
 	</command>
 
 	<command name="configureDestination">
-		<execute function="Click" locator1="Search#SETUP_DESTINATION" />
+		<execute macro="SearchPortlets#gotoEmbeddedOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<if>
 			<isset var="destinationPage" />
 			<then>
-				<execute function="Type" locator1="SearchBarConfiguration#DESTINATION_PAGE" value1="${destinationPage}" />
+				<if>
+					<contains string="${destinationPage}" substring=" " />
+					<then>
+						<var method="StringUtil#replace('${destinationPage}', ' ', '-')" name="destinationPage" />
+					</then>
+				</if>
+
+				<var method="StringUtil#toLowerCase('${destinationPage}')" name="destinationPage" />
+
+				<execute function="Type" locator1="SearchConfiguration#DESTINATION_PAGE" value1="${destinationPage}" />
 			</then>
 		</if>
 
@@ -60,14 +71,14 @@
 		<if>
 			<isset var="keywordsParameterName" />
 			<then>
-				<execute function="Type" locator1="SearchBarConfiguration#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
+				<execute function="Type" locator1="SearchConfiguration#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="scopeParameterName" />
 			<then>
-				<execute function="Type" locator1="SearchBarConfiguration#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
+				<execute function="Type" locator1="SearchConfiguration#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
 			</then>
 		</if>
 
@@ -102,6 +113,37 @@
 		<execute macro="IFrame#closeFrame" />
 	</command>
 
+	<command name="configureSearchOptions">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Search Options" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<if>
+			<equals arg1="${allowEmptySearches}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
+					<var name="checkboxName" value="Allow Empty Searches" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${basicFacetSelection}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
+					<var name="checkboxName" value="Basic Facet Selection" />
+				</execute>
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
 	<command name="configureWidgetParameterNames">
 		<execute macro="SearchPortlets#gotoWidgetOptions">
 			<var name="portletOption" value="Configuration" />
@@ -112,14 +154,14 @@
 		<if>
 			<isset var="keywordsParameterName" />
 			<then>
-				<execute function="Type" locator1="SearchBarConfiguration#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
+				<execute function="Type" locator1="SearchConfiguration#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="scopeParameterName" />
 			<then>
-				<execute function="Type" locator1="SearchBarConfiguration#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
+				<execute function="Type" locator1="SearchConfiguration#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
 			</then>
 		</if>
 
@@ -253,11 +295,20 @@
 		</if>
 	</command>
 
+	<command name="viewResultDetails">
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${searchAssetTitle}" />
+	</command>
+
 	<command name="viewSearchHidden">
 		<execute function="AssertElementNotPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
 	</command>
 
 	<command name="viewSearchResultWithNoPermissions">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords: ${searchTerm}." />
+	</command>
+
+	<command name="viewUserResultDetails">
+		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_1" value1="${pageName}" />
 	</command>
 </definition>

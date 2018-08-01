@@ -1,0 +1,2612 @@
+<definition component-name="portal-search">
+	<property name="osgi.app.includes" value="portal-search-solr" />
+	<property name="osgi.module.configuration.file.names" value="com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config" />
+	<property name="osgi.module.configurations" value="blacklistBundleSymbolicNames=&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch6.api,com.liferay.portal.search.elasticsearch6.impl,com.liferay.portal.search.elasticsearch6.xpack.security.impl,com.liferay.portal.search.elasticsearch6.xpack.monitoring.web&quot;" />
+	<property name="portal.release" value="true" />
+	<property name="portal.suite.search.engine" value="solr" />
+	<property name="portal.upstream" value="true" />
+	<property name="solr.enabled" value="true" />
+	<property name="testray.main.component.name" value="Web Search" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="BlogsEntry#tearDownCP" />
+
+				<execute macro="MessageboardsThread#tearDownCP" />
+
+				<execute macro="User#tearDownCP" />
+
+				<execute macro="WebContent#tearDownCP" />
+
+				<execute macro="DMDocument#tearDownCP" />
+
+				<execute macro="WikiPage#tearDownCP" />
+
+				<execute macro="Vocabulary#tearDownCP" />
+
+				<execute macro="Tag#tearDownCP" />
+
+				<execute macro="Page#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="NavigateToSearchResultsViaURL" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="This is a blog about Potatoes" />
+			<var name="entryTitle" value="Potato Blog" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#addWidgets">
+			<var name="searchPortletList" value="Type Facet,Search Results,Search Bar" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Search Results" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureWidgetParameterNames">
+			<var name="keywordsParameterName" value="keywordparameter" />
+			<var name="scopeParameterName" value="scopeparameter" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureWidgetScope">
+			<var name="searchScope" value="Let the User Choose" />
+		</execute>
+
+		<execute macro="SearchPortlets#selectWidgetScopeInput">
+			<var name="searchScope" value="Everything" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchWidget">
+			<var name="searchTerm" value="Potato" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacet">
+			<var name="facetValueName" value="Blogs Entry" />
+		</execute>
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Potato&amp;scopeparameter=everything&amp;type=com.liferay.blogs.model.BlogsEntry" />
+
+		<var method="selenium#getCurrentUrl()" name="searchURL" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${searchURL}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Search#SEARCH_BAR_WIDGET" value1="Potato" />
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="Potato Blog" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute function="AssertChecked" locator1="Checkbox#ANY_CHECKBOX">
+			<var name="checkboxName" value="Blogs Entry" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntry" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Blogs Entry Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Blogs Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Blogs Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Blogs1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Blogs1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Entry1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Entry1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryCategory" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithCategory">
+			<var name="categoryName" value="Category Name" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Category Name" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Category" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Name" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Category1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Category1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Name1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Name1" />
+		</execute>
+	</command>
+
+	<command ignore="true" name="SearchBlogsEntryCategoryQuotes" priority="4">
+		<!-- Ignoring test until LPS-73326 is resolved -->
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithCategory">
+			<var name="categoryName" value="Category Name" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Category Name&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Category&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Name&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Category Name1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;Category Name1&quot;" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Category1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;Category1&quot;" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Name1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;Name1&quot;" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryQuotes" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Blogs Entry Title&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Entry Title&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Title&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Blogs Entry Content&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Blogs Entry&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Blogs&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Entry Content&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Entry&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Content&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Blogs Content&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;Blogs Content&quot;" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Blogs1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;Blogs1&quot;" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Entry1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;Entry1&quot;" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Title1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;Title1&quot;" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Content1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;Content1&quot;" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Blogs Entry Title1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;Blogs Entry Title1&quot;" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;Blogs Entry Content1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;Blogs Entry Content1&quot;" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryTag" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithTag">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="tag name" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="tag" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="name" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="tag1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="tag1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="name1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="name1" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryTagQuotes" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithTag">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;tag name&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;tag&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;name&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;tag name1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;tag name1&quot;" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;tag1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;tag1&quot;" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="&quot;name1&quot;" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="&quot;name1&quot;" />
+		</execute>
+	</command>
+
+	<command name="SearchDeletedWebContent" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WC Title" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords" />
+	</command>
+
+	<command name="SearchDifferentScopesViaNewSite" priority="4">
+		<description message="This test will set up a search page and search on a newly added site. It will also use different scopes to assert search results for assets from multiple sites" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="Apple" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Apple" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name 3" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Apple" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Site 3 Home Page" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="inheritChanges" value="disable" />
+			<var name="pageName" value="Search Page" />
+			<var name="pageTemplateName" value="Search" />
+		</execute>
+
+		<!-- Workaround for LPS-80521 -->
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Search Page" />
+			<var name="siteName" value="Site Name 3" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site 3 Home Page" />
+			<var name="siteName" value="Site Name 3" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureDestination">
+			<var name="destinationPage" value="Search Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureEmbeddedScope">
+			<var name="searchScope" value="Let the User Choose" />
+		</execute>
+
+		<execute macro="SearchPortlets#selectEmbeddedScopeInput">
+			<var name="searchScope" value="Everything" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="Apple/Web Content Article,Apple/Document,Apple/Blogs Entry" />
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="SearchPortlets#selectEmbeddedScopeInput">
+			<var name="searchScope" value="This Site" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="Apple/Web Content Article,Apple/Document" />
+		</execute>
+	</command>
+
+	<command name="SearchDifferentScopesViaSearchWidget" priority="4">
+		<description message="This test will assert that configurations set within the Embedded search bar will be used when searching via the Widget search bar" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Potato Document" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Test Site" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Test Site" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="This is a blog about Potatoes" />
+			<var name="entryTitle" value="Potato Blog" />
+		</execute>
+
+		<var method="DateUtil#getFormattedDate(0,'MMM d, YYYY')" name="currentDate" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/guest/search" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureEmbeddedScope">
+			<var name="searchScope" value="Everything" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchWidget">
+			<var name="searchTerm" value="Potato" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="entryDate" value="${currentDate}" />
+			<var name="searchAssetSummary" value="This is a blog about Potatoes" />
+			<var name="searchAssetTitle" value="Potato Blog" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Potato" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="entryDate" value="${currentDate}" />
+			<var name="searchAssetTitle" value="Potato Document" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Potato" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureEmbeddedScope">
+			<var name="searchScope" value="This Site" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchWidget">
+			<var name="searchTerm" value="Potato" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="entryDate" value="${currentDate}" />
+			<var name="searchAssetTitle" value="Potato Document" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Potato" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
+			<var name="searchAssetTitle" value="Potato Blog" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+	</command>
+
+	<command name="SearchDocumentsAndMediaDocument" priority="5">
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentSize" value="0k" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="tagNameList" value="moon rocks" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="DM Document Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="DM" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Document" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="DM Document" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="DM Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Document Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="moon rocks" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacet">
+			<var name="facetValueName" value="moon rocks" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="DM1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="DM1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Document1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Document1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+	</command>
+
+	<command name="SearchGlobalTemplateSmoke" priority="5">
+		<description message="This is a use case for LPS-81931" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1 Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Home" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="inheritChanges" value="disable" />
+			<var name="pageName" value="Search Global Template Page" />
+			<var name="pageTemplateName" value="Search" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Search Global Template Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureDestination">
+			<var name="destinationPage" value="Search Global Template Page" />
+		</execute>
+
+		<for list="Category Facet,Folder Facet,Modified Facet,Search Bar,Search Options,Search Results,Tag Facet,Type Facet,User Facet" param="portlet">
+			<execute function="AssertElementPresent" locator1="Portlet#BODY">
+				<var name="key_portletName" value="${portlet}" />
+			</execute>
+		</for>
+
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Search Options" />
+		</execute>
+
+		<for list="Category Facet,Folder Facet,Modified Facet,Search Bar,Search Results,Tag Facet,Type Facet,User Facet" param="portlet">
+			<execute function="AssertElementPresent" locator1="Portlet#BODY">
+				<var name="key_portletName" value="${portlet}" />
+			</execute>
+		</for>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="Blogs Entry 1 Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+	</command>
+
+	<command name="SearchMessageBoardsThread" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="MB Thread Message Body" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="MB" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Thread" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Message" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Subject" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Body" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="MB Thread Message Body" />
+			<var name="searchAssetTitle" value="MB Thread Message Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="MB1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="MB1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Thread1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Thread1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Message1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Message1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Subject1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Subject1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Body1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Body1" />
+		</execute>
+	</command>
+
+	<command name="SearchUser" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="userfn userln" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="userfn" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="userln" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="usersn" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="userfn1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="userfn1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="userln1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="userln1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="usersn1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="usersn1" />
+		</execute>
+	</command>
+
+	<command name="SearchUserWildcard" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="users*" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="userf*" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="userfn userln" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+	</command>
+
+	<command name="SearchUsingCustomFacet">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="WebContent Title 1" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WebContent Title 1" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="1.0" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/guest/search" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Custom Facet" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#configureCustomFacet">
+			<var name="aggregationField" value="version" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="WebContent Title 1" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC">
+			<var name="key_checkboxName" value="1.0" />
+			<var name="key_facetClass" value="Custom Facet" />
+		</execute>
+
+		<execute function="Check" locator1="SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC">
+			<var name="key_checkboxName" value="1.0" />
+			<var name="key_facetClass" value="Custom Facet" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="WebContent Title 1" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WebContent Title 1" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="WebContent Title 1.1" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WebContent Title 1.1" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="1.1" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="WebContent Title 1.1" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC">
+			<var name="key_checkboxName" value="1.1" />
+			<var name="key_facetClass" value="Custom Facet" />
+		</execute>
+
+		<execute function="Check" locator1="SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC">
+			<var name="key_checkboxName" value="1.1" />
+			<var name="key_facetClass" value="Custom Facet" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="WebContent Title 1.1" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+	</command>
+
+	<command name="SearchWebContent" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WC WebContent Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WC" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="WC WebContent Content" />
+			<var name="searchAssetTitle" value="WC WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WC1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="WC1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="WebContent1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="WebContent1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+	</command>
+
+	<command name="SearchWikiPage" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
+
+		<execute macro="WikiPage#addPG">
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Wiki Page Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Wiki" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Page" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetSummary" value="Wiki Page Content" />
+			<var name="searchAssetTitle" value="Wiki Page Title" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Wiki1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Wiki1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Page1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Page1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewNoSearchResults">
+			<var name="searchTerm" value="Content1" />
+		</execute>
+	</command>
+
+	<command name="SearchXSSAsset" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Liferay Alert" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="Thread Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchAssetSummary"><![CDATA[<script>alert(123);</script>]]></var>
+		</execute>
+
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;<span class="highlight">alert</span>(123);&lt;/script&gt;]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
+	</command>
+
+	<command name="ViewMultipleFacetURLs" priority="5">
+		<var name="searchPage" value="Search Page" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Fruit Vocabulary" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="organic" />
+			<var name="vocabularyName" value="Fruit Vocabulary" />
+		</execute>
+
+		<execute macro="Category#getAssetId">
+			<return name="organicCategoryId" />
+			<var name="assetName" value="organic" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentFolder#addCP">
+			<var name="folderDescription" value="WC Folder Name Description 1" />
+			<var name="folderName" value="WC Folder Name 1" />
+		</execute>
+
+		<execute macro="WebContent#getAssetId">
+			<return name="webContentFolderId1" />
+			<var name="folderAsset" value="WC Folder Name 1" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name 1" />
+			<var name="webContentTitle" value="WC Folder Name 1" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="organic" />
+			<var name="vocabularyName" value="Fruit Vocabulary" />
+			<var name="webContentTitle" value="apple" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="apple" />
+		</execute>
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="ripe" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentFolder#addCP">
+			<var name="folderDescription" value="WC Folder Name Description 2" />
+			<var name="folderName" value="WC Folder Name 2" />
+		</execute>
+
+		<execute macro="WebContent#getAssetId">
+			<return name="webContentFolderId2" />
+			<var name="folderAsset" value="WC Folder Name 2" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name 2" />
+			<var name="webContentTitle" value="WC Folder Name 2" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="fresh" />
+			<var name="webContentTitle" value="orange" />
+		</execute>
+
+		<execute macro="Site#getSiteId">
+			<return name="liferaySiteId" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="New Site" />
+			<var name="siteType" value="Blank" />
+		</execute>
+
+		<execute macro="Site#getSiteId">
+			<return name="newSiteId" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithTag">
+			<var name="entryContent" value="Apple Blog Entry Content" />
+			<var name="entryTitle" value="apple" />
+			<var name="tagName" value="sweet" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleTitle" value="Administrator" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Bookmarks" />
+		</execute>
+
+		<execute macro="Bookmark#addWithTagCP">
+			<var name="bookmarkName" value="banana" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
+			<var name="tagNameList" value="fresh,ripe,test" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Bookmarks" />
+		</execute>
+
+		<execute macro="Bookmark#addCategoryCP">
+			<var name="bookmarkName" value="banana" />
+			<var name="categoryName" value="organic" />
+			<var name="vocabularyName" value="Fruit Vocabulary" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="${searchPage}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${searchPage}" />
+		</execute>
+
+		<execute macro="SearchPortlets#addWidgets">
+			<var name="searchPortletList" value="Search Options,Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Search Results" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureWidgetScope">
+			<var name="searchScope" value="Everything" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureSearchOptions">
+			<var name="allowEmptySearches" value="true" />
+			<var name="basicFacetSelection" value="true" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchWidget">
+			<var name="searchTerm" value="apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Blogs Entry,apple/Web Content Article" />
+			<var name="searchTerm" value="apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="banana/Bookmarks,orange/Web Content Article" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="type" />
+			<var name="facetValueName" value="Web Content Article" />
+			<var name="searchPage" value="${searchPage}" />
+			<var name="searchTerm" value="apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Web Content Article" />
+			<var name="searchTerm" value="apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="type" />
+			<var name="facetValueName" value="Blogs Entry" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Blogs Entry,apple/Web Content Article" />
+			<var name="searchTerm" value="apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="banana/Bookmarks,orange/Web Content Article" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#uncheckFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="type" />
+			<var name="facetValueName" value="Web Content Article" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Blogs Entry" />
+			<var name="searchTerm" value="apple" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Web Content Article,banana/Bookmarks,orange/Web Content Article" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#clearAllFacetsAndViewURL">
+			<return name="testSearchURL" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchWidget">
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchPortlets#getSearchTermURL">
+			<return name="testSearchURL" />
+			<var name="searchPage" value="${searchPage}" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute function="AssertLocation" value1="${testSearchURL}" />
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks,orange/Web Content Article" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="category" />
+			<var name="facetValue" value="${organicCategoryId}" />
+			<var name="facetValueName" value="organic" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Web Content Article,banana/Bookmarks" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Blogs Entry,orange/Web Content Article" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="user" />
+			<var name="facetValueName" value="userfn userln" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="banana/Bookmarks" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#uncheckFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="user" />
+			<var name="facetValueName" value="userfn userln" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Web Content Article,banana/Bookmarks" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Blogs Entry,orange/Web Content Article" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#clearAllFacetsAndViewURL">
+			<return name="testSearchURL" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchWidget">
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchPortlets#getSearchTermURL">
+			<return name="testSearchURL" />
+			<var name="searchPage" value="${searchPage}" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="tag" />
+			<var name="facetValueName" value="sweet" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="tag" />
+			<var name="facetValueName" value="fresh" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Web Content Article" />
+		</execute>
+
+		<execute macro="TestCase#getSiteName">
+			<return name="siteName" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="site" />
+			<var name="facetValue" value="${liferaySiteId}" />
+			<var name="facetValueName" value="${siteName}" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="site" />
+			<var name="facetValue" value="${newSiteId}" />
+			<var name="facetValueName" value="New Site" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Web Content Article" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#uncheckFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="site" />
+			<var name="facetValue" value="${newSiteId}" />
+			<var name="facetValueName" value="New Site" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="banana/Bookmarks,orange/Web Content Article" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Blogs Entry,apple/Web Content Article" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="folder" />
+			<var name="facetValue" value="${webContentFolderId2}" />
+			<var name="facetValueName" value="WC Folder Name 2" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="orange/Web Content Article" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="tag" />
+			<var name="facetValueName" value="ripe" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="orange/Web Content Article" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#uncheckFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="folder" />
+			<var name="facetValue" value="${webContentFolderId2}" />
+			<var name="facetValueName" value="WC Folder Name 2" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#uncheckFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="tag" />
+			<var name="facetValueName" value="fresh" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Web Content Article,banana/Bookmarks" />
+			<var name="searchTerm" value="test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
+			<var name="noResultsList" value="apple/Blogs Entry,orange/Web Content Article" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#clearAllFacetsAndViewURL">
+			<return name="testSearchURL" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchWidget">
+			<var name="searchTerm" value="organic" />
+		</execute>
+
+		<execute macro="SearchPortlets#getSearchTermURL">
+			<return name="testSearchURL" />
+			<var name="searchPage" value="${searchPage}" />
+			<var name="searchTerm" value="organic" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="category" />
+			<var name="facetValue" value="${organicCategoryId}" />
+			<var name="facetValueName" value="organic" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="folder" />
+			<var name="facetValue" value="${webContentFolderId1}" />
+			<var name="facetValueName" value="WC Folder Name 1" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="site" />
+			<var name="facetValue" value="${liferaySiteId}" />
+			<var name="facetValueName" value="${siteName}" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="tag" />
+			<var name="facetValueName" value="ripe" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="type" />
+			<var name="facetValueName" value="Web Content Article" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
+			<return name="testSearchURL" />
+			<var name="facetClass" value="user" />
+			<var name="facetValueName" value="test test" />
+			<var name="searchURL" value="${testSearchURL}" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="apple/Web Content Article" />
+			<var name="searchTerm" value="organic" />
+		</execute>
+	</command>
+
+	<command name="ViewSearchResultDetails" priority="5">
+		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="SearchUsecase#ViewSearchResultDetails" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Test Test" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="Test Test" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="SearchPortlets#gotoResultDetails">
+			<var name="searchAssetTitle" value="Test Test" />
+		</execute>
+
+		<execute macro="SearchPortlets#viewUserResultDetails">
+			<var name="pageName" value="Welcome" />
+			<var name="userName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="ViewStagedAndLiveContentInSearchResults" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="inheritChanges" value="disable" />
+			<var name="pageName" value="search" />
+			<var name="pageTemplateName" value="Search" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Publishing" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addArticleCP">
+			<var name="webContentContent" value="WebContent Content" />
+			<var name="webContentTitle" value="WebContent Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="search" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
+			<var name="searchAssetTitle" value="WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<!-- LPS-83060 -->
+
+		<!-- <execute macro="SearchPortlets#configureEmbeddedScope">
+			<var name="searchScope" value="Everything" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
+			<var name="searchAssetTitle" value="WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchPortlets#configureEmbeddedScope">
+			<var name="searchScope" value="This Site" />
+		</execute> -->
+
+		<execute macro="Navigator#gotoStagedView" />
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#deleteStagedCP">
+			<var name="pageName" value="search" />
+			<var name="siteName" value="Site Name" />
+			<var name="webContentTitle" value="WebContent Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="search" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
+			<var name="searchAssetTitle" value="WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute macro="SearchPortlets#searchEmbedded">
+			<var name="searchTerm" value="Web Content Article" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="WebContent Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+	</command>
+</definition>

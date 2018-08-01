@@ -1,16 +1,4 @@
 <definition>
-	<command name="viewAdminDashboard">
-		<description message="The Solr Admin Dashboard is accessible only if the Solr server is successfully running." />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8983/solr" />
-		</execute>
-
-		<execute function="AssertElementPresent#assertVisible" locator1="SolrAdminDashboard#LOGO" />
-		<execute function="AssertTextEquals" locator1="SolrAdminDashboard#VERSIONS_SOLR_SPEC" value1="${solrVersion}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#VERSIONS_SOLR_IMPL" value1="${solrVersion}" />
-	</command>
-
 	<command name="viewLiferayCloudDashboard">
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://localhost:8983/solr/#/~cloud" />
@@ -21,45 +9,6 @@
 		<var name="key_cloudCollectionName" value="${cloudCollectionName}" />
 
 		<execute function="AssertVisible" locator1="SolrAdminDashboard#CLOUD_COLLECTION" />
-	</command>
-
-	<command name="viewLiferayCoreAdminDashboard">
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8983/solr/#/~cores/liferay" />
-		</execute>
-
-		<var name="key_coreName" value="${coreName}" />
-
-		<execute function="AssertTextEquals" locator1="SolrAdminDashboard#CORE_ADMIN_CORE_NAVIGATION" value1="liferay" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_INSTANCE_DIR" value1="solr-${solrVersion}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_INSTANCE_DIR" value1="liferay" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_DATA_DIR" value1="solr-${solrVersion}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_DATA_DIR" value1="liferay" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_DATA_DIR" value1="data" />
-	</command>
-
-	<command name="viewLoggerNameInSolrAdminLogging">
-		<for list="LogUpdateProcessor,SolrCore,UpdateHandler" param="loggerName">
-			<var name="key_loggerName" value="${loggerName}" />
-
-			<execute function="AssertTextEquals" locator1="SolrAdminDashboard#LOGGING_TABLE_LOGGER_NAME" value1="${loggerName}" />
-		</for>
-	</command>
-
-	<command name="viewSolrLogsInConsole">
-		<execute function="Pause" locator1="1000" />
-
-		<var method="StringUtil#lowerCase('${searchTerm}')" name="searchTerm" />
-
-		<execute function="AssertConsoleTextPresent" value1="SolrIndexSearcher" />
-		<execute function="AssertConsoleTextPresent" value1="entryClassName:com.liferay.portlet.messageboards.model.MBMessage" />
-		<execute function="AssertConsoleTextPresent" value1="entryClassName:com.liferay.portlet.documentlibrary.model.DLFileEntry" />
-		<execute function="AssertConsoleTextPresent" value1="content:${searchTerm}" />
-		<execute function="AssertConsoleTextPresent" value1="content_en_US:${searchTerm}" />
-		<execute function="AssertConsoleTextPresent" value1="description:${searchTerm}" />
-		<execute function="AssertConsoleTextPresent" value1="description_en_US:${searchTerm}" />
-		<execute function="AssertConsoleTextPresent" value1="title:${searchTerm}" />
-		<execute function="AssertConsoleTextPresent" value1="title_en_US:${searchTerm}" />
 	</command>
 
 	<command name="viewSolrwithSolrCloudEnabledInConsole">

@@ -776,8 +776,6 @@
 	</command>
 
 	<command name="SearchMultipleTagsViaBlogs" priority="3">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
-		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;true&quot;" />
 		<property name="testray.component.names" value="Blogs,Tags" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -798,6 +796,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Page Name" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="search" />
+			<var name="pageTemplateName" value="Search" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -847,20 +850,22 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ClassicSearch#search">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="blue" />
 		</execute>
 
-		<execute macro="ClassicSearch#viewSearchAssetTitle">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="Entry Title 1" />
+			<var name="searchAssetType" value="Blogs Entry" />
 		</execute>
 
-		<execute macro="ClassicSearch#search">
+		<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="yellow" />
 		</execute>
 
-		<execute macro="ClassicSearch#viewSearchAssetTitle">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="Entry Title 3" />
+			<var name="searchAssetType" value="Blogs Entry" />
 		</execute>
 	</command>
 

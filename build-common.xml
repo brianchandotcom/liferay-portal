@@ -725,7 +725,13 @@ information.
 				<then>
 					<xmlproperty file="../tools/maven/${artifact.name}.xml" />
 
-					<property file="bnd.bnd" />
+					<loadproperties srcFile="bnd.bnd">
+						<filterchain>
+							<linecontains>
+								<contains value="Bundle-Version" />
+							</linecontains>
+						</filterchain>
+					</loadproperties>
 
 					<property name="artifact.version" value="${Bundle-Version}" />
 

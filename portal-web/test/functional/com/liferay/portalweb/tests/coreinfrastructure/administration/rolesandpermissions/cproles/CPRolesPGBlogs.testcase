@@ -1944,6 +1944,7 @@
 
 	<command name="ViewBlogsPermissionsRegRole" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="CPRolesPGBlogs#ViewBlogsPermissionsRegRole" />
 
 		<execute macro="Permissions#setUpRegRoleLoginUserPG">
 			<var name="pageName" value="Blogs Page" />

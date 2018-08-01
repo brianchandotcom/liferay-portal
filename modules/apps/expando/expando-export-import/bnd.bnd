@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Expando Export Import
+Bundle-SymbolicName: com.liferay.expando.exportimport
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

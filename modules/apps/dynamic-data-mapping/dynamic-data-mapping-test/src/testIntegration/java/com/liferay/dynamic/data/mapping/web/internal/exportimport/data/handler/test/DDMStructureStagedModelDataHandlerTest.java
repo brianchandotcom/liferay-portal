@@ -376,6 +376,13 @@ public class DDMStructureStagedModelDataHandlerTest
 			structure.getStorageType(), importedStructure.getStorageType());
 		Assert.assertEquals(structure.getType(), importedStructure.getType());
 
+		structure = DDMStructureLocalServiceUtil.fetchDDMStructure(
+			structure.getStructureId());
+
+		if (structure == null) {
+			return;
+		}
+
 		// Data provider instance
 
 		List<DDMDataProviderInstanceLink> dataProviderInstanceLinks =

@@ -83,6 +83,8 @@ public class DummyStagedModelRepository
 			dummy.setUserId(portletDataContext.getUserId(dummy.getUserUuid()));
 		}
 
+		dummy.setId(new Dummy().getId());
+
 		_dummies.add(dummy);
 
 		return dummy;

@@ -225,6 +225,10 @@ public class PortletExportControllerImpl implements PortletExportController {
 			document.formattedString());
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x)
+	 */
+	@Deprecated
 	@Override
 	public void exportExpandoTables(PortletDataContext portletDataContext)
 		throws Exception {
@@ -940,7 +944,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 			exportPortletControlsMap.get(PortletDataHandlerKeys.PORTLET_SETUP));
 
 		exportAssetLinks(portletDataContext);
-		exportExpandoTables(portletDataContext);
 		exportLocks(portletDataContext);
 
 		portletDataContext.addDeletionSystemEventStagedModelTypes(

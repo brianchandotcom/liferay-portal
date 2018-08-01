@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.adapter.StagedExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.exportimport.internal.util.ExportImportPermissionUtil;
 import com.liferay.exportimport.internal.xstream.ConverterAdapter;
@@ -2202,6 +2203,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 
 			_expandoColumnsMap.put(className, expandoColumns);
+
+			for (ExpandoColumn expandoColumn : expandoColumns) {
+				StagedExpandoColumn stagedExpandoColumn =
+					ModelAdapterUtil.adapt(
+						expandoColumn, ExpandoColumn.class,
+						StagedExpandoColumn.class);
+
+				addReferenceElement(
+					classedModel, element, stagedExpandoColumn,
+					REFERENCE_TYPE_DEPENDENCY, true);
+			}
 		}
 
 		ExpandoBridge expandoBridge = classedModel.getExpandoBridge();

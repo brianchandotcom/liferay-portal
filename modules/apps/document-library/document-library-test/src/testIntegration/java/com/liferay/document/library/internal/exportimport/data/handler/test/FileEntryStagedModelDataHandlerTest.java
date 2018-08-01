@@ -16,6 +16,7 @@ package com.liferay.document.library.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -598,7 +599,15 @@ public class FileEntryStagedModelDataHandlerTest
 			fileEntry.getDescription(), importedFileEntry.getDescription());
 		Assert.assertEquals(fileEntry.getSize(), importedFileEntry.getSize());
 
-		FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+		FileVersion latestFileVersion = null;
+
+		try {
+			latestFileVersion = fileEntry.getLatestFileVersion();
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			return;
+		}
+
 		FileVersion importedLatestFileVersion =
 			importedFileEntry.getLatestFileVersion();
 

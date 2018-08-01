@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.expando.web.internal.constants;
+package com.liferay.expando.kernel.model.adapter;
+
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.portal.kernel.model.StagedModel;
 
 /**
- * @author Drew Brokke
+ * @author Akos Thurzo
  */
-public class ExpandoPortletKeys {
-
-	public static final String EXPANDO =
-		"com_liferay_expando_web_portlet_ExpandoPortlet";
-
+public interface StagedExpandoTable extends ExpandoTable, StagedModel {
 }

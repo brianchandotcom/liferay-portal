@@ -22,13 +22,10 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.model.WikiPageDisplay;
 
 import javax.portlet.PortletPreferences;
 
@@ -139,20 +136,12 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				},
 				WikiPage.class.getName()));
 		setStagingControls(getExportControls());
-
-		_portalCache = _multiVMPool.getPortalCache(
-			WikiPageDisplay.class.getName());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	@Reference
-	private MultiVMPool _multiVMPool;
-
-	private PortalCache<?, ?> _portalCache;
 
 	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN + ")")
 	private PortletDataHandler _wikiAdminPortletDataHandler;

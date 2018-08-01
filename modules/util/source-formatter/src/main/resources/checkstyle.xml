@@ -119,7 +119,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.ConstructorMissingEmptyLineCheck">
 			<message key="empty.line.missing" value="There should be an empty line before line ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.DeprecatedMethodCallsCheck">
+		<module name="com.liferay.source.formatter.checkstyle.checks.DeprecatedUsageCheck">
 			<property name="enabled" value="false" />
 			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated" />
 		</module>

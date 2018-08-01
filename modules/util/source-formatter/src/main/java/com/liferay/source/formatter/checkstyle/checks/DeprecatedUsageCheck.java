@@ -58,7 +58,7 @@ import java.util.Map;
 /**
  * @author Hugo Huijser
  */
-public class DeprecatedMethodCallsCheck extends BaseCheck {
+public class DeprecatedUsageCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

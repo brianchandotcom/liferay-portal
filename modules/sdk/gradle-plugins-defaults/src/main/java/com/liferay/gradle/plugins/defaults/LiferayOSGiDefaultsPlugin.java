@@ -970,7 +970,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						GradleUtil.getConvention(
 							project, MavenPluginConvention.class);
 
-					final SourceSet sourceSet = GradleUtil.getSourceSet(
+					SourceSet sourceSet = GradleUtil.getSourceSet(
 						project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
@@ -979,7 +979,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						project);
 					final String groupId = String.valueOf(project.getGroup());
 
-					final StringBuilder sb = new StringBuilder();
+					StringBuilder sb = new StringBuilder();
 
 					sb.append(sourceSetOutput.getClassesDir());
 					sb.append("/META-INF/maven/");
@@ -994,22 +994,23 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 							@SuppressWarnings("unused")
 							public MavenPom doCall(MavenPom mavenPom) {
-								Conf2ScopeMappingContainer scopeMappings =
-									mavenPom.getScopeMappings();
+								Conf2ScopeMappingContainer
+									conf2ScopeMappingContainer =
+										mavenPom.getScopeMappings();
 
-								Configuration compileOnlyConfiguration =
+								Configuration configuration =
 									GradleUtil.getConfiguration(
 										project,
 										JavaPlugin.
 											COMPILE_ONLY_CONFIGURATION_NAME);
 
-								scopeMappings.addMapping(
+								conf2ScopeMappingContainer.addMapping(
 									MavenPlugin.PROVIDED_COMPILE_PRIORITY,
-									compileOnlyConfiguration,
+									configuration,
 									Conf2ScopeMappingContainer.PROVIDED);
 
-								mavenPom.setGroupId(groupId);
 								mavenPom.setArtifactId(artifactId);
+								mavenPom.setGroupId(groupId);
 
 								mavenPom.writeTo(infoPath + "/pom.xml");
 

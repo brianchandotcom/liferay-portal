@@ -210,6 +210,8 @@ name = HtmlUtil.escapeJS(name);
 			<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.tinymce.web#" + editorName + "#onEditorCreate" %>' />
 
 			Liferay.namespace('EDITORS').tinymce.addInstance();
+
+			Liferay.on('inputLocalized:localeChanged', this._onLocaleChangedHandler, this)
 		},
 
 		initInstanceCallback: function() {
@@ -253,8 +255,22 @@ name = HtmlUtil.escapeJS(name);
 			else {
 				document.getElementById('<%= name %>').innerHTML = value;
 			}
+		},
+
+		_onLocaleChangedHandler: function(event) {
+			var instance = this;
+
+			var contentsLanguage = event.item.getAttribute('data-value');
+			var contentsLanguageDir = event.target.Language.direction[contentsLanguage];
+
+			var nativeEditor = instance.getNativeEditor();
+			var context = nativeEditor.$().context;
+
+			context.setAttribute('dir', contentsLanguageDir);
+			context.setAttribute('lang', contentsLanguage);
 		}
 	};
+
 
 	<c:if test="<%= autoCreate %>">
 		window['<%= name %>'].initEditor();

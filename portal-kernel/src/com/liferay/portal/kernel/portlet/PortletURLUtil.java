@@ -28,15 +28,17 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.MimeResponse;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Miguel Pastor
+ * @author Neil Griffin
  */
 public class PortletURLUtil {
 
@@ -129,21 +132,28 @@ public class PortletURLUtil {
 			return portletURL;
 		}
 
-		portletURL = liferayPortletResponse.createRenderURL();
+		portletURL = liferayPortletResponse.createRenderURL(
+			MimeResponse.Copy.NONE);
 
-		Enumeration<String> enu = liferayPortletRequest.getParameterNames();
+		MutableRenderParameters mutableRenderParameters =
+			portletURL.getRenderParameters();
 
-		while (enu.hasMoreElements()) {
-			String param = enu.nextElement();
+		RenderParameters renderParameters =
+			liferayPortletRequest.getRenderParameters();
 
-			String[] values = liferayPortletRequest.getParameterValues(param);
+		Set<String> renderParameterNames = renderParameters.getNames();
+
+		for (String renderParameterName : renderParameterNames) {
+			String[] values = renderParameters.getValues(renderParameterName);
 
 			boolean addParam = true;
 
 			// Don't set parameter values that are over 32 kb. See LEP-1755.
 
 			for (String value : values) {
-				if (value.length() > _CURRENT_URL_PARAMETER_THRESHOLD) {
+				if ((value != null) &&
+					(value.length() > _CURRENT_URL_PARAMETER_THRESHOLD)) {
+
 					addParam = false;
 
 					break;
@@ -151,7 +161,7 @@ public class PortletURLUtil {
 			}
 
 			if (addParam) {
-				portletURL.setParameter(param, values);
+				mutableRenderParameters.setValues(renderParameterName, values);
 			}
 		}
 

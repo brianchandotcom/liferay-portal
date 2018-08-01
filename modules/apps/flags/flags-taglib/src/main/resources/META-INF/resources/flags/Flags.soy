@@ -9,13 +9,12 @@
 	{@param flagsEnabled: bool}
 	{@param id: string}
 	{@param label: bool}
-	{@param message: string}
+	{@param message: string|null}
 	{@param pathTermsOfUse: string}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param reasons: ?}
 	{@param signedIn: bool}
-	{@param title: string}
 	{@param? _handleCloseDialogClick: any}
 	{@param? _handleFlagButtonClick: any}
 	{@param? _handleReasonChange: any}
@@ -26,6 +25,14 @@
 	{@param? _showErrorMessage: bool}
 	{@param? elementClasses: string}
 	{@param? reporterEmailAddress: string}
+
+	{let $title kind="text"}
+		{if not $enabled}
+			{msg desc=""}flags-are-disabled-because-this-entry-is-in-the-recycle-bin{/msg}
+		{else}
+			{$message}
+		{/if}
+	{/let}
 
 	{let $containerAttributes kind="attributes"}
 		class="taglib-flags
@@ -76,35 +83,35 @@
  */
 {template .flagIcon}
 	{@param label: bool}
-	{@param message: string}
+	{@param message: string|null}
 	{@param spritemap: string}
 	{@param? _handleFlagButtonClick: any}
 	{@param? enabled: bool}
 
-	{let $emptyMessage: $message == '' /}
+	{let $defaultMessage kind="text"}
+		{msg desc=""}report{/msg}
+	{/let}
+
+	{let $labelMessage: isNull($message) ? $defaultMessage : $message /}
+
+	{let $emptyMessage: $labelMessage == '' /}
 
 	{let $wrapperAttributes kind="attributes"}
 		{if not $label and not $emptyMessage}
 			class="lfr-portal-tooltip"
-			title="{$message}"
+			title="{$labelMessage}"
 		{/if}
 	{/let}
 
 	<span {$wrapperAttributes}>
 		{call ClayButton.render}
-			{param ariaLabel kind="text"}
-				{if not $emptyMessage}
-					{$message}
-				{else}
-					{msg desc=""}report{/msg}
-				{/if}
-			{/param}
+			{param ariaLabel: not $emptyMessage ? $labelMessage : $defaultMessage /}
 			{param elementClasses: 'btn-outline-borderless btn-outline-secondary' /}
 			{param events: ['click': $_handleFlagButtonClick] /}
 			{param disabled: not $enabled /}
 			{param icon: 'flag-empty' /}
-			{param label: $emptyMessage ? null : $message /}
-			{param monospaced: $emptyMessage /}
+			{param label: $label and not $emptyMessage ? $labelMessage : null /}
+			{param monospaced: $emptyMessage or not $label /}
 			{param size: 'sm' /}
 			{param spritemap: $spritemap /}
 			{param type: 'button' /}

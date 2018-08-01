@@ -187,6 +187,10 @@ for (Portlet portlet : portlets) {
 			break;
 		}
 	}
+
+	if (portletHubRequired) {
+		break;
+	}
 }
 %>
 

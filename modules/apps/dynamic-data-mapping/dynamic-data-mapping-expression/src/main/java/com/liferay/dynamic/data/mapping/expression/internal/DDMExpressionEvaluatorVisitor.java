@@ -40,16 +40,22 @@ import static com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExp
 import static com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.StringLiteralContext;
 import static com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.SubtractionExpressionContext;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandler;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessor;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserver;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionBaseVisitor;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
@@ -62,32 +68,22 @@ import org.antlr.v4.runtime.tree.ParseTree;
 public class DDMExpressionEvaluatorVisitor
 	extends DDMExpressionBaseVisitor<Object> {
 
-	public void addFunctions(
-		Map<String, DDMExpressionFunction> ddmExpressionFunctions) {
-
-		_functions.putAll(ddmExpressionFunctions);
-	}
-
-	public void addVariable(String name, Object value) {
-		_variables.put(name, value);
-	}
-
 	@Override
 	public Object visitAdditionExpression(
 		@NotNull AdditionExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		BigDecimal bigDecimal1 = visitChild(context, 0);
+		BigDecimal bigDecimal2 = visitChild(context, 2);
 
-		return l.doubleValue() + r.doubleValue();
+		return bigDecimal1.add(bigDecimal2);
 	}
 
 	@Override
 	public Object visitAndExpression(@NotNull AndExpressionContext context) {
-		boolean l = visitChild(context, 0);
-		boolean r = visitChild(context, 2);
+		Boolean boolean1 = visitChild(context, 0);
+		Boolean boolean2 = visitChild(context, 2);
 
-		return l && r;
+		return boolean1 && boolean2;
 	}
 
 	@Override
@@ -101,20 +97,20 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitDivisionExpression(
 		@NotNull DivisionExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		BigDecimal bigDecimal1 = visitChild(context, 0);
+		BigDecimal bigDecimal2 = visitChild(context, 2);
 
-		return l.doubleValue() / r.doubleValue();
+		return bigDecimal1.divide(bigDecimal2);
 	}
 
 	@Override
 	public Object visitEqualsExpression(
 		@NotNull EqualsExpressionContext context) {
 
-		Object l = visitChild(context, 0);
-		Object r = visitChild(context, 2);
+		Object object1 = visitChild(context, 0);
+		Object object2 = visitChild(context, 2);
 
-		return l.equals(r);
+		return Objects.equals(object1, object2);
 	}
 
 	@Override
@@ -129,7 +125,7 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitFloatingPointLiteral(
 		@NotNull FloatingPointLiteralContext context) {
 
-		return GetterUtil.getDouble(context.getText());
+		return new BigDecimal(GetterUtil.getDouble(context.getText()));
 	}
 
 	@Override
@@ -138,73 +134,95 @@ public class DDMExpressionEvaluatorVisitor
 
 		String functionName = getFunctionName(context.functionName);
 
-		DDMExpressionFunction ddmExpressionFunction = _functions.get(
-			functionName);
-
-		if (ddmExpressionFunction == null) {
-			throw new IllegalStateException(
-				String.format("Function \"%s\" not defined", functionName));
-		}
+		DDMExpressionFunction ddmExpressionFunction =
+			_ddmExpressionFunctions.get(functionName);
 
 		Object[] params = getFunctionParameters(context.functionParameters());
 
-		return ddmExpressionFunction.evaluate(params);
+		if (params.length == 0) {
+			DDMExpressionFunction.Function0 function0 =
+				(DDMExpressionFunction.Function0)ddmExpressionFunction;
+
+			return function0.apply();
+		}
+		else if (params.length == 1) {
+			DDMExpressionFunction.Function1 function1 =
+				(DDMExpressionFunction.Function1)ddmExpressionFunction;
+
+			return function1.apply(params[0]);
+		}
+		else if (params.length == 2) {
+			DDMExpressionFunction.Function2 function2 =
+				(DDMExpressionFunction.Function2)ddmExpressionFunction;
+
+			return function2.apply(params[0], params[1]);
+		}
+		else if (params.length == 3) {
+			DDMExpressionFunction.Function3 function3 =
+				(DDMExpressionFunction.Function3)ddmExpressionFunction;
+
+			return function3.apply(params[0], params[1], params[2]);
+		}
+		else if (params.length == 4) {
+			DDMExpressionFunction.Function4 function4 =
+				(DDMExpressionFunction.Function4)ddmExpressionFunction;
+
+			return function4.apply(params[0], params[1], params[2], params[3]);
+		}
+
+		return null;
 	}
 
 	@Override
 	public Object visitGreaterThanExpression(
 		@NotNull GreaterThanExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Comparable comparable1 = visitChild(context, 0);
+		Comparable comparable2 = visitChild(context, 2);
 
-		return l.doubleValue() > r.doubleValue();
+		return comparable1.compareTo(comparable2) == 1;
 	}
 
 	@Override
 	public Object visitGreaterThanOrEqualsExpression(
 		@NotNull GreaterThanOrEqualsExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Comparable comparable1 = visitChild(context, 0);
+		Comparable comparable2 = visitChild(context, 2);
 
-		return l.doubleValue() >= r.doubleValue();
+		return comparable1.compareTo(comparable2) >= 0;
 	}
 
 	@Override
 	public Object visitIntegerLiteral(@NotNull IntegerLiteralContext context) {
-		Number number = GetterUtil.getLong(context.getText());
-
-		return number.doubleValue();
+		return new BigDecimal(GetterUtil.getLong(context.getText()));
 	}
 
 	@Override
 	public Object visitLessThanExpression(
 		@NotNull LessThanExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Comparable comparable1 = visitChild(context, 0);
+		Comparable comparable2 = visitChild(context, 2);
 
-		return l.doubleValue() < r.doubleValue();
+		return comparable1.compareTo(comparable2) == -1;
 	}
 
 	@Override
 	public Object visitLessThanOrEqualsExpression(
 		@NotNull LessThanOrEqualsExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Comparable comparable1 = visitChild(context, 0);
+		Comparable comparable2 = visitChild(context, 2);
 
-		return l.doubleValue() <= r.doubleValue();
+		return comparable1.compareTo(comparable2) <= 0;
 	}
 
 	@Override
 	public Object visitLogicalConstant(
 		@NotNull LogicalConstantContext context) {
 
-		String boleanString = StringUtil.toLowerCase(context.getText());
-
-		return Boolean.parseBoolean(boleanString);
+		return Boolean.parseBoolean(context.getText());
 	}
 
 	@Override
@@ -227,36 +245,36 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitMinusExpression(
 		@NotNull MinusExpressionContext context) {
 
-		Number number = visitChild(context, 1);
+		BigDecimal bigDecimal1 = visitChild(context, 1);
 
-		return -(number.doubleValue());
+		return bigDecimal1.multiply(new BigDecimal(-1));
 	}
 
 	@Override
 	public Object visitMultiplicationExpression(
 		@NotNull MultiplicationExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		BigDecimal bigDecimal1 = visitChild(context, 0);
+		BigDecimal bigDecimal2 = visitChild(context, 2);
 
-		return l.doubleValue() * r.doubleValue();
+		return bigDecimal1.multiply(bigDecimal2);
 	}
 
 	@Override
 	public Object visitNotEqualsExpression(
 		@NotNull NotEqualsExpressionContext context) {
 
-		Object l = visitChild(context, 0);
-		Object r = visitChild(context, 2);
+		Object object1 = visitChild(context, 0);
+		Object object2 = visitChild(context, 2);
 
-		return !l.equals(r);
+		return !Objects.equals(object1, object2);
 	}
 
 	@Override
 	public Object visitNotExpression(@NotNull NotExpressionContext context) {
-		boolean b = visitChild(context, 1);
+		boolean boolean1 = visitChild(context, 1);
 
-		return !b;
+		return !boolean1;
 	}
 
 	@Override
@@ -284,10 +302,10 @@ public class DDMExpressionEvaluatorVisitor
 
 	@Override
 	public Object visitOrExpression(@NotNull OrExpressionContext context) {
-		boolean l = visitChild(context, 0);
-		boolean r = visitChild(context, 2);
+		boolean boolean1 = visitChild(context, 0);
+		boolean boolean2 = visitChild(context, 2);
 
-		return l || r;
+		return boolean1 || boolean2;
 	}
 
 	@Override
@@ -299,10 +317,26 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitSubtractionExpression(
 		@NotNull SubtractionExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		BigDecimal bigDecimal1 = visitChild(context, 0);
+		BigDecimal bigDecimal2 = visitChild(context, 2);
 
-		return l.doubleValue() - r.doubleValue();
+		return bigDecimal1.subtract(bigDecimal2);
+	}
+
+	protected DDMExpressionEvaluatorVisitor(
+		Map<String, DDMExpressionFunction> ddmExpressionFunctions,
+		Map<String, Object> variables,
+		DDMExpressionActionHandler ddmExpressionActionHandler,
+		DDMExpressionFieldAccessor ddmExpressionFieldAccessor,
+		DDMExpressionObserver ddmExpressionObserver,
+		DDMExpressionParameterAccessor ddmExpressionParameterAccessor) {
+
+		_ddmExpressionFunctions = ddmExpressionFunctions;
+		_variables = variables;
+		_ddmExpressionActionHandler = ddmExpressionActionHandler;
+		_ddmExpressionFieldAccessor = ddmExpressionFieldAccessor;
+		_ddmExpressionObserver = ddmExpressionObserver;
+		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
 	}
 
 	protected String getFunctionName(Token functionNameToken) {
@@ -335,8 +369,12 @@ public class DDMExpressionEvaluatorVisitor
 		return (T)parseTree.accept(this);
 	}
 
-	private final Map<String, DDMExpressionFunction> _functions =
-		new HashMap<>();
-	private final Map<String, Object> _variables = new HashMap<>();
+	private final DDMExpressionActionHandler _ddmExpressionActionHandler;
+	private final DDMExpressionFieldAccessor _ddmExpressionFieldAccessor;
+	private final Map<String, DDMExpressionFunction> _ddmExpressionFunctions;
+	private final DDMExpressionObserver _ddmExpressionObserver;
+	private final DDMExpressionParameterAccessor
+		_ddmExpressionParameterAccessor;
+	private final Map<String, Object> _variables;
 
 }

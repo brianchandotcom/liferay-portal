@@ -37,7 +37,7 @@
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteTagURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteTagURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<liferay-ui:search-container
 		id="assetTags"
 		searchContainer="<%= assetTagsDisplayContext.getTagsSearchContainer() %>"
@@ -79,12 +79,13 @@
 				</c:when>
 				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand table-list-title"
 						name="name"
 						value="<%= tag.getName() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-small"
 						name="usages"
 						value="<%= String.valueOf(fullTagsCount) %>"
 					/>

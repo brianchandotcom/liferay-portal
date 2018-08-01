@@ -14,7 +14,10 @@
 
 package com.liferay.portal.configuration.metatype.definitions.annotations.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
@@ -142,8 +145,20 @@ public class AnnotationsExtendedAttributeDefinition
 			}
 		}
 		catch (NoSuchMethodException nsme) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"The configuration bean class ",
+						_configurationBeanClass.getName(),
+						" does not have a method for the attribute definition ",
+						_attributeDefinition.getID()),
+					nsme);
+			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnnotationsExtendedAttributeDefinition.class);
 
 	private final AttributeDefinition _attributeDefinition;
 	private final Class<?> _configurationBeanClass;

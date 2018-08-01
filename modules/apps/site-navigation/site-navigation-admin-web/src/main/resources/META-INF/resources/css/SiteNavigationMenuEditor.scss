@@ -5,13 +5,14 @@
 $controlBarDesktopHeight: 120px;
 $managementBarHeight: 4rem;
 $managementBarMarginBottom: 1.25rem;
+$productMenuWidth: 320px;
 
 body.has-control-menu .contextual-sidebar {
 	margin-top: 1px;
 }
 
 body.open .site-navigation-management-bar {
-	width: calc(100vw - 320px);
+	width: calc(100vw - #{$productMenuWidth});
 }
 
 @include sm {

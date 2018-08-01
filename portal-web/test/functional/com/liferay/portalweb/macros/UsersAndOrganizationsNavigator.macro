@@ -9,17 +9,4 @@
 			</then>
 		</if>
 	</command>
-
-	<command name="gotoUsers">
-		<execute function="Pause" locator1="1000" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="NavBar#USERS" />
-			<then>
-				<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
-			</then>
-		</if>
-
-		<execute function="AssertVisible" locator1="UsersAndOrganizations#USER_TABLE_HEADER_FIRST_NAME" />
-	</command>
 </definition>

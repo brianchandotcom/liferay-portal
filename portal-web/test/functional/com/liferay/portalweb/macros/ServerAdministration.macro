@@ -130,34 +130,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="searchPortalPropertiesCP">
-		<execute function="AssertClick" locator1="NavTab#PROPERTIES" value1="Properties" />
-
-		<execute function="AssertClick" locator1="NavTab#PORTAL_PROPERTIES" value1="Portal Properties" />
-
-		<execute function="Type" locator1="ServerAdministrationProperties#PORTAL_PROPERTIES_SEARCH_FIELD" value1="${propertyName}" />
-
-		<execute function="AssertClick" locator1="ServerAdministrationProperties#PORTAL_PROPERTIES_SEARCH_BUTTON" value1="Search" />
-
-		<var name="key_propertyName" value="${propertyName}" />
-
-		<execute function="AssertTextEquals" locator1="ServerAdministrationProperties#PORTAL_PROPERTIES_TABLE_PROPERTY" value1="${propertyName}" />
-
-		<if>
-			<isset var="propertyOveridden" />
-			<then>
-				<execute function="MouseOver" locator1="ServerAdministrationResources#SOURCE" />
-
-				<execute function="AssertTextEquals" locator1="ServerAdministrationProperties#PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property was overridden using the Control Panel and is stored in the database." />
-			</then>
-			<else>
-				<execute function="MouseOver" locator1="ServerAdministrationResources#SOURCE" />
-
-				<execute function="AssertTextEquals" locator1="ServerAdministrationProperties#PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property is read from a portal.properties file or one of its extension files." />
-			</else>
-		</if>
-	</command>
-
 	<command name="tearDownDMFileUploadSettings">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

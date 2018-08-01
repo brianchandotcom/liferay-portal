@@ -1,8 +1,4 @@
 <definition>
-	<command name="changeDatabase">
-		<execute function="AssertClick" locator1="SetupWizard#DATABASE_CHANGE_LINK" value1="(Change)" />
-	</command>
-
 	<command name="configureAdministratorUserPG">
 		<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${administratorFirstName}" />
 		<execute function="Type" locator1="TextInput#LAST_NAME" value1="${administratorLastName}" />
@@ -161,17 +157,6 @@
 		<execute function="AssertClick" locator1="Button#FINISH_CONFIGURATION" value1="Finish Configuration" />
 	</command>
 
-	<command name="populateDatabaseConfiguration">
-		<execute function="Type" locator1="SetupWizard#DATABASE_CHANGE_JDBC_URL_FIELD" value1="${jdbcURL}" />
-		<execute function="Type" locator1="SetupWizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD" value1="${jdbcDriverClassName}" />
-		<execute function="Type" locator1="SetupWizard#DATABASE_CHANGE_USER_NAME_FIELD" value1="${userName}" />
-		<execute function="Type" locator1="SetupWizard#DATABASE_CHANGE_PASSWORD_FIELD" value1="${password}" />
-	</command>
-
-	<command name="selectDatabase">
-		<execute function="Select" locator1="SetupWizard#DATABASE_CHANGE_DATABASE_TYPE_SELECT" value1="${databaseType}" />
-	</command>
-
 	<command name="viewConfigurationSavedPG">
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SetupWizard#CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />
@@ -263,10 +248,5 @@
 				<execute function="AssertTextEquals#assertValue" locator1="TextInput#PORTAL_NAME" value1="Liferay" />
 			</else>
 		</if>
-	</command>
-
-	<command name="viewSampleDataAddedInConsole">
-		<execute function="AssertConsoleTextPresent" value1="SetupWizardSampleDataUtil" />
-		<execute function="AssertConsoleTextPresent" value1="Adding sample data" />
 	</command>
 </definition>

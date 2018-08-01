@@ -200,12 +200,6 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
-	<command name="gotoRolesAdminFromPortletConfiguration">
-		<execute function="AssertClick" locator1="AssetPermissions#ROLE_LINK" value1="${roleName}">
-			<var name="key_roleName" value="${roleName}" />
-		</execute>
-	</command>
-
 	<command name="gotoSitepageCP">
 		<execute macro="SitePages#togglePrivacy">
 			<var name="privacy" value="${privacy}" />

@@ -495,6 +495,49 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceWithRegisteredServiceRanking() {
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			createServiceTrackerMap(_bundleContext);
+
+		TrackedOne trackedOne1 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1);
+
+		TrackedOne trackedOne2 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
+			trackedOne2, 0);
+
+		Assert.assertEquals(
+			trackedOne1, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration1.unregister();
+
+		serviceRegistration1 = registerService(trackedOne1);
+
+		TrackedOne trackedOne3 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
+			trackedOne3, 1);
+
+		Assert.assertEquals(
+			trackedOne3, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration3.unregister();
+
+		Assert.assertEquals(
+			trackedOne2, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration2.unregister();
+
+		Assert.assertEquals(
+			trackedOne1, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration1.unregister();
+	}
+
+	@Test
 	public void testGetServiceWithServiceTrackerCustomizer() {
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(

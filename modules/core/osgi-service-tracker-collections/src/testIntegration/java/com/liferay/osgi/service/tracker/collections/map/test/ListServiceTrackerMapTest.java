@@ -358,6 +358,54 @@ public class ListServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceWithRegisteredServiceRanking() {
+		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			createServiceTrackerMap(_bundleContext);
+
+		TrackedOne trackedOne1 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1);
+
+		TrackedOne trackedOne2 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
+			trackedOne2, 0);
+
+		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(services.toString(), 2, services.size());
+
+		Iterator<TrackedOne> iterator = services.iterator();
+
+		Assert.assertEquals(trackedOne1, iterator.next());
+		Assert.assertEquals(trackedOne2, iterator.next());
+
+		serviceRegistration1.unregister();
+
+		serviceRegistration1 = registerService(trackedOne1);
+
+		TrackedOne trackedOne3 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
+			trackedOne3, 1);
+
+		services = serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(services.toString(), 3, services.size());
+
+		iterator = services.iterator();
+
+		Assert.assertEquals(trackedOne3, iterator.next());
+		Assert.assertEquals(trackedOne2, iterator.next());
+		Assert.assertEquals(trackedOne1, iterator.next());
+
+		serviceRegistration3.unregister();
+		serviceRegistration2.unregister();
+		serviceRegistration1.unregister();
+	}
+
+	@Test
 	public void testGetServiceWithSimpleRegistration() {
 		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 			createServiceTrackerMap(_bundleContext);

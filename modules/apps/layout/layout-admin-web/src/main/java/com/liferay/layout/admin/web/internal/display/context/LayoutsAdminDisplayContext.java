@@ -869,12 +869,18 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	public boolean isShowOrphanPortletsAction(Layout layout) {
+	public boolean isShowOrphanPortletsAction(Layout layout)
+		throws PortalException {
+
 		if (StagingUtil.isIncomplete(layout)) {
 			return false;
 		}
 
 		if (!layout.isSupportsEmbeddedPortlets()) {
+			return false;
+		}
+
+		if (!isShowAddRootLayoutButton()) {
 			return false;
 		}
 

@@ -16,6 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.servi
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -33,12 +34,21 @@ public interface MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration {
 	/**
 	 * Sets the API Key for the Computer Vision API V2.
 	 */
+	@ExtendedAttributeDefinition(
+		descriptionArguments = "https://azure.microsoft.com/en-us/try/cognitive-services/my-apis/?apiSlug=computer-services"
+	)
 	@Meta.AD(description = "api-key-description", name = "api-key")
 	public String apiKey();
 
 	/**
 	 * Sets the Computer Vision API V2 endpoint.
 	 */
+	@ExtendedAttributeDefinition(
+		descriptionArguments = {
+			"https://westcentralus.api.cognitive.microsoft.com/vision/v2.0",
+			"https://azure.microsoft.com/en-us/try/cognitive-services/my-apis/?apiSlug=computer-services"
+		}
+	)
 	@Meta.AD(description = "api-endpoint-description", name = "api-endpoint")
 	public String apiEndpoint();
 

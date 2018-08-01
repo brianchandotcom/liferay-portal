@@ -3151,7 +3151,8 @@
 		<tag-class>com.liferay.taglib.ui.SearchIteratorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>containerCssClass</name>
+			<description>A CSS class for styling the component.</description>
+			<name>searchResultCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

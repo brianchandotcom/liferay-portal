@@ -27,10 +27,6 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 
 	public static final String DEFAULT_DISPLAY_STYLE = "list";
 
-	public String getContainerCssClass() {
-		return _containerCssClass;
-	}
-
 	public String getDisplayStyle() {
 		return _displayStyle;
 	}
@@ -39,8 +35,12 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		return _resultRowSplitter;
 	}
 
-	public void setContainerCssClass(String containerCssClass) {
-		_containerCssClass = containerCssClass;
+	public String getSearchResultCssClass() {
+		return _searchResultCssClass;
+	}
+
+	public void setSearchResultCssClass(String searchResultCssClass) {
+		_searchResultCssClass = searchResultCssClass;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
@@ -64,16 +64,16 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_containerCssClass = null;
 		_displayStyle = DEFAULT_DISPLAY_STYLE;
 		_markupView = null;
 		_paginate = true;
 		_resultRowSplitter = null;
+		_searchResultCssClass = null;
 	}
 
 	@Override
 	protected String getPage() {
-		String containerCssClass = _containerCssClass;
+		String searchResultCssClass = _searchResultCssClass;
 		String displayStyle = _displayStyle;
 
 		if (Validator.isNull(displayStyle)) {
@@ -94,8 +94,6 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		super.setAttributes(request);
 
 		request.setAttribute(
-			"liferay-ui:search-iterator:containerCssClass", getContainerCssClass());
-		request.setAttribute(
 			"liferay-ui:search-iterator:displayStyle", getDisplayStyle());
 		request.setAttribute(
 			"liferay-ui:search-iterator:markupView", _markupView);
@@ -103,12 +101,14 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 			"liferay-ui:search-iterator:paginate", String.valueOf(_paginate));
 		request.setAttribute(
 			"liferay-ui:search-iterator:resultRowSplitter", _resultRowSplitter);
+		request.setAttribute(
+			"liferay-ui:search-iterator:searchResultCssClass", getSearchResultCssClass());
 	}
 
-	private String _containerCssClass;
 	private String _displayStyle = DEFAULT_DISPLAY_STYLE;
 	private String _markupView;
 	private boolean _paginate = true;
 	private ResultRowSplitter _resultRowSplitter;
+	private String _searchResultCssClass;
 
 }

@@ -19,8 +19,8 @@
 <%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jspf" %>
 
 <%
-if (containerCssClass == null) {
-	containerCssClass = "display-style-icon list-unstyled row";
+if (searchResultCssClass == null) {
+	searchResultCssClass = "display-style-icon list-unstyled row";
 }
 
 request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_CHECKER, rowChecker);
@@ -48,7 +48,7 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 		</div>
 	</c:if>
 
-	<ul class="<%= containerCssClass %>" data-qa-id="rows<%= i %>">
+	<ul class="<%= searchResultCssClass %>" data-qa-id="rows<%= i %>">
 
 		<%
 		for (int j = 0; j < curResultRows.size(); j++) {

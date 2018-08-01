@@ -19,8 +19,8 @@
 <%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jspf" %>
 
 <%
-if (containerCssClass == null) {
-	containerCssClass = "show-quick-actions-on-hover table table-autofit table-heading-nowrap table-list";
+if (searchResultCssClass == null) {
+	searchResultCssClass = "show-quick-actions-on-hover table table-autofit table-heading-nowrap table-list";
 }
 
 List<ResultRowSplitterEntry> resultRowSplitterEntries = new ArrayList<ResultRowSplitterEntry>();
@@ -42,7 +42,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 %>
 
 <div class="table-responsive">
-	<table class="<%= containerCssClass %>">
+	<table class="<%= searchResultCssClass %>">
 		<c:if test="<%= Validator.isNotNull(summary) %>">
 			<caption class="sr-only"><%= summary %></caption>
 		</c:if>

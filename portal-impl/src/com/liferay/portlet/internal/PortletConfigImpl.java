@@ -304,6 +304,10 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 		Set<String> windowStateNames = windowStateMap.get(mimeType);
 
+		if (windowStateNames == null) {
+			return Collections.emptyEnumeration();
+		}
+
 		List<WindowState> windowStates = new ArrayList<>(
 			windowStateNames.size());
 

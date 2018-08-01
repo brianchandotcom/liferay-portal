@@ -25,6 +25,75 @@ public interface DDMExpressionFunction {
 	 * {@link Function4}
 	 */
 	@Deprecated
-	public Object evaluate(Object... parameters);
+	public default Object evaluate(Object... parameters) {
+		if (parameters.length == 0) {
+			DDMExpressionFunction.Function0 function0 =
+				(DDMExpressionFunction.Function0)this;
+
+			return function0.apply();
+		}
+		else if (parameters.length == 1) {
+			DDMExpressionFunction.Function1 function1 =
+				(DDMExpressionFunction.Function1)this;
+
+			return function1.apply(parameters[0]);
+		}
+		else if (parameters.length == 2) {
+			DDMExpressionFunction.Function2 function2 =
+				(DDMExpressionFunction.Function2)this;
+
+			return function2.apply(parameters[0], parameters[1]);
+		}
+		else if (parameters.length == 3) {
+			DDMExpressionFunction.Function3 function3 =
+				(DDMExpressionFunction.Function3)this;
+
+			return function3.apply(parameters[0], parameters[1], parameters[2]);
+		}
+		else if (parameters.length == 4) {
+			DDMExpressionFunction.Function4 function4 =
+				(DDMExpressionFunction.Function4)this;
+
+			return function4.apply(
+				parameters[0], parameters[1], parameters[2], parameters[3]);
+		}
+
+		return null;
+	}
+
+	@FunctionalInterface
+	public interface Function0<R> extends DDMExpressionFunction {
+
+		public R apply();
+
+	}
+
+	@FunctionalInterface
+	public interface Function1<A, R> extends DDMExpressionFunction {
+
+		public R apply(A a);
+
+	}
+
+	@FunctionalInterface
+	public interface Function2<A, B, R> extends DDMExpressionFunction {
+
+		public R apply(A a, B b);
+
+	}
+
+	@FunctionalInterface
+	public interface Function3<A, B, C, R> extends DDMExpressionFunction {
+
+		public R apply(A a, B b, C c);
+
+	}
+
+	@FunctionalInterface
+	public interface Function4<A, B, C, D, R> extends DDMExpressionFunction {
+
+		public R apply(A a, B b, C c, D d);
+
+	}
 
 }

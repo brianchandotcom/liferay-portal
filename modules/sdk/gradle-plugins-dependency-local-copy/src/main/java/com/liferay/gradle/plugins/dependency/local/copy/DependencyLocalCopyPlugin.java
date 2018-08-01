@@ -79,18 +79,16 @@ public class DependencyLocalCopyPlugin implements Plugin<Project> {
 			project, SYNC_LOCAL_COPY_TASK_NAME + dependencyProjectPath,
 			Sync.class);
 
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, sync.getName());
 
 		DependencyHandler dependencyHandler = project.getDependencies();
 
 		ProjectDependency projectDependency =
-			(ProjectDependency)dependencyHandler.create(dependencyProject);
+			(ProjectDependency)dependencyHandler.add(
+				configuration.getName(), dependencyProject);
 
 		projectDependency.setTransitive(transitive);
-
-		Configuration configuration =
-			configurationContainer.detachedConfiguration(projectDependency);
 
 		sync.from(configuration);
 

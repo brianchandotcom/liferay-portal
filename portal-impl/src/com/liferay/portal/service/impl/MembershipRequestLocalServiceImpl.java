@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -351,24 +352,28 @@ public class MembershipRequestLocalServiceImpl
 		mailTemplateContextBuilder.put(
 			"[$COMPANY_ID$]", String.valueOf(company.getCompanyId()));
 		mailTemplateContextBuilder.put("[$COMPANY_MX$]", company.getMx());
-		mailTemplateContextBuilder.put("[$COMPANY_NAME$]", company.getName());
 		mailTemplateContextBuilder.put(
-			"[$COMMENTS$]", membershipRequest.getComments());
+			"[$COMPANY_NAME$]", HtmlUtil.escape(company.getName()));
+		mailTemplateContextBuilder.put(
+			"[$COMMENTS$]", HtmlUtil.escape(membershipRequest.getComments()));
 		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", fromAddress);
-		mailTemplateContextBuilder.put("[$FROM_NAME$]", fromName);
+		mailTemplateContextBuilder.put(
+			"[$FROM_NAME$]", HtmlUtil.escape(fromName));
 		mailTemplateContextBuilder.put("[$PORTAL_URL$]", portalURL);
 		mailTemplateContextBuilder.put(
-			"[$REPLY_COMMENTS$]", membershipRequest.getReplyComments());
+			"[$REPLY_COMMENTS$]",
+			HtmlUtil.escape(membershipRequest.getReplyComments()));
 		mailTemplateContextBuilder.put(
 			"[$REQUEST_USER_ADDRESS$]", requestUser.getEmailAddress());
 		mailTemplateContextBuilder.put(
-			"[$REQUEST_USER_NAME$]", requestUser.getFullName());
+			"[$REQUEST_USER_NAME$]",
+			HtmlUtil.escape(requestUser.getFullName()));
 
 		Group group = groupLocalService.getGroup(
 			membershipRequest.getGroupId());
 
 		mailTemplateContextBuilder.put(
-			"[$SITE_NAME$]", group.getDescriptiveName());
+			"[$SITE_NAME$]", HtmlUtil.escape(group.getDescriptiveName()));
 
 		mailTemplateContextBuilder.put(
 			"[$STATUS$]",
@@ -376,10 +381,12 @@ public class MembershipRequestLocalServiceImpl
 				locale -> LanguageUtil.get(locale, statusKey)));
 		mailTemplateContextBuilder.put(
 			"[$TO_ADDRESS$]", user.getEmailAddress());
-		mailTemplateContextBuilder.put("[$TO_NAME$]", user.getFullName());
+		mailTemplateContextBuilder.put(
+			"[$TO_NAME$]", HtmlUtil.escape(user.getFullName()));
 		mailTemplateContextBuilder.put(
 			"[$USER_ADDRESS$]", user.getEmailAddress());
-		mailTemplateContextBuilder.put("[$USER_NAME$]", user.getFullName());
+		mailTemplateContextBuilder.put(
+			"[$USER_NAME$]", HtmlUtil.escape(user.getFullName()));
 
 		MailTemplateContext mailTemplateContext =
 			mailTemplateContextBuilder.build();

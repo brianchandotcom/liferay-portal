@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -717,18 +718,21 @@ public class AnnouncementsEntryLocalServiceImpl
 		mailTemplateContextBuilder.put(
 			"[$COMPANY_ID$]", String.valueOf(company.getCompanyId()));
 		mailTemplateContextBuilder.put("[$COMPANY_MX$]", company.getMx());
-		mailTemplateContextBuilder.put("[$COMPANY_NAME$]", company.getName());
+		mailTemplateContextBuilder.put(
+			"[$COMPANY_NAME$]", HtmlUtil.escape(company.getName()));
 		mailTemplateContextBuilder.put("[$ENTRY_CONTENT$]", entry.getContent());
 		mailTemplateContextBuilder.put(
 			"[$ENTRY_ID$]", String.valueOf(entry.getEntryId()));
-		mailTemplateContextBuilder.put("[$ENTRY_TITLE$]", entry.getTitle());
+		mailTemplateContextBuilder.put(
+			"[$ENTRY_TITLE$]", HtmlUtil.escape(entry.getTitle()));
 		mailTemplateContextBuilder.put(
 			"[$ENTRY_TYPE$]",
 			new EscapableLocalizableFunction(
 				locale -> LanguageUtil.get(locale, entry.getType())));
 		mailTemplateContextBuilder.put("[$ENTRY_URL$]", entry.getUrl());
 		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", fromAddress);
-		mailTemplateContextBuilder.put("[$FROM_NAME$]", fromName);
+		mailTemplateContextBuilder.put(
+			"[$FROM_NAME$]", HtmlUtil.escape(fromName));
 		mailTemplateContextBuilder.put("[$PORTAL_URL$]", portalURL);
 		mailTemplateContextBuilder.put(
 			"[$PORTLET_NAME$]",
@@ -740,11 +744,11 @@ public class AnnouncementsEntryLocalServiceImpl
 			Group group = groupLocalService.getGroup(entry.getGroupId());
 
 			mailTemplateContextBuilder.put(
-				"[$SITE_NAME$]", group.getDescriptiveName());
+				"[$SITE_NAME$]", HtmlUtil.escape(group.getDescriptiveName()));
 		}
 
 		mailTemplateContextBuilder.put("[$TO_ADDRESS$]", toAddress);
-		mailTemplateContextBuilder.put("[$TO_NAME$]", toName);
+		mailTemplateContextBuilder.put("[$TO_NAME$]", HtmlUtil.escape(toName));
 
 		MailTemplateContext mailTemplateContext =
 			mailTemplateContextBuilder.build();

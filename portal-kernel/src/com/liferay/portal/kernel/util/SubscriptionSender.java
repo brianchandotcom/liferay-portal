@@ -959,7 +959,8 @@ public class SubscriptionSender implements Serializable {
 		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", from.getAddress());
 		mailTemplateContextBuilder.put(
 			"[$FROM_NAME$]",
-			GetterUtil.getString(from.getPersonal(), from.getAddress()));
+			HtmlUtil.escape(
+				GetterUtil.getString(from.getPersonal(), from.getAddress())));
 		mailTemplateContextBuilder.put(
 			"[$TO_ADDRESS$]", HtmlUtil.escape(to.getAddress()));
 		mailTemplateContextBuilder.put(

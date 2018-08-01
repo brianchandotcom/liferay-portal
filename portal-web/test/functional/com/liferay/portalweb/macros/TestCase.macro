@@ -20,15 +20,11 @@
 				</not>
 			</or>
 			<then>
-				<execute macro="TestCase#getTestName">
-					<return name="testName" />
-				</execute>
-
 				<if>
 					<and>
 						<equals arg1="${testPortalInstance}" arg2="true" />
 						<not>
-							<equals arg1="${testName}" arg2="${testNameSkipPortalInstance}" />
+							<condition function="IsTestName" locator1="" value1="${testNameSkipPortalInstance}" />
 						</not>
 					</and>
 					<then>
@@ -72,15 +68,11 @@
 		<var method="TestPropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="TestCase#getTestName">
-			<return name="testName" />
-		</execute>
-
 		<if>
 			<and>
 				<equals arg1="${testPortalInstance}" arg2="true" />
 				<not>
-					<equals arg1="${testName}" arg2="${testNameSkipPortalInstance}" />
+					<condition function="IsTestName" locator1="" value1="${testNameSkipPortalInstance}" />
 				</not>
 			</and>
 			<then>

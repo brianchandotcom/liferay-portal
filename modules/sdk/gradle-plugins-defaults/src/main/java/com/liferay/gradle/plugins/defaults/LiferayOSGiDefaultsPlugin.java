@@ -1888,7 +1888,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public void execute(ExternalDependency externalDependency) {
 					String version = externalDependency.getVersion();
 
-					if (version.endsWith(
+					if (Validator.isNotNull(version) &&
+						version.endsWith(
 							GradlePluginsDefaultsUtil.
 								SNAPSHOT_VERSION_SUFFIX)) {
 

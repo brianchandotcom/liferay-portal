@@ -487,119 +487,6 @@
 		</if>
 	</command>
 
-	<command name="enableRating">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<if>
-			<equals arg1="${calendarType}" arg2="My Calendars" />
-			<then>
-				<var name="key_user" value="${user}" />
-
-				<execute function="Click" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
-
-				<execute macro="Calendar#_gotoMenulistOption">
-					<var name="menuListOption" value="Calendar Settings" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
-				<then>
-					<var name="key_site" value="${site}" />
-
-					<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
-
-					<execute macro="Calendar#_gotoMenulistOption">
-						<var name="menuListOption" value="Calendar Settings" />
-					</execute>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${calendarType}" arg2="Other Calendars" />
-				<then>
-					<execute macro="Calendar#chooseOtherCalendarMenulistOption">
-						<var name="calendarName" value="${calendarName}" />
-						<var name="menuListOption" value="Calendar Settings" />
-					</execute>
-				</then>
-			</elseif>
-		</if>
-
-		<var name="key_calendarName" value="${calendarName}" />
-
-		<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
-
-		<execute function="AssertTextEquals" locator1="CalendarEditCalendar#HEADER_TITLE" value1="${calendarName}" />
-		<execute function="Check" locator1="CalendarEditCalendar#ENABLE_RATINGS_CHECKBOX" />
-
-		<execute macro="Button#clickSave" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
-			<then>
-				<execute macro="Alert#viewSuccessMessage" />
-				<execute function="SelectFrame" value1="relative=top" />
-			</then>
-			<else>
-				<execute function="SelectFrame" value1="relative=top" />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
-	</command>
-
-	<command name="enableViewEventDetailsPermissions">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<if>
-			<equals arg1="${calendarType}" arg2="My Calendars" />
-			<then>
-				<var name="key_user" value="${user}" />
-
-				<execute function="Click" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
-
-				<execute macro="Calendar#_gotoMenulistOption">
-					<var name="menuListOption" value="Permissions" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
-				<then>
-					<var name="key_site" value="${site}" />
-
-					<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
-
-					<execute macro="Calendar#_gotoMenulistOption">
-						<var name="menuListOption" value="Permissions" />
-					</execute>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${calendarType}" arg2="Other Calendars" />
-				<then>
-					<execute macro="Calendar#chooseOtherCalendarMenulistOption">
-						<var name="calendarName" value="${calendarName}" />
-						<var name="menuListOption" value="Permissions" />
-					</execute>
-				</then>
-			</elseif>
-		</if>
-
-		<var method="StringUtil#replace('${roleTitle}', ' ', '-')" name="key_roleTitle" />
-		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
-
-		<execute macro="IFrame#selectPermissionsFrame" />
-
-		<execute function="Check" locator1="Permissions#EVENT_PERMISSIONS_VIEW_EVENT_DETAILS_CHECKBOX" value1="${roleTitle}" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="exportCalendarFile">
 		<var name="key_calendarName" value="${calendarName}" />
 
@@ -808,16 +695,6 @@
 		</if>
 	</command>
 
-	<command name="viewBusyDaySmallCalendar">
-		<var name="key_dateNumber" value="${dateNumber}" />
-
-		<execute function="AssertElementPresent" locator1="Calendar#SMALL_CALENDAR_BUSY_DAY" />
-
-		<execute function="Click" locator1="Calendar#SMALL_CALENDAR_BUSY_DAY" />
-
-		<execute function="Pause" locator1="5000" />
-	</command>
-
 	<command name="viewCalendarColorPicker">
 		<execute macro="Calendar#_gotoOtherCalendarMenulist">
 			<var name="calendarName" value="${calendarName}" />
@@ -828,16 +705,6 @@
 		<execute function="AssertElementPresent" locator1="Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER" />
 	</command>
 
-	<command name="viewCalendarViaTable">
-		<var name="key_calendarName" value="${calendarName}" />
-
-		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_NAME" value1="${calendarName}" />
-		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_DESCRIPTION" value1="${calendarDescription}" />
-		<execute function="AssertElementPresent" locator1="CalendarManageCalendars#CALENDAR_TABLE_COLOR" />
-		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_DEFAULT" value1="${calendarDefault}" />
-		<execute function="AssertElementPresent" locator1="CalendarManageCalendars#CALENDAR_TABLE_ACTIONS" />
-	</command>
-
 	<command name="viewColor">
 		<var name="key_color" value="${myCalendarColor}" />
 
@@ -846,17 +713,6 @@
 			<then>
 				<execute function="AssertElementPresent" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR" />
 				<execute function="AssertElementNotPresent" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewColorDefault">
-		<var name="key_color" value="${myCalendarColor}" />
-
-		<if>
-			<equals arg1="${calendarType}" arg2="My Calendars" />
-			<then>
-				<execute function="AssertElementPresent" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
 			</then>
 		</if>
 	</command>
@@ -899,29 +755,6 @@
 			<condition function="IsTextNotEqual" locator1="Calendar#SCHEDULER_VIEW_MONTH_DATE" value1="${dateMonth}" />
 			<then>
 				<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
-			</then>
-		</while>
-	</command>
-
-	<command name="viewMonthSmallCalendar">
-
-		<!--
-		To ensure the desired month will always be reached, click "Previous"
-		until it reaches our baseline of February 2016. Then click "Next" until
-		it reaches ${dateMonth}.
-		-->
-
-		<while max-iterations="100">
-			<condition function="IsTextNotEqual" locator1="Calendar#SMALL_CALENDAR_DATE" value1="February 2016" />
-			<then>
-				<execute function="Click" locator1="Calendar#SMALL_CALENDAR_PREVIOUS" />
-			</then>
-		</while>
-
-		<while max-iterations="100">
-			<condition function="IsTextNotEqual" locator1="Calendar#SMALL_CALENDAR_DATE" value1="${dateMonth}" />
-			<then>
-				<execute function="Click" locator1="Calendar#SMALL_CALENDAR_NEXT" />
 			</then>
 		</while>
 	</command>

@@ -17,12 +17,6 @@
 		<execute function="AssertClick" locator1="Button#MAIN_CONTENT_SUBMIT" value1="Submit" />
 	</command>
 
-	<command name="gotoFormPage">
-		<var name="key_formPageName" value="${formPageName}" />
-
-		<execute function="AssertClick" locator1="FormPortlet#FORM_PAGE" value1="${formPageName}" />
-	</command>
-
 	<command name="nextPage">
 		<execute function="AssertClick" locator1="Button#NEXT" value1="Next" />
 

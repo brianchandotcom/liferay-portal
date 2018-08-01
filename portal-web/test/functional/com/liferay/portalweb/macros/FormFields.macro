@@ -231,10 +231,6 @@
 		<execute function="DragAndDrop#dragAndDropToObject" locator1="FormFields#OPTIONS_DRAG_ICON_1" locator2="FormFields#OPTIONS_DRAG_ICON_2" value1="" />
 	</command>
 
-	<command name="removeRepeatableField">
-		<execute function="Click" locator1="FormFields#FIELD_REMOVE" />
-	</command>
-
 	<command name="removeSelectOption">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_selectOption" value="${selectOption}" />
@@ -370,19 +366,6 @@
 		</execute>
 	</command>
 
-	<command name="viewAutoCompleteOptions">
-		<var name="key_autocompleteOption" value="${autocompleteOption}" />
-
-		<execute function="AssertTextEquals" locator1="FormFields#AUTOCOMPLETE_OPTION" value1="${autocompleteOption}" />
-
-		<if>
-			<isset var="autocompleteOptionNotVisible" />
-			<then>
-				<execute function="AssertTextNotPresent" locator1="FormFields#AUTOCOMPLETE_LIST" value1="${autocompleteOptionNotVisible}" />
-			</then>
-		</if>
-	</command>
-
 	<command name="viewCaptchaField">
 		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#CAPTCHA_FIELD" />
 		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#CAPTCHA_FIELD_REFRESH" />
@@ -504,13 +487,6 @@
 		<execute function="AssertTextEquals" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}">
 			<var name="key_fieldName" value="${fieldName}" />
 			<var name="key_fieldValue" value="${fieldValue}" />
-		</execute>
-	</command>
-
-	<command name="viewOptionsLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#OPTIONS_LABEL" value1="${fieldLabel}">
-			<var name="key_fieldLabel" value="${fieldLabel}" />
-			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 	</command>
 
@@ -735,24 +711,6 @@
 
 	<command name="viewTextLabel">
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL" value1="${fieldLabel}">
-			<var name="key_fieldLabel" value="${fieldLabel}" />
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewTextMultilineField">
-		<execute macro="FormFields#viewTextMultilineLabel">
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#TEXT_MULTILINE_FIELD">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewTextMultilineLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_MULTILINE_LABEL" value1="${fieldLabel}">
 			<var name="key_fieldLabel" value="${fieldLabel}" />
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>

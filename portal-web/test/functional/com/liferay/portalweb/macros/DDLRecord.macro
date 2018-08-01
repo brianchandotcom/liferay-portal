@@ -420,28 +420,6 @@
 		</while>
 	</command>
 
-	<command name="publishViaDDLDisplayPG">
-		<if>
-			<isset var="workflowDefinition" />
-			<then>
-				<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-			</else>
-		</if>
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="removeTranslation">
-		<var name="key_localizedLanguage" value="${localizedLanguage}" />
-
-		<execute function="ClickNoError" locator1="Translation#REMOVE_TRANSLATION" />
-
-		<execute function="AssertConfirm" value1="Are you sure you want to deactivate this language?" />
-	</command>
-
 	<command name="saveAsDraftCP">
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
@@ -766,19 +744,6 @@
 	<command name="viewFirstRecordSearchResult">
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${field} ${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewFirstRecordViaDDLDisplayTemplate">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
-
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="View" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 
 	<command name="viewGeolocationRecord">

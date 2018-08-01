@@ -15,20 +15,6 @@
 		<execute function="AssertNotVisible" locator1="FormRules#RULE_BUILDER_ADD_RULE_BUTTON" />
 	</command>
 
-	<command name="chooseCalculateAdvancedOperator">
-		<execute function="Click" locator1="FormRules#RULE_BUILDER_CALCULATE_ELLIPSIS" />
-
-		<var name="key_calculateAdvancedOperator" value="${calculateAdvancedOperator}" />
-
-		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_CALCULATE_ADVANCED_OPERATOR" value1="${calculateAdvancedOperator}" />
-	</command>
-
-	<command name="chooseCalculateNumericValue">
-		<var name="key_calculateNumericValue" value="${calculateNumericValue}" />
-
-		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_CALCULATE_NUMERIC_VALUE" value1="${calculateNumericValue}" />
-	</command>
-
 	<command name="chooseCalculateOperator">
 		<var name="key_calculateOperator" value="${calculateOperator}" />
 

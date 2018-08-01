@@ -253,6 +253,8 @@ name = HtmlUtil.escapeJS(name);
 			<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.tinymce.web#" + editorName + "#onEditorCreate" %>' />
 
 			Liferay.namespace('EDITORS').tinymce.addInstance();
+
+			Liferay.on('inputLocalized:localeChanged', this._onLocaleChangedHandler, this)
 		},
 
 		initInstanceCallback: function() {
@@ -290,12 +292,33 @@ name = HtmlUtil.escapeJS(name);
 		instanceReady: false,
 
 		setHTML: function(value) {
+			var editor;
+
 			if (window['<%= name %>'].instanceReady) {
-				tinyMCE.editors['<%= name %>'].setContent(value);
+				editor = tinyMCE.editors['<%= name %>'];
+				editor.setContent(value);
+
+				if (this.contentsLanguage && this.contentsLanguageDir) {
+					editor.$().context.setAttribute('lang', this.contentsLanguage);
+					editor.$().context.setAttribute('dir', this.contentsLanguageDir);
+				}
 			}
 			else {
-				document.getElementById('<%= name %>').innerHTML = value;
+				editor = document.getElementById('<%= name %>');
+				editor.innerHTML = value;
+
+				if (this.contentsLanguage && this.contentsLanguageDir) {
+					editor.setAttribute('lang', this.contentsLanguage);
+					editor.setAttribute('dir', this.contentsLanguageDir);
+				}
 			}
+		},
+
+		_onLocaleChangedHandler: function(event) {
+			var instance = this;
+
+			this.contentsLanguage = event.item.getAttribute('data-value');
+			this.contentsLanguageDir = Liferay.Language.direction[this.contentsLanguage];
 		}
 	};
 

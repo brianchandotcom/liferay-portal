@@ -140,7 +140,19 @@ name = HtmlUtil.escapeJS(name);
 		return data;
 	};
 
-	var eventHandles = [];
+	var onLocaleChangedHandler = function(event) {
+		var contentsLanguage = event.item.getAttribute('data-value');
+		var contentsLanguageDir = Liferay.Language.direction[contentsLanguage];
+
+		var nativeEditor = window['<%= name %>'].getNativeEditor();
+
+		nativeEditor.config.contentsLanguage = contentsLanguage;
+		nativeEditor.config.contentsLangDirection = contentsLanguageDir;
+	};
+
+	var eventHandles = [
+		Liferay.on('inputLocalized:localeChanged', onLocaleChangedHandler)
+	];
 
 	window['<%= name %>'] = {
 		create: function() {

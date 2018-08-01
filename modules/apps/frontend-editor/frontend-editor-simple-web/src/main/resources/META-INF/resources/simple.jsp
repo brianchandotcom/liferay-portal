@@ -179,7 +179,9 @@ name = HtmlUtil.escapeJS(name);
 			window['<%= name %>'].instanceReady = true;
 
 			Liferay.component('<%= name %>', window['<%= name %>']);
-		},
+
+			Liferay.on('inputLocalized:localeChanged', this._onLocaleChangedHandler, this)
+	},
 
 		instanceReady: false,
 
@@ -187,6 +189,18 @@ name = HtmlUtil.escapeJS(name);
 			if (window['<%= name %>'].instanceReady) {
 				document.getElementById('<%= name %>').value = value || '';
 			}
+		},
+
+		_onLocaleChangedHandler: function(event) {
+			var instance = this;
+
+			var contentsLanguage = event.item.getAttribute('data-value');
+			var contentsLanguageDir = Liferay.Language.direction[contentsLanguage];
+
+			var nativeEditor = instance.getNativeEditor();
+
+			nativeEditor.setAttribute('dir', contentsLanguageDir);
+			nativeEditor.setAttribute('lang', contentsLanguage);
 		}
 	};
 

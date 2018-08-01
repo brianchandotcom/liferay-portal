@@ -79,8 +79,8 @@ public class FormStructureNestedCollectionResource
 
 		Representor.FirstStep<DDMStructure> bidirectionalModelStep =
 			ddmStructureFirstStep.addBidirectionalModel(
-				"contentSpace", "formStructures",
-				ContentSpaceIdentifier.class, DDMStructureModel::getGroupId);
+				"contentSpace", "formStructures", ContentSpaceIdentifier.class,
+				DDMStructureModel::getGroupId);
 
 		return bidirectionalModelStep.build();
 	}

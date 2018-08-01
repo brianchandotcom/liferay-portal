@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -42,10 +43,13 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
+import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -159,9 +163,20 @@ public class InitUtil {
 
 		DBManagerUtil.setDBManager(new DBManagerImpl());
 
-		// ROME
+		// XML
 
 		XmlReader.setDefaultEncoding(StringPool.UTF8);
+
+		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
+			new SecureXMLFactoryProviderUtil();
+
+		secureXMLFactoryProviderUtil.setSecureXMLFactoryProvider(
+			new SecureXMLFactoryProviderImpl());
+
+		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
+			new UnsecureSAXReaderUtil();
+
+		unsecureSAXReaderUtil.setSAXReader(new SAXReaderImpl());
 
 		if (_PRINT_TIME) {
 			System.out.println(

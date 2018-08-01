@@ -8,7 +8,6 @@
 	<theme id="classic" name="Classic">
 		<template-extension>ftl</template-extension>
 		<settings>
-			<setting configurable="true" key="bullet-style" options="dots,arrows" type="select" value="dots" />
 			<setting configurable="true" key="show-footer" type="checkbox" value="true" />
 			<setting configurable="true" key="show-header" type="checkbox" value="true" />
 			<setting configurable="true" key="show-header-search" type="checkbox" value="true" />

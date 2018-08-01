@@ -42,7 +42,6 @@
 		</property>
 		<property name="nextMethodInterceptor" ref="portalResiliencyAdvice" />
 	</bean>
-	<bean class="com.liferay.portal.security.lang.DoPrivilegedFactory" />
 	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceContextAdvice">
 		<property name="nextMethodInterceptor" ref="retryAdvice" />
 	</bean>

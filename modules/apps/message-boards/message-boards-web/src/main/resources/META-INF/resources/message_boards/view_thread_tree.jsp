@@ -51,50 +51,53 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys
 	<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<%
-List messages = treeWalker.getMessages();
-int[] range = treeWalker.getChildrenRange(message);
-
-depth++;
-
-MBMessageIterator mbMessageIterator = new MBMessageIterator(messages, range[0], range[1]);
-
-while (mbMessageIterator.hasNext()) {
-	MBMessage curMessage = mbMessageIterator.next();
-
-	if (!MBUtil.isViewableMessage(themeDisplay, curMessage, message)) {
-		continue;
-	}
-
-	boolean lastChildNode = false;
-
-	if (!mbMessageIterator.hasNext()) {
-		lastChildNode = true;
-	}
-
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(depth));
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-%>
-
-	<div class="card-tab message-container">
-		<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
-	</div>
-
-<%
-}
-%>
-
-<c:if test="<%= !thread.isLocked() && !message.isDraft() && MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) %>">
+<c:if test="<%= message.getMessageId() != treeWalker.getRoot().getMessageId() %>">
 
 	<%
-	MBMessage curMessage = message;
-	long replyToMessageId = message.getMessageId();
+	List messages = treeWalker.getMessages();
+	int[] range = treeWalker.getChildrenRange(message);
+
+	depth++;
+
+	MBMessageIterator mbMessageIterator = new MBMessageIterator(messages, range[0], range[1]);
+
+	while (mbMessageIterator.hasNext()) {
+		MBMessage curMessage = mbMessageIterator.next();
+
+		if (!MBUtil.isViewableMessage(themeDisplay, curMessage, message)) {
+			continue;
+		}
+
+		boolean lastChildNode = false;
+
+		if (!mbMessageIterator.hasNext()) {
+			lastChildNode = true;
+		}
+
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(depth));
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
 	%>
 
-	<%@ include file="/message_boards/edit_message_quick.jspf" %>
+		<div class="card-tab message-container">
+			<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
+		</div>
+
+	<%
+	}
+	%>
+
+	<c:if test="<%= !thread.isLocked() && !message.isDraft() && MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) %>">
+
+		<%
+		MBMessage curMessage = message;
+		long replyToMessageId = message.getMessageId();
+		%>
+
+		<%@ include file="/message_boards/edit_message_quick.jspf" %>
+	</c:if>
 </c:if>

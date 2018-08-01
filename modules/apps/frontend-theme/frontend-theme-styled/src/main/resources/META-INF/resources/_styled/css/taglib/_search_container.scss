@@ -48,20 +48,18 @@
 		}
 	}
 
-	.table-list {
-		tbody {
-			tr:nth-last-child(2) {
-				td, th {
-					&:first-child {
-						@if $enable-rounded {
+	@if $enable-rounded {
+		.table-list {
+			tbody {
+				tr:nth-last-child(2) {
+					td, th {
+						&:first-child {
 							border-bottom-left-radius: $table-list-border-radius;
 						}
 					}
 
 					&:last-child {
-						@if $enable-rounded {
-							border-bottom-right-radius: $table-list-border-radius;
-						}
+						border-bottom-right-radius: $table-list-border-radius;
 					}
 				}
 			}

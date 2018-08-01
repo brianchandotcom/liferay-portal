@@ -4238,6 +4238,12 @@ OSGi modules.
 ### Added
 - [LPS-84027]: Add support for `SPRING_BOOT_JAVA_OPTS` environment variable.
 
+## 5.4.104 - 2018-08-01
+
+### Added
+- [LPS-84055]: Automatically exclude Git ignored projects from executing the
+`writeArtifactPublishCommands` task.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4689,6 +4695,7 @@ OSGi modules.
 [LPS-83929]: https://issues.liferay.com/browse/LPS-83929
 [LPS-84027]: https://issues.liferay.com/browse/LPS-84027
 [LPS-84039]: https://issues.liferay.com/browse/LPS-84039
+[LPS-84055]: https://issues.liferay.com/browse/LPS-84055
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

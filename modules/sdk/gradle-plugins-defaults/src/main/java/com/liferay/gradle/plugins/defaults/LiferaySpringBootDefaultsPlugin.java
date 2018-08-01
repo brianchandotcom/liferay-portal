@@ -18,8 +18,11 @@ import com.liferay.gradle.plugins.SourceFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
+
+import java.util.Collections;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -31,9 +34,11 @@ import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
 
 import org.springframework.boot.gradle.plugin.SpringBootPlugin;
+import org.springframework.boot.gradle.run.BootRunTask;
 
 /**
  * @author Peter Shin
+ * @author Andrea Di Giorgi
  */
 public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 
@@ -48,14 +53,21 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 
 		_configureProject(project);
 
-		_addTaskRun(project);
+		BootRunTask bootRunTask = (BootRunTask)GradleUtil.getTask(
+			project, "bootRun");
+
+		_addTaskRun(bootRunTask);
+		_configureTaskBootRun(bootRunTask);
 	}
 
-	private Task _addTaskRun(Project project) {
+	private Task _addTaskRun(BootRunTask bootRunTask) {
+		Project project = bootRunTask.getProject();
+
 		Task task = project.task(ApplicationPlugin.TASK_RUN_NAME);
 
-		task.dependsOn("bootRun");
-		task.setDescription("Runs Spring Boot 'bootRun' task.");
+		task.dependsOn(bootRunTask);
+		task.setDescription(
+			"Runs Spring Boot '" + bootRunTask.getName() + "' task.");
 		task.setGroup(BasePlugin.BUILD_GROUP);
 
 		return task;
@@ -75,6 +87,14 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 			project, "project.group", _GROUP);
 
 		project.setGroup(group);
+	}
+
+	private void _configureTaskBootRun(BootRunTask bootRunTask) {
+		String springBootJavaOpts = System.getenv("SPRING_BOOT_JAVA_OPTS");
+
+		if (Validator.isNotNull(springBootJavaOpts)) {
+			bootRunTask.setJvmArgs(Collections.singleton(springBootJavaOpts));
+		}
 	}
 
 	private static final String _GROUP = "com.liferay";

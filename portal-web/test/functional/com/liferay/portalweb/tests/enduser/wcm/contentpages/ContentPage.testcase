@@ -97,9 +97,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Page Templates" />
-		</execute>
+		<execute macro="NavItem#gotoPageTemplates" />
 
 		<execute macro="LayoutPageTemplates#addCollection">
 			<var name="collectionName" value="Page Template Collection" />
@@ -126,9 +124,7 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Pages" />
-		</execute>
+		<execute macro="NavItem#gotoPages" />
 
 		<execute macro="ContentPages#addPage">
 			<var name="pageName" value="Test Page Name" />

@@ -264,7 +264,7 @@
 	<command name="_selectImportFile">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
-		<execute macro="Navigator#gotoNavItem">
+		<execute macro="NavItem#click">
 			<var name="navItem" value="Import" />
 		</execute>
 

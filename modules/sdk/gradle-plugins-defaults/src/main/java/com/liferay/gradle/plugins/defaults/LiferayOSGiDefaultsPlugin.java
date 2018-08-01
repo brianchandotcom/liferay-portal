@@ -256,6 +256,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String DOWNLOAD_COMPILED_JSP_TASK_NAME =
 		"downloadCompiledJSP";
 
+	public static final String GENERATE_POM_INFO_TASK_NAME = "generatePomInfo";
+
 	public static final String INSTALL_CACHE_TASK_NAME = "installCache";
 
 	public static final String JAR_JAVADOC_TASK_NAME = "jarJavadoc";
@@ -398,8 +400,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_addTaskCopyLibs(project);
 
-		Task generatePomInfoTask = _addTaskGeneratePomInfo(project);
-
 		Copy deployDependenciesTask = _addTaskDeployDependencies(
 			project, liferayExtension);
 
@@ -414,6 +414,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				LiferayBasePlugin.DEPLOY_TASK_NAME);
 		}
 
+		Task generatePomInfoTask = _addTaskGeneratePomInfo(project);
 		final Jar jarJSPsTask = _addTaskJarJSP(project);
 		final Jar jarJavadocTask = _addTaskJarJavadoc(project);
 		final Jar jarJSDocTask = _addTaskJarJSDoc(project);
@@ -959,7 +960,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private Task _addTaskGeneratePomInfo(final Project project) {
-		Task task = project.task(_GENERATE_POM_INFO_TASK_NAME);
+		Task task = project.task(GENERATE_POM_INFO_TASK_NAME);
 
 		task.doLast(
 			new Action<Task>() {
@@ -4255,9 +4256,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private static final String _CACHE_COMMIT_MESSAGE = "FAKE GRADLE CACHE";
 
 	private static final char _DEPENDENCY_KEY_SEPARATOR = '/';
-
-	private static final String _GENERATE_POM_INFO_TASK_NAME =
-		"generatePomInfo";
 
 	private static final String _GROUP = "com.liferay";
 

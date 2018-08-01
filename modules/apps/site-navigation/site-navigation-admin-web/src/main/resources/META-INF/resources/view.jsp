@@ -79,9 +79,16 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						</h6>
 
 						<h5>
-							<aui:a href="<%= editSiteNavigationMenuURL %>">
-								<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
-							</aui:a>
+							<c:choose>
+								<c:when test="<%= siteNavigationAdminDisplayContext.hasEditPermission() %>">
+									<aui:a href="<%= editSiteNavigationMenuURL %>">
+										<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
+								</c:otherwise>
+							</c:choose>
 						</h5>
 
 						<h6 class="text-default">
@@ -107,7 +114,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>"
-							url="<%= editSiteNavigationMenuURL %>"
+							url="<%= siteNavigationAdminDisplayContext.hasEditPermission() ? editSiteNavigationMenuURL : null %>"
 						>
 							<liferay-frontend:vertical-card-sticker-bottom>
 								<liferay-ui:user-portrait
@@ -129,7 +136,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
-						href="<%= editSiteNavigationMenuURL %>"
+						href="<%= siteNavigationAdminDisplayContext.hasEditPermission() ? editSiteNavigationMenuURL : null %>"
 						name="title"
 						value="<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>"
 					/>

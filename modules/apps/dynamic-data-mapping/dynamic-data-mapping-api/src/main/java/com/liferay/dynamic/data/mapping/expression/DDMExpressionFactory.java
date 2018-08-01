@@ -22,30 +22,65 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface DDMExpressionFactory {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createDDMExpression(String)}
+	 */
+	@Deprecated
 	public DDMExpression<Boolean> createBooleanDDMExpression(
 			String ddmExpressionString)
 		throws DDMExpressionException;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createDDMExpression(String)}
+	 */
+	@Deprecated
 	public DDMExpression<Double> createDoubleDDMExpression(
 			String ddmExpressionString)
 		throws DDMExpressionException;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createDDMExpression(String)}
+	 */
+	@Deprecated
 	public DDMExpression<Float> createFloatDDMExpression(
 			String ddmExpressionString)
 		throws DDMExpressionException;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createDDMExpression(String)}
+	 */
+	@Deprecated
 	public DDMExpression<Integer> createIntegerDDMExpression(
 			String ddmExpressionString)
 		throws DDMExpressionException;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createDDMExpression(String)}
+	 */
+	@Deprecated
 	public DDMExpression<Long> createLongDDMExpression(
 			String ddmExpressionString)
 		throws DDMExpressionException;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createDDMExpression(String)}
+	 */
+	@Deprecated
 	public DDMExpression<Number> createNumberDDMExpression(
 			String ddmExpressionString)
 		throws DDMExpressionException;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * DDMExpressionFactory#createDDMExpression(String)}
+	 */
+	@Deprecated
 	public DDMExpression<String> createStringDDMExpression(
 			String ddmExpressionString)
 		throws DDMExpressionException;

@@ -97,7 +97,7 @@ public class VocabularyNestedCollectionResource
 		).identifier(
 			AssetVocabulary::getVocabularyId
 		).addBidirectionalModel(
-			"interactionService", "vocabularies", ContentSpaceIdentifier.class,
+			"contentSpace", "vocabularies", ContentSpaceIdentifier.class,
 			AssetVocabulary::getGroupId
 		).addDate(
 			"dateCreated", AssetVocabulary::getCreateDate

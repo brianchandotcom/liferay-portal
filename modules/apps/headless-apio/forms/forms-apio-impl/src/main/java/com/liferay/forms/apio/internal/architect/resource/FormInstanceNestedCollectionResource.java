@@ -83,7 +83,7 @@ public class FormInstanceNestedCollectionResource
 		).identifier(
 			DDMFormInstance::getFormInstanceId
 		).addBidirectionalModel(
-			"interactionService", "formInstances", ContentSpaceIdentifier.class,
+			"contentSpace", "formInstances", ContentSpaceIdentifier.class,
 			DDMFormInstance::getGroupId
 		).addDate(
 			"dateCreated", DDMFormInstance::getCreateDate

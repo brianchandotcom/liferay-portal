@@ -79,7 +79,7 @@ public class ContentStructureNestedCollectionResource
 
 		Representor.FirstStep<DDMStructure> bidirectionalModelStep =
 			ddmStructureFirstStep.addBidirectionalModel(
-				"interactionService", "contentStructures",
+				"contentSpace", "contentStructures",
 				ContentSpaceIdentifier.class, DDMStructureModel::getGroupId);
 
 		return bidirectionalModelStep.build();

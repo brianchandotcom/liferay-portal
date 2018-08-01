@@ -93,7 +93,7 @@ public class KeywordNestedCollectionResource
 		).identifier(
 			AssetTag::getTagId
 		).addBidirectionalModel(
-			"interactionService", "keywords", ContentSpaceIdentifier.class,
+			"contentSpace", "keywords", ContentSpaceIdentifier.class,
 			AssetTag::getGroupId
 		).addDate(
 			"dateCreated", AssetTag::getCreateDate

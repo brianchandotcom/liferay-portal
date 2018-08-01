@@ -103,6 +103,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -645,8 +646,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 			return;
 		}
 
-		PortletDataHandler portletDataHandler =
-			portlet.getPortletDataHandlerInstance();
+		PortletDataHandler portletDataHandler = _getPortletDataHandler(
+			portletDataContext, portlet);
 
 		if ((portletDataHandler == null) ||
 			portletDataHandler.isDataPortletInstanceLevel()) {
@@ -709,25 +710,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 		String data = null;
 
 		try {
-			if (ExportImportThreadLocal.isPortletStagingInProcess() &&
-				ExportImportDateUtil.isRangeFromLastPublishDate(
-					portletDataContext)) {
-
-				String changesetPortletId = ChangesetPortletKeys.CHANGESET;
-
-				Portlet changesetPortlet = _portletLocalService.getPortletById(
-					changesetPortletId);
-
-				PortletDataHandler changesetPortletPortletDataHandlerInstance =
-					changesetPortlet.getPortletDataHandlerInstance();
-
-				data = changesetPortletPortletDataHandlerInstance.exportData(
-					portletDataContext, portletId, jxPortletPreferences);
-			}
-			else {
-				data = portletDataHandler.exportData(
-					portletDataContext, portletId, jxPortletPreferences);
-			}
+			data = portletDataHandler.exportData(
+				portletDataContext, portletId, jxPortletPreferences);
 		}
 		finally {
 			portletDataContext.setGroupId(groupId);
@@ -1406,6 +1390,41 @@ public class PortletExportControllerImpl implements PortletExportController {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	private PortletDataHandler _getPortletDataHandler(
+		PortletDataContext portletDataContext, Portlet portlet) {
+
+		Optional<Portlet> portletOptional = _replacePortlet(
+			portletDataContext, portlet);
+
+		return portletOptional.map(
+			Portlet::getPortletDataHandlerInstance).orElse(null);
+	}
+
+	private Optional<Portlet> _replacePortlet(
+		PortletDataContext portletDataContext, Portlet portlet) {
+
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			String changesetPortletId = ChangesetPortletKeys.CHANGESET;
+
+			if (ExportImportThreadLocal.isPortletStagingInProcess()) {
+				Portlet changesetPortlet = _portletLocalService.getPortletById(
+					changesetPortletId);
+
+				return Optional.of(changesetPortlet);
+			}
+
+			if (ExportImportThreadLocal.isLayoutStagingInProcess() &&
+				!changesetPortletId.equals(portlet.getPortletId())) {
+
+				return Optional.empty();
+			}
+		}
+
+		return Optional.of(portlet);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

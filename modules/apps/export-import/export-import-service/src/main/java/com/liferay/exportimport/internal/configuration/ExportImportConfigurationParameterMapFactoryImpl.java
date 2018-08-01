@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 
@@ -597,15 +596,6 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 	 * @param parameterMap the parameter map
 	 */
 	private void _replaceParameterMap(Map<String, String[]> parameterMap) {
-		boolean portletPublish = false;
-
-		if (Objects.equals(
-				MapUtil.getString(parameterMap, "javax.portlet.action"),
-				"publishPortlet")) {
-
-			portletPublish = true;
-		}
-
 		try {
 			List<Portlet> dataSiteLevelPortlets =
 				_exportImportHelper.getDataSiteLevelPortlets(
@@ -621,10 +611,6 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 
 				String[] portletDataValues = parameterMap.get(portletDataKey);
 
-				if (!portletPublish) {
-					parameterMap.remove(portletDataKey);
-				}
-
 				if (portletDataAll ||
 					((portletDataValues != null) &&
 					 GetterUtil.getBoolean(portletDataValues[0]))) {
@@ -637,14 +623,10 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 				}
 			}
 
-			if (!portletPublish) {
-				parameterMap.remove(PortletDataHandlerKeys.PORTLET_DATA_ALL);
-
-				parameterMap.put(
-					PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-						ChangesetPortletKeys.CHANGESET,
-					new String[] {StringPool.TRUE});
-			}
+			parameterMap.put(
+				PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+					ChangesetPortletKeys.CHANGESET,
+				new String[] {StringPool.TRUE});
 		}
 		catch (Exception e) {
 			throw new ExportImportRuntimeException(e);

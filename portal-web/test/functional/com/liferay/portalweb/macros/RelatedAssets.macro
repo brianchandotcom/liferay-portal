@@ -33,18 +33,6 @@
 		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT_MENULIST_ASSET" value1="${assetType}" />
 	</command>
 
-	<command name="gotoWebContentSelectionCP">
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Related Assets" />
-		</execute>
-
-		<execute macro="RelatedAssets#_selectAssetType">
-			<var name="assetType" value="${assetType}" />
-		</execute>
-	</command>
-
 	<command name="selectAsset">
 		<execute macro="RelatedAssets#_selectAssetType">
 			<var name="assetType" value="${assetType}" />

@@ -1,8 +1,4 @@
 <definition>
-	<command name="_addItemApplication">
-		<execute function="Select" locator1="SiteNavigationMenu#APPLICATION_SELECT" value1="${applicationName}" />
-	</command>
-
 	<command name="_addItemPage">
 		<execute macro="IFrame#selectConfigurationFrame" />
 
@@ -38,17 +34,6 @@
 		<execute function="Type" locator1="TextInput#URL" value1="${url}" />
 	</command>
 
-	<command name="_closeMenuSidebar">
-		<if>
-			<condition function="IsVisible" locator1="SiteNavigationMenu#SIDEBAR" />
-			<then>
-				<execute function="Click" locator1="Icon#ANGLE_RIGHT" />
-			</then>
-		</if>
-
-		<execute function="AssertNotVisible" locator1="SiteNavigationMenu#SIDEBAR" />
-	</command>
-
 	<command name="_editItemPage">
 		<if>
 			<isset var="name" />
@@ -80,19 +65,6 @@
 				</then>
 			</elseif>
 		</if>
-	</command>
-
-	<command name="_openMenuSidebar">
-		<if>
-			<condition function="IsNotVisible" locator1="SiteNavigationMenu#SIDEBAR" />
-			<then>
-				<execute function="Click" locator1="Icon#COG_PAGE">
-					<var name="key_pageName" value="${pageName}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute function="AssertVisible" locator1="SiteNavigationMenu#SIDEBAR" />
 	</command>
 
 	<command name="addItem">
@@ -154,16 +126,6 @@
 		</execute>
 
 		<execute macro="Modal#save" />
-	</command>
-
-	<command name="configureMenuFunction">
-		<execute macro="SiteNavigationMenu#_openMenuSidebar" />
-
-		<execute function="Check" locator1="SiteNavigationMenu#FUNCTION_RADIO">
-			<var name="key_function" value="${function}" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureMenuType">
@@ -305,16 +267,6 @@
 		<execute function="AssertTextEquals" locator1="SiteNavigationMenu#MENU_MARKED_AS" value1="${menuType}">
 			<var name="key_markedAs" value="${menuType}" />
 			<var name="key_rowEntry" value="${rowEntry}" />
-		</execute>
-	</command>
-
-	<command name="viewPrimaryFunctionMessage">
-		<execute macro="SiteNavigationMenu#_openMenuSidebar" />
-
-		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="The primary menu for this site is already defined." />
-
-		<execute function="AssertNotChecked" locator1="SiteNavigationMenu#FUNCTION_RADIO">
-			<var name="key_function" value="Primary" />
 		</execute>
 	</command>
 </definition>

@@ -90,12 +90,6 @@
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${pageName}" />
 	</command>
 
-	<command name="gotoEntryInDescriptiveView">
-		<var name="key_siteName" value="${entryName}" />
-
-		<execute function="AssertClick" locator1="SitesDirectory#DESCRIPTIVE_SITE_ENTRY" value1="${entryName}" />
-	</command>
-
 	<command name="gotoLoginPage">
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 	</command>
@@ -214,50 +208,6 @@
 		<execute function="Click" locator1="Link#STAGING" />
 	</command>
 
-	<command name="gotoViewPage">
-		<if>
-			<isset var="nodePort" />
-			<then>
-				<execute function="Open" locator1="http://localhost:${nodePort}" />
-			</then>
-			<elseif>
-				<not>
-					<and>
-						<isset var="defaultURL" />
-						<equals arg1="${defaultURL}" arg2="false" />
-					</and>
-				</not>
-				<then>
-					<execute macro="ProductMenuHelper#expandPanel">
-						<var name="panel" value="Site Administration" />
-					</execute>
-
-					<execute macro="ProductMenuHelper#expandCategory">
-						<var name="category" value="Build" />
-					</execute>
-
-					<execute macro="ProductMenuHelper#expandPagePagination" />
-
-					<var name="key_page" value="${pageName}" />
-
-					<execute function="Click" locator1="ProductMenu#PAGES" />
-				</then>
-			</elseif>
-		</if>
-
-		<var name="key_pageName" value="${pageName}" />
-
-		<if>
-			<contains string="${pageName}" substring="&apos;" />
-			<then>
-				<execute function="AssertClick" locator1="Home#PAGE_WITH_QUOTES" value1="${pageName}" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />
-			</else>
-		</if>
-	</command>
-
 	<command name="openNodePort">
 		<execute function="Open" locator1="http://localhost:${nodePort}" />
 	</command>
@@ -360,19 +310,6 @@
 		</if>
 
 		<execute function="Open" locator1="${baseURL}/web/${siteNameURL}-staging" />
-	</command>
-
-	<command name="openStagingURL">
-		<var name="baseURL" value="${baseURL}" />
-
-		<if>
-			<contains string="${baseURL}" substring="{baseURL}" />
-			<then>
-				<var method="PropsUtil#get('portal.url')" name="baseURL" />
-			</then>
-		</if>
-
-		<execute function="Open" locator1="${baseURL}/web/guest-staging" />
 	</command>
 
 	<command name="openURL">

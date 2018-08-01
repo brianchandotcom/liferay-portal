@@ -451,24 +451,6 @@
 		</for>
 	</command>
 
-	<command name="viewImportNoContentTrackingActions">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Campaigns" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${campaignName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Reports" />
-		</execute>
-
-		<var name="key_rowEntry" value="${metricName}" />
-
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
-	</command>
-
 	<command name="viewMetricReport">
 		<var name="key_metricName" value="${metricName}" />
 

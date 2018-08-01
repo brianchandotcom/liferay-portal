@@ -1112,14 +1112,6 @@
 		</if>
 	</command>
 
-	<command name="gotoArticlePermissionsCP">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Permissions" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-	</command>
-
 	<command name="moveArticlesToFolderCP">
 		<for list="${webContentArticlesList}" param="webContentTitle">
 			<execute function="Check" locator1="WC#ENTRY_LIST_CHECKBOX">
@@ -1552,22 +1544,6 @@
 		</for>
 	</command>
 
-	<command name="viewCategoryDescriptiveCP">
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_LIST_THUMBNAIL">
-			<var name="key_webContentTitle" value="${webContentTitle}" />
-		</execute>
-
-		<for list="${categoryNameList}" param="categoryName">
-			<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_LIST_CATEGORY" value1="${categoryName}">
-				<var name="key_categoryName" value="${categoryName}" />
-			</execute>
-		</for>
-	</command>
-
 	<command name="viewCompareVersions">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -1679,24 +1655,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="Select Web Content to make it visible" />
 	</command>
 
-	<command name="viewDisplayPagePGViaAP">
-		<execute function="MouseOver" locator1="AP#BODY" />
-
-		<execute function="Click#mouseOverClick" locator1="Icon#EDIT">
-			<var name="key_assetTitle" value="${assetTitle}" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Display Page" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="WCSelectDisplayPage#PUBLIC_DISPLAY_PAGE_ITEM" value1="${displayPageSelection}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="viewDisplayStyleCP">
 		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="cards" />
@@ -1785,16 +1743,6 @@
 		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE_HEADER" value1="${webContentTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_CONTENT" value1="${webContentContent}">
 			<var name="key_assetContent" value="${webContentContent}" />
-		</execute>
-	</command>
-
-	<command name="viewLinkToPagePGViaWCD">
-		<execute function="AssertClick" locator1="WCD#WEB_CONTENT_LINK_TO_PAGE" value1="Link to Page" />
-
-		<execute macro="Page#viewChildPageDropdown">
-			<var name="childPageName" value="${childPageName}" />
-			<var name="javaScriptPage" value="${javaScriptPage}" />
-			<var name="viewChildPageDropdown" value="${viewChildPageDropdown}" />
 		</execute>
 	</command>
 
@@ -1928,25 +1876,6 @@
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
 	</command>
 
-	<command name="viewSelectNoPGViaWCD">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="AssertElementNotPresent" locator1="WCDConfiguration#WEB_CONTENT_TABLE_TITLE">
-			<var name="key_webContentTitle" value="${webContentTitle}" />
-		</execute>
-	</command>
-
 	<command name="viewSpecificVersionHistoryCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
@@ -2028,20 +1957,6 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_LIST_TITLE" value1="${webContentTitle}" />
 			</else>
 		</if>
-	</command>
-
-	<command name="viewTranslation">
-		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="AssertTextEquals" locator1="Translation#AVAILABLE_TRANSLATIONS_LABEL" value1="Available Translations:" />
-
-		<execute function="AssertClick" locator1="Translation#AVAILABLE_TRANSLATION" value1="${localizedLanguage}">
-			<var name="key_localizedLanguage" value="${localizedLanguage}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${localizedTitle}" />
-		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${localizedContent}">
-			<var name="key_editor" value="content" />
-		</execute>
 	</command>
 
 	<command name="viewUnlocalizableTextBox">

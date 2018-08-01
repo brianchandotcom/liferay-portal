@@ -18,10 +18,4 @@
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
-
-	<command name="viewContentPG">
-		<execute function="AssertTextEquals" locator1="Fragment#CONTENT_PAGE_FRAGMENT" value1="${content}">
-			<var name="key_content" value="${content}" />
-		</execute>
-	</command>
 </definition>

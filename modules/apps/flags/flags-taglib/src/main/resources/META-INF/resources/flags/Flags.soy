@@ -92,6 +92,13 @@
 
 	<span {$wrapperAttributes}>
 		{call ClayButton.render}
+			{param ariaLabel kind="text"}
+				{if not $emptyMessage}
+					{$message}
+				{else}
+					{msg desc=""}report{/msg}
+				{/if}
+			{/param}
 			{param elementClasses: 'btn-outline-borderless btn-outline-secondary' /}
 			{param events: ['click': $_handleFlagButtonClick] /}
 			{param disabled: not $enabled /}

@@ -16,6 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.inter
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -33,6 +34,9 @@ public interface GoogleCloudVisionAssetAutoTagProviderConfiguration {
 	/**
 	 * Sets the API Key for Google Cloud Vision API.
 	 */
+	@ExtendedAttributeDefinition(
+		descriptionArguments = "https://cloud.google.com/docs/authentication/api-keys"
+	)
 	@Meta.AD(description = "api-key-description", name = "api-key")
 	public String apiKey();
 

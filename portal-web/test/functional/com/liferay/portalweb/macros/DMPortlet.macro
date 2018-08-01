@@ -178,17 +178,4 @@
 		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Documents and Media" />
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 	</command>
-
-	<command name="viewRootFolderPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
 </definition>

@@ -82,10 +82,6 @@
 		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ENABLE_RSS_SUBSCRIPTION" />
 	</command>
 
-	<command name="uncheckSocialBookmarks">
-		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
-	</command>
-
 	<command name="viewAsSiteMemberPG">
 		<var name="key_portletName" value="Blogs" />
 
@@ -203,21 +199,6 @@
 		<execute macro="MenuItem#viewPresent">
 			<var name="menuItem" value="Permissions" />
 		</execute>
-	</command>
-
-	<command name="viewScopeCP">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_AUTHOR" value1="${entryAuthor}" />
 	</command>
 
 	<command name="viewScopeDefaultNoEntryCP">

@@ -193,24 +193,6 @@
 		<execute function="AssertTextNotPresent" value1="{entryContent}" />
 	</command>
 
-	<command name="viewHiddenPG">
-		<var name="key_distributionScope" value="${distributionScope}" />
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Show">
-			<var name="key_menuItem" value="Show" />
-		</execute>
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-
-		<var name="key_entryContent" value="${entryContent}" />
-
-		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_SCOPE" value1="${distributionScope}" />
-	</command>
-
 	<command name="viewList">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -261,20 +243,5 @@
 		<var name="key_entryContent" value="${entryContent}" />
 
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContent}" />
-	</command>
-
-	<command name="viewViaManageEntriesPG">
-		<var name="key_distributionScope" value="${distributionScope}" />
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="Select" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-
-		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TYPE" value1="${announcementType}" />
-		<execute function="AssertElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_MODIFIED_DATE" />
-		<execute function="AssertElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_DISPLAY_DATE" />
-		<execute function="AssertElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_EXPIRATION_DATE" />
-		<execute function="AssertElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_MODIFIED_DATE" />
-		<execute function="AssertElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_ACTIONS" />
 	</command>
 </definition>

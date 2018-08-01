@@ -48,10 +48,6 @@
 		<execute function="Click" locator1="Button#BROWSE_IMAGE" />
 	</command>
 
-	<command name="gotoConfigurationPermissionsPG">
-		<execute function="AssertClick" locator1="NavBar#PERMISSIONS" value1="Permissions" />
-	</command>
-
 	<command name="gotoConfigurationScopePG">
 		<execute function="AssertClick" locator1="NavBar#SCOPE" value1="Scope" />
 	</command>
@@ -62,30 +58,6 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-	</command>
-
-	<command name="gotoConfigurationSetupRSSPG">
-		<execute function="AssertClick" locator1="Configuration#NAVIGATION_RSS" value1="RSS" />
-	</command>
-
-	<command name="gotoDraftCP">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
-		</execute>
-
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_STATUS" value1="Draft" />
-
-		<execute function="AssertClick" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
-	</command>
-
-	<command name="gotoDraftEditPG">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
-
-		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
 	</command>
 
 	<command name="gotoEditCP">
@@ -202,64 +174,5 @@
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
-
-	<command name="moveToRecycleBinDraftCP">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_STATUS" value1="Draft" />
-
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="PortletEntry#clickMoveToRecycleBin" />
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
-
-	<command name="viewEditLinkPG">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
-		<execute function="AssertElementPresent" locator1="Link#EDIT" />
-	</command>
-
-	<command name="viewNextEntryNavigation">
-		<execute function="AssertTextEquals" locator1="BlogsEntry#PREVIOUS_ENTRY_TITLE" value1="${nextEntryTitle}" />
-
-		<if>
-			<isset var="nextEntrySubtitle" />
-			<then>
-				<execute function="AssertTextEquals" locator1="BlogsEntry#NEXT_ENTRY_SUBTITLE" value1="${nextEntrySubtitle}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="nextEntryAuthor" />
-			<then>
-				<execute function="AssertTextEquals" locator1="BlogsEntry#NEXT_ENTRY_AUTHOR" value1="${nextEntryAuthor}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewPreviousEntryNavigation">
-		<execute function="AssertTextEquals" locator1="BlogsEntry#NEXT_ENTRY_TITLE" value1="${previousEntryTitle}" />
-
-		<if>
-			<isset var="previousEntrySubtitle" />
-			<then>
-				<execute function="AssertTextEquals" locator1="BlogsEntry#PREVIOUS_ENTRY_SUBTITLE" value1="${previousEntrySubtitle}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="previousEntryAuthor" />
-			<then>
-				<execute function="AssertTextEquals" locator1="BlogsEntry#PREVIOUS_ENTRY_AUTHOR" value1="${previousEntryAuthor}" />
-			</then>
-		</if>
 	</command>
 </definition>

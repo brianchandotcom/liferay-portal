@@ -345,24 +345,6 @@
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 	</command>
 
-	<command name="addSections">
-		<var name="sectionCount" value="0" />
-
-		<for list="${kbAdminSection}" param="kbAdminSection">
-			<var method="MathUtil#sum('${sectionCount}', '1')" name="sectionCount" />
-
-			<var name="key_counter" value="${sectionCount}" />
-
-			<execute function="Type" locator1="KnowledgeBaseArticle#ADMIN_KB_ARTICLE_SECTION" value1="${kbAdminSection}" />
-
-			<execute function="Click" locator1="Icon#ADD_REPEATABLE_ENTRY">
-				<var name="key_assetType" value="KBArticleSection" />
-			</execute>
-		</for>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
-
 	<command name="cancelAddKBArticle">
 		<execute macro="LexiconEntry#gotoAddMenuItem">
 			<var name="menuItem" value="Basic Article" />
@@ -575,48 +557,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="configureKBRatingTypePG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
-
-		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#NAVIGATION_TAB_DISPLAY_SETTINGS" value1="Display Settings" />
-
-		<if>
-			<equals arg1="${useStarRatings}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#DISPLAY_SETTINGS_USE_STAR_RATINGS_RADIO" value1="Use Star Ratings" />
-			</then>
-			<elseif>
-				<equals arg1="${useThumbsRatings}" arg2="true" />
-				<then>
-					<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#DISPLAY_SETTINGS_USE_THUMBS_RATINGS_RADIO" value1="Use Thumbs Up/Thumbs Down" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command name="configureKBSectionPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Knowledge Base Section" />
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
-
-		<execute function="AssertChecked" locator1="KnowledgeBaseSection#CONFIGURATION_SHOW_SECTIONS_TITLE_CHECKBOX" />
-
-		<execute function="AddSelection" locator1="KnowledgeBaseSection#CONFIGURATION_SECTIONS_SELECT" value1="${kbArticleSection}" />
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
 	<command name="configureKBSocialBookmarkSites">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${portletName}" />
@@ -760,24 +700,6 @@
 		</if>
 	</command>
 
-	<command name="editKBArticlePriorityCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
-
-		<execute function="Type" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbNewPriority}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ACTIONS" value1="Actions" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Save" />
-		</execute>
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbNewPriority}" />
-	</command>
-
 	<command name="editPGViaKBDisplay">
 		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Edit">
 			<var name="key_kbTool" value="Edit" />
@@ -846,33 +768,9 @@
 		</for>
 	</command>
 
-	<command name="goBackCP">
-		<execute function="AssertClick" locator1="Icon#BACK" value1="Back" />
-	</command>
-
-	<command name="goBackToSearchResultsPG">
-		<execute function="AssertClick" locator1="KnowledgeBaseSearch#SEARCH_BACK_BUTTON" value1="Back" />
-	</command>
-
 	<command name="gotoChildArticleDescriptiveDetails">
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_CHILD_ARTICLE_LINK" value1="Child Article">
 			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		</execute>
-	</command>
-
-	<command name="gotoCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertTextEquals#assertValue" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_AUTHOR" value1="${kbAuthor}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${kbArticleTitle}" />
-		</execute>
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="View" />
 		</execute>
 	</command>
 
@@ -906,18 +804,6 @@
 
 	<command name="gotoNextArticlePG">
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#NEXT" value1="${kbDisplayNextArticle}" />
-	</command>
-
-	<command name="gotoPGViaKBSearchResult">
-		<execute function="AssertClick" locator1="KnowledgeBase#KB_SEARCH_RESULTS_TITLE" value1="${kbArticleTitle}">
-			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		</execute>
-	</command>
-
-	<command name="gotoPGViaKBSection">
-		<execute function="AssertClick" locator1="KnowledgeBaseSection#KB_ARTICLE_LINK" value1="${kbArticleTitle}">
-			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		</execute>
 	</command>
 
 	<command name="gotoPreviousArticle">
@@ -1168,42 +1054,6 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="selectSectionPGViaKBSection">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
-
-		<execute function="AssertChecked" locator1="KnowledgeBaseSection#CONFIGURATION_SHOW_SECTIONS_TITLE_CHECKBOX" />
-
-		<execute function="AddSelection" locator1="KnowledgeBaseSection#CONFIGURATION_SECTIONS_SELECT" value1="${kbArticleSection}" />
-
-		<execute function="AssertSelectedLabel" locator1="KnowledgeBaseSection#CONFIGURATION_ARTICLE_DISPLAY_STYLE_SELECT" value1="Title" />
-		<execute function="AssertSelectedLabel" locator1="KnowledgeBaseSection#CONFIGURATION_ARTICLE_WINDOW_STATE_SELECT" value1="Maximized" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="setPriorityCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="Type" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
-
-		<execute function="Check" locator1="KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX" />
-
-		<execute function="Click" locator1="KnowledgeBase#MENUBAR_ACTIONS" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Save" />
-		</execute>
-
-		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="setScopeCP">
@@ -1461,11 +1311,6 @@
 		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#PRINT" />
 	</command>
 
-	<command name="viewDefaultViaKBArticlePG">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please configure this portlet to make it visible to all users." />
-		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#ARTICLE_TITLE" />
-	</command>
-
 	<command name="viewDefaultViaKBDisplayPG">
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please configure this portlet to make it visible to all users." />
 		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#DISPLAY_TITLE" />
@@ -1485,10 +1330,6 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD" value1="${kbArticleFriendlyURL}" />
-	</command>
-
-	<command name="viewImageCaptionViaContentCmd">
-		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#CONTENT_IMAGE" />
 	</command>
 
 	<command name="viewImageViaContentCmd">
@@ -1644,11 +1485,6 @@
 		<execute function="AssertTextNotPresent" value1="${kbArticleTitle}" />
 	</command>
 
-	<command name="viewNoPGViaKBSection">
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseSection#SECTIONS_TITLE" value1="General" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSection#PORTLET_BODY" value1="No articles were found" />
-	</command>
-
 	<command name="viewParentArticleHierarchyViaKBDisplayPG">
 		<var name="count" value="0" />
 
@@ -1689,24 +1525,6 @@
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${kbArticleContent}" />
-	</command>
-
-	<command name="viewSearchResultsPG">
-		<for list="${kbArticleTitleList}" param="kbArticleTitle">
-			<execute function="AssertTextEquals" locator1="KnowledgeBase#KB_SEARCH_RESULTS_TITLE" value1="${kbArticleTitle}">
-				<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="viewSectionPG">
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseSection#SECTIONS_TITLE" value1="${kbArticleSection}" />
-
-		<for list="${kbArticleTitleList}" param="kbArticleTitle">
-			<execute function="AssertTextEquals" locator1="KnowledgeBaseSection#KB_ARTICLE_LINK" value1="${kbArticleTitle}">
-				<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-			</execute>
-		</for>
 	</command>
 
 	<command name="viewSourceURLCP">

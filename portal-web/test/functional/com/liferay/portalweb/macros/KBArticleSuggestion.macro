@@ -28,42 +28,15 @@
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
-	<command name="gotoArticleCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="Click" locator1="KnowledgeBaseSuggestions#TITLE" value1="${kbSuggestionBody}" />
-	</command>
-
-	<command name="gotoSuggestionStatusInProgress">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#NAVIGATION_IN_PROGRESS" value1="IN PROGRESS (${suggestionCount})" />
-	</command>
-
 	<command name="gotoSuggestionStatusNew">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#NAVIGATION_NEW" value1="NEW (${suggestionCount})" />
 	</command>
 
-	<command name="gotoSuggestionStatusResolved">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#NAVIGATION_RESOLVED" value1="RESOLVED (${suggestionCount})" />
-	</command>
-
 	<command name="moveToInProgressStatus">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Move to In Progress" />
-			<var name="rowEntry" value="${kbSuggestionBody}" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
-
-	<command name="moveToNewStatus">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Move to New" />
 			<var name="rowEntry" value="${kbSuggestionBody}" />
 		</execute>
 
@@ -77,18 +50,6 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
-
-	<command name="viewDefaultInProgress">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No in progress suggestion was found." />
-	</command>
-
-	<command name="viewDefaultNew">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No new suggestion was found." />
-	</command>
-
-	<command name="viewDefaultResolved">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No completed suggestion was found." />
 	</command>
 
 	<command name="viewNoDuplicatePG">
@@ -105,11 +66,6 @@
 		<execute macro="PortletEntry#viewEmptyMessage">
 			<var name="entity" value="Suggestions" />
 		</execute>
-	</command>
-
-	<command name="viewNoSuggestionsPG">
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
-		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" />
 	</command>
 
 	<command name="viewPG">

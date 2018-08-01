@@ -254,30 +254,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="unbanUserCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_BANNED_USERS" value1="Banned Users" />
-
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${useScreenName}" />
-		</execute>
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Unban This User" />
-		</execute>
-
-		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_BANNED_USER" />
-		<execute function="AssertTextNotPresent" value1="${userScreenName}" />
-	</command>
-
 	<command name="viewAnonymousPostingConfigurationCP">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
@@ -323,25 +299,6 @@
 		<var name="key_siteName" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#SITE_NAME" value1="${userScreenName}" />
-	</command>
-
-	<command name="viewBanPG">
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You have been banned by the moderator." />
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
-		<execute function="AssertElementNotPresent" locator1="Button#NEW_THREAD" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#RSS_LINK" />
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="Subscribe" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_MESSAGE_BOARDS_HOME" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_RECENT_POSTS" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_MY_POSTS" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_MY_SUBSCRIPTIONS" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_STATISTICS" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_BANNED_USERS" />
-		<execute function="AssertElementNotPresent" locator1="NavBar#BASIC_SEARCH_FIELD" />
-		<execute function="AssertElementNotPresent" locator1="NavBar#BASIC_SEARCH_BUTTON" />
 	</command>
 
 	<command name="viewDefaultEmailFromCP">

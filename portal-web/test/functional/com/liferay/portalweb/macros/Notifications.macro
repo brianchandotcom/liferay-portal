@@ -149,10 +149,6 @@
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
 	</command>
 
-	<command name="viewNoLongerAppliedNotification">
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_TITLE" value1="Notification no longer applies." />
-	</command>
-
 	<command name="viewNoNotificationEntry">
 		<execute function="AssertElementNotPresent" locator1="Notifications#USER_BAR_BADGE_COUNT" />
 		<execute function="AssertElementNotPresent" locator1="Notifications#NOTIFICATIONS_CONTENT_GENERIC" />
@@ -201,14 +197,6 @@
 		<var name="key_publicationType" value="${publicationType}" />
 
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_TITLE" value1="${portletName} ${publicationType} ${contentBody}" />
-	</command>
-
-	<command name="viewUpdatedComment">
-		<var method="StringUtil#lowerCase('${assetType}')" name="assetType" />
-		<var name="key_contentBody" value="${contentBody}" />
-
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_TITLE" value1="${user} updated a ${assetType} to ${content}." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
 	</command>
 
 	<command name="viewUpdatedContent">

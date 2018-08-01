@@ -17,6 +17,10 @@
 <%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
 
 <%
+if (searchResultCssClass == null) {
+	searchResultCssClass = "table table-bordered table-hover table-striped";
+}
+
 int end = searchContainer.getEnd();
 int total = searchContainer.getTotal();
 
@@ -61,7 +65,7 @@ if (iteratorURL != null) {
 	</c:if>
 
 	<div id="<%= namespace + id %>SearchContainer">
-		<table class="table table-bordered table-hover table-striped">
+		<table class="<%= searchResultCssClass %>">
 
 		<c:if test="<%= Validator.isNotNull(summary) %>">
 			<caption class="sr-only"><%= summary %></caption>

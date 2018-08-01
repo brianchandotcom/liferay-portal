@@ -14,27 +14,21 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
- * @author arthurchan35
+ * @author Arthur Chan
  */
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
-	public void onBeforeRemove(Group group) throws ModelListenerException {
-		try {
-			PortletPreferencesLocalServiceUtil.deletePortletPreferences(
-				group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				PortletKeys.PREFS_PLID_SHARED);
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
+	public void onBeforeRemove(Group group) {
+		PortletPreferencesLocalServiceUtil.deletePortletPreferences(
+			group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+			PortletKeys.PREFS_PLID_SHARED);
 	}
 
 }

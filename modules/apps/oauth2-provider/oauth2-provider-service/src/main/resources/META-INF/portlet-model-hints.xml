@@ -78,7 +78,7 @@
 			<hint name="max-length">255</hint>
 		</field>
 		<field name="scope" type="String">
-			<hint name="max-length">255</hint>
+			<hint name="max-length">240</hint>
 		</field>
 	</model>
 </model-hints>

@@ -62,5 +62,5 @@ create table OAuth2ScopeGrant (
 	oA2AScopeAliasesId LONG,
 	applicationName VARCHAR(255) null,
 	bundleSymbolicName VARCHAR(255) null,
-	scope VARCHAR(255) null
+	scope VARCHAR(240) null
 );

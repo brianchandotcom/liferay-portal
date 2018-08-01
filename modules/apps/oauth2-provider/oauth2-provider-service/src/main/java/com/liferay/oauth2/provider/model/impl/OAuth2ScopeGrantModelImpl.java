@@ -80,7 +80,7 @@ public class OAuth2ScopeGrantModelImpl extends BaseModelImpl<OAuth2ScopeGrant>
 		TABLE_COLUMNS_MAP.put("scope", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2ScopeGrant (oAuth2ScopeGrantId LONG not null primary key,companyId LONG,oA2AScopeAliasesId LONG,applicationName VARCHAR(255) null,bundleSymbolicName VARCHAR(255) null,scope VARCHAR(255) null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2ScopeGrant (oAuth2ScopeGrantId LONG not null primary key,companyId LONG,oA2AScopeAliasesId LONG,applicationName VARCHAR(255) null,bundleSymbolicName VARCHAR(255) null,scope VARCHAR(240) null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2ScopeGrant";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2ScopeGrant.oAuth2ScopeGrantId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2ScopeGrant.oAuth2ScopeGrantId ASC";

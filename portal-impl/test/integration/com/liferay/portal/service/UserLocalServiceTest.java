@@ -15,6 +15,8 @@
 package com.liferay.portal.service;
 
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
@@ -47,6 +50,20 @@ public class UserLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testGetCompanyUsers() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		List<User> companyUsers = UserLocalServiceUtil.getCompanyUsers(
+			_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(companyUsers.toString(), 1, companyUsers.size());
+
+		User user = companyUsers.get(0);
+
+		Assert.assertFalse(user.isDefaultUser());
+	}
 
 	@Test
 	public void testGetGroupUsers() throws Exception {
@@ -169,6 +186,9 @@ public class UserLocalServiceTest {
 			_users.add(UserTestUtil.addUser());
 		}
 	}
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

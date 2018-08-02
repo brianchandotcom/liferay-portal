@@ -34,36 +34,39 @@ import java.util.regex.Pattern;
 public class LocalGitSyncUtil {
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalRepository localRepository, LocalGitBranch localGitBranch) {
+		LocalRepository localRepository, LocalGitBranch localGitBranch,
+		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
 			localRepository, "liferay", localGitBranch.getName(), "liferay",
-			localGitBranch.getSHA(), localGitBranch.getSHA());
+			localGitBranch.getSHA(), localGitBranch.getSHA(), synchronize);
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalRepository localRepository, PullRequest pullRequest) {
+		LocalRepository localRepository, PullRequest pullRequest,
+		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
 			localRepository, pullRequest.getReceiverUsername(),
 			pullRequest.getSenderBranchName(), pullRequest.getSenderUsername(),
 			pullRequest.getSenderSHA(),
-			pullRequest.getUpstreamLiferayBranchSHA());
+			pullRequest.getUpstreamLiferayBranchSHA(), synchronize);
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalRepository localRepository, Ref ref) {
+		LocalRepository localRepository, Ref ref, boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
 			localRepository, ref.getUsername(), ref.getName(),
-			ref.getUsername(), ref.getSHA(), ref.getSHA());
+			ref.getUsername(), ref.getSHA(), ref.getSHA(), synchronize);
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalRepository localRepository, String name, String sha) {
+		LocalRepository localRepository, String name, String sha,
+		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
-			localRepository, "liferay", name, "liferay", sha, sha);
+			localRepository, "liferay", name, "liferay", sha, sha, synchronize);
 	}
 
 	public static List<GitWorkingDirectory.Remote> getLocalGitRemotes(
@@ -1257,10 +1260,16 @@ public class LocalGitSyncUtil {
 	private static LocalGitBranch _createCachedLocalGitBranch(
 		LocalRepository localRepository, String receiverUsername,
 		String senderBranchName, String senderUsername, String senderBranchSHA,
-		String upstreamBranchSHA) {
+		String upstreamBranchSHA, boolean synchronize) {
 
 		GitWorkingDirectory gitWorkingDirectory =
 			localRepository.getGitWorkingDirectory();
+
+		if (synchronize) {
+			synchronizeToLocalGit(
+				gitWorkingDirectory, receiverUsername, 0, senderBranchName,
+				senderUsername, senderBranchSHA, upstreamBranchSHA);
+		}
 
 		String cacheBranchName = getCacheBranchName(
 			receiverUsername, senderUsername, senderBranchSHA,

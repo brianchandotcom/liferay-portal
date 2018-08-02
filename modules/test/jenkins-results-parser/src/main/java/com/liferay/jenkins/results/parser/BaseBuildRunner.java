@@ -81,13 +81,13 @@ public abstract class BaseBuildRunner {
 				portalHtmlURL, getTestSuiteName());
 
 			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
-				_portalLocalRepository, pullRequest);
+				_portalLocalRepository, pullRequest, synchronizeBranches());
 		}
 		else if (Ref.isValidHtmlURL(portalHtmlURL)) {
 			Ref ref = new Ref(portalHtmlURL);
 
 			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
-				_portalLocalRepository, ref);
+				_portalLocalRepository, ref, synchronizeBranches());
 		}
 		else {
 			throw new RuntimeException("Invalid html url " + portalHtmlURL);
@@ -116,6 +116,8 @@ public abstract class BaseBuildRunner {
 
 		return null;
 	}
+
+	protected abstract boolean synchronizeBranches();
 
 	private final Job _job;
 	private final List<LocalGitBranch> _localGitBranches = new ArrayList<>();

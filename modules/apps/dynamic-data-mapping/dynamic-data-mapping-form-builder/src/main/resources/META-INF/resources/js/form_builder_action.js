@@ -75,7 +75,18 @@ AUI.add(
 						return fieldsFiltered;
 					},
 
-					getValue: function() {}
+					getValue: function() {},
+
+					hideMessageField: function(index) {
+						var instance = this;
+
+						let boundingBox = instance.get('boundingBox');
+
+						var fieldMessageContainer = boundingBox.one('.target-message-' + index);
+
+						fieldMessageContainer.hide();
+						fieldMessageContainer.html('');
+					},
 				}
 			}
 		);

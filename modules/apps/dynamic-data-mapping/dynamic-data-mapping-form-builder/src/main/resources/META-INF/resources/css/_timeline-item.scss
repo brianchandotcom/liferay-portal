@@ -16,12 +16,12 @@
 			margin: 0;
 		}
 
-		.form-control {
-			margin: 8px 0;
+		.form-group, .form-group-autofit {
+			margin: 0;
 		}
 
-		.form-group {
-			margin: 0 10px;
+		.form-group-item {
+			max-width: 200px;
 		}
 
 		.rule-choose-box {

@@ -102,13 +102,21 @@
 	<li class="form-builder-rule-condition-container-{$index} timeline-item">
 		<div class="panel panel-default">
 			<div class="flex-container panel-body">
-				<h4>{$if}</h4>
+				<div class="form-group-autofit">
+					<div class="form-group-item form-group-item-label form-group-item-shrink">
+						<h4>
+							<span class="text-truncate-inline">
+								<span class="text-truncate">{$if}</span>
+							</span>
+						</h4>
+					</div>
 
-				<div class="condition-if-{$index} form-group"></div>
-				<div class="condition-operator-{$index} form-group"></div>
-				<div class="condition-the-{$index} form-group"></div>
-				<div class="condition-type-value-{$index} form-group"></div>
-				<div class="condition-type-value-options-{$index} form-group"></div>
+					<div class="condition-if-{$index} form-group-item"></div>
+					<div class="condition-operator-{$index} form-group-item"></div>
+					<div class="condition-type-{$index} form-group-item hide"></div>
+					<div class="condition-type-value-{$index} form-group-item hide"></div>
+					<div class="condition-type-value-options-{$index} form-group-item hide"></div>
+				</div>
 
 				<div class="timeline-increment">
 					<span class="timeline-icon"></span>
@@ -205,12 +213,18 @@
 	<li class="form-builder-rule-action-container-{$index} timeline-item">
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-12 flex-container ">
-						<h4>{$do}</h4>
-						<div class="action-{$index} form-group"></div>
-						<div class="container-target-action form-group target-{$index}"></div>
+				<div class="form-group-autofit">
+					<div class="form-group-item form-group-item-label form-group-item-shrink">
+						<h4>
+							<span class="text-truncate-inline">
+								<span class="text-truncate">{$do}</span>
+							</span>
+						</h4>
 					</div>
+
+					<div class="action-{$index} form-group-item"></div>
+					<div class="form-group-item form-group-item-label form-group-item-shrink hide target-message-{$index}"></div>
+					<div class="container-target-action form-group-item hide target-{$index}"></div>
 				</div>
 
 				<div class="action-rule-data-provider row">

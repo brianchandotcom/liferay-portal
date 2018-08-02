@@ -47,10 +47,12 @@ AUI.add(
 
 				instance._renderFirstOperand(index, condition, contentBox.one('.condition-if-' + index));
 				instance._renderOperator(index, condition, contentBox.one('.condition-operator-' + index));
-				instance._renderSecondOperandType(index, condition, contentBox.one('.condition-the-' + index));
+				instance._renderSecondOperandType(index, condition, contentBox.one('.condition-type-' + index));
 				instance._renderSecondOperandInput(index, condition, contentBox.one('.condition-type-value-' + index));
 				instance._renderSecondOperandSelectField(index, condition, contentBox.one('.condition-type-value-' + index));
 				instance._renderSecondOperandSelectOptions(index, condition, contentBox.one('.condition-type-value-options-' + index));
+
+				instance._updateTypeFieldVisibility(index);
 
 				instance._conditionsIndexes.push(Number(index));
 			},
@@ -487,8 +489,8 @@ AUI.add(
 					else if (fieldName.match('-condition-operator')) {
 						var operator = event.newVal[0];
 
-						instance._updateTypeFieldVisibility(index);
 						instance._updateSecondOperandType(operator, index);
+						instance._updateTypeFieldVisibility(index);
 					}
 					else if (fieldName.match('-condition-second-operand-type')) {
 						instance._updateSecondOperandFieldVisibility(index);
@@ -541,13 +543,6 @@ AUI.add(
 				instance._setVisibleToOperandField(secondOperandsInputDecimal, false);
 				instance._setVisibleToOperandField(secondOperandsInputInteger, false);
 				instance._setVisibleToOperandField(secondOperandsInputText, false);
-
-				secondOperandFields.set('value', '');
-				secondOperandOptions.set('value', '');
-				secondOperandsInputDate.set('value', '');
-				secondOperandsInputDecimal.set('value', '');
-				secondOperandsInputInteger.set('value', '');
-				secondOperandsInputText.set('value', '');
 			},
 
 			_hideSecondOperandTypeField: function(index) {
@@ -947,6 +942,11 @@ AUI.add(
 
 				var secondOperandType = instance._getSecondOperandType(index);
 
+				var contentBox = instance.get('contentBox');
+
+				var typeValueContainer = contentBox.one('.condition-type-value-' + index);
+				var typeValueOptionsContainer = contentBox.one('.condition-type-value-options-' + index);
+
 				if (secondOperandType.get('visible')) {
 					var secondOperandTypeValue = instance._getSecondOperandTypeValue(index);
 
@@ -954,9 +954,13 @@ AUI.add(
 
 					var secondOperandOptions = instance._getSecondOperand(index, 'options');
 
+					typeValueContainer.hide();
+					typeValueOptionsContainer.hide();
 					instance._hideSecondOperandField(index);
 
 					if (secondOperandTypeValue === 'field') {
+						typeValueContainer.show();
+
 						secondOperandFields.set('visible', true);
 
 						secondOperandOptions.cleanSelect();
@@ -966,12 +970,14 @@ AUI.add(
 						var secondOperand = '';
 
 						if ((options.length > 0) && instance._getFieldProperty(instance._getFirstOperandValue(index), 'type') !== 'text') {
+							typeValueOptionsContainer.show();
 							secondOperandOptions.set('options', options);
 							secondOperandOptions.set('visible', true);
 
 							secondOperandFields.cleanSelect();
 						}
 						else if (instance._getFieldProperty(instance._getFirstOperandValue(index), 'type') == 'date') {
+							typeValueContainer.show();
 							secondOperand = instance._getSecondOperand(index, 'input-date');
 
 							secondOperand.set('visible', true);
@@ -979,6 +985,8 @@ AUI.add(
 							secondOperandOptions.cleanSelect();
 						}
 						else {
+							typeValueContainer.show();
+
 							var type = instance._getFieldProperty(instance._getFirstOperandValue(index), 'dataType');
 
 							if (type == 'integer') {
@@ -1045,8 +1053,16 @@ AUI.add(
 				var secondOperandType = instance._getSecondOperandType(index);
 
 				if (secondOperandType) {
+					var contentBox = instance.get('contentBox');
+
+					var typeContainer = contentBox.one('.condition-type-' + index);
+
 					if (instance._getFirstOperandValue(index) && instance._getOperatorValue(index) && !instance._isUnaryCondition(index)) {
 						secondOperandType.set('visible', true);
+
+						typeContainer.show();
+						instance._updateSecondOperandFieldVisibility(index);
+
 					}
 					else {
 						instance._hideSecondOperandField(index);

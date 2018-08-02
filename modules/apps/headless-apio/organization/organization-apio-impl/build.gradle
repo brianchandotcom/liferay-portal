@@ -9,6 +9,7 @@ dependencies {
 	compileOnly project(":apps:headless-apio:email:email-apio-api")
 	compileOnly project(":apps:headless-apio:organization:organization-apio-api")
 	compileOnly project(":apps:headless-apio:person:person-apio-api")
+	compileOnly project(":apps:headless-apio:phone:phone-apio-api")
 	compileOnly project(":apps:headless-apio:site:site-apio-api")
 	compileOnly project(":apps:headless-apio:web-url:web-url-apio-api")
 }

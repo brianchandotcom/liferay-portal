@@ -22,6 +22,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.email.apio.architect.identifier.EmailIdentifier;
 import com.liferay.organization.apio.architect.identifier.OrganizationIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.model.Company;
@@ -104,6 +105,8 @@ public class OrganizationCollectionResource
 			).addString(
 				"addressRegion", this::_getRegion
 			).build()
+		).addRelatedCollection(
+			"emails", EmailIdentifier.class
 		).addRelatedCollection(
 			"members", PersonIdentifier.class
 		).addRelatedCollection(

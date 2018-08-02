@@ -1,4 +1,3 @@
-import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask
 import com.liferay.gradle.plugins.defaults.tasks.CopyIvyDependenciesTask
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask
 import com.liferay.gradle.plugins.util.PortalTools
@@ -13,7 +12,6 @@ buildscript {
 apply plugin: "com.liferay.source.formatter"
 apply plugin: "com.liferay.source.formatter.defaults"
 
-task buildFixPackChangeLog(type: BuildChangeLogTask)
 task formatSourceCurrentBranch(type: FormatSourceTask)
 task formatSourceLatestAuthor(type: FormatSourceTask)
 task formatSourceLocalChanges(type: FormatSourceTask)
@@ -29,25 +27,6 @@ Map<File, Properties> libDependenciesMap = libDependenciesFileTree.collectEntrie
 	Properties properties = GUtil.loadProperties(it)
 
 	[it.parentFile, properties]
-}
-
-buildFixPackChangeLog {
-	changeLogHeader = {
-		File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
-
-		Matcher matcher = (releaseInfoFile.text =~ /private static final String _VERSION = "(.+)";/)
-
-		return matcher[0][1]
-	}
-
-	changeLogFile = "../.releng/fix-pack.changelog"
-	dirs = ["../portal-impl", "../portal-kernel", "../portal-web", "../util-bridges", "../util-java", "../util-slf4j", "../util-taglib"]
-
-	if (project.hasProperty("rangeStart")) {
-		rangeStart = project.rangeStart
-	}
-
-	ticketIdPrefixes "LRQA"
 }
 
 formatSourceCurrentBranch {

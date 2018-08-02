@@ -356,6 +356,12 @@ public class TableMapperTest {
 		PortalCache<Long, long[]> leftToRightPortalCache =
 			_tableMapperImpl.leftToRightPortalCache;
 
+		Assert.assertNull(leftToRightPortalCache);
+
+		_tableMapperImpl.getRightPrimaryKeys(0);
+
+		leftToRightPortalCache = _tableMapperImpl.leftToRightPortalCache;
+
 		Class<?> clazz = leftToRightPortalCache.getClass();
 
 		Assert.assertEquals(
@@ -374,6 +380,12 @@ public class TableMapperTest {
 
 		PortalCache<Long, long[]> rightToLeftPortalCache =
 			_tableMapperImpl.rightToLeftPortalCache;
+
+		Assert.assertNull(rightToLeftPortalCache);
+
+		_tableMapperImpl.getLeftPrimaryKeys(0);
+
+		rightToLeftPortalCache = _tableMapperImpl.rightToLeftPortalCache;
 
 		clazz = rightToLeftPortalCache.getClass();
 
@@ -1560,6 +1572,18 @@ public class TableMapperTest {
 
 		Map<String, PortalCache<?, ?>> portalCaches =
 			ReflectionTestUtil.getFieldValue(multiVMPool, "_portalCaches");
+
+		Assert.assertEquals(portalCaches.toString(), 0, portalCaches.size());
+
+		tableMapper.destroy();
+
+		Assert.assertEquals(portalCaches.toString(), 0, portalCaches.size());
+
+		tableMapper.getLeftPrimaryKeys(0);
+
+		Assert.assertEquals(portalCaches.toString(), 1, portalCaches.size());
+
+		tableMapper.getRightPrimaryKeys(0);
 
 		Assert.assertEquals(portalCaches.toString(), 2, portalCaches.size());
 

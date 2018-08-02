@@ -150,7 +150,8 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			"1.0.2", "1.1.0",
 			new UpgradeDocumentLibraryTypeContent(
 				_journalArticleImageUpgradeUtil),
-			new UpgradeImageTypeContent(_imageLocalService),
+			new UpgradeImageTypeContent(
+				_imageLocalService, _journalArticleImageUpgradeUtil),
 			new UpgradeJournalArticleLocalizedValues());
 
 		registry.register(

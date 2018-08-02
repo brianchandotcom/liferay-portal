@@ -14,9 +14,8 @@
 
 package com.liferay.journal.internal.upgrade.v1_1_0;
 
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.journal.constants.JournalConstants;
+import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -26,12 +25,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ImageLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -60,8 +56,12 @@ import java.util.concurrent.Future;
  */
 public class UpgradeImageTypeContent extends UpgradeProcess {
 
-	public UpgradeImageTypeContent(ImageLocalService imageLocalService) {
+	public UpgradeImageTypeContent(
+		ImageLocalService imageLocalService,
+		JournalArticleImageUpgradeUtil journalArticleImageUpgradeUtil) {
+
 		_imageLocalService = imageLocalService;
+		_journalArticleImageUpgradeUtil = journalArticleImageUpgradeUtil;
 	}
 
 	protected String convertTypeImageElements(
@@ -90,7 +90,8 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 					continue;
 				}
 
-				long folderId = getFolderId(userId, groupId, resourcePrimKey);
+				long folderId = _journalArticleImageUpgradeUtil.getFolderId(
+					userId, groupId, resourcePrimKey);
 
 				FileEntry fileEntry = null;
 
@@ -156,7 +157,8 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 				long resourcePrimKey = rs1.getLong(3);
 				long userId = rs1.getLong(4);
 
-				long folderId = getFolderId(userId, groupId, resourcePrimKey);
+				long folderId = _journalArticleImageUpgradeUtil.getFolderId(
+					userId, groupId, resourcePrimKey);
 
 				SaveImageFileEntryCallable saveImageFileEntryCallable =
 					new SaveImageFileEntryCallable(
@@ -190,59 +192,6 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 		copyJournalArticleImagesToJournalRepository();
 
 		updateContentImages();
-	}
-
-	protected long getFolderId(long userId, long groupId, long resourcePrimKey)
-		throws PortalException {
-
-		long repositoryId = getRepositoryId(groupId);
-
-		try {
-			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-				repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				String.valueOf(resourcePrimKey));
-
-			return folder.getFolderId();
-		}
-		catch (NoSuchFolderException nsfe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get folder for " +
-						String.valueOf(resourcePrimKey),
-					nsfe);
-			}
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
-			userId, repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			String.valueOf(resourcePrimKey), serviceContext);
-
-		return folder.getFolderId();
-	}
-
-	protected long getRepositoryId(long groupId) throws PortalException {
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				groupId, JournalConstants.SERVICE_NAME);
-
-		if (repository != null) {
-			return repository.getRepositoryId();
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		repository = PortletFileRepositoryUtil.addPortletRepository(
-			groupId, JournalConstants.SERVICE_NAME, serviceContext);
-
-		return repository.getRepositoryId();
 	}
 
 	protected void updateContentImages() throws Exception {
@@ -284,6 +233,8 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 		UpgradeImageTypeContent.class);
 
 	private final ImageLocalService _imageLocalService;
+	private final JournalArticleImageUpgradeUtil
+		_journalArticleImageUpgradeUtil;
 
 	private class SaveImageFileEntryCallable implements Callable<Boolean> {
 

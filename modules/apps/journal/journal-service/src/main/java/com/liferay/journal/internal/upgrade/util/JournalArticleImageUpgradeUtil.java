@@ -14,7 +14,10 @@
 
 package com.liferay.journal.internal.upgrade.util;
 
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,7 +25,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -84,6 +91,39 @@ public class JournalArticleImageUpgradeUtil {
 		return fileEntry;
 	}
 
+	public long getFolderId(long userId, long groupId, long resourcePrimKey)
+		throws PortalException {
+
+		long repositoryId = _getRepositoryId(groupId);
+
+		try {
+			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+				repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				String.valueOf(resourcePrimKey));
+
+			return folder.getFolderId();
+		}
+		catch (NoSuchFolderException nsfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get folder for " +
+						String.valueOf(resourcePrimKey),
+					nsfe);
+			}
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			userId, repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(resourcePrimKey), serviceContext);
+
+		return folder.getFolderId();
+	}
+
 	private FileEntry _getFileEntryByDocumentLibraryURL(String url)
 		throws PortalException {
 
@@ -126,6 +166,26 @@ public class JournalArticleImageUpgradeUtil {
 
 		return _dlAppLocalService.getFileEntryByUuidAndGroupId(
 			matcher.group(1), groupId);
+	}
+
+	private long _getRepositoryId(long groupId) throws PortalException {
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				groupId, JournalConstants.SERVICE_NAME);
+
+		if (repository != null) {
+			return repository.getRepositoryId();
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		repository = PortletFileRepositoryUtil.addPortletRepository(
+			groupId, JournalConstants.SERVICE_NAME, serviceContext);
+
+		return repository.getRepositoryId();
 	}
 
 	private String _getUuidByDocumentLibraryURLWithoutUuid(String[] splitURL)

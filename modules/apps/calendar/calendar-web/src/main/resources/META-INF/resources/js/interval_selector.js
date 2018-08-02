@@ -73,6 +73,11 @@ AUI.add(
 						instance.eventHandlers = null;
 					},
 
+					setDuration: function(duration) {
+						var instance = this;
+						instance._duration = duration;
+					},
+
 					startDurationPreservation: function() {
 						var instance = this;
 

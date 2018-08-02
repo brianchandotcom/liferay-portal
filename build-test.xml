@@ -1109,6 +1109,15 @@ war.path=${app.server.portal.dir}/</echo>
 			<if>
 				<equals arg1="${test.poshi.runner.local.release}" arg2="true" />
 				<then>
+					<if>
+						<not>
+							<available file="tools/sdk" />
+						</not>
+						<then>
+							<antcall inheritAll="false" target="setup-sdk" />
+						</then>
+					</if>
+
 					<gradle-execute dir="${test.poshi.runner.src.dir}" task="deploy" />
 				</then>
 			</if>

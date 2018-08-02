@@ -396,9 +396,7 @@
 									callback(imageSrc, selectedItem);
 								}
 								else {
-									var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
-
-									editor.insertElement(el);
+									editor.insertHtml('<img src="' + imageSrc + '">');
 
 									if (isSelectionEmpty) {
 										editor.execCommand('enter');

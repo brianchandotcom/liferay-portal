@@ -346,7 +346,7 @@
 				editor.getSelection().selectElement(newFakeImage);
 			}
 			else {
-				editor.insertElement(newFakeImage);
+				editor.insertHtml(newFakeImage.getOuterHtml());
 			}
 		},
 

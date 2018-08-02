@@ -116,8 +116,7 @@ public class CSSBuilderArgs {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #setDocrootDir(File)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #setDocrootDir(File)}
 	 */
 	@Deprecated
 	public void setDocrootDir(File docrootDir) {

@@ -37,11 +37,8 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 
 <div class="site-navigation-menu-item <%= (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() > 0) ? "site-navigation-menu-item--nested" : StringPool.BLANK %> <%= (selectedSiteNavigationMenuItemId == siteNavigationMenuItemId) ? "site-navigation-menu-item--selected" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>" tabindex="0">
 	<div class="site-navigation-menu-item__content">
-		<liferay-frontend:horizontal-card
-			actionJsp="/site_navigation_menu_item_action.jsp"
-			actionJspServletContext="<%= application %>"
-		>
-			<liferay-frontend:horizontal-card-col>
+		<div class="card card-horizontal taglib-horizontal-card">
+			<div class="card-row card-row-padded">
 				<div class="card-row">
 					<div class="autofit-col site-navigation-menu-item__drag-icon">
 						<liferay-ui:icon
@@ -64,8 +61,20 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 						</h6>
 					</div>
 				</div>
-			</liferay-frontend:horizontal-card-col>
-		</liferay-frontend:horizontal-card>
+
+				<liferay-util:buffer
+					var="actionJspBuffer"
+				>
+					<liferay-util:include page="/site_navigation_menu_item_action.jsp" servletContext="<%= application %>" />
+				</liferay-util:buffer>
+
+				<c:if test="<%= Validator.isNotNull(actionJspBuffer) %>">
+					<div class="card-col-field lfr-card-actions-column">
+						<%= actionJspBuffer %>
+					</div>
+				</c:if>
+			</div>
+		</div>
 	</div>
 
 	<%

@@ -30,6 +30,15 @@ import java.util.List;
 public class ServiceBuilderBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
+	@Override
+	public int getAxisCount() {
+		if (testClasses.isEmpty() && _buildServiceCore) {
+			return 1;
+		}
+
+		return super.getAxisCount();
+	}
+
 	public boolean isBuildServiceCore() {
 		return _buildServiceCore;
 	}

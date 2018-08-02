@@ -40,6 +40,16 @@ import org.json.JSONObject;
  */
 public class PullRequest {
 
+	public static boolean isValidHtmlURL(String htmlURL) {
+		Matcher matcher = _htmlURLPattern.matcher(htmlURL);
+
+		if (matcher.find()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public PullRequest(String htmlURL) {
 		this(htmlURL, _TEST_SUITE_NAME_DEFAULT);
 	}
@@ -207,6 +217,10 @@ public class PullRequest {
 		return _jsonObject.toString(4);
 	}
 
+	public JSONObject getJSONObject() {
+		return _jsonObject;
+	}
+
 	public List<Label> getLabels() {
 		return _labels;
 	}
@@ -222,6 +236,18 @@ public class PullRequest {
 
 	public String getOwnerUsername() {
 		return _ownerUsername;
+	}
+
+	public String getReceiverUsername() {
+		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
+
+		JSONObject userJSONObject = baseJSONObject.getJSONObject("user");
+
+		return userJSONObject.getString("login");
+	}
+
+	public String getRepositoryName() {
+		return getGitHubRemoteRepositoryName();
 	}
 
 	public String getSenderBranchName() {
@@ -268,6 +294,30 @@ public class PullRequest {
 		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
 
 		return baseJSONObject.getString("sha");
+	}
+
+	public String getUpstreamLiferayBranchSHA() {
+		Ref upstreamLiferayRef = getUpstreamLiferayRef();
+
+		return upstreamLiferayRef.getSHA();
+	}
+
+	public Ref getUpstreamLiferayRef() {
+		if (_upstreamLiferayRef != null) {
+			return _upstreamLiferayRef;
+		}
+
+		_upstreamLiferayRef = new Ref(
+			JenkinsResultsParserUtil.combine(
+				"https://github.com/liferay/", getRepositoryName(), "/tree/",
+				getUpstreamBranchName()));
+
+		return _upstreamLiferayRef;
+	}
+
+	public String getURL() {
+		return JenkinsResultsParserUtil.getGitHubApiUrl(
+			_gitHubRemoteRepositoryName, _ownerUsername, "pulls/" + _number);
 	}
 
 	public boolean hasLabel(String labelName) {
@@ -512,11 +562,6 @@ public class PullRequest {
 		return _jsonObject.getString("issue_url");
 	}
 
-	protected String getURL() {
-		return JenkinsResultsParserUtil.getGitHubApiUrl(
-			_gitHubRemoteRepositoryName, _ownerUsername, "pulls/" + _number);
-	}
-
 	protected void updateGithub() {
 		JSONObject jsonObject = new JSONObject();
 
@@ -552,5 +597,6 @@ public class PullRequest {
 	private String _ownerUsername;
 	private final String _testSuiteName;
 	private TestSuiteStatus _testSuiteStatus = TestSuiteStatus.MISSING;
+	private Ref _upstreamLiferayRef;
 
 }

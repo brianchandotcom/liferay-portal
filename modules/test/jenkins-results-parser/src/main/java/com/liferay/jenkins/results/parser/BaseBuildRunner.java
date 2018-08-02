@@ -31,7 +31,80 @@ public abstract class BaseBuildRunner {
 		this.job = job;
 	}
 
+	protected PortalLocalGitBranch getPortalLocalGitBranch() {
+		return _portalLocalGitBranch;
+	}
+
+	protected PortalLocalGitBranch getPortalLocalGitBranch(
+		String portalHtmlURL) {
+
+		if (_portalLocalGitBranch != null) {
+			return _portalLocalGitBranch;
+		}
+
+		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			portalTestClassJob.getPortalGitWorkingDirectory();
+
+		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
+			portalGitWorkingDirectory.getRepositoryName(),
+			portalGitWorkingDirectory.getUpstreamBranchName());
+
+		if (!(localRepository instanceof PortalLocalRepository)) {
+			throw new RuntimeException(
+				"Invalid local repository " + localRepository);
+		}
+
+		_portalLocalRepository = (PortalLocalRepository)localRepository;
+
+		LocalGitBranch localGitBranch;
+
+		if (PullRequest.isValidHtmlURL(portalHtmlURL)) {
+			PullRequest pullRequest = new PullRequest(
+				portalHtmlURL, getTestSuiteName());
+
+			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+				_portalLocalRepository, pullRequest);
+		}
+		else if (Ref.isValidHtmlURL(portalHtmlURL)) {
+			Ref ref = new Ref(portalHtmlURL);
+
+			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+				_portalLocalRepository, ref);
+		}
+		else {
+			throw new RuntimeException("Invalid html url " + portalHtmlURL);
+		}
+
+		if (!(localGitBranch instanceof PortalLocalGitBranch)) {
+			throw new RuntimeException(
+				"Invalid local git branch " + localGitBranch);
+		}
+
+		_portalLocalGitBranch = (PortalLocalGitBranch)localGitBranch;
+
+		return _portalLocalGitBranch;
+	}
+
+	protected PortalLocalRepository getPortalLocalRepository() {
+		return _portalLocalRepository;
+	}
+
+	protected String getTestSuiteName() {
+		if (job instanceof TestSuiteJob) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)job;
+
+			return testSuiteJob.getTestSuiteName();
+		}
+
+		return null;
+	}
+
 	protected final Job job;
 	protected LocalRepository primaryLocalRepository;
+
+	private PortalLocalGitBranch _portalLocalGitBranch;
+	private PortalLocalRepository _portalLocalRepository;
 
 }

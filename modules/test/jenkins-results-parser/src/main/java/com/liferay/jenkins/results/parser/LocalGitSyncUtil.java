@@ -33,6 +33,39 @@ import java.util.regex.Pattern;
  */
 public class LocalGitSyncUtil {
 
+	public static LocalGitBranch createCachedLocalGitBranch(
+		LocalRepository localRepository, LocalGitBranch localGitBranch) {
+
+		return _createCachedLocalGitBranch(
+			localRepository, "liferay", localGitBranch.getName(), "liferay",
+			localGitBranch.getSHA(), localGitBranch.getSHA());
+	}
+
+	public static LocalGitBranch createCachedLocalGitBranch(
+		LocalRepository localRepository, PullRequest pullRequest) {
+
+		return _createCachedLocalGitBranch(
+			localRepository, pullRequest.getReceiverUsername(),
+			pullRequest.getSenderBranchName(), pullRequest.getSenderUsername(),
+			pullRequest.getSenderSHA(),
+			pullRequest.getUpstreamLiferayBranchSHA());
+	}
+
+	public static LocalGitBranch createCachedLocalGitBranch(
+		LocalRepository localRepository, Ref ref) {
+
+		return _createCachedLocalGitBranch(
+			localRepository, ref.getUsername(), ref.getName(),
+			ref.getUsername(), ref.getSHA(), ref.getSHA());
+	}
+
+	public static LocalGitBranch createCachedLocalGitBranch(
+		LocalRepository localRepository, String name, String sha) {
+
+		return _createCachedLocalGitBranch(
+			localRepository, "liferay", name, "liferay", sha, sha);
+	}
+
 	public static List<GitWorkingDirectory.Remote> getLocalGitRemotes(
 		GitWorkingDirectory gitWorkingDirectory) {
 
@@ -832,8 +865,6 @@ public class LocalGitSyncUtil {
 				getGitHubRemoteURL(
 					gitWorkingDirectory.getRepositoryName(), senderUsername));
 
-			boolean pullRequest = !upstreamBranchSHA.equals(senderBranchSHA);
-
 			String cacheBranchName = getCacheBranchName(
 				receiverUsername, senderUsername, senderBranchSHA,
 				upstreamBranchSHA);
@@ -914,7 +945,7 @@ public class LocalGitSyncUtil {
 				gitWorkingDirectory.createLocalGitBranch(
 					cacheBranchName, true, senderBranchSHA);
 
-				if (pullRequest) {
+				if (!upstreamBranchSHA.equals(senderBranchSHA)) {
 					gitWorkingDirectory.checkoutLocalGitBranch(
 						cacheLocalGitBranch);
 
@@ -1221,6 +1252,36 @@ public class LocalGitSyncUtil {
 		}
 
 		return validatedLocalGitRemoteURLs;
+	}
+
+	private static LocalGitBranch _createCachedLocalGitBranch(
+		LocalRepository localRepository, String receiverUsername,
+		String senderBranchName, String senderUsername, String senderBranchSHA,
+		String upstreamBranchSHA) {
+
+		GitWorkingDirectory gitWorkingDirectory =
+			localRepository.getGitWorkingDirectory();
+
+		String cacheBranchName = getCacheBranchName(
+			receiverUsername, senderUsername, senderBranchSHA,
+			upstreamBranchSHA);
+
+		List<GitWorkingDirectory.Remote> localGitRemotes =
+			getLocalGitRemotes(gitWorkingDirectory);
+
+		RemoteGitBranch remoteGitBranch =
+			gitWorkingDirectory.getRemoteGitBranch(
+				cacheBranchName, getRandomRemote(localGitRemotes));
+
+		if (!gitWorkingDirectory.localSHAExists(remoteGitBranch.getSHA())) {
+			gitWorkingDirectory.fetch(remoteGitBranch);
+		}
+
+		return gitWorkingDirectory.createLocalGitBranch(
+			JenkinsResultsParserUtil.combine(
+				gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
+				String.valueOf(System.currentTimeMillis())),
+			true, remoteGitBranch.getSHA());
 	}
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =

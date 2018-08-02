@@ -15,63 +15,53 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessorAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.PortalUtil;
 
-import javax.servlet.http.HttpServletRequest;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
  */
-public class BelongsToRoleFunction implements DDMExpressionFunction {
-
-	public BelongsToRoleFunction(
-		HttpServletRequest request, long groupId,
-		RoleLocalService roleLocalService,
-		UserGroupRoleLocalService userGroupRoleLocalService,
-		UserLocalService userLocalService) {
-
-		_request = request;
-		_groupId = groupId;
-		_roleLocalService = roleLocalService;
-		_userGroupRoleLocalService = userGroupRoleLocalService;
-		_userLocalService = userLocalService;
-	}
+@Component(
+	immediate = true, property = "ddm.form.evaluator.function.name=belongsTo",
+	service = DDMExpressionFunction.class
+)
+public class BelongsToRoleFunction
+	implements DDMExpressionFunction.Function1<String[], Boolean>,
+			   DDMExpressionParameterAccessorAware {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length < 1) {
-			throw new IllegalArgumentException(
-				"At least one parameter is expected");
+	public Boolean apply(String[] roles) {
+		if (_ddmExpressionParameterAccessor == null) {
+			return false;
 		}
 
 		try {
-			Company company = PortalUtil.getCompany(_request);
-			User user = PortalUtil.getUser(_request);
-
 			boolean belongsTo;
 
-			for (Object parameter : parameters) {
-				String roleName = String.valueOf(parameter);
+			long companyId = _ddmExpressionParameterAccessor.getCompanyId();
+			long groupId = _ddmExpressionParameterAccessor.getGroupId();
+			long userId = _ddmExpressionParameterAccessor.getUserId();
 
-				Role role = _roleLocalService.fetchRole(
-					company.getCompanyId(), roleName);
+			for (String roleName : roles) {
+				Role role = roleLocalService.fetchRole(companyId, roleName);
 
 				if (role == null) {
 					continue;
 				}
 
-				if (user == null) {
-					if (parameter.equals("Guest")) {
+				if (userId == 0) {
+					if (roleName.equals("Guest")) {
 						return true;
 					}
 
@@ -79,13 +69,12 @@ public class BelongsToRoleFunction implements DDMExpressionFunction {
 				}
 
 				if (role.getType() == RoleConstants.TYPE_REGULAR) {
-					belongsTo = _userLocalService.hasRoleUser(
-						company.getCompanyId(), roleName, user.getUserId(),
-						true);
+					belongsTo = userLocalService.hasRoleUser(
+						companyId, roleName, userId, true);
 				}
 				else {
-					belongsTo = _userGroupRoleLocalService.hasUserGroupRole(
-						user.getUserId(), _groupId, roleName, true);
+					belongsTo = userGroupRoleLocalService.hasUserGroupRole(
+						userId, groupId, roleName, true);
 				}
 
 				if (belongsTo) {
@@ -102,13 +91,25 @@ public class BelongsToRoleFunction implements DDMExpressionFunction {
 		return false;
 	}
 
+	@Override
+	public void setDDMExpressionParameterAccessor(
+		DDMExpressionParameterAccessor ddmExpressionParameterAccessor) {
+
+		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
+	}
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
+	@Reference
+	protected UserGroupRoleLocalService userGroupRoleLocalService;
+
+	@Reference
+	protected UserLocalService userLocalService;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BelongsToRoleFunction.class);
 
-	private final long _groupId;
-	private final HttpServletRequest _request;
-	private final RoleLocalService _roleLocalService;
-	private final UserGroupRoleLocalService _userGroupRoleLocalService;
-	private final UserLocalService _userLocalService;
+	private DDMExpressionParameterAccessor _ddmExpressionParameterAccessor;
 
 }

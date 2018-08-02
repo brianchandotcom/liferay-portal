@@ -14,43 +14,22 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 
-import java.util.List;
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
  */
-public class SetEnabledFunction extends SetPropertyFunction {
-
-	public SetEnabledFunction(
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults) {
-
-		super(ddmFormFieldEvaluationResults, "readOnly");
-	}
+@Component(
+	immediate = true, property = "ddm.form.evaluator.function.name=setEnabled",
+	service = DDMExpressionFunction.class
+)
+public class SetEnabledFunction extends SetPropertyFunction<Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
-			throw new IllegalArgumentException("Two parameters are expected");
-		}
-
-		String fieldName = parameters[0].toString();
-
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
-			getDDMFormFieldEvaluationResults(fieldName);
-
-		boolean propertyValue = (Boolean)parameters[1];
-
-		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
-				ddmFormFieldEvaluationResults) {
-
-			ddmFormFieldEvaluationResult.setReadOnly(!propertyValue);
-		}
-
-		return true;
+	protected String getPropertyName() {
+		return "readOnly";
 	}
 
 }

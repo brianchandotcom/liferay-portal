@@ -30,17 +30,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "ddm.form.evaluator.function.name=match",
 	service = DDMExpressionFunction.class
 )
-public class MatchFunction implements DDMExpressionFunction {
+public class MatchFunction
+	implements DDMExpressionFunction.Function2<String, String, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
-			throw new IllegalArgumentException("Two parameters are expected");
-		}
-
-		String value = String.valueOf(parameters[0]);
-		String regex = String.valueOf(parameters[1]);
-
+	public Boolean apply(String value, String regex) {
 		try {
 			Pattern pattern = Pattern.compile(regex);
 

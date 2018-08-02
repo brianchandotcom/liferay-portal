@@ -31,16 +31,13 @@ import org.osgi.service.component.annotations.Component;
 	property = "ddm.form.evaluator.function.name=isEmailAddress",
 	service = DDMExpressionFunction.class
 )
-public class IsEmailAddressFunction implements DDMExpressionFunction {
+public class IsEmailAddressFunction
+	implements DDMExpressionFunction.Function1<String, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 1) {
-			throw new IllegalArgumentException("One parameter is expected");
-		}
-
+	public Boolean apply(String parameter) {
 		return Stream.of(
-			StringUtil.split(parameters[0].toString(), CharPool.COMMA)
+			StringUtil.split(parameter, CharPool.COMMA)
 		).map(
 			String::trim
 		).allMatch(

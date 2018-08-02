@@ -16,6 +16,11 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 
+import java.math.BigDecimal;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -29,48 +34,16 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = DDMExpressionFunction.class
 )
-public class SumFunction implements DDMExpressionFunction {
+public class SumFunction
+	implements DDMExpressionFunction.Function1<BigDecimal[], BigDecimal> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		Object[] values = null;
-
-		if ((parameters.length == 1) && isArray(parameters[0])) {
-			values = (Object[])parameters[0];
-		}
-		else {
-			values = parameters;
-		}
-
-		double sum = 0;
-
-		boolean integerSum = true;
-
-		for (Object value : values) {
-			if (!Number.class.isInstance(value)) {
-				continue;
-			}
-
-			if (!Integer.class.isInstance(value)) {
-				integerSum = false;
-			}
-
-			Number number = (Number)value;
-
-			sum += number.doubleValue();
-		}
-
-		if (integerSum) {
-			return (int)sum;
-		}
-
-		return sum;
-	}
-
-	protected boolean isArray(Object parameter) {
-		Class<?> clazz = parameter.getClass();
-
-		return clazz.isArray();
+	public BigDecimal apply(BigDecimal[] values) {
+		return Stream.of(
+			values
+		).collect(
+			Collectors.reducing(BigDecimal.ZERO, (num1, num2) -> num1.add(num2))
+		);
 	}
 
 }

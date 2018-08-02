@@ -14,83 +14,48 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessor;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessorAware;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyRequest;
+import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyResponse;
+import com.liferay.petra.string.StringPool;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
  */
-public class GetValueFunction extends BaseDDMFormRuleFunction {
+@Component(
+	immediate = true, property = "ddm.form.evaluator.function.name=getValue",
+	service = DDMExpressionFunction.class
+)
+public class GetValueFunction
+	implements DDMExpressionFunction.Function1<String, Object>,
+			   DDMExpressionFieldAccessorAware {
 
-	public GetValueFunction(
-		Map<String, DDMFormField> ddmFormFields,
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResultsMap,
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+	@Override
+	public Object apply(String field) {
+		if (_ddmExpressionFieldAccessor == null) {
+			return StringPool.BLANK;
+		}
 
-		super(ddmFormFieldEvaluationResultsMap);
+		GetFieldPropertyRequest.Builder builder =
+			GetFieldPropertyRequest.Builder.newBuilder(field, "value");
 
-		_ddmFormFields = ddmFormFields;
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		GetFieldPropertyResponse getFieldPropertyResponse =
+			_ddmExpressionFieldAccessor.getFieldProperty(builder.build());
+
+		return getFieldPropertyResponse.getValue();
 	}
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 1) {
-			throw new IllegalArgumentException("One parameter is expected");
-		}
+	public void setDDMExpressionFieldAccessor(
+		DDMExpressionFieldAccessor ddmExpressionFieldAccessor) {
 
-		String ddmFormFieldName = parameters[0].toString();
-
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
-			getDDMFormFieldEvaluationResults(ddmFormFieldName);
-
-		Stream<DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultStream =
-				ddmFormFieldEvaluationResults.stream();
-
-		Stream<Object> valueStream = ddmFormFieldEvaluationResultStream.map(
-			result -> map(ddmFormFieldName, result.getValue()));
-
-		Set<Object> valuesSet = valueStream.collect(Collectors.toSet());
-
-		Object[] values = valuesSet.toArray();
-
-		if (values.length == 1) {
-			return values[0];
-		}
-
-		return values;
+		_ddmExpressionFieldAccessor = ddmExpressionFieldAccessor;
 	}
 
-	protected Object map(String ddmFormFieldName, Object value) {
-		DDMFormField ddmFormField = _ddmFormFields.get(ddmFormFieldName);
-
-		if (ddmFormField == null) {
-			return value;
-		}
-
-		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
-				ddmFormField.getType());
-
-		if (ddmFormFieldValueAccessor == null) {
-			return value;
-		}
-
-		return ddmFormFieldValueAccessor.map(value);
-	}
-
-	private final Map<String, DDMFormField> _ddmFormFields;
-	private final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker;
+	private DDMExpressionFieldAccessor _ddmExpressionFieldAccessor;
 
 }

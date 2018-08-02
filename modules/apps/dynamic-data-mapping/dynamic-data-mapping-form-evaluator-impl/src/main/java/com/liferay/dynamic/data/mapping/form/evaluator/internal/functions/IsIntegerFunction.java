@@ -27,16 +27,13 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "ddm.form.evaluator.function.name=isInteger",
 	service = DDMExpressionFunction.class
 )
-public class IsIntegerFunction implements DDMExpressionFunction {
+public class IsIntegerFunction
+	implements DDMExpressionFunction.Function1<Object, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 1) {
-			throw new IllegalArgumentException("One parameter is expected");
-		}
-
+	public Boolean apply(Object parameter) {
 		Integer value = NumberUtils.toInt(
-			parameters[0].toString(), Integer.MIN_VALUE);
+			parameter.toString(), Integer.MIN_VALUE);
 
 		return value != Integer.MIN_VALUE;
 	}

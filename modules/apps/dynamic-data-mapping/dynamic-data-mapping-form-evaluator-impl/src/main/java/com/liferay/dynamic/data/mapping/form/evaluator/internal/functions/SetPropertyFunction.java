@@ -14,51 +14,42 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-
-import java.util.List;
-import java.util.Map;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserver;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserverAware;
+import com.liferay.dynamic.data.mapping.expression.UpdateFieldPropertyRequest;
 
 /**
  * @author Leonardo Barros
  */
-public class SetPropertyFunction extends BaseDDMFormRuleFunction {
-
-	public SetPropertyFunction(
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResultsMap,
-		String propertyName) {
-
-		super(ddmFormFieldEvaluationResultsMap);
-
-		_propertyName = propertyName;
-	}
+public abstract class SetPropertyFunction<V>
+	implements DDMExpressionFunction.Function2<String, V, Boolean>,
+			   DDMExpressionObserverAware {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
-			throw new IllegalArgumentException("Two parameters are expected");
+	public Boolean apply(String field, V value) {
+		if (_ddmExpressionObserver == null) {
+			return false;
 		}
 
-		String ddmFormFieldName = parameters[0].toString();
+		UpdateFieldPropertyRequest.Builder builder =
+			UpdateFieldPropertyRequest.Builder.newBuilder(
+				field, getPropertyName(), value);
 
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
-			getDDMFormFieldEvaluationResults(ddmFormFieldName);
-
-		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
-				ddmFormFieldEvaluationResults) {
-
-			ddmFormFieldEvaluationResult.setProperty(
-				_propertyName, parameters[1]);
-
-			if (_propertyName.equals("value")) {
-				ddmFormFieldEvaluationResult.setProperty("valueChanged", true);
-			}
-		}
+		_ddmExpressionObserver.updateFieldProperty(builder.build());
 
 		return true;
 	}
 
-	private final String _propertyName;
+	@Override
+	public void setDDMExpressionObserver(
+		DDMExpressionObserver ddmExpressionObserver) {
+
+		_ddmExpressionObserver = ddmExpressionObserver;
+	}
+
+	protected abstract String getPropertyName();
+
+	private DDMExpressionObserver _ddmExpressionObserver;
 
 }

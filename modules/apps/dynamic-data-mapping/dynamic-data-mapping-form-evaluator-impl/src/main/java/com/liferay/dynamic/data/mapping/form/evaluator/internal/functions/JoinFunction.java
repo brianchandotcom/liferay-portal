@@ -29,20 +29,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "ddm.form.evaluator.function.name=join",
 	service = DDMExpressionFunction.class
 )
-public class JoinFunction implements DDMExpressionFunction {
+public class JoinFunction
+	implements DDMExpressionFunction.Function1<JSONArray, String> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
-			throw new IllegalArgumentException("Two parameters are expected");
-		}
-
-		if (!(parameters[0] instanceof JSONArray)) {
-			throw new IllegalArgumentException("JSONArray is expected");
-		}
-
-		JSONArray jsonArray = (JSONArray)parameters[0];
-
+	public String apply(JSONArray jsonArray) {
 		StringBundler sb = new StringBundler(jsonArray.length() * 2 - 1);
 
 		for (int i = 0; i < jsonArray.length(); i++) {

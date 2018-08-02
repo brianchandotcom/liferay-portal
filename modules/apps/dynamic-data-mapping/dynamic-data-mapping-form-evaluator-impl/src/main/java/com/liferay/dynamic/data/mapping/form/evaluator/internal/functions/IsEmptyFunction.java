@@ -28,29 +28,26 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "ddm.form.evaluator.function.name=isEmpty",
 	service = DDMExpressionFunction.class
 )
-public class IsEmptyFunction implements DDMExpressionFunction {
+public class IsEmptyFunction
+	implements DDMExpressionFunction.Function1<Object, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters == null) {
+	public Boolean apply(Object parameter) {
+		if (parameter == null) {
 			return true;
 		}
 
-		if ((parameters.length == 1) && isArray(parameters[0])) {
-			Object[] values = (Object[])parameters[0];
+		if (isArray(parameter)) {
+			Object[] values = (Object[])parameter;
 
-			if (values.length == 0) {
-				return true;
-			}
-
-			return !Stream.of(
+			return Stream.of(
 				values
-			).anyMatch(
-				Validator::isNotNull
+			).allMatch(
+				Validator::isNull
 			);
 		}
 
-		return Validator.isNull(parameters[0]);
+		return Validator.isNull(parameter);
 	}
 
 	protected boolean isArray(Object parameter) {

@@ -14,7 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserver;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserverAware;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessorAware;
+import com.liferay.dynamic.data.mapping.expression.UpdateFieldPropertyRequest;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -28,59 +33,73 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
  */
-public class SetOptionsFunction extends BaseDDMFormRuleFunction {
-
-	public SetOptionsFunction(
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults,
-		Locale locale, JSONFactory jsonFactory) {
-
-		super(ddmFormFieldEvaluationResults);
-
-		_languageId = LanguageUtil.getLanguageId(locale);
-		_jsonFactory = jsonFactory;
-	}
+@Component(
+	immediate = true, property = "ddm.form.evaluator.function.name=setOptions",
+	service = DDMExpressionFunction.class
+)
+public class SetOptionsFunction
+	implements DDMExpressionFunction.Function2<String, String, Boolean>,
+			   DDMExpressionObserverAware, DDMExpressionParameterAccessorAware {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
-			throw new IllegalArgumentException("Two parameters are expected");
+	public Boolean apply(String field, String json) {
+		if ((_ddmExpressionObserver == null) ||
+			(_ddmExpressionParameterAccessor == null)) {
+
+			return false;
 		}
 
-		List<KeyValuePair> keyValuePairs = createKeyValuePairList(
-			String.valueOf(parameters[1]));
+		UpdateFieldPropertyRequest.Builder builder =
+			UpdateFieldPropertyRequest.Builder.newBuilder(
+				field, "options",
+				createKeyValuePairList(
+					json, _ddmExpressionParameterAccessor.getLocale()));
 
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
-			getDDMFormFieldEvaluationResults(String.valueOf(parameters[0]));
-
-		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
-				ddmFormFieldEvaluationResults) {
-
-			ddmFormFieldEvaluationResult.setProperty("options", keyValuePairs);
-		}
+		_ddmExpressionObserver.updateFieldProperty(builder.build());
 
 		return true;
 	}
 
-	protected List<KeyValuePair> createKeyValuePairList(String value) {
+	@Override
+	public void setDDMExpressionObserver(
+		DDMExpressionObserver ddmExpressionObserver) {
+
+		_ddmExpressionObserver = ddmExpressionObserver;
+	}
+
+	@Override
+	public void setDDMExpressionParameterAccessor(
+		DDMExpressionParameterAccessor ddmExpressionParameterAccessor) {
+
+		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
+	}
+
+	protected List<KeyValuePair> createKeyValuePairList(
+		String value, Locale locale) {
+
+		String languageId = LanguageUtil.getLanguageId(locale);
+
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
 		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
+			JSONObject jsonObject = jsonFactory.createJSONObject(
 				String.valueOf(value));
 
 			Iterator<String> keys = jsonObject.keys();
 
 			while (keys.hasNext()) {
-				String languageId = keys.next();
+				String currentLanguageId = keys.next();
 
-				if (languageId.equals(_languageId)) {
-					JSONArray jsonArray = jsonObject.getJSONArray(languageId);
+				if (currentLanguageId.equals(languageId)) {
+					JSONArray jsonArray = jsonObject.getJSONArray(
+						currentLanguageId);
 
 					for (int i = 0; i < jsonArray.length(); i++) {
 						JSONObject optionJSONObject = jsonArray.getJSONObject(
@@ -104,9 +123,13 @@ public class SetOptionsFunction extends BaseDDMFormRuleFunction {
 		return keyValuePairs;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SetOptionsFunction.class);
+	@Reference
+	protected JSONFactory jsonFactory;
 
-	private final JSONFactory _jsonFactory;
-	private final String _languageId;
+	private static final Log _log = LogFactoryUtil.getLog(
+		SetOptionsFunction.class);
+
+	private DDMExpressionObserver _ddmExpressionObserver;
+	private DDMExpressionParameterAccessor _ddmExpressionParameterAccessor;
 
 }

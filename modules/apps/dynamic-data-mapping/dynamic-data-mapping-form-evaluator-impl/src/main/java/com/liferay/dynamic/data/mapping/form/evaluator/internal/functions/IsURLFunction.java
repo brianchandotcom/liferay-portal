@@ -26,15 +26,16 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "ddm.form.evaluator.function.name=isURL",
 	service = DDMExpressionFunction.class
 )
-public class IsURLFunction implements DDMExpressionFunction {
+public class IsURLFunction
+	implements DDMExpressionFunction.Function1<Object, Boolean> {
 
 	@Override
-	public Object evaluate(Object... parameters) {
-		if (parameters.length != 1) {
-			throw new IllegalArgumentException("One parameter is expected");
+	public Boolean apply(Object parameter) {
+		if (parameter == null) {
+			return false;
 		}
 
-		return Validator.isUrl(parameters[0].toString());
+		return Validator.isUrl(parameter.toString());
 	}
 
 }

@@ -274,7 +274,7 @@ if (portletTitleBasedNavigation) {
 							<aui:input checked="<%= !automaticURL %>" label="custom" name="automaticURL" type="radio" value="<%= false %>" />
 						</div>
 
-						<aui:field-wrapper cssClass="form-group" disabled="<%= automaticURL %>" helpMessage='<%= LanguageUtil.format(resourceBundle, "for-example-x", "<em>one-day-in-the-life-of-marion-cotillard</em>") %>' label="blog-entry-url" name="urlTitleWrapper">
+						<aui:field-wrapper cssClass="form-group" disabled="<%= automaticURL %>" helpMessage='<%= LanguageUtil.format(resourceBundle, "for-example-x", "<em>one-day-in-the-life-of-marion-cotillard</em>") %>' label="blog-entry-url" name="urlTitle">
 							<div class="form-text"><%= friendlyURLPrefix %></div>
 
 							<aui:input cssClass="input-medium" disabled="<%= automaticURL %>" ignoreRequestValue="<%= true %>" label="" name="urlTitle" prefix="/" type="text" value="<%= urlTitle %>" />

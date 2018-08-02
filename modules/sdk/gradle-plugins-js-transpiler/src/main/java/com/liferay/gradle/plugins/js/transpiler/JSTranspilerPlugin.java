@@ -55,7 +55,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		"downloadMetalCli";
 
 	/**
-	 * @deprecated As of Judson (7.1.x), moved to {@link
+	 * @deprecated As of Judson, moved to {@link
 	 *             JSTranspilerBasePlugin.JS_COMPILE_CONFIGURATION_NAME}
 	 */
 	@Deprecated

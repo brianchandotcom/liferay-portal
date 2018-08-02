@@ -42,6 +42,11 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectIndentation() throws Exception {
+		test("IncorrectIndentation.testjsp");
+	}
+
+	@Test
 	public void testMisplacedImport() throws Exception {
 		test("MisplacedImport.testjsp", "Move imports to init.jsp");
 	}

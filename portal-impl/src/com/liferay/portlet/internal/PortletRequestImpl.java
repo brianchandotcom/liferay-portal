@@ -1352,7 +1352,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 				if (pos >= 0) {
 					name = name.substring(0, pos);
-
+					
 					name = name.concat(
 						name.substring(
 							pos + privateRenderParameterNamespaceLength));

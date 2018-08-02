@@ -975,6 +975,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				if (dependency instanceof ProjectDependency) {
 					return true;
 				}
+
+				String version = dependency.getVersion();
+
+				if ((version != null) && version.equals("default")) {
+					return true;
+				}
 			}
 		}
 

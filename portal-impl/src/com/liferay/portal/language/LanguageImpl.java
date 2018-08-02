@@ -1556,7 +1556,8 @@ public class LanguageImpl implements Language, Serializable {
 		_groupLanguageCodeLocalesMapMap.remove(groupId);
 		_groupLanguageIdLocalesMap.remove(groupId);
 
-		_sendClearCacheClusterMessage(_resetAvailableGroupLocales, groupId);
+		_sendClearCacheClusterMessage(
+			_resetAvailableGroupLocalesMethodKey, groupId);
 	}
 
 	@Override
@@ -1861,8 +1862,9 @@ public class LanguageImpl implements Language, Serializable {
 		new ConcurrentHashMap<>();
 	private static final Pattern _pattern = Pattern.compile(
 		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
-	private static final MethodKey _resetAvailableGroupLocales = new MethodKey(
-		LanguageUtil.class, "resetAvailableGroupLocales", long.class);
+	private static final MethodKey _resetAvailableGroupLocalesMethodKey =
+		new MethodKey(
+			LanguageUtil.class, "resetAvailableGroupLocales", long.class);
 	private static final MethodKey _resetAvailableLocalesMethodKey =
 		new MethodKey(LanguageUtil.class, "resetAvailableLocales", long.class);
 

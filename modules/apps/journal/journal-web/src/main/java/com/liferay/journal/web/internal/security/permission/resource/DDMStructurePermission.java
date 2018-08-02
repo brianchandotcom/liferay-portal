@@ -15,6 +15,7 @@
 package com.liferay.journal.web.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -46,6 +47,27 @@ public class DDMStructurePermission {
 			permissionChecker, structureId, actionId);
 	}
 
+	public static boolean containsAddStructurePermission(
+			PermissionChecker permissionChecker, long groupId, long classNameId)
+		throws PortalException {
+
+		return _ddmPermissionSupport.containsAddStructurePermission(
+			permissionChecker, groupId, classNameId);
+	}
+
+	public static String getStructureModelResourceName(long classNameId)
+		throws PortalException {
+
+		return _ddmPermissionSupport.getStructureModelResourceName(classNameId);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMPermissionSupport(
+		DDMPermissionSupport ddmPermissionSupport) {
+
+		_ddmPermissionSupport = ddmPermissionSupport;
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)",
 		unbind = "-"
@@ -56,6 +78,7 @@ public class DDMStructurePermission {
 		_ddmStructureModelResourcePermission = modelResourcePermission;
 	}
 
+	private static DDMPermissionSupport _ddmPermissionSupport;
 	private static ModelResourcePermission<DDMStructure>
 		_ddmStructureModelResourcePermission;
 

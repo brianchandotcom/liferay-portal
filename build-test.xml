@@ -1903,7 +1903,18 @@ tell application "Safari" to quit
 				<then>
 					<ant antfile="build-test-solr.xml" inheritAll="false" target="deploy-solr" />
 
-					<ant antfile="build-test-solr.xml" inheritAll="false" target="start-solr" />
+					<condition else="${env.TEST_BATCH_NAME}" property="test.batch.name" value="${test.batch.name}">
+						<isset property="test.batch.name" />
+					</condition>
+
+					<if>
+						<not>
+							<contains string="${test.batch.name}" substring="functional" />
+						</not>
+						<then>
+							<ant antfile="build-test-solr.xml" inheritAll="false" target="start-solr" />
+						</then>
+					</if>
 				</then>
 			</if>
 		</sequential>
@@ -9765,6 +9776,19 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<then>
 				<ant antfile="build-test-solr.xml" target="start-solr" />
 			</then>
+			<elseif>
+				<isset property="env.CI_TEST_SUITE" />
+				<then>
+					<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+
+					<if>
+						<equals arg1="${suite.search.engine}" arg2="solr" />
+						<then>
+							<ant antfile="build-test-solr.xml" target="start-solr" />
+						</then>
+					</if>
+				</then>
+			</elseif>
 		</if>
 
 		<get-testcase-property property.name="test.smtp.server.enabled" />

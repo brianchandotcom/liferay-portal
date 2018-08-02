@@ -114,10 +114,10 @@ public class LocalGitSyncUtil {
 		for (final GitWorkingDirectory.Remote localGitRemote :
 				localGitRemotes) {
 
-			Callable<Object> callable = new Callable<Object>() {
+			Callable<Object> callable = new SafeCallable<Object>() {
 
 				@Override
-				public Object call() {
+				public Object safeCall() {
 					cacheBranch(
 						gitWorkingDirectory, localGitBranch, localGitRemote,
 						start);
@@ -310,10 +310,10 @@ public class LocalGitSyncUtil {
 		for (final GitWorkingDirectory.Remote localGitRemote :
 				localGitRemotes) {
 
-			Callable<Object> callable = new Callable<Object>() {
+			Callable<Object> callable = new SafeCallable<Object>() {
 
 				@Override
-				public Object call() {
+				public Object safeCall() {
 					deleteExpiredRemoteGitBranches(
 						gitWorkingDirectory, localGitRemote, start);
 
@@ -347,10 +347,10 @@ public class LocalGitSyncUtil {
 		List<Callable<Boolean>> callables = new ArrayList<>();
 
 		for (final GitWorkingDirectory.Remote remote : remotes) {
-			Callable<Boolean> callable = new Callable<Boolean>() {
+			Callable<Boolean> callable = new SafeCallable<Boolean>() {
 
 				@Override
-				public Boolean call() {
+				public Boolean safeCall() {
 					gitWorkingDirectory.deleteRemoteGitBranch(
 						remoteGitBranchName, remote);
 
@@ -527,10 +527,10 @@ public class LocalGitSyncUtil {
 		List<Callable<Boolean>> callables = new ArrayList<>();
 
 		for (final GitWorkingDirectory.Remote remote : remotes) {
-			Callable<Boolean> callable = new Callable<Boolean>() {
+			Callable<Boolean> callable = new SafeCallable<Boolean>() {
 
 				@Override
-				public Boolean call() {
+				public Boolean safeCall() {
 					RemoteGitBranch remoteGitBranch =
 						gitWorkingDirectory.pushToRemote(
 							force, localGitBranch, remoteGitBranchName, remote);
@@ -927,10 +927,10 @@ public class LocalGitSyncUtil {
 		List<Callable<String>> callables = new ArrayList<>();
 
 		for (final String localGitRemoteURL : localGitRemoteURLs) {
-			Callable<String> callable = new Callable<String>() {
+			Callable<String> callable = new SafeCallable<String>() {
 
 				@Override
-				public String call() {
+				public String safeCall() {
 					if (gitWorkingDirectory.isRemoteRepositoryAlive(
 							localGitRemoteURL)) {
 
@@ -968,5 +968,23 @@ public class LocalGitSyncUtil {
 		"cache(-([^-]+))+");
 	private static final ThreadPoolExecutor _threadPoolExecutor =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(16, true);
+
+	private abstract static class SafeCallable<T> implements Callable<T> {
+
+		@Override
+		public final T call() {
+			try {
+				return safeCall();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		public abstract T safeCall();
+
+	}
 
 }

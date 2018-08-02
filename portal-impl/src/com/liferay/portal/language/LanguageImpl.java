@@ -108,9 +108,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LanguageImpl implements Language, Serializable {
 
-	public void afterPropertiesSet() {
-	}
-
 	/**
 	 * Returns the translated pattern using the current request's locale or, if
 	 * the current request locale is not available, the server's default locale.

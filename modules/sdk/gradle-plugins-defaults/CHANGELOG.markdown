@@ -4238,7 +4238,7 @@ OSGi modules.
 ### Added
 - [LPS-84027]: Add support for `SPRING_BOOT_JAVA_OPTS` environment variable.
 
-## 5.4.104 - 2018-08-01
+## 5.5.0 - 2018-08-01
 
 ### Added
 - [LPS-84055]: Automatically exclude Git ignored projects from executing the

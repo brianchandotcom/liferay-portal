@@ -6939,6 +6939,19 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 					replace="\1"
 				/>
 
+				<if>
+					<contains string="${test.name.skip.portal.instance}" substring="." />
+					<then>
+						<propertyregex
+							input="${test.name.skip.portal.instance}"
+							override="true"
+							property="test.name.skip.portal.instance"
+							regexp=".*\.(.*)"
+							replace="\1"
+						/>
+					</then>
+				</if>
+
 				<echo append="true" file="${test.ext.properties.file}">
 					test.portal.instance=true
 					test.name.skip.portal.instance=${test.name.skip.portal.instance}

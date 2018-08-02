@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cluster.multiple.internal.jgroups;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.cluster.multiple.internal.ClusterChannel;
@@ -23,12 +24,17 @@ import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Method;
+
 import java.net.InetAddress;
+
+import java.util.List;
+import java.util.Map;
 
 import org.jgroups.JChannel;
 import org.jgroups.protocols.TP;
@@ -82,20 +88,11 @@ public class JGroupsClusterChannel implements ClusterChannel {
 			_localAddress = new AddressImpl(_jChannel.getAddress());
 
 			if (_log.isInfoEnabled()) {
-				String jChannelProperties = _jChannel.getProperties();
-
-				String excludedPropertyKeys = StringUtil.merge(
-					clusterExecutorConfiguration.excludedPropertyKeys(),
-					StringPool.PIPE);
-
-				String excludedPropertyKeysRegEx =
-					"((\\b" + excludedPropertyKeys + "\\b)=)(?:\\w*)(;|\\))";
-
 				_log.info(
 					"Create a new JGroups channel with properties " +
-						jChannelProperties.replaceAll(
-							excludedPropertyKeysRegEx,
-							"$1" + StringPool.STAR + "$3"));
+						_getJChannelProperties(
+							clusterExecutorConfiguration.
+								excludedPropertyKeys()));
 			}
 		}
 		catch (Exception e) {
@@ -195,6 +192,56 @@ public class JGroupsClusterChannel implements ClusterChannel {
 				throw new SystemException("Unable to send unicast message", e);
 			}
 		}
+	}
+
+	private String _getJChannelProperties(String[] excludedPropertyKeys)
+		throws Exception {
+
+		Method getPropsMethod = ReflectionUtil.getDeclaredMethod(
+			ProtocolStack.class, "getProps", Protocol.class);
+
+		ProtocolStack protocolStack = _jChannel.getProtocolStack();
+
+		List<Protocol> protocols = protocolStack.getProtocols();
+
+		StringBundler protocolsSB = new StringBundler(5 * protocols.size());
+
+		for (int i = protocols.size() - 1; i >= 0; i--) {
+			Protocol protocol = protocols.get(i);
+
+			if (protocolsSB.index() > 0) {
+				protocolsSB.append(StringPool.COLON);
+			}
+
+			protocolsSB.append(protocol.getName());
+
+			Map<String, String> properties =
+				(Map<String, String>)getPropsMethod.invoke(null, protocol);
+
+			for (String excludedPropertyKey : excludedPropertyKeys) {
+				properties.remove(excludedPropertyKey);
+			}
+
+			protocolsSB.append(StringPool.OPEN_PARENTHESIS);
+
+			StringBundler propertiesSB = new StringBundler(
+				4 * properties.size());
+
+			for (Map.Entry<String, String> entry : properties.entrySet()) {
+				if (propertiesSB.index() > 0) {
+					propertiesSB.append(StringPool.SEMICOLON);
+				}
+
+				propertiesSB.append(entry.getKey());
+				propertiesSB.append(StringPool.EQUAL);
+				propertiesSB.append(entry.getValue());
+			}
+
+			protocolsSB.append(propertiesSB.toString());
+			protocolsSB.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		return protocolsSB.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

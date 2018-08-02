@@ -14,7 +14,6 @@ apply plugin: "com.liferay.source.formatter"
 apply plugin: "com.liferay.source.formatter.defaults"
 
 task buildFixPackChangeLog(type: BuildChangeLogTask)
-task cleanVersionOverride
 task formatSourceCurrentBranch(type: FormatSourceTask)
 task formatSourceLatestAuthor(type: FormatSourceTask)
 task formatSourceLocalChanges(type: FormatSourceTask)
@@ -49,24 +48,6 @@ buildFixPackChangeLog {
 	}
 
 	ticketIdPrefixes "LRQA"
-}
-
-cleanVersionOverride {
-	doLast {
-		String gitRepoPath = project.properties["gitRepoPath"]
-
-		if (!gitRepoPath) {
-			throw new GradleException("Please set the property \"-PgitRepoPath\".")
-		}
-
-		File gitRepoDir = file(gitRepoPath)
-
-		FileTree bndBndFileTree = fileTree(dir: gitRepoDir, include : "**/bnd.bnd")
-
-		delete bndBndFileTree.collect {
-			new File(gitRepoDir.parentFile, ".version-override-${it.parentFile.name}.properties")
-		}
-	}
 }
 
 formatSourceCurrentBranch {

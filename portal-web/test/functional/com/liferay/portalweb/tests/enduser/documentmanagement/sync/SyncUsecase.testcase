@@ -1,6 +1,6 @@
 <definition component-name="portal-document-management">
 	<property name="osgi.app.includes" value="oauth, oauth-api, oauth-service, oauth-web, sync-encryptor, sync-oauth, sync-security, sync-service, sync-web" />
-	<property name="portal.release" value="true" />
+	<property name="portal.release" value="false" />
 	<property name="portal.upstream" value="true" />
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="test.run.environment" value="EE" />

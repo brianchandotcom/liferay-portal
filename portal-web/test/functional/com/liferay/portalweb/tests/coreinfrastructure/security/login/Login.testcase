@@ -171,26 +171,6 @@
 		</execute>
 	</command>
 
-	<command name="Login" priority="4">
-		<property name="test.name.skip.portal.instance" value="Login#Login" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG" />
-	</command>
-
-	<command name="LoginFirstTime" priority="4">
-		<execute macro="SignIn#signIn" />
-
-		<execute macro="SignIn#agreeToTermsOfUse" />
-
-		<execute macro="SignIn#setPasswordReminder" />
-
-		<execute macro="Smoke#viewWelcomePage" />
-	</command>
-
 	<command ignore="true" name="LoginWithSpanishOnlyEnabledLocale" priority="5">
 		<description message="This is a use case for LPS-72398." />
 

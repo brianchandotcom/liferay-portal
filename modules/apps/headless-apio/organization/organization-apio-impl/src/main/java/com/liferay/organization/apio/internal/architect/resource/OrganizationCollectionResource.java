@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
 
 import java.util.List;
 import java.util.Locale;
@@ -107,6 +108,8 @@ public class OrganizationCollectionResource
 			"members", PersonIdentifier.class
 		).addRelatedCollection(
 			"addresses", AddressIdentifier.class
+		).addRelatedCollection(
+			"webUrls", WebUrlIdentifier.class
 		).addRelativeURL(
 			"logo", this::_getLogoURL
 		).addString(

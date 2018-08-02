@@ -41,10 +41,14 @@ import static com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExp
 import static com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.SubtractionExpressionContext;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandler;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandlerAware;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessor;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessorAware;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserver;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserverAware;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessorAware;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionBaseVisitor;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -136,6 +140,29 @@ public class DDMExpressionEvaluatorVisitor
 
 		DDMExpressionFunction ddmExpressionFunction =
 			_ddmExpressionFunctions.get(functionName);
+
+		if (ddmExpressionFunction instanceof DDMExpressionObserverAware) {
+			((DDMExpressionObserverAware)ddmExpressionFunction).
+				setDDMExpressionObserver(_ddmExpressionObserver);
+		}
+
+		if (ddmExpressionFunction instanceof DDMExpressionActionHandlerAware) {
+			((DDMExpressionActionHandlerAware)ddmExpressionFunction).
+				setDDMExpressionActionHandler(_ddmExpressionActionHandler);
+		}
+
+		if (ddmExpressionFunction instanceof
+				DDMExpressionParameterAccessorAware) {
+
+			((DDMExpressionParameterAccessorAware)ddmExpressionFunction).
+				setDDMExpressionParameterAccessor(
+					_ddmExpressionParameterAccessor);
+		}
+
+		if (ddmExpressionFunction instanceof DDMExpressionFieldAccessorAware) {
+			((DDMExpressionFieldAccessorAware)ddmExpressionFunction).
+				setDDMExpressionFieldAccessor(_ddmExpressionFieldAccessor);
+		}
 
 		Object[] params = getFunctionParameters(context.functionParameters());
 

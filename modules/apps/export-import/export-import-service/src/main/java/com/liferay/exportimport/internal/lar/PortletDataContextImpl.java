@@ -3010,18 +3010,55 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return parentElement.attributeValue("self-path");
 	}
 
+	private long _getKeyFromMap(Map<Long, Long> map, long value) {
+		for (Map.Entry<Long, Long> entry : map.entrySet()) {
+			if (entry.getValue() == value) {
+				return entry.getKey();
+			}
+		}
+
+		return 0;
+	}
+
 	private void _importWorkflowDefinitionLink(ClassedModel classedModel)
 		throws PortletDataException {
 
 		Element stagedWorkflowDefinitionLinkElements =
 			getImportDataGroupElement(StagedWorkflowDefinitionLink.class);
 
+		Map<Long, Long> primaryKeys = (Map<Long, Long>)getNewPrimaryKeysMap(
+			classedModel.getModelClass());
+
 		for (Element stagedWorkflowDefinitionLinkElement :
 				stagedWorkflowDefinitionLinkElements.elements()) {
+
+			String referrerClassName = GetterUtil.getString(
+				stagedWorkflowDefinitionLinkElement.attributeValue(
+					"referrer-class-name"));
+			long referrerClassPK = GetterUtil.getLong(
+				stagedWorkflowDefinitionLinkElement.attributeValue(
+					"referrer-class-pk"));
+
+			String className = classedModel.getModelClassName();
+
+			long newPrimaryKey = GetterUtil.getLong(
+				classedModel.getPrimaryKeyObj());
+
+			long oldPrimaryKey = _getKeyFromMap(primaryKeys, newPrimaryKey);
+
+			if (!referrerClassName.equals(className) ||
+				(referrerClassPK != oldPrimaryKey)) {
+
+				continue;
+			}
 
 			String displayName =
 				stagedWorkflowDefinitionLinkElement.attributeValue(
 					"display-name");
+
+			if (Validator.isNull(displayName)) {
+				continue;
+			}
 
 			WorkflowDefinition workflowDefinition = null;
 
@@ -3041,44 +3078,31 @@ public class PortletDataContextImpl implements PortletDataContext {
 				return;
 			}
 
-			Element referencesElement =
-				stagedWorkflowDefinitionLinkElement.element("references");
+			WorkflowDefinitionLink workflowDefinitionLink =
+				WorkflowDefinitionLinkLocalServiceUtil.
+					fetchWorkflowDefinitionLink(
+						getCompanyId(), getScopeGroupId(), className,
+						newPrimaryKey, -1);
 
-			List<Element> referenceElements = referencesElement.elements(
-				"reference");
+			if ((workflowDefinition != null) &&
+				(workflowDefinitionLink == null)) {
 
-			for (Element referenceElement : referenceElements) {
-				String className = referenceElement.attributeValue(
-					"class-name");
-				long classPK = GetterUtil.getLong(
-					referenceElement.attributeValue("class-pk"));
+				try {
+					long importedClassPK = GetterUtil.getLong(
+						classedModel.getPrimaryKeyObj());
 
-				WorkflowDefinitionLink workflowDefinitionLink =
+					PermissionChecker permissionChecker =
+						PermissionThreadLocal.getPermissionChecker();
+
 					WorkflowDefinitionLinkLocalServiceUtil.
-						fetchWorkflowDefinitionLink(
-							getCompanyId(), getScopeGroupId(), className,
-							classPK, -1);
-
-				if ((workflowDefinition != null) &&
-					(workflowDefinitionLink == null)) {
-
-					try {
-						long importedClassPK = GetterUtil.getLong(
-							classedModel.getPrimaryKeyObj());
-
-						PermissionChecker permissionChecker =
-							PermissionThreadLocal.getPermissionChecker();
-
-						WorkflowDefinitionLinkLocalServiceUtil.
-							addWorkflowDefinitionLink(
-								permissionChecker.getUserId(), getCompanyId(),
-								getScopeGroupId(), className, importedClassPK,
-								-1, workflowDefinition.getName(),
-								workflowDefinition.getVersion());
-					}
-					catch (PortalException pe) {
-						throw new PortletDataException(pe.getMessage(), pe);
-					}
+						addWorkflowDefinitionLink(
+							permissionChecker.getUserId(), getCompanyId(),
+							getScopeGroupId(), className, importedClassPK, -1,
+							workflowDefinition.getName(),
+							workflowDefinition.getVersion());
+				}
+				catch (PortalException pe) {
+					throw new PortletDataException(pe.getMessage(), pe);
 				}
 			}
 		}

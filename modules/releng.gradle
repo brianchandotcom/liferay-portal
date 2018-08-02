@@ -873,7 +873,7 @@ private void _cherryPickPrepNext(Commit commit) {
 	String moduleTaskPrefix = _getModuleTaskPrefix(moduleDir)
 
 	if (_isGitRepoReadOnly(moduleDir)) {
-		println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} is in a read-only subrepo"
+		println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} is in a read-only subrepository"
 	}
 	else {
 		List<String> excludedTaskNames = []

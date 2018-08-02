@@ -262,6 +262,16 @@ public interface SingleModelMessageMapper<T>
 	}
 
 	/**
+	 * Maps the semantics to its JSON object representation.
+	 *
+	 * @param jsonObjectBuilder the JSON object builder for the page
+	 * @param semantics Semantics of each member provided by the collection
+	 */
+	public default void mapNestedPageSemantics(
+		JSONObjectBuilder jsonObjectBuilder, String semantics) {
+	}
+
+	/**
 	 * Maps a resource's number field to its JSON object representation.
 	 *
 	 * @param jsonObjectBuilder the JSON object builder for the model

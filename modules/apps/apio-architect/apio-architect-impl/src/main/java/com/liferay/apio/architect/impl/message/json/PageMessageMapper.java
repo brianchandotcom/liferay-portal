@@ -583,18 +583,6 @@ public interface PageMessageMapper<T>
 	}
 
 	/**
-	 * Maps the total number of elements in a nested collection to its JSON
-	 * object representation.
-	 *
-	 * @param jsonObjectBuilder the JSON object builder for the nested
-	 *        collection
-	 * @param totalCount the total number of elements in the collection
-	 */
-	public default void mapNestedPageItemTotalCount(
-		JSONObjectBuilder jsonObjectBuilder, int totalCount) {
-	}
-
-	/**
 	 * Maps the next page's URL to its JSON object representation.
 	 *
 	 * @param jsonObjectBuilder the JSON object builder for the page
@@ -635,6 +623,16 @@ public interface PageMessageMapper<T>
 	 */
 	public default void mapPreviousPageURL(
 		JSONObjectBuilder jsonObjectBuilder, String url) {
+	}
+
+	/**
+	 * Maps the semantics to its JSON object representation.
+	 *
+	 * @param jsonObjectBuilder the JSON object builder for the page
+	 * @param semantics Semantics of each member provided by the collection
+	 */
+	public default void mapSemantics(
+		JSONObjectBuilder jsonObjectBuilder, String semantics) {
 	}
 
 	/**

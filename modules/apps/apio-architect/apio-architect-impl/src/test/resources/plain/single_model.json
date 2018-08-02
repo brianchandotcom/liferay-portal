@@ -29,6 +29,20 @@
 		"link": "www.liferay.com",
 		"linked": "localhost/o/api/p/second-inner-model/second",
 		"localizedString": "Translated",
+		"nestedList": {
+			"elements": [
+				{
+					"number1": 2018,
+					"string1": "id 1",
+					"string2": "string3"
+				}, {
+					"number1": 2018,
+					"string1": "id 2",
+					"string2": "string3"
+				}
+			],
+			"numberOfItems": 2
+		},
 		"number": 42,
 		"numberList": [1, 2],
 		"relatedCollection": "localhost/o/api/p/first-inner-model/first/models",
@@ -55,6 +69,46 @@
 		},
 		"number1": 42,
 		"string1": "first"
+	},
+	"nestedList": {
+		"elements": [
+			{
+				"nested4": {
+					"nestedList": {
+						"elements": [
+							{
+								"number1": 2017
+							}, {
+								"number1": 2017
+							}
+						],
+						"numberOfItems": 2
+					},
+					"string1": "id 4"
+				},
+				"number1": 2017,
+				"string1": "id 1",
+				"string2": "string2"
+			}, {
+				"number1": 2017,
+				"string1": "id 2",
+				"string2": "string2",
+				"nested4": {
+					"nestedList": {
+						"elements": [
+							{
+								"number1": 2017
+							}, {
+								"number1": 2017
+							}
+						],
+						"numberOfItems": 2
+					},
+					"string1": "id 4"
+				}
+			}
+		],
+		"numberOfItems": 2
 	},
 	"number1": 2017,
 	"number2": 42,

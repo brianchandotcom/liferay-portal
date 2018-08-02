@@ -57,6 +57,22 @@ public class JSONLDEntryPointMessageMapper implements EntryPointMessageMapper {
 	}
 
 	@Override
+	public void mapSemantics(
+		JSONObjectBuilder jsonObjectBuilder, String semantics) {
+
+		jsonObjectBuilder.nestedField(
+			"manages", "property"
+		).stringValue(
+			"rdf:type"
+		);
+		jsonObjectBuilder.nestedField(
+			"manages", "object"
+		).stringValue(
+			"schema:" + semantics
+		);
+	}
+
+	@Override
 	public void onFinish(
 		JSONObjectBuilder jsonObjectBuilder, EntryPoint entryPoint) {
 

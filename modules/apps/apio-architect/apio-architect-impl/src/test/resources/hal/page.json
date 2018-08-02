@@ -53,6 +53,50 @@
 						},
 						"number1": 42,
 						"string1": "1"
+					},
+					"nestedList": {
+						"_embedded": [
+							{
+								"_embedded": {
+									"nested4": {
+										"string1": "id 4"
+									},
+									"nestedList": {
+										"_embedded": [
+											{
+												"number1": 2017
+											}, {
+												"number1": 2017
+											}
+										],
+										"total": 2
+									}
+								},
+								"number1": 2017,
+								"string1": "id 1",
+								"string2": "string2"
+							}, {
+								"number1": 2017,
+								"string1": "id 2",
+								"string2": "string2",
+								"_embedded": {
+									"nested4": {
+										"string1": "id 4"
+									},
+									"nestedList": {
+										"_embedded": [
+											{
+												"number1": 2017
+											}, {
+												"number1": 2017
+											}
+										],
+										"total": 2
+									}
+								}
+							}
+						],
+						"total": 2
 					}
 				},
 				"_links": {
@@ -139,6 +183,50 @@
 						},
 						"number1": 42,
 						"string1": "2"
+					},
+					"nestedList": {
+						"_embedded": [
+							{
+								"_embedded": {
+									"nested4": {
+										"string1": "id 4"
+									},
+									"nestedList": {
+										"_embedded": [
+											{
+												"number1": 2017
+											}, {
+												"number1": 2017
+											}
+										],
+										"total": 2
+									}
+								},
+								"number1": 2017,
+								"string1": "id 1",
+								"string2": "string2"
+							}, {
+								"number1": 2017,
+								"string1": "id 2",
+								"string2": "string2",
+								"_embedded": {
+									"nested4": {
+										"string1": "id 4"
+									},
+									"nestedList": {
+										"_embedded": [
+											{
+												"number1": 2017
+											}, {
+												"number1": 2017
+											}
+										],
+										"total": 2
+									}
+								}
+							}
+						],
+						"total": 2
 					}
 				},
 				"_links": {
@@ -225,6 +313,50 @@
 						},
 						"number1": 42,
 						"string1": "3"
+					},
+					"nestedList": {
+						"_embedded": [
+							{
+								"_embedded": {
+									"nested4": {
+										"string1": "id 4"
+									},
+									"nestedList": {
+										"_embedded": [
+											{
+												"number1": 2017
+											}, {
+												"number1": 2017
+											}
+										],
+										"total": 2
+									}
+								},
+								"number1": 2017,
+								"string1": "id 1",
+								"string2": "string2"
+							}, {
+								"number1": 2017,
+								"string1": "id 2",
+								"string2": "string2",
+								"_embedded": {
+									"nested4": {
+										"string1": "id 4"
+									},
+									"nestedList": {
+										"_embedded": [
+											{
+												"number1": 2017
+											}, {
+												"number1": 2017
+											}
+										],
+										"total": 2
+									}
+								}
+							}
+						],
+						"total": 2
 					}
 				},
 				"_links": {

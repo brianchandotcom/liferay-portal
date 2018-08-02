@@ -14,6 +14,7 @@
 
 package com.liferay.apio.architect.impl.message.json.hal;
 
+import com.liferay.apio.architect.impl.list.FunctionalList;
 import com.liferay.apio.architect.impl.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.impl.message.json.PageMessageMapper;
 import com.liferay.apio.architect.impl.message.json.SingleModelMessageMapper;
@@ -21,6 +22,7 @@ import com.liferay.apio.architect.impl.wiring.osgi.manager.representable.Represe
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.single.model.SingleModel;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
@@ -153,6 +155,34 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 			).add(
 				itemJSONObjectBuilder
 			)
+		);
+	}
+
+	@Override
+	public void onFinishNestedCollection(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder collectionJsonObjectBuilder, String fieldName,
+		List<?> list, FunctionalList<String> embeddedPathElements) {
+
+		singleModelJSONObjectBuilder.field(
+			"_embedded"
+		).field(
+			fieldName
+		).objectValue(
+			collectionJsonObjectBuilder
+		);
+	}
+
+	@Override
+	public void onFinishNestedCollectionItem(
+		JSONObjectBuilder collectionJsonObjectBuilder,
+		JSONObjectBuilder itemJSONObjectBuilder, SingleModel<?> singleModel) {
+
+		collectionJsonObjectBuilder.field(
+			"_embedded"
+		).arrayValue(
+		).add(
+			itemJSONObjectBuilder
 		);
 	}
 

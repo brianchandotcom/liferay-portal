@@ -50,6 +50,44 @@
 			},
 			"number1": 42,
 			"string1": "first"
+		},
+		"nestedList" : {
+			"total" : 2,
+			"_embedded" : [ {
+					"number1" : 2017,
+					"string1" : "id 1",
+					"string2" : "string2",
+					"_embedded" : {
+						"nested4" : {
+							"string1" : "id 4"
+						},
+						"nestedList" : {
+							"total" : 2,
+							"_embedded" : [ {
+									"number1" : 2017
+								}, {
+									"number1" : 2017
+								} ]
+						}
+					}
+				}, {
+					"_embedded" : {
+						"nested4" : {
+							"string1" : "id 4"
+						},
+						"nestedList" : {
+							"total" : 2,
+							"_embedded" : [ {
+									"number1" : 2017
+								}, {
+									"number1" : 2017
+								} ]
+						}
+					},
+					"number1" : 2017,
+					"string1" : "id 2",
+					"string2" : "string2"
+				} ]
 		}
 	},
 	"_links": {

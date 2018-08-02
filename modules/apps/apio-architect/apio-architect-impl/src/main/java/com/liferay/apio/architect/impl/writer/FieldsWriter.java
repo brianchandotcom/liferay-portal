@@ -20,12 +20,18 @@ import static com.liferay.apio.architect.impl.url.URLCreator.createBinaryURL;
 import static com.liferay.apio.architect.impl.url.URLCreator.createNestedCollectionURL;
 import static com.liferay.apio.architect.impl.url.URLCreator.createSingleURL;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 import com.liferay.apio.architect.alias.representor.FieldFunction;
+import com.liferay.apio.architect.alias.representor.NestedListFieldFunction;
+import com.liferay.apio.architect.consumer.TriConsumer;
 import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.apio.architect.impl.alias.BaseRepresentorFunction;
 import com.liferay.apio.architect.impl.alias.SingleModelFunction;
 import com.liferay.apio.architect.impl.list.FunctionalList;
 import com.liferay.apio.architect.impl.request.RequestInfo;
 import com.liferay.apio.architect.impl.response.control.Fields;
+import com.liferay.apio.architect.impl.single.model.SingleModelImpl;
 import com.liferay.apio.architect.impl.unsafe.Unsafe;
 import com.liferay.apio.architect.related.RelatedCollection;
 import com.liferay.apio.architect.related.RelatedModel;
@@ -34,6 +40,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -42,6 +49,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.slf4j.Logger;
 
 /**
  * Writes the different fields declared on a {@link Representor}.
@@ -235,11 +244,13 @@ public class FieldsWriter<T> {
 				return fieldsPredicate.test(fieldFunction.getKey());
 			}
 		).forEach(
-			fieldFunction -> {
-				U u = fieldFunction.apply(_singleModel.getModel());
+			fieldFunction -> _tryToWriteField(
+				fieldFunction.getKey(),
+				key -> {
+					U u = fieldFunction.apply(_singleModel.getModel());
 
-				biConsumer.accept(fieldFunction.getKey(), u);
-			}
+					biConsumer.accept(key, u);
+				})
 		);
 	}
 
@@ -271,6 +282,94 @@ public class FieldsWriter<T> {
 			writeField(
 				function -> function.apply(_requestInfo.getAcceptLanguage()),
 				biConsumer));
+	}
+
+	public <S> void writeNestedLists(
+		BaseRepresentorFunction baseRepresentorFunction,
+		SingleModel<S> singleModel,
+		BiConsumer<NestedListFieldFunction, List<?>> biConsumer) {
+
+		baseRepresentorFunction.apply(
+			singleModel.getResourceName()
+		).<BaseRepresentor<S>>map(
+			Unsafe::unsafeCast
+		).map(
+			BaseRepresentor::getNestedListFieldFunctions
+		).map(
+			List::stream
+		).orElseGet(
+			Stream::empty
+		).forEach(
+			nestedListFieldFunction -> {
+				Predicate<String> fieldsPredicate = getFieldsPredicate();
+
+				String key = nestedListFieldFunction.getKey();
+
+				if (!fieldsPredicate.test(key)) {
+					return;
+				}
+
+				List<?> list = nestedListFieldFunction.apply(
+					singleModel.getModel());
+
+				if (list == null) {
+					return;
+				}
+
+				biConsumer.accept(nestedListFieldFunction, list);
+			}
+		);
+	}
+
+	public <S, U> void writeNestedResources(
+		BaseRepresentorFunction baseRepresentorFunction,
+		SingleModel<U> singleModel, FunctionalList<String> embeddedPathElements,
+		TriConsumer<SingleModel<S>, FunctionalList<String>,
+			BaseRepresentorFunction> triConsumer) {
+
+		baseRepresentorFunction.apply(
+			singleModel.getResourceName()
+		).<BaseRepresentor<U>>map(
+			Unsafe::unsafeCast
+		).map(
+			BaseRepresentor::getNestedFieldFunctions
+		).map(
+			List::stream
+		).orElseGet(
+			Stream::empty
+		).forEach(
+			nestedFieldFunction -> {
+				Predicate<String> fieldsPredicate = getFieldsPredicate();
+
+				String key = nestedFieldFunction.getKey();
+
+				if (!fieldsPredicate.test(key)) {
+					return;
+				}
+
+				Object mappedModel = nestedFieldFunction.apply(
+					singleModel.getModel());
+
+				if (mappedModel == null) {
+					return;
+				}
+
+				FunctionalList<String> embeddedNestedPathElements =
+					new FunctionalList<>(
+						embeddedPathElements, nestedFieldFunction.getKey());
+
+				SingleModelImpl nestedSingleModel = new SingleModelImpl<>(
+					mappedModel, "", Collections.emptyList());
+
+				BaseRepresentorFunction nestedRepresentorFunction =
+					__ -> Optional.of(
+						nestedFieldFunction.getNestedRepresentor());
+
+				triConsumer.accept(
+					nestedSingleModel, embeddedNestedPathElements,
+					nestedRepresentorFunction);
+			}
+		);
 	}
 
 	/**
@@ -326,7 +425,8 @@ public class FieldsWriter<T> {
 		FunctionalList<String> embeddedPathElements = new FunctionalList<>(
 			parentEmbeddedPathElements, key);
 
-		biConsumer.accept(url, embeddedPathElements);
+		_tryToWriteField(
+			key, __ -> biConsumer.accept(url, embeddedPathElements));
 	}
 
 	/**
@@ -457,7 +557,8 @@ public class FieldsWriter<T> {
 		).map(
 			path -> createSingleURL(_requestInfo.getApplicationURL(), path)
 		).ifPresent(
-			url -> biConsumer.accept(url, embeddedPathElements)
+			url -> _tryToWriteField(
+				key, __ -> biConsumer.accept(url, embeddedPathElements))
 		);
 	}
 
@@ -557,8 +658,20 @@ public class FieldsWriter<T> {
 		consumer.accept(_baseRepresentor.getTypes());
 	}
 
+	private void _tryToWriteField(String key, Consumer<String> consumer) {
+		try {
+			consumer.accept(key);
+		}
+		catch (Exception e) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug("Can't write field" + key, e);
+			}
+		}
+	}
+
 	private final BaseRepresentor<T> _baseRepresentor;
 	private final FunctionalList<String> _embeddedPathElements;
+	private final Logger _logger = getLogger(getClass());
 	private final Path _path;
 	private final RequestInfo _requestInfo;
 	private final SingleModel<T> _singleModel;

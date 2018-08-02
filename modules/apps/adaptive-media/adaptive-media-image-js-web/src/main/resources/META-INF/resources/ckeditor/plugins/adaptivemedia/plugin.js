@@ -121,7 +121,7 @@
 					el = instance._getImgElement(imageSrc, selectedItem, fileEntryAttributeName);
 				}
 
-				editor.insertElement(el);
+				editor.insertHtml(el.getOuterHtml());
 
 				if (isSelectionEmpty) {
 					editor.execCommand('enter');

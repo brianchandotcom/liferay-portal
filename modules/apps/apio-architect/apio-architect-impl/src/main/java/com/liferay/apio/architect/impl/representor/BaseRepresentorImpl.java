@@ -151,6 +151,11 @@ public abstract class BaseRepresentorImpl<T> implements BaseRepresentor<T> {
 	}
 
 	@Override
+	public String getPrimaryType() {
+		return primaryType;
+	}
+
+	@Override
 	public List<RelatedModel<T, ?>> getRelatedModels() {
 		return relatedModels;
 	}
@@ -447,6 +452,8 @@ public abstract class BaseRepresentorImpl<T> implements BaseRepresentor<T> {
 	 * @review
 	 */
 	protected void addTypes(String type, String... types) {
+		primaryType = type;
+
 		this.types.add(type);
 		Collections.addAll(this.types, types);
 	}
@@ -456,6 +463,7 @@ public abstract class BaseRepresentorImpl<T> implements BaseRepresentor<T> {
 	protected final List<NestedFieldFunction<T, ?>> nestedFieldFunctions;
 	protected final List<NestedListFieldFunction<T, ?>>
 		nestedListFieldFunctions;
+	protected String primaryType;
 	protected final List<RelatedModel<T, ?>> relatedModels;
 	protected final List<String> types;
 

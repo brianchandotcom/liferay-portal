@@ -134,8 +134,12 @@ public class BuildThemeMojo extends AbstractMojo {
 		_themeBuilderArgs.setUnstyledDir(unstyledDir);
 	}
 
-	private Artifact _resolveArtifact(Artifact artifact)
+	private Artifact _resolveArtifact(Dependency dependency)
 		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			dependency.getGroupId(), dependency.getArtifactId(),
+			dependency.getType(), dependency.getVersion());
 
 		ArtifactRequest artifactRequest = new ArtifactRequest();
 
@@ -152,16 +156,6 @@ public class BuildThemeMojo extends AbstractMojo {
 			_repositorySystemSession, artifactRequest);
 
 		return artifactResult.getArtifact();
-	}
-
-	private Artifact _resolveArtifact(Dependency dependency)
-		throws ArtifactResolutionException {
-
-		Artifact artifact = new DefaultArtifact(
-			dependency.getGroupId(), dependency.getArtifactId(),
-			dependency.getType(), dependency.getVersion());
-
-		return _resolveArtifact(artifact);
 	}
 
 	/**

@@ -189,8 +189,12 @@ public class BuildCSSMojo extends AbstractMojo {
 		}
 	}
 
-	private Artifact _resolveArtifact(Artifact artifact)
+	private Artifact _resolveArtifact(Dependency dependency)
 		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			dependency.getGroupId(), dependency.getArtifactId(),
+			dependency.getType(), dependency.getVersion());
 
 		ArtifactRequest artifactRequest = new ArtifactRequest();
 
@@ -207,16 +211,6 @@ public class BuildCSSMojo extends AbstractMojo {
 			_repositorySystemSession, artifactRequest);
 
 		return artifactResult.getArtifact();
-	}
-
-	private Artifact _resolveArtifact(Dependency dependency)
-		throws ArtifactResolutionException {
-
-		Artifact artifact = new DefaultArtifact(
-			dependency.getGroupId(), dependency.getArtifactId(),
-			dependency.getType(), dependency.getVersion());
-
-		return _resolveArtifact(artifact);
 	}
 
 	/**

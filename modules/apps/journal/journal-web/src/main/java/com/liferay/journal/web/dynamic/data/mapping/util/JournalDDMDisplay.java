@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.webdav.WebDAVUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -76,18 +75,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getAvailableFields() {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE";
-	}
-
-	public String getConfirmSelectStructureMessage(Locale locale) {
-		return LanguageUtil.get(
-			getResourceBundle(locale),
-			"selecting-a-new-structure-deletes-all-unsaved-content");
-	}
-
-	public String getConfirmSelectTemplateMessage(Locale locale) {
-		return LanguageUtil.get(
-			getResourceBundle(locale),
-			"selecting-a-new-template-deletes-all-unsaved-content");
 	}
 
 	@Override
@@ -186,17 +173,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
-	public boolean isShowConfirmSelectStructure() {
-		return true;
-	}
-
-	@Override
 	public boolean isShowConfirmSelectTemplate() {
-		return true;
-	}
-
-	@Override
-	public boolean isShowStructureSelector() {
 		return true;
 	}
 

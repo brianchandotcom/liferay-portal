@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.role.apio.identifier.RoleIdentifier;
+import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
 
 import java.util.Date;
 import java.util.List;
@@ -133,6 +134,8 @@ public class PersonCollectionResource
 			"emails", EmailIdentifier.class
 		).addRelatedCollection(
 			"phones", PhoneIdentifier.class
+		).addRelatedCollection(
+			"webUrls", WebUrlIdentifier.class
 		).addRelativeURL(
 			"image", UserWrapper::getPortraitURL
 		).addString(

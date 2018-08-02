@@ -115,7 +115,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #setBaseDir(File)}
+	 * @deprecated As of 2.1.0, replaced by {@link #setBaseDir(File)}
 	 * @parameter
 	 */
 	@Deprecated
@@ -151,7 +151,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #setImportDir(File)}
+	 * @deprecated As of 2.1.0, replaced by {@link #setImportDir(File)}
 	 * @parameter
 	 */
 	@Deprecated

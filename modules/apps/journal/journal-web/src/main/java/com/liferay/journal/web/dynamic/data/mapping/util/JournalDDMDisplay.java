@@ -91,31 +91,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
-	public String getEditStructureDefaultValuesURL(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			DDMStructure structure, String redirectURL)
-		throws Exception {
-
-		PortletURL portletURL = portal.getControlPanelPortletURL(
-			liferayPortletRequest, JournalPortletKeys.JOURNAL,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/edit_article.jsp");
-		portletURL.setParameter("redirect", redirectURL);
-		portletURL.setParameter(
-			"groupId", String.valueOf(structure.getGroupId()));
-		portletURL.setParameter(
-			"classNameId",
-			String.valueOf(portal.getClassNameId(DDMStructure.class)));
-		portletURL.setParameter(
-			"classPK", String.valueOf(structure.getStructureId()));
-		portletURL.setParameter("ddmStructureKey", structure.getStructureKey());
-
-		return portletURL.toString();
-	}
-
-	@Override
 	public String getPortletId() {
 		return JournalPortletKeys.JOURNAL;
 	}

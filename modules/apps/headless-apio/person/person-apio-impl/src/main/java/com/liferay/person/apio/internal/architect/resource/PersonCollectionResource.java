@@ -25,6 +25,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.email.apio.architect.identifier.EmailIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.person.apio.internal.architect.form.PersonCreatorForm;
 import com.liferay.person.apio.internal.architect.form.PersonUpdaterForm;
@@ -127,6 +128,8 @@ public class PersonCollectionResource
 			"roles", RoleIdentifier.class
 		).addRelatedCollection(
 			"addresses", AddressIdentifier.class
+		).addRelatedCollection(
+			"emails", EmailIdentifier.class
 		).addRelativeURL(
 			"image", UserWrapper::getPortraitURL
 		).addString(

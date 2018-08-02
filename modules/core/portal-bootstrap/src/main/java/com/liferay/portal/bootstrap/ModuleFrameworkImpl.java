@@ -320,9 +320,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Registering context " + context);
 		}
 
-		if ((context instanceof ApplicationContext) &&
-			PropsValues.MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES) {
-
+		if (context instanceof ApplicationContext) {
 			ApplicationContext applicationContext = (ApplicationContext)context;
 
 			_registerApplicationContext(applicationContext);

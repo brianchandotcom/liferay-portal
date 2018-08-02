@@ -1101,6 +1101,10 @@ public class PropsValues {
 
 	public static final String MODULE_FRAMEWORK_PORTAL_DIR = PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_PORTAL_DIR);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES));
 
 	public static final String MODULE_FRAMEWORK_RESOLVER_REVISION_BATCH_SIZE = PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_RESOLVER_REVISION_BATCH_SIZE);

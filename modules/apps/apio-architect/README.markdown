@@ -138,7 +138,7 @@ Pull requests with contributions should be sent to the GitHub user *liferay*. Th
 ## Bug Reporting and Feature Requests
 Did you find a bug? Please file an issue for it at [https://issues.liferay.com](https://issues.liferay.com) following [Liferay's JIRA Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/JIRA), and select *Apio Architect* as the component.
 
-If you'd like to suggest a new feature for Liferay, visit the [Ideas Dashboard](https://dev.liferay.com/participate/ideas) to submit and track the progress of your idea!
+If you'd like to suggest a new feature for Liferay, visit the [list of issues and suggestions](https://issues.liferay.com/projects/APIO/issues) to submit and track the progress of your idea!
 
 ## License
 This library is free software ("Licensed Software"); you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.

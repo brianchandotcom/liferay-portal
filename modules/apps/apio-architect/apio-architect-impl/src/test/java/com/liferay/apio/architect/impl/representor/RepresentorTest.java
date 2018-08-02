@@ -268,6 +268,10 @@ public class RepresentorTest {
 
 	@Test
 	public void testTypes() {
+		String primaryType = _representor.getPrimaryType();
+
+		assertThat(primaryType, is("Type 1"));
+
 		List<String> types = _representor.getTypes();
 
 		assertThat(types, contains("Type 1", "Type 2", "Type 3"));

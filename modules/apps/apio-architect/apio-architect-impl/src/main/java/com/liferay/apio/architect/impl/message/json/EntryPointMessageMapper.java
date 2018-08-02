@@ -60,6 +60,16 @@ public interface EntryPointMessageMapper extends MessageMapper<EntryPoint> {
 	}
 
 	/**
+	 * Maps the semantics to its JSON object representation.
+	 *
+	 * @param jsonObjectBuilder the JSON object builder for the page
+	 * @param semantics Semantics of each member provided by the collection
+	 */
+	public default void mapSemantics(
+		JSONObjectBuilder jsonObjectBuilder, String semantics) {
+	}
+
+	/**
 	 * Finishes the item. This is the final entry point message mapper method
 	 * the writer calls for the item.
 	 *

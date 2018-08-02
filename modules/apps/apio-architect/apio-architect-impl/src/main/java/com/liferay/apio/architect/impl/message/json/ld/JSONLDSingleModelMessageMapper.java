@@ -315,6 +315,22 @@ public class JSONLDSingleModelMessageMapper<T>
 	}
 
 	@Override
+	public void mapNestedPageSemantics(
+		JSONObjectBuilder jsonObjectBuilder, String semantics) {
+
+		jsonObjectBuilder.nestedField(
+			"manages", "property"
+		).stringValue(
+			"rdf:type"
+		);
+		jsonObjectBuilder.nestedField(
+			"manages", "object"
+		).stringValue(
+			"schema:" + semantics
+		);
+	}
+
+	@Override
 	public void mapNumberField(
 		JSONObjectBuilder jsonObjectBuilder, String fieldName, Number value) {
 

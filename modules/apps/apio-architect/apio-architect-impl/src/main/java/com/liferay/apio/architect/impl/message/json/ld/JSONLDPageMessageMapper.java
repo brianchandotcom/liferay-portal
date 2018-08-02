@@ -106,17 +106,6 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 	}
 
 	@Override
-	public void mapNestedPageItemTotalCount(
-		JSONObjectBuilder jsonObjectBuilder, int totalCount) {
-
-		jsonObjectBuilder.field(
-			"totalItems"
-		).numberValue(
-			totalCount
-		);
-	}
-
-	@Override
 	public void mapNextPageURL(
 		JSONObjectBuilder jsonObjectBuilder, String url) {
 
@@ -144,6 +133,22 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 			"view", "previous"
 		).stringValue(
 			url
+		);
+	}
+
+	@Override
+	public void mapSemantics(
+		JSONObjectBuilder jsonObjectBuilder, String semantics) {
+
+		jsonObjectBuilder.nestedField(
+			"manages", "property"
+		).stringValue(
+			"rdf:type"
+		);
+		jsonObjectBuilder.nestedField(
+			"manages", "object"
+		).stringValue(
+			"schema:" + semantics
 		);
 	}
 

@@ -56,6 +56,10 @@
 			"@type": [
 				"Collection"
 			],
+			"manages": {
+				"object": "schema:Type 7",
+				"property": "rdf:type"
+			},
 			"member": [
 				{
 					"@type": ["Type 7"],
@@ -113,6 +117,10 @@
 		"@type": [
 			"Collection"
 		],
+		"manages": {
+			"object": "schema:Type 6",
+			"property": "rdf:type"
+		},
 		"member": [
 			{
 				"@type": ["Type 6"],
@@ -120,6 +128,10 @@
 					"@type" : [ "Type 7" ],
 					"nestedList" : {
 						"totalItems" : 2,
+						"manages": {
+							"object": "schema:Type 8",
+							"property": "rdf:type"
+						},
 						"member" : [ {
 								"@type" : [ "Type 8" ],
 								"number1" : 2017
@@ -141,6 +153,10 @@
 					"@type" : [ "Type 7" ],
 					"nestedList" : {
 						"totalItems" : 2,
+						"manages": {
+							"object": "schema:Type 8",
+							"property": "rdf:type"
+						},
 						"member" : [ {
 								"@type" : [ "Type 8" ],
 								"number1" : 2017

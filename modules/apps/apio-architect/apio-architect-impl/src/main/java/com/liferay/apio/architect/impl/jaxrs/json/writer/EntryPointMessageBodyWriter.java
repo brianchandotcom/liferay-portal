@@ -19,8 +19,10 @@ import com.liferay.apio.architect.impl.jaxrs.json.writer.base.BaseMessageBodyWri
 import com.liferay.apio.architect.impl.message.json.EntryPointMessageMapper;
 import com.liferay.apio.architect.impl.request.RequestInfo;
 import com.liferay.apio.architect.impl.wiring.osgi.manager.message.json.EntryPointMessageMapperManager;
+import com.liferay.apio.architect.impl.wiring.osgi.manager.representable.RepresentableManager;
 import com.liferay.apio.architect.impl.writer.EntryPointWriter;
 import com.liferay.apio.architect.impl.writer.EntryPointWriter.Builder;
+import com.liferay.apio.architect.representor.Representor;
 
 import java.lang.reflect.Type;
 
@@ -38,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * corresponds to the media type.
  *
  * @author Alejandro Hernández
+ * @author Zoltán Takács
  * @review
  */
 @Component(
@@ -79,6 +82,12 @@ public class EntryPointMessageBodyWriter
 			entryPointMessageMapper
 		).requestInfo(
 			requestInfo
+		).typeFunction(
+			name -> _representableManager.getRepresentorOptional(
+				name
+			).map(
+				Representor::getPrimaryType
+			)
 		).build();
 
 		return entryPointWriter.write();
@@ -86,5 +95,8 @@ public class EntryPointMessageBodyWriter
 
 	@Reference
 	private EntryPointMessageMapperManager _entryPointMessageMapperManager;
+
+	@Reference
+	private RepresentableManager _representableManager;
 
 }

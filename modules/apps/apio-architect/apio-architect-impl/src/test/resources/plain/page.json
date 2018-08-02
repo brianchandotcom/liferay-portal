@@ -32,6 +32,20 @@
 				"link": "www.liferay.com",
 				"linked": "localhost/o/api/p/second-inner-model/second",
 				"localizedString": "Translated",
+				"nestedList": {
+					"elements": [
+						{
+							"number1": 2018,
+							"string1": "id 1",
+							"string2": "string3"
+						}, {
+							"number1": 2018,
+							"string1": "id 2",
+							"string2": "string3"
+						}
+					],
+					"totalNumberOfItems": 2
+				},
 				"number": 42,
 				"numberList": [1, 2],
 				"relatedCollection": "localhost/o/api/p/first-inner-model/first/models",
@@ -58,6 +72,46 @@
 				},
 				"number1": 42,
 				"string1": "1"
+			},
+			"nestedList": {
+				"elements": [
+					{
+						"nested4": {
+							"nestedList": {
+								"elements": [
+									{
+										"number1": 2017
+									}, {
+										"number1": 2017
+									}
+								],
+								"totalNumberOfItems": 2
+							},
+							"string1": "id 4"
+						},
+						"number1": 2017,
+						"string1": "id 1",
+						"string2": "string2"
+					}, {
+						"number1": 2017,
+						"string1": "id 2",
+						"string2": "string2",
+						"nested4": {
+							"nestedList": {
+								"elements": [
+									{
+										"number1": 2017
+									}, {
+										"number1": 2017
+									}
+								],
+								"totalNumberOfItems": 2
+							},
+							"string1": "id 4"
+						}
+					}
+				],
+				"totalNumberOfItems": 2
 			},
 			"number1": 2017,
 			"number2": 42,
@@ -104,6 +158,20 @@
 				"link": "www.liferay.com",
 				"linked": "localhost/o/api/p/second-inner-model/second",
 				"localizedString": "Translated",
+				"nestedList": {
+					"elements": [
+						{
+							"number1": 2018,
+							"string1": "id 1",
+							"string2": "string3"
+						}, {
+							"number1": 2018,
+							"string1": "id 2",
+							"string2": "string3"
+						}
+					],
+					"totalNumberOfItems": 2
+				},
 				"number": 42,
 				"numberList": [1, 2],
 				"relatedCollection": "localhost/o/api/p/first-inner-model/first/models",
@@ -131,6 +199,46 @@
 				"number1": 42,
 				"string1": "2"
 			},
+			"nestedList": {
+				"elements": [
+					{
+						"nested4": {
+							"nestedList": {
+								"elements": [
+									{
+										"number1": 2017
+									}, {
+										"number1": 2017
+									}
+								],
+								"totalNumberOfItems": 2
+							},
+							"string1": "id 4"
+						},
+						"number1": 2017,
+						"string1": "id 1",
+						"string2": "string2"
+					}, {
+						"number1": 2017,
+						"string1": "id 2",
+						"string2": "string2",
+						"nested4": {
+							"nestedList": {
+								"elements": [
+									{
+										"number1": 2017
+									}, {
+										"number1": 2017
+									}
+								],
+								"totalNumberOfItems": 2
+							},
+							"string1": "id 4"
+						}
+					}
+				],
+				"totalNumberOfItems": 2
+			},
 			"number1": 2017,
 			"number2": 42,
 			"numberList1": [1, 2, 3, 4, 5],
@@ -144,8 +252,7 @@
 			"string2": "Hypermedia",
 			"stringList1": ["a", "b", "c", "d", "e"],
 			"stringList2": ["f", "g", "h", "i", "j"]
-		},
-		{
+		}, {
 			"applicationRelativeURL1": "localhost/o/api/first",
 			"binary1": "localhost/o/api/b/model/3/binary1",
 			"binary2": "localhost/o/api/b/model/3/binary2",
@@ -176,6 +283,20 @@
 				"link": "www.liferay.com",
 				"linked": "localhost/o/api/p/second-inner-model/second",
 				"localizedString": "Translated",
+				"nestedList": {
+					"elements": [
+						{
+							"number1": 2018,
+							"string1": "id 1",
+							"string2": "string3"
+						}, {
+							"number1": 2018,
+							"string1": "id 2",
+							"string2": "string3"
+						}
+					],
+					"totalNumberOfItems": 2
+				},
 				"number": 42,
 				"numberList": [1, 2],
 				"relatedCollection": "localhost/o/api/p/first-inner-model/first/models",
@@ -202,6 +323,46 @@
 				},
 				"number1": 42,
 				"string1": "3"
+			},
+			"nestedList": {
+				"elements": [
+					{
+						"nested4": {
+							"nestedList": {
+								"elements": [
+									{
+										"number1": 2017
+									}, {
+										"number1": 2017
+									}
+								],
+								"totalNumberOfItems": 2
+							},
+							"string1": "id 4"
+						},
+						"number1": 2017,
+						"string1": "id 1",
+						"string2": "string2"
+					}, {
+						"number1": 2017,
+						"string1": "id 2",
+						"string2": "string2",
+						"nested4": {
+							"nestedList": {
+								"elements": [
+									{
+										"number1": 2017
+									}, {
+										"number1": 2017
+									}
+								],
+								"totalNumberOfItems": 2
+							},
+							"string1": "id 4"
+						}
+					}
+				],
+				"totalNumberOfItems": 2
 			},
 			"number1": 2017,
 			"number2": 42,

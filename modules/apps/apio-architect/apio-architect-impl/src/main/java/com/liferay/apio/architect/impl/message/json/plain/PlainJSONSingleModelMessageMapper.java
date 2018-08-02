@@ -17,6 +17,7 @@ package com.liferay.apio.architect.impl.message.json.plain;
 import com.liferay.apio.architect.impl.list.FunctionalList;
 import com.liferay.apio.architect.impl.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.impl.message.json.SingleModelMessageMapper;
+import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -227,6 +228,17 @@ public class PlainJSONSingleModelMessageMapper<T>
 	}
 
 	@Override
+	public void mapNestedPageItemTotalCount(
+		JSONObjectBuilder jsonObjectBuilder, int count) {
+
+		jsonObjectBuilder.field(
+			"numberOfItems"
+		).numberValue(
+			count
+		);
+	}
+
+	@Override
 	public void mapNumberField(
 		JSONObjectBuilder jsonObjectBuilder, String fieldName, Number value) {
 
@@ -281,6 +293,36 @@ public class PlainJSONSingleModelMessageMapper<T>
 		).addAllStrings(
 			value
 		);
+	}
+
+	public void onFinishNestedCollection(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder collectionJsonObjectBuilder, String fieldName,
+		List<?> list, FunctionalList<String> embeddedPathElements) {
+
+		singleModelJSONObjectBuilder.nestedField(
+			embeddedPathElements.head(), _getTail(embeddedPathElements)
+		).objectValue(
+			collectionJsonObjectBuilder
+		);
+	}
+
+	public void onFinishNestedCollectionItem(
+		JSONObjectBuilder collectionJsonObjectBuilder,
+		JSONObjectBuilder itemJSONObjectBuilder, SingleModel<?> singleModel) {
+
+		collectionJsonObjectBuilder.field(
+			"elements"
+		).arrayValue(
+		).add(
+			itemJSONObjectBuilder
+		);
+	}
+
+	private String[] _getTail(FunctionalList<String> embeddedPathElements) {
+		Stream<String> stream = embeddedPathElements.tailStream();
+
+		return stream.toArray(String[]::new);
 	}
 
 }

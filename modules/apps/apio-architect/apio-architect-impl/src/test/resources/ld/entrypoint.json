@@ -10,15 +10,33 @@
 	"collection": [
 		{
 			"@id": "localhost/o/api/p/type1",
-			"@type": ["Collection"]
+			"@type": [
+				"Collection"
+			],
+			"manages": {
+				"object": "schema:Type1",
+				"property": "rdf:type"
+			}
 		},
 		{
 			"@id": "localhost/o/api/p/type2",
-			"@type": ["Collection"]
+			"@type": [
+				"Collection"
+			],
+			"manages": {
+				"object": "schema:Type2",
+				"property": "rdf:type"
+			}
 		},
 		{
 			"@id": "localhost/o/api/p/type3",
-			"@type": ["Collection"]
+			"@type": [
+				"Collection"
+			],
+			"manages": {
+				"object": "schema:Type3",
+				"property": "rdf:type"
+			}
 		}
 	]
 }

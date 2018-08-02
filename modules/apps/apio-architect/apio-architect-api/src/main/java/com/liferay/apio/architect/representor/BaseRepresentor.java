@@ -146,6 +146,13 @@ public interface BaseRepresentor<T> {
 	public List<FieldFunction<T, List<Number>>> getNumberListFunctions();
 
 	/**
+	 * Returns the primary type.
+	 *
+	 * @return the primary type
+	 */
+	public String getPrimaryType();
+
+	/**
 	 * Returns the related models.
 	 *
 	 * @return the related models

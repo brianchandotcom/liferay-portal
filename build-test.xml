@@ -4626,7 +4626,7 @@ go]]></replacevalue>
 
 		<gradle-execute dir="${portal.dir}/modules" task="cleanVersionOverride">
 			<arg value="-b" />
-			<arg value="util.gradle" />
+			<arg value="releng.gradle" />
 			<arg value="-PgitRepoPath=${module.dir}" />
 		</gradle-execute>
 	</target>

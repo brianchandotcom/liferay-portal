@@ -40,15 +40,13 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 		List<String> blocks = GradleSourceUtil.getDependenciesBlocks(content);
 
 		for (String dependencies : blocks) {
-			content = _formatDependencies(absolutePath, content, dependencies);
+			content = _formatDependencies(content, dependencies);
 		}
 
 		return content;
 	}
 
-	private String _formatDependencies(
-		String absolutePath, String content, String dependencies) {
-
+	private String _formatDependencies(String content, String dependencies) {
 		int x = dependencies.indexOf("\n");
 		int y = dependencies.lastIndexOf("\n");
 
@@ -63,9 +61,7 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 				oldDependency);
 			String newDependency = oldDependency;
 
-			if (!_isTestUtilModule(absolutePath) &&
-				configuration.equals("compile")) {
-
+			if (configuration.equals("compile")) {
 				newDependency = StringUtil.replaceFirst(
 					oldDependency, "compile", "compileOnly");
 
@@ -94,20 +90,6 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 		File file = new File(absolutePath.substring(0, pos + 1) + "bnd.bnd");
 
 		return file.exists();
-	}
-
-	private boolean _isTestUtilModule(String absolutePath) {
-		int x = absolutePath.lastIndexOf(StringPool.SLASH);
-
-		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
-
-		String moduleName = absolutePath.substring(y + 1, x);
-
-		if (!moduleName.endsWith("-test-util")) {
-			return false;
-		}
-
-		return true;
 	}
 
 }

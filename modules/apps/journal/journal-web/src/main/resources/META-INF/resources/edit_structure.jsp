@@ -238,18 +238,16 @@ renderResponse.setTitle((structure != null) ? LanguageUtil.format(request, "edit
 
 <aui:script>
 	function <portlet:namespace />openParentStructureSelector() {
-		Liferay.Util.openDDMPortlet(
+		Liferay.Util.selectEntity(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE) %>',
-				classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
 				dialog: {
-					destroyOnHide: true
+					constrain: true,
+					modal: true
 				},
-				eventName: '<portlet:namespace />selectParentStructure',
-				mvcPath: '/select_structure.jsp',
-				showAncestorScopes: true,
-				showManageTemplates: false,
-				title: '<liferay-ui:message key="select-structure" />'
+				eventName: '<portlet:namespace />selectStructure',
+				id: '<portlet:namespace />selectStructure',
+				title: '<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /><portlet:param name="classPK" value="<%= String.valueOf(structureId) %>" /></portlet:renderURL>'
 			},
 			function(event) {
 				var form = AUI.$('#<portlet:namespace />fm');

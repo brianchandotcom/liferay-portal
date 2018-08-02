@@ -52,22 +52,20 @@ public class BuildCSSMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
-			Artifact artifact = null;
-
 			for (Dependency dependency : _project.getDependencies()) {
 				String artifactId = dependency.getArtifactId();
 
 				if (artifactId.equals("com.liferay.frontend.css.common") &&
 					(_cssBuilderArgs.getImportDir() == null)) {
 
-					artifact = _resolveArtifact(dependency);
+					Artifact artifact = _resolveArtifact(dependency);
 
-					_cssBuilderArgs.setImportDir(artifact.getFile());
+					if (artifact != null) {
+						_cssBuilderArgs.setImportDir(artifact.getFile());
+					}
+
+					break;
 				}
-			}
-
-			if (artifact != null) {
-				_cssBuilderArgs.setImportDir(artifact.getFile());
 			}
 
 			if (_buildContext.isIncremental()) {

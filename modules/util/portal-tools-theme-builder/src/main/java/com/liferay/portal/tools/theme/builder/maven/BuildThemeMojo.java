@@ -47,9 +47,6 @@ public class BuildThemeMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
-			Artifact styledArtifact = null;
-			Artifact unstyledArtifact = null;
-
 			for (Dependency dependency : _project.getDependencies()) {
 				String artifactId = dependency.getArtifactId();
 
@@ -58,22 +55,22 @@ public class BuildThemeMojo extends AbstractMojo {
 					ThemeBuilder.STYLED.equals(
 						_themeBuilderArgs.getParentName())) {
 
-					styledArtifact = _resolveArtifact(dependency);
+					Artifact artifact = _resolveArtifact(dependency);
+
+					if (artifact != null) {
+						_themeBuilderArgs.setParentDir(artifact.getFile());
+					}
 				}
 				else if (artifactId.equals(
 							 "com.liferay.frontend.theme.unstyled") &&
 						 (_themeBuilderArgs.getUnstyledDir() == null)) {
 
-					unstyledArtifact = _resolveArtifact(dependency);
+					Artifact artifact = _resolveArtifact(dependency);
+
+					if (artifact != null) {
+						_themeBuilderArgs.setUnstyledDir(artifact.getFile());
+					}
 				}
-			}
-
-			if (styledArtifact != null) {
-				_themeBuilderArgs.setParentDir(styledArtifact.getFile());
-			}
-
-			if (unstyledArtifact != null) {
-				_themeBuilderArgs.setUnstyledDir(unstyledArtifact.getFile());
 			}
 
 			ThemeBuilder themeBuilder = new ThemeBuilder(_themeBuilderArgs);

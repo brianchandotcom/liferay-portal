@@ -44,7 +44,6 @@ import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeImageTypeContent;
 import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeJournalArticleLocalizedValues;
 import com.liferay.journal.internal.upgrade.v1_1_1.UpgradeFileUploadsConfiguration;
 import com.liferay.journal.internal.upgrade.v1_1_2.UpgradeCheckIntervalConfiguration;
-import com.liferay.journal.internal.upgrade.v1_1_3.UpgradeImageContent;
 import com.liferay.journal.internal.upgrade.v1_1_3.UpgradeResourcePermissions;
 import com.liferay.journal.internal.upgrade.v1_1_4.UpgradeUrlTitle;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
@@ -164,8 +163,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeCheckIntervalConfiguration(_configurationAdmin));
 
 		registry.register(
-			"1.1.2", "1.1.3", new UpgradeImageContent(),
-			new UpgradeResourcePermissions(_resourceActions));
+			"1.1.2", "1.1.3", new UpgradeResourcePermissions(_resourceActions));
 
 		registry.register("1.1.3", "1.1.4", new UpgradeUrlTitle());
 	}

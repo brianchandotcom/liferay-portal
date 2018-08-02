@@ -1,6 +1,8 @@
 import {dom} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
+import position from 'metal-position';
 import State, {Config} from 'metal-state';
+import throttle from 'metal-throttle';
 
 import {
 	getNearestMenuItem,
@@ -46,6 +48,9 @@ class SiteNavigationMenuEditor extends State {
 
 	constructor(config, ...args) {
 		super(config, ...args);
+
+		this._scrollOnDrag = throttle(this._scrollOnDrag.bind(this), 250);
+		this._scrollOnDragLoop = this._scrollOnDragLoop.bind(this);
 
 		this.setState(config);
 
@@ -115,6 +120,55 @@ class SiteNavigationMenuEditor extends State {
 	}
 
 	/**
+	 * Scrolls up or down when an item is being dragged
+	 *
+	 * @param {!object} placeholderMenuItem Dragged item
+	 * @private
+	 */
+
+	_scrollOnDrag(placeholderMenuItem) {
+		const controlMenu = document.querySelector('.control-menu');
+		const controlMenuHeight = controlMenu ? controlMenu.offsetHeight : 0;
+
+		const documentHeight = document.body.offsetHeight;
+
+		const managementBar = document.querySelector('.management-bar');
+		const managementBarHeight = managementBar ? managementBar.offsetHeight : 0;
+
+		const placeholderRegion = position.getRegion(placeholderMenuItem);
+
+		if (
+			placeholderRegion.top > (window.innerHeight - (window.innerHeight * 0.2)) &&
+			(placeholderRegion.bottom + window.scrollY) < (documentHeight + placeholderRegion.height)
+		) {
+			window.scrollTo(
+				{
+					behavior: 'smooth',
+					top: window.scrollY + 100
+				}
+			);
+		}
+		else if (placeholderRegion.top < controlMenuHeight + managementBarHeight + (window.innerHeight * 0.2)) {
+			window.scrollTo(
+				{
+					behavior: 'smooth',
+					top: window.scrollY - 100
+				}
+			);
+		}
+	}
+
+	/**
+	 * Animates the scroll when an item is being dragged
+	 * @private
+	 */
+
+	_scrollOnDragLoop() {
+		this._scrollOnDrag(this._draggedItem);
+		this._scrollAnimationId = requestAnimationFrame(this._scrollOnDragLoop);
+	}
+
+	/**
 	 * This is called when user drags the item across the container.
 	 *
 	 * @param {!object} data Drag event data
@@ -130,6 +184,11 @@ class SiteNavigationMenuEditor extends State {
 			sourceMenuItem,
 			placeholderMenuItem
 		);
+
+		if (!this._draggedItem) {
+			this._draggedItem = placeholderMenuItem;
+			this._scrollOnDragLoop();
+		}
 
 		if (
 			placeholderMenuItem && isMenuItem(placeholderMenuItem) &&
@@ -205,6 +264,10 @@ class SiteNavigationMenuEditor extends State {
 		const menuItemParentId = getId(
 			getParent(menuItem)
 		);
+
+		cancelAnimationFrame(this._scrollAnimationId);
+		this._scrollAnimationId = -1;
+		this._draggedItem = null;
 
 		this._updateParentAndOrder(
 			{
@@ -418,6 +481,16 @@ SiteNavigationMenuEditor.STATE = {
 	namespace: Config.string().required(),
 
 	/**
+	 * @default -1
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @type {!number}
+	 */
+
+	_scrollAnimationId: Config.number().internal().value(-1),
+
+	/**
 	 * Selected menuItem DOM element
 	 *
 	 * @default null
@@ -438,7 +511,19 @@ SiteNavigationMenuEditor.STATE = {
 	 * @type {State}
 	 */
 
-	_dragDrop: Config.internal().value(null)
+	_dragDrop: Config.internal().value(null),
+
+	/**
+	 * Dragged item
+	 *
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @type {State}
+	 */
+
+	_draggedItem: Config.object().internal()
+
 };
 
 export {SiteNavigationMenuEditor};

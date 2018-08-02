@@ -1,7 +1,7 @@
 <definition component-name="portal-security">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Antisamy Hook" />
+	<property name="testray.main.component.name" value="AntiSamy" />
 
 	<var name="pageName" value="Antisamy Test Page" />
 	<var name="portletName" value="Wiki" />

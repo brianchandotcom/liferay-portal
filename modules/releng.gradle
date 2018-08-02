@@ -132,11 +132,7 @@ cleanReleng {
 
 cleanVersionOverride {
 	doLast {
-		String gitRepoPath = project.properties["gitRepoPath"]
-
-		if (!gitRepoPath) {
-			throw new GradleException("Please set the property \"-PgitRepoPath\".")
-		}
+		assert project.properties["gitRepoPath"] : "Please provide a value for the '-PgitRepoPath' property"
 
 		File gitRepoDir = file(gitRepoPath)
 

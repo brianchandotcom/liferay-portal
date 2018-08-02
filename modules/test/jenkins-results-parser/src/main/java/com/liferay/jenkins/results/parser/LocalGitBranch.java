@@ -38,24 +38,7 @@ public class LocalGitBranch extends BaseGitBranch {
 	}
 
 	public void setupWorkspace() {
-		System.out.println();
-		System.out.println("##");
-		System.out.println("## " + toString());
-		System.out.println("##");
-		System.out.println();
-
-		GitWorkingDirectory gitWorkingDirectory =
-			getGitWorkingDirectory();
-
-		gitWorkingDirectory.createLocalGitBranch(this, true);
-
-		gitWorkingDirectory.checkoutLocalGitBranch(this);
-
-		gitWorkingDirectory.reset("--hard " + getSHA());
-
-		gitWorkingDirectory.clean();
-
-		gitWorkingDirectory.displayLog();
+		setupWorkspace(this);
 	}
 
 	@Override
@@ -72,6 +55,27 @@ public class LocalGitBranch extends BaseGitBranch {
 		sb.append(")");
 
 		return sb.toString();
+	}
+
+	protected static void setupWorkspace(LocalGitBranch localGitBranch) {
+		System.out.println();
+		System.out.println("##");
+		System.out.println("## " + localGitBranch.toString());
+		System.out.println("##");
+		System.out.println();
+
+		GitWorkingDirectory gitWorkingDirectory =
+			localGitBranch.getGitWorkingDirectory();
+
+		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
+
+		gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch);
+
+		gitWorkingDirectory.reset("--hard " + localGitBranch.getSHA());
+
+		gitWorkingDirectory.clean();
+
+		gitWorkingDirectory.displayLog();
 	}
 
 	protected LocalGitBranch(

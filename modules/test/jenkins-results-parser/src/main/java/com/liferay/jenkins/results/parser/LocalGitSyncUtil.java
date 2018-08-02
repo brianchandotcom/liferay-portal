@@ -1286,11 +1286,14 @@ public class LocalGitSyncUtil {
 			gitWorkingDirectory.fetch(remoteGitBranch);
 		}
 
-		return gitWorkingDirectory.createLocalGitBranch(
-			JenkinsResultsParserUtil.combine(
-				gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
-				String.valueOf(System.currentTimeMillis())),
-			true, remoteGitBranch.getSHA());
+		LocalGitBranch cachedLocalGitBranch =
+			GitBranchFactory.newLocalGitBranch(
+				JenkinsResultsParserUtil.combine(
+					gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
+					String.valueOf(System.currentTimeMillis())),
+				true, remoteGitBranch.getSHA(), synchronize);
+
+		return gitWorkingDirectory.createLocalGitBranch(cachedLocalGitBranch);
 	}
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =

@@ -442,6 +442,10 @@ public class GitWorkingDirectory {
 		System.out.println();
 	}
 
+	public LocalGitBranch fetch(LocalGitBranch localGitBranch) {
+		return fetch(null, localGitBranch);
+	}
+
 	public LocalGitBranch fetch(
 		LocalGitBranch localGitBranch, boolean noTags,
 		RemoteGitBranch remoteGitBranch) {
@@ -607,6 +611,47 @@ public class GitWorkingDirectory {
 			"Fetch completed in " +
 				JenkinsResultsParserUtil.toDurationString(
 					System.currentTimeMillis() - start));
+	}
+
+	public LocalGitBranch fetch(
+		String branchName, LocalGitBranch localGitBranch) {
+
+		if (localGitBranch == null) {
+			throw new IllegalArgumentException("Local Git Branch is null");
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git fetch --progress -v -f --no-tags ");
+		sb.append(String.valueOf(localGitBranch.getDirectory()));
+		sb.append(" ");
+		sb.append(localGitBranch.getName());
+
+		if ((branchName != null) && !branchName.isEmpty()) {
+			sb.append(":");
+			sb.append(branchName);
+		}
+
+		long start = System.currentTimeMillis();
+
+		ExecutionResult executionResult = executeBashCommands(
+			3, _RETRY_DELAY, 1000 * 60 * 30, sb.toString());
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to fetch from local repository ",
+					String.valueOf(localGitBranch.getDirectory()), "\n",
+					executionResult.getStandardError()));
+		}
+
+		System.out.println(
+			"Fetch completed in " +
+				JenkinsResultsParserUtil.toDurationString(
+					System.currentTimeMillis() - start));
+
+		return createLocalGitBranch(
+			localGitBranch.getName(), true, localGitBranch.getSHA());
 	}
 
 	public List<String> getBranchNamesContainingSHA(String sha) {

@@ -22,6 +22,36 @@ import java.io.IOException;
  */
 public class PortalLocalGitBranch extends LocalGitBranch {
 
+	public PortalLocalGitBranch getBasePortalLocalGitBranch() {
+		if (_basePortalLocalGitBranch != null) {
+			return _basePortalLocalGitBranch;
+		}
+
+		String portalUpstreamBranchName = getPortalUpstreamBranchName();
+
+		if (!portalUpstreamBranchName.contains("-private")) {
+			return null;
+		}
+
+		String branchName = portalUpstreamBranchName.replace("-private", "");
+
+		String repositoryName = "liferay-portal-ee";
+
+		if (branchName.equals("master")) {
+			repositoryName = repositoryName.replace("-ee", "");
+		}
+
+		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
+			repositoryName, branchName);
+
+		LocalGitBranch localGitBranch = _getLocalGitBranchFromGitCommit(
+			"git-commit-portal", localRepository);
+
+		_basePortalLocalGitBranch = (PortalLocalGitBranch)localGitBranch;
+
+		return _basePortalLocalGitBranch;
+	}
+
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
@@ -34,8 +64,22 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		return (PortalLocalRepository)localRepository;
 	}
 
+	@Override
+	public void setupWorkspace() {
+		super.setupWorkspace();
+
+		_setupBasePortalWorkspace();
+	}
+
 	protected PortalLocalGitBranch(
 		LocalRepository localRepository, String name, String sha) {
+
+		this(localRepository, name, sha, false)
+	}
+
+	protected PortalLocalGitBranch(
+		LocalRepository localRepository, String name, String sha,
+		boolean synchronize) {
 
 		super(localRepository, name, sha);
 
@@ -43,6 +87,92 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 			throw new IllegalArgumentException(
 				"Local repository is not a portal repository");
 		}
+
+		_synchronize = synchronize;
 	}
+
+	private String _getGitCommit(String gitCommitFileName) {
+		PortalLocalRepository portalLocalRepository =
+			getPortalLocalRepository();
+
+		File gitCommitFile = new File(
+			portalLocalRepository.getDirectory(), gitCommitFileName);
+
+		try {
+			String gitCommit = JenkinsResultsParserUtil.read(gitCommitFile);
+
+			return gitCommit.trim();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private LocalGitBranch _getLocalGitBranchFromGitCommit(
+		String gitCommitFileName, LocalRepository localRepository) {
+
+		String gitCommit = _getGitCommit(gitCommitFileName);
+
+		LocalGitBranch localGitBranch = null;
+
+		if (gitCommit.matches("[0-9a-f]{5,40}")) {
+			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+				localRepository, localRepository.getUpstreamBranchName(),
+				gitCommit, _synchronize);
+		}
+		else if (PullRequest.isValidHtmlURL(gitCommit)) {
+			PullRequest pullRequest = new PullRequest(gitCommit);
+
+			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+				localRepository, pullRequest, _synchronize);
+		}
+		else if (Ref.isValidHtmlURL(gitCommit)) {
+			Ref ref = new Ref(gitCommit);
+
+			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+				localRepository, ref, _synchronize);
+		}
+
+		if (localGitBranch == null) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Invalid ", gitCommitFileName, " ", gitCommit));
+		}
+
+		return localGitBranch;
+	}
+
+	private void _setupBasePortalWorkspace() {
+		PortalLocalGitBranch basePortalLocalGitBranch =
+			getBasePortalLocalGitBranch();
+
+		if (basePortalLocalGitBranch == null) {
+			return;
+		}
+
+		setupWorkspace(basePortalLocalGitBranch);
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		gitWorkingDirectory.fetch(basePortalLocalGitBranch);
+
+		File gitCommitPortalFile = new File(
+			getDirectory(), "git-commit-portal");
+
+		try {
+			JenkinsResultsParserUtil.write(
+				gitCommitPortalFile, basePortalLocalGitBranch.getSHA());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		AntUtil.callTarget(
+			getDirectory(), "build-working-dir.xml", "prepare-working-dir",
+			null);
+	}
+
+	private PortalLocalGitBranch _basePortalLocalGitBranch;
+	private final boolean _synchronize;
 
 }

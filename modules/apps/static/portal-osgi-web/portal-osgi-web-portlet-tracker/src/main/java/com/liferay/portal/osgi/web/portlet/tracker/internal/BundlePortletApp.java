@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -70,7 +72,9 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public void addPortletURLListener(PortletURLListener portletURLListener) {
-		_portletApp.addPortletURLListener(portletURLListener);
+		_portletURLListeners.add(portletURLListener);
+		_portletURLListenersByListenerClass.put(
+			portletURLListener.getListenerClass(), portletURLListener);
 	}
 
 	@Override
@@ -142,12 +146,12 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public PortletURLListener getPortletURLListener(String listenerClass) {
-		return _portletApp.getPortletURLListener(listenerClass);
+		return _portletURLListenersByListenerClass.get(listenerClass);
 	}
 
 	@Override
 	public Set<PortletURLListener> getPortletURLListeners() {
-		return _portletApp.getPortletURLListeners();
+		return _portletURLListeners;
 	}
 
 	@Override
@@ -246,6 +250,10 @@ public class BundlePortletApp implements PortletApp {
 	private final BundlePluginPackage _pluginPackage;
 	private final Portlet _portalPortletModel;
 	private final PortletApp _portletApp;
+	private final Set<PortletURLListener> _portletURLListeners =
+		new LinkedHashSet<>();
+	private final Map<String, PortletURLListener>
+		_portletURLListenersByListenerClass = new HashMap<>();
 	private final ServiceTracker
 		<ServletContextHelperRegistration, ServletContext> _serviceTracker;
 

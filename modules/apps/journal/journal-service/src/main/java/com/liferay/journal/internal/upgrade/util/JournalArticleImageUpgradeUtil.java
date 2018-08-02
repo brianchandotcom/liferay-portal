@@ -43,16 +43,7 @@ public class JournalArticleImageUpgradeUtil {
 
 	public String getDocumentLibraryValue(String url) {
 		try {
-			FileEntry fileEntry = null;
-
-			if (url.contains("/c/document_library/get_file?") ||
-				url.contains("/image/image_gallery?")) {
-
-				fileEntry = _getFileEntryByOldDocumentLibraryURL(url);
-			}
-			else if (url.contains("/documents/")) {
-				fileEntry = _getFileEntryByDocumentLibraryURL(url);
-			}
+			FileEntry fileEntry = getFileEntryFromURL(url);
 
 			if (fileEntry == null) {
 				return StringPool.BLANK;
@@ -71,6 +62,26 @@ public class JournalArticleImageUpgradeUtil {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public FileEntry getFileEntryFromURL(String url) {
+		FileEntry fileEntry = null;
+
+		try {
+			if (url.contains("/c/document_library/get_file?") ||
+				url.contains("/image/image_gallery?")) {
+
+				fileEntry = _getFileEntryByOldDocumentLibraryURL(url);
+			}
+			else if (url.contains("/documents/")) {
+				fileEntry = _getFileEntryByDocumentLibraryURL(url);
+			}
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to get file entry from URL " + url, pe);
+		}
+
+		return fileEntry;
 	}
 
 	private FileEntry _getFileEntryByDocumentLibraryURL(String url)

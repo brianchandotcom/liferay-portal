@@ -16,15 +16,32 @@ package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Eudaldo Alonso
  */
 public class JournalEditStructuresDisplayContext {
+
+	public JournalEditStructuresDisplayContext(HttpServletRequest request) {
+		_journalWebConfiguration =
+			(JournalWebConfiguration)request.getAttribute(
+				JournalWebConfiguration.class.getName());
+	}
+
+	public boolean autogenerateStructureKey() {
+		return _journalWebConfiguration.autogenerateStructureKey();
+	}
+
+	public boolean changeableDefaultLanguage() {
+		return _journalWebConfiguration.changeableDefaultLanguage();
+	}
 
 	public String getAvailableFields() {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE";
@@ -52,5 +69,7 @@ public class JournalEditStructuresDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalEditStructuresDisplayContext.class);
+
+	private final JournalWebConfiguration _journalWebConfiguration;
 
 }

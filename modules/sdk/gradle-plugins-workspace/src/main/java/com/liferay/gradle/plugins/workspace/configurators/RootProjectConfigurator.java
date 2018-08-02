@@ -93,7 +93,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		"providedModules";
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * @deprecated As of 1.4.0, replaced by {@link
 	 *             #RootProjectConfigurator(Settings)}
 	 */
 	@Deprecated

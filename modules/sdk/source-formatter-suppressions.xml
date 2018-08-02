@@ -8,6 +8,7 @@
 		<suppress checks="BNDBundleInformationCheck" files="modules/sdk/gradle-plugins-target-platform/src/gradleTest/.*" />
 		<suppress checks="BNDBundleInformationCheck" files="modules/sdk/gradle-plugins-workspace/src/gradleTest/.*" />
 		<suppress checks="BNDWebContextPathCheck" files="modules/sdk/gradle-plugins-workspace/src/gradleTest/targetPlatformDefault/modules/foo-rule/bnd.bnd" />
+		<suppress checks="JavaDeprecatedJavadocCheck" files="modules/sdk/.*" />
 		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/sdk/gradle-plugins/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
 		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-beanshell/.*" />
 		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-bnd/.*" />

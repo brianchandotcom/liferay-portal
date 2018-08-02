@@ -62,7 +62,7 @@ public class BuildCSSTask extends Task {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #setBaseDir(File)}
+	 * @deprecated As of 2.1.0, replaced by {@link #setBaseDir(File)}
 	 */
 	@Deprecated
 	public void setDocrootDir(File docrootDir) {
@@ -82,7 +82,7 @@ public class BuildCSSTask extends Task {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #setImportDir(File)}
+	 * @deprecated As of 2.1.0, replaced by {@link #setImportDir(File)}
 	 */
 	@Deprecated
 	public void setPortalCommonPath(File portalCommonPath) {

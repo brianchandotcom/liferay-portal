@@ -19,7 +19,7 @@ package com.liferay.css.builder;
  * @author     Raymond Augé
  * @author     Eduardo Lundgren
  * @author     Shuyang Zhou
- * @deprecated As of Judson (7.1.x), replaced by #{@link
+ * @deprecated As of 2.1.0, replaced by #{@link
  *             com.liferay.css.builder.internal.util.CSSBuilderUtil}
  */
 @Deprecated

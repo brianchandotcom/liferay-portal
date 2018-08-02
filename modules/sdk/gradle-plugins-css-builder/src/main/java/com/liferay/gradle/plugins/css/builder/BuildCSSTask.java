@@ -125,7 +125,7 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getBaseDir()}
+	 * @deprecated As of 2.2.0, replaced by {@link #getBaseDir()}
 	 */
 	@Deprecated
 	public File getDocrootDir() {
@@ -180,7 +180,7 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getImportDir()}
+	 * @deprecated As of 2.2.0, replaced by {@link #getImportDir()}
 	 */
 	@Deprecated
 	public File getPortalCommonDir() {
@@ -188,7 +188,7 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getImportFile()}
+	 * @deprecated As of 2.2.0, replaced by {@link #getImportFile()}
 	 */
 	@Deprecated
 	public File getPortalCommonFile() {
@@ -196,7 +196,7 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getImportPath()}
+	 * @deprecated As of 2.2.0, replaced by {@link #getImportPath()}
 	 */
 	@Deprecated
 	public File getPortalCommonPath() {
@@ -283,7 +283,7 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #setBaseDir(Object)}
+	 * @deprecated As of 2.2.0, replaced by {@link #setBaseDir(Object)}
 	 */
 	@Deprecated
 	public void setDocrootDir(Object docrootDir) {
@@ -307,8 +307,7 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #setImportDir(Object)}
+	 * @deprecated As of 2.2.0, replaced by {@link #setImportDir(Object)}
 	 */
 	@Deprecated
 	public void setPortalCommonDir(Object portalCommonDir) {
@@ -316,8 +315,7 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #setImportFile(Object)}
+	 * @deprecated As of 2.2.0, replaced by {@link #setImportFile(Object)}
 	 */
 	@Deprecated
 	public void setPortalCommonFile(Object portalCommonFile) {

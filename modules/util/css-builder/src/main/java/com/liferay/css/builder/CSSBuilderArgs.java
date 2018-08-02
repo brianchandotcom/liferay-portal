@@ -36,7 +36,7 @@ public class CSSBuilderArgs {
 	public static final String DIR_NAME = "/";
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #BASE_DIR_NAME}
+	 * @deprecated As of 2.1.0, replaced by {@link #BASE_DIR_NAME}
 	 */
 	@Deprecated
 	public static final String DOCROOT_DIR_NAME = BASE_DIR_NAME;
@@ -54,7 +54,7 @@ public class CSSBuilderArgs {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getBaseDir()}
+	 * @deprecated As of 2.1.0, replaced by {@link #getBaseDir()}
 	 */
 	@Deprecated
 	public File getDocrootDir() {
@@ -70,7 +70,7 @@ public class CSSBuilderArgs {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getImportDir()}
+	 * @deprecated As of 2.1.0, replaced by {@link #getImportDir()}
 	 */
 	@Deprecated
 	public File getPortalCommonPath() {
@@ -116,8 +116,7 @@ public class CSSBuilderArgs {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #setDocrootDir(File)}
+	 * @deprecated As of 2.1.0, replaced by {@link #setDocrootDir(File)}
 	 */
 	@Deprecated
 	public void setDocrootDir(File docrootDir) {
@@ -137,7 +136,7 @@ public class CSSBuilderArgs {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #setImportDir(File)}
+	 * @deprecated As of 2.1.0, replaced by {@link #setImportDir(File)}
 	 */
 	@Deprecated
 	public void setPortalCommonPath(File portalCommonPath) {

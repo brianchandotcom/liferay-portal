@@ -4151,7 +4151,7 @@ the `buildChangeLog` task.
 ## 5.4.90 - 2018-07-23
 
 ### Changed
-- [LPS-82976]: Change marker file name from `.lfrbuild-portal-all` to
+- [LPS-82976]: Change the marker file name `.lfrbuild-portal-all` to
 `.lfrbuild-portal-deprecated`.
 
 ## 5.4.91 - 2018-07-24
@@ -4236,7 +4236,7 @@ OSGi modules.
 ## 5.4.103 - 2018-08-01
 
 ### Added
-- [LPS-84027]: Add support for `SPRING_BOOT_JAVA_OPTS` environment variable.
+- [LPS-84027]: Add support for the `SPRING_BOOT_JAVA_OPTS` environment variable.
 
 ## 5.4.104 - 2018-08-01
 

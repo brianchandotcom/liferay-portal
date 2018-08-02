@@ -81,6 +81,12 @@ public class StagedWorkflowDefinitionLinkStagedModelDataHandler
 			"version",
 			String.valueOf(
 				stagedWorkflowDefinitionLink.getWorkflowDefinitionVersion()));
+		element.addAttribute(
+			"referrer-class-pk",
+			String.valueOf(stagedWorkflowDefinitionLink.getClassPK()));
+		element.addAttribute(
+			"referrer-class-name",
+			String.valueOf(stagedWorkflowDefinitionLink.getClassName()));
 	}
 
 	@Override

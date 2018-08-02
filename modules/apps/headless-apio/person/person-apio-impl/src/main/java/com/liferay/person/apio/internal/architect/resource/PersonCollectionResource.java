@@ -37,6 +37,7 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ContactModel;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
@@ -126,6 +127,17 @@ public class PersonCollectionResource
 			"honorificPrefix", _getContactField(Contact::getPrefixId)
 		).addLocalizedStringByLocale(
 			"honorificSuffix", _getContactField(Contact::getSuffixId)
+		).addNested(
+			"contactInformation", this::_getContact,
+			contactBuilder -> contactBuilder.types(
+				"ContactInformation"
+			).addString(
+				"facebookSn", ContactModel::getSmsSn
+			).addString(
+				"skypeSn", ContactModel::getSmsSn
+			).addString(
+				"twitterSn", ContactModel::getSmsSn
+			).build()
 		).addRelatedCollection(
 			"roles", RoleIdentifier.class
 		).addRelatedCollection(
@@ -197,6 +209,14 @@ public class PersonCollectionResource
 			new ServiceContext());
 
 		return new UserWrapper(user, themeDisplay);
+	}
+
+	private Contact _getContact(UserWrapper userWrapper) {
+		return Try.fromFallible(
+			userWrapper::getContact
+		).orElse(
+			null
+		);
 	}
 
 	private BiFunction<UserWrapper, Locale, String> _getContactField(

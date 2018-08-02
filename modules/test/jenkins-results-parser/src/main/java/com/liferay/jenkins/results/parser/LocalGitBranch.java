@@ -14,10 +14,18 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
 /**
  * @author Michael Hashimoto
  */
 public class LocalGitBranch extends BaseGitBranch {
+
+	public File getDirectory() {
+		LocalRepository localRepository = getLocalRepository();
+
+		return localRepository.getDirectory();
+	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
 		LocalRepository localRepository = getLocalRepository();
@@ -27,6 +35,27 @@ public class LocalGitBranch extends BaseGitBranch {
 
 	public LocalRepository getLocalRepository() {
 		return _localRepository;
+	}
+
+	public void setupWorkspace() {
+		System.out.println();
+		System.out.println("##");
+		System.out.println("## " + toString());
+		System.out.println("##");
+		System.out.println();
+
+		GitWorkingDirectory gitWorkingDirectory =
+			getGitWorkingDirectory();
+
+		gitWorkingDirectory.createLocalGitBranch(this, true);
+
+		gitWorkingDirectory.checkoutLocalGitBranch(this);
+
+		gitWorkingDirectory.reset("--hard " + getSHA());
+
+		gitWorkingDirectory.clean();
+
+		gitWorkingDirectory.displayLog();
 	}
 
 	@Override

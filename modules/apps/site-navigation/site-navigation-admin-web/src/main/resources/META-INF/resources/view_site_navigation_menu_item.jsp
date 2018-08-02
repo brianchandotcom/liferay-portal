@@ -62,17 +62,9 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 					</div>
 				</div>
 
-				<liferay-util:buffer
-					var="actionJspBuffer"
-				>
+				<div class="card-col-field lfr-card-actions-column">
 					<liferay-util:include page="/site_navigation_menu_item_action.jsp" servletContext="<%= application %>" />
-				</liferay-util:buffer>
-
-				<c:if test="<%= Validator.isNotNull(actionJspBuffer) %>">
-					<div class="card-col-field lfr-card-actions-column">
-						<%= actionJspBuffer %>
-					</div>
-				</c:if>
+				</div>
 			</div>
 		</div>
 	</div>

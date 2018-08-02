@@ -42,11 +42,16 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		/>
 	</c:if>
 
-	<%
-	String editStructureDefaultValuesURL = PortalUtil.escapeRedirect(ddmDisplay.getEditStructureDefaultValuesURL(liferayPortletRequest, liferayPortletResponse, structure, currentURL));
-	%>
+	<portlet:renderURL var="editStructureDefaultValuesURL">
+		<portlet:param name="mvcPath" value="/edit_article.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(structure.getGroupId()) %>" />
+		<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
+		<portlet:param name="ddmStructureKey" value="<%= structure.getStructureKey() %>" />
+	</portlet:renderURL>
 
-	<c:if test="<%= Validator.isNotNull(editStructureDefaultValuesURL) && DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
 		<liferay-ui:icon
 			message="edit-default-values"
 			url="<%= editStructureDefaultValuesURL %>"

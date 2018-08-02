@@ -22,12 +22,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.apache.maven.project.MavenProject;
-
-import org.codehaus.plexus.component.repository.ComponentDependency;
 
 import org.eclipse.aether.RepositorySystem;
 import org.eclipse.aether.RepositorySystemSession;
@@ -49,27 +47,29 @@ public class BuildThemeMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
-			for (ComponentDependency componentDependency :
-					_pluginDescriptor.getDependencies()) {
-
-				String artifactId = componentDependency.getArtifactId();
+			for (Dependency dependency : _project.getDependencies()) {
+				String artifactId = dependency.getArtifactId();
 
 				if (artifactId.equals("com.liferay.frontend.theme.styled") &&
 					(_themeBuilderArgs.getParentDir() == null) &&
 					ThemeBuilder.STYLED.equals(
 						_themeBuilderArgs.getParentName())) {
 
-					Artifact artifact = _resolveArtifact(componentDependency);
+					Artifact artifact = _resolveArtifact(dependency);
 
-					_themeBuilderArgs.setParentDir(artifact.getFile());
+					if (artifact != null) {
+						_themeBuilderArgs.setParentDir(artifact.getFile());
+					}
 				}
 				else if (artifactId.equals(
 							 "com.liferay.frontend.theme.unstyled") &&
 						 (_themeBuilderArgs.getUnstyledDir() == null)) {
 
-					Artifact artifact = _resolveArtifact(componentDependency);
+					Artifact artifact = _resolveArtifact(dependency);
 
-					_themeBuilderArgs.setUnstyledDir(artifact.getFile());
+					if (artifact != null) {
+						_themeBuilderArgs.setUnstyledDir(artifact.getFile());
+					}
 				}
 			}
 
@@ -131,13 +131,12 @@ public class BuildThemeMojo extends AbstractMojo {
 		_themeBuilderArgs.setUnstyledDir(unstyledDir);
 	}
 
-	private Artifact _resolveArtifact(ComponentDependency componentDependency)
+	private Artifact _resolveArtifact(Dependency dependency)
 		throws ArtifactResolutionException {
 
 		Artifact artifact = new DefaultArtifact(
-			componentDependency.getGroupId(),
-			componentDependency.getArtifactId(), componentDependency.getType(),
-			componentDependency.getVersion());
+			dependency.getGroupId(), dependency.getArtifactId(),
+			dependency.getType(), dependency.getVersion());
 
 		ArtifactRequest artifactRequest = new ArtifactRequest();
 
@@ -155,13 +154,6 @@ public class BuildThemeMojo extends AbstractMojo {
 
 		return artifactResult.getArtifact();
 	}
-
-	/**
-	 * @parameter default-value="${plugin}"
-	 * @readonly
-	 * @required
-	 */
-	private PluginDescriptor _pluginDescriptor;
 
 	/**
 	 * @parameter property="project"

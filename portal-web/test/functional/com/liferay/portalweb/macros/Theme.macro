@@ -1,8 +1,4 @@
 <definition>
-	<command name="configureLookAndFeelBulletStyle">
-		<execute function="Select" locator1="Select#BULLET_STYLE" value1="${bulletStyle}" />
-	</command>
-
 	<command name="configureLookAndFeelSameLook">
 		<execute function="Click" locator1="Radio#SAME_LOOK" />
 	</command>
@@ -47,10 +43,6 @@
 
 	<command name="configureLookAndFeelSpecificLook">
 		<execute function="Click" locator1="Radio#SPECIFIC_LOOK" />
-	</command>
-
-	<command name="viewBulletStyle">
-		<execute function="AssertSelectedLabel" locator1="Select#BULLET_STYLE" value1="${bulletStyle}" />
 	</command>
 
 	<command name="viewMaxMinPortletOptions">

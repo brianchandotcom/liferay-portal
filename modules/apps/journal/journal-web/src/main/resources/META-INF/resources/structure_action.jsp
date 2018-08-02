@@ -64,6 +64,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
 			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(structure.getClassNameId()) %>" />
+			<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />
 			<portlet:param name="showHeader" value="<%= Boolean.TRUE.toString() %>" />
 		</liferay-portlet:renderURL>
 

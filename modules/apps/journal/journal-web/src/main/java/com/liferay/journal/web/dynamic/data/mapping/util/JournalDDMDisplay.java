@@ -17,28 +17,22 @@ package com.liferay.journal.web.dynamic.data.mapping.util;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
-import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
-import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -73,11 +67,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class JournalDDMDisplay extends BaseDDMDisplay {
 
-	@Override
-	public String getAvailableFields() {
-		return "Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE";
-	}
-
 	public String getConfirmSelectStructureMessage(Locale locale) {
 		return LanguageUtil.get(
 			getResourceBundle(locale),
@@ -93,27 +82,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getPortletId() {
 		return JournalPortletKeys.JOURNAL;
-	}
-
-	@Override
-	public String getStorageType() {
-		String storageType = StorageType.JSON.getValue();
-
-		try {
-			long companyId = CompanyThreadLocal.getCompanyId();
-
-			JournalServiceConfiguration journalServiceConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					JournalServiceConfiguration.class, companyId);
-
-			storageType =
-				journalServiceConfiguration.journalArticleStorageType();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return storageType;
 	}
 
 	@Override
@@ -338,8 +306,8 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 			@Override
 			public String getURL(
-                LiferayPortletRequest liferayPortletRequest,
-                LiferayPortletResponse liferayPortletResponse) {
+				LiferayPortletRequest liferayPortletRequest,
+				LiferayPortletResponse liferayPortletResponse) {
 
 				PortletURL portletURL = portal.getControlPanelPortletURL(
 					liferayPortletRequest, JournalPortletKeys.JOURNAL,
@@ -399,9 +367,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 		};
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalDDMDisplay.class);
 
 	private static final Set<String> _templateLanguageTypes = SetUtil.fromArray(
 		new String[] {

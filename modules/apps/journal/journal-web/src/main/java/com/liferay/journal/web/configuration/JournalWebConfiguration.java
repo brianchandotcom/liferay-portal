@@ -52,6 +52,12 @@ public interface JournalWebConfiguration {
 	)
 	public boolean journalArticleForceAutogenerateId();
 
+	@Meta.AD(
+		deflt = "true", description = "autogenerate-structure-key-description",
+		name = "autogenerate-structure-key", required = false
+	)
+	public boolean autogenerateStructureKey();
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */

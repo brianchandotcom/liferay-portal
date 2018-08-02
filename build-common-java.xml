@@ -115,6 +115,8 @@
 		<if>
 			<available file="bnd.bnd" />
 			<then>
+				<generate-pom-info />
+
 				<manifest-helper />
 
 				<bndexpand propertyfile="${project.dir}/common.bnd" />

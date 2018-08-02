@@ -156,6 +156,7 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.artifacts.maven.MavenDeployer;
+import org.gradle.api.artifacts.maven.MavenPom;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
@@ -230,6 +231,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Charles Wu
  */
 public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
@@ -253,6 +255,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String DOWNLOAD_COMPILED_JSP_TASK_NAME =
 		"downloadCompiledJSP";
+
+	public static final String GENERATE_POM_INFO_TASK_NAME = "generatePomInfo";
 
 	public static final String INSTALL_CACHE_TASK_NAME = "installCache";
 
@@ -376,6 +380,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Task baselineTask = GradleUtil.getTask(
 			project, BaselinePlugin.BASELINE_TASK_NAME);
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 		Task syncVersionsTask = _addTaskSyncVersions(project);
 
 		baselineTask.finalizedBy(syncVersionsTask);
@@ -439,7 +444,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
 		_configureSourceSetMain(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
-		_configureTaskJar(project, testProject);
+		_configureTaskJar(jar, testProject);
 		_configureTaskJavadoc(project, portalRootDir);
 		_configureTaskTest(project);
 		_configureTaskTestIntegration(project);
@@ -454,6 +459,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_addTaskUpdateFileSnapshotVersions(project);
 
 		if (publishing) {
+			Task generatePomInfoTask = _addTaskGeneratePomInfo(project);
+
+			jar.dependsOn(generatePomInfoTask);
+
 			_configureTasksEnabledIfStaleSnapshot(
 				project, testProject, MavenPlugin.INSTALL_TASK_NAME,
 				BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
@@ -952,6 +961,87 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		copy.setIncludeEmptyDirs(false);
 
 		return copy;
+	}
+
+	private Task _addTaskGeneratePomInfo(final Project project) {
+		Task task = project.task(GENERATE_POM_INFO_TASK_NAME);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					MavenPluginConvention mavenPluginConvention =
+						GradleUtil.getConvention(
+							project, MavenPluginConvention.class);
+
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+					final String artifactId = GradleUtil.getArchivesBaseName(
+						project);
+					final String groupId = String.valueOf(project.getGroup());
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(sourceSetOutput.getClassesDir());
+					sb.append("/META-INF/maven/");
+					sb.append(groupId);
+					sb.append('/');
+					sb.append(artifactId);
+
+					final String dirName = sb.toString();
+
+					mavenPluginConvention.pom(
+						new Closure<MavenPom>(project) {
+
+							@SuppressWarnings("unused")
+							public MavenPom doCall(MavenPom mavenPom) {
+								Conf2ScopeMappingContainer
+									conf2ScopeMappingContainer =
+										mavenPom.getScopeMappings();
+
+								Configuration configuration =
+									GradleUtil.getConfiguration(
+										project,
+										JavaPlugin.
+											COMPILE_ONLY_CONFIGURATION_NAME);
+
+								conf2ScopeMappingContainer.addMapping(
+									MavenPlugin.PROVIDED_COMPILE_PRIORITY,
+									configuration,
+									Conf2ScopeMappingContainer.PROVIDED);
+
+								mavenPom.setArtifactId(artifactId);
+								mavenPom.setGroupId(groupId);
+
+								mavenPom.writeTo(dirName + "/pom.xml");
+
+								return mavenPom;
+							}
+
+						});
+
+					File file = new File(dirName, "pom.properties");
+
+					Properties properties = new Properties();
+
+					properties.setProperty("artifactId", artifactId);
+					properties.setProperty("groupId", groupId);
+					properties.setProperty(
+						"version", String.valueOf(project.getVersion()));
+
+					FileUtil.writeProperties(file, properties);
+				}
+
+			});
+
+		task.setDescription(
+			"Generates Maven pom.properties and pom.xml for this jar.");
+
+		return task;
 	}
 
 	private InstallCacheTask _addTaskInstallCache(
@@ -2951,14 +3041,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskJar(Project project, boolean testProject) {
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
+	private void _configureTaskJar(Jar jar, boolean testProject) {
 		if (testProject) {
 			jar.dependsOn(JavaPlugin.TEST_CLASSES_TASK_NAME);
 
 			SourceSet sourceSet = GradleUtil.getSourceSet(
-				project,
+				jar.getProject(),
 				TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
 
 			jar.dependsOn(sourceSet.getClassesTaskName());

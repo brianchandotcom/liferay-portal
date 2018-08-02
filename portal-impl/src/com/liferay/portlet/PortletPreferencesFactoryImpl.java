@@ -817,7 +817,10 @@ public class PortletPreferencesFactoryImpl
 
 		String cacheKey = _encodeCacheKey(xml);
 
-		Map<String, Preference> preferencesMap = _preferencesMapPortalCache.get(
+		PortalCache<String, Map<String, Preference>> preferencesMapPortalCache =
+			_getPreferencesMapPortalCache();
+
+		Map<String, Preference> preferencesMap = preferencesMapPortalCache.get(
 			cacheKey);
 
 		if (preferencesMap != null) {
@@ -826,7 +829,7 @@ public class PortletPreferencesFactoryImpl
 
 		preferencesMap = createPreferencesMap(xml);
 
-		_preferencesMapPortalCache.put(cacheKey, preferencesMap);
+		preferencesMapPortalCache.put(cacheKey, preferencesMap);
 
 		return preferencesMap;
 	}
@@ -953,12 +956,22 @@ public class PortletPreferencesFactoryImpl
 			layout.getCompanyId(), ownerId, ownerType, plid, portletId);
 	}
 
+	private PortalCache<String, Map<String, Preference>>
+		_getPreferencesMapPortalCache() {
+
+		if (_preferencesMapPortalCache == null) {
+			_preferencesMapPortalCache = SingleVMPoolUtil.getPortalCache(
+				PortletPreferencesFactoryImpl.class.getName());
+		}
+
+		return _preferencesMapPortalCache;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesFactoryImpl.class);
 
 	private Map<String, Preference> _defaultPreferencesMap;
-	private final PortalCache<String, Map<String, Preference>>
-		_preferencesMapPortalCache = SingleVMPoolUtil.getPortalCache(
-			PortletPreferencesFactoryImpl.class.getName());
+	private volatile PortalCache<String, Map<String, Preference>>
+		_preferencesMapPortalCache;
 
 }

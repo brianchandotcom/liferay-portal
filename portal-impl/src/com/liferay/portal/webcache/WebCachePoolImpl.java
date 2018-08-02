@@ -28,18 +28,18 @@ import com.liferay.portal.kernel.webcache.WebCachePool;
  */
 public class WebCachePoolImpl implements WebCachePool {
 
-	public void afterPropertiesSet() {
-		_portalCache = SingleVMPoolUtil.getPortalCache(_CACHE_NAME);
-	}
-
 	@Override
 	public void clear() {
-		_portalCache.removeAll();
+		PortalCache<String, Object> portalCache = _getPortalCache();
+
+		portalCache.removeAll();
 	}
 
 	@Override
 	public Object get(String key, WebCacheItem wci) {
-		Object obj = _portalCache.get(key);
+		PortalCache<String, Object> portalCache = _getPortalCache();
+
+		Object obj = portalCache.get(key);
 
 		if (obj != null) {
 			return obj;
@@ -54,7 +54,7 @@ public class WebCachePoolImpl implements WebCachePool {
 
 			int timeToLive = (int)(wci.getRefreshTime() / Time.SECOND);
 
-			_portalCache.put(key, obj, timeToLive);
+			portalCache.put(key, obj, timeToLive);
 		}
 		catch (WebCacheException wce) {
 			if (_log.isWarnEnabled()) {
@@ -74,7 +74,17 @@ public class WebCachePoolImpl implements WebCachePool {
 
 	@Override
 	public void remove(String key) {
-		_portalCache.remove(key);
+		PortalCache<String, Object> portalCache = _getPortalCache();
+
+		portalCache.remove(key);
+	}
+
+	private PortalCache<String, Object> _getPortalCache() {
+		if (_portalCache == null) {
+			_portalCache = SingleVMPoolUtil.getPortalCache(_CACHE_NAME);
+		}
+
+		return _portalCache;
 	}
 
 	private static final String _CACHE_NAME = WebCachePool.class.getName();
@@ -82,6 +92,6 @@ public class WebCachePoolImpl implements WebCachePool {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WebCachePoolImpl.class);
 
-	private PortalCache<String, Object> _portalCache;
+	private volatile PortalCache<String, Object> _portalCache;
 
 }

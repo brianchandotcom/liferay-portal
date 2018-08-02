@@ -683,8 +683,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			else if (themeDisplay.isLifecycleAction()) {
 				_triggeredByActionURL = true;
 
-				if (Objects.equals(
-						getLifecycle(), PortletRequest.ACTION_PHASE)) {
+				if (getLifecycle().equals(PortletRequest.ACTION_PHASE)) {
 
 					// Request was triggered by an action URL and is being
 					// processed by
@@ -719,10 +718,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					continue;
 				}
 
-				if (Objects.equals(
-						getLifecycle(), PortletRequest.HEADER_PHASE) ||
-					Objects.equals(
-						getLifecycle(), PortletRequest.RENDER_PHASE)) {
+				if (getLifecycle().equals(PortletRequest.HEADER_PHASE) ||
+					getLifecycle().equals(PortletRequest.RENDER_PHASE)) {
 
 					if (privateRenderParameters == null) {
 						privateRenderParameters = new HashMap<>();
@@ -859,7 +856,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_plid = plid;
 
 		Set<String> publicRenderParameterNames = new HashSet<>();
-
 		Set<PublicRenderParameter> publicRenderParameters =
 			portlet.getPublicRenderParameters();
 
@@ -872,7 +868,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		Map<String, String[]> allRenderParameters = new LinkedHashMap<>();
 
-		if (Objects.equals(getLifecycle(), PortletRequest.RESOURCE_PHASE)) {
+		if (getLifecycle().equals(PortletRequest.RESOURCE_PHASE)) {
 			for (PublicRenderParameter publicRenderParameter :
 					publicRenderParameters) {
 
@@ -1351,11 +1347,11 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE.length();
 
 				if (pos >= 0) {
-					name = name.substring(0, pos);
-					
-					name = name.concat(
-						name.substring(
-							pos + privateRenderParameterNamespaceLength));
+					name = name.substring(
+						0,
+						pos).concat(
+							name.substring(
+								pos + privateRenderParameterNamespaceLength));
 				}
 			}
 

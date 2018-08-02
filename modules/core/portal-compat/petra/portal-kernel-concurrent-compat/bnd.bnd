@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Kernel Concurrent Compat
-Bundle-SymbolicName: com.liferay.portal.kernel.concurrent.compat
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.kernel.concurrent

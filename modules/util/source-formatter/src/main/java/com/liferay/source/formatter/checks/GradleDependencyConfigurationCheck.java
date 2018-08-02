@@ -40,15 +40,13 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 		List<String> blocks = GradleSourceUtil.getDependenciesBlocks(content);
 
 		for (String dependencies : blocks) {
-			content = _formatDependencies(absolutePath, content, dependencies);
+			content = _formatDependencies(content, dependencies);
 		}
 
 		return content;
 	}
 
-	private String _formatDependencies(
-		String absolutePath, String content, String dependencies) {
-
+	private String _formatDependencies(String content, String dependencies) {
 		int x = dependencies.indexOf("\n");
 		int y = dependencies.lastIndexOf("\n");
 

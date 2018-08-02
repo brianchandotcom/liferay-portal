@@ -14,8 +14,43 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+
 /**
  * @author Eudaldo Alonso
  */
 public class JournalEditStructuresDisplayContext {
+
+	public String getAvailableFields() {
+		return "Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE";
+	}
+
+	public String getStorageType() {
+		String storageType = StorageType.JSON.getValue();
+
+		try {
+			long companyId = CompanyThreadLocal.getCompanyId();
+
+			JournalServiceConfiguration journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class, companyId);
+
+			storageType =
+				journalServiceConfiguration.journalArticleStorageType();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return storageType;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalEditStructuresDisplayContext.class);
+
 }

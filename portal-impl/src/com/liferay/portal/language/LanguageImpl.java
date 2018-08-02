@@ -1612,7 +1612,9 @@ public class LanguageImpl implements Language, Serializable {
 	private static void _sendClearCacheClusterMessage(
 		MethodKey methodKey, long argument) {
 
-		if (!ClusterInvokeThreadLocal.isEnabled()) {
+		if (!ClusterExecutorUtil.isEnabled() ||
+			!ClusterInvokeThreadLocal.isEnabled()) {
+
 			return;
 		}
 

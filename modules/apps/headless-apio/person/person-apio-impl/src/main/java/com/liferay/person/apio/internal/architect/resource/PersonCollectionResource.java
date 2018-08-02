@@ -32,6 +32,7 @@ import com.liferay.person.apio.internal.architect.form.PersonUpdaterForm;
 import com.liferay.person.apio.internal.model.UserWrapper;
 import com.liferay.person.apio.internal.query.FullNameQuery;
 import com.liferay.petra.string.StringPool;
+import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -130,6 +131,8 @@ public class PersonCollectionResource
 			"addresses", AddressIdentifier.class
 		).addRelatedCollection(
 			"emails", EmailIdentifier.class
+		).addRelatedCollection(
+			"phones", PhoneIdentifier.class
 		).addRelativeURL(
 			"image", UserWrapper::getPortraitURL
 		).addString(

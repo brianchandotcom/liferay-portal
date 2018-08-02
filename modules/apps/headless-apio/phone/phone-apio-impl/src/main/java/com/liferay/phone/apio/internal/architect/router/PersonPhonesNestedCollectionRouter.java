@@ -18,13 +18,14 @@ import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.organization.apio.architect.identifier.OrganizationIdentifier;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Phone;
-import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PhoneService;
+import com.liferay.portal.kernel.service.UserService;
 
 import java.util.List;
 
@@ -34,16 +35,16 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Provides the information necessary to expose the <a
  * href="http://schema.org/Telephone">Telephone</a> resources contained inside
- * an <a href="http://schema.org/Organization">Organization</a> through a web
- * API. The resources are mapped from the internal model {@link Phone}.
+ * an <a href="http://schema.org/Person">Person</a> through a web API. The
+ * resources are mapped from the internal model {@link Phone}.
  *
  * @author Javier Gamarra
  * @review
  */
 @Component(immediate = true)
-public class OrganizationPhonesNestedCollectionRouter implements
+public class PersonPhonesNestedCollectionRouter implements
 	NestedCollectionRouter<Phone, Long, PhoneIdentifier, Long,
-		OrganizationIdentifier> {
+		PersonIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<Phone, Long, Long> collectionRoutes(
@@ -54,25 +55,21 @@ public class OrganizationPhonesNestedCollectionRouter implements
 		).build();
 	}
 
-	private PageItems<Phone> _getPageItems(
-			Pagination pagination, long organizationId)
+	private PageItems<Phone> _getPageItems(Pagination pagination, long personId)
 		throws PortalException {
 
-		Organization organization = _organizationService.getOrganization(
-			organizationId);
+		User user = _userService.getUserById(personId);
 
 		List<Phone> phones = _phoneService.getPhones(
-			organization.getModelClassName(), organization.getOrganizationId());
+			Contact.class.getName(), user.getContactId());
 
-		int count = phones.size();
-
-		return new PageItems<>(phones, count);
+		return new PageItems<>(phones, phones.size());
 	}
 
 	@Reference
-	private OrganizationService _organizationService;
+	private PhoneService _phoneService;
 
 	@Reference
-	private PhoneService _phoneService;
+	private UserService _userService;
 
 }

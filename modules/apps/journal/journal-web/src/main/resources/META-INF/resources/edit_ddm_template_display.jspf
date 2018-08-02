@@ -14,15 +14,7 @@
  */
 --%>
 
-<%
-String scriptContent = ParamUtil.getString(request, "scriptContent");
-
-if (Validator.isNotNull(scriptContent)) {
-	script = scriptContent;
-}
-%>
-
-<aui:input name="scriptContent" type="hidden" value="<%= script %>" />
+<aui:input name="scriptContent" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getScript() %>" />
 
 <liferay-ui:panel-container
 	extended="<%= true %>"
@@ -39,7 +31,7 @@ if (Validator.isNotNull(scriptContent)) {
 		title="script"
 	>
 		<div class="form-group lfr-template-editor-container">
-			<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
+			<c:if test="<%= journalEditDDMTemplateDisplayContext.isAutocompleteEnabled() %>">
 				<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">
 					<div class="search" id="<portlet:namespace />paletteSearchContainer">
 						<input class="col-md-12 field form-control search-query" id="<portlet:namespace />paletteSearch" placeholder="<liferay-ui:message key="search" />" type="text" />
@@ -49,25 +41,7 @@ if (Validator.isNotNull(scriptContent)) {
 						<div id="<portlet:namespace />paletteData">
 
 							<%
-							long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template, classNameId);
-
-							Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, classPK, language, locale);
-
-							TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(templateHandlerClassNameId);
-
-							Class<?> clazz = ddmDisplay.getClass();
-
-							if (templateHandler != null) {
-								clazz = templateHandler.getClass();
-							}
-
-							Bundle bundle = FrameworkUtil.getBundle(clazz);
-
-							ResourceBundleLoader resourceBundleLoader = ResourceBundleLoaderUtil.getResourceBundleLoaderByBundleSymbolicName(bundle.getSymbolicName());
-
-							ResourceBundle templateHandlerResourceBundle = resourceBundleLoader.loadResourceBundle(locale);
-
-							for (TemplateVariableGroup templateVariableGroup : templateVariableGroups.values()) {
+							for (TemplateVariableGroup templateVariableGroup : journalEditDDMTemplateDisplayContext.getTemplateVariableGroups()) {
 								if (templateVariableGroup.isEmpty()) {
 									continue;
 								}
@@ -78,7 +52,7 @@ if (Validator.isNotNull(scriptContent)) {
 									cssClass="palette-section"
 									extended="<%= false %>"
 									id="<%= HtmlUtil.getAUICompatibleId(templateVariableGroup.getLabel()) %>"
-									title="<%= LanguageUtil.get(request, templateHandlerResourceBundle, HtmlUtil.escape(templateVariableGroup.getLabel())) %>"
+									title="<%= LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), HtmlUtil.escape(templateVariableGroup.getLabel())) %>"
 								>
 									<ul class="palette-item-content">
 
@@ -87,8 +61,8 @@ if (Validator.isNotNull(scriptContent)) {
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, language)) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, templateHandlerResourceBundle, templateVariableDefinition)) %>">
-													<%= HtmlUtil.escape(LanguageUtil.get(request, templateHandlerResourceBundle, templateVariableDefinition.getLabel())) %>
+												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, journalEditDDMTemplateDisplayContext.getLanguage())) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition)) %>">
+													<%= HtmlUtil.escape(LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition.getLabel())) %>
 
 													<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
@@ -113,7 +87,7 @@ if (Validator.isNotNull(scriptContent)) {
 			<%
 			String editorContainerClass = "lfr-editor-container";
 
-			if (!ddmDisplayContext.isAutocompleteEnabled(language)) {
+			if (!journalEditDDMTemplateDisplayContext.isAutocompleteEnabled()) {
 				editorContainerClass += " lfr-editor-container-full";
 			}
 			%>
@@ -155,7 +129,7 @@ if (Validator.isNotNull(scriptContent)) {
 	var prevEditorContent;
 	var richEditor;
 
-	<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
+	<c:if test="<%= journalEditDDMTemplateDisplayContext.isAutocompleteEnabled() %>">
 		var paletteContainer = panelScriptContainer.one('#<portlet:namespace />templatePaletteContainer');
 		var paletteDataContainer = panelScriptContainer.one('#<portlet:namespace />paletteDataContainer');
 
@@ -329,10 +303,10 @@ if (Validator.isNotNull(scriptContent)) {
 		var AutoComplete;
 
 		<c:choose>
-			<c:when test="<%= language.equals(TemplateConstants.LANG_TYPE_FTL) %>">
+			<c:when test="<%= Objects.equals(journalEditDDMTemplateDisplayContext.getLanguage(), TemplateConstants.LANG_TYPE_FTL) %>">
 				AutoComplete = A.AceEditor.AutoCompleteFreemarker;
 			</c:when>
-			<c:when test="<%= language.equals(TemplateConstants.LANG_TYPE_VM) %>">
+			<c:when test="<%= Objects.equals(journalEditDDMTemplateDisplayContext.getLanguage(), TemplateConstants.LANG_TYPE_VM) %>">
 				AutoComplete = A.AceEditor.AutoCompleteVelocity;
 			</c:when>
 		</c:choose>
@@ -340,7 +314,7 @@ if (Validator.isNotNull(scriptContent)) {
 		if (AutoComplete) {
 			var processor = new AutoComplete(
 				{
-					variables: <%= ddmDisplayContext.getAutocompleteJSON(request, language) %>
+					variables: <%= journalEditDDMTemplateDisplayContext.getAutocompleteJSON() %>
 				}
 			);
 
@@ -413,7 +387,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 			setEditorPlugins();
 
-			<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
+			<c:if test="<%= journalEditDDMTemplateDisplayContext.isAutocompleteEnabled() %>">
 				paletteContainer.delegate('click', onPaletteItemChosen, '.palette-item');
 
 				new A.TogglerDelegate(
@@ -450,16 +424,16 @@ if (Validator.isNotNull(scriptContent)) {
 		function(event) {
 			var form = A.one('#<portlet:namespace />fm');
 
-			<portlet:renderURL var="refreshTemplateURL">
-				<portlet:param name="mvcPath" value="/edit_template.jsp" />
+			<portlet:renderURL var="refreshDDMTemplateURL">
+				<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
 			</portlet:renderURL>
 
-			form.attr('action', '<%= refreshTemplateURL %>');
+			form.attr('action', '<%= refreshDDMTemplateURL %>');
 
 			if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
 				Liferay.fire('<portlet:namespace />saveTemplate');
 			}
-			<c:if test="<%= template == null %>">
+			<c:if test="<%= ddmTemplate == null %>">
 				else {
 					editorContentElement.val(STR_EMPTY);
 				}
@@ -682,5 +656,5 @@ private String _getVariableReferenceCode(String variableName, String accessor, S
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_dynamic_data_mapping_web.edit_template_display_jspf");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_journal_web.edit_ddm_template_display_jspf");
 %>

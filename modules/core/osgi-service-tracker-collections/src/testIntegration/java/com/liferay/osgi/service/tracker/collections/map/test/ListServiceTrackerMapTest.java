@@ -251,6 +251,11 @@ public class ListServiceTrackerMapTest {
 		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 			createServiceTrackerMap(_bundleContext);
 
+		TrackedOne trackedOne1 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1, -1);
+
 		TrackedOne trackedOne2 = new TrackedOne();
 
 		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
@@ -260,11 +265,6 @@ public class ListServiceTrackerMapTest {
 
 		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
 			trackedOne3, 1);
-
-		TrackedOne trackedOne1 = new TrackedOne();
-
-		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
-			trackedOne1, -1);
 
 		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
 
@@ -400,9 +400,9 @@ public class ListServiceTrackerMapTest {
 		Assert.assertEquals(trackedOne2, iterator.next());
 		Assert.assertEquals(trackedOne1, iterator.next());
 
-		serviceRegistration3.unregister();
-		serviceRegistration2.unregister();
 		serviceRegistration1.unregister();
+		serviceRegistration2.unregister();
+		serviceRegistration3.unregister();
 	}
 
 	@Test

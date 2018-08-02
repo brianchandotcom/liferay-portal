@@ -16,6 +16,7 @@ package com.liferay.person.apio.internal.architect.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
+import com.liferay.address.apio.architect.identifier.AddressIdentifier;
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -124,6 +125,8 @@ public class PersonCollectionResource
 			"honorificSuffix", _getContactField(Contact::getSuffixId)
 		).addRelatedCollection(
 			"roles", RoleIdentifier.class
+		).addRelatedCollection(
+			"addresses", AddressIdentifier.class
 		).addRelativeURL(
 			"image", UserWrapper::getPortraitURL
 		).addString(

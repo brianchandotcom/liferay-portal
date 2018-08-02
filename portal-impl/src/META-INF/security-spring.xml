@@ -12,7 +12,7 @@
 	<bean class="com.liferay.portal.kernel.internal.security.permission.resource.PortletResourcePermissionDefinitionTracker" id="com.liferay.portal.kernel.internal.security.permission.resource.PortletResourcePermissionDefinitionTracker" />
 	<bean class="com.liferay.portal.kernel.model.ModelHintsUtil" id="com.liferay.portal.kernel.model.ModelHintsUtil">
 		<property name="modelHints">
-			<bean class="com.liferay.portal.model.DefaultModelHintsImpl" depends-on="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil" />
+			<bean class="com.liferay.portal.model.DefaultModelHintsImpl" />
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.kernel.security.auth.AuthTokenUtil" id="com.liferay.portal.kernel.security.auth.AuthTokenUtil" />
@@ -67,7 +67,7 @@
 			<bean class="com.liferay.portal.security.permission.PermissionConverterImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.security.permission.ResourceActionsImpl" depends-on="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil" id="com.liferay.portal.kernel.security.permission.ResourceActions" />
+	<bean class="com.liferay.portal.security.permission.ResourceActionsImpl" id="com.liferay.portal.kernel.security.permission.ResourceActions" />
 	<bean class="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" id="com.liferay.portal.kernel.security.permission.ResourceActionsUtil">
 		<property name="resourceActions" ref="com.liferay.portal.kernel.security.permission.ResourceActions" />
 	</bean>
@@ -86,7 +86,7 @@
 		<property name="methodFactoryRegistry">
 			<bean class="com.liferay.portal.webdav.methods.MethodFactoryRegistryImpl">
 				<property name="defaultMethodFactory">
-					<bean class="com.liferay.portal.webdav.methods.MethodFactoryImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil" />
+					<bean class="com.liferay.portal.webdav.methods.MethodFactoryImpl" />
 				</property>
 			</bean>
 		</property>
@@ -95,7 +95,7 @@
 		<property name="secure" value="true" />
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" depends-on="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil" id="com.liferay.portal.kernel.xml.SAXReaderUtil">
+	<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" id="com.liferay.portal.kernel.xml.SAXReaderUtil">
 		<property name="SAXReader" ref="com.liferay.portal.kernel.xml.SAXReader" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil" id="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil">

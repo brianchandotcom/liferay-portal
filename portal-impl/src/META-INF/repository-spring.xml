@@ -7,7 +7,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.portal.repository.RepositoryFactoryImpl" depends-on="com.liferay.portal.kernel.model.ModelHintsUtil" id="com.liferay.portal.kernel.repository.RepositoryFactory" />
+	<bean class="com.liferay.portal.repository.RepositoryFactoryImpl" id="com.liferay.portal.kernel.repository.RepositoryFactory" />
 	<bean class="com.liferay.portal.kernel.repository.RepositoryFactoryUtil" id="com.liferay.portal.kernel.repository.RepositoryFactoryUtil">
 		<property name="repositoryFactory" ref="com.liferay.portal.kernel.repository.RepositoryFactory" />
 	</bean>

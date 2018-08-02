@@ -23,15 +23,22 @@ import java.util.Properties;
  */
 public class JunitPortalBatchBuildRunner extends PortalBatchBuildRunner {
 
-	protected JunitPortalBatchBuildRunner(Job job, String batchName) {
-		super(job, batchName);
+	protected JunitPortalBatchBuildRunner(
+		Job job, String batchName, String htmlURL) {
+
+		super(job, batchName, htmlURL);
 
 		_setPortalBuildProperties();
 	}
 
 	private void _setPortalBuildProperties() {
+		PortalLocalGitBranch portalLocalGitBranch = getPortalLocalGitBranch();
+
+		LocalRepository localRepository =
+			portalLocalGitBranch.getLocalRepository();
+	
 		String portalUpstreamBranchName =
-			primaryLocalRepository.getUpstreamBranchName();
+			localRepository.getUpstreamBranchName();
 
 		if (portalUpstreamBranchName.contains("7.0.x") ||
 			portalUpstreamBranchName.contains("7.1.x") ||

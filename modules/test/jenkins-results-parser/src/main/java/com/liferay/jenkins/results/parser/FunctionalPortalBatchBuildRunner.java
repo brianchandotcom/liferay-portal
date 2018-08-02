@@ -21,8 +21,10 @@ import java.util.Properties;
  */
 public class FunctionalPortalBatchBuildRunner extends PortalBatchBuildRunner {
 
-	protected FunctionalPortalBatchBuildRunner(Job job, String batchName) {
-		super(job, batchName);
+	protected FunctionalPortalBatchBuildRunner(
+		Job job, String batchName, String htmlURL) {
+
+		super(job, batchName, htmlURL);
 
 		_setPortalBuildProperties();
 	}
@@ -32,6 +34,9 @@ public class FunctionalPortalBatchBuildRunner extends PortalBatchBuildRunner {
 
 		properties.put("jsp.precompile", "on");
 		properties.put("jsp.precompile.parallel", "on");
+
+		PortalLocalRepository portalLocalRepository =
+			getPortalLocalRepository();
 
 		portalLocalRepository.setBuildProperties(properties);
 	}

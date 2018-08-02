@@ -14,21 +14,37 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseBuildRunner {
 
-	public Job getJob() {
-		return job;
-	}
-
 	public void setup() {
-		primaryLocalRepository.setup();
+		for (LocalGitBranch localGitBranch : _localGitBranches) {
+			localGitBranch.setupWorkspace();
+
+			LocalRepository localRepository =
+				localGitBranch.getLocalRepository();
+
+			localRepository.writeRepositoryPropertiesFiles();
+		}
 	}
 
 	protected BaseBuildRunner(Job job) {
-		this.job = job;
+		_job = job;
+	}
+
+	protected void addLocalGitBranch(LocalGitBranch localGitBranch) {
+		if (localGitBranch != null) {
+			_localGitBranches.add(localGitBranch);
+		}
+	}
+
+	protected Job getJob() {
+		return _job;
 	}
 
 	protected PortalLocalGitBranch getPortalLocalGitBranch() {
@@ -42,7 +58,7 @@ public abstract class BaseBuildRunner {
 			return _portalLocalGitBranch;
 		}
 
-		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
+		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)_job;
 
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			portalTestClassJob.getPortalGitWorkingDirectory();
@@ -92,8 +108,8 @@ public abstract class BaseBuildRunner {
 	}
 
 	protected String getTestSuiteName() {
-		if (job instanceof TestSuiteJob) {
-			TestSuiteJob testSuiteJob = (TestSuiteJob)job;
+		if (_job instanceof TestSuiteJob) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)_job;
 
 			return testSuiteJob.getTestSuiteName();
 		}
@@ -101,9 +117,8 @@ public abstract class BaseBuildRunner {
 		return null;
 	}
 
-	protected final Job job;
-	protected LocalRepository primaryLocalRepository;
-
+	private final Job _job;
+	private final List<LocalGitBranch> _localGitBranches = new ArrayList<>();
 	private PortalLocalGitBranch _portalLocalGitBranch;
 	private PortalLocalRepository _portalLocalRepository;
 

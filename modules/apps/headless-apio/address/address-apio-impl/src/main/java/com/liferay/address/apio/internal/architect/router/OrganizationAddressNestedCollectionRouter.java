@@ -33,10 +33,9 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/Address">Address</a> resources contained
- * inside an <a href="http://schema.org/Organization">Organization</a> through a
- * web API. The resources are mapped from the internal model {@link
- * Address}.
+ * href="http://schema.org/Address">Address</a> resources contained inside an <a
+ * href="http://schema.org/Organization">Organization</a> through a web API. The
+ * resources are mapped from the internal model {@link Address}.
  *
  * @author Javier Gamarra
  * @review

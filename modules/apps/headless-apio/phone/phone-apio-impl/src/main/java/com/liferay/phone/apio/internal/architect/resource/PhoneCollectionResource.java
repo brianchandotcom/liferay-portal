@@ -19,7 +19,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
-import com.liferay.portal.kernel.model.ListTypeModel;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.service.PhoneService;
 
@@ -68,7 +68,7 @@ public class PhoneCollectionResource
 			phone -> Try.fromFallible(
 				phone::getType
 			).map(
-				ListTypeModel::getName
+				ListType::getName
 			).orElse(
 				null
 			)

@@ -18,7 +18,7 @@ import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
-import com.liferay.portal.kernel.model.ListTypeModel;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
@@ -64,7 +64,7 @@ public class WebUrlCollectionResource
 			website -> Try.fromFallible(
 				website::getType
 			).map(
-				ListTypeModel::getName
+				ListType::getName
 			).orElse(
 				null
 			)

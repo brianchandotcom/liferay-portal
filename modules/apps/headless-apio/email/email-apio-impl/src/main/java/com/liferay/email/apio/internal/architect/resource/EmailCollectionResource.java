@@ -20,7 +20,7 @@ import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.email.apio.architect.identifier.EmailIdentifier;
 import com.liferay.portal.kernel.model.EmailAddress;
-import com.liferay.portal.kernel.model.ListTypeModel;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.service.EmailAddressService;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,7 +66,7 @@ public class EmailCollectionResource
 			email -> Try.fromFallible(
 				email::getType
 			).map(
-				ListTypeModel::getName
+				ListType::getName
 			).orElse(
 				null
 			)

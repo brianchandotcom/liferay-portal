@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.model.adapter;
 
-import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 
 /**
  * @author Zoltan Csaszi
  */
 public interface StagedWorkflowDefinitionLink
-	extends StagedModel, WorkflowDefinitionLink {
+	extends StagedGroupedModel, WorkflowDefinitionLink {
 }

@@ -23,7 +23,45 @@
 		</if>
 	</tear-down>
 
-	<command name="SessionTimeout" priority="4">
+	<command name="RedirectOnExpire" priority="5">
+		<description message="This is a use case for LPS-75977." />
+
+		<property name="custom.properties" value="session.timeout.redirect.on.expire=true" />
+		<property name="test.name.skip.portal.instance" value="LoginUsecase#SessionTimeoutRedirectOnExpire" />
+		<property name="web.xml.timeout" value="2" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Session Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Session Page" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
+
+		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
+
+		<execute function="Pause" locator1="60000" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="WarningDue to inactivity, your session will expire" />
+
+		<execute function="Pause" locator1="60000" />
+
+		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
+
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
+	</command>
+
+	<command name="RememberMeChecked" priority="4">
 		<property name="web.xml.timeout" value="2" />
 
 		<execute macro="Navigator#openURL" />
@@ -72,43 +110,5 @@
 		<execute function="Refresh" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
-	</command>
-
-	<command name="SessionTimeoutRedirectOnExpire" priority="5">
-		<description message="This is a use case for LPS-75977." />
-
-		<property name="custom.properties" value="session.timeout.redirect.on.expire=true" />
-		<property name="test.name.skip.portal.instance" value="LoginUsecase#SessionTimeoutRedirectOnExpire" />
-		<property name="web.xml.timeout" value="2" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Session Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Session Page" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
-
-		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
-
-		<execute function="Pause" locator1="60000" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="WarningDue to inactivity, your session will expire" />
-
-		<execute function="Pause" locator1="60000" />
-
-		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
 	</command>
 </definition>

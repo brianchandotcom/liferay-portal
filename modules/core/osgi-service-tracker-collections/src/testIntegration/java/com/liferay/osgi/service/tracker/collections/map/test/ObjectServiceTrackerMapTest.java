@@ -224,6 +224,52 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceWithChangingServiceRanking() {
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			createServiceTrackerMap(_bundleContext);
+
+		TrackedOne trackedOne1 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1, 3);
+
+		TrackedOne trackedOne2 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
+			trackedOne2, 2);
+
+		TrackedOne trackedOne3 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
+			trackedOne3, 1);
+
+		Assert.assertEquals(
+			trackedOne1, serviceTrackerMap.getService("aTarget"));
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("service.ranking", 0);
+		properties.put("target", "aTarget");
+
+		serviceRegistration1.setProperties(properties);
+
+		Assert.assertEquals(
+			trackedOne2, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration2.unregister();
+
+		Assert.assertEquals(
+			trackedOne3, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration3.unregister();
+
+		Assert.assertEquals(
+			trackedOne1, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration1.unregister();
+	}
+
+	@Test
 	public void testGetServiceWithCustomComparator() {
 		ServiceReferenceMapper<String, TrackedOne>
 			propertyServiceReferenceMapper =
@@ -446,6 +492,49 @@ public class ObjectServiceTrackerMapTest {
 		ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, null, null,
 			(ServiceReferenceMapper<? extends Object, ? super Object>)null);
+	}
+
+	@Test
+	public void testGetServiceWithRegisteredServiceRanking() {
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			createServiceTrackerMap(_bundleContext);
+
+		TrackedOne trackedOne1 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1);
+
+		TrackedOne trackedOne2 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
+			trackedOne2, 0);
+
+		Assert.assertEquals(
+			trackedOne1, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration1.unregister();
+
+		serviceRegistration1 = registerService(trackedOne1);
+
+		TrackedOne trackedOne3 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
+			trackedOne3, 1);
+
+		Assert.assertEquals(
+			trackedOne3, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration3.unregister();
+
+		Assert.assertEquals(
+			trackedOne2, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration2.unregister();
+
+		Assert.assertEquals(
+			trackedOne1, serviceTrackerMap.getService("aTarget"));
+
+		serviceRegistration1.unregister();
 	}
 
 	@Test

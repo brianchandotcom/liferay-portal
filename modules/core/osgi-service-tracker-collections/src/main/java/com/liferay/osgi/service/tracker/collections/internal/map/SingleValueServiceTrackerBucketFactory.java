@@ -19,9 +19,10 @@ import com.liferay.osgi.service.tracker.collections.internal.ServiceReferenceSer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.List;
 
 import org.osgi.framework.ServiceReference;
 
@@ -53,12 +54,10 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 		public SingleBucket() {
 			_service = null;
 
-			ServiceReferenceServiceTupleComparator<SR>
-				serviceReferenceServiceTupleComparator =
-					new ServiceReferenceServiceTupleComparator<>(_comparator);
+			_serviceReferenceServiceTupleComparator =
+				new ServiceReferenceServiceTupleComparator<>(_comparator);
 
-			_serviceReferences = new PriorityQueue<>(
-				1, serviceReferenceServiceTupleComparator);
+			_serviceReferences = new ArrayList<>(1);
 		}
 
 		@Override
@@ -77,10 +76,11 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 			_serviceReferences.remove(serviceReferenceServiceTuple);
 
-			ServiceReferenceServiceTuple<SR, TS>
-				headServiceReferenceServiceTuple = _serviceReferences.peek();
+			if (!_serviceReferences.isEmpty()) {
+				ServiceReferenceServiceTuple<SR, TS>
+					headServiceReferenceServiceTuple = _serviceReferences.get(
+						0);
 
-			if (headServiceReferenceServiceTuple != null) {
 				_service = headServiceReferenceServiceTuple.getService();
 			}
 			else {
@@ -94,15 +94,19 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 			_serviceReferences.add(serviceReferenceServiceTuple);
 
+			_serviceReferences.sort(_serviceReferenceServiceTupleComparator);
+
 			ServiceReferenceServiceTuple<SR, TS>
-				headServiceReferenceServiceTuple = _serviceReferences.peek();
+				headServiceReferenceServiceTuple = _serviceReferences.get(0);
 
 			_service = headServiceReferenceServiceTuple.getService();
 		}
 
 		private TS _service;
-		private final PriorityQueue<ServiceReferenceServiceTuple<SR, TS>>
+		private final List<ServiceReferenceServiceTuple<SR, TS>>
 			_serviceReferences;
+		private final ServiceReferenceServiceTupleComparator<SR>
+			_serviceReferenceServiceTupleComparator;
 
 	}
 

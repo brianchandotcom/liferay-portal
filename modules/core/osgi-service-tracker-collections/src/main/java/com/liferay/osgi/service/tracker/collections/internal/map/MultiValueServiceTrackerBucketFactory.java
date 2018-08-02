@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.osgi.framework.ServiceReference;
 
@@ -79,6 +77,9 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 
 			_serviceReferenceServiceTuples.add(serviceReferenceServiceTuple);
 
+			_serviceReferenceServiceTuples.sort(
+				_serviceReferenceServiceTupleComparator);
+
 			rebuild();
 		}
 
@@ -96,15 +97,15 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 		}
 
 		private ListServiceTrackerBucket() {
-			ServiceReferenceServiceTupleComparator<SR>
-				serviceReferenceServiceTupleComparator =
-					new ServiceReferenceServiceTupleComparator<>(_comparator);
+			_serviceReferenceServiceTupleComparator =
+				new ServiceReferenceServiceTupleComparator<>(_comparator);
 
-			_serviceReferenceServiceTuples = new TreeSet<>(
-				serviceReferenceServiceTupleComparator);
+			_serviceReferenceServiceTuples = new ArrayList<>();
 		}
 
-		private final Set<ServiceReferenceServiceTuple<SR, TS>>
+		private final ServiceReferenceServiceTupleComparator<SR>
+			_serviceReferenceServiceTupleComparator;
+		private final List<ServiceReferenceServiceTuple<SR, TS>>
 			_serviceReferenceServiceTuples;
 		private List<TS> _services = new ArrayList<>();
 

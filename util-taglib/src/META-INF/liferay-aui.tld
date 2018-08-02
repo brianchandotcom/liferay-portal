@@ -343,6 +343,13 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
+			<description><![CDATA[Whether the component is disabled. The default value is <code>false</code>.]]></description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[Whether the wrapper should be the first element of the form. The default value is <code>false</code>.]]></description>
 			<name>first</name>
 			<required>false</required>

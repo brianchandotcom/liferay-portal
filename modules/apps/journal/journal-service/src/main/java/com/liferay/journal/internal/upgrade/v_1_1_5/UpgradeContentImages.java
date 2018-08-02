@@ -76,9 +76,7 @@ public class UpgradeContentImages extends UpgradeProcess {
 
 				String id = dynamicContentEl.attributeValue("id");
 
-				if ((fileEntryId <= 0) && Validator.isNull(id)) {
-					continue;
-				}
+				String data = String.valueOf(dynamicContentEl.getData());
 
 				FileEntry fileEntry = null;
 
@@ -86,8 +84,13 @@ public class UpgradeContentImages extends UpgradeProcess {
 					fileEntry = _getFileEntryById(
 						userId, groupId, resourcePrimKey, id);
 				}
-				else {
+				else if (fileEntryId > 0) {
 					fileEntry = _getFileEntryByFileEntryId(fileEntryId);
+				}
+				else {
+					fileEntry =
+						_journalArticleImageUpgradeUtil.getFileEntryFromURL(
+							data);
 				}
 
 				if (fileEntry == null) {

@@ -4238,6 +4238,12 @@ OSGi modules.
 ### Added
 - [LPS-84027]: Add support for `SPRING_BOOT_JAVA_OPTS` environment variable.
 
+## 5.4.104 - 2018-08-01
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.94.
+
 ## 5.5.0 - 2018-08-01
 
 ### Added

@@ -1,3 +1,4 @@
+import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil
 import com.liferay.gradle.util.FileUtil
 
@@ -47,12 +48,36 @@ buildscript {
 
 apply plugin: "org.ajoberstar.grgit"
 
+task buildFixPackChangeLog(type: BuildChangeLogTask)
 task cherryPickArtifacts
+task cleanReleng
+task cleanVersionOverride
 task lockDependencyVersion
 task lockPrivateDependencyVersions
 task prepareMajorIncrement
 task syncGitRepoReleases
 task tagAppReleases
+
+buildFixPackChangeLog {
+	changeLogHeader = {
+		File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+
+		Matcher matcher = (releaseInfoFile.text =~ /private static final String _VERSION = "(.+)";/)
+
+		return matcher[0][1]
+	}
+
+	changeLogFile = "../.releng/fix-pack.changelog"
+	description = "Generates the '${relativePath(changeLogFile)}' file with the change log of all portal artifacts."
+	dirs = ["../portal-impl", "../portal-kernel", "../portal-web", "../util-bridges", "../util-java", "../util-slf4j", "../util-taglib"]
+	group = "releng"
+
+	if (project.hasProperty("rangeStart")) {
+		rangeStart = project.rangeStart
+	}
+
+	ticketIdPrefixes "LRQA"
+}
 
 cherryPickArtifacts {
 	description = "Cherry-picks 'apply' and 'prep next' artifact publishing commits from a release branch. Required properties: '-Psince', '-Puntil'."
@@ -76,6 +101,50 @@ cherryPickArtifacts {
 			else if (commit.shortMessage.contains("prep next")) {
 				_cherryPickPrepNext(commit)
 			}
+		}
+	}
+
+	group = "releng"
+}
+
+cleanReleng {
+	description = "Removes all 'artifact.properties' files pointing to non-existing modules."
+
+	doLast {
+		File relengRootDir = file(".releng")
+
+		FileTree relengFileTree = fileTree(dir: relengRootDir, include: "**/artifact.properties")
+
+		relengFileTree.each {
+			File relengFile ->
+
+			File relengDir = relengFile.parentFile
+
+			File moduleDir = file(FileUtil.relativize(relengDir, relengRootDir))
+
+			if (!moduleDir.exists()) {
+				delete relengDir
+
+				logger.lifecycle "Removed {}", relativePath(relengDir)
+			}
+		}
+	}
+
+	group = "releng"
+}
+
+cleanVersionOverride {
+	description = "Removes all version override files belonging to a particular subrepository. Required property: '-PgitRepoPath'."
+
+	doLast {
+		assert project.properties["gitRepoPath"] : "Please provide a value for the '-PgitRepoPath' property"
+
+		File gitRepoDir = file(gitRepoPath)
+
+		FileTree bndBndFileTree = fileTree(dir: gitRepoDir, include : "**/bnd.bnd")
+
+		delete bndBndFileTree.collect {
+			new File(gitRepoDir.parentFile, ".version-override-${it.parentFile.name}.properties")
 		}
 	}
 
@@ -168,6 +237,8 @@ lockDependencyVersion {
 			grgit.commit message: "${dependencyProjectName} ${dependencyVersion} apply"
 		}
 	}
+
+	group = "releng"
 }
 
 lockPrivateDependencyVersions {
@@ -255,10 +326,12 @@ lockPrivateDependencyVersions {
 			}
 		}
 	}
+
+	group = "releng"
 }
 
 prepareMajorIncrement {
-	description = "Prepares the build scripts of modules and portal artifacts to a major version increment, by increasing all versions to +1 major and converting all dependencies into project dependencies. This task must run from the master branch. Also, passing '-PreleaseDir=/data/liferay-portal-71x' causes the task not to increment the modules that already have a version greater than the one in /data/liferay-portal-71x."
+	description = "Prepares the build scripts of modules and portal artifacts to a major version increment, by increasing all versions to +1 major and converting all dependencies into project dependencies. This task must run from the master branch. Also, passing '-PreleaseDir=/data/liferay-portal-71x' causes the task not to increment the modules that already have a version greater than the one in '/data/liferay-portal-71x'."
 
 	doLast {
 		File releaseModulesDir = null
@@ -533,6 +606,8 @@ prepareMajorIncrement {
 			incrementMajorVersionClosure new File(portalRootDir, it)
 		}
 	}
+
+	group = "releng"
 }
 
 syncGitRepoReleases {
@@ -592,6 +667,8 @@ syncGitRepoReleases {
 			}
 		}
 	}
+
+	group = "releng"
 }
 
 tagAppReleases {
@@ -669,6 +746,8 @@ tagAppReleases {
 			}
 		}
 	}
+
+	group = "releng"
 }
 
 private void _cherryPickApply(Commit commit) {
@@ -794,7 +873,7 @@ private void _cherryPickPrepNext(Commit commit) {
 	String moduleTaskPrefix = _getModuleTaskPrefix(moduleDir)
 
 	if (_isGitRepoReadOnly(moduleDir)) {
-		println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} is in a read-only subrepo"
+		println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} is in a read-only subrepository"
 	}
 	else {
 		List<String> excludedTaskNames = []

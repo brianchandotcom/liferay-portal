@@ -15,6 +15,8 @@
 --%>
 
 <%
+boolean changeableDefaultLanguage = journalEditStructuresDisplayContext.changeableDefaultLanguage();
+
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
 Locale[] availableLocales = {LocaleUtil.getSiteDefault()};
@@ -39,8 +41,6 @@ if (Validator.isNotNull(script)) {
 	}
 }
 %>
-
-<div class="separator"><!-- --></div>
 
 <div class="alert alert-danger hide lfr-message-response" id="<portlet:namespace />messageContainer"></div>
 
@@ -113,8 +113,6 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 	var STR_VALUE = 'value';
 
-	var availableFields;
-
 	var displayWarning = function(message) {
 		new Liferay.Notification(
 			{
@@ -182,14 +180,14 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		content = content.replace(/nestedFields/g, 'fields');
 
 		if (content.indexOf('availableLanguageIds') === -1 || content.indexOf('defaultLanguageId') === -1 || content.indexOf('fields') === -1) {
-			displayWarning('<%= UnicodeLanguageUtil.get(resourceBundle, "you-cannot-remove-default-attributes") %>');
+			displayWarning('<liferay-ui:message key="you-cannot-remove-default-attributes" />');
 		}
 		else {
 			try {
 				content = JSON.parse(content);
 			}
 			catch (e) {
-				displayWarning('<%= UnicodeLanguageUtil.get(resourceBundle, "you-have-entered-invalid-json") %>');
+				displayWarning('<liferay-ui:message key="you-have-entered-invalid-json" />');
 
 				return;
 			}
@@ -225,13 +223,11 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		}
 	};
 
-	<c:if test="<%= Validator.isNotNull(scopeAvailableFields) %>">
-		availableFields = A.Object.getValue(window, '<%= HtmlUtil.escapeJS(scopeAvailableFields) %>'.split('.'));
+	var availableFields = A.Object.getValue(window, '<%= HtmlUtil.escapeJS(journalEditStructuresDisplayContext.getAvailableFields()) %>'.split('.'));
 
-		if (A.Lang.isFunction(availableFields)) {
-			availableFields = availableFields(A, Liferay.FormBuilder);
-		}
-	</c:if>
+	if (A.Lang.isFunction(availableFields)) {
+		availableFields = availableFields(A, Liferay.FormBuilder);
+	}
 
 	var formBuilder = new Liferay.FormBuilder(
 		{
@@ -246,7 +242,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 			</c:if>
 
 			portletNamespace: '<portlet:namespace />',
-			portletResourceNamespace: '<%= HtmlUtil.escapeJS(portletResourceNamespace) %>',
+			portletResourceNamespace: '<portlet:namespace />',
 			readOnly: <%= ParamUtil.getBoolean(request, "formBuilderReadOnly") %>,
 			srcNode: '#<portlet:namespace />formBuilderContent',
 			translationManager: {
@@ -306,9 +302,9 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 	Liferay.on('destroyPortlet', onDestroyPortlet);
 
-	window['<%= HtmlUtil.escapeJS(portletResourceNamespace) %>formBuilder'] = formBuilder;
+	window['<portlet:namespace />formBuilder'] = formBuilder;
 
-	window['<%= HtmlUtil.escapeJS(portletResourceNamespace) %>getContentValue'] = getContentValue;
+	window['<portlet:namespace />getContentValue'] = getContentValue;
 
 	Liferay.on(
 		'<portlet:namespace />saveTemplate',

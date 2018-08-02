@@ -68,6 +68,7 @@ buildFixPackChangeLog {
 	}
 
 	changeLogFile = "../.releng/fix-pack.changelog"
+	description = "Generates the '${relativePath(changeLogFile)}' file with the change log of all portal artifacts."
 	dirs = ["../portal-impl", "../portal-kernel", "../portal-web", "../util-bridges", "../util-java", "../util-slf4j", "../util-taglib"]
 	group = "releng"
 
@@ -107,6 +108,8 @@ cherryPickArtifacts {
 }
 
 cleanReleng {
+	description = "Removes all 'artifact.properties' files pointing to non-existing modules."
+
 	doLast {
 		File relengRootDir = file(".releng")
 
@@ -131,6 +134,8 @@ cleanReleng {
 }
 
 cleanVersionOverride {
+	description = "Removes all version override files belonging to a particular subrepository. Required property: '-PgitRepoPath'."
+
 	doLast {
 		assert project.properties["gitRepoPath"] : "Please provide a value for the '-PgitRepoPath' property"
 
@@ -326,7 +331,7 @@ lockPrivateDependencyVersions {
 }
 
 prepareMajorIncrement {
-	description = "Prepares the build scripts of modules and portal artifacts to a major version increment, by increasing all versions to +1 major and converting all dependencies into project dependencies. This task must run from the master branch. Also, passing '-PreleaseDir=/data/liferay-portal-71x' causes the task not to increment the modules that already have a version greater than the one in /data/liferay-portal-71x."
+	description = "Prepares the build scripts of modules and portal artifacts to a major version increment, by increasing all versions to +1 major and converting all dependencies into project dependencies. This task must run from the master branch. Also, passing '-PreleaseDir=/data/liferay-portal-71x' causes the task not to increment the modules that already have a version greater than the one in '/data/liferay-portal-71x'."
 
 	doLast {
 		File releaseModulesDir = null

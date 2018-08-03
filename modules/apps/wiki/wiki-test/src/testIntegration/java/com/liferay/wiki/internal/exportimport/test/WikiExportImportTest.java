@@ -66,7 +66,7 @@ public class WikiExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getPortletId() {
-		return WikiPortletKeys.WIKI;
+		return WikiPortletKeys.WIKI_ADMIN;
 	}
 
 	@Before

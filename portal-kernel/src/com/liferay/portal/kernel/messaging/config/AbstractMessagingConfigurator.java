@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.messaging.config;
 
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
@@ -389,9 +387,6 @@ public abstract class AbstractMessagingConfigurator
 				MessageBusEventListener.class, messageBusEventListener);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AbstractMessagingConfigurator.class);
 
 	private final Set<DestinationConfiguration> _destinationConfigurations =
 		new HashSet<>();

@@ -17,8 +17,6 @@ package com.liferay.polls.internal.upgrade;
 import com.liferay.polls.internal.upgrade.v1_0_0.UpgradeKernelPackage;
 import com.liferay.polls.internal.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.polls.internal.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -44,8 +42,5 @@ public class PollsServiceUpgrade implements UpgradeStepRegistrator {
 			"1.0.3", "1.0.4",
 			new com.liferay.polls.internal.upgrade.v1_0_4.UpgradePortletId());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PollsServiceUpgrade.class);
 
 }

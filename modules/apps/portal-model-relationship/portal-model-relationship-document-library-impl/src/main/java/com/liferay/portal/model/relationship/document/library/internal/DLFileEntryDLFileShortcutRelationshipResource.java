@@ -17,8 +17,6 @@ package com.liferay.portal.model.relationship.document.library.internal;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.relationship.Relationship;
 import com.liferay.portal.relationship.RelationshipResource;
 
@@ -48,9 +46,6 @@ public class DLFileEntryDLFileShortcutRelationshipResource
 				dlFileEntry.getFileEntryId())
 		).build();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntryDLFileShortcutRelationshipResource.class);
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

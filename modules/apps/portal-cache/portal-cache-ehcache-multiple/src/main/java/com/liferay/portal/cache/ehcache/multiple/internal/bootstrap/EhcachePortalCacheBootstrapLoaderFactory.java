@@ -21,8 +21,6 @@ import com.liferay.portal.cache.ehcache.multiple.configuration.EhcacheMultipleCo
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 
@@ -106,9 +104,6 @@ public class EhcachePortalCacheBootstrapLoaderFactory
 
 		return clazz.getClassLoader();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EhcachePortalCacheBootstrapLoaderFactory.class);
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;

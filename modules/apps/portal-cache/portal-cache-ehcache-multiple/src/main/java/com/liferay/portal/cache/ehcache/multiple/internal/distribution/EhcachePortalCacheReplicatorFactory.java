@@ -19,8 +19,6 @@ import com.liferay.portal.cache.PortalCacheReplicatorFactory;
 import com.liferay.portal.cache.ehcache.multiple.configuration.EhcacheMultipleConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 
 import java.io.Serializable;
@@ -86,9 +84,6 @@ public class EhcachePortalCacheReplicatorFactory
 
 		return clazz.getClassLoader();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EhcachePortalCacheReplicatorFactory.class);
 
 	private volatile EhcacheMultipleConfiguration _ehcacheMultipleConfiguration;
 

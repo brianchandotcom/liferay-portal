@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.mapping.web.internal.exportimport.content.proce
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.StagedModel;
 
 import org.osgi.service.component.annotations.Component;
@@ -68,9 +66,6 @@ public class DDMTemplateExportImportContentProcessor
 		_defaultTextExportImportContentProcessor.validateContentReferences(
 			groupId, content);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMTemplateExportImportContentProcessor.class);
 
 	@Reference(target = "(model.class.name=java.lang.String)")
 	private ExportImportContentProcessor<String>

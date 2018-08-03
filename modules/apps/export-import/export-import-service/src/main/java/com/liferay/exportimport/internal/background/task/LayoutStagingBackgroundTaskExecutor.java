@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
@@ -256,9 +254,6 @@ public class LayoutStagingBackgroundTaskExecutor
 			userId, sourceGroup, branchingPublic, branchingPrivate, false,
 			serviceContext);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutStagingBackgroundTaskExecutor.class);
 
 	private class LayoutStagingImportCallable
 		implements Callable<MissingReferences> {

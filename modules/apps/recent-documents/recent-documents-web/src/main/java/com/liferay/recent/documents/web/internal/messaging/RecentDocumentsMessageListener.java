@@ -16,8 +16,6 @@ package com.liferay.recent.documents.web.internal.messaging;
 
 import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -93,9 +91,6 @@ public class RecentDocumentsMessageListener extends BaseMessageListener {
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RecentDocumentsMessageListener.class);
 
 	@Reference
 	private DLFileRankLocalService _dLFileRankLocalService;

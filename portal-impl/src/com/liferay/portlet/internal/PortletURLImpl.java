@@ -1005,19 +1005,16 @@ public class PortletURLImpl
 
 		Map<String, String[]> portletURLParams = new LinkedHashMap<>();
 
-		Set<String> actionParameterNames;
+		Set<String> actionParameterNames = Collections.emptySet();
 
 		if (_mutableActionParameters != null) {
 			actionParameterNames = _mutableActionParameters.getNames();
 
 			for (String parameterName : actionParameterNames) {
 				portletURLParams.put(
-					_ACTION_PARAMETER_NAMESPACE + parameterName,
+					_ACTION_PARAMETER_NAMESPACE.concat(parameterName),
 					_mutableActionParameters.getValues(parameterName));
 			}
-		}
-		else {
-			actionParameterNames = Collections.emptySet();
 		}
 
 		Set<String> resourceParameterNames = Collections.emptySet();
@@ -1027,7 +1024,7 @@ public class PortletURLImpl
 
 			for (String parameterName : resourceParameterNames) {
 				portletURLParams.put(
-					_RESOURCE_PARAMETER_NAMESPACE + parameterName,
+					_RESOURCE_PARAMETER_NAMESPACE.concat(parameterName),
 					_mutableResourceParameters.getValues(parameterName));
 			}
 		}
@@ -1083,7 +1080,8 @@ public class PortletURLImpl
 						}
 
 						renderParameterName =
-							_ACTION_PARAMETER_NAMESPACE + renderParameterName;
+							_ACTION_PARAMETER_NAMESPACE.concat(
+								renderParameterName);
 					}
 					else if (_lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 						PortletRequest portletRequest = getPortletRequest();
@@ -1110,8 +1108,8 @@ public class PortletURLImpl
 					}
 					else {
 						renderParameterName =
-							PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE +
-								renderParameterName;
+							PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE.
+								concat(renderParameterName);
 					}
 
 					portletURLParams.put(
@@ -1367,7 +1365,8 @@ public class PortletURLImpl
 
 			return (LiferayMutablePortletParameters)_mutableActionParameters;
 		}
-		else if (_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+
+		if (_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
 			return (LiferayMutablePortletParameters)_mutableResourceParameters;
 		}
 

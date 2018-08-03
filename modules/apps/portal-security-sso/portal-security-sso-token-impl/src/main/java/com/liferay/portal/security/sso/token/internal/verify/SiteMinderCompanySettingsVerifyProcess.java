@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.sso.token.internal.verify;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PrefsProps;
@@ -91,9 +89,6 @@ public class SiteMinderCompanySettingsVerifyProcess
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteMinderCompanySettingsVerifyProcess.class);
 
 	private CompanyLocalService _companyLocalService;
 	private PrefsProps _prefsProps;

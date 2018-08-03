@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.HashSet;
@@ -205,9 +203,6 @@ public class DDMFormInstanceStagedModelRepository
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormInstanceStagedModelRepository.class);
 
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;

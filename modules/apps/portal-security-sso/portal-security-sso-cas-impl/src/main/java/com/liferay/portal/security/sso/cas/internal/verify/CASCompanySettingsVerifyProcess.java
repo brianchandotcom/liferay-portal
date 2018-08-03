@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.sso.cas.internal.verify;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -113,9 +111,6 @@ public class CASCompanySettingsVerifyProcess
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CASCompanySettingsVerifyProcess.class);
 
 	private CompanyLocalService _companyLocalService;
 	private SettingsFactory _settingsFactory;

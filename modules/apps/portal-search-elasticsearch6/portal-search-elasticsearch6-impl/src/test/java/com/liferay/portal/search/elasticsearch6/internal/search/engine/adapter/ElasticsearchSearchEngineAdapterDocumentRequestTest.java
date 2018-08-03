@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -393,9 +391,6 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 	private static final String _MAPPING_SOURCE =
 		"{\"properties\":{\"matchDocument\":{\"type\":\"boolean\"}}}";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ElasticsearchSearchEngineAdapterDocumentRequestTest.class);
 
 	private Client _client;
 	private final DocumentFixture _documentFixture = new DocumentFixture();

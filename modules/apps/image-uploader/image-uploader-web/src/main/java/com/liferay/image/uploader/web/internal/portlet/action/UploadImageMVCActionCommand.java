@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -362,9 +360,6 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			throw new UploadException(nsre);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UploadImageMVCActionCommand.class);
 
 	private volatile DLConfiguration _dlConfiguration;
 

@@ -32,7 +32,6 @@ import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.Dictionary;
@@ -116,9 +115,6 @@ public class WikiPageModelResourcePermissionRegistrar {
 
 	@Reference
 	private StagingPermission _stagingPermission;
-
-	@Reference
-	private WikiNodeLocalService _wikiNodeLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
 	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;

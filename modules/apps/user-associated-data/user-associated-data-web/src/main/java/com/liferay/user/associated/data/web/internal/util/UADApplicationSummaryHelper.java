@@ -15,8 +15,6 @@
 package com.liferay.user.associated.data.web.internal.util;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -278,9 +276,6 @@ public class UADApplicationSummaryHelper {
 
 		return liferayPortletURL.toString();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UADApplicationSummaryHelper.class);
 
 	@Reference
 	private Portal _portal;

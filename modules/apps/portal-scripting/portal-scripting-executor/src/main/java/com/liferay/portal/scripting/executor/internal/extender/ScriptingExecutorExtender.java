@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -112,9 +110,6 @@ public class ScriptingExecutorExtender {
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
 	@Reference(
 		target = "(destination.name=" + ScriptingExecutorMessagingConstants.DESTINATION_NAME + ")"
 	)
@@ -126,9 +121,6 @@ public class ScriptingExecutorExtender {
 	private final Set<String> _scriptingLanguages = new HashSet<>();
 	private ServiceTracker<ScriptBundleProvider, ScriptBundleProvider>
 		_serviceTracker;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 	private class ScriptBundleProviderServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

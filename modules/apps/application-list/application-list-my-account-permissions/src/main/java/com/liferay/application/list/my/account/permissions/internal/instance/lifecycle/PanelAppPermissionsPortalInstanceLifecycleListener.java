@@ -22,8 +22,6 @@ import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.my.account.permissions.internal.PanelAppMyAccountPermissions;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -61,9 +59,6 @@ public class PanelAppPermissionsPortalInstanceLifecycleListener
 		_panelAppMyAccountPermissions.initPermissions(
 			company.getCompanyId(), portlets);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PanelAppPermissionsPortalInstanceLifecycleListener.class);
 
 	@Reference
 	private PanelAppMyAccountPermissions _panelAppMyAccountPermissions;

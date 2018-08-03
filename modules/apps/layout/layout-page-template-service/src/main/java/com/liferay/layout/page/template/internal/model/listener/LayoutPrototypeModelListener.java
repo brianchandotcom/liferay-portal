@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -136,9 +135,6 @@ public class LayoutPrototypeModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPrototypeModelListener.class);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference(unbind = "-")
 	private LayoutPageTemplateEntryLocalService

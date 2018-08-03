@@ -15,7 +15,6 @@
 package com.liferay.asset.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.journal.model.JournalArticle;
@@ -140,9 +139,6 @@ public class AssetUtilSearchSortTest {
 	protected ServiceContext createServiceContext() throws PortalException {
 		return _journalArticleFixture.createServiceContext();
 	}
-
-	@Inject
-	private static AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;

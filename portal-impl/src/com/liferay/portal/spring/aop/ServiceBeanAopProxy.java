@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.spring.aop.AopProxy;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -173,9 +171,6 @@ public class ServiceBeanAopProxy
 		serviceBeanMethodInvocation.setMethodInterceptors(
 			methodInterceptorsBag.getMergedMethodInterceptors());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ServiceBeanAopProxy.class);
 
 	private final AdvisedSupport _advisedSupport;
 	private final List<MethodInterceptor> _classLevelMethodInterceptors;

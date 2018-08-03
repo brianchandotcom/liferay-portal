@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import com.liferay.jenkins.results.parser.GitHubRemoteRepository.Label;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.text.ParseException;
@@ -225,6 +226,22 @@ public class PullRequest {
 		return _labels;
 	}
 
+	public String getLiferayRemoteBranchSHA() {
+		RemoteGitBranch liferayRemoteGitBranch = getLiferayRemoteGitBranch();
+
+		return liferayRemoteGitBranch.getSHA();
+	}
+
+	public RemoteGitBranch getLiferayRemoteGitBranch() {
+		if (_liferayRemoteGitBranch == null) {
+			_liferayRemoteGitBranch = GitUtil.getRemoteGitBranch(
+				getUpstreamBranchName(), new File("."),
+				"git@github.com/liferay/" + getRepositoryName());
+		}
+
+		return _liferayRemoteGitBranch;
+	}
+
 	public String getLocalSenderBranchName() {
 		return JenkinsResultsParserUtil.combine(
 			getSenderUsername(), "-", getNumber(), "-", getSenderBranchName());
@@ -294,25 +311,6 @@ public class PullRequest {
 		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
 
 		return baseJSONObject.getString("sha");
-	}
-
-	public String getUpstreamLiferayBranchSHA() {
-		Ref upstreamLiferayRef = getUpstreamLiferayRef();
-
-		return upstreamLiferayRef.getSHA();
-	}
-
-	public Ref getUpstreamLiferayRef() {
-		if (_upstreamLiferayRef != null) {
-			return _upstreamLiferayRef;
-		}
-
-		_upstreamLiferayRef = new Ref(
-			JenkinsResultsParserUtil.combine(
-				"https://github.com/liferay/", getRepositoryName(), "/tree/",
-				getUpstreamBranchName()));
-
-		return _upstreamLiferayRef;
 	}
 
 	public String getURL() {
@@ -593,10 +591,10 @@ public class PullRequest {
 	private String _gitHubRemoteRepositoryName;
 	private JSONObject _jsonObject;
 	private final List<Label> _labels = new ArrayList<>();
+	private RemoteGitBranch _liferayRemoteGitBranch;
 	private Integer _number;
 	private String _ownerUsername;
 	private final String _testSuiteName;
 	private TestSuiteStatus _testSuiteStatus = TestSuiteStatus.MISSING;
-	private Ref _upstreamLiferayRef;
 
 }

@@ -49,8 +49,8 @@ public class LocalGitSyncUtil {
 		return _createCachedLocalGitBranch(
 			localRepository, pullRequest.getReceiverUsername(),
 			pullRequest.getSenderBranchName(), pullRequest.getSenderUsername(),
-			pullRequest.getSenderSHA(),
-			pullRequest.getUpstreamLiferayBranchSHA(), synchronize);
+			pullRequest.getSenderSHA(), pullRequest.getLiferayRemoteBranchSHA(),
+			synchronize);
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(

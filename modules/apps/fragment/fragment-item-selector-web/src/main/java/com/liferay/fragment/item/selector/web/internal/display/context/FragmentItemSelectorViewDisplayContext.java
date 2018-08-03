@@ -447,7 +447,6 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _search;
 	}
 
-	private String _displayStyle;
 	private FragmentCollection _fragmentCollection;
 	private Long _fragmentCollectionId;
 	private SearchContainer _fragmentCollectionsSearchContainer;

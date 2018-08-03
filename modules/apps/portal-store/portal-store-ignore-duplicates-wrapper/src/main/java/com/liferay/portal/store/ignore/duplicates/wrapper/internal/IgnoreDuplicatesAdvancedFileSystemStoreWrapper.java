@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.store.StoreWrapper;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -35,10 +34,5 @@ public class IgnoreDuplicatesAdvancedFileSystemStoreWrapper
 	public Store wrap(Store store) {
 		return new IgnoreDuplicatesStore(store);
 	}
-
-	@Reference(
-		target = "(store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore)"
-	)
-	private Store _store;
 
 }

@@ -145,9 +145,6 @@ public class NtlmPostFilter extends BaseFilter {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private NtlmFilter _ntlmFilter;
-
-	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

@@ -493,9 +493,6 @@ public class NettyFabricAgentStubTest {
 			return "Test Result";
 		}
 
-		@OutputResource
-		private static final String _NOT_AFILE = "Not a File";
-
 		private static final long serialVersionUID = 1L;
 
 		@OutputResource

@@ -33,7 +33,6 @@ import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 
 import javax.xml.parsers.SAXParserFactory;
@@ -43,8 +42,6 @@ import org.apache.felix.utils.log.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.mockito.Mock;
 
 import org.osgi.framework.Bundle;
 
@@ -483,12 +480,6 @@ public class WebXMLDefinitionLoaderTest {
 			filterDefinitions.toString(), filterDefinitionsCount,
 			filterDefinitions.size());
 	}
-
-	@Mock
-	private Servlet _servlet;
-
-	@Mock
-	private ServletContextListener _servletContextListener;
 
 	private static class TestBundle extends MockBundle {
 

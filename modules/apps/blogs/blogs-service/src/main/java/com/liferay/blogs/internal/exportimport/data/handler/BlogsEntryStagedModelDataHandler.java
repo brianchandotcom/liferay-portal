@@ -27,7 +27,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -417,9 +416,6 @@ public class BlogsEntryStagedModelDataHandler
 
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Reference
-	private CommentManager _commentManager;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

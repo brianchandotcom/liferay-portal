@@ -67,9 +67,6 @@ public class DLFileEntryUADAnonymizer extends BaseDLFileEntryUADAnonymizer {
 		_dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
 	}
 
-	private static final String[] _DL_FILE_VERSION_USER_ID_FIELD_NAMES =
-		{"statusByUserId", "userId"};
-
 	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 

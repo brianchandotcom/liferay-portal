@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.scripting.ScriptBundleProvider;
 import com.liferay.portal.scripting.executor.internal.ScriptingExecutorMessagingConstants;
@@ -114,9 +113,6 @@ public class ScriptingExecutorExtender {
 		target = "(destination.name=" + ScriptingExecutorMessagingConstants.DESTINATION_NAME + ")"
 	)
 	private Destination _destination;
-
-	@Reference
-	private Portal _portal;
 
 	private final Set<String> _scriptingLanguages = new HashSet<>();
 	private ServiceTracker<ScriptBundleProvider, ScriptBundleProvider>

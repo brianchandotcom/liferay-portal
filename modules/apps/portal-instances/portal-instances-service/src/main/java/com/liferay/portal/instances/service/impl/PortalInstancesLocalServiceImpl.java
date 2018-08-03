@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -155,9 +154,6 @@ public class PortalInstancesLocalServiceImpl
 
 	@ServiceReference(type = CompanyLocalService.class)
 	private CompanyLocalService _companyLocalService;
-
-	@ServiceReference(type = CompanyService.class)
-	private CompanyService _companyService;
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;

@@ -325,7 +325,6 @@ public class LayoutPrototypeDisplayContext {
 		};
 	}
 
-	private String _displayStyle;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

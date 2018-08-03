@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.recent.documents.web.configuration.RecentDocumentsConfiguration;
 
 import java.util.Map;
@@ -94,9 +93,6 @@ public class RecentDocumentsMessageListener extends BaseMessageListener {
 
 	@Reference
 	private DLFileRankLocalService _dLFileRankLocalService;
-
-	@Reference
-	private Props _props;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

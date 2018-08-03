@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
@@ -164,9 +163,6 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 
 	@Reference
 	private StagingPermission _stagingPermission;
-
-	@Reference
-	private WorkflowInstanceManager _workflowInstanceManager;
 
 	@Reference
 	private WorkflowPermission _workflowPermission;

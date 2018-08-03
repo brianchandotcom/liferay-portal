@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -255,9 +254,6 @@ public class GogoShellPortlet extends MVCPortlet {
 
 	@Reference
 	private CommandProcessor _commandProcessor;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.gogo.shell.web)")
 	private ResourceBundleLoader _resourceBundleLoader;

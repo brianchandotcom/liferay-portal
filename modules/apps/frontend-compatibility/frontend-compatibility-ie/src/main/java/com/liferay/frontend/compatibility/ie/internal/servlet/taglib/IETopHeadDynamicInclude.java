@@ -17,14 +17,12 @@ package com.liferay.frontend.compatibility.ie.internal.servlet.taglib;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -80,14 +78,5 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private BrowserSniffer _browserSniffer;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.compatibility.ie)",
-		unbind = "-"
-	)
-	private ServletContext _servletContext;
 
 }

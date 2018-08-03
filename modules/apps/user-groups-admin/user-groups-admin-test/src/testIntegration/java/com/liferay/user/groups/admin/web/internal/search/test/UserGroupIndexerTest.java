@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -109,9 +108,6 @@ public class UserGroupIndexerTest {
 
 	@Inject
 	private static UserGroupLocalService _userGroupLocalService;
-
-	@Inject
-	private static UsersAdmin _usersAdmin;
 
 	private Indexer<UserGroup> _indexer;
 

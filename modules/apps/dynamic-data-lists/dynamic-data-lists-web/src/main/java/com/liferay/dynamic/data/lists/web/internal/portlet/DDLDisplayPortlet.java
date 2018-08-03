@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -262,10 +261,6 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	private DDMDisplayRegistry _ddmDisplayRegistry;
 	private DDMPermissionSupport _ddmPermissionSupport;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@Reference
-	private Portal _portal;
-
 	private StorageEngine _storageEngine;
 
 }

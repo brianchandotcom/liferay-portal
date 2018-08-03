@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -413,12 +412,6 @@ public class JournalFeedReferencesExportImportContentProcessor
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private Http _http;
-
-	@Reference
 	private JournalFeedLocalService _journalFeedLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

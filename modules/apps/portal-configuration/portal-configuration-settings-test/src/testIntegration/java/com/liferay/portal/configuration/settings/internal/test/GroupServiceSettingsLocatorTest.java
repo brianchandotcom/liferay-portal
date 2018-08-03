@@ -16,13 +16,8 @@ package com.liferay.portal.configuration.settings.internal.test;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
-import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.PortletKeys;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -67,9 +62,5 @@ public class GroupServiceSettingsLocatorTest
 
 		Assert.assertEquals(groupPortletPreferencesValue, getSettingsValue());
 	}
-
-	@DeleteAfterTestRun
-	private final List<PortletPreferences> _portletPreferencesList =
-		new ArrayList<>();
 
 }

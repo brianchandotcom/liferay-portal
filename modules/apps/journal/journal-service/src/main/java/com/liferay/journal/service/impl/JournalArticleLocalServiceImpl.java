@@ -40,7 +40,6 @@ import com.liferay.exportimport.kernel.exception.ExportImportContentValidationEx
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalActivityKeys;
@@ -8776,9 +8775,6 @@ public class JournalArticleLocalServiceImpl
 
 	@ServiceReference(type = CommentManager.class)
 	private CommentManager _commentManager;
-
-	@ServiceReference(type = JournalFileUploadsConfiguration.class)
-	private JournalFileUploadsConfiguration _journalFileUploadsConfiguration;
 
 	@BeanReference(type = JournalHelper.class)
 	private JournalHelper _journalHelper;

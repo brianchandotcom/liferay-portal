@@ -274,8 +274,6 @@ public class IMAPConnection {
 		}
 	}
 
-	private static final String _TRANSPORT = "_TRANSPORT_";
-
 	private static final Log _log = LogFactoryUtil.getLog(IMAPConnection.class);
 
 	private static final ConcurrentHashMap<String, Store> _allStores =

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -335,8 +334,5 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 
 	@ServiceReference(type = SchedulerEngineHelper.class)
 	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@ServiceReference(type = TriggerFactory.class)
-	private TriggerFactory _triggerFactory;
 
 }

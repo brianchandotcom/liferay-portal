@@ -20,7 +20,7 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 import java.util.List;
 
@@ -84,7 +84,7 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 			return;
 		}
 
-		int lineLength1 = CommonUtils.lengthExpandedTabs(
+		int lineLength1 = CommonUtil.lengthExpandedTabs(
 			line1, line1.length(), getTabWidth());
 
 		String trimmedLine2 = StringUtil.trim(line2);

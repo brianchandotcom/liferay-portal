@@ -16,7 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import com.puppycrawl.tools.checkstyle.utils.ScopeUtils;
+import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
 
 /**
  * @author Hugo Huijser
@@ -34,7 +34,7 @@ public class MissingModifierCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (ScopeUtils.isLocalVariableDef(detailAST)) {
+		if (ScopeUtil.isLocalVariableDef(detailAST)) {
 			return;
 		}
 

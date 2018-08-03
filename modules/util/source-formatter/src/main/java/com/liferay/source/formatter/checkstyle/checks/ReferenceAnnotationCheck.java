@@ -21,7 +21,7 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import com.puppycrawl.tools.checkstyle.utils.AnnotationUtility;
+import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -93,7 +93,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 				continue;
 			}
 
-			if (AnnotationUtility.containsAnnotation(
+			if (AnnotationUtil.containsAnnotation(
 					variableDefAST, "Reference")) {
 
 				return;
@@ -124,7 +124,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 	}
 
 	private void _checkReferenceAnnotation(DetailAST detailAST) {
-		DetailAST annotationAST = AnnotationUtility.getAnnotation(
+		DetailAST annotationAST = AnnotationUtil.getAnnotation(
 			detailAST, "Reference");
 
 		if (annotationAST == null) {

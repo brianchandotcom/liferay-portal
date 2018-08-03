@@ -49,6 +49,18 @@ const KEYS = {
 const SCROLL_DISPLACEMENT = 100;
 
 /**
+ * Window height
+ */
+
+const WINDOW_HEIGHT = window.innerHeight;
+
+/**
+ * Margin on window top and bottom in which scroll starts
+ */
+
+const SCROLL_MARGIN = WINDOW_HEIGHT * 0.2;
+
+/**
  *	Site navigation menu editor component.
  */
 
@@ -148,7 +160,7 @@ class SiteNavigationMenuEditor extends State {
 		const placeholderRegion = position.getRegion(placeholderMenuItem);
 
 		if (
-			placeholderRegion.top > (window.innerHeight - (window.innerHeight * 0.2)) &&
+			placeholderRegion.top > (WINDOW_HEIGHT - SCROLL_MARGIN) &&
 			(placeholderRegion.bottom + window.scrollY) < (DOCUMENT_HEIGHT + placeholderRegion.height)
 		) {
 			window.scrollTo(
@@ -158,7 +170,7 @@ class SiteNavigationMenuEditor extends State {
 				}
 			);
 		}
-		else if (placeholderRegion.top < controlMenuHeight + managementBarHeight + (window.innerHeight * 0.2)) {
+		else if (placeholderRegion.top < (controlMenuHeight + managementBarHeight + SCROLL_MARGIN)) {
 			window.scrollTo(
 				{
 					behavior: 'smooth',

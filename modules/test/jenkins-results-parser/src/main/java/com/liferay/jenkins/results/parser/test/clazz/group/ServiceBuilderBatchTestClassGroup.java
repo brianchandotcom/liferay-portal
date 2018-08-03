@@ -32,19 +32,20 @@ public class ServiceBuilderBatchTestClassGroup
 
 	@Override
 	public int getAxisCount() {
-		if (testClasses.isEmpty() && _buildServiceCore) {
+		if (testClasses.isEmpty() && (_buildType == BuildType.CORE)) {
 			return 1;
 		}
 
 		return super.getAxisCount();
 	}
 
-	public boolean isBuildServiceCore() {
-		return _buildServiceCore;
+	public BuildType getBuildType() {
+		return _buildType;
 	}
 
-	public boolean isBuildServiceFull() {
-		return _buildServiceFull;
+	public static enum BuildType {
+
+		CORE, FULL
 	}
 
 	public static class ServiceBuilderBatchTestClass
@@ -112,7 +113,7 @@ public class ServiceBuilderBatchTestClassGroup
 					"portal-tools-service-builder");
 
 			if (!modifiedPortalToolsServiceBuilderFiles.isEmpty()) {
-				_buildServiceFull = true;
+				_buildType = BuildType.FULL;
 
 				return;
 			}
@@ -121,7 +122,7 @@ public class ServiceBuilderBatchTestClassGroup
 				portalGitWorkingDirectory.getModifiedFilesList("portal-impl/");
 
 			if (!modifiedPortalImplFiles.isEmpty()) {
-				_buildServiceCore = true;
+				_buildType = BuildType.CORE;
 			}
 			else {
 				List<File> modifiedPortalKernelFiles =
@@ -129,7 +130,7 @@ public class ServiceBuilderBatchTestClassGroup
 						"portal-kernel/");
 
 				if (!modifiedPortalKernelFiles.isEmpty()) {
-					_buildServiceCore = true;
+					_buildType = BuildType.CORE;
 				}
 			}
 
@@ -147,7 +148,7 @@ public class ServiceBuilderBatchTestClassGroup
 			}
 		}
 		else {
-			_buildServiceFull = true;
+			_buildType = BuildType.FULL;
 
 			moduleDirsList.add(portalModulesBaseDir);
 		}
@@ -163,7 +164,6 @@ public class ServiceBuilderBatchTestClassGroup
 		}
 	}
 
-	private boolean _buildServiceCore;
-	private boolean _buildServiceFull;
+	private BuildType _buildType;
 
 }

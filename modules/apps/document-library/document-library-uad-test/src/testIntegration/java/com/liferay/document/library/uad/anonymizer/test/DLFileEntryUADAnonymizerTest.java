@@ -71,8 +71,6 @@ public class DLFileEntryUADAnonymizerTest
 
 	@Test
 	public void testAnonymizeDLFileEntryVersions() throws Exception {
-		Assert.assertTrue(true);
-
 		DLFileEntry dlFileEntry = _dlFileEntryUADTestHelper.addDLFileEntry(
 			user.getUserId());
 

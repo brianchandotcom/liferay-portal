@@ -244,6 +244,15 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		StagedModelDataHandlerUtil.importStagedModel(
 			portletDataContext, exportedStagedModel);
+
+		StagedModel importedStagedModel = getStagedModel(
+			exportedStagedModel.getUuid(), liveGroup);
+
+		validateImportedStagedModel(exportedStagedModel, importedStagedModel);
+
+		Assert.assertNotEquals(
+			exportedStagedModel.getPrimaryKeyObj(),
+			importedStagedModel.getPrimaryKeyObj());
 	}
 
 	@Test
@@ -562,7 +571,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 	protected void addRatings(StagedModel stagedModel) throws Exception {
 		RatingsTestUtil.addEntry(
-			ExportImportClassedModelUtil.getClassName(stagedModel),
+			stagedModel.getModelClassName(),
 			ExportImportClassedModelUtil.getClassPK(stagedModel));
 	}
 

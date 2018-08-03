@@ -527,7 +527,6 @@ public class JournalArticleStagedModelDataHandlerTest
 		JournalArticle article = (JournalArticle)stagedModel;
 		JournalArticle importedArticle = (JournalArticle)importedStagedModel;
 
-		Assert.assertEquals(article.getTitle(), importedArticle.getTitle());
 		Assert.assertEquals(
 			article.getUrlTitle(), importedArticle.getUrlTitle());
 		Assert.assertEquals(

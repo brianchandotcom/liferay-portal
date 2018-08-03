@@ -132,6 +132,16 @@ public class DummyStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected void deleteStagedModel(
+			StagedModel dummy,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		_dummyStagedModelRepository.deleteStagedModel((Dummy)dummy);
+	}
+
+	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		return _dummyStagedModelRepository.fetchStagedModelByUuidAndGroupId(
 			uuid, group.getGroupId());

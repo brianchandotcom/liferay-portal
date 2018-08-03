@@ -84,6 +84,8 @@ public class DummyFolderStagedModelRepository
 				portletDataContext.getUserId(dummyFolder.getUserUuid()));
 		}
 
+		dummyFolder.setId(new DummyFolder().getId());
+
 		_dummyFolders.add(dummyFolder);
 
 		return dummyFolder;

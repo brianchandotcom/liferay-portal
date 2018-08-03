@@ -2,6 +2,4 @@ Bundle-Activator: com.liferay.portal.remote.jaxrs.whiteboard.test.internal.activ
 Bundle-Name: Liferay Portal Remote JAXRS Whiteboard Test
 Bundle-SymbolicName: com.liferay.portal.remote.jaxrs.whiteboard.test
 Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Remote Service Engines
 Private-Package: com.liferay.portal.remote.jaxrs.whiteboard.test.internal.*

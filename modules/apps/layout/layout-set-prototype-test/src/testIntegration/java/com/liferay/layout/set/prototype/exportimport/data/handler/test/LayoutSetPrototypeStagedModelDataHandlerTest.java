@@ -347,7 +347,8 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			StagedModel stagedModel, StagedModel importedStagedModel)
 		throws Exception {
 
-		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+		Assert.assertEquals(
+			stagedModel.getUuid(), importedStagedModel.getUuid());
 
 		LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)stagedModel;
 		LayoutSetPrototype importedLayoutSetPrototype =

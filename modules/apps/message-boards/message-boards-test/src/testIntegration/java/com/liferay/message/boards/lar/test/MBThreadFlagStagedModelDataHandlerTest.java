@@ -96,7 +96,8 @@ public class MBThreadFlagStagedModelDataHandlerTest
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
-		return null;
+		return MBThreadFlagLocalServiceUtil.fetchMBThreadFlagByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override

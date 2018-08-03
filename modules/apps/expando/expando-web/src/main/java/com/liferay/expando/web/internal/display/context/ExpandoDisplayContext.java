@@ -14,7 +14,7 @@
 
 package com.liferay.expando.web.internal.display.context;
 
-import com.liferay.expando.web.internal.constants.ExpandoPortletKeys;
+import com.liferay.expando.constants.ExpandoPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;

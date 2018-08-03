@@ -77,6 +77,8 @@ public class DummyStagedModelRepository
 			PortletDataContext portletDataContext, Dummy dummy)
 		throws PortalException {
 
+		dummy.setId(new Dummy().getId());
+
 		if ((portletDataContext != null) &&
 			(portletDataContext.getUserIdStrategy() != null)) {
 

@@ -15,16 +15,20 @@
 package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
+import com.liferay.journal.web.internal.security.permission.resource.DDMStructurePermission;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -32,6 +36,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -45,9 +51,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class JournalSelectDDMStructureDisplayContext {
+public class JournalStructuresDisplayContext {
 
-	public JournalSelectDDMStructureDisplayContext(
+	public JournalStructuresDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;
@@ -60,14 +66,20 @@ public class JournalSelectDDMStructureDisplayContext {
 				JournalWebConfiguration.class.getName());
 	}
 
-	public long getClassPK() {
-		if (_classPK != null) {
-			return _classPK;
-		}
+	public List<DropdownItem> getActionItemsDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.putData("action", "deleteStructures");
+						dropdownItem.setIcon("times");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
 
-		_classPK = ParamUtil.getLong(_renderRequest, "classPK");
-
-		return _classPK;
+		};
 	}
 
 	public String getClearResultsURL() {
@@ -78,8 +90,23 @@ public class JournalSelectDDMStructureDisplayContext {
 		return clearResultsURL.toString();
 	}
 
-	public String getEventName() {
-		return _renderResponse.getNamespace() + "selectStructure";
+	public CreationMenu getCreationMenu() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/edit_structure.jsp", "redirect",
+							themeDisplay.getURLCurrent());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "add"));
+					});
+			}
+		};
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
@@ -127,13 +154,9 @@ public class JournalSelectDDMStructureDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL searchActionURL = _getPortletURL();
 
-		portletURL.setParameter("mvcPath", "/select_structure.jsp");
-		portletURL.setParameter("classPK", String.valueOf(getClassPK()));
-		portletURL.setParameter("eventName", getEventName());
-
-		return portletURL.toString();
+		return searchActionURL.toString();
 	}
 
 	public String getSortingURL() {
@@ -171,6 +194,8 @@ public class JournalSelectDDMStructureDisplayContext {
 		structureSearch.setOrderByCol(orderByCol);
 		structureSearch.setOrderByComparator(orderByComparator);
 		structureSearch.setOrderByType(orderByType);
+		structureSearch.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 
 		long[] groupIds = {themeDisplay.getScopeGroupId()};
 
@@ -179,39 +204,19 @@ public class JournalSelectDDMStructureDisplayContext {
 				themeDisplay.getScopeGroupId());
 		}
 
-		int total = 0;
-
-		if (_isSearchRestriction()) {
-			total = DDMStructureLinkLocalServiceUtil.getStructureLinksCount(
-				_getSearchRestrictionClassNameId(),
-				_getSearchRestrictionClassPK());
-		}
-		else {
-			total = DDMStructureServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), groupIds,
-				PortalUtil.getClassNameId(JournalArticle.class.getName()),
-				_getKeywords(), WorkflowConstants.STATUS_ANY);
-		}
+		int total = DDMStructureServiceUtil.searchCount(
+			themeDisplay.getCompanyId(), groupIds,
+			PortalUtil.getClassNameId(JournalArticle.class.getName()),
+			_getKeywords(), WorkflowConstants.STATUS_ANY);
 
 		structureSearch.setTotal(total);
 
-		List<DDMStructure> results = null;
-
-		if (_isSearchRestriction()) {
-			results =
-				DDMStructureLinkLocalServiceUtil.getStructureLinkStructures(
-					_getSearchRestrictionClassNameId(),
-					_getSearchRestrictionClassPK(), structureSearch.getStart(),
-					structureSearch.getEnd());
-		}
-		else {
-			results = DDMStructureServiceUtil.search(
-				themeDisplay.getCompanyId(), groupIds,
-				PortalUtil.getClassNameId(JournalArticle.class.getName()),
-				_getKeywords(), WorkflowConstants.STATUS_ANY,
-				structureSearch.getStart(), structureSearch.getEnd(),
-				structureSearch.getOrderByComparator());
-		}
+		List<DDMStructure> results = DDMStructureServiceUtil.search(
+			themeDisplay.getCompanyId(), groupIds,
+			PortalUtil.getClassNameId(JournalArticle.class.getName()),
+			_getKeywords(), WorkflowConstants.STATUS_ANY,
+			structureSearch.getStart(), structureSearch.getEnd(),
+			structureSearch.getOrderByComparator());
 
 		structureSearch.setResults(results);
 
@@ -240,6 +245,32 @@ public class JournalSelectDDMStructureDisplayContext {
 
 	public boolean isSearch() {
 		if (Validator.isNotNull(_getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowAddButton() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (stagingGroupHelper.isLocalLiveGroup(group) ||
+			stagingGroupHelper.isRemoteLiveGroup(group)) {
+
+			return false;
+		}
+
+		if (DDMStructurePermission.containsAddStructurePermission(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class.getName()))) {
+
 			return true;
 		}
 
@@ -299,13 +330,7 @@ public class JournalSelectDDMStructureDisplayContext {
 	private PortletURL _getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/select_structure.jsp");
-
-		long classPK = getClassPK();
-
-		if (classPK != 0) {
-			portletURL.setParameter("classPK", String.valueOf(classPK));
-		}
+		portletURL.setParameter("mvcPath", "/view_structures.jsp");
 
 		String keywords = _getKeywords();
 
@@ -328,40 +353,6 @@ public class JournalSelectDDMStructureDisplayContext {
 		return portletURL;
 	}
 
-	private long _getSearchRestrictionClassNameId() {
-		if (_searchRestrictionClassNameId != null) {
-			return _searchRestrictionClassNameId;
-		}
-
-		_searchRestrictionClassNameId = ParamUtil.getLong(
-			_request, "searchRestrictionClassNameId");
-
-		return _searchRestrictionClassNameId;
-	}
-
-	private long _getSearchRestrictionClassPK() {
-		if (_searchRestrictionClassPK != null) {
-			return _searchRestrictionClassPK;
-		}
-
-		_searchRestrictionClassPK = ParamUtil.getLong(
-			_request, "searchRestrictionClassPK");
-
-		return _searchRestrictionClassPK;
-	}
-
-	private boolean _isSearchRestriction() {
-		if (_searchRestriction != null) {
-			return _searchRestriction;
-		}
-
-		_searchRestriction = ParamUtil.getBoolean(
-			_request, "searchRestriction");
-
-		return _searchRestriction;
-	}
-
-	private Long _classPK;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private String _orderByCol;
@@ -369,9 +360,6 @@ public class JournalSelectDDMStructureDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private Boolean _searchRestriction;
-	private Long _searchRestrictionClassNameId;
-	private Long _searchRestrictionClassPK;
 	private SearchContainer _structureSearch;
 
 }

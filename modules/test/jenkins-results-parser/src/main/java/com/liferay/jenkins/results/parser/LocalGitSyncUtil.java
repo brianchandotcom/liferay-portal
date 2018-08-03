@@ -1262,6 +1262,55 @@ public class LocalGitSyncUtil {
 		String senderBranchName, String senderUsername, String senderBranchSHA,
 		String upstreamBranchSHA, boolean synchronize) {
 
+		if (!JenkinsResultsParserUtil.isCINode()) {
+			GitWorkingDirectory gitWorkingDirectory =
+				localRepository.getGitWorkingDirectory();
+
+			RemoteGitBranch remoteGitBranch =
+				gitWorkingDirectory.getRemoteGitBranch(
+					senderBranchName,
+					JenkinsResultsParserUtil.combine(
+						"git@github.com:", senderUsername, "/",
+						localRepository.getName()));
+
+			if (!gitWorkingDirectory.localSHAExists(remoteGitBranch.getSHA())) {
+				gitWorkingDirectory.fetch(remoteGitBranch);
+			}
+
+			LocalGitBranch cacheLocalGitBranch =
+				gitWorkingDirectory.createLocalGitBranch(
+					JenkinsResultsParserUtil.combine(
+						gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
+						String.valueOf(System.currentTimeMillis())),
+					true, remoteGitBranch.getSHA());
+
+			if (!upstreamBranchSHA.equals(senderBranchSHA)) {
+				gitWorkingDirectory.checkoutLocalGitBranch(cacheLocalGitBranch);
+
+				LocalGitBranch upstreamLocalGitBranch =
+					GitBranchFactory.newLocalGitBranch(
+						localRepository,
+						gitWorkingDirectory.getUpstreamBranchName(),
+						upstreamBranchSHA);
+
+				if (!gitWorkingDirectory.localSHAExists(upstreamBranchSHA)) {
+					RemoteGitBranch upstreamRemoteGitBranch =
+						gitWorkingDirectory.getUpstreamRemoteGitBranch();
+
+					upstreamLocalGitBranch = gitWorkingDirectory.fetch(
+						upstreamLocalGitBranch, upstreamRemoteGitBranch);
+				}
+
+				gitWorkingDirectory.createLocalGitBranch(
+					upstreamLocalGitBranch, true);
+
+				cacheLocalGitBranch = gitWorkingDirectory.rebase(
+					true, upstreamLocalGitBranch, cacheLocalGitBranch);
+			}
+
+			return cacheLocalGitBranch;
+		}
+
 		GitWorkingDirectory gitWorkingDirectory =
 			localRepository.getGitWorkingDirectory();
 
@@ -1275,8 +1324,8 @@ public class LocalGitSyncUtil {
 			receiverUsername, senderUsername, senderBranchSHA,
 			upstreamBranchSHA);
 
-		List<GitWorkingDirectory.Remote> localGitRemotes =
-			getLocalGitRemotes(gitWorkingDirectory);
+		List<GitWorkingDirectory.Remote> localGitRemotes = getLocalGitRemotes(
+			gitWorkingDirectory);
 
 		RemoteGitBranch remoteGitBranch =
 			gitWorkingDirectory.getRemoteGitBranch(
@@ -1288,10 +1337,11 @@ public class LocalGitSyncUtil {
 
 		LocalGitBranch cachedLocalGitBranch =
 			GitBranchFactory.newLocalGitBranch(
+				localRepository,
 				JenkinsResultsParserUtil.combine(
 					gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
 					String.valueOf(System.currentTimeMillis())),
-				true, remoteGitBranch.getSHA(), synchronize);
+				remoteGitBranch.getSHA(), synchronize);
 
 		return gitWorkingDirectory.createLocalGitBranch(cachedLocalGitBranch);
 	}

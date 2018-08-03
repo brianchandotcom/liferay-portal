@@ -35,17 +35,14 @@ import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.portlet.PortletDependencyFactory;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,7 +58,6 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.model.impl.PortletURLListenerImpl;
 import com.liferay.portal.model.impl.PublicRenderParameterImpl;
-import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portlet.PortletBagFactory;
@@ -1322,9 +1318,6 @@ public class PortletTracker
 
 	private String _httpServiceEndpoint = StringPool.BLANK;
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
 	@Reference
 	private Portal _portal;
 
@@ -1341,21 +1334,12 @@ public class PortletTracker
 		new PortletPropertyValidator();
 
 	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Reference
-	private ResourceActions _resourceActions;
-
-	@Reference
 	private SAXReader _saxReader;
 
 	private final ConcurrentMap<Long, ServiceRegistrations>
 		_serviceRegistrations = new ConcurrentHashMap<>();
 	private ServiceTracker<Portlet, com.liferay.portal.kernel.model.Portlet>
 		_serviceTracker;
-
-	@Reference
-	private ServletContextHelperFactory _servletContextHelperFactory;
 
 	private class ServiceRegistrations {
 

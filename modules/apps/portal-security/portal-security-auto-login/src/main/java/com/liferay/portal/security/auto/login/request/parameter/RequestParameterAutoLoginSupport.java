@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.auto.login.request.parameter;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
@@ -128,9 +126,6 @@ public class RequestParameterAutoLoginSupport extends BaseAutoLogin {
 	private static final String _LOGIN_PARAM = "parameterAutoLoginLogin";
 
 	private static final String _PASSWORD_PARAM = "parameterAutoLoginPassword";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RequestParameterAutoLoginSupport.class);
 
 	private Portal _portal;
 	private UserLocalService _userLocalService;

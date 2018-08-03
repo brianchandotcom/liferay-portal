@@ -404,7 +404,6 @@ public class DisplayPageDisplayContext {
 	private final AssetDisplayContributorTracker
 		_assetDisplayContributorTracker;
 	private SearchContainer _displayPagesSearchContainer;
-	private String _displayStyle;
 	private String _keywords;
 	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;

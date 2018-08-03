@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -157,8 +156,5 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserService _userService;
 
 }

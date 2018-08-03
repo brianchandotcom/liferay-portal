@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -166,9 +165,6 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutPrototypeService _layoutPrototypeService;
-
-	@Reference
-	private Portal _portal;
 
 	private class AddLayoutPrototypeCallable
 		implements Callable<LayoutPrototype> {

@@ -14,8 +14,6 @@
 
 package com.liferay.marketplace.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -49,7 +47,5 @@ public class UpgradeApp extends UpgradeProcess {
 			runSQL("alter table Marketplace_App add version VARCHAR(75)");
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeApp.class);
 
 }

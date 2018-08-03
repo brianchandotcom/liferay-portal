@@ -287,7 +287,6 @@ public class AssetTagsSelectorDisplayContext {
 		return portletURL;
 	}
 
-	private String _displayStyle;
 	private String _eventName;
 	private long[] _groupIds;
 	private String _keywords;

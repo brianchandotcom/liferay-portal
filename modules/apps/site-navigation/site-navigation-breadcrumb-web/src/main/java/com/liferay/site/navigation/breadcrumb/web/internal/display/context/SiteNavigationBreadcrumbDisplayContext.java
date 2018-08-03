@@ -14,8 +14,6 @@
 
 package com.liferay.site.navigation.breadcrumb.web.internal.display.context;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -175,9 +173,6 @@ public class SiteNavigationBreadcrumbDisplayContext {
 
 		return _showPortletBreadcrumb;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteNavigationBreadcrumbDisplayContext.class);
 
 	private String _ddmTemplateKey;
 	private String _displayStyle;

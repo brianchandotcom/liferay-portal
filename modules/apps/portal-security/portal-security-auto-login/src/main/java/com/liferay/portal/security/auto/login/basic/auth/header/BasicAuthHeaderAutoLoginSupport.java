@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.auto.login.basic.auth.header;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
@@ -77,8 +75,5 @@ public class BasicAuthHeaderAutoLoginSupport extends BaseAutoLogin {
 
 		return credentials;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BasicAuthHeaderAutoLoginSupport.class);
 
 }

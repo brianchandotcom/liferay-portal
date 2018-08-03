@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.service.impl;
 
-import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
@@ -22,8 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -667,9 +664,6 @@ public class LayoutPageTemplateEntryServiceImpl
 				StringPool.BLANK, serviceContext);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPageTemplateEntryServiceImpl.class);
-
 	private static volatile ModelResourcePermission<LayoutPageTemplateEntry>
 		_layoutPageTemplateEntryModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(
@@ -686,8 +680,5 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;
-
-	@ServiceReference(type = FragmentEntryService.class)
-	private FragmentEntryService _fragmentEntryService;
 
 }

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
@@ -384,9 +383,6 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 	@Mock
 	private ResourceBundle _resourceBundle;
-
-	@Mock
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	private final SelectDDMFormFieldTemplateContextContributor
 		_selectDDMFormFieldTemplateContextContributor =

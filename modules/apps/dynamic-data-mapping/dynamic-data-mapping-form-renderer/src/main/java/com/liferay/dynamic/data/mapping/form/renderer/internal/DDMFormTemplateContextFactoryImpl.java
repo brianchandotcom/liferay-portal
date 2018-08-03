@@ -21,8 +21,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.renderer.internal.util.DDMFormTemplateContextFactoryUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -373,12 +371,6 @@ public class DDMFormTemplateContextFactoryImpl
 
 	@Reference
 	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
-
-	@Reference
-	private DDMFormJSONSerializer _ddmFormJSONSerializer;
-
-	@Reference
-	private DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 
 	private DDMFormTemplateContextFactoryHelper
 		_ddmFormTemplateContextFactoryHelper;

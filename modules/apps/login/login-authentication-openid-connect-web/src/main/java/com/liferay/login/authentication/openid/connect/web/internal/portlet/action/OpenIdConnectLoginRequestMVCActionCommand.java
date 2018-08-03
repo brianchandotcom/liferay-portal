@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
@@ -101,9 +100,6 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectLoginRequestMVCActionCommand.class);
-
-	@Reference
-	private OpenIdConnect _openIdConnect;
 
 	@Reference
 	private OpenIdConnectServiceHandler _openIdConnectServiceHandler;

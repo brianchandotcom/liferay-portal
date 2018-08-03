@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -65,8 +64,5 @@ public class UpdateLayoutPageTemplateEntryAssetTypeMVCActionCommand
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
-
-	@Reference
-	private Portal _portal;
 
 }

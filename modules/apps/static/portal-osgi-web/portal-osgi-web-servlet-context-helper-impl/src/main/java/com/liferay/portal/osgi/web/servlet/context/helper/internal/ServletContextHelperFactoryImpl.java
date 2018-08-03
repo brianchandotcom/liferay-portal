@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.http.runtime.HttpServiceRuntime;
 
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
@@ -91,9 +90,6 @@ public class ServletContextHelperFactoryImpl
 
 	private static final String _FEATURES_LOAD_EXTERNAL_DTD =
 		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
-
-	@Reference
-	private HttpServiceRuntime _httpServiceRuntime;
 
 	@Reference
 	private JSPServletFactory _jspServletFactory;

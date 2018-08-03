@@ -27,7 +27,6 @@ import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenPro
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProviderAccessor;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
-import com.liferay.oauth2.provider.scope.liferay.ScopedServiceTrackerMapFactory;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -1134,9 +1132,6 @@ public class LiferayOAuthDataProvider
 		_codeGrantsPortalCache;
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
 	private MultiVMPool _multiVMPool;
 
 	@Reference
@@ -1155,9 +1150,6 @@ public class LiferayOAuthDataProvider
 
 	@Reference
 	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
-
-	@Reference
-	private ScopedServiceTrackerMapFactory _scopedServiceTrackerMapFactory;
 
 	@Reference
 	private ScopeLocator _scopeFinderLocator;

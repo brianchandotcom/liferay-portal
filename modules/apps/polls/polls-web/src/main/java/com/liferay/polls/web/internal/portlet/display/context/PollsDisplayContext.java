@@ -378,8 +378,6 @@ public class PollsDisplayContext {
 		pollsQuestionSearch.setTotal(total);
 	}
 
-	private static final String[] _DISPLAY_VIEWS = {"list"};
-
 	private final PollsRequestHelper _pollsRequestHelper;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

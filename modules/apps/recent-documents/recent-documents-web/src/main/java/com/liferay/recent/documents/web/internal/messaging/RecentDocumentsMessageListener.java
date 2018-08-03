@@ -16,8 +16,6 @@ package com.liferay.recent.documents.web.internal.messaging;
 
 import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -28,7 +26,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.recent.documents.web.configuration.RecentDocumentsConfiguration;
 
 import java.util.Map;
@@ -94,14 +91,8 @@ public class RecentDocumentsMessageListener extends BaseMessageListener {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		RecentDocumentsMessageListener.class);
-
 	@Reference
 	private DLFileRankLocalService _dLFileRankLocalService;
-
-	@Reference
-	private Props _props;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

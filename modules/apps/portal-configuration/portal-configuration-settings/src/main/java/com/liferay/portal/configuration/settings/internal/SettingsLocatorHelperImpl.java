@@ -19,8 +19,6 @@ import com.liferay.portal.configuration.settings.internal.scoped.configuration.S
 import com.liferay.portal.configuration.settings.internal.scoped.configuration.ScopedConfigurationBeanConfigurationListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -340,9 +338,6 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 				scopeKey.getObjectClass()),
 			configuration, parentSettings);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SettingsLocatorHelperImpl.class);
 
 	private final ConcurrentMap<String, Class<?>> _configurationBeanClasses =
 		new ConcurrentHashMap<>();

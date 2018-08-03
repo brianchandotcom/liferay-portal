@@ -23,10 +23,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.webdav.WebDAVServlet;
 
 import java.util.HashMap;
@@ -339,9 +337,6 @@ public class BaseWebDAVTestCase {
 	private static final String _PROPFIND_XML;
 
 	private static final String _SERVLET_PATH = "";
-
-	@Inject
-	private static WebDAVStorage _webDAVStorage;
 
 	static {
 		StringBundler sb = new StringBundler(8);

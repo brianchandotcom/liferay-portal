@@ -16,7 +16,6 @@ package com.liferay.portal.search.admin.web.internal.portlet.action;
 
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -185,9 +184,6 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			_indexWriterHelper.indexSpellCheckerDictionaries(companyId);
 		}
 	}
-
-	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

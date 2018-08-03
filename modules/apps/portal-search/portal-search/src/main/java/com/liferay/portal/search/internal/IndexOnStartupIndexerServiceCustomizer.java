@@ -15,7 +15,6 @@
 package com.liferay.portal.search.internal;
 
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -175,9 +174,6 @@ public class IndexOnStartupIndexerServiceCustomizer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexOnStartupIndexerServiceCustomizer.class);
-
-	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
 
 	private BundleContext _bundleContext;
 

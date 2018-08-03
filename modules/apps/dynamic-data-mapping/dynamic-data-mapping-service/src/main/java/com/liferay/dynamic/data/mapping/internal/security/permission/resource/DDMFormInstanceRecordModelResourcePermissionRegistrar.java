@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -86,9 +85,6 @@ public class DDMFormInstanceRecordModelResourcePermissionRegistrar {
 	private PortletResourcePermission _portletResourcePermission;
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 	private class DDMFormInstanceRecordAutosavedPermissionLogic
 		implements ModelResourcePermissionLogic<DDMFormInstanceRecord> {

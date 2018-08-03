@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
@@ -105,9 +104,6 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 
 		return redirectURL.toString();
 	}
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;

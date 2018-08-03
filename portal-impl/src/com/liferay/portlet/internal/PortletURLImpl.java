@@ -1507,7 +1507,7 @@ public class PortletURLImpl
 
 					for (String parameterName : resourceParameterNames) {
 						_entrySet.add(
-							new SimpleImmutableEntry<>(
+							new SimpleEntry<>(
 								parameterName,
 								mutableResourceParameters.getValues(
 									parameterName)));
@@ -1520,7 +1520,7 @@ public class PortletURLImpl
 
 					for (String parameterName : actionParameterNames) {
 						_entrySet.add(
-							new SimpleImmutableEntry<>(
+							new SimpleEntry<>(
 								parameterName,
 								mutableActionParameters.getValues(
 									parameterName)));
@@ -1535,7 +1535,7 @@ public class PortletURLImpl
 
 					for (String parameterName : renderParameterNames) {
 						_entrySet.add(
-							new SimpleImmutableEntry<>(
+							new SimpleEntry<>(
 								parameterName,
 								_mutableRenderParameters.getValues(
 									parameterName)));

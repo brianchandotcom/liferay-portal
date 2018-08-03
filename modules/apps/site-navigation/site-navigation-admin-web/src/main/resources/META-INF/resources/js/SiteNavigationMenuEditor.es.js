@@ -43,6 +43,12 @@ const KEYS = {
 };
 
 /**
+ * Distance the window moves on scroll
+ */
+
+const SCROLL_DISPLACEMENT = 100;
+
+/**
  *	Site navigation menu editor component.
  */
 
@@ -148,7 +154,7 @@ class SiteNavigationMenuEditor extends State {
 			window.scrollTo(
 				{
 					behavior: 'smooth',
-					top: window.scrollY + 100
+					top: window.scrollY + SCROLL_DISPLACEMENT
 				}
 			);
 		}
@@ -156,7 +162,7 @@ class SiteNavigationMenuEditor extends State {
 			window.scrollTo(
 				{
 					behavior: 'smooth',
-					top: window.scrollY - 100
+					top: window.scrollY - SCROLL_DISPLACEMENT
 				}
 			);
 		}

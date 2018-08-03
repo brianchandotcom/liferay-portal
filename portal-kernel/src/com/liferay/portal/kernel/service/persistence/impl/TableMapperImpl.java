@@ -51,6 +51,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		String rightColumnName, BasePersistence<L> leftBasePersistence,
 		BasePersistence<R> rightBasePersistence) {
 
+		_tableName = tableName;
+
 		this.leftColumnName = leftColumnName;
 		this.rightColumnName = rightColumnName;
 		this.leftBasePersistence = leftBasePersistence;
@@ -98,13 +100,6 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 					"SELECT ", rightColumnName, " FROM ", tableName, " WHERE ",
 					leftColumnName, " = ?"),
 				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
-
-		leftToRightPortalCache = MultiVMPoolUtil.getPortalCache(
-			StringBundler.concat(
-				TableMapper.class.getName(), "-", tableName, "-LeftToRight"));
-		rightToLeftPortalCache = MultiVMPoolUtil.getPortalCache(
-			StringBundler.concat(
-				TableMapper.class.getName(), "-", tableName, "-RightToLeft"));
 	}
 
 	@Override
@@ -114,6 +109,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		if (containsTableMapping(leftPrimaryKey, rightPrimaryKey, false)) {
 			return false;
 		}
+
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			getRightToLeftPortalCache();
 
 		leftToRightPortalCache.remove(leftPrimaryKey);
 		rightToLeftPortalCache.remove(rightPrimaryKey);
@@ -126,6 +126,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	@Override
 	public long[] addTableMappings(
 		long companyId, long leftPrimaryKey, long[] rightPrimaryKeys) {
+
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			getRightToLeftPortalCache();
 
 		List<Long> addedRightPrimaryKeys = new ArrayList<>();
 		long[] currentRightPrimaryKeys = getPrimaryKeys(
@@ -154,6 +159,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	@Override
 	public long[] addTableMappings(
 		long companyId, long[] leftPrimaryKeys, long rightPrimaryKey) {
+
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			getRightToLeftPortalCache();
 
 		List<Long> addedLeftPrimaryKeys = new ArrayList<>();
 		long[] currentLeftPrimaryKeys = getPrimaryKeys(
@@ -188,6 +198,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public int deleteLeftPrimaryKeyTableMappings(long leftPrimaryKey) {
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			getRightToLeftPortalCache();
+
 		return deleteTableMappings(
 			leftBasePersistence, rightBasePersistence, leftToRightPortalCache,
 			rightToLeftPortalCache, getRightPrimaryKeysSqlQuery,
@@ -196,6 +211,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public int deleteRightPrimaryKeyTableMappings(long rightPrimaryKey) {
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			getRightToLeftPortalCache();
+
 		return deleteTableMappings(
 			rightBasePersistence, leftBasePersistence, rightToLeftPortalCache,
 			leftToRightPortalCache, getLeftPrimaryKeysSqlQuery,
@@ -210,6 +230,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			return false;
 		}
 
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			getRightToLeftPortalCache();
+
 		leftToRightPortalCache.remove(leftPrimaryKey);
 		rightToLeftPortalCache.remove(rightPrimaryKey);
 
@@ -219,6 +244,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	@Override
 	public long[] deleteTableMappings(
 		long leftPrimaryKey, long[] rightPrimaryKeys) {
+
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			getRightToLeftPortalCache();
 
 		boolean clearCache = false;
 		long[] currentRightPrimaryKeys = getPrimaryKeys(
@@ -251,6 +281,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	public long[] deleteTableMappings(
 		long[] leftPrimaryKeys, long rightPrimaryKey) {
 
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			getRightToLeftPortalCache();
+
 		boolean clearCache = false;
 		long[] currentLeftPrimaryKeys = getPrimaryKeys(
 			rightToLeftPortalCache, getLeftPrimaryKeysSqlQuery, rightPrimaryKey,
@@ -280,15 +315,23 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public void destroy() {
-		MultiVMPoolUtil.removePortalCache(
-			leftToRightPortalCache.getPortalCacheName());
-		MultiVMPoolUtil.removePortalCache(
-			rightToLeftPortalCache.getPortalCacheName());
+		if (leftToRightPortalCache != null) {
+			MultiVMPoolUtil.removePortalCache(
+				leftToRightPortalCache.getPortalCacheName());
+		}
+
+		if (rightToLeftPortalCache != null) {
+			MultiVMPoolUtil.removePortalCache(
+				rightToLeftPortalCache.getPortalCacheName());
+		}
 	}
 
 	@Override
 	public List<L> getLeftBaseModels(
 		long rightPrimaryKey, int start, int end, OrderByComparator<L> obc) {
+
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			getRightToLeftPortalCache();
 
 		return getBaseModels(
 			rightToLeftPortalCache, getLeftPrimaryKeysSqlQuery, rightPrimaryKey,
@@ -297,6 +340,9 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public long[] getLeftPrimaryKeys(long rightPrimaryKey) {
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			getRightToLeftPortalCache();
+
 		return getPrimaryKeys(
 			rightToLeftPortalCache, getLeftPrimaryKeysSqlQuery, rightPrimaryKey,
 			true);
@@ -311,6 +357,9 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	public List<R> getRightBaseModels(
 		long leftPrimaryKey, int start, int end, OrderByComparator<R> obc) {
 
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+
 		return getBaseModels(
 			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,
 			rightBasePersistence, start, end, obc);
@@ -318,6 +367,9 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public long[] getRightPrimaryKeys(long leftPrimaryKey) {
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+
 		return getPrimaryKeys(
 			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,
 			true);
@@ -492,6 +544,9 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	protected boolean containsTableMapping(
 		long leftPrimaryKey, long rightPrimaryKey, boolean updateCache) {
 
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			getLeftToRightPortalCache();
+
 		long[] rightPrimaryKeys = getPrimaryKeys(
 			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,
 			updateCache);
@@ -504,6 +559,36 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		}
 	}
 
+	protected PortalCache<Long, long[]> getLeftToRightPortalCache() {
+		PortalCache<Long, long[]> portalCache = leftToRightPortalCache;
+
+		if (portalCache == null) {
+			portalCache = MultiVMPoolUtil.getPortalCache(
+				StringBundler.concat(
+					TableMapper.class.getName(), "-", _tableName,
+					"-LeftToRight"));
+
+			leftToRightPortalCache = portalCache;
+		}
+
+		return portalCache;
+	}
+
+	protected PortalCache<Long, long[]> getRightToLeftPortalCache() {
+		PortalCache<Long, long[]> portalCache = rightToLeftPortalCache;
+
+		if (portalCache == null) {
+			portalCache = MultiVMPoolUtil.getPortalCache(
+				StringBundler.concat(
+					TableMapper.class.getName(), "-", _tableName,
+					"-RightToLeft"));
+
+			rightToLeftPortalCache = portalCache;
+		}
+
+		return portalCache;
+	}
+
 	protected SqlUpdate addTableMappingSqlUpdate;
 	protected SqlUpdate deleteLeftPrimaryKeyTableMappingsSqlUpdate;
 	protected SqlUpdate deleteRightPrimaryKeyTableMappingsSqlUpdate;
@@ -512,11 +597,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	protected MappingSqlQuery<Long> getRightPrimaryKeysSqlQuery;
 	protected BasePersistence<L> leftBasePersistence;
 	protected String leftColumnName;
-	protected PortalCache<Long, long[]> leftToRightPortalCache;
+	protected volatile PortalCache<Long, long[]> leftToRightPortalCache;
 	protected TableMapper<R, L> reverseTableMapper;
 	protected BasePersistence<R> rightBasePersistence;
 	protected String rightColumnName;
-	protected PortalCache<Long, long[]> rightToLeftPortalCache;
+	protected volatile PortalCache<Long, long[]> rightToLeftPortalCache;
 
 	private void _addTableMapping(
 		long companyId, long leftPrimaryKey, long rightPrimaryKey) {
@@ -609,5 +694,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		return false;
 	}
+
+	private final String _tableName;
 
 }

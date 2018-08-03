@@ -102,7 +102,7 @@ public class KeywordNestedCollectionResource
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, AssetTag::getUserId
 		).addNumber(
-			"usages", AssetTag::getAssetCount
+			"keywordUsageCount", AssetTag::getAssetCount
 		).addString(
 			"name", AssetTag::getName
 		).build();

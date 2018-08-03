@@ -18,7 +18,7 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 import java.util.List;
 
@@ -140,7 +140,7 @@ public class AppendCheck extends StringConcatenationCheck {
 
 		String previousLine = getLine(previousMethodCallAST.getLineNo() - 1);
 
-		int previousLineLength = CommonUtils.lengthExpandedTabs(
+		int previousLineLength = CommonUtil.lengthExpandedTabs(
 			previousLine, previousLine.length(), getTabWidth());
 
 		if ((previousLineLength + literalStringValue.length()) <=

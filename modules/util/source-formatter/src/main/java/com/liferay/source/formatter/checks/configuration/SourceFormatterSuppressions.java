@@ -87,7 +87,8 @@ public class SourceFormatterSuppressions {
 		String checkName, String fileNameRegex) {
 
 		_checkstyleFilterSet.addFilter(
-			new SuppressElement(fileNameRegex, checkName, null, null, null));
+			new SuppressElement(
+				fileNameRegex, checkName, null, null, null, null));
 	}
 
 	private void _addSourceCheckSuppression(

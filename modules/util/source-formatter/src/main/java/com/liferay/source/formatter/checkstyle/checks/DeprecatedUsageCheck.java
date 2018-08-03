@@ -36,7 +36,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import com.puppycrawl.tools.checkstyle.utils.AnnotationUtility;
+import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			return;
 		}
 
-		if (AnnotationUtility.containsAnnotation(detailAST, "Deprecated")) {
+		if (AnnotationUtil.containsAnnotation(detailAST, "Deprecated")) {
 			return;
 		}
 
@@ -974,7 +974,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 			if (((parentAST.getType() == TokenTypes.METHOD_DEF) ||
 				 (parentAST.getType() == TokenTypes.VARIABLE_DEF)) &&
-				AnnotationUtility.containsAnnotation(parentAST, "Deprecated")) {
+				AnnotationUtil.containsAnnotation(parentAST, "Deprecated")) {
 
 				return true;
 			}

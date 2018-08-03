@@ -1,6 +1,6 @@
 <definition component-name="portal-search">
 	<property name="portal.release" value="true" />
-	<property name="portal.suite.search.engine" value="elasticsearch6,solr" />
+	<property name="portal.suite.search.engine" value="elasticsearch6" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Web Search" />
 

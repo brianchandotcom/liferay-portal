@@ -160,6 +160,7 @@ class SiteNavigationMenuEditor extends State {
 		const placeholderRegion = position.getRegion(placeholderMenuItem);
 
 		if (
+			this._currentYPosition < placeholderRegion.top &&
 			placeholderRegion.top > (WINDOW_HEIGHT - SCROLL_MARGIN) &&
 			(placeholderRegion.bottom + window.scrollY) < (DOCUMENT_HEIGHT + placeholderRegion.height)
 		) {
@@ -170,7 +171,10 @@ class SiteNavigationMenuEditor extends State {
 				}
 			);
 		}
-		else if (placeholderRegion.top < (controlMenuHeight + managementBarHeight + SCROLL_MARGIN)) {
+		else if (
+			this._currentYPosition > placeholderRegion.top &&
+			placeholderRegion.top < (controlMenuHeight + managementBarHeight + SCROLL_MARGIN)
+		) {
 			window.scrollTo(
 				{
 					behavior: 'smooth',
@@ -178,6 +182,8 @@ class SiteNavigationMenuEditor extends State {
 				}
 			);
 		}
+
+		this._currentYPosition = placeholderRegion.top;
 	}
 
 	/**
@@ -501,6 +507,16 @@ SiteNavigationMenuEditor.STATE = {
 	 */
 
 	namespace: Config.string().required(),
+
+	/**
+	 * @default -1
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @type {!number}
+	 */
+
+	_currentYPosition: Config.number().internal().value(-1),
 
 	/**
 	 * @default -1

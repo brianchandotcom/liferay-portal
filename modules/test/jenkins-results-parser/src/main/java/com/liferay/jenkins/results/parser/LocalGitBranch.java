@@ -37,6 +37,12 @@ public class LocalGitBranch extends BaseGitBranch {
 		return _localRepository;
 	}
 
+	public String getUpstreamBranchName() {
+		LocalRepository localRepository = getLocalRepository();
+
+		return localRepository.getUpstreamBranchName();
+	}
+
 	public void setupWorkspace() {
 		setupWorkspace(this);
 	}

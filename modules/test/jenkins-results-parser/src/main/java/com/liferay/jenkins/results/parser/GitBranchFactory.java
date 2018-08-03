@@ -22,7 +22,7 @@ public class GitBranchFactory {
 	public static LocalGitBranch newLocalGitBranch(
 		LocalRepository localRepository, String name, String sha) {
 
-		return newLocalGitBranch(localRepository, name, sha, synchronize);
+		return newLocalGitBranch(localRepository, name, sha, false);
 	}
 
 	public static LocalGitBranch newLocalGitBranch(

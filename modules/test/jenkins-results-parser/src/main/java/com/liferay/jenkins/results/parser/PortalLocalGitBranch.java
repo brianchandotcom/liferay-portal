@@ -27,7 +27,7 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 			return _basePortalLocalGitBranch;
 		}
 
-		String portalUpstreamBranchName = getPortalUpstreamBranchName();
+		String portalUpstreamBranchName = getUpstreamBranchName();
 
 		if (!portalUpstreamBranchName.contains("-private")) {
 			return null;
@@ -52,6 +52,33 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		return _basePortalLocalGitBranch;
 	}
 
+	public PortalLocalGitBranch getCompanionPortalLocalGitBranch() {
+		if (_companionPortalLocalGitBranch != null) {
+			return _companionPortalLocalGitBranch;
+		}
+
+		String portalUpstreamBranchName = getUpstreamBranchName();
+
+		if (!portalUpstreamBranchName.equals("7.0.x") &&
+			!portalUpstreamBranchName.equals("7.1.x") &&
+			!portalUpstreamBranchName.equals("master")) {
+
+			return null;
+		}
+
+		String branchName = portalUpstreamBranchName + "-private";
+
+		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
+			"liferay-portal-ee", branchName);
+
+		LocalGitBranch localGitBranch = _getLocalGitBranchFromGitCommit(
+			"git-commit-portal-private", localRepository);
+
+		_companionPortalLocalGitBranch = (PortalLocalGitBranch)localGitBranch;
+
+		return _companionPortalLocalGitBranch;
+	}
+
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
@@ -69,12 +96,14 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		super.setupWorkspace();
 
 		_setupBasePortalWorkspace();
+
+		_setupCompanionPortalWorkspace();
 	}
 
 	protected PortalLocalGitBranch(
 		LocalRepository localRepository, String name, String sha) {
 
-		this(localRepository, name, sha, false)
+		this(localRepository, name, sha, false);
 	}
 
 	protected PortalLocalGitBranch(
@@ -172,7 +201,31 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 			null);
 	}
 
+	private void _setupCompanionPortalWorkspace() {
+		PortalLocalGitBranch companionPortalLocalGitBranch =
+			getCompanionPortalLocalGitBranch();
+
+		if (companionPortalLocalGitBranch == null) {
+			return;
+		}
+
+		setupWorkspace(companionPortalLocalGitBranch);
+
+		File companionPrivateModulesDir = new File(
+			companionPortalLocalGitBranch.getDirectory(), "modules/private");
+		File privateModulesDir = new File(getDirectory(), "modules/private");
+
+		try {
+			JenkinsResultsParserUtil.copy(
+				companionPrivateModulesDir, privateModulesDir);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	private PortalLocalGitBranch _basePortalLocalGitBranch;
+	private PortalLocalGitBranch _companionPortalLocalGitBranch;
 	private final boolean _synchronize;
 
 }

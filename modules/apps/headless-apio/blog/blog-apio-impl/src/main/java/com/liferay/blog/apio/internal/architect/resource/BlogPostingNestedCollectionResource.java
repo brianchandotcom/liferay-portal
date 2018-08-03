@@ -126,9 +126,9 @@ public class BlogPostingNestedCollectionResource
 			"image", MediaObjectIdentifier.class,
 			BlogsEntry::getCoverImageFileEntryId
 		).addRelatedCollection(
-			"categories", CategoryIdentifier.class
+			"category", CategoryIdentifier.class
 		).addRelatedCollection(
-			"comments", CommentIdentifier.class
+			"comment", CommentIdentifier.class
 		).addRelatedCollection(
 			"vocabularyAssignment", VocabularyIdentifier.class
 		).addString(
@@ -140,7 +140,7 @@ public class BlogPostingNestedCollectionResource
 		).addString(
 			"description", BlogsEntry::getDescription
 		).addString(
-			"fileFormat", blogsEntry -> "text/html"
+			"encodingFormat", blogsEntry -> "text/html"
 		).addString(
 			"friendlyUrlPath", BlogsEntry::getUrlTitle
 		).addString(

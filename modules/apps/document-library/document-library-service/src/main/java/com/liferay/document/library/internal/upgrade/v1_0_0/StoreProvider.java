@@ -58,20 +58,20 @@ public class StoreProvider {
 
 		@Override
 		public Store addingService(ServiceReference<Store> serviceReference) {
-			Store store = _bundleContext.getService(serviceReference);
-
 			String storeType = (String)serviceReference.getProperty(
 				"store.type");
 
 			if ((storeType == null) ||
 				!storeType.equals(PropsValues.DL_STORE_IMPL)) {
 
-				return store;
+				return null;
 			}
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
 			properties.put("dl.store.upgrade", "true");
+
+			Store store = _bundleContext.getService(serviceReference);
 
 			_serviceRegistration = _bundleContext.registerService(
 				Store.class, store, properties);

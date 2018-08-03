@@ -94,7 +94,7 @@ public class FolderNestedCollectionResource
 		).addDate(
 			"datePublished", Folder::getCreateDate
 		).addRelatedCollection(
-			"folders", FolderIdentifier.class
+			"subFolders", FolderIdentifier.class
 		).addString(
 			"name", Folder::getName
 		).build();

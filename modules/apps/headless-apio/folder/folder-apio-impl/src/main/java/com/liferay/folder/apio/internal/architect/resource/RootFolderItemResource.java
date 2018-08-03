@@ -61,7 +61,7 @@ public class RootFolderItemResource
 		).addRelatedCollection(
 			"folders", FolderIdentifier.class
 		).addRelatedCollection(
-			"mediaObjects", MediaObjectIdentifier.class
+			"documents", MediaObjectIdentifier.class
 		).build();
 	}
 

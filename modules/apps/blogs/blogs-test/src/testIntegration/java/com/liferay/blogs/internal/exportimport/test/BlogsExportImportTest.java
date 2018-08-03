@@ -55,7 +55,7 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getPortletId() {
-		return BlogsPortletKeys.BLOGS;
+		return BlogsPortletKeys.BLOGS_ADMIN;
 	}
 
 	@Before

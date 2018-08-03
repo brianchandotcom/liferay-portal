@@ -62,7 +62,7 @@ public class MBExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getPortletId() {
-		return MBPortletKeys.MESSAGE_BOARDS;
+		return MBPortletKeys.MESSAGE_BOARDS_ADMIN;
 	}
 
 	@Before

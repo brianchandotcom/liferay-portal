@@ -207,17 +207,6 @@ public abstract class CompanyScopedConfigurationProvider
 			new ObjectValuePair<>(configuration, configurable));
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), Replaced by {@link #unregisterConfiguration(String)}
-	 */
-	@Deprecated
-	@Override
-	public synchronized void unregisterConfiguration(
-		Configuration configuration) {
-
-		throw new UnsupportedOperationException("Deprecated method");
-	}
-
 	@Override
 	public synchronized void unregisterConfiguration(String pid) {
 		Long companyId = _pidCompanyConfigurations.remove(pid);

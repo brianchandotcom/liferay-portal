@@ -31,7 +31,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersionModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
@@ -131,7 +130,7 @@ public class FormInstanceRecordNestedCollectionResource
 				"creator", PersonIdentifier.class,
 				DDMFormInstanceRecordVersion::getUserId
 			).addString(
-				"name", DDMFormInstanceRecordVersionModel::getVersion
+				"name", DDMFormInstanceRecordVersion::getVersion
 			).build()
 		).addNestedList(
 			"fieldValues", this::_getFieldValues,

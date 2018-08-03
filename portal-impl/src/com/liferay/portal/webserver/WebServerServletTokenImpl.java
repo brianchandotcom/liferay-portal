@@ -27,7 +27,7 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 
 	@Override
 	public String getToken(long imageId) {
-		PortalCache<Long, String> portalCache = _getPortalCache();
+		PortalCache<Long, String> portalCache = PortalCacheHolder._portalCache;
 
 		Long key = imageId;
 
@@ -44,7 +44,7 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 
 	@Override
 	public void resetToken(long imageId) {
-		PortalCache<Long, String> portalCache = _getPortalCache();
+		PortalCache<Long, String> portalCache = PortalCacheHolder._portalCache;
 
 		portalCache.remove(imageId);
 
@@ -57,17 +57,14 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 		return String.valueOf(System.currentTimeMillis());
 	}
 
-	private PortalCache<Long, String> _getPortalCache() {
-		if (_portalCache == null) {
-			_portalCache = MultiVMPoolUtil.getPortalCache(_CACHE_NAME);
-		}
-
-		return _portalCache;
-	}
-
 	private static final String _CACHE_NAME =
 		WebServerServletToken.class.getName();
 
-	private volatile PortalCache<Long, String> _portalCache;
+	private static class PortalCacheHolder {
+
+		private static final PortalCache<Long, String> _portalCache =
+			MultiVMPoolUtil.getPortalCache(_CACHE_NAME);
+
+	}
 
 }

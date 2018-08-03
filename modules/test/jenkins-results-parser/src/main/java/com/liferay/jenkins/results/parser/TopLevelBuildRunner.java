@@ -14,31 +14,27 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
-public class BuildRunnerFactory {
+public abstract class TopLevelBuildRunner extends BaseBuildRunner {
 
-	public static BatchBuildRunner newBatchBuildRunner(
-		Job job, String batchName, String htmlURL) {
-
-		if (batchName.contains("functional")) {
-			return new FunctionalPortalBatchBuildRunner(
-				job, batchName, htmlURL);
-		}
-		else if (batchName.contains("integration") ||
-				 batchName.contains("unit")) {
-
-			return new JunitPortalBatchBuildRunner(job, batchName, htmlURL);
-		}
-
-		return new PortalBatchBuildRunner(job, batchName, htmlURL);
+	public List<String> getBatchNames() {
+		return _batchNames;
 	}
 
-	public static TopLevelBuildRunner newTopLevelBuildRunner(
-		Job job, String htmlURL) {
-
-		return new PortalTopLevelBuildRunner(job, htmlURL);
+	protected TopLevelBuildRunner(Job job) {
+		super(job);
 	}
+
+	@Override
+	protected boolean synchronizeBranches() {
+		return true;
+	}
+
+	private final List<String> _batchNames = new ArrayList<>();
 
 }

@@ -17,28 +17,24 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class BuildRunnerFactory {
+public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
 
-	public static BatchBuildRunner newBatchBuildRunner(
-		Job job, String batchName, String htmlURL) {
+	protected PortalTopLevelBuildRunner(Job job, String htmlURL) {
+		super(job);
 
-		if (batchName.contains("functional")) {
-			return new FunctionalPortalBatchBuildRunner(
-				job, batchName, htmlURL);
-		}
-		else if (batchName.contains("integration") ||
-				 batchName.contains("unit")) {
-
-			return new JunitPortalBatchBuildRunner(job, batchName, htmlURL);
+		if (!(job instanceof PortalTestClassJob)) {
+			throw new RuntimeException("Invalid job type");
 		}
 
-		return new PortalBatchBuildRunner(job, batchName, htmlURL);
-	}
+		PortalLocalGitBranch portalLocalGitBranch = getPortalLocalGitBranch(
+			htmlURL);
 
-	public static TopLevelBuildRunner newTopLevelBuildRunner(
-		Job job, String htmlURL) {
+		addLocalGitBranch(portalLocalGitBranch);
 
-		return new PortalTopLevelBuildRunner(job, htmlURL);
+		PortalLocalRepository portalLocalRepository =
+			getPortalLocalRepository();
+
+		portalLocalRepository.setJobProperties(getJob());
 	}
 
 }

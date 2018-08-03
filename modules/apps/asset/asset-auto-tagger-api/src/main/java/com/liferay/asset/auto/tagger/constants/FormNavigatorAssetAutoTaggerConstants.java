@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.web.internal.constants;
+package com.liferay.asset.auto.tagger.constants;
 
 /**
  * @author Alejandro Tardín

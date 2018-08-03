@@ -16,7 +16,7 @@ package com.liferay.asset.auto.tagger.web.internal.servlet.taglib.ui;
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
-import com.liferay.asset.auto.tagger.web.internal.constants.FormNavigatorAssetAutoTaggerConstants;
+import com.liferay.asset.auto.tagger.constants.FormNavigatorAssetAutoTaggerConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;

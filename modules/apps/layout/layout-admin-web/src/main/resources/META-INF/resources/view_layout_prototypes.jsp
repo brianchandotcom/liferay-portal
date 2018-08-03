@@ -16,8 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:error exception="<%= RequiredLayoutPrototypeException.class %>" message="you-cannot-delete-page-templates-that-are-used-by-a-page" />
-
 <clay:navigation-bar
 	inverted="<%= true %>"
 	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
@@ -41,6 +39,8 @@
 </portlet:actionURL>
 
 <aui:form action="<%= deleteLayoutPrototypesURL %>" cssClass="container-fluid-1280" name="fm">
+	<liferay-ui:error embed="<%= false %>" exception="<%= RequiredLayoutPrototypeException.class %>" message="you-cannot-delete-page-templates-that-are-used-by-a-page" />
+
 	<liferay-ui:search-container
 		searchContainer="<%= layoutPrototypeDisplayContext.getSearchContainer() %>"
 	>

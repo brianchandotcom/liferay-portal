@@ -27,6 +27,15 @@ import java.util.regex.Pattern;
  * @author Peter Yoo
  */
 public class GitUtil {
+	
+	public static RemoteGitBranch getRemoteGitBranch(
+		String remoteGitBranchName, File workingDirectory, String remoteURL) {
+
+		List<RemoteGitBranch> remoteGitBranches = getRemoteGitBranches(
+			remoteGitBranchName, workingDirectory, remoteURL);
+
+		return remoteGitBranches.get(0);
+	}
 
 	public static List<RemoteGitBranch> getRemoteGitBranches(
 		String remoteGitBranchName, File workingDirectory, String remoteURL) {

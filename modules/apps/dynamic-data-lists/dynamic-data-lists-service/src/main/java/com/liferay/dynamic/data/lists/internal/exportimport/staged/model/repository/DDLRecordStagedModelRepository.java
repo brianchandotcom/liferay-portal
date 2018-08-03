@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -289,9 +287,6 @@ public class DDLRecordStagedModelRepository
 
 		_ddlRecordLocalService.updateDDLRecord(importedRecord);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDLRecordStagedModelRepository.class);
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;

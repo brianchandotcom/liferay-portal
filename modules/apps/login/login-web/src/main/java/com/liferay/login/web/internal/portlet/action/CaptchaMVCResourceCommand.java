@@ -16,8 +16,6 @@ package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.login.web.internal.constants.LoginPortletKeys;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
 import java.io.IOException;
@@ -55,8 +53,5 @@ public class CaptchaMVCResourceCommand implements MVCResourceCommand {
 			throw new PortletException(ioe);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CaptchaMVCResourceCommand.class);
 
 }

@@ -32,8 +32,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -363,9 +361,6 @@ public class ExportImportLifecycleEventTest {
 				ExportImportLifecycleConstants.
 					EVENT_STAGED_MODEL_IMPORT_SUCCEEDED));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ExportImportLifecycleEventTest.class);
 
 	private Map<Integer, ExportImportLifecycleEvent>
 		_firedExportImportLifecycleEventsMap;

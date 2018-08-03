@@ -14,8 +14,6 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
@@ -127,9 +125,6 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 			throw new LPKGVerifyException(e);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultLPKGVerifier.class);
 
 	private BundleContext _bundleContext;
 

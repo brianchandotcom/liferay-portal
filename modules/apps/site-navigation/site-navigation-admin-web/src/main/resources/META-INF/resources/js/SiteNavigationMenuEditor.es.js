@@ -73,6 +73,12 @@ class SiteNavigationMenuEditor extends State {
 	constructor(config, ...args) {
 		super(config, ...args);
 
+		const controlMenu = document.querySelector('.control-menu');
+		this._controlMenuHeight = controlMenu ? controlMenu.offsetHeight : 0;
+
+		const managementBar = document.querySelector('.management-bar');
+		this._managementBarHeight = managementBar ? managementBar.offsetHeight : 0;
+
 		this._scrollOnDrag = throttle(this._scrollOnDrag.bind(this), 250);
 		this._scrollOnDragLoop = this._scrollOnDragLoop.bind(this);
 
@@ -146,23 +152,14 @@ class SiteNavigationMenuEditor extends State {
 	/**
 	 * Scrolls up or down when an item is being dragged
 	 *
-	 * @param {!object} placeholderMenuItem Dragged item
 	 * @private
 	 */
 
-	_scrollOnDrag(placeholderMenuItem) {
-		const controlMenu = document.querySelector('.control-menu');
-		const controlMenuHeight = controlMenu ? controlMenu.offsetHeight : 0;
-
-		const managementBar = document.querySelector('.management-bar');
-		const managementBarHeight = managementBar ? managementBar.offsetHeight : 0;
-
-		const placeholderRegion = position.getRegion(placeholderMenuItem);
-
+	_scrollOnDrag() {
 		if (
-			this._currentYPosition < placeholderRegion.top &&
-			placeholderRegion.top > (WINDOW_HEIGHT - SCROLL_MARGIN) &&
-			(placeholderRegion.bottom + window.scrollY) < (DOCUMENT_HEIGHT + placeholderRegion.height)
+			this._currentYPosition < this._draggedItemRegion.top &&
+			this._draggedItemRegion.top > (WINDOW_HEIGHT - SCROLL_MARGIN) &&
+			(this._draggedItemRegion.bottom + window.scrollY) < (DOCUMENT_HEIGHT + this._draggedItemRegion.height)
 		) {
 			window.scrollTo(
 				{
@@ -172,8 +169,8 @@ class SiteNavigationMenuEditor extends State {
 			);
 		}
 		else if (
-			this._currentYPosition > placeholderRegion.top &&
-			placeholderRegion.top < (controlMenuHeight + managementBarHeight + SCROLL_MARGIN)
+			this._currentYPosition > this._draggedItemRegion.top &&
+			this._draggedItemRegion.top < (this._controlMenuHeight + this._managementBarHeight + SCROLL_MARGIN)
 		) {
 			window.scrollTo(
 				{
@@ -183,7 +180,7 @@ class SiteNavigationMenuEditor extends State {
 			);
 		}
 
-		this._currentYPosition = placeholderRegion.top;
+		this._currentYPosition = this._draggedItemRegion.top;
 	}
 
 	/**
@@ -192,7 +189,7 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_scrollOnDragLoop() {
-		this._scrollOnDrag(this._draggedItem);
+		this._scrollOnDrag(this._draggedItemRegion);
 		this._scrollAnimationId = requestAnimationFrame(this._scrollOnDragLoop);
 	}
 
@@ -213,10 +210,12 @@ class SiteNavigationMenuEditor extends State {
 			placeholderMenuItem
 		);
 
-		if (!this._draggedItem) {
-			this._draggedItem = placeholderMenuItem;
+		if (!this._draggedItemRegion) {
+			this._draggedItemRegion = position.getRegion(placeholderMenuItem);
 			this._scrollOnDragLoop();
 		}
+
+		this._draggedItemRegion = position.getRegion(placeholderMenuItem);
 
 		if (
 			placeholderMenuItem && isMenuItem(placeholderMenuItem) &&
@@ -295,7 +294,7 @@ class SiteNavigationMenuEditor extends State {
 
 		cancelAnimationFrame(this._scrollAnimationId);
 		this._scrollAnimationId = -1;
-		this._draggedItem = null;
+		this._draggedItemRegion = null;
 
 		this._updateParentAndOrder(
 			{
@@ -509,26 +508,6 @@ SiteNavigationMenuEditor.STATE = {
 	namespace: Config.string().required(),
 
 	/**
-	 * @default -1
-	 * @instance
-	 * @memberOf SiteNavigationMenuEditor
-	 * @private
-	 * @type {!number}
-	 */
-
-	_currentYPosition: Config.number().internal().value(-1),
-
-	/**
-	 * @default -1
-	 * @instance
-	 * @memberOf SiteNavigationMenuEditor
-	 * @private
-	 * @type {!number}
-	 */
-
-	_scrollAnimationId: Config.number().internal().value(-1),
-
-	/**
 	 * Selected menuItem DOM element
 	 *
 	 * @default null
@@ -539,6 +518,28 @@ SiteNavigationMenuEditor.STATE = {
 	 */
 
 	selectedMenuItem: Config.object().value(null),
+
+	/**
+	 * Control menu height
+	 *
+	 * @default 0
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @type {State}
+	 */
+
+	_controlMenuHeight: Config.number().internal().value(0),
+
+	/**
+	 * @default -1
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @type {!number}
+	 */
+
+	_currentYPosition: Config.number().internal().value(-1),
 
 	/**
 	 * Internal DragDrop instance.
@@ -560,7 +561,29 @@ SiteNavigationMenuEditor.STATE = {
 	 * @type {State}
 	 */
 
-	_draggedItem: Config.object().internal()
+	_draggedItemRegion: Config.object().internal(),
+
+	/**
+	 * Management bar height
+	 *
+	 * @default 0
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @type {State}
+	 */
+
+	_managementBarHeight: Config.number().internal().value(0),
+
+	/**
+	 * @default -1
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @type {!number}
+	 */
+
+	_scrollAnimationId: Config.number().internal().value(-1)
 
 };
 

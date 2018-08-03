@@ -1162,62 +1162,8 @@ public class GitWorkingDirectory {
 	public List<RemoteGitBranch> getRemoteGitBranches(
 		String remoteGitBranchName, String remoteURL) {
 
-		Matcher remoteURLMatcher = Remote.remoteURLPattern.matcher(remoteURL);
-
-		if (!remoteURLMatcher.find()) {
-			throw new IllegalArgumentException(
-				"Invalid remote url " + remoteURL);
-		}
-
-		String command = null;
-
-		if (remoteGitBranchName != null) {
-			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", remoteURL, " ", remoteGitBranchName);
-		}
-		else {
-			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", remoteURL);
-		}
-
-		ExecutionResult executionResult = executeBashCommands(
-			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 1000 * 60 * 10, command);
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get remote branches from ", remoteURL, "\n",
-					executionResult.getStandardError()));
-		}
-
-		String input = executionResult.getStandardOut();
-
-		List<RemoteGitBranch> remoteGitBranches = new ArrayList<>();
-
-		RemoteRepository remoteRepository =
-			RepositoryFactory.getRemoteRepository(
-				remoteURLMatcher.group("hostname"),
-				remoteURLMatcher.group("repositoryName"),
-				remoteURLMatcher.group("username"));
-
-		for (String line : input.split("\n")) {
-			Pattern gitLsRemotePattern = Remote.gitLsRemotePattern;
-
-			Matcher gitLsRemoteMatcher = gitLsRemotePattern.matcher(line);
-
-			if (gitLsRemoteMatcher.find()) {
-				remoteGitBranches.add(
-					GitBranchFactory.newRemoteGitBranch(
-						remoteRepository, gitLsRemoteMatcher.group("name"),
-						gitLsRemoteMatcher.group("sha")));
-			}
-		}
-
-		System.out.println(
-			"getRemoteGitBranches found " + remoteGitBranches.size() +
-				" branches at " + remoteURL + ".");
-
-		return remoteGitBranches;
+		return GitUtil.getRemoteGitBranches(
+			remoteGitBranchName, _workingDirectory, remoteURL);
 	}
 
 	public List<String> getRemoteGitBranchNames(Remote remote) {

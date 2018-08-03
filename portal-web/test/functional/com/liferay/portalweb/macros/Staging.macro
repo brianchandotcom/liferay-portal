@@ -347,6 +347,12 @@
 		<if>
 			<isset var="uncheckSubContent" />
 			<then>
+				<execute function="Check#checkHiddenToggleSwitch" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX">
+					<var name="key_contentName" value="${mainContent}" />
+				</execute>
+
+				<execute function="Pause" locator1="3000" />
+
 				<execute macro="ContentConfiguration#uncheckSubContent">
 					<var name="mainContent" value="${mainContent}" />
 					<var name="uncheckSubContent" value="${uncheckSubContent}" />

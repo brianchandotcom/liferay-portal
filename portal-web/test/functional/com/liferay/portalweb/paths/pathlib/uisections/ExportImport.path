@@ -79,7 +79,7 @@
 <!--CONTENT-->
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK</td>
-	<td>//a[@data-portlettitle='${key_contentName}']</td>
+	<td>//a[@data-portlettitle='${key_contentName}']/..</td>
 	<td></td>
 </tr>
 <tr>

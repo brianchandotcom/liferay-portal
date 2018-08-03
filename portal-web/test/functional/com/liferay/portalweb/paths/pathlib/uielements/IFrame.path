@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_LATEST_CHANGES_DIALOG</td>
+	<td>//div[contains(@id,'publishLatestChangesDialog')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ASSIGNEES</td>
 	<td>//iframe[contains(@id,'selectAssignees')]</td>
 	<td></td>

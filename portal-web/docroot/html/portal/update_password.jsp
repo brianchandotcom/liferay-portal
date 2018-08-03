@@ -109,9 +109,6 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 
 									<liferay-ui:message arguments="<%= upe.regex %>" key="that-password-does-not-comply-with-the-regular-expression" translateArguments="<%= false %>" />
 								</c:when>
-								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustMatch.class.getName()) %>">
-									<liferay-ui:message key="the-passwords-you-entered-do-not-match" />
-								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreAlphanumeric.class.getName()) %>">
 
 									<%
@@ -151,6 +148,9 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									%>
 
 									<liferay-ui:message arguments="<%= String.valueOf(upe.minUppercase) %>" key="that-password-must-contain-at-least-x-uppercase-characters" translateArguments="<%= false %>" />
+								</c:when>
+								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustMatch.class.getName()) %>">
+									<liferay-ui:message key="the-passwords-you-entered-do-not-match" />
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeEqualToCurrent.class.getName()) %>">
 									<liferay-ui:message key="your-new-password-cannot-be-the-same-as-your-old-password-please-enter-a-different-password" />

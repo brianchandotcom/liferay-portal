@@ -32,4 +32,11 @@ public interface ClusterExecutorConfiguration {
 	@Meta.AD(deflt = "false", name = "debug-enabled", required = false)
 	public boolean debugEnabled();
 
+	@Meta.AD(
+		deflt = "access_key|secret_access_key",
+		description = "excluded-property-keys-help",
+		name = "excluded-property-keys", required = false
+	)
+	public String[] excludedPropertyKeys();
+
 }

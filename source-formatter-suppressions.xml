@@ -132,6 +132,8 @@
 
 		<suppress checks="BNDBundleCheck" files="modules/private/.*" />
 		<suppress checks="BNDSuiteCheck" files="modules/private/apps/lcs/.*" />
+		<suppress checks="GradleTestDependencyVersionCheck" files="modules/apps/apio-architect/.*" />
+		<suppress checks="GradleTestDependencyVersionCheck" files="modules/private/apps/lcs/.*" />
 		<suppress checks="JavaAPISignatureCheck" files="modules/apps/apio-architect/.*" />
 		<suppress checks="JavaAPISignatureCheck" files="modules/private/apps/commerce/.*" />
 		<suppress checks="JavaConfigurationCategoryCheck" files="modules/apps/apio-architect/.*" />

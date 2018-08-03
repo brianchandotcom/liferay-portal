@@ -21,51 +21,9 @@ JournalEditStructuresDisplayContext journalEditStructuresDisplayContext = new Jo
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-long structureId = ParamUtil.getLong(request, "structureId");
-
-DDMStructure structure = DDMStructureLocalServiceUtil.fetchStructure(structureId);
-
-DDMStructureVersion structureVersion = null;
-
-if (structure != null) {
-	structureVersion = structure.getLatestStructureVersion();
-}
+DDMStructure structure = journalEditStructuresDisplayContext.getStructure();
 
 long groupId = BeanParamUtil.getLong(structure, request, "groupId", scopeGroupId);
-
-long parentStructureId = BeanParamUtil.getLong(structure, request, "parentStructureId", DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
-
-DDMStructure parentStructure = DDMStructureLocalServiceUtil.fetchStructure(parentStructureId);
-
-String parentStructureName = StringPool.BLANK;
-
-if (parentStructure != null) {
-	parentStructureName = parentStructure.getName(locale);
-}
-
-String script = null;
-
-if (structure != null) {
-	script = BeanParamUtil.getString(structureVersion, request, "definition");
-}
-else {
-	script = BeanParamUtil.getString(structure, request, "definition");
-}
-
-JSONArray fieldsJSONArray = null;
-
-if (structure != null) {
-	fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structureVersion, script);
-}
-else {
-	fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structure, script);
-}
-
-String fieldsJSONArrayString = StringPool.BLANK;
-
-if (fieldsJSONArray != null) {
-	fieldsJSONArrayString = fieldsJSONArray.toString();
-}
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(PortalUtil.escapeRedirect(redirect));
@@ -90,7 +48,7 @@ renderResponse.setTitle((structure != null) ? LanguageUtil.format(request, "edit
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
+	<aui:input name="structureId" type="hidden" value="<%= journalEditStructuresDisplayContext.getStructureId() %>" />
 	<aui:input name="definition" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
@@ -151,13 +109,13 @@ renderResponse.setTitle((structure != null) ? LanguageUtil.format(request, "edit
 		<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
 		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 
-		<c:if test="<%= (structure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(structureId) > 0) %>">
+		<c:if test="<%= (structure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditStructuresDisplayContext.getStructureId()) > 0) %>">
 			<div class="alert alert-warning">
 				<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
 			</div>
 		</c:if>
 
-		<c:if test="<%= (structureId > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(null, PortalUtil.getClassNameId(DDMStructure.class), structureId) > 0) %>">
+		<c:if test="<%= (journalEditStructuresDisplayContext.getStructureId() > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(null, PortalUtil.getClassNameId(DDMStructure.class), journalEditStructuresDisplayContext.getStructureId()) > 0) %>">
 			<div class="alert alert-info">
 				<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
 			</div>
@@ -199,18 +157,18 @@ renderResponse.setTitle((structure != null) ? LanguageUtil.format(request, "edit
 						<aui:input name="description" />
 
 						<aui:field-wrapper label="parent-strucutre">
-							<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
+							<aui:input name="parentStructureId" type="hidden" value="<%= journalEditStructuresDisplayContext.getParentStructureId() %>" />
 
-							<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentStructureName" type="text" value="<%= parentStructureName %>" />
+							<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentStructureName" type="text" value="<%= journalEditStructuresDisplayContext.getParentStructureName() %>" />
 
 							<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
 
-							<aui:button disabled="<%= Validator.isNull(parentStructureName) %>" name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
+							<aui:button disabled="<%= Validator.isNull(journalEditStructuresDisplayContext.getParentStructureName()) %>" name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
 						</aui:field-wrapper>
 
 						<c:if test="<%= structure != null %>">
 							<portlet:resourceURL id="/journal/get_structure" var="getStructureURL">
-								<portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" />
+								<portlet:param name="structureId" value="<%= String.valueOf(journalEditStructuresDisplayContext.getStructureId()) %>" />
 							</portlet:resourceURL>
 
 							<aui:input name="url" type="resource" value="<%= getStructureURL %>" />
@@ -247,7 +205,7 @@ renderResponse.setTitle((structure != null) ? LanguageUtil.format(request, "edit
 				eventName: '<portlet:namespace />selectStructure',
 				id: '<portlet:namespace />selectStructure',
 				title: '<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /><portlet:param name="classPK" value="<%= String.valueOf(structureId) %>" /></portlet:renderURL>'
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /><portlet:param name="classPK" value="<%= String.valueOf(journalEditStructuresDisplayContext.getStructureId()) %>" /></portlet:renderURL>'
 			},
 			function(event) {
 				var form = AUI.$('#<portlet:namespace />fm');

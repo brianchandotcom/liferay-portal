@@ -100,6 +100,10 @@ public class ConfigurationIndexingExtender {
 			Map<String, ConfigurationModel> configurationModels =
 				_configurationModelRetriever.getConfigurationModels(bundle);
 
+			if (configurationModels.isEmpty()) {
+				return null;
+			}
+
 			_configurationModelIndexer.reindex(configurationModels.values());
 
 			commit(_configurationModelIndexer);

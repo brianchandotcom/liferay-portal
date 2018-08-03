@@ -195,9 +195,9 @@ public class StructuredContentNestedCollectionResource
 				"name", DDMFormFieldValue::getName
 			).build()
 		).addRelatedCollection(
-			"categories", CategoryIdentifier.class
+			"category", CategoryIdentifier.class
 		).addRelatedCollection(
-			"comments", CommentIdentifier.class
+			"comment", CommentIdentifier.class
 		).addStringList(
 			"keywords", this::_getJournalArticleAssetTags
 		).build();

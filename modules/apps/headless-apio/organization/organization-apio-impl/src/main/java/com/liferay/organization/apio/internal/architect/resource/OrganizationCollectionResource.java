@@ -116,19 +116,21 @@ public class OrganizationCollectionResource
 			"services", this::_getOrgLabors,
 			this::_getServiceNestedRepresentorFunction
 		).addRelatedCollection(
-			"addresses", AddressIdentifier.class
+			"address", AddressIdentifier.class
 		).addRelatedCollection(
-			"emails", EmailIdentifier.class
+			"email", EmailIdentifier.class
 		).addRelatedCollection(
 			"phones", PhoneIdentifier.class
 		).addRelatedCollection(
-			"userAccounts", PersonIdentifier.class
+			"members", PersonIdentifier.class
 		).addRelatedCollection(
-			"webUrls", WebUrlIdentifier.class
+			"telephone", PhoneIdentifier.class
+		).addRelatedCollection(
+			"webUrl", WebUrlIdentifier.class
 		).addRelativeURL(
 			"logo", this::_getLogoURL
 		).addString(
-			"comments", Organization::getComments
+			"comment", Organization::getComments
 		).addString(
 			"name", Organization::getName
 		).build();

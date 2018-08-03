@@ -16,7 +16,8 @@ package com.liferay.document.library.internal.upgrade.v1_0_0;
 
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -27,6 +28,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -50,6 +52,10 @@ public class StoreProvider {
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private Props _props;
+
 	private ServiceRegistration<Store> _serviceRegistration;
 	private ServiceTracker<Store, Store> _serviceTracker;
 
@@ -62,7 +68,7 @@ public class StoreProvider {
 				"store.type");
 
 			if ((storeType == null) ||
-				!storeType.equals(PropsValues.DL_STORE_IMPL)) {
+				!storeType.equals(_props.get(PropsKeys.DL_STORE_IMPL))) {
 
 				return null;
 			}

@@ -88,7 +88,7 @@ public class DLFileEntryUADAnonymizerTest
 			WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
-			dlFileVersions.toString(), 3, dlFileVersions.size());
+			dlFileVersions.toString(), 4, dlFileVersions.size());
 
 		uadAnonymizer.autoAnonymize(
 			dlFileEntry, user.getUserId(), anonymousUser);

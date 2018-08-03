@@ -40,7 +40,7 @@ public class FolderForm {
 			__ -> "This form can be used to create or update a folder"
 		).constructor(
 			FolderForm::new
-		).addRequiredString(
+		).addOptionalString(
 			"description", FolderForm::_setDescription
 		).addRequiredString(
 			"name", FolderForm::_setName

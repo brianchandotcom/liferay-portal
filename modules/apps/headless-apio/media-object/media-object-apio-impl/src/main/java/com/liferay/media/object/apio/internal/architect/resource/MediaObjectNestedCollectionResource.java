@@ -96,7 +96,7 @@ public class MediaObjectNestedCollectionResource
 		).identifier(
 			FileEntry::getFileEntryId
 		).addBidirectionalModel(
-			"folder", "mediaObjects", FolderIdentifier.class,
+			"folder", "documents", FolderIdentifier.class,
 			FileEntry::getFolderId
 		).addRelativeURL(
 			"contentStream", this::_getFileEntryPreviewURL

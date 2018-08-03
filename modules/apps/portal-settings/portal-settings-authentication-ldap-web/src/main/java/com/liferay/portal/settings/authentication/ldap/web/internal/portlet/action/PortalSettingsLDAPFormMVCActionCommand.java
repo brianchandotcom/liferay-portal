@@ -253,17 +253,17 @@ public class PortalSettingsLDAPFormMVCActionCommand
 			LDAPConstants.IMPORT_USER_PASSWORD_DEFAULT,
 			LDAPConstants.IMPORT_USER_PASSWORD_ENABLED);
 
-		_setStringProperties(
-			actionRequest, properties, LDAPConstants.IMPORT_METHOD,
-			LDAPConstants.IMPORT_USER_PASSWORD_DEFAULT,
-			LDAPConstants.IMPORT_USER_SYNC_STRATEGY);
-
 		_setIntegerProperties(
 			actionRequest, properties, LDAPConstants.IMPORT_INTERVAL);
 
 		_setLongProperties(
 			actionRequest, properties,
 			LDAPConstants.IMPORT_LOCK_EXPIRATION_TIME);
+
+		_setStringProperties(
+			actionRequest, properties, LDAPConstants.IMPORT_METHOD,
+			LDAPConstants.IMPORT_USER_PASSWORD_DEFAULT,
+			LDAPConstants.IMPORT_USER_SYNC_STRATEGY);
 
 		configurationProvider.updateProperties(companyId, properties);
 	}

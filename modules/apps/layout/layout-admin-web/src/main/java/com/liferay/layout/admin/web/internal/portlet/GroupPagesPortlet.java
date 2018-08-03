@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
+import com.liferay.portal.kernel.exception.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.exception.SitemapChangeFrequencyException;
 import com.liferay.portal.kernel.exception.SitemapIncludeException;
 import com.liferay.portal.kernel.exception.SitemapPagePriorityException;
@@ -205,6 +206,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 			cause instanceof NoSuchGroupException ||
 			cause instanceof PrincipalException ||
 			cause instanceof RequiredLayoutException ||
+			cause instanceof RequiredLayoutPrototypeException ||
 			cause instanceof SitemapChangeFrequencyException ||
 			cause instanceof SitemapIncludeException ||
 			cause instanceof SitemapPagePriorityException ||

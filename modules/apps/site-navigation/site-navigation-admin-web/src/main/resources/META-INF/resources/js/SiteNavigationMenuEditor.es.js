@@ -61,7 +61,7 @@ const WINDOW_HEIGHT = window.innerHeight;
 const SCROLL_MARGIN = WINDOW_HEIGHT * 0.2;
 
 /**
- *	Site navigation menu editor component.
+ * Site navigation menu editor component.
  */
 
 class SiteNavigationMenuEditor extends State {

@@ -15,15 +15,22 @@
 package com.liferay.document.library.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
+import com.liferay.message.boards.constants.MBCategoryConstants;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -60,16 +67,13 @@ public class DLFileEntryUADAnonymizerTest
 	@After
 	public void tearDown() throws Exception {
 		_dlFileEntryUADTestHelper.cleanUpDependencies(_dlFileEntries);
+
+		_dlFileEntries.clear();
 	}
 
 	@Test
 	public void testAnonymizeDLFileEntryVersions() throws Exception {
-		Assert.assertTrue(true);
-
-		DLFileEntry dlFileEntry = _dlFileEntryUADTestHelper.addDLFileEntry(
-			user.getUserId());
-
-		_dlFileEntries.add(dlFileEntry);
+		DLFileEntry dlFileEntry = addBaseModel(user.getUserId());
 
 		long dlFileEntryId = dlFileEntry.getFileEntryId();
 
@@ -83,7 +87,7 @@ public class DLFileEntryUADAnonymizerTest
 			WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
-			dlFileVersions.toString(), 3, dlFileVersions.size());
+			dlFileVersions.toString(), 4, dlFileVersions.size());
 
 		uadAnonymizer.autoAnonymize(
 			dlFileEntry, user.getUserId(), anonymousUser);
@@ -95,6 +99,69 @@ public class DLFileEntryUADAnonymizerTest
 
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
 			_assertDLFileVersionAnonymized(dlFileVersion);
+		}
+	}
+
+	@Test
+	public void testRemoveAssetLinks() throws Exception {
+		DLFileEntry dlFileEntry = addBaseModel(user.getUserId());
+
+		AssetEntry dlFileEntryAssetEntry = _assetEntryLocalService.fetchEntry(
+			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+
+		Assert.assertNotNull(
+			"There should be an associated AssetEntry for the DLFileEntry.",
+			dlFileEntryAssetEntry);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(dlFileEntry.getGroupId());
+
+		serviceContext.setAssetTagNames(new String[0]);
+		serviceContext.setAssetLinkEntryIds(
+			new long[] {dlFileEntryAssetEntry.getEntryId()});
+		serviceContext.setAssetEntryVisible(true);
+
+		MBMessage mbMessage = MBTestUtil.addMessageWithWorkflow(
+			dlFileEntry.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			serviceContext);
+
+		try {
+			AssetEntry mbMessageAssetEntry = _assetEntryLocalService.fetchEntry(
+				MBMessage.class.getName(), mbMessage.getMessageId());
+
+			List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
+				mbMessageAssetEntry.getEntryId());
+
+			Assert.assertEquals(
+				"There should be an asset link for the newly created " +
+					"MBMessage.",
+				1, assetLinks.size());
+
+			AssetLink assetLink = assetLinks.get(0);
+
+			Assert.assertEquals(
+				"The AssetLink should be associated with the DLFileEntry",
+				assetLink.getEntryId2(), dlFileEntryAssetEntry.getEntryId());
+
+			_uadAnonymizer.delete(dlFileEntry);
+
+			dlFileEntryAssetEntry = _assetEntryLocalService.fetchEntry(
+				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+
+			Assert.assertNull(
+				"The anonymizer should also remove the AssetEntry.",
+				dlFileEntryAssetEntry);
+
+			assetLink = _assetLinkLocalService.fetchAssetLink(
+				assetLink.getLinkId());
+
+			Assert.assertNull(
+				"The anonymizer should also remove the AssetLink.", assetLink);
+		}
+		finally {
+			_mbThreadLocalService.deleteThread(mbMessage.getThread());
 		}
 	}
 
@@ -195,9 +262,14 @@ public class DLFileEntryUADAnonymizerTest
 	}
 
 	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private AssetLinkLocalService _assetLinkLocalService;
+
+	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	@DeleteAfterTestRun
 	private final List<DLFileEntry> _dlFileEntries = new ArrayList<>();
 
 	@Inject
@@ -205,6 +277,9 @@ public class DLFileEntryUADAnonymizerTest
 
 	@Inject
 	private DLFileEntryUADTestHelper _dlFileEntryUADTestHelper;
+
+	@Inject
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Inject(filter = "component.name=*.DLFileEntryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

@@ -18,6 +18,7 @@ import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.apio.architect.function.throwable.ThrowableFunction;
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -69,6 +70,9 @@ public class BlogPostingForm {
 			"creator", PersonIdentifier.class, BlogPostingForm::setCreatorId
 		).addOptionalLinkedModel(
 			"image", MediaObjectIdentifier.class, BlogPostingForm::setImageId
+		).addOptionalLinkedModelList(
+			"category", CategoryIdentifier.class,
+			BlogPostingForm::setCategories
 		).addOptionalString(
 			"alternativeHeadline", BlogPostingForm::setAlternativeHeadline
 		).addOptionalString(
@@ -259,6 +263,11 @@ public class BlogPostingForm {
 			serviceContext.setAssetTagNames(ArrayUtil.toStringArray(_keywords));
 		}
 
+		if (ListUtil.isNotEmpty(_categories)) {
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toLongArray(_categories));
+		}
+
 		return serviceContext;
 	}
 
@@ -268,6 +277,10 @@ public class BlogPostingForm {
 
 	public void setArticleBody(String articleBody) {
 		_articleBody = articleBody;
+	}
+
+	public void setCategories(List<Long> categories) {
+		_categories = categories;
 	}
 
 	public void setCreateDate(Date createDate) {
@@ -312,6 +325,7 @@ public class BlogPostingForm {
 
 	private String _alternativeHeadline;
 	private String _articleBody;
+	private List<Long> _categories;
 	private Date _createDate;
 	private Long _creatorId;
 	private String _description;

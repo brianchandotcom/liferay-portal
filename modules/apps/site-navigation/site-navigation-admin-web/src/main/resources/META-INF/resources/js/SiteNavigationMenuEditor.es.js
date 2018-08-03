@@ -27,6 +27,12 @@ import {
 	unselectAll
 } from './SiteNavigationMenuItemDOMHandler.es';
 
+/**
+ * Document height
+ */
+
+const DOCUMENT_HEIGHT = document.body.offsetHeight;
+
 const KEYS = {
 	ARROW_DOWN: 'ArrowDown',
 	ARROW_LEFT: 'ArrowLeft',
@@ -130,8 +136,6 @@ class SiteNavigationMenuEditor extends State {
 		const controlMenu = document.querySelector('.control-menu');
 		const controlMenuHeight = controlMenu ? controlMenu.offsetHeight : 0;
 
-		const documentHeight = document.body.offsetHeight;
-
 		const managementBar = document.querySelector('.management-bar');
 		const managementBarHeight = managementBar ? managementBar.offsetHeight : 0;
 
@@ -139,7 +143,7 @@ class SiteNavigationMenuEditor extends State {
 
 		if (
 			placeholderRegion.top > (window.innerHeight - (window.innerHeight * 0.2)) &&
-			(placeholderRegion.bottom + window.scrollY) < (documentHeight + placeholderRegion.height)
+			(placeholderRegion.bottom + window.scrollY) < (DOCUMENT_HEIGHT + placeholderRegion.height)
 		) {
 			window.scrollTo(
 				{

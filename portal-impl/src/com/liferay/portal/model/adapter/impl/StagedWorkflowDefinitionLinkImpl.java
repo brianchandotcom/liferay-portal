@@ -35,22 +35,6 @@ public class StagedWorkflowDefinitionLinkImpl
 		WorkflowDefinitionLink workflowDefinitionLink) {
 
 		_workflowDefinitionLink = workflowDefinitionLink;
-
-		_workflowDefinitionLinkId =
-			workflowDefinitionLink.getWorkflowDefinitionLinkId();
-		_groupId = workflowDefinitionLink.getGroupId();
-		_classNameId = workflowDefinitionLink.getClassNameId();
-		_classPK = workflowDefinitionLink.getClassPK();
-		_companyId = workflowDefinitionLink.getCompanyId();
-		_createDate = workflowDefinitionLink.getCreateDate();
-		_modifiedDate = workflowDefinitionLink.getModifiedDate();
-		_typePK = workflowDefinitionLink.getTypePK();
-		_userId = workflowDefinitionLink.getUserId();
-		_userName = workflowDefinitionLink.getUserName();
-		_workflowDefinitionName =
-			workflowDefinitionLink.getWorkflowDefinitionName();
-		_workflowDefinitionVersion =
-			workflowDefinitionLink.getWorkflowDefinitionVersion();
 	}
 
 	@Override
@@ -61,7 +45,7 @@ public class StagedWorkflowDefinitionLinkImpl
 	@Override
 	public String getClassName() {
 		ClassName className = ClassNameLocalServiceUtil.fetchClassName(
-			_classNameId);
+			_workflowDefinitionLink.getClassNameId());
 
 		if (className != null) {
 			return className.getClassName();
@@ -72,27 +56,27 @@ public class StagedWorkflowDefinitionLinkImpl
 
 	@Override
 	public long getClassNameId() {
-		return _classNameId;
+		return _workflowDefinitionLink.getClassNameId();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _classPK;
+		return _workflowDefinitionLink.getClassPK();
 	}
 
 	@Override
 	public long getCompanyId() {
-		return _companyId;
+		return _workflowDefinitionLink.getCompanyId();
 	}
 
 	@Override
 	public Date getCreateDate() {
-		return _createDate;
+		return _workflowDefinitionLink.getCreateDate();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _groupId;
+		return _workflowDefinitionLink.getGroupId();
 	}
 
 	@Override
@@ -102,12 +86,12 @@ public class StagedWorkflowDefinitionLinkImpl
 
 	@Override
 	public Date getModifiedDate() {
-		return _modifiedDate;
+		return _workflowDefinitionLink.getModifiedDate();
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _workflowDefinitionLinkId;
+		return _workflowDefinitionLink.getWorkflowDefinitionLinkId();
 	}
 
 	@Override
@@ -117,22 +101,23 @@ public class StagedWorkflowDefinitionLinkImpl
 
 	@Override
 	public long getTypePK() {
-		return _typePK;
+		return _workflowDefinitionLink.getTypePK();
 	}
 
 	@Override
 	public long getUserId() {
-		return _userId;
+		return _workflowDefinitionLink.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _userName;
+		return _workflowDefinitionLink.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return String.valueOf(_workflowDefinitionLinkId);
+		return String.valueOf(
+			_workflowDefinitionLink.getWorkflowDefinitionLinkId());
 	}
 
 	public WorkflowDefinitionLink getWorkflowDefinitionLink() {
@@ -141,17 +126,17 @@ public class StagedWorkflowDefinitionLinkImpl
 
 	@Override
 	public long getWorkflowDefinitionLinkId() {
-		return _workflowDefinitionLinkId;
+		return _workflowDefinitionLink.getWorkflowDefinitionLinkId();
 	}
 
 	@Override
 	public String getWorkflowDefinitionName() {
-		return _workflowDefinitionName;
+		return _workflowDefinitionLink.getWorkflowDefinitionName();
 	}
 
 	@Override
 	public int getWorkflowDefinitionVersion() {
-		return _workflowDefinitionVersion;
+		return _workflowDefinitionLink.getWorkflowDefinitionVersion();
 	}
 
 	@Override
@@ -163,18 +148,6 @@ public class StagedWorkflowDefinitionLinkImpl
 		throw new UnsupportedOperationException();
 	}
 
-	private final long _classNameId;
-	private final long _classPK;
-	private final long _companyId;
-	private final Date _createDate;
-	private final long _groupId;
-	private final Date _modifiedDate;
-	private final long _typePK;
-	private final long _userId;
-	private final String _userName;
 	private final WorkflowDefinitionLink _workflowDefinitionLink;
-	private final long _workflowDefinitionLinkId;
-	private final String _workflowDefinitionName;
-	private final int _workflowDefinitionVersion;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
@@ -23,8 +24,6 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.DefaultLogger;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
-
-import java.io.OutputStream;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,11 +36,8 @@ import java.util.TreeSet;
  */
 public class CheckstyleLogger extends DefaultLogger {
 
-	public CheckstyleLogger(
-		OutputStream outputStream, boolean closeStreamsAfterUse,
-		String baseDirName) {
-
-		super(outputStream, closeStreamsAfterUse);
+	public CheckstyleLogger(String baseDirName) {
+		super(new UnsyncByteArrayOutputStream(), OutputStreamOptions.CLOSE);
 
 		_baseDirName = baseDirName;
 

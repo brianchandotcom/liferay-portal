@@ -98,7 +98,7 @@ public class OrganizationCollectionResource
 		).identifier(
 			Organization::getOrganizationId
 		).addBidirectionalModel(
-			"parentOrganization", "suborganizations",
+			"parentOrganization", "suborganization",
 			OrganizationIdentifier.class,
 			OrganizationCollectionResource::_getParentOrganizationId
 		).addLinkedModel(
@@ -120,9 +120,9 @@ public class OrganizationCollectionResource
 		).addRelatedCollection(
 			"emails", EmailIdentifier.class
 		).addRelatedCollection(
-			"members", PersonIdentifier.class
-		).addRelatedCollection(
 			"phones", PhoneIdentifier.class
+		).addRelatedCollection(
+			"userAccounts", PersonIdentifier.class
 		).addRelatedCollection(
 			"webUrls", WebUrlIdentifier.class
 		).addRelativeURL(

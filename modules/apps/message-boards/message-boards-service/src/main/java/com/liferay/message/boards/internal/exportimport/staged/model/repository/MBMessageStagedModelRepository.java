@@ -16,11 +16,19 @@ package com.liferay.message.boards.internal.exportimport.staged.model.repository
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -89,7 +97,53 @@ public class MBMessageStagedModelRepository
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
-		throw new UnsupportedOperationException();
+		final ExportActionableDynamicQuery actionableDynamicQuery =
+			_mbMessageLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Criterion modifiedDateCriterion =
+					portletDataContext.getDateRangeCriteria("modifiedDate");
+				Criterion statusDateCriterion =
+					portletDataContext.getDateRangeCriteria("statusDate");
+
+				if ((modifiedDateCriterion != null) &&
+					(statusDateCriterion != null)) {
+
+					Disjunction disjunction =
+						RestrictionsFactoryUtil.disjunction();
+
+					disjunction.add(modifiedDateCriterion);
+					disjunction.add(statusDateCriterion);
+
+					dynamicQuery.add(disjunction);
+				}
+
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
+
+				dynamicQuery.add(classNameIdProperty.eq(0L));
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				if (portletDataContext.isInitialPublication()) {
+					dynamicQuery.add(
+						statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
+				}
+				else {
+					StagedModelDataHandler<?> stagedModelDataHandler =
+						StagedModelDataHandlerRegistryUtil.
+							getStagedModelDataHandler(
+								MBMessage.class.getName());
+
+					dynamicQuery.add(
+						statusProperty.in(
+							stagedModelDataHandler.getExportableStatuses()));
+				}
+			});
+
+		return actionableDynamicQuery;
 	}
 
 	@Override

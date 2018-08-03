@@ -14,11 +14,19 @@
 
 package com.liferay.document.library.internal.exportimport.staged.model.repository;
 
+import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 
@@ -91,7 +99,34 @@ public class FileShortcutStagedModelRepository
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
-		throw new UnsupportedOperationException();
+		ExportActionableDynamicQuery exportActionableDynamicQuery =
+			_dlFileShortcutLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+			exportActionableDynamicQuery.getAddCriteriaMethod();
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				addCriteriaMethod.addCriteria(dynamicQuery);
+
+				Property property = PropertyFactoryUtil.forName("active");
+
+				dynamicQuery.add(property.eq(Boolean.TRUE));
+			});
+
+		exportActionableDynamicQuery.setPerformActionMethod(
+			(DLFileShortcut dlFileShortcut) -> {
+				FileShortcut fileShortcut = _dlAppLocalService.getFileShortcut(
+					dlFileShortcut.getFileShortcutId());
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, fileShortcut);
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(DLFileShortcutConstants.getClassName()));
+
+		return exportActionableDynamicQuery;
 	}
 
 	@Override
@@ -126,5 +161,8 @@ public class FileShortcutStagedModelRepository
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 }

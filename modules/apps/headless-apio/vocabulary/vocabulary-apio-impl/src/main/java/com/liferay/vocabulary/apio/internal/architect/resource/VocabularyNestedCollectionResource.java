@@ -103,8 +103,6 @@ public class VocabularyNestedCollectionResource
 			"dateCreated", AssetVocabulary::getCreateDate
 		).addDate(
 			"dateModified", AssetVocabulary::getModifiedDate
-		).addDate(
-			"datePublished", AssetVocabulary::getLastPublishDate
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, AssetVocabulary::getUserId
 		).addLocalizedStringByLocale(

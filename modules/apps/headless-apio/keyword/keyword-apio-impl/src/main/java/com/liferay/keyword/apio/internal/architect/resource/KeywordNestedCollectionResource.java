@@ -99,8 +99,6 @@ public class KeywordNestedCollectionResource
 			"dateCreated", AssetTag::getCreateDate
 		).addDate(
 			"dateModified", AssetTag::getModifiedDate
-		).addDate(
-			"datePublished", AssetTag::getLastPublishDate
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, AssetTag::getUserId
 		).addNumber(

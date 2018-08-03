@@ -14,10 +14,74 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.concurrent.TimeoutException;
+
 /**
  * @author Peter Yoo
  */
 public class GitUtil {
+
+	protected static ExecutionResult executeBashCommands(
+		int maxRetries, long retryDelay, long timeout, File workingDirectory,
+		String... commands) {
+
+		Process process = null;
+
+		int retries = 0;
+
+		while (retries < maxRetries) {
+			try {
+				retries++;
+
+				process = JenkinsResultsParserUtil.executeBashCommands(
+					true, workingDirectory, timeout, commands);
+
+				break;
+			}
+			catch (IOException | TimeoutException e) {
+				if (retries == maxRetries) {
+					throw new RuntimeException(
+						"Unable to execute bash commands: " +
+							Arrays.toString(commands),
+						e);
+				}
+
+				System.out.println(
+					"Unable to execute bash commands retrying... ");
+
+				e.printStackTrace();
+
+				JenkinsResultsParserUtil.sleep(retryDelay);
+			}
+		}
+
+		String standardErr = "";
+
+		try {
+			standardErr = JenkinsResultsParserUtil.readInputStream(
+				process.getErrorStream());
+		}
+		catch (IOException ioe) {
+			standardErr = "";
+		}
+
+		String standardOut = "";
+
+		try {
+			standardOut = JenkinsResultsParserUtil.readInputStream(
+				process.getInputStream());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to read process input stream", ioe);
+		}
+
+		return new ExecutionResult(
+			process.exitValue(), standardErr.trim(), standardOut.trim());
+	}
 
 	public static class ExecutionResult {
 	

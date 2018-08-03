@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1887,59 +1886,8 @@ public class GitWorkingDirectory {
 	protected ExecutionResult executeBashCommands(
 		int maxRetries, long retryDelay, long timeout, String... commands) {
 
-		Process process = null;
-
-		int retries = 0;
-
-		while (retries < maxRetries) {
-			try {
-				retries++;
-
-				process = JenkinsResultsParserUtil.executeBashCommands(
-					true, _workingDirectory, timeout, commands);
-
-				break;
-			}
-			catch (IOException | TimeoutException e) {
-				if (retries == maxRetries) {
-					throw new RuntimeException(
-						"Unable to execute bash commands: " +
-							Arrays.toString(commands),
-						e);
-				}
-
-				System.out.println(
-					"Unable to execute bash commands retrying... ");
-
-				e.printStackTrace();
-
-				JenkinsResultsParserUtil.sleep(retryDelay);
-			}
-		}
-
-		String standardErr = "";
-
-		try {
-			standardErr = JenkinsResultsParserUtil.readInputStream(
-				process.getErrorStream());
-		}
-		catch (IOException ioe) {
-			standardErr = "";
-		}
-
-		String standardOut = "";
-
-		try {
-			standardOut = JenkinsResultsParserUtil.readInputStream(
-				process.getInputStream());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to read process input stream", ioe);
-		}
-
-		return new ExecutionResult(
-			process.exitValue(), standardErr.trim(), standardOut.trim());
+		return GitUtil.executeBashCommands(
+			maxRetries, retryDelay, timeout, _workingDirectory, commands);
 	}
 
 	protected Commit getCommit(String gitLogEntity) {

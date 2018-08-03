@@ -309,19 +309,7 @@
 						A.one('#fm').on(
 							'submit',
 							function(event) {
-								if (adminEmailAddress) {
-									adminEmailAddress = adminEmailAddress.val();
-								}
-
-								if (adminFirstName) {
-									adminFirstName = adminFirstName.val();
-								}
-
-								if (adminLastName) {
-									adminLastName = adminLastName.val();
-								}
-
-								if (adminEmailAddress != '' && adminFirstName != '' && adminLastName != '') {
+								if ((adminEmailAddress && (adminEmailAddress.val() != '')) && (adminFirstName && (adminFirstName.val() != '')) && (adminLastName && (adminLastName.val() != ''))) {
 									if (defaultDatabase.val() == 'true') {
 										startInstall();
 

@@ -18,7 +18,6 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -68,9 +67,6 @@ public class ResetLayoutPrototypeMergeFailCountAndMergeMVCActionCommand
 
 		SitesUtil.setMergeFailCount(layoutPrototype, 0);
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;

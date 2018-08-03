@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -348,9 +347,6 @@ public class ExportImportChangesetMVCActionCommandImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

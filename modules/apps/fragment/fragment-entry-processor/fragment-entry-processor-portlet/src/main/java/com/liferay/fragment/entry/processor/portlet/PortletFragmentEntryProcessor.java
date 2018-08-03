@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -422,9 +421,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

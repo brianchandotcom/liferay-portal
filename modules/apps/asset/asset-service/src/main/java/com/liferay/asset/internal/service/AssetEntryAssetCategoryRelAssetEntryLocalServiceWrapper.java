@@ -103,7 +103,4 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
 	private AssetEntryAssetCategoryRelLocalService
 		_assetEntryAssetCategoryRelLocalService;
 
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
 }

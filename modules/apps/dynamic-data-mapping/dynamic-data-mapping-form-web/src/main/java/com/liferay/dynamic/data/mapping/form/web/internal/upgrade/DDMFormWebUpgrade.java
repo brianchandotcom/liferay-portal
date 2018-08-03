@@ -14,12 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.upgrade;
 
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -37,11 +34,5 @@ public class DDMFormWebUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.dynamic.data.mapping.form.web.internal.upgrade.
 				v1_0_0.UpgradeDDMFormPortletPreferences());
 	}
-
-	@Reference
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

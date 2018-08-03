@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PrefsProps;
@@ -190,12 +188,6 @@ public class PanelAppRegistry {
 
 	@Reference
 	private PrefsProps _prefsProps;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 	private ServiceTrackerMap<String, List<PanelApp>> _serviceTrackerMap;
 

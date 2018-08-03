@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -90,9 +89,6 @@ public class DDMFormInstanceModelResourcePermissionRegistrar {
 
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(resource.name=" + DDMConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

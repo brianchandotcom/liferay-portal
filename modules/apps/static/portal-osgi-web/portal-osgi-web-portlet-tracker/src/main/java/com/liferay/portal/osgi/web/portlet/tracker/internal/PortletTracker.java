@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1339,9 +1338,6 @@ public class PortletTracker
 
 	private final PortletPropertyValidator _portletPropertyValidator =
 		new PortletPropertyValidator();
-
-	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ResourceActions _resourceActions;

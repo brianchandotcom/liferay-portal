@@ -27,7 +27,6 @@ import com.liferay.portal.language.LanguageImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -295,8 +294,5 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 
 	@Mock
 	private ThemeDisplay _themeDisplay;
-
-	@Mock
-	private WikiPageLocalService _wikiPageLocalService;
 
 }

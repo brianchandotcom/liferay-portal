@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -499,9 +498,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchPermissionCheckerImpl.class);
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

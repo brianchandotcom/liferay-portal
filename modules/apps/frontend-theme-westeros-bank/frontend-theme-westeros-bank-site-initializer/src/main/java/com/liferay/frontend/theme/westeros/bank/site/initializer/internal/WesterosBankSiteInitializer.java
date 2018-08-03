@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
@@ -686,9 +685,6 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

@@ -118,7 +118,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustHaveMoreAlphanumeric upe = (UserPasswordException.MustHaveMoreAlphanumeric)SessionErrors.get(request, UserPasswordException.MustHaveMoreAlphanumeric.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minAlphanumeric) %>" key="that-password-must-have-more-alphanumeric-characters" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= String.valueOf(upe.minAlphanumeric) %>" key="that-password-must-contain-at-least-x-alphanumeric-characters" translateArguments="<%= false %>" />
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreLowercase.class.getName()) %>">
 
@@ -126,7 +126,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustHaveMoreLowercase upe = (UserPasswordException.MustHaveMoreLowercase)SessionErrors.get(request, UserPasswordException.MustHaveMoreLowercase.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minLowercase) %>" key="that-password-must-have-more-lowercase-characters" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= String.valueOf(upe.minLowercase) %>" key="that-password-must-contain-at-least-x-lowercase-characters" translateArguments="<%= false %>" />
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreNumbers.class.getName()) %>">
 
@@ -134,7 +134,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustHaveMoreNumbers upe = (UserPasswordException.MustHaveMoreNumbers)SessionErrors.get(request, UserPasswordException.MustHaveMoreNumbers.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minNumbers) %>" key="that-password-must-have-more-number-characters" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= String.valueOf(upe.minNumbers) %>" key="that-password-must-contain-at-least-x-numbers" translateArguments="<%= false %>" />
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreSymbols.class.getName()) %>">
 
@@ -142,7 +142,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustHaveMoreSymbols upe = (UserPasswordException.MustHaveMoreSymbols)SessionErrors.get(request, UserPasswordException.MustHaveMoreSymbols.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minSymbols) %>" key="that-password-must-have-more-symbol-characters" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= String.valueOf(upe.minSymbols) %>" key="that-password-must-contain-at-least-x-symbols" translateArguments="<%= false %>" />
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreUppercase.class.getName()) %>">
 
@@ -150,7 +150,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustHaveMoreUppercase upe = (UserPasswordException.MustHaveMoreUppercase)SessionErrors.get(request, UserPasswordException.MustHaveMoreUppercase.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minUppercase) %>" key="that-password-must-have-more-uppercase-characters" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= String.valueOf(upe.minUppercase) %>" key="that-password-must-contain-at-least-x-uppercase-characters" translateArguments="<%= false %>" />
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeEqualToCurrent.class.getName()) %>">
 									<liferay-ui:message key="your-new-password-cannot-be-the-same-as-your-old-password-please-enter-a-different-password" />

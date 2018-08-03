@@ -201,7 +201,7 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public boolean isWARFile() {
-		return true;
+		return _warFile;
 	}
 
 	@Override
@@ -239,7 +239,7 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public void setWARFile(boolean warFile) {
-		_portletApp.setWARFile(warFile);
+		_warFile = warFile;
 	}
 
 	private String _defaultNamespace;
@@ -248,5 +248,6 @@ public class BundlePortletApp implements PortletApp {
 	private final PortletApp _portletApp;
 	private final ServiceTracker
 		<ServletContextHelperRegistration, ServletContext> _serviceTracker;
+	private boolean _warFile;
 
 }

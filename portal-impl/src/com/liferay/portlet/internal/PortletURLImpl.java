@@ -1548,29 +1548,23 @@ public class PortletURLImpl
 
 		@Override
 		public String[] put(String key, String[] value) {
-			String[] oldValues = null;
-
 			Set<Map.Entry<String, String[]>> entrySet = entrySet();
-
-			boolean containsKey = false;
 
 			for (Map.Entry<String, String[]> entry : entrySet) {
 				String entryKey = entry.getKey();
 
 				if (entryKey.equals(key)) {
-					oldValues = entry.getValue();
-					entry.setValue(value);
-					containsKey = true;
+					String[] oldValues = entry.getValue();
 
-					break;
+					entry.setValue(value);
+
+					return oldValues;
 				}
 			}
 
-			if (!containsKey) {
-				entrySet.add(new SimpleEntry<>(key, value));
-			}
+			entrySet.add(new SimpleEntry<>(key, value));
 
-			return oldValues;
+			return null;
 		}
 
 		private Set<Map.Entry<String, String[]>> _entrySet;

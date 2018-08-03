@@ -79,6 +79,49 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		return _companionPortalLocalGitBranch;
 	}
 
+	public PortalLocalGitBranch getOtherPortalLocalGitBranch() {
+		if (_otherPortalLocalGitBranch != null) {
+			return _otherPortalLocalGitBranch;
+		}
+
+		String branchName = getUpstreamBranchName();
+
+		if (branchName.equals("7.0.x")) {
+			branchName = branchName.replace("7.0.x", "master");
+		}
+		else if (branchName.equals("7.1.x")) {
+			branchName = branchName.replace("7.1.x", "7.0.x");
+		}
+		else if (branchName.equals("master")) {
+			branchName = branchName.replace("master", "7.0.x");
+		}
+		else {
+			return null;
+		}
+
+		String repositoryName = "liferay-portal-ee";
+
+		if (branchName.equals("master")) {
+			repositoryName = repositoryName.replace("-ee", "");
+		}
+
+		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
+			repositoryName, branchName);
+
+		Ref ref = new Ref(
+			JenkinsResultsParserUtil.combine(
+				"https://github.com/liferay/", repositoryName, "/tree/",
+				branchName));
+
+		LocalGitBranch localGitBranch =
+			LocalGitSyncUtil.createCachedLocalGitBranch(
+				localRepository, ref, _synchronize);
+
+		_otherPortalLocalGitBranch = (PortalLocalGitBranch)localGitBranch;
+
+		return _otherPortalLocalGitBranch;
+	}
+
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
@@ -98,6 +141,8 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		_setupBasePortalWorkspace();
 
 		_setupCompanionPortalWorkspace();
+
+		_setupOtherPortalWorkspace();
 	}
 
 	protected PortalLocalGitBranch(
@@ -224,8 +269,20 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		}
 	}
 
+	private void _setupOtherPortalWorkspace() {
+		PortalLocalGitBranch otherPortalLocalGitBranch =
+			getOtherPortalLocalGitBranch();
+
+		if (otherPortalLocalGitBranch == null) {
+			return;
+		}
+
+		setupWorkspace(otherPortalLocalGitBranch);
+	}
+
 	private PortalLocalGitBranch _basePortalLocalGitBranch;
 	private PortalLocalGitBranch _companionPortalLocalGitBranch;
+	private PortalLocalGitBranch _otherPortalLocalGitBranch;
 	private final boolean _synchronize;
 
 }

@@ -1257,22 +1257,22 @@ app.server.type=@{app.server.type}]]></echo>
 						</then>
 					</if>
 
-					<get-testcase-property property.name="osgi.app.includes" />
-
 					<if>
-						<and>
-							<isset property="env.CI_TEST_SUITE" />
-							<not>
-								<contains string="${osgi.app.includes}" substring="portal-search-solr" />
-							</not>
-						</and>
+						<isset property="env.CI_TEST_SUITE" />
 						<then>
-							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+
+							<get-testcase-property property.name="osgi.app.includes" />
 
 							<if>
-								<equals arg1="${search.engine}" arg2="solr" />
+								<and>
+									<equals arg1="${suite.search.engine}" arg2="solr" />
+									<not>
+										<contains string="${osgi.app.includes}" substring="portal-search-solr" />
+									</not>
+								</and>
 								<then>
-									<prepare-search-engine search.engine="${search.engine}" />
+									<prepare-search-engine search.engine="${suite.search.engine}" />
 								</then>
 							</if>
 						</then>
@@ -1292,7 +1292,7 @@ app.server.type=@{app.server.type}]]></echo>
 					</if>
 
 					<if>
-						<isset property="search.engine" />
+						<isset property="suite.search.engine" />
 						<then>
 							<stop-search-engine />
 						</then>
@@ -1341,16 +1341,21 @@ app.server.type=@{app.server.type}]]></echo>
 					<if>
 						<isset property="env.CI_TEST_SUITE" />
 						<then>
-							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
 
-							<prepare-search-engine search.engine="${search.engine}" />
+							<if>
+								<equals arg1="${suite.search.engine}" arg2="solr" />
+								<then>
+									<prepare-search-engine search.engine="${suite.search.engine}" />
+								</then>
+							</if>
 						</then>
 					</if>
 				</test-set-up>
 
 				<test-tear-down>
 					<if>
-						<isset property="search.engine" />
+						<isset property="suite.search.engine" />
 						<then>
 							<stop-search-engine />
 						</then>
@@ -2241,9 +2246,14 @@ app.server.type=@{app.server.type}]]></echo>
 					<if>
 						<isset property="env.CI_TEST_SUITE" />
 						<then>
-							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
 
-							<prepare-search-engine search.engine="${search.engine}" />
+							<if>
+								<equals arg1="${suite.search.engine}" arg2="solr" />
+								<then>
+									<prepare-search-engine search.engine="${suite.search.engine}" />
+								</then>
+							</if>
 						</then>
 					</if>
 
@@ -2267,7 +2277,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<test-tear-down>
 					<if>
-						<isset property="search.engine" />
+						<isset property="suite.search.engine" />
 						<then>
 							<stop-search-engine />
 						</then>

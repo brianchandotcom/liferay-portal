@@ -14,7 +14,7 @@
 
 package com.liferay.asset.auto.tagger.web.internal.servlet.taglib.ui;
 
-import com.liferay.asset.auto.tagger.web.internal.constants.FormNavigatorAssetAutoTaggerConstants;
+import com.liferay.asset.auto.tagger.constants.FormNavigatorAssetAutoTaggerConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;

@@ -1272,7 +1272,7 @@ app.server.type=@{app.server.type}]]></echo>
 									</not>
 								</and>
 								<then>
-									<prepare-search-engine search.engine="${suite.search.engine}" />
+									<prepare-solr-suite />
 								</then>
 							</if>
 						</then>
@@ -1346,7 +1346,7 @@ app.server.type=@{app.server.type}]]></echo>
 							<if>
 								<equals arg1="${suite.search.engine}" arg2="solr" />
 								<then>
-									<prepare-search-engine search.engine="${suite.search.engine}" />
+									<prepare-solr-suite />
 								</then>
 							</if>
 						</then>
@@ -2251,7 +2251,7 @@ app.server.type=@{app.server.type}]]></echo>
 							<if>
 								<equals arg1="${suite.search.engine}" arg2="solr" />
 								<then>
-									<prepare-search-engine search.engine="${suite.search.engine}" />
+									<prepare-solr-suite />
 								</then>
 							</if>
 						</then>

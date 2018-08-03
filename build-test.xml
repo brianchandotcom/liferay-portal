@@ -1892,29 +1892,20 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-search-engine">
-		<attribute name="search.engine" />
-
+	<macrodef name="prepare-solr-suite">
 		<sequential>
-			<echo>Preparing search engine: @{search.engine}</echo>
+			<ant antfile="build-test-solr.xml" inheritAll="false" target="deploy-solr" />
+
+			<condition else="${env.TEST_BATCH_NAME}" property="test.batch.name" value="${test.batch.name}">
+				<isset property="test.batch.name" />
+			</condition>
 
 			<if>
-				<equals arg1="@{search.engine}" arg2="solr" />
+				<not>
+					<contains string="${test.batch.name}" substring="functional" />
+				</not>
 				<then>
-					<ant antfile="build-test-solr.xml" inheritAll="false" target="deploy-solr" />
-
-					<condition else="${env.TEST_BATCH_NAME}" property="test.batch.name" value="${test.batch.name}">
-						<isset property="test.batch.name" />
-					</condition>
-
-					<if>
-						<not>
-							<contains string="${test.batch.name}" substring="functional" />
-						</not>
-						<then>
-							<ant antfile="build-test-solr.xml" inheritAll="false" target="start-solr" />
-						</then>
-					</if>
+					<ant antfile="build-test-solr.xml" inheritAll="false" target="start-solr" />
 				</then>
 			</if>
 		</sequential>

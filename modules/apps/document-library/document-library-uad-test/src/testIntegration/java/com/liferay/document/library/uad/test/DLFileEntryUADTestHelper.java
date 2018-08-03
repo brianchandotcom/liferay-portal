@@ -15,11 +15,12 @@
 package com.liferay.document.library.uad.test;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -51,16 +52,22 @@ public class DLFileEntryUADTestHelper {
 			RandomTestUtil.randomString(), false, serviceContext);
 
 		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
+		long folderId = dlFolder.getFolderId();
+		long repositoryId = dlFolder.getRepositoryId();
+		String changeLog = StringPool.BLANK;
+		String description = StringPool.BLANK;
+		String mimeType = ContentTypes.TEXT_PLAIN;
+		String sourceFileName = RandomTestUtil.randomString();
+		String title = RandomTestUtil.randomString();
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
-		return _dlFileEntryLocalService.addFileEntry(
-			userId, dlFolder.getGroupId(), dlFolder.getRepositoryId(),
-			dlFolder.getFolderId(), RandomTestUtil.randomString(),
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, is, bytes.length, serviceContext);
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			userId, repositoryId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, is, bytes.length, serviceContext);
+
+		return _dlFileEntryLocalService.getFileEntry(
+			fileEntry.getFileEntryId());
 	}
 
 	public void cleanUpDependencies(List<DLFileEntry> dlFileEntries)
@@ -70,6 +77,9 @@ public class DLFileEntryUADTestHelper {
 			_dlFolderLocalService.deleteFolder(dlFileEntry.getFolderId());
 		}
 	}
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

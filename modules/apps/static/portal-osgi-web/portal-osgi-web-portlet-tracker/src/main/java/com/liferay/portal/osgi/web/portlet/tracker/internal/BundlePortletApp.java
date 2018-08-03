@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.SpriteImage;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -191,7 +193,7 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public SpriteImage getSpriteImage(String fileName) {
-		return _portletApp.getSpriteImage(fileName);
+		return _spriteImagesMap.get(fileName);
 	}
 
 	@Override
@@ -234,7 +236,21 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public void setSpriteImages(String spriteFileName, Properties properties) {
-		_portletApp.setSpriteImages(spriteFileName, properties);
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			String key = (String)entry.getKey();
+			String value = (String)entry.getValue();
+
+			int[] values = StringUtil.split(value, 0);
+
+			int offset = values[0];
+			int height = values[1];
+			int width = values[2];
+
+			SpriteImage spriteImage = new SpriteImage(
+				spriteFileName, key, offset, height, width);
+
+			_spriteImagesMap.put(key, spriteImage);
+		}
 	}
 
 	@Override
@@ -248,5 +264,6 @@ public class BundlePortletApp implements PortletApp {
 	private final PortletApp _portletApp;
 	private final ServiceTracker
 		<ServletContextHelperRegistration, ServletContext> _serviceTracker;
+	private final Map<String, SpriteImage> _spriteImagesMap = new HashMap<>();
 
 }

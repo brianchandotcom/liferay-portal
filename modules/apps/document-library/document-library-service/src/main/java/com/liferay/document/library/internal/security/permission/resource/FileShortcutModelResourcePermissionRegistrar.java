@@ -15,7 +15,6 @@
 package com.liferay.document.library.internal.security.permission.resource;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -63,9 +62,6 @@ public class FileShortcutModelResourcePermissionRegistrar {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 	@Reference(target = "(resource.name=" + DLConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

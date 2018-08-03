@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.internal.exportimport.data.handler;
 
-import com.liferay.changeset.service.ChangesetCollectionLocalService;
-import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -61,7 +59,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -950,15 +947,6 @@ public class FileEntryStagedModelDataHandler
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	@Reference
-	private ChangesetCollectionLocalService _changesetCollectionLocalService;
-
-	@Reference
-	private ChangesetEntryLocalService _changesetEntryLocalService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)"

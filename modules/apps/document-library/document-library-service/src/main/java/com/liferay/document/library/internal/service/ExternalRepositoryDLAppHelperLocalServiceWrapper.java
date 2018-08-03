@@ -30,7 +30,6 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -148,8 +147,5 @@ public class ExternalRepositoryDLAppHelperLocalServiceWrapper
 
 		return true;
 	}
-
-	@Reference
-	private DLAppHelperLocalService _dlAppHelperLocalService;
 
 }

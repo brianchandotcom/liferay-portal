@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -695,9 +694,6 @@ public class UserIndexerTest {
 
 		return strings.toString();
 	}
-
-	@Inject
-	private static GroupLocalService _groupLocalService;
 
 	@Inject
 	private static IndexerRegistry _indexerRegistry;

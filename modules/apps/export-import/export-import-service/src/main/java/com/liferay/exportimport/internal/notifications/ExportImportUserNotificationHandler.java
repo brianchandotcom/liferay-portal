@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -174,9 +173,6 @@ public class ExportImportUserNotificationHandler
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.staging.lang)")
 	private ResourceBundleLoader _resourceBundleLoader;

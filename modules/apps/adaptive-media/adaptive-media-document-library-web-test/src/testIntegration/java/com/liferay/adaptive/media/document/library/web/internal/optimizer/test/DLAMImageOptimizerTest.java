@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -411,9 +410,6 @@ public class DLAMImageOptimizerTest {
 
 	@DeleteAfterTestRun
 	private Company _company2;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

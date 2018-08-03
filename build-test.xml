@@ -1892,25 +1892,6 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-solr-suite">
-		<sequential>
-			<ant antfile="build-test-solr.xml" inheritAll="false" target="deploy-solr" />
-
-			<condition else="${env.TEST_BATCH_NAME}" property="test.batch.name" value="${test.batch.name}">
-				<isset property="test.batch.name" />
-			</condition>
-
-			<if>
-				<not>
-					<contains string="${test.batch.name}" substring="functional" />
-				</not>
-				<then>
-					<ant antfile="build-test-solr.xml" inheritAll="false" target="start-solr" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-test-bundles">
 		<attribute name="unit" />
 		<sequential>

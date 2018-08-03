@@ -15,7 +15,6 @@
 package com.liferay.source.formatter;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
@@ -149,7 +148,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
 		_checkstyleLogger = new AlloyMVCCheckstyleLogger(
-			new UnsyncByteArrayOutputStream(), true,
 			sourceFormatterArgs.getBaseDirName());
 		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
 			"checkstyle-alloy-mvc.xml", getPropertiesMap(),

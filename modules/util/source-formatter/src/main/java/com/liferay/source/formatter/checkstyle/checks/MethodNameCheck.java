@@ -20,7 +20,7 @@ import com.liferay.source.formatter.util.DebugUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import com.puppycrawl.tools.checkstyle.utils.AnnotationUtility;
+import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -71,7 +71,7 @@ public class MethodNameCheck
 
 	@Override
 	protected boolean mustCheckName(DetailAST detailAST) {
-		if (AnnotationUtility.containsAnnotation(detailAST, "Reference")) {
+		if (AnnotationUtil.containsAnnotation(detailAST, "Reference")) {
 			return false;
 		}
 

@@ -59,8 +59,6 @@ public class StructureRepresentorBuilderHelperImpl
 			"dateCreated", DDMStructure::getCreateDate
 		).addDate(
 			"dateModified", DDMStructure::getCreateDate
-		).addDate(
-			"datePublished", DDMStructure::getLastPublishDate
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, DDMStructure::getUserId
 		).addLocalizedStringByLocale(

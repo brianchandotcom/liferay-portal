@@ -85,8 +85,6 @@ public class EmbeddedWebPageNestedCollectionResource
 			"dateCreated", Layout::getCreateDate
 		).addDate(
 			"dateModified", Layout::getModifiedDate
-		).addDate(
-			"datePublished", Layout::getLastPublishDate
 		).addLocalizedStringByLocale(
 			"breadcrumb", LayoutResourceCollectionUtil::getBreadcrumb
 		).addLocalizedStringByLocale(

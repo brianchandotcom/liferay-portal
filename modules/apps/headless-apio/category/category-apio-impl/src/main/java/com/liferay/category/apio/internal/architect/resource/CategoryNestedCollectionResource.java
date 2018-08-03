@@ -108,8 +108,6 @@ public class CategoryNestedCollectionResource
 			"dateCreated", AssetCategory::getCreateDate
 		).addDate(
 			"dateModified", AssetCategory::getModifiedDate
-		).addDate(
-			"datePublished", AssetCategory::getLastPublishDate
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, AssetCategory::getUserId
 		).addLocalizedStringByLocale(

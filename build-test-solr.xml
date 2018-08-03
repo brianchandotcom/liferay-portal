@@ -375,6 +375,8 @@ schema=schema.xml</echo>
 	</target>
 
 	<target name="stop-solr-core">
+		<print-file file.name="${solr.dir}/server/logs/solr.log" />
+
 		<get-testcase-property property.name="solr.solrcloud.enabled" />
 
 		<if>

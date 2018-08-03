@@ -197,9 +197,6 @@ public class JGroupsClusterChannel implements ClusterChannel {
 	private String _getJChannelProperties(String[] excludedPropertyKeys)
 		throws Exception {
 
-		Method getPropsMethod = ReflectionUtil.getDeclaredMethod(
-			ProtocolStack.class, "getProps", Protocol.class);
-
 		ProtocolStack protocolStack = _jChannel.getProtocolStack();
 
 		List<Protocol> protocols = protocolStack.getProtocols();
@@ -216,7 +213,7 @@ public class JGroupsClusterChannel implements ClusterChannel {
 			protocolsSB.append(protocol.getName());
 
 			Map<String, String> properties =
-				(Map<String, String>)getPropsMethod.invoke(null, protocol);
+				(Map<String, String>)_getPropsMethod.invoke(null, protocol);
 
 			for (String excludedPropertyKey : excludedPropertyKeys) {
 				properties.remove(excludedPropertyKey);
@@ -246,6 +243,18 @@ public class JGroupsClusterChannel implements ClusterChannel {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsClusterChannel.class);
+
+	private static final Method _getPropsMethod;
+
+	static {
+		try {
+			_getPropsMethod = ReflectionUtil.getDeclaredMethod(
+				ProtocolStack.class, "getProps", Protocol.class);
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
 
 	private final String _clusterName;
 	private final ClusterReceiver _clusterReceiver;

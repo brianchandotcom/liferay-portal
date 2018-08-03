@@ -224,7 +224,7 @@ if (portletTitleBasedNavigation) {
 													commonFileMetadataContainer.unplug(A.LoadingMask);
 
 													if (!itemFailed) {
-														location.href = '<%= HtmlUtil.escape(redirect) %>';
+														location.href = '<%= HtmlUtil.escapeJS(redirect) %>';
 													}
 												}
 											},

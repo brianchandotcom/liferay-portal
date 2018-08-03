@@ -33,7 +33,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AssetAutoTaggerCompanyConfiguration {
 
 	/**
-	 * Enables asset auto tagging
+	 * Enables asset auto tagging.
 	 */
 	@Meta.AD(
 		deflt = "true", description = "enabled-description", name = "enabled",
@@ -42,7 +42,7 @@ public interface AssetAutoTaggerCompanyConfiguration {
 	public boolean enabled();
 
 	/**
-	 * Specifies the maximum number of tags that can be added for a given asset
+	 * Specifies the maximum number of tags that can be added for a given asset.
 	 */
 	@Meta.AD(
 		description = "maximum-number-of-tags-per-asset-description",

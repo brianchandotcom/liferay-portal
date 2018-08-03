@@ -33,7 +33,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AssetAutoTaggerGroupConfiguration {
 
 	/**
-	 * Enables asset auto tagging
+	 * Enables asset auto tagging.
 	 */
 	@Meta.AD(
 		deflt = "true", description = "enabled-description", name = "enabled",

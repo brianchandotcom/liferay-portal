@@ -17,11 +17,11 @@ package com.liferay.journal.internal.upgrade;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeUtil;
 import com.liferay.journal.internal.upgrade.v0_0_2.UpgradeClassNames;
 import com.liferay.journal.internal.upgrade.v0_0_3.UpgradeJournalArticleType;
 import com.liferay.journal.internal.upgrade.v0_0_4.UpgradeSchema;
@@ -44,9 +44,9 @@ import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeImageTypeContent;
 import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeJournalArticleLocalizedValues;
 import com.liferay.journal.internal.upgrade.v1_1_1.UpgradeFileUploadsConfiguration;
 import com.liferay.journal.internal.upgrade.v1_1_2.UpgradeCheckIntervalConfiguration;
-import com.liferay.journal.internal.upgrade.v1_1_3.UpgradeImageContent;
 import com.liferay.journal.internal.upgrade.v1_1_3.UpgradeResourcePermissions;
 import com.liferay.journal.internal.upgrade.v1_1_4.UpgradeUrlTitle;
+import com.liferay.journal.internal.upgrade.v_1_1_5.UpgradeContentImages;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -148,8 +148,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.2", "1.1.0",
-			new UpgradeDocumentLibraryTypeContent(_dlAppLocalService),
-			new UpgradeImageTypeContent(_imageLocalService),
+			new UpgradeDocumentLibraryTypeContent(
+				_journalArticleImageUpgradeUtil),
+			new UpgradeImageTypeContent(
+				_imageLocalService, _journalArticleImageUpgradeUtil),
 			new UpgradeJournalArticleLocalizedValues());
 
 		registry.register(
@@ -162,10 +164,13 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeCheckIntervalConfiguration(_configurationAdmin));
 
 		registry.register(
-			"1.1.2", "1.1.3", new UpgradeImageContent(),
-			new UpgradeResourcePermissions(_resourceActions));
+			"1.1.2", "1.1.3", new UpgradeResourcePermissions(_resourceActions));
 
 		registry.register("1.1.3", "1.1.4", new UpgradeUrlTitle());
+
+		registry.register(
+			"1.1.4", "1.1.5",
+			new UpgradeContentImages(_journalArticleImageUpgradeUtil));
 	}
 
 	protected void deleteTempImages() throws Exception {
@@ -246,11 +251,6 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
@@ -316,9 +316,12 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
-	private DLAppLocalService _dlAppLocalService;
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
+
+	@Reference
+	private JournalArticleImageUpgradeUtil _journalArticleImageUpgradeUtil;
+
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

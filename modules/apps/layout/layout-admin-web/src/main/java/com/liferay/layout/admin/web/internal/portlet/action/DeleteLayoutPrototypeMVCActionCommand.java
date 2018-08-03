@@ -15,9 +15,11 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.portal.kernel.exception.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -59,7 +61,17 @@ public class DeleteLayoutPrototypeMVCActionCommand
 		}
 
 		for (long curLayoutPrototypeId : layoutPrototypeIds) {
-			_layoutPrototypeService.deleteLayoutPrototype(curLayoutPrototypeId);
+			try {
+				_layoutPrototypeService.deleteLayoutPrototype(
+					curLayoutPrototypeId);
+			}
+			catch (RequiredLayoutPrototypeException rlpe) {
+				SessionErrors.add(actionRequest, rlpe.getClass());
+
+				hideDefaultErrorMessage(actionRequest);
+
+				sendRedirect(actionRequest, actionResponse);
+			}
 		}
 	}
 

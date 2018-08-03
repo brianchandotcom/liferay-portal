@@ -16,7 +16,7 @@ package com.liferay.document.library.uad.anonymizer;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -53,7 +53,7 @@ public class DLFileEntryUADAnonymizer extends BaseDLFileEntryUADAnonymizer {
 
 	@Override
 	public void delete(DLFileEntry dlFileEntry) throws PortalException {
-		_dlAppService.deleteFileEntry(dlFileEntry.getFileEntryId());
+		_dlAppLocalService.deleteFileEntry(dlFileEntry.getFileEntryId());
 	}
 
 	private void _anonymizeDLFileVersion(
@@ -77,7 +77,7 @@ public class DLFileEntryUADAnonymizer extends BaseDLFileEntryUADAnonymizer {
 		{"statusByUserId", "userId"};
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;

@@ -143,10 +143,9 @@ public class PortletURLUtil {
 
 		Set<String> renderParameterNames = renderParameters.getNames();
 
+		renderParameter:
 		for (String renderParameterName : renderParameterNames) {
 			String[] values = renderParameters.getValues(renderParameterName);
-
-			boolean addParam = true;
 
 			// Don't set parameter values that are over 32 kb. See LEP-1755.
 
@@ -154,15 +153,11 @@ public class PortletURLUtil {
 				if ((value != null) &&
 					(value.length() > _CURRENT_URL_PARAMETER_THRESHOLD)) {
 
-					addParam = false;
-
-					break;
+					continue renderParameter;
 				}
 			}
 
-			if (addParam) {
-				mutableRenderParameters.setValues(renderParameterName, values);
-			}
+			mutableRenderParameters.setValues(renderParameterName, values);
 		}
 
 		liferayPortletRequest.setAttribute(

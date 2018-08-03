@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import com.google.common.collect.Lists;
 
+import com.liferay.jenkins.results.parser.GitUtil.ExecutionResult;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -2114,42 +2116,6 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	protected class ExecutionResult {
-
-		public int getExitValue() {
-			return _exitValue;
-		}
-
-		public String getStandardError() {
-			return _standardError;
-		}
-
-		public String getStandardOut() {
-			return _standardOut;
-		}
-
-		protected ExecutionResult(
-			int exitValue, String standardError, String standardOut) {
-
-			_exitValue = exitValue;
-			_standardError = standardError;
-
-			if (standardOut.endsWith("\nFinished executing Bash commands.")) {
-				_standardOut = standardOut.substring(
-					0,
-					standardOut.indexOf("\nFinished executing Bash commands."));
-			}
-			else {
-				_standardOut = standardOut;
-			}
-		}
-
-		private final int _exitValue;
-		private final String _standardError;
-		private final String _standardOut;
-
-	}
-
 	private static List<String> _getBuildPropertyAsList(String key) {
 		try {
 			return JenkinsResultsParserUtil.getBuildPropertyAsList(key);
@@ -2182,7 +2148,7 @@ public class GitWorkingDirectory {
 			exceptionThrown = true;
 		}
 
-		if (exceptionThrown || (executionResult._exitValue != 0)) {
+		if (exceptionThrown || (executionResult.getExitValue() != 0)) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Unable to delete local branches:", "\n    ",
@@ -2226,7 +2192,7 @@ public class GitWorkingDirectory {
 			exceptionThrown = true;
 		}
 
-		if (exceptionThrown || (executionResult._exitValue != 0)) {
+		if (exceptionThrown || (executionResult.getExitValue() != 0)) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Unable to delete ", remoteURL, " branches:\n    ",

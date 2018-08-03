@@ -93,6 +93,40 @@ public class DLExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
+		// Root folder id is set, only export that
+
+		String portletId = portletDataContext.getPortletId();
+
+		long rootFolderId = GetterUtil.getLong(
+			portletPreferences.getValue("rootFolderId", null));
+
+		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder folder = null;
+
+			try {
+				folder = _dlAppLocalService.getFolder(rootFolderId);
+			}
+			catch (PortalException pe) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Portlet ");
+				sb.append(portletId);
+				sb.append(" refers to an invalid root folder ID ");
+				sb.append(rootFolderId);
+
+				_log.error(sb.toString());
+
+				throw new PortletDataException(sb.toString(), pe);
+			}
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletId, folder);
+
+			return portletPreferences;
+		}
+
+		// Root folder id is not set, we need to export everything
+
 		try {
 			portletDataContext.addPortletPermissions(DLConstants.RESOURCE_NAME);
 		}
@@ -104,8 +138,6 @@ public class DLExportImportPortletPreferencesProcessor
 
 			throw pde;
 		}
-
-		String portletId = portletDataContext.getPortletId();
 
 		try {
 			String namespace = _dlPortletDataHandler.getNamespace();
@@ -234,32 +266,6 @@ public class DLExportImportPortletPreferencesProcessor
 			throw pde;
 		}
 
-		long rootFolderId = GetterUtil.getLong(
-			portletPreferences.getValue("rootFolderId", null));
-
-		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			Folder folder = null;
-
-			try {
-				folder = _dlAppLocalService.getFolder(rootFolderId);
-			}
-			catch (PortalException pe) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("Portlet ");
-				sb.append(portletId);
-				sb.append(" refers to an invalid root folder ID ");
-				sb.append(rootFolderId);
-
-				_log.error(sb.toString());
-
-				throw new PortletDataException(sb.toString(), pe);
-			}
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, folder);
-		}
-
 		return portletPreferences;
 	}
 
@@ -268,6 +274,42 @@ public class DLExportImportPortletPreferencesProcessor
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
+
+		// Root folder id is set, only import that
+
+		long rootFolderId = GetterUtil.getLong(
+			portletPreferences.getValue("rootFolderId", null));
+
+		if (rootFolderId > 0) {
+			Element foldersElement =
+				portletDataContext.getImportDataGroupElement(DLFolder.class);
+
+			List<Element> folderElements = foldersElement.elements();
+
+			if (!folderElements.isEmpty()) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, folderElements.get(0));
+
+				Map<Long, Long> folderIds =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						Folder.class + ".folderIdsAndRepositoryEntryIds");
+
+				rootFolderId = MapUtil.getLong(
+					folderIds, rootFolderId, rootFolderId);
+
+				try {
+					portletPreferences.setValue(
+						"rootFolderId", String.valueOf(rootFolderId));
+				}
+				catch (ReadOnlyException roe) {
+					throw new PortletDataException(
+						"Unable to update portlet preferences during import",
+						roe);
+				}
+			}
+		}
+
+		// Root folder is is not set, need to import everything
 
 		try {
 			portletDataContext.importPortletPermissions(
@@ -347,38 +389,6 @@ public class DLExportImportPortletPreferencesProcessor
 			for (Element fileShortcutElement : fileShortcutElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, fileShortcutElement);
-			}
-		}
-
-		long rootFolderId = GetterUtil.getLong(
-			portletPreferences.getValue("rootFolderId", null));
-
-		if (rootFolderId > 0) {
-			Element foldersElement =
-				portletDataContext.getImportDataGroupElement(DLFolder.class);
-
-			List<Element> folderElements = foldersElement.elements();
-
-			if (!folderElements.isEmpty()) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, folderElements.get(0));
-
-				Map<Long, Long> folderIds =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						Folder.class + ".folderIdsAndRepositoryEntryIds");
-
-				rootFolderId = MapUtil.getLong(
-					folderIds, rootFolderId, rootFolderId);
-
-				try {
-					portletPreferences.setValue(
-						"rootFolderId", String.valueOf(rootFolderId));
-				}
-				catch (ReadOnlyException roe) {
-					throw new PortletDataException(
-						"Unable to update portlet preferences during import",
-						roe);
-				}
 			}
 		}
 

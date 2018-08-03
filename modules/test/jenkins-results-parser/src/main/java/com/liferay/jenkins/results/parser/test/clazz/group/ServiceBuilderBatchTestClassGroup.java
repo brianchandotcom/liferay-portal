@@ -123,13 +123,10 @@ public class ServiceBuilderBatchTestClassGroup
 					excludesPathMatchers, includesPathMatchers);
 
 			for (File modifiedModuleDir : modifiedModuleDirsList) {
-				List<File> bndBndFiles = JenkinsResultsParserUtil.findFiles(
-					modifiedModuleDir, "bnd.bnd");
-
 				List<File> serviceXmlFiles = JenkinsResultsParserUtil.findFiles(
 					modifiedModuleDir, "service.xml");
 
-				if (!bndBndFiles.isEmpty() && !serviceXmlFiles.isEmpty()) {
+				if (!serviceXmlFiles.isEmpty()) {
 					moduleDirsList.add(modifiedModuleDir);
 				}
 			}

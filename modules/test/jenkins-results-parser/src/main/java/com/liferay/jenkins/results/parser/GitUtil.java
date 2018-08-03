@@ -83,6 +83,10 @@ public class GitUtil {
 			process.exitValue(), standardErr.trim(), standardOut.trim());
 	}
 
+	public static final int MAX_RETRIES = 1;
+	public static final long RETRY_DELAY = 1000;
+	public static final long TIMEOUT = 30 * 1000;
+
 	public static class ExecutionResult {
 	
 		public int getExitValue() {

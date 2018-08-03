@@ -219,42 +219,6 @@
 		</execute>
 	</command>
 
-	<command name="ViewEmptyFragmentCannotBePublished" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Page Fragments" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
-
-		<execute macro="Fragment#addFragment">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
-
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Fragment Name (Draft)" />
-		</execute>
-
-		<execute macro="Fragment#typeFragmentEditor">
-			<var name="editor" value="html" />
-			<var name="templateScript" value="" />
-		</execute>
-
-		<execute macro="Fragment#typeFragmentEditor">
-			<var name="editor" value="css" />
-			<var name="templateScript" value="" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="Alert#viewErrorMessage">
-			<var name="errorMessage" value="HTML content must not be empty." />
-		</execute>
-	</command>
-
 	<command name="ViewOnlyDraftFragmentsCanBeSaved" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />

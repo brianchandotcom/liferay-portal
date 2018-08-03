@@ -86,13 +86,13 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 
 		String branchName = getUpstreamBranchName();
 
-		if (branchName.equals("7.0.x")) {
+		if (branchName.contains("7.0.x")) {
 			branchName = branchName.replace("7.0.x", "master");
 		}
-		else if (branchName.equals("7.1.x")) {
+		else if (branchName.contains("7.1.x")) {
 			branchName = branchName.replace("7.1.x", "7.0.x");
 		}
-		else if (branchName.equals("master")) {
+		else if (branchName.contains("master")) {
 			branchName = branchName.replace("master", "7.0.x");
 		}
 		else {
@@ -127,7 +127,7 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 			return _pluginsLocalGitBranch;
 		}
 
-		String branchName = getPortalUpstreamBranchName();
+		String branchName = getUpstreamBranchName();
 
 		if (branchName.contains("7.0.x") || branchName.contains("7.1.x") ||
 			branchName.contains("master")) {
@@ -156,13 +156,6 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		LocalRepository localRepository = getLocalRepository();
 
 		return (PortalLocalRepository)localRepository;
-	}
-
-	public String getPortalUpstreamBranchName() {
-		PortalLocalRepository portalLocalRepository =
-			getPortalLocalRepository();
-
-		return portalLocalRepository.getUpstreamBranchName();
 	}
 
 	@Override

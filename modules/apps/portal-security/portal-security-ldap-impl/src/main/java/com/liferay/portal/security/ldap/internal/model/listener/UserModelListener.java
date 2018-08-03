@@ -16,8 +16,6 @@ package com.liferay.portal.security.ldap.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
@@ -124,9 +122,6 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 				new ServiceContext());
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UserModelListener.class);
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

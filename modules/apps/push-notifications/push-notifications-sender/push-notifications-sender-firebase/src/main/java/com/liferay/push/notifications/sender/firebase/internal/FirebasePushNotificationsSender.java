@@ -21,8 +21,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.exception.PushNotificationsException;
@@ -182,9 +180,6 @@ public class FirebasePushNotificationsSender
 	protected void deactivate() {
 		_sender = null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FirebasePushNotificationsSender.class);
 
 	private volatile FirebasePushNotificationsSenderConfiguration
 		_firebasePushNotificationsSenderConfiguration;

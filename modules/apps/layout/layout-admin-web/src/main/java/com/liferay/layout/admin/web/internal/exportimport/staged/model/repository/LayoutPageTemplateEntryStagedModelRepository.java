@@ -23,8 +23,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -175,9 +173,6 @@ public class LayoutPageTemplateEntryStagedModelRepository
 		return _layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(existingLayoutPageTemplateEntry);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPageTemplateEntryStagedModelRepository.class);
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

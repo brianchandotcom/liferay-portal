@@ -24,9 +24,6 @@ import java.io.IOException;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Represent the Apio Architect Forms
  *
@@ -54,7 +51,5 @@ public class ApioForm extends ApioBaseResponse {
 			throw new IOException("The given resource is not a from");
 		}
 	}
-
-	private static final Logger _log = LoggerFactory.getLogger(ApioForm.class);
 
 }

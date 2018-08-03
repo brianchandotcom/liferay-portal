@@ -18,8 +18,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -248,8 +246,5 @@ public class TempFileEntryUtil {
 
 	private static final UUID _UUID = UUID.fromString(
 		"00EF1134-B3EE-432A-BABD-367CEFA44DE1");
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TempFileEntryUtil.class);
 
 }

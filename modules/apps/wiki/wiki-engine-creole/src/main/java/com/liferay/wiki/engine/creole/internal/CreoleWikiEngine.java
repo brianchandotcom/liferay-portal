@@ -17,10 +17,8 @@ package com.liferay.wiki.engine.creole.internal;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
@@ -49,6 +47,8 @@ import org.antlr.runtime.RecognitionException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Miguel Pastor
@@ -169,17 +169,6 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.wiki.engine.lang)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = new AggregateResourceBundleLoader(
-			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
-	}
-
-	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.creole)",
 		unbind = "-"
 	)
@@ -210,7 +199,13 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreoleWikiEngine.class);
 
-	private ResourceBundleLoader _resourceBundleLoader;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.wiki.engine.lang)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
+
 	private ServletContext _servletContext;
 
 	@Reference(

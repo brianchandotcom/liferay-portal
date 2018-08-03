@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,6 +64,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -104,8 +107,15 @@ public class DDMFormTemplateContextFactoryImpl
 			collectResourceBundles(interfaceClass, resourceBundles, locale);
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+		ResourceBundle resourceBundle = null;
+
+		if (clazz == getClass()) {
+			resourceBundle = _resourceBundleLoader.loadResourceBundle(locale);
+		}
+		else {
+			resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, clazz.getClassLoader());
+		}
 
 		if (resourceBundle != null) {
 			resourceBundles.add(resourceBundle);
@@ -388,6 +398,13 @@ public class DDMFormTemplateContextFactoryImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.dynamic.data.mapping.form.renderer)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private SoyHTMLSanitizer _soyHTMLSanitizer;

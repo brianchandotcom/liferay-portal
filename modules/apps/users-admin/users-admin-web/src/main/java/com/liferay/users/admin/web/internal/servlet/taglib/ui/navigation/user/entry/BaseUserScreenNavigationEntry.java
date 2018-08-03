@@ -18,10 +18,8 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.users.admin.constants.UserFormConstants;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 
@@ -34,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pei-Jung Lan
@@ -81,11 +81,7 @@ public abstract class BaseUserScreenNavigationEntry
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle bundleResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			bundleResourceBundle, PortalUtil.getResourceBundle(locale));
+		return resourceBundleLoader.loadResourceBundle(locale);
 	}
 
 	@Reference
@@ -93,5 +89,12 @@ public abstract class BaseUserScreenNavigationEntry
 
 	@Reference
 	protected Portal portal;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.users.admin.web)"
+	)
+	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 }

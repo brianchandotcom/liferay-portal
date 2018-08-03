@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -47,6 +47,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pavel Savinov
@@ -224,8 +225,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			return;
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(Locale.getDefault());
 
 		throw new FragmentEntryContentException(
 			LanguageUtil.format(
@@ -269,8 +270,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		idsStream = idsStream.filter(id -> idsMap.get(id) > 1);
 
 		if (idsStream.count() > 0) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(Locale.getDefault());
 
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
@@ -306,8 +307,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			return;
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(Locale.getDefault());
 
 		throw new FragmentEntryContentException(
 			LanguageUtil.get(
@@ -321,5 +322,12 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private final Map<String, EditableElementParser> _editableElementParsers =
 		new HashMap<>();
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.fragment.entry.processor.editable)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

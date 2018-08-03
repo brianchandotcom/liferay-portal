@@ -54,6 +54,8 @@ import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eduardo Lundgren
@@ -120,7 +122,7 @@ public class NotificationTemplateContextFactory {
 		attributes.put("portalURL", portalURL);
 
 		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(user.getLocale());
+			_bundleResourceBundleLoader.loadResourceBundle(user.getLocale());
 
 		attributes.put(
 			"portletName",
@@ -201,12 +203,22 @@ public class NotificationTemplateContextFactory {
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.calendar.web)", unbind = "-"
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.calendar.web)"
 	)
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 
-		_resourceBundleLoader = resourceBundleLoader;
+		_setBundleResourceBundleLoader(resourceBundleLoader);
+	}
+
+	protected void unsetResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		if (_bundleResourceBundleLoader == resourceBundleLoader) {
+			_setBundleResourceBundleLoader(null);
+		}
 	}
 
 	private static String _getCalendarBookingURL(
@@ -273,9 +285,17 @@ public class NotificationTemplateContextFactory {
 		return userTimezoneDisplayName;
 	}
 
+	private static void _setBundleResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_bundleResourceBundleLoader = resourceBundleLoader;
+	}
+
+	private static volatile ResourceBundleLoader _bundleResourceBundleLoader;
 	private static CompanyLocalService _companyLocalService;
 	private static GroupLocalService _groupLocalService;
 	private static LayoutLocalService _layoutLocalService;
-	private static ResourceBundleLoader _resourceBundleLoader;
+
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -15,11 +15,17 @@
 package com.liferay.journal.content.asset.addon.entry.conversions.internal;
 
 import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Julio Camarero
@@ -57,5 +63,16 @@ public class PDFConvertionUserToolAssetAddonEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		return _resourceBundleLoader.loadResourceBundle(locale);
+	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.journal.content.asset.addon.entry.conversions)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

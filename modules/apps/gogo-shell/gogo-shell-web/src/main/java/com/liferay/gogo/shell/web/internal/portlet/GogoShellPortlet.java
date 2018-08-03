@@ -52,6 +52,8 @@ import org.apache.felix.service.command.CommandSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Andrea Di Giorgi
@@ -259,7 +261,11 @@ public class GogoShellPortlet extends MVCPortlet {
 	@Reference
 	private Portal _portal;
 
-	@Reference(target = "(bundle.symbolic.name=com.liferay.gogo.shell.web)")
-	private ResourceBundleLoader _resourceBundleLoader;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.gogo.shell.web)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

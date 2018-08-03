@@ -37,6 +37,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jeyvison Nascimento
@@ -146,16 +148,11 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)",
-		unbind = "-"
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)"
 	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		this.resourceBundleLoader = resourceBundleLoader;
-	}
-
-	protected ResourceBundleLoader resourceBundleLoader;
+	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 	@Reference
 	protected WorkflowDefinitionManager workflowDefinitionManager;

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLUIItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -40,10 +40,12 @@ public class GoogleDocsUIItemsProcessor {
 
 	public GoogleDocsUIItemsProcessor(
 		HttpServletRequest request,
-		GoogleDocsMetadataHelper googleDocsMetadataHelper) {
+		GoogleDocsMetadataHelper googleDocsMetadataHelper,
+		ResourceBundleLoader resourceBundleLoader) {
 
 		_request = request;
 		_googleDocsMetadataHelper = googleDocsMetadataHelper;
+		_resourceBundleLoader = resourceBundleLoader;
 	}
 
 	public void processMenuItems(List<MenuItem> menuItems) {
@@ -94,8 +96,8 @@ public class GoogleDocsUIItemsProcessor {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
 
 		String message = LanguageUtil.get(
 			resourceBundle, "edit-in-google-docs");
@@ -132,5 +134,6 @@ public class GoogleDocsUIItemsProcessor {
 
 	private final GoogleDocsMetadataHelper _googleDocsMetadataHelper;
 	private final HttpServletRequest _request;
+	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

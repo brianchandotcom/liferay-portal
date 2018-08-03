@@ -48,6 +48,8 @@ import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Akos Thurzo
@@ -178,7 +180,11 @@ public class ExportImportUserNotificationHandler
 	@Reference
 	private PortletLocalService _portletLocalService;
 
-	@Reference(target = "(bundle.symbolic.name=com.liferay.staging.lang)")
-	private ResourceBundleLoader _resourceBundleLoader;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.staging.lang)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -41,6 +41,8 @@ import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Sergio González
@@ -343,10 +345,11 @@ public class NotificationsPortlet extends MVCPortlet {
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.notifications.web)",
-		unbind = "-"
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.notifications.web)"
 	)
-	private ResourceBundleLoader _resourceBundleLoader;
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 	private SubscriptionLocalService _subscriptionLocalService;
 	private UserNotificationDeliveryLocalService

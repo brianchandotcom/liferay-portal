@@ -18,15 +18,19 @@ import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProces
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pavel Savinov
@@ -65,8 +69,8 @@ public class ImageEditableElementParser implements EditableElementParser {
 		List<Element> elements = element.getElementsByTag("img");
 
 		if (elements.size() != 1) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(Locale.getDefault());
 
 			throw new FragmentEntryContentException(
 				LanguageUtil.format(
@@ -80,5 +84,12 @@ public class ImageEditableElementParser implements EditableElementParser {
 		EditableFragmentEntryProcessor.class,
 		"/META-INF/resources/fragment/entry/processor/editable" +
 			"/image_field_template.tmpl");
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.fragment.entry.processor.editable)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.IOException;
 
@@ -127,8 +127,8 @@ public class DDMFormFunctionsServlet extends HttpServlet {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
 
 		for (Map.Entry<String, DDMExpressionFunction> entry : entries) {
 			jsonArray.put(toJSONObject(entry, resourceBundle));
@@ -167,5 +167,12 @@ public class DDMFormFunctionsServlet extends HttpServlet {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.dynamic.data.mapping.form.builder)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

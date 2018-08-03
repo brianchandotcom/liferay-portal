@@ -31,6 +31,12 @@ import javax.portlet.PortletRequest;
 public abstract class BaseUserActionContributor
 	implements UserActionContributor {
 
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), in order to be able to override
+	 * the ResourceBundle a ResourceBundleLoader must be defined in the last
+	 * implemented class in the hierarchy
+	 */
+	@Deprecated
 	public ResourceBundle getResourceBundle(Locale locale) {
 		ResourceBundle bundleResourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());

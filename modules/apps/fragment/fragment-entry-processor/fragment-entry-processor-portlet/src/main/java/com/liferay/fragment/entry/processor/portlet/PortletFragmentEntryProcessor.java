@@ -44,13 +44,14 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -65,6 +66,8 @@ import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pavel Savinov
@@ -97,9 +100,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String portletName = _portletRegistry.getPortletName(alias);
 
 			if (Validator.isNull(portletName)) {
+				ResourceBundle resourceBundle =
+					_resourceBundleLoader.loadResourceBundle(
+						Locale.getDefault());
+
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
-						_resourceBundle,
+						resourceBundle,
 						"there-is-no-widget-available-for-alias-x", alias));
 			}
 
@@ -189,10 +196,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String alias = StringUtil.replace(
 				htmlTagName, "lfr-widget-", StringPool.BLANK);
 
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(Locale.getDefault());
+
 			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
-						_resourceBundle,
+						resourceBundle,
 						"there-is-no-widget-available-for-alias-x", alias));
 			}
 
@@ -201,7 +211,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
-						_resourceBundle,
+						resourceBundle,
 						"widget-id-must-contain-only-alphanumeric-characters",
 						alias));
 			}
@@ -438,7 +448,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Reference
 	private PortletRegistry _portletRegistry;
 
-	private final ResourceBundle _resourceBundle = ResourceBundleUtil.getBundle(
-		"content.Language", getClass());
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.fragment.entry.processor.portlet)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

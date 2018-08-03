@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,14 +40,17 @@ public class GoogleDocsIGViewFileVersionDisplayContext
 		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion,
-		GoogleDocsMetadataHelper googleDocsMetadataHelper) {
+		GoogleDocsMetadataHelper googleDocsMetadataHelper,
+		ResourceBundleLoader resourceBundleLoader) {
 
 		super(
 			_UUID, parentIGViewFileVersionDisplayContext, request, response,
 			fileVersion);
 
+		_resourceBundleLoader = resourceBundleLoader;
+
 		_googleDocsUIItemsProcessor = new GoogleDocsUIItemsProcessor(
-			request, googleDocsMetadataHelper);
+			request, googleDocsMetadataHelper, _resourceBundleLoader);
 	}
 
 	@Override
@@ -71,5 +75,6 @@ public class GoogleDocsIGViewFileVersionDisplayContext
 		"D60D21C4-9626-4EDF-A658-336198DB4A34");
 
 	private final GoogleDocsUIItemsProcessor _googleDocsUIItemsProcessor;
+	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

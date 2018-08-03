@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
@@ -61,7 +61,8 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		DDMFormInstanceRecordLocalService formInstanceRecordLocalService,
 		DDMFormInstanceVersionLocalService formInstanceVersionLocalService,
 		DDMFormRenderer formRenderer, DDMFormValuesFactory formValuesFactory,
-		DDMFormValuesMerger formValuesMerger) {
+		DDMFormValuesMerger formValuesMerger,
+		ResourceBundleLoader resourceBundleLoader) {
 
 		_httpServletResponse = httpServletResponse;
 		_ddmFormInstanceRecordLocalService = formInstanceRecordLocalService;
@@ -69,6 +70,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		_ddmFormRenderer = formRenderer;
 		_ddmFormValuesFactory = formValuesFactory;
 		_ddmFormValuesMerger = formValuesMerger;
+		_resourceBundleLoader = resourceBundleLoader;
 
 		_ddmFormAdminRequestHelper = new DDMFormAdminRequestHelper(
 			httpServletRequest);
@@ -201,8 +203,8 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 
 		String labelString = label.getString(locale);
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
 
 		label.addString(
 			locale,
@@ -255,5 +257,6 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final HttpServletResponse _httpServletResponse;
+	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

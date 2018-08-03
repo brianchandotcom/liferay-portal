@@ -22,12 +22,15 @@ import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Locale;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eudaldo Alonso
@@ -144,9 +147,21 @@ public class JournalContentDDMDisplay extends BaseDDMDisplay {
 		return _ddmDisplay.isShowStructureSelector();
 	}
 
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
 	@Reference(
 		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")"
 	)
 	private DDMDisplay _ddmDisplay;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.journal.content.web)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

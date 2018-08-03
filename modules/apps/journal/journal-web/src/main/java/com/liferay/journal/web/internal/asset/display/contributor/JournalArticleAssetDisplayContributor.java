@@ -44,6 +44,8 @@ import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jürgen Kappler
@@ -121,12 +123,22 @@ public class JournalArticleAssetDisplayContributor
 
 	@Override
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.journal.web)", unbind = "-"
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.journal.web)"
 	)
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 
 		this.resourceBundleLoader = resourceBundleLoader;
+	}
+
+	protected void unsetResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		if (this.resourceBundleLoader == resourceBundleLoader) {
+			this.resourceBundleLoader = null;
+		}
 	}
 
 	private String _transformFileEntryURL(String data) {

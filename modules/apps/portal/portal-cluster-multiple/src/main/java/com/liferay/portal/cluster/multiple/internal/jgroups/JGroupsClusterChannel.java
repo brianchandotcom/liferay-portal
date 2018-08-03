@@ -195,22 +195,18 @@ public class JGroupsClusterChannel implements ClusterChannel {
 	}
 
 	private String _getJChannelProperties(String[] excludedPropertyKeys)
-		throws Exception {
+		throws ReflectiveOperationException {
 
 		ProtocolStack protocolStack = _jChannel.getProtocolStack();
 
 		List<Protocol> protocols = protocolStack.getProtocols();
 
-		StringBundler protocolsSB = new StringBundler(5 * protocols.size());
+		StringBundler sb = new StringBundler();
 
 		for (int i = protocols.size() - 1; i >= 0; i--) {
 			Protocol protocol = protocols.get(i);
 
-			if (protocolsSB.index() > 0) {
-				protocolsSB.append(StringPool.COLON);
-			}
-
-			protocolsSB.append(protocol.getName());
+			sb.append(protocol.getName());
 
 			Map<String, String> properties =
 				(Map<String, String>)_getPropsMethod.invoke(null, protocol);
@@ -219,26 +215,27 @@ public class JGroupsClusterChannel implements ClusterChannel {
 				properties.remove(excludedPropertyKey);
 			}
 
-			protocolsSB.append(StringPool.OPEN_PARENTHESIS);
+			if (!properties.isEmpty()) {
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
-			StringBundler propertiesSB = new StringBundler(
-				4 * properties.size());
-
-			for (Map.Entry<String, String> entry : properties.entrySet()) {
-				if (propertiesSB.index() > 0) {
-					propertiesSB.append(StringPool.SEMICOLON);
+				for (Map.Entry<String, String> entry : properties.entrySet()) {
+					sb.append(entry.getKey());
+					sb.append(StringPool.EQUAL);
+					sb.append(entry.getValue());
+					sb.append(StringPool.SEMICOLON);
 				}
 
-				propertiesSB.append(entry.getKey());
-				propertiesSB.append(StringPool.EQUAL);
-				propertiesSB.append(entry.getValue());
+				sb.setStringAt(StringPool.CLOSE_PARENTHESIS, sb.index() - 1);
 			}
 
-			protocolsSB.append(propertiesSB.toString());
-			protocolsSB.append(StringPool.CLOSE_PARENTHESIS);
+			sb.append(StringPool.COLON);
 		}
 
-		return protocolsSB.toString();
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

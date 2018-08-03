@@ -21,13 +21,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Alejandro Tardín
  */
-@ExtendedObjectClassDefinition(category = "documents-and-media")
+@ExtendedObjectClassDefinition(
+	category = "documents-and-media",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
-	id = "com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderConfiguration",
+	id = "com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration",
 	localization = "content/Language",
 	name = "tensorflow-auto-tag-provider-configuration-name"
 )
-public interface TensorFlowImageAssetAutoTagProviderConfiguration {
+public interface TensorFlowImageAssetAutoTagProviderCompanyConfiguration {
 
 	/**
 	 * Enables auto tagging of images using a pre-trained tensorflow model.

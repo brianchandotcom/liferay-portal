@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.web.internal.constants;
+package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.constants;
 
 /**
  * @author Alejandro Tardín
  */
-public class FormNavigatorAssetAutoTaggerConstants {
+public class TensorflowAssetAutoTagProviderConstants {
 
-	public static final String CATEGORY_KEY_COMPANY_SETTINGS_ASSET_AUTO_TAGGER =
-		"asset-auto-tagging";
+	public static final String SERVICE_NAME =
+		"com.liferay.document.library.asset.auto.tagger.tensorflow";
 
 }

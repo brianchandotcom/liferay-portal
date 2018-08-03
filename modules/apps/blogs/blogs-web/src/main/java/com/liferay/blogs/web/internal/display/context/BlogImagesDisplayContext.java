@@ -16,6 +16,7 @@ package com.liferay.blogs.web.internal.display.context;
 
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -134,8 +134,7 @@ public class BlogImagesDisplayContext {
 						_log.warn(
 							StringBundler.concat(
 								"Documents and Media search index is stale ",
-								"and contains file entry ",
-								String.valueOf(fileEntryId)));
+								"and contains file entry ", fileEntryId));
 					}
 
 					continue;

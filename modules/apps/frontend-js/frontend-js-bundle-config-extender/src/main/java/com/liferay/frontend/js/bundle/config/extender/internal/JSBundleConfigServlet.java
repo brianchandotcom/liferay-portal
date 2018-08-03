@@ -15,9 +15,9 @@
 package com.liferay.frontend.js.bundle.config.extender.internal;
 
 import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigTracker.JSConfig;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.minifier.MinifierUtil;
 

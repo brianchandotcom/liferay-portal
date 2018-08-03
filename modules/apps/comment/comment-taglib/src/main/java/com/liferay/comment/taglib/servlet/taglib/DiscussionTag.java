@@ -15,10 +15,10 @@
 package com.liferay.comment.taglib.servlet.taglib;
 
 import com.liferay.comment.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 

@@ -17,6 +17,7 @@ package com.liferay.application.list.user.personal.site.permissions.internal;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -79,7 +79,7 @@ public class UserPersonalSitePermissions {
 					StringBundler.concat(
 						"Unable to initialize user personal site permissions ",
 						"for portlet ", portlet.getPortletId(), " in company ",
-						String.valueOf(companyId)),
+						companyId),
 					pe);
 			}
 		}
@@ -110,7 +110,7 @@ public class UserPersonalSitePermissions {
 					StringBundler.concat(
 						"Unable to initialize user personal site permissions ",
 						"for portlet ", portlet.getPortletId(), " in company ",
-						String.valueOf(companyId)),
+						companyId),
 					pe);
 			}
 		}

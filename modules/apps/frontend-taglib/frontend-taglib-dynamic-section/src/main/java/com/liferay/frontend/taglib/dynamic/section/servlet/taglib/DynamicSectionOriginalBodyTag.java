@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.dynamic.section.servlet.taglib;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.taglib.TagSupport;
 
 import java.io.IOException;

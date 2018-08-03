@@ -17,11 +17,11 @@ package com.liferay.asset.tag.stats.service.impl;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.asset.tag.stats.service.base.AssetTagStatsLocalServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 
@@ -57,8 +57,8 @@ public class AssetTagStatsLocalServiceImpl
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Add failed, fetch {tagId=", String.valueOf(tagId),
-						", classNameId=", String.valueOf(classNameId), "}"));
+						"Add failed, fetch {tagId=", tagId, ", classNameId=",
+						classNameId, "}"));
 			}
 
 			tagStats = assetTagStatsPersistence.fetchByT_C(

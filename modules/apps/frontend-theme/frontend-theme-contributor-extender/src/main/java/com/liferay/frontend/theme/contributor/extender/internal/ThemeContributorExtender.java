@@ -15,9 +15,9 @@
 package com.liferay.frontend.theme.contributor.extender.internal;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -63,8 +63,7 @@ public class ThemeContributorExtender extends AbstractExtender {
 	@Override
 	protected void debug(Bundle bundle, String s) {
 		_logger.log(
-			Logger.LOG_DEBUG,
-			StringBundler.concat("[", String.valueOf(bundle), "] ", s));
+			Logger.LOG_DEBUG, StringBundler.concat("[", bundle, "] ", s));
 	}
 
 	@Override
@@ -99,8 +98,7 @@ public class ThemeContributorExtender extends AbstractExtender {
 	@Override
 	protected void warn(Bundle bundle, String s, Throwable t) {
 		_logger.log(
-			Logger.LOG_WARNING,
-			StringBundler.concat("[", String.valueOf(bundle), "] ", s), t);
+			Logger.LOG_WARNING, StringBundler.concat("[", bundle, "] ", s), t);
 	}
 
 	private String _getProperty(

@@ -15,9 +15,9 @@
 package com.liferay.frontend.js.top.head.extender.internal;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
@@ -53,8 +53,7 @@ public class TopHeadExtender extends AbstractExtender {
 	@Override
 	protected void debug(Bundle bundle, String s) {
 		_logger.log(
-			Logger.LOG_DEBUG,
-			StringBundler.concat("[", String.valueOf(bundle), "] ", s));
+			Logger.LOG_DEBUG, StringBundler.concat("[", bundle, "] ", s));
 	}
 
 	@Override
@@ -103,8 +102,7 @@ public class TopHeadExtender extends AbstractExtender {
 	@Override
 	protected void warn(Bundle bundle, String s, Throwable t) {
 		_logger.log(
-			Logger.LOG_WARNING,
-			StringBundler.concat("[", String.valueOf(bundle), "] ", s), t);
+			Logger.LOG_WARNING, StringBundler.concat("[", bundle, "] ", s), t);
 	}
 
 	private Logger _logger;

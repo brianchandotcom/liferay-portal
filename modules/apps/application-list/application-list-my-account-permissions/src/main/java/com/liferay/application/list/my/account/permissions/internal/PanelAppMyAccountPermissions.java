@@ -17,6 +17,7 @@ package com.liferay.application.list.my.account.permissions.internal;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Arrays;
 import java.util.List;
@@ -87,7 +87,7 @@ public class PanelAppMyAccountPermissions {
 					StringBundler.concat(
 						"Unable to initialize My Account panel permissions ",
 						"for portlet ", portlet.getPortletId(), " in company ",
-						String.valueOf(companyId)),
+						companyId),
 					e);
 			}
 		}

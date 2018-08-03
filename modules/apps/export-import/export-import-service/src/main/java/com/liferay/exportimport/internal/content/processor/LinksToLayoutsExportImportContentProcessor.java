@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorExc
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -126,9 +126,8 @@ public class LinksToLayoutsExportImportContentProcessor
 			catch (Exception e) {
 				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
 					String message = StringBundler.concat(
-						"Unable to get layout with ID ",
-						String.valueOf(layoutId), " in group ",
-						String.valueOf(portletDataContext.getScopeGroupId()));
+						"Unable to get layout with ID ", layoutId, " in group ",
+						portletDataContext.getScopeGroupId());
 
 					ExportImportContentProcessorException eicpe =
 						new ExportImportContentProcessorException(message, e);

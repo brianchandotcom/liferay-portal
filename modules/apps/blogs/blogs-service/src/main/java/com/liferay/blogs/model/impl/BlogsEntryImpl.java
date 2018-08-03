@@ -15,6 +15,7 @@
 package com.liferay.blogs.model.impl;
 
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Image;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 
@@ -69,7 +69,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 
 		return StringBundler.concat(
 			themeDisplay.getPathImage(), "/blogs/entry?img_id=",
-			String.valueOf(getSmallImageId()), "&t=",
+			getSmallImageId(), "&t=",
 			WebServerServletTokenUtil.getToken(getSmallImageId()));
 	}
 
@@ -113,7 +113,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		if ((smallImageId != 0) && isSmallImage()) {
 			return StringBundler.concat(
 				themeDisplay.getPathImage(), "/blogs/entry?img_id=",
-				String.valueOf(smallImageId), "&t=",
+				smallImageId, "&t=",
 				WebServerServletTokenUtil.getToken(smallImageId));
 		}
 

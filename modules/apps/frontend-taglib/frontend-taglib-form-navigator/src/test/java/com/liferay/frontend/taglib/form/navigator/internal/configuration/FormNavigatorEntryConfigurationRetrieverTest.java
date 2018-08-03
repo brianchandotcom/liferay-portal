@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Iterator;
 import java.util.List;

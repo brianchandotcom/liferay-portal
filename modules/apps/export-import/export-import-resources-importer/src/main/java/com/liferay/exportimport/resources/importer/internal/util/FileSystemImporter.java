@@ -46,6 +46,7 @@ import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -90,7 +91,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -210,7 +210,7 @@ public class FileSystemImporter extends BaseImporter {
 					_log.info(
 						StringBundler.concat(
 							"DDM template with name ", name, " and version ",
-							String.valueOf(version), " already exists"));
+							version, " already exists"));
 				}
 
 				return;
@@ -386,7 +386,7 @@ public class FileSystemImporter extends BaseImporter {
 					_log.info(
 						StringBundler.concat(
 							"DDM structure with name ", name, " and version ",
-							String.valueOf(version), " already exists"));
+							version, " already exists"));
 				}
 
 				return;
@@ -491,7 +491,7 @@ public class FileSystemImporter extends BaseImporter {
 					_log.info(
 						StringBundler.concat(
 							"DDM structure with name ", name, " and version ",
-							String.valueOf(version), " already exists"));
+							version, " already exists"));
 				}
 
 				return;
@@ -597,7 +597,7 @@ public class FileSystemImporter extends BaseImporter {
 					_log.info(
 						StringBundler.concat(
 							"DDM template with name ", name, " and version ",
-							String.valueOf(version), " already exists"));
+							version, " already exists"));
 				}
 
 				return;
@@ -692,7 +692,7 @@ public class FileSystemImporter extends BaseImporter {
 					_log.info(
 						StringBundler.concat(
 							"DDM template with name ", name, " and version ",
-							String.valueOf(version), " already exists"));
+							version, " already exists"));
 				}
 
 				return;
@@ -1306,8 +1306,7 @@ public class FileSystemImporter extends BaseImporter {
 					_log.info(
 						StringBundler.concat(
 							"Layout prototype with name ", name,
-							" already exists for company ",
-							String.valueOf(companyId)));
+							" already exists for company ", companyId));
 				}
 
 				return;
@@ -1635,8 +1634,7 @@ public class FileSystemImporter extends BaseImporter {
 						_log.warn(
 							StringBundler.concat(
 								"Unable to index entry for class name ",
-								className, " and primary key ",
-								String.valueOf(primaryKey)),
+								className, " and primary key ", primaryKey),
 							se);
 					}
 				}

@@ -16,9 +16,9 @@ package com.liferay.frontend.theme.contributor.extender.internal;
 
 import com.liferay.frontend.theme.contributor.extender.BundleWebResources;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
 import java.util.Collection;

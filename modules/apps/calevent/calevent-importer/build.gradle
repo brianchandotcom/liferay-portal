@@ -10,4 +10,5 @@ dependencies {
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:subscription:subscription-api")
+	compileOnly project(":core:petra:petra-string")
 }

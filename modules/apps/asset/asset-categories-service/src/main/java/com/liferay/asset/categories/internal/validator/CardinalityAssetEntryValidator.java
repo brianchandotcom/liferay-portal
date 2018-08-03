@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 
@@ -120,8 +120,8 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Entity with ClassPK: ", String.valueOf(classPK),
-							" and ClassNameId: ", String.valueOf(classNameId),
+							"Entity with ClassPK: ", classPK,
+							" and ClassNameId: ", classNameId,
 							" is not categorizable"),
 						pe);
 				}

@@ -23,11 +23,11 @@ import com.liferay.document.library.kernel.exception.InvalidFileVersionException
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -211,9 +211,8 @@ public final class DLValidatorImpl implements DLValidator {
 		if ((maxSize > 0) && (size > maxSize)) {
 			throw new FileSizeException(
 				StringBundler.concat(
-					String.valueOf(size),
-					" exceeds the maximum permitted size of ",
-					String.valueOf(maxSize), " for file ", fileName));
+					size, " exceeds the maximum permitted size of ", maxSize,
+					" for file ", fileName));
 		}
 	}
 

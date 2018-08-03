@@ -15,7 +15,7 @@
 package com.liferay.frontend.css.rtl.servlet.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.Hashtable;
 

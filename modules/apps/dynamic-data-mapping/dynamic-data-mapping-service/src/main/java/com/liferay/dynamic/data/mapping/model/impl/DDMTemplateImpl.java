@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -102,9 +102,8 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 		}
 
 		return StringBundler.concat(
-			themeDisplay.getPathImage(), "/template?img_id=",
-			String.valueOf(getSmallImageId()), "&t=",
-			WebServerServletTokenUtil.getToken(getSmallImageId()));
+			themeDisplay.getPathImage(), "/template?img_id=", getSmallImageId(),
+			"&t=", WebServerServletTokenUtil.getToken(getSmallImageId()));
 	}
 
 	@Override

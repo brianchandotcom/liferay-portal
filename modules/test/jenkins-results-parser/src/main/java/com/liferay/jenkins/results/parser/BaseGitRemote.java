@@ -23,6 +23,13 @@ import java.util.regex.Pattern;
  */
 public class BaseGitRemote implements Comparable<BaseGitRemote> {
 
+	public static final Pattern gitLsRemotePattern = Pattern.compile(
+		"(?<sha>[^\\s]{40}+)[\\s]+refs/heads/(?<name>[^\\s]+)");
+	public static final Pattern remoteURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"git@(?<hostname>[^:]+):(?<username>[^/]+)/",
+			"(?<repositoryName>[^\\.]+)(.git)?"));
+
 	@Override
 	public int compareTo(BaseGitRemote otherGitRemote) {
 		int result = _name.compareTo(otherGitRemote._name);

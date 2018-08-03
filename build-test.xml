@@ -3953,17 +3953,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="stop-search-engine">
-		<sequential>
-			<if>
-				<equals arg1="${search.engine}" arg2="solr" />
-				<then>
-					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="uninstall-patches">
 		<attribute name="patching.tool.dir" />
 

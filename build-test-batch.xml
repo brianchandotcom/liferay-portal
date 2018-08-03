@@ -1348,9 +1348,9 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<test-tear-down>
 					<if>
-						<isset property="suite.search.engine" />
+						<equals arg1="${suite.search.engine}" arg2="solr" />
 						<then>
-							<stop-search-engine />
+							<ant antfile="build-test-solr.xml" target="stop-solr-core" />
 						</then>
 					</if>
 				</test-tear-down>
@@ -2270,9 +2270,9 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<test-tear-down>
 					<if>
-						<isset property="suite.search.engine" />
+						<equals arg1="${suite.search.engine}" arg2="solr" />
 						<then>
-							<stop-search-engine />
+							<ant antfile="build-test-solr.xml" target="stop-solr-core" />
 						</then>
 					</if>
 				</test-tear-down>

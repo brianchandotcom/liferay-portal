@@ -93,11 +93,11 @@ public class ListServiceTrackerMapTest {
 
 		registerService(trackedOne2, 2);
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 3, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
 
-		Iterator<? extends TrackedOne> iterator = services.iterator();
+		Iterator<? extends TrackedOne> iterator = trackedOnes.iterator();
 
 		Assert.assertEquals(trackedOne3, iterator.next());
 		Assert.assertEquals(trackedOne2, iterator.next());
@@ -122,11 +122,11 @@ public class ListServiceTrackerMapTest {
 		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
 			trackedOne2, 2);
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 3, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
 
-		Iterator<? extends TrackedOne> iterator = services.iterator();
+		Iterator<? extends TrackedOne> iterator = trackedOnes.iterator();
 
 		serviceRegistration2.unregister();
 
@@ -137,14 +137,14 @@ public class ListServiceTrackerMapTest {
 		Assert.assertEquals(trackedOne2, iterator.next());
 		Assert.assertEquals(trackedOne1, iterator.next());
 
-		services = serviceTrackerMap.getService("aTarget");
+		trackedOnes = serviceTrackerMap.getService("aTarget");
 
 		// Getting the list of services should return a list with the affected
 		// changes
 
-		Assert.assertEquals(services.toString(), 2, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 2, trackedOnes.size());
 
-		iterator = services.iterator();
+		iterator = trackedOnes.iterator();
 
 		Assert.assertEquals(trackedOne3, iterator.next());
 		Assert.assertEquals(trackedOne1, iterator.next());
@@ -184,22 +184,25 @@ public class ListServiceTrackerMapTest {
 
 		serviceRegistration2.unregister();
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = serviceTrackerMap.getService("aTarget");
 
 		// Getting the list of services should return a list with the affected
 		// changes
 
-		Assert.assertEquals(services.toString(), 2, services.size());
-		Assert.assertTrue(services.toString(), services.contains(trackedOne1));
-		Assert.assertTrue(services.toString(), services.contains(trackedOne3));
+		Assert.assertEquals(trackedOnes.toString(), 2, trackedOnes.size());
+		Assert.assertTrue(
+			trackedOnes.toString(), trackedOnes.contains(trackedOne1));
+		Assert.assertTrue(
+			trackedOnes.toString(), trackedOnes.contains(trackedOne3));
 
 		serviceRegistration3.unregister();
 
-		services = serviceTrackerMap.getService("aTarget");
+		trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 1, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 1, trackedOnes.size());
 
-		Assert.assertTrue(services.toString(), services.contains(trackedOne1));
+		Assert.assertTrue(
+			trackedOnes.toString(), trackedOnes.contains(trackedOne1));
 
 		serviceRegistration1.unregister();
 	}
@@ -266,11 +269,11 @@ public class ListServiceTrackerMapTest {
 		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
 			trackedOne3, 1);
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 3, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
 
-		Iterator<? extends TrackedOne> iterator = services.iterator();
+		Iterator<? extends TrackedOne> iterator = trackedOnes.iterator();
 
 		Assert.assertEquals(trackedOne3, iterator.next());
 		Assert.assertEquals(trackedOne2, iterator.next());
@@ -283,11 +286,11 @@ public class ListServiceTrackerMapTest {
 
 		serviceRegistration3.setProperties(properties);
 
-		services = serviceTrackerMap.getService("aTarget");
+		trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 3, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
 
-		iterator = services.iterator();
+		iterator = trackedOnes.iterator();
 
 		Assert.assertEquals(trackedOne2, iterator.next());
 		Assert.assertEquals(trackedOne1, iterator.next());
@@ -300,11 +303,11 @@ public class ListServiceTrackerMapTest {
 
 		serviceRegistration3.setProperties(properties);
 
-		services = serviceTrackerMap.getService("aTarget");
+		trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 3, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
 
-		iterator = services.iterator();
+		iterator = trackedOnes.iterator();
 
 		Assert.assertEquals(trackedOne3, iterator.next());
 		Assert.assertEquals(trackedOne2, iterator.next());
@@ -317,11 +320,11 @@ public class ListServiceTrackerMapTest {
 		serviceRegistration2.setProperties(properties);
 		serviceRegistration3.setProperties(properties);
 
-		services = serviceTrackerMap.getService("aTarget");
+		trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 3, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
 
-		iterator = services.iterator();
+		iterator = trackedOnes.iterator();
 
 		Assert.assertEquals(trackedOne2, iterator.next());
 		Assert.assertEquals(trackedOne3, iterator.next());
@@ -352,9 +355,9 @@ public class ListServiceTrackerMapTest {
 		registerService(new TrackedOne());
 		registerService(new TrackedOne());
 
-		List<TrackedOne> services = _serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = _serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 2, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 2, trackedOnes.size());
 	}
 
 	@Test
@@ -372,11 +375,11 @@ public class ListServiceTrackerMapTest {
 		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
 			trackedOne2, 0);
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 2, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 2, trackedOnes.size());
 
-		Iterator<TrackedOne> iterator = services.iterator();
+		Iterator<TrackedOne> iterator = trackedOnes.iterator();
 
 		Assert.assertEquals(trackedOne1, iterator.next());
 		Assert.assertEquals(trackedOne2, iterator.next());
@@ -390,11 +393,11 @@ public class ListServiceTrackerMapTest {
 		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
 			trackedOne3, 1);
 
-		services = serviceTrackerMap.getService("aTarget");
+		trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 3, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
 
-		iterator = services.iterator();
+		iterator = trackedOnes.iterator();
 
 		Assert.assertEquals(trackedOne3, iterator.next());
 		Assert.assertEquals(trackedOne2, iterator.next());
@@ -412,9 +415,9 @@ public class ListServiceTrackerMapTest {
 
 		registerService(new TrackedOne());
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 1, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 1, trackedOnes.size());
 
 		serviceTrackerMap.close();
 	}
@@ -427,9 +430,9 @@ public class ListServiceTrackerMapTest {
 		registerService(new TrackedOne());
 		registerService(new TrackedOne());
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 2, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 2, trackedOnes.size());
 
 		serviceTrackerMap.close();
 	}

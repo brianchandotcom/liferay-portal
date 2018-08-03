@@ -74,6 +74,13 @@ public class DLFileEntryUADTestHelper {
 		throws Exception {
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			if (_dlFileEntryLocalService.fetchDLFileEntry(
+					dlFileEntry.getFileEntryId()) != null) {
+
+				_dlAppLocalService.deleteFileEntry(
+					dlFileEntry.getFileEntryId());
+			}
+
 			_dlFolderLocalService.deleteFolder(dlFileEntry.getFolderId());
 		}
 	}

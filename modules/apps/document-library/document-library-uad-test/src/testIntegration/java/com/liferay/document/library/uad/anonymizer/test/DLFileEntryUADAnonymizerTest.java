@@ -26,11 +26,11 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -67,14 +67,13 @@ public class DLFileEntryUADAnonymizerTest
 	@After
 	public void tearDown() throws Exception {
 		_dlFileEntryUADTestHelper.cleanUpDependencies(_dlFileEntries);
+
+		_dlFileEntries.clear();
 	}
 
 	@Test
 	public void testAnonymizeDLFileEntryVersions() throws Exception {
-		DLFileEntry dlFileEntry = _dlFileEntryUADTestHelper.addDLFileEntry(
-			user.getUserId());
-
-		_dlFileEntries.add(dlFileEntry);
+		DLFileEntry dlFileEntry = addBaseModel(user.getUserId());
 
 		long dlFileEntryId = dlFileEntry.getFileEntryId();
 
@@ -128,36 +127,42 @@ public class DLFileEntryUADAnonymizerTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
 			serviceContext);
 
-		AssetEntry mbMessageAssetEntry = _assetEntryLocalService.fetchEntry(
-			MBMessage.class.getName(), mbMessage.getMessageId());
+		try {
+			AssetEntry mbMessageAssetEntry = _assetEntryLocalService.fetchEntry(
+				MBMessage.class.getName(), mbMessage.getMessageId());
 
-		List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
-			mbMessageAssetEntry.getEntryId());
+			List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
+				mbMessageAssetEntry.getEntryId());
 
-		Assert.assertEquals(
-			"There should be an asset link for the newly created MBMessage.", 1,
-			assetLinks.size());
+			Assert.assertEquals(
+				"There should be an asset link for the newly created " +
+					"MBMessage.",
+				1, assetLinks.size());
 
-		AssetLink assetLink = assetLinks.get(0);
+			AssetLink assetLink = assetLinks.get(0);
 
-		Assert.assertEquals(
-			"The AssetLink should be associated with the DLFileEntry",
-			assetLink.getEntryId2(), dlFileEntryAssetEntry.getEntryId());
+			Assert.assertEquals(
+				"The AssetLink should be associated with the DLFileEntry",
+				assetLink.getEntryId2(), dlFileEntryAssetEntry.getEntryId());
 
-		_uadAnonymizer.delete(dlFileEntry);
+			_uadAnonymizer.delete(dlFileEntry);
 
-		dlFileEntryAssetEntry = _assetEntryLocalService.fetchEntry(
-			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+			dlFileEntryAssetEntry = _assetEntryLocalService.fetchEntry(
+				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
 
-		Assert.assertNull(
-			"The anonymizer should also remove the AssetEntry.",
-			dlFileEntryAssetEntry);
+			Assert.assertNull(
+				"The anonymizer should also remove the AssetEntry.",
+				dlFileEntryAssetEntry);
 
-		assetLink = _assetLinkLocalService.fetchAssetLink(
-			assetLink.getLinkId());
+			assetLink = _assetLinkLocalService.fetchAssetLink(
+				assetLink.getLinkId());
 
-		Assert.assertNull(
-			"The anonymizer should also remove the AssetLink.", assetLink);
+			Assert.assertNull(
+				"The anonymizer should also remove the AssetLink.", assetLink);
+		}
+		finally {
+			_mbThreadLocalService.deleteThread(mbMessage.getThread());
+		}
 	}
 
 	@Override
@@ -265,7 +270,6 @@ public class DLFileEntryUADAnonymizerTest
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	@DeleteAfterTestRun
 	private final List<DLFileEntry> _dlFileEntries = new ArrayList<>();
 
 	@Inject
@@ -273,6 +277,9 @@ public class DLFileEntryUADAnonymizerTest
 
 	@Inject
 	private DLFileEntryUADTestHelper _dlFileEntryUADTestHelper;
+
+	@Inject
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Inject(filter = "component.name=*.DLFileEntryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

@@ -185,8 +185,7 @@ public class UserPasswordException extends PortalException {
 		public MustHaveMoreNumbers(long minNumbers) {
 			super(
 				String.format(
-					"Passwordmust have at least %s number characters",
-					minNumbers));
+					"Password must have at least %s numbers", minNumbers));
 
 			this.minNumbers = minNumbers;
 		}
@@ -200,8 +199,7 @@ public class UserPasswordException extends PortalException {
 		public MustHaveMoreSymbols(long minSymbols) {
 			super(
 				String.format(
-					"Password must have at least %s symbol characters",
-					minSymbols));
+					"Password must have at least %s symbols", minSymbols));
 
 			this.minSymbols = minSymbols;
 		}

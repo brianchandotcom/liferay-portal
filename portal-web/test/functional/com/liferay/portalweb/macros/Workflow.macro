@@ -462,7 +462,7 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute macro="MenuItem#viewPresent">
+		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Reject" />
 		</execute>
 
@@ -531,7 +531,7 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute macro="MenuItem#viewPresent">
+		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Resubmit" />
 		</execute>
 

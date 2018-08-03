@@ -199,8 +199,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		String friendlyURL = friendlyURLMap.get(LocaleUtil.getSiteDefault());
 
-		int priority = layoutLocalServiceHelper.getNextPriority(
-			groupId, privateLayout, parentLayoutId, null, -1);
+		int priority = Integer.MAX_VALUE;
+
+		if (!hidden) {
+			priority = layoutLocalServiceHelper.getNextPriority(
+				groupId, privateLayout, parentLayoutId, null, -1);
+		}
 
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,

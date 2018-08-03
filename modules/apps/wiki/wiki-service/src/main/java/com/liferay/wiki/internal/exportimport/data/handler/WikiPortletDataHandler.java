@@ -143,7 +143,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN + ")")
+	@Reference(
+		target = "(javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN + ")"
+	)
 	private PortletDataHandler _wikiAdminPortletDataHandler;
 
 }

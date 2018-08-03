@@ -41,7 +41,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jürgen Kappler
  */
 public class UpgradeContentImages extends UpgradeProcess {
 

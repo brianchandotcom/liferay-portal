@@ -30,7 +30,7 @@
    			-d groupId=${groupId} \
   			-d fragmentCollectionId=${collectionId} \
   			-d name=${name} \
-  			-d status=0
+  			-d status=${status}
 		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
@@ -79,6 +79,7 @@
 				<fail message="Please set 'name'." />
 			</then>
 		</if>
+
 		<if>
 			<not>
 				<isset var="collectionName" />
@@ -88,11 +89,21 @@
 			</then>
 		</if>
 
+		<if>
+			<not>
+				<isset var="status" />
+			</not>
+			<then>
+				<var name="status" value="0" />
+			</then>
+		</if>
+
 		<execute macro="JSONFragment#_addFragment">
 			<var name="collectionName" value="${collectionName}" />
 			<var name="fragmentFile" value="${fragmentFile}" />
 			<var name="groupName" value="${groupName}" />
 			<var name="name" value="${name}" />
+			<var name="status" value="${status}" />
 		</execute>
 	</command>
 
@@ -103,6 +114,15 @@
 			</not>
 			<then>
 				<fail message="Please set 'name'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
 			</then>
 		</if>
 
@@ -125,6 +145,7 @@
 				<fail message="Please set 'collectionName'." />
 			</then>
 		</if>
+
 		<if>
 			<not>
 				<isset var="groupId" />

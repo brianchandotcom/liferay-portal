@@ -15,60 +15,33 @@
 package com.liferay.document.library.web.internal.lar;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.exportimport.data.handler.DLExportableRepositoryPublisher;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
-import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
-import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.Staging;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Conjunction;
-import com.liferay.portal.kernel.dao.orm.Criterion;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileShortcut;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.RepositoryLocalService;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner;
-import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepositoryDefiner;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -76,7 +49,6 @@ import javax.portlet.PortletPreferences;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -152,16 +124,6 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 		setPublishToLiveByDefault(PropsValues.DL_PUBLISH_TO_LIVE_BY_DEFAULT);
 		setRank(90);
 		setStagingControls(getExportControls());
-
-		_dlExportableRepositoryPublishers = ServiceTrackerListFactory.open(
-			bundleContext, DLExportableRepositoryPublisher.class);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_dlExportableRepositoryPublishers != null) {
-			_dlExportableRepositoryPublishers.close();
-		}
 	}
 
 	@Override
@@ -210,15 +172,25 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
+			StagedModelRepository<?> stagedModelRepository =
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					DLFolder.class.getName());
+
 			ActionableDynamicQuery folderActionableDynamicQuery =
-				getFolderActionableDynamicQuery(portletDataContext);
+				stagedModelRepository.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			folderActionableDynamicQuery.performActions();
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "documents")) {
+			StagedModelRepository<?> stagedModelRepository =
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					DLFileEntry.class.getName());
+
 			ActionableDynamicQuery fileEntryActionableDynamicQuery =
-				getFileEntryActionableDynamicQuery(portletDataContext);
+				stagedModelRepository.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			fileEntryActionableDynamicQuery.performActions();
 		}
@@ -226,22 +198,37 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "document-types")) {
 
+			StagedModelRepository<?> stagedModelRepository =
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					DLFileEntryType.class.getName());
+
 			ActionableDynamicQuery fileEntryTypeActionableDynamicQuery =
-				getDLFileEntryTypeActionableDynamicQuery(portletDataContext);
+				stagedModelRepository.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			fileEntryTypeActionableDynamicQuery.performActions();
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "repositories")) {
+			StagedModelRepository<?> stagedModelRepository =
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					Repository.class.getName());
+
 			ActionableDynamicQuery repositoryActionableDynamicQuery =
-				getRepositoryActionableDynamicQuery(portletDataContext);
+				stagedModelRepository.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			repositoryActionableDynamicQuery.performActions();
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "shortcuts")) {
+			StagedModelRepository<?> stagedModelRepository =
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					DLFileShortcut.class.getName());
+
 			ActionableDynamicQuery fileShortcutActionableDynamicQuery =
-				getDLFileShortcutActionableDynamicQuery(portletDataContext);
+				stagedModelRepository.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			fileShortcutActionableDynamicQuery.performActions();
 		}
@@ -348,332 +335,62 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 			return;
 		}
 
+		StagedModelRepository<?> fileShortcutStagedModelRepository =
+			StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+				DLFileShortcut.class.getName());
+
 		ActionableDynamicQuery dlFileShortcutActionableDynamicQuery =
-			getDLFileShortcutActionableDynamicQuery(portletDataContext);
+			fileShortcutStagedModelRepository.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		dlFileShortcutActionableDynamicQuery.performCount();
 
+		StagedModelRepository<?> fileEntryStagedModelRepository =
+			StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+				DLFileEntry.class.getName());
+
 		ActionableDynamicQuery fileEntryActionableDynamicQuery =
-			getFileEntryActionableDynamicQuery(portletDataContext);
+			fileEntryStagedModelRepository.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		fileEntryActionableDynamicQuery.performCount();
 
+		StagedModelRepository<?> dlFileEntryTypeStagedModelRepository =
+			StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+				DLFileEntryType.class.getName());
+
 		ActionableDynamicQuery fileEntryTypeActionableDynamicQuery =
-			getDLFileEntryTypeActionableDynamicQuery(portletDataContext);
+			dlFileEntryTypeStagedModelRepository.
+				getExportActionableDynamicQuery(portletDataContext);
 
 		fileEntryTypeActionableDynamicQuery.performCount();
 
+		StagedModelRepository<?> folderStagedModelRepository =
+			StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+				DLFolder.class.getName());
+
 		ActionableDynamicQuery folderActionableDynamicQuery =
-			getFolderActionableDynamicQuery(portletDataContext);
+			folderStagedModelRepository.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		folderActionableDynamicQuery.performCount();
 
+		StagedModelRepository<?> repositoryStagedModelRepository =
+			StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+				Repository.class.getName());
+
 		ActionableDynamicQuery repositoryActionableDynamicQuery =
-			getRepositoryActionableDynamicQuery(portletDataContext);
+			repositoryStagedModelRepository.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		repositoryActionableDynamicQuery.performCount();
-	}
-
-	protected ActionableDynamicQuery getDLFileEntryTypeActionableDynamicQuery(
-		PortletDataContext portletDataContext) {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			_dlFileEntryTypeLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			actionableDynamicQuery.getAddCriteriaMethod();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				addCriteriaMethod.addCriteria(dynamicQuery);
-
-				Property property = PropertyFactoryUtil.forName("groupId");
-
-				dynamicQuery.add(
-					property.in(
-						new Long[] {portletDataContext.getScopeGroupId()}));
-			});
-
-		actionableDynamicQuery.setPerformActionMethod(
-			(DLFileEntryType dlFileEntryType) -> {
-				if (dlFileEntryType.isExportable()) {
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, dlFileEntryType);
-				}
-			});
-
-		return actionableDynamicQuery;
-	}
-
-	protected ActionableDynamicQuery getDLFileShortcutActionableDynamicQuery(
-		PortletDataContext portletDataContext) {
-
-		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			_dlFileShortcutLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			exportActionableDynamicQuery.getAddCriteriaMethod();
-
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				addCriteriaMethod.addCriteria(dynamicQuery);
-
-				Property property = PropertyFactoryUtil.forName("active");
-
-				dynamicQuery.add(property.eq(Boolean.TRUE));
-			});
-
-		exportActionableDynamicQuery.setPerformActionMethod(
-			(DLFileShortcut dlFileShortcut) -> {
-				FileShortcut fileShortcut = _dlAppLocalService.getFileShortcut(
-					dlFileShortcut.getFileShortcutId());
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, fileShortcut);
-			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(DLFileShortcutConstants.getClassName()));
-
-		return exportActionableDynamicQuery;
-	}
-
-	protected ActionableDynamicQuery getFileEntryActionableDynamicQuery(
-		PortletDataContext portletDataContext) {
-
-		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
-			portletDataContext);
-
-		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			_dlFileEntryLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				DynamicQuery fileVersionDynamicQuery =
-					DynamicQueryFactoryUtil.forClass(
-						DLFileVersion.class, "dlFileVersion",
-						PortalClassLoaderUtil.getClassLoader());
-
-				fileVersionDynamicQuery.setProjection(
-					ProjectionFactoryUtil.property("fileEntryId"));
-
-				fileVersionDynamicQuery.add(
-					RestrictionsFactoryUtil.eqProperty(
-						"dlFileVersion.fileEntryId", "this.fileEntryId"));
-				fileVersionDynamicQuery.add(
-					RestrictionsFactoryUtil.eqProperty(
-						"dlFileVersion.version", "this.version"));
-
-				Property fileVersionStatusProperty =
-					PropertyFactoryUtil.forName("dlFileVersion.status");
-
-				StagedModelDataHandler<?> stagedModelDataHandler =
-					StagedModelDataHandlerRegistryUtil.
-						getStagedModelDataHandler(DLFileEntry.class.getName());
-
-				fileVersionDynamicQuery.add(
-					fileVersionStatusProperty.in(
-						stagedModelDataHandler.getExportableStatuses()));
-
-				Criterion fileVersionModifiedDateCriterion =
-					portletDataContext.getDateRangeCriteria(
-						"dlFileVersion.modifiedDate");
-				Criterion fileVersionStatusDateCriterion =
-					portletDataContext.getDateRangeCriteria(
-						"dlFileVersion.statusDate");
-				Criterion modifiedDateCriterion =
-					portletDataContext.getDateRangeCriteria(
-						"this.modifiedDate");
-
-				if ((fileVersionStatusDateCriterion != null) &&
-					(modifiedDateCriterion != null)) {
-
-					Disjunction disjunction =
-						RestrictionsFactoryUtil.disjunction();
-
-					disjunction.add(fileVersionModifiedDateCriterion);
-					disjunction.add(fileVersionStatusDateCriterion);
-					disjunction.add(modifiedDateCriterion);
-
-					fileVersionDynamicQuery.add(disjunction);
-				}
-
-				Property fileEntryIdProperty = PropertyFactoryUtil.forName(
-					"fileEntryId");
-
-				dynamicQuery.add(
-					fileEntryIdProperty.in(fileVersionDynamicQuery));
-
-				Property repositoryIdProperty = PropertyFactoryUtil.forName(
-					"repositoryId");
-
-				dynamicQuery.add(
-					repositoryIdProperty.in(exportableRepositoryIds));
-			});
-		exportActionableDynamicQuery.setPerformActionMethod(
-			(DLFileEntry dlFileEntry) -> {
-				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-					dlFileEntry.getFileEntryId());
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, fileEntry);
-			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(DLFileEntryConstants.getClassName()));
-
-		return exportActionableDynamicQuery;
-	}
-
-	protected ActionableDynamicQuery getFolderActionableDynamicQuery(
-		PortletDataContext portletDataContext) {
-
-		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
-			portletDataContext);
-
-		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			_dlFolderLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			exportActionableDynamicQuery.getAddCriteriaMethod();
-
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				addCriteriaMethod.addCriteria(dynamicQuery);
-
-				Property property = PropertyFactoryUtil.forName("repositoryId");
-
-				dynamicQuery.add(property.in(exportableRepositoryIds));
-			});
-
-		exportActionableDynamicQuery.setPerformActionMethod(
-			(DLFolder dlFolder) -> {
-				if (dlFolder.isInTrash()) {
-					return;
-				}
-
-				Folder folder = _dlAppLocalService.getFolder(
-					dlFolder.getFolderId());
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, folder);
-			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(DLFolderConstants.getClassName()));
-
-		return exportActionableDynamicQuery;
-	}
-
-	protected ActionableDynamicQuery getRepositoryActionableDynamicQuery(
-		PortletDataContext portletDataContext) {
-
-		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
-			portletDataContext);
-
-		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			_repositoryLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			exportActionableDynamicQuery.getAddCriteriaMethod();
-
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				addCriteriaMethod.addCriteria(dynamicQuery);
-
-				Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
-
-				Property classNameIdProperty = PropertyFactoryUtil.forName(
-					"classNameId");
-
-				long liferayRepositoryClassNameId = _portal.getClassNameId(
-					LiferayRepositoryDefiner.CLASS_NAME);
-
-				conjunction.add(
-					classNameIdProperty.ne(liferayRepositoryClassNameId));
-
-				long tempFileRepositoryClassNameId = _portal.getClassNameId(
-					TemporaryFileEntryRepositoryDefiner.CLASS_NAME);
-
-				conjunction.add(
-					classNameIdProperty.ne(tempFileRepositoryClassNameId));
-
-				dynamicQuery.add(conjunction);
-
-				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
-
-				Property portletIdProperty = PropertyFactoryUtil.forName(
-					"portletId");
-
-				disjunction.add(portletIdProperty.isNull());
-				disjunction.add(portletIdProperty.eq(StringPool.BLANK));
-				disjunction.add(
-					portletIdProperty.eq(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN));
-				disjunction.add(
-					portletIdProperty.like(
-						DLPortletKeys.DOCUMENT_LIBRARY + "%"));
-
-				Property repositoryIdProperty = PropertyFactoryUtil.forName(
-					"repositoryId");
-
-				disjunction.add(
-					repositoryIdProperty.in(exportableRepositoryIds));
-
-				dynamicQuery.add(disjunction);
-			});
-
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
-				_portal.getClassNameId(Repository.class.getName()),
-				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
-
-		return exportActionableDynamicQuery;
-	}
-
-	private Collection<Long> _getExportableRepositoryIds(
-		PortletDataContext portletDataContext) {
-
-		Collection<Long> exportableRepositoryIds = new HashSet<>();
-
-		exportableRepositoryIds.add(portletDataContext.getScopeGroupId());
-
-		for (DLExportableRepositoryPublisher dlExportableRepositoryPublisher :
-				_dlExportableRepositoryPublishers) {
-
-			dlExportableRepositoryPublisher.publish(
-				portletDataContext.getScopeGroupId(),
-				exportableRepositoryIds::add);
-		}
-
-		return exportableRepositoryIds;
 	}
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	private ServiceTrackerList
-		<DLExportableRepositoryPublisher, DLExportableRepositoryPublisher>
-			_dlExportableRepositoryPublishers;
-
-	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	@Reference
-	private DLFileShortcutLocalService _dlFileShortcutLocalService;
-
-	@Reference
-	private DLFolderLocalService _dlFolderLocalService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference
 	private Staging _staging;

@@ -14,21 +14,28 @@
 
 package com.liferay.bookmarks.internal.exportimport.portlet.preferences.processor;
 
+import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.internal.exportimport.data.handler.BookmarksPortletDataHandler;
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 import java.util.Map;
@@ -66,6 +73,59 @@ public class BookmarksExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
+		try {
+			portletDataContext.addPortletPermissions(
+				BookmarksConstants.RESOURCE_NAME);
+		}
+		catch (PortalException pe) {
+			PortletDataException pde = new PortletDataException(pe);
+
+			pde.setPortletId(BookmarksPortletKeys.BOOKMARKS);
+			pde.setType(PortletDataException.EXPORT_PORTLET_PERMISSIONS);
+
+			throw pde;
+		}
+
+		try {
+			String namespace = _bookmarksPortletDataHandler.getNamespace();
+
+			String portletId = portletDataContext.getPortletId();
+
+			if (portletDataContext.getBooleanParameter(namespace, "folders")) {
+				ExportActionableDynamicQuery folderActionableDynamicQuery =
+					_bookmarksFolderStagedModelRepository.
+						getExportActionableDynamicQuery(portletDataContext);
+
+				folderActionableDynamicQuery.setPerformActionMethod(
+					(BookmarksFolder bookmarksFolder) ->
+						StagedModelDataHandlerUtil.exportReferenceStagedModel(
+							portletDataContext, portletId, bookmarksFolder));
+
+				folderActionableDynamicQuery.performActions();
+			}
+
+			if (portletDataContext.getBooleanParameter(namespace, "entries")) {
+				ActionableDynamicQuery entryActionableDynamicQuery =
+					_bookmarksEntryStagedModelRepository.
+						getExportActionableDynamicQuery(portletDataContext);
+
+				entryActionableDynamicQuery.setPerformActionMethod(
+					(BookmarksEntry bookmarksEntry) ->
+						StagedModelDataHandlerUtil.exportReferenceStagedModel(
+							portletDataContext, portletId, bookmarksEntry));
+
+				entryActionableDynamicQuery.performActions();
+			}
+		}
+		catch (PortalException pe) {
+			PortletDataException pde = new PortletDataException(pe);
+
+			pde.setPortletId(BookmarksPortletKeys.BOOKMARKS);
+			pde.setType(PortletDataException.EXPORT_PORTLET_DATA);
+
+			throw pde;
+		}
+
 		long rootFolderId = GetterUtil.getLong(
 			portletPreferences.getValue("rootFolderId", null));
 
@@ -84,7 +144,7 @@ public class BookmarksExportImportPortletPreferencesProcessor
 			portlet, portletDataContext.getExportDataRootElement(), folder,
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
 			!portletDataContext.getBooleanParameter(
-				BookmarksPortletDataHandler.NAMESPACE, "entries"));
+				_bookmarksPortletDataHandler.getNamespace(), "entries"));
 
 		return portletPreferences;
 	}
@@ -94,6 +154,47 @@ public class BookmarksExportImportPortletPreferencesProcessor
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
+
+		try {
+			portletDataContext.importPortletPermissions(
+				BookmarksConstants.RESOURCE_NAME);
+		}
+		catch (PortalException pe) {
+			PortletDataException pde = new PortletDataException(pe);
+
+			pde.setPortletId(BookmarksPortletKeys.BOOKMARKS);
+			pde.setType(PortletDataException.IMPORT_PORTLET_PERMISSIONS);
+
+			throw pde;
+		}
+
+		String namespace = _bookmarksPortletDataHandler.getNamespace();
+
+		if (portletDataContext.getBooleanParameter(namespace, "folders")) {
+			Element foldersElement =
+				portletDataContext.getImportDataGroupElement(
+					BookmarksFolder.class);
+
+			List<Element> folderElements = foldersElement.elements();
+
+			for (Element folderElement : folderElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, folderElement);
+			}
+		}
+
+		if (portletDataContext.getBooleanParameter(namespace, "entries")) {
+			Element entriesElement =
+				portletDataContext.getImportDataGroupElement(
+					BookmarksEntry.class);
+
+			List<Element> entryElements = entriesElement.elements();
+
+			for (Element entryElement : entryElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, entryElement);
+			}
+		}
 
 		long rootFolderId = GetterUtil.getLong(
 			portletPreferences.getValue("rootFolderId", null));
@@ -144,7 +245,25 @@ public class BookmarksExportImportPortletPreferencesProcessor
 		_portletLocalService = portletLocalService;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
+	)
+	private StagedModelRepository<BookmarksEntry>
+		_bookmarksEntryStagedModelRepository;
+
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
+	)
+	private StagedModelRepository<BookmarksFolder>
+		_bookmarksFolderStagedModelRepository;
+
+	@Reference(
+		target = "(javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS + ")"
+	)
+	private PortletDataHandler _bookmarksPortletDataHandler;
+
 	private PortletLocalService _portletLocalService;
 
 }

@@ -18,8 +18,12 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -92,7 +96,33 @@ public class DLFileEntryTypeStagedModelRepository
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
-		throw new UnsupportedOperationException();
+		ExportActionableDynamicQuery actionableDynamicQuery =
+			_dlFileEntryTypeLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+			actionableDynamicQuery.getAddCriteriaMethod();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				addCriteriaMethod.addCriteria(dynamicQuery);
+
+				Property property = PropertyFactoryUtil.forName("groupId");
+
+				dynamicQuery.add(
+					property.in(
+						new Long[] {portletDataContext.getScopeGroupId()}));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(DLFileEntryType dlFileEntryType) -> {
+				if (dlFileEntryType.isExportable()) {
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, dlFileEntryType);
+				}
+			});
+
+		return actionableDynamicQuery;
 	}
 
 	@Override

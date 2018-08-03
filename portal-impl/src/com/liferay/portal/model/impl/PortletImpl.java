@@ -4654,7 +4654,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	 * String, String, String)} are to be referenced in the page's header.
 	 */
-	private boolean _portletDependencyCssEnabled;
+	private boolean _portletDependencyCssEnabled = true;
 
 	/**
 	 * <code>True</code> if the JavaScript resource dependencies specified in
@@ -4663,7 +4663,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	 * String, String, String)} are to be referenced in the page's header.
 	 */
-	private boolean _portletDependencyJavaScriptEnabled;
+	private boolean _portletDependencyJavaScriptEnabled = true;
 
 	/**
 	 * The filters of the portlet.

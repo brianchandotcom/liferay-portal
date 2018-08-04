@@ -46,6 +46,7 @@ public class ServiceBuilderBatchTestClassGroup
 	public static enum BuildType {
 
 		CORE, FULL
+
 	}
 
 	public static class ServiceBuilderBatchTestClass
@@ -114,6 +115,8 @@ public class ServiceBuilderBatchTestClassGroup
 
 			if (!modifiedPortalToolsServiceBuilderFiles.isEmpty()) {
 				_buildType = BuildType.FULL;
+
+				moduleDirsList.add(portalModulesBaseDir);
 
 				return;
 			}

@@ -17,10 +17,6 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <style type="text/css">
-	.alert-danger, .alert-success {
-		margin: 15px auto 5px;
-	}
-
 	.build-info {
 		color: #555;
 		font-size: 11px;

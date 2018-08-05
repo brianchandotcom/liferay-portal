@@ -14,9 +14,12 @@
 
 package com.liferay.frontend.theme.porygon.site.initializer.internal;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryModel;
@@ -45,6 +48,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -131,6 +135,8 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				"Entry", entryFragmentEntries, _PATH + "/page_templates",
 				"entry.jpg", serviceContext);
 
+			_addApplicationDisplayTemplates(serviceContext);
+
 			_addLayouts(_LAYOUT_NAMES, serviceContext);
 		}
 		catch (Exception e) {
@@ -148,6 +154,34 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = bundleContext.getBundle();
+	}
+
+	private void _addApplicationDisplayTemplates(ServiceContext serviceContext)
+		throws Exception {
+
+		Enumeration<URL> urls = _bundle.findEntries(
+			_PATH + "/adt", "*.ftl", false);
+
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+
+			String script = StringUtil.read(url.openStream());
+
+			String fileName = FileUtil.getShortFileName(url.getPath());
+
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(LocaleUtil.getSiteDefault(), fileName);
+
+			_ddmTemplateLocalService.addTemplate(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(AssetEntry.class.getName()), 0,
+				_portal.getClassNameId(_PORTLET_DISPLAY_TEMPLATE_CLASS_NAME),
+				nameMap, new HashMap<>(),
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+				DDMTemplateConstants.TEMPLATE_MODE_EDIT,
+				TemplateConstants.LANG_TYPE_FTL, script, serviceContext);
+		}
 	}
 
 	private LayoutPageTemplateEntry _addDisplayPageEntry(
@@ -425,6 +459,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		"com/liferay/frontend/theme/porygon/site/initializer/internal" +
 			"/dependencies";
 
+	private static final String _PORTLET_DISPLAY_TEMPLATE_CLASS_NAME =
+		"com.liferay.portlet.display.template.PortletDisplayTemplate";
+
 	private static final String _THEME_ID = "porygon_WAR_porygontheme";
 
 	private static final String _THEME_NAME = "Porygon";
@@ -433,6 +470,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		PorygonSiteInitializer.class);
 
 	private Bundle _bundle;
+
+	@Reference
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

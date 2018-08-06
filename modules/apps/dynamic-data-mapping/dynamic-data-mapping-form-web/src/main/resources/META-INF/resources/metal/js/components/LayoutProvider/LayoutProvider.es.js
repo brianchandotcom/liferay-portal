@@ -229,7 +229,7 @@ class LayoutProvider extends Component {
     }
 
     render() {
-        const { children } = this.props;
+        const { children, spritemap } = this.props;
         const { fieldFocus, context, mode } = this.state;
 
         if (children.length) {
@@ -243,7 +243,7 @@ class LayoutProvider extends Component {
                 fieldMove: this._handleFieldMove.bind(this),
             };
 
-            Object.assign(Child.props, {...this.props, events, context, fieldFocus, mode});
+            Object.assign(Child.props, {...this.otherProps(), events, context, fieldFocus, mode, spritemap});
 
             return Child;
         }

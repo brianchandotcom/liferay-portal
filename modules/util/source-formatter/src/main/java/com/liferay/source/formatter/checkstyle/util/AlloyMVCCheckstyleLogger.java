@@ -16,18 +16,13 @@ package com.liferay.source.formatter.checkstyle.util;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 
-import java.io.OutputStream;
-
 /**
  * @author Hugo Huijser
  */
 public class AlloyMVCCheckstyleLogger extends CheckstyleLogger {
 
-	public AlloyMVCCheckstyleLogger(
-		OutputStream outputStream, boolean closeStreamsAfterUse,
-		String baseDirName) {
-
-		super(outputStream, closeStreamsAfterUse, baseDirName);
+	public AlloyMVCCheckstyleLogger(String baseDirName) {
+		super(baseDirName);
 	}
 
 	@Override

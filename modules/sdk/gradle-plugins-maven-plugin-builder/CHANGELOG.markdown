@@ -49,7 +49,14 @@ present.
 - [LPS-71264]: Fix the `WriteMavenSettingsTask` instance's `localRepositoryDir`
 property usage when running on Windows.
 
+## 1.2.1 - 2018-08-06
+
+### Fixed
+- [LPS-84213]: Fix the `buildPluginDescriptor` task by updating the
+`maven-plugin-plugin` version to `3.5.2`.
+
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67986]: https://issues.liferay.com/browse/LPS-67986
 [LPS-71087]: https://issues.liferay.com/browse/LPS-71087
 [LPS-71264]: https://issues.liferay.com/browse/LPS-71264
+[LPS-84213]: https://issues.liferay.com/browse/LPS-84213

@@ -14,7 +14,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.2.0"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.2.1"
 	}
 
 	repositories {
@@ -102,7 +102,7 @@ Property Name | Type | Default Value | Description
 `mavenDebug` | `boolean` | `false` | Whether to invoke the Maven Embedder in debug mode.
 <a name="mavenembedderclasspath"></a>`mavenEmbedderClasspath` | `FileCollection` | `null` | The classpath used to invoke the Maven Embedder.
 `mavenEmbedderMainClassName` | `String` | `"org.apache.maven.cli.MavenCli"` | The Maven Embedder's main class name.
-`mavenPluginPluginVersion` | `String` | `"3.4"` | The version of the [Maven Plugin Plugin](https://maven.apache.org/plugin-tools/maven-plugin-plugin/) to use to generate the plugin descriptor for the project.
+`mavenPluginPluginVersion` | `String` | `"3.5.2"` | The version of the [Maven Plugin Plugin](https://maven.apache.org/plugin-tools/maven-plugin-plugin/) to use to generate the plugin descriptor for the project.
 <a name="mavensettingsfile"></a>`mavenSettingsFile` | `File` | `null` | The custom `settings.xml` file to use. It sets the `--settings` argument on the Maven Embedder invocation.
 <a name="outputdir"></a>`outputDir` | `File` | `null` | The directory where the Maven plugin descriptor files are saved.
 <a name="pomartifactid"></a>`pomArtifactId` | `String` | `null` | The identifier for the artifact that is unique within the group. It sets the value of the [`project.artifactId`](http://maven.apache.org/ref/3.3.3/maven-model/maven.html#class_project) element in the generated `pom.xml` file.

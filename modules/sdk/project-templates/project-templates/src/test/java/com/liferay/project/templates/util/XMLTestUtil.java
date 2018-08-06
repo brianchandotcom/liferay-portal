@@ -31,10 +31,10 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.junit.Assert;
 
-import org.w3c.dom.Comment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 /**
  * @author Andrea Di Giorgi
@@ -76,10 +76,14 @@ public class XMLTestUtil {
 				for (int j = 0; j < cnodeList.getLength(); j++) {
 					Node cnode = cnodeList.item(j);
 
-					if (cnode.getNodeType() == Node.COMMENT_NODE) {
-						Comment comment = (Comment)cnode;
+					if (cnode.getNodeType() == Node.TEXT_NODE) {
+						Text text = (Text)cnode;
 
-						if (comment.getData().equals("ignore")) {
+						String textContent = text.getTextContent();
+
+						if (textContent.contains(
+								"ignore dependency comparison")) {
+
 							ignoreNode = true;
 
 							break;

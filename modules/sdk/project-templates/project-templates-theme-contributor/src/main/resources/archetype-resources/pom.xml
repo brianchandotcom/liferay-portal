@@ -84,12 +84,11 @@
 		</plugins>
 	</build>
 	<dependencies>
-		<dependency>
+		<dependency>## ignore dependency comparison
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.frontend.css.common</artifactId>
 			<version>${com.liferay.frontend.css.common.version}</version>
 			<scope>provided</scope>
-#if (false)<!--ignore-->#end
 		</dependency>
 	</dependencies>
 </project>

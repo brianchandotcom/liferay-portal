@@ -21,6 +21,12 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,10 +92,40 @@ public class ServiceBuilderBatchTestClassGroup
 
 	}
 
-	protected static List<File> getModulesProjectDirs(File modulesDir) {
-		final List<File> modulesProjectDirs = new ArrayList<>();
+	protected static List<File> getModulesProjectDirs(File moduleBaseDir)
+		throws IOException {
 
-		modulesProjectDirs.add(modulesDir);
+		final List<File> modulesProjectDirs = new ArrayList<>();
+		final Path moduleBaseDirPath = moduleBaseDir.toPath();
+
+		Files.walkFileTree(
+			moduleBaseDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path filePath, BasicFileAttributes attrs) {
+
+					if (filePath.equals(moduleBaseDirPath)) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					File currentDirectory = filePath.toFile();
+
+					List<File> serviceXmlFiles =
+						JenkinsResultsParserUtil.findFiles(
+							currentDirectory, "service.xml");
+
+					if (!serviceXmlFiles.isEmpty()) {
+						modulesProjectDirs.add(currentDirectory);
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 
 		return modulesProjectDirs;
 	}
@@ -116,8 +152,6 @@ public class ServiceBuilderBatchTestClassGroup
 			if (!modifiedPortalToolsServiceBuilderFiles.isEmpty()) {
 				_buildType = BuildType.FULL;
 
-				moduleDirsList.add(portalModulesBaseDir);
-
 				return;
 			}
 
@@ -137,23 +171,14 @@ public class ServiceBuilderBatchTestClassGroup
 				}
 			}
 
-			List<File> modifiedModuleDirsList =
+			moduleDirsList.addAll(
 				portalGitWorkingDirectory.getModifiedModuleDirsList(
-					excludesPathMatchers, includesPathMatchers);
-
-			for (File modifiedModuleDir : modifiedModuleDirsList) {
-				List<File> serviceXmlFiles = JenkinsResultsParserUtil.findFiles(
-					modifiedModuleDir, "service.xml");
-
-				if (!serviceXmlFiles.isEmpty()) {
-					moduleDirsList.add(modifiedModuleDir);
-				}
-			}
+					excludesPathMatchers, includesPathMatchers));
 		}
 		else {
 			_buildType = BuildType.FULL;
 
-			moduleDirsList.add(portalModulesBaseDir);
+			return;
 		}
 
 		for (File moduleDir : moduleDirsList) {

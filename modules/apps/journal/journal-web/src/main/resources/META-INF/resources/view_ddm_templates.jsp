@@ -152,11 +152,27 @@ if (layout != null) {
 					/>
 				</c:if>
 
-				<liferay-ui:search-container-column-jsp
+				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="description"
-					path="/template_description.jsp"
-				/>
+				>
+                    <c:if test="<%= Validator.isNotNull(rowHREF) %>">
+                        <a href="<%= rowHREF %>">
+                    </c:if>
+
+                    <c:choose>
+                        <c:when test="<%= template.isSmallImage() %>">
+                            <img alt="<%= HtmlUtil.escape(template.getName(locale)) %>" class="lfr-ddm-small-image-view" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
+                        </c:when>
+                        <c:otherwise>
+                            <%= HtmlUtil.escape(template.getDescription(locale)) %>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <c:if test="<%= Validator.isNotNull(rowHREF) %>">
+                        </a>
+                    </c:if>
+                </liferay-ui:search-container-column-text>
 
 				<c:if test='<%= !excludedColumnNames.contains("structure") && (structure == null) %>'>
 

@@ -4,6 +4,26 @@ body:not(.has-contextual-sidebar) .contextual-sidebar-content {
 	padding-right: $contextualSidebarContentPadding;
 }
 
+.btn-link {
+	z-index: 6;
+}
+
+.drag-card{
+	z-index: 5;
+	overflow: hidden;
+}
+
+.drag-handler {
+	background-color: transparent;
+	cursor: move;
+	display: block;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 5;
+}
+
 .fragments-editor .contextual-sidebar.fragments-editor-sidebar {
 	height: calc(100vh - #{$controlMenuHeight} - #{$managementBarHeight});
 	margin-top: 2px;

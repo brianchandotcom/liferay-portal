@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="uoei" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_14.jpg" title="content_14.jpg" type="document">$content_14.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="zqtz" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[The Earth was small]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="cgey" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[light blue, and so touchingly alone]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="whyt" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>The Earth was small, light blue, and so touchingly alone, our home that must be defended like a holy relic. The Earth was absolutely round. I believe I never knew what the word round meant until I saw Earth from space.</p>
+<p>You know, being a test pilot isn't always the healthiest business in the world.</p>
+<p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &mdash; an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+<p>We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one which we intend to win.</p>
+<p>Many say exploration is part of our destiny, but it&rsquo;s actually our duty to future generations and their quest to ensure the survival of the human species.</p>
+<p>It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my thumb and shut one eye, and my thumb blotted out the planet Earth. I didn't feel like a giant. I felt very, very small.</p>
+<p>Failure is not an option.</p>
+<p>It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my thumb and shut one eye, and my thumb blotted out the planet Earth. I didn't feel like a giant. I felt very, very small.</p>
+<p>We want to explore. We&rsquo;re curious people. Look back over history, people have put their lives at stake to go out and explore &hellip; We believe in what we&rsquo;re doing. Now it&rsquo;s time to go.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

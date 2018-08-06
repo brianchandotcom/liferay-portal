@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="lccv" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_02.jpg" title="content_02.jpg" type="document">$content_02.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="ovek" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[We have an infinite amount to learn]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="coan" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[both from nature and from each other]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="sjrs" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>We have an infinite amount to learn both from nature and from each other</p>
+<p>I don't know what you could say about a day in which you have seen four beautiful sunsets.</p>
+<p>That's one small step for [a] man, one giant leap for mankind.</p>
+<p>There can be no thought of finishing for &lsquo;aiming for the stars.&rsquo; Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
+<p>The regret on our side is, they used to say years ago, we are reading about you in science class. Now they say, we are reading about you in history class.</p>
+<p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.</p>
+<p>Failure is not an option.</p>
+<p>To be the first to enter the cosmos, to engage, single-handed, in an unprecedented duel with nature&mdash;could one dream of anything more?</p>
+<p>To be the first to enter the cosmos, to engage, single-handed, in an unprecedented duel with nature&mdash;could one dream of anything more?</p>
+<p>Dinosaurs are extinct today because they lacked opposable thumbs and the brainpower to build a space program.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

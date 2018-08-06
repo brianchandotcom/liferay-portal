@@ -182,11 +182,11 @@ public class BundlePortletApp implements PortletApp {
 	}
 
 	public int getSpecMajorVersion() {
-		return _portletApp.getSpecMajorVersion();
+		return _specMajorVersion;
 	}
 
 	public int getSpecMinorVersion() {
-		return _portletApp.getSpecMinorVersion();
+		return _specMinorVersion;
 	}
 
 	@Override
@@ -225,11 +225,11 @@ public class BundlePortletApp implements PortletApp {
 	}
 
 	public void setSpecMajorVersion(int specMajorVersion) {
-		_portletApp.setSpecMajorVersion(specMajorVersion);
+		_specMajorVersion = specMajorVersion;
 	}
 
 	public void setSpecMinorVersion(int specMinorVersion) {
-		_portletApp.setSpecMinorVersion(specMinorVersion);
+		_specMinorVersion = specMinorVersion;
 	}
 
 	@Override
@@ -248,5 +248,7 @@ public class BundlePortletApp implements PortletApp {
 	private final PortletApp _portletApp;
 	private final ServiceTracker
 		<ServletContextHelperRegistration, ServletContext> _serviceTracker;
+	private int _specMajorVersion = 2;
+	private int _specMinorVersion;
 
 }

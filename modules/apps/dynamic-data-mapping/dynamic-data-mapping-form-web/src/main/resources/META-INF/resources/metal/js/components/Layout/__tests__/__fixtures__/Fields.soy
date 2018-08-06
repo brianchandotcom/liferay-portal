@@ -1,0 +1,28 @@
+{namespace Fields}
+
+{template .render}
+	{@param? type: string}
+
+	{switch $type}
+		{case 'text'}
+			{call .Text /}
+		{case 'select'}
+			{call .Select /}
+		{case 'radio'}
+			{call .Radio /}
+		{default}
+			<div>Undefined template.</div>
+	{/switch}
+{/template}
+
+{template .Text}
+	<p>Text Field</p>
+{/template}
+
+{template .Radio}
+	<p>Radio Field</p>
+{/template}
+
+{template .Select}
+	<p>Select Field</p>
+{/template}

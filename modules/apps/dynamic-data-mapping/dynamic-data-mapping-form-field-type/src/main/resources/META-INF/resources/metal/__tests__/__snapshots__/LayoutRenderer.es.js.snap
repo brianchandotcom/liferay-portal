@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout Render should render fields 1`] = `
+<div>
+  <div class="form-group">
+    <label></label>
+    <label class="toggle-switch">
+      <input class="toggle-switch-check" type="checkbox">
+      <span class="toggle-switch-label"></span>
+      <span aria-hidden="true" class="toggle-switch-bar">
+        <span class="toggle-switch-handle"></span>
+      </span>
+    </label>
+    <span class="form-text"></span>
+  </div>
+  <div class="form-group">
+    <label></label>
+    <div class="input-group">
+      <div class="input-group-item input-group-prepend">
+        <input class="form-control" placeholder="__/__/____" type="text" disabled="">
+      </div>
+    </div>
+    <span class="form-text"></span>
+  </div>
+  <div class="form-group">
+    <label></label>
+    <div class="liferay-ddm-form-field-grid table-responsive">
+      <table class="table table-autofit table-list table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>col1</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr name="jehf">
+            <td>row</td>
+            <td>
+              <input class="form-builder-grid-field" data-row-index="0" name="jehf" type="radio" value="fieldId">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <span class="form-text"></span>
+  </div>
+  <div class="form-group">
+    <label></label>
+    <div class="form-builder-select-field input-group-container">
+      <div class="form-control select-field-trigger" disabled="">
+        <div class="option-selected option-selected-placeholder">Choose an Option</div>
+        <a class="select-arrow-down-container" href="javascript:;"></a>
+      </div>
+    </div>
+    <div class="dropdown-menu">
+      <ul class="list-unstyled">
+        <li class="dropdown-item">Option 1</li>
+        <li class="dropdown-item">Option 2</li>
+      </ul>
+    </div>
+    <span class="form-text"></span>
+  </div>
+  <div class="form-group">
+    <label></label>
+    <input class="form-control" type="text">
+    <span class="form-text"></span>
+  </div>
+  <div class="form-group">
+    <label></label>
+    <span class="form-text"></span>
+  </div>
+</div>
+`;

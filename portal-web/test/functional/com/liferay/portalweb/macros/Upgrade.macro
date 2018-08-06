@@ -1256,6 +1256,80 @@
 			<var name="userLastName" value="Userln" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Document" />
+		</execute>
+
+		<execute macro="DMPortlet#setDescriptiveView" />
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="Document1" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
+
+		<execute macro="DMDocument#expandInfo" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" value1="1.0">
+			<var name="key_dmDocumentVersionNumber" value="1.0" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (22KB)">
+			<var name="key_dmDocumentSize" value="22KB" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
+			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#viewFrontPagePG">
+			<var name="wikiPageContent" value="Wiki Front Page Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
+			<var name="key_pageName" value="Site Page" />
+		</execute>
+
 		<execute macro="SignOut#signOut" />
 
 		<execute macro="SignIn#signIn" />

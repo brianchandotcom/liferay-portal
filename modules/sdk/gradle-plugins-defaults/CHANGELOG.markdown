@@ -4256,6 +4256,12 @@ to Maven.
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.95.
 
+## 5.5.1 - 2018-08-02
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.96.
+
 ## 5.5.2 - 2018-08-02
 
 ### Fixed

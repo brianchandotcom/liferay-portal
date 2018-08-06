@@ -58,9 +58,10 @@ public class SaveFormInstanceMVCActionCommand
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
 
-		String mvcPath = ParamUtil.getString(actionRequest, "mvcPath");
+		String mvcPath = ParamUtil.getString(
+			actionRequest, "mvcRenderCommandName");
 
-		portletURL.setParameter("mvcPath", mvcPath);
+		portletURL.setParameter("mvcRenderCommandName", mvcPath);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

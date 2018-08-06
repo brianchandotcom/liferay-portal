@@ -54,7 +54,7 @@ public class MediaObjectCreatorForm {
 		).addOptionalString(
 			"description", MediaObjectCreatorForm::_setDescription
 		).addOptionalString(
-			"title", MediaObjectCreatorForm::_setTitle
+			"headline", MediaObjectCreatorForm::_setTitle
 		).addOptionalStringList(
 			"keywords", MediaObjectCreatorForm::_setKeywords
 		).addRequiredFile(

@@ -14,7 +14,7 @@
 
 			<@liferay_journal["journal-article"]
 				articleId=assetObject.getArticleId()
-				ddmTemplateKey="Porygon_Entry"
+				ddmTemplateKey="PORYGON_ENTRY"
 				groupId=assetObject.getGroupId()
 			/>
 		</#list>

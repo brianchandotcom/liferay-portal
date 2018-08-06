@@ -4256,11 +4256,39 @@ to Maven.
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.95.
 
-## 5.5.2 - 2018-08-01
+## 5.5.1 - 2018-08-02
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.96.
+
+## 5.5.2 - 2018-08-02
+
+### Changed
+- [LPS-76475]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.97.
 
 ### Fixed
 - [LPS-84055]: The `printDependentArtifact` task should print the project
 directory when it has a dependency with version `default`.
+
+## 5.5.3 - 2018-08-05
+
+### Changed
+- [LPS-83705]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.98.
+
+## 5.5.4 - 2018-08-06
+
+### Changed
+- [LPS-78033]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.99.
+
+## 5.5.5 - 2018-08-06
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.100.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
@@ -4569,6 +4597,7 @@ directory when it has a dependency with version `default`.
 [LPS-76226]: https://issues.liferay.com/browse/LPS-76226
 [LPS-76256]: https://issues.liferay.com/browse/LPS-76256
 [LPS-76326]: https://issues.liferay.com/browse/LPS-76326
+[LPS-76475]: https://issues.liferay.com/browse/LPS-76475
 [LPS-76601]: https://issues.liferay.com/browse/LPS-76601
 [LPS-76623]: https://issues.liferay.com/browse/LPS-76623
 [LPS-76626]: https://issues.liferay.com/browse/LPS-76626
@@ -4715,6 +4744,7 @@ directory when it has a dependency with version `default`.
 [LPS-84027]: https://issues.liferay.com/browse/LPS-84027
 [LPS-84039]: https://issues.liferay.com/browse/LPS-84039
 [LPS-84055]: https://issues.liferay.com/browse/LPS-84055
+[LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

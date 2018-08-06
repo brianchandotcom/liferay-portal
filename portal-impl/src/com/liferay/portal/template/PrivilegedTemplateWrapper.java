@@ -33,7 +33,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Tina Tian
  * @author Shuyang Zhou
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class PrivilegedTemplateWrapper implements Template {
 
 	public PrivilegedTemplateWrapper(

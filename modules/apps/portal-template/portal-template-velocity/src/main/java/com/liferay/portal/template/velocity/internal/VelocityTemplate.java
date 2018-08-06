@@ -24,10 +24,6 @@ import com.liferay.portal.template.TemplateResourceThreadLocal;
 
 import java.io.Writer;
 
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
-
 import java.util.Map;
 
 import org.apache.velocity.Template;
@@ -45,7 +41,7 @@ public class VelocityTemplate extends AbstractSingleResourceTemplate {
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		VelocityEngine velocityEngine,
 		TemplateContextHelper templateContextHelper,
-		int resourceModificationCheckInterval, boolean privileged) {
+		int resourceModificationCheckInterval) {
 
 		super(
 			templateResource, errorTemplateResource, context,
@@ -54,7 +50,6 @@ public class VelocityTemplate extends AbstractSingleResourceTemplate {
 
 		_velocityContext = new VelocityContext(super.context);
 		_velocityEngine = velocityEngine;
-		_privileged = privileged;
 	}
 
 	@Override
@@ -97,22 +92,11 @@ public class VelocityTemplate extends AbstractSingleResourceTemplate {
 			TemplateConstants.LANG_TYPE_VM, templateResource);
 
 		try {
-			Template template = null;
-
-			if (_privileged) {
-				template = AccessController.doPrivileged(
-					new TemplatePrivilegedExceptionAction(templateResource));
-			}
-			else {
-				template = _velocityEngine.getTemplate(
-					getTemplateResourceUUID(templateResource),
-					TemplateConstants.DEFAUT_ENCODING);
-			}
+			Template template = _velocityEngine.getTemplate(
+				getTemplateResourceUUID(templateResource),
+				TemplateConstants.DEFAUT_ENCODING);
 
 			template.merge(_velocityContext, writer);
-		}
-		catch (PrivilegedActionException pae) {
-			throw pae.getException();
 		}
 		finally {
 			TemplateResourceThreadLocal.setTemplateResource(
@@ -120,28 +104,7 @@ public class VelocityTemplate extends AbstractSingleResourceTemplate {
 		}
 	}
 
-	private final boolean _privileged;
 	private final VelocityContext _velocityContext;
 	private final VelocityEngine _velocityEngine;
-
-	private class TemplatePrivilegedExceptionAction
-		implements PrivilegedExceptionAction<Template> {
-
-		public TemplatePrivilegedExceptionAction(
-			TemplateResource templateResource) {
-
-			_templateResource = templateResource;
-		}
-
-		@Override
-		public Template run() throws Exception {
-			return _velocityEngine.getTemplate(
-				getTemplateResourceUUID(_templateResource),
-				TemplateConstants.DEFAUT_ENCODING);
-		}
-
-		private final TemplateResource _templateResource;
-
-	}
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.template.velocity.internal;
 
-import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -29,12 +28,6 @@ import java.io.IOException;
 import java.io.Reader;
 
 import java.lang.reflect.Field;
-
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
-
-import java.util.List;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.Template;
@@ -82,75 +75,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 
 	@Override
 	public Resource getResource(
-			final String resourceName, final int resourceType,
-			final String encoding)
-		throws Exception, ParseErrorException, ResourceNotFoundException {
-
-		for (String macroTemplateId : _macroTemplateIds) {
-			if (resourceName.equals(macroTemplateId)) {
-
-				// This resource is provided by the portal, so invoke it from an
-				// access controller
-
-				try {
-					return AccessController.doPrivileged(
-						new ResourcePrivilegedExceptionAction(
-							resourceName, resourceType, encoding));
-				}
-				catch (PrivilegedActionException pae) {
-					throw pae.getException();
-				}
-			}
-		}
-
-		return _getResource(resourceName, resourceType, encoding);
-	}
-
-	@Override
-	public synchronized void initialize(RuntimeServices runtimeServices)
-		throws Exception {
-
-		ExtendedProperties extendedProperties =
-			runtimeServices.getConfiguration();
-
-		Field field = ReflectionUtil.getDeclaredField(
-			RuntimeInstance.class, "configuration");
-
-		field.set(
-			runtimeServices, new FastExtendedProperties(extendedProperties));
-
-		_macroTemplateIds = StringPlus.asList(
-			extendedProperties.get(VelocityEngine.VM_LIBRARY));
-		_resourceModificationCheckInterval = GetterUtil.getInteger(
-			extendedProperties.get(
-				"liferay." + VelocityEngine.RESOURCE_LOADER +
-					".resourceModificationCheckInterval"),
-			60);
-		_templateResourceLoader =
-			(TemplateResourceLoader)extendedProperties.get(
-				VelocityTemplateResourceLoader.class.getName());
-
-		super.initialize(runtimeServices);
-	}
-
-	private Template _createTemplate(TemplateResource templateResource)
-		throws IOException {
-
-		Template template = new LiferayTemplate(templateResource);
-
-		template.setEncoding(TemplateConstants.DEFAUT_ENCODING);
-		template.setName(templateResource.getTemplateId());
-		template.setResourceLoader(new LiferayResourceLoader());
-		template.setRuntimeServices(rsvc);
-
-		template.process();
-
-		return template;
-	}
-
-	private Resource _getResource(
-			final String resourceName, final int resourceType,
-			final String encoding)
+			String resourceName, int resourceType, String encoding)
 		throws Exception, ParseErrorException, ResourceNotFoundException {
 
 		if (resourceType != ResourceManager.RESOURCE_TEMPLATE) {
@@ -190,7 +115,46 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		return template;
 	}
 
-	private List<String> _macroTemplateIds;
+	@Override
+	public synchronized void initialize(RuntimeServices runtimeServices)
+		throws Exception {
+
+		ExtendedProperties extendedProperties =
+			runtimeServices.getConfiguration();
+
+		Field field = ReflectionUtil.getDeclaredField(
+			RuntimeInstance.class, "configuration");
+
+		field.set(
+			runtimeServices, new FastExtendedProperties(extendedProperties));
+
+		_resourceModificationCheckInterval = GetterUtil.getInteger(
+			extendedProperties.get(
+				"liferay." + VelocityEngine.RESOURCE_LOADER +
+					".resourceModificationCheckInterval"),
+			60);
+		_templateResourceLoader =
+			(TemplateResourceLoader)extendedProperties.get(
+				VelocityTemplateResourceLoader.class.getName());
+
+		super.initialize(runtimeServices);
+	}
+
+	private Template _createTemplate(TemplateResource templateResource)
+		throws IOException {
+
+		Template template = new LiferayTemplate(templateResource);
+
+		template.setEncoding(TemplateConstants.DEFAUT_ENCODING);
+		template.setName(templateResource.getTemplateId());
+		template.setResourceLoader(new LiferayResourceLoader());
+		template.setRuntimeServices(rsvc);
+
+		template.process();
+
+		return template;
+	}
+
 	private final PortalCache<TemplateResource, Object> _portalCache;
 	private int _resourceModificationCheckInterval = 60;
 	private TemplateResourceLoader _templateResourceLoader;
@@ -223,28 +187,6 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		}
 
 		private final TemplateResource _templateResource;
-
-	}
-
-	private class ResourcePrivilegedExceptionAction
-		implements PrivilegedExceptionAction<Resource> {
-
-		public ResourcePrivilegedExceptionAction(
-			String resourceName, int resourceType, String encoding) {
-
-			_resourceName = resourceName;
-			_resourceType = resourceType;
-			_encoding = encoding;
-		}
-
-		@Override
-		public Resource run() throws Exception {
-			return _getResource(_resourceName, _resourceType, _encoding);
-		}
-
-		private final String _encoding;
-		private final String _resourceName;
-		private final int _resourceType;
 
 	}
 

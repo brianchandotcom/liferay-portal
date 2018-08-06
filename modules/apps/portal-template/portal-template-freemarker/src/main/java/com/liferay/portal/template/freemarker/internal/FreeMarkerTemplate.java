@@ -42,8 +42,6 @@ import freemarker.template.utility.ObjectWrapperWithAPISupport;
 import java.io.Serializable;
 import java.io.Writer;
 
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
 import java.util.HashMap;
@@ -59,15 +57,13 @@ public class FreeMarkerTemplate extends AbstractSingleResourceTemplate {
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		Configuration configuration,
-		TemplateContextHelper templateContextHelper, boolean privileged,
-		long interval) {
+		TemplateContextHelper templateContextHelper, long interval) {
 
 		super(
 			templateResource, errorTemplateResource, context,
 			templateContextHelper, TemplateConstants.LANG_TYPE_FTL, interval);
 
 		_configuration = configuration;
-		_privileged = privileged;
 	}
 
 	@Override
@@ -120,25 +116,14 @@ public class FreeMarkerTemplate extends AbstractSingleResourceTemplate {
 			TemplateConstants.LANG_TYPE_FTL, templateResource);
 
 		try {
-			Template template = null;
-
-			if (_privileged) {
-				template = AccessController.doPrivileged(
-					new TemplatePrivilegedExceptionAction(templateResource));
-			}
-			else {
-				template = _configuration.getTemplate(
-					getTemplateResourceUUID(templateResource),
-					TemplateConstants.DEFAUT_ENCODING);
-			}
+			Template template = _configuration.getTemplate(
+				getTemplateResourceUUID(templateResource),
+				TemplateConstants.DEFAUT_ENCODING);
 
 			template.process(
 				new CachableDefaultMapAdapter(
 					context, template.getObjectWrapper()),
 				writer);
-		}
-		catch (PrivilegedActionException pae) {
-			throw pae.getException();
 		}
 		finally {
 			TemplateResourceThreadLocal.setTemplateResource(
@@ -150,7 +135,6 @@ public class FreeMarkerTemplate extends AbstractSingleResourceTemplate {
 		new TemplateModel() {};
 
 	private final Configuration _configuration;
-	private final boolean _privileged;
 
 	private class CachableDefaultMapAdapter
 		extends WrappingTemplateModel

@@ -351,11 +351,11 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, boolean restricted,
-		Map<String, Object> helperUtilities, boolean privileged) {
+		Map<String, Object> helperUtilities) {
 
 		Template template = new FreeMarkerTemplate(
 			templateResource, errorTemplateResource, helperUtilities,
-			_configuration, templateContextHelper, privileged,
+			_configuration, templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		if (restricted) {

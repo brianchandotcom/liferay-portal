@@ -33,10 +33,6 @@ import java.io.IOException;
 
 import java.lang.reflect.Constructor;
 
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
-
 import java.util.Locale;
 
 /**
@@ -76,38 +72,6 @@ public class LiferayTemplateCache extends TemplateCache {
 	public MaybeMissingTemplate getTemplate(
 			String templateId, Locale locale, Object customLookupCondition,
 			String encoding, boolean parse)
-		throws IOException {
-
-		for (String macroTemplateId :
-				_freeMarkerEngineConfiguration.macroLibrary()) {
-
-			int pos = macroTemplateId.indexOf(" as ");
-
-			if (pos != -1) {
-				macroTemplateId = macroTemplateId.substring(0, pos);
-			}
-
-			if (templateId.equals(macroTemplateId)) {
-
-				// This template is provided by the portal, so invoke it from an
-				// access controller
-
-				try {
-					return AccessController.doPrivileged(
-						new TemplatePrivilegedExceptionAction(
-							macroTemplateId, locale, encoding));
-				}
-				catch (PrivilegedActionException pae) {
-					throw (IOException)pae.getException();
-				}
-			}
-		}
-
-		return _getTemplate(templateId, locale, encoding);
-	}
-
-	private MaybeMissingTemplate _getTemplate(
-			String templateId, Locale locale, String encoding)
 		throws IOException {
 
 		if (templateId == null) {
@@ -177,27 +141,5 @@ public class LiferayTemplateCache extends TemplateCache {
 	private final FreeMarkerEngineConfiguration _freeMarkerEngineConfiguration;
 	private final PortalCache<TemplateResource, Object> _portalCache;
 	private final TemplateResourceLoader _templateResourceLoader;
-
-	private class TemplatePrivilegedExceptionAction
-		implements PrivilegedExceptionAction<MaybeMissingTemplate> {
-
-		public TemplatePrivilegedExceptionAction(
-			String templateId, Locale locale, String encoding) {
-
-			_templateId = templateId;
-			_locale = locale;
-			_encoding = encoding;
-		}
-
-		@Override
-		public MaybeMissingTemplate run() throws Exception {
-			return _getTemplate(_templateId, _locale, _encoding);
-		}
-
-		private final String _encoding;
-		private final Locale _locale;
-		private final String _templateId;
-
-	}
 
 }

@@ -21,7 +21,7 @@
 
 						<@liferay_journal["journal-article"]
 							articleId=assetObject.getArticleId()
-							ddmTemplateKey="Porygon_carousel"
+							ddmTemplateKey="PORYGON_CAROUSEL"
 							groupId=assetObject.getGroupId()
 						/>
 					</div>

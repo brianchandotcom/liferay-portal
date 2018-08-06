@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -146,7 +147,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 			_addApplicationDisplayTemplates(serviceContext);
 
-			_addDDMStructure(serviceContext);
+			DDMStructure ddmStructure = _addDDMStructure(serviceContext);
+
+			_addDDMTemplates(ddmStructure, serviceContext);
 
 			_addLayouts(_LAYOUT_NAMES, serviceContext);
 		}
@@ -195,7 +198,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addDDMStructure(ServiceContext serviceContext)
+	private DDMStructure _addDDMStructure(ServiceContext serviceContext)
 		throws Exception {
 
 		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
@@ -225,13 +228,47 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		DDMFormLayout ddmFormLayout =
 			_ddmFormLayoutJSONDeserializer.deserialize(layout);
 
-		_ddmStructureLocalService.addStructure(
+		return _ddmStructureLocalService.addStructure(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			_portal.getClassNameId(JournalArticle.class), "porygon-entry",
 			nameMap, descriptionMap, ddmForm, ddmFormLayout,
 			StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT,
 			serviceContext);
+	}
+
+	private void _addDDMTemplates(
+			DDMStructure ddmStructure, ServiceContext serviceContext)
+		throws Exception {
+
+		Enumeration<URL> urls = _bundle.findEntries(
+			_PATH + "/journal/structures/porygon_entry/templates", "*", false);
+
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+
+			String script = StringUtil.read(url.openStream());
+
+			String ddmTemplateKey = FileUtil.stripExtension(
+				FileUtil.getShortFileName(url.getPath()));
+
+			String ddmTemplateName = StringUtil.upperCaseFirstLetter(
+				StringUtil.replace(ddmTemplateKey, '_', ' '));
+
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(LocaleUtil.getSiteDefault(), ddmTemplateName);
+
+			_ddmTemplateLocalService.addTemplate(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(), ddmStructure.getClassNameId(),
+				ddmTemplateKey, nameMap, null,
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+				DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+				TemplateConstants.LANG_TYPE_FTL, script, true, false,
+				StringPool.BLANK, null, serviceContext);
+		}
 	}
 
 	private LayoutPageTemplateEntry _addDisplayPageEntry(

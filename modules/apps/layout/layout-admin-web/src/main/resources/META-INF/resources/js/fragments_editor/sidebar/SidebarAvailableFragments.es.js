@@ -22,7 +22,8 @@ class SidebarAvailableFragments extends Component {
 		this._dragDrop = new DragDrop(
 			{
 				dragPlaceholder: Drag.Placeholder.CLONE,
-				sources: '.card-title',
+				handles: '.drag-handler',
+				sources: '.drag-card',
 				targets: `.${this.dropTargetClass}`
 			}
 		);

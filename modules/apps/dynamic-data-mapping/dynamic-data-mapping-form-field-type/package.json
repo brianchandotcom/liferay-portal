@@ -30,6 +30,9 @@
 		"rimraf": "^2.6.2"
 	},
 	"jest": {
+		"moduleNameMapper": {
+			"clay-(.*)$": "<rootDir>/node_modules/clay-$1"
+		},
 		"modulePathIgnorePatterns": [
 			"/__fixtures__/",
 			"/classes/"
@@ -47,8 +50,10 @@
 	"name": "dynamic-data-mapping-form-field-type",
 	"private": true,
 	"scripts": {
-		"build": "npm run soy && babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,*_field*.js,*_support.js,src/**/__tests__/*.js,src/**/__tests__/*/*.js && liferay-npm-bundler && rimraf src/**/*.soy.js",
-		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'"
+		"build": "npm run soy && babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,*_field*.js,*_support.js,src/**/__tests__/*.js,src/**/__tests__/*/*.js && liferay-npm-bundler && npm run clean",
+		"clean": "rimraf src/**/*.soy.js",
+		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
+		"test": "npm run soy && NODE_ENV=test jest && npm run clean"
 	},
 	"version": "4.0.0"
 }

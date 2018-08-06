@@ -42,10 +42,12 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.HeaderRequest;
@@ -83,17 +85,48 @@ public class HeaderResponseImpl
 		}
 
 		if (xml != null) {
+
+			xml = StringUtil.trim(xml);
+
+			if (xml.isEmpty()) {
+				return;
+			}
+
+			xml = _addClosingTags(xml);
+
 			List<ParsedElement> parsedElements = _parseElements(xml);
+
+			if (parsedElements.isEmpty()) {
+				return;
+			}
 
 			if (parsedElements.size() > 1) {
 				throw new IllegalArgumentException(
 					"More than one element in markup: " + xml);
+			}
+
+			ParsedElement parsedElement = parsedElements.get(0);
+
+			if (!parsedElement.isValid()) {
+				throw new IllegalArgumentException(
+					"Invalid dependency: " + xml);
 			}
 		}
 
 		PortletDependency portletDependency =
 			PortletDependencyFactoryUtil.createPortletDependency(
 				name, scope, version, xml, portletRequestImpl);
+
+		if (PortletDependency.Type.OTHER.equals(portletDependency.getType())) {
+			if (xml != null) {
+				throw new IllegalArgumentException(
+					"Invalid dependency markup: " + xml);
+			}
+
+			_log.error("Unable to add dependency: " + portletDependency);
+
+			return;
+		}
 
 		Portlet portlet = getPortlet();
 
@@ -259,6 +292,26 @@ public class HeaderResponseImpl
 		}
 	}
 
+	private String _addClosingTags(String xml) {
+		if (xml.contains("<link")) {
+			xml = xml.replaceAll("(<link[^>]*)>(?!\\s*</link>)", "$1></link>");
+		}
+
+		if (xml.contains("<LINK")) {
+			xml = xml.replaceAll("(<LINK[^>]*)>(?!\\s*</LINK>)", "$1></LINK>");
+		}
+
+		if (xml.contains("<meta")) {
+			xml = xml.replaceAll("(<meta[^>]*)>(?!\\s*</meta>)", "$1></meta>");
+		}
+
+		if (xml.contains("<META")) {
+			xml = xml.replaceAll("(<META[^>]*)>(?!\\s*</META>)", "$1></META>");
+		}
+
+		return xml;
+	}
+
 	private void _addDependencyToHead(
 		String name, String scope, String version, ParsedElement parsedElement,
 		PortletDependency portletDependency) {
@@ -267,10 +320,16 @@ public class HeaderResponseImpl
 			scope = StringPool.BLANK;
 		}
 
-		SemVer semVer = SemVer._DEFAULT;
+		SemVer semVer;
+		String versionKey;
 
-		if (Validator.isNotNull(version)) {
+		if (Validator.isNull(version)) {
+			semVer = SemVer._DEFAULT;
+			versionKey = StringUtil.randomId();
+		}
+		else {
 			semVer = new SemVer(version);
+			versionKey = version;
 		}
 
 		HeaderRequest headerRequest = (HeaderRequest)getPortletRequest();
@@ -322,7 +381,7 @@ public class HeaderResponseImpl
 		sb.append(StringPool.COLON);
 		sb.append(scope);
 		sb.append(StringPool.COLON);
-		sb.append(version);
+		sb.append(versionKey);
 
 		String outputKey = sb.toString();
 
@@ -347,6 +406,24 @@ public class HeaderResponseImpl
 			return;
 		}
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Markup before conversion to well-formed XML:" + xml);
+		}
+
+		if (!xml.startsWith("<head>")) {
+			xml = "<head>".concat(xml);
+		}
+
+		if (!xml.endsWith("</head>")) {
+			xml = xml.concat("</head>");
+		}
+
+		xml = _addClosingTags(xml);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Markup after conversion to well-formed XML:" + xml);
+		}
+
 		for (ParsedElement parsedElement : _parseElements(xml)) {
 			_addDependencyToHead(name, scope, null, parsedElement, null);
 		}
@@ -364,40 +441,80 @@ public class HeaderResponseImpl
 			xmlStreamReader = xmlInputFactory.createXMLStreamReader(
 				new UnsyncStringReader(xml));
 
+			Map<String, String> elementAttributes = null;
+			String elementName = null;
+			StringBundler elementTextSB = null;
+
 			while (xmlStreamReader.hasNext()) {
 				int event = xmlStreamReader.next();
 
-				if (event == XMLStreamConstants.START_ELEMENT) {
-					String elementName = xmlStreamReader.getLocalName();
+				if (elementTextSB == null) {
+					elementTextSB = new StringBundler();
+				}
 
-					if (elementName.equals("link") ||
-						elementName.equals("script")) {
+				if (event == XMLStreamConstants.CHARACTERS) {
+					String text = xmlStreamReader.getText();
 
-						Map<String, String> elementAttributes =
-							new LinkedHashMap<>();
+					if (text != null) {
+						text = StringUtil.trim(text);
 
-						int attributeCount =
-							xmlStreamReader.getAttributeCount();
-
-						for (int i = 0; i < attributeCount; i++) {
-							elementAttributes.put(
-								xmlStreamReader.getAttributeLocalName(i),
-								xmlStreamReader.getAttributeValue(i));
+						if (!text.isEmpty()) {
+							elementTextSB.append(text);
 						}
-
+					}
+				}
+				else if (event == XMLStreamConstants.COMMENT) {
+					if (elementName != null) {
+						elementTextSB.append("\n<!--");
+						elementTextSB.append(xmlStreamReader.getText());
+						elementTextSB.append("-->");
+					}
+				}
+				else if (event == XMLStreamConstants.END_ELEMENT) {
+					if (elementName != null) {
 						parsedElements.add(
 							new ParsedElement(
 								elementName, elementAttributes,
-								xmlStreamReader.getElementText()));
+								elementTextSB.toString(), true));
+
+						elementAttributes = null;
+						elementName = null;
+						elementTextSB = null;
 					}
-					else {
-						_log.error("Invalid element: " + elementName);
+				}
+				else if (event == XMLStreamConstants.START_ELEMENT) {
+					String localName = xmlStreamReader.getLocalName();
+
+					if (!localName.equals("head")) {
+						if (localName.equals("link") ||
+							localName.equals("meta") ||
+							localName.equals("script") ||
+							localName.equals("style")) {
+
+							elementName = localName;
+
+							elementAttributes = new LinkedHashMap<>();
+
+							int attributeCount =
+								xmlStreamReader.getAttributeCount();
+
+							for (int i = 0; i < attributeCount; i++) {
+								elementAttributes.put(
+									xmlStreamReader.getAttributeLocalName(i),
+									xmlStreamReader.getAttributeValue(i));
+							}
+						}
+						else {
+							throw new XMLStreamException(
+								"Invalid element: " + localName);
+						}
 					}
 				}
 			}
 		}
 		catch (XMLStreamException xmlse) {
-			_log.error("Invalid markup: " + xml, xmlse);
+			_log.error(xmlse.getMessage());
+			parsedElements.add(new ParsedElement(null, null, null, false));
 		}
 		finally {
 			if (xmlStreamReader != null) {
@@ -425,10 +542,14 @@ public class HeaderResponseImpl
 
 	private static class ParsedElement {
 
+		public boolean isValid() {
+			return _valid;
+		}
+
 		public StringBundler toStringBundler() {
 			StringBundler sb = new StringBundler(_attributes.size() * 5 + 7);
 
-			sb.append(StringPool.LESS_THAN);
+			sb.append("\n<");
 			sb.append(_name);
 
 			for (Map.Entry<String, String> entry : _attributes.entrySet()) {
@@ -440,25 +561,43 @@ public class HeaderResponseImpl
 			}
 
 			sb.append(StringPool.GREATER_THAN);
-			sb.append(_text);
-			sb.append("</");
-			sb.append(_name);
-			sb.append(StringPool.GREATER_THAN);
+
+			if (!Objects.equals(_name, "link") &&
+				!Objects.equals(_name, "meta")) {
+
+				if (_text != null) {
+					sb.append(_text);
+				}
+
+				sb.append("\n</");
+				sb.append(_name);
+				sb.append(StringPool.GREATER_THAN);
+			}
 
 			return sb;
 		}
 
 		private ParsedElement(
-			String name, Map<String, String> attributes, String text) {
+			String name, Map<String, String> attributes, String text,
+			boolean valid) {
 
 			_name = name;
-			_attributes = attributes;
+
+			if (attributes == null) {
+				_attributes = Collections.emptyMap();
+			}
+			else {
+				_attributes = attributes;
+			}
+
 			_text = text;
+			_valid = valid;
 		}
 
 		private final Map<String, String> _attributes;
 		private final String _name;
 		private final String _text;
+		private final boolean _valid;
 
 	}
 

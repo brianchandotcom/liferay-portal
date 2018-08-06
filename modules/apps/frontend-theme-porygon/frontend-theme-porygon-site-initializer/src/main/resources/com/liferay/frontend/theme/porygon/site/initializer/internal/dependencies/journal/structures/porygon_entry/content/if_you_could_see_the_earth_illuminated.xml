@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="zyzh" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_16.jpg" title="content_16.jpg" type="document">$content_16.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="nyuj" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[If you could see the earth illuminated]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="tdjx" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[when you were in a place as dark as night]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="cajv" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>It would look to you more splendid than the moon.</p>
+<p>That's one small step for [a] man, one giant leap for mankind.</p>
+<p>I believe every human has a finite number of heartbeats. I don't intend to waste any of mine</p>
+<p>The dreams of yesterday are the hopes of today and the reality of tomorrow.</p>
+<p>The path of a cosmonaut is not an easy, triumphant march to glory. You have to get to know the meaning not just of joy but also of grief, before being allowed in the spacecraft cabin.</p>
+<p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &mdash; an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+<p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+<p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
+<p>The Earth was small, light blue, and so touchingly alone, our home that must be defended like a holy relic. The Earth was absolutely round. I believe I never knew what the word round meant until I saw Earth from space.</p>
+<p>We are all connected; To each other, biologically. To the earth, chemically. To the rest of the universe atomically.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

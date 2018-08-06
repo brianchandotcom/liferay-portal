@@ -4264,6 +4264,10 @@ to Maven.
 
 ## 5.5.2 - 2018-08-02
 
+### Changed
+- [LPS-76475]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.97.
+
 ### Fixed
 - [LPS-84055]: The `printDependentArtifact` task should print the project
 directory when it has a dependency with version `default`.
@@ -4575,6 +4579,7 @@ directory when it has a dependency with version `default`.
 [LPS-76226]: https://issues.liferay.com/browse/LPS-76226
 [LPS-76256]: https://issues.liferay.com/browse/LPS-76256
 [LPS-76326]: https://issues.liferay.com/browse/LPS-76326
+[LPS-76475]: https://issues.liferay.com/browse/LPS-76475
 [LPS-76601]: https://issues.liferay.com/browse/LPS-76601
 [LPS-76623]: https://issues.liferay.com/browse/LPS-76623
 [LPS-76626]: https://issues.liferay.com/browse/LPS-76626

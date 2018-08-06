@@ -30,11 +30,19 @@ public class UnusedVariableCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
+		return new int[] {
+			TokenTypes.CLASS_DEF, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF
+		};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if ((detailAST.getType() == TokenTypes.CLASS_DEF) &&
+			(detailAST.getParent() != null)) {
+
+			return;
+		}
+
 		List<DetailAST> variableDefASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.VARIABLE_DEF);
 
@@ -48,7 +56,14 @@ public class UnusedVariableCheck extends BaseCheck {
 			DetailAST modifiersAST = variableDefAST.findFirstToken(
 				TokenTypes.MODIFIERS);
 
-			if (modifiersAST.getChildCount() > 0) {
+			if (detailAST.getType() == TokenTypes.CLASS_DEF) {
+				if (modifiersAST.branchContains(TokenTypes.ANNOTATION) ||
+					!modifiersAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
+
+					continue;
+				}
+			}
+			else if (modifiersAST.getChildCount() > 0) {
 				continue;
 			}
 
@@ -56,7 +71,9 @@ public class UnusedVariableCheck extends BaseCheck {
 
 			String variableName = nameAST.getText();
 
-			if (Collections.frequency(tokenNames, variableName) == 1) {
+			if (!variableName.equals("serialVersionUID") &&
+				(Collections.frequency(tokenNames, variableName) == 1)) {
+
 				log(
 					variableDefAST.getLineNo(), _MSG_UNUSED_VARIABLE,
 					variableName);

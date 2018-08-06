@@ -475,9 +475,6 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		return assetLinks;
 	}
 
-	private static final String _FIND_BY_ASSET_ENTRY_GROUP_ID =
-		AssetLinkLocalServiceImpl.class.getName() + ".findByAssetEntryGroupId";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetLinkLocalServiceImpl.class);
 

@@ -650,21 +650,14 @@ public class EhcachePortalCacheTest {
 
 	private static final String _KEY_2 = "KEY_2";
 
-	private static final String _KEY_3 = "KEY_3";
-
 	private static final String _NEW_PORTAL_CACHE_NAME =
 		"NEW_PORTAL_CACHE_NAME";
-
-	private static final String _PORTAL_CACHE_MANAGER_NAME =
-		"PORTAL_CACHE_MANAGER_NAME";
 
 	private static final String _PORTAL_CACHE_NAME = "PORTAL_CACHE_NAME";
 
 	private static final String _VALUE_1 = "VALUE_1";
 
 	private static final String _VALUE_2 = "VALUE_2";
-
-	private static final String _VALUE_3 = "VALUE_3";
 
 	private static CacheManager _cacheManager;
 

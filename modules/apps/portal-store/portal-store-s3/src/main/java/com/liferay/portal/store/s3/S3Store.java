@@ -809,7 +809,6 @@ public class S3Store extends BaseStore {
 
 	private static volatile S3StoreConfiguration _s3StoreConfiguration;
 
-	private AbortedMultipartUploadCleaner _abortedMultipartUploadCleaner;
 	private AmazonS3 _amazonS3;
 	private AWSCredentialsProvider _awsCredentialsProvider;
 	private String _bucketName;

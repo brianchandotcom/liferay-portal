@@ -16,7 +16,6 @@ package com.liferay.portal.security.sso.token.internal.verify;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.security.sso.token.internal.constants.LegacyTokenPropsKeys;
 import com.liferay.portal.security.sso.token.internal.constants.TokenConfigurationKeys;
@@ -95,7 +94,6 @@ public class ShibbolethCompanySettingsVerifyProcess
 	}
 
 	private CompanyLocalService _companyLocalService;
-	private PrefsProps _prefsProps;
 	private SettingsFactory _settingsFactory;
 
 }

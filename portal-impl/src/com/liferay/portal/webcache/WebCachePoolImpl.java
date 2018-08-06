@@ -30,16 +30,14 @@ public class WebCachePoolImpl implements WebCachePool {
 
 	@Override
 	public void clear() {
-		PortalCache<String, Object> portalCache =
-			PortalCacheHolder._portalCache;
+		PortalCache<String, Object> portalCache = _getPortalCache();
 
 		portalCache.removeAll();
 	}
 
 	@Override
 	public Object get(String key, WebCacheItem wci) {
-		PortalCache<String, Object> portalCache =
-			PortalCacheHolder._portalCache;
+		PortalCache<String, Object> portalCache = _getPortalCache();
 
 		Object obj = portalCache.get(key);
 
@@ -76,10 +74,17 @@ public class WebCachePoolImpl implements WebCachePool {
 
 	@Override
 	public void remove(String key) {
-		PortalCache<String, Object> portalCache =
-			PortalCacheHolder._portalCache;
+		PortalCache<String, Object> portalCache = _getPortalCache();
 
 		portalCache.remove(key);
+	}
+
+	private PortalCache<String, Object> _getPortalCache() {
+		if (_portalCache == null) {
+			_portalCache = SingleVMPoolUtil.getPortalCache(_CACHE_NAME);
+		}
+
+		return _portalCache;
 	}
 
 	private static final String _CACHE_NAME = WebCachePool.class.getName();
@@ -87,11 +92,6 @@ public class WebCachePoolImpl implements WebCachePool {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WebCachePoolImpl.class);
 
-	private static class PortalCacheHolder {
-
-		private static final PortalCache<String, Object> _portalCache =
-			SingleVMPoolUtil.getPortalCache(_CACHE_NAME);
-
-	}
+	private volatile PortalCache<String, Object> _portalCache;
 
 }

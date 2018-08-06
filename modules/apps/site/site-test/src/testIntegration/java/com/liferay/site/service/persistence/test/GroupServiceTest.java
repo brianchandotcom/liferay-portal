@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -58,6 +60,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -191,6 +195,28 @@ public class GroupServiceTest {
 
 			GroupLocalServiceUtil.deleteGroup(parentGroup);
 		}
+	}
+
+	@Test
+	public void testDeleteGroupRemovesSharedPortletPreferences()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.addPortletPreferences(
+				group.getCompanyId(), group.getGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				PortletKeys.PREFS_PLID_SHARED, RandomTestUtil.randomString(),
+				null, null);
+
+		GroupLocalServiceUtil.deleteGroup(group);
+
+		Assert.assertNull(
+			"Deleting the group should also delete layout type portlet " +
+				"preferences that do no belong to a single layout.",
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				portletPreferences.getPortletPreferencesId()));
 	}
 
 	@Test(expected = NoSuchResourcePermissionException.class)
@@ -1262,5 +1288,8 @@ public class GroupServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.internal.architect.form;
+package com.liferay.structured.content.apio.architect.form;
 
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;

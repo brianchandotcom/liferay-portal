@@ -35,12 +35,14 @@ import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,6 +61,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -128,9 +131,6 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 			List<FileEntry> fileEntries = _addFileEntries(serviceContext);
 
-			Map<String, String> fileEntriesMap = _getFileEntriesMap(
-				fileEntries);
-
 			List<FragmentEntry> fragmentEntries = _addFragmentEntries(
 				fileEntries, serviceContext);
 
@@ -150,6 +150,8 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			DDMStructure ddmStructure = _addDDMStructure(serviceContext);
 
 			_addDDMTemplates(ddmStructure, serviceContext);
+
+			_addJournalArticles(fileEntries, serviceContext);
 
 			_addLayouts(_LAYOUT_NAMES, serviceContext);
 		}
@@ -231,7 +233,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		return _ddmStructureLocalService.addStructure(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-			_portal.getClassNameId(JournalArticle.class), "porygon-entry",
+			_portal.getClassNameId(JournalArticle.class), "PORYGON_ENTRY",
 			nameMap, descriptionMap, ddmForm, ddmFormLayout,
 			StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT,
 			serviceContext);
@@ -393,6 +395,55 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		}
 
 		return fragmentEntries;
+	}
+
+	private List<JournalArticle> _addJournalArticles(
+			List<FileEntry> fileEntries, ServiceContext serviceContext)
+		throws Exception {
+
+		Map<String, String> fileEntriesMap = new HashMap<>();
+
+		for (FileEntry fileEntry : fileEntries) {
+			fileEntriesMap.put(
+				fileEntry.getFileName(),
+				JSONFactoryUtil.looseSerialize(fileEntry));
+		}
+
+		List<JournalArticle> journalArticles = new ArrayList<>();
+
+		Enumeration<URL> urls = _bundle.findEntries(
+			_PATH + "/journal/structures/porygon_entry/content", "*", false);
+
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+
+			String content = StringUtil.replace(
+				StringUtil.read(url.openStream()), StringPool.DOLLAR,
+				StringPool.DOLLAR, fileEntriesMap);
+
+			System.out.println(content);
+
+			String fileName = FileUtil.stripExtension(
+				FileUtil.getShortFileName(url.getPath()));
+
+			String articleName = StringUtil.upperCaseFirstLetter(
+				CamelCaseUtil.toCamelCase(
+					StringUtil.replace(
+						fileName, StringPool.UNDERLINE, StringPool.SPACE)));
+
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(LocaleUtil.getSiteDefault(), articleName);
+
+			JournalArticle article = _journalArticleLocalService.addArticle(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
+				nameMap, null, content, "PORYGON_ENTRY", "PORYGON_ENTRY",
+				serviceContext);
+
+			journalArticles.add(article);
+		}
+
+		return journalArticles;
 	}
 
 	private List<Layout> _addLayouts(
@@ -584,6 +635,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -11,7 +11,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -231,7 +231,7 @@
 		<property name="test.assert.javascript.errors" value="false" />
 		<property name="test.smtp.server.enabled" value="true" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -585,9 +585,9 @@
 	<command name="TestDatabaseConnection" priority="3">
 		<description message="This is a use case for LPS-43525." />
 
-		<var method="TestPropsUtil#get('database.mysql.password')" name="databasePassword" />
-		<var method="TestPropsUtil#get('database.mysql.url')" name="databaseURL" />
-		<var method="TestPropsUtil#get('database.mysql.username')" name="databaseUsername" />
+		<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
+		<var method="PropsUtil#get('database.mysql.url')" name="databaseURL" />
+		<var method="PropsUtil#get('database.mysql.username')" name="databaseUsername" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -616,7 +616,7 @@
 		<property name="test.assert.javascript.errors" value="false" />
 		<property name="test.name.skip.portal.instance" value="CPReportsadmin#ViewEmailNotificationDelivery" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="TestCase#getSiteName">
 			<return name="siteName" />
@@ -630,8 +630,8 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
-			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
+			<var method="PropsUtil#get('email.address.1')" name="userName" />
+			<var method="PropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -652,7 +652,7 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
-			<var method="TestPropsUtil#get('email.address.2')" name="emailNotificationsAddress" />
+			<var method="PropsUtil#get('email.address.2')" name="emailNotificationsAddress" />
 			<var name="emailRecipientAddress" value="test@liferay.com" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportName" value="Custom Report Name" />
@@ -662,8 +662,8 @@
 		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
+			<var method="PropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -706,7 +706,7 @@
 	<command ignore="true" name="ViewEmailRecipientDelivery" priority="4">
 		<property name="test.name.skip.portal.instance" value="CPReportsadmin#ViewEmailRecipientDelivery" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<property name="test.assert.javascript.errors" value="false" />
 
@@ -717,8 +717,8 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
-			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
+			<var method="PropsUtil#get('email.address.1')" name="userName" />
+			<var method="PropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -740,7 +740,7 @@
 
 		<execute macro="ReportsAdmin#addReportEntry">
 			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var method="TestPropsUtil#get('email.address.4')" name="emailRecipientAddress" />
+			<var method="PropsUtil#get('email.address.4')" name="emailRecipientAddress" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
 		</execute>
@@ -748,8 +748,8 @@
 		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
-			<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.4')" name="userPassword" />
+			<var method="PropsUtil#get('email.address.4')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.4')" name="userPassword" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />

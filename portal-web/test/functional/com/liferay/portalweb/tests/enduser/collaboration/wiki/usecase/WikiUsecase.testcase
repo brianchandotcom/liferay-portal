@@ -40,7 +40,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -318,7 +318,7 @@
 			<var name="privacy" value="Private Pages" />
 		</execute>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Research Projects" />

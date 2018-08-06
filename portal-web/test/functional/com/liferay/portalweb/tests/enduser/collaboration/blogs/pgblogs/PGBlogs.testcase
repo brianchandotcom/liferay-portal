@@ -43,7 +43,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -516,7 +516,7 @@
 	<command name="AddCustomURL" priority="4">
 		<description message="This is usecase 3 for LPS-69240" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entrySubtitle" value="Blogs Entry Subtitle" />

@@ -89,7 +89,7 @@
 	</command>
 
 	<command name="viewPGViaFriendlyURL">
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 		<var method="StringUtil#toLowerCase('${siteName}')" name="siteNameURL" />
 
 		<var method="StringUtil#replace('${siteNameURL}', ' ', '-')" name="siteNameURL" />

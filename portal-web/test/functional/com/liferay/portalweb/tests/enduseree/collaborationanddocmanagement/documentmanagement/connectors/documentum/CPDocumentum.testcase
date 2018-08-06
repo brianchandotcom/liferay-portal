@@ -11,7 +11,7 @@
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
 
-		<var method="TestPropsUtil#get('cmis.repository.vm.host.name')" name="documentumVMHostName" />
+		<var method="PropsUtil#get('cmis.repository.vm.host.name')" name="documentumVMHostName" />
 
 		<execute function="AntCommand" locator1="build-test-documentum.xml" value1="clean-documentum-repository -Dssh.host=${documentumVMHostName}" />
 
@@ -114,7 +114,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />

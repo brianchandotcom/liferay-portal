@@ -11,7 +11,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -39,7 +39,7 @@
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="FormRules#ConfigureAutofillRule" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -189,7 +189,7 @@
 		<description message="This is a use case for LPS-71592." />
 		<property name="portal.acceptance" value="true" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -322,7 +322,7 @@
 	<command name="ConfigureRequireRule" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -425,7 +425,7 @@
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="Forms#ConfigureShowRuleUsingAndCondition" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openURL" />
 

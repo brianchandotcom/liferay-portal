@@ -11,7 +11,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -24,7 +24,7 @@
 	<command name="ConfigureAutocompleteWithTextField" priority="5">
 		<property name="test.name.skip.portal.instance" value="FormsDataProvider#ConfigureAutocompleteWithTextField" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -214,7 +214,7 @@
 	<command name="ConfigureWithSelectField" priority="5">
 		<property name="test.name.skip.portal.instance" value="FormsDataProvider#ConfigureWithSelectField" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -335,7 +335,7 @@
 		<description message="This is a use case for LPS-75682." />
 		<property name="test.name.skip.portal.instance" value="FormsDataProvider#ViewDataRetrievedForGuestUser" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openURL" />
 

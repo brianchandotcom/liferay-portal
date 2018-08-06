@@ -26,7 +26,7 @@
 			<return name="currentURL" />
 		</execute>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<var name="isLocalizedURL" value="false" />
 
@@ -65,7 +65,7 @@
 					<return name="currentURL" />
 				</execute>
 
-				<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+				<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 				<execute macro="Navigator#openSpecificURL">
 					<var method="StringUtil#replace('${currentURL}', '${portalURL}', '${portalURL}/${locale}')" name="url" />
@@ -274,7 +274,7 @@
 		<if>
 			<contains string="${baseURL}" substring="{baseURL}" />
 			<then>
-				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+				<var method="PropsUtil#get('portal.url')" name="baseURL" />
 			</then>
 		</if>
 
@@ -290,7 +290,7 @@
 		<if>
 			<contains string="${baseURL}" substring="{baseURL}" />
 			<then>
-				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+				<var method="PropsUtil#get('portal.url')" name="baseURL" />
 			</then>
 		</if>
 
@@ -306,7 +306,7 @@
 		<if>
 			<contains string="${baseURL}" substring="{baseURL}" />
 			<then>
-				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+				<var method="PropsUtil#get('portal.url')" name="baseURL" />
 			</then>
 		</if>
 
@@ -319,7 +319,7 @@
 		<if>
 			<contains string="${baseURL}" substring="{baseURL}" />
 			<then>
-				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+				<var method="PropsUtil#get('portal.url')" name="baseURL" />
 			</then>
 		</if>
 
@@ -335,7 +335,7 @@
 		<if>
 			<contains string="${baseURL}" substring="{baseURL}" />
 			<then>
-				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+				<var method="PropsUtil#get('portal.url')" name="baseURL" />
 			</then>
 		</if>
 
@@ -355,7 +355,7 @@
 		<if>
 			<contains string="${baseURL}" substring="{baseURL}" />
 			<then>
-				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+				<var method="PropsUtil#get('portal.url')" name="baseURL" />
 			</then>
 		</if>
 
@@ -368,7 +368,7 @@
 		<if>
 			<contains string="${baseURL}" substring="{baseURL}" />
 			<then>
-				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+				<var method="PropsUtil#get('portal.url')" name="baseURL" />
 			</then>
 		</if>
 
@@ -383,7 +383,7 @@
 		<if>
 			<contains string="${baseURL}" substring="{baseURL}" />
 			<then>
-				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+				<var method="PropsUtil#get('portal.url')" name="baseURL" />
 			</then>
 		</if>
 

@@ -558,7 +558,7 @@
 	</command>
 
 	<command name="publishWorkflowDefinition">
-		<var method="TestPropsUtil#get('test.run.environment')" name="testRunEnvironment" />
+		<var method="PropsUtil#get('test.run.environment')" name="testRunEnvironment" />
 
 		<if>
 			<equals arg1="${testRunEnvironment}" arg2="EE" />

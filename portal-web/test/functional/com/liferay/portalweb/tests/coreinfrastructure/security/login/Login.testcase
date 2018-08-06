@@ -11,7 +11,7 @@
 		<property name="test.name.skip.portal.instance" value="Login#CASSmoke" />
 		<property name="web.plugins.includes" value="cas-web" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -80,10 +80,10 @@
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#FacebookSSOSmoke" />
 
-		<var method="TestPropsUtil#get('facebook.application.id')" name="facebookApplicationID" />
-		<var method="TestPropsUtil#get('facebook.application.secret')" name="facebookApplicationSecret" />
-		<var method="TestPropsUtil#get('facebook.email')" name="facebookEmail" />
-		<var method="TestPropsUtil#get('facebook.password')" name="facebookPassword" />
+		<var method="PropsUtil#get('facebook.application.id')" name="facebookApplicationID" />
+		<var method="PropsUtil#get('facebook.application.secret')" name="facebookApplicationSecret" />
+		<var method="PropsUtil#get('facebook.email')" name="facebookEmail" />
+		<var method="PropsUtil#get('facebook.password')" name="facebookPassword" />
 
 		<execute macro="User#firstLoginPG" />
 
@@ -132,10 +132,10 @@
 
 		<var method="MathUtil#randomNumber('3')" name="googlePropertiesSet" />
 
-		<var method="TestPropsUtil#get('google.client.id.${googlePropertiesSet}')" name="googleClientID" />
-		<var method="TestPropsUtil#get('google.client.secret.${googlePropertiesSet}')" name="googleClientSecret" />
-		<var method="TestPropsUtil#get('email.address.1')" name="userEmailAddress" />
-		<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
+		<var method="PropsUtil#get('google.client.id.${googlePropertiesSet}')" name="googleClientID" />
+		<var method="PropsUtil#get('google.client.secret.${googlePropertiesSet}')" name="googleClientSecret" />
+		<var method="PropsUtil#get('email.address.1')" name="userEmailAddress" />
+		<var method="PropsUtil#get('email.password.1')" name="userPassword" />
 
 		<execute macro="User#firstLoginPG" />
 
@@ -213,10 +213,10 @@
 
 		<var method="MathUtil#randomNumber('3')" name="googlePropertiesSet" />
 
-		<var method="TestPropsUtil#get('google.client.id.${googlePropertiesSet}')" name="openIDConnectClientID" />
-		<var method="TestPropsUtil#get('google.client.secret.${googlePropertiesSet}')" name="openIDConnectClientSecret" />
-		<var method="TestPropsUtil#get('email.address.1')" name="userEmailAddress" />
-		<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
+		<var method="PropsUtil#get('google.client.id.${googlePropertiesSet}')" name="openIDConnectClientID" />
+		<var method="PropsUtil#get('google.client.secret.${googlePropertiesSet}')" name="openIDConnectClientSecret" />
+		<var method="PropsUtil#get('email.address.1')" name="userEmailAddress" />
+		<var method="PropsUtil#get('email.password.1')" name="userPassword" />
 
 		<execute macro="User#firstLoginPG" />
 
@@ -261,8 +261,8 @@
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
 
-		<var method="TestPropsUtil#get('openid.password')" name="openIDPassword" />
-		<var method="TestPropsUtil#get('openid.username')" name="openIDUsername" />
+		<var method="PropsUtil#get('openid.password')" name="openIDPassword" />
+		<var method="PropsUtil#get('openid.username')" name="openIDUsername" />
 
 		<execute macro="User#firstLoginPG" />
 

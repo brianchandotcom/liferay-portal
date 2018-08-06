@@ -82,7 +82,7 @@
 			<var name="nodePort" value="9080" />
 		</execute>
 
-		<var method="TestPropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
+		<var method="PropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
 
 		<execute macro="PatchingTool#installPatchOnSpecificServer">
 			<var name="nodePort" value="8080" />

@@ -1,7 +1,7 @@
 <definition>
 	<command name="accountSignIn">
-		<var method="TestPropsUtil#get('sharepoint.oauth.user.name')" name="key_userEmail" />
-		<var method="TestPropsUtil#get('sharepoint.oauth.user.password')" name="key_userPassword" />
+		<var method="PropsUtil#get('sharepoint.oauth.user.name')" name="key_userEmail" />
+		<var method="PropsUtil#get('sharepoint.oauth.user.password')" name="key_userPassword" />
 
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="MicrosoftLogin#LOGIN_USER_CHOOSER" />

@@ -146,7 +146,7 @@
 			</then>
 		</while>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalURL" />
 		<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />

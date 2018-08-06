@@ -11,7 +11,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -26,7 +26,7 @@
 		<property name="portal.acceptance" value="pending" />
 		<property name="test.name.skip.portal.instance" value="PorygonTheme#AddThemeSite" />
 
-		<var method="TestPropsUtil#get('theme.contains.resources')" name="themeContainsResources" />
+		<var method="PropsUtil#get('theme.contains.resources')" name="themeContainsResources" />
 
 		<if>
 			<equals arg1="${themeContainsResources}" arg2="true" />

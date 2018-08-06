@@ -9,7 +9,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -38,8 +38,8 @@
 	<command ignore="true" name="ViewRecaptchaEnabled" priority="4">
 		<property name="test.name.skip.portal.instance" value="Captcha#ViewRecaptchaEnabled" />
 
-		<var method="TestPropsUtil#get('recaptcha.private.key')" name="recaptchaPrivateKey" />
-		<var method="TestPropsUtil#get('recaptcha.public.key')" name="recaptchaPublicKey" />
+		<var method="PropsUtil#get('recaptcha.private.key')" name="recaptchaPrivateKey" />
+		<var method="PropsUtil#get('recaptcha.public.key')" name="recaptchaPublicKey" />
 
 		<!-- LRQA-42641 -->
 

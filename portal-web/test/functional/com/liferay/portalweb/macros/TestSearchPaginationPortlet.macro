@@ -1,6 +1,6 @@
 <definition>
 	<command name="search15Results">
-		<var method="TestPropsUtil#get('browser.type')" name="browserType" />
+		<var method="PropsUtil#get('browser.type')" name="browserType" />
 
 		<if>
 			<equals arg1="${browserType}" arg2="firefox" />

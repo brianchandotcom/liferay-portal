@@ -4,8 +4,8 @@
 	<property name="test.ignore.tomcat.ext.environment" value="true" />
 	<property name="testray.main.component.name" value="Patching Tool" />
 
-	<var method="TestPropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
-	<var method="TestPropsUtil#get('test.build.fix.pack.zip.url.previous')" name="testBuildFixPackZipURLPrevious" />
+	<var method="PropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
+	<var method="PropsUtil#get('test.build.fix.pack.zip.url.previous')" name="testBuildFixPackZipURLPrevious" />
 
 	<set-up>
 		<execute macro="SignIn#signInTestSetup" />

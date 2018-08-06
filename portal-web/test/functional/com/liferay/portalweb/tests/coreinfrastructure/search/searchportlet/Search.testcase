@@ -11,7 +11,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -99,7 +99,7 @@
 			<var name="facetValueName" value="Blogs Entry" />
 		</execute>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Potato&amp;scopeparameter=everything&amp;type=com.liferay.blogs.model.BlogsEntry" />
 
@@ -943,7 +943,7 @@
 
 		<var method="DateUtil#getFormattedDate(0,'MMM d, YYYY')" name="currentDate" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${portalURL}/web/guest/search" />
@@ -1511,7 +1511,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="1.0" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${portalURL}/web/guest/search" />

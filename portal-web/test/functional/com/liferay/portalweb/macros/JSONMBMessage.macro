@@ -37,7 +37,7 @@
 
 		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<var method="StringUtil#replace('${messageBoardsThreadURL}', '${portalURL}/web/guest/message-boards-page/-/message_boards/message/', '')" name="messageId" />
 

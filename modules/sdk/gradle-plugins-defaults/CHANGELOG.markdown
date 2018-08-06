@@ -4256,7 +4256,7 @@ to Maven.
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.95.
 
-## 5.5.2 - 2018-08-01
+## 5.5.2 - 2018-08-02
 
 ### Fixed
 - [LPS-84055]: The `printDependentArtifact` task should print the project

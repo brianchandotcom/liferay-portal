@@ -15,8 +15,6 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -101,9 +99,6 @@ public class DuplicateDefinitionPortletConfigurationIcon
 		return (KaleoDefinitionVersion)portletRequest.getAttribute(
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DuplicateDefinitionPortletConfigurationIcon.class);
 
 	@Reference
 	private Portal _portal;

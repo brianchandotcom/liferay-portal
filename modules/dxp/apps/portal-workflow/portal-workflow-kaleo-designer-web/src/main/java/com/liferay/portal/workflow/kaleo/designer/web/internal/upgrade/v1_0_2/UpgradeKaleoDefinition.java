@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_2;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -119,9 +117,6 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 			addKaleoDefinitionsFromKaleoDefinitionVersion();
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeKaleoDefinition.class);
 
 	private final CounterLocalService _counterLocalService;
 	private final KaleoDefinitionLocalService _kaleoDefinitionLocalService;

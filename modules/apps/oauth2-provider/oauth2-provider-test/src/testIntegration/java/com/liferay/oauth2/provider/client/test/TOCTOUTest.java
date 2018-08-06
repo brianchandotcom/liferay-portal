@@ -214,6 +214,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 			}
 			finally {
 				bundleContext.ungetService(oA2ApplicationLSServiceReference);
+
+				bundleContext.ungetService(oA2AScopeAliasesLSServiceReference);
 			}
 		}
 

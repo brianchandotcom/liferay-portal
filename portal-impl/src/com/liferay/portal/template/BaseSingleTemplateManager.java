@@ -17,9 +17,6 @@ package com.liferay.portal.template;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateResource;
 
-import java.security.AccessControlContext;
-import java.security.AccessController;
-
 import java.util.List;
 import java.util.Map;
 
@@ -56,33 +53,35 @@ public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, boolean restricted) {
 
-		AccessControlContext accessControlContext = getAccessControlContext();
-
-		if (accessControlContext == null) {
-			return doGetTemplate(
-				templateResource, errorTemplateResource, restricted,
-				getHelperUtilities(restricted), false);
-		}
-
-		Map<String, Object> helperUtilities = AccessController.doPrivileged(
-			new DoGetHelperUtilitiesPrivilegedAction(
-				templateContextHelper, getTemplateControlContextClassLoader(),
-				restricted),
-			accessControlContext);
-
-		Template template = AccessController.doPrivileged(
-			new DoGetSingleTemplatePrivilegedAction(
-				templateResource, errorTemplateResource, restricted,
-				helperUtilities));
-
-		return new PrivilegedTemplateWrapper(accessControlContext, template);
+		return doGetTemplate(
+			templateResource, errorTemplateResource, restricted,
+			getHelperUtilities(restricted));
 	}
 
 	protected abstract Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, boolean restricted,
-		Map<String, Object> helperUtilities, boolean privileged);
+		Map<String, Object> helperUtilities);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #doGetTemplate(TemplateResource, TemplateResource, boolean, Map)}
+	 */
+	@Deprecated
+	protected Template doGetTemplate(
+		TemplateResource templateResource,
+		TemplateResource errorTemplateResource, boolean restricted,
+		Map<String, Object> helperUtilities, boolean privileged) {
+
+		return doGetTemplate(
+			templateResource, errorTemplateResource, restricted,
+			helperUtilities);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected class DoGetSingleTemplatePrivilegedAction
 		extends DoGetAbstractTemplatePrivilegedAction {
 

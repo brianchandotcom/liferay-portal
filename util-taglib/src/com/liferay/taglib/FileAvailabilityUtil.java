@@ -20,10 +20,8 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.net.MalformedURLException;
 import java.net.URL;
-
-import java.security.AccessController;
-import java.security.PrivilegedExceptionAction;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -74,10 +72,9 @@ public class FileAvailabilityUtil {
 		URL url = null;
 
 		try {
-			url = AccessController.doPrivileged(
-				new ResourcePrivilegedExceptionAction(servletContext, path));
+			url = servletContext.getResource(path);
 		}
-		catch (Exception e) {
+		catch (MalformedURLException murle) {
 		}
 
 		if ((url == null) && !PortalWebResourcesUtil.isAvailable(path)) {
@@ -107,26 +104,6 @@ public class FileAvailabilityUtil {
 		}
 
 		return availabilities;
-	}
-
-	private static class ResourcePrivilegedExceptionAction
-		implements PrivilegedExceptionAction<URL> {
-
-		public ResourcePrivilegedExceptionAction(
-			ServletContext servletContext, String path) {
-
-			_servletContext = servletContext;
-			_path = path;
-		}
-
-		@Override
-		public URL run() throws Exception {
-			return _servletContext.getResource(_path);
-		}
-
-		private final String _path;
-		private final ServletContext _servletContext;
-
 	}
 
 }

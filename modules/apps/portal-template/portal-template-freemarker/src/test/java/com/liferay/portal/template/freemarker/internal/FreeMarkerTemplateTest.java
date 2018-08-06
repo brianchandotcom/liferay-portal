@@ -97,7 +97,7 @@ public class FreeMarkerTemplateTest {
 	public void testGet() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_configuration, _templateContextHelper, false,
+			_configuration, _templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -117,7 +117,7 @@ public class FreeMarkerTemplateTest {
 	public void testPrepare() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_configuration, _templateContextHelper, false,
+			_configuration, _templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -139,7 +139,7 @@ public class FreeMarkerTemplateTest {
 	public void testProcessTemplate1() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_configuration, _templateContextHelper, false,
+			_configuration, _templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -157,7 +157,7 @@ public class FreeMarkerTemplateTest {
 	public void testProcessTemplate2() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, null,
-			_configuration, _templateContextHelper, false,
+			_configuration, _templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -181,7 +181,7 @@ public class FreeMarkerTemplateTest {
 		Template template = new FreeMarkerTemplate(
 			new StringTemplateResource(
 				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
-			null, null, _configuration, _templateContextHelper, false,
+			null, null, _configuration, _templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -200,7 +200,7 @@ public class FreeMarkerTemplateTest {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME),
 			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
-			_configuration, _templateContextHelper, false,
+			_configuration, _templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -219,7 +219,7 @@ public class FreeMarkerTemplateTest {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, _configuration,
-			_templateContextHelper, false,
+			_templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -238,7 +238,7 @@ public class FreeMarkerTemplateTest {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
 			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
-			_configuration, _templateContextHelper, false,
+			_configuration, _templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -264,7 +264,7 @@ public class FreeMarkerTemplateTest {
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
 			new StringTemplateResource(
 				_WRONG_ERROR_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
-			null, _configuration, _templateContextHelper, false,
+			null, _configuration, _templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -286,7 +286,7 @@ public class FreeMarkerTemplateTest {
 
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, context,
-			_configuration, _templateContextHelper, false,
+			_configuration, _templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();

@@ -111,6 +111,10 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		this.templateResourceLoader = templateResourceLoader;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected AccessControlContext getAccessControlContext() {
 		TemplateControlContext templateControlContext =
 			templateContextHelper.getTemplateControlContext();
@@ -133,6 +137,10 @@ public abstract class BaseTemplateManager implements TemplateManager {
 	protected TemplateContextHelper templateContextHelper;
 	protected TemplateResourceLoader templateResourceLoader;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected abstract class DoGetAbstractTemplatePrivilegedAction
 		implements PrivilegedAction<Template> {
 
@@ -151,6 +159,10 @@ public abstract class BaseTemplateManager implements TemplateManager {
 
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected class DoGetHelperUtilitiesPrivilegedAction
 		implements PrivilegedAction<Map<String, Object>> {
 

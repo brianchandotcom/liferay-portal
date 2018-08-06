@@ -83,7 +83,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Shuyang Zhou
  */
 @Component(
-	configurationPid = "com.liferay.portal.cluster.configuration.ClusterExecutorConfiguration",
+	configurationPid = "com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration",
 	immediate = true,
 	service = {ClusterExecutor.class, ClusterExecutorImpl.class}
 )

@@ -804,6 +804,11 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 					return false;
 				}
 
+				@Override
+				public String[] excludedPropertyKeys() {
+					return new String[] {"access_key", "secret_access_key"};
+				}
+
 			};
 
 			setPortalExecutorManager(new MockPortalExecutorManager());

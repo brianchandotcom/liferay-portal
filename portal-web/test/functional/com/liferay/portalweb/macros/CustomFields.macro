@@ -33,7 +33,7 @@
 		<execute function="Pause" locator1="3000" />
 
 		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${resourceName}" />
+			<var name="rowEntry" value="${customFieldName}" />
 		</execute>
 
 		<execute macro="MenuItem#click">

@@ -491,10 +491,17 @@ public class LocalGitSyncUtil {
 		List<GitWorkingDirectory.Remote> remotes) {
 
 		for (GitWorkingDirectory.Remote remote : remotes) {
-			if (gitWorkingDirectory.remoteGitBranchExists(
-					remoteGitBranchName, remote)) {
+			try {
+				if (gitWorkingDirectory.remoteGitBranchExists(
+						remoteGitBranchName, remote)) {
 
-				continue;
+					continue;
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+
+				return false;
 			}
 
 			return false;

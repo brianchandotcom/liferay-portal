@@ -105,9 +105,22 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 		DetailAST firstChildAST = childAST.getFirstChild();
 		DetailAST lastChildAST = childAST.getLastChild();
 
-		if ((firstChildAST.getType() != TokenTypes.IDENT) ||
-			(lastChildAST.getType() != TokenTypes.IDENT)) {
+		if (firstChildAST.getType() != TokenTypes.IDENT) {
+			if (firstChildAST.getChildCount() != 2) {
+				return false;
+			}
 
+			DetailAST detailAST1 = firstChildAST.getFirstChild();
+			DetailAST detailAST2 = firstChildAST.getLastChild();
+
+			if ((detailAST1.getType() != TokenTypes.LITERAL_THIS) ||
+				(detailAST2.getType() != TokenTypes.IDENT)) {
+
+				return false;
+			}
+		}
+
+		if (lastChildAST.getType() != TokenTypes.IDENT) {
 			return false;
 		}
 

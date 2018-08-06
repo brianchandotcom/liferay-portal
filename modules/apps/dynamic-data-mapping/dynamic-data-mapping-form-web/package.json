@@ -1,12 +1,65 @@
 {
+	"csfConfig": {
+		"path:**/__tests__/**/*.es.js": {
+			"js": {
+				"lint": {
+					"env": {
+						"jest": true
+					},
+					"rules": {
+						"no-console": 0,
+						"no-eval": 0,
+						"no-unused-vars": 0
+					}
+				}
+			}
+		}
+	},
 	"dependencies": {
-		"metal-component": "^2.5.13",
-		"metal-soy": "^2.7.0"
+		"classnames": "^2.2.6",
+		"clay-management-toolbar": "^2.2.0",
+		"metal-drag-drop": "^3.1.0",
+		"metal-jsx": "^2.16.5"
 	},
 	"devDependencies": {
-		"liferay-module-config-generator": "^1.2.1",
-		"metal-cli": "^4.2.0"
+		"babel-cli": "^6.26.0",
+		"babel-plugin-module-resolver": "^3.1.1",
+		"babel-plugin-transform-class-properties": "^6.24.1",
+		"babel-plugin-transform-object-rest-spread": "^6.26.0",
+		"babel-plugin-transform-runtime": "^6.23.0",
+		"babel-preset-env": "^1.7.0",
+		"babel-preset-metal-jsx": "^0.1.1",
+		"jest": "^23.4.1",
+		"liferay-jest-junit-reporter": "0.0.4",
+		"liferay-npm-bundler": "^2.1.0",
+		"metal-jest-serializer": "^2.0.0",
+		"metal-tools-soy": "^6.0.0"
 	},
+	"jest": {
+		"moduleNameMapper": {
+			"clay-(.*)$": "<rootDir>/node_modules/clay-$1"
+		},
+		"modulePathIgnorePatterns": [
+			"/classes/",
+			"/__mock__/",
+			"/__fixtures__/"
+		],
+		"snapshotSerializers": [
+			"metal-jest-serializer"
+		],
+		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
+		"testURL": "http://localhost",
+		"transformIgnorePatterns": [
+			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
+		]
+	},
+	"main": "metal/js/main.es.js",
 	"name": "dynamic-data-mapping-form-web",
+	"private": true,
+	"scripts": {
+		"build": "npm run soy && babel --ignore '**/__tests__/*.js,**/__tests__/*/*.js' --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
+		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
+		"test": "npm run soy && NODE_ENV=test jest"
+	},
 	"version": "2.0.0"
 }

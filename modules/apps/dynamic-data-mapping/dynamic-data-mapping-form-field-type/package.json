@@ -1,26 +1,54 @@
 {
 	"dependencies": {
+		"clay-checkbox": "^2.2.0",
+		"clay-icon": "^2.2.0",
+		"clay-radio": "^2.2.0",
 		"incremental-dom-string": "0.0.2",
 		"metal-component": "^2.14.0",
 		"metal-position": "^2.1.1",
-		"metal-soy": "^2.14.0",
+		"metal-soy": "^2.16.0",
 		"text-mask-addons": "^3.7.1",
 		"vanilla-text-mask": "^5.0.1"
 	},
 	"devDependencies": {
-		"babel-cli": "6.26.0",
-		"babel-preset-es2015": "6.24.1",
-		"babel-preset-liferay-project": "^1.6.1",
-		"liferay-module-config-generator": "^1.2.1",
-		"liferay-npm-bundler": "^1.8.0",
-		"liferay-npm-bundler-preset-amd": "^1.6.1",
-		"liferay-npm-bundler-preset-standard": "^1.3.0",
-		"metal-tools-soy": "^4.2.1",
+		"babel-cli": "^6.26.0",
+		"babel-plugin-module-resolver": "^3.1.1",
+		"babel-plugin-transform-class-properties": "^6.24.1",
+		"babel-preset-env": "^1.7.0",
+		"check-source-formatting": "^2.0.4",
+		"eslint": "^4.10.0",
+		"eslint-config-liferay": "^2.0.8",
+		"eslint-plugin-no-for-of-loops": "1.0.0",
+		"eslint-plugin-react": "^7.4.0",
+		"jest": "^23.4.1",
+		"liferay-jest-junit-reporter": "0.0.4",
+		"liferay-npm-bundler": "^2.1.0",
+		"metal-jest-serializer": "^2.0.0",
+		"metal-soy-critic": "^2.4.0",
+		"metal-tools-soy": "^6.0.0",
+		"prettier-eslint-cli": "^4.7.0",
 		"rimraf": "^2.6.2"
 	},
+	"jest": {
+		"modulePathIgnorePatterns": [
+			"/__fixtures__/",
+			"/classes/"
+		],
+		"snapshotSerializers": [
+			"metal-jest-serializer"
+		],
+		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
+		"testURL": "http://localhost",
+		"transformIgnorePatterns": [
+			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
+		]
+	},
+	"main": "./",
 	"name": "dynamic-data-mapping-form-field-type",
+	"private": true,
 	"scripts": {
-		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,*_field*.js,*_support.js && liferay-npm-bundler && rimraf src/**/*.soy.js"
+		"build": "npm run soy && babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,*_field*.js,*_support.js,src/**/__tests__/*.js,src/**/__tests__/*/*.js && liferay-npm-bundler && rimraf src/**/*.soy.js",
+		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'"
 	},
 	"version": "4.0.0"
 }

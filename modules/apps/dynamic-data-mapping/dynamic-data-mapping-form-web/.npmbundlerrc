@@ -2,9 +2,12 @@
 	"config": {
 		"imports": {
 			"frontend-taglib-clay": {
-				"clay-checkbox": "^2.2.0",
-				"clay-icon": "^2.2.0",
-				"clay-radio": "^2.2.0"
+				"clay-management-toolbar": ">=2.1.12",
+				"clay-button": ">=2.1.12",
+				"clay-navigation-bar": ">=2.1.12"
+			},
+			"dynamic-data-mapping-form-field-type": {
+				"/": ">=4.0.0"
 			},
 			"frontend-js-metal-web": {
 				"metal": ">=2.16.5",

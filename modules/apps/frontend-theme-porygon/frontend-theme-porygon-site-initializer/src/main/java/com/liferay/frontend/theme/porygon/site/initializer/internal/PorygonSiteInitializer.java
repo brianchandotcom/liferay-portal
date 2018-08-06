@@ -18,13 +18,22 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -137,6 +146,8 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 			_addApplicationDisplayTemplates(serviceContext);
 
+			_addDDMStructure(serviceContext);
+
 			_addLayouts(_LAYOUT_NAMES, serviceContext);
 		}
 		catch (Exception e) {
@@ -182,6 +193,45 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				DDMTemplateConstants.TEMPLATE_MODE_EDIT,
 				TemplateConstants.LANG_TYPE_FTL, script, serviceContext);
 		}
+	}
+
+	private void _addDDMStructure(ServiceContext serviceContext)
+		throws Exception {
+
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(siteDefaultLocale, "Porygon Entry");
+
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(siteDefaultLocale, "Porygon Entry");
+
+		URL definitionURL = _bundle.getEntry(
+			_PATH + "/journal/structures/porygon_entry/definition.json");
+
+		String definition = StringUtil.read(definitionURL.openStream());
+
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(definition);
+
+		ddmForm = _ddm.updateDDMFormDefaultLocale(ddmForm, siteDefaultLocale);
+
+		URL layoutURL = _bundle.getEntry(
+			_PATH + "/journal/structures/porygon_entry/layout.json");
+
+		String layout = StringUtil.read(layoutURL.openStream());
+
+		DDMFormLayout ddmFormLayout =
+			_ddmFormLayoutJSONDeserializer.deserialize(layout);
+
+		_ddmStructureLocalService.addStructure(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			_portal.getClassNameId(JournalArticle.class), "porygon-entry",
+			nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT,
+			serviceContext);
 	}
 
 	private LayoutPageTemplateEntry _addDisplayPageEntry(
@@ -470,6 +520,18 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		PorygonSiteInitializer.class);
 
 	private Bundle _bundle;
+
+	@Reference
+	private DDM _ddm;
+
+	@Reference
+	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+
+	@Reference
+	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;

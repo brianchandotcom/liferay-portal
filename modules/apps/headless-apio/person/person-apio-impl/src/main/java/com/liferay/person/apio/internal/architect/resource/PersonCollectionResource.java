@@ -118,7 +118,7 @@ public class PersonCollectionResource
 		Representor.Builder<UserWrapper, Long> builder) {
 
 		return builder.types(
-			"Person"
+			"Liferay:UserAccount", "Person"
 		).identifier(
 			User::getUserId
 		).addDate(

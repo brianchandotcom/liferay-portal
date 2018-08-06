@@ -844,10 +844,10 @@ public class Recurrence implements Serializable {
 			!matchesByYearDay(candidate) || !matchesByWeekNo(candidate) ||
 			!matchesByMonth(candidate)) {
 
-			// Doesn't match a by* rule
+			// Does not match a by* rule
 
 			if (debug) {
-				System.err.println("doesn't match a by*");
+				System.err.println("does not match a by*");
 			}
 
 			return false;

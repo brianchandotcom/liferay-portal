@@ -116,7 +116,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 			Assert.assertNotNull(friendlyURLResolver);
 
 			Assert.assertEquals(
-				"Should still be 1 since it's higher rankged.",
+				"Should still be 1 since it is higher rankged.",
 				friendlyURLResolver1, friendlyURLResolver);
 		}
 		finally {

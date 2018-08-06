@@ -253,7 +253,7 @@
 		<execute function="AssertTextNotPresent" value1="com.liferay.wiki.engine.text" />
 	</command>
 
-	<command name="ViewNoInvokedPortletViaURL" priority="5">
+	<command ignore="true" name="ViewNoInvokedPortletViaURL" priority="5">
 		<description message="This is a use case for LPS-55622." />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

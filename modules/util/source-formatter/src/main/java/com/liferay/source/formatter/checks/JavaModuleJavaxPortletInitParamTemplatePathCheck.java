@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.File;
@@ -30,6 +31,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -55,6 +57,14 @@ public class JavaModuleJavaxPortletInitParamTemplatePathCheck
 		String content = javaTerm.getContent();
 
 		if (javaTerm.getParentJavaClass() != null) {
+			return content;
+		}
+
+		JavaClass javaClass = (JavaClass)javaTerm;
+
+		List<String> extendedClassNames = javaClass.getExtendedClassNames();
+
+		if (!extendedClassNames.contains("MVCPortlet")) {
 			return content;
 		}
 

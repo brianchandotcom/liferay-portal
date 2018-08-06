@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -131,7 +132,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		oAuth2Application.setPrivacyPolicyURL(privacyPolicyURL);
 		oAuth2Application.setRedirectURIsList(redirectURIsList);
 
-		if ((scopeAliasesList != null) && !scopeAliasesList.isEmpty()) {
+		if (ListUtil.isNotEmpty(scopeAliasesList)) {
 			OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
 				oAuth2ApplicationScopeAliasesLocalService.
 					addOAuth2ApplicationScopeAliases(
@@ -350,26 +351,42 @@ public class OAuth2ApplicationLocalServiceImpl
 		OAuth2Application oAuth2Application =
 			oAuth2ApplicationPersistence.findByPrimaryKey(oAuth2ApplicationId);
 
-		if ((scopeAliasesList == null) || scopeAliasesList.isEmpty()) {
+		if (ListUtil.isEmpty(scopeAliasesList)) {
+			if (oAuth2Application.getOAuth2ApplicationScopeAliasesId() == 0) {
+				return oAuth2Application;
+			}
+
 			oAuth2Application.setModifiedDate(new Date());
 			oAuth2Application.setOAuth2ApplicationScopeAliasesId(0);
 
 			return oAuth2ApplicationPersistence.update(oAuth2Application);
 		}
 
-		if (oAuth2Application.getOAuth2ApplicationScopeAliasesId() == 0) {
-			OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-				oAuth2ApplicationScopeAliasesLocalService.
-					fetchOAuth2ApplicationScopeAliases(
-						oAuth2ApplicationId, scopeAliasesList);
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
+			oAuth2ApplicationScopeAliasesLocalService.
+				fetchOAuth2ApplicationScopeAliases(
+					oAuth2ApplicationId, scopeAliasesList);
 
-			if (oAuth2ApplicationScopeAliases == null) {
-				oAuth2ApplicationScopeAliases =
-					oAuth2ApplicationScopeAliasesLocalService.
-						addOAuth2ApplicationScopeAliases(
-							oAuth2Application.getCompanyId(), userId, userName,
-							oAuth2ApplicationId, scopeAliasesList);
-			}
+		if (oAuth2ApplicationScopeAliases != null) {
+			oAuth2ApplicationScopeAliases.setUserId(userId);
+			oAuth2ApplicationScopeAliases.setUserName(userName);
+
+			oAuth2ApplicationScopeAliases =
+				oAuth2ApplicationScopeAliasesLocalService.
+					updateOAuth2ApplicationScopeAliases(
+						oAuth2ApplicationScopeAliases);
+		}
+		else {
+			oAuth2ApplicationScopeAliases =
+				oAuth2ApplicationScopeAliasesLocalService.
+					addOAuth2ApplicationScopeAliases(
+						oAuth2Application.getCompanyId(), userId, userName,
+						oAuth2ApplicationId, scopeAliasesList);
+		}
+
+		if (oAuth2Application.getOAuth2ApplicationScopeAliasesId() !=
+				oAuth2ApplicationScopeAliases.
+					getOAuth2ApplicationScopeAliasesId()) {
 
 			oAuth2Application.setModifiedDate(new Date());
 			oAuth2Application.setOAuth2ApplicationScopeAliasesId(
@@ -378,37 +395,9 @@ public class OAuth2ApplicationLocalServiceImpl
 
 			return oAuth2ApplicationPersistence.update(oAuth2Application);
 		}
-
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			oAuth2ApplicationScopeAliasesLocalService.
-				getOAuth2ApplicationScopeAliases(
-					oAuth2Application.getOAuth2ApplicationScopeAliasesId());
-
-		List<String> actualScopeAliasesList =
-			oAuth2ApplicationScopeAliases.getScopeAliasesList();
-
-		if (actualScopeAliasesList.equals(scopeAliasesList)) {
+		else {
 			return oAuth2Application;
 		}
-
-		oAuth2ApplicationScopeAliases =
-			oAuth2ApplicationScopeAliasesLocalService.
-				fetchOAuth2ApplicationScopeAliases(
-					oAuth2ApplicationId, scopeAliasesList);
-
-		if (oAuth2ApplicationScopeAliases == null) {
-			oAuth2ApplicationScopeAliases =
-				oAuth2ApplicationScopeAliasesLocalService.
-					addOAuth2ApplicationScopeAliases(
-						oAuth2Application.getCompanyId(), userId, userName,
-						oAuth2ApplicationId, scopeAliasesList);
-		}
-
-		oAuth2Application.setModifiedDate(new Date());
-		oAuth2Application.setOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliases.getOAuth2ApplicationScopeAliasesId());
-
-		return oAuth2ApplicationPersistence.update(oAuth2Application);
 	}
 
 	protected void validate(

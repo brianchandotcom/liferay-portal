@@ -19,6 +19,7 @@
 <%
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
+boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
 
 DDMStructure structure = null;
 
@@ -50,7 +51,22 @@ if (layout != null) {
 	navigationItems='<%= journalDisplayContext.getNavigationBarItems("templates") %>'
 />
 
-<liferay-util:include page="/template_management_bar.jsp" servletContext="<%= application %>" />
+<clay:management-toolbar
+	actionDropdownItems='<%= ddmDisplayContext.getActionItemsDropdownItems("deleteTemplates") %>'
+	clearResultsURL="<%= ddmDisplayContext.getClearResultsURL() %>"
+	componentId="ddmTemplateManagementToolbar"
+	creationMenu="<%= ddmDisplayContext.getTemplateCreationMenu() %>"
+	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
+	filterDropdownItems="<%= ddmDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= ddmDisplayContext.getTemplateSearchActionURL() %>"
+	searchContainerId="<%= ddmDisplayContext.getTemplateSearchContainerId() %>"
+	searchFormName="fm1"
+	selectable="<%= includeCheckBox && !user.isDefaultUser() %>"
+	sortingOrder="<%= ddmDisplayContext.getOrderByType() %>"
+	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
+/>
 
 <c:if test="<%= showHeader %>">
 	<c:choose>
@@ -218,3 +234,37 @@ if (layout != null) {
 		</liferay-ui:search-container>
 	</div>
 </aui:form>
+
+<aui:script sandbox="<%= true %>">
+	var deleteTemplates = function() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			var searchContainer = AUI.$('#<portlet:namespace />entriesContainer', form);
+
+			form.attr('method', 'post');
+			form.fm('deleteTemplateIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="deleteTemplate"><portlet:param name="mvcPath" value="/view_template.jsp" /></portlet:actionURL>');
+		}
+	};
+
+	var ACTIONS = {
+		'deleteTemplates': deleteTemplates
+	};
+
+	Liferay.componentReady('ddmTemplateManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+					function(event) {
+						var itemData = event.data.item.data;
+
+						if (itemData && itemData.action && ACTIONS[itemData.action]) {
+							ACTIONS[itemData.action]();
+						}
+				}
+			);
+		}
+	);
+</aui:script>

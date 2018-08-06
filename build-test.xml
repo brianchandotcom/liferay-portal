@@ -1892,23 +1892,6 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-search-engine">
-		<attribute name="search.engine" />
-
-		<sequential>
-			<echo>Preparing search engine: @{search.engine}</echo>
-
-			<if>
-				<equals arg1="@{search.engine}" arg2="solr" />
-				<then>
-					<ant antfile="build-test-solr.xml" inheritAll="false" target="deploy-solr" />
-
-					<ant antfile="build-test-solr.xml" inheritAll="false" target="start-solr" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-test-bundles">
 		<attribute name="unit" />
 		<sequential>
@@ -3967,17 +3950,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<socket port="@{app.server.leading.port.number}080" server="localhost" />
 				</not>
 			</waitfor>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-search-engine">
-		<sequential>
-			<if>
-				<equals arg1="${search.engine}" arg2="solr" />
-				<then>
-					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
-				</then>
-			</if>
 		</sequential>
 	</macrodef>
 
@@ -9765,6 +9737,19 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<then>
 				<ant antfile="build-test-solr.xml" target="start-solr" />
 			</then>
+			<elseif>
+				<isset property="env.CI_TEST_SUITE" />
+				<then>
+					<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+
+					<if>
+						<equals arg1="${suite.search.engine}" arg2="solr" />
+						<then>
+							<ant antfile="build-test-solr.xml" target="start-solr" />
+						</then>
+					</if>
+				</then>
+			</elseif>
 		</if>
 
 		<get-testcase-property property.name="test.smtp.server.enabled" />
@@ -10101,10 +10086,21 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<if>
 			<equals arg1="${solr.enabled}" arg2="true" />
 			<then>
-				<print-file file.name="${solr.dir}/server/logs/solr.log" />
-
 				<ant antfile="build-test-solr.xml" target="stop-solr-core" />
 			</then>
+			<elseif>
+				<isset property="env.CI_TEST_SUITE" />
+				<then>
+					<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+
+					<if>
+						<equals arg1="${suite.search.engine}" arg2="solr" />
+						<then>
+							<ant antfile="build-test-solr.xml" target="stop-solr-core" />
+						</then>
+					</if>
+				</then>
+			</elseif>
 		</if>
 
 		<antcall target="clean-up-web-xml" />

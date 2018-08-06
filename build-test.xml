@@ -1066,30 +1066,38 @@ war.path=${app.server.portal.dir}/</echo>
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 
 		<sequential>
-			<local name="hotfix.build.version" />
-			<local name="hotfix.portal.version" />
 			<local name="patch.requirements" />
 
 			<get-patch-requirements patch.file.zip.url="@{hotfix.file.zip.url}" />
 
-			<propertyregex
-				input="@{hotfix.file.zip.url}"
-				property="hotfix.build.version"
-				regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
-				replace="\1\2\3"
-			/>
+			<if>
+				<not>
+					<equals arg1="${patch.requirements}" arg2="" />
+				</not>
+				<then>
+					<local name="hotfix.build.version" />
+					<local name="hotfix.portal.version" />
 
-			<propertyregex
-				input="@{hotfix.file.zip.url}"
-				property="hotfix.portal.version"
-				regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
-				replace="\1.\2.\3"
-			/>
+					<propertyregex
+						input="@{hotfix.file.zip.url}"
+						property="hotfix.build.version"
+						regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
+						replace="\1\2\3"
+					/>
 
-			<mirrors-get
-				dest="@{patching.tool.dir}/patches"
-				src="http://files.liferay.com/private/ee/fix-packs/${hotfix.portal.version}/de/liferay-fix-pack-${patch.requirements}-${hotfix.build.version}.zip"
-			/>
+					<propertyregex
+						input="@{hotfix.file.zip.url}"
+						property="hotfix.portal.version"
+						regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
+						replace="\1.\2.\3"
+					/>
+
+					<mirrors-get
+						dest="@{patching.tool.dir}/patches"
+						src="http://files.liferay.com/private/ee/fix-packs/${hotfix.portal.version}/de/liferay-fix-pack-${patch.requirements}-${hotfix.build.version}.zip"
+					/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

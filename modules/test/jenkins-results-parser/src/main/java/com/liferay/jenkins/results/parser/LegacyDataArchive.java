@@ -107,6 +107,7 @@ public class LegacyDataArchive {
 			_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
 
 		_dataArchiveType = _legacyDataArchiveGroup.getDataArchiveType();
+
 		String portalVersion =
 			_legacyDataArchivePortalVersion.getPortalVersion();
 		File legacyDataWorkingDirectory =

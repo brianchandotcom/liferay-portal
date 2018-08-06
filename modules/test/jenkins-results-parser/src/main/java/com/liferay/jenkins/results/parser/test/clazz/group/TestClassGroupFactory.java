@@ -67,6 +67,11 @@ public class TestClassGroupFactory {
 					batchName, portalTestClassJob);
 			}
 
+			if (batchName.startsWith("service-builder-")) {
+				return new ServiceBuilderBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
 			if (batchName.startsWith("tck-")) {
 				return new TCKJunitBatchTestClassGroup(
 					batchName, portalTestClassJob);

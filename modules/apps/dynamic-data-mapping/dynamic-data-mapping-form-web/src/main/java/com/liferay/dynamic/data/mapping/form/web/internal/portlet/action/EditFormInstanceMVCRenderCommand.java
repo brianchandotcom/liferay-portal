@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -69,7 +69,8 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 
 		if (ddmFormWebConfiguration.enableExperimentalInterface()) {
 			DDMFormAdminDisplayContext ddmFormAdminDisplayContext =
-				(DDMFormAdminDisplayContext)renderRequest.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+				(DDMFormAdminDisplayContext)renderRequest.getAttribute(
+					WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 			long ddmStructureId;
 
@@ -78,19 +79,20 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 
 				String serializedFormBuilderContext = getFormBuilderContext(
 					ddmStructureId,
-					PortalUtil.getHttpServletRequest(renderRequest));
+					_portal.getHttpServletRequest(renderRequest));
 
 				renderRequest.setAttribute(
 					"serializedFormBuilderContext",
 					serializedFormBuilderContext);
-			} catch (PortalException e) {
-				e.printStackTrace();
+			}
+			catch (PortalException pe) {
+				pe.printStackTrace();
 			}
 
 			renderRequest.setAttribute(
 				"mainRequire",
-				_npmResolver.resolveModuleName("dynamic-data-mapping-form-web") +
-					" as main");
+				_npmResolver.resolveModuleName(
+					"dynamic-data-mapping-form-web") + " as main");
 
 			return "/metal/edit_form_instance.jsp";
 		}
@@ -176,5 +178,8 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private NPMResolver _npmResolver;
+
+	@Reference
+	private Portal _portal;
 
 }

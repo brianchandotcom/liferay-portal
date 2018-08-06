@@ -63,7 +63,7 @@ public class StructureRepresentorBuilderHelperImpl
 		).addLocalizedStringByLocale(
 			"name", DDMStructure::getName
 		).addNestedList(
-			"pages", StructureRepresentorUtil::getPages,
+			"formPages", StructureRepresentorUtil::getPages,
 			StructureRepresentorBuilderHelperImpl::_buildFormPages
 		);
 	}
@@ -86,25 +86,25 @@ public class StructureRepresentorBuilderHelperImpl
 		return builder.types(
 			"FormField"
 		).addBoolean(
-			"isAutocomplete",
+			"autocomplete",
 			getFieldProperty(Boolean.class::cast, "autocomplete")
 		).addBoolean(
-			"isInline", getFieldProperty(Boolean.class::cast, "inline")
+			"inline", getFieldProperty(Boolean.class::cast, "inline")
 		).addBoolean(
-			"isLocalizable", DDMFormField::isLocalizable
+			"localizable", DDMFormField::isLocalizable
 		).addBoolean(
-			"isMultiple", DDMFormField::isMultiple
+			"multiple", DDMFormField::isMultiple
 		).addBoolean(
-			"isReadOnly", DDMFormField::isReadOnly
+			"readOnly", DDMFormField::isReadOnly
 		).addBoolean(
-			"isRepeatable", DDMFormField::isRepeatable
+			"repeatable", DDMFormField::isRepeatable
 		).addBoolean(
-			"isRequired", DDMFormField::isRequired
+			"required", DDMFormField::isRequired
 		).addBoolean(
-			"isShowAsSwitcher",
+			"showAsSwitcher",
 			getFieldProperty(Boolean.class::cast, "showAsSwitcher")
 		).addBoolean(
-			"isShowLabel", DDMFormField::isShowLabel
+			"showLabel", DDMFormField::isShowLabel
 		).addLocalizedStringByLocale(
 			"label", getLocalizedString(DDMFormField::getLabel)
 		).addLocalizedStringByLocale(

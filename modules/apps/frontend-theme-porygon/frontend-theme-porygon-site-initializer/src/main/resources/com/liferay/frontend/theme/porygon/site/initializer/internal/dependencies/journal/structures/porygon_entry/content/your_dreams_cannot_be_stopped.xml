@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="wafk" name="coverImage" type="image">
+		<dynamic-content language-id="en_US" alt="" name="content_06.jpg" title="content_06.jpg" type="document">$content_06.jpg$</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="eqov" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Your dreams cannot be stopped]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="fjvw" name="subTitle" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[This is not the work of any one man or even a group of men]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="yath" name="content" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Buy why, some say, the moon? Why choose this as our goal? And they may as well ask why climb the highest mountain?</p>
+<p>Houston, Tranquillity Base here. The Eagle has landed.</p>
+<p>Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.</p>
+<p>We want to explore. We&rsquo;re curious people. Look back over history, people have put their lives at stake to go out and explore &hellip; We believe in what we&rsquo;re doing. Now it&rsquo;s time to go.</p>
+<p>Across the sea of space, the stars are other suns.</p>
+<p>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</p>
+<p>Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.</p>
+<p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
+<p>I believe every human has a finite number of heartbeats. I don't intend to waste any of mine</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

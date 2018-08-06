@@ -28,7 +28,6 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.layout.type.controller.content.internal.util.SoyContextFactoryUtil;
 import com.liferay.petra.string.StringPool;
@@ -366,7 +365,6 @@ public class FragmentsEditorDisplayContext {
 	}
 
 	private final ItemSelector _itemSelector;
-	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;

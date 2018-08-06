@@ -694,7 +694,6 @@ public class JournalTransformer {
 	private static final Log _logXmlBeforeListener = LogFactoryUtil.getLog(
 		JournalTransformer.class.getName() + ".XmlBeforeListener");
 
-	private final Map<String, String> _errorTemplateIds = new HashMap<>();
 	private final boolean _restricted;
 
 }

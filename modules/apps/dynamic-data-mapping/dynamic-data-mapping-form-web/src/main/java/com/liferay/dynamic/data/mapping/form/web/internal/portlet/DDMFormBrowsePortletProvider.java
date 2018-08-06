@@ -16,8 +16,6 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
 
@@ -65,8 +63,5 @@ public class DDMFormBrowsePortletProvider
 	)
 	protected void setPortlet(Portlet portlet) {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormBrowsePortletProvider.class);
 
 }

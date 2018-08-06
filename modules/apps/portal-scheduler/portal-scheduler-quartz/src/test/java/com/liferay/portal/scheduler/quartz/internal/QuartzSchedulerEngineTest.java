@@ -701,8 +701,6 @@ public class QuartzSchedulerEngineTest {
 
 	private static final String _TEST_JOB_NAME_PREFIX = "test.job.";
 
-	private static final String _TEST_PORTLET_ID = "testPortletId";
-
 	private JSONFactory _jsonFactory;
 	private QuartzSchedulerEngine _quartzSchedulerEngine;
 	private final QuartzTriggerFactory _quartzTriggerFactory =

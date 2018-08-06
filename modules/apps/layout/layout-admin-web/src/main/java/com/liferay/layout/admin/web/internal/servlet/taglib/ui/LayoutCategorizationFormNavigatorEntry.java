@@ -14,8 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -72,9 +70,6 @@ public class LayoutCategorizationFormNavigatorEntry
 	protected String getJspPath() {
 		return "/layout/categorization.jsp";
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutCategorizationFormNavigatorEntry.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

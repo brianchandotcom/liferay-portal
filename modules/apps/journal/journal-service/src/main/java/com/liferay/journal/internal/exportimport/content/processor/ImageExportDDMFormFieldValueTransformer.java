@@ -24,8 +24,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -93,9 +91,6 @@ public class ImageExportDDMFormFieldValueTransformer
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ImageExportDDMFormFieldValueTransformer.class);
 
 	private final DLAppService _dlAppService;
 	private final boolean _exportReferencedContent;

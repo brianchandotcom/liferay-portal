@@ -1336,8 +1336,6 @@ public class LayoutsAdminDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
-	private String _orderByCol;
-	private String _orderByType;
 	private Long _parentLayoutId;
 	private Boolean _privateLayout;
 	private String _redirect;

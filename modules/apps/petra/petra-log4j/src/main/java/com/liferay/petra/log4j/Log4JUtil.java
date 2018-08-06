@@ -38,7 +38,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -324,8 +323,6 @@ public class Log4JUtil {
 
 	private static final Logger _logger = Logger.getRootLogger();
 
-	private static final Map<String, String> _customLogSettings =
-		new ConcurrentHashMap<>();
 	private static String _liferayHome;
 
 }

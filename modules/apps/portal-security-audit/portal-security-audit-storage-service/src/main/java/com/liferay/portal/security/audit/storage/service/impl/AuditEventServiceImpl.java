@@ -121,7 +121,4 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			sessionID, andSearch);
 	}
 
-	private static final String _PORTLET_ID =
-		"com_liferay_audit_web_portlet_AuditPortlet";
-
 }

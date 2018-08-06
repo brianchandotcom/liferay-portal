@@ -379,7 +379,6 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 	private SearchContainer _assetDisplayPageSearchContainer;
 	private final AssetDisplayPageSelectorCriterion
 		_assetDisplayPageSelectorCriterion;
-	private String _displayStyle;
 	private final String _itemSelectedEventName;
 	private String _keywords;
 	private String _orderByCol;

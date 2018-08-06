@@ -14,8 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -71,9 +69,6 @@ public class LayoutSEOFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 	protected String getJspPath() {
 		return "/layout/seo.jsp";
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutSEOFormNavigatorEntry.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -51,4 +51,11 @@ public interface DDMFormWebConfiguration {
 	)
 	public String defaultDisplayView();
 
+	@Meta.AD(
+		deflt = "false",
+		description = "enable-experimental-interface-description",
+		name = "enable-experimental-interface", required = false
+	)
+	public boolean enableExperimentalInterface();
+
 }

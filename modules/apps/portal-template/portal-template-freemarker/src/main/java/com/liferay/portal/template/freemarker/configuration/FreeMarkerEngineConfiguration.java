@@ -47,7 +47,7 @@ public interface FreeMarkerEngineConfiguration {
 	public String[] restrictedClasses();
 
 	@Meta.AD(
-		deflt = "serviceLocator|utilLocator|objectUtil|staticFieldGetter|staticUtil",
+		deflt = "httpUtilUnsafe|objectUtil|serviceLocator|staticFieldGetter|staticUtil|utilLocator",
 		name = "restricted-variables", required = false
 	)
 	public String[] restrictedVariables();

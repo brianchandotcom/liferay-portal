@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,7 +49,6 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.net.InetAddress;
-import java.net.URI;
 import java.net.URL;
 
 import java.util.HashMap;
@@ -396,19 +396,10 @@ public class PingbackMethodImpl implements Method {
 
 	private boolean _isSourceURILocalNetwork() {
 		try {
-			URI uri = new URI(_sourceURI);
+			URL url = new URL(_sourceURI);
 
-			InetAddress inetAddress = InetAddress.getByName(uri.getHost());
-
-			if (inetAddress.isAnyLocalAddress() ||
-				inetAddress.isLinkLocalAddress() ||
-				inetAddress.isLoopbackAddress() ||
-				inetAddress.isSiteLocalAddress()) {
-
-				return true;
-			}
-
-			return false;
+			return InetAddressUtil.isLocalInetAddress(
+				InetAddress.getByName(url.getHost()));
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

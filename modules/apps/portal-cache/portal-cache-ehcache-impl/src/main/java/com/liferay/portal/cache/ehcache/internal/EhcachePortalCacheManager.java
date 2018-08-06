@@ -21,7 +21,6 @@ import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheManagerEventListener;
-import com.liferay.portal.cache.ehcache.internal.management.ManagementService;
 import com.liferay.portal.cache.ehcache.spi.EhcacheUnwrapUtil;
 import com.liferay.portal.cache.ehcache.spi.event.ConfigurableEhcachePortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -56,6 +55,7 @@ import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.event.CacheManagerEventListenerRegistry;
+import net.sf.ehcache.management.ManagementService;
 import net.sf.ehcache.util.FailSafeTimer;
 
 import org.osgi.framework.BundleContext;
@@ -267,7 +267,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 							serviceReference);
 
 						ManagementService managementService =
-							new ManagementService(_cacheManager, mBeanServer);
+							new ManagementService(
+								_cacheManager, mBeanServer, true, true, true,
+								true);
 
 						managementService.init();
 

@@ -31,15 +31,15 @@ import org.gradle.api.tasks.Exec;
 import org.gradle.util.GUtil;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Eddie Olson
  */
-public class WeDeployDataPlugin implements Plugin<Project> {
+public class WeDeployMessageQueuePlugin implements Plugin<Project> {
 
-	public static final String DELETE_WEDEPLOY_DATA_TASK_NAME =
-		"deleteWeDeployData";
+	public static final String DELETE_WEDEPLOY_MESSAGE_QUEUE_TASK_NAME =
+		"deleteWeDeployMessageQueue";
 
-	public static final String DEPLOY_WEDEPLOY_DATA_TASK_NAME =
-		"deployWeDeployData";
+	public static final String DEPLOY_WEDEPLOY_MESSAGE_QUEUE_TASK_NAME =
+		"deployWeDeployMessageQueue";
 
 	@Override
 	public void apply(Project project) {
@@ -55,18 +55,18 @@ public class WeDeployDataPlugin implements Plugin<Project> {
 
 		String wedeployService = (String)wedeployJsonMap.get("id");
 
-		_addTaskDeleteWeDeployData(
+		_addTaskDeleteWeDeployMessageQueue(
 			project, wedeployProject, wedeployRemote, wedeployService);
 
-		_addTaskDeployWeDeployData(project, wedeployProject, wedeployRemote);
+		_addTaskDeployWeDeployMessageQueue(project, wedeployProject, wedeployRemote);
 	}
 
-	private Exec _addTaskDeleteWeDeployData(
+	private Exec _addTaskDeleteWeDeployMessageQueue(
 		Project project, String wedeployProject, String wedeployRemote,
 		Object wedeployService) {
 
 		Exec exec = GradleUtil.addTask(
-			project, DELETE_WEDEPLOY_DATA_TASK_NAME, Exec.class);
+			project, DELETE_WEDEPLOY_MESSAGE_QUEUE_TASK_NAME, Exec.class);
 
 		exec.args("delete", "--force");
 
@@ -82,17 +82,17 @@ public class WeDeployDataPlugin implements Plugin<Project> {
 
 		exec.setExecutable("we");
 
-		exec.setDescription("Deletes the data " + project + " from WeDeploy.");
+		exec.setDescription("Deletes the message queue " + project + " from WeDeploy.");
 		exec.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		return exec;
 	}
 
-	private Exec _addTaskDeployWeDeployData(
+	private Exec _addTaskDeployWeDeployMessageQueue(
 		Project project, String wedeployProject, String wedeployRemote) {
 
 		Exec exec = GradleUtil.addTask(
-			project, DEPLOY_WEDEPLOY_DATA_TASK_NAME, Exec.class);
+			project, DEPLOY_WEDEPLOY_MESSAGE_QUEUE_TASK_NAME, Exec.class);
 
 		exec.args("deploy");
 
@@ -106,7 +106,7 @@ public class WeDeployDataPlugin implements Plugin<Project> {
 
 		exec.setExecutable("we");
 
-		exec.setDescription("Deploys the data " + project + " to WeDeploy.");
+		exec.setDescription("Deploys the message queue " + project + " to WeDeploy.");
 		exec.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		return exec;

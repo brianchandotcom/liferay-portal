@@ -15,11 +15,11 @@
 package com.liferay.journal.internal.transformer;
 
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.util.PropsUtil;

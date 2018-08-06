@@ -15,6 +15,7 @@
 package com.liferay.opensocial.shindig.service;
 
 import com.liferay.opensocial.shindig.util.ShindigUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.service.PhoneServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 

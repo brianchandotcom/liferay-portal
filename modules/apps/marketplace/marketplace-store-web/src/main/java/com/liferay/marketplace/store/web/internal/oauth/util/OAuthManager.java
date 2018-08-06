@@ -24,6 +24,7 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.marketplace.store.web.internal.configuration.MarketplaceStoreWebConfigurationValues;
 import com.liferay.marketplace.store.web.internal.oauth.api.MarketplaceApi;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 
@@ -148,8 +148,7 @@ public class OAuthManager {
 					_log.warn(
 						StringBundler.concat(
 							"Unable to setup Marketplace for company ",
-							String.valueOf(company.getCompanyId()), ": ",
-							e.getMessage()));
+							company.getCompanyId(), ": ", e.getMessage()));
 				}
 			}
 		}

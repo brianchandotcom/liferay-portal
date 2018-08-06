@@ -45,6 +45,7 @@ import com.liferay.journal.service.persistence.JournalArticlePersistence;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
@@ -65,7 +66,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -116,8 +116,7 @@ public class JournalArticleModelValidator
 					LocaleException.TYPE_CONTENT,
 					StringBundler.concat(
 						"The locale ", articleDefaultLocale.getLanguage(),
-						" is not available in site with groupId",
-						String.valueOf(groupId)));
+						" is not available in site with groupId", groupId));
 
 				le.setSourceAvailableLocales(
 					Collections.singleton(articleDefaultLocale));
@@ -353,9 +352,8 @@ public class JournalArticleModelValidator
 
 		throw new InvalidDDMStructureException(
 			StringBundler.concat(
-				"Invalid structure ",
-				String.valueOf(ddmStructure.getStructureId()), " for folder ",
-				String.valueOf(folderId)));
+				"Invalid structure ", ddmStructure.getStructureId(),
+				" for folder ", folderId));
 	}
 
 	@Override

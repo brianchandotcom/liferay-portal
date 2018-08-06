@@ -56,6 +56,7 @@ import com.liferay.journal.web.internal.security.permission.resource.JournalFold
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -101,7 +102,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -1034,8 +1034,7 @@ public class JournalDisplayContext {
 			entriesChecker.setRememberCheckBoxStateURLRegex(
 				StringBundler.concat(
 					"^(?!.*", _liferayPortletResponse.getNamespace(),
-					"redirect).*(folderId=", String.valueOf(getFolderId()),
-					")"));
+					"redirect).*(folderId=", getFolderId(), ")"));
 
 			articleSearchContainer.setRowChecker(entriesChecker);
 

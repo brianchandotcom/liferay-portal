@@ -15,7 +15,7 @@
 package com.liferay.knowledge.base.markdown.converter.internal.pegdown.serializer;
 
 import com.liferay.knowledge.base.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.List;
 import java.util.regex.Matcher;

@@ -34,6 +34,7 @@ import com.liferay.mail.reader.service.AttachmentLocalServiceUtil;
 import com.liferay.mail.reader.service.FolderLocalServiceUtil;
 import com.liferay.mail.reader.service.MessageLocalServiceUtil;
 import com.liferay.petra.mail.InternetAddressUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 

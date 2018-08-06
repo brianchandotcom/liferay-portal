@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.parser.bbcode.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.HtmlImpl;
 
 import org.junit.Assert;

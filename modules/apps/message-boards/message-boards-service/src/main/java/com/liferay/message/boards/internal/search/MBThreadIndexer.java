@@ -21,6 +21,7 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -277,8 +277,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 			_log.debug(
 				StringBundler.concat(
 					"Reindexing message boards threads for message board ",
-					"category ID ", String.valueOf(categoryId),
-					" and group ID ", String.valueOf(groupId)));
+					"category ID ", categoryId, " and group ID ", groupId));
 		}
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =

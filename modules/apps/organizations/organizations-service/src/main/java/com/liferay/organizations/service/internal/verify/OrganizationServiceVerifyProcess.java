@@ -15,6 +15,7 @@
 package com.liferay.organizations.service.internal.verify;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.PreparedStatement;
@@ -117,7 +117,7 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Processing ", String.valueOf(organizations.size()),
+						"Processing ", organizations.size(),
 						" organizations with no asset"));
 			}
 
@@ -131,9 +131,8 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 						_log.warn(
 							StringBundler.concat(
 								"Unable to update asset for organization ",
-								String.valueOf(
-									organization.getOrganizationId()),
-								": ", e.getMessage()));
+								organization.getOrganizationId(), ": ",
+								e.getMessage()));
 					}
 				}
 			}

@@ -44,6 +44,7 @@ import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -83,7 +84,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -667,9 +667,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (kbArticle == null) {
 			throw new NoSuchArticleException(
 				StringBundler.concat(
-					"No KBArticle exists with the key {groupId=",
-					String.valueOf(groupId), ", kbFolderId=",
-					String.valueOf(kbFolderId), ", urlTitle=", urlTitle, "}"));
+					"No KBArticle exists with the key {groupId=", groupId,
+					", kbFolderId=", kbFolderId, ", urlTitle=", urlTitle, "}"));
 		}
 
 		return kbArticle;
@@ -689,8 +688,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (kbArticle == null) {
 			throw new NoSuchArticleException(
 				StringBundler.concat(
-					"No KBArticle with the key {groupId=",
-					String.valueOf(groupId), ", urlTitle=", urlTitle,
+					"No KBArticle with the key {groupId=", groupId,
+					", urlTitle=", urlTitle,
 					"} found in a folder with URL title ", kbFolderUrlTitle));
 		}
 
@@ -838,10 +837,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (latestKBArticle == null) {
 			throw new NoSuchArticleException(
 				StringBundler.concat(
-					"No KBArticle exists with the key {groupId=",
-					String.valueOf(groupId), ", kbFolderId=",
-					String.valueOf(kbFolderId), ", urlTitle=", urlTitle,
-					", status=", String.valueOf(status), "}"));
+					"No KBArticle exists with the key {groupId=", groupId,
+					", kbFolderId=", kbFolderId, ", urlTitle=", urlTitle,
+					", status=", status, "}"));
 		}
 
 		return latestKBArticle;

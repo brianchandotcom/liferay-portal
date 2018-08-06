@@ -14,8 +14,8 @@
 
 package com.liferay.mobile.device.rules.web.internal.upgrade;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Tom Wang

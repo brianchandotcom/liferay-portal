@@ -18,11 +18,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
@@ -65,11 +65,9 @@ public class UpgradeArticleAssets extends UpgradeProcess {
 		try (PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
 					"select resourcePrimKey, indexable from JournalArticle ",
-					"where companyId = ", String.valueOf(companyId), " and ",
-					"version = ",
-					String.valueOf(JournalArticleConstants.VERSION_DEFAULT),
-					" and status = ",
-					String.valueOf(WorkflowConstants.STATUS_DRAFT)));
+					"where companyId = ", companyId, " and version = ",
+					JournalArticleConstants.VERSION_DEFAULT, " and status = ",
+					WorkflowConstants.STATUS_DRAFT));
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {

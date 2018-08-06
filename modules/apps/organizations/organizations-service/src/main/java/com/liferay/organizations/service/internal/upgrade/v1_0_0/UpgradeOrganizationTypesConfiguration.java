@@ -16,6 +16,7 @@ package com.liferay.organizations.service.internal.upgrade.v1_0_0;
 
 import com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration;
 import com.liferay.organizations.service.internal.constants.LegacyOrganizationTypesKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;

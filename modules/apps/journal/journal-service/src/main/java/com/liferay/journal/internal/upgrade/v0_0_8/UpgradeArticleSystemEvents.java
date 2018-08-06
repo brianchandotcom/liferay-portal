@@ -14,6 +14,7 @@
 
 package com.liferay.journal.internal.upgrade.v0_0_8;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
@@ -68,7 +68,7 @@ public class UpgradeArticleSystemEvents extends UpgradeProcess {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Processing ", String.valueOf(systemEvents.size()),
+						"Processing ", systemEvents.size(),
 						" delete system events for journal articles"));
 			}
 

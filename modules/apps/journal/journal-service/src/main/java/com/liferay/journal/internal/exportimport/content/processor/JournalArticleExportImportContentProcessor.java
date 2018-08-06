@@ -33,6 +33,7 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -44,7 +45,6 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -488,8 +488,7 @@ public class JournalArticleExportImportContentProcessor
 							new NoSuchArticleException(
 								StringBundler.concat(
 									"No JournalArticle exists with the key ",
-									"{resourcePrimKey=",
-									String.valueOf(classPK), "}"));
+									"{resourcePrimKey=", classPK, "}"));
 
 						if (throwable == null) {
 							throwable = nsae;

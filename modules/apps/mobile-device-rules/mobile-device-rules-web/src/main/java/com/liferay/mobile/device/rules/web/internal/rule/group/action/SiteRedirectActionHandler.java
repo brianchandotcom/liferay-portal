@@ -16,6 +16,7 @@ package com.liferay.mobile.device.rules.web.internal.rule.group.action;
 
 import com.liferay.mobile.device.rules.action.ActionHandler;
 import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -95,8 +95,8 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Layout ", String.valueOf(layout.getPlid()),
-						" does not belong to group ", String.valueOf(groupId)));
+						"Layout ", layout.getPlid(),
+						" does not belong to group ", groupId));
 			}
 
 			layout = null;

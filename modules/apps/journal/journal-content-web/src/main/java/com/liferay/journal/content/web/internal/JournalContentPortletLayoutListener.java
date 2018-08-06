@@ -22,6 +22,7 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -69,8 +69,7 @@ public class JournalContentPortletLayoutListener
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringBundler.concat(
-					"Add ", portletId, " to layout ", String.valueOf(plid)));
+				StringBundler.concat("Add ", portletId, " to layout ", plid));
 		}
 
 		try {
@@ -101,8 +100,7 @@ public class JournalContentPortletLayoutListener
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringBundler.concat(
-					"Move ", portletId, " from in ", String.valueOf(plid)));
+				StringBundler.concat("Move ", portletId, " from in ", plid));
 		}
 	}
 
@@ -113,8 +111,7 @@ public class JournalContentPortletLayoutListener
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Remove ", portletId, " from layout ",
-					String.valueOf(plid)));
+					"Remove ", portletId, " from layout ", plid));
 		}
 
 		try {
@@ -154,8 +151,7 @@ public class JournalContentPortletLayoutListener
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Setup ", portletId, " from layout ",
-					String.valueOf(plid)));
+					"Setup ", portletId, " from layout ", plid));
 		}
 
 		try {

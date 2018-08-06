@@ -20,8 +20,8 @@ import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.petra.reflect.AnnotationLocator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.reflect.Method;
 

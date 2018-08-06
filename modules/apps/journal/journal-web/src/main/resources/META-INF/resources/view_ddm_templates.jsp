@@ -45,7 +45,11 @@ if (layout != null) {
 	<portlet:param name="mvcPath" value="/view_template.jsp" />
 </portlet:renderURL>
 
-<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems='<%= journalDisplayContext.getNavigationBarItems("templates") %>'
+/>
+
 <liferay-util:include page="/template_management_bar.jsp" servletContext="<%= application %>" />
 
 <c:if test="<%= showHeader %>">

@@ -11,6 +11,11 @@
 	<version>${version}</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+#if (${liferayVersion.startsWith("7.0")})
+		<com.liferay.frontend.css.common.version>2.0.3</com.liferay.frontend.css.common.version>
+#elseif (${liferayVersion.startsWith("7.1")})
+		<com.liferay.frontend.css.common.version>3.0.1</com.liferay.frontend.css.common.version>
+#end
 	</properties>
 	<build>
 		<plugins>
@@ -78,4 +83,13 @@
 			</plugin>
 		</plugins>
 	</build>
+	<dependencies>
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.frontend.css.common</artifactId>
+			<version>${com.liferay.frontend.css.common.version}</version>
+			<scope>provided</scope>
+#if (false)<!--ignore-->#end
+		</dependency>
+	</dependencies>
 </project>

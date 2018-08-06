@@ -242,21 +242,19 @@ public class PersonCollectionResource
 			Credentials credentials, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		PermissionChecker permissionChecker =
+			(PermissionChecker)credentials.get();
+
+		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
+			throw new MustBeCompanyAdmin(permissionChecker);
+		}
+
 		Optional<String> optional = fullNameQuery.getFullNameOptional();
 
 		if (optional.isPresent()) {
-			PermissionChecker permissionChecker =
-				(PermissionChecker)credentials.get();
-
-			if (!permissionChecker.isCompanyAdmin(
-					themeDisplay.getCompanyId())) {
-
-				throw new MustBeCompanyAdmin(permissionChecker);
-			}
-
 			List<User> users = _userLocalService.search(
 				themeDisplay.getCompanyId(), optional.get(),
-				WorkflowConstants.STATUS_ANY, null,
+				WorkflowConstants.STATUS_APPROVED, null,
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				new UserLastNameComparator());
 
@@ -265,19 +263,21 @@ public class PersonCollectionResource
 
 			int count = _userLocalService.searchCount(
 				themeDisplay.getCompanyId(), optional.get(),
-				WorkflowConstants.STATUS_ANY, null);
+				WorkflowConstants.STATUS_APPROVED, null);
 
 			return new PageItems<>(userWrappers, count);
 		}
 
-		List<User> users = _userService.getCompanyUsers(
-			themeDisplay.getCompanyId(), pagination.getStartPosition(),
-			pagination.getEndPosition());
+		List<User> users = _userLocalService.getUsers(
+			themeDisplay.getCompanyId(), false,
+			WorkflowConstants.STATUS_APPROVED, pagination.getStartPosition(),
+			pagination.getEndPosition(), null);
 
 		List<UserWrapper> userWrappers = _toUserWrappers(users, themeDisplay);
 
-		int count = _userService.getCompanyUsersCount(
-			themeDisplay.getCompanyId());
+		int count = _userLocalService.getUsersCount(
+			themeDisplay.getCompanyId(), false,
+			WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(userWrappers, count);
 	}

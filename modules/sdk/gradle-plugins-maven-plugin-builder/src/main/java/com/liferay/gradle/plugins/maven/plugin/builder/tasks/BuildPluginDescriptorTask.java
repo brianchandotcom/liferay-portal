@@ -798,7 +798,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private FileCollection _mavenEmbedderClasspath;
 	private Object _mavenEmbedderMainClassName =
 		"org.apache.maven.cli.MavenCli";
-	private Object _mavenPluginPluginVersion = "3.4";
+	private Object _mavenPluginPluginVersion = "3.5.2";
 	private Object _mavenSettingsFile;
 	private Object _outputDir;
 	private Object _pomArtifactId;

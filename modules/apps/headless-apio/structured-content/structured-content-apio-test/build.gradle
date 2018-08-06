@@ -1,0 +1,13 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":apps:apio-architect:apio-architect-api")
+
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:headless-apio:structured-content:structured-content-apio-api")
+	testIntegrationCompile project(":apps:journal:journal-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

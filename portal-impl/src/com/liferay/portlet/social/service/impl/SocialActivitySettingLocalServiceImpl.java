@@ -69,10 +69,7 @@ public class SocialActivitySettingLocalServiceImpl
 
 		String key = encodeKey(groupId, className, activityType);
 
-		PortalCache<String, SocialActivityDefinition> activityDefinitions =
-			PortalCacheHolder._activityDefinitions;
-
-		SocialActivityDefinition activityDefinition = activityDefinitions.get(
+		SocialActivityDefinition activityDefinition = _activityDefinitions.get(
 			key);
 
 		if (activityDefinition != null) {
@@ -90,7 +87,7 @@ public class SocialActivitySettingLocalServiceImpl
 		activityDefinition = getActivityDefinition(
 			groupId, className, activityType, defaultActivityDefinition);
 
-		activityDefinitions.put(key, activityDefinition);
+		_activityDefinitions.put(key, activityDefinition);
 
 		return activityDefinition;
 	}
@@ -251,10 +248,7 @@ public class SocialActivitySettingLocalServiceImpl
 
 		String key = encodeKey(groupId, className, activityType);
 
-		PortalCache<String, SocialActivityDefinition> activityDefinitions =
-			PortalCacheHolder._activityDefinitions;
-
-		activityDefinitions.remove(key);
+		_activityDefinitions.remove(key);
 	}
 
 	@Override
@@ -422,12 +416,8 @@ public class SocialActivitySettingLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialActivitySettingLocalServiceImpl.class);
 
-	private static class PortalCacheHolder {
-
-		private static final PortalCache<String, SocialActivityDefinition>
-			_activityDefinitions = MultiVMPoolUtil.getPortalCache(
-				SocialActivitySettingLocalServiceImpl.class.getName());
-
-	}
+	private static final PortalCache<String, SocialActivityDefinition>
+		_activityDefinitions = MultiVMPoolUtil.getPortalCache(
+			SocialActivitySettingLocalServiceImpl.class.getName());
 
 }

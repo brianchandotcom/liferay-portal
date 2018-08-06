@@ -53,12 +53,14 @@ public class CachelessTableMapperImpl
 				" = ? AND ", rightColumnName, " = ?"),
 			RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT);
 
-		leftToRightPortalCache = new DummyPortalCache();
-		rightToLeftPortalCache = new DummyPortalCache();
-	}
+		leftToRightPortalCache = new DummyPortalCache(
+			leftToRightPortalCache.getPortalCacheName(),
+			leftToRightPortalCache.getPortalCacheManager());
+		rightToLeftPortalCache = new DummyPortalCache(
+			rightToLeftPortalCache.getPortalCacheName(),
+			rightToLeftPortalCache.getPortalCacheManager());
 
-	@Override
-	public void destroy() {
+		destroy();
 	}
 
 	@Override
@@ -115,12 +117,12 @@ public class CachelessTableMapperImpl
 
 		@Override
 		public PortalCacheManager<Long, long[]> getPortalCacheManager() {
-			throw new UnsupportedOperationException();
+			return portalCacheManager;
 		}
 
 		@Override
 		public String getPortalCacheName() {
-			throw new UnsupportedOperationException();
+			return portalCacheName;
 		}
 
 		@Override
@@ -159,10 +161,6 @@ public class CachelessTableMapperImpl
 		public void unregisterPortalCacheListeners() {
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), with no direct replacement
-		 */
-		@Deprecated
 		protected DummyPortalCache(
 			String portalCacheName,
 			PortalCacheManager<Long, long[]> portalCacheManager) {
@@ -171,20 +169,8 @@ public class CachelessTableMapperImpl
 			this.portalCacheManager = portalCacheManager;
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), with no direct replacement
-		 */
-		@Deprecated
-		protected PortalCacheManager<Long, long[]> portalCacheManager;
-
-		/**
-		 * @deprecated As of Judson (7.1.x), with no direct replacement
-		 */
-		@Deprecated
-		protected String portalCacheName;
-
-		private DummyPortalCache() {
-		}
+		protected final PortalCacheManager<Long, long[]> portalCacheManager;
+		protected final String portalCacheName;
 
 	}
 

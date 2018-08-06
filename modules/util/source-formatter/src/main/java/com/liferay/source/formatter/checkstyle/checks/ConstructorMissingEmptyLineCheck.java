@@ -103,7 +103,6 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 		}
 
 		DetailAST firstChildAST = childAST.getFirstChild();
-		DetailAST lastChildAST = childAST.getLastChild();
 
 		if (firstChildAST.getType() != TokenTypes.IDENT) {
 			if (firstChildAST.getChildCount() != 2) {
@@ -120,12 +119,14 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 			}
 		}
 
-		if (lastChildAST.getType() != TokenTypes.IDENT) {
-			return false;
-		}
+		DetailAST lastChildAST = childAST.getLastChild();
 
-		if (!parameters.contains(lastChildAST.getText())) {
-			return false;
+		if (lastChildAST.getType() == TokenTypes.IDENT) {
+			String text = lastChildAST.getText();
+
+			if (!parameters.contains(text) && !text.matches("^[A-Z0-9_]+$")) {
+				return false;
+			}
 		}
 
 		DetailAST nextSiblingAST = expressionAST.getNextSibling();

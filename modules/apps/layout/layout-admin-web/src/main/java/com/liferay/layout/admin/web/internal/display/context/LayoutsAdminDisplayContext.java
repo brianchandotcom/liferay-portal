@@ -162,7 +162,7 @@ public class LayoutsAdminDisplayContext {
 		JSONArray breadcrumbEntriesJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		boolean privatePages = isPrivatePages();
+		boolean privatePages = isPrivateLayout();
 
 		Layout selLayout = getSelLayout();
 
@@ -418,23 +418,6 @@ public class LayoutsAdminDisplayContext {
 		return markAsHomePageLayoutURL.toString();
 	}
 
-	public String getNavigation() {
-		if (_navigation != null) {
-			return _navigation;
-		}
-
-		String defaultNavigation = "public-pages";
-
-		if (!isShowPublicPages()) {
-			defaultNavigation = "private-pages";
-		}
-
-		_navigation = ParamUtil.getString(
-			_liferayPortletRequest, "navigation", defaultNavigation);
-
-		return _navigation;
-	}
-
 	public List<NavigationItem> getNavigationItems() {
 		Group group = _themeDisplay.getScopeGroup();
 
@@ -557,7 +540,8 @@ public class LayoutsAdminDisplayContext {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("tabs1", getTabs1());
-		portletURL.setParameter("navigation", getNavigation());
+		portletURL.setParameter(
+			"privateLayout", String.valueOf(isPrivateLayout()));
 
 		return portletURL;
 	}
@@ -632,8 +616,6 @@ public class LayoutsAdminDisplayContext {
 
 		selectLayoutPageTemplateEntryURL.setParameter(
 			"mvcPath", "/select_layout_page_template_entry.jsp");
-		selectLayoutPageTemplateEntryURL.setParameter(
-			"navigation", getNavigation());
 		selectLayoutPageTemplateEntryURL.setParameter(
 			"redirect", getRedirect());
 		selectLayoutPageTemplateEntryURL.setParameter(
@@ -736,7 +718,7 @@ public class LayoutsAdminDisplayContext {
 
 	public int getTotalItems() throws Exception {
 		return LayoutLocalServiceUtil.getLayoutsCount(
-			getSelGroup(), isPrivatePages());
+			getSelGroup(), isPrivateLayout());
 	}
 
 	public String getViewLayoutURL(Layout layout) throws PortalException {
@@ -800,22 +782,6 @@ public class LayoutsAdminDisplayContext {
 			_liferayPortletRequest, "privateLayout");
 
 		return _privateLayout;
-	}
-
-	public boolean isPrivatePages() {
-		if (Objects.equals(getNavigation(), "private-pages")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isPublicPages() {
-		if (Objects.equals(getNavigation(), "public-pages")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isShowAddChildPageAction(Layout layout)
@@ -963,7 +929,7 @@ public class LayoutsAdminDisplayContext {
 
 			if ((layout.getParentLayoutId() ==
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) &&
-				(_getHomePagePlid(isPrivatePages()) != layout.getPlid())) {
+				(_getHomePagePlid(isPrivateLayout()) != layout.getPlid())) {
 
 				jsonObject.put(
 					"markAsHomePageLayoutURL",
@@ -1006,7 +972,7 @@ public class LayoutsAdminDisplayContext {
 
 		List<LayoutSetBranch> layoutSetBranches =
 			LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(
-				_themeDisplay.getScopeGroupId(), isPrivatePages());
+				_themeDisplay.getScopeGroupId(), isPrivateLayout());
 
 		if ((_activeLayoutSetBranchId == 0) && !layoutSetBranches.isEmpty()) {
 			LayoutSetBranch currentUserLayoutSetBranch =
@@ -1039,18 +1005,6 @@ public class LayoutsAdminDisplayContext {
 
 		PortletURL portletURL = getPortletURL();
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
-
-		if (layout != null) {
-			String navigation = "public-pages";
-
-			if (layout.isPrivateLayout()) {
-				navigation = "private-pages";
-			}
-
-			portletURL.setParameter("navigation", navigation);
-		}
-
 		portletURL.setParameter("selPlid", String.valueOf(plid));
 		portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
@@ -1073,8 +1027,6 @@ public class LayoutsAdminDisplayContext {
 
 		PortletURL pagesURL = getPortletURL();
 
-		pagesURL.setParameter(
-			"navigation", privatePages ? "private-pages" : "public-pages");
 		pagesURL.setParameter(
 			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
 		pagesURL.setParameter("privateLayout", String.valueOf(privatePages));
@@ -1146,7 +1098,7 @@ public class LayoutsAdminDisplayContext {
 		if (LayoutLocalServiceUtil.hasLayouts(getSelGroup(), false) &&
 			isShowPublicPages()) {
 
-			boolean active = isPublicPages();
+			boolean active = !isPrivateLayout();
 
 			if (selLayout != null) {
 				active = selLayout.isPublicLayout();
@@ -1156,7 +1108,7 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		if (LayoutLocalServiceUtil.hasLayouts(getSelGroup(), true)) {
-			boolean active = isPrivatePages();
+			boolean active = isPrivateLayout();
 
 			if (selLayout != null) {
 				active = selLayout.isPrivateLayout();
@@ -1173,7 +1125,7 @@ public class LayoutsAdminDisplayContext {
 			layoutColumnsJSONArray.put(layoutSetBranchesJSONArray);
 		}
 
-		JSONArray pagesJSONArray = _getLayoutsJSONArray(0, isPrivatePages());
+		JSONArray pagesJSONArray = _getLayoutsJSONArray(0, isPrivateLayout());
 
 		if (selLayout == null) {
 			layoutColumnsJSONArray.put(pagesJSONArray);
@@ -1205,7 +1157,7 @@ public class LayoutsAdminDisplayContext {
 
 		List<LayoutSetBranch> layoutSetBranches =
 			LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(
-				_themeDisplay.getScopeGroupId(), isPrivatePages());
+				_themeDisplay.getScopeGroupId(), isPrivateLayout());
 
 		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -1366,7 +1318,6 @@ public class LayoutsAdminDisplayContext {
 	private Long _layoutId;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private String _navigation;
 	private Long _parentLayoutId;
 	private Boolean _privateLayout;
 	private String _redirect;

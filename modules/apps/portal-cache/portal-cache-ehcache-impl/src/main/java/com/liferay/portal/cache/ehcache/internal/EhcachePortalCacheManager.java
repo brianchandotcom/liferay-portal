@@ -178,8 +178,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	protected void doDestroy() {
 		_cacheManager.shutdown();
 
-		if (_mBeanServerServiceTracker != null) {
-			_mBeanServerServiceTracker.close();
+		if (_managementService != null) {
+			_managementService.dispose();
 		}
 
 		if (_serviceTracker != null) {
@@ -201,7 +201,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return _portalCacheManagerConfiguration;
 	}
 
-	protected void initPortalCacheConfiguratorSettingsServiceTracker() {
+	protected void initPortalCacheConfiguratorSettingsServiceTracker(
+		BundleContext bundleContext) {
+
 		String filterString = StringBundler.concat(
 			"(&(objectClass=", PortalCacheConfiguratorSettings.class.getName(),
 			")(", PortalCacheManager.PORTAL_CACHE_MANAGER_NAME, "=",
@@ -280,42 +282,12 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				props.get(
 					PropsKeys.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED))) {
 
-			_mBeanServerServiceTracker =
-				new ServiceTracker<MBeanServer, ManagementService>(
-					bundleContext, MBeanServer.class, null) {
+			_managementService = new ManagementService(
+				_cacheManager, mBeanServer, _registerCacheManager,
+				_registerCaches, _registerCacheConfigurations,
+				_registerCacheStatistics);
 
-					@Override
-					public ManagementService addingService(
-						ServiceReference<MBeanServer> serviceReference) {
-
-						MBeanServer mBeanServer = bundleContext.getService(
-							serviceReference);
-
-						ManagementService managementService =
-							new ManagementService(
-								_cacheManager, mBeanServer,
-								_registerCacheManager, _registerCaches,
-								_registerCacheConfigurations,
-								_registerCacheStatistics);
-
-						managementService.init();
-
-						return managementService;
-					}
-
-					@Override
-					public void removedService(
-						ServiceReference<MBeanServer> serviceReference,
-						ManagementService managementService) {
-
-						managementService.dispose();
-
-						bundleContext.ungetService(serviceReference);
-					}
-
-				};
-
-			_mBeanServerServiceTracker.open();
+			_managementService.init();
 		}
 	}
 
@@ -425,7 +397,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	protected BaseEhcachePortalCacheManagerConfigurator
 		baseEhcachePortalCacheManagerConfigurator;
-	protected BundleContext bundleContext;
+	protected MBeanServer mBeanServer;
 	protected volatile Props props;
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -434,8 +406,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private CacheManager _cacheManager;
 	private String _configFile;
 	private String _defaultConfigFile;
-	private ServiceTracker<MBeanServer, ManagementService>
-		_mBeanServerServiceTracker;
+	private ManagementService _managementService;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;

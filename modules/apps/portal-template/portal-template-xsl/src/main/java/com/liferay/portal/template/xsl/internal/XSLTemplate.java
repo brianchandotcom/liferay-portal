@@ -29,10 +29,6 @@ import com.liferay.portal.xsl.XSLURIResolver;
 
 import java.io.Writer;
 
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
@@ -127,8 +123,7 @@ public class XSLTemplate implements Template {
 
 		if (_errorTemplateResource == null) {
 			try {
-				transformer = _getTransformer(
-					_transformerFactory, _xslTemplateResource);
+				transformer = _getTransformer(_xslTemplateResource);
 
 				transformer.transform(
 					_xmlStreamSource, new StreamResult(writer));
@@ -145,8 +140,7 @@ public class XSLTemplate implements Template {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		transformer = _getTransformer(
-			_transformerFactory, _xslTemplateResource);
+		transformer = _getTransformer(_xslTemplateResource);
 
 		transformer.setParameter(TemplateConstants.WRITER, unsyncStringWriter);
 
@@ -202,7 +196,7 @@ public class XSLTemplate implements Template {
 		}
 		catch (Exception e1) {
 			Transformer errorTransformer = _getTransformer(
-				_transformerFactory, _errorTemplateResource);
+				_errorTemplateResource);
 
 			errorTransformer.setParameter(TemplateConstants.WRITER, writer);
 
@@ -270,30 +264,21 @@ public class XSLTemplate implements Template {
 		return _context.values();
 	}
 
-	private Transformer _getTransformer(
-			TransformerFactory transformerFactory,
-			TemplateResource templateResource)
+	private Transformer _getTransformer(TemplateResource templateResource)
 		throws TemplateException {
 
 		try {
 			StreamSource scriptSource = new StreamSource(
 				templateResource.getReader());
 
-			Transformer transformer = AccessController.doPrivileged(
-				new TransformerPrivilegedExceptionAction(
-					transformerFactory, scriptSource));
+			Transformer transformer = _transformerFactory.newTransformer(
+				scriptSource);
 
 			for (Map.Entry<String, Object> entry : _context.entrySet()) {
 				transformer.setParameter(entry.getKey(), entry.getValue());
 			}
 
 			return transformer;
-		}
-		catch (PrivilegedActionException pae) {
-			throw new TemplateException(
-				"Unable to get Transformer for template " +
-					templateResource.getTemplateId(),
-				pae.getException());
 		}
 		catch (Exception e) {
 			throw new TemplateException(
@@ -306,28 +291,8 @@ public class XSLTemplate implements Template {
 	private final Map<String, Object> _context;
 	private TemplateResource _errorTemplateResource;
 	private final TemplateContextHelper _templateContextHelper;
-	private TransformerFactory _transformerFactory;
+	private final TransformerFactory _transformerFactory;
 	private StreamSource _xmlStreamSource;
 	private final XSLTemplateResource _xslTemplateResource;
-
-	private static class TransformerPrivilegedExceptionAction
-		implements PrivilegedExceptionAction<Transformer> {
-
-		public TransformerPrivilegedExceptionAction(
-			TransformerFactory transformerFactory, StreamSource scriptSource) {
-
-			_transformerFactory = transformerFactory;
-			_scriptSource = scriptSource;
-		}
-
-		@Override
-		public Transformer run() throws Exception {
-			return _transformerFactory.newTransformer(_scriptSource);
-		}
-
-		private final StreamSource _scriptSource;
-		private TransformerFactory _transformerFactory;
-
-	}
 
 }

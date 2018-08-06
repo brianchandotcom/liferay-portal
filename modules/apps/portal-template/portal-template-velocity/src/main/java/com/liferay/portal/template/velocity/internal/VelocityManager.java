@@ -260,13 +260,12 @@ public class VelocityManager extends BaseSingleTemplateManager {
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, boolean restricted,
-		Map<String, Object> helperUtilities, boolean privileged) {
+		Map<String, Object> helperUtilities) {
 
 		Template template = new VelocityTemplate(
 			templateResource, errorTemplateResource, helperUtilities,
 			_velocityEngine, templateContextHelper,
-			_velocityEngineConfiguration.resourceModificationCheckInterval(),
-			privileged);
+			_velocityEngineConfiguration.resourceModificationCheckInterval());
 
 		if (restricted) {
 			template = new RestrictedTemplate(

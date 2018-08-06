@@ -150,6 +150,79 @@ public class UserPasswordException extends PortalException {
 
 	}
 
+	public static class MustHaveMoreAlphanumeric extends UserPasswordException {
+
+		public MustHaveMoreAlphanumeric(long minAlphanumeric) {
+			super(
+				String.format(
+					"Password must have at least %s alphanumeric characters",
+					minAlphanumeric));
+
+			this.minAlphanumeric = minAlphanumeric;
+		}
+
+		public final long minAlphanumeric;
+
+	}
+
+	public static class MustHaveMoreLowercase extends UserPasswordException {
+
+		public MustHaveMoreLowercase(long minLowercase) {
+			super(
+				String.format(
+					"Password must have at least %s lowercase characters",
+					minLowercase));
+
+			this.minLowercase = minLowercase;
+		}
+
+		public final long minLowercase;
+
+	}
+
+	public static class MustHaveMoreNumbers extends UserPasswordException {
+
+		public MustHaveMoreNumbers(long minNumbers) {
+			super(
+				String.format(
+					"Password must have at least %s numbers", minNumbers));
+
+			this.minNumbers = minNumbers;
+		}
+
+		public final long minNumbers;
+
+	}
+
+	public static class MustHaveMoreSymbols extends UserPasswordException {
+
+		public MustHaveMoreSymbols(long minSymbols) {
+			super(
+				String.format(
+					"Password must have at least %s symbols", minSymbols));
+
+			this.minSymbols = minSymbols;
+		}
+
+		public final long minSymbols;
+
+	}
+
+	public static class MustHaveMoreUppercase extends UserPasswordException {
+
+		public MustHaveMoreUppercase(long minUppercase) {
+			super(
+				String.format(
+					"Password must have at least %s uppercase characters",
+					minUppercase));
+
+			this.minUppercase = minUppercase;
+		}
+
+		public final long minUppercase;
+
+	}
+
 	public static class MustMatch extends UserPasswordException {
 
 		public MustMatch(long userId) {
@@ -311,12 +384,16 @@ public class UserPasswordException extends PortalException {
 			StringPool.TRIPLE_PERIOD;
 	}
 
+	private UserPasswordException(String message) {
+		super(message);
+	}
+
 	private UserPasswordException(String message, int type) {
 		super(message);
 
 		_type = type;
 	}
 
-	private final int _type;
+	private int _type;
 
 }

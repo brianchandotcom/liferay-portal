@@ -270,8 +270,15 @@ public class DDMTemplateStagedModelDataHandler
 			templateElement, ExportImportPathUtil.getModelPath(template),
 			template);
 
-		portletDataContext.addPermissions(
-			getResourceName(template), template.getPrimaryKey());
+		try {
+			portletDataContext.addPermissions(
+				getResourceName(template), template.getPrimaryKey());
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
 	}
 
 	@Override
@@ -445,9 +452,16 @@ public class DDMTemplateStagedModelDataHandler
 
 			portletDataContext.importClassedModel(template, importedTemplate);
 
-			portletDataContext.importPermissions(
-				getResourceName(template), template.getPrimaryKey(),
-				importedTemplate.getPrimaryKey());
+			try {
+				portletDataContext.importPermissions(
+					getResourceName(template), template.getPrimaryKey(),
+					importedTemplate.getPrimaryKey());
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+			}
 
 			Map<String, String> ddmTemplateKeys =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(

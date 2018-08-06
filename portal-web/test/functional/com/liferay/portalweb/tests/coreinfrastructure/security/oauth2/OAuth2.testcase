@@ -10,7 +10,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -200,7 +200,7 @@
 
 		<var method="selenium#getElementValue(OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET)" name="generatedClientSecret" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<var name="curl"><![CDATA[
 			${portalURL}/o/oauth2/token \

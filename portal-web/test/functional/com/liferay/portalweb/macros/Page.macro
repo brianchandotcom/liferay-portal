@@ -367,7 +367,7 @@
 	</command>
 
 	<command name="getGroupIdFromHtmlSource">
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<var method="selenium#getAttribute('//li[@class=\'control-menu-nav-item\']/a[contains(@data-qa-id,\'editLayout\')]@href')" name="pageURL" />
 

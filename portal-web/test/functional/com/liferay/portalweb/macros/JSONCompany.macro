@@ -15,8 +15,8 @@
 	</command>
 
 	<command name="getPortalInstanceName">
-		<var method="TestPropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<and>
@@ -43,7 +43,7 @@
 	</command>
 
 	<command name="getPortalURL">
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<return value="${portalURL}" />
 	</command>

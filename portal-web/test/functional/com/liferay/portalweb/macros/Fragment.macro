@@ -79,7 +79,7 @@
 	<command name="importCollectionFromTempFolder">
 		<execute macro="Fragment#_gotoImportCollection" />
 
-		<var method="TestPropsUtil#get('output.dir.name')" name="tempDir" />
+		<var method="PropsUtil#get('output.dir.name')" name="tempDir" />
 
 		<var method="StringUtil#split('**/collections-*.zip')" name="pattern" />
 

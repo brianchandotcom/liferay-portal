@@ -12,11 +12,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var method="TestPropsUtil#get('database.hypersonic.password')" name="databasePassword" />
+			<var method="PropsUtil#get('database.hypersonic.password')" name="databasePassword" />
 			<var name="databaseType" value="Hypersonic" />
-			<var method="TestPropsUtil#get('database.hypersonic.username')" name="databaseUserName" />
-			<var method="TestPropsUtil#get('database.hypersonic.driver')" name="jdbcDriverClassName" />
-			<var method="TestPropsUtil#get('database.hypersonic.url')" name="jdbcURL" />
+			<var method="PropsUtil#get('database.hypersonic.username')" name="databaseUserName" />
+			<var method="PropsUtil#get('database.hypersonic.driver')" name="jdbcDriverClassName" />
+			<var method="PropsUtil#get('database.hypersonic.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -32,11 +32,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var method="TestPropsUtil#get('database.mysql.password')" name="databasePassword" />
+			<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
 			<var name="databaseType" value="MySQL" />
-			<var method="TestPropsUtil#get('database.mysql.username')" name="databaseUserName" />
-			<var method="TestPropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
-			<var method="TestPropsUtil#get('database.mysql.url')" name="jdbcURL" />
+			<var method="PropsUtil#get('database.mysql.username')" name="databaseUserName" />
+			<var method="PropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
+			<var method="PropsUtil#get('database.mysql.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />

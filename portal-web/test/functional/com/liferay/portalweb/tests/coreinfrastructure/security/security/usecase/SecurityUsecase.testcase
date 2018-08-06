@@ -10,7 +10,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -28,7 +28,7 @@
 	<command name="NoGuestRoleFromWCDArticleHistoryURL" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 		<var name="url" value="${portalURL}/web/guest/home?&amp;p_p_id=com_liferay_journal_web_portlet_JournalPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_mode=view&amp;_com_liferay_journal_web_portlet_JournalPortlet_struts_action=%2Fjournal%2Fview_article_history&amp;_com_liferay_journal_web_portlet_JournalPortlet_groupId=10180&amp;_com_liferay_journal_web_portlet_JournalPortlet_articleId=" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -125,7 +125,7 @@
 			<return name="groupId" />
 		</execute>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Api#gotoPAuthURL">
 			<var name="url" value="${portalURL}/api/jsonws/layout/update-layout/group-id/${groupId}/private-layout/false/layout-id/1/type-settings/layout-template-id%3D2_columns_ii%0Acolumn-1%3Dcom_liferay_marketplace_app_manager_web_portlet_MarketplaceAppManagerPortlet?p_auth=" />
@@ -147,7 +147,7 @@
 	<command name="ValidateBeanIdentifierUserPermissions" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 		<var name="url" value="${portalURL}/c/portal/json_service?serviceClassName=com.liferay.portal.service.AccountServiceUtil&amp;serviceMethodName=getBeanIdentifier&amp;p_auth=" />
 
 		<execute macro="Api#gotoPAuthURL" />
@@ -159,7 +159,7 @@
 	<command name="ValidateCannotStealAdminAccount" priority="4">
 		<property name="test.name.skip.portal.instance" value="SecurityUsecase#ValidateCannotStealAdminAccount" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
@@ -203,7 +203,7 @@
 		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}" />
 		<property name="portal.acceptance" value="true" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
@@ -240,7 +240,7 @@
 	<command name="ViewJSLoaderModulesURLNoWiki" priority="5">
 		<description message="This is a use case for LPS-73595." />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${portalURL}/o/js_loader_modules" />
@@ -256,7 +256,7 @@
 	<command ignore="true" name="ViewNoInvokedPortletViaURL" priority="5">
 		<description message="This is a use case for LPS-55622." />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<var name="undeployedPortletURL">
 			<![CDATA[

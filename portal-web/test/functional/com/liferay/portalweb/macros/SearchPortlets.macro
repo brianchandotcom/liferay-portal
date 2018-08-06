@@ -206,7 +206,7 @@
 
 		<var method="StringUtil#toLowerCase('${searchPage}')" name="searchPage" />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<var name="searchURL" value="${portalURL}/web/guest/${searchPage}?q=" />
 

@@ -12,7 +12,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -1649,7 +1649,7 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="AlloyEditor#addSourceContent">
 			<var name="content"><![CDATA[<p><span><a href="${portalURL}/web/guest/home/-/testportlet">text</a></span></p>]]></var>

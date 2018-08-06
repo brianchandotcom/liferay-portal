@@ -50,7 +50,7 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
 			<equals arg1="${testPortalInstance}" arg2="true" />
@@ -1010,8 +1010,8 @@
 
 		<var method="MathUtil#randomNumber('3')" name="googlePropertiesSet" />
 
-		<var method="TestPropsUtil#get('google.api.key.${googlePropertiesSet}')" name="googleAppsAPIKey" />
-		<var method="TestPropsUtil#get('google.client.id.${googlePropertiesSet}')" name="googleClientID" />
+		<var method="PropsUtil#get('google.api.key.${googlePropertiesSet}')" name="googleAppsAPIKey" />
+		<var method="PropsUtil#get('google.client.id.${googlePropertiesSet}')" name="googleClientID" />
 
 		<execute macro="PortalSettings#configureGoogleApps">
 			<var name="googleAppsAPIKey" value="${googleAppsAPIKey}" />
@@ -1031,8 +1031,8 @@
 		</execute>
 
 		<execute macro="GoogleDoc#gotoDrive">
-			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
 			<var name="windowTitle" value="Documents and Media Page - Liferay" />
 		</execute>
 
@@ -1428,8 +1428,8 @@
 		</execute>
 
 		<execute macro="PortalSettings#configureGoogleApps">
-			<var method="TestPropsUtil#get('google.api.key')" name="googleAppsAPIKey" />
-			<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />
+			<var method="PropsUtil#get('google.api.key')" name="googleAppsAPIKey" />
+			<var method="PropsUtil#get('google.client.id')" name="googleClientID" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1445,8 +1445,8 @@
 		</execute>
 
 		<execute macro="GoogleDoc#gotoDrive">
-			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
 			<var name="windowTitle" value="Documents and Media Page - Liferay" />
 		</execute>
 

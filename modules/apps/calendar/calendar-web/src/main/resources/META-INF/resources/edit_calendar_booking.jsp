@@ -939,53 +939,33 @@ while (manageableCalendarsIterator.hasNext()) {
 			var endDateContainer = A.one('#<portlet:namespace />endDateContainer');
 			var startDateContainer = A.one('#<portlet:namespace />startDateContainer');
 
-			var endDatePicker = intervalSelector.get('endDatePicker');
-			var startDatePicker = intervalSelector.get('startDatePicker');
-
-			var endDate = endDatePicker.getDate();
-			var startDate = startDatePicker.getDate();
-
-			var endTimePicker = intervalSelector.get('endTimePicker');
-			var startTimePicker = intervalSelector.get('startTimePicker');
+			var endTimeHours;
+			var endTimeMinutes;
+			var startTimeHours;
+			var startTimeMinutes;
 
 			var checked = allDayCheckbox.get('checked');
 
 			if (checked) {
 				placeholderSchedulerEvent.set('allDay', true);
 
-				startDate.setHours(0);
-				startDate.setMinutes(0);
-
-				endDate.setHours(23);
-				endDate.setMinutes(59);
-
-				intervalSelector.setDuration(endDate.valueOf() - startDate.valueOf());
-
-				startTimePicker.selectDates([startDate]);
-				endTimePicker.selectDates([endDate]);
+				startTimeHours = 0;
+				startTimeMinutes = 0;
+				endTimeHours = 23;
+				endTimeMinutes = 59;
 			}
 			else {
 				placeholderSchedulerEvent.set('allDay', false);
 
-				var startDateHours = <%= defaultStartTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
-				var startDateMinutes = <%= defaultStartTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
-
-				var endDateHours = <%= defaultEndTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
-				var endDateMinutes = <%= defaultEndTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
-
-				startDate.setHours(startDateHours);
-				startDate.setMinutes(startDateMinutes);
-
-				endDate.setHours(endDateHours);
-				endDate.setMinutes(endDateMinutes);
-
-				intervalSelector.setDuration(endDate.valueOf() - startDate.valueOf());
-
-				startTimePicker.selectDates([startDate]);
-				endTimePicker.selectDates([endDate]);
-
 				endDateContainer.show();
+
+				startTimeHours = <%= defaultStartTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
+				startTimeMinutes = <%= defaultStartTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
+				endTimeHours = <%= defaultEndTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
+				endTimeMinutes = <%= defaultEndTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
 			}
+
+			updateTimePickersValues(startTimeHours, startTimeMinutes, endTimeHours, endTimeMinutes);
 
 			endDateContainer.toggleClass('allday-class-active', checked);
 			startDateContainer.toggleClass('allday-class-active', checked);
@@ -993,6 +973,28 @@ while (manageableCalendarsIterator.hasNext()) {
 			scheduler.syncEventsUI();
 		}
 	);
+
+	var updateTimePickersValues = function(startTimeHours, startTimeMinutes, endTimeHours, endTimeMinutes) {
+		var endDatePicker = intervalSelector.get('endDatePicker');
+		var startDatePicker = intervalSelector.get('startDatePicker');
+
+		var endDate = endDatePicker.getDate();
+		var startDate = startDatePicker.getDate();
+
+		startDate.setHours(startTimeHours);
+		startDate.setMinutes(startTimeMinutes);
+
+		endDate.setHours(endTimeHours);
+		endDate.setMinutes(endTimeMinutes);
+
+		intervalSelector.setDuration(endDate.valueOf() - startDate.valueOf());
+
+		var endTimePicker = intervalSelector.get('endTimePicker');
+		var startTimePicker = intervalSelector.get('startTimePicker');
+
+		startTimePicker.selectDates([startDate]);
+		endTimePicker.selectDates([endDate]);
+	};
 
 	scheduler.load();
 </aui:script>

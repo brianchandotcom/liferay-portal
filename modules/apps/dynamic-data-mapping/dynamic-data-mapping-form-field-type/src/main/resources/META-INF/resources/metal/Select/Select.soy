@@ -1,0 +1,144 @@
+{namespace Select}
+
+{template .render}
+	{@param? _handleClickItem: any}
+	{@param? _handleClick: any}
+	{@param? editable: bool}
+	{@param? helpText: string}
+	{@param? id: string}
+	{@param? items: list<[
+		checked: bool,
+		disabled: bool,
+		id: string,
+		inline: bool,
+		label: string,
+		name: string,
+		showLabel: bool,
+		value: string
+	]>}
+	{@param? label: string}
+	{@param? open: bool}
+	{@param? placeholder: string}
+	{@param? predefinedValue: string}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? value: string}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param _handleClickItem: $_handleClickItem /}
+				{param _handleClick: $_handleClick /}
+				{param editable: $editable /}
+				{param id: $id /}
+				{param items: $items /}
+				{param open: $open /}
+				{param placeholder: $placeholder /}
+				{param predefinedValue: $predefinedValue /}
+				{param spritemap: $spritemap /}
+				{param value: $value /}
+			{/call}
+		{/param}
+
+		{param helpText: $helpText /}
+		{param id: $id /}
+		{param label: $label /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param? _handleClickItem: any}
+	{@param? _handleClick: any}
+	{@param? editable: bool}
+	{@param? id: string}
+	{@param? items: list<[
+		checked: bool,
+		disabled: bool,
+		id: string,
+		inline: bool,
+		label: string,
+		name: string,
+		showLabel: bool,
+		value: string
+	]>}
+	{@param? open: bool}
+	{@param? placeholder: string}
+	{@param? predefinedValue: string}
+	{@param? spritemap: string}
+	{@param? value: string}
+
+	<div class="form-builder-select-field input-group-container">
+		{let $attributes kind="attributes"}
+			class="form-control select-field-trigger"
+
+			{if $id}
+				id="{$id}"
+			{/if}
+
+			{if not $editable}
+				disabled
+			{/if}
+
+			data-onclick="{$_handleClick}"
+		{/let}
+
+		<div {$attributes}>
+			<div class="option-selected option-selected-placeholder">{$value ? $value : ($predefinedValue ? $predefinedValue : $placeholder)}</div>
+			<a class="select-arrow-down-container" href="javascript:;">
+				{if $spritemap}
+					{call ClayIcon.render}
+						{param spritemap: $spritemap /}
+						{param symbol: 'caret-double' /}
+					{/call}
+				{/if}
+			</a>
+		</div>
+	</div>
+
+	{call .listItems}
+		{param _handleClickItem: $_handleClickItem /}
+		{param items: $items /}
+		{param open: $open /}
+	{/call}
+{/template}
+
+{template .listItems}
+	{@param? _handleClickItem: any}
+	{@param? items: list<[
+		checked: bool,
+		disabled: bool,
+		id: string,
+		inline: bool,
+		label: string,
+		name: string,
+		showLabel: bool,
+		value: string
+	]>}
+
+	{@param? open: bool}
+
+	{let $attributes kind="attributes"}
+		class="dropdown-menu
+
+		{if $open}
+			{sp}dropdown-opened
+		{/if}
+		"
+		data-onclick="{$_handleClickItem}"
+
+	{/let}
+
+	{if $items}
+		<div {$attributes}>
+			<ul class="list-unstyled">
+				{foreach $item in $items}
+					<li class="dropdown-item">{$item.value}</li>
+				{/foreach}
+			</ul>
+		</div>
+	{/if}
+{/template}

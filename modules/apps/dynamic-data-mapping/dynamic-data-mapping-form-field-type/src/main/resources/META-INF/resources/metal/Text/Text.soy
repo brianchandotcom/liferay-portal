@@ -1,0 +1,67 @@
+{namespace Text}
+
+{template .render}
+	{@param? _handleFieldChange: any}
+	{@param? editable: bool}
+	{@param? helpText: string}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? placeholder: string}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? value: string}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param editable: $editable /}
+				{param _handleFieldChange: $_handleFieldChange /}
+				{param id: $id /}
+				{param placeholder: $placeholder /}
+				{param value: $value /}
+			{/call}
+		{/param}
+
+		{param helpText: $helpText /}
+		{param id: $id /}
+		{param label: $label /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param? editable: bool}
+	{@param? id: string}
+	{@param? placeholder: string}
+	{@param? value: string}
+	{@param? _handleFieldChange: any}
+
+	{let $attributes kind="attributes"}
+		class="form-control"
+
+		{if $id}
+			id="{$id}"
+		{/if}
+
+		{if $placeholder}
+			placeholder="{$placeholder}"
+		{/if}
+
+		type="text"
+
+		data-oninput="{$_handleFieldChange}"
+
+		{if not($editable)}
+			disabled="disabled"
+		{/if}
+
+		{if $value}
+			value = "{$value}"
+		{/if}
+	{/let}
+
+	<input {$attributes}>
+{/template}

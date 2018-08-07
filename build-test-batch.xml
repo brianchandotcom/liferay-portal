@@ -4623,7 +4623,51 @@ ${output.content}</echo>
 
 				<record action="start" name="${project.dir}/build.services.output.txt" />
 
-				<ant dir="portal-impl" target="build-services" />
+				<if>
+					<not>
+						<equals arg1="${skip.service.builder.full}" arg2="true" />
+					</not>
+					<then>
+						<ant dir="portal-impl" target="build-services" />
+					</then>
+					<else>
+						<if>
+							<not>
+								<equals arg1="${skip.service.builder.core}" arg2="true" />
+							</not>
+							<then>
+								<ant dir="portal-impl" target="build-service-counter" />
+								<ant dir="portal-impl" target="build-service-portal" />
+								<ant dir="portal-impl" target="build-service-portlets" />
+							</then>
+						</if>
+
+						<if>
+							<isset property="modules.test.class.group" />
+							<then>
+								<loadresource property="modules.build.service.tasks">
+									<filterchain>
+										<tokenfilter>
+											<replaceregex flags="g" pattern="(\S+ )" replace="\0," />
+										</tokenfilter>
+									</filterchain>
+									<propertyresource name="modules.test.class.group" />
+								</loadresource>
+
+								<for list="${modules.build.service.tasks}" param="modules.build.service.task" trim="true">
+									<sequential>
+										<echo>Executing Gradle tasks: @{modules.build.service.task}</echo>
+
+										<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.build.service.task}">
+											<arg value="-DbuildService.skipReadOnly=${build.services.skip.read.only}" />
+											<arg value="-Pcom.liferay.portal.tools.service.builder.ignore.local=false" />
+										</gradle-execute>
+									</sequential>
+								</for>
+							</then>
+						</if>
+					</else>
+				</if>
 
 				<record action="stop" name="${project.dir}/build.services.output.txt" />
 

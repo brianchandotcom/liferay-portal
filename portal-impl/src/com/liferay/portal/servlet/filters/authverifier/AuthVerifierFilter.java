@@ -150,7 +150,7 @@ public class AuthVerifierFilter extends BasePortalFilter {
 
 		if (state == AuthVerifierResult.State.INVALID_CREDENTIALS) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Result state doesn't allow us to continue");
+				_log.debug("Result state does not allow us to continue");
 			}
 		}
 		else if (state == AuthVerifierResult.State.NOT_APPLICABLE) {

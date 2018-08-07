@@ -579,11 +579,11 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		}
 
 		Assert.assertTrue(
-			"Couldn't find expected max-width of '" + expectedMaxWidth +
+			"Could not find expected max-width of '" + expectedMaxWidth +
 				"' in '" + sourceJSONObject.toString() + "'",
 			(expectedMaxWidth == 0) || assertedMaxWidth);
 		Assert.assertTrue(
-			"Couldn't find expected min-width of '" + expectedMinWidth +
+			"Could not find expected min-width of '" + expectedMinWidth +
 				"' in '" + sourceJSONObject.toString() + "'",
 			(expectedMinWidth == 0) || assertedMinWidth);
 	}

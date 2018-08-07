@@ -134,7 +134,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Plugin package " + pluginPackage.getModuleId() +
-					" registered successfully. It's now ready to be used.");
+					" registered successfully. It is now ready to be used.");
 		}
 	}
 

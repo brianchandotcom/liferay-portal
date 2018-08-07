@@ -375,7 +375,7 @@ public abstract class BaseTestPreparatorBundleActivator
 				throw new IllegalStateException(
 					StringBundler.concat(
 						"Expected modifications count ",
-						expectedModificationsCount, " didn't match ",
+						expectedModificationsCount, " did not match ",
 						countDownLatch.getCount()));
 			}
 		}

@@ -2,6 +2,7 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="ContractionsCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checkstyle/checks/ContractionsCheck\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/.*" />
 	</checkstyle>
 	<source-check>

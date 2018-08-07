@@ -48,21 +48,25 @@ public class PersonCreatorForm {
 		).constructor(
 			PersonCreatorForm::new
 		).addOptionalString(
-			"gender", PersonCreatorForm::_setGender
+			"gender", PersonCreatorForm::setGender
 		).addOptionalString(
-			"alternateName", PersonCreatorForm::_setAlternateName
+			"alternateName", PersonCreatorForm::setAlternateName
 		).addOptionalDate(
-			"birthDate", PersonCreatorForm::_setBirthDate
+			"birthDate", PersonCreatorForm::setBirthDate
+		).addOptionalString(
+			"honorificPrefix", PersonCreatorForm::setHonorificPrefix
+		).addOptionalString(
+			"honorificSuffix", PersonCreatorForm::setHonorificSuffix
 		).addOptionalFile(
 			"image", PersonCreatorForm::setImage
 		).addRequiredString(
-			"email", PersonCreatorForm::_setEmail
+			"email", PersonCreatorForm::setEmail
 		).addRequiredString(
-			"familyName", PersonCreatorForm::_setFamilyName
+			"familyName", PersonCreatorForm::setFamilyName
 		).addRequiredString(
-			"givenName", PersonCreatorForm::_setGivenName
+			"givenName", PersonCreatorForm::setGivenName
 		).addOptionalString(
-			"jobTitle", PersonCreatorForm::_setJobTitle
+			"jobTitle", PersonCreatorForm::setJobTitle
 		).build();
 	}
 
@@ -148,6 +152,14 @@ public class PersonCreatorForm {
 		return _givenName;
 	}
 
+	public String getHonorificPrefix() {
+		return _honorificPrefix;
+	}
+
+	public String getHonorificSuffix() {
+		return _honorificSuffix;
+	}
+
 	public BinaryFile getImage() {
 		return _image;
 	}
@@ -191,11 +203,11 @@ public class PersonCreatorForm {
 		return Validator.isNull(_alternateName);
 	}
 
-	private void _setAlternateName(String alternateName) {
+	public void setAlternateName(String alternateName) {
 		_alternateName = alternateName;
 	}
 
-	private void _setBirthDate(Date birthDate) {
+	public void setBirthDate(Date birthDate) {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(birthDate);
@@ -205,23 +217,35 @@ public class PersonCreatorForm {
 		_birthdayYear = calendar.get(Calendar.YEAR);
 	}
 
-	private void _setEmail(String emailAddress) {
+	public void setEmail(String emailAddress) {
 		_email = emailAddress;
 	}
 
-	private void _setFamilyName(String lastName) {
+	public void setFamilyName(String lastName) {
 		_familyName = lastName;
 	}
 
-	private void _setGender(String gender) {
+	public void setGender(String gender) {
 		_male = "male".equals(gender);
 	}
 
-	private void _setGivenName(String givenName) {
+	public void setGivenName(String givenName) {
 		_givenName = givenName;
 	}
 
-	private void _setJobTitle(String jobTitle) {
+	public void setHonorificPrefix(String honorificPrefix) {
+		_honorificPrefix = honorificPrefix;
+	}
+
+	public void setHonorificSuffix(String honorificSuffix) {
+		_honorificSuffix = honorificSuffix;
+	}
+
+	public void setImage(BinaryFile image) {
+		_image = image;
+	}
+
+	public void setJobTitle(String jobTitle) {
 		_jobTitle = jobTitle;
 	}
 
@@ -232,6 +256,8 @@ public class PersonCreatorForm {
 	private String _email;
 	private String _familyName;
 	private String _givenName;
+	private String _honorificPrefix;
+	private String _honorificSuffix;
 	private BinaryFile _image;
 	private String _jobTitle;
 	private Boolean _male;

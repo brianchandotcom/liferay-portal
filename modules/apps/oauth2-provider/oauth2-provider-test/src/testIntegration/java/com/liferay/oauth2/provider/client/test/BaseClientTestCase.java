@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.shrinkwrap.osgi.api.BndProjectBuilder;
@@ -178,8 +179,7 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected Cookie getAuthenticatedCookie(
-			String login, String password, String hostname)
-		throws URISyntaxException {
+		String login, String password, String hostname) {
 
 		Invocation.Builder invocationBuilder = getInvocationBuilder(
 			hostname, getLoginWebTarget());
@@ -202,86 +202,31 @@ public abstract class BaseClientTestCase {
 		return cookie.toCookie();
 	}
 
+	protected Function<WebTarget, Invocation.Builder>
+		getAuthenticatedInvocationBuilder(
+			String login, String password, String hostname) {
+
+		Cookie authenticatedCookie = getAuthenticatedCookie(
+			login, password, hostname);
+
+		return webtarget -> {
+			Invocation.Builder invocationBuilder = getInvocationBuilder(
+				hostname, webtarget);
+
+			invocationBuilder = invocationBuilder.accept(
+				"text/html"
+			).cookie(
+				authenticatedCookie
+			);
+
+			return invocationBuilder;
+		};
+	}
+
 	protected BiFunction<String, Invocation.Builder, Response>
 		getAuthorizationCode(String user, String password, String hostname) {
 
 		return getAuthorizationCode(user, password, hostname, (String)null);
-	}
-
-	protected String getAuthorizationCode(
-		String login, String password, String hostname,
-		Function<WebTarget, WebTarget> authorizeRequestFunction) {
-
-		try {
-			Invocation.Builder invocationBuilder = getInvocationBuilder(
-				hostname,
-				authorizeRequestFunction.apply(getAuthorizeWebTarget()));
-
-			Cookie authenticatedCookie = getAuthenticatedCookie(
-				login, password, hostname);
-
-			Response response = invocationBuilder.accept(
-				"text/html"
-			).cookie(
-				authenticatedCookie
-			).get();
-
-			URI location = response.getLocation();
-
-			if (location == null) {
-				throw new RuntimeException(
-					"Invalid authorization response: " + response.getStatus());
-			}
-
-			Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-				location.getQuery());
-
-			if (parameterMap.containsKey("error")) {
-				return parameterMap.get("error")[0];
-			}
-
-			MultivaluedMap<String, String> formData =
-				new MultivaluedHashMap<>();
-
-			formData.add("oauthDecision", "allow");
-
-			for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-				String key = entry.getKey();
-
-				if (!StringUtil.startsWith(key, "oauth2_")) {
-					continue;
-				}
-
-				formData.add(
-					key.substring("oauth2_".length()), entry.getValue()[0]);
-			}
-
-			invocationBuilder = getInvocationBuilder(
-				hostname, getAuthorizeDecisionWebTarget());
-
-			invocationBuilder = invocationBuilder.cookie(authenticatedCookie);
-
-			response = invocationBuilder.post(Entity.form(formData));
-
-			location = response.getLocation();
-
-			if (location == null) {
-				throw new RuntimeException(
-					"Invalid authorization decision response: " +
-						response.getStatus());
-			}
-
-			parameterMap = HttpUtil.getParameterMap(location.getQuery());
-
-			if (parameterMap.containsKey("error")) {
-				return parameterMap.get("error")[0];
-			}
-
-			return parameterMap.get("code")[0];
-		}
-		catch (URISyntaxException urise) {
-			throw new RuntimeException(urise);
-		}
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>
@@ -289,31 +234,24 @@ public abstract class BaseClientTestCase {
 			String user, String password, String hostname, String scope) {
 
 		return (clientId, invocationBuilder) -> {
-			String authorizationCode = getAuthorizationCode(
+			String authorizationCode = getCodeResponse(
 				user, password, hostname,
-				webTarget -> {
-					webTarget = webTarget.queryParam(
+				getCode(
+					webTarget -> webTarget.queryParam(
 						"client_id", clientId
 					).queryParam(
 						"response_type", "code"
-					);
+					).queryParam(
+						"scope", scope
+					)),
+				this::parseAuthorizationCodeString);
 
-					if (scope != null) {
-						webTarget = webTarget.queryParam("scope", scope);
-					}
+			BiFunction<String, Invocation.Builder, Response>
+				authorizationCodePKCEFunction = getExchangeAuthorizationCode(
+					authorizationCode, null);
 
-					return webTarget;
-				});
-
-			MultivaluedMap<String, String> formData =
-				new MultivaluedHashMap<>();
-
-			formData.add("client_id", clientId);
-			formData.add("client_secret", "oauthTestApplicationSecret");
-			formData.add("code", authorizationCode);
-			formData.add("grant_type", "authorization_code");
-
-			return invocationBuilder.post(Entity.form(formData));
+			return authorizationCodePKCEFunction.apply(
+				clientId, invocationBuilder);
 		};
 	}
 
@@ -336,37 +274,35 @@ public abstract class BaseClientTestCase {
 
 			final String codeChallenge = base64UrlDigest;
 
-			String authorizationCode = getAuthorizationCode(
+			String authorizationCode = getCodeResponse(
 				userName, password, hostname,
-				webTarget -> webTarget.queryParam(
-					"client_id", clientId
-				).queryParam(
-					"code_challenge", codeChallenge
-				).queryParam(
-					"response_type", "code"
-				));
+				getCode(
+					webTarget -> webTarget.queryParam(
+						"client_id", clientId
+					).queryParam(
+						"code_challenge", codeChallenge
+					).queryParam(
+						"response_type", "code"
+					)),
+				this::parseAuthorizationCodeString);
 
-			MultivaluedMap<String, String> formData =
-				new MultivaluedHashMap<>();
+			BiFunction<String, Invocation.Builder, Response>
+				authorizationCodePKCEFunction =
+					getExchangeAuthorizationCodePKCE(
+						authorizationCode, null, codeVerifier);
 
-			formData.add("client_id", clientId);
-			formData.add("code", authorizationCode);
-			formData.add("code_verifier", codeVerifier);
-			formData.add("grant_type", "authorization_code");
-
-			return invocationBuilder.post(Entity.form(formData));
+			return authorizationCodePKCEFunction.apply(
+				clientId, invocationBuilder);
 		};
 	}
 
-	protected WebTarget getAuthorizeDecisionWebTarget()
-		throws URISyntaxException {
-
+	protected WebTarget getAuthorizeDecisionWebTarget()	 {
 		WebTarget webTarget = getAuthorizeWebTarget();
 
 		return webTarget.path("decision");
 	}
 
-	protected WebTarget getAuthorizeWebTarget() throws URISyntaxException {
+	protected WebTarget getAuthorizeWebTarget() {
 		WebTarget webTarget = getOAuth2WebTarget();
 
 		return webTarget.path("authorize");
@@ -400,6 +336,107 @@ public abstract class BaseClientTestCase {
 		return invocationBuilder.post(Entity.form(formData));
 	}
 
+	protected Function<Function<WebTarget, Invocation.Builder>, Response>
+		getCode(Function<WebTarget, WebTarget> authorizeRequestFunction) {
+
+		return invocationBuilderFunction -> {
+			Invocation.Builder invocationBuilder =
+				invocationBuilderFunction.apply(
+					authorizeRequestFunction.apply(getAuthorizeWebTarget()));
+
+			Response response = invocationBuilder.get();
+
+			URI location = response.getLocation();
+
+			if (location == null) {
+				return response;
+			}
+
+			Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+				location.getQuery());
+
+			if (parameterMap.containsKey("error")) {
+				return response;
+			}
+
+			MultivaluedMap<String, String> formData =
+				new MultivaluedHashMap<>();
+
+			formData.add("oauthDecision", "allow");
+
+			for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+				String key = entry.getKey();
+
+				if (!StringUtil.startsWith(key, "oauth2_")) {
+					continue;
+				}
+
+				formData.add(
+					key.substring("oauth2_".length()), entry.getValue()[0]);
+			}
+
+			invocationBuilder = invocationBuilderFunction.apply(
+				getAuthorizeDecisionWebTarget());
+
+			response = invocationBuilder.post(Entity.form(formData));
+
+			return response;
+		};
+	}
+
+	protected <T> T getCodeResponse(
+		String login, String password, String hostname,
+		Function<Function<WebTarget, Invocation.Builder>, Response>
+			authorizationResponseFunction,
+		Function<Response, T> codeParser) {
+
+		return codeParser.apply(
+			authorizationResponseFunction.apply(
+				getAuthenticatedInvocationBuilder(login, password, hostname)));
+	}
+
+	protected BiFunction<String, Invocation.Builder, Response>
+		getExchangeAuthorizationCode(
+			String authorizationCode, String redirectUri) {
+
+		return (clientId, invocationBuilder) -> {
+			MultivaluedMap<String, String> formData =
+				new MultivaluedHashMap<>();
+
+			formData.add("client_id", clientId);
+			formData.add("client_secret", "oauthTestApplicationSecret");
+			formData.add("code", authorizationCode);
+			formData.add("grant_type", "authorization_code");
+
+			if (Validator.isNotNull(redirectUri)) {
+				formData.add("redirect_uri", redirectUri);
+			}
+
+			return invocationBuilder.post(Entity.form(formData));
+		};
+	}
+
+	protected BiFunction<String, Invocation.Builder, Response>
+		getExchangeAuthorizationCodePKCE(
+			String authorizationCode, String redirectUri, String codeVerifier) {
+
+		return (clientId, invocationBuilder) -> {
+			MultivaluedMap<String, String> formData =
+				new MultivaluedHashMap<>();
+
+			formData.add("client_id", clientId);
+			formData.add("code", authorizationCode);
+			formData.add("code_verifier", codeVerifier);
+			formData.add("grant_type", "authorization_code");
+
+			if (Validator.isNotNull(redirectUri)) {
+				formData.add("redirect_uri", redirectUri);
+			}
+
+			return invocationBuilder.post(Entity.form(formData));
+		};
+	}
+
 	protected Invocation.Builder getInvocationBuilder(
 		String hostname, WebTarget webTarget) {
 
@@ -412,12 +449,10 @@ public abstract class BaseClientTestCase {
 		return invocationBuilder;
 	}
 
-	protected WebTarget getJsonWebTarget(String... paths)
-		throws URISyntaxException {
-
+	protected WebTarget getJsonWebTarget(String... paths)	 {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_url.toURI());
+		WebTarget webTarget = client.target(_getPortalURL());
 
 		webTarget = webTarget.path("api");
 		webTarget = webTarget.path("jsonws");
@@ -429,10 +464,10 @@ public abstract class BaseClientTestCase {
 		return webTarget;
 	}
 
-	protected WebTarget getLoginWebTarget() throws URISyntaxException {
+	protected WebTarget getLoginWebTarget() {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_url.toURI());
+		WebTarget webTarget = client.target(_getPortalURL());
 
 		webTarget = webTarget.path("c");
 		webTarget = webTarget.path("portal");
@@ -441,10 +476,10 @@ public abstract class BaseClientTestCase {
 		return webTarget;
 	}
 
-	protected WebTarget getOAuth2WebTarget() throws URISyntaxException {
+	protected WebTarget getOAuth2WebTarget() {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_url.toURI());
+		WebTarget webTarget = client.target(_getPortalURL());
 
 		webTarget = webTarget.path("o");
 		webTarget = webTarget.path("oauth2");
@@ -488,48 +523,40 @@ public abstract class BaseClientTestCase {
 		};
 	}
 
-	protected String getToken(String clientId) throws URISyntaxException {
+	protected String getToken(String clientId) {
 		return getToken(clientId, null);
 	}
 
-	protected String getToken(String clientId, String hostname)
-		throws URISyntaxException {
-
+	protected String getToken(String clientId, String hostname)	 {
 		return parseTokenString(
 			getClientCredentials(
 				clientId, getTokenInvocationBuilder(hostname)));
 	}
 
 	protected <T> T getToken(
-			String clientId, String hostname,
-			BiFunction<String, Invocation.Builder, Response>
-				credentialsBiFunction,
-			Function<Response, T> tokenParser)
-		throws URISyntaxException {
+		String clientId, String hostname,
+		BiFunction<String, Invocation.Builder, Response> credentialsBiFunction,
+		Function<Response, T> tokenParser) {
 
 		return tokenParser.apply(
 			credentialsBiFunction.apply(
 				clientId, getTokenInvocationBuilder(hostname)));
 	}
 
-	protected Invocation.Builder getTokenInvocationBuilder(String hostname)
-		throws URISyntaxException {
-
+	protected Invocation.Builder getTokenInvocationBuilder(String hostname) {
 		return getInvocationBuilder(hostname, getTokenWebTarget());
 	}
 
-	protected WebTarget getTokenWebTarget() throws URISyntaxException {
+	protected WebTarget getTokenWebTarget() {
 		WebTarget webTarget = getOAuth2WebTarget();
 
 		return webTarget.path("token");
 	}
 
-	protected WebTarget getWebTarget(String... paths)
-		throws URISyntaxException {
-
+	protected WebTarget getWebTarget(String... paths)	 {
 		Client client = getClient();
 
-		WebTarget target = client.target(_url.toURI());
+		WebTarget target = client.target(_getPortalURL());
 
 		target = target.path("o");
 		target = target.path("oauth2-test");
@@ -541,8 +568,46 @@ public abstract class BaseClientTestCase {
 		return target;
 	}
 
+	protected String parseAuthorizationCodeString(Response response) {
+		URI location = response.getLocation();
+
+		if (location == null) {
+			throw new IllegalArgumentException(
+				"Authorization service response missing Location header from " +
+					"which code is extracted");
+		}
+
+		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+			location.getQuery());
+
+		if (!parameterMap.containsKey("code")) {
+			return null;
+		}
+
+		return parameterMap.get("code")[0];
+	}
+
 	protected String parseError(Response response) {
 		return parseJsonField(response, "error");
+	}
+
+	protected String parseErrorParameter(Response response) {
+		URI location = response.getLocation();
+
+		if (location == null) {
+			throw new IllegalArgumentException(
+				"Authorization service response missing Location header from " +
+					"which error is extracted");
+		}
+
+		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+			location.getQuery());
+
+		if (!parameterMap.containsKey("error")) {
+			return null;
+		}
+
+		return parameterMap.get("error")[0];
 	}
 
 	protected String parseJsonField(Response response, String fieldName) {
@@ -575,6 +640,15 @@ public abstract class BaseClientTestCase {
 
 	protected String parseTokenString(Response response) {
 		return parseJsonField(response, "access_token");
+	}
+
+	private URI _getPortalURL() {
+		try {
+			return _url.toURI();
+		}
+		catch (URISyntaxException urise) {
+			throw new RuntimeException(urise);
+		}
 	}
 
 	@ArquillianResource

@@ -52,10 +52,15 @@ public class GrantAuthorizationCodeKillSwitchTest extends BaseClientTestCase {
 	public void test() throws Exception {
 		Assert.assertEquals(
 			"unauthorized_client",
-			getToken(
-				"oauthTestApplicationCode", null,
-				getAuthorizationCode("test@liferay.com", "test", null),
-				this::parseError));
+			getCodeResponse(
+				"test@liferay.com", "test", null,
+				getCode(
+					webTarget -> webTarget.queryParam(
+						"client_id", "oauthTestApplicationCode"
+					).queryParam(
+						"response_type", "code"
+					)),
+				this::parseErrorParameter));
 	}
 
 	public static class

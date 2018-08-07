@@ -319,7 +319,12 @@ body {
 		}
 	}
 
-	.panel-heading {
+	.panel-header, .panel-heading {
+		border-bottom-width: 1px;
+		font-size: inherit;
+		line-height: 1.5;
+		position: relative;
+
 		.panel-title > .panel-toggler {
 			&:not(.collapsed) {
 				background-color: $product-menu-panel-title-active-bg;
@@ -332,9 +337,18 @@ body {
 				color: $product-menu-panel-title-color;
 			}
 		}
+	}
 
-		padding: 0;
-		position: relative;
+	.panel-header {
+		.collapse-icon-closed, .collapse-icon-open {
+			font-size: inherit;
+			top: 50%;
+		}
+
+		&.panel-heading {
+			border-bottom-width: 0;
+			padding: 0;
+		}
 	}
 }
 

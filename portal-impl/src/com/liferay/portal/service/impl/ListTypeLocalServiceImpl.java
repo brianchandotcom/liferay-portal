@@ -54,6 +54,11 @@ public class ListTypeLocalServiceImpl extends ListTypeLocalServiceBaseImpl {
 	}
 
 	@Override
+	public ListType getListType(String name, String type) {
+		return listTypePersistence.fetchByN_T(name, type);
+	}
+
+	@Override
 	public List<ListType> getListTypes(String type) {
 		return listTypePersistence.findByType(type);
 	}

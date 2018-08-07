@@ -31,6 +31,11 @@ public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 	}
 
 	@Override
+	public ListType getListType(String name, String type) {
+		return listTypeLocalService.getListType(name, type);
+	}
+
+	@Override
 	public List<ListType> getListTypes(String type) {
 		return listTypeLocalService.getListTypes(type);
 	}

@@ -24,6 +24,10 @@ body:not(.has-contextual-sidebar) .contextual-sidebar-content {
 	z-index: 5;
 }
 
+.dragging {
+	width: 272px;
+}
+
 .fragments-editor .contextual-sidebar.fragments-editor-sidebar {
 	height: calc(100vh - #{$controlMenuHeight} - #{$managementBarHeight});
 	margin-top: 2px;

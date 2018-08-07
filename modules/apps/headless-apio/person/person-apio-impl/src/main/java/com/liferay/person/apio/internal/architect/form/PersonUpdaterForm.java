@@ -17,6 +17,10 @@ package com.liferay.person.apio.internal.architect.form;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Optional;
+
 /**
  * Instances of this class represent the values extracted from a person updater
  * form.
@@ -44,14 +48,22 @@ public class PersonUpdaterForm {
 			PersonUpdaterForm::new
 		).addOptionalString(
 			"alternateName", PersonUpdaterForm::setAlternateName
+		).addOptionalDate(
+			"birthDate", PersonUpdaterForm::setBirthDate
+		).addOptionalString(
+			"gender", PersonUpdaterForm::setGender
+		).addOptionalString(
+			"honorificPrefix", PersonUpdaterForm::setHonorificPrefix
+		).addOptionalString(
+			"honorificSuffix", PersonUpdaterForm::setHonorificSuffix
+		).addOptionalString(
+			"jobTitle", PersonUpdaterForm::setJobTitle
 		).addRequiredString(
 			"email", PersonUpdaterForm::setEmail
 		).addRequiredString(
 			"familyName", PersonUpdaterForm::setFamilyName
 		).addRequiredString(
 			"givenName", PersonUpdaterForm::setGivenName
-		).addRequiredString(
-			"jobTitle", PersonUpdaterForm::setJobTitle
 		).addRequiredString(
 			"password", PersonUpdaterForm::setPassword
 		).build();
@@ -65,6 +77,36 @@ public class PersonUpdaterForm {
 	 */
 	public String getAlternateName() {
 		return _alternateName;
+	}
+
+	/**
+	 * Returns the person's birthday day
+	 *
+	 * @return the person's birthday day
+	 * @review
+	 */
+	public Optional<Integer> getBirthdayDay() {
+		return Optional.ofNullable(_birthdayDay);
+	}
+
+	/**
+	 * Returns the person's birthday month
+	 *
+	 * @return the person's birthday month
+	 * @review
+	 */
+	public Optional<Integer> getBirthdayMonth() {
+		return Optional.ofNullable(_birthdayMonth);
+	}
+
+	/**
+	 * Returns the person's birthday year
+	 *
+	 * @return the person's birthday year
+	 * @review
+	 */
+	public Optional<Integer> getBirthdayYear() {
+		return Optional.ofNullable(_birthdayYear);
 	}
 
 	/**
@@ -97,6 +139,14 @@ public class PersonUpdaterForm {
 		return _givenName;
 	}
 
+	public String getHonorificPrefix() {
+		return _honorificPrefix;
+	}
+
+	public String getHonorificSuffix() {
+		return _honorificSuffix;
+	}
+
 	/**
 	 * Returns the person's job title
 	 *
@@ -117,8 +167,22 @@ public class PersonUpdaterForm {
 		return _password;
 	}
 
+	public Optional<Boolean> isMale() {
+		return Optional.ofNullable(_male);
+	}
+
 	public void setAlternateName(String alternateName) {
 		_alternateName = alternateName;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(birthDate);
+
+		_birthdayMonth = calendar.get(Calendar.MONTH);
+		_birthdayDay = calendar.get(Calendar.DATE);
+		_birthdayYear = calendar.get(Calendar.YEAR);
 	}
 
 	public void setEmail(String emailAddress) {
@@ -129,8 +193,20 @@ public class PersonUpdaterForm {
 		_familyName = lastName;
 	}
 
+	public void setGender(String gender) {
+		_male = "male".equals(gender);
+	}
+
 	public void setGivenName(String givenName) {
 		_givenName = givenName;
+	}
+
+	public void setHonorificPrefix(String honorificPrefix) {
+		_honorificPrefix = honorificPrefix;
+	}
+
+	public void setHonorificSuffix(String honorificSuffix) {
+		_honorificSuffix = honorificSuffix;
 	}
 
 	public void setJobTitle(String jobTitle) {
@@ -142,10 +218,16 @@ public class PersonUpdaterForm {
 	}
 
 	private String _alternateName;
+	private Integer _birthdayDay;
+	private Integer _birthdayMonth;
+	private Integer _birthdayYear;
 	private String _email;
 	private String _familyName;
 	private String _givenName;
+	private String _honorificPrefix;
+	private String _honorificSuffix;
 	private String _jobTitle;
+	private Boolean _male;
 	private String _password;
 
 }

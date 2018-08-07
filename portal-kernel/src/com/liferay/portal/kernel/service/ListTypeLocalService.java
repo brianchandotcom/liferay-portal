@@ -182,6 +182,9 @@ public interface ListTypeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ListType getListType(long listTypeId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListType getListType(String name, String type);
+
 	/**
 	* Returns a range of all the list types.
 	*

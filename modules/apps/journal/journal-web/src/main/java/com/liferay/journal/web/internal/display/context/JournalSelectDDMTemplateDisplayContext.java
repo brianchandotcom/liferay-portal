@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -53,6 +54,10 @@ public class JournalSelectDDMTemplateDisplayContext {
 		_renderResponse = renderResponse;
 
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
+
+		_journalWebConfiguration =
+			(JournalWebConfiguration)_request.getAttribute(
+				JournalWebConfiguration.class.getName());
 	}
 
 	public String getClearResultsURL() {
@@ -169,8 +174,12 @@ public class JournalSelectDDMTemplateDisplayContext {
 		templateSearch.setOrderByComparator(orderByComparator);
 		templateSearch.setOrderByType(orderByType);
 
-		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
-			themeDisplay.getScopeGroupId());
+		long[] groupIds = {themeDisplay.getScopeGroupId()};
+
+		if (_journalWebConfiguration.showAncestorScopesByDefault()) {
+			groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				themeDisplay.getScopeGroupId());
+		}
 
 		int total = DDMTemplateServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), groupIds,
@@ -322,6 +331,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 		return _structureId;
 	}
 
+	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;

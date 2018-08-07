@@ -519,6 +519,11 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		List<Layout> layouts = new ArrayList<>();
 
+		Layout scienceLayout = _addScienceLayout(
+			ddmStructure, adtDDMTemplates, serviceContext);
+
+		layouts.add(scienceLayout);
+
 		for (String layoutName : layoutNames) {
 			Map<Locale, String> nameMap = new HashMap<>();
 
@@ -535,6 +540,34 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		}
 
 		return layouts;
+	}
+
+	private Layout _addScienceLayout(
+			DDMStructure ddmStructure, List<DDMTemplate> adtDDMTemplates,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("layout-template-id", "1_column");
+
+		Layout layout = _addLayout(
+			"Science", typeSettingsProperties, serviceContext);
+
+		_addAssetPublisherPortlet(
+			ddmStructure,
+			_getDDMTemplate(
+				"EntryCardFirstItemBiggerRightADT", adtDDMTemplates),
+			"5", layout, serviceContext);
+
+		_addAssetPublisherPortlet(
+			ddmStructure,
+			_getDDMTemplate("EntryList3itemsADT", adtDDMTemplates), "5", layout,
+			serviceContext);
+
+		_updateLayout(layout);
+
+		return layout;
 	}
 
 	private ServiceContext _createServiceContext(long groupId)
@@ -719,7 +752,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	}
 
 	private static final String[] _LAYOUT_NAMES =
-		{"Home", "Photography", "Science", "Reviews"};
+		{"Home", "Photography", "Reviews"};
 
 	private static final String _PATH =
 		"com/liferay/frontend/theme/porygon/site/initializer/internal" +

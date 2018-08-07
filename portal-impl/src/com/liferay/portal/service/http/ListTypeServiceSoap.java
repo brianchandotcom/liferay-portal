@@ -78,6 +78,21 @@ public class ListTypeServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.ListTypeSoap getListType(
+		String name, String type) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.model.ListType returnValue = ListTypeServiceUtil.getListType(name,
+					type);
+
+			return com.liferay.portal.kernel.model.ListTypeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.ListTypeSoap[] getListTypes(
 		String type) throws RemoteException {
 		try {

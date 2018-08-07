@@ -226,6 +226,17 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			Layout layout, ServiceContext serviceContext)
 		throws Exception {
 
+		_addAssetPublisherPortlet(
+			ddmStructure, ddmTemplate, delta, "barebone", layout,
+			serviceContext);
+	}
+
+	private void _addAssetPublisherPortlet(
+			DDMStructure ddmStructure, DDMTemplate ddmTemplate, String delta,
+			String portletDecoratorId, Layout layout,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
@@ -243,6 +254,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			portletPreferences.setValue(
 				"displayStyle", "ddmTemplate_" + ddmTemplate.getTemplateKey());
 		}
+
+		portletPreferences.setValue(
+			"portletSetupPortletDecoratorId", portletDecoratorId);
 
 		_portletPreferencesLocalService.addPortletPreferences(
 			serviceContext.getCompanyId(), 0,
@@ -495,14 +509,16 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		return journalArticles;
 	}
 
-	private Layout _addLayout(
-			String name, UnicodeProperties typeSettingsProperties,
-			ServiceContext serviceContext)
+	private Layout _addLayout(String name, ServiceContext serviceContext)
 		throws Exception {
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("layout-template-id", "1_column");
 
 		return _layoutLocalService.addLayout(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(), false,
@@ -524,6 +540,11 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		layouts.add(scienceLayout);
 
+		Layout reviewsLayout = _addReviewsLayout(
+			ddmStructure, adtDDMTemplates, serviceContext);
+
+		layouts.add(reviewsLayout);
+
 		for (String layoutName : layoutNames) {
 			Map<Locale, String> nameMap = new HashMap<>();
 
@@ -542,17 +563,34 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		return layouts;
 	}
 
+	private Layout _addReviewsLayout(
+			DDMStructure ddmStructure, List<DDMTemplate> adtDDMTemplates,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Layout layout = _addLayout("Reviews", serviceContext);
+
+		_addAssetPublisherPortlet(
+			ddmStructure,
+			_getDDMTemplate("EntryList3itemsADT", adtDDMTemplates), "6", layout,
+			serviceContext);
+
+		_addAssetPublisherPortlet(
+			ddmStructure,
+			_getDDMTemplate("EntryList4itemsADT", adtDDMTemplates), "12",
+			"trending", layout, serviceContext);
+
+		_updateLayout(layout);
+
+		return layout;
+	}
+
 	private Layout _addScienceLayout(
 			DDMStructure ddmStructure, List<DDMTemplate> adtDDMTemplates,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("layout-template-id", "1_column");
-
-		Layout layout = _addLayout(
-			"Science", typeSettingsProperties, serviceContext);
+		Layout layout = _addLayout("Science", serviceContext);
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
@@ -622,9 +660,6 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			"groupId", String.valueOf(serviceContext.getScopeGroupId()));
 
 		portletPreferences.setValue("emailAssetEntryAddedEnabled", "false");
-
-		portletPreferences.setValue(
-			"portletSetupPortletDecoratorId", "barebone");
 
 		return portletPreferences;
 	}
@@ -751,8 +786,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			StringPool.BLANK, StringPool.BLANK);
 	}
 
-	private static final String[] _LAYOUT_NAMES =
-		{"Home", "Photography", "Reviews"};
+	private static final String[] _LAYOUT_NAMES = {"Home", "Photography"};
 
 	private static final String _PATH =
 		"com/liferay/frontend/theme/porygon/site/initializer/internal" +

@@ -58,10 +58,7 @@ public class ModulesSemVerBatchTestClassGroup
 
 	}
 
-	protected static List<File> getModulesProjectDirs(
-		File moduleBaseDir, File modulesDir) {
-
-		final File baseDir = modulesDir;
+	protected static List<File> getModulesProjectDirs(File moduleBaseDir) {
 		final List<File> modulesProjectDirs = new ArrayList<>();
 		final Path moduleBaseDirPath = moduleBaseDir.toPath();
 
@@ -74,7 +71,7 @@ public class ModulesSemVerBatchTestClassGroup
 					public FileVisitResult preVisitDirectory(
 						Path filePath, BasicFileAttributes attrs) {
 
-						if (filePath.equals(baseDir.toPath())) {
+						if (filePath.equals(moduleBaseDirPath)) {
 							return FileVisitResult.CONTINUE;
 						}
 
@@ -150,8 +147,7 @@ public class ModulesSemVerBatchTestClassGroup
 		}
 
 		for (File moduleDir : moduleDirsList) {
-			List<File> modulesProjectsDirs = getModulesProjectDirs(
-				moduleDir, portalModulesBaseDir);
+			List<File> modulesProjectsDirs = getModulesProjectDirs(moduleDir);
 
 			if (!modulesProjectsDirs.isEmpty()) {
 				testClasses.add(

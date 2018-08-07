@@ -25,16 +25,19 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class PortalExecutorManagerUtil {
 
 	public static ThreadPoolExecutor getPortalExecutor(String name) {
-		return getPortalExecutorManager().getPortalExecutor(name);
+		return _portalExecutorManager.getPortalExecutor(name);
 	}
 
 	public static ThreadPoolExecutor getPortalExecutor(
 		String name, boolean createIfAbsent) {
 
-		return getPortalExecutorManager().getPortalExecutor(
-			name, createIfAbsent);
+		return _portalExecutorManager.getPortalExecutor(name, createIfAbsent);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static PortalExecutorManager getPortalExecutorManager() {
 		return _portalExecutorManager;
 	}
@@ -42,7 +45,7 @@ public class PortalExecutorManagerUtil {
 	public static ThreadPoolExecutor registerPortalExecutor(
 		String name, ThreadPoolExecutor threadPoolExecutor) {
 
-		return getPortalExecutorManager().registerPortalExecutor(
+		return _portalExecutorManager.registerPortalExecutor(
 			name, threadPoolExecutor);
 	}
 

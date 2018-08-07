@@ -27,14 +27,18 @@ public class UserInitialsGeneratorUtil {
 	public static String getInitials(
 		Locale locale, String firstName, String middleName, String lastName) {
 
-		return getUserInitialsGenerator().getInitials(
+		return _userInitialsGenerator.getInitials(
 			locale, firstName, middleName, lastName);
 	}
 
 	public static String getInitials(User user) {
-		return getUserInitialsGenerator().getInitials(user);
+		return _userInitialsGenerator.getInitials(user);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static UserInitialsGenerator getUserInitialsGenerator() {
 		return _userInitialsGenerator;
 	}

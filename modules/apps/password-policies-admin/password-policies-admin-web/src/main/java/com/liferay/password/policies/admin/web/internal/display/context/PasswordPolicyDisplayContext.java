@@ -53,62 +53,60 @@ public class PasswordPolicyDisplayContext {
 		String tabs1 = ParamUtil.getString(_request, "tabs1", "details");
 		String redirect = ParamUtil.getString(_request, "redirect");
 
-		long passwordPolicyId = ParamUtil.getLong(_request, "passwordPolicyId");
-
-		PasswordPolicy passwordPolicy =
-			PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(
-				passwordPolicyId);
-
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
-			"passwordPolicyId", String.valueOf(passwordPolicyId));
+			"passwordPolicyId", String.valueOf(_getPasswordPolicyId()));
 
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
-		NavigationItem detailsNavigationItem = new NavigationItem();
+		if (_hasPermission(ActionKeys.UPDATE)) {
+			NavigationItem detailsNavigationItem = new NavigationItem();
 
-		detailsNavigationItem.setActive(tabs1.equals("details"));
+			detailsNavigationItem.setActive(tabs1.equals("details"));
 
-		PortletURL detailsURL = PortletURLUtil.clone(
-			portletURL, _renderResponse);
+			PortletURL detailsURL = PortletURLUtil.clone(
+				portletURL, _renderResponse);
 
-		detailsURL.setParameter("mvcPath", "/edit_password_policy.jsp");
-		detailsURL.setParameter("tabs1", "details");
+			detailsURL.setParameter("mvcPath", "/edit_password_policy.jsp");
+			detailsURL.setParameter("tabs1", "details");
 
-		detailsNavigationItem.setHref(detailsURL.toString());
+			detailsNavigationItem.setHref(detailsURL.toString());
 
-		detailsNavigationItem.setLabel(LanguageUtil.get(_request, "details"));
+			detailsNavigationItem.setLabel(
+				LanguageUtil.get(_request, "details"));
 
-		navigationItems.add(detailsNavigationItem);
-
-		NavigationItem assigneesNavigationItem = new NavigationItem();
-
-		assigneesNavigationItem.setActive(tabs1.equals("assignees"));
-
-		boolean showNav = false;
-
-		if ((passwordPolicy != null) && hasAssignMembersPermission()) {
-			showNav = true;
+			navigationItems.add(detailsNavigationItem);
 		}
 
-		assigneesNavigationItem.setDisabled(!showNav);
+		PasswordPolicy passwordPolicy = _getPasswordPolicy();
 
-		PortletURL assigneesURL = PortletURLUtil.clone(
-			portletURL, _renderResponse);
+		if ((passwordPolicy != null) &&
+			_hasPermission(ActionKeys.ASSIGN_MEMBERS)) {
 
-		assigneesURL.setParameter(
-			"mvcPath", "/edit_password_policy_assignments.jsp");
-		assigneesURL.setParameter("tabs1", "assignees");
+			NavigationItem assigneesNavigationItem = new NavigationItem();
 
-		assigneesNavigationItem.setHref(
-			showNav ? assigneesURL.toString() : StringPool.BLANK);
+			assigneesNavigationItem.setActive(tabs1.equals("assignees"));
 
-		assigneesNavigationItem.setLabel(
-			LanguageUtil.get(_request, "assignees"));
+			PortletURL assigneesURL = PortletURLUtil.clone(
+				portletURL, _renderResponse);
 
-		navigationItems.add(assigneesNavigationItem);
+			assigneesURL.setParameter(
+				"mvcPath", "/edit_password_policy_assignments.jsp");
+			assigneesURL.setParameter("tabs1", "assignees");
+
+			assigneesNavigationItem.setHref(assigneesURL.toString());
+
+			assigneesNavigationItem.setLabel(
+				LanguageUtil.get(_request, "assignees"));
+
+			navigationItems.add(assigneesNavigationItem);
+		}
+
+		if (navigationItems.isEmpty()) {
+			return null;
+		}
 
 		return navigationItems;
 	}
@@ -144,12 +142,29 @@ public class PasswordPolicyDisplayContext {
 		return navigationItems;
 	}
 
-	public boolean hasAssignMembersPermission() {
-		long passwordPolicyId = ParamUtil.getLong(_request, "passwordPolicyId");
+	private PasswordPolicy _getPasswordPolicy() {
+		if (_passwordPolicy != null) {
+			return _passwordPolicy;
+		}
 
-		PasswordPolicy passwordPolicy =
-			PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(
-				passwordPolicyId);
+		_passwordPolicy = PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(
+			_getPasswordPolicyId());
+
+		return _passwordPolicy;
+	}
+
+	private long _getPasswordPolicyId() {
+		if (_passwordPolicyId != 0L) {
+			return _passwordPolicyId;
+		}
+
+		_passwordPolicyId = ParamUtil.getLong(_request, "passwordPolicyId");
+
+		return _passwordPolicyId;
+	}
+
+	private boolean _hasPermission(String actionId) {
+		PasswordPolicy passwordPolicy = _getPasswordPolicy();
 
 		if (passwordPolicy == null) {
 			return false;
@@ -160,9 +175,11 @@ public class PasswordPolicyDisplayContext {
 
 		return PasswordPolicyPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(),
-			passwordPolicy.getPasswordPolicyId(), ActionKeys.ASSIGN_MEMBERS);
+			passwordPolicy.getPasswordPolicyId(), actionId);
 	}
 
+	private PasswordPolicy _passwordPolicy;
+	private long _passwordPolicyId;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 

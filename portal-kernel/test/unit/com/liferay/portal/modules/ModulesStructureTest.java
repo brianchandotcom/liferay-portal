@@ -19,6 +19,7 @@ import aQute.bnd.version.Version;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1123,20 +1124,28 @@ public class ModulesStructureTest {
 
 		String gitIgnore = ModulesStructureTestUtil.read(gitIgnorePath);
 
-		SortedSet<String> gitIgnoreLines = new TreeSet<>(
+		String[] gitIgnoreLines = StringUtil.splitLines(gitIgnore);
+
+		SortedSet<String> validGitIgnoreLines = new TreeSet<>(
 			gitIgnoreTemplateLines);
 
-		for (String line : StringUtil.splitLines(gitIgnore)) {
+		for (String line : gitIgnoreLines) {
 			for (String prefix : _GIT_IGNORE_LINE_PREFIXES) {
 				if (line.startsWith(prefix)) {
-					gitIgnoreLines.add(line);
+					validGitIgnoreLines.add(line);
 				}
+			}
+		}
+
+		for (String line : _GIT_IGNORE_OPTIONAL_LINES) {
+			if (!ArrayUtil.contains(gitIgnoreLines, line)) {
+				validGitIgnoreLines.remove(line);
 			}
 		}
 
 		Assert.assertEquals(
 			"Incorrect " + gitIgnorePath,
-			_getAntPluginsGitIgnore(dirPath, gitIgnoreLines), gitIgnore);
+			_getAntPluginsGitIgnore(dirPath, validGitIgnoreLines), gitIgnore);
 	}
 
 	private void _testGitRepoProjectGroup(
@@ -1347,6 +1356,9 @@ public class ModulesStructureTest {
 		"apply plugin: \"com.liferay.app.defaults.plugin\"";
 
 	private static final String[] _GIT_IGNORE_LINE_PREFIXES = {"/wedeploy/"};
+
+	private static final String[] _GIT_IGNORE_OPTIONAL_LINES =
+		{"gradle-ext.properties"};
 
 	private static final String _GIT_REPO_FILE_NAME = ".gitrepo";
 

@@ -19,7 +19,7 @@ package com.liferay.jenkins.results.parser;
  */
 public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
 
-	protected PortalTopLevelBuildRunner(Job job, String htmlURL) {
+	protected PortalTopLevelBuildRunner(Job job, String portalGitHubURL) {
 		super(job);
 
 		if (!(job instanceof PortalTestClassJob)) {
@@ -27,7 +27,7 @@ public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
 		}
 
 		PortalLocalGitBranch portalLocalGitBranch = getPortalLocalGitBranch(
-			htmlURL);
+			portalGitHubURL);
 
 		addLocalGitBranch(portalLocalGitBranch);
 

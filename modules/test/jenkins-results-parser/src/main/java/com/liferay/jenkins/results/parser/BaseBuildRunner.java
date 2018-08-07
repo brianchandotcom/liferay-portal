@@ -52,7 +52,7 @@ public abstract class BaseBuildRunner {
 	}
 
 	protected PortalLocalGitBranch getPortalLocalGitBranch(
-		String portalHtmlURL) {
+		String portalGitHubURL) {
 
 		if (_portalLocalGitBranch != null) {
 			return _portalLocalGitBranch;
@@ -76,21 +76,23 @@ public abstract class BaseBuildRunner {
 
 		LocalGitBranch localGitBranch;
 
-		if (PullRequest.isValidHtmlURL(portalHtmlURL)) {
+		if (PullRequest.isValidGitHubPullRequestURL(portalGitHubURL)) {
 			PullRequest pullRequest = new PullRequest(
-				portalHtmlURL, getTestSuiteName());
+				portalGitHubURL, getTestSuiteName());
 
 			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
 				_portalLocalRepository, pullRequest, synchronizeBranches());
 		}
-		else if (GitUtil.isValidGitHubRefURL(portalHtmlURL)) {
-			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(portalHtmlURL);
+		else if (GitUtil.isValidGitHubRefURL(portalGitHubURL)) {
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
+				portalGitHubURL);
 
 			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
 				_portalLocalRepository, remoteGitRef, synchronizeBranches());
 		}
 		else {
-			throw new RuntimeException("Invalid html url " + portalHtmlURL);
+			throw new RuntimeException(
+				"Invalid portal github url " + portalGitHubURL);
 		}
 
 		if (!(localGitBranch instanceof PortalLocalGitBranch)) {

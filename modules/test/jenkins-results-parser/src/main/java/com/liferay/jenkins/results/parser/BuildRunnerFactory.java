@@ -20,25 +20,25 @@ package com.liferay.jenkins.results.parser;
 public class BuildRunnerFactory {
 
 	public static BatchBuildRunner newBatchBuildRunner(
-		Job job, String batchName, String htmlURL) {
+		Job job, String batchName, String gitHubURL) {
 
 		if (batchName.contains("functional")) {
 			return new FunctionalPortalBatchBuildRunner(
-				job, batchName, htmlURL);
+				job, batchName, gitHubURL);
 		}
 		else if (batchName.contains("integration") ||
 				 batchName.contains("unit")) {
 
-			return new JunitPortalBatchBuildRunner(job, batchName, htmlURL);
+			return new JunitPortalBatchBuildRunner(job, batchName, gitHubURL);
 		}
 
-		return new PortalBatchBuildRunner(job, batchName, htmlURL);
+		return new PortalBatchBuildRunner(job, batchName, gitHubURL);
 	}
 
 	public static TopLevelBuildRunner newTopLevelBuildRunner(
-		Job job, String htmlURL) {
+		Job job, String gitHubURL) {
 
-		return new PortalTopLevelBuildRunner(job, htmlURL);
+		return new PortalTopLevelBuildRunner(job, gitHubURL);
 	}
 
 }

@@ -22,9 +22,9 @@ import java.util.Properties;
 public class FunctionalPortalBatchBuildRunner extends PortalBatchBuildRunner {
 
 	protected FunctionalPortalBatchBuildRunner(
-		Job job, String batchName, String htmlURL) {
+		Job job, String batchName, String portalGitHubURL) {
 
-		super(job, batchName, htmlURL);
+		super(job, batchName, portalGitHubURL);
 
 		_setPortalBuildProperties();
 	}

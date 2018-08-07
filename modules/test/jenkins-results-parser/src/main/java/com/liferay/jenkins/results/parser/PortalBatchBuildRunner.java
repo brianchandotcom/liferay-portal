@@ -20,7 +20,7 @@ package com.liferay.jenkins.results.parser;
 public class PortalBatchBuildRunner extends BatchBuildRunner {
 
 	protected PortalBatchBuildRunner(
-		Job job, String batchName, String htmlURL) {
+		Job job, String batchName, String portalGitHubURL) {
 
 		super(job, batchName);
 
@@ -29,7 +29,7 @@ public class PortalBatchBuildRunner extends BatchBuildRunner {
 		}
 
 		PortalLocalGitBranch portalLocalGitBranch = getPortalLocalGitBranch(
-			htmlURL);
+			portalGitHubURL);
 
 		addLocalGitBranch(portalLocalGitBranch);
 

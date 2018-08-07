@@ -220,7 +220,7 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 				localRepository, localRepository.getUpstreamBranchName(),
 				gitCommit, _synchronize);
 		}
-		else if (PullRequest.isValidHtmlURL(gitCommit)) {
+		else if (PullRequest.isValidGitHubPullRequestURL(gitCommit)) {
 			PullRequest pullRequest = new PullRequest(gitCommit);
 
 			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(

@@ -41,8 +41,8 @@ import org.json.JSONObject;
  */
 public class PullRequest {
 
-	public static boolean isValidHtmlURL(String htmlURL) {
-		Matcher matcher = _htmlURLPattern.matcher(htmlURL);
+	public static boolean isValidGitHubPullRequestURL(String gitHubURL) {
+		Matcher matcher = _gitHubPullRequestURLPattern.matcher(gitHubURL);
 
 		if (matcher.find()) {
 			return true;
@@ -51,21 +51,21 @@ public class PullRequest {
 		return false;
 	}
 
-	public PullRequest(String htmlURL) {
-		this(htmlURL, _TEST_SUITE_NAME_DEFAULT);
+	public PullRequest(String gitHubURL) {
+		this(gitHubURL, _TEST_SUITE_NAME_DEFAULT);
 	}
 
-	public PullRequest(String htmlURL, String testSuiteName) {
+	public PullRequest(String gitHubURL, String testSuiteName) {
 		if ((testSuiteName == null) || testSuiteName.isEmpty()) {
 			testSuiteName = _TEST_SUITE_NAME_DEFAULT;
 		}
 
 		_testSuiteName = testSuiteName;
 
-		Matcher matcher = _htmlURLPattern.matcher(htmlURL);
+		Matcher matcher = _gitHubPullRequestURLPattern.matcher(gitHubURL);
 
 		if (!matcher.find()) {
-			throw new RuntimeException("Invalid URL " + htmlURL);
+			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
 		}
 
 		_gitHubRemoteRepositoryName = matcher.group(
@@ -236,7 +236,7 @@ public class PullRequest {
 		if (_liferayRemoteGitBranch == null) {
 			_liferayRemoteGitBranch = GitUtil.getRemoteGitBranch(
 				getUpstreamBranchName(), new File("."),
-				"git@github.com/liferay/" + getRepositoryName());
+				"git@github.com:liferay/" + getRepositoryName());
 		}
 
 		return _liferayRemoteGitBranch;
@@ -582,7 +582,7 @@ public class PullRequest {
 
 	private static final String _TEST_SUITE_NAME_DEFAULT = "default";
 
-	private static final Pattern _htmlURLPattern = Pattern.compile(
+	private static final Pattern _gitHubPullRequestURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<owner>[^/]+)/",
 			"(?<gitHubRemoteRepositoryName>[^/]+)/pull/(?<number>\\d+)"));

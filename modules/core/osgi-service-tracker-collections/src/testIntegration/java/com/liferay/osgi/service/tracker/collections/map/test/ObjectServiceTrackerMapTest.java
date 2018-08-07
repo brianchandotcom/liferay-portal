@@ -30,7 +30,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
@@ -148,17 +147,9 @@ public class ObjectServiceTrackerMapTest {
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "(target=*)",
-				new ServiceReferenceMapper<String, TrackedOne>() {
-
-					@Override
-					public void map(
-						ServiceReference<TrackedOne> serviceReference,
-						Emitter<String> emitter) {
-
-						emitter.emit("one");
-						emitter.emit("two");
-					}
-
+				(serviceReference, emitter) -> {
+					emitter.emit("one");
+					emitter.emit("two");
 				},
 				new ServiceTrackerCustomizer<TrackedOne, TrackedOne>() {
 
@@ -279,17 +270,7 @@ public class ObjectServiceTrackerMapTest {
 			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "(target=*)",
 				propertyServiceReferenceMapper,
-				new Comparator<ServiceReference<TrackedOne>>() {
-
-					@Override
-					public int compare(
-						ServiceReference<TrackedOne> serviceReference1,
-						ServiceReference<TrackedOne> serviceReference2) {
-
-						return -1;
-					}
-
-				});
+				(serviceReference1, serviceReference2) -> -1);
 
 		TrackedOne trackedOne1 = new TrackedOne();
 
@@ -357,21 +338,12 @@ public class ObjectServiceTrackerMapTest {
 	@Test
 	public void testGetServiceWithCustomServiceReferenceMapper() {
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-
 			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "(&(other=*)(target=*))",
-				new ServiceReferenceMapper<String, TrackedOne>() {
-
-					@Override
-					public void map(
-						ServiceReference<TrackedOne> serviceReference,
-						Emitter<String> keys) {
-
-						keys.emit(
-							serviceReference.getProperty("other") + " - " +
-								serviceReference.getProperty("target"));
-					}
-
+				(serviceReference, keys) -> {
+					keys.emit(
+						serviceReference.getProperty("other") + " - " +
+							serviceReference.getProperty("target"));
 				});
 
 		Dictionary<String, String> properties = new Hashtable<>();
@@ -594,23 +566,15 @@ public class ObjectServiceTrackerMapTest {
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "(target=*)",
-				new ServiceReferenceMapper<String, TrackedOne>() {
+				(serviceReference, emitter) -> {
+					TrackedOne trackedOne = _bundleContext.getService(
+						serviceReference);
 
-					@Override
-					public void map(
-						ServiceReference<TrackedOne> serviceReference,
-						Emitter<String> emitter) {
+					emitter.emit(
+						serviceReference.getProperty("target") + "-" +
+							trackedOne.getKey());
 
-						TrackedOne trackedOne = _bundleContext.getService(
-							serviceReference);
-
-						emitter.emit(
-							serviceReference.getProperty("target") + "-" +
-								trackedOne.getKey());
-
-						_bundleContext.ungetService(serviceReference);
-					}
-
+					_bundleContext.ungetService(serviceReference);
 				},
 				new ServiceTrackerCustomizer<TrackedOne, TrackedTwo>() {
 
@@ -664,19 +628,11 @@ public class ObjectServiceTrackerMapTest {
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "(target=*)",
-				new ServiceReferenceMapper<String, TrackedOne>() {
-
-					@Override
-					public void map(
-						ServiceReference<TrackedOne> serviceReference,
-						Emitter<String> emitter) {
-
-						emitter.emit(
-							(String)serviceReference.getProperty("target"));
-						emitter.emit(
-							(String)serviceReference.getProperty("target"));
-					}
-
+				(serviceReference, emitter) -> {
+					emitter.emit(
+						(String)serviceReference.getProperty("target"));
+					emitter.emit(
+						(String)serviceReference.getProperty("target"));
 				},
 				new ServiceTrackerCustomizer<TrackedOne, TrackedTwo>() {
 
@@ -860,14 +816,7 @@ public class ObjectServiceTrackerMapTest {
 		ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				wrappedBundleContext, TrackedOne.class, null,
-				new ServiceReferenceMapper<TrackedOne, TrackedOne>() {
-
-					@Override
-					public void map(
-						ServiceReference<TrackedOne> serviceReference,
-						Emitter<TrackedOne> emitter) {
-					}
-
+				(serviceReference, emitter) -> {
 				});
 
 		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(

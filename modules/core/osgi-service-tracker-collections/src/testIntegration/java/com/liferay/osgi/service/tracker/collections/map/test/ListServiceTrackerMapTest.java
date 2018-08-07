@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.internal.map.BundleContextWr
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedOne;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
@@ -154,18 +153,7 @@ public class ListServiceTrackerMapTest {
 	public void testGestServiceWithUnregisteringAndCustomComparator() {
 		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 			createServiceTrackerMap(
-				_bundleContext,
-				new Comparator<ServiceReference<TrackedOne>>() {
-
-					@Override
-					public int compare(
-						ServiceReference<TrackedOne> serviceReference1,
-						ServiceReference<TrackedOne> serviceReference2) {
-
-						return 0;
-					}
-
-				});
+				_bundleContext, (serviceReference1, serviceReference2) -> 0);
 
 		TrackedOne trackedOne1 = new TrackedOne();
 
@@ -340,17 +328,7 @@ public class ListServiceTrackerMapTest {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, TrackedOne.class, null,
 			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
-			new Comparator<ServiceReference<TrackedOne>>() {
-
-				@Override
-				public int compare(
-					ServiceReference<TrackedOne> serviceReference1,
-					ServiceReference<TrackedOne> serviceReference2) {
-
-					return 0;
-				}
-
-			});
+			(serviceReference1, serviceReference2) -> 0);
 
 		registerService(new TrackedOne());
 		registerService(new TrackedOne());
@@ -643,14 +621,7 @@ public class ListServiceTrackerMapTest {
 		ServiceTrackerMap<TrackedOne, List<TrackedOne>> serviceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContextWrapper, TrackedOne.class, null,
-				new ServiceReferenceMapper<TrackedOne, TrackedOne>() {
-
-					@Override
-					public void map(
-						ServiceReference<TrackedOne> serviceReference,
-						Emitter<TrackedOne> emitter) {
-					}
-
+				(serviceReference, emitter) -> {
 				});
 
 		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(

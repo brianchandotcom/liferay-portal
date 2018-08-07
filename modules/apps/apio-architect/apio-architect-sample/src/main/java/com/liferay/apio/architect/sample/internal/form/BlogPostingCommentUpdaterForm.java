@@ -41,7 +41,7 @@ public class BlogPostingCommentUpdaterForm {
 		).constructor(
 			BlogPostingCommentUpdaterForm::new
 		).addRequiredString(
-			"text", BlogPostingCommentUpdaterForm::_setText
+			"text", BlogPostingCommentUpdaterForm::setText
 		).build();
 	}
 
@@ -54,7 +54,7 @@ public class BlogPostingCommentUpdaterForm {
 		return _text;
 	}
 
-	private void _setText(String text) {
+	public void setText(String text) {
 		_text = text;
 	}
 

@@ -45,27 +45,27 @@ public class PersonForm {
 		).constructor(
 			PersonForm::new
 		).addRequiredDate(
-			"birthDate", PersonForm::_setBirthDate
+			"birthDate", PersonForm::setBirthDate
 		).addOptionalStringList(
-			"jobTitle", PersonForm::_setJobTitles
+			"jobTitle", PersonForm::setJobTitles
 		).addRequiredString(
-			"addressCountry", PersonForm::_setCountryCode
+			"addressCountry", PersonForm::setCountryCode
 		).addRequiredString(
-			"addressLocality", PersonForm::_setCity
+			"addressLocality", PersonForm::setCity
 		).addRequiredString(
-			"addressRegion", PersonForm::_setState
+			"addressRegion", PersonForm::setState
 		).addRequiredString(
-			"givenName", PersonForm::_setGivenName
+			"givenName", PersonForm::setGivenName
 		).addRequiredString(
-			"image", PersonForm::_setImage
+			"image", PersonForm::setImage
 		).addRequiredString(
-			"email", PersonForm::_setEmail
+			"email", PersonForm::setEmail
 		).addRequiredString(
-			"familyName", PersonForm::_setFamilyName
+			"familyName", PersonForm::setFamilyName
 		).addRequiredString(
-			"postalCode", PersonForm::_setZipCode
+			"postalCode", PersonForm::setZipCode
 		).addRequiredString(
-			"streetAddress", PersonForm::_setStreetAddress
+			"streetAddress", PersonForm::setStreetAddress
 		).build();
 	}
 
@@ -133,47 +133,47 @@ public class PersonForm {
 			_countryCode, _state, _city, _zipCode, _streetAddress);
 	}
 
-	private void _setBirthDate(Date birthDate) {
+	public void setBirthDate(Date birthDate) {
 		_birthDate = birthDate;
 	}
 
-	private void _setCity(String city) {
+	public void setCity(String city) {
 		_city = city;
 	}
 
-	private void _setCountryCode(String countryCode) {
+	public void setCountryCode(String countryCode) {
 		_countryCode = countryCode;
 	}
 
-	private void _setEmail(String emailAddress) {
+	public void setEmail(String emailAddress) {
 		_email = emailAddress;
 	}
 
-	private void _setFamilyName(String lastName) {
+	public void setFamilyName(String lastName) {
 		_familyName = lastName;
 	}
 
-	private void _setGivenName(String givenName) {
+	public void setGivenName(String givenName) {
 		_givenName = givenName;
 	}
 
-	private void _setImage(String image) {
+	public void setImage(String image) {
 		_image = image;
 	}
 
-	private void _setJobTitles(List<String> jobTitles) {
+	public void setJobTitles(List<String> jobTitles) {
 		_jobTitles = jobTitles;
 	}
 
-	private void _setState(String state) {
+	public void setState(String state) {
 		_state = state;
 	}
 
-	private void _setStreetAddress(String streetAddress) {
+	public void setStreetAddress(String streetAddress) {
 		_streetAddress = streetAddress;
 	}
 
-	private void _setZipCode(String zipCode) {
+	public void setZipCode(String zipCode) {
 		_zipCode = zipCode;
 	}
 

@@ -43,9 +43,9 @@ public class BlogPostingCommentCreatorForm {
 			BlogPostingCommentCreatorForm::new
 		).addRequiredLinkedModel(
 			"author", PersonIdentifier.class,
-			BlogPostingCommentCreatorForm::_setAuthor
+			BlogPostingCommentCreatorForm::setAuthor
 		).addRequiredString(
-			"text", BlogPostingCommentCreatorForm::_setText
+			"text", BlogPostingCommentCreatorForm::setText
 		).build();
 	}
 
@@ -67,11 +67,11 @@ public class BlogPostingCommentCreatorForm {
 		return _text;
 	}
 
-	private void _setAuthor(Long author) {
+	public void setAuthor(Long author) {
 		_author = author;
 	}
 
-	private void _setText(String text) {
+	public void setText(String text) {
 		_text = text;
 	}
 

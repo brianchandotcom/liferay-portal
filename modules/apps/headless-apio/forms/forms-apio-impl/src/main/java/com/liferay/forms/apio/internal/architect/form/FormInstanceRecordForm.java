@@ -43,9 +43,9 @@ public class FormInstanceRecordForm {
 		).constructor(
 			FormInstanceRecordForm::new
 		).addRequiredString(
-			"fieldValues", FormInstanceRecordForm::_setFieldValues
+			"fieldValues", FormInstanceRecordForm::setFieldValues
 		).addRequiredBoolean(
-			"isDraft", FormInstanceRecordForm::_setDraft
+			"isDraft", FormInstanceRecordForm::setDraft
 		).build();
 	}
 
@@ -57,11 +57,11 @@ public class FormInstanceRecordForm {
 		return _draft;
 	}
 
-	private void _setDraft(boolean draft) {
+	public void setDraft(boolean draft) {
 		_draft = draft;
 	}
 
-	private void _setFieldValues(String formValues) {
+	public void setFieldValues(String formValues) {
 		_fieldValues = formValues;
 	}
 

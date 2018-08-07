@@ -48,9 +48,9 @@ public class VocabularyForm {
 		).constructor(
 			VocabularyForm::new
 		).addOptionalString(
-			"description", VocabularyForm::_setDescription
+			"description", VocabularyForm::setDescription
 		).addRequiredString(
-			"name", VocabularyForm::_setName
+			"name", VocabularyForm::setName
 		).build();
 	}
 
@@ -74,11 +74,11 @@ public class VocabularyForm {
 		return Collections.singletonMap(locale, _name);
 	}
 
-	private void _setDescription(String description) {
+	public void setDescription(String description) {
 		_description = description;
 	}
 
-	private void _setName(String name) {
+	public void setName(String name) {
 		_name = name;
 	}
 

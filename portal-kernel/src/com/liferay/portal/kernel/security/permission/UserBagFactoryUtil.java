@@ -23,9 +23,13 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class UserBagFactoryUtil {
 
 	public static UserBag create(long userId) throws PortalException {
-		return getUserBagFactory().create(userId);
+		return _userBagFactory.create(userId);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static UserBagFactory getUserBagFactory() {
 		return _userBagFactory;
 	}

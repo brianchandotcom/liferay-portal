@@ -24,16 +24,19 @@ public class MailTemplateFactoryUtil {
 	public static MailTemplate createMailTemplate(
 		String template, boolean escapeHTML) {
 
-		return getMailTemplateFactory().createMailTemplate(
-			template, escapeHTML);
+		return _mailTemplateFactory.createMailTemplate(template, escapeHTML);
 	}
 
 	public static MailTemplateContextBuilder
 		createMailTemplateContextBuilder() {
 
-		return getMailTemplateFactory().createMailTemplateContextBuilder();
+		return _mailTemplateFactory.createMailTemplateContextBuilder();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static MailTemplateFactory getMailTemplateFactory() {
 		return _mailTemplateFactory;
 	}

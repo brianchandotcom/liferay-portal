@@ -16,13 +16,13 @@ package com.liferay.portal.language;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
+import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronizer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.LanguageWrapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,8 +39,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -109,6 +107,23 @@ import javax.servlet.http.HttpServletResponse;
 public class LanguageImpl implements Language, Serializable {
 
 	public void afterPropertiesSet() {
+		_companyLocalesPortalCache = MultiVMPoolUtil.getPortalCache(
+			_COMPANY_LOCALES_PORTAL_CACHE_NAME);
+
+		PortalCacheMapSynchronizeUtil.synchronize(
+			_companyLocalesPortalCache, _companyLocalesBags,
+			_removeSynchronizer);
+
+		_groupLocalesPortalCache = MultiVMPoolUtil.getPortalCache(
+			_GROUP_LOCALES_PORTAL_CACHE_NAME);
+
+		PortalCacheMapSynchronizeUtil.synchronize(
+			_groupLocalesPortalCache, _groupLanguageCodeLocalesMapMap,
+			_removeSynchronizer);
+
+		PortalCacheMapSynchronizeUtil.synchronize(
+			_groupLocalesPortalCache, _groupLanguageIdLocalesMap,
+			_removeSynchronizer);
 	}
 
 	/**
@@ -1556,18 +1571,12 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public void resetAvailableGroupLocales(long groupId) {
-		_groupLanguageCodeLocalesMapMap.remove(groupId);
-		_groupLanguageIdLocalesMap.remove(groupId);
-
-		_sendClearCacheClusterMessage(_resetAvailableGroupLocales, groupId);
+		_resetAvailableGroupLocales(groupId);
 	}
 
 	@Override
 	public void resetAvailableLocales(long companyId) {
-		_companyLocalesBags.remove(companyId);
-
-		_sendClearCacheClusterMessage(
-			_resetAvailableLocalesMethodKey, companyId);
+		_resetAvailableLocales(companyId);
 	}
 
 	@Override
@@ -1609,21 +1618,6 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		return companyLocalesBag;
-	}
-
-	private static void _sendClearCacheClusterMessage(
-		MethodKey methodKey, long argument) {
-
-		if (!ClusterInvokeThreadLocal.isEnabled()) {
-			return;
-		}
-
-		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			new MethodHandler(methodKey, argument), true);
-
-		clusterRequest.setFireAndForget(true);
-
-		ClusterExecutorUtil.execute(clusterRequest);
 	}
 
 	private ObjectValuePair<HashMap<String, Locale>, HashMap<String, Locale>>
@@ -1858,16 +1852,41 @@ public class LanguageImpl implements Language, Serializable {
 		return locale;
 	}
 
+	private void _resetAvailableGroupLocales(long groupId) {
+		_groupLocalesPortalCache.remove(groupId);
+	}
+
+	private void _resetAvailableLocales(long companyId) {
+		_companyLocalesPortalCache.remove(companyId);
+	}
+
+	private static final String _COMPANY_LOCALES_PORTAL_CACHE_NAME =
+		LanguageImpl.class.getName() + "._companyLocalesPortalCache";
+
+	private static final String _GROUP_LOCALES_PORTAL_CACHE_NAME =
+		LanguageImpl.class.getName() + "._groupLocalesPortalCache";
+
 	private static final Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 
 	private static final Map<Long, CompanyLocalesBag> _companyLocalesBags =
 		new ConcurrentHashMap<>();
+	private static PortalCache<Long, Serializable> _companyLocalesPortalCache;
+	private static PortalCache<Long, Serializable> _groupLocalesPortalCache;
 	private static final Pattern _pattern = Pattern.compile(
 		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
-	private static final MethodKey _resetAvailableGroupLocales = new MethodKey(
-		LanguageUtil.class, "resetAvailableGroupLocales", long.class);
-	private static final MethodKey _resetAvailableLocalesMethodKey =
-		new MethodKey(LanguageUtil.class, "resetAvailableLocales", long.class);
+
+	private static final Synchronizer<Long, Serializable> _removeSynchronizer =
+		new Synchronizer<Long, Serializable>() {
+
+			@Override
+			public void onSynchronize(
+				Map<? extends Long, ? extends Serializable> map, Long key,
+				Serializable value, int timeToLive) {
+
+				map.remove(key);
+			}
+
+		};
 
 	private final Map<Long, HashMap<String, Locale>>
 		_groupLanguageCodeLocalesMapMap = new ConcurrentHashMap<>();

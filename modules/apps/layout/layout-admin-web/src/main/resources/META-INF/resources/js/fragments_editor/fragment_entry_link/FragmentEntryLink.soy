@@ -10,12 +10,14 @@
 	{@param? _handleFragmentMoveUpButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? defaultLanguageId: string}
+	{@param? dropTargetClass: string}
 	{@param? languageId: string}
 	{@param? name: string}
 	{@param? showControlBar: bool}
 
 	{let $wrapperClasses kind="text"}
 		fragment-entry-link-wrapper
+		{sp}{$dropTargetClass}
 
 		{if $languageId != $defaultLanguageId}
 			{sp}translating

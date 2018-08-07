@@ -271,12 +271,7 @@ AUI.add(
 					buffer.push('<assignees/>');
 				}
 				else if (!dataAssignments.address || dataAssignments.address.filter(isValue).length === 0) {
-					if (wrapperNodeName === 'recipients') {
-						buffer.push('<assignees/>');
-					}
-					else {
-						buffer.push('<user/>');
-					}
+					buffer.push('<user/>');
 				}
 
 				buffer.push(xmlAssignments.close);

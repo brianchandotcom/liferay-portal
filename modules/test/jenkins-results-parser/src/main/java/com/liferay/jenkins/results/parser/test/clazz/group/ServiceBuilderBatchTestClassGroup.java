@@ -21,12 +21,6 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,40 +73,17 @@ public class ServiceBuilderBatchTestClassGroup
 
 	}
 
-	protected static List<File> getModulesProjectDirs(File moduleBaseDir)
-		throws IOException {
-
+	protected static List<File> getModulesProjectDirs(File moduleBaseDir) {
 		final List<File> modulesProjectDirs = new ArrayList<>();
-		final Path moduleBaseDirPath = moduleBaseDir.toPath();
 
-		Files.walkFileTree(
-			moduleBaseDirPath,
-			new SimpleFileVisitor<Path>() {
+		for (File modulesSubDir : moduleBaseDir.listFiles()) {
+			List<File> serviceXmlFiles = JenkinsResultsParserUtil.findFiles(
+				modulesSubDir, "service.xml");
 
-				@Override
-				public FileVisitResult preVisitDirectory(
-					Path filePath, BasicFileAttributes attrs) {
-
-					if (filePath.equals(moduleBaseDirPath)) {
-						return FileVisitResult.CONTINUE;
-					}
-
-					File currentDirectory = filePath.toFile();
-
-					List<File> serviceXmlFiles =
-						JenkinsResultsParserUtil.findFiles(
-							currentDirectory, "service.xml");
-
-					if (!serviceXmlFiles.isEmpty()) {
-						modulesProjectDirs.add(currentDirectory);
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
+			if (!serviceXmlFiles.isEmpty()) {
+				modulesProjectDirs.add(modulesSubDir);
+			}
+		}
 
 		return modulesProjectDirs;
 	}

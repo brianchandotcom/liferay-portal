@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -49,14 +50,18 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -66,8 +71,11 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -81,6 +89,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
 
@@ -145,15 +155,18 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				"Entry", entryFragmentEntries, _PATH + "/page_templates",
 				"entry.jpg", serviceContext);
 
-			_addApplicationDisplayTemplates(serviceContext);
+			List<DDMTemplate> ddmTemplates = _addApplicationDisplayTemplates(
+				serviceContext);
 
-			DDMStructure ddmStructure = _addDDMStructure(serviceContext);
+			DDMStructure ddmStructure = _addJournalArticleDDMStructure(
+				serviceContext);
 
-			_addDDMTemplates(ddmStructure, serviceContext);
+			_addJournalArticleDDMTemplates(ddmStructure, serviceContext);
 
 			_addJournalArticles(fileEntries, serviceContext);
 
-			_addLayouts(_LAYOUT_NAMES, serviceContext);
+			_addLayouts(
+				_LAYOUT_NAMES, ddmStructure, ddmTemplates, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -172,8 +185,11 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		_bundle = bundleContext.getBundle();
 	}
 
-	private void _addApplicationDisplayTemplates(ServiceContext serviceContext)
+	private List<DDMTemplate> _addApplicationDisplayTemplates(
+			ServiceContext serviceContext)
 		throws Exception {
+
+		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
 		Enumeration<URL> urls = _bundle.findEntries(
 			_PATH + "/adt", "*.ftl", false);
@@ -183,13 +199,14 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 			String script = StringUtil.read(url.openStream());
 
-			String fileName = FileUtil.getShortFileName(url.getPath());
+			String fileName = FileUtil.stripExtension(
+				FileUtil.getShortFileName(url.getPath()));
 
 			Map<Locale, String> nameMap = new HashMap<>();
 
 			nameMap.put(LocaleUtil.getSiteDefault(), fileName);
 
-			_ddmTemplateLocalService.addTemplate(
+			DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(AssetEntry.class.getName()), 0,
 				_portal.getClassNameId(_PORTLET_DISPLAY_TEMPLATE_CLASS_NAME),
@@ -197,80 +214,40 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_EDIT,
 				TemplateConstants.LANG_TYPE_FTL, script, serviceContext);
+
+			ddmTemplates.add(ddmTemplate);
 		}
+
+		return ddmTemplates;
 	}
 
-	private DDMStructure _addDDMStructure(ServiceContext serviceContext)
+	private void _addAssetPublisherPortlet(
+			DDMStructure ddmStructure, DDMTemplate ddmTemplate, String delta,
+			Layout layout, ServiceContext serviceContext)
 		throws Exception {
 
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
 
-		Map<Locale, String> nameMap = new HashMap<>();
+		String portletId = layoutTypePortlet.addPortletId(
+			serviceContext.getUserId(),
+			"com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+			"column-1", -1);
 
-		nameMap.put(siteDefaultLocale, "Porygon Entry");
+		PortletPreferences portletPreferences =
+			_getAssetPublisherPortletPreferences(ddmStructure, serviceContext);
 
-		Map<Locale, String> descriptionMap = new HashMap<>();
+		portletPreferences.setValue("delta", delta);
 
-		descriptionMap.put(siteDefaultLocale, "Porygon Entry");
-
-		URL definitionURL = _bundle.getEntry(
-			_PATH + "/journal/structures/porygon_entry/definition.json");
-
-		String definition = StringUtil.read(definitionURL.openStream());
-
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(definition);
-
-		ddmForm = _ddm.updateDDMFormDefaultLocale(ddmForm, siteDefaultLocale);
-
-		URL layoutURL = _bundle.getEntry(
-			_PATH + "/journal/structures/porygon_entry/layout.json");
-
-		String layout = StringUtil.read(layoutURL.openStream());
-
-		DDMFormLayout ddmFormLayout =
-			_ddmFormLayoutJSONDeserializer.deserialize(layout);
-
-		return _ddmStructureLocalService.addStructure(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-			_portal.getClassNameId(JournalArticle.class), "PORYGON_ENTRY",
-			nameMap, descriptionMap, ddmForm, ddmFormLayout,
-			StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT,
-			serviceContext);
-	}
-
-	private void _addDDMTemplates(
-			DDMStructure ddmStructure, ServiceContext serviceContext)
-		throws Exception {
-
-		Enumeration<URL> urls = _bundle.findEntries(
-			_PATH + "/journal/structures/porygon_entry/templates", "*", false);
-
-		while (urls.hasMoreElements()) {
-			URL url = urls.nextElement();
-
-			String script = StringUtil.read(url.openStream());
-
-			String ddmTemplateKey = FileUtil.stripExtension(
-				FileUtil.getShortFileName(url.getPath()));
-
-			String ddmTemplateName = StringUtil.upperCaseFirstLetter(
-				StringUtil.replace(ddmTemplateKey, '_', ' '));
-
-			Map<Locale, String> nameMap = new HashMap<>();
-
-			nameMap.put(LocaleUtil.getSiteDefault(), ddmTemplateName);
-
-			_ddmTemplateLocalService.addTemplate(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(DDMStructure.class),
-				ddmStructure.getStructureId(), ddmStructure.getClassNameId(),
-				ddmTemplateKey, nameMap, null,
-				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
-				DDMTemplateConstants.TEMPLATE_MODE_CREATE,
-				TemplateConstants.LANG_TYPE_FTL, script, true, false,
-				StringPool.BLANK, null, serviceContext);
+		if (ddmTemplate != null) {
+			portletPreferences.setValue(
+				"displayStyle", "ddmTemplate_" + ddmTemplate.getTemplateKey());
 		}
+
+		_portletPreferencesLocalService.addPortletPreferences(
+			serviceContext.getCompanyId(), 0,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId,
+			null, PortletPreferencesFactoryUtil.toXML(portletPreferences));
 	}
 
 	private LayoutPageTemplateEntry _addDisplayPageEntry(
@@ -397,6 +374,80 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		return fragmentEntries;
 	}
 
+	private DDMStructure _addJournalArticleDDMStructure(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(siteDefaultLocale, "Porygon Entry");
+
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(siteDefaultLocale, "Porygon Entry");
+
+		URL definitionURL = _bundle.getEntry(
+			_PATH + "/journal/structures/porygon_entry/definition.json");
+
+		String definition = StringUtil.read(definitionURL.openStream());
+
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(definition);
+
+		ddmForm = _ddm.updateDDMFormDefaultLocale(ddmForm, siteDefaultLocale);
+
+		URL layoutURL = _bundle.getEntry(
+			_PATH + "/journal/structures/porygon_entry/layout.json");
+
+		String layout = StringUtil.read(layoutURL.openStream());
+
+		DDMFormLayout ddmFormLayout =
+			_ddmFormLayoutJSONDeserializer.deserialize(layout);
+
+		return _ddmStructureLocalService.addStructure(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			_portal.getClassNameId(JournalArticle.class), "PORYGON_ENTRY",
+			nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT,
+			serviceContext);
+	}
+
+	private void _addJournalArticleDDMTemplates(
+			DDMStructure ddmStructure, ServiceContext serviceContext)
+		throws Exception {
+
+		Enumeration<URL> urls = _bundle.findEntries(
+			_PATH + "/journal/structures/porygon_entry/templates", "*", false);
+
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+
+			String script = StringUtil.read(url.openStream());
+
+			String ddmTemplateKey = FileUtil.stripExtension(
+				FileUtil.getShortFileName(url.getPath()));
+
+			String ddmTemplateName = StringUtil.upperCaseFirstLetter(
+				StringUtil.replace(ddmTemplateKey, '_', ' '));
+
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(LocaleUtil.getSiteDefault(), ddmTemplateName);
+
+			_ddmTemplateLocalService.addTemplate(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(), ddmStructure.getClassNameId(),
+				ddmTemplateKey, nameMap, null,
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+				DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+				TemplateConstants.LANG_TYPE_FTL, script, true, false,
+				StringPool.BLANK, null, serviceContext);
+		}
+	}
+
 	private List<JournalArticle> _addJournalArticles(
 			List<FileEntry> fileEntries, ServiceContext serviceContext)
 		throws Exception {
@@ -421,8 +472,6 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				StringUtil.read(url.openStream()), StringPool.DOLLAR,
 				StringPool.DOLLAR, fileEntriesMap);
 
-			System.out.println(content);
-
 			String fileName = FileUtil.stripExtension(
 				FileUtil.getShortFileName(url.getPath()));
 
@@ -446,8 +495,26 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		return journalArticles;
 	}
 
+	private Layout _addLayout(
+			String name, UnicodeProperties typeSettingsProperties,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getSiteDefault(), name);
+
+		return _layoutLocalService.addLayout(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, new HashMap<>(),
+			new HashMap<>(), new HashMap<>(), new HashMap<>(), "portlet",
+			typeSettingsProperties.toString(), false, new HashMap<>(),
+			serviceContext);
+	}
+
 	private List<Layout> _addLayouts(
-			String[] layoutNames, ServiceContext serviceContext)
+			String[] layoutNames, DDMStructure ddmStructure,
+			List<DDMTemplate> adtDDMTemplates, ServiceContext serviceContext)
 		throws Exception {
 
 		List<Layout> layouts = new ArrayList<>();
@@ -493,6 +560,55 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		serviceContext.setTimeZone(user.getTimeZone());
 
 		return serviceContext;
+	}
+
+	private PortletPreferences _getAssetPublisherPortletPreferences(
+			DDMStructure ddmStructure, ServiceContext serviceContext)
+		throws Exception {
+
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		String journalArticleClassNameId = String.valueOf(
+			_portal.getClassNameId(JournalArticle.class));
+
+		String structureId = String.valueOf(ddmStructure.getStructureId());
+
+		portletPreferences.setValue("anyAssetType", journalArticleClassNameId);
+
+		portletPreferences.setValue(
+			"anyClassTypeJournalArticleAssetRendererFactory", structureId);
+
+		portletPreferences.setValue("assetLinkBehavior", "viewInPortlet");
+		portletPreferences.setValue("classNameIds", journalArticleClassNameId);
+		portletPreferences.setValue("classTypeIds", structureId);
+
+		portletPreferences.setValue(
+			"classTypeIdsJournalArticleAssetRendererFactory", structureId);
+
+		portletPreferences.setValue(
+			"groupId", String.valueOf(serviceContext.getScopeGroupId()));
+
+		portletPreferences.setValue("emailAssetEntryAddedEnabled", "false");
+
+		portletPreferences.setValue(
+			"portletSetupPortletDecoratorId", "barebone");
+
+		return portletPreferences;
+	}
+
+	private DDMTemplate _getDDMTemplate(
+		String name, List<DDMTemplate> ddmTemplates) {
+
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			String ddmTemplateName = ddmTemplate.getName(
+				LocaleUtil.getSiteDefault());
+
+			if (ddmTemplateName.equals(name)) {
+				return ddmTemplate;
+			}
+		}
+
+		return null;
 	}
 
 	private Map<String, String> _getFileEntriesMap(List<FileEntry> fileEntries)
@@ -556,6 +672,18 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			StringPool.BLANK, bytes, serviceContext);
 
 		return fileEntry.getFileEntryId();
+	}
+
+	private void _updateLayout(Layout layout) throws Exception {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.resetModes();
+		layoutTypePortlet.resetStates();
+
+		layout = _layoutService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 	private void _updateLogo(ServiceContext serviceContext) throws Exception {
@@ -647,10 +775,16 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		_layoutPageTemplateEntryLocalService;
 
 	@Reference
+	private LayoutService _layoutService;
+
+	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.frontend.theme.porygon.site.initializer)"

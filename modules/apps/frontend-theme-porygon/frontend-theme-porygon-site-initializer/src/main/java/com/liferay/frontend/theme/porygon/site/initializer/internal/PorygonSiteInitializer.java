@@ -222,18 +222,8 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addAssetPublisherPortlet(
-			DDMStructure ddmStructure, DDMTemplate ddmTemplate, String delta,
-			Layout layout, ServiceContext serviceContext)
-		throws Exception {
-
-		_addAssetPublisherPortlet(
-			ddmStructure, ddmTemplate, delta, "barebone", layout,
-			serviceContext);
-	}
-
-	private void _addAssetPublisherPortlet(
-			DDMStructure ddmStructure, DDMTemplate ddmTemplate, String delta,
-			String portletDecoratorId, Layout layout,
+			DDMStructure ddmStructure, String ddmTemplateKey, String delta,
+			String portletDecoratorId, Layout layout, String column,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -243,17 +233,13 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		String portletId = layoutTypePortlet.addPortletId(
 			serviceContext.getUserId(),
 			"com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
-			"column-1", -1);
+			column, -1);
 
 		PortletPreferences portletPreferences =
 			_getAssetPublisherPortletPreferences(ddmStructure, serviceContext);
 
 		portletPreferences.setValue("delta", delta);
-
-		if (ddmTemplate != null) {
-			portletPreferences.setValue(
-				"displayStyle", "ddmTemplate_" + ddmTemplate.getTemplateKey());
-		}
+		portletPreferences.setValue("displayStyle", ddmTemplateKey);
 
 		portletPreferences.setValue(
 			"portletSetupPortletDecoratorId", portletDecoratorId);
@@ -535,6 +521,11 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		List<Layout> layouts = new ArrayList<>();
 
+		Layout photographyLayout = _addPhotographyLayout(
+			ddmStructure, adtDDMTemplates, serviceContext);
+
+		layouts.add(photographyLayout);
+
 		Layout scienceLayout = _addScienceLayout(
 			ddmStructure, adtDDMTemplates, serviceContext);
 
@@ -563,6 +554,63 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		return layouts;
 	}
 
+	private String _addNestedPortletsPortlet(
+			Layout layout, ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		String portletId = layoutTypePortlet.addPortletId(
+			serviceContext.getUserId(),
+			"com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet",
+			_COLUMN_1, -1);
+
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		portletPreferences.setValue("layoutTemplateId", "2_columns_iii");
+
+		portletPreferences.setValue(
+			"portletSetupPortletDecoratorId", _BAREBONE_DECORATOR);
+
+		_portletPreferencesLocalService.addPortletPreferences(
+			serviceContext.getCompanyId(), 0,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId,
+			null, PortletPreferencesFactoryUtil.toXML(portletPreferences));
+
+		return portletId;
+	}
+
+	private Layout _addPhotographyLayout(
+			DDMStructure ddmStructure, List<DDMTemplate> adtDDMTemplates,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Layout layout = _addLayout("Photography", serviceContext);
+
+		_addAssetPublisherPortlet(
+			ddmStructure,
+			_getDDMTemplateKey(
+				"EntryCardFirstItemBiggerRightADT", adtDDMTemplates),
+			"3", _BAREBONE_DECORATOR, layout, _COLUMN_1, serviceContext);
+
+		String portletId = _addNestedPortletsPortlet(layout, serviceContext);
+
+		_addAssetPublisherPortlet(
+			ddmStructure,
+			_getDDMTemplateKey("EntryList3itemsADT", adtDDMTemplates), "12",
+			_BAREBONE_DECORATOR, layout, _getNestedColumn(portletId, _COLUMN_1),
+			serviceContext);
+
+		_addAssetPublisherPortlet(
+			ddmStructure, "title-list", "12", _TRENDING_DECORATOR, layout,
+			_getNestedColumn(portletId, _COLUMN_2), serviceContext);
+
+		_updateLayout(layout);
+
+		return layout;
+	}
+
 	private Layout _addReviewsLayout(
 			DDMStructure ddmStructure, List<DDMTemplate> adtDDMTemplates,
 			ServiceContext serviceContext)
@@ -572,13 +620,13 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplate("EntryList3itemsADT", adtDDMTemplates), "6", layout,
-			serviceContext);
+			_getDDMTemplateKey("EntryList3itemsADT", adtDDMTemplates), "6",
+			_BAREBONE_DECORATOR, layout, _COLUMN_1, serviceContext);
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplate("EntryList4itemsADT", adtDDMTemplates), "12",
-			"trending", layout, serviceContext);
+			_getDDMTemplateKey("EntryList4itemsADT", adtDDMTemplates), "12",
+			_TRENDING_DECORATOR, layout, _COLUMN_1, serviceContext);
 
 		_updateLayout(layout);
 
@@ -594,14 +642,14 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplate(
+			_getDDMTemplateKey(
 				"EntryCardFirstItemBiggerRightADT", adtDDMTemplates),
-			"5", layout, serviceContext);
+			"5", _BAREBONE_DECORATOR, layout, _COLUMN_1, serviceContext);
 
 		_addAssetPublisherPortlet(
 			ddmStructure,
-			_getDDMTemplate("EntryList3itemsADT", adtDDMTemplates), "5", layout,
-			serviceContext);
+			_getDDMTemplateKey("EntryList3itemsADT", adtDDMTemplates), "5",
+			_BAREBONE_DECORATOR, layout, _COLUMN_1, serviceContext);
 
 		_updateLayout(layout);
 
@@ -664,7 +712,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		return portletPreferences;
 	}
 
-	private DDMTemplate _getDDMTemplate(
+	private String _getDDMTemplateKey(
 		String name, List<DDMTemplate> ddmTemplates) {
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
@@ -672,11 +720,11 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				LocaleUtil.getSiteDefault());
 
 			if (ddmTemplateName.equals(name)) {
-				return ddmTemplate;
+				return "ddmTemplate_" + ddmTemplate.getTemplateKey();
 			}
 		}
 
-		return null;
+		return name;
 	}
 
 	private Map<String, String> _getFileEntriesMap(List<FileEntry> fileEntries)
@@ -706,6 +754,17 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		}
 
 		return fragmentEntriesMap;
+	}
+
+	private String _getNestedColumn(String column, String portletId) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(StringPool.UNDERLINE);
+		sb.append(portletId);
+		sb.append(StringPool.DOUBLE_UNDERLINE);
+		sb.append(column);
+
+		return sb.toString();
 	}
 
 	private long _getPreviewFileEntryId(
@@ -786,7 +845,13 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			StringPool.BLANK, StringPool.BLANK);
 	}
 
-	private static final String[] _LAYOUT_NAMES = {"Home", "Photography"};
+	private static final String _BAREBONE_DECORATOR = "barebone";
+
+	private static final String _COLUMN_1 = "column-1";
+
+	private static final String _COLUMN_2 = "column-2";
+
+	private static final String[] _LAYOUT_NAMES = {"Home"};
 
 	private static final String _PATH =
 		"com/liferay/frontend/theme/porygon/site/initializer/internal" +
@@ -798,6 +863,8 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	private static final String _THEME_ID = "porygon_WAR_porygontheme";
 
 	private static final String _THEME_NAME = "Porygon";
+
+	private static final String _TRENDING_DECORATOR = "trending";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PorygonSiteInitializer.class);

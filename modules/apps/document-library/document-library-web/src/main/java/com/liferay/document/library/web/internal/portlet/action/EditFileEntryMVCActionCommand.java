@@ -953,6 +953,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				// Update file entry and checkin
 
+				if (size == 0) {
+					fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+					contentType = fileEntry.getMimeType();
+				}
+
 				fileEntry = _dlAppService.updateFileEntryAndCheckIn(
 					fileEntryId, sourceFileName, contentType, title,
 					description, changeLog, majorVersion, inputStream, size,
@@ -961,6 +967,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			else {
 
 				// Update file entry
+
+				if (size == 0) {
+					fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+					contentType = fileEntry.getMimeType();
+				}
 
 				fileEntry = _dlAppService.updateFileEntry(
 					fileEntryId, sourceFileName, contentType, title,

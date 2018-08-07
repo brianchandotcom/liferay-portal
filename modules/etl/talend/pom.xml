@@ -7,6 +7,20 @@
 	<version>0.1.0-SNAPSHOT</version>
 	<name>Liferay Talend</name>
 	<packaging>pom</packaging>
+	<repositories>
+		<repository>
+			<id>liferay</id>
+			<name>Liferay Repository</name>
+			<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>liferay</id>
+			<name>Liferay Repository</name>
+			<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<properties>
 		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>

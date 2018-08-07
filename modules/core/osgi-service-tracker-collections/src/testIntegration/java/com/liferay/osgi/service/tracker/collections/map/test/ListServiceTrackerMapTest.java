@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.internal.map.BundleContextWr
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedOne;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
@@ -67,19 +66,14 @@ public class ListServiceTrackerMapTest {
 
 	@After
 	public void tearDown() throws BundleException {
+		_serviceTrackerMap.close();
+
 		_bundle.stop();
-
-		if (_serviceTrackerMap != null) {
-			_serviceTrackerMap.close();
-
-			_serviceTrackerMap = null;
-		}
 	}
 
 	@Test
 	public void testGestServiceWithDifferentRanking() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(_bundleContext);
+		_serviceTrackerMap = createServiceTrackerMap(_bundleContext);
 
 		TrackedOne trackedOne1 = new TrackedOne();
 
@@ -93,11 +87,11 @@ public class ListServiceTrackerMapTest {
 
 		registerService(trackedOne2, 2);
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = _serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 3, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
 
-		Iterator<? extends TrackedOne> iterator = services.iterator();
+		Iterator<? extends TrackedOne> iterator = trackedOnes.iterator();
 
 		Assert.assertEquals(trackedOne3, iterator.next());
 		Assert.assertEquals(trackedOne2, iterator.next());
@@ -106,8 +100,7 @@ public class ListServiceTrackerMapTest {
 
 	@Test
 	public void testGestServiceWithUnregistering() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(_bundleContext);
+		_serviceTrackerMap = createServiceTrackerMap(_bundleContext);
 
 		TrackedOne trackedOne1 = new TrackedOne();
 
@@ -122,11 +115,11 @@ public class ListServiceTrackerMapTest {
 		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
 			trackedOne2, 2);
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = _serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 3, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
 
-		Iterator<? extends TrackedOne> iterator = services.iterator();
+		Iterator<? extends TrackedOne> iterator = trackedOnes.iterator();
 
 		serviceRegistration2.unregister();
 
@@ -137,14 +130,14 @@ public class ListServiceTrackerMapTest {
 		Assert.assertEquals(trackedOne2, iterator.next());
 		Assert.assertEquals(trackedOne1, iterator.next());
 
-		services = serviceTrackerMap.getService("aTarget");
+		trackedOnes = _serviceTrackerMap.getService("aTarget");
 
 		// Getting the list of services should return a list with the affected
 		// changes
 
-		Assert.assertEquals(services.toString(), 2, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 2, trackedOnes.size());
 
-		iterator = services.iterator();
+		iterator = trackedOnes.iterator();
 
 		Assert.assertEquals(trackedOne3, iterator.next());
 		Assert.assertEquals(trackedOne1, iterator.next());
@@ -152,20 +145,8 @@ public class ListServiceTrackerMapTest {
 
 	@Test
 	public void testGestServiceWithUnregisteringAndCustomComparator() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(
-				_bundleContext,
-				new Comparator<ServiceReference<TrackedOne>>() {
-
-					@Override
-					public int compare(
-						ServiceReference<TrackedOne> serviceReference1,
-						ServiceReference<TrackedOne> serviceReference2) {
-
-						return 0;
-					}
-
-				});
+		_serviceTrackerMap = createServiceTrackerMap(
+			_bundleContext, (serviceReference1, serviceReference2) -> 0);
 
 		TrackedOne trackedOne1 = new TrackedOne();
 
@@ -184,48 +165,49 @@ public class ListServiceTrackerMapTest {
 
 		serviceRegistration2.unregister();
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = _serviceTrackerMap.getService("aTarget");
 
 		// Getting the list of services should return a list with the affected
 		// changes
 
-		Assert.assertEquals(services.toString(), 2, services.size());
-		Assert.assertTrue(services.toString(), services.contains(trackedOne1));
-		Assert.assertTrue(services.toString(), services.contains(trackedOne3));
+		Assert.assertEquals(trackedOnes.toString(), 2, trackedOnes.size());
+		Assert.assertTrue(
+			trackedOnes.toString(), trackedOnes.contains(trackedOne1));
+		Assert.assertTrue(
+			trackedOnes.toString(), trackedOnes.contains(trackedOne3));
 
 		serviceRegistration3.unregister();
 
-		services = serviceTrackerMap.getService("aTarget");
+		trackedOnes = _serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 1, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 1, trackedOnes.size());
 
-		Assert.assertTrue(services.toString(), services.contains(trackedOne1));
+		Assert.assertTrue(
+			trackedOnes.toString(), trackedOnes.contains(trackedOne1));
 
 		serviceRegistration1.unregister();
 	}
 
 	@Test
 	public void testGetServicesIsNullAfterDeregistration() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(_bundleContext);
+		_serviceTrackerMap = createServiceTrackerMap(_bundleContext);
 
 		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
 			new TrackedOne());
 		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
 			new TrackedOne());
 
-		Assert.assertNotNull(serviceTrackerMap.getService("aTarget"));
+		Assert.assertNotNull(_serviceTrackerMap.getService("aTarget"));
 
 		serviceRegistration1.unregister();
 		serviceRegistration2.unregister();
 
-		Assert.assertNull(serviceTrackerMap.getService("aTarget"));
+		Assert.assertNull(_serviceTrackerMap.getService("aTarget"));
 	}
 
 	@Test
 	public void testGetServicesWithDifferentKeys() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(_bundleContext);
+		_serviceTrackerMap = createServiceTrackerMap(_bundleContext);
 
 		registerService(new TrackedOne(), "aTarget");
 		registerService(new TrackedOne(), "anotherTarget");
@@ -233,12 +215,12 @@ public class ListServiceTrackerMapTest {
 		registerService(new TrackedOne(), "anotherTarget");
 		registerService(new TrackedOne(), "anotherTarget");
 
-		List<TrackedOne> aTargetList = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> aTargetList = _serviceTrackerMap.getService("aTarget");
 
 		Assert.assertNotNull(aTargetList);
 		Assert.assertEquals(aTargetList.toString(), 2, aTargetList.size());
 
-		List<TrackedOne> anotherTargetList = serviceTrackerMap.getService(
+		List<TrackedOne> anotherTargetList = _serviceTrackerMap.getService(
 			"anotherTarget");
 
 		Assert.assertNotNull(anotherTargetList);
@@ -247,65 +229,180 @@ public class ListServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceWithChangingServiceRanking() {
+		_serviceTrackerMap = createServiceTrackerMap(_bundleContext);
+
+		TrackedOne trackedOne1 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1, -1);
+
+		TrackedOne trackedOne2 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
+			trackedOne2, 0);
+
+		TrackedOne trackedOne3 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
+			trackedOne3, 1);
+
+		List<TrackedOne> trackedOnes = _serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
+
+		Iterator<? extends TrackedOne> iterator = trackedOnes.iterator();
+
+		Assert.assertEquals(trackedOne3, iterator.next());
+		Assert.assertEquals(trackedOne2, iterator.next());
+		Assert.assertEquals(trackedOne1, iterator.next());
+
+		Hashtable<String, Object> properties = new Hashtable<>();
+
+		properties.put("service.ranking", -2);
+		properties.put("target", "aTarget");
+
+		serviceRegistration3.setProperties(properties);
+
+		trackedOnes = _serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
+
+		iterator = trackedOnes.iterator();
+
+		Assert.assertEquals(trackedOne2, iterator.next());
+		Assert.assertEquals(trackedOne1, iterator.next());
+		Assert.assertEquals(trackedOne3, iterator.next());
+
+		properties = new Hashtable<>();
+
+		properties.put("service.ranking", 1);
+		properties.put("target", "aTarget");
+
+		serviceRegistration3.setProperties(properties);
+
+		trackedOnes = _serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
+
+		iterator = trackedOnes.iterator();
+
+		Assert.assertEquals(trackedOne3, iterator.next());
+		Assert.assertEquals(trackedOne2, iterator.next());
+		Assert.assertEquals(trackedOne1, iterator.next());
+
+		properties = new Hashtable<>();
+
+		properties.put("target", "aTarget");
+
+		serviceRegistration2.setProperties(properties);
+		serviceRegistration3.setProperties(properties);
+
+		trackedOnes = _serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
+
+		iterator = trackedOnes.iterator();
+
+		Assert.assertEquals(trackedOne2, iterator.next());
+		Assert.assertEquals(trackedOne3, iterator.next());
+		Assert.assertEquals(trackedOne1, iterator.next());
+
+		serviceRegistration1.unregister();
+		serviceRegistration2.unregister();
+		serviceRegistration3.unregister();
+	}
+
+	@Test
 	public void testGetServiceWithCustomComparatorReturningZero() {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, TrackedOne.class, null,
-			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
-			new Comparator<ServiceReference<TrackedOne>>() {
-
-				@Override
-				public int compare(
-					ServiceReference<TrackedOne> serviceReference1,
-					ServiceReference<TrackedOne> serviceReference2) {
-
-					return 0;
-				}
-
-			});
+			new PropertyServiceReferenceMapper<>("target"),
+			(serviceReference1, serviceReference2) -> 0);
 
 		registerService(new TrackedOne());
 		registerService(new TrackedOne());
 
-		List<TrackedOne> services = _serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = _serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 2, services.size());
+		Assert.assertEquals(trackedOnes.toString(), 2, trackedOnes.size());
+	}
+
+	@Test
+	public void testGetServiceWithRegisteredServiceRanking() {
+		_serviceTrackerMap = createServiceTrackerMap(_bundleContext);
+
+		TrackedOne trackedOne1 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1);
+
+		TrackedOne trackedOne2 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
+			trackedOne2, 0);
+
+		List<TrackedOne> trackedOnes = _serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(trackedOnes.toString(), 2, trackedOnes.size());
+
+		Iterator<TrackedOne> iterator = trackedOnes.iterator();
+
+		Assert.assertEquals(trackedOne1, iterator.next());
+		Assert.assertEquals(trackedOne2, iterator.next());
+
+		serviceRegistration1.unregister();
+
+		serviceRegistration1 = registerService(trackedOne1);
+
+		TrackedOne trackedOne3 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
+			trackedOne3, 1);
+
+		trackedOnes = _serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(trackedOnes.toString(), 3, trackedOnes.size());
+
+		iterator = trackedOnes.iterator();
+
+		Assert.assertEquals(trackedOne3, iterator.next());
+		Assert.assertEquals(trackedOne2, iterator.next());
+		Assert.assertEquals(trackedOne1, iterator.next());
+
+		serviceRegistration1.unregister();
+		serviceRegistration2.unregister();
+		serviceRegistration3.unregister();
 	}
 
 	@Test
 	public void testGetServiceWithSimpleRegistration() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(_bundleContext);
+		_serviceTrackerMap = createServiceTrackerMap(_bundleContext);
 
 		registerService(new TrackedOne());
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = _serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 1, services.size());
-
-		serviceTrackerMap.close();
+		Assert.assertEquals(trackedOnes.toString(), 1, trackedOnes.size());
 	}
 
 	@Test
 	public void testGetServiceWithSimpleRegistrationTwice() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(_bundleContext);
+		_serviceTrackerMap = createServiceTrackerMap(_bundleContext);
 
 		registerService(new TrackedOne());
 		registerService(new TrackedOne());
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+		List<TrackedOne> trackedOnes = _serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(services.toString(), 2, services.size());
-
-		serviceTrackerMap.close();
+		Assert.assertEquals(trackedOnes.toString(), 2, trackedOnes.size());
 	}
 
 	@Test
 	public void testOperationBalancesOutGetServiceAndUngetService() {
 		BundleContextWrapper bundleContextWrapper = wrapContext();
 
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(bundleContextWrapper);
+		_serviceTrackerMap = createServiceTrackerMap(bundleContextWrapper);
 
 		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
 			new TrackedOne());
@@ -334,8 +431,6 @@ public class ListServiceTrackerMapTest {
 		for (AtomicInteger serviceReferenceCount : serviceReferenceCounts) {
 			Assert.assertEquals(0, serviceReferenceCount.get());
 		}
-
-		serviceTrackerMap.close();
 	}
 
 	@Test
@@ -367,8 +462,7 @@ public class ListServiceTrackerMapTest {
 
 				};
 
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(serviceTrackerMapListener);
+		_serviceTrackerMap = createServiceTrackerMap(serviceTrackerMapListener);
 
 		ServiceRegistration<TrackedOne> serviceRegistration = null;
 
@@ -381,8 +475,6 @@ public class ListServiceTrackerMapTest {
 			if (serviceRegistration != null) {
 				serviceRegistration.unregister();
 			}
-
-			serviceTrackerMap.close();
 		}
 	}
 
@@ -417,15 +509,14 @@ public class ListServiceTrackerMapTest {
 
 				};
 
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(serviceTrackerMapListener);
+		_serviceTrackerMap = createServiceTrackerMap(serviceTrackerMapListener);
 
 		ServiceRegistration<TrackedOne> serviceRegistration = null;
 
 		try {
 			serviceRegistration = registerService(new TrackedOne(), "aTarget");
 
-			List<TrackedOne> trackedOnes = serviceTrackerMap.getService(
+			List<TrackedOne> trackedOnes = _serviceTrackerMap.getService(
 				"aTarget");
 
 			Assert.assertEquals(trackedOnes.toString(), 1, trackedOnes.size());
@@ -434,8 +525,6 @@ public class ListServiceTrackerMapTest {
 			if (serviceRegistration != null) {
 				serviceRegistration.unregister();
 			}
-
-			serviceTrackerMap.close();
 		}
 	}
 
@@ -478,8 +567,7 @@ public class ListServiceTrackerMapTest {
 
 				};
 
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap(serviceTrackerMapListener);
+		_serviceTrackerMap = createServiceTrackerMap(serviceTrackerMapListener);
 
 		ServiceRegistration<TrackedOne> serviceRegistration = null;
 
@@ -494,8 +582,6 @@ public class ListServiceTrackerMapTest {
 			if (serviceRegistration != null) {
 				serviceRegistration.unregister();
 			}
-
-			serviceTrackerMap.close();
 		}
 	}
 
@@ -503,18 +589,10 @@ public class ListServiceTrackerMapTest {
 	public void testUnkeyedServiceReferencesBalanceReferenceCount() {
 		BundleContextWrapper bundleContextWrapper = wrapContext();
 
-		ServiceTrackerMap<TrackedOne, List<TrackedOne>> serviceTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContextWrapper, TrackedOne.class, null,
-				new ServiceReferenceMapper<TrackedOne, TrackedOne>() {
-
-					@Override
-					public void map(
-						ServiceReference<TrackedOne> serviceReference,
-						Emitter<TrackedOne> emitter) {
-					}
-
-				});
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContextWrapper, TrackedOne.class, null,
+			(serviceReference, emitter) -> {
+			});
 
 		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
 			new TrackedOne());
@@ -537,8 +615,6 @@ public class ListServiceTrackerMapTest {
 		Assert.assertEquals(
 			serviceReferenceCounts.toString(), 0,
 			serviceReferenceCounts.size());
-
-		serviceTrackerMap.close();
 	}
 
 	protected ServiceTrackerMap<String, List<TrackedOne>>
@@ -555,8 +631,7 @@ public class ListServiceTrackerMapTest {
 
 		return ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, TrackedOne.class, null,
-			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
-			comparator);
+			new PropertyServiceReferenceMapper<>("target"), comparator);
 	}
 
 	protected ServiceTrackerMap<String, List<TrackedOne>>
@@ -566,10 +641,9 @@ public class ListServiceTrackerMapTest {
 
 		return ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, TrackedOne.class, null,
-			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
-			new DefaultServiceTrackerCustomizer<TrackedOne>(_bundleContext),
-			new PropertyServiceReferenceComparator<TrackedOne>(
-				"service.ranking"),
+			new PropertyServiceReferenceMapper<>("target"),
+			new DefaultServiceTrackerCustomizer<>(_bundleContext),
+			new PropertyServiceReferenceComparator<>("service.ranking"),
 			serviceTrackerMapListener);
 	}
 

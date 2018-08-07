@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.osgi.framework.ServiceReference;
 
@@ -70,19 +68,28 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 
 			_serviceReferenceServiceTuples.remove(serviceReferenceServiceTuple);
 
-			rebuild();
+			_rebuild();
 		}
 
 		@Override
 		public synchronized void store(
 			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
-			_serviceReferenceServiceTuples.add(serviceReferenceServiceTuple);
+			int index = Collections.binarySearch(
+				_serviceReferenceServiceTuples, serviceReferenceServiceTuple,
+				_serviceReferenceServiceTupleComparator);
 
-			rebuild();
+			if (index < 0) {
+				index = -index - 1;
+			}
+
+			_serviceReferenceServiceTuples.add(
+				index, serviceReferenceServiceTuple);
+
+			_rebuild();
 		}
 
-		protected void rebuild() {
+		private void _rebuild() {
 			_services = new ArrayList<>(_serviceReferenceServiceTuples.size());
 
 			for (ServiceReferenceServiceTuple<SR, TS>
@@ -95,17 +102,11 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 			_services = Collections.unmodifiableList(_services);
 		}
 
-		private ListServiceTrackerBucket() {
-			ServiceReferenceServiceTupleComparator<SR>
-				serviceReferenceServiceTupleComparator =
-					new ServiceReferenceServiceTupleComparator<>(_comparator);
-
-			_serviceReferenceServiceTuples = new TreeSet<>(
-				serviceReferenceServiceTupleComparator);
-		}
-
-		private final Set<ServiceReferenceServiceTuple<SR, TS>>
-			_serviceReferenceServiceTuples;
+		private final ServiceReferenceServiceTupleComparator<SR>
+			_serviceReferenceServiceTupleComparator =
+				new ServiceReferenceServiceTupleComparator<>(_comparator);
+		private final List<ServiceReferenceServiceTuple<SR, TS>>
+			_serviceReferenceServiceTuples = new ArrayList<>();
 		private List<TS> _services = new ArrayList<>();
 
 	}

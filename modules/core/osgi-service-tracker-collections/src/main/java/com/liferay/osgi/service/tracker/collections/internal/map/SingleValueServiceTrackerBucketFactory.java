@@ -19,9 +19,10 @@ import com.liferay.osgi.service.tracker.collections.internal.ServiceReferenceSer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.List;
 
 import org.osgi.framework.ServiceReference;
 
@@ -50,17 +51,6 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 	private class SingleBucket implements ServiceTrackerBucket<SR, TS, TS> {
 
-		public SingleBucket() {
-			_service = null;
-
-			ServiceReferenceServiceTupleComparator<SR>
-				serviceReferenceServiceTupleComparator =
-					new ServiceReferenceServiceTupleComparator<>(_comparator);
-
-			_serviceReferences = new PriorityQueue<>(
-				1, serviceReferenceServiceTupleComparator);
-		}
-
 		@Override
 		public TS getContent() {
 			return _service;
@@ -77,14 +67,15 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 			_serviceReferences.remove(serviceReferenceServiceTuple);
 
-			ServiceReferenceServiceTuple<SR, TS>
-				headServiceReferenceServiceTuple = _serviceReferences.peek();
-
-			if (headServiceReferenceServiceTuple != null) {
-				_service = headServiceReferenceServiceTuple.getService();
+			if (_serviceReferences.isEmpty()) {
+				_service = null;
 			}
 			else {
-				_service = null;
+				ServiceReferenceServiceTuple<SR, TS>
+					headServiceReferenceServiceTuple = _serviceReferences.get(
+						0);
+
+				_service = headServiceReferenceServiceTuple.getService();
 			}
 		}
 
@@ -92,17 +83,28 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 		public synchronized void store(
 			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
-			_serviceReferences.add(serviceReferenceServiceTuple);
+			int index = Collections.binarySearch(
+				_serviceReferences, serviceReferenceServiceTuple,
+				_serviceReferenceServiceTupleComparator);
+
+			if (index < 0) {
+				index = -index - 1;
+			}
+
+			_serviceReferences.add(index, serviceReferenceServiceTuple);
 
 			ServiceReferenceServiceTuple<SR, TS>
-				headServiceReferenceServiceTuple = _serviceReferences.peek();
+				headServiceReferenceServiceTuple = _serviceReferences.get(0);
 
 			_service = headServiceReferenceServiceTuple.getService();
 		}
 
 		private TS _service;
-		private final PriorityQueue<ServiceReferenceServiceTuple<SR, TS>>
-			_serviceReferences;
+		private final List<ServiceReferenceServiceTuple<SR, TS>>
+			_serviceReferences = new ArrayList<>(1);
+		private final ServiceReferenceServiceTupleComparator<SR>
+			_serviceReferenceServiceTupleComparator =
+				new ServiceReferenceServiceTupleComparator<>(_comparator);
 
 	}
 

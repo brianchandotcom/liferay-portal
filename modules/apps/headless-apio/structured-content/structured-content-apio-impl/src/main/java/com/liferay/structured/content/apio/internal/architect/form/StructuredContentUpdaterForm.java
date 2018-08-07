@@ -48,17 +48,17 @@ public class StructuredContentUpdaterForm {
 		).constructor(
 			StructuredContentUpdaterForm::new
 		).addRequiredLong(
-			"group", StructuredContentUpdaterForm::_setGroup
+			"group", StructuredContentUpdaterForm::setGroup
 		).addRequiredLong(
-			"user", StructuredContentUpdaterForm::_setUser
+			"user", StructuredContentUpdaterForm::setUser
 		).addRequiredLong(
-			"version", StructuredContentUpdaterForm::_setVersion
+			"version", StructuredContentUpdaterForm::setVersion
 		).addRequiredString(
-			"description", StructuredContentUpdaterForm::_setDescription
+			"description", StructuredContentUpdaterForm::setDescription
 		).addRequiredString(
-			"text", StructuredContentUpdaterForm::_setText
+			"text", StructuredContentUpdaterForm::setText
 		).addRequiredString(
-			"title", StructuredContentUpdaterForm::_setTitle
+			"title", StructuredContentUpdaterForm::setTitle
 		).build();
 	}
 
@@ -122,27 +122,27 @@ public class StructuredContentUpdaterForm {
 		return _version;
 	}
 
-	private void _setDescription(String description) {
+	public void setDescription(String description) {
 		_description = description;
 	}
 
-	private void _setGroup(long group) {
+	public void setGroup(long group) {
 		_group = group;
 	}
 
-	private void _setText(String text) {
+	public void setText(String text) {
 		_text = text;
 	}
 
-	private void _setTitle(String title) {
+	public void setTitle(String title) {
 		_title = title;
 	}
 
-	private void _setUser(long user) {
+	public void setUser(long user) {
 		_user = user;
 	}
 
-	private void _setVersion(long version) {
+	public void setVersion(long version) {
 		_version = version;
 	}
 

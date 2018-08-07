@@ -32,7 +32,7 @@ public class KeywordForm {
 		).constructor(
 			KeywordForm::new
 		).addRequiredString(
-			"name", KeywordForm::_setName
+			"name", KeywordForm::setName
 		).build();
 	}
 
@@ -40,7 +40,7 @@ public class KeywordForm {
 		return _name;
 	}
 
-	private void _setName(String name) {
+	public void setName(String name) {
 		_name = name;
 	}
 

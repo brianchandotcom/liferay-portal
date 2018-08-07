@@ -42,13 +42,13 @@ public class BlogPostingForm {
 		).constructor(
 			BlogPostingForm::new
 		).addRequiredLinkedModel(
-			"creator", PersonIdentifier.class, BlogPostingForm::_setCreator
+			"creator", PersonIdentifier.class, BlogPostingForm::setCreator
 		).addRequiredString(
-			"articleBody", BlogPostingForm::_setArticleBody
+			"articleBody", BlogPostingForm::setArticleBody
 		).addRequiredString(
-			"alternativeHeadline", BlogPostingForm::_setAlternativeHeadline
+			"alternativeHeadline", BlogPostingForm::setAlternativeHeadline
 		).addRequiredString(
-			"headline", BlogPostingForm::_setHeadline
+			"headline", BlogPostingForm::setHeadline
 		).build();
 	}
 
@@ -88,19 +88,19 @@ public class BlogPostingForm {
 		return _headline;
 	}
 
-	private void _setAlternativeHeadline(String lastName) {
+	public void setAlternativeHeadline(String lastName) {
 		_alternativeHeadline = lastName;
 	}
 
-	private void _setArticleBody(String articleBody) {
+	public void setArticleBody(String articleBody) {
 		_articleBody = articleBody;
 	}
 
-	private void _setCreator(Long creator) {
+	public void setCreator(Long creator) {
 		_creator = creator;
 	}
 
-	private void _setHeadline(String headline) {
+	public void setHeadline(String headline) {
 		_headline = headline;
 	}
 

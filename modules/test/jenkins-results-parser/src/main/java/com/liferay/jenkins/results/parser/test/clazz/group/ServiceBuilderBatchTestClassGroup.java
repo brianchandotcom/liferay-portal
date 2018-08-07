@@ -77,6 +77,10 @@ public class ServiceBuilderBatchTestClassGroup
 		final List<File> modulesProjectDirs = new ArrayList<>();
 
 		for (File modulesSubDir : moduleBaseDir.listFiles()) {
+			if (!modulesSubDir.isDirectory()) {
+				continue;
+			}
+
 			List<File> serviceXmlFiles = JenkinsResultsParserUtil.findFiles(
 				modulesSubDir, "service.xml");
 

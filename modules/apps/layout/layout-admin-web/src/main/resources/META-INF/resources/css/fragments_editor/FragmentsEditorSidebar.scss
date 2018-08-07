@@ -5,12 +5,12 @@ body:not(.has-contextual-sidebar) .contextual-sidebar-content {
 }
 
 .btn-link {
-	z-index: 6;
+	z-index: $sidebarCardPlusButtonZIndex;
 }
 
-.drag-card{
-	z-index: 5;
+.drag-card {
 	overflow: hidden;
+	z-index: $sidebarCardZIndex;
 }
 
 .drag-handler {
@@ -21,11 +21,11 @@ body:not(.has-contextual-sidebar) .contextual-sidebar-content {
 	position: absolute;
 	top: 0;
 	width: 100%;
-	z-index: 5;
+	z-index: $sidebarCardZIndex;
 }
 
 .dragging {
-	width: 272px;
+	width: $sidebarCardWidth;
 }
 
 .fragments-editor .contextual-sidebar.fragments-editor-sidebar {

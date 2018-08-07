@@ -22,10 +22,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 JournalArticle article = (JournalArticle)row.getObject();
 
 String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
-
-AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
-
-AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(article));
 %>
 
 <aui:a href="<%= href %>" title="<%= HtmlUtil.escape(article.getTitle(locale)) %>">

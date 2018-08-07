@@ -139,10 +139,10 @@ public class DummyFolderWithMissingDummyPortletDataHandler
 			return null;
 		}
 
-		Element dummiesElement = portletDataContext.getImportDataGroupElement(
-			DummyFolder.class);
+		Element dummyFoldersElement =
+			portletDataContext.getImportDataGroupElement(DummyFolder.class);
 
-		List<Element> dummyFolderElements = dummiesElement.elements();
+		List<Element> dummyFolderElements = dummyFoldersElement.elements();
 
 		for (Element dummyFolderElement : dummyFolderElements) {
 			StagedModelDataHandlerUtil.importStagedModel(

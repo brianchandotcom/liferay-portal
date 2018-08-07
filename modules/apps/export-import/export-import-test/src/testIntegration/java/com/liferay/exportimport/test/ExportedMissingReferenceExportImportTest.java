@@ -24,6 +24,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.exportimport.test.util.TestUserIdStrategy;
 import com.liferay.exportimport.test.util.constants.DummyFolderPortletKeys;
+import com.liferay.exportimport.test.util.exportimport.data.handler.DummyFolderPortletDataHandler;
 import com.liferay.exportimport.test.util.exportimport.data.handler.DummyFolderWithMissingDummyPortletDataHandler;
 import com.liferay.exportimport.test.util.exportimport.data.handler.DummyFolderWithMissingLayoutPortletDataHandler;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
@@ -56,7 +58,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,7 +65,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Akos Thurzo
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class ExportedMissingReferenceExportImportTest
 	extends BaseExportImportTestCase {
@@ -167,6 +167,16 @@ public class ExportedMissingReferenceExportImportTest
 	}
 
 	@Test
+	public void testMissingDummyMissingDummyPDHFirst() throws Exception {
+		_testMissingDummyOrder(true);
+	}
+
+	@Test
+	public void testMissingDummyMissingDummyPDHSecond() throws Exception {
+		_testMissingDummyOrder(false);
+	}
+
+	@Test
 	public void testMissingLayout() throws Exception {
 		List<PortletDataHandler> portletDataHandlers = setPortletDataHandler(
 			DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
@@ -234,6 +244,20 @@ public class ExportedMissingReferenceExportImportTest
 		return getExportParameterMap();
 	}
 
+	protected int getPortletDataHandlerRank(Class portletDataHandlerClass) {
+		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
+			ServiceTrackerCollections.openList(portletDataHandlerClass);
+
+		Assert.assertEquals(
+			portletDataHandlerInstances.toString(), 1,
+			portletDataHandlerInstances.size());
+
+		PortletDataHandler portletDataHandlerInstance =
+			portletDataHandlerInstances.get(0);
+
+		return portletDataHandlerInstance.getRank();
+	}
+
 	protected List<PortletDataHandler> setPortletDataHandler(
 			String portletId, Class portletDataHandlerClass)
 		throws Exception {
@@ -257,6 +281,68 @@ public class ExportedMissingReferenceExportImportTest
 		portletBag.setPortletDataHandlerInstances(portletDataHandlerInstances);
 
 		return oldDataHandlerInstances;
+	}
+
+	protected void setPortletDataHandlerRank(
+		Class portletDataHandlerClass, int rank) {
+
+		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
+			ServiceTrackerCollections.openList(portletDataHandlerClass);
+
+		Assert.assertEquals(
+			portletDataHandlerInstances.toString(), 1,
+			portletDataHandlerInstances.size());
+
+		PortletDataHandler portletDataHandlerInstance =
+			portletDataHandlerInstances.get(0);
+
+		portletDataHandlerInstance.setRank(rank);
+	}
+
+	private void _testMissingDummyOrder(boolean missingFirst) throws Exception {
+		int dummyFolderPortletDataHandlerRank = getPortletDataHandlerRank(
+			DummyFolderPortletDataHandler.class);
+		int dummyFolderWithMissingDummyPortletDataHandlerRank =
+			getPortletDataHandlerRank(
+				DummyFolderWithMissingDummyPortletDataHandler.class);
+
+		List<PortletDataHandler> portletDataHandlers = null;
+
+		try {
+			setPortletDataHandlerRank(
+				DummyFolderPortletDataHandler.class, missingFirst ? 200 : 100);
+			setPortletDataHandlerRank(
+				DummyFolderWithMissingDummyPortletDataHandler.class,
+				missingFirst ? 100 : 200);
+
+			portletDataHandlers = setPortletDataHandler(
+				DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
+				DummyFolderWithMissingDummyPortletDataHandler.class);
+
+			LayoutTestUtil.addPortletToLayout(
+				layout,
+				DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE);
+
+			long[] layoutIds = {layout.getLayoutId()};
+
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			if (missingFirst) {
+				assertMissingReferences();
+			}
+		}
+		finally {
+			setPortletDataHandler(
+				DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
+				portletDataHandlers);
+
+			setPortletDataHandlerRank(
+				DummyFolderPortletDataHandler.class,
+				dummyFolderPortletDataHandlerRank);
+			setPortletDataHandlerRank(
+				DummyFolderWithMissingDummyPortletDataHandler.class,
+				dummyFolderWithMissingDummyPortletDataHandlerRank);
+		}
 	}
 
 	private StagedModelRepository<DummyFolder>

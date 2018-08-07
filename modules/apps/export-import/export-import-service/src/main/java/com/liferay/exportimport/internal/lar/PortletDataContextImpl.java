@@ -656,8 +656,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 			else {
 				missingReferenceElement.addAttribute(
-					"element-path",
-					ExportImportPathUtil.getPortletDataPath(this));
+					"element-path", _getPortletXmlPath());
 			}
 		}
 	}
@@ -2545,7 +2544,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return SAXReaderUtil.createElement("EMPTY-ELEMENT");
 		}
 
-		Element groupElement = _importDataRootElement.element(name);
+		Element groupElement = (Element)_importDataRootElement.selectSingleNode(
+			".//" + name);
 
 		if (groupElement == null) {
 			return SAXReaderUtil.createElement("EMPTY-ELEMENT");
@@ -2946,6 +2946,28 @@ public class PortletDataContextImpl implements PortletDataContext {
 					this, stagedWorkflowDefinitionLink);
 			}
 		}
+	}
+
+	private String _getPortletXmlPath() {
+		if (_exportDataRootElement == null) {
+			return StringPool.BLANK;
+		}
+
+		Element element = _exportDataRootElement.getParent();
+
+		Element parentElement = null;
+
+		while (element != null) {
+			parentElement = element;
+
+			element = element.getParent();
+		}
+
+		if (parentElement == null) {
+			return StringPool.BLANK;
+		}
+
+		return parentElement.attributeValue("self-path");
 	}
 
 	private void _importWorkflowDefinitionLink(ClassedModel classedModel)

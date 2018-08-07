@@ -548,6 +548,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 		Element rootElement = document.addElement(clazz.getSimpleName());
 
+		rootElement.addAttribute(
+			"self-path",
+			ExportImportPathUtil.getPortletDataPath(portletDataContext));
+
 		portletDataContext.setExportDataRootElement(rootElement);
 
 		return rootElement;

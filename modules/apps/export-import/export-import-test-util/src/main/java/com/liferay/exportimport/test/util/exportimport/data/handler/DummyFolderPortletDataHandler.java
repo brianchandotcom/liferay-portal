@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "javax.portlet.name=" + DummyFolderPortletKeys.DUMMY_FOLDER,
-	service = PortletDataHandler.class
+	service = {DummyFolderPortletDataHandler.class, PortletDataHandler.class}
 )
 public class DummyFolderPortletDataHandler extends BasePortletDataHandler {
 
@@ -119,10 +119,10 @@ public class DummyFolderPortletDataHandler extends BasePortletDataHandler {
 			return null;
 		}
 
-		Element dummiesElement = portletDataContext.getImportDataGroupElement(
-			DummyFolder.class);
+		Element dummyFoldersElement =
+			portletDataContext.getImportDataGroupElement(DummyFolder.class);
 
-		List<Element> dummyFolderElements = dummiesElement.elements();
+		List<Element> dummyFolderElements = dummyFoldersElement.elements();
 
 		for (Element dummyFolderElement : dummyFolderElements) {
 			StagedModelDataHandlerUtil.importStagedModel(

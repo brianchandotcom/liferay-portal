@@ -25,6 +25,7 @@ import com.liferay.exportimport.test.util.model.DummyReference;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,6 +64,25 @@ public class DummyStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			dummyElement, ExportImportPathUtil.getModelPath(dummy), dummy);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long id)
+		throws Exception {
+
+		Dummy existingDummy = fetchMissingReference(uuid, groupId);
+
+		if (existingDummy == null) {
+			return;
+		}
+
+		Map<Long, Long> ids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Dummy.class);
+
+		ids.put(id, existingDummy.getId());
 	}
 
 	@Override

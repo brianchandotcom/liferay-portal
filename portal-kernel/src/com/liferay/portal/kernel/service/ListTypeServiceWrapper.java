@@ -37,6 +37,12 @@ public class ListTypeServiceWrapper implements ListTypeService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.ListType getListType(String name,
+		String type) {
+		return _listTypeService.getListType(name, type);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
 		String type) {
 		return _listTypeService.getListTypes(type);

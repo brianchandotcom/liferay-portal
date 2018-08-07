@@ -18,6 +18,7 @@ import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.address.apio.architect.identifier.AddressIdentifier;
 import com.liferay.apio.architect.credentials.Credentials;
+import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -39,20 +40,31 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactModel;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.ListTypeModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException.MustBeCompanyAdmin;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.role.apio.identifier.RoleIdentifier;
 import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Date;
 import java.util.List;
@@ -118,7 +130,7 @@ public class PersonCollectionResource
 		Representor.Builder<UserWrapper, Long> builder) {
 
 		return builder.types(
-			"Person"
+			"Liferay:UserAccount", "Person"
 		).identifier(
 			User::getUserId
 		).addDate(
@@ -192,23 +204,62 @@ public class PersonCollectionResource
 	}
 
 	private UserWrapper _addUser(
-			PersonCreatorForm personCreatorForm, ThemeDisplay themeDisplay)
-		throws PortalException {
+		PersonCreatorForm personCreatorForm, ThemeDisplay themeDisplay) {
 
-		User user = _userLocalService.addUser(
-			UserConstants.USER_ID_DEFAULT, themeDisplay.getCompanyId(), true,
-			null, null, personCreatorForm.needsAlternateName(),
-			personCreatorForm.getAlternateName(), personCreatorForm.getEmail(),
-			0, StringPool.BLANK, LocaleUtil.getDefault(),
-			personCreatorForm.getGivenName(), StringPool.BLANK,
-			personCreatorForm.getFamilyName(), 0, 0, personCreatorForm.isMale(),
-			personCreatorForm.getBirthdayMonth(),
-			personCreatorForm.getBirthdayDay(),
-			personCreatorForm.getBirthdayYear(),
-			personCreatorForm.getJobTitle(), null, null, null, null, false,
-			new ServiceContext());
+		try {
+			return TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					long prefixId = _getPrefixId(
+						personCreatorForm.getHonorificPrefix(),
+						ListTypeConstants.CONTACT_PREFIX, 0);
 
-		return new UserWrapper(user, themeDisplay);
+					long suffixId = _getPrefixId(
+						personCreatorForm.getHonorificSuffix(),
+						ListTypeConstants.CONTACT_SUFFIX, 0);
+
+					User user = _userLocalService.addUser(
+						UserConstants.USER_ID_DEFAULT,
+						themeDisplay.getCompanyId(), true, null, null,
+						personCreatorForm.needsAlternateName(),
+						personCreatorForm.getAlternateName(),
+						personCreatorForm.getEmail(), 0, StringPool.BLANK,
+						LocaleUtil.getDefault(),
+						personCreatorForm.getGivenName(), StringPool.BLANK,
+						personCreatorForm.getFamilyName(), prefixId, suffixId,
+						personCreatorForm.isMale(),
+						personCreatorForm.getBirthdayMonth(),
+						personCreatorForm.getBirthdayDay(),
+						personCreatorForm.getBirthdayYear(),
+						personCreatorForm.getJobTitle(), null, null, null, null,
+						false, new ServiceContext());
+
+					byte[] bytes = _getImageArray(personCreatorForm);
+
+					_userLocalService.updatePortrait(user.getUserId(), bytes);
+
+					return new UserWrapper(user, themeDisplay);
+				});
+		}
+		catch (Throwable throwable) {
+			throw new RuntimeException(throwable);
+		}
+	}
+
+	private String _getAlternateName(
+		PersonUpdaterForm personUpdaterForm, User user) {
+
+		if (personUpdaterForm.getAlternateName() == null) {
+			return user.getScreenName();
+		}
+
+		return personUpdaterForm.getAlternateName();
+	}
+
+	private Integer _getBirthdayDate(
+		Optional<Integer> birthdayDate, int existingDate) {
+
+		return birthdayDate.orElse(existingDate);
 	}
 
 	private Contact _getContact(UserWrapper userWrapper) {
@@ -227,11 +278,23 @@ public class PersonCollectionResource
 		).map(
 			function::apply
 		).map(
-			_listTypeLocalService::getListType
+			_listTypeService::getListType
 		).map(
 			ListType::getName
 		).map(
 			name -> LanguageUtil.get(locale, name)
+		).orElse(
+			null
+		);
+	}
+
+	private byte[] _getImageArray(PersonCreatorForm personCreatorForm) {
+		return Try.fromFallible(
+			personCreatorForm::getImage
+		).map(
+			BinaryFile::getInputStream
+		).map(
+			this::_readInputStream
 		).orElse(
 			null
 		);
@@ -242,21 +305,19 @@ public class PersonCollectionResource
 			Credentials credentials, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		PermissionChecker permissionChecker =
+			(PermissionChecker)credentials.get();
+
+		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
+			throw new MustBeCompanyAdmin(permissionChecker);
+		}
+
 		Optional<String> optional = fullNameQuery.getFullNameOptional();
 
 		if (optional.isPresent()) {
-			PermissionChecker permissionChecker =
-				(PermissionChecker)credentials.get();
-
-			if (!permissionChecker.isCompanyAdmin(
-					themeDisplay.getCompanyId())) {
-
-				throw new MustBeCompanyAdmin(permissionChecker);
-			}
-
 			List<User> users = _userLocalService.search(
 				themeDisplay.getCompanyId(), optional.get(),
-				WorkflowConstants.STATUS_ANY, null,
+				WorkflowConstants.STATUS_APPROVED, null,
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				new UserLastNameComparator());
 
@@ -265,21 +326,35 @@ public class PersonCollectionResource
 
 			int count = _userLocalService.searchCount(
 				themeDisplay.getCompanyId(), optional.get(),
-				WorkflowConstants.STATUS_ANY, null);
+				WorkflowConstants.STATUS_APPROVED, null);
 
 			return new PageItems<>(userWrappers, count);
 		}
 
-		List<User> users = _userService.getCompanyUsers(
-			themeDisplay.getCompanyId(), pagination.getStartPosition(),
-			pagination.getEndPosition());
+		List<User> users = _userLocalService.getUsers(
+			themeDisplay.getCompanyId(), false,
+			WorkflowConstants.STATUS_APPROVED, pagination.getStartPosition(),
+			pagination.getEndPosition(), null);
 
 		List<UserWrapper> userWrappers = _toUserWrappers(users, themeDisplay);
 
-		int count = _userService.getCompanyUsersCount(
-			themeDisplay.getCompanyId());
+		int count = _userLocalService.getUsersCount(
+			themeDisplay.getCompanyId(), false,
+			WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(userWrappers, count);
+	}
+
+	private long _getPrefixId(
+		String honorificTitle, String className, long defaultTitle) {
+
+		return Try.fromFallible(
+			() -> _listTypeService.getListType(honorificTitle, className)
+		).map(
+			ListTypeModel::getListTypeId
+		).orElse(
+			defaultTitle
+		);
 	}
 
 	private UserWrapper _getUserWrapper(long userId, ThemeDisplay themeDisplay)
@@ -292,6 +367,32 @@ public class PersonCollectionResource
 		User user = _userService.getUserById(userId);
 
 		return new UserWrapper(user, themeDisplay);
+	}
+
+	private Boolean _isMale(PersonUpdaterForm personUpdaterForm, User user)
+		throws PortalException {
+
+		Optional<Boolean> male = personUpdaterForm.isMale();
+
+		return male.orElse(user.isMale());
+	}
+
+	private byte[] _readInputStream(InputStream inputStream)
+		throws IOException {
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		byte[] bytes = new byte[1024];
+		int value = -1;
+
+		while ((value = inputStream.read(bytes)) != -1) {
+			byteArrayOutputStream.write(bytes, 0, value);
+		}
+
+		byteArrayOutputStream.flush();
+
+		return byteArrayOutputStream.toByteArray();
 	}
 
 	private List<UserWrapper> _toUserWrappers(
@@ -315,14 +416,42 @@ public class PersonCollectionResource
 
 		User user = _userService.getUserById(userId);
 
-		user.setPassword(personUpdaterForm.getPassword());
-		user.setScreenName(personUpdaterForm.getAlternateName());
-		user.setEmailAddress(personUpdaterForm.getEmail());
-		user.setFirstName(personUpdaterForm.getGivenName());
-		user.setLastName(personUpdaterForm.getFamilyName());
-		user.setJobTitle(personUpdaterForm.getJobTitle());
+		Contact contact = user.getContact();
 
-		user = _userLocalService.updateUser(user);
+		long prefixId = _getPrefixId(
+			personUpdaterForm.getHonorificPrefix(),
+			ListTypeConstants.CONTACT_PREFIX, contact.getPrefixId());
+
+		long suffixId = _getPrefixId(
+			personUpdaterForm.getHonorificSuffix(),
+			ListTypeConstants.CONTACT_SUFFIX, contact.getSuffixId());
+
+		String alternateName = _getAlternateName(personUpdaterForm, user);
+
+		Date birthday = user.getBirthday();
+
+		user = _userLocalService.updateUser(
+			user.getUserId(), user.getPassword(),
+			personUpdaterForm.getPassword(), personUpdaterForm.getPassword(),
+			false, user.getReminderQueryQuestion(),
+			user.getReminderQueryAnswer(), alternateName,
+			personUpdaterForm.getEmail(), user.getFacebookId(),
+			user.getOpenId(), false, null, user.getLanguageId(),
+			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
+			personUpdaterForm.getGivenName(), user.getMiddleName(),
+			personUpdaterForm.getFamilyName(), prefixId, suffixId,
+			_isMale(personUpdaterForm, user),
+			_getBirthdayDate(
+				personUpdaterForm.getBirthdayMonth(), birthday.getMonth()),
+			_getBirthdayDate(
+				personUpdaterForm.getBirthdayDay(), birthday.getDate()),
+			_getBirthdayDate(
+				personUpdaterForm.getBirthdayYear(), birthday.getYear()),
+			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
+			contact.getSkypeSn(), contact.getTwitterSn(),
+			personUpdaterForm.getJobTitle(), user.getGroupIds(),
+			user.getOrganizationIds(), user.getRoleIds(), null,
+			user.getUserGroupIds(), new ServiceContext());
 
 		return new UserWrapper(user, themeDisplay);
 	}
@@ -333,7 +462,11 @@ public class PersonCollectionResource
 	private HasPermission<Long> _hasPermission;
 
 	@Reference
-	private ListTypeLocalService _listTypeLocalService;
+	private ListTypeService _listTypeService;
+
+	private final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -199,11 +199,11 @@
 		</execute>
 
 		<execute macro="Fragment#addFragment">
-			<var name="fragmentName" value="Fragment Name" />
+			<var name="fragmentName" value="Fragment Name 2" />
 		</execute>
 
 		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Fragment Name (Draft)" />
+			<var name="portletTitle" value="Fragment Name 2 (Draft)" />
 		</execute>
 
 		<execute macro="PortletEntry#saveAsDraft" />
@@ -219,13 +219,13 @@
 		</execute>
 
 		<execute macro="PortletEntry#viewWorkflowStatus">
-			<var name="rowEntry" value="Fragment Name" />
+			<var name="rowEntry" value="Fragment Name 2" />
 			<var name="workflowStatus" value="Draft" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Fragment Name" />
+			<var name="rowEntry" value="Fragment Name 2" />
 		</execute>
 
 		<var name="htmlSnippet"><![CDATA[

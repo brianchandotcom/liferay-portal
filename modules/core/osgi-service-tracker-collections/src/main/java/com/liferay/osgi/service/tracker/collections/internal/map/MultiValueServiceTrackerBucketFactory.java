@@ -68,7 +68,7 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 
 			_serviceReferenceServiceTuples.remove(serviceReferenceServiceTuple);
 
-			rebuild();
+			_rebuild();
 		}
 
 		@Override
@@ -86,10 +86,17 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 			_serviceReferenceServiceTuples.add(
 				index, serviceReferenceServiceTuple);
 
-			rebuild();
+			_rebuild();
 		}
 
-		protected void rebuild() {
+		private ListServiceTrackerBucket() {
+			_serviceReferenceServiceTupleComparator =
+				new ServiceReferenceServiceTupleComparator<>(_comparator);
+
+			_serviceReferenceServiceTuples = new ArrayList<>();
+		}
+
+		private void _rebuild() {
 			_services = new ArrayList<>(_serviceReferenceServiceTuples.size());
 
 			for (ServiceReferenceServiceTuple<SR, TS>
@@ -100,13 +107,6 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 			}
 
 			_services = Collections.unmodifiableList(_services);
-		}
-
-		private ListServiceTrackerBucket() {
-			_serviceReferenceServiceTupleComparator =
-				new ServiceReferenceServiceTupleComparator<>(_comparator);
-
-			_serviceReferenceServiceTuples = new ArrayList<>();
 		}
 
 		private final ServiceReferenceServiceTupleComparator<SR>

@@ -51,15 +51,6 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 	private class SingleBucket implements ServiceTrackerBucket<SR, TS, TS> {
 
-		public SingleBucket() {
-			_service = null;
-
-			_serviceReferenceServiceTupleComparator =
-				new ServiceReferenceServiceTupleComparator<>(_comparator);
-
-			_serviceReferences = new ArrayList<>(1);
-		}
-
 		@Override
 		public TS getContent() {
 			return _service;
@@ -106,6 +97,15 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 				headServiceReferenceServiceTuple = _serviceReferences.get(0);
 
 			_service = headServiceReferenceServiceTuple.getService();
+		}
+
+		private SingleBucket() {
+			_service = null;
+
+			_serviceReferenceServiceTupleComparator =
+				new ServiceReferenceServiceTupleComparator<>(_comparator);
+
+			_serviceReferences = new ArrayList<>(1);
 		}
 
 		private TS _service;

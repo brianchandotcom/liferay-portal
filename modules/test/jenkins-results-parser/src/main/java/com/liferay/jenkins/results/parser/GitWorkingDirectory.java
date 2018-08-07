@@ -41,13 +41,13 @@ import org.json.JSONObject;
  */
 public class GitWorkingDirectory {
 
-	public static String getGitHubUserName(Remote remote) {
-		String remoteURL = remote.getRemoteURL();
+	public static String getGitHubUserName(BaseGitRemote baseGitRemote) {
+		String remoteURL = baseGitRemote.getRemoteURL();
 
 		if (!remoteURL.contains("github.com")) {
 			throw new IllegalArgumentException(
 				JenkinsResultsParserUtil.combine(
-					remote.getName(),
+					baseGitRemote.getName(),
 					" does not point to a GitHub repository"));
 		}
 
@@ -63,33 +63,33 @@ public class GitWorkingDirectory {
 		return userName.substring(0, userName.indexOf("/"));
 	}
 
-	public Remote addRemote(
-		boolean force, String remoteName, String remoteURL) {
+	public BaseGitRemote addGitRemote(
+		boolean force, String gitRemoteName, String remoteURL) {
 
-		if (remoteExists(remoteName)) {
+		if (gitRemoteExists(gitRemoteName)) {
 			if (force) {
-				removeRemote(getRemote(remoteName));
+				removeGitRemote(getGitRemote(gitRemoteName));
 			}
 			else {
 				throw new IllegalArgumentException(
 					JenkinsResultsParserUtil.combine(
-						"Remote ", remoteName, " already exists"));
+						"Git Remote ", gitRemoteName, " already exists"));
 			}
 		}
 
 		ExecutionResult executionResult = executeBashCommands(
 			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
 			JenkinsResultsParserUtil.combine(
-				"git remote add ", remoteName, " ", remoteURL));
+				"git remote add ", gitRemoteName, " ", remoteURL));
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to add remote ", remoteName, "\n",
+					"Unable to add git remote ", gitRemoteName, "\n",
 					executionResult.getStandardError()));
 		}
 
-		return getRemote(remoteName);
+		return getGitRemote(gitRemoteName);
 	}
 
 	public void checkoutLocalGitBranch(LocalGitBranch localGitBranch) {
@@ -375,8 +375,10 @@ public class GitWorkingDirectory {
 		deleteRemoteGitBranches(Arrays.asList(remoteGitBranch));
 	}
 
-	public void deleteRemoteGitBranch(String branchName, Remote remote) {
-		deleteRemoteGitBranch(branchName, remote.getRemoteURL());
+	public void deleteRemoteGitBranch(
+		String branchName, BaseGitRemote baseGitRemote) {
+
+		deleteRemoteGitBranch(branchName, baseGitRemote.getRemoteURL());
 	}
 
 	public void deleteRemoteGitBranch(
@@ -563,8 +565,8 @@ public class GitWorkingDirectory {
 		return fetch(localGitBranch, true, remoteGitBranch);
 	}
 
-	public void fetch(Remote remote) {
-		fetch(remote.getRemoteURL());
+	public void fetch(BaseGitRemote baseGitRemote) {
+		fetch(baseGitRemote.getRemoteURL());
 	}
 
 	public LocalGitBranch fetch(RemoteGitBranch remoteGitBranch) {
@@ -584,7 +586,8 @@ public class GitWorkingDirectory {
 			throw new IllegalArgumentException("Remote URL is null");
 		}
 
-		Matcher remoteURLMatcher = Remote.remoteURLPattern.matcher(remoteURL);
+		Matcher remoteURLMatcher = BaseGitRemote.remoteURLPattern.matcher(
+			remoteURL);
 
 		if (!remoteURLMatcher.find()) {
 			throw new IllegalArgumentException(
@@ -1028,7 +1031,7 @@ public class GitWorkingDirectory {
 				rebasedLocalGitBranchName, true, senderSHA);
 
 			RemoteGitBranch upstreamRemoteGitBranch = getRemoteGitBranch(
-				upstreamBranchName, getUpstreamRemote(), true);
+				upstreamBranchName, getUpstreamGitRemote(), true);
 
 			if (upstreamBranchSHA == null) {
 				upstreamBranchSHA = upstreamRemoteGitBranch.getSHA();
@@ -1043,6 +1046,10 @@ public class GitWorkingDirectory {
 
 			rebasedLocalGitBranch = rebase(
 				true, upstreamLocalGitBranch, rebasedLocalGitBranch);
+
+			clean();
+
+			reset("--hard");
 
 			return rebasedLocalGitBranch;
 		}
@@ -1061,40 +1068,41 @@ public class GitWorkingDirectory {
 			pullRequest.getLiferayRemoteBranchSHA());
 	}
 
-	public Remote getRemote(String name) {
+	public BaseGitRemote getGitRemote(String name) {
 		if (name.equals("upstream")) {
 			name = "upstream-temp";
 		}
 
-		Map<String, Remote> remotes = getRemotes();
+		Map<String, BaseGitRemote> gitRemotes = getGitRemotes();
 
 		name = name.trim();
 
-		Remote remote = remotes.get(name);
+		BaseGitRemote gitRemote = gitRemotes.get(name);
 
-		if ((remote == null) && name.equals("upstream-temp")) {
+		if ((gitRemote == null) && name.equals("upstream-temp")) {
 			JenkinsResultsParserUtil.sleep(1000);
 
-			remotes = getRemotes();
+			gitRemotes = getGitRemotes();
 
-			return remotes.get(name);
+			return gitRemotes.get(name);
 		}
 
-		return remote;
+		return gitRemote;
 	}
 
 	public RemoteGitBranch getRemoteGitBranch(
-		String remoteGitBranchName, Remote remote) {
+		String remoteGitBranchName, BaseGitRemote baseGitRemote) {
 
 		return getRemoteGitBranch(
-			remoteGitBranchName, remote.getRemoteURL(), false);
+			remoteGitBranchName, baseGitRemote.getRemoteURL(), false);
 	}
 
 	public RemoteGitBranch getRemoteGitBranch(
-		String remoteGitBranchName, Remote remote, boolean required) {
+		String remoteGitBranchName, BaseGitRemote baseGitRemote,
+		boolean required) {
 
 		return getRemoteGitBranch(
-			remoteGitBranchName, remote.getRemoteURL(), required);
+			remoteGitBranchName, baseGitRemote.getRemoteURL(), required);
 	}
 
 	public RemoteGitBranch getRemoteGitBranch(
@@ -1140,8 +1148,10 @@ public class GitWorkingDirectory {
 		return null;
 	}
 
-	public List<RemoteGitBranch> getRemoteGitBranches(Remote remote) {
-		return getRemoteGitBranches(null, remote.getRemoteURL());
+	public List<RemoteGitBranch> getRemoteGitBranches(
+		BaseGitRemote baseGitRemote) {
+
+		return getRemoteGitBranches(null, baseGitRemote.getRemoteURL());
 	}
 
 	public List<RemoteGitBranch> getRemoteGitBranches(
@@ -1155,9 +1165,10 @@ public class GitWorkingDirectory {
 	}
 
 	public List<RemoteGitBranch> getRemoteGitBranches(
-		String remoteGitBranchName, Remote remote) {
+		String remoteGitBranchName, BaseGitRemote baseGitRemote) {
 
-		return getRemoteGitBranches(remoteGitBranchName, remote.getRemoteURL());
+		return getRemoteGitBranches(
+			remoteGitBranchName, baseGitRemote.getRemoteURL());
 	}
 
 	public List<RemoteGitBranch> getRemoteGitBranches(
@@ -1174,8 +1185,8 @@ public class GitWorkingDirectory {
 			remoteGitBranchName, _workingDirectory, remoteURL);
 	}
 
-	public List<String> getRemoteGitBranchNames(Remote remote) {
-		return getRemoteGitBranchNames(remote.getRemoteURL());
+	public List<String> getRemoteGitBranchNames(BaseGitRemote baseGitRemote) {
+		return getRemoteGitBranchNames(baseGitRemote.getRemoteURL());
 	}
 
 	public List<String> getRemoteGitBranchNames(
@@ -1198,10 +1209,10 @@ public class GitWorkingDirectory {
 	}
 
 	public String getRemoteGitBranchSHA(
-		String remoteGitBranchName, Remote remote) {
+		String remoteGitBranchName, BaseGitRemote baseGitRemote) {
 
 		return getRemoteGitBranchSHA(
-			remoteGitBranchName, remote.getRemoteURL());
+			remoteGitBranchName, baseGitRemote.getRemoteURL());
 	}
 
 	public String getRemoteGitBranchSHA(
@@ -1257,14 +1268,14 @@ public class GitWorkingDirectory {
 		return null;
 	}
 
-	public Set<String> getRemoteNames() {
-		Map<String, Remote> remotes = getRemotes();
+	public Set<String> getGitRemoteNames() {
+		Map<String, BaseGitRemote> gitRemotes = getGitRemotes();
 
-		return remotes.keySet();
+		return gitRemotes.keySet();
 	}
 
-	public Map<String, Remote> getRemotes() {
-		Map<String, Remote> remotes = new HashMap<>();
+	public Map<String, BaseGitRemote> getGitRemotes() {
+		Map<String, BaseGitRemote> gitRemotes = new HashMap<>();
 
 		int retries = 0;
 
@@ -1272,7 +1283,7 @@ public class GitWorkingDirectory {
 
 		while (true) {
 			if (retries > 1) {
-				return remotes;
+				return gitRemotes;
 			}
 
 			ExecutionResult executionResult = executeBashCommands(
@@ -1282,7 +1293,7 @@ public class GitWorkingDirectory {
 			if (executionResult.getExitValue() != 0) {
 				throw new RuntimeException(
 					JenkinsResultsParserUtil.combine(
-						"Unable to get list of remotes\n",
+						"Unable to get list of git remotes\n",
 						executionResult.getStandardError()));
 			}
 
@@ -1328,30 +1339,30 @@ public class GitWorkingDirectory {
 		try {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Found remotes: ");
+			sb.append("Found git remotes: ");
 
 			for (int i = 0; i < lines.length; i = i + 2) {
-				Remote remote = new Remote(
+				BaseGitRemote baseGitRemote = new BaseGitRemote(
 					this, Arrays.copyOfRange(lines, i, i + 2));
 
 				if (i > 0) {
 					sb.append(", ");
 				}
 
-				sb.append(remote.getName());
+				sb.append(baseGitRemote.getName());
 
-				remotes.put(remote.getName(), remote);
+				gitRemotes.put(baseGitRemote.getName(), baseGitRemote);
 			}
 
 			System.out.println(sb);
 		}
 		catch (Throwable t) {
-			System.out.println("Unable to parse remotes\n" + standardOut);
+			System.out.println("Unable to parse git remotes\n" + standardOut);
 
 			throw t;
 		}
 
-		return remotes;
+		return gitRemotes;
 	}
 
 	public String getRepositoryName() {
@@ -1436,24 +1447,25 @@ public class GitWorkingDirectory {
 		return commits;
 	}
 
-	public RemoteGitBranch pushToRemote(
+	public RemoteGitBranch pushToRemoteRepository(
 		boolean force, LocalGitBranch localGitBranch,
-		String remoteGitBranchName, Remote remote) {
+		String remoteGitBranchName, BaseGitRemote baseGitRemote) {
 
-		return pushToRemote(
-			force, localGitBranch, remoteGitBranchName, remote.getRemoteURL());
+		return pushToRemoteRepository(
+			force, localGitBranch, remoteGitBranchName,
+			baseGitRemote.getRemoteURL());
 	}
 
-	public RemoteGitBranch pushToRemote(
+	public RemoteGitBranch pushToRemoteRepository(
 		boolean force, LocalGitBranch localGitBranch,
 		String remoteGitBranchName, RemoteRepository remoteRepository) {
 
-		return pushToRemote(
+		return pushToRemoteRepository(
 			force, localGitBranch, remoteGitBranchName,
 			remoteRepository.getRemoteURL());
 	}
 
-	public RemoteGitBranch pushToRemote(
+	public RemoteGitBranch pushToRemoteRepository(
 		boolean force, LocalGitBranch localGitBranch,
 		String remoteGitBranchName, String remoteURL) {
 
@@ -1563,16 +1575,18 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public boolean remoteExists(String remoteName) {
-		if (getRemote(remoteName) != null) {
+	public boolean gitRemoteExists(String gitRemoteName) {
+		if (getGitRemote(gitRemoteName) != null) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public boolean remoteGitBranchExists(String branchName, Remote remote) {
-		return remoteGitBranchExists(branchName, remote.getRemoteURL());
+	public boolean remoteGitBranchExists(
+		String branchName, BaseGitRemote baseGitRemote) {
+
+		return remoteGitBranchExists(branchName, baseGitRemote.getRemoteURL());
 	}
 
 	public boolean remoteGitBranchExists(
@@ -1590,26 +1604,28 @@ public class GitWorkingDirectory {
 		return false;
 	}
 
-	public void removeRemote(Remote remote) {
-		if ((remote == null) || !remoteExists(remote.getName())) {
+	public void removeGitRemote(BaseGitRemote baseGitRemote) {
+		if ((baseGitRemote == null) ||
+			!gitRemoteExists(baseGitRemote.getName())) {
+
 			return;
 		}
 
 		ExecutionResult executionResult = executeBashCommands(
 			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
-			"git remote rm " + remote.getName());
+			"git remote rm " + baseGitRemote.getName());
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to remove remote ", remote.getName(), "\n",
-					executionResult.getStandardError()));
+					"Unable to remove git remote ", baseGitRemote.getName(),
+					"\n", executionResult.getStandardError()));
 		}
 	}
 
-	public void removeRemotes(List<Remote> remotes) {
-		for (Remote remote : remotes) {
-			removeRemote(remote);
+	public void removeGitRemotes(List<BaseGitRemote> baseGitRemotes) {
+		for (BaseGitRemote baseGitRemote : baseGitRemotes) {
+			removeGitRemote(baseGitRemote);
 		}
 	}
 
@@ -1677,10 +1693,10 @@ public class GitWorkingDirectory {
 
 		_upstreamBranchName = upstreamBranchName;
 
-		Remote upstreamTempRemote = getRemote("upstream-temp");
+		BaseGitRemote upstreamTempGitRemote = getGitRemote("upstream-temp");
 
-		if (upstreamTempRemote != null) {
-			removeRemote(upstreamTempRemote);
+		if (upstreamTempGitRemote != null) {
+			removeGitRemote(upstreamTempGitRemote);
 		}
 
 		waitForIndexLock();
@@ -1692,18 +1708,18 @@ public class GitWorkingDirectory {
 		_repositoryName = repositoryName;
 
 		if (_publicOnlyRepositoryNames.contains(_repositoryName)) {
-			setUpstreamRemoteToPublicRepository();
+			setUpstreamGitRemoteToPublicRepository();
 		}
 		else {
 			if (_privateOnlyRepositoryNames.contains(_repositoryName)) {
-				setUpstreamRemoteToPrivateRepository();
+				setUpstreamGitRemoteToPrivateRepository();
 			}
 			else {
 				if (upstreamBranchName.equals("master")) {
-					setUpstreamRemoteToPublicRepository();
+					setUpstreamGitRemoteToPublicRepository();
 				}
 				else {
-					setUpstreamRemoteToPrivateRepository();
+					setUpstreamGitRemoteToPrivateRepository();
 				}
 			}
 		}
@@ -1725,7 +1741,7 @@ public class GitWorkingDirectory {
 			throw new IllegalArgumentException("Unable to find Git SHA");
 		}
 
-		String gitHubUserName = getGitHubUserName(getRemote("upstream"));
+		String gitHubUserName = getGitHubUserName(getGitRemote("upstream"));
 		String message = matcher.group("message");
 		String repositoryName = getRepositoryName();
 		String sha = matcher.group("sha");
@@ -1776,18 +1792,18 @@ public class GitWorkingDirectory {
 			"Real Git directory could not be found in " + gitFile.getPath());
 	}
 
-	protected Remote getUpstreamRemote() {
-		Map<String, Remote> remotes = getRemotes();
+	protected BaseGitRemote getUpstreamGitRemote() {
+		Map<String, BaseGitRemote> gitRemotes = getGitRemotes();
 
-		Remote remote = remotes.get("upstream");
+		BaseGitRemote gitRemote = gitRemotes.get("upstream");
 
-		return remote;
+		return gitRemote;
 	}
 
 	protected String loadRepositoryName() {
-		Remote upstreamRemote = getUpstreamRemote();
+		BaseGitRemote upstreamGitRemote = getUpstreamGitRemote();
 
-		String remoteURL = upstreamRemote.getRemoteURL();
+		String remoteURL = upstreamGitRemote.getRemoteURL();
 
 		int x = remoteURL.lastIndexOf("/") + 1;
 
@@ -1820,9 +1836,9 @@ public class GitWorkingDirectory {
 	}
 
 	protected String loadRepositoryUsername() {
-		Remote upstreamRemote = getUpstreamRemote();
+		BaseGitRemote upstreamGitRemote = getUpstreamGitRemote();
 
-		String remoteURL = upstreamRemote.getRemoteURL();
+		String remoteURL = upstreamGitRemote.getRemoteURL();
 
 		int x = remoteURL.indexOf(":") + 1;
 		int y = remoteURL.indexOf("/");
@@ -1830,16 +1846,16 @@ public class GitWorkingDirectory {
 		return remoteURL.substring(x, y);
 	}
 
-	protected void setUpstreamRemoteToPrivateRepository() {
-		Remote upstreamRemote = getUpstreamRemote();
+	protected void setUpstreamGitRemoteToPrivateRepository() {
+		BaseGitRemote upstreamGitRemote = getUpstreamGitRemote();
 
-		addRemote(true, "upstream-temp", upstreamRemote.getRemoteURL());
+		addGitRemote(true, "upstream-temp", upstreamGitRemote.getRemoteURL());
 	}
 
-	protected void setUpstreamRemoteToPublicRepository() {
-		Remote upstreamRemote = getUpstreamRemote();
+	protected void setUpstreamGitRemoteToPublicRepository() {
+		BaseGitRemote upstreamGitRemote = getUpstreamGitRemote();
 
-		addRemote(true, "upstream-temp", upstreamRemote.getRemoteURL());
+		addGitRemote(true, "upstream-temp", upstreamGitRemote.getRemoteURL());
 	}
 
 	protected void setWorkingDirectory(String workingDirectoryPath)

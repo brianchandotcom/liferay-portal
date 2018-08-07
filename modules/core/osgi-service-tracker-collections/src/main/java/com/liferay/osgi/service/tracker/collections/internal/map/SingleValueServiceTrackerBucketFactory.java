@@ -76,15 +76,15 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 			_serviceReferences.remove(serviceReferenceServiceTuple);
 
-			if (!_serviceReferences.isEmpty()) {
+			if (_serviceReferences.isEmpty()) {
+				_service = null;
+			}
+			else {
 				ServiceReferenceServiceTuple<SR, TS>
 					headServiceReferenceServiceTuple = _serviceReferences.get(
 						0);
 
 				_service = headServiceReferenceServiceTuple.getService();
-			}
-			else {
-				_service = null;
 			}
 		}
 

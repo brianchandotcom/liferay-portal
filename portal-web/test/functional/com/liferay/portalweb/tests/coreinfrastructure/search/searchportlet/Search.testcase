@@ -1891,6 +1891,8 @@
 	</command>
 
 	<command name="ViewMultipleFacetURLs" priority="5">
+		<property name="osgi.app.includes" value="bookmarks" />
+
 		<var name="searchPage" value="Search Page" />
 
 		<execute macro="ProductMenu#gotoPortlet">

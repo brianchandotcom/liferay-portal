@@ -148,6 +148,7 @@
 
 	<command name="XPackSmokeTest" priority="5">
 		<property name="elastic.xpack.enabled" value="true" />
+		<property name="osgi.app.includes" value="portal-search-elasticsearch6-xpack-monitoring,portal-search-elasticsearch6-xpack-security" />
 		<property name="remote.elasticsearch.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Elasticsearch6EE#XPackSmokeTest" />
 

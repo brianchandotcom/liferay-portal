@@ -14,7 +14,7 @@ runGradleTest {
 
 		File nodeModulesDir = new File(themeDir, "node_modules")
 
-		assert !nodeModulesDir.exists()
+		assert nodeModulesDir.exists()
 
 		warFile = file("build/dist/osgi/modules/baz-theme.war")
 

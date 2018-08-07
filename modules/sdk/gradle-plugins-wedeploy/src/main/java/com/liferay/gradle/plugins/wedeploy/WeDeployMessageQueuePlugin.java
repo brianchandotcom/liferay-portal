@@ -58,7 +58,8 @@ public class WeDeployMessageQueuePlugin implements Plugin<Project> {
 		_addTaskDeleteWeDeployMessageQueue(
 			project, wedeployProject, wedeployRemote, wedeployService);
 
-		_addTaskDeployWeDeployMessageQueue(project, wedeployProject, wedeployRemote);
+		_addTaskDeployWeDeployMessageQueue(
+			project, wedeployProject, wedeployRemote);
 	}
 
 	private Exec _addTaskDeleteWeDeployMessageQueue(
@@ -82,7 +83,8 @@ public class WeDeployMessageQueuePlugin implements Plugin<Project> {
 
 		exec.setExecutable("we");
 
-		exec.setDescription("Deletes the message queue " + project + " from WeDeploy.");
+		exec.setDescription(
+			"Deletes the message queue " + project + " from WeDeploy.");
 		exec.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		return exec;
@@ -106,7 +108,8 @@ public class WeDeployMessageQueuePlugin implements Plugin<Project> {
 
 		exec.setExecutable("we");
 
-		exec.setDescription("Deploys the message queue " + project + " to WeDeploy.");
+		exec.setDescription(
+			"Deploys the message queue " + project + " to WeDeploy.");
 		exec.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		return exec;

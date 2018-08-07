@@ -65,5 +65,10 @@
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageText" value="${wikiPageText}" />
 		</execute>
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="${wikiPageText}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
 	</command>
 </definition>

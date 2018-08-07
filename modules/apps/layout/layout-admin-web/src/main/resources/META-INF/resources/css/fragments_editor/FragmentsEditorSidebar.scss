@@ -4,35 +4,35 @@ body:not(.has-contextual-sidebar) .contextual-sidebar-content {
 	padding-right: $contextualSidebarContentPadding;
 }
 
-.btn-link {
-	z-index: $sidebarCardPlusButtonZIndex;
-}
-
-.drag-card {
-	overflow: hidden;
-	z-index: $sidebarCardZIndex;
-}
-
-.drag-handler {
-	background-color: transparent;
-	cursor: move;
-	display: block;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	width: 100%;
-	z-index: $sidebarCardZIndex;
-}
-
-.dragging {
-	width: $sidebarCardWidth;
-}
-
 .fragments-editor .contextual-sidebar.fragments-editor-sidebar {
 	height: calc(100vh - #{$controlMenuHeight} - #{$managementBarHeight});
 	margin-top: 2px;
 	top: $controlMenuHeight + $managementBarHeight;
 	z-index: $sidebarZIndex;
+
+	.btn-link {
+		z-index: $sidebarCardPlusButtonZIndex;
+	}
+
+	.drag-card {
+		overflow: hidden;
+		z-index: $sidebarCardZIndex;
+	}
+
+	.drag-handler {
+		background-color: transparent;
+		cursor: move;
+		display: block;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: $sidebarCardZIndex;
+	}
+
+	.dragging {
+		width: $sidebarCardWidth;
+	}
 
 	button.component-action {
 		cursor: pointer;

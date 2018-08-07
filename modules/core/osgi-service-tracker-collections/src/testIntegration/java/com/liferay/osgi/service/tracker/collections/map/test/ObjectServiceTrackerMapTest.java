@@ -270,7 +270,7 @@ public class ObjectServiceTrackerMapTest {
 			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "(target=*)",
 				propertyServiceReferenceMapper,
-				(serviceReference1, serviceReference2) -> -1);
+				(sr1, sr2) -> sr1.compareTo(sr2));
 
 		TrackedOne trackedOne1 = new TrackedOne();
 
@@ -306,7 +306,7 @@ public class ObjectServiceTrackerMapTest {
 			selector.map("target");
 
 		Collector<String, TrackedOne, TrackedOne, TrackedOne> collector =
-			mapper.collectSingleValue((sr1, sr2) -> -1);
+			mapper.collectSingleValue((sr1, sr2) -> sr1.compareTo(sr2));
 
 		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 				collector.build()) {

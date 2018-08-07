@@ -75,10 +75,16 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 		public synchronized void store(
 			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
-			_serviceReferenceServiceTuples.add(serviceReferenceServiceTuple);
-
-			_serviceReferenceServiceTuples.sort(
+			int index = Collections.binarySearch(
+				_serviceReferenceServiceTuples, serviceReferenceServiceTuple,
 				_serviceReferenceServiceTupleComparator);
+
+			if (index < 0) {
+				index = -index - 1;
+			}
+
+			_serviceReferenceServiceTuples.add(
+				index, serviceReferenceServiceTuple);
 
 			rebuild();
 		}

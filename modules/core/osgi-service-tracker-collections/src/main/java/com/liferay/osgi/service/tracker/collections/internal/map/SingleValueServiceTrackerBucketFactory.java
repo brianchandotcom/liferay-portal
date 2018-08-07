@@ -92,9 +92,15 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 		public synchronized void store(
 			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
-			_serviceReferences.add(serviceReferenceServiceTuple);
+			int index = Collections.binarySearch(
+				_serviceReferences, serviceReferenceServiceTuple,
+				_serviceReferenceServiceTupleComparator);
 
-			_serviceReferences.sort(_serviceReferenceServiceTupleComparator);
+			if (index < 0) {
+				index = -index - 1;
+			}
+
+			_serviceReferences.add(index, serviceReferenceServiceTuple);
 
 			ServiceReferenceServiceTuple<SR, TS>
 				headServiceReferenceServiceTuple = _serviceReferences.get(0);

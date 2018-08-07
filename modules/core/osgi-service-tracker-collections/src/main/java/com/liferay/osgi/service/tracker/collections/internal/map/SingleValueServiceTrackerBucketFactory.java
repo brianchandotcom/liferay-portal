@@ -99,20 +99,12 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 			_service = headServiceReferenceServiceTuple.getService();
 		}
 
-		private SingleBucket() {
-			_service = null;
-
-			_serviceReferenceServiceTupleComparator =
-				new ServiceReferenceServiceTupleComparator<>(_comparator);
-
-			_serviceReferences = new ArrayList<>(1);
-		}
-
 		private TS _service;
 		private final List<ServiceReferenceServiceTuple<SR, TS>>
-			_serviceReferences;
+			_serviceReferences = new ArrayList<>(1);
 		private final ServiceReferenceServiceTupleComparator<SR>
-			_serviceReferenceServiceTupleComparator;
+			_serviceReferenceServiceTupleComparator =
+				new ServiceReferenceServiceTupleComparator<>(_comparator);
 
 	}
 

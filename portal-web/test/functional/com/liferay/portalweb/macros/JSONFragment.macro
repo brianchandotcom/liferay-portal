@@ -26,11 +26,11 @@
 
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/fragment.fragmententry/add-fragment-entry \
-   			-u test@liferay.com:test \
-   			-d groupId=${groupId} \
-  			-d fragmentCollectionId=${collectionId} \
-  			-d name=${name} \
-  			-d status=${status}
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d fragmentCollectionId=${collectionId} \
+			-d name=${name} \
+			-d status=${status}
 		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
@@ -59,10 +59,10 @@
 
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d name=${name} \
-			  -d description=
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d name=${name} \
+			-d description=
 		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
@@ -158,11 +158,11 @@
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
 			-u test@liferay.com:test \
- 			-d groupId=${groupId} \
- 			-d name=${collectionName} \
- 			-d <CURL_DATA[start=-1]CURL_DATA> \
- 			-d <CURL_DATA[end=-1]CURL_DATA> \
- 			-d -orderByComparator=
+			-d groupId=${groupId} \
+			-d name=${collectionName} \
+			-d <CURL_DATA[start=-1]CURL_DATA> \
+			-d <CURL_DATA[end=-1]CURL_DATA> \
+			-d -orderByComparator=
 		]]></var>
 
 		<var method="JSONCurlUtil#post('${curl}', '$..fragmentCollectionId')" name="collectionId" />

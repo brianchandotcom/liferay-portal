@@ -54,19 +54,19 @@ public class StructuredContentCreatorForm {
 		).constructor(
 			StructuredContentCreatorForm::new
 		).addOptionalStringList(
-			"keywords", StructuredContentCreatorForm::_setKeywords
+			"keywords", StructuredContentCreatorForm::setKeywords
 		).addRequiredDate(
-			"displayDate", StructuredContentCreatorForm::_setDisplayDate
+			"displayDate", StructuredContentCreatorForm::setDisplayDate
 		).addRequiredString(
-			"description", StructuredContentCreatorForm::_setDescription
+			"description", StructuredContentCreatorForm::setDescription
 		).addRequiredString(
-			"structure", StructuredContentCreatorForm::_setStructure
+			"structure", StructuredContentCreatorForm::setStructure
 		).addRequiredString(
-			"template", StructuredContentCreatorForm::_setTemplate
+			"template", StructuredContentCreatorForm::setTemplate
 		).addRequiredString(
-			"text", StructuredContentCreatorForm::_setText
+			"text", StructuredContentCreatorForm::setText
 		).addRequiredString(
-			"title", StructuredContentCreatorForm::_setTitle
+			"title", StructuredContentCreatorForm::setTitle
 		).build();
 	}
 
@@ -199,11 +199,11 @@ public class StructuredContentCreatorForm {
 		return titleMap;
 	}
 
-	private void _setDescription(String description) {
+	public void setDescription(String description) {
 		_description = description;
 	}
 
-	private void _setDisplayDate(Date displayDate) {
+	public void setDisplayDate(Date displayDate) {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(displayDate);
@@ -215,23 +215,23 @@ public class StructuredContentCreatorForm {
 		_displayDateMinute = calendar.get(Calendar.MINUTE);
 	}
 
-	private void _setKeywords(List<String> keywords) {
+	public void setKeywords(List<String> keywords) {
 		_keywords = keywords;
 	}
 
-	private void _setStructure(String structure) {
+	public void setStructure(String structure) {
 		_structure = structure;
 	}
 
-	private void _setTemplate(String template) {
+	public void setTemplate(String template) {
 		_template = template;
 	}
 
-	private void _setText(String text) {
+	public void setText(String text) {
 		_text = text;
 	}
 
-	private void _setTitle(String title) {
+	public void setTitle(String title) {
 		_title = title;
 	}
 

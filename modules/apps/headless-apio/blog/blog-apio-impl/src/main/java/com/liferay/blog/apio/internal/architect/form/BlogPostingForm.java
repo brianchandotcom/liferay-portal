@@ -60,29 +60,29 @@ public class BlogPostingForm {
 		).constructor(
 			BlogPostingForm::new
 		).addOptionalDate(
-			"dateDisplayed", BlogPostingForm::_setDisplayDate
+			"dateDisplayed", BlogPostingForm::setDisplayDate
 		).addOptionalDate(
-			"dateCreated", BlogPostingForm::_setCreateDate
+			"dateCreated", BlogPostingForm::setCreateDate
 		).addOptionalDate(
-			"dateModified", BlogPostingForm::_setModifiedDate
+			"dateModified", BlogPostingForm::setModifiedDate
 		).addOptionalLinkedModel(
-			"creator", PersonIdentifier.class, BlogPostingForm::_setCreatorId
+			"creator", PersonIdentifier.class, BlogPostingForm::setCreatorId
 		).addOptionalLinkedModel(
-			"image", MediaObjectIdentifier.class, BlogPostingForm::_setImageId
+			"image", MediaObjectIdentifier.class, BlogPostingForm::setImageId
 		).addOptionalString(
-			"alternativeHeadline", BlogPostingForm::_setAlternativeHeadline
+			"alternativeHeadline", BlogPostingForm::setAlternativeHeadline
 		).addOptionalString(
-			"caption", BlogPostingForm::_setImageCaption
+			"caption", BlogPostingForm::setImageCaption
 		).addOptionalString(
-			"description", BlogPostingForm::_setDescription
+			"description", BlogPostingForm::setDescription
 		).addOptionalString(
-			"friendlyUrlPath", BlogPostingForm::_setFriendlyURLPath
+			"friendlyUrlPath", BlogPostingForm::setFriendlyURLPath
 		).addOptionalStringList(
-			"keywords", BlogPostingForm::_setKeywords
+			"keywords", BlogPostingForm::setKeywords
 		).addRequiredString(
-			"articleBody", BlogPostingForm::_setArticleBody
+			"articleBody", BlogPostingForm::setArticleBody
 		).addRequiredString(
-			"headline", BlogPostingForm::_setHeadline
+			"headline", BlogPostingForm::setHeadline
 		).build();
 	}
 
@@ -262,51 +262,51 @@ public class BlogPostingForm {
 		return serviceContext;
 	}
 
-	private void _setAlternativeHeadline(String alternativeHeadline) {
+	public void setAlternativeHeadline(String alternativeHeadline) {
 		_alternativeHeadline = alternativeHeadline;
 	}
 
-	private void _setArticleBody(String articleBody) {
+	public void setArticleBody(String articleBody) {
 		_articleBody = articleBody;
 	}
 
-	private void _setCreateDate(Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
 
-	private void _setCreatorId(long creatorId) {
+	public void setCreatorId(long creatorId) {
 		_creatorId = creatorId;
 	}
 
-	private void _setDescription(String description) {
+	public void setDescription(String description) {
 		_description = description;
 	}
 
-	private void _setDisplayDate(Date displayDate) {
+	public void setDisplayDate(Date displayDate) {
 		_displayDate = displayDate;
 	}
 
-	private void _setFriendlyURLPath(String friendlyURLPath) {
+	public void setFriendlyURLPath(String friendlyURLPath) {
 		_friendlyURLPath = friendlyURLPath;
 	}
 
-	private void _setHeadline(String headline) {
+	public void setHeadline(String headline) {
 		_headline = headline;
 	}
 
-	private void _setImageCaption(String imageCaption) {
+	public void setImageCaption(String imageCaption) {
 		_imageCaption = imageCaption;
 	}
 
-	private void _setImageId(long imageId) {
+	public void setImageId(long imageId) {
 		_imageId = imageId;
 	}
 
-	private void _setKeywords(List<String> keywords) {
+	public void setKeywords(List<String> keywords) {
 		_keywords = keywords;
 	}
 
-	private void _setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 

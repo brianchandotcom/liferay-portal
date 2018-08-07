@@ -41,9 +41,9 @@ public class FolderForm {
 		).constructor(
 			FolderForm::new
 		).addOptionalString(
-			"description", FolderForm::_setDescription
+			"description", FolderForm::setDescription
 		).addRequiredString(
-			"name", FolderForm::_setName
+			"name", FolderForm::setName
 		).build();
 	}
 
@@ -67,11 +67,11 @@ public class FolderForm {
 		return _name;
 	}
 
-	private void _setDescription(String description) {
+	public void setDescription(String description) {
 		_description = description;
 	}
 
-	private void _setName(String name) {
+	public void setName(String name) {
 		_name = name;
 	}
 

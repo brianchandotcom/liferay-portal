@@ -46,9 +46,9 @@ public class CategoryForm {
 		).constructor(
 			CategoryForm::new
 		).addOptionalString(
-			"description", CategoryForm::_setDescription
+			"description", CategoryForm::setDescription
 		).addRequiredString(
-			"name", CategoryForm::_setName
+			"name", CategoryForm::setName
 		).build();
 	}
 
@@ -72,11 +72,11 @@ public class CategoryForm {
 		return Collections.singletonMap(locale, _name);
 	}
 
-	private void _setDescription(String description) {
+	public void setDescription(String description) {
 		_description = description;
 	}
 
-	private void _setName(String name) {
+	public void setName(String name) {
 		_name = name;
 	}
 

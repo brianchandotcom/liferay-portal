@@ -46,7 +46,7 @@ public class LinkedCategoryForm {
 			LinkedCategoryForm::new
 		).addRequiredLinkedModel(
 			"category", CategoryIdentifier.class,
-			LinkedCategoryForm::_setCategoryId
+			LinkedCategoryForm::setCategoryId
 		).build();
 	}
 
@@ -60,7 +60,7 @@ public class LinkedCategoryForm {
 		return _categoryId;
 	}
 
-	private void _setCategoryId(long categoryId) {
+	public void setCategoryId(long categoryId) {
 		_categoryId = categoryId;
 	}
 

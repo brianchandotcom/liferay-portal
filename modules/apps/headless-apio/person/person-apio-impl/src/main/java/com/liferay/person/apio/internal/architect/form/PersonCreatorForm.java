@@ -47,19 +47,19 @@ public class PersonCreatorForm {
 		).constructor(
 			PersonCreatorForm::new
 		).addOptionalString(
-			"gender", PersonCreatorForm::_setGender
-		).addOptionalString(
-			"alternateName", PersonCreatorForm::_setAlternateName
+			"alternateName", PersonCreatorForm::setAlternateName
 		).addOptionalDate(
-			"birthDate", PersonCreatorForm::_setBirthDate
-		).addRequiredString(
-			"email", PersonCreatorForm::_setEmail
-		).addRequiredString(
-			"familyName", PersonCreatorForm::_setFamilyName
-		).addRequiredString(
-			"givenName", PersonCreatorForm::_setGivenName
+			"birthDate", PersonCreatorForm::setBirthDate
 		).addOptionalString(
-			"jobTitle", PersonCreatorForm::_setJobTitle
+			"gender", PersonCreatorForm::setGender
+		).addRequiredString(
+			"email", PersonCreatorForm::setEmail
+		).addRequiredString(
+			"familyName", PersonCreatorForm::setFamilyName
+		).addRequiredString(
+			"givenName", PersonCreatorForm::setGivenName
+		).addOptionalString(
+			"jobTitle", PersonCreatorForm::setJobTitle
 		).build();
 	}
 
@@ -184,11 +184,11 @@ public class PersonCreatorForm {
 		return Validator.isNull(_alternateName);
 	}
 
-	private void _setAlternateName(String alternateName) {
+	public void setAlternateName(String alternateName) {
 		_alternateName = alternateName;
 	}
 
-	private void _setBirthDate(Date birthDate) {
+	public void setBirthDate(Date birthDate) {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(birthDate);
@@ -198,23 +198,23 @@ public class PersonCreatorForm {
 		_birthdayYear = calendar.get(Calendar.YEAR);
 	}
 
-	private void _setEmail(String emailAddress) {
+	public void setEmail(String emailAddress) {
 		_email = emailAddress;
 	}
 
-	private void _setFamilyName(String lastName) {
+	public void setFamilyName(String lastName) {
 		_familyName = lastName;
 	}
 
-	private void _setGender(String gender) {
+	public void setGender(String gender) {
 		_male = "male".equals(gender);
 	}
 
-	private void _setGivenName(String givenName) {
+	public void setGivenName(String givenName) {
 		_givenName = givenName;
 	}
 
-	private void _setJobTitle(String jobTitle) {
+	public void setJobTitle(String jobTitle) {
 		_jobTitle = jobTitle;
 	}
 

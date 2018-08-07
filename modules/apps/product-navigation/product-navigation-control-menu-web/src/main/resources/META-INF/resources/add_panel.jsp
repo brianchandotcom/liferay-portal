@@ -45,7 +45,7 @@
 					<div aria-multiselectable="true" class="panel-group" id="<portlet:namespace />Accordion" role="tablist">
 						<c:if test="<%= hasAddApplicationsPermission %>">
 							<div class="add-application-panel panel">
-								<div class="panel-heading" id="<portlet:namespace />addApplicationHeading" role="tab">
+								<div class="panel-header panel-heading" id="<portlet:namespace />addApplicationHeading" role="tab">
 									<div class="panel-title">
 										<a aria-controls="#<portlet:namespace />addApplicationCollapse" aria-expanded="<%= selectedTab.equals("applications") %>" class="<%= selectedTab.equals("applications") ? StringPool.BLANK : "collapsed" %> collapse-icon collapse-icon-middle panel-toggler" data-qa-id="addMenuAddApplicationCategory" data-toggle="collapse" href="#<portlet:namespace />addApplicationCollapse" role="button">
 											<span class="category-name"><liferay-ui:message key="widgets" /></span>
@@ -67,7 +67,7 @@
 
 						<c:if test="<%= hasAddContentPermission %>">
 							<div class="add-content-panel panel">
-								<div class="panel-heading" id="<portlet:namespace />addContentHeading" role="tab">
+								<div class="panel-header panel-heading" id="<portlet:namespace />addContentHeading" role="tab">
 									<div class="panel-title">
 										<a aria-controls="#<portlet:namespace />addContentCollapse" aria-expanded="<%= selectedTab.equals("content") %>" class="<%= selectedTab.equals("content") ? StringPool.BLANK : "collapsed" %> collapse-icon collapse-icon-middle panel-toggler" data-qa-id="addMenuAddContentCategory" data-toggle="collapse" href="#<portlet:namespace />addContentCollapse" role="button">
 											<span class="category-name"><liferay-ui:message key="content" /></span>

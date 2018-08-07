@@ -1,6 +1,8 @@
 import {dom} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
+import position from 'metal-position';
 import State, {Config} from 'metal-state';
+import throttle from 'metal-throttle';
 
 import {
 	getNearestMenuItem,
@@ -25,6 +27,18 @@ import {
 	unselectAll
 } from './SiteNavigationMenuItemDOMHandler.es';
 
+/**
+ * Document height.
+ * @review
+ */
+
+const DOCUMENT_HEIGHT = document.body.offsetHeight;
+
+/**
+ * List of keys used for moving elements with keyboard.
+ * @review
+ */
+
 const KEYS = {
 	ARROW_DOWN: 'ArrowDown',
 	ARROW_LEFT: 'ArrowLeft',
@@ -35,17 +49,49 @@ const KEYS = {
 };
 
 /**
- *	Site navigation menu editor component.
+ * Distance the window moves on scroll.
+ * @review
+ */
+
+const SCROLL_DISPLACEMENT = 100;
+
+/**
+ * Window height
+ * @review
+ */
+
+const WINDOW_HEIGHT = window.innerHeight;
+
+/**
+ * Margin on window top and bottom in which scroll starts.
+ * @review
+ */
+
+const SCROLL_MARGIN = WINDOW_HEIGHT * 0.2;
+
+/**
+ * SiteNavigationMenuEditor
+ * @review
  */
 
 class SiteNavigationMenuEditor extends State {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 
 	constructor(config, ...args) {
 		super(config, ...args);
+
+		const controlMenu = document.querySelector('.control-menu');
+		this._controlMenuHeight = controlMenu ? controlMenu.offsetHeight : 0;
+
+		const managementBar = document.querySelector('.management-bar');
+		this._managementBarHeight = managementBar ? managementBar.offsetHeight : 0;
+
+		this._scrollOnDrag = throttle(this._scrollOnDrag.bind(this), 250);
+		this._scrollOnDragLoop = this._scrollOnDragLoop.bind(this);
 
 		this.setState(config);
 
@@ -93,6 +139,7 @@ class SiteNavigationMenuEditor extends State {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 
 	dispose(...args) {
@@ -115,11 +162,56 @@ class SiteNavigationMenuEditor extends State {
 	}
 
 	/**
+	 * Scrolls up or down when an item is being dragged.
+	 * @private
+	 * @review
+	 */
+
+	_scrollOnDrag() {
+		if (
+			this._currentYPosition < this._draggedItemRegion.top &&
+			this._draggedItemRegion.top > (WINDOW_HEIGHT - SCROLL_MARGIN) &&
+			(this._draggedItemRegion.bottom + window.scrollY) < (DOCUMENT_HEIGHT + this._draggedItemRegion.height)
+		) {
+			window.scrollTo(
+				{
+					behavior: 'smooth',
+					top: window.scrollY + SCROLL_DISPLACEMENT
+				}
+			);
+		}
+		else if (
+			this._currentYPosition > this._draggedItemRegion.top &&
+			this._draggedItemRegion.top < (this._controlMenuHeight + this._managementBarHeight + SCROLL_MARGIN)
+		) {
+			window.scrollTo(
+				{
+					behavior: 'smooth',
+					top: window.scrollY - SCROLL_DISPLACEMENT
+				}
+			);
+		}
+
+		this._currentYPosition = this._draggedItemRegion.top;
+	}
+
+	/**
+	 * Animates the scroll when an item is being dragged.
+	 * @private
+	 * @review
+	 */
+
+	_scrollOnDragLoop() {
+		this._scrollOnDrag(this._draggedItemRegion);
+		this._scrollAnimationId = requestAnimationFrame(this._scrollOnDragLoop);
+	}
+
+	/**
 	 * This is called when user drags the item across the container.
-	 *
 	 * @param {!object} data Drag event data
 	 * @param {!Event} event Drag event
 	 * @private
+	 * @review
 	 */
 
 	_handleDragItem(data, event) {
@@ -130,6 +222,13 @@ class SiteNavigationMenuEditor extends State {
 			sourceMenuItem,
 			placeholderMenuItem
 		);
+
+		if (!this._draggedItemRegion) {
+			this._draggedItemRegion = position.getRegion(placeholderMenuItem);
+			this._scrollOnDragLoop();
+		}
+
+		this._draggedItemRegion = position.getRegion(placeholderMenuItem);
 
 		if (
 			placeholderMenuItem && isMenuItem(placeholderMenuItem) &&
@@ -171,10 +270,10 @@ class SiteNavigationMenuEditor extends State {
 
 	/**
 	 * This is called when user starts to drag the item across the container.
-	 *
 	 * @param {!object} data Drag event data
 	 * @param {!Event} event Drag event
 	 * @private
+	 * @review
 	 */
 
 	_handleDragStart(data, event) {
@@ -187,10 +286,10 @@ class SiteNavigationMenuEditor extends State {
 
 	/**
 	 * This is called when user drops the item on the container.
-	 *
 	 * @param {!object} data Drop event data
 	 * @param {!Event} event Drop event
 	 * @private
+	 * @review
 	 */
 
 	_handleDropItem(data, event) {
@@ -206,6 +305,10 @@ class SiteNavigationMenuEditor extends State {
 			getParent(menuItem)
 		);
 
+		cancelAnimationFrame(this._scrollAnimationId);
+		this._scrollAnimationId = -1;
+		this._draggedItemRegion = null;
+
 		this._updateParentAndOrder(
 			{
 				dragOrder: menuItemIndex,
@@ -219,9 +322,9 @@ class SiteNavigationMenuEditor extends State {
 
 	/**
 	 * This is called when user clicks on menu item.
-	 *
 	 * @param {!Event} event Click event data
 	 * @private
+	 * @review
 	 */
 
 	_handleItemClick(event) {
@@ -234,9 +337,9 @@ class SiteNavigationMenuEditor extends State {
 
 	/**
 	 * This is called when user presses a key on menu item.
-	 *
 	 * @param {!Event} event KeyUp event data
 	 * @private
+	 * @review
 	 */
 
 	_handleItemKeyUp(event) {
@@ -332,7 +435,7 @@ class SiteNavigationMenuEditor extends State {
 	}
 
 	/**
-	 * Handle selectedMenuItem property change
+	 * Handle selectedMenuItem property change.
 	 * @param {{newVal: HTMLElement|null}} event
 	 * @private
 	 * @review
@@ -356,6 +459,7 @@ class SiteNavigationMenuEditor extends State {
 	 * }} data
 	 * @private
 	 * @return {Promise}
+	 * @review
 	 */
 
 	_updateParentAndOrder(data) {
@@ -389,18 +493,19 @@ class SiteNavigationMenuEditor extends State {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 
 SiteNavigationMenuEditor.STATE = {
 
 	/**
 	 * URL for edit site navigation menu item parent action.
-	 *
 	 * @default undefined
 	 * @instance
 	 * @memberOf SiteNavigationMenuEditor
+	 * @review
 	 * @type {!string}
 	 */
 
@@ -408,18 +513,17 @@ SiteNavigationMenuEditor.STATE = {
 
 	/**
 	 * Portlet namespace to use in edit action.
-	 *
 	 * @default undefined
 	 * @instance
 	 * @memberOf SiteNavigationMenuEditor
+	 * @review
 	 * @type {!string}
 	 */
 
 	namespace: Config.string().required(),
 
 	/**
-	 * Selected menuItem DOM element
-	 *
+	 * Selected menuItem DOM element.
 	 * @default null
 	 * @instance
 	 * @memberOf SiteNavigationMenuEditor
@@ -430,15 +534,74 @@ SiteNavigationMenuEditor.STATE = {
 	selectedMenuItem: Config.object().value(null),
 
 	/**
+	 * Control menu height.
+	 * @default 0
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+
+	_controlMenuHeight: Config.number().internal().value(0),
+
+	/**
+	 * @default -1
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+
+	_currentYPosition: Config.number().internal().value(-1),
+
+	/**
 	 * Internal DragDrop instance.
-	 *
 	 * @default null
 	 * @instance
 	 * @memberOf SiteNavigationMenuEditor
-	 * @type {State}
+	 * @review
+	 * @type {object|null}
 	 */
 
-	_dragDrop: Config.internal().value(null)
+	_dragDrop: Config.internal().value(null),
+
+	/**
+	 * Dragged item.
+	 * @default undefined
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @review
+	 * @type {HTMLElement|null}
+	 */
+
+	_draggedItemRegion: Config.object().internal(),
+
+	/**
+	 * Management bar height
+	 * @default 0
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+
+	_managementBarHeight: Config.number().internal().value(0),
+
+	/**
+	 * @default -1
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+
+	_scrollAnimationId: Config.number().internal().value(-1)
+
 };
 
 export {SiteNavigationMenuEditor};

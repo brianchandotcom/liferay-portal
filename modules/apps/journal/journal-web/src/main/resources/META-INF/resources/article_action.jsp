@@ -31,6 +31,8 @@ if (row != null) {
 else {
 	article = (JournalArticle)request.getAttribute("info_panel.jsp-entry");
 }
+
+	Group group = themeDisplay.getScopeGroup();
 %>
 
 <liferay-ui:icon-menu
@@ -208,7 +210,7 @@ else {
 		/>
 	</c:if>
 
-	<c:if test="<%= journalDisplayContext.isShowPublishArticleAction(article) %>">
+	<c:if test="<%= journalDisplayContext.isShowPublishArticleAction(article) && !group.isLayout() %>">
 		<portlet:actionURL name="/journal/publish_article" var="publishArticleURL">
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />

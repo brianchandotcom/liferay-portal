@@ -93,12 +93,16 @@ The model-resource element defines the permissions of the model.
 <!--
 The organization value specifies if the model resource is an organization model
 resource. The default value is false.
+-->
+<!ATTLIST model-resource
+	organization CDATA #IMPLIED
+>
 
+<!--
 The portal value specifies if the model resource is a portal model resource. The
 default value is false.
 -->
 <!ATTLIST model-resource
-	organization CDATA #IMPLIED
 	portal CDATA #IMPLIED
 >
 

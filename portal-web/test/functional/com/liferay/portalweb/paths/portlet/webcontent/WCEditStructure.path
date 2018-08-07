@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>WCEditStructure</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WCEditStructure</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//div[contains(@class,'sheet-footer ')]/button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

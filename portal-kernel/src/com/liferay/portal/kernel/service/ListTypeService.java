@@ -53,6 +53,9 @@ public interface ListTypeService extends BaseService {
 	public ListType getListType(long listTypeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListType getListType(String name, String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ListType> getListTypes(String type);
 
 	/**

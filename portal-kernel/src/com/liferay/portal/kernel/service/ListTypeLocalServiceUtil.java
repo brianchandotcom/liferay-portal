@@ -205,6 +205,11 @@ public class ListTypeLocalServiceUtil {
 		return getService().getListType(listTypeId);
 	}
 
+	public static com.liferay.portal.kernel.model.ListType getListType(
+		String name, String type) {
+		return getService().getListType(name, type);
+	}
+
 	/**
 	* Returns a range of all the list types.
 	*

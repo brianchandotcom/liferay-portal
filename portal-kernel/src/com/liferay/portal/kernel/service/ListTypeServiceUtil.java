@@ -46,6 +46,11 @@ public class ListTypeServiceUtil {
 		return getService().getListType(listTypeId);
 	}
 
+	public static com.liferay.portal.kernel.model.ListType getListType(
+		String name, String type) {
+		return getService().getListType(name, type);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
 		String type) {
 		return getService().getListTypes(type);

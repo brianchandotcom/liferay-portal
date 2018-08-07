@@ -210,6 +210,12 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 		return _listTypeLocalService.getListType(listTypeId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.ListType getListType(String name,
+		String type) {
+		return _listTypeLocalService.getListType(name, type);
+	}
+
 	/**
 	* Returns a range of all the list types.
 	*

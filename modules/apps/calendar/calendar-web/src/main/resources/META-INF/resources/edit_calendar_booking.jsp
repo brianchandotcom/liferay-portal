@@ -869,7 +869,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 		var inviteResourcesInput = A.one('#<portlet:namespace />inviteResource');
 
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL"></liferay-portlet:resourceURL>
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL" />
 
 		calendarContainer.createCalendarsAutoComplete(
 			'<%= calendarResourcesURL %>',
@@ -928,22 +928,44 @@ while (manageableCalendarsIterator.hasNext()) {
 
 	var allDayCheckbox = A.one('#<portlet:namespace />allDay');
 
+	<%
+	defaultEndTimeJCalendar = (java.util.Calendar)defaultStartTimeJCalendar.clone();
+	defaultEndTimeJCalendar.add(java.util.Calendar.MINUTE, defaultDuration);
+	%>
+
 	allDayCheckbox.after(
 		'click',
 		function() {
 			var endDateContainer = A.one('#<portlet:namespace />endDateContainer');
 			var startDateContainer = A.one('#<portlet:namespace />startDateContainer');
 
+			var endTimeHours;
+			var endTimeMinutes;
+			var startTimeHours;
+			var startTimeMinutes;
+
 			var checked = allDayCheckbox.get('checked');
 
 			if (checked) {
 				placeholderSchedulerEvent.set('allDay', true);
+
+				startTimeHours = 0;
+				startTimeMinutes = 0;
+				endTimeHours = 23;
+				endTimeMinutes = 59;
 			}
 			else {
 				placeholderSchedulerEvent.set('allDay', false);
 
 				endDateContainer.show();
+
+				startTimeHours = <%= defaultStartTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
+				startTimeMinutes = <%= defaultStartTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
+				endTimeHours = <%= defaultEndTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
+				endTimeMinutes = <%= defaultEndTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
 			}
+
+			updateTimePickersValues(startTimeHours, startTimeMinutes, endTimeHours, endTimeMinutes);
 
 			endDateContainer.toggleClass('allday-class-active', checked);
 			startDateContainer.toggleClass('allday-class-active', checked);
@@ -951,6 +973,28 @@ while (manageableCalendarsIterator.hasNext()) {
 			scheduler.syncEventsUI();
 		}
 	);
+
+	var updateTimePickersValues = function(startTimeHours, startTimeMinutes, endTimeHours, endTimeMinutes) {
+		var endDatePicker = intervalSelector.get('endDatePicker');
+		var startDatePicker = intervalSelector.get('startDatePicker');
+
+		var endDate = endDatePicker.getDate();
+		var startDate = startDatePicker.getDate();
+
+		startDate.setHours(startTimeHours);
+		startDate.setMinutes(startTimeMinutes);
+
+		endDate.setHours(endTimeHours);
+		endDate.setMinutes(endTimeMinutes);
+
+		intervalSelector.setDuration(endDate.valueOf() - startDate.valueOf());
+
+		var endTimePicker = intervalSelector.get('endTimePicker');
+		var startTimePicker = intervalSelector.get('startTimePicker');
+
+		startTimePicker.selectDates([startDate]);
+		endTimePicker.selectDates([endDate]);
+	};
 
 	scheduler.load();
 </aui:script>

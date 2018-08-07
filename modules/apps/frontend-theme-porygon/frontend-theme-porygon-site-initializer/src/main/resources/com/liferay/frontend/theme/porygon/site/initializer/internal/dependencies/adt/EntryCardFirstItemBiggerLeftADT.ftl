@@ -3,6 +3,7 @@
 		<#list entries as curEntry>
 			<#assign
 				assetRenderer = curEntry.getAssetRenderer()
+				assetObject = assetRenderer.getAssetObject()
 				viewURL = (!stringUtil.equals(assetLinkBehavior, "showFullContent"))?then(assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true), assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry))
 			/>
 
@@ -11,9 +12,10 @@
 			${request.setAttribute("viewURL", viewURL )}
 			${request.setAttribute("author", portalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName()) )}
 
-			<@liferay_ui["asset-display"]
-				assetEntry=curEntry
-				template="Porygon_Entry"
+			<@liferay_journal["journal-article"]
+				articleId=assetObject.getArticleId()
+				ddmTemplateKey="PORYGON_ENTRY"
+				groupId=assetObject.getGroupId()
 			/>
 		</#list>
 	</div>

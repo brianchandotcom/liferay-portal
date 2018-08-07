@@ -75,21 +75,6 @@ public class ServiceBuilderBatchTestClassGroup
 			initTestMethods(modulesProjectDirs, modulesDir, "buildService");
 		}
 
-		@Override
-		protected void initTestMethods(
-			List<File> modulesProjectDirs, File modulesDir, String taskName) {
-
-			for (File modulesProjectDir : modulesProjectDirs) {
-				String path = JenkinsResultsParserUtil.getPathRelativeTo(
-					modulesProjectDir, modulesDir);
-
-				String moduleTaskCall = JenkinsResultsParserUtil.combine(
-					path, ":", taskName);
-
-				addTestMethod(moduleTaskCall);
-			}
-		}
-
 	}
 
 	protected static List<File> getModulesProjectDirs(File moduleBaseDir)

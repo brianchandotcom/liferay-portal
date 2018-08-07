@@ -47,6 +47,7 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 	@Override
 	public void configurationEvent(ConfigurationEvent configurationEvent) {
 		String factoryPid = configurationEvent.getFactoryPid();
+		String pid = configurationEvent.getPid();
 
 		if (Validator.isNull(factoryPid) ||
 			!_configurationProviders.containsKey(factoryPid)) {
@@ -58,13 +59,14 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 			_configurationProviders.get(factoryPid);
 
 		try {
-			Configuration configuration = _configurationAdmin.getConfiguration(
-				configurationEvent.getPid(), StringPool.QUESTION);
-
 			if (configurationEvent.getType() == ConfigurationEvent.CM_DELETED) {
-				configurationProvider.unregisterConfiguration(configuration);
+				configurationProvider.unregisterConfiguration(pid);
 			}
 			else {
+				Configuration configuration =
+					_configurationAdmin.getConfiguration(
+						configurationEvent.getPid(), StringPool.QUESTION);
+
 				configurationProvider.registerConfiguration(configuration);
 			}
 		}

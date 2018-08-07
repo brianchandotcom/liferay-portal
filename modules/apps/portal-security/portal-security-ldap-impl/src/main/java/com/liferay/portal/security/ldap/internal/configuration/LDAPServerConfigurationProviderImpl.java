@@ -70,6 +70,9 @@ public class LDAPServerConfigurationProviderImpl
 
 			Configuration configuration = objectValuePair.getKey();
 
+			_pidCompanyConfigurations.remove(configuration.getPid());
+			_pidServerConfigurations.remove(configuration.getPid());
+
 			try {
 				configuration.delete();
 			}
@@ -81,7 +84,6 @@ public class LDAPServerConfigurationProviderImpl
 		return true;
 	}
 
-	@Override
 	public boolean delete(long companyId, long ldapServerId) {
 		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
 			objectValuePairs = _configurations.get(companyId);
@@ -98,6 +100,9 @@ public class LDAPServerConfigurationProviderImpl
 		}
 
 		Configuration configuration = objectValuePair.getKey();
+
+		_pidCompanyConfigurations.remove(configuration.getPid());
+		_pidServerConfigurations.remove(configuration.getPid());
 
 		try {
 			configuration.delete();
@@ -326,6 +331,8 @@ public class LDAPServerConfigurationProviderImpl
 		LDAPServerConfiguration ldapServerConfiguration =
 			ConfigurableUtil.createConfigurable(getMetatype(), properties);
 
+		String pid = configuration.getPid();
+
 		synchronized (_configurations) {
 			Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
 				ldapServerConfigurations = _configurations.computeIfAbsent(
@@ -334,31 +341,25 @@ public class LDAPServerConfigurationProviderImpl
 			ldapServerConfigurations.put(
 				ldapServerConfiguration.ldapServerId(),
 				new ObjectValuePair<>(configuration, ldapServerConfiguration));
+
+			_pidCompanyConfigurations.put(
+				pid, ldapServerConfiguration.companyId());
+			_pidServerConfigurations.put(
+				pid, ldapServerConfiguration.ldapServerId());
 		}
 	}
 
 	@Override
-	public void unregisterConfiguration(Configuration configuration) {
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new HashMapDictionary<>();
-		}
-
-		LDAPServerConfiguration ldapServerConfiguration =
-			ConfigurableUtil.createConfigurable(getMetatype(), properties);
-
-		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
-			objectValuePairs = _configurations.get(
-				ldapServerConfiguration.companyId());
-
+	public void unregisterConfiguration(String pid) {
 		synchronized (_configurations) {
-			if (!MapUtil.isEmpty(objectValuePairs)) {
-				objectValuePairs.remove(ldapServerConfiguration.ldapServerId());
+			Long companyId = _pidCompanyConfigurations.remove(pid);
+			Long ldapServerId = _pidServerConfigurations.remove(pid);
+			
+			Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
+				objectValuePairs = _configurations.get(companyId);
 
-				if (objectValuePairs.isEmpty()) {
-					_configurations.remove(ldapServerConfiguration.companyId());
-				}
+			if (!MapUtil.isEmpty(objectValuePairs)) {
+				objectValuePairs.remove(ldapServerId);
 			}
 		}
 	}
@@ -421,5 +422,7 @@ public class LDAPServerConfigurationProviderImpl
 	private final LDAPServerConfiguration _defaultLDAPServerConfiguration =
 		ConfigurableUtil.createConfigurable(
 			LDAPServerConfiguration.class, Collections.emptyMap());
+	private final Map<String, Long> _pidCompanyConfigurations = new HashMap<>();
+	private final Map<String, Long> _pidServerConfigurations = new HashMap<>();
 
 }

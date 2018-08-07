@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author Yi-Chen Tsai
@@ -82,7 +83,7 @@ public class ServiceBuilderBatchTestClassGroup
 			}
 
 			List<File> serviceXmlFiles = JenkinsResultsParserUtil.findFiles(
-				modulesSubDir, "service.xml");
+				modulesSubDir, Pattern.quote("service.xml"));
 
 			if (!serviceXmlFiles.isEmpty()) {
 				modulesProjectDirs.add(modulesSubDir);

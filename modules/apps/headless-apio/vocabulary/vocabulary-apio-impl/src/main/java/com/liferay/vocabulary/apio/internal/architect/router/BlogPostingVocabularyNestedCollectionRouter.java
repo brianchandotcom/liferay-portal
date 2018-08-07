@@ -33,9 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose {@code Vocabulary} resources
- * associated to a {@code BlogsEntry}.
- * The resources are mapped from the internal model {@code
- * AssetVocabulary}.
+ * associated to a {@code BlogsEntry}. The resources are mapped from the
+ * internal model {@code AssetVocabulary}.
  *
  * @author Javier Gamarra
  * @review

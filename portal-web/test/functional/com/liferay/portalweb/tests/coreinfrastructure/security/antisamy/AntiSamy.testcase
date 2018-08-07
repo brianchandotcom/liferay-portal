@@ -3,31 +3,10 @@
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="AntiSamy" />
 
-	<var name="pageName" value="Antisamy Test Page" />
-	<var name="portletName" value="Wiki" />
-
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
 
 		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
 	</set-up>
 
 	<tear-down>
@@ -47,6 +26,24 @@
 	</tear-down>
 
 	<command name="AddWikiFrontPageContentJavascript" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="AntiSamy Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="AntiSamy Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
 		<var name="wikiPageContent">
 			<![CDATA[
 				<p id='demo'>PASS</p>
@@ -61,9 +58,7 @@
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="htmlSource" value="true" />
-			<var name="pageName" value="${pageName}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageText" value="${wikiPageText}" />
 		</execute>
 
 		<execute macro="WikiPage#viewPG">

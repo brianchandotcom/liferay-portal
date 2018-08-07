@@ -40,10 +40,15 @@ public class GitBranchFactory {
 		return new LocalGitBranch(localRepository, name, sha);
 	}
 
-	public static RemoteGitBranch newRemoteGitBranch(
-		RemoteRepository remoteRepository, String name, String sha) {
+	public static RemoteGitRef newRemoteGitRef(
+		RemoteRepository remoteRepository, String name, String sha,
+		String type) {
 
-		return new RemoteGitBranch(remoteRepository, name, sha);
+		if (type.equals("heads")) {
+			return new RemoteGitBranch(remoteRepository, name, sha);
+		}
+
+		return new RemoteGitRef(remoteRepository, name, sha);
 	}
 
 }

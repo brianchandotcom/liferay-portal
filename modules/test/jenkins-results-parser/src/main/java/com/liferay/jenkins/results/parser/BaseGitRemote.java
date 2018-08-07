@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 public class BaseGitRemote implements Comparable<BaseGitRemote> {
 
 	public static final Pattern gitLsRemotePattern = Pattern.compile(
-		"(?<sha>[^\\s]{40}+)[\\s]+refs/heads/(?<name>[^\\s]+)");
+		"(?<sha>[^\\s]{40}+)[\\s]+refs/(?<type>[^/]+)+/(?<name>[^\\s]+)");
 	public static final Pattern remoteURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"git@(?<hostname>[^:]+):(?<username>[^/]+)/",

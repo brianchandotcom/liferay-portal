@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseGitBranch {
+public abstract class BaseGitRef {
 
 	public String getName() {
 		return _name;
@@ -27,7 +27,7 @@ public abstract class BaseGitBranch {
 		return _sha;
 	}
 
-	protected BaseGitBranch(String name, String sha) {
+	protected BaseGitRef(String name, String sha) {
 		if ((name == null) || name.isEmpty()) {
 			throw new IllegalArgumentException("Name is null");
 		}

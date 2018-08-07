@@ -17,48 +17,12 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class RemoteGitBranch
-	extends BaseGitBranch implements Comparable<RemoteGitBranch> {
-
-	@Override
-	public int compareTo(RemoteGitBranch o) {
-		String name = getName();
-
-		return name.compareTo(o.getName());
-	}
-
-	public RemoteRepository getRemoteRepository() {
-		return _remoteRepository;
-	}
-
-	@Override
-	public String toString() {
-		RemoteRepository remoteRepository = getRemoteRepository();
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(remoteRepository.getRemoteURL());
-		sb.append(" (");
-		sb.append(getName());
-		sb.append(" - ");
-		sb.append(getSHA());
-		sb.append(")");
-
-		return sb.toString();
-	}
+public class RemoteGitBranch extends RemoteGitRef  {
 
 	protected RemoteGitBranch(
 		RemoteRepository remoteRepository, String name, String sha) {
 
-		super(name, sha);
-
-		if (remoteRepository == null) {
-			throw new IllegalArgumentException("Remote repository is null");
-		}
-
-		_remoteRepository = remoteRepository;
+		super(remoteRepository, name, sha);
 	}
-
-	private final RemoteRepository _remoteRepository;
 
 }

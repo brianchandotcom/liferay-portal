@@ -19,7 +19,7 @@ import java.io.File;
 /**
  * @author Michael Hashimoto
  */
-public class LocalGitBranch extends BaseGitBranch {
+public class LocalGitBranch extends BaseGitRef {
 
 	public File getDirectory() {
 		LocalRepository localRepository = getLocalRepository();

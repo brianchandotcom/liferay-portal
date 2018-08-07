@@ -84,8 +84,8 @@ public class CentralSubrepository {
 
 			gitWorkingDirectory.checkoutLocalGitBranch(tempLocalGitBranch);
 
-			GitWorkingDirectory.Remote upstreamRemote =
-				gitWorkingDirectory.getRemote("upstream");
+			BaseGitRemote upstreamGitRemote = gitWorkingDirectory.getGitRemote(
+				"upstream");
 
 			upstreamLocalGitBranch = gitWorkingDirectory.getLocalGitBranch(
 				_subrepositoryUpstreamBranchName, true);
@@ -93,7 +93,7 @@ public class CentralSubrepository {
 			gitWorkingDirectory.fetch(
 				upstreamLocalGitBranch,
 				gitWorkingDirectory.getRemoteGitBranch(
-					_subrepositoryUpstreamBranchName, upstreamRemote, true));
+					_subrepositoryUpstreamBranchName, upstreamGitRemote, true));
 		}
 		finally {
 			if ((upstreamLocalGitBranch != null) &&

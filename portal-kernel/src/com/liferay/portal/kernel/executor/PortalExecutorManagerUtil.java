@@ -34,10 +34,6 @@ public class PortalExecutorManagerUtil {
 		return _portalExecutorManager.getPortalExecutor(name, createIfAbsent);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	public static PortalExecutorManager getPortalExecutorManager() {
 		return _portalExecutorManager;
 	}

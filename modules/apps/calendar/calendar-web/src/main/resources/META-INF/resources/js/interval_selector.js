@@ -75,6 +75,7 @@ AUI.add(
 
 					setDuration: function(duration) {
 						var instance = this;
+
 						instance._duration = duration;
 					},
 

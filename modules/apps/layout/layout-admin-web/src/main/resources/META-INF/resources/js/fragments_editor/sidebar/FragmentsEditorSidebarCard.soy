@@ -11,7 +11,11 @@
 	{@param? _handleClick: any}
 	{@param? imagePreviewURL: string}
 
-<div class="card">
+<div
+	class="card drag-card"
+	data-item-id="{$itemId}"
+	data-item-name="{$itemName}"
+>
 	{if $imagePreviewURL}
 		<div class="aspect-ratio aspect-ratio-16-to-9 card-item-first">
 		<img
@@ -22,15 +26,12 @@
 		</div>
 	{/if}
 
+	<div class="drag-handler"></div>
+
 	<div class="card-body">
 		<div class="card-row">
 		<div class="autofit-col autofit-col-expand autofit-row-center">
-			<div
-				class="card-title text-truncate"
-				data-item-id="{$itemId}"
-				data-item-name="{$itemName}"
-				title="{$itemName}"
-			>
+			<div class="card-title text-truncate" title="{$itemName}">
 			{$itemName}
 			</div>
 		</div>

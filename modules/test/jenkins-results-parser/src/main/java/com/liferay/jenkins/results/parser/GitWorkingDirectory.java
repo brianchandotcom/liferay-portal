@@ -1661,17 +1661,6 @@ public class GitWorkingDirectory {
 		throw new RuntimeException("Unable to run: git status");
 	}
 
-	public static class Remote extends BaseGitRemote {
-
-		protected Remote(
-			GitWorkingDirectory gitWorkingDirectory,
-			String[] remoteInputLines) {
-
-			super(gitWorkingDirectory, remoteInputLines);
-		}
-
-	}
-
 	protected GitWorkingDirectory(
 			String upstreamBranchName, String workingDirectoryPath)
 		throws IOException {

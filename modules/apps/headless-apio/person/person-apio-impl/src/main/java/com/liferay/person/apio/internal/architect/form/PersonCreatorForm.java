@@ -14,6 +14,7 @@
 
 package com.liferay.person.apio.internal.architect.form;
 
+import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -52,6 +53,8 @@ public class PersonCreatorForm {
 			"birthDate", PersonCreatorForm::setBirthDate
 		).addOptionalString(
 			"gender", PersonCreatorForm::setGender
+		).addOptionalFile(
+			"image", PersonCreatorForm::setImage
 		).addRequiredString(
 			"email", PersonCreatorForm::setEmail
 		).addRequiredString(
@@ -145,6 +148,10 @@ public class PersonCreatorForm {
 		return _givenName;
 	}
 
+	public BinaryFile getImage() {
+		return _image;
+	}
+
 	/**
 	 * Returns the person's job title
 	 *
@@ -225,6 +232,7 @@ public class PersonCreatorForm {
 	private String _email;
 	private String _familyName;
 	private String _givenName;
+	private BinaryFile _image;
 	private String _jobTitle;
 	private Boolean _male;
 

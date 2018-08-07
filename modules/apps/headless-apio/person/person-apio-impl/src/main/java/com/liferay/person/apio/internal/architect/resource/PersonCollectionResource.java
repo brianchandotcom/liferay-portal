@@ -18,6 +18,7 @@ import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.address.apio.architect.identifier.AddressIdentifier;
 import com.liferay.apio.architect.credentials.Credentials;
+import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -53,6 +54,10 @@ import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.role.apio.identifier.RoleIdentifier;
 import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Date;
 import java.util.List;
@@ -237,6 +242,18 @@ public class PersonCollectionResource
 		);
 	}
 
+	private byte[] _getImageArray(PersonCreatorForm personCreatorForm) {
+		return Try.fromFallible(
+			personCreatorForm::getImage
+		).map(
+			BinaryFile::getInputStream
+		).map(
+			this::_readInputStream
+		).orElse(
+			null
+		);
+	}
+
 	private PageItems<UserWrapper> _getPageItems(
 			Pagination pagination, FullNameQuery fullNameQuery,
 			Credentials credentials, ThemeDisplay themeDisplay)
@@ -292,6 +309,24 @@ public class PersonCollectionResource
 		User user = _userService.getUserById(userId);
 
 		return new UserWrapper(user, themeDisplay);
+	}
+
+	private byte[] _readInputStream(InputStream inputStream)
+		throws IOException {
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		byte[] bytes = new byte[1024];
+		int value = -1;
+
+		while ((value = inputStream.read(bytes)) != -1) {
+			byteArrayOutputStream.write(bytes, 0, value);
+		}
+
+		byteArrayOutputStream.flush();
+
+		return byteArrayOutputStream.toByteArray();
 	}
 
 	private List<UserWrapper> _toUserWrappers(

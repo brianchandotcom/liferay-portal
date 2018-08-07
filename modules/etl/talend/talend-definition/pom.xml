@@ -14,6 +14,11 @@
 	<packaging>bundle</packaging>
 	<repositories>
 		<repository>
+			<id>liferay</id>
+			<name>Liferay Repository</name>
+			<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
 			<id>talend_nexus</id>
 			<name>snapshots</name>
 			<url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceSnapshot/</url>

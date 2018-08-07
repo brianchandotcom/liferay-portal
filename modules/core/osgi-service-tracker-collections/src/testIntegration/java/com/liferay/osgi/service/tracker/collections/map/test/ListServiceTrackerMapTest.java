@@ -327,7 +327,7 @@ public class ListServiceTrackerMapTest {
 	public void testGetServiceWithCustomComparatorReturningZero() {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, TrackedOne.class, null,
-			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
+			new PropertyServiceReferenceMapper<>("target"),
 			(serviceReference1, serviceReference2) -> 0);
 
 		registerService(new TrackedOne());
@@ -663,8 +663,7 @@ public class ListServiceTrackerMapTest {
 
 		return ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, TrackedOne.class, null,
-			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
-			comparator);
+			new PropertyServiceReferenceMapper<>("target"), comparator);
 	}
 
 	protected ServiceTrackerMap<String, List<TrackedOne>>
@@ -674,10 +673,9 @@ public class ListServiceTrackerMapTest {
 
 		return ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, TrackedOne.class, null,
-			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
-			new DefaultServiceTrackerCustomizer<TrackedOne>(_bundleContext),
-			new PropertyServiceReferenceComparator<TrackedOne>(
-				"service.ranking"),
+			new PropertyServiceReferenceMapper<>("target"),
+			new DefaultServiceTrackerCustomizer<>(_bundleContext),
+			new PropertyServiceReferenceComparator<>("service.ranking"),
 			serviceTrackerMapListener);
 	}
 

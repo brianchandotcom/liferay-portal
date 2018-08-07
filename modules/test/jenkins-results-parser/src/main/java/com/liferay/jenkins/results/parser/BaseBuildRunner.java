@@ -83,11 +83,11 @@ public abstract class BaseBuildRunner {
 			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
 				_portalLocalRepository, pullRequest, synchronizeBranches());
 		}
-		else if (Ref.isValidHtmlURL(portalHtmlURL)) {
-			Ref ref = new Ref(portalHtmlURL);
+		else if (GitUtil.isValidGitHubRefURL(portalHtmlURL)) {
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(portalHtmlURL);
 
 			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
-				_portalLocalRepository, ref, synchronizeBranches());
+				_portalLocalRepository, remoteGitRef, synchronizeBranches());
 		}
 		else {
 			throw new RuntimeException("Invalid html url " + portalHtmlURL);

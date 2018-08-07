@@ -108,14 +108,14 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
 			repositoryName, branchName);
 
-		Ref ref = new Ref(
+		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
 			JenkinsResultsParserUtil.combine(
 				"https://github.com/liferay/", repositoryName, "/tree/",
 				branchName));
 
 		LocalGitBranch localGitBranch =
 			LocalGitSyncUtil.createCachedLocalGitBranch(
-				localRepository, ref, _synchronize);
+				localRepository, remoteGitRef, _synchronize);
 
 		_otherPortalLocalGitBranch = (PortalLocalGitBranch)localGitBranch;
 
@@ -226,11 +226,11 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
 				localRepository, pullRequest, _synchronize);
 		}
-		else if (Ref.isValidHtmlURL(gitCommit)) {
-			Ref ref = new Ref(gitCommit);
+		else if (GitUtil.isValidGitHubRefURL(gitCommit)) {
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(gitCommit);
 
 			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
-				localRepository, ref, _synchronize);
+				localRepository, remoteGitRef, _synchronize);
 		}
 
 		if (localGitBranch == null) {

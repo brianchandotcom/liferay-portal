@@ -54,11 +54,13 @@ public class LocalGitSyncUtil {
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalRepository localRepository, Ref ref, boolean synchronize) {
+		LocalRepository localRepository, RemoteGitRef remoteGitRef,
+		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
-			localRepository, ref.getUsername(), ref.getName(),
-			ref.getUsername(), ref.getSHA(), ref.getSHA(), synchronize);
+			localRepository, remoteGitRef.getUsername(), remoteGitRef.getName(),
+			remoteGitRef.getUsername(), remoteGitRef.getSHA(),
+			remoteGitRef.getSHA(), synchronize);
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(

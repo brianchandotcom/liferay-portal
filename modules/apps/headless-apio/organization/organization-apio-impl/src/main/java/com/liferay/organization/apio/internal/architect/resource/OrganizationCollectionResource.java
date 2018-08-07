@@ -248,33 +248,33 @@ public class OrganizationCollectionResource
 		).addString(
 			"type", this::_getOrgLaborType
 		).addString(
-			"fridayOpen", orgLabor -> _getHours(orgLabor.getFriOpen())
-		).addString(
 			"fridayClose", orgLabor -> _getHours(orgLabor.getFriClose())
 		).addString(
-			"mondayOpen", orgLabor -> _getHours(orgLabor.getMonOpen())
+			"fridayOpen", orgLabor -> _getHours(orgLabor.getFriOpen())
 		).addString(
 			"mondayClose", orgLabor -> _getHours(orgLabor.getMonClose())
 		).addString(
-			"saturdayOpen", orgLabor -> _getHours(orgLabor.getSatOpen())
+			"mondayOpen", orgLabor -> _getHours(orgLabor.getMonOpen())
 		).addString(
 			"saturdayClose", orgLabor -> _getHours(orgLabor.getSatClose())
 		).addString(
-			"sundayOpen", orgLabor -> _getHours(orgLabor.getSunOpen())
+			"saturdayOpen", orgLabor -> _getHours(orgLabor.getSatOpen())
 		).addString(
 			"sundayClose", orgLabor -> _getHours(orgLabor.getSunClose())
 		).addString(
-			"thursdayOpen", orgLabor -> _getHours(orgLabor.getThuOpen())
+			"sundayOpen", orgLabor -> _getHours(orgLabor.getSunOpen())
 		).addString(
 			"thursdayClose", orgLabor -> _getHours(orgLabor.getThuClose())
 		).addString(
-			"tuesdayOpen", orgLabor -> _getHours(orgLabor.getTueOpen())
+			"thursdayOpen", orgLabor -> _getHours(orgLabor.getThuOpen())
 		).addString(
 			"tuesdayClose", orgLabor -> _getHours(orgLabor.getTueClose())
 		).addString(
-			"wednesdayOpen", orgLabor -> _getHours(orgLabor.getWedOpen())
+			"tuesdayOpen", orgLabor -> _getHours(orgLabor.getTueOpen())
 		).addString(
 			"wednesdayClose", orgLabor -> _getHours(orgLabor.getWedClose())
+		).addString(
+			"wednesdayOpen", orgLabor -> _getHours(orgLabor.getWedOpen())
 		).build();
 	}
 

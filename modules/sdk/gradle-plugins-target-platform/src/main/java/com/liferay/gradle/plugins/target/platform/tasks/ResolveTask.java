@@ -302,6 +302,10 @@ public class ResolveTask extends DefaultTask {
 				String bundleSymbolicName = _getManifestValue(
 					requirementFile, Constants.BUNDLE_SYMBOLICNAME);
 
+				if (bundleSymbolicName == null) {
+					continue;
+				}
+
 				if (!first) {
 					bufferedWriter.write(",\\");
 					bufferedWriter.newLine();

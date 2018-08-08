@@ -82,9 +82,7 @@ public class PasswordPolicyDisplayContext {
 			navigationItems.add(detailsNavigationItem);
 		}
 
-		if ((passwordPolicy != null) &&
-			_hasPermission(ActionKeys.ASSIGN_MEMBERS)) {
-
+		if (_hasPermission(ActionKeys.ASSIGN_MEMBERS)) {
 			NavigationItem assigneesNavigationItem = new NavigationItem();
 
 			assigneesNavigationItem.setActive(tabs1.equals("assignees"));

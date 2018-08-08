@@ -17,10 +17,9 @@ package com.liferay.password.policies.admin.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -45,6 +44,13 @@ public class PasswordPolicyDisplayContext {
 
 		_request = request;
 		_renderResponse = renderResponse;
+
+		_passwordPolicyId = ParamUtil.getLong(_request, "passwordPolicyId");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_permissionChecker = themeDisplay.getPermissionChecker();
 	}
 
 	public List<NavigationItem> getEditPasswordPolicyNavigationItems()
@@ -57,7 +63,7 @@ public class PasswordPolicyDisplayContext {
 
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
-			"passwordPolicyId", String.valueOf(_getPasswordPolicyId()));
+			"passwordPolicyId", String.valueOf(_passwordPolicyId));
 
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
@@ -142,53 +148,18 @@ public class PasswordPolicyDisplayContext {
 		return _hasPermission(actionId, passwordPolicyId);
 	}
 
-	private PasswordPolicy _getPasswordPolicy() {
-		if (_passwordPolicy != null) {
-			return _passwordPolicy;
-		}
-
-		_passwordPolicy = PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(
-			_getPasswordPolicyId());
-
-		return _passwordPolicy;
-	}
-
-	private long _getPasswordPolicyId() {
-		if (_passwordPolicyId != null) {
-			return _passwordPolicyId;
-		}
-
-		_passwordPolicyId = ParamUtil.getLong(_request, "passwordPolicyId");
-
-		return _passwordPolicyId;
-	}
-
-	private ThemeDisplay _getThemeDisplay() {
-		if (_themeDisplay != null) {
-			return _themeDisplay;
-		}
-
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return _themeDisplay;
-	}
-
 	private boolean _hasPermission(String actionId) {
-		return _hasPermission(actionId, _getPasswordPolicyId());
+		return _hasPermission(actionId, _passwordPolicyId);
 	}
 
 	private boolean _hasPermission(String actionId, long passwordPolicyId) {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		return PasswordPolicyPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), passwordPolicyId, actionId);
+			_permissionChecker, passwordPolicyId, actionId);
 	}
 
-	private PasswordPolicy _passwordPolicy;
-	private Long _passwordPolicyId;
+	private final Long _passwordPolicyId;
+	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private ThemeDisplay _themeDisplay;
 
 }

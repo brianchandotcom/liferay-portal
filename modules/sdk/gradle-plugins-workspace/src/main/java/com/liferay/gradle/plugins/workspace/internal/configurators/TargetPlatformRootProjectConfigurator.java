@@ -134,7 +134,8 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_LIFERAY_PORTAL, bomCompileOnlyArtifactId, targetPlatformVersion);
+			_GROUP_ID_LIFERAY_PORTAL, bomCompileOnlyArtifactId,
+			targetPlatformVersion);
 	}
 
 	private void _addDependenciesTargetPlatformDistro(
@@ -165,7 +166,8 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 						project,
 						TargetPlatformPlugin.
 							TARGET_PLATFORM_DISTRO_CONFIGURATION_NAME,
-						_GROUP_ID_LIFERAY_PORTAL, artifactId, targetPlatformVersion);
+						_GROUP_ID_LIFERAY_PORTAL, artifactId,
+						targetPlatformVersion);
 				}
 
 			});

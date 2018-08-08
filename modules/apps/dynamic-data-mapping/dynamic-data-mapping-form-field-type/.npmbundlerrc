@@ -1,4 +1,27 @@
 {
-    "output": "classes/META-INF/resources",
-    "preset": "liferay-npm-bundler-preset-standard"
+	"config": {
+		"imports": {
+			"frontend-taglib-clay": {
+				"clay-checkbox": "^2.2.0",
+				"clay-icon": "^2.2.0",
+				"clay-radio": "^2.2.0"
+			},
+			"frontend-js-metal-web": {
+				"metal": ">=2.16.5",
+				"metal-component": ">=2.16.5",
+				"metal-soy": ">=2.16.5",
+				"metal-jsx": ">=2.16.5",
+				"metal-state": ">=2.16.5",
+				"metal-dom": ">=2.16.5",
+				"metal-events": ">=2.16.5"
+			}
+		}
+	},
+	"ignore": [
+		"**/*.js",
+		"**/__tests__/*.js",
+		"!**/*.es.js",
+		"!**/*.soy.js"
+	],
+	"output": "classes/META-INF/resources"
 }

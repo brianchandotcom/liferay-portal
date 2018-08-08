@@ -39,7 +39,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 				modelVar="formInstance"
 			>
 				<portlet:renderURL var="rowURL">
-					<portlet:param name="mvcPath" value="/admin/edit_form_instance.jsp" />
+					<portlet:param name="mvcRenderCommandName" value="/admin/edit_form_instance" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstance.getFormInstanceId()) %>" />
 					<portlet:param name="displayStyle" value="<%= displayStyle %>" />

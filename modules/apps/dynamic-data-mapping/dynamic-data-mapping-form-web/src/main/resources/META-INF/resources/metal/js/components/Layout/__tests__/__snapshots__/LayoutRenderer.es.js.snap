@@ -1,0 +1,359 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LayoutRenderer should not render the layout with the field empty in non-editable mode 1`] = `
+<div class="form-builder-layout">
+  <div class="layout-page">
+    <div class="row">
+      <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
+        <p>Radio Field</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
+        <p>Text Field</p>
+      </div>
+      <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
+        <p>Select Field</p>
+      </div>
+      <div class="col-md-2 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
+        <p>Text Field</p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`LayoutRenderer should render a layout in editable mode 1`] = `
+<div class="form-builder-layout">
+  <div class="layout-page">
+    <div class="row">
+      <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
+        <div class="ddm-field-container">
+          <div class="ddm-resize-handle-left"></div>
+          <div class="ddm-drag">
+            <p>Radio Field</p>
+          </div>
+          <div class="ddm-field-actions-container">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                <title>paste</title>
+                <use xlink:href="icons.svg#paste"></use>
+              </svg>
+            </button>
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                <title>trash</title>
+                <use xlink:href="icons.svg#trash"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="ddm-resize-handle-right"></div>
+        </div>
+      </div>
+      <div class="col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
+        <div class="ddm-field-container">
+          <div class="ddm-resize-handle-left"></div>
+          <div class="ddm-drag">
+            <p>Text Field</p>
+          </div>
+          <div class="ddm-field-actions-container">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                <title>paste</title>
+                <use xlink:href="icons.svg#paste"></use>
+              </svg>
+            </button>
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                <title>trash</title>
+                <use xlink:href="icons.svg#trash"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="ddm-resize-handle-right"></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
+        <div class="ddm-field-container">
+          <div class="ddm-resize-handle-left"></div>
+          <div class="ddm-drag">
+            <p>Select Field</p>
+          </div>
+          <div class="ddm-field-actions-container">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                <title>paste</title>
+                <use xlink:href="icons.svg#paste"></use>
+              </svg>
+            </button>
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                <title>trash</title>
+                <use xlink:href="icons.svg#trash"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="ddm-resize-handle-right"></div>
+        </div>
+      </div>
+      <div class="col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
+        <div class="ddm-field-container">
+          <div class="ddm-resize-handle-left"></div>
+          <div class="ddm-drag">
+            <p>Text Field</p>
+          </div>
+          <div class="ddm-field-actions-container">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                <title>paste</title>
+                <use xlink:href="icons.svg#paste"></use>
+              </svg>
+            </button>
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                <title>trash</title>
+                <use xlink:href="icons.svg#trash"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="ddm-resize-handle-right"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`LayoutRenderer should render a layout with an empty field only in editable mode 1`] = `
+<div class="form-builder-layout">
+  <div class="layout-page">
+    <div class="row">
+      <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
+        <div class="ddm-field-container">
+          <div class="ddm-resize-handle-left"></div>
+          <div class="ddm-drag">
+            <p>Radio Field</p>
+          </div>
+          <div class="ddm-field-actions-container">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                <title>paste</title>
+                <use xlink:href="icons.svg#paste"></use>
+              </svg>
+            </button>
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                <title>trash</title>
+                <use xlink:href="icons.svg#trash"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="ddm-resize-handle-right"></div>
+        </div>
+      </div>
+      <div class="col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
+        <div class="ddm-field-container">
+          <div class="ddm-resize-handle-left"></div>
+          <div class="ddm-drag">
+            <p>Text Field</p>
+          </div>
+          <div class="ddm-field-actions-container">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                <title>paste</title>
+                <use xlink:href="icons.svg#paste"></use>
+              </svg>
+            </button>
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                <title>trash</title>
+                <use xlink:href="icons.svg#trash"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="ddm-resize-handle-right"></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
+        <div class="ddm-field-container">
+          <div class="ddm-resize-handle-left"></div>
+          <div class="ddm-drag">
+            <p>Select Field</p>
+          </div>
+          <div class="ddm-field-actions-container">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                <title>paste</title>
+                <use xlink:href="icons.svg#paste"></use>
+              </svg>
+            </button>
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                <title>trash</title>
+                <use xlink:href="icons.svg#trash"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="ddm-resize-handle-right"></div>
+        </div>
+      </div>
+      <div class="col-md-2 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
+        <div class="ddm-field-container">
+          <div class="ddm-resize-handle-left"></div>
+          <div class="ddm-drag">
+            <div>Field doesn't exist.</div>
+          </div>
+          <div class="ddm-field-actions-container">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                <title>paste</title>
+                <use xlink:href="icons.svg#paste"></use>
+              </svg>
+            </button>
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                <title>trash</title>
+                <use xlink:href="icons.svg#trash"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="ddm-resize-handle-right"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
+        <div class="ddm-field-container">
+          <div class="ddm-resize-handle-left"></div>
+          <div class="ddm-drag">
+            <p>Text Field</p>
+          </div>
+          <div class="ddm-field-actions-container">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
+                <title>paste</title>
+                <use xlink:href="icons.svg#paste"></use>
+              </svg>
+            </button>
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+                <title>trash</title>
+                <use xlink:href="icons.svg#trash"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="ddm-resize-handle-right"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
+        <div class="ddm-target col-empty"></div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`LayoutRenderer should render a layout with pages 1`] = `
+<div class="form-builder-layout">
+  <div class="layout-page">
+    <div class="row">
+      <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
+        <p>Radio Field</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
+        <p>Text Field</p>
+      </div>
+      <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
+        <p>Select Field</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
+        <p>Text Field</p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`LayoutRenderer should render a layout with pages in mode of list 1`] = `
+<div aria-labelledby="sidebarLightFormsFieldTab" class="fade tab-pane active show" id="sidebarLightDetails" role="tabpanel">
+  <div class="row">
+    <div class="col-md-3">
+      <p>Radio Field</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <p>Text Field</p>
+    </div>
+    <div class="col-md-6">
+      <p>Select Field</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>Text Field</p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`LayoutRenderer should render default markup 1`] = `<p>Drag from sidebar and drop here</p>`;

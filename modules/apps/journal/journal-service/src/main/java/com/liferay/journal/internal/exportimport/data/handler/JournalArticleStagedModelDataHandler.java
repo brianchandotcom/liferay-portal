@@ -1053,6 +1053,10 @@ public class JournalArticleStagedModelDataHandler
 			return existingArticle;
 		}
 
+		if (version == 0.0) {
+			return _journalArticleLocalService.fetchArticle(groupId, articleId);
+		}
+
 		return _journalArticleLocalService.fetchArticle(
 			groupId, articleId, version);
 	}

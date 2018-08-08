@@ -19,7 +19,7 @@ import org.gradle.api.Project;
 /**
  * @author Eddie Olson
  */
-public class WeDeployMessageQueuePlugin extends BaseWeDeployPlugin {
+public class MessageQueueWeDeployPlugin extends BaseWeDeployPlugin {
 
 	public static final String DELETE_WEDEPLOY_MESSAGE_QUEUE_TASK_NAME =
 		"deleteWeDeployMessageQueue";

@@ -39,10 +39,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistrar;
 import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -202,6 +204,10 @@ public abstract class AbstractSearchEngineConfigurator
 		_messageBus.removeDestination(
 			searchEngineRegistration.getSearchWriterDestinationName());
 
+		if (_destinationServiceRegistrar != null) {
+			_destinationServiceRegistrar.destroy();
+		}
+
 		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
 
 		searchEngineHelper.removeSearchEngine(
@@ -358,6 +364,23 @@ public abstract class AbstractSearchEngineConfigurator
 				_messageBus, searchEngineId);
 		}
 
+		Registry registry = RegistryUtil.getRegistry();
+
+		_destinationServiceRegistrar = registry.getServiceRegistrar(
+			Destination.class);
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("destination.name", searchReaderDestination.getName());
+
+		_destinationServiceRegistrar.registerService(
+			Destination.class, searchReaderDestination, properties);
+
+		properties.put("destination.name", searchWriterDestination.getName());
+
+		_destinationServiceRegistrar.registerService(
+			Destination.class, searchWriterDestination, properties);
+
 		createSearchEngineListeners(
 			searchEngineId, searchEngine, searchReaderDestination,
 			searchWriterDestination);
@@ -452,6 +475,7 @@ public abstract class AbstractSearchEngineConfigurator
 	private final List<SearchEngineRegistration> _searchEngineRegistrations =
 		new ArrayList<>();
 	private Map<String, SearchEngine> _searchEngines;
+	private ServiceRegistrar<Destination> _destinationServiceRegistrar;
 
 	private static class SearchEngineRegistration {
 

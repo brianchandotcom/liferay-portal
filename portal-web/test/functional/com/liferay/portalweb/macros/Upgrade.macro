@@ -50,7 +50,8 @@
 			<var name="fieldFieldLabel" value="Text" />
 		</execute>
 
-		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error:" />
+		<execute function="AssertConsoleTextNotPresent" value1="SQLCODE=-134" />
+		<execute function="AssertConsoleTextNotPresent" value1="SQLCODE=-727" />
 	</command>
 
 	<command name="addForm">

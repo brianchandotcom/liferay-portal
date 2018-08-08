@@ -17,7 +17,15 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class RemoteGitBranch extends BaseGitBranch {
+public class RemoteGitBranch
+	extends BaseGitBranch implements Comparable<RemoteGitBranch> {
+
+	@Override
+	public int compareTo(RemoteGitBranch o) {
+		String name = getName();
+
+		return name.compareTo(o.getName());
+	}
 
 	public RemoteRepository getRemoteRepository() {
 		return _remoteRepository;

@@ -20,8 +20,10 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
+import com.liferay.portal.kernel.exception.RequiredWorkflowRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.exception.RolePermissionsException;
@@ -161,7 +163,16 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
-		_roleService.deleteRole(roleId);
+		try {
+			_roleService.deleteRole(roleId);
+		}
+		catch (ModelListenerException mle) {
+			Throwable cause = mle.getCause();
+
+			if (cause instanceof RequiredWorkflowRoleException) {
+				SessionErrors.add(actionRequest, cause.getClass(), cause);
+			}
+		}
 	}
 
 	public void deleteRoles(
@@ -171,8 +182,17 @@ public class RolesAdminPortlet extends MVCPortlet {
 		long[] deleteRoleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "deleteRoleIds"), 0L);
 
-		for (long roleId : deleteRoleIds) {
-			_roleService.deleteRole(roleId);
+		try {
+			for (long roleId : deleteRoleIds) {
+				_roleService.deleteRole(roleId);
+			}
+		}
+		catch (ModelListenerException mle) {
+			Throwable cause = mle.getCause();
+
+			if (cause instanceof RequiredWorkflowRoleException) {
+				SessionErrors.add(actionRequest, cause.getClass(), cause);
+			}
 		}
 	}
 
@@ -438,9 +458,12 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		long roleId = ParamUtil.getLong(renderRequest, "roleId");
 
-		if (SessionErrors.contains(
+		if ((SessionErrors.contains(
 				renderRequest, RequiredRoleException.class.getName()) &&
-			(roleId < 1)) {
+			 (roleId < 1)) ||
+			SessionErrors.contains(
+				renderRequest,
+				RequiredWorkflowRoleException.getNestedClasses())) {
 
 			include("/view.jsp", renderRequest, renderResponse);
 		}

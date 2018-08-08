@@ -1057,6 +1057,58 @@ release was successful.</echo>
 		<delete dir="${tmp.hypersonic.dir}" />
 	</target>
 
+	<target name="generate-osgi-state">
+		<property location="dist/osgi.state.tmp" name="tmp.osgi.state.dir" />
+
+		<property location="${tmp.osgi.state.dir}/tomcat-${app.server.tomcat.version}/bin" name="tmp.app.server.tomcat.bin.dir" />
+
+		<copy
+			todir="${tmp.osgi.state.dir}"
+		>
+			<fileset
+				dir="${liferay.home}"
+			/>
+		</copy>
+
+		<chmod
+			perm="744"
+		>
+			<fileset
+				dir="${tmp.app.server.tomcat.bin.dir}"
+				includes="*.sh"
+			/>
+		</chmod>
+
+		<parallel>
+			<exec dir="${tmp.app.server.tomcat.bin.dir}" executable="sh">
+				<arg value="catalina.sh" />
+				<arg value="run" />
+			</exec>
+
+			<sequential>
+				<waitfor>
+					<http url="http://localhost:8080" />
+				</waitfor>
+
+				<sleep seconds="5" />
+
+				<exec dir="${tmp.app.server.tomcat.bin.dir}" executable="sh">
+					<arg value="shutdown.sh" />
+				</exec>
+			</sequential>
+		</parallel>
+
+		<copy
+			todir="dist/osgi/state"
+		>
+			<fileset
+				dir="${tmp.osgi.state.dir}/osgi/state"
+			/>
+		</copy>
+
+		<delete dir="${tmp.osgi.state.dir}" />
+	</target>
+
 	<target name="prepare-generated-files">
 		<antcall target="clean" />
 		<antcall target="start" />
@@ -3418,7 +3470,7 @@ plugins.includes=</echo>
 	</target>
 
 	<target name="zip-executable">
-		<delete failonerror="false" file="dist/${zip.executable.file}-${lp.version}.zip" />
+ 		<delete failonerror="false" file="dist/${zip.executable.file}-${lp.version}.zip" />
 
 		<antelope:stringutil property="zip.executable.dir.beginindex" string="${zip.executable.dir}">
 			<lastindexof string="/" />
@@ -3591,10 +3643,6 @@ plugins.includes=</echo>
 			</then>
 			<else>
 
-				<!--
-				Only used by when zipping Tcat admin and agent
-				-->
-
 				<zip
 					destfile="dist/${zip.executable.file}-${lp.version}.zip"
 				>
@@ -3623,6 +3671,21 @@ plugins.includes=</echo>
 					<zipfileset
 						dir="dist/hypersonic"
 						prefix="liferay-portal-${lp.version}/${zip.executable.dir.name}/data"
+					/>
+				</zip>
+			</then>
+		</if> 
+
+		<if>
+			<available file="dist/osgi/state" />
+			<then>
+				<zip
+					destfile="dist/${zip.executable.file}-${lp.version}.zip"
+					update="true"
+				>
+					<zipfileset
+						dir="dist/osgi/state"
+						prefix="liferay-portal-${lp.version}/osgi/state"
 					/>
 				</zip>
 			</then>

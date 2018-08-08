@@ -21,7 +21,24 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
  */
 public interface DDMFormLayoutValidator {
 
-	public void validate(DDMFormLayout ddmFormLayout)
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by
+	 * {@link DDMFormLayoutValidator#validate(DDMFormLayoutValidatorValidateRequest)}
+	 */
+	@Deprecated
+	public default void validate(DDMFormLayout ddmFormLayout)
+		throws DDMFormLayoutValidationException {
+
+		DDMFormLayoutValidatorValidateRequest validateFormLayoutRequest =
+			DDMFormLayoutValidatorValidateRequest.Builder.newBuilder(
+				ddmFormLayout
+			).build();
+
+		validate(validateFormLayoutRequest);
+	}
+
+	public void validate(
+			DDMFormLayoutValidatorValidateRequest validateFormLayoutRequest)
 		throws DDMFormLayoutValidationException;
 
 }

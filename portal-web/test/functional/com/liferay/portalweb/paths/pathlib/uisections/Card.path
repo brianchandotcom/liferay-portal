@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>GENERIC_SMALL_TEXT</td>
-	<td>//div[contains(@class,'card')]//span[contains(@class,'lfr-card-workflow-text')]</td>
+	<td>//div[contains(@class,'card')][contains(.,'${key_rowEntry}')]//span[contains(@class,'lfr-card-workflow-text')]</td>
 	<td></td>
 </tr>
 <tr>

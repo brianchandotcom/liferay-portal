@@ -20,10 +20,9 @@ import com.liferay.analytics.data.binding.internal.IdentityContextMessageJSONObj
 import com.liferay.analytics.model.IdentityContextMessage;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Eduardo Garcia
@@ -40,8 +39,8 @@ public class IdentityClientImpl implements IdentityClient {
 			"/%s%s", identityContextMessage.getAnalyticsKey(),
 			_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PATH);
 
-		if (_logger.isDebugEnabled()) {
-			_logger.debug(
+		if (_log.isDebugEnabled()) {
+			_log.debug(
 				"Sending identity request {} to destination {}//{}:{}{}",
 				jsonIdentityContextMessage,
 				_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PROTOCOL,
@@ -75,7 +74,7 @@ public class IdentityClientImpl implements IdentityClient {
 		_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PROTOCOL = System.getProperty(
 			"identity.gateway.protocol", "https");
 
-	private static final Logger _logger = LoggerFactory.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		IdentityClientImpl.class);
 
 	private final JSONObjectMapper<IdentityContextMessage> _jsonObjectMapper =

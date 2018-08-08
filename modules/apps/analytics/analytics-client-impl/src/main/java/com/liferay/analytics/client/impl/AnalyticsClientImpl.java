@@ -20,10 +20,9 @@ import com.liferay.analytics.data.binding.internal.AnalyticsEventsMessageJSONObj
 import com.liferay.analytics.model.AnalyticsEventsMessage;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Eduardo Garcia
@@ -36,8 +35,8 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 		String jsonAnalyticsEventsMessage = _jsonObjectMapper.map(
 			analyticsEventsMessage);
 
-		if (_logger.isDebugEnabled()) {
-			_logger.debug(
+		if (_log.isDebugEnabled()) {
+			_log.debug(
 				String.format(
 					"Sending analytics message %s to destination %s//%s:%s%s",
 					jsonAnalyticsEventsMessage,
@@ -76,7 +75,7 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 		_SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PROTOCOL = System.getProperty(
 			"analytics.gateway.protocol", "https");
 
-	private static final Logger _logger = LoggerFactory.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsClientImpl.class);
 
 	private final JSONObjectMapper<AnalyticsEventsMessage> _jsonObjectMapper =

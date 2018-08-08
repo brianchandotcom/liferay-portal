@@ -15,6 +15,8 @@
 package com.liferay.portal.remote.cxf.common.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.remote.cxf.common.configuration.CXFEndpointPublisherConfiguration;
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
@@ -49,9 +51,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Carlos Sierra Andrés
@@ -265,8 +264,8 @@ public class CXFEndpointPublisher {
 				_busServiceRegistration.unregister();
 			}
 			catch (Exception e) {
-				if (_logger.isWarnEnabled()) {
-					_logger.warn(
+				if (_log.isWarnEnabled()) {
+					_log.warn(
 						"Unable to unregister CXF bus service registration " +
 							_busServiceRegistration);
 				}
@@ -277,8 +276,8 @@ public class CXFEndpointPublisher {
 					_remoteAccessFilterServiceRegistration.unregister();
 				}
 				catch (Exception e) {
-					if (_logger.isWarnEnabled()) {
-						_logger.warn(
+					if (_log.isWarnEnabled()) {
+						_log.warn(
 							"Unable to unregister RemoteAccessFilter " +
 								"registration " +
 									_remoteAccessFilterServiceRegistration);
@@ -291,8 +290,8 @@ public class CXFEndpointPublisher {
 					_authVerifierFilterServiceRegistration.unregister();
 				}
 				catch (Exception e) {
-					if (_logger.isWarnEnabled()) {
-						_logger.warn(
+					if (_log.isWarnEnabled()) {
+						_log.warn(
 							"Unable to unregister AuthVerifierFilter " +
 								"registration " +
 									_authVerifierFilterServiceRegistration);
@@ -304,8 +303,8 @@ public class CXFEndpointPublisher {
 				_servletServiceRegistration.unregister();
 			}
 			catch (Exception e) {
-				if (_logger.isWarnEnabled()) {
-					_logger.warn(
+				if (_log.isWarnEnabled()) {
+					_log.warn(
 						"Unable to unregister servlet service registration " +
 							_servletServiceRegistration);
 				}
@@ -315,8 +314,8 @@ public class CXFEndpointPublisher {
 				_servletContextHelperServiceRegistration.unregister();
 			}
 			catch (Exception e) {
-				if (_logger.isWarnEnabled()) {
-					_logger.warn(
+				if (_log.isWarnEnabled()) {
+					_log.warn(
 						"Unable to unregister servlet context helper service " +
 							"registration " +
 								_servletContextHelperServiceRegistration);
@@ -324,7 +323,7 @@ public class CXFEndpointPublisher {
 			}
 		}
 
-		private static final Logger _logger = LoggerFactory.getLogger(
+		private static final Log _log = LogFactoryUtil.getLog(
 			CXFEndpointPublisher.class);
 
 		private ServiceRegistration<Filter>

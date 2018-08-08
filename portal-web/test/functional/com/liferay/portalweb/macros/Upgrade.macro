@@ -1268,7 +1268,9 @@
 			<var name="pageName" value="Document" />
 		</execute>
 
-		<execute macro="DMPortlet#setDescriptiveView" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
 
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentTitle" value="Document1" />

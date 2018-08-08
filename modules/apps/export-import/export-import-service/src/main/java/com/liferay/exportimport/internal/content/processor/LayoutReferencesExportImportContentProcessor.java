@@ -744,6 +744,13 @@ public class LayoutReferencesExportImportContentProcessor
 
 			String url = content.substring(beginPos + offset, endPos);
 
+			if (url.contains("/c/document_library/get_file?") ||
+				url.contains("/documents/") ||
+				url.contains("/image/image_gallery?")) {
+
+				continue;
+			}
+
 			endPos = url.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
 
 			if (endPos != -1) {

@@ -45,6 +45,7 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidatorValidateRequest;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -1947,7 +1948,11 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected void validate(DDMForm ddmForm) throws PortalException {
-		ddmFormValidator.validate(ddmForm);
+		DDMFormValidatorValidateRequest.Builder builder =
+			DDMFormValidatorValidateRequest.Builder.newBuilder(
+				ddmForm
+			);
+		ddmFormValidator.validate(builder.build());
 	}
 
 	protected void validate(DDMForm parentDDMForm, DDMForm ddmForm)

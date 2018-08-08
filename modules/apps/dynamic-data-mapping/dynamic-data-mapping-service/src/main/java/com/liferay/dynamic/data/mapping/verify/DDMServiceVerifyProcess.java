@@ -35,6 +35,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorValidateRequest;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidatorValidateRequest;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorValidateRequest;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -168,7 +171,12 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 			DDMFormValues ddmFormValues = getDDMFormValues(
 				ddmStructureVersion.getDDMForm(), ddmContent);
 
-			_ddmFormValuesValidator.validate(ddmFormValues);
+			DDMFormValuesValidatorValidateRequest.Builder builder =
+				DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+					ddmFormValues
+				);
+
+			_ddmFormValuesValidator.validate(builder.build());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -207,13 +215,19 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyDDMForm(DDMForm ddmForm) throws PortalException {
-		_ddmFormValidator.validate(ddmForm);
+		DDMFormValidatorValidateRequest.Builder builder =
+			DDMFormValidatorValidateRequest.Builder.newBuilder(ddmForm);
+
+		_ddmFormValidator.validate(builder.build());
 	}
 
 	protected void verifyDDMFormLayout(DDMFormLayout ddmFormLayout)
 		throws PortalException {
 
-		_ddmFormLayoutValidator.validate(ddmFormLayout);
+		DDMFormLayoutValidatorValidateRequest.Builder builder =
+			DDMFormLayoutValidatorValidateRequest.Builder.newBuilder(ddmFormLayout);
+
+		_ddmFormLayoutValidator.validate(builder.build());
 	}
 
 	protected void verifyStructure(DDMStructure ddmStructure)

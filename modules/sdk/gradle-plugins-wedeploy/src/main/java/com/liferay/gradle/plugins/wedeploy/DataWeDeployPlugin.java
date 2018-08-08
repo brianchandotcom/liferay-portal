@@ -19,7 +19,7 @@ import org.gradle.api.Project;
 /**
  * @author Andrea Di Giorgi
  */
-public class WeDeployDataPlugin extends BaseWeDeployPlugin {
+public class DataWeDeployPlugin extends BaseWeDeployPlugin {
 
 	public static final String DELETE_WEDEPLOY_DATA_TASK_NAME =
 		"deleteWeDeployData";

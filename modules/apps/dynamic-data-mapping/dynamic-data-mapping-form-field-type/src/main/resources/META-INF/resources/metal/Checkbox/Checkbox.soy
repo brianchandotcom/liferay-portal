@@ -1,7 +1,7 @@
 {namespace Checkbox}
 
 {template .render}
-	{@param? _handleToggleChange: any}
+	{@param? _handleToggleChanged: any}
 	{@param? editable: bool}
 	{@param? helpText: string}
 	{@param? id: string}
@@ -15,7 +15,7 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
-				{param _handleToggleChange: $_handleToggleChange /}
+				{param _handleToggleChanged: $_handleToggleChanged /}
 				{param checked: $value /}
 				{param disabled: $editable /}
 				{param label: $label /}
@@ -34,14 +34,14 @@
 
 {template .content}
 	{@param? checked: bool}
-	{@param? _handleToggleChange: any}
+	{@param? _handleToggleChanged: any}
 	{@param? disabled: bool}
 	{@param? label: string}
 	{@param? showAsSwitcher: bool}
 
 	{if $showAsSwitcher}
 		<label class="toggle-switch">
-			<input class="toggle-switch-check" type="checkbox" data-onchange="{$_handleToggleChange}">
+			<input class="toggle-switch-check" type="checkbox" data-onchange="{$_handleToggleChanged}">
 			<span class="toggle-switch-label">{$label}</span>
 			<span aria-hidden="true" class="toggle-switch-bar">
 				<span class="toggle-switch-handle" data-label-off="{$label}" data-label-on="{$label}">

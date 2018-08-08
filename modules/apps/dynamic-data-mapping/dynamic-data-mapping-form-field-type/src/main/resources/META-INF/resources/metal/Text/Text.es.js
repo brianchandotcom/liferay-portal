@@ -91,10 +91,10 @@ class Text extends Component {
 		key: Config.string(),
 	};
 
-	_handleFieldChange(event) {
+	_handleFieldChanged(event) {
 		const {key} = this;
 
-		this.emit('fieldEdit', {
+		this.emit('fieldEdited', {
 			value: event.target.value,
 			key,
 			originalEvent: event,

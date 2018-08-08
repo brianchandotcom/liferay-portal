@@ -16,11 +16,7 @@ const withAppComposer = WrappedComponent => {
          * @param {!Object} context
          * @private
          */
-		_handleContextChanged() {
-			// TODO:
-			// logic to autosave...
-
-		}
+		_handleContextChanged() {}
 
 		/**
 		 * @inheritDoc

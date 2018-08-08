@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Sidebar Edit mode should go into edit mode with just fieldContext, fieldLists and fieldFocus 1`] = `
+exports[`Sidebar Edit mode should go into edit mode with just fieldContext, fieldLists and focusedField 1`] = `
 <div class="sidebar-container" ref="sidebar">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">

@@ -1,7 +1,7 @@
 {namespace Text}
 
 {template .render}
-	{@param? _handleFieldChange: any}
+	{@param? _handleFieldChanged: any}
 	{@param? editable: bool}
 	{@param? helpText: string}
 	{@param? id: string}
@@ -16,7 +16,7 @@
 		{param contentRenderer kind="html"}
 			{call .content}
 				{param editable: $editable /}
-				{param _handleFieldChange: $_handleFieldChange /}
+				{param _handleFieldChanged: $_handleFieldChanged /}
 				{param id: $id /}
 				{param placeholder: $placeholder /}
 				{param value: $value /}
@@ -37,7 +37,7 @@
 	{@param? id: string}
 	{@param? placeholder: string}
 	{@param? value: string}
-	{@param? _handleFieldChange: any}
+	{@param? _handleFieldChanged: any}
 
 	{let $attributes kind="attributes"}
 		class="form-control"
@@ -52,7 +52,7 @@
 
 		type="text"
 
-		data-oninput="{$_handleFieldChange}"
+		data-oninput="{$_handleFieldChanged}"
 
 		{if not($editable)}
 			disabled="disabled"

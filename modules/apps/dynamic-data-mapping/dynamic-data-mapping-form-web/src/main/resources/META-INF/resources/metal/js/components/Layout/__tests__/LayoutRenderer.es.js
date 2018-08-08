@@ -61,7 +61,7 @@ describe('LayoutRenderer', () => {
 
 	it('should render a layout with disabled drag and drop', () => {
 		component = new LayoutRenderer({
-			disabledDragAndDrop: true,
+			dragAndDropDisabled: true,
 			editable: true,
 			pages: context,
 			spritemap,
@@ -99,10 +99,10 @@ describe('LayoutRenderer', () => {
 
 		jest.runAllTimers();
 
-		component.refs.field.emitFieldEdit();
+		component.refs.field.emitFieldEdited();
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldEdit', {
+		expect(spy).toHaveBeenCalledWith('fieldEdited', {
 			value: 'Foo',
 			key: 'Bar',
 			originalEvent: {},
@@ -129,17 +129,17 @@ describe('LayoutRenderer', () => {
 		component._handleDragAndDropEnd(mockEvent);
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldMove', {
+		expect(spy).toHaveBeenCalledWith('fieldMoved', {
 			data: mockEvent,
 			target: {
-				indexColumn: false,
-				indexPage: 0,
-				indexRow: 0,
+				columnIndex: false,
+				pageIndex: 0,
+				rowIndex: 0,
 			},
 			source: {
-				indexColumn: 1,
-				indexPage: 0,
-				indexRow: 1,
+				columnIndex: 1,
+				pageIndex: 0,
+				rowIndex: 1,
 			},
 		});
 	});
@@ -163,12 +163,12 @@ describe('LayoutRenderer', () => {
 		component._handleDragAndDropEnd(mockEvent);
 
 		expect(spy).not.toHaveBeenCalled();
-		expect(spy).not.toHaveBeenCalledWith('fieldMove', expect.any(Object));
+		expect(spy).not.toHaveBeenCalledWith('fieldMoved', expect.any(Object));
 	});
 
 	it('should render a layout with emit an field clicked event', () => {
 		component = new LayoutRenderer({
-			disabledDragAndDrop: true,
+			dragAndDropDisabled: true,
 			editable: true,
 			pages: context,
 			spritemap,
@@ -184,7 +184,7 @@ describe('LayoutRenderer', () => {
 
 	it('should emit a fieldClicked event with the field location', () => {
 		component = new LayoutRenderer({
-			disabledDragAndDrop: true,
+			dragAndDropDisabled: true,
 			editable: true,
 			pages: context,
 			spritemap,
@@ -198,9 +198,9 @@ describe('LayoutRenderer', () => {
 		expect(spy).toHaveBeenCalledWith(
 			'fieldClicked',
 			expect.objectContaining({
-				indexColumn: expect.anything(),
-				indexPage: expect.any(Number),
-				indexRow: expect.any(Number),
+				columnIndex: expect.anything(),
+				pageIndex: expect.any(Number),
+				rowIndex: expect.any(Number),
 			})
 		);
 	});
@@ -252,7 +252,7 @@ describe('LayoutRenderer', () => {
 
 	it('should render a layout and if it is disabled should not reset the drag-and-drop feature for all API page changes', () => {
 		component = new LayoutRenderer({
-			disabledDragAndDrop: true,
+			dragAndDropDisabled: true,
 			editable: true,
 			pages: context,
 			spritemap,
@@ -272,9 +272,9 @@ describe('LayoutRenderer', () => {
 	});
 
 	it('should render a layout with an empty field only in editable mode', () => {
-		const indexColumn = 2;
-		const indexPage = 0;
-		const indexRow = 1;
+		const columnIndex = 2;
+		const pageIndex = 0;
+		const rowIndex = 1;
 		const fields = [
 			{
 				type: 'option_multiple',
@@ -283,9 +283,9 @@ describe('LayoutRenderer', () => {
 		];
 		const newContext = LayoutSupport.addFields(
 			context,
-			indexPage,
-			indexRow,
-			indexColumn,
+			pageIndex,
+			rowIndex,
+			columnIndex,
 			fields
 		);
 
@@ -299,9 +299,9 @@ describe('LayoutRenderer', () => {
 	});
 
 	it('should not render the layout with the field empty in non-editable mode', () => {
-		const indexColumn = 2;
-		const indexPage = 0;
-		const indexRow = 1;
+		const columnIndex = 2;
+		const pageIndex = 0;
+		const rowIndex = 1;
 		const fields = [
 			{
 				type: 'option_multiple',
@@ -310,9 +310,9 @@ describe('LayoutRenderer', () => {
 		];
 		const newContext = LayoutSupport.addFields(
 			context,
-			indexPage,
-			indexRow,
-			indexColumn,
+			pageIndex,
+			rowIndex,
+			columnIndex,
 			fields
 		);
 

@@ -156,8 +156,8 @@ describe('Select', () => {
 	});
 
 	it('should emit a field edit event when an item is selected', () => {
-		const handleFieldEdit = jest.fn();
-		const events = {fieldEdit: handleFieldEdit};
+		const handleFieldEdited = jest.fn();
+		const events = {fieldEdited: handleFieldEdited};
 
 		component = new Select({
 			items: [
@@ -182,7 +182,7 @@ describe('Select', () => {
 			{}
 		);
 
-		expect(handleFieldEdit).toHaveBeenCalled();
+		expect(handleFieldEdited).toHaveBeenCalled();
 	});
 
 	it('should open dropdown when select is clicked', () => {
@@ -236,6 +236,6 @@ describe('Select', () => {
 		);
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldEdit', expect.any(Object));
+		expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
 	});
 });

@@ -8,7 +8,7 @@ class SidebarProvider extends Component {
 
 		context: Config.array(),
 
-		fieldFocus: Config.object(),
+		focusedField: Config.object(),
 	};
 
 	static STATE = {
@@ -41,14 +41,14 @@ class SidebarProvider extends Component {
 	}
 
 	_syncContextWithFieldContext() {
-		const {context, fieldFocus} = this.props;
-		const {indexColumn, indexPage, indexRow} = fieldFocus;
+		const {context, focusedField} = this.props;
+		const {columnIndex, pageIndex, rowIndex} = focusedField;
 
 		const fieldSelected = LayoutSupport.getColumn(
 			context,
-			indexPage,
-			indexRow,
-			indexColumn
+			pageIndex,
+			rowIndex,
+			columnIndex
 		)[0];
 
 		const depth = array => {

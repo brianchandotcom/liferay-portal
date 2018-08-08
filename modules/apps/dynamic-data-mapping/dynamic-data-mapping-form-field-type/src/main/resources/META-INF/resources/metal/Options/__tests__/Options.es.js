@@ -120,8 +120,8 @@ describe('Options', () => {
 	});
 
 	it('should emit a field edit event on any item value change', () => {
-		const handleFieldEdit = jest.fn();
-		const events = {fieldEdit: handleFieldEdit};
+		const handleFieldEdited = jest.fn();
+		const events = {fieldEdited: handleFieldEdited};
 
 		component = new Options({
 			items: [
@@ -146,12 +146,12 @@ describe('Options', () => {
 			{}
 		);
 
-		expect(handleFieldEdit).toHaveBeenCalled();
+		expect(handleFieldEdited).toHaveBeenCalled();
 	});
 
 	it('should add a new item when add a content in the last option', () => {
-		const handleFieldEdit = jest.fn();
-		const events = {fieldEdit: handleFieldEdit};
+		const handleFieldEdited = jest.fn();
+		const events = {fieldEdited: handleFieldEdited};
 
 		component = new Options({
 			items: [
@@ -209,6 +209,6 @@ describe('Options', () => {
 		);
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldEdit', expect.any(Object));
+		expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
 	});
 });

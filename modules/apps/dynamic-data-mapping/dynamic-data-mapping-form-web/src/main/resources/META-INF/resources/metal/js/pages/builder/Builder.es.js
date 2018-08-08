@@ -26,7 +26,7 @@ class Builder extends Component {
 	 * @private
 	 */
 	_handleFieldAdd(event) {
-		this.emit('fieldAdd', event);
+		this.emit('fieldAdded', event);
 	}
 
 	/**
@@ -34,8 +34,8 @@ class Builder extends Component {
 	 * @param {!Object} data
 	 * @private
 	 */
-	_handleFieldEdit(data) {
-		this.emit('fieldEdit', data);
+	_handleFieldEdited(data) {
+		this.emit('fieldEdited', data);
 	}
 
 	/**
@@ -43,8 +43,8 @@ class Builder extends Component {
 	 * @param {!Object} data
 	 * @private
 	 */
-	_handleFieldMove(data) {
-		this.emit('fieldMove', data);
+	_handleFieldMoved(data) {
+		this.emit('fieldMoved', data);
 	}
 
 	/**
@@ -53,7 +53,7 @@ class Builder extends Component {
 	 * @private
 	 */
 	_handleDeleteButtonClicked(indexes) {
-		this.emit('fieldDelete', indexes);
+		this.emit('fieldDeleted', indexes);
 	}
 
 	/**
@@ -72,17 +72,23 @@ class Builder extends Component {
 	 * @inheritDoc
 	 */
 	render() {
-		const {context, fieldFocus, listFields, spritemap, mode} = this.props;
+		const {
+			context,
+			focusedField,
+			fieldsList,
+			spritemap,
+			mode,
+		} = this.props;
 
 		const layoutRendererEvents = {
 			fieldClicked: this._handleFieldClicked.bind(this),
-			fieldMove: this._handleFieldMove.bind(this),
+			fieldMoved: this._handleFieldMoved.bind(this),
 			deleteButtonClicked: this._handleDeleteButtonClicked.bind(this),
 		};
 
 		const sidebarEvents = {
-			fieldAdd: this._handleFieldAdd.bind(this),
-			fieldEdit: this._handleFieldEdit.bind(this),
+			fieldAdded: this._handleFieldAdd.bind(this),
+			fieldEdited: this._handleFieldEdited.bind(this),
 		};
 
 		const clayManagementToolbarEvents = {
@@ -111,8 +117,8 @@ class Builder extends Component {
 				<Sidebar
 					context={context}
 					events={sidebarEvents}
-					fieldFocus={fieldFocus}
-					fieldLists={listFields}
+					focusedField={focusedField}
+					fieldLists={fieldsList}
 					mode={mode}
 					ref="sidebar"
 					spritemap={spritemap}

@@ -4,8 +4,8 @@ import Soy from 'metal-soy';
 import templates from './Fields.soy.js';
 
 class Fields extends Component {
-	emitFieldEdit() {
-		this.emit('fieldEdit', {
+	emitFieldEdited() {
+		this.emit('fieldEdited', {
 			value: 'Foo',
 			key: 'Bar',
 			originalEvent: {},

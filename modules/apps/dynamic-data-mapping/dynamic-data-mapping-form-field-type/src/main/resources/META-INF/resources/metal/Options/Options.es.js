@@ -111,7 +111,7 @@ class Options extends Component {
 		);
 	}
 
-	_handleTextChange(data) {
+	_handleTextChanged(data) {
 		const {value, originalEvent} = data;
 		const {key} = this;
 		const fieldIndex = this._getFieldIndex(
@@ -129,7 +129,7 @@ class Options extends Component {
 
 		this.setState({items: this.items});
 
-		this.emit('fieldEdit', {
+		this.emit('fieldEdited', {
 			value: this.items,
 			key,
 			originalEvent: originalEvent,

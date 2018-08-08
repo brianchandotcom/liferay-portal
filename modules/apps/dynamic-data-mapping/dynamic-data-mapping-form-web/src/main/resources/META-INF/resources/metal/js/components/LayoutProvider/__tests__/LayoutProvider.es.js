@@ -55,11 +55,11 @@ describe('LayoutProvider', () => {
 		const {provider} = component.refs;
 
 		expect(provider.props.children[0].props.events).toMatchObject({
-			fieldAdd: expect.any(Function),
+			fieldAdded: expect.any(Function),
 			fieldClicked: expect.any(Function),
-			fieldDelete: expect.any(Function),
-			fieldEdit: expect.any(Function),
-			fieldMove: expect.any(Function),
+			fieldDeleted: expect.any(Function),
+			fieldEdited: expect.any(Function),
+			fieldMoved: expect.any(Function),
 		});
 	});
 
@@ -71,25 +71,25 @@ describe('LayoutProvider', () => {
 		expect(child.props.context).toEqual(provider.state.context);
 	});
 
-	it('should pass to the child component the fieldFocus', () => {
+	it('should pass to the child component the focusedField', () => {
 		component = new Parent();
 
 		const {provider, child} = component.refs;
 
-		const fieldFocus = {
-			indexColumn: 0,
-			indexPage: 0,
-			indexRow: 0,
+		const focusedField = {
+			columnIndex: 0,
+			pageIndex: 0,
+			rowIndex: 0,
 			type: 'radio',
 		};
 
 		provider.setState({
-			fieldFocus,
+			focusedField,
 		});
 
 		jest.runAllTimers();
 
-		expect(child.props.fieldFocus).toEqual(provider.state.fieldFocus);
+		expect(child.props.focusedField).toEqual(provider.state.focusedField);
 	});
 
 	it('should pass to the child component the mode', () => {
@@ -107,25 +107,25 @@ describe('LayoutProvider', () => {
 	});
 
 	describe('Field events', () => {
-		describe('fieldMove', () => {
-			it('should listen to the fieldMove event and move the field to the row in context', () => {
+		describe('fieldMoved', () => {
+			it('should listen to the fieldMoved event and move the field to the row in context', () => {
 				component = new Parent();
 
 				const {provider, child} = component.refs;
 				const mockEvent = {
 					target: {
-						indexPage: 0,
-						indexRow: 0,
-						indexColumn: false,
+						pageIndex: 0,
+						rowIndex: 0,
+						columnIndex: false,
 					},
 					source: {
-						indexColumn: 0,
-						indexRow: 1,
-						indexPage: 0,
+						columnIndex: 0,
+						rowIndex: 1,
+						pageIndex: 0,
 					},
 				};
 
-				child.emit('fieldMove', mockEvent);
+				child.emit('fieldMoved', mockEvent);
 
 				jest.runAllTimers();
 
@@ -133,24 +133,24 @@ describe('LayoutProvider', () => {
 				expect(child.props.context).toEqual(provider.state.context);
 			});
 
-			it('should listen to the fieldMove event and move the field to the column in context', () => {
+			it('should listen to the fieldMoved event and move the field to the column in context', () => {
 				component = new Parent();
 
 				const {provider, child} = component.refs;
 				const mockEvent = {
 					target: {
-						indexColumn: 1,
-						indexPage: 0,
-						indexRow: 0,
+						columnIndex: 1,
+						pageIndex: 0,
+						rowIndex: 0,
 					},
 					source: {
-						indexColumn: 1,
-						indexPage: 0,
-						indexRow: 1,
+						columnIndex: 1,
+						pageIndex: 0,
+						rowIndex: 1,
 					},
 				};
 
-				child.emit('fieldMove', mockEvent);
+				child.emit('fieldMoved', mockEvent);
 
 				jest.runAllTimers();
 
@@ -164,18 +164,18 @@ describe('LayoutProvider', () => {
 				const {provider, child} = component.refs;
 				const mockEvent = {
 					target: {
-						indexColumn: 1,
-						indexRow: 0,
-						indexPage: 0,
+						columnIndex: 1,
+						rowIndex: 0,
+						pageIndex: 0,
 					},
 					source: {
-						indexColumn: 0,
-						indexPage: 0,
-						indexRow: 2,
+						columnIndex: 0,
+						pageIndex: 0,
+						rowIndex: 2,
 					},
 				};
 
-				child.emit('fieldMove', mockEvent);
+				child.emit('fieldMoved', mockEvent);
 
 				jest.runAllTimers();
 
@@ -189,18 +189,18 @@ describe('LayoutProvider', () => {
 				const {provider, child} = component.refs;
 				const mockEvent = {
 					target: {
-						indexColumn: false,
-						indexRow: 0,
-						indexPage: 0,
+						columnIndex: false,
+						rowIndex: 0,
+						pageIndex: 0,
 					},
 					source: {
-						indexColumn: 0,
-						indexPage: 0,
-						indexRow: 0,
+						columnIndex: 0,
+						pageIndex: 0,
+						rowIndex: 0,
 					},
 				};
 
-				child.emit('fieldMove', mockEvent);
+				child.emit('fieldMoved', mockEvent);
 
 				jest.runAllTimers();
 
@@ -209,23 +209,23 @@ describe('LayoutProvider', () => {
 			});
 		});
 
-		describe('fieldAdd', () => {
-			it('should listen the fieldAdd event and add the field in the column to the context', () => {
+		describe('fieldAdded', () => {
+			it('should listen the fieldAdded event and add the field in the column to the context', () => {
 				component = new Parent();
 
 				const {provider, child} = component.refs;
 				const mockEvent = {
 					target: {
-						indexRow: 0,
-						indexPage: 0,
-						indexColumn: 1,
+						rowIndex: 0,
+						pageIndex: 0,
+						columnIndex: 1,
 					},
 					fieldProperties: {
 						type: 'text',
 					},
 				};
 
-				child.emit('fieldAdd', mockEvent);
+				child.emit('fieldAdded', mockEvent);
 
 				jest.runAllTimers();
 
@@ -233,22 +233,22 @@ describe('LayoutProvider', () => {
 				expect(child.props.context).toEqual(provider.state.context);
 			});
 
-			it('should listen the fieldAdd event and add the field in the row to the context', () => {
+			it('should listen the fieldAdded event and add the field in the row to the context', () => {
 				component = new Parent();
 
 				const {provider, child} = component.refs;
 				const mockEvent = {
 					target: {
-						indexRow: 0,
-						indexPage: 0,
-						indexColumn: false,
+						rowIndex: 0,
+						pageIndex: 0,
+						columnIndex: false,
 					},
 					fieldProperties: {
 						type: 'text',
 					},
 				};
 
-				child.emit('fieldAdd', mockEvent);
+				child.emit('fieldAdded', mockEvent);
 
 				jest.runAllTimers();
 
@@ -256,48 +256,48 @@ describe('LayoutProvider', () => {
 				expect(child.props.context).toEqual(provider.state.context);
 			});
 
-			it('should update the fieldFocus with the location of the new field when adding to the context', () => {
+			it('should update the focusedField with the location of the new field when adding to the context', () => {
 				component = new Parent();
 
 				const {provider, child} = component.refs;
 				const mockEvent = {
 					target: {
-						indexRow: 1,
-						indexPage: 0,
-						indexColumn: 2,
+						rowIndex: 1,
+						pageIndex: 0,
+						columnIndex: 2,
 					},
 					fieldProperties: {
 						type: 'text',
 					},
 				};
 
-				child.emit('fieldAdd', mockEvent);
+				child.emit('fieldAdded', mockEvent);
 
-				const fieldFocus = {
+				const focusedField = {
 					...mockEvent.target,
 					type: mockEvent.fieldProperties.type,
 				};
 
 				jest.runAllTimers();
 
-				expect(provider.state.fieldFocus).toEqual(fieldFocus);
-				expect(child.props.fieldFocus).toEqual(fieldFocus);
+				expect(provider.state.focusedField).toEqual(focusedField);
+				expect(child.props.focusedField).toEqual(focusedField);
 				expect(provider.state.mode).toBe('edit');
 			});
 		});
 
-		describe('fieldDelete', () => {
-			it('should listen the fieldDelete event and delete the field in the column to the context', () => {
+		describe('fieldDeleted', () => {
+			it('should listen the fieldDeleted event and delete the field in the column to the context', () => {
 				component = new Parent();
 
 				const {provider, child} = component.refs;
 				const mockEvent = {
-					indexRow: 1,
-					indexPage: 0,
-					indexColumn: 0,
+					rowIndex: 1,
+					pageIndex: 0,
+					columnIndex: 0,
 				};
 
-				child.emit('fieldDelete', mockEvent);
+				child.emit('fieldDeleted', mockEvent);
 
 				jest.runAllTimers();
 
@@ -306,8 +306,8 @@ describe('LayoutProvider', () => {
 			});
 		});
 
-		describe('fieldEdit', () => {
-			it('should listen the fieldEdit event and edit the field to the context', () => {
+		describe('fieldEdited', () => {
+			it('should listen the fieldEdited event and edit the field to the context', () => {
 				component = new Parent();
 
 				const {provider, child} = component.refs;
@@ -316,20 +316,20 @@ describe('LayoutProvider', () => {
 					key: 'label',
 				};
 				const mockFieldFocus = {
-					indexColumn: 0,
-					indexPage: 0,
-					indexRow: 1,
+					columnIndex: 0,
+					pageIndex: 0,
+					rowIndex: 1,
 				};
 
 				child.emit('fieldClicked', mockFieldFocus);
-				child.emit('fieldEdit', mockEvent);
+				child.emit('fieldEdited', mockEvent);
 
 				jest.runAllTimers();
 
 				expect(
-					provider.state.context[mockFieldFocus.indexPage].rows[
-						mockFieldFocus.indexRow
-					].columns[mockFieldFocus.indexColumn].fields[0][
+					provider.state.context[mockFieldFocus.pageIndex].rows[
+						mockFieldFocus.rowIndex
+					].columns[mockFieldFocus.columnIndex].fields[0][
 						mockEvent.key
 					]
 				).toBe(mockEvent.value);
@@ -339,14 +339,14 @@ describe('LayoutProvider', () => {
 		});
 
 		describe('fieldClicked', () => {
-			it('should listen the fieldClicked event and change the state of the fieldFocus to the data receive', () => {
+			it('should listen the fieldClicked event and change the state of the focusedField to the data receive', () => {
 				component = new Parent();
 
 				const {provider, child} = component.refs;
 				const mockEvent = {
-					indexColumn: 0,
-					indexPage: 0,
-					indexRow: 0,
+					columnIndex: 0,
+					pageIndex: 0,
+					rowIndex: 0,
 					mode: 'edit',
 				};
 
@@ -355,7 +355,7 @@ describe('LayoutProvider', () => {
 				expect(provider.props.children[0].props.events).toMatchObject({
 					fieldClicked: expect.any(Function),
 				});
-				expect(provider.state.fieldFocus).toEqual(mockEvent);
+				expect(provider.state.focusedField).toEqual(mockEvent);
 			});
 		});
 	});

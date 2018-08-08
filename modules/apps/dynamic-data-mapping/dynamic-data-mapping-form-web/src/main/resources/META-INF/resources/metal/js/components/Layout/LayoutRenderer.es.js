@@ -50,7 +50,7 @@ class LayoutRenderer extends Component {
 		 * @memberof LayoutRenderer
 		 * @type {?bool}
 		 */
-		disabledDragAndDrop: Config.bool().value(false),
+		dragAndDropDisabled: Config.bool().value(false),
 
 		/**
 		 * @default false
@@ -96,7 +96,7 @@ class LayoutRenderer extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
-		if (this.editable && !this.disabledDragAndDrop) {
+		if (this.editable && !this.dragAndDropDisabled) {
 			this._startDrag();
 		}
 	}
@@ -109,7 +109,7 @@ class LayoutRenderer extends Component {
 			typeof nextState.pages !== 'undefined' &&
 			nextState.pages.newVal.length &&
 			this.editable &&
-			!this.disabledDragAndDrop
+			!this.dragAndDropDisabled
 		) {
 			this._dragAndDrop.disposeInternal();
 			this._startDrag();
@@ -120,15 +120,15 @@ class LayoutRenderer extends Component {
 	 * @param {!Object} data
 	 * @private
 	 */
-	_handleFieldChange(data) {
-		this.emit('fieldEdit', data);
+	_handleFieldChanged(data) {
+		this.emit('fieldEdited', data);
 	}
 
 	/**
 	 * @param {!Event} event
 	 * @private
 	 */
-	_handleFocusSelectField(event) {
+	_handleSelectFieldFocused(event) {
 		this._emitFieldClicked(
 			event.delegateTarget.parentElement.parentElement,
 			'edit'
@@ -139,16 +139,7 @@ class LayoutRenderer extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
-	_handleOnClickResize() {
-		// TODO:
-		// Logic to resize field...
-		// const handle = event.target;
-		// const colNode = dom.closest(event, '.col-ddm');
-		//
-		// dom.on(colNode, 'mousemove', this._handleMouseMove.bind(this, colNode));
-		// dom.on(handle, 'mousedown', this._handleMouseMove.bind(this, handle));
-
-	}
+	_handleOnClickResize() {}
 
 	/**
 	 * @param {!Event} event
@@ -173,17 +164,17 @@ class LayoutRenderer extends Component {
 			return;
 		}
 
-		const indexTarget = LayoutSupport.getIndexes(data.target.parentElement);
-		const indexSource = LayoutSupport.getIndexes(
+		const targetIndex = LayoutSupport.getIndexes(data.target.parentElement);
+		const sourceIndex = LayoutSupport.getIndexes(
 			data.source.parentElement.parentElement
 		);
 
 		data.source.innerHTML = '';
 
-		this._handleFieldMove({
+		this._handleFieldMoved({
 			data,
-			target: indexTarget,
-			source: indexSource,
+			target: targetIndex,
+			source: sourceIndex,
 		});
 	}
 
@@ -191,8 +182,8 @@ class LayoutRenderer extends Component {
 	 * @param {!Object} payload
 	 * @private
 	 */
-	_handleFieldMove({data, target, source}) {
-		this.emit('fieldMove', {
+	_handleFieldMoved({data, target, source}) {
+		this.emit('fieldMoved', {
 			target,
 			source,
 			data,

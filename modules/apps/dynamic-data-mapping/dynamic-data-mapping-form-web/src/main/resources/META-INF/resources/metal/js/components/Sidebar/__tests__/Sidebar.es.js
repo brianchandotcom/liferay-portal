@@ -127,10 +127,10 @@ describe('Sidebar', () => {
 
 	it('should open Sidebar when is edit mode', () => {
 		component = new Sidebar({
-			fieldFocus: {
-				indexColumn: 0,
-				indexPage: 0,
-				indexRow: 0,
+			focusedField: {
+				columnIndex: 0,
+				pageIndex: 0,
+				rowIndex: 0,
 				type: 'text',
 			},
 			fieldLists,
@@ -165,10 +165,10 @@ describe('Sidebar', () => {
 
 	it('should update the internal mode with the above mode changes when in edit mode', () => {
 		component = new Sidebar({
-			fieldFocus: {
-				indexColumn: 0,
-				indexPage: 0,
-				indexRow: 0,
+			focusedField: {
+				columnIndex: 0,
+				pageIndex: 0,
+				rowIndex: 0,
 				type: 'text',
 			},
 			fieldLists,
@@ -206,13 +206,13 @@ describe('Sidebar', () => {
 		expect(spyDrag).toHaveBeenCalled();
 	});
 
-	it('should continue to propagate the fieldEdit event', () => {
+	it('should continue to propagate the fieldEdited event', () => {
 		component = new Sidebar({
 			mode: 'edit',
-			fieldFocus: {
-				indexColumn: 0,
-				indexPage: 0,
-				indexRow: 0,
+			focusedField: {
+				columnIndex: 0,
+				pageIndex: 0,
+				rowIndex: 0,
 				type: 'text',
 			},
 			fieldLists,
@@ -223,10 +223,10 @@ describe('Sidebar', () => {
 		const spy = jest.spyOn(component, 'emit');
 		const {layoutRenderer} = component.refs;
 
-		layoutRenderer.emit('fieldEdit', {});
+		layoutRenderer.emit('fieldEdited', {});
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldEdit', expect.any(Object));
+		expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
 	});
 
 	it('should close sidebar when dragging an item', () => {
@@ -246,7 +246,7 @@ describe('Sidebar', () => {
 		expect(component.state.show).toBeFalsy();
 	});
 
-	it('should emit a fieldAdd event when adding in layout', () => {
+	it('should emit a fieldAdded event when adding in layout', () => {
 		component = new Sidebar({
 			fieldLists,
 			spritemap,
@@ -278,18 +278,18 @@ describe('Sidebar', () => {
 			source: field1,
 		};
 
-		component._handleFieldMove(mockEvent, {
+		component._handleFieldMoved(mockEvent, {
 			preventDefault: jest.fn(),
 		});
 
 		jest.runAllTimers();
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldAdd', {
+		expect(spy).toHaveBeenCalledWith('fieldAdded', {
 			target: {
-				indexColumn: 0,
-				indexPage: 2,
-				indexRow: 2,
+				columnIndex: 0,
+				pageIndex: 2,
+				rowIndex: 2,
 			},
 			fieldProperties: expect.any(Object),
 			data: expect.anything(),
@@ -308,7 +308,7 @@ describe('Sidebar', () => {
 			source: undefined,
 		};
 
-		component._handleFieldMove(mockEvent, {
+		component._handleFieldMoved(mockEvent, {
 			preventDefault: jest.fn(),
 		});
 
@@ -335,13 +335,13 @@ describe('Sidebar', () => {
 			expect(component).toMatchSnapshot();
 		});
 
-		it('should go into edit mode with just fieldContext, fieldLists and fieldFocus', () => {
+		it('should go into edit mode with just fieldContext, fieldLists and focusedField', () => {
 			component = new Sidebar({
 				mode: 'edit',
-				fieldFocus: {
-					indexColumn: 0,
-					indexPage: 0,
-					indexRow: 0,
+				focusedField: {
+					columnIndex: 0,
+					pageIndex: 0,
+					rowIndex: 0,
 					type: 'text',
 				},
 				fieldLists,
@@ -354,13 +354,13 @@ describe('Sidebar', () => {
 			expect(component).toMatchSnapshot();
 		});
 
-		it('should return true when there is fieldFocus, edit mode, fieldLists, and fieldContext', () => {
+		it('should return true when there is focusedField, edit mode, fieldLists, and fieldContext', () => {
 			component = new Sidebar({
 				mode: 'edit',
-				fieldFocus: {
-					indexColumn: 0,
-					indexPage: 0,
-					indexRow: 0,
+				focusedField: {
+					columnIndex: 0,
+					pageIndex: 0,
+					rowIndex: 0,
 					type: 'text',
 				},
 				fieldLists,
@@ -371,13 +371,13 @@ describe('Sidebar', () => {
 			expect(component._isEditMode()).toBe(true);
 		});
 
-		it('should return false when there is only fieldFocus', () => {
+		it('should return false when there is only focusedField', () => {
 			component = new Sidebar({
 				spritemap,
-				fieldFocus: {
-					indexColumn: 0,
-					indexPage: 0,
-					indexRow: 0,
+				focusedField: {
+					columnIndex: 0,
+					pageIndex: 0,
+					rowIndex: 0,
 					type: 'text',
 				},
 			});
@@ -444,10 +444,10 @@ describe('Sidebar', () => {
 		it('should change the tab on edit mode', () => {
 			component = new Sidebar({
 				mode: 'edit',
-				fieldFocus: {
-					indexColumn: 0,
-					indexPage: 0,
-					indexRow: 0,
+				focusedField: {
+					columnIndex: 0,
+					pageIndex: 0,
+					rowIndex: 0,
 					type: 'text',
 				},
 				fieldLists,
@@ -467,10 +467,10 @@ describe('Sidebar', () => {
 		it('should return to add mode', () => {
 			component = new Sidebar({
 				mode: 'edit',
-				fieldFocus: {
-					indexColumn: 0,
-					indexPage: 0,
-					indexRow: 0,
+				focusedField: {
+					columnIndex: 0,
+					pageIndex: 0,
+					rowIndex: 0,
 					type: 'text',
 				},
 				fieldLists,

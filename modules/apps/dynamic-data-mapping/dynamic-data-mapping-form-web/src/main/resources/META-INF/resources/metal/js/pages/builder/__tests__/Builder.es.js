@@ -22,7 +22,7 @@ describe('Builder', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('should continue to propagate the fieldAdd event', () => {
+	it('should continue to propagate the fieldAdded event', () => {
 		component = new Builder({
 			spritemap,
 		});
@@ -31,13 +31,13 @@ describe('Builder', () => {
 		const {sidebar} = component.refs;
 		const mockEvent = jest.fn();
 
-		sidebar.emit('fieldAdd', mockEvent);
+		sidebar.emit('fieldAdded', mockEvent);
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldAdd', expect.anything());
+		expect(spy).toHaveBeenCalledWith('fieldAdded', expect.anything());
 	});
 
-	it('should continue to propagate the fieldEdit event', () => {
+	it('should continue to propagate the fieldEdited event', () => {
 		component = new Builder({
 			spritemap,
 		});
@@ -46,13 +46,13 @@ describe('Builder', () => {
 		const {sidebar} = component.refs;
 		const mockEvent = jest.fn();
 
-		sidebar.emit('fieldEdit', mockEvent);
+		sidebar.emit('fieldEdited', mockEvent);
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldEdit', expect.anything());
+		expect(spy).toHaveBeenCalledWith('fieldEdited', expect.anything());
 	});
 
-	it('should continue to propagate the fieldMove event', () => {
+	it('should continue to propagate the fieldMoved event', () => {
 		component = new Builder({
 			spritemap,
 		});
@@ -61,13 +61,13 @@ describe('Builder', () => {
 		const {layoutRenderer} = component.refs;
 		const mockEvent = jest.fn();
 
-		layoutRenderer.emit('fieldMove', mockEvent);
+		layoutRenderer.emit('fieldMoved', mockEvent);
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldMove', expect.anything());
+		expect(spy).toHaveBeenCalledWith('fieldMoved', expect.anything());
 	});
 
-	it('should continue to propagate the fieldDelete event', () => {
+	it('should continue to propagate the fieldDeleted event', () => {
 		component = new Builder({
 			spritemap,
 		});
@@ -79,7 +79,7 @@ describe('Builder', () => {
 		layoutRenderer.emit('deleteButtonClicked', mockEvent);
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldDelete', expect.anything());
+		expect(spy).toHaveBeenCalledWith('fieldDeleted', expect.anything());
 	});
 
 	it('should continue to propagate the fieldClicked event and open the sidebar', () => {

@@ -60,13 +60,13 @@ class Sidebar extends Component {
 		 * @memberof Sidebar
 		 * @type {?object}
 		 */
-		fieldFocus: Config.shapeOf({
-			indexColumn: Config.oneOfType([
+		focusedField: Config.shapeOf({
+			columnIndex: Config.oneOfType([
 				Config.bool().value(false),
 				Config.number(),
 			]),
-			indexPage: Config.number(),
-			indexRow: Config.number(),
+			pageIndex: Config.number(),
+			rowIndex: Config.number(),
 			type: Config.string().required(),
 		}).value({}),
 
@@ -136,8 +136,8 @@ class Sidebar extends Component {
 	 * @param {Object} data
 	 * @protected
 	 */
-	_handleFieldEdit(data) {
-		this.emit('fieldEdit', data);
+	_handleFieldEdited(data) {
+		this.emit('fieldEdited', data);
 	}
 
 	/**
@@ -146,7 +146,7 @@ class Sidebar extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
-	_handleFieldMove(data, event) {
+	_handleFieldMoved(data, event) {
 		event.preventDefault();
 
 		if (!data.target) {
@@ -160,7 +160,7 @@ class Sidebar extends Component {
 		);
 		const fieldProperties = fieldLists[Number(fieldIndex)];
 
-		this.emit('fieldAdd', {
+		this.emit('fieldAdded', {
 			target: indexTarget,
 			fieldProperties,
 			data,
@@ -201,13 +201,13 @@ class Sidebar extends Component {
 	 * @return {bool}
 	 */
 	_isEditMode(mode = this.state.mode) {
-		const {fieldFocus, fieldLists, fieldContext} = this.props;
+		const {focusedField, fieldLists, fieldContext} = this.props;
 
 		return !!(
 			mode === 'edit' &&
 			!(
-				Object.keys(fieldFocus).length === 0 &&
-				fieldFocus.constructor === Object
+				Object.keys(focusedField).length === 0 &&
+				focusedField.constructor === Object
 			) &&
 			fieldContext.length &&
 			fieldLists.length
@@ -238,7 +238,7 @@ class Sidebar extends Component {
 
 		this._dragAndDrop.on(
 			DragDrop.Events.END,
-			this._handleFieldMove.bind(this)
+			this._handleFieldMoved.bind(this)
 		);
 		this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDrag.bind(this));
 	}
@@ -316,16 +316,21 @@ class Sidebar extends Component {
 	 */
 	render() {
 		const {show, tabActive, mode} = this.state;
-		const {spritemap, fieldLists, fieldFocus, fieldContext} = this.props;
+		const {
+			spritemap,
+			fieldLists,
+			focusedField,
+			fieldContext,
+		} = this.props;
 
 		const layoutRenderEvents = {
-			fieldEdit: this._handleFieldEdit.bind(this),
+			fieldEdited: this._handleFieldEdited.bind(this),
 		};
 		let currentField = null;
 
 		if (mode === 'edit') {
 			currentField = fieldLists.find(item => {
-				return item.type == fieldFocus.type;
+				return item.type == focusedField.type;
 			});
 		}
 

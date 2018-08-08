@@ -114,10 +114,10 @@ class Checkbox extends Component {
 		key: Config.string(),
 	};
 
-	_handleToggleChange(event) {
+	_handleToggleChanged(event) {
 		const {key} = this;
 
-		this.emit('fieldEdit', {
+		this.emit('fieldEdited', {
 			value: event.delegateTarget.checked,
 			key,
 			originalEvent: event,

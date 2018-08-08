@@ -137,7 +137,7 @@ class Select extends Component {
 		key: Config.string(),
 	};
 
-	_handleClickItem(event) {
+	_handleItemClicked(event) {
 		const {key} = this;
 
 		this.setState({
@@ -145,7 +145,7 @@ class Select extends Component {
 			predefinedValue: event.target.innerText,
 		});
 
-		this.emit('fieldEdit', {
+		this.emit('fieldEdited', {
 			value: event.target.innerText,
 			key,
 			originalEvent: event,

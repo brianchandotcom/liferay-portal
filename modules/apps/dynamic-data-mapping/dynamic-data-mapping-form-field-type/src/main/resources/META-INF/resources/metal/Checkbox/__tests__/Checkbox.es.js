@@ -120,8 +120,8 @@ describe('Field Checkbox', () => {
 	});
 
 	it('should emit field edit event on field change', () => {
-		const handleFieldChange = jest.fn();
-		const events = {fieldEdit: handleFieldChange};
+		const handleFieldChanged = jest.fn();
+		const events = {fieldEdited: handleFieldChanged};
 
 		component = new Checkbox({
 			spritemap: spritemap,
@@ -134,7 +134,7 @@ describe('Field Checkbox', () => {
 			{}
 		);
 
-		expect(handleFieldChange).toHaveBeenCalled();
+		expect(handleFieldChanged).toHaveBeenCalled();
 	});
 
 	it('should propagate the field edit event on field change', () => {
@@ -151,6 +151,6 @@ describe('Field Checkbox', () => {
 		);
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldEdit', expect.any(Object));
+		expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
 	});
 });

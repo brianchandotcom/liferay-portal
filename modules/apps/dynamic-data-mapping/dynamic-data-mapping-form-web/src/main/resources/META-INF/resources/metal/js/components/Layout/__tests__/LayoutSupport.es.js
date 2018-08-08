@@ -52,9 +52,9 @@ describe('LayoutSupport', () => {
 	});
 
 	it('add a new field to column to the context', () => {
-		const indexColumn = 1;
-		const indexPage = 0;
-		const indexRow = 0;
+		const columnIndex = 1;
+		const pageIndex = 0;
+		const rowIndex = 0;
 		const field = {
 			type: 'text',
 			spritemap: 'icons.svg',
@@ -63,33 +63,33 @@ describe('LayoutSupport', () => {
 		expect(
 			LayoutSupport.addFieldToColumn(
 				context,
-				indexPage,
-				indexRow,
-				indexColumn,
+				pageIndex,
+				rowIndex,
+				columnIndex,
 				field
 			)
 		).toMatchSnapshot();
 	});
 
 	it('should not add an empty object to the column when the field is not passed', () => {
-		const indexColumn = 1;
-		const indexPage = 0;
-		const indexRow = 0;
+		const columnIndex = 1;
+		const pageIndex = 0;
+		const rowIndex = 0;
 
 		expect(
 			LayoutSupport.addFieldToColumn(
 				context,
-				indexPage,
-				indexRow,
-				indexColumn
+				pageIndex,
+				rowIndex,
+				columnIndex
 			)
 		).toMatchSnapshot();
 	});
 
 	it('should add a new fields to column void', () => {
-		const indexColumn = 2;
-		const indexPage = 0;
-		const indexRow = 1;
+		const columnIndex = 2;
+		const pageIndex = 0;
+		const rowIndex = 1;
 		const fields = [
 			{
 				type: 'text',
@@ -100,100 +100,100 @@ describe('LayoutSupport', () => {
 		expect(
 			LayoutSupport.addFields(
 				context,
-				indexPage,
-				indexRow,
-				indexColumn,
+				pageIndex,
+				rowIndex,
+				columnIndex,
 				fields
 			)
 		).toMatchSnapshot();
 	});
 
 	it('should not add new fields to the column as a way to remove', () => {
-		const indexColumn = 2;
-		const indexPage = 0;
-		const indexRow = 1;
+		const columnIndex = 2;
+		const pageIndex = 0;
+		const rowIndex = 1;
 
 		expect(
-			LayoutSupport.addFields(context, indexPage, indexRow, indexColumn)
+			LayoutSupport.addFields(context, pageIndex, rowIndex, columnIndex)
 		).toMatchSnapshot();
 	});
 
 	it('should remove a column from context and reorder', () => {
-		const indexColumn = 1;
-		const indexPage = 0;
-		const indexRow = 1;
+		const columnIndex = 1;
+		const pageIndex = 0;
+		const rowIndex = 1;
 
 		expect(
 			LayoutSupport.removeColumn(
 				context,
-				indexPage,
-				indexRow,
-				indexColumn
+				pageIndex,
+				rowIndex,
+				columnIndex
 			)
 		).toMatchSnapshot();
 	});
 
 	it('should remove a fields to column from context', () => {
-		const indexColumn = 1;
-		const indexPage = 0;
-		const indexRow = 1;
+		const columnIndex = 1;
+		const pageIndex = 0;
+		const rowIndex = 1;
 
 		expect(
 			LayoutSupport.removeFields(
 				context,
-				indexPage,
-				indexRow,
-				indexColumn
+				pageIndex,
+				rowIndex,
+				columnIndex
 			)
 		).toMatchSnapshot();
 	});
 
 	it('should remove a row from context and reorder', () => {
-		const indexPage = 0;
-		const indexRow = 1;
+		const pageIndex = 0;
+		const rowIndex = 1;
 
 		expect(
-			LayoutSupport.removeRow(context, indexPage, indexRow)
+			LayoutSupport.removeRow(context, pageIndex, rowIndex)
 		).toMatchSnapshot();
 	});
 
 	it('should get a column from context', () => {
-		const indexColumn = 1;
-		const indexPage = 0;
-		const indexRow = 1;
+		const columnIndex = 1;
+		const pageIndex = 0;
+		const rowIndex = 1;
 
 		expect(
-			LayoutSupport.getColumn(context, indexPage, indexRow, indexColumn)
+			LayoutSupport.getColumn(context, pageIndex, rowIndex, columnIndex)
 		).toMatchSnapshot();
 	});
 
 	it('should get a row from context', () => {
-		const indexPage = 0;
-		const indexRow = 1;
+		const pageIndex = 0;
+		const rowIndex = 1;
 
 		expect(
-			LayoutSupport.getRow(context, indexPage, indexRow)
+			LayoutSupport.getRow(context, pageIndex, rowIndex)
 		).toMatchSnapshot();
 	});
 
 	it('should return true if there are fields in the context line', () => {
-		const indexPage = 0;
-		const indexRow = 0;
+		const pageIndex = 0;
+		const rowIndex = 0;
 
 		expect(
-			LayoutSupport.hasFieldsRow(context, indexPage, indexRow)
+			LayoutSupport.hasFieldsRow(context, pageIndex, rowIndex)
 		).toBeTruthy();
 	});
 
 	it('should return false if there are fields in the context line', () => {
-		const indexPage = 0;
-		const indexRow = 0;
+		const pageIndex = 0;
+		const rowIndex = 0;
 
 		expect(
 			LayoutSupport.hasFieldsRow(
-				LayoutSupport.removeFields(context, indexPage, indexRow, 0),
-				indexPage,
-				indexRow
+				LayoutSupport.removeFields(context, pageIndex, rowIndex, 0),
+				pageIndex,
+				rowIndex
 			)
 		).toBeFalsy();
 	});
@@ -218,9 +218,9 @@ describe('LayoutSupport', () => {
 		});
 
 		expect(LayoutSupport.getIndexes(element)).toEqual({
-			indexColumn: 0,
-			indexPage: 2,
-			indexRow: 2,
+			columnIndex: 0,
+			pageIndex: 2,
+			rowIndex: 2,
 		});
 	});
 
@@ -240,16 +240,16 @@ describe('LayoutSupport', () => {
 		});
 
 		expect(LayoutSupport.getIndexes(element)).toEqual({
-			indexColumn: false,
-			indexPage: 2,
-			indexRow: 1,
+			columnIndex: false,
+			pageIndex: 2,
+			rowIndex: 1,
 		});
 	});
 
 	it('should replace column fields', () => {
-		const indexPage = 0;
-		const indexRow = 0;
-		const indexColumn = 0;
+		const pageIndex = 0;
+		const rowIndex = 0;
+		const columnIndex = 0;
 		const newField = [
 			{
 				type: 'radio',
@@ -260,9 +260,9 @@ describe('LayoutSupport', () => {
 		expect(
 			LayoutSupport.changeFieldsFromColumn(
 				context,
-				indexPage,
-				indexRow,
-				indexColumn,
+				pageIndex,
+				rowIndex,
+				columnIndex,
 				newField
 			)
 		).toMatchSnapshot();

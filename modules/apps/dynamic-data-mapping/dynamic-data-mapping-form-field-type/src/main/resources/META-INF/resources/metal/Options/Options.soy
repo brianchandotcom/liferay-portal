@@ -1,7 +1,7 @@
 {namespace Options}
 
 {template .render}
-	{@param? _handleTextChange: any}
+	{@param? _handleTextChanged: any}
 	{@param? editable: bool}
 	{@param? helpText: string}
 	{@param? items: list<[
@@ -29,7 +29,7 @@
 						{let $fieldConfig kind="html"}
 							{call Text.render}
 								{param events: [
-									'fieldEdit': $_handleTextChange
+									'fieldEdited': $_handleTextChanged
 								] /}
 								{param editable: $editable ? $editable : $option.disabled /}
 								{param value: $option.label and $option.value ? $option.label : $placeholder /}
@@ -43,7 +43,7 @@
 						{if isLast($option)}
 							{call Text.render}
 								{param events: [
-									'fieldEdit': $_handleTextChange
+									'fieldEdited': $_handleTextChanged
 								] /}
 
 								{param editable: $editable ? $editable : $option.disabled /}

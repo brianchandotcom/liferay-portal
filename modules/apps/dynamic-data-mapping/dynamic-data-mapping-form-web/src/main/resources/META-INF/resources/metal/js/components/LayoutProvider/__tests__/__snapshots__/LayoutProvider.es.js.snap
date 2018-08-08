@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LayoutProvider Field events fieldAdd should listen the fieldAdd event and add the field in the column to the context 1`] = `
+exports[`LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the column to the context 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -82,7 +82,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldAdd should listen the fieldAdd event and add the field in the row to the context 1`] = `
+exports[`LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the row to the context 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -172,7 +172,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldDelete should listen the fieldDelete event and delete the field in the column to the context 1`] = `
+exports[`LayoutProvider Field events fieldDeleted should listen the fieldDeleted event and delete the field in the column to the context 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -243,7 +243,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldEdit should listen the fieldEdit event and edit the field to the context 1`] = `
+exports[`LayoutProvider Field events fieldEdited should listen the fieldEdited event and edit the field to the context 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -320,7 +320,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMove should listen to the fieldMove event and move the field to the column in context 1`] = `
+exports[`LayoutProvider Field events fieldMoved should listen to the fieldMoved event and move the field to the column in context 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -397,7 +397,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMove should listen to the fieldMove event and move the field to the row in context 1`] = `
+exports[`LayoutProvider Field events fieldMoved should listen to the fieldMoved event and move the field to the row in context 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -482,7 +482,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMove should move the field to the column in context and remove the row if there are no fields 1`] = `
+exports[`LayoutProvider Field events fieldMoved should move the field to the column in context and remove the row if there are no fields 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -551,7 +551,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMove should move the field to the row in context and remove the row if there are no fields 1`] = `
+exports[`LayoutProvider Field events fieldMoved should move the field to the row in context and remove the row if there are no fields 1`] = `
 Array [
   Object {
     "rows": Array [

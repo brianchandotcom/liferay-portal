@@ -102,8 +102,8 @@ describe('Field Text', () => {
 	});
 
 	it('should emit a field edit event on field value change', () => {
-		const handleFieldEdit = jest.fn();
-		const events = {fieldEdit: handleFieldEdit};
+		const handleFieldEdited = jest.fn();
+		const events = {fieldEdited: handleFieldEdited};
 
 		component = new Text({
 			spritemap: spritemap,
@@ -116,11 +116,11 @@ describe('Field Text', () => {
 			{}
 		);
 
-		expect(handleFieldEdit).toHaveBeenCalled();
+		expect(handleFieldEdited).toHaveBeenCalled();
 	});
 
 	it('should emit a field edit with correct parameters', done => {
-		const handleFieldEdit = data => {
+		const handleFieldEdited = data => {
 			expect(data).toEqual(
 				expect.objectContaining({
 					value: expect.any(String),
@@ -130,7 +130,7 @@ describe('Field Text', () => {
 			);
 			done();
 		};
-		const events = {fieldEdit: handleFieldEdit};
+		const events = {fieldEdited: handleFieldEdited};
 
 		component = new Text({
 			spritemap: spritemap,
@@ -160,6 +160,6 @@ describe('Field Text', () => {
 		);
 
 		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldEdit', expect.any(Object));
+		expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
 	});
 });

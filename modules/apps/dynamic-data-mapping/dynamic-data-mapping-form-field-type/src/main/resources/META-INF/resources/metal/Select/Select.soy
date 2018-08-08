@@ -1,7 +1,7 @@
 {namespace Select}
 
 {template .render}
-	{@param? _handleClickItem: any}
+	{@param? _handleItemClicked: any}
 	{@param? _handleClick: any}
 	{@param? editable: bool}
 	{@param? helpText: string}
@@ -28,7 +28,7 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
-				{param _handleClickItem: $_handleClickItem /}
+				{param _handleItemClicked: $_handleItemClicked /}
 				{param _handleClick: $_handleClick /}
 				{param editable: $editable /}
 				{param id: $id /}
@@ -51,7 +51,7 @@
 {/template}
 
 {template .content}
-	{@param? _handleClickItem: any}
+	{@param? _handleItemClicked: any}
 	{@param? _handleClick: any}
 	{@param? editable: bool}
 	{@param? id: string}
@@ -100,14 +100,14 @@
 	</div>
 
 	{call .listItems}
-		{param _handleClickItem: $_handleClickItem /}
+		{param _handleItemClicked: $_handleItemClicked /}
 		{param items: $items /}
 		{param open: $open /}
 	{/call}
 {/template}
 
 {template .listItems}
-	{@param? _handleClickItem: any}
+	{@param? _handleItemClicked: any}
 	{@param? items: list<[
 		checked: bool,
 		disabled: bool,
@@ -128,7 +128,7 @@
 			{sp}dropdown-opened
 		{/if}
 		"
-		data-onclick="{$_handleClickItem}"
+		data-onclick="{$_handleItemClicked}"
 
 	{/let}
 

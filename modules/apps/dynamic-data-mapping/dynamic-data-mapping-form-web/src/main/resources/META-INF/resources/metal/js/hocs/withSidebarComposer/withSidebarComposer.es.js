@@ -17,30 +17,20 @@ const withSidebarComposer = WrappedComponent => {
 
 			context: Config.array(),
 
-			fieldFocus: Config.object(),
+			focusedField: Config.object(),
 		};
 
 		/*
          * @param {!Object} context
          * @private
          */
-		_handleShowChanged() {
-			// TODO:
-			// logic to autosave...
-
-		}
+		_handleShowChanged() {}
 
 		/**
 		 * @inheritDoc
 		 */
 		render() {
 			const {children} = this.props;
-			// const events = {
-			//     showChanged: this._handleShowChanged.bind(this),
-			//     ...this.props.events
-			// };
-
-			// const props = Object.assign({...this.props}, events);
 
 			return (
 				<WrappedComponent {...this.props}>{children}</WrappedComponent>

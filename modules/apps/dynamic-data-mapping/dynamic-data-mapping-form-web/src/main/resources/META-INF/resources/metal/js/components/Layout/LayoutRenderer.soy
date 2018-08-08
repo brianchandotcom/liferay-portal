@@ -3,8 +3,8 @@
 {template .render}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleFieldChange: any}
-	{@param? _handleFocusSelectField: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
 	{@param? activePage: number}
 	{@param? editable: bool}
@@ -15,8 +15,8 @@
 
 	{delcall LayoutRenderer.pages variant="$contentRenderer"}
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
-		{param _handleFieldChange: $_handleFieldChange /}
-		{param _handleFocusSelectField: $_handleFocusSelectField /}
+		{param _handleFieldChanged: $_handleFieldChanged /}
+		{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 		{param _handleOnClickResize: $_handleOnClickResize /}
 		{param activePage: $activePage /}
 		{param contentRenderer: $contentRenderer /}
@@ -29,8 +29,8 @@
 {deltemplate LayoutRenderer.pages variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleFieldChange: any}
-	{@param? _handleFocusSelectField: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
@@ -41,8 +41,8 @@
 		<div class="form-builder-layout">
 			{delcall LayoutRenderer.page variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
-				{param _handleFieldChange: $_handleFieldChange /}
-				{param _handleFocusSelectField: $_handleFocusSelectField /}
+				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 				{param _handleOnClickResize: $_handleOnClickResize /}
 				{param contentRenderer: $contentRenderer /}
 				{param editable: $editable /}
@@ -59,8 +59,8 @@
 {deltemplate LayoutRenderer.pages variant="'list'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleFieldChange: any}
-	{@param? _handleFocusSelectField: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
@@ -78,8 +78,8 @@
 		<div aria-labelledby="sidebarLightFormsFieldTab" class="{$classes}" id="sidebarLightDetails" role="tabpanel">
 			{delcall LayoutRenderer.page variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
-				{param _handleFieldChange: $_handleFieldChange /}
-				{param _handleFocusSelectField: $_handleFocusSelectField /}
+				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 				{param _handleOnClickResize: $_handleOnClickResize /}
 				{param contentRenderer: $contentRenderer /}
 				{param editable: $editable /}
@@ -94,8 +94,8 @@
 {deltemplate LayoutRenderer.page variant="'list'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleFieldChange: any}
-	{@param? _handleFocusSelectField: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
@@ -105,12 +105,12 @@
 	{for $row in $page.rows}
 		{delcall LayoutRenderer.row variant="'grid'"}
 			{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
-			{param _handleFieldChange: $_handleFieldChange /}
-			{param _handleFocusSelectField: $_handleFocusSelectField /}
+			{param _handleFieldChanged: $_handleFieldChanged /}
+			{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 			{param _handleOnClickResize: $_handleOnClickResize /}
 			{param contentRenderer: $contentRenderer /}
 			{param editable: $editable /}
-			{param indexRow: index($row) /}
+			{param rowIndex: index($row) /}
 			{param pageId: $pageId /}
 			{param row: $row /}
 			{param spritemap: $spritemap /}
@@ -121,8 +121,8 @@
 {deltemplate LayoutRenderer.page variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleFieldChange: any}
-	{@param? _handleFocusSelectField: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
@@ -142,12 +142,12 @@
 
 			{delcall LayoutRenderer.row variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
-				{param _handleFieldChange: $_handleFieldChange /}
-				{param _handleFocusSelectField: $_handleFocusSelectField /}
+				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 				{param _handleOnClickResize: $_handleOnClickResize /}
 				{param contentRenderer: $contentRenderer /}
 				{param editable: $editable /}
-				{param indexRow: index($row) /}
+				{param rowIndex: index($row) /}
 				{param pageId: $pageId /}
 				{param row: $row /}
 				{param spritemap: $spritemap /}
@@ -168,12 +168,12 @@
 {deltemplate LayoutRenderer.row variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleFieldChange: any}
-	{@param? _handleFocusSelectField: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
-	{@param? indexRow: number}
+	{@param? rowIndex: number}
 	{@param? pageId: number}
 	{@param? row: ?}
 
@@ -181,13 +181,13 @@
 		{for $column in $row.columns}
 			{delcall LayoutRenderer.column variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
-				{param _handleFieldChange: $_handleFieldChange /}
-				{param _handleFocusSelectField: $_handleFocusSelectField /}
+				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 				{param _handleOnClickResize: $_handleOnClickResize /}
 				{param column: $column /}
 				{param editable: $editable /}
-				{param indexColumn: index($column) /}
-				{param indexRow: $indexRow /}
+				{param columnIndex: index($column) /}
+				{param rowIndex: $rowIndex /}
 				{param pageId: $pageId /}
 				{param spritemap: $spritemap /}
 			{/delcall}
@@ -198,13 +198,13 @@
 {deltemplate LayoutRenderer.column variant="'list'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleFieldChange: any}
-	{@param? _handleFocusSelectField: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
 	{@param? column: ?}
 	{@param? editable: bool}
-	{@param? indexColumn: number}
-	{@param? indexRow: number}
+	{@param? columnIndex: number}
+	{@param? rowIndex: number}
 	{@param? pageId: number}
 
 	{if length($column.fields) != 0}
@@ -219,7 +219,7 @@
 				{delcall LayoutRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
 					{param editable: $editable /}
 					{param events: [
-							'fieldEdit': $_handleFieldChange
+							'fieldEdited': $_handleFieldChanged
 					] /}
 					{param spritemap: $spritemap /}
 				{/delcall}
@@ -231,29 +231,29 @@
 {deltemplate LayoutRenderer.column variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleFieldChange: any}
-	{@param? _handleFocusSelectField: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
 	{@param? column: ?}
 	{@param? editable: bool}
-	{@param? indexColumn: number}
-	{@param? indexRow: number}
+	{@param? columnIndex: number}
+	{@param? rowIndex: number}
 	{@param? pageId: number}
 
 	{if length($column.fields) != 0}
 		{let $attributes kind="attributes"}
 			class="col-md-{$column.size} col-ddm"
 
-			{if $indexRow != 'undefined'}
-				data-ddm-field-row="{$indexRow}"
+			{if $rowIndex != 'undefined'}
+				data-ddm-field-row="{$rowIndex}"
 			{/if}
 
 			{if $pageId != 'undefined'}
 				data-ddm-field-page="{$pageId}"
 			{/if}
 
-			{if $indexColumn != 'undefined'}
-				data-ddm-field-column="{$indexColumn}"
+			{if $columnIndex != 'undefined'}
+				data-ddm-field-column="{$columnIndex}"
 			{/if}
 		{/let}
 
@@ -265,7 +265,7 @@
 					{delcall LayoutRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
 						{param editable: $editable /}
 						{param events: [
-							'fieldEdit': $_handleFieldChange
+							'fieldEdited': $_handleFieldChanged
 						] /}
 						{param ref: 'field' /}
 						{param spritemap: $spritemap /}
@@ -280,7 +280,7 @@
 					{let $attributesDrag kind="attributes"}
 						class="ddm-drag"
 
-						data-onclick="{$_handleFocusSelectField}"
+						data-onclick="{$_handleSelectFieldFocused}"
 					{/let}
 
 					<div {$attributesDrag}>
@@ -300,9 +300,9 @@
 		</div>
 	{elseif $editable}
 		{call .fieldEmpty}
-			{param column: $indexColumn /}
+			{param column: $columnIndex /}
 			{param pageId: $pageId /}
-			{param row: $indexRow /}
+			{param row: $rowIndex /}
 			{param size: $column.size /}
 		{/call}
 	{/if}

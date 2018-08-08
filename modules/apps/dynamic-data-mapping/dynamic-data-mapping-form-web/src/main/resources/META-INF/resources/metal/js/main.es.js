@@ -1,15 +1,10 @@
+import {Config} from 'metal-state';
+import Builder from './pages/builder/index.es';
 import ClayNavigationBar from 'clay-navigation-bar';
 import Component from 'metal-jsx';
-import loader from './components/FieldsLoader/index.es';
 import LayoutProvider from './components/LayoutProvider/index.es';
+import loader from './components/FieldsLoader/index.es';
 import withAppComposer from './hocs/withAppComposer/index.es';
-import {Config} from 'metal-state';
-
-// Page
-
-import Builder from './pages/builder/index.es';
-
-// HOC
 
 const LayoutProviderWithAppComposer = withAppComposer(LayoutProvider);
 

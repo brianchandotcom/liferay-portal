@@ -15,98 +15,98 @@ const addRow = (pages, indexToAddRow, pageIndex, newRow) => {
 	return pages;
 };
 
-const addFieldToColumn = (pages, indexPage, indexRow, indexColumn, fields) => {
+const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, fields) => {
 	if (!fields) {
 		console.warn(
-			`It is not possible to add the field to column (${indexPage}, ${indexRow}, ${indexColumn}) when the field is not passed.`
+			`It is not possible to add the field to column (${pageIndex}, ${rowIndex}, ${columnIndex}) when the field is not passed.`
 		);
 
 		return pages;
 	}
 
-	pages[Number(indexPage)].rows[Number(indexRow)].columns[
-		Number(indexColumn)
+	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
+		Number(columnIndex)
 	].fields.push(fields);
 
 	return pages;
 };
 
-const addFields = (pages, indexPage, indexRow, indexColumn, fields = []) => {
+const addFields = (pages, pageIndex, rowIndex, columnIndex, fields = []) => {
 	if (!fields.length) {
 		console.warn(
-			`Can not add empty fields to column (${indexPage}, ${indexRow}, ${indexColumn}), use removeFields for this.`
+			`Can not add empty fields to column (${pageIndex}, ${rowIndex}, ${columnIndex}), use removeFields for this.`
 		);
 
 		return pages;
 	}
 
-	pages[Number(indexPage)].rows[Number(indexRow)].columns[
-		Number(indexColumn)
+	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
+		Number(columnIndex)
 	].fields = fields;
 
 	return pages;
 };
 
-const removeColumn = (pages, indexPage, indexRow, indexColumn) => {
-	pages[Number(indexPage)].rows[Number(indexRow)].columns.splice(
-		Number(indexColumn)
+const removeColumn = (pages, pageIndex, rowIndex, columnIndex) => {
+	pages[Number(pageIndex)].rows[Number(rowIndex)].columns.splice(
+		Number(columnIndex)
 	);
 
 	return pages;
 };
 
-const removeFields = (pages, indexPage, indexRow, indexColumn) => {
-	pages[Number(indexPage)].rows[Number(indexRow)].columns[
-		Number(indexColumn)
+const removeFields = (pages, pageIndex, rowIndex, columnIndex) => {
+	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
+		Number(columnIndex)
 	].fields = [];
 
 	return pages;
 };
 
-const removeRow = (pages, indexPage, indexRow) => {
-	pages[Number(indexPage)].rows.splice(Number(indexRow), 1);
+const removeRow = (pages, pageIndex, rowIndex) => {
+	pages[Number(pageIndex)].rows.splice(Number(rowIndex), 1);
 
 	return pages;
 };
 
-const getColumn = (pages, indexPage, indexRow, indexColumn) => {
-	return pages[Number(indexPage)].rows[Number(indexRow)].columns[
-		Number(indexColumn)
+const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {
+	return pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
+		Number(columnIndex)
 	].fields;
 };
 
-const getRow = (pages, indexPage, indexRow) => {
-	return pages[Number(indexPage)].rows[Number(indexRow)];
+const getRow = (pages, pageIndex, rowIndex) => {
+	return pages[Number(pageIndex)].rows[Number(rowIndex)];
 };
 
-const hasFieldsRow = (pages, indexPage, indexRow) => {
-	const row = pages[Number(indexPage)].rows[Number(indexRow)].columns;
+const hasFieldsRow = (pages, pageIndex, rowIndex) => {
+	const row = pages[Number(pageIndex)].rows[Number(rowIndex)].columns;
 
 	return !!row.filter(elem => elem.fields.length).length;
 };
 
 const getIndexes = node => {
-	const indexColumn = node.getAttribute('data-ddm-field-column');
-	const indexPage = node.getAttribute('data-ddm-field-page');
-	const indexRow = node.getAttribute('data-ddm-field-row');
+	const columnIndex = node.getAttribute('data-ddm-field-column');
+	const pageIndex = node.getAttribute('data-ddm-field-page');
+	const rowIndex = node.getAttribute('data-ddm-field-row');
 
 	return {
-		indexColumn:
-			typeof indexColumn === 'string' ? Number(indexColumn) : false,
-		indexPage: Number(indexPage),
-		indexRow: Number(indexRow),
+		columnIndex:
+			typeof columnIndex === 'string' ? Number(columnIndex) : false,
+		pageIndex: Number(pageIndex),
+		rowIndex: Number(rowIndex),
 	};
 };
 
 const changeFieldsFromColumn = (
 	pages,
-	indexPage,
-	indexRow,
-	indexColumn,
+	pageIndex,
+	rowIndex,
+	columnIndex,
 	newFields
 ) => {
-	pages[Number(indexPage)].rows[Number(indexRow)].columns[
-		Number(indexColumn)
+	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
+		Number(columnIndex)
 	].fields = newFields;
 
 	return pages;

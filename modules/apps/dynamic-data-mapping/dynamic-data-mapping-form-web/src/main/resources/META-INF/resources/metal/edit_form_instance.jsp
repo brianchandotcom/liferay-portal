@@ -21,42 +21,36 @@
 <aui:script require="<%= mainRequire %>">
 	const spritemap = 'http://localhost:8080/o/admin-theme/images/clay/icons.svg';
 
-	const listFields = [
+	const fieldsList = [
 		{
 			name: 'Date',
 			type: 'date',
-			icon: 'calendar',
-			description: 'Select date from a Datepicker.'
+			icon: 'calendar'
 		},
 		{
 			name: 'Text Field',
 			type: 'text',
-			icon: 'text',
-			description: 'Single line or multiline text area.'
+			icon: 'text'
 		},
 		{
 			name: 'Single Selection',
 			type: 'radio',
-			icon: 'radio-button',
-			description: 'Select only one item with a radio button.'
+			icon: 'radio-button'
 		},
 		{
 			name: 'Select from list',
 			type: 'select',
-			icon: 'list',
-			description: 'Choose an or more options from a list.'
+			icon: 'list'
 		},
 		{
 			name: 'Grid',
 			type: 'grid',
-			icon: 'grid',
-			description: 'Select options from a matrix.'
+			icon: 'grid'
 		},
 		{
 			name: 'Multiple Selection',
 			type: 'checkbox',
-			icon: 'select-from-list',
-			description: 'Select multiple options using a checkbox.'
+			icon: 'select-from-list'
 		}
 	];
 
@@ -166,7 +160,7 @@
 	main.DDMForm(
 		{
 			spritemap,
-			listFields,
+			fieldsList,
 			context: serializedFormBuilderContext.pages,
 			fieldContext,
 			modules: Liferay.MODULES,

@@ -34,6 +34,7 @@ import org.junit.Assert;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 /**
  * @author Andrea Di Giorgi
@@ -66,7 +67,33 @@ public class XMLTestUtil {
 			Node node = nodeList.item(i);
 
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				elements.add((Element)node);
+				Element childElement = (Element)node;
+
+				boolean ignoreNode = false;
+
+				NodeList childNodeList = childElement.getChildNodes();
+
+				for (int j = 0; j < childNodeList.getLength(); j++) {
+					Node childNode = childNodeList.item(j);
+
+					if (childNode.getNodeType() == Node.TEXT_NODE) {
+						Text text = (Text)childNode;
+
+						String textContent = text.getTextContent();
+
+						if (textContent.contains(
+								"Ignore Dependency Comparison")) {
+
+							ignoreNode = true;
+
+							break;
+						}
+					}
+				}
+
+				if (!ignoreNode) {
+					elements.add(childElement);
+				}
 			}
 		}
 

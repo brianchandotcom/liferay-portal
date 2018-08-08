@@ -13,10 +13,22 @@ buildscript {
 apply plugin: "com.liferay.portal.tools.theme.builder"
 
 dependencies {
+#if (${liferayVersion.startsWith("7.0")})
 	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "2.0.13"
+#elseif (${liferayVersion.startsWith("7.1")})
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "3.0.4"
+#end
+#if (${liferayVersion.startsWith("7.0")})
 	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "2.0.13"
+#elseif (${liferayVersion.startsWith("7.1")})
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "3.0.4"
+#end
 
+#if (${liferayVersion.startsWith("7.0")})
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "2.0.3"
+#elseif (${liferayVersion.startsWith("7.1")})
+	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "3.0.1"
+#end
 
 	themeBuilder group: "com.liferay", name: "com.liferay.portal.tools.theme.builder", version: "@com.liferay.portal.tools.theme.builder.version@"
 }

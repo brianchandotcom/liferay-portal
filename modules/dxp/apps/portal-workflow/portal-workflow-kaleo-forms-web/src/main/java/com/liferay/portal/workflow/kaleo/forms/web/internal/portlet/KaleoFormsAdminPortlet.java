@@ -29,11 +29,14 @@ import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -101,8 +104,9 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -613,6 +617,56 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		return _ddmFormJSONDeserializer.deserialize(definition);
 	}
 
+	protected DDMFormFieldValue getDDMFormFieldValueByNameAndInstanceId(
+		List<DDMFormFieldValue> ddmFormFieldValues, String name,
+		String instanceId) {
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (name.equals(ddmFormFieldValue.getName()) &&
+				instanceId.equals(ddmFormFieldValue.getInstanceId())) {
+
+				return ddmFormFieldValue;
+			}
+		}
+
+		return null;
+	}
+
+	protected List<DDMFormFieldValue> getDDMFormFieldValuesRemovedByReviewer(
+		List<DDMFormFieldValue> reviewedDDMFormFieldValues,
+		List<DDMFormFieldValue> ddmFormFieldValuesBeforeReview) {
+
+		List<DDMFormFieldValue> ddmFormFieldValuesRemovedByReviewer =
+			new ArrayList<>();
+
+
+		for (DDMFormFieldValue ddmFormFieldValueBeforeReview :
+			ddmFormFieldValuesBeforeReview) {
+
+			DDMFormFieldValue actualDDMFormFieldValue =
+				getDDMFormFieldValueByNameAndInstanceId(
+					reviewedDDMFormFieldValues,
+					ddmFormFieldValueBeforeReview.getName(),
+					ddmFormFieldValueBeforeReview.getInstanceId());
+
+			if (actualDDMFormFieldValue == null) {
+				ddmFormFieldValuesRemovedByReviewer.add(
+					ddmFormFieldValueBeforeReview);
+			}
+
+			else {
+				List<DDMFormFieldValue> nestedDDMFormFieldValuesRemovedByReviewer =
+					getDDMFormFieldValuesRemovedByReviewer(actualDDMFormFieldValue.getNestedDDMFormFieldValues(), ddmFormFieldValueBeforeReview.getNestedDDMFormFieldValues());
+
+				if (!nestedDDMFormFieldValuesRemovedByReviewer.isEmpty()) {
+					ddmFormFieldValueBeforeReview.setNestedDDMFormFields(nestedDDMFormFieldValuesRemovedByReviewer);
+					ddmFormFieldValuesRemovedByReviewer.add(ddmFormFieldValueBeforeReview);
+				}
+			}
+		}
+		return ddmFormFieldValuesRemovedByReviewer;
+	}
+
 	/**
 	 * Returns an array of the Kaleo process IDs in the action request.
 	 *
@@ -679,6 +733,40 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		return false;
 	}
 
+	protected void removeDDMFormFieldValuesRemovedByReviewer(
+		List<DDMFormFieldValue> updatedDDMFormFieldValues,
+		List<DDMFormFieldValue> ddmFormFieldValuesRemovedByReviewer) {
+
+
+		List<DDMFormFieldValue> pendingRemovalDDMFormFieldValues =
+			new ArrayList<>();
+
+		for (DDMFormFieldValue ddmFormFieldValue : updatedDDMFormFieldValues) {
+			DDMFormFieldValue actualDDMFormFieldValue =
+				getDDMFormFieldValueByNameAndInstanceId(
+					ddmFormFieldValuesRemovedByReviewer,
+					ddmFormFieldValue.getName(),
+					ddmFormFieldValue.getInstanceId());
+
+			if (actualDDMFormFieldValue != null) {
+				if (actualDDMFormFieldValue.equals(
+					ddmFormFieldValue)) {
+
+					pendingRemovalDDMFormFieldValues.add(ddmFormFieldValue);
+				}
+				else {
+					removeDDMFormFieldValuesRemovedByReviewer(
+						ddmFormFieldValue.getNestedDDMFormFieldValues(),
+						actualDDMFormFieldValue.getNestedDDMFormFieldValues()
+					);
+				}
+			}
+		}
+
+		if (!pendingRemovalDDMFormFieldValues.isEmpty()) {
+			updatedDDMFormFieldValues.removeAll(pendingRemovalDDMFormFieldValues);
+		}
+	}
 	/**
 	 * Stores the Kaleo process, workflow instance, and workflow task as
 	 * attributes in the request if the Kaleo process ID, workflow instance ID,
@@ -945,6 +1033,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setFieldsToDDMFormValuesConverter(
+		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter) {
+
+		_fieldsToDDMFormValuesConverter = fieldsToDDMFormValuesConverter;
+	}
+
+	@Reference(unbind = "-")
 	protected void setKaleoDefinitionVersionLocalService(
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService) {
 
@@ -1061,8 +1156,34 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			boolean majorVersion = ParamUtil.getBoolean(
 				serviceContext, "majorVersion");
 
+			long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
+
+			DDMStructure ddmStructure =
+				ddlRecordSet.getDDMStructure(ddmTemplateId);
+
+			long ddmStructureId = ddmStructure.getPrimaryKey();
+
+			DDMFormValues ddlRecordDDMFormValues = ddlRecord.getDDMFormValues();
+
+			Fields reviewFormFields = _ddm.getFields(
+				ddmStructureId, ddlRecordDDMFormValues);
+
+			DDMFormValues reviewFormDDMFormValues =
+				_fieldsToDDMFormValuesConverter.convert(
+					ddmStructure, reviewFormFields);
+
+			List<DDMFormFieldValue> ddmFormFieldValuesRemovedByReviewer =
+				getDDMFormFieldValuesRemovedByReviewer(
+					ddmFormValues.getDDMFormFieldValues(),
+					reviewFormDDMFormValues.getDDMFormFieldValues());
+
+			removeDDMFormFieldValuesRemovedByReviewer(
+				ddlRecordDDMFormValues.getDDMFormFieldValues(),
+				ddmFormFieldValuesRemovedByReviewer);
+
 			ddmFormValues = _ddmFormValuesMerger.merge(
-				ddmFormValues, ddlRecord.getDDMFormValues());
+				ddmFormValues, ddlRecordDDMFormValues);
+
 
 			ddlRecord = _ddlRecordLocalService.updateRecord(
 				serviceContext.getUserId(), ddlRecordId, majorVersion,
@@ -1096,6 +1217,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	private DDMDisplayRegistry _ddmDisplayRegistry;
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private DDMFormValuesMerger _ddmFormValuesMerger;
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 	private volatile KaleoFormsWebConfiguration _kaleoFormsWebConfiguration;

@@ -3604,6 +3604,11 @@ plugins.includes=</echo>
 				</if>
 			</then>
 			<else>
+
+				<!--
+				Only used by when zipping Tcat admin and agent
+				-->
+
 				<zip
 					destfile="dist/${zip.executable.file}-${lp.version}.zip"
 				>

@@ -18,9 +18,13 @@
 ### Added
 - [LPS-81530]: Add the ability to configure imported BOMs to manage Java
 dependencies and the various artifacts used in resolving OSGi dependencies.
+
+## 1.1.1 - 2018-07-23
+
+### Added
 - [LPS-82491]: Add support for the `idea` plugin.
 
-## 1.1.2 - 2018-08-08
+## 1.1.2 - *(Unreleased)*
 
 ### Fixed
 - [LPS-83922]: Don't add requirements for files that don't have BSN.

@@ -75,9 +75,10 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 					WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 			try {
-				String serializedFormBuilderContext = getFormBuilderContext(
-					ddmFormAdminDisplayContext.getDDMStructureId(),
-					_portal.getHttpServletRequest(renderRequest));
+				String serializedFormBuilderContext =
+					getSerializedFormBuilderContext(
+						ddmFormAdminDisplayContext.getDDMStructureId(),
+						_portal.getHttpServletRequest(renderRequest));
 
 				renderRequest.setAttribute(
 					"serializedFormBuilderContext",
@@ -100,7 +101,7 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 		return "/admin/edit_form_instance.jsp";
 	}
 
-	protected String getFormBuilderContext(
+	protected String getSerializedFormBuilderContext(
 		long ddmStructureId, HttpServletRequest request) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -118,24 +119,24 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 		Optional<DDMStructure> ddmStructureOptional = Optional.ofNullable(
 			_ddmStructureLocalService.fetchDDMStructure(ddmStructureId));
 
-		Locale locale = themeDisplay.getSiteDefaultLocale();
+		Locale defaultLocale = themeDisplay.getSiteDefaultLocale();
 
 		if (ddmStructureOptional.isPresent()) {
 			DDMStructure ddmStructure = ddmStructureOptional.get();
 
 			DDMForm ddmForm = ddmStructure.getDDMForm();
 
-			locale = ddmForm.getDefaultLocale();
+			defaultLocale = ddmForm.getDefaultLocale();
 		}
 
-		DDMFormBuilderContextResponse formBuilderContextResponse =
+		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
 			_ddmFormBuilderContextFactory.create(
 				DDMFormBuilderContextRequest.with(
 					ddmStructureOptional, themeDisplay.getRequest(),
-					themeDisplay.getResponse(), locale, true));
+					themeDisplay.getResponse(), defaultLocale, true));
 
 		return jsonSerializer.serializeDeep(
-			formBuilderContextResponse.getContext());
+			ddmFormBuilderContextResponse.getContext());
 	}
 
 	@Reference(unbind = "-")

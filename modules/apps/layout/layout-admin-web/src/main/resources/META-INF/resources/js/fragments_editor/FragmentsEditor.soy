@@ -23,9 +23,9 @@
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
-	{@param? dropTargetClass: string}
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
+	{@param? _dropTargetClass: string}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentDrag: any}
 	{@param? _handleFragmentEntryClick: any}
@@ -100,7 +100,7 @@
 		{/call}
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
-			{param dropTargetClass: $dropTargetClass /}
+			{param dropTargetClass: $_dropTargetClass /}
 			{param events: [
 				'fragmentEntryDrag': $_handleFragmentDrag,
 				'fragmentEntryClick': $_handleFragmentEntryClick,
@@ -124,7 +124,7 @@
 			{call com.liferay.layout.admin.web.FragmentEntryLinkList.render}
 				{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 				{param defaultLanguageId: $defaultLanguageId /}
-				{param dropTargetClass: $dropTargetClass ?: '' /}
+				{param dropTargetClass: $_dropTargetClass ?: '' /}
 				{param events: [
 					'editableChanged': $_handleEditableChanged,
 					'mappeableFieldClicked': $_handleMappeableFieldClicked,

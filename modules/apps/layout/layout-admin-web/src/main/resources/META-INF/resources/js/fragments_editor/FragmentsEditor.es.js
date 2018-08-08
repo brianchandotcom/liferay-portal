@@ -834,17 +834,6 @@ FragmentsEditor.STATE = {
 	deleteFragmentEntryLinkURL: Config.string().required(),
 
 	/**
-	 * CSS class for the fragments drop target.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	dropTargetClass: Config.string().value('dropTarget'),
-
-	/**
 	 * URL for updating a distinct fragment entries of the editor.
 	 * @default undefined
 	 * @instance
@@ -1122,6 +1111,17 @@ FragmentsEditor.STATE = {
 	_dirty: Config.bool()
 		.internal()
 		.value(false),
+
+	/**
+	 * CSS class for the fragments drop target.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	_dropTargetClass: Config.string().internal().value('dropTarget'),
 
 	/**
 	 * If true, editable values should be highlighted.

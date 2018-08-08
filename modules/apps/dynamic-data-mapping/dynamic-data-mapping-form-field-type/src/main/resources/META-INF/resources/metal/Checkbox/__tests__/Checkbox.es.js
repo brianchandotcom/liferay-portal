@@ -122,6 +122,7 @@ describe('Field Checkbox', () => {
 	it('should emit field edit event on field change', () => {
 		const handleFieldChange = jest.fn();
 		const events = {fieldEdit: handleFieldChange};
+
 		component = new Checkbox({
 			spritemap: spritemap,
 			events,

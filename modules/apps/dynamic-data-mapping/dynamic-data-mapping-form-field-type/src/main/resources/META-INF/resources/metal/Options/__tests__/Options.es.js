@@ -122,6 +122,7 @@ describe('Options', () => {
 	it('should emit a field edit event on any item value change', () => {
 		const handleFieldEdit = jest.fn();
 		const events = {fieldEdit: handleFieldEdit};
+
 		component = new Options({
 			items: [
 				{
@@ -151,6 +152,7 @@ describe('Options', () => {
 	it('should add a new item when add a content in the last option', () => {
 		const handleFieldEdit = jest.fn();
 		const events = {fieldEdit: handleFieldEdit};
+
 		component = new Options({
 			items: [
 				{
@@ -168,6 +170,7 @@ describe('Options', () => {
 			events,
 		});
 		const initialSize = component.items.length;
+
 		MetalTestUtil.triggerEvent(
 			component.element.querySelector(
 				'.field-options .form-group:last-child input'

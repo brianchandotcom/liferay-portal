@@ -1,10 +1,9 @@
-import { Config } from 'metal-state';
+import './TextRegister.soy.js';
+import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import FieldBase from 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
-
 import templates from './Text.soy.js';
-import TextRegister from './TextRegister.soy.js';
+import {Config} from 'metal-state';
 
 class Text extends Component {
 	static STATE = {
@@ -93,7 +92,7 @@ class Text extends Component {
 	};
 
 	_handleFieldChange(event) {
-		const { key } = this;
+		const {key} = this;
 
 		this.emit('fieldEdit', {
 			value: event.target.value,

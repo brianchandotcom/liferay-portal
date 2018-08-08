@@ -81,7 +81,7 @@ exports[`Sidebar Edit mode should not enter editing mode with only \`edit\` in m
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
+                <span class="text-truncate"> Add Elements </span>
               </span>
             </div>
           </li>
@@ -126,7 +126,7 @@ exports[`Sidebar Edit mode should not go into edit mode with just fieldContext 1
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
+                <span class="text-truncate"> Add Elements </span>
               </span>
             </div>
           </li>
@@ -171,7 +171,7 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
+                <span class="text-truncate"> Add Elements </span>
               </span>
             </div>
           </li>
@@ -216,7 +216,7 @@ exports[`Sidebar should render a Sidebar open 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
+                <span class="text-truncate"> Add Elements </span>
               </span>
             </div>
           </li>
@@ -261,7 +261,7 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
+                <span class="text-truncate"> Add Elements </span>
               </span>
             </div>
           </li>
@@ -295,7 +295,7 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
     <div class="ddm-sidebar-body">
       <ul class="list-group">
         <li class="list-group-header">
-          <h3 class="list-group-header-title">Basic Elements</h3>
+          <h3 class="list-group-header-title"> Basic Elements </h3>
         </li>
         <div ref="field0" data-ddm-field-type-index="0" class="ddm-drag-item list-group-item list-group-item-flex">
           <div class="autofit-col">
@@ -402,7 +402,7 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
+                <span class="text-truncate"> Add Elements </span>
               </span>
             </div>
           </li>
@@ -447,7 +447,7 @@ exports[`Sidebar should render the default markup 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
+                <span class="text-truncate"> Add Elements </span>
               </span>
             </div>
           </li>

@@ -104,6 +104,7 @@ describe('Field Text', () => {
 	it('should emit a field edit event on field value change', () => {
 		const handleFieldEdit = jest.fn();
 		const events = {fieldEdit: handleFieldEdit};
+
 		component = new Text({
 			spritemap: spritemap,
 			events,
@@ -130,6 +131,7 @@ describe('Field Text', () => {
 			done();
 		};
 		const events = {fieldEdit: handleFieldEdit};
+
 		component = new Text({
 			spritemap: spritemap,
 			key: 'input',

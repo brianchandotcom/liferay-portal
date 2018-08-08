@@ -158,6 +158,7 @@ describe('Select', () => {
 	it('should emit a field edit event when an item is selected', () => {
 		const handleFieldEdit = jest.fn();
 		const events = {fieldEdit: handleFieldEdit};
+
 		component = new Select({
 			items: [
 				{

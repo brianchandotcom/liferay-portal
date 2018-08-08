@@ -6,47 +6,49 @@ import Component from 'metal-jsx';
  * @param {!Object} WrappedComponent
  * @return {!Object} new component
  */
-const withSidebarComposer = (WrappedComponent) => {
+const withSidebarComposer = WrappedComponent => {
+	/**
+	 * With Sidebar Composer.
+	 * @extends Component
+	 */
+	class WithSidebarComposer extends Component {
+		static PROPS = {
+			fieldContext: Config.array().value([]),
 
-    /**
-     * With Sidebar Composer.
-     * @extends Component
-     */
-    class WithSidebarComposer extends Component {
-        static PROPS = {
-            fieldContext: Config.array().value([]),
+			context: Config.array(),
 
-            context: Config.array(),
+			fieldFocus: Config.object(),
+		};
 
-            fieldFocus: Config.object(),
-        }
-
-        /*
+		/*
          * @param {!Object} context
          * @private
          */
-        _handleShowChanged(context) {
-            // TODO:
-            // logic to autosave...
-        }
+		_handleShowChanged() {
+			// TODO:
+			// logic to autosave...
 
-        /**
-         * @inheritDoc
-         */
-        render() {
-            const { children } = this.props;
-            // const events = {
-            //     showChanged: this._handleShowChanged.bind(this),
-            //     ...this.props.events
-            // };
+		}
 
-            // const props = Object.assign({...this.props}, events);
+		/**
+		 * @inheritDoc
+		 */
+		render() {
+			const {children} = this.props;
+			// const events = {
+			//     showChanged: this._handleShowChanged.bind(this),
+			//     ...this.props.events
+			// };
 
-            return <WrappedComponent {...this.props}>{children}</WrappedComponent>
-        }
-    }
+			// const props = Object.assign({...this.props}, events);
 
-    return WithSidebarComposer;
+			return (
+				<WrappedComponent {...this.props}>{children}</WrappedComponent>
+			);
+		}
+	}
+
+	return WithSidebarComposer;
 };
 
 export default withSidebarComposer;

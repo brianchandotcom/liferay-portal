@@ -1,6 +1,6 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './LayoutRenderer.soy.js';
 

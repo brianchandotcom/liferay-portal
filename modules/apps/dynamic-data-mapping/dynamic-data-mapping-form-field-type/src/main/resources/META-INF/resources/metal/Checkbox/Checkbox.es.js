@@ -1,11 +1,11 @@
+import './CheckboxRegister.soy.js';
 import 'clay-checkbox';
-import { Config } from 'metal-state';
+import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
+import {Config} from 'metal-state';
 import Component from 'metal-component';
-import FieldBase from 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
 import Soy from 'metal-soy';
 
 import templates from './Checkbox.soy.js';
-import CheckboxRegister from './CheckboxRegister.soy.js';
 
 /**
  * Checkbox.
@@ -115,7 +115,7 @@ class Checkbox extends Component {
 	};
 
 	_handleToggleChange(event) {
-		const { key } = this;
+		const {key} = this;
 
 		this.emit('fieldEdit', {
 			value: event.delegateTarget.checked,

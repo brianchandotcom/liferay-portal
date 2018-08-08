@@ -1,11 +1,10 @@
+import './SelectRegister.soy.js';
 import 'clay-icon';
-import { Config } from 'metal-state';
+import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
+import {Config} from 'metal-state';
 import Component from 'metal-component';
-import FieldBase from 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
 import Soy from 'metal-soy';
-
 import templates from './Select.soy.js';
-import SelectRegister from './SelectRegister.soy.js';
 
 class Select extends Component {
 	static STATE = {
@@ -139,7 +138,7 @@ class Select extends Component {
 	};
 
 	_handleClickItem(event) {
-		const { key } = this;
+		const {key} = this;
 
 		this.setState({
 			value: event.target.innerText,
@@ -154,7 +153,7 @@ class Select extends Component {
 	}
 
 	_handleClick() {
-		this.setState({ open: !this.open });
+		this.setState({open: !this.open});
 	}
 }
 

@@ -1,92 +1,99 @@
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
-import { LayoutSupport } from '../Layout/index.es.js';
+import {LayoutSupport} from '../Layout/index.es.js';
 
 class SidebarProvider extends Component {
-    static PROPS = {
-        fieldContext: Config.array(),
+	static PROPS = {
+		fieldContext: Config.array(),
 
-        context: Config.array(),
+		context: Config.array(),
 
-        fieldFocus: Config.object(),
-    }
+		fieldFocus: Config.object(),
+	};
 
-    static STATE = {
-        fieldContext: Config.array(),
-    }
+	static STATE = {
+		fieldContext: Config.array(),
+	};
 
-    constructor(props, context) {
-        super(props, context);
+	constructor(props, context) {
+		super(props, context);
 
-        this.state.fieldContext = props.fieldContext;
-    }
+		this.state.fieldContext = props.fieldContext;
+	}
 
-    willReceiveProps(nextProps) {
-        if (
-            typeof nextProps.context !== 'undefined' &&
-            nextProps.context.newVal.length
-        ) {
-            // this._syncContextWithFieldContext();
-        }
+	willReceiveProps(nextProps) {
+		if (
+			typeof nextProps.context !== 'undefined' &&
+			nextProps.context.newVal.length
+		) {
+			// this._syncContextWithFieldContext();
 
-        if (
-            typeof nextProps.fieldContext !== 'undefined' && 
-            nextProps.fieldContext.newVal.length
-        ) {
-            this.setState({
-                fieldContext: nextProps.fieldContext.newVal
-            });
-        }
-    }
+		}
 
-    _syncContextWithFieldContext() {
-        const { context, fieldFocus } = this.props;
-        const { fieldContext } = this.state;
-        const { indexColumn, indexPage, indexRow } = fieldFocus;
+		if (
+			typeof nextProps.fieldContext !== 'undefined' &&
+			nextProps.fieldContext.newVal.length
+		) {
+			this.setState({
+				fieldContext: nextProps.fieldContext.newVal,
+			});
+		}
+	}
 
-        const fieldSelected = LayoutSupport.getColumn(context, indexPage, indexRow, indexColumn)[0];
+	_syncContextWithFieldContext() {
+		const {context, fieldFocus} = this.props;
+		const {indexColumn, indexPage, indexRow} = fieldFocus;
 
-        const depth = (array) => {
-            for (let i = 0; i < array.length; i++) {
-                let item = array[i];
+		const fieldSelected = LayoutSupport.getColumn(
+			context,
+			indexPage,
+			indexRow,
+			indexColumn
+		)[0];
 
-                if (item.key) {  
-                    let propName = fieldSelected[item.key] || '';
+		const depth = array => {
+			for (let i = 0; i < array.length; i++) {
+				let item = array[i];
 
-                    item[item.key] = propName;
-                }
+				if (item.key) {
+					let propName = fieldSelected[item.key] || '';
 
-                if (item.rows && item.rows.length) {
-                    depth(item.rows);
-                } else if (item.columns && item.columns.length) {
-                    depth(item.columns);
-                } else if (item.fields && item.fields.length) {
-                    depth(item.fields);
-                }
-            }
+					item[item.key] = propName;
+				}
 
-            return array;
-        }
-    }
+				if (item.rows && item.rows.length) {
+					depth(item.rows);
+				}
+				else if (item.columns && item.columns.length) {
+					depth(item.columns);
+				}
+				else if (item.fields && item.fields.length) {
+					depth(item.fields);
+				}
+			}
 
-    _handleShowChanged(event) {
-        this.emit('showChanged', event);
-    }
+			return array;
+		};
+	}
 
-    render() {
-        const { children } = this.props;
-        const { fieldContext } = this.state;
-        const Child = children[0];
+	_handleShowChanged(event) {
+		this.emit('showChanged', event);
+	}
 
-        const events = {
-            showChanged: this._handleShowChanged.bind(this),
-            ...Child.props.events
-        };
+	render() {
+		const {children} = this.props;
+		const {fieldContext} = this.state;
+		const Child = children[0];
 
-        Object.assign(Child.props, {...this.props}, events, fieldContext);
+		const events = {
+			showChanged: this._handleShowChanged.bind(this),
+			...Child.props.events,
+		};
 
-        return children;
-    }
+		Object.assign(Child.props, {...this.props}, events, fieldContext);
+
+		return children;
+	}
 }
 
 export default SidebarProvider;

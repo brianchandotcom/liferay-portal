@@ -4,130 +4,115 @@ let component;
 let spritemap = 'icons.svg';
 
 describe('Builder', () => {
-    beforeEach(() => {
-        jest.useFakeTimers();
-    });
+	beforeEach(() => {
+		jest.useFakeTimers();
+	});
 
-    afterEach(() => {
-        if (component) {
-            component.dispose();
-        }
-    });
+	afterEach(() => {
+		if (component) {
+			component.dispose();
+		}
+	});
 
-    it('should render the default markup', () => {
-        component = new Builder({
-            spritemap,
-        });
+	it('should render the default markup', () => {
+		component = new Builder({
+			spritemap,
+		});
 
-        expect(component).toMatchSnapshot();
-    });
+		expect(component).toMatchSnapshot();
+	});
 
-    it('should continue to propagate the fieldAdd event', () => {
-        component = new Builder({
-            spritemap,
-        });
+	it('should continue to propagate the fieldAdd event', () => {
+		component = new Builder({
+			spritemap,
+		});
 
-        const spy = jest.spyOn(component, 'emit');
-        const { sidebar } = component.refs;
-        const mockEvent = jest.fn();
+		const spy = jest.spyOn(component, 'emit');
+		const {sidebar} = component.refs;
+		const mockEvent = jest.fn();
 
-        sidebar.emit('fieldAdd', mockEvent);
+		sidebar.emit('fieldAdd', mockEvent);
 
-        expect(spy).toHaveBeenCalled();
-        expect(spy).toHaveBeenCalledWith(
-            'fieldAdd',
-            expect.anything()
-        );
-    });
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith('fieldAdd', expect.anything());
+	});
 
-    it('should continue to propagate the fieldEdit event', () => {
-        component = new Builder({
-            spritemap,
-        });
+	it('should continue to propagate the fieldEdit event', () => {
+		component = new Builder({
+			spritemap,
+		});
 
-        const spy = jest.spyOn(component, 'emit');
-        const { sidebar } = component.refs;
-        const mockEvent = jest.fn();
+		const spy = jest.spyOn(component, 'emit');
+		const {sidebar} = component.refs;
+		const mockEvent = jest.fn();
 
-        sidebar.emit('fieldEdit', mockEvent);
+		sidebar.emit('fieldEdit', mockEvent);
 
-        expect(spy).toHaveBeenCalled();
-        expect(spy).toHaveBeenCalledWith(
-            'fieldEdit',
-            expect.anything()
-        );
-    });
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith('fieldEdit', expect.anything());
+	});
 
-    it('should continue to propagate the fieldMove event', () => {
-        component = new Builder({
-            spritemap,
-        });
+	it('should continue to propagate the fieldMove event', () => {
+		component = new Builder({
+			spritemap,
+		});
 
-        const spy = jest.spyOn(component, 'emit');
-        const { layoutRenderer } = component.refs;
-        const mockEvent = jest.fn();
+		const spy = jest.spyOn(component, 'emit');
+		const {layoutRenderer} = component.refs;
+		const mockEvent = jest.fn();
 
-        layoutRenderer.emit('fieldMove', mockEvent);
+		layoutRenderer.emit('fieldMove', mockEvent);
 
-        expect(spy).toHaveBeenCalled();
-        expect(spy).toHaveBeenCalledWith(
-            'fieldMove',
-            expect.anything()
-        );
-    });
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith('fieldMove', expect.anything());
+	});
 
-    it('should continue to propagate the fieldDelete event', () => {
-        component = new Builder({
-            spritemap,
-        });
+	it('should continue to propagate the fieldDelete event', () => {
+		component = new Builder({
+			spritemap,
+		});
 
-        const spy = jest.spyOn(component, 'emit');
-        const { layoutRenderer } = component.refs;
-        const mockEvent = jest.fn();
+		const spy = jest.spyOn(component, 'emit');
+		const {layoutRenderer} = component.refs;
+		const mockEvent = jest.fn();
 
-        layoutRenderer.emit('deleteButtonClicked', mockEvent);
+		layoutRenderer.emit('deleteButtonClicked', mockEvent);
 
-        expect(spy).toHaveBeenCalled();
-        expect(spy).toHaveBeenCalledWith(
-            'fieldDelete',
-            expect.anything()
-        );
-    });
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith('fieldDelete', expect.anything());
+	});
 
-    it('should continue to propagate the fieldClicked event and open the sidebar', () => {
-        component = new Builder({
-            spritemap,
-        });
+	it('should continue to propagate the fieldClicked event and open the sidebar', () => {
+		component = new Builder({
+			spritemap,
+		});
 
-        const spy = jest.spyOn(component, 'emit');
-        const { layoutRenderer, sidebar } = component.refs;
-        const mockEvent = jest.fn();
+		const spy = jest.spyOn(component, 'emit');
+		const {layoutRenderer, sidebar} = component.refs;
+		const mockEvent = jest.fn();
 
-        layoutRenderer.emit('fieldClicked', mockEvent);
+		layoutRenderer.emit('fieldClicked', mockEvent);
 
-        jest.runAllTimers();
+		jest.runAllTimers();
 
-        expect(spy).toHaveBeenCalled();
-        expect(spy).toHaveBeenCalledWith(
-            'fieldClicked',
-            expect.anything()
-        );
-        expect(sidebar.state.show).toBeTruthy();
-    });
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith('fieldClicked', expect.anything());
+		expect(sidebar.state.show).toBeTruthy();
+	});
 
-    it('should open the sidebar when click the creation button', () => {
-        component = new Builder({
-            spritemap,
-        });
+	it('should open the sidebar when click the creation button', () => {
+		component = new Builder({
+			spritemap,
+		});
 
-        const { managementToolbar, sidebar } = component.refs;
+		const {managementToolbar, sidebar} = component.refs;
 
-        managementToolbar.refs.creationMenu.element.click();
+		managementToolbar.refs.creationMenu.element.click();
 
-        jest.runAllTimers();
+		jest.runAllTimers();
 
-        expect(sidebar.props.mode).toBe('add');
-        expect(sidebar.state.mode).toBe('add');
-        expect(sidebar.state.show).toBeTruthy();
-    });
+		expect(sidebar.props.mode).toBe('add');
+		expect(sidebar.state.mode).toBe('add');
+		expect(sidebar.state.show).toBeTruthy();
+	});
 });

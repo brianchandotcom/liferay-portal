@@ -1,255 +1,328 @@
-import Component, { Fragment } from 'metal-jsx';
+import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
-import { LayoutSupport } from '../Layout/index.es';
+import {LayoutSupport} from '../Layout/index.es';
 
 /**
- * LayoutProvider listens to your children's events to 
+ * LayoutProvider listens to your children's events to
  * control the `context` and make manipulations.
  * @extends Component
  */
 class LayoutProvider extends Component {
-    static PROPS = {
-        /**
-         * @default undefined
-         * @instance
-         * @memberof LayoutProvider
-         * @type {?(array|undefined)}
-         */
-        context: Config.array(),
+	static PROPS = {
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?(array|undefined)}
+		 */
+		context: Config.array(),
 
-        /**
-         * @default undefined
-         * @instance
-         * @memberof LayoutProvider
-         * @type {?(array|undefined)}
-         */
-        spritemap: Config.string()
-    }
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?(array|undefined)}
+		 */
+		spritemap: Config.string(),
+	};
 
-    static STATE = {
-        /**
-         * @default undefined
-         * @instance
-         * @memberof LayoutProvider
-         * @type {?array}
-         */
-        context: Config.array(),
+	static STATE = {
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?array}
+		 */
+		context: Config.array(),
 
-        /**
-         * @default undefined
-         * @instance
-         * @memberof LayoutProvider
-         * @type {?object}
-         */
-        fieldFocus: Config.shapeOf({
-            indexColumn: Config.oneOfType([
-                Config.bool().value(false),
-                Config.number()
-            ]).required(),
-            indexPage: Config.number().required(),
-            indexRow: Config.number().required(),
-            type: Config.string().required(),
-        }).value({}),
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?object}
+		 */
+		fieldFocus: Config.shapeOf({
+			indexColumn: Config.oneOfType([
+				Config.bool().value(false),
+				Config.number(),
+			]).required(),
+			indexPage: Config.number().required(),
+			indexRow: Config.number().required(),
+			type: Config.string().required(),
+		}).value({}),
 
-        /**
-         * @default add
-         * @instance
-         * @memberof LayoutProvider
-         * @type {?string}
-         */
-        mode: Config.oneOf(['add', 'edit']).value('add'),
-    }
+		/**
+		 * @default add
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?string}
+		 */
+		mode: Config.oneOf(['add', 'edit']).value('add'),
+	};
 
-    /**
+	/**
 	 * @inheritDoc
 	 */
-    constructor(props, context) {
-        super(props, context);
+	constructor(props, context) {
+		super(props, context);
 
-        this.state.context = props.context;
-    }
+		this.state.context = props.context;
+	}
 
-    /**
-     * @param {!Object} data
-     * @private
-     */
-    _handleFieldClicked(data) {
-        this.setState({
-            fieldFocus: data,
-            mode: 'edit'
-        });
-    }
+	/**
+	 * @param {!Object} data
+	 * @private
+	 */
+	_handleFieldClicked(data) {
+		this.setState({
+			fieldFocus: data,
+			mode: 'edit',
+		});
+	}
 
-    /**
-     * @param {!Object}
-     * @private
-     */
-    _handleFieldAdd({ target, fieldProperties, data }) {
-        const { spritemap } = this.props;
-        const { context } = this.state;
-        const { indexRow, indexPage, indexColumn } = target;
+	/**
+	 * @param {!Object} payload
+	 * @private
+	 */
+	_handleFieldAdd({target, fieldProperties}) {
+		const {spritemap} = this.props;
+		const {context} = this.state;
+		const {indexRow, indexPage, indexColumn} = target;
 
-        fieldProperties = Object.assign({}, fieldProperties, {spritemap});
+		fieldProperties = Object.assign({}, fieldProperties, {spritemap});
 
-        let newContext = null;
+		let newContext = null;
 
-        if (target.indexColumn === false) {
-            let newRow = LayoutSupport.implAddRow(12, [fieldProperties]);
-            newContext = LayoutSupport.addRow(context, indexRow, indexPage, newRow);
-        } else {
-            newContext = LayoutSupport.addFieldToColumn(context, indexPage, indexRow, indexColumn, fieldProperties);
-        }
+		if (target.indexColumn === false) {
+			let newRow = LayoutSupport.implAddRow(12, [fieldProperties]);
 
-        this.setState({
-            context: newContext,
-            fieldFocus: {
-                indexColumn,
-                indexPage,
-                indexRow,
-                type: fieldProperties.type,
-            },
-            mode: 'edit'
-        });
-    }
+			newContext = LayoutSupport.addRow(
+				context,
+				indexRow,
+				indexPage,
+				newRow
+			);
+		}
+		else {
+			newContext = LayoutSupport.addFieldToColumn(
+				context,
+				indexPage,
+				indexRow,
+				indexColumn,
+				fieldProperties
+			);
+		}
 
-    /**
-     * @param {!Object}
-     * @private
-     */
-    _handleFieldDelete({ indexRow, indexPage, indexColumn }) {
-        const { context } = this.state;
-        let newContext = LayoutSupport.removeFields(context, indexPage, indexRow, indexColumn);
-        newContext = this._cleanRowEmpty(newContext, { indexRow, indexPage, indexColumn });
+		this.setState({
+			context: newContext,
+			fieldFocus: {
+				indexColumn,
+				indexPage,
+				indexRow,
+				type: fieldProperties.type,
+			},
+			mode: 'edit',
+		});
+	}
 
-        this.setState({
-            context: newContext,
-            fieldFocus: {}
-        });
-    }
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+	_handleFieldDelete({indexRow, indexPage, indexColumn}) {
+		const {context} = this.state;
+		let newContext = LayoutSupport.removeFields(
+			context,
+			indexPage,
+			indexRow,
+			indexColumn
+		);
 
-    /**
-     * @param {!Object}
-     * @private
-     */
-    _handleFieldEdit({value, key}) {
-        const { context, fieldFocus } = this.state;
-        const { indexColumn, indexPage, indexRow } = fieldFocus;
-        const fieldSelected = LayoutSupport.getColumn(context, indexPage, indexRow, indexColumn);
+		newContext = this._cleanRowEmpty(newContext, {
+			indexRow,
+			indexPage,
+			indexColumn,
+		});
 
-        const implPropertiesField = {
-            [key]: value
-        }
+		this.setState({
+			context: newContext,
+			fieldFocus: {},
+		});
+	}
 
-        const newField = Object.assign({}, fieldSelected[0], implPropertiesField);
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+	_handleFieldEdit({value, key}) {
+		const {context, fieldFocus} = this.state;
+		const {indexColumn, indexPage, indexRow} = fieldFocus;
+		const fieldSelected = LayoutSupport.getColumn(
+			context,
+			indexPage,
+			indexRow,
+			indexColumn
+		);
 
-        const newContext = LayoutSupport.changeFieldsFromColumn(context, indexPage, indexRow, indexColumn, [newField]);
+		const implPropertiesField = {
+			[key]: value,
+		};
 
-        this.setState({
-            context: this.state.context
-        });
-    }
+		const newField = Object.assign(
+			{},
+			fieldSelected[0],
+			implPropertiesField
+		);
 
-    /**
-     * @param {!Object}
-     * @private
-     */
-    _handleFieldMove({ target, source }) {
-        const { context } = this.state;
-        const fieldSourceToMove = this._getFieldSourceToMove(context, source);
+		LayoutSupport.changeFieldsFromColumn(
+			context,
+			indexPage,
+			indexRow,
+			indexColumn,
+			[newField]
+		);
 
-        let newContext = LayoutSupport.removeFields(context, source.indexPage, source.indexRow, source.indexColumn);
+		this.setState({
+			context: this.state.context,
+		});
+	}
 
-        if (target.indexColumn === false) {
-            newContext = this._cleanRowEmpty(newContext, source);
-            newContext = this._addFieldToRow(newContext, target, fieldSourceToMove);
-        } else {
-            newContext = this._addFieldToColumn(newContext, target, fieldSourceToMove);
-            newContext = this._cleanRowEmpty(newContext, source);
-        }
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+	_handleFieldMove({target, source}) {
+		const {context} = this.state;
+		const fieldSourceToMove = this._getFieldSourceToMove(context, source);
 
-        this.setState({
-            context: newContext,
-            fieldFocus: {}
-        });
+		let newContext = LayoutSupport.removeFields(
+			context,
+			source.indexPage,
+			source.indexRow,
+			source.indexColumn
+		);
 
-        newContext = null;
-    }
+		if (target.indexColumn === false) {
+			newContext = this._cleanRowEmpty(newContext, source);
+			newContext = this._addFieldToRow(
+				newContext,
+				target,
+				fieldSourceToMove
+			);
+		}
+		else {
+			newContext = this._addFieldToColumn(
+				newContext,
+				target,
+				fieldSourceToMove
+			);
+			newContext = this._cleanRowEmpty(newContext, source);
+		}
 
-    /**
-     * @param {!Array} context
-     * @param {!Object} source
-     * @private
-     * @return {Object}
-     */
-    _cleanRowEmpty(context, source) {
-        const { indexRow, indexPage, indexColumn } = source;
+		this.setState({
+			context: newContext,
+			fieldFocus: {},
+		});
 
-        if (!LayoutSupport.hasFieldsRow(context, indexPage, indexRow)) {
-            return LayoutSupport.removeRow(context, indexPage, indexRow);
-        }
+		newContext = null;
+	}
 
-        return context;
-    }
+	/**
+	 * @param {!Array} context
+	 * @param {!Object} source
+	 * @private
+	 * @return {Object}
+	 */
+	_cleanRowEmpty(context, source) {
+		const {indexRow, indexPage} = source;
 
-    /**
-     * @param {!Array} context
-     * @param {!Object} field
-     * @param {!Object} target
-     * @private
-     * @return {Object}
-     */
-    _addFieldToRow(context, target, field) {
-        const { indexRow, indexPage } = target;
-        const newRow = LayoutSupport.implAddRow(12, field);
-        return LayoutSupport.addRow(context, indexRow, indexPage, newRow);
-    }
+		if (!LayoutSupport.hasFieldsRow(context, indexPage, indexRow)) {
+			return LayoutSupport.removeRow(context, indexPage, indexRow);
+		}
 
-    /**
-     * @param {!Array} context
-     * @param {!Object} field
-     * @param {!Object} target
-     * @private
-     * @return {Object}
-     */
-    _addFieldToColumn(context, target, field) {
-        const { indexRow, indexPage, indexColumn } = target;
-        return LayoutSupport.addFields(context, indexPage, indexRow, indexColumn, field);
-    }
+		return context;
+	}
 
-    /**
-     * @param {!Array} context
-     * @param {!Object} source
-     * @private
-     * @return {Object}
-     */
-    _getFieldSourceToMove(context, source) {
-        const { indexRow, indexPage, indexColumn } = source;
-        return LayoutSupport.getColumn(context, indexPage, indexRow, indexColumn);
-    }
+	/**
+	 * @param {!Array} context
+	 * @param {!Object} target
+	 * @param {!Object} field
+	 * @private
+	 * @return {Object}
+	 */
+	_addFieldToRow(context, target, field) {
+		const {indexRow, indexPage} = target;
+		const newRow = LayoutSupport.implAddRow(12, field);
 
-    render() {
-        const { children, spritemap } = this.props;
-        const { fieldFocus, context, mode } = this.state;
+		return LayoutSupport.addRow(context, indexRow, indexPage, newRow);
+	}
 
-        if (children.length) {
-            const Child = children[0];
+	/**
+	 * @param {!Array} context
+	 * @param {!Object} target
+	 * @param {!Object} field
+	 * @private
+	 * @return {Object}
+	 */
+	_addFieldToColumn(context, target, field) {
+		const {indexRow, indexPage, indexColumn} = target;
 
-            const events = {
-                fieldAdd: this._handleFieldAdd.bind(this),
-                fieldEdit: this._handleFieldEdit.bind(this),
-                fieldClicked: this._handleFieldClicked.bind(this),
-                fieldDelete: this._handleFieldDelete.bind(this),
-                fieldMove: this._handleFieldMove.bind(this),
-            };
+		return LayoutSupport.addFields(
+			context,
+			indexPage,
+			indexRow,
+			indexColumn,
+			field
+		);
+	}
 
-            Object.assign(Child.props, {...this.otherProps(), events, context, fieldFocus, mode, spritemap});
+	/**
+	 * @param {!Array} context
+	 * @param {!Object} source
+	 * @private
+	 * @return {Object}
+	 */
+	_getFieldSourceToMove(context, source) {
+		const {indexRow, indexPage, indexColumn} = source;
 
-            return Child;
-        }
+		return LayoutSupport.getColumn(
+			context,
+			indexPage,
+			indexRow,
+			indexColumn
+		);
+	}
 
-        return;
-    }
+	render() {
+		const {children, spritemap} = this.props;
+		const {fieldFocus, context, mode} = this.state;
+
+		if (children.length) {
+			const Child = children[0];
+
+			const events = {
+				fieldAdd: this._handleFieldAdd.bind(this),
+				fieldEdit: this._handleFieldEdit.bind(this),
+				fieldClicked: this._handleFieldClicked.bind(this),
+				fieldDelete: this._handleFieldDelete.bind(this),
+				fieldMove: this._handleFieldMove.bind(this),
+			};
+
+			Object.assign(Child.props, {
+				...this.otherProps(),
+				events,
+				context,
+				fieldFocus,
+				mode,
+				spritemap,
+			});
+
+			return Child;
+		}
+
+		return;
+	}
 }
 
 export default LayoutProvider;

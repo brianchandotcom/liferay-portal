@@ -32,7 +32,7 @@ exports[`Builder should render the default markup 1`] = `
             <li class="tbar-item tbar-item-expand text-left">
               <div class="tbar-section">
                 <span class="text-truncate-inline">
-                  <span class="text-truncate">Add Elements</span>
+                  <span class="text-truncate"> Add Elements </span>
                 </span>
               </div>
             </li>

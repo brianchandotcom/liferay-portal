@@ -1,10 +1,9 @@
-import { Config } from 'metal-state';
+import './GridRegister.soy.js';
+import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
+import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import FieldBase from 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
-
 import templates from './Grid.soy.js';
-import GridRegister from './GridRegister.soy.js';
 
 class Grid extends Component {
 	static STATE = {

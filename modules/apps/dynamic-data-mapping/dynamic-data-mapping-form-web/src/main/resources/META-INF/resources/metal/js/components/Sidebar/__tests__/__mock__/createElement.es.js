@@ -1,13 +1,13 @@
 const setAttribute = (node, attributes) => {
-    attributes.map(({key, value}) => node.setAttribute(key, value));
+	attributes.map(({key, value}) => node.setAttribute(key, value));
 
-    return node;
-}
+	return node;
+};
 
-const createElement = (object) => {
-    const { tagname, attributes } = object;
+const createElement = object => {
+	const {tagname, attributes} = object;
 
-    return setAttribute(document.createElement(tagname), attributes);
+	return setAttribute(document.createElement(tagname), attributes);
 };
 
 export default createElement;

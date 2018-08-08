@@ -1,12 +1,10 @@
-import { Config } from 'metal-state';
+import './OptionsRegister.soy.js';
+import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
+import 'dynamic-data-mapping-form-field-type/metal/Text/index.es';
+import {Config} from 'metal-state';
 import Component from 'metal-component';
-import dom from 'metal-dom';
-import FieldBase from 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
-import Text from 'dynamic-data-mapping-form-field-type/metal/Text/index.es';
 import Soy from 'metal-soy';
-
 import templates from './Options.soy.js';
-import OptionsRegister from './OptionsRegister.soy.js';
 
 /**
  * Options.
@@ -114,20 +112,22 @@ class Options extends Component {
 	}
 
 	_handleTextChange(data) {
-		const { value, originalEvent } = data;
-		const { key } = this;
+		const {value, originalEvent} = data;
+		const {key} = this;
 		const fieldIndex = this._getFieldIndex(
 			originalEvent.delegateTarget.parentNode
 		);
 
 		if (typeof this.items[fieldIndex] === 'undefined') {
-			const newItem = { label: value };
+			const newItem = {label: value};
+
 			this.items.push(newItem);
-		} else {
+		}
+		else {
 			this.items[fieldIndex].label = value;
 		}
 
-		this.setState({ items: this.items });
+		this.setState({items: this.items});
 
 		this.emit('fieldEdit', {
 			value: this.items,

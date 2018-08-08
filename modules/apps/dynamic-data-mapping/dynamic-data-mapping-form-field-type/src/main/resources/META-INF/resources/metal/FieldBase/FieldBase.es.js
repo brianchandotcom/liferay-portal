@@ -1,7 +1,7 @@
-import { Config } from 'metal-state';
+import 'clay-icon';
+import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import ClayIcon from 'clay-icon';
 
 import templates from './FieldBase.soy.js';
 

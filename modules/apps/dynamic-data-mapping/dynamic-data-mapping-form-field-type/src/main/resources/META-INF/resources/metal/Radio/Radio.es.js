@@ -1,11 +1,10 @@
+import './RadioRegister.soy.js';
 import 'clay-radio';
-import { Config } from 'metal-state';
+import 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
+import {Config} from 'metal-state';
 import Component from 'metal-component';
-import FieldBase from 'dynamic-data-mapping-form-field-type/metal/FieldBase/index.es';
 import Soy from 'metal-soy';
-
 import templates from './Radio.soy.js';
-import RadioRegister from './RadioRegister.soy.js';
 
 /**
  * Radio.

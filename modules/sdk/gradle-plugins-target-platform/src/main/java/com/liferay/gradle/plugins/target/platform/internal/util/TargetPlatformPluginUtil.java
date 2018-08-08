@@ -45,6 +45,8 @@ public class TargetPlatformPluginUtil {
 			GradleUtil.getExtension(
 				project, DependencyManagementExtension.class);
 
+		dependencyManagementExtension.setApplyMavenExclusions(false);
+
 		GroovyObjectSupport groovyObjectSupport =
 			(GroovyObjectSupport)dependencyManagementExtension;
 

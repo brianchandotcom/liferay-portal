@@ -60,7 +60,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		Matcher matcher = _externalVersionPattern.matcher(
 			targetPlatformVersion);
 
-		String repositoryVersion = null;
+		String normalizedTargetPlatformVersion = null;
 
 		if (matcher.matches()) {
 			StringBuilder sb = new StringBuilder();
@@ -87,10 +87,10 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 					"Invalid version property value", nfe);
 			}
 
-			repositoryVersion = _fixBadVersionNumbers(sb.toString());
+			normalizedTargetPlatformVersion = sb.toString();
 		}
 		else {
-			repositoryVersion = targetPlatformVersion;
+			normalizedTargetPlatformVersion = targetPlatformVersion;
 		}
 
 		GradleUtil.applyPlugin(project, TargetPlatformIDEPlugin.class);
@@ -99,8 +99,10 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		_configureTargetPlatform(project);
 		_configureTargetPlatformIDE(project);
 
-		_addDependenciesTargetPlatformBoms(project, repositoryVersion);
-		_addDependenciesTargetPlatformDistro(project, repositoryVersion);
+		_addDependenciesTargetPlatformBoms(
+			project, normalizedTargetPlatformVersion);
+		_addDependenciesTargetPlatformDistro(
+			project, normalizedTargetPlatformVersion);
 	}
 
 	private TargetPlatformRootProjectConfigurator() {
@@ -109,14 +111,30 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 	private void _addDependenciesTargetPlatformBoms(
 		Project project, String targetPlatformVersion) {
 
+		Matcher matcher = _dxpVersionPattern.matcher(targetPlatformVersion);
+
+		String bomArtifactId = null;
+		String bomCompileOnlyArtifactId = null;
+
+		if (matcher.matches()) {
+			bomArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM;
+			bomCompileOnlyArtifactId =
+				_ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY;
+		}
+		else {
+			bomArtifactId = _ARTIFACT_ID_RELEASE_PORTAL_BOM;
+			bomCompileOnlyArtifactId =
+				_ARTIFACT_ID_RELEASE_PORTAL_BOM_COMPILE_ONLY;
+		}
+
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			"com.liferay", "com.liferay.ce.portal.bom", targetPlatformVersion);
+			_GROUP_ID_LIFERAY_PORTAL, bomArtifactId, targetPlatformVersion);
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			"com.liferay", "com.liferay.ce.portal.compile.only",
+			_GROUP_ID_LIFERAY_PORTAL, bomCompileOnlyArtifactId,
 			targetPlatformVersion);
 	}
 
@@ -132,11 +150,23 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
+					Matcher matcher = _dxpVersionPattern.matcher(
+						targetPlatformVersion);
+
+					final String artifactId;
+
+					if (matcher.matches()) {
+						artifactId = _ARTIFACT_ID_RELEASE_DXP_DISTRO;
+					}
+					else {
+						artifactId = _ARTIFACT_ID_RELEASE_PORTAL_DISTRO;
+					}
+
 					GradleUtil.addDependency(
 						project,
 						TargetPlatformPlugin.
 							TARGET_PLATFORM_DISTRO_CONFIGURATION_NAME,
-						"com.liferay", "com.liferay.ce.portal.distro",
+						_GROUP_ID_LIFERAY_PORTAL, artifactId,
 						targetPlatformVersion);
 				}
 
@@ -201,13 +231,28 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 			"com.liferay", "com.liferay.portal");
 	}
 
-	private String _fixBadVersionNumbers(String version) {
-		if (version.equals("7.0.6")) {
-			return "7.0.6.1";
-		}
+	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM =
+		"release.dxp.bom";
 
-		return version;
-	}
+	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY =
+		"release.dxp.bom.compile.only";
+
+	private static final String _ARTIFACT_ID_RELEASE_DXP_DISTRO =
+		"release.dxp.distro";
+
+	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM =
+		"release.portal.bom";
+
+	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM_COMPILE_ONLY =
+		"release.portal.bom.compile.only";
+
+	private static final String _ARTIFACT_ID_RELEASE_PORTAL_DISTRO =
+		"release.portal.distro";
+
+	private static final String _GROUP_ID_LIFERAY_PORTAL = "com.liferay.portal";
+
+	private static final Pattern _dxpVersionPattern = Pattern.compile(
+		"7\\.[0-2]\\.1[0-9](\\.[0-9]+)?");
 
 	private final Pattern _externalVersionPattern = Pattern.compile(
 		"([0-9]+)\\.([0-9]+)-([A-Za-z]+)([0-9]+)");

@@ -4306,6 +4306,12 @@ directory when it has a dependency with version `default`.
 - [LPS-84055]: The `printDependentArtifact` task should print the project
 directory when it has a `compile*` dependency with the version `default`.
 
+## 5.5.8 - 2018-08-07
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.103.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

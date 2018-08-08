@@ -155,14 +155,14 @@ public class WeDeploySettingsPlugin implements Plugin<Settings> {
 							settings, dirPath, rootDirPath, projectPathPrefix);
 
 						projectPathPluginClasses.put(
-							projectPath, WeDeployDataPlugin.class);
+							projectPath, DataWeDeployPlugin.class);
 					}
 					else if (wedeployJSON.contains("wedeploy/message-queue")) {
 						String projectPath = _includeProject(
 							settings, dirPath, rootDirPath, projectPathPrefix);
 
 						projectPathPluginClasses.put(
-							projectPath, WeDeployMessageQueuePlugin.class);
+							projectPath, MessageQueueWeDeployPlugin.class);
 					}
 
 					return FileVisitResult.SKIP_SUBTREE;

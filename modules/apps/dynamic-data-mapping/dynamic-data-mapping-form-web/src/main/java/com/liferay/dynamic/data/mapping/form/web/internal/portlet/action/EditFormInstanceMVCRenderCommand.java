@@ -28,6 +28,8 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -72,13 +74,9 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 				(DDMFormAdminDisplayContext)renderRequest.getAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-			long ddmStructureId;
-
 			try {
-				ddmStructureId = ddmFormAdminDisplayContext.getDDMStructureId();
-
 				String serializedFormBuilderContext = getFormBuilderContext(
-					ddmStructureId,
+					ddmFormAdminDisplayContext.getDDMStructureId(),
 					_portal.getHttpServletRequest(renderRequest));
 
 				renderRequest.setAttribute(
@@ -86,7 +84,9 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 					serializedFormBuilderContext);
 			}
 			catch (PortalException pe) {
-				pe.printStackTrace();
+				if (_log.isWarnEnabled()) {
+					_log.warn(pe, pe);
+				}
 			}
 
 			renderRequest.setAttribute(
@@ -162,6 +162,9 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 
 		_ddmFormWebConfigurationActivator = null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditFormInstanceMVCRenderCommand.class);
 
 	private static DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
 	private static DDMStructureLocalService _ddmStructureLocalService;

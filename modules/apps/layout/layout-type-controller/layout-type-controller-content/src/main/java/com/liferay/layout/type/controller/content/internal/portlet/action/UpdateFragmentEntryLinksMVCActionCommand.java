@@ -16,6 +16,7 @@ package com.liferay.layout.type.controller.content.internal.portlet.action;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -93,12 +96,19 @@ public class UpdateFragmentEntryLinksMVCActionCommand
 		long fragmentEntryLinkId1 = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId1");
 
+		long fragmentEntryLinkId2 = ParamUtil.getLong(
+			actionRequest, "fragmentEntryLinkId2");
+
+		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+		String data = ParamUtil.getString(actionRequest, "data");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		FragmentEntryLink fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLinkId1);
-
-		long fragmentEntryLinkId2 = ParamUtil.getLong(
-			actionRequest, "fragmentEntryLinkId2");
 
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
@@ -110,6 +120,11 @@ public class UpdateFragmentEntryLinksMVCActionCommand
 
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 				fragmentEntryLinkId2, fragmentEntryLink1.getPosition());
+
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructure(
+					serviceContext.getScopeGroupId(), classNameId, classPK,
+					data);
 		}
 	}
 
@@ -122,6 +137,10 @@ public class UpdateFragmentEntryLinksMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	private class UpdateLayoutPageTemplateStructuresCallable
 		implements Callable<Void> {

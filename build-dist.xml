@@ -1005,108 +1005,28 @@ release was successful.</echo>
 		</if>
 	</target>
 
-	<target name="generate-hypersonic-data">
-		<property location="dist/hypersonic.tmp" name="tmp.hypersonic.dir" />
-
-		<property location="${tmp.hypersonic.dir}/tomcat-${app.server.tomcat.version}/bin" name="tmp.app.server.tomcat.bin.dir" />
-
-		<copy
-			todir="${tmp.hypersonic.dir}"
-		>
-			<fileset
-				dir="${liferay.home}"
-			/>
-		</copy>
-
-		<chmod
-			perm="744"
-		>
-			<fileset
-				dir="${tmp.app.server.tomcat.bin.dir}"
-				includes="*.sh"
-			/>
-		</chmod>
-
-		<parallel>
-			<exec dir="${tmp.app.server.tomcat.bin.dir}" executable="sh">
-				<arg value="catalina.sh" />
-				<arg value="run" />
-			</exec>
-
-			<sequential>
-				<waitfor>
-					<http url="http://localhost:8080" />
-				</waitfor>
-
-				<sleep seconds="5" />
-
-				<exec dir="${tmp.app.server.tomcat.bin.dir}" executable="sh">
-					<arg value="shutdown.sh" />
-				</exec>
-			</sequential>
-		</parallel>
-
+	<target depends="tomcat-startup-shutdown" name="generate-hypersonic-data">
 		<copy
 			todir="dist/hypersonic"
 		>
 			<fileset
-				dir="${tmp.hypersonic.dir}/data/hypersonic"
+				dir="${tmp.startup.shutdown.dir}/data/hypersonic"
 			/>
 		</copy>
-
-		<delete dir="${tmp.hypersonic.dir}" />
 	</target>
 
-	<target name="generate-osgi-state">
-		<property location="dist/osgi.state.tmp" name="tmp.osgi.state.dir" />
-
-		<property location="${tmp.osgi.state.dir}/tomcat-${app.server.tomcat.version}/bin" name="tmp.app.server.tomcat.bin.dir" />
-
-		<copy
-			todir="${tmp.osgi.state.dir}"
-		>
-			<fileset
-				dir="${liferay.home}"
-			/>
-		</copy>
-
-		<chmod
-			perm="744"
-		>
-			<fileset
-				dir="${tmp.app.server.tomcat.bin.dir}"
-				includes="*.sh"
-			/>
-		</chmod>
-
-		<parallel>
-			<exec dir="${tmp.app.server.tomcat.bin.dir}" executable="sh">
-				<arg value="catalina.sh" />
-				<arg value="run" />
-			</exec>
-
-			<sequential>
-				<waitfor>
-					<http url="http://localhost:8080" />
-				</waitfor>
-
-				<sleep seconds="5" />
-
-				<exec dir="${tmp.app.server.tomcat.bin.dir}" executable="sh">
-					<arg value="shutdown.sh" />
-				</exec>
-			</sequential>
-		</parallel>
-
+	<target depends="tomcat-startup-shutdown" name="generate-osgi-state">
 		<copy
 			todir="dist/osgi/state"
 		>
 			<fileset
-				dir="${tmp.osgi.state.dir}/osgi/state"
+				dir="${tmp.startup.shutdown.dir}/osgi/state"
 			/>
 		</copy>
+	</target>
 
-		<delete dir="${tmp.osgi.state.dir}" />
+	<target depends="generate-hypersonic-data,generate-osgi-state" name="generate-startup-files">
+		<delete dir="${tmp.startup.shutdown.dir}" />
 	</target>
 
 	<target name="prepare-generated-files">
@@ -1229,6 +1149,48 @@ release was successful.</echo>
 				</then>
 			</if>
 		</sequential>
+	</target>
+
+	<target name="tomcat-startup-shutdown">
+		<property location="dist/startup.shutdown.tmp" name="tmp.startup.shutdown.dir" />
+
+		<property location="${tmp.startup.shutdown.dir}/tomcat-${app.server.tomcat.version}/bin" name="tmp.app.server.tomcat.bin.dir" />
+
+		<copy
+			todir="${tmp.startup.shutdown.dir}"
+		>
+			<fileset
+				dir="${liferay.home}"
+			/>
+		</copy>
+
+		<chmod
+			perm="744"
+		>
+			<fileset
+				dir="${tmp.app.server.tomcat.bin.dir}"
+				includes="*.sh"
+			/>
+		</chmod>
+
+		<parallel>
+			<exec dir="${tmp.app.server.tomcat.bin.dir}" executable="sh">
+				<arg value="catalina.sh" />
+				<arg value="run" />
+			</exec>
+
+			<sequential>
+				<waitfor>
+					<http url="http://localhost:8080" />
+				</waitfor>
+
+				<sleep seconds="5" />
+
+				<exec dir="${tmp.app.server.tomcat.bin.dir}" executable="sh">
+					<arg value="shutdown.sh" />
+				</exec>
+			</sequential>
+		</parallel>
 	</target>
 
 	<target name="unzip-glassfish">

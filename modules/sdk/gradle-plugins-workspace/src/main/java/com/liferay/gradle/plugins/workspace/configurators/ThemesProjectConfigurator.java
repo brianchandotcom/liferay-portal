@@ -166,7 +166,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		copy.dependsOn(assembleTask);
 
 		copy.into(
-			"osgi/modules",
+			"osgi/war",
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")

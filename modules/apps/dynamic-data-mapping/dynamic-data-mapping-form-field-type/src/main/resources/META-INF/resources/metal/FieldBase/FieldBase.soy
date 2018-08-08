@@ -1,0 +1,37 @@
+{namespace FieldBase}
+
+{template .render}
+	{@param? contentRenderer: any}
+	{@param? id: string}
+	{@param? helpText: string}
+	{@param? label: string}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+
+	<div class="form-group">
+		{let $attributesLabel kind="attributes"}
+			{if $id}
+				for="{$id}"
+			{/if}
+		{/let}
+
+		<label {$attributesLabel}>
+			{if $label and $showLabel}
+				{$label}{sp}
+			{/if}
+			{if $required and $spritemap}
+				<span class="reference-mark">
+					{call ClayIcon.render}
+						{param spritemap: $spritemap /}
+						{param symbol: 'asterisk' /}
+					{/call}
+				</span>
+			{/if}
+		</label>
+
+		{$contentRenderer}
+
+		<span class="form-text">{$helpText}</span>
+	</div>
+{/template}

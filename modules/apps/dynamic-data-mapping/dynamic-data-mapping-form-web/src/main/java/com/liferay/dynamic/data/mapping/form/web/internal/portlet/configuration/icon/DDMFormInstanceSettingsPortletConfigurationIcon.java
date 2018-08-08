@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-		"path=/admin/edit_form_instance.jsp"
+		"path=/admin/edit_form_instance"
 	},
 	service = PortletConfigurationIcon.class
 )

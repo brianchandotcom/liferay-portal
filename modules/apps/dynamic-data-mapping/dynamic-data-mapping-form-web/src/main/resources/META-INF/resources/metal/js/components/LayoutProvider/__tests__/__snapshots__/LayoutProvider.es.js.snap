@@ -1,0 +1,625 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LayoutProvider Field events fieldAdd should listen the fieldAdd event and add the field in the column to the context 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "spritemap": "icons.svg",
+                "type": "text",
+              },
+            ],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events fieldAdd should listen the fieldAdd event and add the field in the row to the context 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "spritemap": "icons.svg",
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events fieldDelete should listen the fieldDelete event and delete the field in the column to the context 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events fieldEdit should listen the fieldEdit event and edit the field to the context 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Foo",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events fieldMove should listen to the fieldMove event and move the field to the column in context 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events fieldMove should listen to the fieldMove event and move the field to the row in context 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events fieldMove should move the field to the column in context and remove the row if there are no fields 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events fieldMove should move the field to the row in context and remove the row if there are no fields 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;

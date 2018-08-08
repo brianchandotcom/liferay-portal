@@ -14,13 +14,26 @@
 
 package com.liferay.layout.type.controller.content.internal.portlet.action;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -42,24 +55,73 @@ import org.osgi.service.component.annotations.Reference;
 public class DeleteFragmentEntryLinkMVCActionCommand
 	extends BaseMVCActionCommand {
 
+	protected FragmentEntryLink deleteFragmentEntryLink(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		long fragmentEntryLinkId = ParamUtil.getLong(
+			actionRequest, "fragmentEntryLinkId");
+
+		return _fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+			fragmentEntryLinkId);
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fragmentEntryLinkId = ParamUtil.getLong(
-			actionRequest, "fragmentEntryLinkId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
-			fragmentEntryLinkId);
+		Callable<FragmentEntryLink> deleteFragmentEntryLinkCallable =
+			new DeleteFragmentEntryLinkCallable(actionRequest);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig, deleteFragmentEntryLinkCallable);
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+		}
 
 		hideDefaultSuccessMessage(actionRequest);
 
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, JSONFactoryUtil.createJSONObject());
+			actionRequest, actionResponse, jsonObject);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeleteFragmentEntryLinkMVCActionCommand.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	private class DeleteFragmentEntryLinkCallable
+		implements Callable<FragmentEntryLink> {
+
+		@Override
+		public FragmentEntryLink call() throws Exception {
+			return deleteFragmentEntryLink(_actionRequest);
+		}
+
+		private DeleteFragmentEntryLinkCallable(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
+
+	}
 
 }

@@ -113,23 +113,28 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		Matcher dxpVersion = _dxpVersionPattern.matcher(targetPlatformVersion);
 
-		final String artifactId;
+		final String bomArtifactId;
+		final String bomCompileOnlyArtifactId;
 
 		if (dxpVersion.matches()) {
-			artifactId = _ARTIFACT_ID_RELEASE_DXP_BOM;
+			bomArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM;
+			bomCompileOnlyArtifactId =
+				_ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY;
 		}
 		else {
-			artifactId = _ARTIFACT_ID_RELEASE_PORTAL_BOM;
+			bomArtifactId = _ARTIFACT_ID_RELEASE_PORTAL_BOM;
+			bomCompileOnlyArtifactId =
+				_ARTIFACT_ID_RELEASE_PORTAL_BOM_COMPILE_ONLY;
 		}
 
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_PORTAL, artifactId, targetPlatformVersion);
+			_GROUP_ID_PORTAL, bomArtifactId, targetPlatformVersion);
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_PORTAL, artifactId, targetPlatformVersion);
+			_GROUP_ID_PORTAL, bomCompileOnlyArtifactId, targetPlatformVersion);
 	}
 
 	private void _addDependenciesTargetPlatformDistro(
@@ -227,11 +232,17 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM =
 		"release.dxp.bom";
 
+	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY =
+		"release.dxp.bom.compile.only";
+
 	private static final String _ARTIFACT_ID_RELEASE_DXP_DISTRO =
 		"release.dxp.distro";
 
 	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM =
 		"release.portal.bom";
+
+	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM_COMPILE_ONLY =
+		"release.portal.bom.compile.only";
 
 	private static final String _ARTIFACT_ID_RELEASE_PORTAL_DISTRO =
 		"release.portal.distro";

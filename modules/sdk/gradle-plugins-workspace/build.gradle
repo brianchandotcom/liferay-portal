@@ -43,7 +43,7 @@ copyRepo {
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.12.104"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.5"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "1.1.1"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "1.1.2"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.4"
 	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.2.6"
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"

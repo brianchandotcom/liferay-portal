@@ -249,6 +249,13 @@ version 3.2.6.
 - [LPS-82491]: Update the [Liferay Gradle Target Platform Plugin] dependency to
 version 1.1.0.
 
+## 1.10.7 - 2017-08-08
+
+### Fixed
+- [LPS-83922]: Adjust target platform configuration to use new BOM ids.
+- [LPS-83922]: Update the [Liferay Gradle Target Platform Plugin] dependency to
+version 1.1.2.
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
@@ -306,3 +313,4 @@ version 1.1.0.
 [LPS-80950]: https://issues.liferay.com/browse/LPS-80950
 [LPS-82491]: https://issues.liferay.com/browse/LPS-82491
 [LPS-82534]: https://issues.liferay.com/browse/LPS-82534
+[LPS-83922]: https://issues.liferay.com/browse/LPS-83922

@@ -140,6 +140,14 @@ public class PasswordPolicyDisplayContext {
 		return navigationItems;
 	}
 
+	public boolean hasPermission(String actionId, long passwordPolicyId) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return PasswordPolicyPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), passwordPolicyId, actionId);
+	}
+
 	private PasswordPolicy _getPasswordPolicy() {
 		if (_passwordPolicy != null) {
 			return _passwordPolicy;
@@ -152,7 +160,7 @@ public class PasswordPolicyDisplayContext {
 	}
 
 	private long _getPasswordPolicyId() {
-		if (_passwordPolicyId != 0L) {
+		if (_passwordPolicyId != null) {
 			return _passwordPolicyId;
 		}
 
@@ -177,7 +185,7 @@ public class PasswordPolicyDisplayContext {
 	}
 
 	private PasswordPolicy _passwordPolicy;
-	private long _passwordPolicyId;
+	private Long _passwordPolicyId;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 

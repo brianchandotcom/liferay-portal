@@ -283,6 +283,19 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Callback executed when a fragment entry of a collection is being dragged.
+	 * It receives hoveredFragmentEntryId and nearestBorder as event data.
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+
+	_handleFragmentDrag(event) {
+		this._hoveredFragmentEntryLinkBorder = event.nearestBorder;
+		this._hoveredFragmentEntryLinkId = event.hoveredFragmentEntryLinkId;
+	}
+
+	/**
 	 * Callback executed when a fragment entry of a collection is clicked.
 	 * It receives fragmentEntryId and fragmentName as event data.
 	 * @param {!Event} event
@@ -1123,6 +1136,28 @@ FragmentsEditor.STATE = {
 	_highlightMapping: Config.bool()
 		.internal()
 		.value(false),
+
+	/**
+	 * Nearest border of the hovered fragment entry link when dragging.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	_hoveredFragmentEntryLinkBorder: Config.string().internal(),
+
+	/**
+	 * Id of the hovered fragment entry link when dragging.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	_hoveredFragmentEntryLinkId: Config.string().internal(),
 
 	/**
 	 * Last data when the autosave has been executed.

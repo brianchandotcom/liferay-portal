@@ -14,6 +14,10 @@
  */
 --%>
 
+<%
+boolean hasUpdatePermission = PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.UPDATE);
+%>
+
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<liferay-ui:search-container-column-icon
@@ -24,7 +28,7 @@
 			colspan="<%= 2 %>"
 		>
 			<h5>
-				<aui:a href="<%= rowURL %>"><%= passwordPolicy.getName() %></aui:a>
+				<aui:a href="<%= hasUpdatePermission ? rowURL : null %>"><%= passwordPolicy.getName() %></aui:a>
 			</h5>
 
 			<h6 class="text-default">
@@ -53,14 +57,14 @@
 				rowChecker="<%= passwordPolicySearchContainer.getRowChecker() %>"
 				subtitle="<%= passwordPolicy.getDescription() %>"
 				title="<%= passwordPolicy.getName() %>"
-				url="<%= rowURL.toString() %>"
+				url="<%= hasUpdatePermission ? rowURL.toString() : null %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
-			href="<%= rowURL %>"
+			href="<%= hasUpdatePermission ? rowURL : null %>"
 			name="name"
 			truncate="<%= true %>"
 		>
@@ -69,7 +73,7 @@
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
-			href="<%= rowURL %>"
+			href="<%= hasUpdatePermission ? rowURL : null %>"
 			name="description"
 			orderable="<%= true %>"
 			property="description"

@@ -62,7 +62,9 @@
 									<liferay-ui:message key="portal" />
 								</h3>
 
-								<aui:input label="portal-name" name="companyName" value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
+								<aui:input label="portal-name" name="companyName" value="<%= PropsValues.COMPANY_DEFAULT_NAME %>">
+									<aui:validator name="required" />
+								</aui:input>
 
 								<aui:field-wrapper label="default-language" name="companyLocale">
 									<div class="form-group-autofit">
@@ -231,6 +233,7 @@
 						var adminEmailAddress = A.one('#<portlet:namespace />adminEmailAddress');
 						var adminFirstName = A.one('#<portlet:namespace />adminFirstName');
 						var adminLastName = A.one('#<portlet:namespace />adminLastName');
+						var companyName = A.one('#<portlet:namespace />companyName');
 						var customDatabaseOptions = A.one('#customDatabaseOptions');
 						var customDatabaseOptionsLink = A.one('#customDatabaseOptionsLink');
 						var databaseSelector = A.one('#databaseType');
@@ -309,7 +312,7 @@
 						A.one('#fm').on(
 							'submit',
 							function(event) {
-								if ((adminEmailAddress && (adminEmailAddress.val() != '')) && (adminFirstName && (adminFirstName.val() != '')) && (adminLastName && (adminLastName.val() != ''))) {
+								if ((adminEmailAddress && (adminEmailAddress.val() != '')) && (adminFirstName && (adminFirstName.val() != '')) && (adminLastName && (adminLastName.val() != '')) && (companyName && (companyName.val() != ''))) {
 									if (defaultDatabase.val() == 'true') {
 										startInstall();
 

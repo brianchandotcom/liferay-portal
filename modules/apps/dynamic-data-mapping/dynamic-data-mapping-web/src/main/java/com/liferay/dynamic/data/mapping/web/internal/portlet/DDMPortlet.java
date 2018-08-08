@@ -39,21 +39,27 @@ import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorError;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorErrorStatus;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustNotDuplicateFieldName;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetOptionsForField;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldName;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidatorError;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidatorErrorStatus;
 import com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.web.internal.display.context.DDMDisplayContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletPreferencesException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -61,7 +67,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -137,12 +148,14 @@ public class DDMPortlet extends MVCPortlet {
 
 				include("/error.jsp", actionRequest, actionResponse);
 			}
-			else if (e instanceof DDMFormLayoutValidationException ||
-					 e instanceof DDMFormValidationException ||
-					 e instanceof LocaleException ||
-					 e instanceof MustNotDuplicateFieldName ||
-					 e instanceof MustSetOptionsForField ||
-					 e instanceof MustSetValidCharactersForFieldName ||
+			else if (e instanceof DDMFormValidationException) {
+				addSessionErrors((DDMFormValidationException)e, actionRequest);
+			}
+			else if (e instanceof DDMFormLayoutValidationException) {
+				addSessionErrors(
+					(DDMFormLayoutValidationException)e, actionRequest);
+			}
+			else if (e instanceof LocaleException ||
 					 e instanceof RequiredStructureException ||
 					 e instanceof RequiredTemplateException ||
 					 e instanceof StructureDefinitionException ||
@@ -216,6 +229,131 @@ public class DDMPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		ddmWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDMWebConfiguration.class, properties);
+	}
+
+	protected void addSessionError(
+		DDMFormLayoutValidatorError ddmFormLayoutValidatorError,
+		ActionRequest actionRequest) {
+
+		DDMFormLayoutValidatorErrorStatus errorStatus =
+			ddmFormLayoutValidatorError.getErrorStatus();
+
+		Map<String, Object> properties =
+			ddmFormLayoutValidatorError.getProperties();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		if (errorStatus ==
+				DDMFormLayoutValidatorErrorStatus.
+					MUST_NOT_DUPLICATE_FIELD_NAME_EXCEPTION) {
+
+			Set<String> fields = (Set<String>)properties.get("fields");
+
+			Stream<String> stream = fields.stream();
+
+			String argument = HtmlUtil.escape(
+				stream.collect(Collectors.joining(StringPool.COMMA_AND_SPACE)));
+
+			Object value = LanguageUtil.format(
+				locale,
+				"the-definition-field-name-x-was-defined-more-than-once",
+				argument, false);
+
+			SessionErrors.add(actionRequest, errorStatus.name(), value);
+		}
+		else {
+			SessionErrors.add(
+				actionRequest, DDMFormLayoutValidationException.class);
+		}
+	}
+
+	protected void addSessionError(
+		DDMFormValidatorError ddmFormValidatorError,
+		ActionRequest actionRequest) {
+
+		DDMFormValidatorErrorStatus errorStatus =
+			ddmFormValidatorError.getErrorStatus();
+
+		Map<String, Object> properties = ddmFormValidatorError.getProperties();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		if (errorStatus ==
+				DDMFormValidatorErrorStatus.
+					MUST_NOT_DUPLICATE_FIELD_NAME_EXCEPTION) {
+
+			String field = HtmlUtil.escape(
+				MapUtil.getString(properties, "field"));
+
+			Object value = LanguageUtil.format(
+				locale,
+				"the-definition-field-name-x-was-defined-more-than-once", field,
+				false);
+
+			SessionErrors.add(actionRequest, errorStatus.name(), value);
+		}
+		else if (errorStatus ==
+					 DDMFormValidatorErrorStatus.
+						 MUST_SET_OPTIONS_FOR_FIELD_EXCEPTION) {
+
+			String field = HtmlUtil.escape(
+				MapUtil.getString(properties, "field"));
+
+			Object value = LanguageUtil.format(
+				locale, "at-least-one-option-should-be-set-for-field-x", field,
+				false);
+
+			SessionErrors.add(actionRequest, errorStatus.name(), value);
+		}
+		else if (errorStatus ==
+					 DDMFormValidatorErrorStatus.
+						 MUST_SET_VALID_CHARACTERS_FOR_FIELD_NAME_EXCEPTION) {
+
+			String field = HtmlUtil.escape(
+				MapUtil.getString(properties, "field"));
+
+			Object value = LanguageUtil.format(
+				locale, "invalid-characters-were-defined-for-field-name-x",
+				field, false);
+
+			SessionErrors.add(actionRequest, errorStatus.name(), value);
+		}
+		else {
+			SessionErrors.add(actionRequest, DDMFormValidationException.class);
+		}
+	}
+
+	protected void addSessionErrors(
+		DDMFormLayoutValidationException exception,
+		ActionRequest actionRequest) {
+
+		List<DDMFormLayoutValidatorError> ddmFormLayoutValidatorErrors =
+			exception.getDDMFormLayoutValidatorErrors();
+
+		for (DDMFormLayoutValidatorError ddmFormLayoutValidatorError :
+				ddmFormLayoutValidatorErrors) {
+
+			addSessionError(ddmFormLayoutValidatorError, actionRequest);
+		}
+	}
+
+	protected void addSessionErrors(
+		DDMFormValidationException exception, ActionRequest actionRequest) {
+
+		List<DDMFormValidatorError> ddmFormValidatorErrors =
+			exception.getDDMFormValidatorErrors();
+
+		for (DDMFormValidatorError ddmFormValidatorError :
+				ddmFormValidatorErrors) {
+
+			addSessionError(ddmFormValidatorError, actionRequest);
+		}
 	}
 
 	protected void setDDMDisplayContextRequestAttribute(

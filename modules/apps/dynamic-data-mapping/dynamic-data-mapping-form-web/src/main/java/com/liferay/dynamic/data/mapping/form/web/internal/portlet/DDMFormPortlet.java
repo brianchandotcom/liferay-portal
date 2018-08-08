@@ -27,7 +27,10 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorError;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorErrorStatus;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -37,11 +40,17 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -104,6 +113,9 @@ public class DDMFormPortlet extends MVCPortlet {
 			hideDefaultErrorMessage(actionRequest);
 
 			if (cause instanceof DDMFormValuesValidationException) {
+				addSessionErrors(
+					(DDMFormValuesValidationException)cause, actionRequest);
+
 				if (cause instanceof
 						DDMFormValuesValidationException.RequiredValue) {
 
@@ -160,6 +172,65 @@ public class DDMFormPortlet extends MVCPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	protected void addSessionError(
+		DDMFormValuesValidatorError ddmFormValuesValidatorError,
+		ActionRequest actionRequest) {
+
+		DDMFormValuesValidatorErrorStatus errorStatus =
+			ddmFormValuesValidatorError.getErrorStatus();
+
+		Map<String, Object> properties =
+			ddmFormValuesValidatorError.getProperties();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		if (errorStatus ==
+				DDMFormValuesValidatorErrorStatus.
+					MUST_SET_VALID_VALUE_EXCEPTION) {
+
+			String field = HtmlUtil.escape(
+				MapUtil.getString(properties, "field"));
+
+			Object value = LanguageUtil.format(
+				locale, "validation-failed-for-field-x", field, false);
+
+			SessionErrors.add(actionRequest, errorStatus.name(), value);
+		}
+		else if (errorStatus ==
+					 DDMFormValuesValidatorErrorStatus.
+						 REQUIRED_VALUE_EXCEPTION) {
+
+			String field = HtmlUtil.escape(
+				MapUtil.getString(properties, "field"));
+
+			Object value = LanguageUtil.format(
+				locale, "no-value-is-defined-for-field-x", field, false);
+
+			SessionErrors.add(actionRequest, errorStatus.name(), value);
+		}
+		else {
+			SessionErrors.add(
+				actionRequest, DDMFormValuesValidationException.class);
+		}
+	}
+
+	protected void addSessionErrors(
+		DDMFormValuesValidationException exception,
+		ActionRequest actionRequest) {
+
+		List<DDMFormValuesValidatorError> ddmFormValuesValidatorErrors =
+			exception.getDDMFormValuesValidatorErrors();
+
+		for (DDMFormValuesValidatorError ddmFormValuesValidatorError :
+				ddmFormValuesValidatorErrors) {
+
+			addSessionError(ddmFormValuesValidatorError, actionRequest);
+		}
 	}
 
 	protected void checkFormIsNotRestricted(

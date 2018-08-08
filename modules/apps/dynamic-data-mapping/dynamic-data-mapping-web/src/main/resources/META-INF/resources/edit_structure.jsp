@@ -105,45 +105,27 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
 
-		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.MustNotDuplicateFieldName.class %>">
+		<%
+		for (DDMFormLayoutValidatorErrorStatus errorStatus : DDMFormLayoutValidatorErrorStatus.values()) {
+		%>
 
-			<%
-			DDMFormLayoutValidationException.MustNotDuplicateFieldName mndfn = (DDMFormLayoutValidationException.MustNotDuplicateFieldName)errorException;
-			%>
+			<liferay-ui:error key="<%= errorStatus.name() %>" />
 
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE)) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
-		</liferay-ui:error>
+		<%
+		}
+		%>
 
 		<liferay-ui:error exception="<%= DDMFormValidationException.class %>" message="please-enter-a-valid-form-definition" />
 
-		<liferay-ui:error exception="<%= DDMFormValidationException.MustNotDuplicateFieldName.class %>">
+		<%
+		for (DDMFormValidatorErrorStatus errorStatus : DDMFormValidatorErrorStatus.values()) {
+		%>
 
-			<%
-			DDMFormValidationException.MustNotDuplicateFieldName mndfn = (DDMFormValidationException.MustNotDuplicateFieldName)errorException;
-			%>
+			<liferay-ui:error key="<%= errorStatus.name() %>" />
 
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(mndfn.getFieldName()) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetFieldsForForm.class %>" message="please-add-at-least-one-field" />
-
-		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetOptionsForField.class %>">
-
-			<%
-			DDMFormValidationException.MustSetOptionsForField msoff = (DDMFormValidationException.MustSetOptionsForField)errorException;
-			%>
-
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(msoff.getFieldName()) %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidCharactersForFieldName.class %>">
-
-			<%
-			DDMFormValidationException.MustSetValidCharactersForFieldName msvcffn = (DDMFormValidationException.MustSetValidCharactersForFieldName)errorException;
-			%>
-
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(msvcffn.getFieldName()) %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
-		</liferay-ui:error>
+		<%
+		}
+		%>
 
 		<liferay-ui:error exception="<%= LocaleException.class %>">
 

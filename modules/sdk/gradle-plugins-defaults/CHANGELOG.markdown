@@ -4290,6 +4290,12 @@ directory when it has a dependency with version `default`.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.100.
 
+## 5.5.6 - 2018-08-06
+
+### Changed
+- [LPS-84213]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.101.
+
 ## 5.5.7 - 2018-08-06
 
 ### Fixed
@@ -4751,6 +4757,7 @@ directory when it has a `compile*` dependency with the version `default`.
 [LPS-84039]: https://issues.liferay.com/browse/LPS-84039
 [LPS-84055]: https://issues.liferay.com/browse/LPS-84055
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
+[LPS-84213]: https://issues.liferay.com/browse/LPS-84213
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

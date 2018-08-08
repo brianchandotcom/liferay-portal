@@ -111,12 +111,12 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 	private void _addDependenciesTargetPlatformBoms(
 		Project project, String targetPlatformVersion) {
 
-		Matcher dxpVersion = _dxpVersionPattern.matcher(targetPlatformVersion);
+		Matcher matcher = _dxpVersionPattern.matcher(targetPlatformVersion);
 
 		final String bomArtifactId;
 		final String bomCompileOnlyArtifactId;
 
-		if (dxpVersion.matches()) {
+		if (matcher.matches()) {
 			bomArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM;
 			bomCompileOnlyArtifactId =
 				_ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY;
@@ -130,11 +130,11 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_PORTAL, bomArtifactId, targetPlatformVersion);
+			_GROUP_ID_LIFERAY_PORTAL, bomArtifactId, targetPlatformVersion);
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_PORTAL, bomCompileOnlyArtifactId, targetPlatformVersion);
+			_GROUP_ID_LIFERAY_PORTAL, bomCompileOnlyArtifactId, targetPlatformVersion);
 	}
 
 	private void _addDependenciesTargetPlatformDistro(
@@ -149,12 +149,12 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					Matcher dxpMatcher = _dxpVersionPattern.matcher(
+					Matcher matcher = _dxpVersionPattern.matcher(
 						targetPlatformVersion);
 
 					final String artifactId;
 
-					if (dxpMatcher.matches()) {
+					if (matcher.matches()) {
 						artifactId = _ARTIFACT_ID_RELEASE_DXP_DISTRO;
 					}
 					else {
@@ -165,7 +165,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 						project,
 						TargetPlatformPlugin.
 							TARGET_PLATFORM_DISTRO_CONFIGURATION_NAME,
-						_GROUP_ID_PORTAL, artifactId, targetPlatformVersion);
+						_GROUP_ID_LIFERAY_PORTAL, artifactId, targetPlatformVersion);
 				}
 
 			});
@@ -247,7 +247,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 	private static final String _ARTIFACT_ID_RELEASE_PORTAL_DISTRO =
 		"release.portal.distro";
 
-	private static final String _GROUP_ID_PORTAL = "com.liferay.portal";
+	private static final String _GROUP_ID_LIFERAY_PORTAL = "com.liferay.portal";
 
 	private static final Pattern _dxpVersionPattern = Pattern.compile(
 		"7\\.[0-2]\\.1[0-9](\\.[0-9]+)?");

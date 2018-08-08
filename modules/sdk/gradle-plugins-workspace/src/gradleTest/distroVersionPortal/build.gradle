@@ -14,7 +14,7 @@ runGradleTest {
 
 		assert resolvedConfiguration.hasError()
 
-		String errorMessage
+		String errorMessage = ""
 
 		try {
 			resolvedConfiguration.rethrowFailure()

@@ -10,15 +10,15 @@ allprojects {
 
 runGradleTest {
 	doLast {
-		String error
+		String errorMessage = ""
 
 		try {
 			tasks.eclipseClasspath.execute()
 		}
 		catch (Exception e) {
-			error = e.cause.message
+			errorMessage = e.cause.message
 		}
 
-		assert error.contains("release.dxp.bom")
+		assert errorMessage.contains("release.dxp.bom")
 	}
 }

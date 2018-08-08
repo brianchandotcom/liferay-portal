@@ -10,15 +10,15 @@ allprojects {
 
 runGradleTest {
 	doLast {
-		String error
+		String errorMessage = ""
 
 		try {
 			tasks.eclipseClasspath.execute()
 		}
 		catch (Exception e) {
-			error = e.cause.message
+			errorMessage = e.cause.message
 		}
 
-		assert error.contains("release.portal.bom")
+		assert errorMessage.contains("release.portal.bom")
 	}
 }

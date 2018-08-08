@@ -113,8 +113,8 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		Matcher matcher = _dxpVersionPattern.matcher(targetPlatformVersion);
 
-		final String bomArtifactId;
-		final String bomCompileOnlyArtifactId;
+		String bomArtifactId;
+		String bomCompileOnlyArtifactId;
 
 		if (matcher.matches()) {
 			bomArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM;

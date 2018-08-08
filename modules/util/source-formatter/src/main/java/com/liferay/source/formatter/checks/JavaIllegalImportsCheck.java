@@ -171,6 +171,15 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 					"thread-safe, see LPS-70963");
 		}
 
+		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
+			content.contains("org.slf4j.Logger")) {
+
+			addMessage(
+				fileName,
+				"Use com.liferay.portal.kernel.log.Log instead of " +
+					"org.slf4j.Logger");
+		}
+
 		return content;
 	}
 

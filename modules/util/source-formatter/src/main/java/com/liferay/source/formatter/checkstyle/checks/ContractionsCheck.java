@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -29,13 +31,16 @@ public class ContractionsCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		String s = detailAST.getText();
+		String s = StringUtil.toLowerCase(detailAST.getText());
 
 		for (String contraction : _CONTRACTIONS) {
-			if (s.matches("(?i).*\\b" + contraction + "\\b.*")) {
-				log(detailAST.getLineNo(), _MSG_AVOID_CONTRACTION, contraction);
+			int i = s.indexOf(StringUtil.toLowerCase(contraction));
 
-				return;
+			if ((i != -1) && !Character.isLetterOrDigit(s.charAt(i - 1)) &&
+				!Character.isLetterOrDigit(
+					s.charAt(i + contraction.length()))) {
+
+				log(detailAST.getLineNo(), _MSG_AVOID_CONTRACTION, contraction);
 			}
 		}
 	}

@@ -61,7 +61,9 @@ public class PasswordPolicyDisplayContext {
 
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
-		if (_hasPermission(ActionKeys.UPDATE)) {
+		PasswordPolicy passwordPolicy = _getPasswordPolicy();
+
+		if ((passwordPolicy == null) || _hasPermission(ActionKeys.UPDATE)) {
 			NavigationItem detailsNavigationItem = new NavigationItem();
 
 			detailsNavigationItem.setActive(tabs1.equals("details"));
@@ -79,8 +81,6 @@ public class PasswordPolicyDisplayContext {
 
 			navigationItems.add(detailsNavigationItem);
 		}
-
-		PasswordPolicy passwordPolicy = _getPasswordPolicy();
 
 		if ((passwordPolicy != null) &&
 			_hasPermission(ActionKeys.ASSIGN_MEMBERS)) {

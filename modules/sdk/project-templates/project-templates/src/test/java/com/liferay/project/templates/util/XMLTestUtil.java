@@ -67,17 +67,17 @@ public class XMLTestUtil {
 			Node node = nodeList.item(i);
 
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				Element celement = (Element)node;
+				Element childElement = (Element)node;
 
 				boolean ignoreNode = false;
 
-				NodeList cnodeList = celement.getChildNodes();
+				NodeList childNodeList = childElement.getChildNodes();
 
-				for (int j = 0; j < cnodeList.getLength(); j++) {
-					Node cnode = cnodeList.item(j);
+				for (int j = 0; j < childNodeList.getLength(); j++) {
+					Node childNode = childNodeList.item(j);
 
-					if (cnode.getNodeType() == Node.TEXT_NODE) {
-						Text text = (Text)cnode;
+					if (childNode.getNodeType() == Node.TEXT_NODE) {
+						Text text = (Text)childNode;
 
 						String textContent = text.getTextContent();
 
@@ -92,7 +92,7 @@ public class XMLTestUtil {
 				}
 
 				if (!ignoreNode) {
-					elements.add(celement);
+					elements.add(childElement);
 				}
 			}
 		}

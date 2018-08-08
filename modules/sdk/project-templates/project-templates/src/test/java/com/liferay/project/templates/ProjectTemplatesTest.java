@@ -3991,7 +3991,9 @@ public class ProjectTemplatesTest {
 
 		final String repositoryUrl = mavenExecutor.getRepositoryUrl();
 
-		if (projectDir.getPath().contains("workspace")) {
+		String projectPath = projectDir.getPath();
+
+		if (projectPath.contains("workspace")) {
 			File buildFile = new File(projectDir, "build.gradle");
 
 			Path buildFilePath = buildFile.toPath();

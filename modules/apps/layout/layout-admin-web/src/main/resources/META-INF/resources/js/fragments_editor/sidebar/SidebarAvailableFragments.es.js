@@ -1,10 +1,21 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
+import position from 'metal-position';
 import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarCard.es';
 import templates from './SidebarAvailableFragments.soy';
+
+/**
+ * List of values that the dragging border can take
+ * @review
+ */
+
+const DRAGGING_BORDERS = {
+	bottom: 'drag-bottom',
+	top: 'drag-top'
+};
 
 /**
  * SidebarAvailableFragments
@@ -29,6 +40,11 @@ class SidebarAvailableFragments extends Component {
 		);
 
 		this._dragDrop.on(
+			DragDrop.Events.DRAG,
+			this._handleDrag.bind(this)
+		);
+
+		this._dragDrop.on(
 			DragDrop.Events.END,
 			this._handleDrop.bind(this)
 		);
@@ -42,6 +58,38 @@ class SidebarAvailableFragments extends Component {
 
 	dispose() {
 		this._dragDrop.dispose();
+	}
+
+	/**
+	 * Callback that is executed when an item is being dragged.
+	 * It propagates an fragmentDrag event with the id of the fragment
+	 * that is being hovered and the nearest border.
+	 * @param {!MouseEvent} event
+	 * @private
+	 * @review
+	 */
+
+	_handleDrag(data, event) {
+		const targetItem = data.target;
+
+		if (targetItem && 'fragmentEntryLinkId' in targetItem.dataset) {
+			const mouseY = event.target.mousePos_.y;
+			const targetItemRegion = position.getRegion(targetItem);
+
+			let nearestBorder = DRAGGING_BORDERS.bottom;
+
+			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
+				nearestBorder = DRAGGING_BORDERS.top;
+			}
+
+			this.emit(
+				'fragmentEntryDrag',
+				{
+					hoveredFragmentEntryLinkId: targetItem.dataset.fragmentEntryLinkId,
+					nearestBorder: nearestBorder
+				}
+			);
+		}
 	}
 
 	/**

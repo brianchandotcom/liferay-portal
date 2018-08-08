@@ -17,30 +17,30 @@ package com.liferay.gradle.plugins.wedeploy;
 import org.gradle.api.Project;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Eddie Olson
  */
-public class WeDeployDataPlugin extends BaseWeDeployPlugin {
+public class MessageQueueWeDeployPlugin extends BaseWeDeployPlugin {
 
-	public static final String DELETE_WEDEPLOY_DATA_TASK_NAME =
-		"deleteWeDeployData";
+	public static final String DELETE_WEDEPLOY_MESSAGE_QUEUE_TASK_NAME =
+		"deleteWeDeployMessageQueue";
 
-	public static final String DEPLOY_WEDEPLOY_DATA_TASK_NAME =
-		"deployWeDeployData";
+	public static final String DEPLOY_WEDEPLOY_MESSAGE_QUEUE_TASK_NAME =
+		"deployWeDeployMessageQueue";
 
 	protected String getDeleteWeDeployTaskDescription(Project project) {
-		return "Deletes the data " + project + " from WeDeploy.";
+		return "Deletes the message queue " + project + " from WeDeploy.";
 	}
 
 	protected String getDeleteWeDeployTaskName() {
-		return DELETE_WEDEPLOY_DATA_TASK_NAME;
+		return DELETE_WEDEPLOY_MESSAGE_QUEUE_TASK_NAME;
 	}
 
 	protected String getDeployWeDeployTaskDescription(Project project) {
-		return "Deploys the data " + project + " to WeDeploy.";
+		return "Deploys the message queue " + project + " to WeDeploy.";
 	}
 
 	protected String getDeployWeDeployTaskName() {
-		return DEPLOY_WEDEPLOY_DATA_TASK_NAME;
+		return DEPLOY_WEDEPLOY_MESSAGE_QUEUE_TASK_NAME;
 	}
 
 }

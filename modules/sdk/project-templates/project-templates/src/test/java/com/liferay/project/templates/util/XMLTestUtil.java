@@ -82,7 +82,7 @@ public class XMLTestUtil {
 						String textContent = text.getTextContent();
 
 						if (textContent.contains(
-								"ignore dependency comparison")) {
+								"Ignore Dependency Comparison")) {
 
 							ignoreNode = true;
 

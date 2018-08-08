@@ -84,7 +84,7 @@
 		</plugins>
 	</build>
 	<dependencies>
-		<dependency>## ignore dependency comparison
+		<dependency>## Ignore Dependency Comparison
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.frontend.css.common</artifactId>
 			<version>${com.liferay.frontend.css.common.version}</version>

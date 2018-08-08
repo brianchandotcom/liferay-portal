@@ -98,19 +98,19 @@
 		</plugins>
 	</build>
 	<dependencies>
-		<dependency>## ignore dependency comparison
+		<dependency>## Ignore Dependency Comparison
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.frontend.css.common</artifactId>
 			<version>${com.liferay.frontend.css.common.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>## ignore dependency comparison
+		<dependency>## Ignore Dependency Comparison
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.frontend.theme.styled</artifactId>
 			<version>${com.liferay.frontend.theme.styled.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>## ignore dependency comparison
+		<dependency>## Ignore Dependency Comparison
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.frontend.theme.unstyled</artifactId>
 			<version>${com.liferay.frontend.theme.unstyled.version}</version>

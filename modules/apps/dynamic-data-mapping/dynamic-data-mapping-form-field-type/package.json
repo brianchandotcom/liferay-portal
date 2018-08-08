@@ -12,6 +12,7 @@
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
+		"babel-eslint": "^8.2.6",
 		"babel-plugin-module-resolver": "^3.1.1",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-preset-env": "^1.7.0",
@@ -30,6 +31,13 @@
 		"rimraf": "^2.6.2"
 	},
 	"jest": {
+		"coverageDirectory": "build/coverage",
+		"coverageThreshold": {
+			"global": {
+				"functions": 70,
+				"lines": 70
+			}
+		},
 		"moduleNameMapper": {
 			"clay-(.*)$": "<rootDir>/node_modules/clay-$1"
 		},
@@ -52,8 +60,10 @@
 	"scripts": {
 		"build": "npm run soy && babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,*_field*.js,*_support.js,src/**/__tests__/*.js,src/**/__tests__/*/*.js && liferay-npm-bundler && npm run clean",
 		"clean": "rimraf src/**/*.soy.js",
+		"format": "prettier-eslint --write 'src/main/resources/META-INF/resources/metal/**/*.js'",
+		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
-		"test": "npm run soy && NODE_ENV=test jest && npm run clean"
+		"test": "npm run soy && NODE_ENV=test jest --coverage && npm run clean"
 	},
 	"version": "4.0.0"
 }

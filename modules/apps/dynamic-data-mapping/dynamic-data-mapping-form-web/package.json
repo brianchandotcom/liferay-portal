@@ -19,27 +19,40 @@
 		"classnames": "^2.2.6",
 		"clay-checkbox": "^2.2.0",
 		"clay-icon": "^2.2.0",
-		"clay-radio": "^2.2.0",
 		"clay-management-toolbar": "^2.2.0",
+		"clay-radio": "^2.2.0",
 		"metal-drag-drop": "^3.1.0",
 		"metal-jsx": "^2.16.5"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
+		"babel-eslint": "^8.2.6",
 		"babel-plugin-module-resolver": "^3.1.1",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-plugin-transform-runtime": "^6.23.0",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-metal-jsx": "^0.1.1",
+		"eslint": "^4.10.0",
+		"eslint-config-liferay": "^2.0.8",
+		"eslint-plugin-no-for-of-loops": "1.0.0",
+		"eslint-plugin-react": "^7.4.0",
 		"jest": "^23.4.1",
 		"liferay-jest-junit-reporter": "0.0.4",
 		"liferay-npm-bundler": "^2.1.0",
 		"metal-jest-serializer": "^2.0.0",
 		"metal-tools-soy": "^6.0.0",
+		"prettier-eslint-cli": "^4.7.0",
 		"rimraf": "^2.6.2"
 	},
 	"jest": {
+		"coverageDirectory": "build/coverage",
+		"coverageThreshold": {
+			"global": {
+				"functions": 70,
+				"lines": 70
+			}
+		},
 		"moduleNameMapper": {
 			"clay-(.*)$": "<rootDir>/node_modules/clay-$1"
 		},
@@ -63,8 +76,11 @@
 	"scripts": {
 		"build": "npm run soy && babel --ignore '**/__tests__/*.js,**/__tests__/*/*.js' --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && npm run clean",
 		"clean": "rimraf src/**/*.soy.js",
+		"format": "prettier-eslint --write 'src/main/resources/META-INF/resources/metal/**/*.js'",
+		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
-		"test": "npm run soy && NODE_ENV=test jest && npm run clean"
+		"test": "npm run soy && NODE_ENV=test jest --coverage && npm run clean",
+		"test:snapshots": "npm run soy && NODE_ENV=test jest --coverage -u && npm run clean"
 	},
 	"version": "2.0.0"
 }

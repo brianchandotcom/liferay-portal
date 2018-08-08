@@ -139,11 +139,7 @@ public class PasswordPolicyDisplayContext {
 	}
 
 	public boolean hasPermission(String actionId, long passwordPolicyId) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return PasswordPolicyPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), passwordPolicyId, actionId);
+		return _hasPermission(actionId, passwordPolicyId);
 	}
 
 	private PasswordPolicy _getPasswordPolicy() {
@@ -167,24 +163,32 @@ public class PasswordPolicyDisplayContext {
 		return _passwordPolicyId;
 	}
 
-	private boolean _hasPermission(String actionId) {
-		PasswordPolicy passwordPolicy = _getPasswordPolicy();
-
-		if (passwordPolicy == null) {
-			return false;
+	private ThemeDisplay _getThemeDisplay() {
+		if (_themeDisplay != null) {
+			return _themeDisplay;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		return _themeDisplay;
+	}
+
+	private boolean _hasPermission(String actionId) {
+		return _hasPermission(actionId, _getPasswordPolicyId());
+	}
+
+	private boolean _hasPermission(String actionId, long passwordPolicyId) {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
 		return PasswordPolicyPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(),
-			passwordPolicy.getPasswordPolicyId(), actionId);
+			themeDisplay.getPermissionChecker(), passwordPolicyId, actionId);
 	}
 
 	private PasswordPolicy _passwordPolicy;
 	private Long _passwordPolicyId;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private ThemeDisplay _themeDisplay;
 
 }

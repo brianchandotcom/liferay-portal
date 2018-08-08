@@ -330,11 +330,15 @@ public abstract class AbstractSearchEngineConfigurator
 		searchEngineRegistration.setSearchReaderDestinationName(
 			searchReaderDestination.getName());
 
+		registerSearchEngineDestination(searchReaderDestination);
+
 		Destination searchWriterDestination = getSearchWriterDestination(
 			_messageBus, searchEngineId);
 
 		searchEngineRegistration.setSearchWriterDestinationName(
 			searchWriterDestination.getName());
+
+		registerSearchEngineDestination(searchWriterDestination);
 
 		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
 
@@ -364,23 +368,6 @@ public abstract class AbstractSearchEngineConfigurator
 				_messageBus, searchEngineId);
 		}
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		_destinationServiceRegistrar = registry.getServiceRegistrar(
-			Destination.class);
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("destination.name", searchReaderDestination.getName());
-
-		_destinationServiceRegistrar.registerService(
-			Destination.class, searchReaderDestination, properties);
-
-		properties.put("destination.name", searchWriterDestination.getName());
-
-		_destinationServiceRegistrar.registerService(
-			Destination.class, searchWriterDestination, properties);
-
 		createSearchEngineListeners(
 			searchEngineId, searchEngine, searchReaderDestination,
 			searchWriterDestination);
@@ -403,6 +390,22 @@ public abstract class AbstractSearchEngineConfigurator
 				invokerMessageListener.getMessageListener(),
 				invokerMessageListener.getClassLoader());
 		}
+	}
+
+	protected void registerSearchEngineDestination(Destination destination) {
+		if (_destinationServiceRegistrar == null) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			_destinationServiceRegistrar = registry.getServiceRegistrar(
+				Destination.class);
+		}
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("destination.name", destination.getName());
+
+		_destinationServiceRegistrar.registerService(
+			Destination.class, destination, properties);
 	}
 
 	protected void registerSearchEngineMessageListener(
@@ -469,13 +472,13 @@ public abstract class AbstractSearchEngineConfigurator
 	private static final Log _log = LogFactoryUtil.getLog(
 		AbstractSearchEngineConfigurator.class);
 
+	private ServiceRegistrar<Destination> _destinationServiceRegistrar;
 	private volatile MessageBus _messageBus;
 	private volatile ServiceReference<MessageBus> _messageBusServiceReference;
 	private String _originalSearchEngineId;
 	private final List<SearchEngineRegistration> _searchEngineRegistrations =
 		new ArrayList<>();
 	private Map<String, SearchEngine> _searchEngines;
-	private ServiceRegistrar<Destination> _destinationServiceRegistrar;
 
 	private static class SearchEngineRegistration {
 

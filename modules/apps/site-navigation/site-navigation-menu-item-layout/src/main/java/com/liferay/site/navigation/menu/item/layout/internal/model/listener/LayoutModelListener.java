@@ -56,7 +56,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			layout.getTypeSettingsProperties();
 
 		boolean addToAutoMenus = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("addToAutoMenus"), true);
+			typeSettingsProperties.getProperty("addToAutoMenus"),
+			ExportImportThreadLocal.isLayoutImportInProcess());
 		boolean visible = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("visible"), true);
 

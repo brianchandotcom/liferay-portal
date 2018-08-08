@@ -3432,7 +3432,7 @@ plugins.includes=</echo>
 	</target>
 
 	<target name="zip-executable">
- 		<delete failonerror="false" file="dist/${zip.executable.file}-${lp.version}.zip" />
+		<delete failonerror="false" file="dist/${zip.executable.file}-${lp.version}.zip" />
 
 		<antelope:stringutil property="zip.executable.dir.beginindex" string="${zip.executable.dir}">
 			<lastindexof string="/" />
@@ -3604,7 +3604,6 @@ plugins.includes=</echo>
 				</if>
 			</then>
 			<else>
-
 				<zip
 					destfile="dist/${zip.executable.file}-${lp.version}.zip"
 				>
@@ -3636,7 +3635,7 @@ plugins.includes=</echo>
 					/>
 				</zip>
 			</then>
-		</if> 
+		</if>
 
 		<if>
 			<available file="dist/osgi/state" />

@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -68,6 +69,7 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		int position = ParamUtil.getInteger(actionRequest, "position");
+		String data = ParamUtil.getString(actionRequest, "data");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -79,11 +81,18 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			throw new NoSuchEntryException();
 		}
 
-		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			fragmentEntryId, classNameId, classPK, fragmentEntry.getCss(),
-			fragmentEntry.getHtml(), fragmentEntry.getJs(), null, position,
-			serviceContext);
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				fragmentEntryId, classNameId, classPK, fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(), null, position,
+				serviceContext);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructure(
+				serviceContext.getScopeGroupId(), classNameId, classPK, data);
+
+		return fragmentEntryLink;
 	}
 
 	@Override
@@ -145,6 +154,10 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	private class AddFragmentEntryLinkCallable
 		implements Callable<FragmentEntryLink> {

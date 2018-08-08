@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -61,9 +64,22 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
+		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+		String data = ParamUtil.getString(actionRequest, "data");
 
-		return _fragmentEntryLinkLocalService.deleteFragmentEntryLink(
-			fragmentEntryLinkId);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+				fragmentEntryLinkId);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructure(
+				serviceContext.getScopeGroupId(), classNameId, classPK, data);
+
+		return fragmentEntryLink;
 	}
 
 	@Override
@@ -107,6 +123,10 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	private class DeleteFragmentEntryLinkCallable
 		implements Callable<FragmentEntryLink> {

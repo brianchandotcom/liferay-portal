@@ -346,7 +346,7 @@ public interface UserLocalService extends BaseLocalService,
 	that login does not exist.
 	* @see AuthPipeline
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public int authenticateByEmailAddress(long companyId, String emailAddress,
 		String password, Map<String, String[]> headerMap,
 		Map<String, String[]> parameterMap, Map<String, Object> resultsMap)
@@ -371,7 +371,7 @@ public interface UserLocalService extends BaseLocalService,
 	that login does not exist.
 	* @see AuthPipeline
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public int authenticateByScreenName(long companyId, String screenName,
 		String password, Map<String, String[]> headerMap,
 		Map<String, String[]> parameterMap, Map<String, Object> resultsMap)
@@ -396,7 +396,7 @@ public interface UserLocalService extends BaseLocalService,
 	that login does not exist.
 	* @see AuthPipeline
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public int authenticateByUserId(long companyId, long userId,
 		String password, Map<String, String[]> headerMap,
 		Map<String, String[]> parameterMap, Map<String, Object> resultsMap)

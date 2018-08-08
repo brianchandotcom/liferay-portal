@@ -35,6 +35,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorValidateRequest;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -609,7 +610,12 @@ public class DDLRecordSetLocalServiceImpl
 
 		Date now = new Date();
 
-		ddmFormValuesValidator.validate(settingsDDMFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				settingsDDMFormValues
+			);
+
+		ddmFormValuesValidator.validate(builder.build());
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);

@@ -507,6 +507,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public RenderParameters getRenderParameters() {
+		if (_portletSpecMajorVersion < 3) {
+			throw new UnsupportedOperationException("Requires 3.0 opt-in");
+		}
+
 		return _renderParameters;
 	}
 
@@ -594,6 +598,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_portletName = portlet.getPortletId();
 
 		PortletApp portletApp = portlet.getPortletApp();
+
+		_portletSpecMajorVersion = portletApp.getSpecMajorVersion();
 
 		Map<String, String[]> publicRenderParametersMap =
 			PublicRenderParametersPool.get(request, plid);
@@ -701,8 +707,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			facesPortlet = true;
 		}
 
-		int portletSpecMajorVersion = portletApp.getSpecMajorVersion();
-
 		Set<String> privateRenderParameterNames = new LinkedHashSet<>();
 
 		if (portletFocus) {
@@ -713,7 +717,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 				RequestParameter requestParameter = new RequestParameter(
 					entry.getKey(), entry.getValue(), portletNamespace,
-					portletSpecMajorVersion);
+					_portletSpecMajorVersion);
 
 				if (requestParameter.isNameInvalid(_strutsPortlet)) {
 					continue;
@@ -785,7 +789,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					if (publicRenderParametersMap.containsKey(
 							publicRenderParameterName)) {
 
-						if (portletSpecMajorVersion == 3) {
+						if (_portletSpecMajorVersion == 3) {
 							publicRenderParametersMap.put(
 								publicRenderParameterName,
 								privateRenderParameter.getValues());
@@ -857,6 +861,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		_locale = themeDisplay.getLocale();
 		_plid = plid;
+
+		if (_portletSpecMajorVersion < 3) {
+			return;
+		}
 
 		Set<String> publicRenderParameterNames = new HashSet<>();
 
@@ -945,12 +953,12 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 				RequestParameter requestParameter = new RequestParameter(
 					entry.getKey(), entry.getValue(), portletNamespace,
-					portletSpecMajorVersion);
+					_portletSpecMajorVersion);
 
 				if (publicRenderParameterNames.contains(
 						requestParameter.getName())) {
 
-					if (portletSpecMajorVersion == 3) {
+					if (_portletSpecMajorVersion == 3) {
 						String publicRenderParameterName =
 							PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE;
 
@@ -1085,6 +1093,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	public void setWindowState(WindowState windowState) {
 		_windowState = windowState;
+	}
+
+	protected int getPortletSpecMajorVersion() {
+		return _portletSpecMajorVersion;
 	}
 
 	private void _copyAttributeNames(
@@ -1240,6 +1252,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private PortletMode _portletMode;
 	private String _portletName;
 	private HttpServletRequest _portletRequestDispatcherRequest;
+	private int _portletSpecMajorVersion;
 	private PortletPreferences _preferences;
 	private Profile _profile;
 	private String _remoteUser;

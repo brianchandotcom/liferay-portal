@@ -285,17 +285,6 @@ The column element represents a column in the database.
 -->
 <!ELEMENT column (#PCDATA)>
 
-
-
-
-
-
-
-
-
-
-
-
 <!--
 The name value specifies the getter and setter name in the entity.
 -->

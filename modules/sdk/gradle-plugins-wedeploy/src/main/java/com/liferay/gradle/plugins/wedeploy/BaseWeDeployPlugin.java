@@ -33,13 +33,7 @@ import org.gradle.util.GUtil;
 /**
  * @author Andrea Di Giorgi
  */
-public class WeDeployDataPlugin implements Plugin<Project> {
-
-	public static final String DELETE_WEDEPLOY_DATA_TASK_NAME =
-		"deleteWeDeployData";
-
-	public static final String DEPLOY_WEDEPLOY_DATA_TASK_NAME =
-		"deployWeDeployData";
+public abstract class BaseWeDeployPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
@@ -55,18 +49,26 @@ public class WeDeployDataPlugin implements Plugin<Project> {
 
 		String wedeployService = (String)wedeployJsonMap.get("id");
 
-		_addTaskDeleteWeDeployData(
+		_addTaskDeleteWeDeploy(
 			project, wedeployProject, wedeployRemote, wedeployService);
 
-		_addTaskDeployWeDeployData(project, wedeployProject, wedeployRemote);
+		_addTaskDeployWeDeploy(project, wedeployProject, wedeployRemote);
 	}
 
-	private Exec _addTaskDeleteWeDeployData(
+	protected abstract String getDeleteWeDeployTaskDescription(Project project);
+
+	protected abstract String getDeleteWeDeployTaskName();
+
+	protected abstract String getDeployWeDeployTaskDescription(Project project);
+
+	protected abstract String getDeployWeDeployTaskName();
+
+	private Exec _addTaskDeleteWeDeploy(
 		Project project, String wedeployProject, String wedeployRemote,
 		Object wedeployService) {
 
 		Exec exec = GradleUtil.addTask(
-			project, DELETE_WEDEPLOY_DATA_TASK_NAME, Exec.class);
+			project, getDeleteWeDeployTaskName(), Exec.class);
 
 		exec.args("delete", "--force");
 
@@ -82,17 +84,17 @@ public class WeDeployDataPlugin implements Plugin<Project> {
 
 		exec.setExecutable("we");
 
-		exec.setDescription("Deletes the data " + project + " from WeDeploy.");
+		exec.setDescription(getDeleteWeDeployTaskDescription(project));
 		exec.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		return exec;
 	}
 
-	private Exec _addTaskDeployWeDeployData(
+	private Exec _addTaskDeployWeDeploy(
 		Project project, String wedeployProject, String wedeployRemote) {
 
 		Exec exec = GradleUtil.addTask(
-			project, DEPLOY_WEDEPLOY_DATA_TASK_NAME, Exec.class);
+			project, getDeployWeDeployTaskName(), Exec.class);
 
 		exec.args("deploy");
 
@@ -106,7 +108,7 @@ public class WeDeployDataPlugin implements Plugin<Project> {
 
 		exec.setExecutable("we");
 
-		exec.setDescription("Deploys the data " + project + " to WeDeploy.");
+		exec.setDescription(getDeployWeDeployTaskDescription(project));
 		exec.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		return exec;

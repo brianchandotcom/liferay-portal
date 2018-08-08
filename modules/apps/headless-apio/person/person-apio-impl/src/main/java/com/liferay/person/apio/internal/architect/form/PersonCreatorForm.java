@@ -14,6 +14,7 @@
 
 package com.liferay.person.apio.internal.architect.form;
 
+import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -52,6 +53,12 @@ public class PersonCreatorForm {
 			"birthDate", PersonCreatorForm::setBirthDate
 		).addOptionalString(
 			"gender", PersonCreatorForm::setGender
+		).addOptionalString(
+			"honorificPrefix", PersonCreatorForm::setHonorificPrefix
+		).addOptionalString(
+			"honorificSuffix", PersonCreatorForm::setHonorificSuffix
+		).addOptionalFile(
+			"image", PersonCreatorForm::setImage
 		).addRequiredString(
 			"email", PersonCreatorForm::setEmail
 		).addRequiredString(
@@ -145,6 +152,18 @@ public class PersonCreatorForm {
 		return _givenName;
 	}
 
+	public String getHonorificPrefix() {
+		return _honorificPrefix;
+	}
+
+	public String getHonorificSuffix() {
+		return _honorificSuffix;
+	}
+
+	public BinaryFile getImage() {
+		return _image;
+	}
+
 	/**
 	 * Returns the person's job title
 	 *
@@ -214,6 +233,18 @@ public class PersonCreatorForm {
 		_givenName = givenName;
 	}
 
+	public void setHonorificPrefix(String honorificPrefix) {
+		_honorificPrefix = honorificPrefix;
+	}
+
+	public void setHonorificSuffix(String honorificSuffix) {
+		_honorificSuffix = honorificSuffix;
+	}
+
+	public void setImage(BinaryFile image) {
+		_image = image;
+	}
+
 	public void setJobTitle(String jobTitle) {
 		_jobTitle = jobTitle;
 	}
@@ -225,6 +256,9 @@ public class PersonCreatorForm {
 	private String _email;
 	private String _familyName;
 	private String _givenName;
+	private String _honorificPrefix;
+	private String _honorificSuffix;
+	private BinaryFile _image;
 	private String _jobTitle;
 	private Boolean _male;
 

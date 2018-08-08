@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.theme.porygon.site.initializer.internal;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -151,10 +153,6 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 			entryFragmentEntries.add(fragmentEntriesMap.get("entry"));
 
-			_addDisplayPageEntry(
-				"Entry", entryFragmentEntries, _PATH + "/page_templates",
-				"entry.jpg", serviceContext);
-
 			List<DDMTemplate> ddmTemplates = _addApplicationDisplayTemplates(
 				serviceContext);
 
@@ -162,6 +160,10 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				serviceContext);
 
 			_addJournalArticleDDMTemplates(ddmStructure, serviceContext);
+
+			_addDisplayPageEntry(
+				"Porgon Entry", entryFragmentEntries, _PATH + "/page_templates",
+				"entry.jpg", ddmStructure, fileEntries, serviceContext);
 
 			_addJournalArticles(fileEntries, serviceContext);
 
@@ -252,6 +254,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	private LayoutPageTemplateEntry _addDisplayPageEntry(
 			String name, List<FragmentEntry> fragmentEntries,
 			String thumbnailPath, String thumbnailFileName,
+			DDMStructure ddmStructure, List<FileEntry> fileEntries,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -261,17 +264,26 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-				name, LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
-				previewFileEntryId, WorkflowConstants.STATUS_APPROVED,
+				ddmStructure.getClassNameId(), ddmStructure.getStructureId(),
+				name, LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+				true, 0, previewFileEntryId, WorkflowConstants.STATUS_APPROVED,
 				serviceContext);
 
 		long[] fragmentEntryIds = ListUtil.toLongArray(
 			fragmentEntries, FragmentEntryModel::getFragmentEntryId);
 
+		Map<String, String> fileEntriesMap = _getFileEntriesMap(fileEntries);
+
+		URL url = _bundle.getEntry(_PATH + "/fragments/editable_values.json");
+
+		String editableValues = StringUtil.replace(
+			StringUtil.read(url.openStream()), StringPool.DOLLAR,
+			StringPool.DOLLAR, fileEntriesMap);
+
 		return _layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), name,
-				fragmentEntryIds, StringPool.BLANK, serviceContext);
+				fragmentEntryIds, editableValues, serviceContext);
 	}
 
 	private List<FileEntry> _addFileEntries(ServiceContext serviceContext)
@@ -552,6 +564,12 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
 				nameMap, null, content, "PORYGON_ENTRY", "PORYGON_ENTRY",
 				serviceContext);
+
+			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(JournalArticle.class),
+				article.getResourcePrimKey(), 0,
+				AssetDisplayPageConstants.TYPE_DEFAULT, serviceContext);
 
 			journalArticles.add(article);
 		}
@@ -912,6 +930,10 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PorygonSiteInitializer.class);
+
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
 
 	private Bundle _bundle;
 

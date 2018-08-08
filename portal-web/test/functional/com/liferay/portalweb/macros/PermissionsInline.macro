@@ -165,8 +165,8 @@
 			<var name="key_threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${threadReplyBody}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
+			<var name="key_threadReplyBody" value="${threadReplyBody}" />
 		</execute>
 
 		<execute macro="MenuItem#click">

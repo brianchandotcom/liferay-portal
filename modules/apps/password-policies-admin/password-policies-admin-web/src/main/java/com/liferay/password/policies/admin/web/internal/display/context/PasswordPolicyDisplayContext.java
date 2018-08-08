@@ -61,9 +61,7 @@ public class PasswordPolicyDisplayContext {
 
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
-		PasswordPolicy passwordPolicy = _getPasswordPolicy();
-
-		if ((passwordPolicy == null) || _hasPermission(ActionKeys.UPDATE)) {
+		if ((_passwordPolicyId == 0) || _hasPermission(ActionKeys.UPDATE)) {
 			NavigationItem detailsNavigationItem = new NavigationItem();
 
 			detailsNavigationItem.setActive(tabs1.equals("details"));

@@ -61,6 +61,11 @@
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
 	</source-processor>
+	<source-processor name="DTDSourceProcessor">
+		<check name="WhitespaceCheck">
+			<property name="allowLeadingSpaces" value="true" />
+		</check>
+	</source-processor>
 	<source-processor name="FTLSourceProcessor">
 		<check name="FTLEmptyLinesCheck" />
 		<check name="FTLIfStatementCheck" />

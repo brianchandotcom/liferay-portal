@@ -103,6 +103,19 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 					content, StringPool.COMMA, matcher.end(3));
 			}
 
+			if (!deprecatedInfo.startsWith(StringPool.COMMA_AND_SPACE)) {
+				return StringUtil.replaceFirst(
+					content, StringPool.COMMA, StringPool.COMMA_AND_SPACE,
+					matcher.start(7));
+			}
+
+			if (deprecatedInfo.matches(", [A-Z].*")) {
+				String s = deprecatedInfo.substring(0, 3);
+
+				return StringUtil.replaceFirst(
+					content, s, StringUtil.toLowerCase(s), matcher.start(7));
+			}
+
 			if (deprecatedInfo.endsWith(StringPool.PERIOD) &&
 				!deprecatedInfo.matches("[\\S\\s]*\\.[ \n][\\S\\s]*")) {
 

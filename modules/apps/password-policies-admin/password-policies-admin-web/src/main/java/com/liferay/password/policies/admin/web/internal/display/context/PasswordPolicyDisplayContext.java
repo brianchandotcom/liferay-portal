@@ -153,6 +153,10 @@ public class PasswordPolicyDisplayContext {
 	}
 
 	private boolean _hasPermission(String actionId, long passwordPolicyId) {
+		if (passwordPolicyId <= 0) {
+			return false;
+		}
+
 		return PasswordPolicyPermissionUtil.contains(
 			_permissionChecker, passwordPolicyId, actionId);
 	}

@@ -425,7 +425,6 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static void deleteFromAllRemotes(
-		final GitWorkingDirectory gitWorkingDirectory,
 		final String remoteGitBranchName,
 		final List<GitWorkingDirectory.Remote> remotes) {
 
@@ -438,6 +437,9 @@ public class LocalGitSyncUtil {
 
 				@Override
 				public Boolean safeCall() {
+					GitWorkingDirectory gitWorkingDirectory =
+						remote.getGitWorkingDirectory();
+
 					gitWorkingDirectory.deleteRemoteGitBranch(
 						remoteGitBranchName, remote);
 
@@ -473,12 +475,14 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static List<RemoteGitBranch> getCacheRemoteGitBranches(
-		GitWorkingDirectory gitWorkingDirectory,
 		GitWorkingDirectory.Remote remote) {
 
 		List<RemoteGitBranch> cacheRemoteGitBranches = new ArrayList<>();
 
 		Map<String, RemoteGitBranch> remoteGitBranches = new HashMap<>();
+
+		GitWorkingDirectory gitWorkingDirectory =
+			remote.getGitWorkingDirectory();
 
 		for (RemoteGitBranch remoteGitBranch :
 				gitWorkingDirectory.getRemoteGitBranches(remote)) {
@@ -864,7 +868,7 @@ public class LocalGitSyncUtil {
 			localGitRemotes);
 
 		List<RemoteGitBranch> cacheRemoteGitBranches =
-			getCacheRemoteGitBranches(gitWorkingDirectory, localGitRemote);
+			getCacheRemoteGitBranches(localGitRemote);
 
 		boolean updated = false;
 
@@ -887,9 +891,7 @@ public class LocalGitSyncUtil {
 			}
 
 			if (updated) {
-				deleteFromAllRemotes(
-					gitWorkingDirectory, cacheRemoteGitBranchName,
-					localGitRemotes);
+				deleteFromAllRemotes(cacheRemoteGitBranchName, localGitRemotes);
 
 				continue;
 			}
@@ -931,9 +933,7 @@ public class LocalGitSyncUtil {
 					true, gitWorkingDirectory, newTimestampLocalGitBranch,
 					newTimestampBranchName, localGitRemotes);
 
-				deleteFromAllRemotes(
-					gitWorkingDirectory, cacheRemoteGitBranchName,
-					localGitRemotes);
+				deleteFromAllRemotes(cacheRemoteGitBranchName, localGitRemotes);
 
 				updated = true;
 			}

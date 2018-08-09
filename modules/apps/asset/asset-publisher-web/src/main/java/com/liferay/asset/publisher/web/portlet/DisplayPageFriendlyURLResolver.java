@@ -29,11 +29,13 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -90,11 +92,22 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		String urlTitle = friendlyURL.substring(
 			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
 
+		String normalizedUrlTitle =
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+
 		JournalArticle journalArticle =
 			_journalArticleLocalService.getLatestArticleByUrlTitle(
-				groupId,
-				FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle),
-				WorkflowConstants.STATUS_APPROVED);
+				groupId, normalizedUrlTitle, WorkflowConstants.STATUS_APPROVED);
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		if (!friendlyURLMap.containsValue(normalizedUrlTitle)) {
+			throw new NoSuchArticleException(
+				StringBundler.concat(
+					"No latest version of a JournalArticle exists with the key",
+					"{groupId=", groupId, ", urlTitle=", urlTitle, ", status=",
+					WorkflowConstants.STATUS_ANY, "}"));
+		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(),
@@ -140,8 +153,23 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
 
 		JournalArticle journalArticle =
-			_journalArticleLocalService.getArticleByUrlTitle(
-				groupId, normalizedUrlTitle);
+			_journalArticleLocalService.getLatestArticleByUrlTitle(
+				groupId, normalizedUrlTitle, WorkflowConstants.STATUS_APPROVED);
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		if (!friendlyURLMap.containsValue(normalizedUrlTitle)) {
+			throw new NoSuchArticleException(
+				StringBundler.concat(
+					"No latest version of a JournalArticle exists with the key",
+					"{groupId=", groupId, ", urlTitle=", urlTitle, ", status=",
+					WorkflowConstants.STATUS_ANY, "}"));
+		}
+
+		if (Validator.isNotNull(journalArticle.getLayoutUuid())) {
+			return _layoutLocalService.getLayoutByUuidAndGroupId(
+				journalArticle.getLayoutUuid(), groupId, privateLayout);
+		}
 
 		if (Validator.isNotNull(journalArticle.getLayoutUuid())) {
 			return _layoutLocalService.getLayoutByUuidAndGroupId(

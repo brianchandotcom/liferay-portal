@@ -67,7 +67,7 @@ public class DDMFormInstanceRecordTestHelper {
 	}
 
 	public DDMFormInstanceRecord addDDMFormInstanceRecord(
-			DDMFormValues ddmFormValues, int actionPublish)
+			DDMFormValues ddmFormValues)
 		throws PortalException {
 
 		ServiceContext serviceContext =

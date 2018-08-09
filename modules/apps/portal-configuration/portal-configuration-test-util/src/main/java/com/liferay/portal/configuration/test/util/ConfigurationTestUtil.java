@@ -15,9 +15,9 @@
 package com.liferay.portal.configuration.test.util;
 
 import com.liferay.osgi.util.service.OSGiServiceUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;

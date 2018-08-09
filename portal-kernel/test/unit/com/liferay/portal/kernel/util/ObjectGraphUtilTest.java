@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ObjectGraphUtil.AnnotatedFieldMappingVisitor;
 import com.liferay.portal.kernel.util.ObjectGraphUtil.Visitor;

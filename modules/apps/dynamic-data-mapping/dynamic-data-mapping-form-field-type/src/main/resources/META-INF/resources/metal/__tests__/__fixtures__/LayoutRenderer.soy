@@ -1,0 +1,15 @@
+{namespace LayoutRenderer}
+
+{template .render}
+	{@param items: list<[
+		type: string
+	]>}
+
+	<div>
+		{foreach $item in $items}
+			{let $type: $item.type /}
+
+			{delcall LayoutRenderer.RegisterFieldType variant="$type" /}
+		{/foreach}
+	</div>
+{/template}

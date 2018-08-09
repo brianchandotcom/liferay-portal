@@ -30,4 +30,7 @@ public class DDMFormWebKeys {
 
 	public static final String GROUP_ID = "GROUP_ID";
 
+	public static final String SERIALIZED_FORM_BUILDER_CONTEXT =
+		"SERIALIZED_FORM_BUILDER_CONTEXT";
+
 }

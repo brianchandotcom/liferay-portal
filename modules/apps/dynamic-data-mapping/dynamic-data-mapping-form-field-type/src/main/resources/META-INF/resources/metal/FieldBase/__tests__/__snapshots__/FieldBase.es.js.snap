@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FieldBase should not render the label if showLabel is false 1`] = `
+<div class="form-group">
+  <label></label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`FieldBase should render the FieldBase with contentRenderer 1`] = `
+<div class="form-group">
+  <label></label>
+  &lt;div&gt; &lt;h1&gt;Foo bar&lt;/h1&gt; &lt;/div&gt;
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`FieldBase should render the FieldBase with help text 1`] = `
+<div class="form-group">
+  <label></label>
+  <span class="form-text">Type something!</span>
+</div>
+`;
+
+exports[`FieldBase should render the FieldBase with id 1`] = `
+<div class="form-group">
+  <label for="Id"></label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`FieldBase should render the FieldBase with label 1`] = `
+<div class="form-group">
+  <label>Text </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`FieldBase should render the FieldBase with required 1`] = `
+<div class="form-group">
+  <label>
+    <span class="reference-mark">
+      <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
+        <title>asterisk</title>
+        <use xlink:href="icons.svg#asterisk"></use>
+      </svg>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`FieldBase should render the default markup 1`] = `
+<div class="form-group">
+  <label></label>
+  <span class="form-text"></span>
+</div>
+`;

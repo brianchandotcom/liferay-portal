@@ -1,0 +1,71 @@
+{namespace Date}
+
+{template .render}
+	{@param? editable: bool}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? placeholder: string}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? value: string}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param editable: $editable /}
+				{param placeholder: $placeholder /}
+				{param spritemap: $spritemap /}
+				{param value: $value /}
+			{/call}
+		{/param}
+
+		{param id: $id /}
+		{param label: $label /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param? editable: bool}
+	{@param? placeholder: string}
+	{@param? spritemap: string}
+	{@param? value: string}
+
+	{let $attributes kind="attributes"}
+		class="form-control"
+
+		{if $placeholder}
+			placeholder="{$placeholder}"
+		{/if}
+
+		{if $value}
+			value="{$value}"
+		{/if}
+
+		type="text"
+
+		{if not $editable}
+			disabled
+		{/if}
+	{/let}
+
+	<div class="input-group">
+		<div class="input-group-item input-group-prepend">
+			<input {$attributes}>
+		</div>
+
+		{if $spritemap}
+			<div class="input-group-append input-group-item input-group-item-shrink">
+				<span class="input-group-text">
+					{call ClayIcon.render}
+						{param spritemap: $spritemap /}
+						{param symbol: 'calendar' /}
+					{/call}
+				</span>
+			</div>
+		{/if}
+	</div>
+{/template}

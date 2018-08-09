@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceSettingsRedirectURLException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureLayoutException;
@@ -129,7 +130,7 @@ public class SaveFormInstanceMVCCommandHelper {
 
 		try {
 			String serializedFormBuilderContext = ParamUtil.getString(
-				portletRequest, "serializedFormBuilderContext");
+				portletRequest, DDMWebKeys.SERIALIZED_FORM_BUILDER_CONTEXT);
 
 			return ddmFormBuilderContextToDDMForm.deserialize(
 				DDMFormContextDeserializerRequest.with(
@@ -145,7 +146,7 @@ public class SaveFormInstanceMVCCommandHelper {
 
 		try {
 			String serializedFormBuilderContext = ParamUtil.getString(
-				portletRequest, "serializedFormBuilderContext");
+				portletRequest, DDMWebKeys.SERIALIZED_FORM_BUILDER_CONTEXT);
 
 			return ddmFormBuilderContextToDDMFormLayout.deserialize(
 				DDMFormContextDeserializerRequest.with(

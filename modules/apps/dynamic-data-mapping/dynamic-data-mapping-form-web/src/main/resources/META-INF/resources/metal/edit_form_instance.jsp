@@ -19,7 +19,7 @@
 <div id="<portlet:namespace />-container"></div>
 
 <aui:script require="<%= mainRequire %>">
-	const spritemap = 'http://localhost:8080/o/admin-theme/images/clay/icons.svg';
+	const spritemap = '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg';
 
 	const fieldsList = [
 		{

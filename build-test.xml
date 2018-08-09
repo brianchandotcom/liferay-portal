@@ -6205,9 +6205,11 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			</then>
 		</if>
 
+		<get-testcase-property property.name="captcha.enabled" />
+
 		<if>
 			<not>
-				<contains string="${osgi.module.configurations}" substring="maxChallenges" />
+				<equals arg1="${captcha.enabled}" arg2="true" />
 			</not>
 			<then>
 				<prepare-captcha-configuration />

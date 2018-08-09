@@ -150,6 +150,16 @@ class FragmentsEditor extends Component {
 				this.fragmentEntryLinks[index + direction].fragmentEntryLinkId
 			);
 
+			formData.append(
+				`${this.portletNamespace}classNameId`,
+				this.classNameId
+			);
+
+			formData.append(
+				`${this.portletNamespace}classPK`,
+				this.classPK
+			);
+
 			fetch(
 				this.updateFragmentEntryLinksURL,
 				{

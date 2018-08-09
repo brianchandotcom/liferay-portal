@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -82,6 +83,12 @@ public class LayoutSiteNavigationMenuItemType
 		Layout layout = _getLayout(siteNavigationMenuItem);
 
 		if (layout == null) {
+			return false;
+		}
+
+		if (!ArrayUtil.contains(
+				portletDataContext.getLayoutIds(), layout.getLayoutId())) {
+
 			return false;
 		}
 

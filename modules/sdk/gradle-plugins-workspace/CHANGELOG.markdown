@@ -266,7 +266,7 @@ version 2.0.4.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.102.
 
-## 1.10.7 - *(Unreleased)*
+## 1.10.7 - 2018-08-08
 
 ### Fixed
 - [LPS-83922]: Adjust target platform configuration to use new BOM ids.

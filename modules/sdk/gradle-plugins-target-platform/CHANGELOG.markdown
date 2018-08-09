@@ -24,7 +24,7 @@ dependencies and the various artifacts used in resolving OSGi dependencies.
 ### Added
 - [LPS-82491]: Add support for the `idea` plugin.
 
-## 1.1.2 - *(Unreleased)*
+## 1.1.2 - 2018-08-08
 
 ### Fixed
 - [LPS-83922]: Don't add requirements for files that don't have BSN.

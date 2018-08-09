@@ -718,22 +718,12 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static void pushToAllRemotes(
-		final boolean force, final GitWorkingDirectory gitWorkingDirectory,
-		final LocalGitBranch localGitBranch, final String remoteGitBranchName,
+		final boolean force, final LocalGitBranch localGitBranch,
+		final String remoteGitBranchName,
 		final List<GitWorkingDirectory.Remote> remotes) {
 
 		if (localGitBranch == null) {
 			throw new RuntimeException("Local Git branch is null");
-		}
-
-		String localGitBranchName = localGitBranch.getName();
-		LocalGitBranch currentLocalGitBranch =
-			gitWorkingDirectory.getCurrentLocalGitBranch();
-
-		if ((currentLocalGitBranch == null) ||
-			!localGitBranchName.equals(currentLocalGitBranch.getName())) {
-
-			gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch, "-f");
 		}
 
 		final long start = System.currentTimeMillis();
@@ -745,6 +735,9 @@ public class LocalGitSyncUtil {
 
 				@Override
 				public Boolean safeCall() {
+					GitWorkingDirectory gitWorkingDirectory =
+						remote.getGitWorkingDirectory();
+
 					RemoteGitBranch remoteGitBranch =
 						gitWorkingDirectory.pushToRemote(
 							force, localGitBranch, remoteGitBranchName, remote);
@@ -1072,8 +1065,8 @@ public class LocalGitSyncUtil {
 
 			try {
 				pushToAllRemotes(
-					true, gitWorkingDirectory, newTimestampLocalGitBranch,
-					newTimestampBranchName, localGitRemotes);
+					true, newTimestampLocalGitBranch, newTimestampBranchName,
+					localGitRemotes);
 
 				deleteFromAllRemotes(cacheRemoteGitBranchName, localGitRemotes);
 

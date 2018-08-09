@@ -75,6 +75,14 @@ class SidebarAvailableFragments extends Component {
 		}
 	}
 
+	_handleDragEnd(data, event) {
+		const targetItem = data.target;
+
+		if ('fragmentEntryLinkId' in targetItem.dataset) {
+			this.emit('fragmentEntryDragEnd');
+		}
+	}
+
 	/**
 	 * Callback that is executed when an item is dropped.
 	 * It propagates an itemDrop event with the item id.
@@ -153,6 +161,11 @@ class SidebarAvailableFragments extends Component {
 		this._dragDrop.on(
 			DragDrop.Events.END,
 			this._handleDrop.bind(this)
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.TARGET_LEAVE,
+			this._handleDragEnd.bind(this)
 		);
 	}
 }

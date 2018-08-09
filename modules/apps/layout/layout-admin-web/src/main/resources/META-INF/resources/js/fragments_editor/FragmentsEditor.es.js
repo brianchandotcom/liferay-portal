@@ -296,6 +296,18 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Callback executed when whe end dragging over a target.
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+
+	_handleFragmentDragEnd(event) {
+		this._hoveredFragmentEntryLinkBorder = '';
+		this._hoveredFragmentEntryLinkId = '';
+	}
+
+	/**
 	 * Callback executed when a fragment entry of a collection is dropped.
 	 * It receives fragmentEntryId and fragmentName as event data.
 	 * @param {!Event} event

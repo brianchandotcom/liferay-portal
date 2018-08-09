@@ -28,6 +28,7 @@
 	{@param? _dropTargetClass: string}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentDrag: any}
+	{@param? _handleFragmentDragEnd: any}
 	{@param? _handleFragmentDrop: any}
 	{@param? _handleFragmentEntryClick: any}
 	{@param? _handleFragmentMove: any}
@@ -104,6 +105,7 @@
 			{param dropTargetClass: $_dropTargetClass /}
 			{param events: [
 				'fragmentEntryDrag': $_handleFragmentDrag,
+				'fragmentEntryDragEnd': $_handleFragmentDragEnd,
 				'fragmentEntryDrop': $_handleFragmentDrop,
 				'fragmentEntryClick': $_handleFragmentEntryClick,
 				'fragmentRemoveButtonClick': $_handleFragmentRemove,

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.text.DateFormat;
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 
 import java.util.Date;
 import java.util.Enumeration;
@@ -181,7 +183,7 @@ public class ParamUtil {
 			request.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
-			return StringUtil.trim(returnValue);
+			return normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -341,7 +343,7 @@ public class ParamUtil {
 			portletRequest.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
-			return StringUtil.trim(returnValue);
+			return normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -501,7 +503,7 @@ public class ParamUtil {
 			serviceContext.getAttribute(param), defaultValue);
 
 		if (returnValue != null) {
-			return StringUtil.trim(returnValue);
+			return normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -1980,14 +1982,14 @@ public class ParamUtil {
 		String[] values = request.getParameterValues(param);
 
 		if (values == null) {
-			return defaultValue;
+			return normalize(defaultValue);
 		}
 
 		if (split && (values.length == 1)) {
-			return StringUtil.split(values[0]);
+			return normalize(StringUtil.split(values[0]));
 		}
 
-		return values;
+		return normalize(values);
 	}
 
 	/**
@@ -2240,7 +2242,7 @@ public class ParamUtil {
 	 * @return the request parameter value as a String
 	 */
 	public static String getString(HttpServletRequest request, String param) {
-		return GetterUtil.getString(request.getParameter(param));
+		return normalize(GetterUtil.getString(request.getParameter(param)));
 	}
 
 	/**
@@ -2270,7 +2272,8 @@ public class ParamUtil {
 	public static String getString(
 		PortletRequest portletRequest, String param) {
 
-		return GetterUtil.getString(portletRequest.getParameter(param));
+		return normalize(
+			GetterUtil.getString(portletRequest.getParameter(param)));
 	}
 
 	/**
@@ -2301,7 +2304,8 @@ public class ParamUtil {
 	public static String getString(
 		ServiceContext serviceContext, String param) {
 
-		return GetterUtil.getString(serviceContext.getAttribute(param));
+		return normalize(
+			GetterUtil.getString(serviceContext.getAttribute(param)));
 	}
 
 	/**
@@ -2348,8 +2352,9 @@ public class ParamUtil {
 	public static String[] getStringValues(
 		HttpServletRequest request, String param, String[] defaultValue) {
 
-		return GetterUtil.getStringValues(
-			getParameterValues(request, param, null), defaultValue);
+		return normalize(
+			GetterUtil.getStringValues(
+				getParameterValues(request, param, null), defaultValue));
 	}
 
 	/**
@@ -2382,8 +2387,9 @@ public class ParamUtil {
 	public static String[] getStringValues(
 		PortletRequest portletRequest, String param, String[] defaultValue) {
 
-		return GetterUtil.getStringValues(
-			getParameterValues(portletRequest, param, null), defaultValue);
+		return normalize(
+			GetterUtil.getStringValues(
+				getParameterValues(portletRequest, param, null), defaultValue));
 	}
 
 	/**
@@ -2416,8 +2422,9 @@ public class ParamUtil {
 	public static String[] getStringValues(
 		ServiceContext serviceContext, String param, String[] defaultValue) {
 
-		return GetterUtil.getStringValues(
-			serviceContext.getAttribute(param), defaultValue);
+		return normalize(
+			GetterUtil.getStringValues(
+				serviceContext.getAttribute(param), defaultValue));
 	}
 
 	/**
@@ -2474,6 +2481,48 @@ public class ParamUtil {
 		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
 			System.out.println(
 				entry.getKey() + " = " + String.valueOf(entry.getValue()));
+		}
+	}
+
+	protected static String normalize(String input) {
+		if ((_FORM == null) || Validator.isNull(input)) {
+			return input;
+		}
+
+		return Normalizer.normalize(input, _FORM);
+	}
+
+	protected static String[] normalize(String[] input) {
+		if ((_FORM == null) || ArrayUtil.isEmpty(input)) {
+			return input;
+		}
+
+		for (int i = 0; i < input.length; i++) {
+			input[i] = Normalizer.normalize(input[i], _FORM);
+		}
+
+		return input;
+	}
+
+	private static final Form _FORM;
+
+	static {
+		String form = PropsUtil.get(PropsKeys.UNICODE_TEXT_NORMALIZER_FORM);
+
+		if (form.equals("NFC")) {
+			_FORM = Normalizer.Form.NFC;
+		}
+		else if (form.equals("NFD")) {
+			_FORM = Normalizer.Form.NFD;
+		}
+		else if (form.equals("NFKC")) {
+			_FORM = Normalizer.Form.NFKC;
+		}
+		else if (form.equals("NFKD")) {
+			_FORM = Normalizer.Form.NFKD;
+		}
+		else {
+			_FORM = null;
 		}
 	}
 

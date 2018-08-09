@@ -629,24 +629,40 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static boolean remoteGitBranchExists(
-		String remoteGitBranchName, GitWorkingDirectory gitWorkingDirectory,
+		final String remoteGitBranchName,
+		final GitWorkingDirectory gitWorkingDirectory,
 		List<GitWorkingDirectory.Remote> remotes) {
 
-		for (GitWorkingDirectory.Remote remote : remotes) {
-			try {
-				if (gitWorkingDirectory.remoteGitBranchExists(
-						remoteGitBranchName, remote)) {
+		List<Callable<Boolean>> callables = new ArrayList<>(remotes.size());
 
-					continue;
+		for (final GitWorkingDirectory.Remote remote : remotes) {
+			Callable<Boolean> callable = new SafeCallable<Boolean>() {
+
+				@Override
+				public Boolean safeCall() {
+					try {
+						return gitWorkingDirectory.remoteGitBranchExists(
+							remoteGitBranchName, remote);
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+
+						return true;
+					}
 				}
-			}
-			catch (Exception e) {
-				e.printStackTrace();
 
-				continue;
-			}
+			};
 
-			return false;
+			callables.add(callable);
+		}
+
+		ParallelExecutor<Boolean> parallelExecutor = new ParallelExecutor<>(
+			callables, _threadPoolExecutor);
+
+		for (Boolean bool : parallelExecutor.execute()) {
+			if (!bool) {
+				return false;
+			}
 		}
 
 		return true;

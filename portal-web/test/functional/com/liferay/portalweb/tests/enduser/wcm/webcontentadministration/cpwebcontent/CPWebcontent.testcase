@@ -2342,7 +2342,7 @@
 		</execute>
 
 		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="WebContent_portlet.lar" />
+			<var name="larFileName" value="WebContent_portlet2.lar" />
 		</execute>
 
 		<execute macro="WebContent#tearDownCP" />
@@ -2376,7 +2376,7 @@
 		</execute>
 
 		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="WebContent_portlet.lar" />
+			<var name="larFileName" value="WebContent_portlet2.lar" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

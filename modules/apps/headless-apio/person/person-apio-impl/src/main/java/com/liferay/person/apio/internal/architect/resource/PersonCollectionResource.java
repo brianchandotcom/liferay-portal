@@ -253,12 +253,6 @@ public class PersonCollectionResource
 		return personUpdaterForm.getAlternateName();
 	}
 
-	private Integer _getDefaultValue(
-		Optional<Integer> optional, int defaultValue) {
-
-		return optional.orElse(defaultValue);
-	}
-
 	private Contact _getContact(UserWrapper userWrapper) {
 		return Try.fromFallible(
 			userWrapper::getContact
@@ -283,6 +277,12 @@ public class PersonCollectionResource
 		).orElse(
 			null
 		);
+	}
+
+	private Integer _getDefaultValue(
+		Optional<Integer> optional, int defaultValue) {
+
+		return optional.orElse(defaultValue);
 	}
 
 	private byte[] _getImageBytes(PersonCreatorForm personCreatorForm) {
@@ -438,11 +438,14 @@ public class PersonCollectionResource
 			personUpdaterForm.getFamilyName(), prefixId, suffixId,
 			_isMale(personUpdaterForm, user),
 			_getDefaultValue(
-				personUpdaterForm.getBirthdayMonthOptional(), birthdayDate.getMonth()),
+				personUpdaterForm.getBirthdayMonthOptional(),
+				birthdayDate.getMonth()),
 			_getDefaultValue(
-				personUpdaterForm.getBirthdayDayOptional(), birthdayDate.getDate()),
+				personUpdaterForm.getBirthdayDayOptional(),
+				birthdayDate.getDate()),
 			_getDefaultValue(
-				personUpdaterForm.getBirthdayYearOptional(), birthdayDate.getYear()),
+				personUpdaterForm.getBirthdayYearOptional(),
+				birthdayDate.getYear()),
 			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(),
 			personUpdaterForm.getJobTitle(), user.getGroupIds(),

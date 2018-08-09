@@ -41,6 +41,24 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Returns the given editable value
+	 */
+
+	getEditableValue(editableId) {
+		return this.getEditableValues()[editableId];
+	}
+
+	/**
+	 * Returns the editable values property content
+	 * @return {object}
+	 * @review
+	 */
+
+	getEditableValues() {
+		return this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */
@@ -53,6 +71,30 @@ class FragmentEntryLink extends Component {
 				content: this.content ? Soy.toIncDom(this.content) : null
 			}
 		);
+	}
+
+	/**
+	 * Returns a new object with the updated editableId
+	 * @param {string} editableId
+	 * @param {object} content
+	 */
+
+	setEditableValue(editableId, content) {
+		const editableValues = this.getEditableValues();
+
+		const editableValue = this.getEditableValue(editableId);
+
+		editableValues[editableId] = object.mixin({}, editableValue, content);
+
+		this._update(
+			this.languageId,
+			this.defaultLanguageId,
+			[this._updateEditableStatus]
+		);
+
+		return {
+			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: editableValues
+		};
 	}
 
 	/**
@@ -101,48 +143,6 @@ class FragmentEntryLink extends Component {
 		if (this.content) {
 			this._renderContent(this.content);
 		}
-	}
-
-	/**
-	 * Returns the given editable value
-	 */
-
-	getEditableValue(editableId) {
-		return this.getEditableValues()[editableId];
-	}
-
-	/**
-	 * Returns the editable values property content
-	 * @return {object}
-	 * @review
-	 */
-
-	getEditableValues() {
-		return this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
-	}
-
-	/**
-	 * Returns a new object with the updated editableId
-	 * @param {string} editableId
-	 * @param {object} content
-	 */
-
-	setEditableValue(editableId, content) {
-		const editableValues = this.getEditableValues();
-
-		const editableValue = this.getEditableValue(editableId);
-
-		editableValues[editableId] = object.mixin({}, editableValue, content);
-
-		this._update(
-			this.languageId,
-			this.defaultLanguageId,
-			[this._updateEditableStatus]
-		);
-
-		return {
-			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: editableValues
-		};
 	}
 
 	/**

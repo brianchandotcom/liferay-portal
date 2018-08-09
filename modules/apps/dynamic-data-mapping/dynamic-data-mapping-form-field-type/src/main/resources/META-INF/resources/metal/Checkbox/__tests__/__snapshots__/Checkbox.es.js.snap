@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Field Checkbox should be not edidable 1`] = `
+<div class="form-group">
+  <label></label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label"></span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle"></span>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Checkbox should be shown as a switcher 1`] = `
+<div class="form-group">
+  <label></label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label"></span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle"></span>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Checkbox should be shown as checkbox 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="custom-control custom-checkbox">
+    <label>
+      <input checked="" class="custom-control-input" ref="input" type="checkbox">
+      <span class="custom-control-label"></span>
+    </label>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Checkbox should have a helptext 1`] = `
+<div class="form-group">
+  <label></label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label"></span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle"></span>
+    </span>
+  </label>
+  <span class="form-text">Type something</span>
+</div>
+`;
+
+exports[`Field Checkbox should have a key 1`] = `
+<div class="form-group">
+  <label></label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label"></span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle"></span>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Checkbox should have a label 1`] = `
+<div class="form-group">
+  <label></label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label">label</span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle" data-label-off="label" data-label-on="label"></span>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Checkbox should have a predefined Value 1`] = `
+<div class="form-group">
+  <label></label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label"></span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle"></span>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Checkbox should have a spritemap 1`] = `
+<div class="form-group">
+  <label></label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label"></span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle"></span>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Checkbox should have a value 1`] = `
+<div class="form-group">
+  <label></label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label"></span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle"></span>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Checkbox should have an id 1`] = `
+<div class="form-group">
+  <label for="ID"></label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label"></span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle"></span>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Checkbox should not be required 1`] = `
+<div class="form-group">
+  <label></label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label"></span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle"></span>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Checkbox should render Label if showLabel is true 1`] = `
+<div class="form-group">
+  <label>text </label>
+  <label class="toggle-switch">
+    <input class="toggle-switch-check" type="checkbox">
+    <span class="toggle-switch-label">text</span>
+    <span aria-hidden="true" class="toggle-switch-bar">
+      <span class="toggle-switch-handle" data-label-off="text" data-label-on="text"></span>
+    </span>
+  </label>
+  <span class="form-text"></span>
+</div>
+`;

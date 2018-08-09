@@ -132,7 +132,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 
 			submitForm(form, '<portlet:actionURL name="deleteFormInstanceRecord"><portlet:param name="mvcPath" value="/admin/view_form_instance_records.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
-	}
+	};
 
 	var ACTIONS = {
 		'deleteRecords': deleteRecords

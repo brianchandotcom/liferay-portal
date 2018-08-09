@@ -1,0 +1,347 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select should be closed by default 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should be not edidable 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should have a helptext 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text">Type something</span>
+</div>
+`;
+
+exports[`Select should have a key 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should have a label 1`] = `
+<div class="form-group">
+  <label>label </label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should have a placeholder 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Placeholder</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should have a predefinedValue 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Select</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should have a spritemap 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should have a value 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">value</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should have an id 1`] = `
+<div class="form-group">
+  <label for="ID"></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" id="ID" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should have class dropdown-opened when it's opened 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu dropdown-opened">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should not be required 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should render Label if showLabel is true 1`] = `
+<div class="form-group">
+  <label>text </label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+          <title>caret-double</title>
+          <use xlink:href="icons.svg#caret-double"></use>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">Option 1</li>
+      <li class="dropdown-item">Option 2</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should render items 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;"></a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled">
+      <li class="dropdown-item">item</li>
+    </ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Select should render no items when items come empty 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="form-builder-select-field input-group-container">
+    <div class="form-control select-field-trigger" disabled="">
+      <div class="option-selected option-selected-placeholder">Choose an Option</div>
+      <a class="select-arrow-down-container" href="javascript:;"></a>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul class="list-unstyled"></ul>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;

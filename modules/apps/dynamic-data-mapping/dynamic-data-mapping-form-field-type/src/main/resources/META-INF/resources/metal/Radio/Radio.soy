@@ -1,0 +1,63 @@
+{namespace Radio}
+
+{template .render}
+	{@param? editable: bool}
+	{@param? helpText: string}
+	{@param? items: list<[
+		checked: bool,
+		disabled: bool,
+		id: string,
+		inline: bool,
+		label: string,
+		name: string,
+		showLabel: bool,
+		value: string
+	]>}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? value: string}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param disabled: $editable /}
+				{param items: $items /}
+				{param value: $value /}
+			{/call}
+		{/param}
+
+		{param helpText: $helpText /}
+		{param id: $id /}
+		{param label: $label /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param? items: list<[
+		checked: bool,
+		disabled: bool,
+		id: string,
+		inline: bool,
+		label: string,
+		name: string,
+		showLabel: bool,
+		value: string
+	]>}
+	{@param? disabled: bool}
+	{@param? value: string}
+
+	{if $items}
+		{for $radio in $items}
+				{call ClayRadio.render data="$radio"}
+					{param disabled: $disabled ? $disabled : $radio.disabled /}
+					{param checked: $value == $radio.label ? true : false  /}
+				{/call}
+		{/for}
+	{/if}
+{/template}

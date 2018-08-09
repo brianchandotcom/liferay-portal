@@ -158,7 +158,7 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 						}
 
 						Liferay.detach('destroyPortlet', <portlet:namespace />clearPortletHandlers);
-					};
+					}
 
 					Liferay.on('destroyPortlet', <portlet:namespace />clearPortletHandlers);
 
@@ -238,7 +238,7 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 
 								var time = Liferay.Session.get('sessionLength') || tenSeconds;
 
-								<portlet:namespace />intervalId = setInterval(<portlet:namespace />extendSession, (time/2));
+								<portlet:namespace />intervalId = setInterval(<portlet:namespace />extendSession, (time / 2));
 							}
 
 							function <portlet:namespace />extendSession() {

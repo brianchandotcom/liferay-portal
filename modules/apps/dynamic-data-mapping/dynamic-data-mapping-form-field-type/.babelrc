@@ -1,3 +1,17 @@
 {
-	"presets": ["es2015", "liferay-project"]
+    "presets": ["env"],
+    "plugins": [
+        "transform-class-properties"
+    ],
+    "env": {
+        "test": {
+            "plugins": [
+                ["module-resolver", {
+                    "alias": {
+                        "dynamic-data-mapping-form-field-type/*": "./src/main/resources/META-INF/resources"
+                    }
+                }]
+            ]
+        }
+    }
 }

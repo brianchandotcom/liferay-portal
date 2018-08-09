@@ -23,9 +23,11 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Raymond Augé
- * @author Manuel de la Peña
+ * @author     Raymond Augé
+ * @author     Manuel de la Peña
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class PortletInstanceTest {
 
 	@Test

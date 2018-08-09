@@ -3867,7 +3867,7 @@ public class ProjectTemplatesTest {
 		}
 
 		if (!liferayVersionSet) {
-			completeArgs.add("-DliferayVersion=7.0");
+			completeArgs.add("-DliferayVersion=7.1");
 		}
 
 		if (!projectTypeSet) {

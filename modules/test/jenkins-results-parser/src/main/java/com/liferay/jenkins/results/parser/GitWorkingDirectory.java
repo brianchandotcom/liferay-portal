@@ -340,7 +340,11 @@ public class GitWorkingDirectory {
 	}
 
 	public void deleteLocalGitBranches(List<LocalGitBranch> localGitBranches) {
-		List<String> localGitBranchNames = new ArrayList<>();
+		if (localGitBranches.isEmpty()) {
+			return;
+		}
+
+		Set<String> localGitBranchNames = new HashSet<>();
 
 		for (LocalGitBranch localGitBranch : localGitBranches) {
 			localGitBranchNames.add(localGitBranch.getName());
@@ -348,7 +352,8 @@ public class GitWorkingDirectory {
 
 		for (List<String> branchNames :
 				Lists.partition(
-					localGitBranchNames, _DELETE_BRANCHES_BATCH_SIZE)) {
+					new ArrayList<>(localGitBranchNames),
+					_DELETE_BRANCHES_BATCH_SIZE)) {
 
 			_deleteLocalGitBranches(
 				branchNames.toArray(new String[branchNames.size()]));
@@ -778,9 +783,17 @@ public class GitWorkingDirectory {
 	public LocalGitBranch getLocalGitBranch(
 		String branchName, boolean required) {
 
-		List<LocalGitBranch> localGitBranches = getLocalGitBranches(branchName);
+		if ((branchName != null) && !branchName.isEmpty()) {
+			List<LocalGitBranch> localGitBranches = getLocalGitBranches(branchName);
 
-		for (LocalGitBranch localGitBranch : localGitBranches) {
+			if (localGitBranches.isEmpty()) {
+				return null;
+			}
+
+			return localGitBranches.get(0);
+		}
+
+		for (LocalGitBranch localGitBranch : getLocalGitBranches(null)) {
 			if (branchName.equals(localGitBranch.getName())) {
 				return localGitBranch;
 			}

@@ -573,7 +573,7 @@ public class LocalGitSyncUtil {
 		return false;
 	}
 
-	protected static boolean isRemoteGitBranch(
+	protected static boolean remoteGitBranchExists(
 		String remoteGitBranchName, GitWorkingDirectory gitWorkingDirectory,
 		List<GitWorkingDirectory.Remote> remotes) {
 
@@ -700,7 +700,7 @@ public class LocalGitSyncUtil {
 				deleteExpiredRemoteGitBranches(
 					gitWorkingDirectory, localGitRemotes);
 
-				if (isRemoteGitBranch(
+				if (remoteGitBranchExists(
 						cacheBranchName, gitWorkingDirectory,
 						localGitRemotes)) {
 

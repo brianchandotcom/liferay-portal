@@ -812,15 +812,6 @@ public class GitWorkingDirectory {
 						localRepository, branchName,
 						getLocalGitBranchSHA(branchName)));
 			}
-			else {
-				LocalGitBranch currentLocalGitBranch =
-					getCurrentLocalGitBranch();
-
-				localGitBranches.add(
-					GitBranchFactory.newLocalGitBranch(
-						localRepository, branchName,
-						currentLocalGitBranch.getSHA()));
-			}
 
 			return localGitBranches;
 		}

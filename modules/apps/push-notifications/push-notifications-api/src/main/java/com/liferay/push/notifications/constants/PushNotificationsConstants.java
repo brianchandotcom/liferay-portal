@@ -36,6 +36,13 @@ public class PushNotificationsConstants {
 
 	public static final String KEY_SOUND = "sound";
 
+	public static final String KEY_TITLE = "title";
+
+	public static final String KEY_TITLE_LOCALIZED = "titleLocalizedKey";
+
+	public static final String KEY_TITLE_LOCALIZED_ARGUMENTS =
+		"titleLocalizedArguments";
+
 	public static final String KEY_TO_USER_IDS = "toUserIds";
 
 	public static final String KEY_USER_ID = "userId";

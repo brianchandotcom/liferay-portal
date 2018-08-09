@@ -137,6 +137,37 @@ public class FirebasePushNotificationsSender
 				payloadJSONObject.getInt(PushNotificationsConstants.KEY_BADGE));
 		}
 
+		String title = payloadJSONObject.getString(
+			PushNotificationsConstants.KEY_TITLE);
+
+		if (Validator.isNotNull(title)) {
+			builder.title(title);
+		}
+
+		String titleLocalizedKey = payloadJSONObject.getString(
+			PushNotificationsConstants.KEY_TITLE_LOCALIZED);
+
+		if (Validator.isNotNull(titleLocalizedKey)) {
+			builder.titleLocalizationKey(titleLocalizedKey);
+		}
+
+		JSONArray titleLocalizedArgumentsJSONArray =
+			payloadJSONObject.getJSONArray(
+				PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS);
+
+		if (titleLocalizedArgumentsJSONArray != null) {
+			List<String> localizedArguments = new ArrayList<>();
+
+			for (int i = 0; i < titleLocalizedArgumentsJSONArray.length();
+					i++) {
+
+				localizedArguments.add(
+					titleLocalizedArgumentsJSONArray.getString(i));
+			}
+
+			builder.titleLocalizationArguments(localizedArguments);
+		}
+
 		String body = payloadJSONObject.getString(
 			PushNotificationsConstants.KEY_BODY);
 

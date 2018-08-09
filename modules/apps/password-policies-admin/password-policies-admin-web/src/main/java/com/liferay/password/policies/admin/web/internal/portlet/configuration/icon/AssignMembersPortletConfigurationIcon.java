@@ -73,6 +73,7 @@ public class AssignMembersPortletConfigurationIcon
 			portletURL.setParameter(
 				"passwordPolicyId",
 				String.valueOf(_getPasswordPolicyId(portletRequest)));
+			portletURL.setParameter("tabs1", "assignees");
 
 			return portletURL.toString();
 		}

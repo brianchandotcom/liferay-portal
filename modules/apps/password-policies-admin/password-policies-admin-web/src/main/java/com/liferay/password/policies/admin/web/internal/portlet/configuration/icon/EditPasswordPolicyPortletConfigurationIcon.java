@@ -72,6 +72,7 @@ public class EditPasswordPolicyPortletConfigurationIcon
 			portletURL.setParameter(
 				"passwordPolicyId",
 				String.valueOf(_getPasswordPolicyId(portletRequest)));
+			portletURL.setParameter("tabs1", "details");
 
 			return portletURL.toString();
 		}

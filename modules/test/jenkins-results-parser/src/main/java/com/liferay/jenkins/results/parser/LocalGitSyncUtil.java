@@ -20,11 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
@@ -473,10 +471,11 @@ public class LocalGitSyncUtil {
 		List<RemoteGitBranch> cacheRemoteGitBranches =
 			getCacheRemoteGitBranches(remote);
 
-		Map<String, RemoteGitBranch> orphanedBaseCacheRemoteGitBranchesMap =
+		Map<String, RemoteGitBranch> baseCacheRemoteGitBranchesMap =
 			new HashMap<>();
 
-		Set<String> timestampedCacheRemoteGitBranchNames = new HashSet<>();
+		Map<String, RemoteGitBranch> timestampedCacheRemoteGitBranchMap =
+			new HashMap<>();
 
 		for (RemoteGitBranch cacheRemoteGitBranch : cacheRemoteGitBranches) {
 			String cacheRemoteGitBranchName = cacheRemoteGitBranch.getName();
@@ -487,62 +486,96 @@ public class LocalGitSyncUtil {
 				if (cacheRemoteGitBranchName.matches(
 						_cacheBranchPattern.pattern() + "-\\d+")) {
 
-					timestampedCacheRemoteGitBranchNames.add(
-						cacheRemoteGitBranchName.replaceAll("(.*)-\\d+", "$1"));
+					timestampedCacheRemoteGitBranchMap.put(
+						cacheRemoteGitBranchName, cacheRemoteGitBranch);
 				}
 				else {
-					orphanedBaseCacheRemoteGitBranchesMap.put(
+					baseCacheRemoteGitBranchesMap.put(
 						cacheRemoteGitBranchName, cacheRemoteGitBranch);
 				}
 			}
 		}
 
-		List<RemoteGitBranch> orphanedTimestampedCacheRemoteGitBranches =
-			new ArrayList<>();
+		Map<String, RemoteGitBranch> orphanedBaseCacheRemoteGitBranchesMap =
+			new HashMap<>(baseCacheRemoteGitBranchesMap);
+		Map<String, RemoteGitBranch>
+			orphanedTimestampedCacheRemoteGitBranchesMap = new HashMap<>(
+				timestampedCacheRemoteGitBranchMap);
 
-		for (RemoteGitBranch cacheRemoteGitBranch : cacheRemoteGitBranches) {
-			String cacheRemoteGitBranchName = cacheRemoteGitBranch.getName();
+		for (String baseCacheRemoteGitBranchName :
+				baseCacheRemoteGitBranchesMap.keySet()) {
 
-			if (!cacheRemoteGitBranchName.matches(
-					_cacheBranchPattern + "-\\d+")) {
+			String timestampedCacheRemoteGitBranchNamePattern =
+				Pattern.quote(baseCacheRemoteGitBranchName) + "-\\d+";
 
-				continue;
+			for (String timestampedCacheRemoteGitBranchName :
+					timestampedCacheRemoteGitBranchMap.keySet()) {
+
+				if (timestampedCacheRemoteGitBranchName.matches(
+						timestampedCacheRemoteGitBranchNamePattern)) {
+
+					orphanedBaseCacheRemoteGitBranchesMap.remove(
+						baseCacheRemoteGitBranchName);
+				}
 			}
+		}
+
+		for (String timestampedCacheRemoteGitBranchName :
+				timestampedCacheRemoteGitBranchMap.keySet()) {
 
 			String baseCacheRemoteGitBranchName =
-				cacheRemoteGitBranchName.replaceAll("(.*)-\\d+", "$1");
+				timestampedCacheRemoteGitBranchName.replaceAll(
+					"(.*)-\\d+", "$1");
 
-			if (!orphanedBaseCacheRemoteGitBranchesMap.containsKey(
+			if (baseCacheRemoteGitBranchesMap.containsKey(
 					baseCacheRemoteGitBranchName)) {
 
-				orphanedTimestampedCacheRemoteGitBranches.add(cacheRemoteGitBranch);
+				orphanedTimestampedCacheRemoteGitBranchesMap.remove(
+					timestampedCacheRemoteGitBranchName);
 			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String orphanedBaseCacheRemoteGitBranchName :
+				orphanedBaseCacheRemoteGitBranchesMap.keySet()) {
+
+			sb.append(orphanedBaseCacheRemoteGitBranchName);
+			sb.append("\n");
+		}
+
+		for (String orphanedTimestampedCacheRemoteGitBranchName :
+				orphanedTimestampedCacheRemoteGitBranchesMap.keySet()) {
+
+			sb.append(orphanedTimestampedCacheRemoteGitBranchName);
+			sb.append("\n");
 		}
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Found ", String.valueOf(orphanedTimestampedCacheRemoteGitBranches.size()),
-				" orphaned timetamp branches on ", remote.getRemoteURL(), "."));
+				"Found ",
+				String.valueOf(orphanedBaseCacheRemoteGitBranchesMap.size()),
+				" orphaned base cache branches ", "and ",
+				String.valueOf(orphanedTimestampedCacheRemoteGitBranchesMap.
+					size()),
+				" orphaned timestamp branches on ", remote.getRemoteURL(),
+				".\n", sb.toString()));
+
+		List<RemoteGitBranch> orphanedCacheRemoteGitBranches =
+			new ArrayList<>(
+				orphanedBaseCacheRemoteGitBranchesMap.size() +
+					orphanedTimestampedCacheRemoteGitBranchesMap.size());
+
+		orphanedCacheRemoteGitBranches.addAll(
+			orphanedBaseCacheRemoteGitBranchesMap.values());
+		orphanedCacheRemoteGitBranches.addAll(
+			orphanedTimestampedCacheRemoteGitBranchesMap.values());
 
 		GitWorkingDirectory gitWorkingDirectory =
 			remote.getGitWorkingDirectory();
 
-		gitWorkingDirectory.deleteRemoteGitBranches(orphanedTimestampedCacheRemoteGitBranches);
-
-		for (String timestampedBaseCacheRemoteGitBranchName :
-				timestampedCacheRemoteGitBranchNames) {
-
-			orphanedBaseCacheRemoteGitBranchesMap.remove(
-				timestampedBaseCacheRemoteGitBranchName);
-		}
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Found ", String.valueOf(orphanedBaseCacheRemoteGitBranchesMap.size()),
-				" orphaned branches on ", remote.getRemoteURL(), "."));
-
 		gitWorkingDirectory.deleteRemoteGitBranches(
-			new ArrayList<>(orphanedBaseCacheRemoteGitBranchesMap.values()));
+			orphanedCacheRemoteGitBranches);
 	}
 
 	protected static void deleteOrphanedCacheBranches(

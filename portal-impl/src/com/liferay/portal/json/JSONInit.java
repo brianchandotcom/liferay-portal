@@ -33,6 +33,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletDisplayModel;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.File;
 import java.io.InputStream;
@@ -44,6 +47,7 @@ import jodd.introspector.CachingIntrospector;
 import jodd.introspector.JoddIntrospector;
 
 import jodd.json.JoddJson;
+import jodd.json.TypeJsonSerializer;
 import jodd.json.TypeJsonSerializerMap;
 
 /**
@@ -102,8 +106,42 @@ public class JSONInit {
 				new JoddJsonTransformer(
 					(JSONTransformer)classes[1].newInstance()));
 		}
+
+		TypeJsonSerializer objectTypeJsonSerializer = typeSerializerMap.lookup(
+			Object.class);
+
+		typeSerializerMap.register(
+			Object.class,
+			(jsonContext, object) -> {
+				if (object == null) {
+					objectTypeJsonSerializer.serialize(jsonContext, object);
+
+					return;
+				}
+
+				Class<?> objectClass = object.getClass();
+
+				for (String modelClassName : _serviceTrackerMap.keySet()) {
+					if (ClassUtil.isSubclass(objectClass, modelClassName)) {
+						JSONTransformer jsonTransformer =
+							_serviceTrackerMap.getService(modelClassName);
+
+						if (jsonTransformer != null) {
+							jsonTransformer.transform(
+								new JoddJSONContext(jsonContext), object);
+
+							return;
+						}
+					}
+				}
+
+				objectTypeJsonSerializer.serialize(jsonContext, object);
+			});
 	}
 
 	private static boolean _initalized;
+	private static final ServiceTrackerMap<String, JSONTransformer>
+		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
+			JSONTransformer.class, "model.class.name");
 
 }

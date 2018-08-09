@@ -206,7 +206,13 @@ public class DDMDataProviderInstanceFinderImpl
 
 			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_N_D);
 
-			if (inlineSQLHelper) {
+			if (inlineSQLHelper &&
+				InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+
+				if (groupIds.length == 0) {
+					groupIds = new long[] {0};
+				}
+
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, DDMDataProviderInstance.class.getName(),
 					"DDMDataProviderInstance.dataProviderInstanceId", groupIds);
@@ -273,7 +279,13 @@ public class DDMDataProviderInstanceFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_C_G_N_D);
 
-			if (inlineSQLHelper) {
+			if (inlineSQLHelper &&
+				InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+
+				if (groupIds.length == 0) {
+					groupIds = new long[] {0};
+				}
+
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, DDMDataProviderInstance.class.getName(),
 					"DDMDataProviderInstance.dataProviderInstanceId", groupIds);

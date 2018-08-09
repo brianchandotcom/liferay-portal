@@ -613,9 +613,48 @@ public abstract class RegionConfigurationSupport implements ConfigurationListene
         String bsn = bundle.getSymbolicName();
         String version = bundle.getVersion().toString();
         String location = escape( bundle.getLocation() );
-        String f = String.format( "(|(%1$s=%2$s)(%1$s=%2$s|%3$s)(%1$s=%2$s|%3$s|%4$s)(%1$s=%2$s|%3$s|%4$s|%5$s))", key,
-            pid, bsn, version, location );
-        return f;
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("(|(");
+
+		sb.append(key);
+		sb.append('=');
+		sb.append(pid);
+
+		sb.append(")(");
+
+		sb.append(key);
+		sb.append('=');
+		sb.append(pid);
+		sb.append('|');
+		sb.append(bsn);
+
+		sb.append(")(");
+
+		sb.append(key);
+		sb.append('=');
+		sb.append(pid);
+		sb.append('|');
+		sb.append(bsn);
+		sb.append('|');
+		sb.append(version);
+
+		sb.append(")(");
+
+		sb.append(key);
+		sb.append('=');
+		sb.append(pid);
+		sb.append('|');
+		sb.append(bsn);
+		sb.append('|');
+		sb.append(version);
+		sb.append('|');
+		sb.append(location);
+
+		sb.append("))");
+
+		return sb.toString();
     }
 
     /**
@@ -634,3 +673,4 @@ public abstract class RegionConfigurationSupport implements ConfigurationListene
     }
 
 }
+/* @generated */

@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.SourceFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
+import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -80,6 +81,7 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, SpringBootPlugin.class);
+		GradleUtil.applyPlugin(project, TestIntegrationBasePlugin.class);
 	}
 
 	private void _configureProject(Project project) {

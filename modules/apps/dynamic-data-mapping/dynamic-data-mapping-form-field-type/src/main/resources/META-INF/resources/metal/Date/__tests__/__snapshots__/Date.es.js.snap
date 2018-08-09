@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Field Date should be not edidable 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend">
+      <input class="form-control" placeholder="__/__/____" type="text" disabled="">
+    </div>
+    <div class="input-group-append input-group-item input-group-item-shrink">
+      <span class="input-group-text">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+          <title>calendar</title>
+          <use xlink:href="icons.svg#calendar"></use>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Date should have a helpText 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend">
+      <input class="form-control" placeholder="__/__/____" type="text" disabled="">
+    </div>
+    <div class="input-group-append input-group-item input-group-item-shrink">
+      <span class="input-group-text">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+          <title>calendar</title>
+          <use xlink:href="icons.svg#calendar"></use>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Date should have a label 1`] = `
+<div class="form-group">
+  <label>label </label>
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend">
+      <input class="form-control" placeholder="__/__/____" type="text" disabled="">
+    </div>
+    <div class="input-group-append input-group-item input-group-item-shrink">
+      <span class="input-group-text">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+          <title>calendar</title>
+          <use xlink:href="icons.svg#calendar"></use>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Date should have a placeholder 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend">
+      <input class="form-control" placeholder="__/__/____" type="text" disabled="">
+    </div>
+    <div class="input-group-append input-group-item input-group-item-shrink">
+      <span class="input-group-text">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+          <title>calendar</title>
+          <use xlink:href="icons.svg#calendar"></use>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Date should have a spritemap 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend">
+      <input class="form-control" placeholder="__/__/____" type="text" disabled="">
+    </div>
+    <div class="input-group-append input-group-item input-group-item-shrink">
+      <span class="input-group-text">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+          <title>calendar</title>
+          <use xlink:href="icons.svg#calendar"></use>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Date should have a value 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend">
+      <input class="form-control" placeholder="__/__/____" value="value" type="text" disabled="">
+    </div>
+    <div class="input-group-append input-group-item input-group-item-shrink">
+      <span class="input-group-text">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+          <title>calendar</title>
+          <use xlink:href="icons.svg#calendar"></use>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Date should have an id 1`] = `
+<div class="form-group">
+  <label for="ID"></label>
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend">
+      <input class="form-control" placeholder="__/__/____" type="text" disabled="">
+    </div>
+    <div class="input-group-append input-group-item input-group-item-shrink">
+      <span class="input-group-text">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+          <title>calendar</title>
+          <use xlink:href="icons.svg#calendar"></use>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Date should not be required 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend">
+      <input class="form-control" placeholder="__/__/____" type="text" disabled="">
+    </div>
+    <div class="input-group-append input-group-item input-group-item-shrink">
+      <span class="input-group-text">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+          <title>calendar</title>
+          <use xlink:href="icons.svg#calendar"></use>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Date should render Label if showLabel is true 1`] = `
+<div class="form-group">
+  <label>text </label>
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend">
+      <input class="form-control" placeholder="__/__/____" type="text" disabled="">
+    </div>
+    <div class="input-group-append input-group-item input-group-item-shrink">
+      <span class="input-group-text">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+          <title>calendar</title>
+          <use xlink:href="icons.svg#calendar"></use>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;

@@ -160,6 +160,9 @@ public class IncludeTag extends AttributesTagSupport {
 			if (_setAttributeNames == null) {
 				_setAttributeNames = new HashSet<>();
 			}
+			else {
+				_setAttributeNames.clear();
+			}
 
 			_trackedRequest = new TrackedServletRequest(
 				request, _setAttributeNames);

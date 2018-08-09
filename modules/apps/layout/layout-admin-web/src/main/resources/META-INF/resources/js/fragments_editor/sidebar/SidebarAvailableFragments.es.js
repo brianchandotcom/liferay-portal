@@ -97,7 +97,7 @@ class SidebarAvailableFragments extends Component {
 			);
 
 			this.emit(
-				'fragmentEntryClick',
+				'fragmentEntryDrop',
 				{
 					fragmentEntryId: itemId,
 					fragmentName: itemName

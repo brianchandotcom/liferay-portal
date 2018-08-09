@@ -129,6 +129,10 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 			upgradeAbsolutePath = StringPool.BLANK;
 
+			if (Validator.isNull(upgradeContent)) {
+				return false;
+			}
+
 			Matcher matcher = _extendedClassPattern.matcher(upgradeContent);
 
 			if (matcher.find()) {

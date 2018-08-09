@@ -133,16 +133,16 @@ PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getP
 			if (form) {
 				form.setAttribute('method', 'post');
 
-				var passwordPolicyIds = form.querySelector('#<portlet:namespace />passwordPolicyIds');
+				var passwordPolicyIdsInput = form.querySelector('#<portlet:namespace />passwordPolicyIds');
 
-				if (passwordPolicyIds) {
-					passwordPolicyIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+				if (passwordPolicyIdsInput) {
+					passwordPolicyIdsInput.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 				}
 
-				var lifecycle = form.querySelector('#p_p_lifecycle');
+				var lifecycleInput = form.querySelector('#p_p_lifecycle');
 
-				if (lifecycle) {
-					lifecycle.setAttribute('value', '1');
+				if (lifecycleInput) {
+					lifecycleInput.setAttribute('value', '1');
 				}
 
 				submitForm(form, '<portlet:actionURL name="deletePasswordPolicies" />');

@@ -147,17 +147,17 @@ PortletURL portletURL = editPasswordPolicyAssignmentsManagementToolbarDisplayCon
 
 							if (form) {
 								if (result.memberType == 'users') {
-									var addUserIds = form.querySelector('#<portlet:namespace />addUserIds');
+									var addUserIdsInput = form.querySelector('#<portlet:namespace />addUserIds');
 
-									if (addUserIds) {
-										addUserIds.setAttribute('value', result.item);
+									if (addUserIdsInput) {
+										addUserIdsInput.setAttribute('value', result.item);
 									}
 								}
 								else if (result.memberType == 'organizations') {
-									var addOrganizationIds = form.querySelector('#<portlet:namespace />addOrganizationIds');
+									var addOrganizationIdsInput = form.querySelector('#<portlet:namespace />addOrganizationIds');
 
-									if (addOrganizationIds) {
-										addOrganizationIds.setAttribute('value', result.item);
+									if (addOrganizationIdsInput) {
+										addOrganizationIdsInput.setAttribute('value', result.item);
 									}
 								}
 
@@ -187,10 +187,10 @@ PortletURL portletURL = editPasswordPolicyAssignmentsManagementToolbarDisplayCon
 			var form = document.getElementById('<portlet:namespace />fm');
 
 			if (form) {
-				var removeOrganizationIds = form.querySelector('#<portlet:namespace />removeOrganizationIds');
+				var removeOrganizationIdsInput = form.querySelector('#<portlet:namespace />removeOrganizationIds');
 
-				if (removeOrganizationIds) {
-					removeOrganizationIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+				if (removeOrganizationIdsInput) {
+					removeOrganizationIdsInput.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 					submitForm(form);
 				}
@@ -203,10 +203,10 @@ PortletURL portletURL = editPasswordPolicyAssignmentsManagementToolbarDisplayCon
 			var form = document.getElementById('<portlet:namespace />fm');
 
 			if (form) {
-				var removeUserIds = form.querySelector('#<portlet:namespace />removeUserIds');
+				var removeUserIdsInput = form.querySelector('#<portlet:namespace />removeUserIds');
 
-				if (removeUserIds) {
-					removeUserIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+				if (removeUserIdsInput) {
+					removeUserIdsInput.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 					submitForm(form);
 				}

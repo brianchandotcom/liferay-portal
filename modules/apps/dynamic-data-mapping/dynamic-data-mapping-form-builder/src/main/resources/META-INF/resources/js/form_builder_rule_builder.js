@@ -161,7 +161,7 @@ AUI.add(
 
 						var fields = [];
 
-						instance.get('formBuilder').eachFields(
+						instance.get('formBuilder').eachField(
 							function(field) {
 								if (field.get('dataType')) {
 									fields.push(

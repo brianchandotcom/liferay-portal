@@ -38,7 +38,7 @@ dependencies {
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")
-	compileOnly project(":core:petra:petra-reflect")
+	testCompile project(":core:petra:petra-reflect")
 	testCompile project(":core:petra:petra-string")
 
 	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"

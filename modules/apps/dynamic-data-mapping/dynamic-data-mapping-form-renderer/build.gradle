@@ -12,6 +12,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:portal-template:portal-template-soy-api")
+	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "com.google.template", name: "soy", version: "2015-04-10"
@@ -29,6 +30,5 @@ dependencies {
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")
-	compileOnly project(":core:petra:petra-reflect")
 	testCompile project(":core:registry-api")
 }

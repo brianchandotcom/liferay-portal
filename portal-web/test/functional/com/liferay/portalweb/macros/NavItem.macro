@@ -26,12 +26,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoGlobalTemplates">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Global Templates" />
-		</execute>
-	</command>
-
 	<command name="gotoOrganizations">
 		<execute macro="NavItem#click">
 			<var name="navItem" value="Organizations" />

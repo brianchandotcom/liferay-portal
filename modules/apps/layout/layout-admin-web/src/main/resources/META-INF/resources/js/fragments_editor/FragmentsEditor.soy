@@ -44,6 +44,8 @@
 	{@param? _handleToggleHighlightMapping: any}
 	{@param? _handleTranslationLanguageChange: any}
 	{@param? _highlightMapping: bool}
+	{@param? _hoveredFragmentEntryLinkBorder: string}
+	{@param? _hoveredFragmentEntryLinkId: string}
 	{@param? _lastSaveDate: string}
 	{@param? _selectMappingDialogEditableId: string}
 	{@param? _selectMappingDialogEditableType: string}
@@ -136,6 +138,8 @@
 					'remove': $_handleFragmentRemove
 				] /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
+				{param hoveredFragmentEntryLinkBorder: $_hoveredFragmentEntryLinkBorder /}
+				{param hoveredFragmentEntryLinkId: $_hoveredFragmentEntryLinkId /}
 				{param imageSelectorURL: $imageSelectorURL /}
 				{param languageId: $languageId /}
 				{param mapping: $_highlightMapping ?: false /}

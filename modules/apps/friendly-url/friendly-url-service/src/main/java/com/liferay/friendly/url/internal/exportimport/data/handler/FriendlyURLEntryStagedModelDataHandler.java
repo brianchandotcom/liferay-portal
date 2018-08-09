@@ -137,7 +137,7 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 			if (mainEntry) {
 				_friendlyURLEntryLocalService.setMainFriendlyURLEntry(
-					friendlyURLEntry);
+					existingFriendlyURLEntry);
 			}
 		}
 	}

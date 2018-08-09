@@ -573,30 +573,6 @@ public class LocalGitSyncUtil {
 		return false;
 	}
 
-	protected static boolean remoteGitBranchExists(
-		String remoteGitBranchName, GitWorkingDirectory gitWorkingDirectory,
-		List<GitWorkingDirectory.Remote> remotes) {
-
-		for (GitWorkingDirectory.Remote remote : remotes) {
-			try {
-				if (gitWorkingDirectory.remoteGitBranchExists(
-						remoteGitBranchName, remote)) {
-
-					continue;
-				}
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-
-				continue;
-			}
-
-			return false;
-		}
-
-		return true;
-	}
-
 	protected static void pushToAllRemotes(
 		final boolean force, final GitWorkingDirectory gitWorkingDirectory,
 		final LocalGitBranch localGitBranch, final String remoteGitBranchName,
@@ -650,6 +626,30 @@ public class LocalGitSyncUtil {
 				remoteGitBranchName, " on ", String.valueOf(remotes.size()),
 				" git nodes in ",
 				JenkinsResultsParserUtil.toDurationString(duration)));
+	}
+
+	protected static boolean remoteGitBranchExists(
+		String remoteGitBranchName, GitWorkingDirectory gitWorkingDirectory,
+		List<GitWorkingDirectory.Remote> remotes) {
+
+		for (GitWorkingDirectory.Remote remote : remotes) {
+			try {
+				if (gitWorkingDirectory.remoteGitBranchExists(
+						remoteGitBranchName, remote)) {
+
+					continue;
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+
+				continue;
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	protected static String synchronizeToLocalGit(

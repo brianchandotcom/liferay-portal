@@ -13,6 +13,7 @@ import templates from './Options.soy.js';
 
 class Options extends Component {
 	static STATE = {
+
 		/**
 		 * @default false
 		 * @instance
@@ -39,16 +40,18 @@ class Options extends Component {
 		 */
 
 		items: Config.arrayOf(
-			Config.shapeOf({
-				checked: Config.bool().value(false),
-				disabled: Config.bool().value(false),
-				id: Config.string(),
-				inline: Config.bool().value(false),
-				label: Config.string(),
-				name: Config.string(),
-				showLabel: Config.bool().value(true),
-				value: Config.string(),
-			})
+			Config.shapeOf(
+				{
+					checked: Config.bool().value(false),
+					disabled: Config.bool().value(false),
+					id: Config.string(),
+					inline: Config.bool().value(false),
+					label: Config.string(),
+					name: Config.string(),
+					showLabel: Config.bool().value(true),
+					value: Config.string()
+				}
+			)
 		).internal(),
 
 		/**
@@ -98,7 +101,7 @@ class Options extends Component {
 
 		key: Config.string(),
 
-		placeholder: Config.string(),
+		placeholder: Config.string()
 	};
 
 	_getFieldIndex(element) {
@@ -112,7 +115,7 @@ class Options extends Component {
 	}
 
 	_handleTextChanged(data) {
-		const {value, originalEvent} = data;
+		const {originalEvent, value} = data;
 		const {key} = this;
 		const fieldIndex = this._getFieldIndex(
 			originalEvent.delegateTarget.parentNode
@@ -129,11 +132,14 @@ class Options extends Component {
 
 		this.setState({items: this.items});
 
-		this.emit('fieldEdited', {
-			value: this.items,
-			key,
-			originalEvent: originalEvent,
-		});
+		this.emit(
+			'fieldEdited',
+			{
+				key,
+				originalEvent,
+				value: this.items
+			}
+		);
 	}
 }
 

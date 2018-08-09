@@ -6,29 +6,34 @@ import Component from 'metal-jsx';
  * @param {!Object} WrappedComponent
  * @return {!Object} new component
  */
+
 const withSidebarComposer = WrappedComponent => {
+
 	/**
 	 * With Sidebar Composer.
 	 * @extends Component
 	 */
+
 	class WithSidebarComposer extends Component {
 		static PROPS = {
 			fieldContext: Config.array().value([]),
 
 			context: Config.array(),
 
-			focusedField: Config.object(),
+			focusedField: Config.object()
 		};
 
 		/*
          * @param {!Object} context
          * @private
          */
+
 		_handleShowChanged() {}
 
 		/**
 		 * @inheritDoc
 		 */
+
 		render() {
 			const {children} = this.props;
 

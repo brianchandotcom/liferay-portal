@@ -1,74 +1,74 @@
 export default [
 	{
-		title: 'Untitled name',
 		rows: [
 			{
 				columns: [
 					{
 						fields: [
 							{
-								type: 'radio',
 								label: 'Radio',
-							},
+								type: 'radio'
+							}
 						],
-						size: 3,
+						size: 3
 					},
 					{
 						fields: [],
-						size: 9,
-					},
-				],
+						size: 9
+					}
+				]
 			},
 			{
 				columns: [
 					{
 						fields: [
 							{
-								type: 'text',
 								label: 'Text',
 								required: true,
-							},
+								type: 'text'
+							}
 						],
-						size: 4,
+						size: 4
 					},
 					{
 						fields: [
 							{
-								type: 'select',
-								label: 'Select',
-								required: true,
 								items: [
 									{
-										name: 'Foo',
+										name: 'Foo'
 									},
 									{
-										name: 'Bar',
-									},
+										name: 'Bar'
+									}
 								],
-							},
+								label: 'Select',
+								required: true,
+								type: 'select'
+							}
 						],
-						size: 6,
+						size: 6
 					},
 					{
 						fields: [],
-						size: 2,
-					},
-				],
+						size: 2
+					}
+				]
 			},
 			{
 				columns: [
 					{
 						fields: [
 							{
-								type: 'text',
 								label: 'Second row',
 								required: true,
-							},
+								type: 'text'
+							}
 						],
-						size: 12,
-					},
-				],
-			},
+						size: 12
+					}
+				]
+			}
 		],
-	},
+		title: 'Untitled name'
+	}
 ];

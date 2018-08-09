@@ -7,12 +7,15 @@ import {ClayManagementToolbar} from 'clay-management-toolbar';
  * Builder.
  * @extends Component
  */
+
 class Builder extends Component {
+
 	/**
 	 * Continues the propagation of event.
 	 * @param {!Object} indexAllocateField
 	 * @private
 	 */
+
 	_handleFieldClicked(indexAllocateField) {
 		const Sidebar = this.refs.sidebar;
 
@@ -25,6 +28,7 @@ class Builder extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	_handleFieldAdd(event) {
 		this.emit('fieldAdded', event);
 	}
@@ -34,6 +38,7 @@ class Builder extends Component {
 	 * @param {!Object} data
 	 * @private
 	 */
+
 	_handleFieldEdited(data) {
 		this.emit('fieldEdited', data);
 	}
@@ -43,6 +48,7 @@ class Builder extends Component {
 	 * @param {!Object} data
 	 * @private
 	 */
+
 	_handleFieldMoved(data) {
 		this.emit('fieldMoved', data);
 	}
@@ -52,6 +58,7 @@ class Builder extends Component {
 	 * @param {!Object} indexes
 	 * @private
 	 */
+
 	_handleDeleteButtonClicked(indexes) {
 		this.emit('fieldDeleted', indexes);
 	}
@@ -61,6 +68,7 @@ class Builder extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	_handleCreationButtonClicked() {
 		const Sidebar = this.refs.sidebar;
 
@@ -71,37 +79,38 @@ class Builder extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	render() {
 		const {
 			context,
-			focusedField,
 			fieldsList,
-			spritemap,
+			focusedField,
 			mode,
+			spritemap
 		} = this.props;
 
 		const layoutRendererEvents = {
-			fieldClicked: this._handleFieldClicked.bind(this),
-			fieldMoved: this._handleFieldMoved.bind(this),
 			deleteButtonClicked: this._handleDeleteButtonClicked.bind(this),
+			fieldClicked: this._handleFieldClicked.bind(this),
+			fieldMoved: this._handleFieldMoved.bind(this)
 		};
 
 		const sidebarEvents = {
 			fieldAdded: this._handleFieldAdd.bind(this),
-			fieldEdited: this._handleFieldEdited.bind(this),
+			fieldEdited: this._handleFieldEdited.bind(this)
 		};
 
 		const clayManagementToolbarEvents = {
-			creationButtonClicked: this._handleCreationButtonClicked.bind(this),
+			creationButtonClicked: this._handleCreationButtonClicked.bind(this)
 		};
 
 		return (
 			<div>
 				<ClayManagementToolbar
 					events={clayManagementToolbarEvents}
+					ref="managementToolbar"
 					showSearch={false}
 					spritemap={spritemap}
-					ref="managementToolbar"
 				/>
 				<div class="container">
 					<div class="sheet">
@@ -117,8 +126,8 @@ class Builder extends Component {
 				<Sidebar
 					context={context}
 					events={sidebarEvents}
-					focusedField={focusedField}
 					fieldLists={fieldsList}
+					focusedField={focusedField}
 					mode={mode}
 					ref="sidebar"
 					spritemap={spritemap}

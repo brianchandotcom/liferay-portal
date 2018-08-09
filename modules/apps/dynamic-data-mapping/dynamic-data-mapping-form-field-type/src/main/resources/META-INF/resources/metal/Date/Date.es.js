@@ -13,6 +13,7 @@ import templates from './Date.soy.js';
 
 class Date extends Component {
 	static STATE = {
+
 		/**
 		 * @default false
 		 * @instance
@@ -92,7 +93,7 @@ class Date extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string(),
+		value: Config.string()
 	};
 }
 

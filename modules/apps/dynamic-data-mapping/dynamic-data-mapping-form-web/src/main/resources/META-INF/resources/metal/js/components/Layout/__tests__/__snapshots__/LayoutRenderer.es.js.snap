@@ -31,7 +31,7 @@ exports[`LayoutRenderer should render a layout in editable mode 1`] = `
   <div class="layout-page">
     <div class="row">
       <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
     <div class="row">
@@ -59,12 +59,12 @@ exports[`LayoutRenderer should render a layout in editable mode 1`] = `
         </div>
       </div>
       <div class="col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
     <div class="row">
@@ -115,12 +115,12 @@ exports[`LayoutRenderer should render a layout in editable mode 1`] = `
         </div>
       </div>
       <div class="col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
     <div class="row">
@@ -150,7 +150,7 @@ exports[`LayoutRenderer should render a layout in editable mode 1`] = `
     </div>
     <div class="row">
       <div class="col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
   </div>
@@ -162,7 +162,7 @@ exports[`LayoutRenderer should render a layout with an empty field only in edita
   <div class="layout-page">
     <div class="row">
       <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
     <div class="row">
@@ -190,12 +190,12 @@ exports[`LayoutRenderer should render a layout with an empty field only in edita
         </div>
       </div>
       <div class="col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
     <div class="row">
@@ -249,7 +249,7 @@ exports[`LayoutRenderer should render a layout with an empty field only in edita
         <div class="ddm-field-container">
           <div class="ddm-resize-handle-left"></div>
           <div class="ddm-drag">
-            <div>Field doesn't exist.</div>
+            <div class="ddm-field-not-found">Field doesn't exist.</div>
           </div>
           <div class="ddm-field-actions-container">
             <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
@@ -271,7 +271,7 @@ exports[`LayoutRenderer should render a layout with an empty field only in edita
     </div>
     <div class="row">
       <div class="col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
     <div class="row">
@@ -301,7 +301,7 @@ exports[`LayoutRenderer should render a layout with an empty field only in edita
     </div>
     <div class="row">
       <div class="col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
-        <div class="ddm-target col-empty"></div>
+        <div class="col-empty ddm-target"></div>
       </div>
     </div>
   </div>

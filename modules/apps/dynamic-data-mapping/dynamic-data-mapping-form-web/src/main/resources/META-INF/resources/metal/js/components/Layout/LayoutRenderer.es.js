@@ -11,30 +11,9 @@ import templates from './LayoutRenderer.soy.js';
  * LayoutRenderer.
  * @extends Component
  */
+
 class LayoutRenderer extends Component {
 	static STATE = {
-		/**
-		 * @default []
-		 * @instance
-		 * @memberof LayoutRenderer
-		 * @type {?array<object>}
-		 */
-		pages: Config.arrayOf(
-			Config.shapeOf({
-				title: Config.string(),
-				description: Config.string(),
-				rows: Config.arrayOf(
-					Config.shapeOf({
-						columns: Config.arrayOf(
-							Config.shapeOf({
-								fields: Config.array(),
-								size: Config.number(),
-							})
-						),
-					})
-				),
-			})
-		).value([]),
 
 		/**
 		 * @default 0
@@ -42,6 +21,7 @@ class LayoutRenderer extends Component {
 		 * @memberof LayoutRenderer
 		 * @type {?number}
 		 */
+
 		activePage: Config.number().value(0),
 
 		/**
@@ -50,6 +30,7 @@ class LayoutRenderer extends Component {
 		 * @memberof LayoutRenderer
 		 * @type {?bool}
 		 */
+
 		dragAndDropDisabled: Config.bool().value(false),
 
 		/**
@@ -58,6 +39,7 @@ class LayoutRenderer extends Component {
 		 * @memberof LayoutRenderer
 		 * @type {?bool}
 		 */
+
 		editable: Config.bool().value(false),
 
 		/**
@@ -66,7 +48,38 @@ class LayoutRenderer extends Component {
 		 * @memberof LayoutRenderer
 		 * @type {?bool}
 		 */
+
 		modeRenderer: Config.oneOf(['grid', 'list']).value('grid'),
+
+		/**
+		 * @default []
+		 * @instance
+		 * @memberof LayoutRenderer
+		 * @type {?array<object>}
+		 */
+
+		pages: Config.arrayOf(
+			Config.shapeOf(
+				{
+					description: Config.string(),
+					rows: Config.arrayOf(
+						Config.shapeOf(
+							{
+								columns: Config.arrayOf(
+									Config.shapeOf(
+										{
+											fields: Config.array(),
+											size: Config.number()
+										}
+									)
+								)
+							}
+						)
+					),
+					title: Config.string()
+				}
+			)
+		).value([]),
 
 		/**
 		 * @default undefined
@@ -74,17 +87,21 @@ class LayoutRenderer extends Component {
 		 * @memberof LayoutRenderer
 		 * @type {!string}
 		 */
-		spritemap: Config.string().required(),
+
+		spritemap: Config.string().required()
 	};
 
 	/**
 	 * @private
 	 */
+
 	_startDrag() {
-		this._dragAndDrop = new DragDrop({
-			sources: '.ddm-drag',
-			targets: '.ddm-target',
-		});
+		this._dragAndDrop = new DragDrop(
+			{
+				sources: '.ddm-drag',
+				targets: '.ddm-target'
+			}
+		);
 
 		this._dragAndDrop.on(
 			DragDrop.Events.END,
@@ -95,6 +112,7 @@ class LayoutRenderer extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	attached() {
 		if (this.editable && !this.dragAndDropDisabled) {
 			this._startDrag();
@@ -104,6 +122,7 @@ class LayoutRenderer extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	willReceiveState(nextState) {
 		if (
 			typeof nextState.pages !== 'undefined' &&
@@ -120,6 +139,7 @@ class LayoutRenderer extends Component {
 	 * @param {!Object} data
 	 * @private
 	 */
+
 	_handleFieldChanged(data) {
 		this.emit('fieldEdited', data);
 	}
@@ -128,6 +148,7 @@ class LayoutRenderer extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	_handleSelectFieldFocused(event) {
 		this._emitFieldClicked(
 			event.delegateTarget.parentElement.parentElement,
@@ -139,55 +160,65 @@ class LayoutRenderer extends Component {
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	_handleOnClickResize() {}
 
 	/**
 	 * @param {!Event} event
 	 * @private
 	 */
+
 	_handleDeleteButtonClicked(event) {
 		const index = LayoutSupport.getIndexes(
 			dom.closest(event.target, '.col-ddm')
 		);
 
-		this.emit('deleteButtonClicked', {
-			...index,
-		});
+		this.emit(
+			'deleteButtonClicked',
+			{...index}
+		);
 	}
 
 	/**
 	 * @param {!Object} data
 	 * @private
 	 */
+
 	_handleDragAndDropEnd(data) {
 		if (!data.target) {
 			return;
 		}
 
-		const targetIndex = LayoutSupport.getIndexes(data.target.parentElement);
 		const sourceIndex = LayoutSupport.getIndexes(
 			data.source.parentElement.parentElement
 		);
+		const targetIndex = LayoutSupport.getIndexes(data.target.parentElement);
 
 		data.source.innerHTML = '';
 
-		this._handleFieldMoved({
-			data,
-			target: targetIndex,
-			source: sourceIndex,
-		});
+		this._handleFieldMoved(
+			{
+				data,
+				source: sourceIndex,
+				target: targetIndex
+			}
+		);
 	}
 
 	/**
 	 * @param {!Object} payload
 	 * @private
 	 */
+
 	_handleFieldMoved({data, target, source}) {
-		this.emit('fieldMoved', {
-			target,
-			source,
-			data,
-		});
+		this.emit(
+			'fieldMoved',
+			{
+				data,
+				source,
+				target
+			}
+		);
 	}
 
 	/**
@@ -195,13 +226,17 @@ class LayoutRenderer extends Component {
 	 * @param {!String} mode
 	 * @private
 	 */
+
 	_emitFieldClicked(event, mode) {
 		const index = LayoutSupport.getIndexes(event);
 
-		this.emit('fieldClicked', {
-			...index,
-			mode,
-		});
+		this.emit(
+			'fieldClicked',
+			{
+				...index,
+				mode
+			}
+		);
 	}
 }
 

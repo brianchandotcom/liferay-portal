@@ -8,6 +8,7 @@ import templates from './Select.soy.js';
 
 class Select extends Component {
 	static STATE = {
+
 		/**
 		 * @default false
 		 * @instance
@@ -43,24 +44,28 @@ class Select extends Component {
 		 */
 
 		items: Config.arrayOf(
-			Config.shapeOf({
-				active: Config.bool().value(false),
-				disabled: Config.bool().value(false),
-				id: Config.string(),
-				inline: Config.bool().value(false),
-				label: Config.string(),
-				name: Config.string(),
-				showLabel: Config.bool().value(true),
-				value: Config.string(),
-			})
-		).value([
-			{
-				value: 'Option 1',
-			},
-			{
-				value: 'Option 2',
-			},
-		]),
+			Config.shapeOf(
+				{
+					active: Config.bool().value(false),
+					disabled: Config.bool().value(false),
+					id: Config.string(),
+					inline: Config.bool().value(false),
+					label: Config.string(),
+					name: Config.string(),
+					showLabel: Config.bool().value(true),
+					value: Config.string()
+				}
+			)
+		).value(
+			[
+				{
+					value: 'Option 1'
+				},
+				{
+					value: 'Option 2'
+				}
+			]
+		),
 
 		/**
 		 * @default undefined
@@ -134,22 +139,27 @@ class Select extends Component {
 
 		value: Config.string(),
 
-		key: Config.string(),
+		key: Config.string()
 	};
 
 	_handleItemClicked(event) {
 		const {key} = this;
 
-		this.setState({
-			value: event.target.innerText,
-			predefinedValue: event.target.innerText,
-		});
+		this.setState(
+			{
+				predefinedValue: event.target.innerText,
+				value: event.target.innerText
+			}
+		);
 
-		this.emit('fieldEdited', {
-			value: event.target.innerText,
-			key,
-			originalEvent: event,
-		});
+		this.emit(
+			'fieldEdited',
+			{
+				key,
+				originalEvent: event,
+				value: event.target.innerText
+			}
+		);
 	}
 
 	_handleClick() {

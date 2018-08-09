@@ -14,6 +14,7 @@ import templates from './Checkbox.soy.js';
 
 class Checkbox extends Component {
 	static STATE = {
+
 		/**
 		 * @default false
 		 * @instance
@@ -111,17 +112,20 @@ class Checkbox extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		key: Config.string(),
+		key: Config.string()
 	};
 
 	_handleToggleChanged(event) {
 		const {key} = this;
 
-		this.emit('fieldEdited', {
-			value: event.delegateTarget.checked,
-			key,
-			originalEvent: event,
-		});
+		this.emit(
+			'fieldEdited',
+			{
+				key,
+				originalEvent: event,
+				value: event.delegateTarget.checked
+			}
+		);
 	}
 }
 

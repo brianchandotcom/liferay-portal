@@ -360,7 +360,7 @@
 
 	{let $content kind="html"}
 		<div {$attributes}>
-			<div class="ddm-target col-empty"></div>
+			<div class="col-empty ddm-target"></div>
 		</div>
 	{/let}
 
@@ -378,7 +378,7 @@
 	{@param? field: ?}
 
 	{if $editable}
-		<div>
+		<div class="ddm-field-not-found">
 			Field doesn't exist.
 		</div>
 	{/if}

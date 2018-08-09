@@ -7,6 +7,7 @@ import templates from './FieldBase.soy.js';
 
 class FieldBase extends Component {
 	static STATE = {
+
 		/**
 		 * @default input
 		 * @instance
@@ -68,7 +69,7 @@ class FieldBase extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		spritemap: Config.string().required(),
+		spritemap: Config.string().required()
 	};
 }
 

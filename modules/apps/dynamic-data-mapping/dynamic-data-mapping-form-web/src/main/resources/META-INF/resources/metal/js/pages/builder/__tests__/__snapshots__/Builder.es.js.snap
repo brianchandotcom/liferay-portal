@@ -32,14 +32,14 @@ exports[`Builder should render the default markup 1`] = `
             <li class="tbar-item tbar-item-expand text-left">
               <div class="tbar-section">
                 <span class="text-truncate-inline">
-                  <span class="text-truncate"> Add Elements </span>
+                  <span class="text-truncate">Add Elements</span>
                 </span>
               </div>
             </li>
             <li class="tbar-item">
-              <a class="component-action" href="#1" role="button" ref="close">
+              <a class="component-action" href="#1" ref="close" role="button">
                 <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                  <use xlink:href="icons.svg#times"></use>
+                  <use xlinkHref="icons.svg#times"></use>
                 </svg>
               </a>
             </li>
@@ -50,12 +50,12 @@ exports[`Builder should render the default markup 1`] = `
         <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
           <span class="navbar-text-truncate">Details</span>
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-            <use xlink:href="icons.svg#caret-bottom"></use>
+            <use xlinkHref="icons.svg#caret-bottom"></use>
           </svg>
         </a>
         <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
           <ul class="nav navbar-nav" role="tablist">
-            <li ref="tab0" class="nav-item">
+            <li class="nav-item" data-index="0" ref="tab0">
               <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
                 <span class="navbar-text-truncate">Elements</span>
               </a>

@@ -1,5 +1,5 @@
 import {Config} from 'metal-state';
-import {DragDrop, Drag} from 'metal-drag-drop';
+import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
 import classnames from 'classnames';
 import ClayButton from 'clay-button';
@@ -10,15 +10,9 @@ import LayoutRenderer, {LayoutSupport} from '../Layout/index.es.js';
 /**
  * Sidebar is a tooling to mount forms.
  */
+
 class Sidebar extends Component {
 	static STATE = {
-		/**
-		 * @default false
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?bool}
-		 */
-		show: Config.bool().value(false),
 
 		/**
 		 * @default add
@@ -26,7 +20,17 @@ class Sidebar extends Component {
 		 * @memberof Sidebar
 		 * @type {?string}
 		 */
+
 		mode: Config.oneOf(['add', 'edit']).value('add'),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?bool}
+		 */
+
+		show: Config.bool().value(false),
 
 		/**
 		 * @default 0
@@ -34,16 +38,19 @@ class Sidebar extends Component {
 		 * @memberof Sidebar
 		 * @type {?number}
 		 */
-		tabActive: Config.number().value(0),
+
+		activeTab: Config.number().value(0)
 	};
 
 	static PROPS = {
+
 		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof Sidebar
 		 * @type {?(array<object>|undefined)}
 		 */
+
 		context: Config.array().value([]),
 
 		/**
@@ -52,23 +59,8 @@ class Sidebar extends Component {
 		 * @memberof Sidebar
 		 * @type {?(array<object>|undefined)}
 		 */
-		fieldContext: Config.array().value([]),
 
-		/**
-		 * @default {}
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?object}
-		 */
-		focusedField: Config.shapeOf({
-			columnIndex: Config.oneOfType([
-				Config.bool().value(false),
-				Config.number(),
-			]),
-			pageIndex: Config.number(),
-			rowIndex: Config.number(),
-			type: Config.string().required(),
-		}).value({}),
+		fieldContext: Config.array().value([]),
 
 		/**
 		 * @default []
@@ -76,7 +68,29 @@ class Sidebar extends Component {
 		 * @memberof Sidebar
 		 * @type {?(array|undefined)}
 		 */
+
 		fieldLists: Config.array().value([]),
+
+		/**
+		 * @default {}
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?object}
+		 */
+
+		focusedField: Config.shapeOf(
+			{
+				columnIndex: Config.oneOfType(
+					[
+						Config.bool().value(false),
+						Config.number()
+					]
+				),
+				pageIndex: Config.number(),
+				rowIndex: Config.number(),
+				type: Config.string().required()
+			}
+		).value({}),
 
 		/**
 		 * @default add
@@ -84,6 +98,7 @@ class Sidebar extends Component {
 		 * @memberof Sidebar
 		 * @type {?string}
 		 */
+
 		mode: Config.oneOf(['add', 'edit']).value('add'),
 
 		/**
@@ -92,6 +107,7 @@ class Sidebar extends Component {
 		 * @memberof Sidebar
 		 * @type {?(string|undefined)}
 		 */
+
 		spritemap: Config.string().required(),
 
 		/**
@@ -100,14 +116,17 @@ class Sidebar extends Component {
 		 * @memberof Sidebar
 		 * @type {?object}
 		 */
-		tabs: Config.object().value({
-			add: {
-				items: ['Elements'],
-			},
-			edit: {
-				items: ['Basic', 'Properties'],
-			},
-		}),
+
+		tabs: Config.object().value(
+			{
+				add: {
+					items: ['Elements']
+				},
+				edit: {
+					items: ['Basic', 'Properties']
+				}
+			}
+		)
 	};
 
 	/**
@@ -116,6 +135,7 @@ class Sidebar extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
+
 	_handleDocClick(event) {
 		if (this.element.contains(event.target)) {
 			return;
@@ -127,6 +147,7 @@ class Sidebar extends Component {
 	 * Handle with drag and close sidebar when moving.
 	 * @protected
 	 */
+
 	_handleDrag() {
 		this.close();
 	}
@@ -136,6 +157,7 @@ class Sidebar extends Component {
 	 * @param {Object} data
 	 * @protected
 	 */
+
 	_handleFieldEdited(data) {
 		this.emit('fieldEdited', data);
 	}
@@ -146,6 +168,7 @@ class Sidebar extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
+
 	_handleFieldMoved(data, event) {
 		event.preventDefault();
 
@@ -154,25 +177,33 @@ class Sidebar extends Component {
 		}
 
 		const {fieldLists} = this.props;
-		const indexTarget = LayoutSupport.getIndexes(data.target.parentElement);
 		const fieldIndex = data.source.getAttribute(
 			'data-ddm-field-type-index'
 		);
 		const fieldProperties = fieldLists[Number(fieldIndex)];
+		const indexTarget = LayoutSupport.getIndexes(data.target.parentElement);
 
-		this.emit('fieldAdded', {
-			target: indexTarget,
-			fieldProperties,
-			data,
-		});
+		this.emit(
+			'fieldAdded',
+			{
+				data,
+				fieldProperties,
+				target: indexTarget
+			}
+		);
 	}
 
 	/**
 	 * Handle click on the previous button.
 	 * @protected
 	 */
+
 	_handleOnClickPrevious() {
-		this.state.mode = 'add';
+		this.setState(
+			{
+				'mode': 'add'
+			}
+		);
 	}
 
 	/**
@@ -181,15 +212,24 @@ class Sidebar extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
-	_handleOnClickTab(index, event) {
+
+	_handleOnClickTab(event) {
+		const {target} = event;
+		const {index} = target.dataset;
+
 		event.preventDefault();
 
-		this.state.tabActive = index;
+		this.setState(
+			{
+				'activeTab': parseInt(index, 10)
+			}
+		);
 	}
 
 	/**
 	 * @protected
 	 */
+
 	_handleOnClose() {
 		this.close();
 	}
@@ -200,8 +240,9 @@ class Sidebar extends Component {
 	 * @protected
 	 * @return {bool}
 	 */
+
 	_isEditMode(mode = this.state.mode) {
-		const {focusedField, fieldLists, fieldContext} = this.props;
+		const {fieldContext, fieldLists, focusedField} = this.props;
 
 		return !!(
 			mode === 'edit' &&
@@ -219,9 +260,14 @@ class Sidebar extends Component {
 	 * @param {String} mode
 	 * @protected
 	 */
+
 	_setMode(mode) {
 		if (this._isEditMode(mode)) {
-			this.state.mode = mode;
+			this.setState(
+				{
+					mode
+				}
+			);
 		}
 	}
 
@@ -229,12 +275,15 @@ class Sidebar extends Component {
 	 * Start drag and drop and attach events to manipulate.
 	 * @protected
 	 */
+
 	_startDrag() {
-		this._dragAndDrop = new DragDrop({
-			dragPlaceholder: Drag.Placeholder.CLONE,
-			sources: '.ddm-drag-item',
-			targets: '.ddm-target',
-		});
+		this._dragAndDrop = new DragDrop(
+			{
+				dragPlaceholder: Drag.Placeholder.CLONE,
+				sources: '.ddm-drag-item',
+				targets: '.ddm-target'
+			}
+		);
 
 		this._dragAndDrop.on(
 			DragDrop.Events.END,
@@ -246,6 +295,7 @@ class Sidebar extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	attached() {
 		this._startDrag();
 	}
@@ -254,22 +304,31 @@ class Sidebar extends Component {
 	 * Close the Sidebar and remove event to handle document click.
 	 * @public
 	 */
+
 	close() {
-		this.state.show = false;
+		this.setState(
+			{
+				'show': false
+			}
+		);
 		this._eventHandler.removeAllListeners();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
+
 	created() {
 		this._eventHandler = new EventHandler();
+		this._handleOnClickTab = this._handleOnClickTab.bind(this);
+		this._handleOnClose = this._handleOnClose.bind(this);
 		this._setMode(this.props.mode);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
+
 	dispose() {
 		this._eventHandler.removeAllListeners();
 	}
@@ -278,8 +337,13 @@ class Sidebar extends Component {
 	 * Open the Sidebar and attach event to handle document click.
 	 * @public
 	 */
+
 	show() {
-		this.state.show = true;
+		this.setState(
+			{
+				'show': true
+			}
+		);
 
 		this._eventHandler.add(
 			dom.on(document, 'click', this._handleDocClick.bind(this), true)
@@ -289,6 +353,7 @@ class Sidebar extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	willReceiveProps(nextProps) {
 		if (
 			typeof nextProps.context !== 'undefined' &&
@@ -314,32 +379,29 @@ class Sidebar extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	render() {
-		const {show, tabActive, mode} = this.state;
+		const {activeTab, mode, show} = this.state;
 		const {
-			spritemap,
+			fieldContext,
 			fieldLists,
 			focusedField,
-			fieldContext,
+			spritemap
 		} = this.props;
-
-		const layoutRenderEvents = {
-			fieldEdited: this._handleFieldEdited.bind(this),
-		};
 		let currentField = null;
 
+		const layoutRenderEvents = {
+			fieldEdited: this._handleFieldEdited.bind(this)
+		};
+
 		if (mode === 'edit') {
-			currentField = fieldLists.find(item => {
-				return item.type == focusedField.type;
-			});
+			currentField = fieldLists.find(item => item.type == focusedField.type);
 		}
 
-		const styles = classnames('sidebar-container', {
-			show: show,
-		});
+		const styles = classnames('sidebar-container', {show});
 
 		const angleLeftEvents = {
-			click: this._handleOnClickPrevious.bind(this),
+			click: this._handleOnClickPrevious.bind(this)
 		};
 
 		return (
@@ -352,9 +414,7 @@ class Sidebar extends Component {
 									<li class="tbar-item tbar-item-expand text-left">
 										<div class="tbar-section">
 											<span class="text-truncate-inline">
-												<span class="text-truncate">
-													Add Elements
-												</span>
+												<span class="text-truncate">{'Add Elements'}</span>
 											</span>
 										</div>
 									</li>
@@ -365,21 +425,21 @@ class Sidebar extends Component {
 											<ClayButton
 												events={angleLeftEvents}
 												icon="angle-left"
-												spritemap={spritemap}
-												style="secondary"
 												ref="previousButton"
 												size="sm"
+												spritemap={spritemap}
+												style="secondary"
 											/>
 										</li>
 										<li class="tbar-item tbar-item-expand text-left">
 											<div>
 												<ClayButton
+													disabled={true}
 													icon={currentField.icon}
-													spritemap={spritemap}
-													style="secondary"
 													label={currentField.name}
 													size="sm"
-													disabled={true}
+													spritemap={spritemap}
+													style="secondary"
 												/>
 											</div>
 										</li>
@@ -388,19 +448,17 @@ class Sidebar extends Component {
 								<li class="tbar-item">
 									<a
 										class="component-action"
+										data-onclick={this._handleOnClose}
 										href="#1"
-										role="button"
-										data-onclick={this._handleOnClose.bind(
-											this
-										)}
 										ref="close"
+										role="button"
 									>
 										<svg
 											aria-hidden="true"
 											class="lexicon-icon lexicon-icon-times"
 										>
 											<use
-												xlink:href={`${spritemap}#times`}
+												xlinkHref={`${spritemap}#times`}
 											/>
 										</svg>
 									</a>
@@ -418,12 +476,12 @@ class Sidebar extends Component {
 							href="#sidebarLightCollapse00"
 							role="button"
 						>
-							<span class="navbar-text-truncate">Details</span>
+							<span class="navbar-text-truncate">{'Details'}</span>
 							<svg
 								aria-hidden="true"
 								class="lexicon-icon lexicon-icon-caret-bottom"
 							>
-								<use xlink:href={`${spritemap}#caret-bottom`} />
+								<use xlinkHref={`${spritemap}#caret-bottom`} />
 							</svg>
 						</a>
 						<div
@@ -440,9 +498,7 @@ class Sidebar extends Component {
 							!!fieldLists.length && (
 							<ul class="list-group">
 								<li class="list-group-header">
-									<h3 class="list-group-header-title">
-											Basic Elements
-									</h3>
+									<h3 class="list-group-header-title">{'Basic Elements'}</h3>
 								</li>
 								{this._renderListElements()}
 							</ul>
@@ -451,7 +507,7 @@ class Sidebar extends Component {
 							<div class="sidebar-body">
 								<div class="tab-content">
 									<LayoutRenderer
-										activePage={tabActive}
+										activePage={activeTab}
 										events={layoutRenderEvents}
 										modeRenderer="list"
 										pages={fieldContext}
@@ -468,71 +524,81 @@ class Sidebar extends Component {
 	}
 
 	_renderNavItem() {
-		const {tabActive, mode} = this.state;
+		const {activeTab, mode} = this.state;
 		const {tabs} = this.props;
 
-		return tabs[mode].items.map((name, index) => {
-			const style = classnames('nav-link', {
-				active: index === tabActive,
-			});
+		return tabs[mode].items.map(
+			(name, index) => {
+				const style = classnames(
+					'nav-link',
+					{
+						active: index === activeTab
+					}
+				);
 
-			return (
-				<li
-					ref={`tab${index}`}
-					class="nav-item"
-					data-onclick={this._handleOnClickTab.bind(this, index)}
-				>
-					<a
-						aria-controls="sidebarLightDetails"
-						class={style}
-						data-toggle="tab"
-						href="#"
-						role="tab"
+				return (
+					<li
+						class="nav-item"
+						data-index={index}
+						data-onclick={this._handleOnClickTab}
+						key={`tab${index}`}
+						ref={`tab${index}`}
 					>
-						<span class="navbar-text-truncate">{name}</span>
-					</a>
-				</li>
-			);
-		});
+						<a
+							aria-controls="sidebarLightDetails"
+							class={style}
+							data-toggle="tab"
+							href="#"
+							role="tab"
+						>
+							<span class="navbar-text-truncate">{name}</span>
+						</a>
+					</li>
+				);
+			}
+		);
 	}
 
 	_renderListElements() {
 		const {fieldLists, spritemap} = this.props;
 
-		return fieldLists.map((field, index) => {
-			return (
-				<div
-					ref={`field${index}`}
-					class="ddm-drag-item list-group-item list-group-item-flex"
-					data-ddm-field-type-index={index}
-				>
-					<div class="autofit-col">
-						<div class="sticker sticker-secondary">
-							<svg
-								aria-hidden="true"
-								class={`lexicon-icon lexicon-icon-${
-									field.icon
-								}`}
-							>
-								<use
-									xlink:href={`${spritemap}#${field.icon}`}
-								/>
-							</svg>
+		return fieldLists.map(
+			(field, index) => {
+				return (
+					<div
+						class="ddm-drag-item list-group-item list-group-item-flex"
+						data-ddm-field-type-index={index}
+						key={`field${index}`}
+						ref={`field${index}`}
+					>
+						<div class="autofit-col">
+							<div class="sticker sticker-secondary">
+								<svg
+									aria-hidden="true"
+									class={`lexicon-icon lexicon-icon-${
+										field.icon
+									}`}
+								>
+									<use
+										xlinkHref={`${spritemap}#${field.icon}`}
+									/>
+								</svg>
+							</div>
+						</div>
+						<div class="autofit-col autofit-col-expand">
+							<h4 class="list-group-title text-truncate">
+								<span>{field.name}</span>
+							</h4>
+							{field.description && (
+								<p class="list-group-subtitle text-truncate">
+									{field.description}
+								</p>
+							)}
 						</div>
 					</div>
-					<div class="autofit-col autofit-col-expand">
-						<h4 class="list-group-title text-truncate">
-							<span>{field.name}</span>
-						</h4>
-						{field.description && (
-							<p class="list-group-subtitle text-truncate">
-								{field.description}
-							</p>
-						)}
-					</div>
-				</div>
-			);
-		});
+				);
+			}
+		);
 	}
 }
 

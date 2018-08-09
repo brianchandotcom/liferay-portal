@@ -23,34 +23,34 @@
 
 	const fieldsList = [
 		{
-			name: 'Date',
-			type: 'date',
-			icon: 'calendar'
+			icon: 'calendar',
+			name: '<%= LanguageUtil.get(request, "date") %>',
+			type: 'date'
 		},
 		{
-			name: 'Text Field',
-			type: 'text',
-			icon: 'text'
+			icon: 'text',
+			name: '<%= LanguageUtil.get(request, "text-field") %>',
+			type: 'text'
 		},
 		{
-			name: 'Single Selection',
-			type: 'radio',
-			icon: 'radio-button'
+			icon: 'radio-button',
+			name: '<%= LanguageUtil.get(request, "radio-field-type-label") %>',
+			type: 'radio'
 		},
 		{
-			name: 'Select from list',
-			type: 'select',
-			icon: 'list'
+			icon: 'list',
+			name: '<%= LanguageUtil.get(request, "select-field-type-label") %>',
+			type: 'select'
 		},
 		{
-			name: 'Grid',
-			type: 'grid',
-			icon: 'grid'
+			icon: 'grid',
+			name: '<%= LanguageUtil.get(request, "grid-field-type-label") %>',
+			type: 'grid'
 		},
 		{
-			name: 'Multiple Selection',
-			type: 'checkbox',
-			icon: 'select-from-list'
+			icon: 'select-from-list',
+			name: '<%= LanguageUtil.get(request, "checkbox-field-type-label") %>',
+			type: 'checkbox'
 		}
 	];
 
@@ -63,7 +63,7 @@
 							fields: [
 								{
 									key: 'label',
-									label: 'Label',
+									label: '<%= LanguageUtil.get(request, "label") %>',
 									required: false,
 									spritemap: spritemap,
 									type: 'text'
@@ -79,7 +79,7 @@
 							fields: [
 								{
 									key: 'helpText',
-									label: 'Help text',
+									label: '<%= LanguageUtil.get(request, "help-text") %>',
 									required: false,
 									spritemap: spritemap,
 									type: 'text'
@@ -94,14 +94,14 @@
 						{
 							fields: [
 								{
-									key: 'required',
-									type: 'checkbox',
 									items: [
-										{label: 'Required Field'}
+										{label: '￿0￿'}
 									],
+									key: 'required',
 									required: false,
 									showAsSwitcher: true,
-									spritemap: spritemap
+									spritemap: spritemap,
+									type: 'checkbox'
 								}
 							],
 							size: 12
@@ -113,18 +113,18 @@
 						{
 							fields: [
 								{
-									key: 'items',
-									type: 'options',
-									placeholder: 'Enter an option',
 									items: [
 										{
 											disabled: false,
-											label: 'Option 1'
+											label: '<%= LanguageUtil.get(request, "option") %>'
 										}
 									],
-									label: 'Options',
+									key: 'items',
+									label: '<%= LanguageUtil.get(request, "options") %>',
+									placeholder: '<%= LanguageUtil.get(request, "enter-an-option") %>',
 									required: true,
-									spritemap: spritemap
+									spritemap: spritemap,
+									type: 'options'
 								}
 							],
 							size: 12
@@ -141,7 +141,7 @@
 							fields: [
 								{
 									key: 'value',
-									label: 'Predefined Value',
+									label: '<%= LanguageUtil.get(request, "predefined-value") %>',
 									required: false,
 									spritemap: spritemap,
 									type: 'select'
@@ -159,15 +159,15 @@
 
 	main.DDMForm(
 		{
-			spritemap,
-			fieldsList,
 			context: serializedFormBuilderContext.pages,
+			dependencies: ['dynamic-data-mapping-form-field-type/metal'],
 			fieldContext,
+			fieldsList,
 			modules: Liferay.MODULES,
-			dependencies: ['dynamic-data-mapping-form-field-type/metal']
+			spritemap
 		},
 		'#<portlet:namespace />-container',
-		function(instance) {
+		function() {
 		}
 	);
 </aui:script>

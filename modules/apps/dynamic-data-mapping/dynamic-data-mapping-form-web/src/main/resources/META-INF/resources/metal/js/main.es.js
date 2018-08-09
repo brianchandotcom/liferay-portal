@@ -12,16 +12,9 @@ const LayoutProviderWithAppComposer = withAppComposer(LayoutProvider);
  * Form.
  * @extends Component
  */
+
 class Form extends Component {
 	static PROPS = {
-		/**
-		 * The path to the SVG spritemap file containing the icons.
-		 * @default undefined
-		 * @instance
-		 * @memberof Form
-		 * @type {!string}
-		 */
-		spritemap: Config.string().required(),
 
 		/**
 		 * The context for rendering a layout that represents a form.
@@ -30,30 +23,42 @@ class Form extends Component {
 		 * @memberof Form
 		 * @type {!array}
 		 */
+
 		context: Config.array().required(),
+
+		/**
+		 * The path to the SVG spritemap file containing the icons.
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!string}
+		 */
+
+		spritemap: Config.string().required()
 	};
 
 	/**
 	 * @inheritDoc
 	 */
+
 	render() {
 		const {spritemap} = this.props;
 
 		return (
 			<div>
 				<ClayNavigationBar
+					inverted={true}
 					items={[
 						{
 							active: true,
 							href: '#',
-							label: 'Builder',
+							label: 'Builder'
 						},
 						{
 							href: '#',
-							label: 'Rules',
-						},
+							label: 'Rules'
+						}
 					]}
-					inverted={true}
 					spritemap={spritemap}
 				/>
 				<LayoutProviderWithAppComposer {...this.props}>
@@ -66,11 +71,7 @@ class Form extends Component {
 
 const DDMForm = (props, container, callback) => {
 	loader(
-		() => {
-			const instance = new Form(props, container);
-
-			callback(instance);
-		},
+		() => callback(new Form(props, container)),
 		props.modules,
 		props.dependencies
 	);

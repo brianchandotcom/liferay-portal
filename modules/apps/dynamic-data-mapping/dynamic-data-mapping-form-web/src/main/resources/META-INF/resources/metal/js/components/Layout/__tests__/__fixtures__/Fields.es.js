@@ -5,11 +5,14 @@ import templates from './Fields.soy.js';
 
 class Fields extends Component {
 	emitFieldEdited() {
-		this.emit('fieldEdited', {
-			value: 'Foo',
-			key: 'Bar',
-			originalEvent: {},
-		});
+		this.emit(
+			'fieldEdited',
+			{
+				key: 'Bar',
+				originalEvent: {},
+				value: 'Foo'
+			}
+		);
 	}
 }
 

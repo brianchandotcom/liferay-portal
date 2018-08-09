@@ -9,19 +9,27 @@ import '../Options/index.es';
 
 let component;
 
-describe('Layout Render', () => {
-	it('should render fields', () => {
-		component = new LayoutRenderer({
-			items: [
-				{type: 'checkbox'},
-				{type: 'date'},
-				{type: 'grid'},
-				{type: 'select'},
-				{type: 'text'},
-				{type: 'options'},
-			],
-		});
+describe(
+	'Layout Render',
+	() => {
+		it(
+			'should render fields',
+			() => {
+				component = new LayoutRenderer(
+					{
+						items: [
+							{type: 'checkbox'},
+							{type: 'date'},
+							{type: 'grid'},
+							{type: 'select'},
+							{type: 'text'},
+							{type: 'options'}
+						]
+					}
+				);
 
-		expect(component).toMatchSnapshot();
-	});
-});
+				expect(component).toMatchSnapshot();
+			}
+		);
+	}
+);

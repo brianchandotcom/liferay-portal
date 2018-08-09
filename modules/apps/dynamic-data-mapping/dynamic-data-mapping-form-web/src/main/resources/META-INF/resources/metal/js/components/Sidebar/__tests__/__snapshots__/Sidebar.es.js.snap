@@ -26,9 +26,9 @@ exports[`Sidebar Edit mode should go into edit mode with just fieldContext, fiel
             </div>
           </li>
           <li class="tbar-item">
-            <a class="component-action" href="#1" role="button" ref="close">
+            <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlink:href="icons.svg#times"></use>
+                <use xlinkHref="icons.svg#times"></use>
               </svg>
             </a>
           </li>
@@ -39,17 +39,17 @@ exports[`Sidebar Edit mode should go into edit mode with just fieldContext, fiel
       <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
         <span class="navbar-text-truncate">Details</span>
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlink:href="icons.svg#caret-bottom"></use>
+          <use xlinkHref="icons.svg#caret-bottom"></use>
         </svg>
       </a>
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
-          <li ref="tab0" class="nav-item">
+          <li class="nav-item" data-index="0" ref="tab0">
             <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
               <span class="navbar-text-truncate">Basic</span>
             </a>
           </li>
-          <li ref="tab1" class="nav-item">
+          <li class="nav-item" data-index="1" ref="tab1">
             <a class="nav-link" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
               <span class="navbar-text-truncate">Properties</span>
             </a>
@@ -81,14 +81,14 @@ exports[`Sidebar Edit mode should not enter editing mode with only \`edit\` in m
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate"> Add Elements </span>
+                <span class="text-truncate">Add Elements</span>
               </span>
             </div>
           </li>
           <li class="tbar-item">
-            <a class="component-action" href="#1" role="button" ref="close">
+            <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlink:href="icons.svg#times"></use>
+                <use xlinkHref="icons.svg#times"></use>
               </svg>
             </a>
           </li>
@@ -99,12 +99,12 @@ exports[`Sidebar Edit mode should not enter editing mode with only \`edit\` in m
       <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
         <span class="navbar-text-truncate">Details</span>
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlink:href="icons.svg#caret-bottom"></use>
+          <use xlinkHref="icons.svg#caret-bottom"></use>
         </svg>
       </a>
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
-          <li ref="tab0" class="nav-item">
+          <li class="nav-item" data-index="0" ref="tab0">
             <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
               <span class="navbar-text-truncate">Elements</span>
             </a>
@@ -126,14 +126,14 @@ exports[`Sidebar Edit mode should not go into edit mode with just fieldContext 1
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate"> Add Elements </span>
+                <span class="text-truncate">Add Elements</span>
               </span>
             </div>
           </li>
           <li class="tbar-item">
-            <a class="component-action" href="#1" role="button" ref="close">
+            <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlink:href="icons.svg#times"></use>
+                <use xlinkHref="icons.svg#times"></use>
               </svg>
             </a>
           </li>
@@ -144,12 +144,12 @@ exports[`Sidebar Edit mode should not go into edit mode with just fieldContext 1
       <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
         <span class="navbar-text-truncate">Details</span>
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlink:href="icons.svg#caret-bottom"></use>
+          <use xlinkHref="icons.svg#caret-bottom"></use>
         </svg>
       </a>
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
-          <li ref="tab0" class="nav-item">
+          <li class="nav-item" data-index="0" ref="tab0">
             <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
               <span class="navbar-text-truncate">Elements</span>
             </a>
@@ -171,14 +171,14 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate"> Add Elements </span>
+                <span class="text-truncate">Add Elements</span>
               </span>
             </div>
           </li>
           <li class="tbar-item">
-            <a class="component-action" href="#1" role="button" ref="close">
+            <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlink:href="icons.svg#times"></use>
+                <use xlinkHref="icons.svg#times"></use>
               </svg>
             </a>
           </li>
@@ -189,12 +189,12 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
       <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
         <span class="navbar-text-truncate">Details</span>
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlink:href="icons.svg#caret-bottom"></use>
+          <use xlinkHref="icons.svg#caret-bottom"></use>
         </svg>
       </a>
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
-          <li ref="tab0" class="nav-item">
+          <li class="nav-item" data-index="0" ref="tab0">
             <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
               <span class="navbar-text-truncate">Elements</span>
             </a>
@@ -216,14 +216,14 @@ exports[`Sidebar should render a Sidebar open 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate"> Add Elements </span>
+                <span class="text-truncate">Add Elements</span>
               </span>
             </div>
           </li>
           <li class="tbar-item">
-            <a class="component-action" href="#1" role="button" ref="close">
+            <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlink:href="icons.svg#times"></use>
+                <use xlinkHref="icons.svg#times"></use>
               </svg>
             </a>
           </li>
@@ -234,12 +234,12 @@ exports[`Sidebar should render a Sidebar open 1`] = `
       <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
         <span class="navbar-text-truncate">Details</span>
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlink:href="icons.svg#caret-bottom"></use>
+          <use xlinkHref="icons.svg#caret-bottom"></use>
         </svg>
       </a>
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
-          <li ref="tab0" class="nav-item">
+          <li class="nav-item" data-index="0" ref="tab0">
             <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
               <span class="navbar-text-truncate">Elements</span>
             </a>
@@ -261,14 +261,14 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate"> Add Elements </span>
+                <span class="text-truncate">Add Elements</span>
               </span>
             </div>
           </li>
           <li class="tbar-item">
-            <a class="component-action" href="#1" role="button" ref="close">
+            <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlink:href="icons.svg#times"></use>
+                <use xlinkHref="icons.svg#times"></use>
               </svg>
             </a>
           </li>
@@ -279,12 +279,12 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
       <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
         <span class="navbar-text-truncate">Details</span>
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlink:href="icons.svg#caret-bottom"></use>
+          <use xlinkHref="icons.svg#caret-bottom"></use>
         </svg>
       </a>
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
-          <li ref="tab0" class="nav-item">
+          <li class="nav-item" data-index="0" ref="tab0">
             <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
               <span class="navbar-text-truncate">Elements</span>
             </a>
@@ -295,13 +295,13 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
     <div class="ddm-sidebar-body">
       <ul class="list-group">
         <li class="list-group-header">
-          <h3 class="list-group-header-title"> Basic Elements </h3>
+          <h3 class="list-group-header-title">Basic Elements</h3>
         </li>
-        <div ref="field0" data-ddm-field-type-index="0" class="ddm-drag-item list-group-item list-group-item-flex">
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="0" ref="field0">
           <div class="autofit-col">
             <div class="sticker sticker-secondary">
               <svg class="lexicon-icon lexicon-icon-calendar" aria-hidden="true">
-                <use xlink:href="icons.svg#calendar"></use>
+                <use xlinkHref="icons.svg#calendar"></use>
               </svg>
             </div>
           </div>
@@ -312,11 +312,11 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
             <p class="list-group-subtitle text-truncate">Select date from a Datepicker.</p>
           </div>
         </div>
-        <div ref="field1" data-ddm-field-type-index="1" class="ddm-drag-item list-group-item list-group-item-flex">
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="1" ref="field1">
           <div class="autofit-col">
             <div class="sticker sticker-secondary">
               <svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
-                <use xlink:href="icons.svg#text"></use>
+                <use xlinkHref="icons.svg#text"></use>
               </svg>
             </div>
           </div>
@@ -327,11 +327,11 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
             <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
           </div>
         </div>
-        <div ref="field2" data-ddm-field-type-index="2" class="ddm-drag-item list-group-item list-group-item-flex">
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="2" ref="field2">
           <div class="autofit-col">
             <div class="sticker sticker-secondary">
               <svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
-                <use xlink:href="icons.svg#radio-button"></use>
+                <use xlinkHref="icons.svg#radio-button"></use>
               </svg>
             </div>
           </div>
@@ -342,11 +342,11 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
             <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
           </div>
         </div>
-        <div ref="field3" data-ddm-field-type-index="3" class="ddm-drag-item list-group-item list-group-item-flex">
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="3" ref="field3">
           <div class="autofit-col">
             <div class="sticker sticker-secondary">
               <svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
-                <use xlink:href="icons.svg#list"></use>
+                <use xlinkHref="icons.svg#list"></use>
               </svg>
             </div>
           </div>
@@ -357,11 +357,11 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
             <p class="list-group-subtitle text-truncate">Choose an or more options from a list.</p>
           </div>
         </div>
-        <div ref="field4" data-ddm-field-type-index="4" class="ddm-drag-item list-group-item list-group-item-flex">
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="4" ref="field4">
           <div class="autofit-col">
             <div class="sticker sticker-secondary">
               <svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
-                <use xlink:href="icons.svg#grid"></use>
+                <use xlinkHref="icons.svg#grid"></use>
               </svg>
             </div>
           </div>
@@ -372,11 +372,11 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
             <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
           </div>
         </div>
-        <div ref="field5" data-ddm-field-type-index="5" class="ddm-drag-item list-group-item list-group-item-flex">
+        <div class="ddm-drag-item list-group-item list-group-item-flex" data-ddm-field-type-index="5" ref="field5">
           <div class="autofit-col">
             <div class="sticker sticker-secondary">
               <svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
-                <use xlink:href="icons.svg#select-from-list"></use>
+                <use xlinkHref="icons.svg#select-from-list"></use>
               </svg>
             </div>
           </div>
@@ -402,14 +402,14 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate"> Add Elements </span>
+                <span class="text-truncate">Add Elements</span>
               </span>
             </div>
           </li>
           <li class="tbar-item">
-            <a class="component-action" href="#1" role="button" ref="close">
+            <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlink:href="icons.svg#times"></use>
+                <use xlinkHref="icons.svg#times"></use>
               </svg>
             </a>
           </li>
@@ -420,12 +420,12 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
       <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
         <span class="navbar-text-truncate">Details</span>
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlink:href="icons.svg#caret-bottom"></use>
+          <use xlinkHref="icons.svg#caret-bottom"></use>
         </svg>
       </a>
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
-          <li ref="tab0" class="nav-item">
+          <li class="nav-item" data-index="0" ref="tab0">
             <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
               <span class="navbar-text-truncate">Elements</span>
             </a>
@@ -447,14 +447,14 @@ exports[`Sidebar should render the default markup 1`] = `
           <li class="tbar-item tbar-item-expand text-left">
             <div class="tbar-section">
               <span class="text-truncate-inline">
-                <span class="text-truncate"> Add Elements </span>
+                <span class="text-truncate">Add Elements</span>
               </span>
             </div>
           </li>
           <li class="tbar-item">
-            <a class="component-action" href="#1" role="button" ref="close">
+            <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-                <use xlink:href="icons.svg#times"></use>
+                <use xlinkHref="icons.svg#times"></use>
               </svg>
             </a>
           </li>
@@ -465,12 +465,12 @@ exports[`Sidebar should render the default markup 1`] = `
       <a aria-controls="sidebarLightCollapse00" aria-expanded="false" aria-label="Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#sidebarLightCollapse00" role="button">
         <span class="navbar-text-truncate">Details</span>
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-bottom">
-          <use xlink:href="icons.svg#caret-bottom"></use>
+          <use xlinkHref="icons.svg#caret-bottom"></use>
         </svg>
       </a>
       <div class="collapse navbar-collapse" id="sidebarLightCollapse00">
         <ul class="nav navbar-nav" role="tablist">
-          <li ref="tab0" class="nav-item">
+          <li class="nav-item" data-index="0" ref="tab0">
             <a class="nav-link active" aria-controls="sidebarLightDetails" data-toggle="tab" href="#" role="tab">
               <span class="navbar-text-truncate">Elements</span>
             </a>

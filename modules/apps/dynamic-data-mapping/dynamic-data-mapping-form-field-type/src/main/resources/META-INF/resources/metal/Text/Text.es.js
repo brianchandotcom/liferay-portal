@@ -7,6 +7,7 @@ import {Config} from 'metal-state';
 
 class Text extends Component {
 	static STATE = {
+
 		/**
 		 * @default false
 		 * @instance
@@ -88,17 +89,20 @@ class Text extends Component {
 
 		value: Config.string(),
 
-		key: Config.string(),
+		key: Config.string()
 	};
 
 	_handleFieldChanged(event) {
 		const {key} = this;
 
-		this.emit('fieldEdited', {
-			value: event.target.value,
-			key,
-			originalEvent: event,
-		});
+		this.emit(
+			'fieldEdited',
+			{
+				key,
+				originalEvent: event,
+				value: event.target.value
+			}
+		);
 	}
 }
 

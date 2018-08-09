@@ -2,10 +2,10 @@ const implAddRow = (size, fields) => {
 	return {
 		columns: [
 			{
-				fields: fields,
-				size: size,
-			},
-		],
+				fields,
+				size
+			}
+		]
 	};
 };
 
@@ -20,13 +20,12 @@ const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, fields) => {
 		console.warn(
 			`It is not possible to add the field to column (${pageIndex}, ${rowIndex}, ${columnIndex}) when the field is not passed.`
 		);
-
-		return pages;
 	}
-
-	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
-		Number(columnIndex)
-	].fields.push(fields);
+	else {
+		pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
+			Number(columnIndex)
+		].fields.push(fields);
+	}
 
 	return pages;
 };
@@ -36,13 +35,10 @@ const addFields = (pages, pageIndex, rowIndex, columnIndex, fields = []) => {
 		console.warn(
 			`Can not add empty fields to column (${pageIndex}, ${rowIndex}, ${columnIndex}), use removeFields for this.`
 		);
-
-		return pages;
 	}
-
-	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
-		Number(columnIndex)
-	].fields = fields;
+	else {
+		pages[Number(pageIndex)].rows[Number(rowIndex)].columns[Number(columnIndex)].fields = fields;
+	}
 
 	return pages;
 };
@@ -56,9 +52,7 @@ const removeColumn = (pages, pageIndex, rowIndex, columnIndex) => {
 };
 
 const removeFields = (pages, pageIndex, rowIndex, columnIndex) => {
-	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
-		Number(columnIndex)
-	].fields = [];
+	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[Number(columnIndex)].fields = [];
 
 	return pages;
 };
@@ -94,7 +88,7 @@ const getIndexes = node => {
 		columnIndex:
 			typeof columnIndex === 'string' ? Number(columnIndex) : false,
 		pageIndex: Number(pageIndex),
-		rowIndex: Number(rowIndex),
+		rowIndex: Number(rowIndex)
 	};
 };
 
@@ -105,9 +99,7 @@ const changeFieldsFromColumn = (
 	columnIndex,
 	newFields
 ) => {
-	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
-		Number(columnIndex)
-	].fields = newFields;
+	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[Number(columnIndex)].fields = newFields;
 
 	return pages;
 };
@@ -124,5 +116,5 @@ export default {
 	implAddRow,
 	removeColumn,
 	removeFields,
-	removeRow,
+	removeRow
 };

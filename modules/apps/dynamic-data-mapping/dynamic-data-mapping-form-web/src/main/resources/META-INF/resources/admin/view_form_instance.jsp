@@ -120,7 +120,6 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 	Liferay.on(
 		'<portlet:namespace />copyFormURL',
 		function(event) {
-
 			if (copyPublishFormURLPopover.isVisible()) {
 				copyPublishFormURLPopover.hide();
 			}

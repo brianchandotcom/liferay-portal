@@ -13,6 +13,7 @@ import templates from './Radio.soy.js';
 
 class Radio extends Component {
 	static STATE = {
+
 		/**
 		 * @default false
 		 * @instance
@@ -39,24 +40,28 @@ class Radio extends Component {
 		 */
 
 		items: Config.arrayOf(
-			Config.shapeOf({
-				checked: Config.bool().value(false),
-				disabled: Config.bool().value(false),
-				id: Config.string(),
-				inline: Config.bool().value(false),
-				label: Config.string(),
-				name: Config.string(),
-				showLabel: Config.bool().value(true),
-				value: Config.string(),
-			})
-		).value([
-			{
-				label: 'Option 1',
-			},
-			{
-				label: 'Option 2',
-			},
-		]),
+			Config.shapeOf(
+				{
+					checked: Config.bool().value(false),
+					disabled: Config.bool().value(false),
+					id: Config.string(),
+					inline: Config.bool().value(false),
+					label: Config.string(),
+					name: Config.string(),
+					showLabel: Config.bool().value(true),
+					value: Config.string()
+				}
+			)
+		).value(
+			[
+				{
+					label: 'Option 1'
+				},
+				{
+					label: 'Option 2'
+				}
+			]
+		),
 
 		/**
 		 * @default undefined
@@ -119,7 +124,7 @@ class Radio extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string(),
+		value: Config.string()
 	};
 }
 

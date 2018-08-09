@@ -8,11 +8,11 @@ class SidebarProvider extends Component {
 
 		context: Config.array(),
 
-		focusedField: Config.object(),
+		focusedField: Config.object()
 	};
 
 	static STATE = {
-		fieldContext: Config.array(),
+		fieldContext: Config.array()
 	};
 
 	constructor(props, context) {
@@ -26,6 +26,7 @@ class SidebarProvider extends Component {
 			typeof nextProps.context !== 'undefined' &&
 			nextProps.context.newVal.length
 		) {
+
 			// this._syncContextWithFieldContext();
 
 		}
@@ -34,9 +35,11 @@ class SidebarProvider extends Component {
 			typeof nextProps.fieldContext !== 'undefined' &&
 			nextProps.fieldContext.newVal.length
 		) {
-			this.setState({
-				fieldContext: nextProps.fieldContext.newVal,
-			});
+			this.setState(
+				{
+					fieldContext: nextProps.fieldContext.newVal
+				}
+			);
 		}
 	}
 
@@ -53,10 +56,10 @@ class SidebarProvider extends Component {
 
 		const depth = array => {
 			for (let i = 0; i < array.length; i++) {
-				let item = array[i];
+				const item = array[i];
 
 				if (item.key) {
-					let propName = fieldSelected[item.key] || '';
+					const propName = fieldSelected[item.key] || '';
 
 					item[item.key] = propName;
 				}
@@ -87,10 +90,15 @@ class SidebarProvider extends Component {
 
 		const events = {
 			showChanged: this._handleShowChanged.bind(this),
-			...Child.props.events,
+			...Child.props.events
 		};
 
-		Object.assign(Child.props, {...this.props}, events, fieldContext);
+		Object.assign(
+			Child.props,
+			{...this.props},
+			events,
+			fieldContext
+		);
 
 		return children;
 	}

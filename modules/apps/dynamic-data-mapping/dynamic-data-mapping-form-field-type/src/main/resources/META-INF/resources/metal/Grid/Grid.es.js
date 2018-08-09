@@ -7,6 +7,7 @@ import templates from './Grid.soy.js';
 
 class Grid extends Component {
 	static STATE = {
+
 		/**
 		 * @default undefined
 		 * @instance
@@ -15,16 +16,20 @@ class Grid extends Component {
 		 */
 
 		columns: Config.arrayOf(
-			Config.shapeOf({
-				label: Config.string(),
-				value: Config.string(),
-			})
-		).value([
-			{
-				label: 'col1',
-				value: 'fieldId',
-			},
-		]),
+			Config.shapeOf(
+				{
+					label: Config.string(),
+					value: Config.string()
+				}
+			)
+		).value(
+			[
+				{
+					label: 'col1',
+					value: 'fieldId'
+				}
+			]
+		),
 
 		/**
 		 * @default false
@@ -79,16 +84,20 @@ class Grid extends Component {
 		 */
 
 		rows: Config.arrayOf(
-			Config.shapeOf({
-				label: Config.string(),
-				value: Config.string(),
-			})
-		).value([
-			{
-				label: 'row',
-				value: 'jehf',
-			},
-		]),
+			Config.shapeOf(
+				{
+					label: Config.string(),
+					value: Config.string()
+				}
+			)
+		).value(
+			[
+				{
+					label: 'row',
+					value: 'jehf'
+				}
+			]
+		),
 
 		/**
 		 * @default true
@@ -106,7 +115,7 @@ class Grid extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		spritemap: Config.string(),
+		spritemap: Config.string()
 	};
 }
 

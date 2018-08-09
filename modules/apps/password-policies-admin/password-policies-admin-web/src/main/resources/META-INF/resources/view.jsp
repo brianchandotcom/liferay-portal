@@ -95,11 +95,23 @@ PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getP
 				keyProperty="passwordPolicyId"
 				modelVar="passwordPolicy"
 			>
-				<portlet:renderURL var="rowURL">
-					<portlet:param name="mvcPath" value="/edit_password_policy.jsp" />
-					<portlet:param name="redirect" value="<%= passwordPolicySearchContainer.getIteratorURL().toString() %>" />
-					<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
-				</portlet:renderURL>
+
+				<%
+				String rowHref = null;
+
+				if (passwordPolicyDisplayContext.hasPermission(ActionKeys.UPDATE, passwordPolicy.getPasswordPolicyId())) {
+					PortletURL rowURL = renderResponse.createRenderURL();
+
+					rowURL.setParameter("mvcPath", "/edit_password_policy.jsp");
+
+					PortletURL redirectURL = passwordPolicySearchContainer.getIteratorURL();
+
+					rowURL.setParameter("redirect", redirectURL.toString());
+					rowURL.setParameter("passwordPolicyId", String.valueOf(passwordPolicy.getPasswordPolicyId()));
+
+					rowHref = rowURL.toString();
+				}
+				%>
 
 				<%@ include file="/search_columns.jspf" %>
 			</liferay-ui:search-container-row>

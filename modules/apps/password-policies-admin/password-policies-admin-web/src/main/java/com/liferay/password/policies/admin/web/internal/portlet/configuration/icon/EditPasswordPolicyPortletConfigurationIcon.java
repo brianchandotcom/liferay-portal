@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -66,13 +67,17 @@ public class EditPasswordPolicyPortletConfigurationIcon
 				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("mvcPath", "/edit_password_policy.jsp");
-			portletURL.setParameter(
+			MutableRenderParameters mutableRenderParameters =
+				portletURL.getRenderParameters();
+
+			mutableRenderParameters.setValue(
+				"mvcPath", "/edit_password_policy.jsp");
+			mutableRenderParameters.setValue(
 				"redirect", _portal.getCurrentURL(portletRequest));
-			portletURL.setParameter(
+			mutableRenderParameters.setValue(
 				"passwordPolicyId",
 				String.valueOf(_getPasswordPolicyId(portletRequest)));
-			portletURL.setParameter("tabs1", "details");
+			mutableRenderParameters.setValue("tabs1", "details");
 
 			return portletURL.toString();
 		}

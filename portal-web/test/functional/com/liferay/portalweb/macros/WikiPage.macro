@@ -732,8 +732,8 @@
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${entryComment}" />
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${entryComment}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Comments#COMMENT_ACTIONS">
+			<var name="key_entryComment" value="${entryComment}" />
 		</execute>
 
 		<execute macro="MenuItem#click">

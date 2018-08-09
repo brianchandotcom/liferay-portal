@@ -26,7 +26,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.cmpn"
 #else
 #if (${liferayVersion.startsWith("7.1")})
-	compileOnly group: "com.liferay", name: "com.liferay.frontend.js.loader.modules.extender.api", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.frontend.js.loader.modules.extender.api", version: "2.0.2"
 #end
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

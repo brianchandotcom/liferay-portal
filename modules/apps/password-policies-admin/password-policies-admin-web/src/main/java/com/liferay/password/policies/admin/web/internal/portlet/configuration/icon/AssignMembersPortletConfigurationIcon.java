@@ -17,7 +17,7 @@ package com.liferay.password.policies.admin.web.internal.portlet.configuration.i
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -61,18 +62,22 @@ public class AssignMembersPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
+			PortletURL portletURL = _portletURLFactory.create(
 				portletRequest,
 				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter(
+			MutableRenderParameters mutableRenderParameters =
+				portletURL.getRenderParameters();
+
+			mutableRenderParameters.setValue(
 				"mvcPath", "/edit_password_policy_assignments.jsp");
-			portletURL.setParameter(
+			mutableRenderParameters.setValue(
 				"redirect", _portal.getCurrentURL(portletRequest));
-			portletURL.setParameter(
+			mutableRenderParameters.setValue(
 				"passwordPolicyId",
 				String.valueOf(_getPasswordPolicyId(portletRequest)));
+			mutableRenderParameters.setValue("tabs1", "assignees");
 
 			return portletURL.toString();
 		}
@@ -117,5 +122,8 @@ public class AssignMembersPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 }

@@ -70,6 +70,7 @@ page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.auth.AuthException" %><%@
+page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %><%@
 page import="com.liferay.portal.kernel.security.auth.FullNameDefinition" %><%@
 page import="com.liferay.portal.kernel.security.auth.FullNameDefinitionFactory" %><%@
 page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@

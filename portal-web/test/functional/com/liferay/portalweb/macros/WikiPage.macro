@@ -510,8 +510,8 @@
 
 		<var name="key_wikiPageVersion" value="${wikiPageVersionNew}" />
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${wikiPageVersionNew}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Wiki#COMPARE_VERSIONS_VERSION_ACTIONS">
+			<var name="key_wikiPageVersion" value="${wikiPageVersionNew}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Wiki#HISTORY_ACTIVITIES_TABLE_COMPARE_TO_LINK" value1="Compare to..." />

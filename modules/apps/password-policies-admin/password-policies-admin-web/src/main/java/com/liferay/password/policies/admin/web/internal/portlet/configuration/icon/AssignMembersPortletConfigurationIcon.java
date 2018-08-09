@@ -17,6 +17,8 @@ package com.liferay.password.policies.admin.web.internal.portlet.configuration.i
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -82,6 +84,9 @@ public class AssignMembersPortletConfigurationIcon
 			return portletURL.toString();
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return StringPool.BLANK;
@@ -108,6 +113,9 @@ public class AssignMembersPortletConfigurationIcon
 			}
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return false;
@@ -119,6 +127,9 @@ public class AssignMembersPortletConfigurationIcon
 
 		return ParamUtil.getLong(request, "passwordPolicyId");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssignMembersPortletConfigurationIcon.class);
 
 	@Reference
 	private Portal _portal;

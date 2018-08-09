@@ -16,6 +16,8 @@ package com.liferay.password.policies.admin.web.internal.portlet.configuration.i
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -77,6 +79,9 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 			sb.append("');");
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return sb.toString();
@@ -116,6 +121,9 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 			}
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return false;
@@ -134,6 +142,9 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 
 		return ParamUtil.getLong(request, "passwordPolicyId");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeletePasswordPolicyPortletConfigurationIcon.class);
 
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
 

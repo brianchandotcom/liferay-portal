@@ -146,6 +146,18 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Callback executed when styleModifier property has changed
+	 * @inheritDoc
+	 * @review
+	 */
+
+	syncStyleModifier() {
+		if (this.content) {
+			this._renderContent(this.content);
+		}
+	}
+
+	/**
 	 * Create instances of FragmentEditableField for each editable.
 	 */
 
@@ -599,6 +611,17 @@ FragmentEntryLink.STATE = {
 	 */
 
 	showMapping: Config.bool().value(false),
+
+	/**
+	 * CSS class to modify style
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {!string}
+	 */
+
+	styleModifier: Config.string(),
 
 	/**
 	 * Portlet namespace needed for prefixing Alloy Editor instances

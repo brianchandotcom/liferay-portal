@@ -2517,14 +2517,26 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.antisamy.jar!commons-httpclient.jar</file-name>
-				<version>3.1</version>
-				<project-name>HttpClient</project-name>
-				<project-url>http://jakarta.apache.org/httpcomponents/httpclient-3.x/</project-url>
+				<file-name>com.liferay.portal.security.antisamy.jar!httpclient.jar</file-name>
+				<version>4.5.5</version>
+				<project-name>HttpComponents Apache HttpClient</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.security.antisamy.jar!httpcore.jar</file-name>
+				<version>4.4.9</version>
+				<project-name>HttpComponents Apache HttpCore</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

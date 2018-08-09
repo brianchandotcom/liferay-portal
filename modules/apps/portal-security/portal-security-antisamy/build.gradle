@@ -5,8 +5,9 @@ task processSanitizerConfiguration(type: Copy)
 String sanitizerConfigurationUrl = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/owaspantisamy/antisamy-ebay-1.4.4.xml"
 
 dependencies {
-	compileInclude group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
 	compileInclude group: "net.sourceforge.nekohtml", name: "nekohtml", version: "1.9.16"
+	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.5"
+	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.9"
 	compileInclude group: "org.apache.xmlgraphics", name: "batik-css", version: "1.7"
 	compileInclude group: "org.apache.xmlgraphics", name: "batik-ext", version: "1.7"
 	compileInclude group: "org.apache.xmlgraphics", name: "batik-util", version: "1.7"

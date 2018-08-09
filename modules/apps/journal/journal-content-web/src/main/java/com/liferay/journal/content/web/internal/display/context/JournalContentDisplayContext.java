@@ -71,6 +71,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.util.ArrayList;
@@ -935,13 +937,18 @@ public class JournalContentDisplayContext {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (!scopeGroup.isStaged() || scopeGroup.isStagingGroup()) {
-			_showSelectArticleLink = true;
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (stagingGroupHelper.isLocalLiveGroup(scopeGroup) ||
+			stagingGroupHelper.isRemoteLiveGroup(scopeGroup)) {
+
+			_showSelectArticleLink = false;
 
 			return _showSelectArticleLink;
 		}
 
-		_showSelectArticleLink = false;
+		_showSelectArticleLink = true;
 
 		return _showSelectArticleLink;
 	}

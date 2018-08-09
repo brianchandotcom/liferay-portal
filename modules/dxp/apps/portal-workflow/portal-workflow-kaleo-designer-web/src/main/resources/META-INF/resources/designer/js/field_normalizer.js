@@ -2,6 +2,7 @@ AUI.add(
 	'liferay-kaleo-designer-field-normalizer',
 	function(A) {
 		var AArray = A.Array;
+		var AObject = A.Object;
 		var Lang = A.Lang;
 
 		var KaleoDesignerRemoteServices = Liferay.KaleoDesignerRemoteServices;
@@ -117,7 +118,20 @@ AUI.add(
 								}
 							);
 
-							if (isValue(value) && AArray.some(value, isValue)) {
+							// Reception Type is an Assignment attribute but never a type of Assignment
+
+							if (item1 !== 'receptionType' && AArray.some(
+								assignmentValue,
+								function(item2, index2, collection2) {
+									var valid = isValue(item2);
+
+									if (valid && item1 === 'user') {
+										valid = AArray.some(AObject.values(item2), isValue);
+									}
+
+									return valid;
+								}
+							)) {
 								assignments.assignmentType = AArray(item1);
 							}
 						}

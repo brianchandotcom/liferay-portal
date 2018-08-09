@@ -2,6 +2,7 @@
     "env": {
         "test": {
             "plugins": [
+                "transform-decorators-legacy",
                 ["module-resolver", {
                     "alias": {
                         "dynamic-data-mapping-form-field-type/*": "../dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources"
@@ -13,6 +14,7 @@
     "only": ["*.es.js", "*.soy.js"],
     "plugins": [
         "transform-class-properties",
+        "transform-decorators-legacy",
         "transform-object-rest-spread"
     ],
     "presets": [

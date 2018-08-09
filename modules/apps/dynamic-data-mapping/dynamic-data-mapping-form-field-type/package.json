@@ -1,4 +1,44 @@
 {
+	"csfConfig": {
+		"path:**/*.js": {
+			"js": {
+				"lint": {
+					"env": {
+						"browser": true,
+						"jest": true,
+						"mocha": true
+					},
+					"extends": "liferay",
+					"globals": {
+						"$": true,
+						"AlloyEditor": true,
+						"CKEDITOR": true,
+						"MODULE_PATH": true,
+						"main": true
+					},
+					"parser": "babel-eslint",
+					"parserOptions": {
+						"ecmaFeatures": {
+							"allowImportExportEverywhere": true,
+							"experimentalObjectRestSpread": true,
+							"jsx": true
+						},
+						"ecmaVersion": 2017,
+						"sourceType": "module"
+					},
+					"plugins": [
+						"./node_modules/eslint-plugin-react"
+					],
+					"rules": {
+						"no-console": 0,
+						"no-unknown-property": 0,
+						"react/jsx-uses-vars": 2,
+						"require-jsdoc": 0
+					}
+				}
+			}
+		}
+	},
 	"dependencies": {
 		"clay-checkbox": "^2.2.0",
 		"clay-icon": "^2.2.0",
@@ -19,7 +59,6 @@
 		"check-source-formatting": "^2.0.4",
 		"eslint": "^4.10.0",
 		"eslint-config-liferay": "^2.0.8",
-		"eslint-plugin-no-for-of-loops": "1.0.0",
 		"eslint-plugin-react": "^7.4.0",
 		"jest": "^23.4.1",
 		"liferay-jest-junit-reporter": "0.0.4",
@@ -27,7 +66,6 @@
 		"metal-jest-serializer": "^2.0.0",
 		"metal-soy-critic": "^2.4.0",
 		"metal-tools-soy": "^6.0.0",
-		"prettier-eslint-cli": "^4.7.0",
 		"rimraf": "^2.6.2"
 	},
 	"jest": {
@@ -59,8 +97,10 @@
 	"private": true,
 	"scripts": {
 		"build": "npm run soy && babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,*_field*.js,*_support.js,src/**/__tests__/*.js,src/**/__tests__/*/*.js && liferay-npm-bundler && npm run clean",
+		"checkFormat": "npm run csf",
 		"clean": "rimraf src/**/*.soy.js",
-		"format": "prettier-eslint --write 'src/main/resources/META-INF/resources/metal/**/*.js'",
+		"csf": "csf src/main/resources/META-INF/resources/metal/**/*.es.js src/main/resources/META-INF/resources/metal/**/*.soy",
+		"format": "npm run csf -- -i",
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
 		"test": "npm run soy && NODE_ENV=test jest --coverage && npm run clean"

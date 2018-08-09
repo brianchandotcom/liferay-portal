@@ -106,7 +106,7 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 			if (!passwordPolicy.isDefaultPolicy() &&
 				PasswordPolicyPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), passwordPolicyId,
-					ActionKeys.UPDATE)) {
+					ActionKeys.DELETE)) {
 
 				return true;
 			}

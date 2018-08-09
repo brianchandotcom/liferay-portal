@@ -15,24 +15,22 @@
 package com.liferay.password.policies.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.PasswordPolicy;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,28 +59,36 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL(
+	public String getOnClick(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		StringBundler sb = new StringBundler(4);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest,
-				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-				PortletRequest.ACTION_PHASE);
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "deletePasswordPolicy");
-			portletURL.setParameter("mvcPath", "/view.jsp");
-			portletURL.setParameter(
-				"passwordPolicyId",
-				String.valueOf(_getPasswordPolicyId(portletRequest)));
+			sb.append(portletDisplay.getNamespace());
 
-			return portletURL.toString();
+			sb.append("deletePasswordPolicy('");
+
+			sb.append(String.valueOf(_getPasswordPolicyId(portletRequest)));
+
+			sb.append("');");
 		}
 		catch (Exception e) {
 		}
 
-		return StringPool.BLANK;
+		return sb.toString();
+	}
+
+	@Override
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		return "javascript:;";
 	}
 
 	@Override

@@ -214,3 +214,5 @@ PortletURL portletURL = editPasswordPolicyAssignmentsManagementToolbarDisplayCon
 		}
 	};
 </aui:script>
+
+<%@ include file="/action/delete_password_policy.jspf" %>

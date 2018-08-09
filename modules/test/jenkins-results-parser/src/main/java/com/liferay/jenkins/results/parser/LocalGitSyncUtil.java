@@ -501,7 +501,7 @@ public class LocalGitSyncUtil {
 			catch (Exception e) {
 				e.printStackTrace();
 
-				return false;
+				continue;
 			}
 
 			return false;

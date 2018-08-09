@@ -1112,10 +1112,9 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#HISTORY_VERSIONS_SUMMARY" value1="${wikiVersion1Summary}" />
 
 		<var name="key_wikiPageRevision" value="1.0" />
-		<var name="key_wikiPageTitle" value="${wikiPage2Title}" />
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${wikiPage2Title}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Wiki#HISTORY_VERSIONS_ACTIONS">
+			<var name="key_wikiPageRevision" value="${wikiPageRevision}" />
 		</execute>
 
 		<execute macro="MenuItem#click">
@@ -1142,10 +1141,9 @@
 		<execute function="AssertClick" locator1="Wiki#HISTORY_VERSIONS_TAB" value1="Versions" />
 
 		<var name="key_wikiPageRevision" value="${wikiPageRevisionOld}" />
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${wikiPageTitle}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Wiki#HISTORY_VERSIONS_ACTIONS">
+			<var name="key_wikiPageRevision" value="${wikiPageRevision}" />
 		</execute>
 
 		<execute macro="MenuItem#click">

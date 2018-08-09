@@ -142,8 +142,9 @@ if (row == null) {
 			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="publish"
+		<liferay-ui:icon-delete
+			confirmation="are-you-sure-you-want-to-publish-the-selected-folder"
+			message="publish-to-live"
 			url="<%= publishFolderURL %>"
 		/>
 	</c:if>

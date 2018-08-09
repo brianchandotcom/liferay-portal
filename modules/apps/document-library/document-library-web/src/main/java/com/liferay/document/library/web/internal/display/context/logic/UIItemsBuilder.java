@@ -845,9 +845,20 @@ public class UIItemsBuilder {
 		portletURL.setParameter("redirect", StringPool.BLANK);
 		portletURL.setParameter("backURL", _getCurrentURL());
 
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("javascript:if (confirm('");
+		sb.append(
+			UnicodeLanguageUtil.get(
+				_resourceBundle,
+				"are-you-sure-you-want-to-publish-the-selected-document"));
+		sb.append("')){ location.href = '");
+		sb.append(portletURL);
+		sb.append("';}");
+
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.PUBLISH,
-			"publish-to-live", portletURL.toString());
+			"publish-to-live", sb.toString());
 	}
 
 	public void addRevertToVersionMenuItem(List<MenuItem> menuItems)

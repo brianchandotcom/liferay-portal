@@ -407,7 +407,8 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 				<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon
+			<liferay-ui:icon-delete
+				confirmation="are-you-sure-you-want-to-publish-the-selected-folder"
 				message="publish-to-live"
 				url="<%= publishFolderURL %>"
 			/>

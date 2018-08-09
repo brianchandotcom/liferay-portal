@@ -219,7 +219,8 @@ else {
 			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
+		<liferay-ui:icon-delete
+			confirmation="are-you-sure-you-want-to-publish-the-selected-web-content"
 			message="publish-to-live"
 			url="<%= publishArticleURL %>"
 		/>

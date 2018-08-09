@@ -9,3 +9,4 @@ Provide-Capability:\
 		uri="http://liferay.com/tld/export-import-changeset";\
 		version:Version="${Bundle-Version}"
 Web-ContextPath: /export-import-changeset-taglib
+-includeresource: content=../../staging/staging-lang/src/main/resources/content

@@ -37,7 +37,9 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.util.SoyContextFactoryUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
@@ -157,6 +159,8 @@ public class FragmentsEditorDisplayContext {
 
 		soyContext.put("languageId", _themeDisplay.getLanguageId());
 		soyContext.put("lastSaveDate", StringPool.BLANK);
+		soyContext.put(
+			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
 
 		if (_showMapping) {
 			soyContext.put(
@@ -297,6 +301,19 @@ public class FragmentsEditorDisplayContext {
 			desiredItemSelectorReturnTypes);
 
 		return imageItemSelectorCriterion;
+	}
+
+	private String _getLayoutData() {
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					_themeDisplay.getScopeGroupId(), _classNameId, _classPK);
+
+		if (layoutPageTemplateStructure != null) {
+			return layoutPageTemplateStructure.getData();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry()

@@ -28,4 +28,7 @@ public class DDMWebKeys {
 	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE =
 		"DYNAMIC_DATA_MAPPING_TEMPLATE";
 
+	public static final String SERIALIZED_FORM_BUILDER_CONTEXT =
+		"serializedFormBuilderContext";
+
 }

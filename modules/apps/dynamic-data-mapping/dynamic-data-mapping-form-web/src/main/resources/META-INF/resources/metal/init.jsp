@@ -18,7 +18,7 @@
 
 <%
 String mainRequire = (String)renderRequest.getAttribute("mainRequire");
-String serializedFormBuilderContext = (String)renderRequest.getAttribute("serializedFormBuilderContext");
+String serializedFormBuilderContext = (String)renderRequest.getAttribute(DDMWebKeys.SERIALIZED_FORM_BUILDER_CONTEXT);
 %>
 
 <liferay-util:html-top>

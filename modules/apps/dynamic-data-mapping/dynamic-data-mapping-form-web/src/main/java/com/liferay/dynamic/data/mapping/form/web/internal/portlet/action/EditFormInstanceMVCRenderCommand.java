@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextRequest;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
@@ -81,7 +82,7 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 						_portal.getHttpServletRequest(renderRequest));
 
 				renderRequest.setAttribute(
-					"serializedFormBuilderContext",
+					DDMWebKeys.SERIALIZED_FORM_BUILDER_CONTEXT,
 					serializedFormBuilderContext);
 			}
 			catch (PortalException pe) {
@@ -108,7 +109,7 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 			WebKeys.THEME_DISPLAY);
 
 		String serializedFormBuilderContext = ParamUtil.getString(
-			request, "serializedFormBuilderContext");
+			request, DDMWebKeys.SERIALIZED_FORM_BUILDER_CONTEXT);
 
 		if (Validator.isNotNull(serializedFormBuilderContext)) {
 			return serializedFormBuilderContext;

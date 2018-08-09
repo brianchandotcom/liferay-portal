@@ -2470,12 +2470,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!antisamy.jar</file-name>
-				<version>1.5.3</version>
+				<version>1.5.7</version>
 				<project-name>OWASP AntiSamy</project-name>
+				<project-url>https://github.com/nahsra/antisamy</project-url>
 				<licenses>
 					<license>
-						<license-name>BSD License</license-name>
-						<license-url>http://www.opensource.org/licenses/bsd-license.php</license-url>
+						<license-name>BSD 3</license-name>
+						<license-url>https://opensource.org/licenses/BSD-3-Clause</license-url>
 					</license>
 				</licenses>
 			</library>

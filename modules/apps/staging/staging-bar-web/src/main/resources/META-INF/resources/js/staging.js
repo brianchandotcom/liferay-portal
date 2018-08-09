@@ -11,6 +11,8 @@ AUI.add(
 
 				instance.markAsReadyForPublicationURL = config.markAsReadyForPublicationURL;
 
+				instance.layoutRevisionStatusURL = config.layoutRevisionStatusURL;
+
 				instance._namespace = namespace;
 
 				instance._stagingBar = A.oneNS(namespace, '#stagingBar');

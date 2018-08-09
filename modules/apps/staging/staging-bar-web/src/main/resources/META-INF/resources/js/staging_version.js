@@ -70,9 +70,11 @@ AUI.add(
 
 					var layoutRevisionDetails = A.byIdNS(namespace, 'layoutRevisionDetails');
 
+					var layoutRevisionStatus = A.byIdNS(namespace, 'layoutRevisionStatus');
+
 					if (layoutRevisionDetails) {
 						eventHandles.push(
-							Liferay.onceAfter(
+							Liferay.after(
 								'updatedLayout',
 								function(event) {
 									A.io.request(
@@ -89,7 +91,7 @@ AUI.add(
 
 													layoutRevisionDetails.setContent(response);
 
-													window.location.reload();
+													Liferay.fire('updatedStatus');
 												}
 											}
 										}
@@ -97,6 +99,31 @@ AUI.add(
 								}
 							)
 						);
+					}
+
+					if (layoutRevisionStatus) {
+						Liferay.after(
+							'updatedStatus',
+							function(event) {
+								A.io.request(
+									instance.layoutRevisionStatusURL,
+									{
+										on: {
+											failure: function(event, id, obj) {
+												layoutRevisionStatus.setContent(Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page'));
+											},
+											success: function(event, id, obj) {
+												var response = this.get('responseData');
+
+												layoutRevisionStatus.plug(A.Plugin.ParseContent);
+
+												layoutRevisionStatus.setContent(response);
+											}
+										}
+									}
+								);
+							}
+						)
 					}
 
 					instance._eventHandles = eventHandles;

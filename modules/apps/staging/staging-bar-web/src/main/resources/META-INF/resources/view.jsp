@@ -209,7 +209,7 @@ if (liveLayout != null) {
 														</c:if>
 													</div>
 												</li>
-												<li class="control-menu-nav-item staging-bar-level-2-nav-item">
+												<li class="control-menu-nav-item staging-bar-level-2-nav-item" id="<portlet:namespace />layoutRevisionStatus">
 													<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 													<liferay-util:include page="/view_layout_revision_status.jsp" servletContext="<%= application %>" />

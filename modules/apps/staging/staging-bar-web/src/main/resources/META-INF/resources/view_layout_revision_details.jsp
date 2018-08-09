@@ -239,6 +239,10 @@ else {
 		</div>
 	</li>
 
+<portlet:renderURL var="layoutRevisionStatusURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:param name="mvcPath" value="/view_layout_revision_status.jsp" />
+</portlet:renderURL>
+
 <portlet:renderURL var="markAsReadyForPublicationURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="mvcPath" value="/view_layout_revision_details.jsp" />
 </portlet:renderURL>
@@ -254,6 +258,7 @@ else {
 
 	stagingBar.init(
 		{
+			layoutRevisionStatusURL: '<%= layoutRevisionStatusURL %>',
 			markAsReadyForPublicationURL: '<%= markAsReadyForPublicationURL %>',
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletDisplay.getId() %>',

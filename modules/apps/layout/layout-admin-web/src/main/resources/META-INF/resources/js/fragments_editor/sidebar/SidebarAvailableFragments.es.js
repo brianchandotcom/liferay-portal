@@ -30,24 +30,7 @@ class SidebarAvailableFragments extends Component {
 	 */
 
 	attached() {
-		this._dragDrop = new DragDrop(
-			{
-				dragPlaceholder: Drag.Placeholder.CLONE,
-				handles: '.drag-handler',
-				sources: '.drag-card',
-				targets: `.${this.dropTargetClass}`
-			}
-		);
-
-		this._dragDrop.on(
-			DragDrop.Events.DRAG,
-			this._handleDrag.bind(this)
-		);
-
-		this._dragDrop.on(
-			DragDrop.Events.END,
-			this._handleDrop.bind(this)
-		);
+		this._initializeDragAndDrop();
 	}
 
 	/**
@@ -107,6 +90,12 @@ class SidebarAvailableFragments extends Component {
 			const itemId = data.source.dataset.itemId;
 			const itemName = data.source.dataset.itemName;
 
+			requestAnimationFrame(
+				() => {
+					this._initializeDragAndDrop();
+				}
+			);
+
 			this.emit(
 				'fragmentEntryClick',
 				{
@@ -134,6 +123,36 @@ class SidebarAvailableFragments extends Component {
 				fragmentEntryId: event.itemId,
 				fragmentName: event.itemName
 			}
+		);
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+
+	_initializeDragAndDrop() {
+		if (this._dragDrop) {
+			this._dragDrop.dispose();
+		}
+
+		this._dragDrop = new DragDrop(
+			{
+				dragPlaceholder: Drag.Placeholder.CLONE,
+				handles: '.drag-handler',
+				sources: '.drag-card',
+				targets: `.${this.dropTargetClass}`
+			}
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.DRAG,
+			this._handleDrag.bind(this)
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.END,
+			this._handleDrop.bind(this)
 		);
 	}
 }

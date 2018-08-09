@@ -29,5 +29,6 @@ dependencies {
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")
+	compileOnly project(":core:petra:petra-reflect")
 	testCompile project(":core:registry-api")
 }

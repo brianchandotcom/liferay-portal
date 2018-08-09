@@ -13,6 +13,8 @@
 	{@param spritemap: string}
 	{@param translating: bool}
 	{@param? dropTargetClass: string}
+	{@param? hoveredFragmentEntryLinkBorder: string}
+	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
@@ -52,6 +54,11 @@
 	<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
 		{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
 			{foreach $fragmentEntryLink in $fragmentEntryLinks}
+				{let $styleModifier kind="text"}
+					{if $hoveredFragmentEntryLinkId == $fragmentEntryLink.fragmentEntryLinkId}
+						{$hoveredFragmentEntryLinkBorder}
+					{/if}
+				{/let}
 				<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
 					{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 						{param content: $fragmentEntryLink.content /}
@@ -66,6 +73,7 @@
 							'remove': $_handleFragmentRemove
 						] /}
 						{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
+						{param styleModifier: $styleModifier /}
 						{param imageSelectorURL: $imageSelectorURL /}
 						{param languageId: $languageId /}
 						{param name: $fragmentEntryLink.name /}

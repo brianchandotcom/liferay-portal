@@ -2466,6 +2466,8 @@ public interface PropsKeys {
 
 	public static final String TUNNELING_SERVLET_TIMEOUT = "tunneling.servlet.timeout";
 
+	public static final String UNICODE_TEXT_NORMALIZER_FORM = "unicode.text.normalizer.form";
+
 	public static final String UPGRADE_DATABASE_TRANSACTIONS_DISABLED = "upgrade.database.transactions.disabled";
 
 	/**

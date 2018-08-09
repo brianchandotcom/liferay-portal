@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -889,7 +890,7 @@ public class DDMFormAdminDisplayContext {
 
 	protected Locale[] getFormBuilderContextAvailableLocales() {
 		String serializedFormBuilderContext = ParamUtil.getString(
-			_renderRequest, "serializedFormBuilderContext");
+			_renderRequest, DDMWebKeys.SERIALIZED_FORM_BUILDER_CONTEXT);
 
 		if (Validator.isNull(serializedFormBuilderContext)) {
 			return null;
@@ -919,7 +920,7 @@ public class DDMFormAdminDisplayContext {
 
 	protected String getFormBuilderContextDefaultLanguageId() {
 		String serializedFormBuilderContext = ParamUtil.getString(
-			_renderRequest, "serializedFormBuilderContext");
+			_renderRequest, DDMWebKeys.SERIALIZED_FORM_BUILDER_CONTEXT);
 
 		if (Validator.isNull(serializedFormBuilderContext)) {
 			return null;

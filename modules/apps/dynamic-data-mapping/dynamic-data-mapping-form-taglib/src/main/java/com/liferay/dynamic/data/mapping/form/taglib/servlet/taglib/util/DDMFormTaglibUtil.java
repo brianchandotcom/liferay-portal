@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.taglib.servlet.taglib.util;
 
+import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextRequest;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
@@ -72,7 +73,7 @@ public class DDMFormTaglibUtil {
 			WebKeys.THEME_DISPLAY);
 
 		String serializedFormBuilderContext = ParamUtil.getString(
-			request, "serializedFormBuilderContext");
+			request, DDMWebKeys.SERIALIZED_FORM_BUILDER_CONTEXT);
 
 		if (Validator.isNotNull(serializedFormBuilderContext)) {
 			return serializedFormBuilderContext;

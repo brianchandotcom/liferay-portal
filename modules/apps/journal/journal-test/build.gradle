@@ -30,5 +30,6 @@ dependencies {
 	testIntegrationCompile project(":apps:social:social-activity-test-util")
 	testIntegrationCompile project(":apps:trash:trash-api")
 	testIntegrationCompile project(":apps:trash:trash-test-util")
+	testIntegrationCompile project(":core:petra:petra-reflect")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

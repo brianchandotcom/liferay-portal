@@ -28,8 +28,11 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.petra.lang.CentralizedThreadLocalTest}
  */
+@Deprecated
 public class CentralizedThreadLocalTest {
 
 	@ClassRule

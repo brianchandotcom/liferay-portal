@@ -24,8 +24,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Tina Tian
+ * @author     Tina Tian
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class Base64OutputStreamTest {
 
 	@Test

@@ -4318,7 +4318,7 @@ directory when it has a `compile*` dependency with the version `default`.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.104.
 
-## 5.5.10 - 2018-08-08
+## 5.5.10 - 2018-08-09
 
 ### Fixed
 - [LPS-84055]: The `writeArtifactPublishCommands` task should not be skipped if

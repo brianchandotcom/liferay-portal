@@ -85,7 +85,6 @@ public class HeaderResponseImpl
 		}
 
 		if (xml != null) {
-
 			xml = StringUtil.trim(xml);
 
 			if (xml.isEmpty()) {
@@ -293,20 +292,36 @@ public class HeaderResponseImpl
 	}
 
 	private String _addClosingTags(String xml) {
-		if (xml.contains("<link")) {
-			xml = xml.replaceAll("(<link[^>]*)>(?!\\s*</link>)", "$1></link>");
-		}
+		xml = _addClosingTags(xml, "<link", "</link>");
+		xml = _addClosingTags(xml, "<LINK", "</LINK>");
+		xml = _addClosingTags(xml, "<meta", "</meta>");
+		xml = _addClosingTags(xml, "<META", "</META>");
 
-		if (xml.contains("<LINK")) {
-			xml = xml.replaceAll("(<LINK[^>]*)>(?!\\s*</LINK>)", "$1></LINK>");
-		}
+		return xml;
+	}
 
-		if (xml.contains("<meta")) {
-			xml = xml.replaceAll("(<meta[^>]*)>(?!\\s*</meta>)", "$1></meta>");
-		}
+	private String _addClosingTags(String xml, String opening, String closing) {
+		int openingBegin = xml.indexOf(opening);
 
-		if (xml.contains("<META")) {
-			xml = xml.replaceAll("(<META[^>]*)>(?!\\s*</META>)", "$1></META>");
+		while (openingBegin >= 0) {
+			int openingEnd = xml.indexOf(">", openingBegin);
+
+			if (openingEnd > 0) {
+				String remainingXML = xml.substring(openingEnd + 1);
+
+				if (!remainingXML.startsWith(closing)) {
+					String modifiedXML = xml.substring(0, openingEnd + 1);
+
+					modifiedXML = modifiedXML.concat(closing);
+					modifiedXML = modifiedXML.concat(
+						xml.substring(openingEnd + 1));
+
+					xml = modifiedXML;
+				}
+			}
+
+			openingBegin = xml.indexOf(
+				opening, openingBegin + opening.length());
 		}
 
 		return xml;

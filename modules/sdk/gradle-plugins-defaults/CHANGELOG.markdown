@@ -4324,6 +4324,13 @@ directory when it has a `compile*` dependency with the version `default`.
 - [LPS-84055]: The `writeArtifactPublishCommands` task should not be skipped if
 it has `test` dependency with the version `default`.
 
+## 5.5.11 - 2017-08-09
+
+### Changed
+- [LPS-84313]: The `com.liferay.spring.boot.defaults` plugin now automatically
+applies the `com.liferay.test.integration.base` plugin. Configure the
+`check` task to depend on the `testIntegration` task.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4780,6 +4787,7 @@ it has `test` dependency with the version `default`.
 [LPS-84055]: https://issues.liferay.com/browse/LPS-84055
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-84213]: https://issues.liferay.com/browse/LPS-84213
+[LPS-84313]: https://issues.liferay.com/browse/LPS-84313
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

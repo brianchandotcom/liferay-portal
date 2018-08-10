@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.SourceFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
+import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -30,6 +31,7 @@ import org.gradle.api.Task;
 import org.gradle.api.plugins.ApplicationPlugin;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
 
@@ -58,6 +60,11 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 
 		_addTaskRun(bootRunTask);
 		_configureTaskBootRun(bootRunTask);
+
+		Task checkTask = GradleUtil.getTask(
+			project, LifecycleBasePlugin.CHECK_TASK_NAME);
+
+		_configureTaskCheck(checkTask);
 	}
 
 	private Task _addTaskRun(BootRunTask bootRunTask) {
@@ -80,6 +87,7 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, SpringBootPlugin.class);
+		GradleUtil.applyPlugin(project, TestIntegrationBasePlugin.class);
 	}
 
 	private void _configureProject(Project project) {
@@ -95,6 +103,14 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 		if (Validator.isNotNull(springBootJavaOpts)) {
 			bootRunTask.setJvmArgs(Collections.singleton(springBootJavaOpts));
 		}
+	}
+
+	private void _configureTaskCheck(Task checkTask) {
+		Task testIntegrationTask = GradleUtil.getTask(
+			checkTask.getProject(),
+			TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
+
+		checkTask.dependsOn(testIntegrationTask);
 	}
 
 	private static final String _GROUP = "com.liferay";

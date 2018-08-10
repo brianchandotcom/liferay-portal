@@ -14,19 +14,21 @@
 
 package com.liferay.dynamic.data.mapping.io.internal;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.xml.XPath;
@@ -43,28 +45,36 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pablo Carvalho
  */
-@Component(immediate = true)
-public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
+@Component(immediate = true, property = "ddm.form.deserializer.type=xsd")
+public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 
 	@Override
-	public DDMForm deserialize(String serializedDDMForm)
-		throws PortalException {
+	public DDMFormDeserializerDeserializeResponse deserialize(
+		DDMFormDeserializerDeserializeRequest
+			ddmFormDeserializerDeserializeRequest) {
+
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormDeserializerDeserializeResponse.Builder builder =
+			DDMFormDeserializerDeserializeResponse.Builder.newBuilder(ddmForm);
 
 		try {
-			Document document = _saxReader.read(serializedDDMForm);
-
-			DDMForm ddmForm = new DDMForm();
+			Document document = _saxReader.read(
+				ddmFormDeserializerDeserializeRequest.getContent());
 
 			setDDMFormAvailableLocales(document.getRootElement(), ddmForm);
 			setDDMFormDefaultLocale(document.getRootElement(), ddmForm);
 			setDDMFormFields(document.getRootElement(), ddmForm);
-			setDDMFormLocalizedValuesDefaultLocale(ddmForm);
 
-			return ddmForm;
+			setDDMFormLocalizedValuesDefaultLocale(ddmForm);
 		}
-		catch (DocumentException de) {
-			throw new PortalException(de);
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
+
+		return builder.build();
 	}
 
 	protected void addOptionValueLabels(
@@ -393,6 +403,9 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 	protected void setSAXReader(SAXReader saxReader) {
 		_saxReader = saxReader;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormXSDDeserializer.class);
 
 	private SAXReader _saxReader;
 

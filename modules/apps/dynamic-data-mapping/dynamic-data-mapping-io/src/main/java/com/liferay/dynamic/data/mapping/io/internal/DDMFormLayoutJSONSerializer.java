@@ -14,7 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.io.internal;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
@@ -35,19 +37,28 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true)
-public class DDMFormLayoutJSONSerializerImpl
-	implements DDMFormLayoutJSONSerializer {
+@Component(immediate = true, property = "ddm.form.layout.serializer.type=json")
+public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 
 	@Override
-	public String serialize(DDMFormLayout ddmFormLayout) {
+	public DDMFormLayoutSerializerSerializeResponse serialize(
+		DDMFormLayoutSerializerSerializeRequest
+			ddmFormLayoutSerializerSerializeRequest) {
+
+		DDMFormLayout ddmFormLayout =
+			ddmFormLayoutSerializerSerializeRequest.getDDMFormLayout();
+
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addDefaultLanguageId(jsonObject, ddmFormLayout.getDefaultLocale());
 		addPages(jsonObject, ddmFormLayout.getDDMFormLayoutPages());
 		addPaginationMode(jsonObject, ddmFormLayout.getPaginationMode());
 
-		return jsonObject.toString();
+		DDMFormLayoutSerializerSerializeResponse.Builder builder =
+			DDMFormLayoutSerializerSerializeResponse.Builder.newBuilder(
+				jsonObject.toString());
+
+		return builder.build();
 	}
 
 	protected void addColumns(

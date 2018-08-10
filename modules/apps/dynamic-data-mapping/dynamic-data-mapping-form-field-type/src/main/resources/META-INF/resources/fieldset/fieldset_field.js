@@ -125,7 +125,7 @@ AUI.add(
 
 						FieldSetField.superclass.render.apply(instance, arguments);
 
-						instance.eachField(
+						instance.eachNestedField(
 							function(field) {
 								field.render();
 							}

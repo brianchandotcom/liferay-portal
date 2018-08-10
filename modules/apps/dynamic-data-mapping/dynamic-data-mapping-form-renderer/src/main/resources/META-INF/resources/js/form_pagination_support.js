@@ -50,7 +50,7 @@ AUI.add(
 
 				var pageNode = instance.getCurrentPageNode();
 
-				instance.eachField(
+				instance.eachNestedField(
 					function(field) {
 						var visible = field.get('visible');
 

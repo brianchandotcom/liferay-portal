@@ -50,7 +50,7 @@ AUI.add(
 
 				container.html(instance.getTemplate());
 
-				instance.eachField(
+				instance.eachNestedField(
 					function(field) {
 						field.updateContainer();
 					}

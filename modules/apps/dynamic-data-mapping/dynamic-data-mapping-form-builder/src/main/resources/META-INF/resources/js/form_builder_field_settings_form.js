@@ -323,7 +323,7 @@ AUI.add(
 					_updateOptionsFields: function() {
 						var instance = this;
 
-						instance.eachField(
+						instance.eachNestedField(
 							function(field) {
 								var type = field.get('type');
 

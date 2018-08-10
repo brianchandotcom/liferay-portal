@@ -134,7 +134,7 @@ AUI.add(
 
 						var hasFocus = false;
 
-						instance.eachField(
+						instance.eachNestedField(
 							function(field) {
 								hasFocus = field.hasFocus(node);
 
@@ -183,7 +183,7 @@ AUI.add(
 					_afterFormRender: function() {
 						var instance = this;
 
-						instance.eachField(
+						instance.eachNestedField(
 							function(field) {
 								field.render();
 							}

@@ -303,7 +303,7 @@ AUI.add(
 
 						container.setContent(instance.getTemplate());
 
-						instance.eachField(
+						instance.eachNestedField(
 							function(field) {
 								field.updateContainer();
 							}

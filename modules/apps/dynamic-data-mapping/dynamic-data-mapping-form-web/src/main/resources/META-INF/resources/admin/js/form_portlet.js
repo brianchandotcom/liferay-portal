@@ -358,7 +358,7 @@ AUI.add(
 
 						var count = 0;
 
-						formBuilder.eachFields(
+						formBuilder.eachFormBuilderField(
 							function(field) {
 								count++;
 							}

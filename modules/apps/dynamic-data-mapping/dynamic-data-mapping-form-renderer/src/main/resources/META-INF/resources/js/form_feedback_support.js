@@ -30,7 +30,7 @@ AUI.add(
 			clearValidationStatus: function() {
 				var instance = this;
 
-				instance.eachField(
+				instance.eachNestedField(
 					function(field) {
 						field.clearValidationStatus();
 					}
@@ -52,7 +52,7 @@ AUI.add(
 			hideErrorMessages: function() {
 				var instance = this;
 
-				instance.eachField(
+				instance.eachNestedField(
 					function(field) {
 						field.hideErrorMessage();
 					}
@@ -62,7 +62,7 @@ AUI.add(
 			hideFeedback: function() {
 				var instance = this;
 
-				instance.eachField(
+				instance.eachNestedField(
 					function(field) {
 						field.hideFeedback();
 					}
@@ -111,7 +111,7 @@ AUI.add(
 			showValidationStatus: function() {
 				var instance = this;
 
-				instance.eachField(
+				instance.eachNestedField(
 					function(field) {
 						field.showValidationStatus();
 					}

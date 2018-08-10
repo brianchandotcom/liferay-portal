@@ -15,7 +15,7 @@ AUI.add(
 
 				var hasErrors = false;
 
-				instance.eachField(
+				instance.eachNestedField(
 					function(field) {
 						if (field.hasErrors()) {
 							hasErrors = true;
@@ -36,7 +36,7 @@ AUI.add(
 
 				var hasPageErrors = false;
 
-				instance.eachField(
+				instance.eachNestedField(
 					function(field) {
 						var container = field.get('container');
 

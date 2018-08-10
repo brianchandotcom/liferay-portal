@@ -332,6 +332,10 @@ public class GitWorkingDirectory {
 	}
 
 	public void deleteLocalGitBranch(LocalGitBranch localGitBranch) {
+		if (localGitBranch == null) {
+			return;
+		}
+
 		deleteLocalGitBranches(Arrays.asList(localGitBranch));
 	}
 

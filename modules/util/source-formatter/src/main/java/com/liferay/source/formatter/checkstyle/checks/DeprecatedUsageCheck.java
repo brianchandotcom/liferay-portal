@@ -987,7 +987,8 @@ public class DeprecatedUsageCheck extends BaseCheck {
 				return false;
 			}
 
-			if (((parentAST.getType() == TokenTypes.METHOD_DEF) ||
+			if (((parentAST.getType() == TokenTypes.CTOR_DEF) ||
+				 (parentAST.getType() == TokenTypes.METHOD_DEF) ||
 				 (parentAST.getType() == TokenTypes.VARIABLE_DEF)) &&
 				AnnotationUtil.containsAnnotation(parentAST, "Deprecated")) {
 

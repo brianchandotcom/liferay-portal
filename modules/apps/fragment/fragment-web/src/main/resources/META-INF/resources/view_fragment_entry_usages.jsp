@@ -166,7 +166,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 						<liferay-ui:search-iterator
 							displayStyle="list"
 							markupView="lexicon"
-							searchResultCssClass="show-quick-actions-on-hover table table-autofit table-heading-nowrap"
+							searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 						/>
 					</liferay-ui:search-container>
 				</aui:form>

@@ -4949,7 +4949,7 @@ public class ProjectTemplatesTest {
 		return gradleProjectDir;
 	}
 
-	private File _testBuildTemplatePortletWithPackage(
+	private File _testBuildTemplatePortletWithPackage70(
 			String template, String portletClassName,
 			String... resourceFileNames)
 		throws Exception, IOException {
@@ -4981,12 +4981,14 @@ public class ProjectTemplatesTest {
 		return gradleProjectDir;
 	}
 
-	private File _testBuildTemplatePortletWithPortletName(
+	private File _testBuildTemplatePortletWithPackage71(
 			String template, String portletClassName,
 			String... resourceFileNames)
-		throws Exception {
+		throws Exception, IOException {
 
-		File gradleProjectDir = _buildTemplateWithGradle(template, "portlet");
+		File gradleProjectDir = _buildTemplateWithGradle(
+			template, "foo", "--package-name", "com.liferay.test",
+			"--liferayVersion", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -4997,7 +4999,44 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			"apply plugin: \"com.liferay.plugin\"");
+			"apply plugin: \"com.liferay.plugin\"",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
+			"public class FooPortlet extends " + portletClassName + " {");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			template, "foo", "com.test", "-DclassName=Foo",
+			"-Dpackage=com.liferay.test", "-DliferayVersion=7.1");
+
+		_testContains(
+			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		return gradleProjectDir;
+	}
+
+	private File _testBuildTemplatePortletWithPortletName70(
+			String template, String portletClassName,
+			String... resourceFileNames)
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			template, "portlet", "--liferayVersion", "7.0");
+
+		_testExists(gradleProjectDir, "bnd.bnd");
+
+		for (String resourceFileName : resourceFileNames) {
+			_testExists(
+				gradleProjectDir, "src/main/resources/" + resourceFileName);
+		}
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.plugin\"",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/PortletPortlet.java",
@@ -5005,20 +5044,20 @@ public class ProjectTemplatesTest {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "portlet", "com.test", "-DclassName=Portlet",
-			"-Dpackage=portlet");
+			"-Dpackage=portlet", "-DliferayVersion=7.0");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
 		return gradleProjectDir;
 	}
 
-	private File _testBuildTemplatePortletWithPortletSuffix(
+	private File _testBuildTemplatePortletWithPortletName71(
 			String template, String portletClassName,
 			String... resourceFileNames)
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet-portlet");
+			template, "portlet", "--liferayVersion", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -5029,7 +5068,44 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			"apply plugin: \"com.liferay.plugin\"");
+			"apply plugin: \"com.liferay.plugin\"",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/portlet/portlet/PortletPortlet.java",
+			"public class PortletPortlet extends " + portletClassName + " {");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			template, "portlet", "com.test", "-DclassName=Portlet",
+			"-Dpackage=portlet", "-DliferayVersion=7.1");
+
+		_testContains(
+			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		return gradleProjectDir;
+	}
+
+	private File _testBuildTemplatePortletWithPortletSuffix70(
+			String template, String portletClassName,
+			String... resourceFileNames)
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			template, "portlet-portlet", "--liferayVersion", "7.0");
+
+		_testExists(gradleProjectDir, "bnd.bnd");
+
+		for (String resourceFileName : resourceFileNames) {
+			_testExists(
+				gradleProjectDir, "src/main/resources/" + resourceFileName);
+		}
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.plugin\"",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
@@ -5037,7 +5113,43 @@ public class ProjectTemplatesTest {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "portlet-portlet", "com.test", "-DclassName=Portlet",
-			"-Dpackage=portlet.portlet");
+			"-Dpackage=portlet.portlet", "-DliferayVersion=7.0");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		return gradleProjectDir;
+	}
+
+	private File _testBuildTemplatePortletWithPortletSuffix71(
+			String template, String portletClassName,
+			String... resourceFileNames)
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			template, "portlet-portlet", "--liferayVersion", "7.1");
+
+		_testExists(gradleProjectDir, "bnd.bnd");
+
+		for (String resourceFileName : resourceFileNames) {
+			_testExists(
+				gradleProjectDir, "src/main/resources/" + resourceFileName);
+		}
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.plugin\"",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
+			"public class PortletPortlet extends " + portletClassName + " {");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			template, "portlet-portlet", "com.test", "-DclassName=Portlet",
+			"-Dpackage=portlet.portlet", "-DliferayVersion=7.1");
+
+		_testContains(
+			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 

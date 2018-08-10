@@ -20,7 +20,7 @@
 
 <%
 if (searchResultCssClass == null) {
-	searchResultCssClass = "show-quick-actions-on-hover table table-autofit table-heading-nowrap table-list";
+	searchResultCssClass = "show-quick-actions-on-hover table table-autofit table-list";
 }
 
 List<ResultRowSplitterEntry> resultRowSplitterEntries = new ArrayList<ResultRowSplitterEntry>();

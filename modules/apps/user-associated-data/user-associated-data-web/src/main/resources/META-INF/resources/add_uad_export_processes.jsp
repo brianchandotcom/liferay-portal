@@ -110,7 +110,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 					<liferay-ui:search-iterator
 						markupView="lexicon"
-						searchResultCssClass="show-quick-actions-on-hover table table-autofit table-heading-nowrap";
+						searchResultCssClass="show-quick-actions-on-hover table table-autofit table-heading-nowrap"
 					/>
 				</liferay-ui:search-container>
 			</div>

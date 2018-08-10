@@ -97,18 +97,41 @@ public class TagResourceBundleUtil {
 				WebKeys.RESOURCE_BUNDLE_LOADER);
 
 		if (resourceBundleLoader == null) {
+			PortletConfig portletConfig = (PortletConfig)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
+
 			ServletContext servletContext = request.getServletContext();
 
 			String servletContextName = servletContext.getServletContextName();
 
-			if (Validator.isNull(servletContextName)) {
-				return null;
-			}
+			if (portletConfig != null) {
+				resourceBundleLoader =
+					locale -> portletConfig.getResourceBundle(locale);
 
-			resourceBundleLoader =
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByServletContextName(
-						servletContextName);
+				if (Validator.isNotNull(servletContextName)) {
+					ResourceBundleLoader servletContextResourceBundlerLoader =
+						ResourceBundleLoaderUtil.
+							getResourceBundleLoaderByServletContextName(
+								servletContextName);
+
+					if (servletContextResourceBundlerLoader != null) {
+						resourceBundleLoader =
+							new AggregateResourceBundleLoader(
+								resourceBundleLoader,
+								servletContextResourceBundlerLoader);
+					}
+				}
+			}
+			else {
+				if (Validator.isNull(servletContextName)) {
+					return null;
+				}
+
+				resourceBundleLoader =
+					ResourceBundleLoaderUtil.
+						getResourceBundleLoaderByServletContextName(
+							servletContextName);
+			}
 		}
 
 		if (resourceBundleLoader == null) {

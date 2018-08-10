@@ -4337,6 +4337,12 @@ it has `test` dependency with the version `default`.
 applies the `com.liferay.test.integration.base` plugin. Configure the
 `check` task to depend on the `testIntegration` task.
 
+## 5.5.13 - 2018-08-10
+
+### Changed
+- [LPS-84039]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.106.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

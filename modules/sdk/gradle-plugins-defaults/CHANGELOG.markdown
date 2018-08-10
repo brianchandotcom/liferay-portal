@@ -4324,7 +4324,7 @@ directory when it has a `compile*` dependency with the version `default`.
 - [LPS-84055]: The `writeArtifactPublishCommands` task should not be skipped if
 it has `test` dependency with the version `default`.
 
-## 5.5.11 - 2017-08-09
+## 5.5.12 - 2018-08-09
 
 ### Changed
 - [LPS-84313]: The `com.liferay.spring.boot.defaults` plugin now automatically

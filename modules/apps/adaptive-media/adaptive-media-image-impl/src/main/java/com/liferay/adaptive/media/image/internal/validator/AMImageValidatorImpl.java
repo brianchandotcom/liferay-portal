@@ -40,7 +40,8 @@ public class AMImageValidatorImpl implements AMImageValidator {
 		long imageMaxSize = _amImageConfiguration.imageMaxSize();
 
 		if ((imageMaxSize != -1) &&
-			((imageMaxSize == 0) || (fileVersion.getSize() >= imageMaxSize))) {
+			((imageMaxSize == 0) || (fileVersion.getSize() == 0) ||
+			 (fileVersion.getSize() >= imageMaxSize))) {
 
 			return false;
 		}

@@ -52,7 +52,8 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	public void applicationScopedInitialized(
-		@Initialized(ApplicationScoped.class) @Observes ServletContext servletContext,
+		@Initialized(ApplicationScoped.class)
+			@Observes ServletContext servletContext,
 		BeanManager beanManager) {
 
 		// TODO

@@ -14,17 +14,42 @@
 
 package com.liferay.document.library.internal.exportimport.staged.model.repository;
 
+import com.liferay.document.library.exportimport.data.handler.DLExportableRepositoryPublisher;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -89,7 +114,88 @@ public class FileEntryStagedModelRepository
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
-		throw new UnsupportedOperationException();
+		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
+			portletDataContext);
+
+		ExportActionableDynamicQuery exportActionableDynamicQuery =
+			_dlFileEntryLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				DynamicQuery fileVersionDynamicQuery =
+					DynamicQueryFactoryUtil.forClass(
+						DLFileVersion.class, "dlFileVersion",
+						PortalClassLoaderUtil.getClassLoader());
+
+				fileVersionDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("fileEntryId"));
+
+				fileVersionDynamicQuery.add(
+					RestrictionsFactoryUtil.eqProperty(
+						"dlFileVersion.fileEntryId", "this.fileEntryId"));
+				fileVersionDynamicQuery.add(
+					RestrictionsFactoryUtil.eqProperty(
+						"dlFileVersion.version", "this.version"));
+
+				Property fileVersionStatusProperty =
+					PropertyFactoryUtil.forName("dlFileVersion.status");
+
+				StagedModelDataHandler<?> stagedModelDataHandler =
+					StagedModelDataHandlerRegistryUtil.
+						getStagedModelDataHandler(DLFileEntry.class.getName());
+
+				fileVersionDynamicQuery.add(
+					fileVersionStatusProperty.in(
+						stagedModelDataHandler.getExportableStatuses()));
+
+				Criterion fileVersionModifiedDateCriterion =
+					portletDataContext.getDateRangeCriteria(
+						"dlFileVersion.modifiedDate");
+				Criterion fileVersionStatusDateCriterion =
+					portletDataContext.getDateRangeCriteria(
+						"dlFileVersion.statusDate");
+				Criterion modifiedDateCriterion =
+					portletDataContext.getDateRangeCriteria(
+						"this.modifiedDate");
+
+				if ((fileVersionStatusDateCriterion != null) &&
+					(modifiedDateCriterion != null)) {
+
+					Disjunction disjunction =
+						RestrictionsFactoryUtil.disjunction();
+
+					disjunction.add(fileVersionModifiedDateCriterion);
+					disjunction.add(fileVersionStatusDateCriterion);
+					disjunction.add(modifiedDateCriterion);
+
+					fileVersionDynamicQuery.add(disjunction);
+				}
+
+				Property fileEntryIdProperty = PropertyFactoryUtil.forName(
+					"fileEntryId");
+
+				dynamicQuery.add(
+					fileEntryIdProperty.in(fileVersionDynamicQuery));
+
+				Property repositoryIdProperty = PropertyFactoryUtil.forName(
+					"repositoryId");
+
+				dynamicQuery.add(
+					repositoryIdProperty.in(exportableRepositoryIds));
+			});
+		exportActionableDynamicQuery.setPerformActionMethod(
+			(DLFileEntry dlFileEntry) -> {
+				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					dlFileEntry.getFileEntryId());
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, fileEntry);
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(DLFileEntryConstants.getClassName()));
+
+		return exportActionableDynamicQuery;
 	}
 
 	@Override
@@ -120,7 +226,45 @@ public class FileEntryStagedModelRepository
 		throw new UnsupportedOperationException();
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_dlExportableRepositoryPublishers = ServiceTrackerListFactory.open(
+			bundleContext, DLExportableRepositoryPublisher.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_dlExportableRepositoryPublishers != null) {
+			_dlExportableRepositoryPublishers.close();
+		}
+	}
+
+	private Collection<Long> _getExportableRepositoryIds(
+		PortletDataContext portletDataContext) {
+
+		Collection<Long> exportableRepositoryIds = new HashSet<>();
+
+		exportableRepositoryIds.add(portletDataContext.getScopeGroupId());
+
+		for (DLExportableRepositoryPublisher dlExportableRepositoryPublisher :
+				_dlExportableRepositoryPublishers) {
+
+			dlExportableRepositoryPublisher.publish(
+				portletDataContext.getScopeGroupId(),
+				exportableRepositoryIds::add);
+		}
+
+		return exportableRepositoryIds;
+	}
+
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	private ServiceTrackerList
+		<DLExportableRepositoryPublisher, DLExportableRepositoryPublisher>
+			_dlExportableRepositoryPublishers;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

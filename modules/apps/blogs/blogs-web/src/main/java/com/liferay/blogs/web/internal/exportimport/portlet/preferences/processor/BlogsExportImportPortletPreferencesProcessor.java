@@ -14,12 +14,20 @@
 
 package com.liferay.blogs.web.internal.exportimport.portlet.preferences.processor;
 
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 
@@ -56,7 +64,49 @@ public class BlogsExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		return null;
+		try {
+			portletDataContext.addPortletPermissions(
+				BlogsConstants.RESOURCE_NAME);
+		}
+		catch (PortalException pe) {
+			PortletDataException pde = new PortletDataException(pe);
+
+			pde.setPortletId(BlogsPortletKeys.BLOGS);
+			pde.setType(PortletDataException.EXPORT_PORTLET_PERMISSIONS);
+
+			throw pde;
+		}
+
+		if (!portletDataContext.getBooleanParameter(
+				_blogsPortletDataHandler.getNamespace(), "entries")) {
+
+			return portletPreferences;
+		}
+
+		String portletId = portletDataContext.getPortletId();
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_blogsEntryLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(BlogsEntry blogsEntry) ->
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, portletId, blogsEntry));
+
+		try {
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException pe) {
+			PortletDataException pde = new PortletDataException(pe);
+
+			pde.setPortletId(BlogsPortletKeys.BLOGS);
+			pde.setType(PortletDataException.EXPORT_PORTLET_DATA);
+
+			throw pde;
+		}
+
+		return portletPreferences;
 	}
 
 	@Override
@@ -65,8 +115,49 @@ public class BlogsExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		return null;
+		if (!portletDataContext.getBooleanParameter(
+				_blogsPortletDataHandler.getNamespace(), "entries")) {
+
+			return portletPreferences;
+		}
+
+		try {
+			portletDataContext.importPortletPermissions(
+				BlogsConstants.RESOURCE_NAME);
+		}
+		catch (PortalException pe) {
+			PortletDataException pde = new PortletDataException(pe);
+
+			pde.setPortletId(BlogsPortletKeys.BLOGS);
+			pde.setType(PortletDataException.IMPORT_PORTLET_PERMISSIONS);
+
+			throw pde;
+		}
+
+		Element entriesElement = portletDataContext.getImportDataGroupElement(
+			BlogsEntry.class);
+
+		List<Element> entryElements = entriesElement.elements();
+
+		for (Element entryElement : entryElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, entryElement);
+		}
+
+		return portletPreferences;
 	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
+	private PortletDataHandler _blogsPortletDataHandler;
 
 	@Reference(target = "(name=BlogsExportCapability)")
 	private Capability _blogsPortletDisplayTemplateExportCapability;

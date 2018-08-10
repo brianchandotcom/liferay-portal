@@ -66,7 +66,7 @@ public class WikiPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected DataLevel getDataLevel() {
-		return DataLevel.SITE;
+		return DataLevel.PORTLET_INSTANCE;
 	}
 
 	@Override
@@ -86,12 +86,12 @@ public class WikiPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected boolean isDataPortletInstanceLevel() {
-		return false;
+		return true;
 	}
 
 	@Override
 	protected boolean isDataSiteLevel() {
-		return true;
+		return false;
 	}
 
 }

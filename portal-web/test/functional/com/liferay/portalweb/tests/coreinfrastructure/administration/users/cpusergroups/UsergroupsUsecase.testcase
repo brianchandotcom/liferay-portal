@@ -371,7 +371,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<var name="key_userScreenName" value="usersn3" />

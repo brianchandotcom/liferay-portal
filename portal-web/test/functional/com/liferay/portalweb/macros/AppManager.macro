@@ -55,7 +55,7 @@
 
 		<execute macro="Button#clickInstall" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS_3" value1="The plugin was uploaded successfully and is now being installed." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_3" value1="The plugin was uploaded successfully and is now being installed." />
 
 		<execute function="SelectFrame#selectFrameTop" />
 

@@ -1522,7 +1522,7 @@
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#ADD" value1="ADD" />
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
 		<for list="Name,Children Types" param="settingName">
 			<execute macro="SystemSettings#editTextAreaSetting">

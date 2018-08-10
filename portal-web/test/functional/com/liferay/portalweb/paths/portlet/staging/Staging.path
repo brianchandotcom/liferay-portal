@@ -128,7 +128,7 @@
 </tr>
 <tr>
 	<td>VARIATIONS_SELECTOR</td>
-	<td>//select[contains(@id,'variationsSelector')]//option[contains(.,'${pageVariationNameMenulistName}')]</td>
+	<td>//select[contains(@id,'variationsSelector')]</td>
 	<td></td>
 </tr>
 <tr>

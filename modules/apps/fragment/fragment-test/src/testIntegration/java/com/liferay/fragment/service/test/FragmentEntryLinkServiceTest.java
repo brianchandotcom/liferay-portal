@@ -83,18 +83,31 @@ public class FragmentEntryLinkServiceTest {
 				StringPool.BLANK, "<div>test</div>", StringPool.BLANK,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
+		long classNameId = PortalUtil.getClassNameId(Layout.class);
+
+		long classPK = RandomTestUtil.randomLong();
+
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				fragmentEntry.getFragmentEntryId(),
-				PortalUtil.getClassNameId(Layout.class),
-				RandomTestUtil.randomLong(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				StringPool.BLANK, 0, serviceContext);
+				fragmentEntry.getFragmentEntryId(), classNameId, classPK,
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), StringPool.BLANK, 0, serviceContext);
 
 		Assert.assertNotNull(
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
+
+		Assert.assertEquals(classNameId, fragmentEntryLink.getClassNameId());
+
+		Assert.assertEquals(classPK, fragmentEntryLink.getClassPK());
+
+		Assert.assertEquals(fragmentEntry.getCss(), fragmentEntryLink.getCss());
+
+		Assert.assertEquals(fragmentEntry.getJs(), fragmentEntryLink.getJs());
+
+		Assert.assertEquals(
+			fragmentEntry.getHtml(), fragmentEntryLink.getHtml());
 	}
 
 	@Test

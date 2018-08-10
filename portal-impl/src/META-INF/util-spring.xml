@@ -525,8 +525,6 @@
 		<property name="portletConfigurationIconMenu" ref="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu" />
 		<property name="portletToolbar" ref="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" />
 	</bean>
-	<bean class="com.liferay.portlet.usersadmin.util.ContactIndexer" id="com.liferay.portlet.usersadmin.util.ContactIndexer" />
-	<bean class="com.liferay.portlet.usersadmin.util.OrganizationIndexer" id="com.liferay.portlet.usersadmin.util.OrganizationIndexer" />
 	<bean class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" id="com.liferay.roles.admin.kernel.util.RolesAdmin" />
 	<bean class="com.liferay.roles.admin.kernel.util.RolesAdminUtil" id="com.liferay.roles.admin.kernel.util.RolesAdminUtil">
 		<property name="rolesAdmin" ref="com.liferay.roles.admin.kernel.util.RolesAdmin" />

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -45,8 +44,9 @@ import javax.portlet.PortletResponse;
  * @author Raymond Augé
  * @author Zsigmond Rab
  * @author Hugo Huijser
+ * @deprecated As of Judson (7.1.x), since 7.1.0
  */
-@OSGiBeanProperties
+@Deprecated
 public class ContactIndexer extends BaseIndexer<Contact> {
 
 	public static final String CLASS_NAME = Contact.class.getName();

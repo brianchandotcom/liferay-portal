@@ -14,9 +14,9 @@
 
 package com.liferay.asset.tag.stats.internal.service;
 
-import com.liferay.asset.kernel.model.AssetTagStats;
-import com.liferay.asset.kernel.service.AssetTagStatsLocalServiceWrapper;
+import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.asset.tag.stats.service.AssetTagStatsLocalService;
+import com.liferay.asset.tag.stats.service.AssetTagStatsLocalServiceWrapper;
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -38,8 +38,7 @@ public class ModularAssetTagStatsLocalServiceWrapper
 	}
 
 	public ModularAssetTagStatsLocalServiceWrapper(
-		com.liferay.asset.kernel.service.AssetTagStatsLocalService
-			assetTagStatsLocalService) {
+		AssetTagStatsLocalService assetTagStatsLocalService) {
 
 		super(assetTagStatsLocalService);
 	}
@@ -54,9 +53,7 @@ public class ModularAssetTagStatsLocalServiceWrapper
 	@Override
 	public void deleteTagStats(AssetTagStats tagStats) {
 		_assetTagStatsLocalService.deleteTagStats(
-			ModelAdapterUtil.adapt(
-				com.liferay.asset.tag.stats.model.AssetTagStats.class,
-				tagStats));
+			ModelAdapterUtil.adapt(AssetTagStats.class, tagStats));
 	}
 
 	@Override

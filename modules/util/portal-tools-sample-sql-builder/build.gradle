@@ -11,6 +11,7 @@ dependencies {
 	compile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	compile group: "javax.portlet", name: "portlet-api", transitive: false, version: "3.0.0"
 	compile project(":apps:asset:asset-entry-rel-service")
+	compile project(":apps:asset:asset-tag-stats-api")
 	compile project(":apps:asset:asset-tag-stats-service")
 	compile project(":apps:blogs:blogs-api")
 	compile project(":apps:blogs:blogs-service")

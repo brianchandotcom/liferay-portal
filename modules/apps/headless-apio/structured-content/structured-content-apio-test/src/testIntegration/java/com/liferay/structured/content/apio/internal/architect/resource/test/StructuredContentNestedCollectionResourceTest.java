@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
 import java.lang.reflect.Method;
 
@@ -90,30 +91,7 @@ public class StructuredContentNestedCollectionResourceTest {
 			LocaleUtil.getDefault(), null, true, true, serviceContext);
 
 		PageItems pageItems = _getPageItems(
-			new Pagination() {
-
-				@Override
-				public int getEndPosition() {
-					return 10;
-				}
-
-				@Override
-				public int getItemsPerPage() {
-					return 10;
-				}
-
-				@Override
-				public int getPageNumber() {
-					return 0;
-				}
-
-				@Override
-				public int getStartPosition() {
-					return 0;
-				}
-
-			},
-			_group.getGroupId(), null);
+			PaginationTestUtil.of(10, 1), _group.getGroupId(), null);
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 

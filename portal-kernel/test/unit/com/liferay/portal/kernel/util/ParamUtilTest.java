@@ -14,20 +14,40 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.apache.struts.mock.MockHttpServletRequest;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Preston Crary
  */
-public class ParamUtilTest {
+@RunWith(PowerMockRunner.class)
+public class ParamUtilTest extends PowerMockito {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Props props = mock(Props.class);
+
+		when(
+			props.get(PropsKeys.UNICODE_TEXT_NORMALIZER_FORM)
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		PropsUtil.setProps(props);
+	}
 
 	@Test
 	public void testGetHttpServletRequest() {

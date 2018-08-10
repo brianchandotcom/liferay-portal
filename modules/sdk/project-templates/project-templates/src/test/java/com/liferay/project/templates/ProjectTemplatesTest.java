@@ -4450,6 +4450,9 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			template, name, "--liferayVersion", "7.0");
 
+		_testNotContains(gradleProjectDir, "build.gradle",
+			"name: \"com.liferay.frontend.js.loader.modules.extender.api\"");
+
 		_testNotContains(
 			gradleProjectDir, "src/main/resources/META-INF/resources/init.jsp",
 			"<%@ page import=\"" + packageName + ".constants." + className +
@@ -4510,6 +4513,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
+			"name: \"com.liferay.frontend.js.loader.modules.extender.api\"",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 
 		_testContains(

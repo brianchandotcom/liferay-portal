@@ -15,7 +15,6 @@
 package com.liferay.structured.content.apio.architect.controller.test;
 
 import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -42,6 +41,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.structured.content.apio.architect.controller.StructuredContentController;
 import com.liferay.structured.content.apio.architect.model.JournalArticleWrapper;
+import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -127,30 +127,7 @@ public class StructuredContentControllerTest {
 		//When: The Journal Articles are requested
 		PageItems<JournalArticleWrapper> pageItems =
 			_structuredContentController.getPageItems(
-				new Pagination() {
-
-					@Override
-					public int getEndPosition() {
-						return 10;
-					}
-
-					@Override
-					public int getItemsPerPage() {
-						return 10;
-					}
-
-					@Override
-					public int getPageNumber() {
-						return 0;
-					}
-
-					@Override
-					public int getStartPosition() {
-						return 0;
-					}
-
-				},
-				_group.getGroupId(), null);
+				PaginationTestUtil.of(10, 1), _group.getGroupId(), null);
 
 		//Then: The Article is returned
 

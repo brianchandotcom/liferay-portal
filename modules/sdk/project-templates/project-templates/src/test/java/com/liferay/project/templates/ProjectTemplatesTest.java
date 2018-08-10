@@ -492,9 +492,6 @@ public class ProjectTemplatesTest {
 			"control-menu-entry", "foo-bar", "com.test", "-DclassName=FooBar",
 			"-Dpackage=foo.bar", "-DliferayVersion=7.0");
 
-		_testContains(
-			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
-
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
@@ -510,6 +507,9 @@ public class ProjectTemplatesTest {
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"control-menu-entry", "foo-bar", "com.test", "-DclassName=FooBar",
 			"-Dpackage=foo.bar", "-DliferayVersion=7.1");
+
+		_testContains(
+			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -1332,7 +1332,7 @@ public class ProjectTemplatesTest {
 			"Export-Package: gradle.test.constants");
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version \"2.0.0");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/gradle/test/application/list/FooPanelApp.java",
@@ -1832,7 +1832,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");
@@ -1936,7 +1936,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");

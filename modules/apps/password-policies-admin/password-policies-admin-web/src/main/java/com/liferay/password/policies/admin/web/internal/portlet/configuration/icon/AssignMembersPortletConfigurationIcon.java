@@ -75,8 +75,6 @@ public class AssignMembersPortletConfigurationIcon
 			mutableRenderParameters.setValue(
 				"mvcPath", "/edit_password_policy_assignments.jsp");
 			mutableRenderParameters.setValue(
-				"redirect", _portal.getCurrentURL(portletRequest));
-			mutableRenderParameters.setValue(
 				"passwordPolicyId",
 				String.valueOf(_getPasswordPolicyId(portletRequest)));
 			mutableRenderParameters.setValue("tabs1", "assignees");

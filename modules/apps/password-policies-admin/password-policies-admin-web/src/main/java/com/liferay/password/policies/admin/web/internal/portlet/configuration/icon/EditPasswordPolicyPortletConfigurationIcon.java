@@ -75,8 +75,6 @@ public class EditPasswordPolicyPortletConfigurationIcon
 			mutableRenderParameters.setValue(
 				"mvcPath", "/edit_password_policy.jsp");
 			mutableRenderParameters.setValue(
-				"redirect", _portal.getCurrentURL(portletRequest));
-			mutableRenderParameters.setValue(
 				"passwordPolicyId",
 				String.valueOf(_getPasswordPolicyId(portletRequest)));
 			mutableRenderParameters.setValue("tabs1", "details");

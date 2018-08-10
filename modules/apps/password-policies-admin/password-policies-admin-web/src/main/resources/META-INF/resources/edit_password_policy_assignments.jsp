@@ -20,8 +20,6 @@
 String tabs1 = ParamUtil.getString(request, "tabs1", "assignees");
 String tabs2 = ParamUtil.getString(request, "tabs2", "users");
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 long passwordPolicyId = ParamUtil.getLong(request, "passwordPolicyId");
 
 PasswordPolicy passwordPolicy = PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(passwordPolicyId);

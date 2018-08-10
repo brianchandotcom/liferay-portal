@@ -17,17 +17,13 @@ package com.liferay.portal.struts;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.StringServiceRegistrationMap;
-import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 import com.liferay.registry.util.StringPlus;
 
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -42,37 +38,15 @@ public class AuthPublicPathRegistry {
 	}
 
 	public static void register(String... paths) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		for (String path : paths) {
-			Map<String, Object> properties = new HashMap<>();
-
-			properties.put("auth.public.path", path);
-			properties.put("objectClass", Object.class.getName());
-
-			ServiceRegistration<Object> serviceRegistration =
-				registry.registerService(
-					Object.class, new Object(), properties);
-
-			_serviceRegistrations.put(path, serviceRegistration);
-		}
+		Collections.addAll(_paths, paths);
 	}
 
 	public static void unregister(String... paths) {
-		for (String path : paths) {
-			ServiceRegistration<Object> serviceRegistration =
-				_serviceRegistrations.remove(path);
-
-			if (serviceRegistration != null) {
-				serviceRegistration.unregister();
-			}
-		}
+		_paths.removeAll(Arrays.asList(paths));
 	}
 
 	private static final Set<String> _paths = Collections.newSetFromMap(
 		new ConcurrentHashMap<>());
-	private static final StringServiceRegistrationMap<Object>
-		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private static final ServiceTracker<Object, Object> _serviceTracker;
 
 	private static class AuthPublicTrackerCustomizer

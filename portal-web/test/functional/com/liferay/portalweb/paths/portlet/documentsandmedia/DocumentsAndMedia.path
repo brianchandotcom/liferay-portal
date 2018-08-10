@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_FIELD</td>
+	<td>//div[contains(@class,'custom-attributes')]//input[contains(@id,'DLAdminPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELD_NAME</td>
+	<td>//div[contains(@class,'custom-attributes')]/div/label[contains(.,'${key_customFieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_VERSION_VERTICAL_ELLIPSIS</td>
 	<td>//li[@class='list-group-item']/div[contains(.,'${key_dmDocumentVersionNumber}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

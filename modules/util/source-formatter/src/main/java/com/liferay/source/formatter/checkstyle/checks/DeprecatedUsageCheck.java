@@ -15,8 +15,8 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
@@ -170,7 +170,9 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			detailAST, true, TokenTypes.LITERAL_NEW);
 
 		for (DetailAST literalNewAST : literalNewASTList) {
-			if (_hasDeprecatedParent(literalNewAST)) {
+			if (_hasDeprecatedParent(literalNewAST) ||
+				_hasSuppressDeprecationWarningsAnnotation(literalNewAST)) {
+
 				continue;
 			}
 
@@ -212,8 +214,10 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 			if (classInfo.isDeprecatedClass()) {
 				log(
-					literalNewAST.getLineNo(), _MSG_DEPRECATED_CONSTRUCTOR_CALL,
-					constructorName);
+					literalNewAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL,
+					fullyQualifiedClassName);
+
+				continue;
 			}
 
 			List<String> parameterTypeNames = _getParameterTypeNames(
@@ -247,7 +251,9 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			detailAST, true, TokenTypes.DOT);
 
 		for (DetailAST dotAST : dotASTList) {
-			if (_hasDeprecatedParent(dotAST)) {
+			if (_hasDeprecatedParent(dotAST) ||
+				_hasSuppressDeprecationWarningsAnnotation(dotAST)) {
+
 				continue;
 			}
 
@@ -295,7 +301,16 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 			String fieldName = matcher.group(4);
 
-			if (deprecatedFieldNames.contains(fieldName)) {
+			if (!deprecatedFieldNames.contains(fieldName)) {
+				continue;
+			}
+
+			if (classInfo.isDeprecatedClass()) {
+				log(
+					dotAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL,
+					fullyQualifiedClassName);
+			}
+			else {
 				log(dotAST.getLineNo(), _MSG_DEPRECATED_FIELD_CALL, fieldName);
 			}
 		}
@@ -309,7 +324,9 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			detailAST, true, TokenTypes.METHOD_CALL);
 
 		for (DetailAST methodCallAST : methodCallASTList) {
-			if (_hasDeprecatedParent(methodCallAST)) {
+			if (_hasDeprecatedParent(methodCallAST) ||
+				_hasSuppressDeprecationWarningsAnnotation(methodCallAST)) {
+
 				continue;
 			}
 
@@ -333,8 +350,10 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 			if (classInfo.isDeprecatedClass()) {
 				log(
-					methodCallAST.getLineNo(), _MSG_DEPRECATED_METHOD_CALL,
-					methodName);
+					methodCallAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL,
+					fullyQualifiedClassName);
+
+				continue;
 			}
 
 			List<String> parameterTypeNames = _getParameterTypeNames(
@@ -397,7 +416,9 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		DetailAST detailAST, String packageName, List<String> importNames,
 		String directoryPath) {
 
-		if (_hasDeprecatedParent(detailAST)) {
+		if (_hasDeprecatedParent(detailAST) ||
+			_hasSuppressDeprecationWarningsAnnotation(detailAST)) {
+
 			return;
 		}
 
@@ -641,10 +662,12 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		if ((packageName != null) &&
 			fullyQualifiedName.startsWith(packageName)) {
 
-			int y = fullyQualifiedName.lastIndexOf(".");
-
-			String fileName =
-				directoryPath + fullyQualifiedName.substring(y + 1) + ".java";
+			String fileName = StringBundler.concat(
+				directoryPath,
+				StringUtil.replace(
+					fullyQualifiedName.substring(packageName.length() + 1),
+					CharPool.PERIOD, CharPool.SLASH),
+				".java");
 
 			file = new File(fileName);
 
@@ -964,19 +987,53 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		}
 	}
 
-	private boolean _hasDeprecatedParent(DetailAST methodCallAST) {
-		DetailAST parentAST = methodCallAST.getParent();
+	private boolean _hasDeprecatedParent(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
 
 		while (true) {
 			if (parentAST == null) {
 				return false;
 			}
 
-			if (((parentAST.getType() == TokenTypes.METHOD_DEF) ||
+			if (((parentAST.getType() == TokenTypes.CTOR_DEF) ||
+				 (parentAST.getType() == TokenTypes.METHOD_DEF) ||
 				 (parentAST.getType() == TokenTypes.VARIABLE_DEF)) &&
 				AnnotationUtil.containsAnnotation(parentAST, "Deprecated")) {
 
 				return true;
+			}
+
+			parentAST = parentAST.getParent();
+		}
+	}
+
+	private boolean _hasSuppressDeprecationWarningsAnnotation(
+		DetailAST detailAST) {
+
+		DetailAST parentAST = detailAST.getParent();
+
+		while (true) {
+			if (parentAST == null) {
+				return false;
+			}
+
+			if (parentAST.findFirstToken(TokenTypes.MODIFIERS) != null) {
+				DetailAST annotationAST = AnnotationUtil.getAnnotation(
+					parentAST, "SuppressWarnings");
+
+				if (annotationAST != null) {
+					List<DetailAST> literalStringASTList =
+						DetailASTUtil.getAllChildTokens(
+							annotationAST, true, TokenTypes.STRING_LITERAL);
+
+					for (DetailAST literalStringAST : literalStringASTList) {
+						String s = literalStringAST.getText();
+
+						if (s.equals("\"deprecation\"")) {
+							return true;
+						}
+					}
+				}
 			}
 
 			parentAST = parentAST.getParent();

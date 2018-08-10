@@ -2309,9 +2309,9 @@
 
 		<execute macro="Form#closeSidebar" />
 
-		<for list="Japanese (Japan):日本語,Portuguese (Brazil):Português" param="locale">
-			<var method="StringUtil#extractFirst('${locale}', ':')" name="locale" />
-			<var method="StringUtil#extractLast('${locale}', ':')" name="translated" />
+		<for list="Japanese (Japan):日本語,Portuguese (Brazil):Português" param="localeMap">
+			<var method="StringUtil#extractFirst('${localeMap}', ':')" name="locale" />
+			<var method="StringUtil#extractLast('${localeMap}', ':')" name="translated" />
 
 			<execute macro="Form#addTranslation">
 				<var name="localizedLanguage" value="${locale}" />
@@ -2380,9 +2380,9 @@
 
 		<execute macro="Form#save" />
 
-		<for list="Japanese (Japan):日本語,Portuguese (Brazil):Português" param="locale">
-			<var method="StringUtil#extractFirst('${locale}', ':')" name="locale" />
-			<var method="StringUtil#extractLast('${locale}', ':')" name="translated" />
+		<for list="Japanese (Japan):日本語,Portuguese (Brazil):Português" param="localeMap">
+			<var method="StringUtil#extractFirst('${localeMap}', ':')" name="locale" />
+			<var method="StringUtil#extractLast('${localeMap}', ':')" name="translated" />
 
 			<execute macro="Form#selectTranslation">
 				<var name="localizedLanguage" value="${locale}" />

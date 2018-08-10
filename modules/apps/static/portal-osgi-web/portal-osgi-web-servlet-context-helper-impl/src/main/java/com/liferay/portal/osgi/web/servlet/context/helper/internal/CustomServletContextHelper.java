@@ -19,6 +19,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebResourceCollectionDefinition;
 import com.liferay.portal.servlet.delegate.ServletContextDelegate;
@@ -67,6 +68,9 @@ public class CustomServletContextHelper
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+		ServletContextClassLoaderPool.unregister(
+			_servletContext.getServletContextName());
+
 		_servletContext = null;
 	}
 
@@ -74,6 +78,10 @@ public class CustomServletContextHelper
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		_servletContext = ServletContextDelegate.create(
 			servletContextEvent.getServletContext());
+
+		ServletContextClassLoaderPool.register(
+			_servletContext.getServletContextName(),
+			_servletContext.getClassLoader());
 	}
 
 	@Override

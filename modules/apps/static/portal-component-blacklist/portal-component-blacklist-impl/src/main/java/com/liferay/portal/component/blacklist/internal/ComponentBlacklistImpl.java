@@ -65,9 +65,12 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 
 		_bundleListener = new ComponentDisablingBundleListener();
 
+		Set<String> reactivateComponentNames = _initBlacklistComponentNames(
+			properties);
+
 		_bundleContext.addBundleListener(_bundleListener);
 
-		modified(properties);
+		_processBundles(reactivateComponentNames);
 	}
 
 	@Deactivate
@@ -124,7 +127,17 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 
 	@Modified
 	protected void modified(Map<String, Object> properties) {
-		Bundle[] bundles = _bundleContext.getBundles();
+		Set<String> reactivateComponentNames = _initBlacklistComponentNames(
+			properties);
+
+		_processBundles(reactivateComponentNames);
+	}
+
+	@Reference
+	protected ServiceComponentRuntime serviceComponentRuntime;
+
+	private Set<String> _initBlacklistComponentNames(
+		Map<String, Object> properties) {
 
 		ComponentBlacklistConfiguration componentBlacklistConfiguration =
 			ConfigurableUtil.createConfigurable(
@@ -143,15 +156,8 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 				}
 			});
 
-		for (Bundle bundle : bundles) {
-			disableComponents(bundle, _blacklistComponentNames);
-
-			enableComponents(bundle, reactivateComponentNames);
-		}
+		return reactivateComponentNames;
 	}
-
-	@Reference
-	protected ServiceComponentRuntime serviceComponentRuntime;
 
 	private void _performComponentDescriptionDTOOperation(
 		Bundle bundle, Set<String> componentNames,
@@ -168,6 +174,16 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 						componentDescriptionDTO);
 				}
 			});
+	}
+
+	private void _processBundles(Set<String> reactivateComponentNames) {
+		Bundle[] bundles = _bundleContext.getBundles();
+
+		for (Bundle bundle : bundles) {
+			disableComponents(bundle, _blacklistComponentNames);
+
+			enableComponents(bundle, reactivateComponentNames);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

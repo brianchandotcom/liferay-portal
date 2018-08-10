@@ -14,8 +14,8 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Neil Griffin
@@ -64,13 +64,13 @@ public class PortletDependency {
 			sb.append(_name);
 		}
 
-		sb.append(CharPool.SEMICOLON);
+		sb.append(StringPool.SEMICOLON);
 
 		if (_scope != null) {
 			sb.append(_scope);
 		}
 
-		sb.append(CharPool.SEMICOLON);
+		sb.append(StringPool.SEMICOLON);
 
 		if (_version != null) {
 			sb.append(_version);

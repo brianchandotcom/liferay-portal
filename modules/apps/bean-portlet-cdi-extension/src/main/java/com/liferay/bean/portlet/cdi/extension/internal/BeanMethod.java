@@ -47,12 +47,11 @@ public class BeanMethod {
 		_type = type;
 		_beanClass = beanClass;
 		_method = method;
+		_ordinal = ordinal;
 
 		Set<Bean<?>> beans = beanManager.getBeans(beanClass);
 
 		_bean = beanManager.resolve(beans);
-
-		_ordinal = ordinal;
 	}
 
 	public String getActionName() {
@@ -187,6 +186,6 @@ public class BeanMethod {
 	private final BeanManager _beanManager;
 	private final Method _method;
 	private final int _ordinal;
-	private MethodType _type;
+	private final MethodType _type;
 
 }

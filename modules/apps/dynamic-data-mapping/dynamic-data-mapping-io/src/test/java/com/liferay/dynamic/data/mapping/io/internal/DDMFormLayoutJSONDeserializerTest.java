@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.io.internal;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
@@ -116,12 +115,12 @@ public class DDMFormLayoutJSONDeserializerTest extends BaseDDMTestCase {
 
 	protected void setUpDDMFormLayoutJSONDeserializer() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormLayoutJSONDeserializerImpl.class, "_jsonFactory");
+			DDMFormLayoutJSONDeserializer.class, "_jsonFactory");
 
 		field.set(_ddmFormLayoutJSONDeserializer, new JSONFactoryImpl());
 	}
 
 	private final DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer =
-		new DDMFormLayoutJSONDeserializerImpl();
+		new DDMFormLayoutJSONDeserializer();
 
 }

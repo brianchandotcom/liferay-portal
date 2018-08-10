@@ -18,7 +18,10 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -102,6 +105,22 @@ public class DDLRecordSetStagedModelDataHandler
 	@Override
 	public String getDisplayName(DDLRecordSet recordSet) {
 		return recordSet.getNameCurrentValue();
+	}
+
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+			ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
 	@Override
@@ -227,8 +246,7 @@ public class DDLRecordSetStagedModelDataHandler
 		String serializedSettingsDDMFormValues =
 			portletDataContext.getZipEntryAsString(settingsDDMFormValuesPath);
 
-		return _ddmFormValuesJSONDeserializer.deserialize(
-			ddmForm, serializedSettingsDDMFormValues);
+		return deserialize(serializedSettingsDDMFormValues, ddmForm);
 	}
 
 	@Override
@@ -244,10 +262,10 @@ public class DDLRecordSetStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormValuesJSONDeserializer(
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+	protected void setDDMFormValuesDeserializerTracker(
+		DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker) {
 
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+		_ddmFormValuesDeserializerTracker = ddmFormValuesDeserializerTracker;
 	}
 
 	@Reference(
@@ -261,7 +279,7 @@ public class DDLRecordSetStagedModelDataHandler
 	}
 
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 	private StagedModelRepository<DDLRecordSet> _stagedModelRepository;
 
 }

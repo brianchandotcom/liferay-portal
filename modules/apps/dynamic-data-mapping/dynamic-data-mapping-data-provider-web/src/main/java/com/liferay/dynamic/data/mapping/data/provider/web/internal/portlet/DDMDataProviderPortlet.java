@@ -18,7 +18,8 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.display.context.DDMDataProviderDisplayContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -73,12 +74,17 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 			new DDMDataProviderDisplayContext(
 				renderRequest, renderResponse, _ddmDataProviderInstanceService,
 				_ddmDataProviderTracker, _ddmFormRenderer,
-				_ddmFormValuesJSONDeserializer, _userLocalService);
+				getDDMFormValuesDeserializer(), _userLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDataProviderDisplayContext);
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	protected DDMFormValuesDeserializer getDDMFormValuesDeserializer() {
+		return _ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+			"json");
 	}
 
 	@Reference(unbind = "-")
@@ -101,10 +107,10 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormValuesJSONDeserializer(
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+	protected void setDDMFormValuesDeserializerTracker(
+		DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker) {
 
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+		_ddmFormValuesDeserializerTracker = ddmFormValuesDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -115,7 +121,7 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
 	private DDMDataProviderTracker _ddmDataProviderTracker;
 	private DDMFormRenderer _ddmFormRenderer;
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 	private UserLocalService _userLocalService;
 
 }

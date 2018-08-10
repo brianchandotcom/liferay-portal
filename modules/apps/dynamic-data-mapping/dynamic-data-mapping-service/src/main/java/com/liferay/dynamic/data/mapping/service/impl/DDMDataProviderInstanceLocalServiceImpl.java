@@ -17,7 +17,10 @@ package com.liferay.dynamic.data.mapping.service.impl;
 import com.liferay.dynamic.data.mapping.exception.DataProviderInstanceNameException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchDataProviderInstanceException;
 import com.liferay.dynamic.data.mapping.exception.RequiredDataProviderInstanceException;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.base.DDMDataProviderInstanceLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -72,8 +75,7 @@ public class DDMDataProviderInstanceLocalServiceImpl
 		dataProviderInstance.setUserName(user.getFullName());
 		dataProviderInstance.setNameMap(nameMap);
 		dataProviderInstance.setDescriptionMap(descriptionMap);
-		dataProviderInstance.setDefinition(
-			ddmFormValuesJSONSerializer.serialize(ddmFormValues));
+		dataProviderInstance.setDefinition(serialize(ddmFormValues));
 		dataProviderInstance.setType(type);
 
 		ddmDataProviderInstancePersistence.update(dataProviderInstance);
@@ -298,8 +300,7 @@ public class DDMDataProviderInstanceLocalServiceImpl
 		dataProviderInstance.setUserName(user.getFullName());
 		dataProviderInstance.setNameMap(nameMap);
 		dataProviderInstance.setDescriptionMap(descriptionMap);
-		dataProviderInstance.setDefinition(
-			ddmFormValuesJSONSerializer.serialize(ddmFormValues));
+		dataProviderInstance.setDefinition(serialize(ddmFormValues));
 
 		ddmDataProviderInstancePersistence.update(dataProviderInstance);
 
@@ -331,6 +332,21 @@ public class DDMDataProviderInstanceLocalServiceImpl
 			dataProviderInstance.getDataProviderInstanceId(), modelPermissions);
 	}
 
+	protected String serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializer ddmFormValuesSerializer =
+			ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
+
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				ddmFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
+	}
+
 	protected void validate(
 			Map<Locale, String> nameMap, DDMFormValues ddmFormValues)
 		throws PortalException {
@@ -347,8 +363,8 @@ public class DDMDataProviderInstanceLocalServiceImpl
 		ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@ServiceReference(type = DDMFormValuesJSONSerializer.class)
-	protected DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer;
+	@ServiceReference(type = DDMFormValuesSerializerTracker.class)
+	protected DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker;
 
 	@ServiceReference(type = DDMFormValuesValidator.class)
 	protected DDMFormValuesValidator ddmFormValuesValidator;

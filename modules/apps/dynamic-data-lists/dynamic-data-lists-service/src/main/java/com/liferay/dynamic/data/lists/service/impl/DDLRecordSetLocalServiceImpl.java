@@ -22,8 +22,14 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetLocalServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
@@ -394,8 +400,7 @@ public class DDLRecordSetLocalServiceImpl
 
 		DDMForm ddmForm = DDMFormFactory.create(DDLRecordSetSettings.class);
 
-		return ddmFormValuesJSONDeserializer.deserialize(
-			ddmForm, recordSet.getSettings());
+		return deserialize(recordSet.getSettings(), ddmForm);
 	}
 
 	/**
@@ -615,8 +620,7 @@ public class DDLRecordSetLocalServiceImpl
 			recordSetId);
 
 		recordSet.setModifiedDate(now);
-		recordSet.setSettings(
-			ddmFormValuesJSONSerializer.serialize(settingsDDMFormValues));
+		recordSet.setSettings(serialize(settingsDDMFormValues));
 
 		return ddlRecordSetPersistence.update(recordSet);
 	}
@@ -718,6 +722,22 @@ public class DDLRecordSetLocalServiceImpl
 		ddlRecordSetVersionPersistence.update(recordSetVersion);
 
 		return recordSetVersion;
+	}
+
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+			ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
 	protected DDLRecordSet doUpdateRecordSet(
@@ -845,6 +865,21 @@ public class DDLRecordSetLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
+	protected String serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializer ddmFormValuesSerializer =
+			ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
+
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+			ddmFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
+	}
+
 	protected void updateRecordSetVersion(
 			long ddmStructureVersionId, User user, DDLRecordSet recordSet)
 		throws PortalException {
@@ -915,11 +950,11 @@ public class DDLRecordSetLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = DDMFormValuesJSONDeserializer.class)
-	protected DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;
+	@ServiceReference(type = DDMFormValuesDeserializerTracker.class)
+	protected DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker;
 
-	@ServiceReference(type = DDMFormValuesJSONSerializer.class)
-	protected DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer;
+	@ServiceReference(type = DDMFormValuesSerializerTracker.class)
+	protected DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker;
 
 	@ServiceReference(type = DDMFormValuesValidator.class)
 	protected DDMFormValuesValidator ddmFormValuesValidator;

@@ -14,7 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.verify;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -66,11 +69,21 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected DDMFormValues getDDMFormValues(
-			DDMForm ddmForm, DDMContent ddmContent)
-		throws PortalException {
+		DDMForm ddmForm, DDMContent ddmContent) {
 
-		return _ddmFormValuesJSONDeserializer.deserialize(
-			ddmForm, ddmContent.getData());
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				ddmContent.getData(), ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
 	protected DDMFormValues getDDMFormValues(
@@ -100,10 +113,10 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormValuesJSONDeserializer(
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+	protected void setDDMFormValuesDeserializerTracker(
+		DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker) {
 
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+		_ddmFormValuesDeserializerTracker = ddmFormValuesDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -331,7 +344,7 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 	private DDMContentLocalService _ddmContentLocalService;
 	private DDMFormLayoutValidator _ddmFormLayoutValidator;
 	private DDMFormValidator _ddmFormValidator;
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 	private DDMFormValuesValidator _ddmFormValuesValidator;
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;

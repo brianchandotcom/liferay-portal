@@ -15,8 +15,10 @@
 package com.liferay.journal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.registry.Registry;
@@ -86,8 +89,6 @@ public class JournalConverterUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormJSONDeserializer();
-		setUpDDMFormXSDDeserializer();
 		setUpDDMXML();
 
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
@@ -102,7 +103,7 @@ public class JournalConverterUtilTest {
 
 		String definition = read("test-ddm-structure-all-fields.xml");
 
-		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
+		DDMForm ddmForm = deserialize(definition);
 
 		_ddmStructure = _ddmStructureTestHelper.addStructure(
 			_classNameId, null, "Test Structure", ddmForm,
@@ -300,15 +301,14 @@ public class JournalConverterUtilTest {
 	public void testGetDDMXSD() throws Exception {
 		String expectedXSD = read("test-ddm-structure-all-fields.xml");
 
-		DDMForm expectedDDMForm = _ddmFormXSDDeserializer.deserialize(
-			expectedXSD);
+		DDMForm expectedDDMForm = deserialize(expectedXSD);
 
 		String actualXSD = _journalConverter.getDDMXSD(
 			read("test-journal-structure-all-fields.xml"));
 
 		validateDDMXSD(actualXSD);
 
-		DDMForm actualDDMForm = _ddmFormXSDDeserializer.deserialize(actualXSD);
+		DDMForm actualDDMForm = deserialize(actualXSD);
 
 		assertEquals(expectedDDMForm, actualDDMForm);
 	}
@@ -569,6 +569,20 @@ public class JournalConverterUtilTest {
 			actualContent);
 
 		Assert.assertEquals(expectedFieldsMap, actualFieldsMap);
+	}
+
+	protected DDMForm deserialize(String content) {
+		DDMFormDeserializer ddmFormDeserializer =
+			_ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
 	protected Field getBooleanField(long ddmStructureId) {
@@ -891,20 +905,6 @@ public class JournalConverterUtilTest {
 			});
 	}
 
-	protected void setUpDDMFormJSONDeserializer() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmFormJSONDeserializer = registry.getService(
-			DDMFormJSONDeserializer.class);
-	}
-
-	protected void setUpDDMFormXSDDeserializer() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmFormXSDDeserializer = registry.getService(
-			DDMFormXSDDeserializer.class);
-	}
-
 	protected void setUpDDMXML() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -970,8 +970,10 @@ public class JournalConverterUtilTest {
 	private static final String _PUBLIC_USER_LAYOUT = "publicUserLayout";
 
 	private long _classNameId;
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+
+	@Inject
+	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
+
 	private DDMStructure _ddmStructure;
 	private DDMStructureTestHelper _ddmStructureTestHelper;
 	private DDMXML _ddmXML;

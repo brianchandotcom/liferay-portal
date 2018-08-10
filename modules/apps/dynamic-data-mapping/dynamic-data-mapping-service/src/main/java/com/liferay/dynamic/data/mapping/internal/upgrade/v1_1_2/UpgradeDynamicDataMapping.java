@@ -14,10 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_2;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -54,16 +62,16 @@ import java.util.Map.Entry;
 public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	public UpgradeDynamicDataMapping(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer,
-		DDMFormJSONSerializer ddmFormJSONSerializer,
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
-		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer,
+		DDMFormDeserializer ddmFormDeserializer,
+		DDMFormSerializer ddmFormSerializer,
+		DDMFormValuesDeserializer ddmFormValuesDeserializer,
+		DDMFormValuesSerializer ddmFormValuesSerializer,
 		JSONFactory jsonFactory) {
 
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
-		_ddmFormJSONSerializer = ddmFormJSONSerializer;
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
-		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
+		_ddmFormDeserializer = ddmFormDeserializer;
+		_ddmFormSerializer = ddmFormSerializer;
+		_ddmFormValuesDeserializer = ddmFormValuesDeserializer;
+		_ddmFormValuesSerializer = ddmFormValuesSerializer;
 		_jsonFactory = jsonFactory;
 	}
 
@@ -84,6 +92,29 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			return value;
 		}
+	}
+
+	protected DDMForm deserialize(String content) {
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				_ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
 	@Override
@@ -108,8 +139,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
-					ddmForm = _ddmFormJSONDeserializer.deserialize(
-						rs.getString("definition"));
+					ddmForm = deserialize(rs.getString("definition"));
 
 					_ddmForms.put(structureId, ddmForm);
 
@@ -165,6 +195,28 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		throw new UpgradeException(
 			"Unable to find dynamic data mapping structure with ID " +
 				structureId);
+	}
+
+	protected String serialize(DDMForm ddmForm) {
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			_ddmFormSerializer.serialize(builder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
+	}
+
+	protected String serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				_ddmFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
 	protected void transformDDMFormFieldValues(DDMFormValues ddmFormValues)
@@ -240,13 +292,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getFullHierarchyDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues =
-					_ddmFormValuesJSONDeserializer.deserialize(ddmForm, data);
+				DDMFormValues ddmFormValues = deserialize(data, ddmForm);
 
 				transformDDMFormFieldValues(ddmFormValues);
 
-				ps2.setString(
-					1, _ddmFormValuesJSONSerializer.serialize(ddmFormValues));
+				ps2.setString(1, serialize(ddmFormValues));
 
 				ps2.setLong(2, contentId);
 
@@ -274,7 +324,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				updateDDMFormFields(ddmForm);
 
-				ps2.setString(1, _ddmFormJSONSerializer.serialize(ddmForm));
+				ps2.setString(1, serialize(ddmForm));
 
 				ps2.setLong(2, ddmStructureId);
 
@@ -300,6 +350,17 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		upgradeDDMContentReferences(sb.toString());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeDynamicDataMapping.class);
+
+	private final DDMFormDeserializer _ddmFormDeserializer;
+	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
+	private final DDMFormSerializer _ddmFormSerializer;
+	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer;
+	private final DDMFormValuesSerializer _ddmFormValuesSerializer;
+	private final Map<Long, DDMForm> _fullHierarchyDDMForms = new HashMap<>();
+	private final JSONFactory _jsonFactory;
 
 	protected class RadioDDMFormFieldValueTransformer
 		implements DDMFormFieldValueTransformer {

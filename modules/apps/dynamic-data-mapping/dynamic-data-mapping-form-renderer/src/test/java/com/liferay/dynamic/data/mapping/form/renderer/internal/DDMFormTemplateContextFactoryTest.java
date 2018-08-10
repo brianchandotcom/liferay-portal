@@ -23,11 +23,9 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorContext;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
@@ -488,17 +486,17 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 	}
 
 	protected void setUpDDMFormFieldTypesJSONSerializer() throws Exception {
-		DDMFormFieldTypesJSONSerializer ddmFormFieldTypesJSONSerializer = mock(
-			DDMFormFieldTypesJSONSerializer.class);
+		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer = mock(
+			DDMFormFieldTypesSerializer.class);
 
 		setDeclaredField(
 			_ddmFormTemplateContextFactory, "_ddmFormFieldTypesJSONSerializer",
-			ddmFormFieldTypesJSONSerializer);
+			ddmFormFieldTypesSerializer);
 	}
 
 	protected void setUpDDMFormJSONSerializer() throws Exception {
 		DDMFormJSONSerializer ddmFormJSONSerializer =
-			new DDMFormJSONSerializerImpl();
+			new DDMFormJSONSerializer();
 
 		setDeclaredField(
 			_ddmFormTemplateContextFactory, "_ddmFormJSONSerializer",
@@ -516,7 +514,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 
 	protected void setUpDDMFormLayoutJSONSerializer() throws Exception {
 		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer =
-			new DDMFormLayoutJSONSerializerImpl();
+			new DDMFormLayoutJSONSerializer();
 
 		setDeclaredField(
 			_ddmFormTemplateContextFactory, "_ddmFormLayoutJSONSerializer",

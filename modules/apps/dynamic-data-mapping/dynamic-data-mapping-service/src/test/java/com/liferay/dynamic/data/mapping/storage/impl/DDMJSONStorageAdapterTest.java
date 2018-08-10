@@ -15,8 +15,14 @@
 package com.liferay.dynamic.data.mapping.storage.impl;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
@@ -32,6 +38,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -48,18 +55,38 @@ import org.powermock.api.mockito.PowerMockito;
 @RunWith(MockitoJUnitRunner.class)
 public class DDMJSONStorageAdapterTest extends PowerMockito {
 
+	@Before
+	public void setUp() {
+		_ddmJSONStorageAdapter = new DDMJSONStorageAdapter();
+
+		_ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
+		_ddmJSONStorageAdapter.ddmFormValuesDeserializerTracker =
+			_ddmFormValuesDeserializerTracker;
+		_ddmJSONStorageAdapter.ddmFormValuesSerializerTracker =
+			_ddmFormValuesSerializerTracker;
+
+		when(
+			_ddmFormValuesSerializerTracker.getDDMFormValuesSerializer(
+				Matchers.anyString())
+		).thenReturn(
+			_ddmFormValuesSerializer
+		);
+
+		when(
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				Matchers.anyString())
+		).thenReturn(
+			_ddmFormValuesDeserializer
+		);
+	}
+
 	@Test
 	public void testDelete() throws Exception {
-		DDMJSONStorageAdapter ddmJSONStorageAdapter =
-			new DDMJSONStorageAdapter();
-
-		ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
-
 		DDMStorageAdapterDeleteRequest.Builder builder =
 			DDMStorageAdapterDeleteRequest.Builder.newBuilder(1);
 
 		DDMStorageAdapterDeleteResponse expectedResponse =
-			ddmJSONStorageAdapter.delete(builder.build());
+			_ddmJSONStorageAdapter.delete(builder.build());
 
 		Assert.assertTrue(expectedResponse.isDeleted());
 
@@ -72,11 +99,6 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 	@Test(expected = StorageException.class)
 	public void testDeleteException() throws Exception {
-		DDMJSONStorageAdapter ddmJSONStorageAdapter =
-			new DDMJSONStorageAdapter();
-
-		ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
-
 		when(
 			_ddmContentLocalService.deleteDDMContent(2)
 		).thenThrow(
@@ -86,18 +108,11 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 		DDMStorageAdapterDeleteRequest.Builder builder =
 			DDMStorageAdapterDeleteRequest.Builder.newBuilder(2);
 
-		ddmJSONStorageAdapter.delete(builder.build());
+		_ddmJSONStorageAdapter.delete(builder.build());
 	}
 
 	@Test
 	public void testGet() throws Exception {
-		DDMJSONStorageAdapter ddmJSONStorageAdapter =
-			new DDMJSONStorageAdapter();
-
-		ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
-		ddmJSONStorageAdapter.ddmFormValuesJSONDeserializer =
-			_ddmFormValuesJSONDeserializer;
-
 		DDMContent ddmContent = mock(DDMContent.class);
 
 		when(
@@ -118,17 +133,30 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
+		DDMFormValuesDeserializerDeserializeRequest
+			ddmFormValuesDeserializerDeserializeRequest =
+				DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+					data, ddmForm
+				).build();
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				DDMFormValuesDeserializerDeserializeResponse.Builder.newBuilder(
+					ddmFormValues
+				).build();
+
 		when(
-			_ddmFormValuesJSONDeserializer.deserialize(ddmForm, data)
+			_ddmFormValuesDeserializer.deserialize(
+				ddmFormValuesDeserializerDeserializeRequest)
 		).thenReturn(
-			ddmFormValues
+			ddmFormValuesDeserializerDeserializeResponse
 		);
 
 		DDMStorageAdapterGetRequest.Builder builder =
 			DDMStorageAdapterGetRequest.Builder.newBuilder(1, ddmForm);
 
 		DDMStorageAdapterGetResponse ddmStorageAdapterGetResponse =
-			ddmJSONStorageAdapter.get(builder.build());
+			_ddmJSONStorageAdapter.get(builder.build());
 
 		Assert.assertNotNull(ddmStorageAdapterGetResponse.getDDMFormValues());
 
@@ -139,19 +167,14 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 		);
 
 		Mockito.verify(
-			_ddmFormValuesJSONDeserializer, Mockito.times(1)
+			_ddmFormValuesDeserializer, Mockito.times(1)
 		).deserialize(
-			ddmForm, data
+			ddmFormValuesDeserializerDeserializeRequest
 		);
 	}
 
 	@Test(expected = StorageException.class)
 	public void testGetException() throws Exception {
-		DDMJSONStorageAdapter ddmJSONStorageAdapter =
-			new DDMJSONStorageAdapter();
-
-		ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
-
 		when(
 			_ddmContentLocalService.getContent(1)
 		).thenThrow(
@@ -163,18 +186,11 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 		DDMStorageAdapterGetRequest.Builder builder =
 			DDMStorageAdapterGetRequest.Builder.newBuilder(1, ddmForm);
 
-		ddmJSONStorageAdapter.get(builder.build());
+		_ddmJSONStorageAdapter.get(builder.build());
 	}
 
 	@Test
 	public void testInsert() throws Exception {
-		DDMJSONStorageAdapter ddmJSONStorageAdapter =
-			new DDMJSONStorageAdapter();
-
-		ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
-		ddmJSONStorageAdapter.ddmFormValuesJSONSerializer =
-			_ddmFormValuesJSONSerializer;
-
 		DDMContent ddmContent = mock(DDMContent.class);
 
 		when(
@@ -194,10 +210,23 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
+		DDMFormValuesSerializerSerializeRequest
+			ddmFormValuesSerializerSerializeRequest =
+				DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+					ddmFormValues
+				).build();
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				DDMFormValuesSerializerSerializeResponse.Builder.newBuilder(
+					"{}"
+				).build();
+
 		when(
-			_ddmFormValuesJSONSerializer.serialize(ddmFormValues)
+			_ddmFormValuesSerializer.serialize(
+				ddmFormValuesSerializerSerializeRequest)
 		).thenReturn(
-			"{}"
+			ddmFormValuesSerializerSerializeResponse
 		);
 
 		DDMStorageAdapterSaveRequest.Builder builder =
@@ -208,14 +237,14 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 			builder.build();
 
 		DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
-			ddmJSONStorageAdapter.save(ddmStorageAdapterSaveRequest);
+			_ddmJSONStorageAdapter.save(ddmStorageAdapterSaveRequest);
 
 		Assert.assertEquals(1L, ddmStorageAdapterSaveResponse.getPrimaryKey());
 
 		Mockito.verify(
-			_ddmFormValuesJSONSerializer, Mockito.times(1)
+			_ddmFormValuesSerializer, Mockito.times(1)
 		).serialize(
-			ddmFormValues
+			ddmFormValuesSerializerSerializeRequest
 		);
 
 		Mockito.verify(
@@ -229,16 +258,9 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 	@Test(expected = StorageException.class)
 	public void testInsertException() throws Exception {
-		DDMJSONStorageAdapter ddmJSONStorageAdapter =
-			new DDMJSONStorageAdapter();
-
-		ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
-		ddmJSONStorageAdapter.ddmFormValuesJSONSerializer =
-			_ddmFormValuesJSONSerializer;
-
 		when(
-			_ddmFormValuesJSONSerializer.serialize(
-				Matchers.any(DDMFormValues.class))
+			_ddmFormValuesSerializer.serialize(
+				Matchers.any(DDMFormValuesSerializerSerializeRequest.class))
 		).thenThrow(
 			Exception.class
 		);
@@ -250,18 +272,11 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 		DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest =
 			builder.build();
 
-		ddmJSONStorageAdapter.save(ddmStorageAdapterSaveRequest);
+		_ddmJSONStorageAdapter.save(ddmStorageAdapterSaveRequest);
 	}
 
 	@Test
 	public void testUpdate() throws Exception {
-		DDMJSONStorageAdapter ddmJSONStorageAdapter =
-			new DDMJSONStorageAdapter();
-
-		ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
-		ddmJSONStorageAdapter.ddmFormValuesJSONSerializer =
-			_ddmFormValuesJSONSerializer;
-
 		DDMContent ddmContent = mock(DDMContent.class);
 
 		when(
@@ -278,10 +293,23 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
+		DDMFormValuesSerializerSerializeRequest
+			ddmFormValuesSerializerSerializeRequest =
+				DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+					ddmFormValues
+				).build();
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				DDMFormValuesSerializerSerializeResponse.Builder.newBuilder(
+					"{}"
+				).build();
+
 		when(
-			_ddmFormValuesJSONSerializer.serialize(ddmFormValues)
+			_ddmFormValuesSerializer.serialize(
+				ddmFormValuesSerializerSerializeRequest)
 		).thenReturn(
-			"{}"
+			ddmFormValuesSerializerSerializeResponse
 		);
 
 		DDMStorageAdapterSaveRequest.Builder builder =
@@ -294,7 +322,7 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 			).build();
 
 		DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
-			ddmJSONStorageAdapter.save(ddmStorageAdapterSaveRequest);
+			_ddmJSONStorageAdapter.save(ddmStorageAdapterSaveRequest);
 
 		Assert.assertEquals(1L, ddmStorageAdapterSaveResponse.getPrimaryKey());
 
@@ -311,9 +339,9 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 		);
 
 		Mockito.verify(
-			_ddmFormValuesJSONSerializer, Mockito.times(1)
+			_ddmFormValuesSerializer, Mockito.times(1)
 		).serialize(
-			ddmFormValues
+			ddmFormValuesSerializerSerializeRequest
 		);
 
 		Mockito.verify(
@@ -326,16 +354,9 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 	@Test(expected = StorageException.class)
 	public void testUpdateException() throws Exception {
-		DDMJSONStorageAdapter ddmJSONStorageAdapter =
-			new DDMJSONStorageAdapter();
-
-		ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
-		ddmJSONStorageAdapter.ddmFormValuesJSONSerializer =
-			_ddmFormValuesJSONSerializer;
-
 		when(
-			_ddmFormValuesJSONSerializer.serialize(
-				Matchers.any(DDMFormValues.class))
+			_ddmFormValuesSerializer.serialize(
+				Matchers.any(DDMFormValuesSerializerSerializeRequest.class))
 		).thenThrow(
 			Exception.class
 		);
@@ -349,16 +370,24 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 				1
 			).build();
 
-		ddmJSONStorageAdapter.save(ddmStorageAdapterSaveRequest);
+		_ddmJSONStorageAdapter.save(ddmStorageAdapterSaveRequest);
 	}
 
 	@Mock
 	private DDMContentLocalService _ddmContentLocalService;
 
 	@Mock
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private DDMFormValuesDeserializer _ddmFormValuesDeserializer;
 
 	@Mock
-	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
+
+	@Mock
+	private DDMFormValuesSerializer _ddmFormValuesSerializer;
+
+	@Mock
+	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
+
+	private DDMJSONStorageAdapter _ddmJSONStorageAdapter;
 
 }

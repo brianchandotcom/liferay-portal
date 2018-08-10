@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.Add
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetRowChecker;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearch;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearchTerms;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -86,7 +86,7 @@ public class DDMFormAdminFieldSetDisplayContext
 		DDMFormInstanceService formInstanceService,
 		DDMFormInstanceVersionLocalService formInstanceVersionLocalService,
 		DDMFormFieldTypeServicesTracker formFieldTypeServicesTracker,
-		DDMFormFieldTypesJSONSerializer formFieldTypesJSONSerializer,
+		DDMFormFieldTypesSerializerTracker formFieldTypesSerializerTracker,
 		DDMFormRenderer formRenderer, DDMFormValuesFactory formValuesFactory,
 		DDMFormValuesMerger formValuesMerger,
 		DDMStructureLocalService structureLocalService,

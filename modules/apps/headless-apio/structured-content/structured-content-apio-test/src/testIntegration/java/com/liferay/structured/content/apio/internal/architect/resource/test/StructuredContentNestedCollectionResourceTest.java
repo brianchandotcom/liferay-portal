@@ -23,7 +23,9 @@ import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -91,7 +93,8 @@ public class StructuredContentNestedCollectionResourceTest {
 			LocaleUtil.getDefault(), null, true, true, serviceContext);
 
 		PageItems pageItems = _getPageItems(
-			PaginationTestUtil.of(10, 1), _group.getGroupId(), null);
+			PaginationTestUtil.of(10, 1), _group.getGroupId(),
+			_getThemeDisplay(_group));
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
 
@@ -117,6 +120,19 @@ public class StructuredContentNestedCollectionResourceTest {
 		return (PageItems)getPageItems.invoke(
 			_nestedCollectionResource, pagination, contentSpaceId,
 			themeDisplay);
+	}
+
+	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = CompanyLocalServiceUtil.getCompanyById(
+			group.getCompanyId());
+
+		themeDisplay.setCompany(company);
+
+		themeDisplay.setScopeGroupId(group.getGroupId());
+
+		return themeDisplay;
 	}
 
 	@DeleteAfterTestRun

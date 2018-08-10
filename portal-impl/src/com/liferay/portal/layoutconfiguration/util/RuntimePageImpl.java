@@ -118,9 +118,18 @@ public class RuntimePageImpl implements RuntimePage {
 			TemplateResource templateResource)
 		throws Exception {
 
-		doDispatch(
-			request, response, null, templateResource,
-			TemplateConstants.LANG_TYPE_VM, false);
+		processCustomizationSettings(
+			request, response, templateResource,
+			TemplateConstants.LANG_TYPE_VM);
+	}
+
+	@Override
+	public void processCustomizationSettings(
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource, String langType)
+		throws Exception {
+
+		doDispatch(request, response, null, templateResource, langType, false);
 	}
 
 	@Override

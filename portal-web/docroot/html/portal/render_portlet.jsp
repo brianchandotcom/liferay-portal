@@ -217,7 +217,7 @@ if ((!group.hasLocalOrRemoteStagingGroup() || !PropsValues.STAGING_LIVE_GROUP_LO
 		checkingStagingGroup = themeDisplay.getSiteGroup();
 	}
 
-	if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && !checkingStagingGroup.hasLocalOrRemoteStagingGroup() && checkingStagingGroup.isStagedPortlet(portletId)) {
+	if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && (!checkingStagingGroup.hasLocalOrRemoteStagingGroup() || PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED) && checkingStagingGroup.isStagedPortlet(portletId)) {
 		showStagingIcon = true;
 	}
 }

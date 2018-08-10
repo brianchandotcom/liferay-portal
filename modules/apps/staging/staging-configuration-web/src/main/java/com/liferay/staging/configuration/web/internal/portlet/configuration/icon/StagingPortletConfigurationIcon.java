@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.staging.constants.StagingConfigurationPortletKeys;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
@@ -117,7 +118,9 @@ public class StagingPortletConfigurationIcon
 
 		Group group = themeDisplay.getSiteGroup();
 
-		if (group.hasLocalOrRemoteStagingGroup()) {
+		if (group.hasLocalOrRemoteStagingGroup() &&
+			!PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED) {
+
 			return false;
 		}
 

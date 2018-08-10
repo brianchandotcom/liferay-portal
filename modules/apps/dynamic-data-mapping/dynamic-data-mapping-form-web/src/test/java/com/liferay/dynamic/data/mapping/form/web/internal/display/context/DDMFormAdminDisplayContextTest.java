@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
@@ -29,6 +30,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServi
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
@@ -278,6 +280,7 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		_ddmFormAdminDisplayContext = new DDMFormAdminDisplayContext(
 			_renderRequest, mock(RenderResponse.class),
 			new AddDefaultSharedFormLayoutPortalInstanceLifecycleListener(),
+			mock(DDMFormBuilderContextFactory.class),
 			mock(DDMFormWebConfiguration.class),
 			mock(DDMFormInstanceRecordLocalService.class),
 			mock(DDMFormInstanceRecordWriterTracker.class),
@@ -288,7 +291,8 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 			mock(DDMFormRenderer.class), mock(DDMFormValuesFactory.class),
 			mock(DDMFormValuesMerger.class),
 			mock(DDMStructureLocalService.class),
-			mock(DDMStructureService.class), mock(JSONFactory.class));
+			mock(DDMStructureService.class), mock(JSONFactory.class),
+			mock(NPMResolver.class));
 	}
 
 	protected void setUpLanguageUtil() {

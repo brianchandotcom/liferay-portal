@@ -15,35 +15,12 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
-import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextRequest;
-import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
-import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminDisplayContext;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONSerializer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Locale;
-import java.util.Optional;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,92 +47,10 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 			_ddmFormWebConfigurationActivator.getDDMFormWebConfiguration();
 
 		if (ddmFormWebConfiguration.enableExperimentalInterface()) {
-			DDMFormAdminDisplayContext ddmFormAdminDisplayContext =
-				(DDMFormAdminDisplayContext)renderRequest.getAttribute(
-					WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-			try {
-				String serializedFormBuilderContext =
-					getSerializedFormBuilderContext(
-						ddmFormAdminDisplayContext.getDDMStructureId(),
-						_portal.getHttpServletRequest(renderRequest));
-
-				renderRequest.setAttribute(
-					"serializedFormBuilderContext",
-					serializedFormBuilderContext);
-			}
-			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(pe, pe);
-				}
-			}
-
-			renderRequest.setAttribute(
-				"mainRequire",
-				_npmResolver.resolveModuleName(
-					"dynamic-data-mapping-form-web") + " as main");
-
 			return "/metal/edit_form_instance.jsp";
 		}
 
 		return "/admin/edit_form_instance.jsp";
-	}
-
-	protected String getSerializedFormBuilderContext(
-		long ddmStructureId, HttpServletRequest request) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String serializedFormBuilderContext = ParamUtil.getString(
-			request, "serializedFormBuilderContext");
-
-		if (Validator.isNotNull(serializedFormBuilderContext)) {
-			return serializedFormBuilderContext;
-		}
-
-		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
-
-		Optional<DDMStructure> ddmStructureOptional = Optional.ofNullable(
-			_ddmStructureLocalService.fetchDDMStructure(ddmStructureId));
-
-		Locale defaultLocale = themeDisplay.getSiteDefaultLocale();
-
-		if (ddmStructureOptional.isPresent()) {
-			DDMStructure ddmStructure = ddmStructureOptional.get();
-
-			DDMForm ddmForm = ddmStructure.getDDMForm();
-
-			defaultLocale = ddmForm.getDefaultLocale();
-		}
-
-		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
-			_ddmFormBuilderContextFactory.create(
-				DDMFormBuilderContextRequest.with(
-					ddmStructureOptional, themeDisplay.getRequest(),
-					themeDisplay.getResponse(), defaultLocale, true));
-
-		return jsonSerializer.serializeDeep(
-			ddmFormBuilderContextResponse.getContext());
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormBuilderContextFactory(
-		DDMFormBuilderContextFactory ddmFormBuilderContextFactory) {
-
-		_ddmFormBuilderContextFactory = ddmFormBuilderContextFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
 	}
 
 	protected void unsetDDMFormWebConfigurationActivator(
@@ -163,13 +58,6 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 
 		_ddmFormWebConfigurationActivator = null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditFormInstanceMVCRenderCommand.class);
-
-	private static DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
-	private static DDMStructureLocalService _ddmStructureLocalService;
-	private static JSONFactory _jsonFactory;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
@@ -179,11 +67,5 @@ public class EditFormInstanceMVCRenderCommand implements MVCRenderCommand {
 	)
 	private volatile DDMFormWebConfigurationActivator
 		_ddmFormWebConfigurationActivator;
-
-	@Reference
-	private NPMResolver _npmResolver;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -17,8 +17,8 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String mainRequire = (String)renderRequest.getAttribute("mainRequire");
-String serializedFormBuilderContext = (String)renderRequest.getAttribute("serializedFormBuilderContext");
+String mainRequire = ddmFormAdminDisplayContext.getMainRequire();
+String serializedFormBuilderContext = ddmFormAdminDisplayContext.getSerializedFormBuilderContext();
 %>
 
 <liferay-util:html-top>

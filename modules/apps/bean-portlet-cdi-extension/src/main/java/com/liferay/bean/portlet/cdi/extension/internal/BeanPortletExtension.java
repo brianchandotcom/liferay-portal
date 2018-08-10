@@ -14,6 +14,10 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,9 +37,6 @@ import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.portlet.annotations.PortletConfiguration;
 
 import javax.servlet.ServletContext;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Neil Griffin
@@ -58,9 +59,10 @@ public class BeanPortletExtension implements Extension {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Discovered {} bean portlets and {} bean filters for {}",
-				_beanPortlets.size(), _beanFilters.size(),
-				context.getServletContextName());
+				StringBundler.concat(
+					"Discovered ", _beanPortlets.size(), " bean portlets and ",
+					_beanFilters.size(), " bean filters for ",
+					context.getServletContextName()));
 		}
 	}
 
@@ -104,7 +106,7 @@ public class BeanPortletExtension implements Extension {
 
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BeanPortletExtension.class);
 
 	private final List<BeanFilter> _beanFilters = new ArrayList<>();

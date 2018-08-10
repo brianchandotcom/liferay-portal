@@ -15,6 +15,7 @@
 package com.liferay.portal.template.velocity.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.template.Template;
@@ -221,6 +222,9 @@ public class VelocityManager extends BaseSingleTemplateManager {
 				VelocityEngine.VM_PERM_ALLOW_INLINE_REPLACE_GLOBAL,
 				String.valueOf(!cacheEnabled));
 
+			extendedProperties.setProperty(
+				PortalCacheManagerNames.SINGLE_VM, _singleVMPool);
+
 			_velocityEngine.setExtendedProperties(extendedProperties);
 
 			_velocityEngine.init();
@@ -275,10 +279,6 @@ public class VelocityManager extends BaseSingleTemplateManager {
 		return template;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSingleVMPool(SingleVMPool singleVMPool) {
-	}
-
 	private static final Method _layoutIconMethod;
 	private static volatile VelocityEngineConfiguration
 		_velocityEngineConfiguration;
@@ -292,6 +292,9 @@ public class VelocityManager extends BaseSingleTemplateManager {
 			throw new ExceptionInInitializerError(nsme);
 		}
 	}
+
+	@Reference
+	private SingleVMPool _singleVMPool;
 
 	private VelocityEngine _velocityEngine;
 

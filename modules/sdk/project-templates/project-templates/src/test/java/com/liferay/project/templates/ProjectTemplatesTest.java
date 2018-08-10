@@ -1832,10 +1832,10 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
@@ -1936,10 +1936,10 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
@@ -1961,10 +1961,10 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.web.portlet.tracker.internal;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.model.EventDefinition;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.model.SpriteImage;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
-import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -37,7 +35,6 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Raymond Augé
@@ -46,11 +43,10 @@ public class BundlePortletApp implements PortletApp {
 
 	public BundlePortletApp(
 		Bundle bundle, Portlet portalPortletModel,
-		ServiceTracker<ServletContextHelperRegistration, ServletContext>
-			serviceTracker) {
+		ServletContext servletContext) {
 
 		_portalPortletModel = portalPortletModel;
-		_serviceTracker = serviceTracker;
+		_servletContext = servletContext;
 
 		_pluginPackage = new BundlePluginPackage(bundle, this);
 		_portletApp = portalPortletModel.getPortletApp();
@@ -166,12 +162,7 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public ServletContext getServletContext() {
-		try {
-			return _serviceTracker.waitForService(0);
-		}
-		catch (InterruptedException ie) {
-			return ReflectionUtil.throwException(ie);
-		}
+		return _servletContext;
 	}
 
 	@Override
@@ -269,8 +260,7 @@ public class BundlePortletApp implements PortletApp {
 		new LinkedHashSet<>();
 	private final Map<String, PortletURLListener> _portletURLListenersMap =
 		new HashMap<>();
-	private final ServiceTracker
-		<ServletContextHelperRegistration, ServletContext> _serviceTracker;
+	private final ServletContext _servletContext;
 	private int _specMajorVersion = 2;
 	private int _specMinorVersion;
 	private final Map<String, SpriteImage> _spriteImagesMap = new HashMap<>();

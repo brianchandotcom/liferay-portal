@@ -34,14 +34,16 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ViewRecaptchaEnabled" priority="4">
+	<command name="ViewRecaptchaEnabled" priority="4">
+		<description message="This test will deploy an OSGI configuration file to test LPS-84310" />
+
 		<property name="captcha.enabled" value="true" />
+		<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration.config" />
+		<property name="osgi.module.configurations" value="maxChallenges=&quot;0&quot;" />
 		<property name="test.name.skip.portal.instance" value="Captcha#ViewRecaptchaEnabled" />
 
 		<var method="PropsUtil#get('recaptcha.private.key')" name="recaptchaPrivateKey" />
 		<var method="PropsUtil#get('recaptcha.public.key')" name="recaptchaPublicKey" />
-
-		<!-- LRQA-42641 -->
 
 		<execute macro="User#firstLoginPG" />
 
@@ -56,6 +58,10 @@
 			<var name="configurationName" value="CAPTCHA" />
 			<var name="configurationScope" value="System Scope" />
 		</execute>
+
+		<!-- LPS-84310 -->
+
+		<execute macro="SystemSettings#resetConfiguration" />
 
 		<execute macro="SystemSettings#editTextSetting">
 			<var name="settingName" value="Maximum Challenges" />

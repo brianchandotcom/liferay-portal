@@ -4450,7 +4450,8 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			template, name, "--liferayVersion", "7.0");
 
-		_testNotContains(gradleProjectDir, "build.gradle",
+		_testNotContains(
+			gradleProjectDir, "build.gradle",
 			"name: \"com.liferay.frontend.js.loader.modules.extender.api\"");
 
 		_testNotContains(

@@ -201,15 +201,38 @@
 		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
 		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 
-		<var name="key_dmFolderName" value="DM Folder Name" />
-
 		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${key_dmFolderName}" />
+			<var name="name" value="DM Folder Name" />
 		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Custom Fields" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#CUSTOM_FIELD_NAME" value1="${actualScript}">
+			<var name="key_customFieldName" value="${actualScript}" />
+		</execute>
+
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="${actualScript}" />
+			<var name="locale" value="zh_CN" />
+		</execute>
+
+		<execute function="Click" locator1="DocumentsAndMedia#CUSTOM_FIELD" />
+
+		<execute function="Type" locator1="DocumentsAndMedia#CUSTOM_FIELD" value1="测试" />
 
 		<execute macro="PortletEntry#save" />
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="DM Folder Name" />
+		<execute function="AssertAlertNotPresent" />
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="DM Folder Name">
+			<var name="key_dmDocumentTitle" value="DM Folder Name" />
+		</execute>
 	</command>
 
 	<command name="ViewGoogleAnalyticsIDNoXSS" priority="5">

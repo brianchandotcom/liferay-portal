@@ -56,7 +56,7 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getPortletId() {
-		return BookmarksPortletKeys.BOOKMARKS;
+		return BookmarksPortletKeys.BOOKMARKS_ADMIN;
 	}
 
 	@Before

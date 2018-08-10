@@ -21,8 +21,6 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "details");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-
 long passwordPolicyId = ParamUtil.getLong(request, "passwordPolicyId");
 
 PasswordPolicy passwordPolicy = PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(passwordPolicyId);
@@ -36,7 +34,7 @@ if (passwordPolicy == null) {
 boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defaultPolicy");
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL.toString());
+portletDisplay.setURLBack(renderURL);
 
 renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-password-policy") : passwordPolicy.getName());
 %>

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
@@ -43,7 +42,7 @@ public class ParamUtilTest extends PowerMockito {
 		when(
 			props.get(PropsKeys.UNICODE_TEXT_NORMALIZER_FORM)
 		).thenReturn(
-			StringPool.BLANK
+			"NFC"
 		);
 
 		PropsUtil.setProps(props);
@@ -67,6 +66,21 @@ public class ParamUtilTest extends PowerMockito {
 		value = ParamUtil.get(mockHttpServletRequest, "key2", defaultString);
 
 		Assert.assertSame(defaultString, value);
+	}
+
+	@Test
+	public void testGetNormalizedString() {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addParameter("key", "\u1004\u103A\u1037");
+
+		mockHttpServletRequest.addParameter("key2", "\u1004\u1037\u103A");
+
+		String value = ParamUtil.getString(mockHttpServletRequest, "key", "");
+		String value2 = ParamUtil.getString(mockHttpServletRequest, "key2", "");
+
+		Assert.assertEquals(value, value2);
 	}
 
 	@Test

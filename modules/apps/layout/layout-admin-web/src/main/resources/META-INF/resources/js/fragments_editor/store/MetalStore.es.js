@@ -9,6 +9,7 @@ import State, {Config} from 'metal-state';
  */
 
 class MetalStore extends State {
+
 	/**
 	 * @param {object} [initialState={}]
 	 * @param {function[]} [reducers=[]]
@@ -29,7 +30,7 @@ class MetalStore extends State {
 	 * @param {string|number|array|object|undefined} [payload=undefined]
 	 */
 
-	dispatchAction(actionType, payload = undefined)  {
+	dispatchAction(actionType, payload = undefined) {
 		this._state = this._reducers.reduce(
 			(nextState, reducer) => {
 				return this._getFrozenState(
@@ -107,6 +108,7 @@ class MetalStore extends State {
  */
 
 MetalStore.STATE = {
+
 	/**
 	 * @default []
 	 * @instance

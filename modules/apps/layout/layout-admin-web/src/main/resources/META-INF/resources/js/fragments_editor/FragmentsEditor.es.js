@@ -7,6 +7,7 @@ import './dialogs/SelectMappingTypeDialog.es';
 import './fragment_entry_link/FragmentEntryLinkList.es';
 import './sidebar/FragmentsEditorSidebar.es';
 import './toolbar/FragmentsEditorToolbar.es';
+import {DRAG_DROP_INITIAL_STATE, updateDragTargetReducer} from './store/dragDrop.es';
 import FragmentEntryLink from './fragment_entry_link/FragmentEntryLink.es';
 import MetalStore from './store/MetalStore.es';
 import templates from './FragmentsEditor.soy';
@@ -28,7 +29,7 @@ class FragmentsEditor extends Component {
 
 		this._store = new MetalStore(
 			attributes,
-			[]
+			[updateDragTargetReducer]
 		);
 
 		this._store.on(
@@ -280,19 +281,6 @@ class FragmentsEditor extends Component {
 			data.editableId,
 			{[this.languageId || 'defaultValue']: data.value}
 		);
-	}
-
-	/**
-	 * Callback executed when a fragment entry of a collection is being dragged.
-	 * It receives hoveredFragmentEntryId and nearestBorder as event data.
-	 * @param {!Event} event
-	 * @private
-	 * @review
-	 */
-
-	_handleFragmentDrag(event) {
-		this._hoveredFragmentEntryLinkBorder = event.nearestBorder;
-		this._hoveredFragmentEntryLinkId = event.hoveredFragmentEntryLinkId;
 	}
 
 	/**
@@ -881,528 +869,510 @@ class FragmentsEditor extends Component {
  * @type {!Object}
  */
 
-FragmentsEditor.STATE = {
+FragmentsEditor.STATE = Object.assign(
+	{
 
-	/**
-	 * URL for associating fragment entries to the underlying model.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * URL for associating fragment entries to the underlying model.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
 
-	addFragmentEntryLinkURL: Config.string().required(),
+		addFragmentEntryLinkURL: Config.string().required(),
 
-	/**
-	 * List of available languages for translation.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!object}
-	 */
+		/**
+		 * List of available languages for translation.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!object}
+		 */
 
-	availableLanguages: Config.object().required(),
+		availableLanguages: Config.object().required(),
 
-	/**
-	 * Class name id used for storing changes.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * Class name id used for storing changes.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
 
-	classNameId: Config.string().required(),
+		classNameId: Config.string().required(),
 
-	/**
-	 * Class primary key used for storing changes.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * Class primary key used for storing changes.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
 
-	classPK: Config.string().required(),
+		classPK: Config.string().required(),
 
-	/**
-	 * Default configurations for AlloyEditor instances.
-	 * @default {}
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {object}
-	 */
+		/**
+		 * Default configurations for AlloyEditor instances.
+		 * @default {}
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {object}
+		 */
 
-	defaultEditorConfigurations: Config.object().value({}),
+		defaultEditorConfigurations: Config.object().value({}),
 
-	/**
-	 * Default language id.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * Default language id.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
 
-	defaultLanguageId: Config.string().required(),
+		defaultLanguageId: Config.string().required(),
 
-	/**
-	 * URL for removing fragment entries of the underlying model.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * URL for removing fragment entries of the underlying model.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
 
-	deleteFragmentEntryLinkURL: Config.string().required(),
+		deleteFragmentEntryLinkURL: Config.string().required(),
 
-	/**
-	 * URL for updating a distinct fragment entries of the editor.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * URL for updating a distinct fragment entries of the editor.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
 
-	editFragmentEntryLinkURL: Config.string().required(),
+		editFragmentEntryLinkURL: Config.string().required(),
 
-	/**
-	 * Available entries that can be used, organized by collections.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!Array<object>}
-	 */
+		/**
+		 * Available entries that can be used, organized by collections.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!Array<object>}
+		 */
 
-	fragmentCollections: Config.arrayOf(
-		Config.shapeOf(
-			{
-				entries: Config.arrayOf(
-					Config.shapeOf(
+		fragmentCollections: Config.arrayOf(
+			Config.shapeOf(
+				{
+					entries: Config.arrayOf(
+						Config.shapeOf(
+							{
+								fragmentEntryId: Config.string().required(),
+								name: Config.string().required()
+							}
+						)
+					).required(),
+					fragmentCollectionId: Config.string().required(),
+					name: Config.string().required()
+				}
+			)
+		).required(),
+
+		/**
+		 * List of fragment instances being used, the order
+		 * of the elements in this array defines their position.
+		 * @default []
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {Array<{
+		 *   config: Object,
+		 *   content: string,
+		 *   editableValues: Object,
+		 *   fragmentEntryId: !string,
+		 *   fragmentEntryLinkId: !string,
+		 *   name: !string,
+		 *   position: !number
+		 * }>}
+		 */
+
+		fragmentEntryLinks: Config.arrayOf(
+			Config.shapeOf(
+				{
+					config: Config.object().value({}),
+					content: Config.any().value(''),
+					editableValues: Config.object().value({}),
+					fragmentEntryId: Config.string().required(),
+					fragmentEntryLinkId: Config.string().required(),
+					name: Config.string().required(),
+					position: Config.number().required()
+				}
+			)
+		).value([]),
+
+		/**
+		 * URL for obtaining the class types of an asset
+		 * created.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
+
+		getAssetClassTypesURL: Config.string(),
+
+		/**
+		 * URL for obtaining the asset types for which asset display pages can be
+		 * created.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
+
+		getAssetDisplayContributorsURL: Config.string(),
+
+		/**
+		 * Optional ID provided by the template system.
+		 * @default ''
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {string}
+		 */
+
+		id: Config.string().value(''),
+
+		/**
+		 * Image selector url
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
+
+		imageSelectorURL: Config.string().required(),
+
+		/**
+		 * URL for getting the list of mapping fields
+		 * @default null
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {string}
+		 */
+
+		mappingFieldsURL: Config.string().value(null),
+
+		/**
+		 * Currently selected language id.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
+
+		languageId: Config.string().required(),
+
+		/**
+		 * Portlet namespace needed for prefixing form inputs
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
+
+		portletNamespace: Config.string().required(),
+
+		/**
+		 *
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
+
+		publishLayoutPageTemplateEntryURL: Config.string(),
+
+		/**
+		 * URL for redirect.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
+
+		redirectURL: Config.string().required(),
+
+		/**
+		 * URL for getting a fragment content.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
+
+		renderFragmentEntryURL: Config.string().required(),
+
+		/**
+		 * Selected mapping types
+		 * @default {}
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {{
+		 *   subtype: {
+		 *   	id: !string,
+		 *   	label: !string
+		 *   },
+		 *   type: {
+		 *   	id: !string,
+		 *   	label: !string
+		 *   }
+		 * }}
+		 */
+
+		selectedMappingTypes: Config
+			.shapeOf(
+				{
+					subtype: Config.shapeOf(
 						{
-							fragmentEntryId: Config.string().required(),
-							name: Config.string().required()
+							id: Config.string().required(),
+							label: Config.string().required()
+						}
+					),
+					type: Config.shapeOf(
+						{
+							id: Config.string().required(),
+							label: Config.string().required()
 						}
 					)
-				).required(),
-				fragmentCollectionId: Config.string().required(),
-				name: Config.string().required()
-			}
-		)
-	).required(),
+				}
+			)
+			.value({}),
 
-	/**
-	 * List of fragment instances being used, the order
-	 * of the elements in this array defines their position.
-	 * @default []
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {Array<{
-	 *   config: Object,
-	 *   content: string,
-	 *   editableValues: Object,
-	 *   fragmentEntryId: !string,
-	 *   fragmentEntryLinkId: !string,
-	 *   name: !string,
-	 *   position: !number
-	 * }>}
-	 */
+		/**
+		 * Path of the available icons.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
 
-	fragmentEntryLinks: Config.arrayOf(
-		Config.shapeOf(
-			{
-				config: Config.object().value({}),
-				content: Config.any().value(''),
-				editableValues: Config.object().value({}),
-				fragmentEntryId: Config.string().required(),
-				fragmentEntryLinkId: Config.string().required(),
-				name: Config.string().required(),
-				position: Config.number().required()
-			}
-		)
-	).value([]),
+		spritemap: Config.string().required(),
 
-	/**
-	 * URL for obtaining the class types of an asset
-	 * created.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * URL for swapping to fragmentEntryLinks.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
 
-	getAssetClassTypesURL: Config.string(),
+		updateFragmentEntryLinksURL: Config.string().required(),
 
-	/**
-	 * URL for obtaining the asset types for which asset display pages can be
-	 * created.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * URL for updating the asset type associated to a template.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
 
-	getAssetDisplayContributorsURL: Config.string(),
+		updateLayoutPageTemplateEntryAssetTypeURL: Config.string(),
 
-	/**
-	 * Optional ID provided by the template system.
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {string}
-	 */
+		/**
+		 * Allow opening/closing contextual sidebar
+		 * @default true
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {boolean}
+		 */
 
-	id: Config.string().value(''),
+		_contextualSidebarVisible: Config.bool()
+			.internal()
+			.value(true),
 
-	/**
-	 * Image selector url
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * When true, it indicates that are changes pending to save.
+		 * @default false
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {boolean}
+		 */
 
-	imageSelectorURL: Config.string().required(),
+		_dirty: Config.bool()
+			.internal()
+			.value(false),
 
-	/**
-	 * URL for getting the list of mapping fields
-	 * @default null
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {string}
-	 */
+		/**
+		 * CSS class for the fragments drop target.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!string}
+		 */
 
-	mappingFieldsURL: Config.string().value(null),
+		_dropTargetClass: Config.string().internal().value('dropTarget'),
 
-	/**
-	 * Currently selected language id.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * If true, editable values should be highlighted.
+		 * @default false
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {boolean}
+		 */
 
-	languageId: Config.string().required(),
+		_highlightMapping: Config.bool()
+			.internal()
+			.value(false),
 
-	/**
-	 * Portlet namespace needed for prefixing form inputs
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * Last data when the autosave has been executed.
+		 * @default ''
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @type {string}
+		 */
 
-	portletNamespace: Config.string().required(),
+		_lastSaveDate: Config.string()
+			.internal()
+			.value(''),
 
-	/**
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * Editable type of the field that is being mapped
+		 * @default ''
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {string}
+		 */
 
-	publishLayoutPageTemplateEntryURL: Config.string(),
+		_selectMappingDialogEditableType: Config
+			.string()
+			.internal()
+			.value(''),
 
-	/**
-	 * URL for redirect.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * EditableId of the field that is being mapped
+		 * @default ''
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {string}
+		 */
 
-	redirectURL: Config.string().required(),
+		_selectMappingDialogEditableId: Config
+			.string()
+			.internal()
+			.value(''),
 
-	/**
-	 * URL for getting a fragment content.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * FragmentEntryLinkId of the field that is being mapped
+		 * @default ''
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {string}
+		 */
 
-	renderFragmentEntryURL: Config.string().required(),
+		_selectMappingDialogFragmentEntryLinkId: Config
+			.string()
+			.internal()
+			.value(''),
 
-	/**
-	 * Selected mapping types
-	 * @default {}
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {{
-	 *   subtype: {
-	 *   	id: !string,
-	 *   	label: !string
-	 *   },
-	 *   type: {
-	 *   	id: !string,
-	 *   	label: !string
-	 *   }
-	 * }}
-	 */
+		/**
+		 * Mapped field ID of the field that is being mapped
+		 * @default ''
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {string}
+		 */
 
-	selectedMappingTypes: Config
-		.shapeOf(
-			{
-				subtype: Config.shapeOf(
-					{
-						id: Config.string().required(),
-						label: Config.string().required()
-					}
-				),
-				type: Config.shapeOf(
-					{
-						id: Config.string().required(),
-						label: Config.string().required()
-					}
-				)
-			}
-		)
-		.value({}),
+		_selectMappingDialogMappedFieldId: Config
+			.string()
+			.internal()
+			.value(''),
 
-	/**
-	 * Path of the available icons.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * Flag indicating if the SelectMappingDialog should be shown
+		 * @default false
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {boolean}
+		 */
 
-	spritemap: Config.string().required(),
+		_selectMappingDialogVisible: Config
+			.bool()
+			.internal()
+			.value(false),
 
-	/**
-     * URL for swapping to fragmentEntryLinks.
-     * @default undefined
-     * @instance
-     * @memberOf FragmentsEditor
-     * @review
-     * @type {!string}
-     */
+		/**
+		 * Flag indicating if the SelectMappingTypeDialog should be shown
+		 * @default false
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {boolean}
+		 */
 
-	updateFragmentEntryLinksURL: Config.string().required(),
+		_selectMappingTypeDialogVisible: Config
+			.bool()
+			.internal()
+			.value(false),
 
-	/**
-	 * URL for updating the asset type associated to a template.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
+		/**
+		 * Store instance
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {MetalStore}
+		 */
 
-	updateLayoutPageTemplateEntryAssetTypeURL: Config.string(),
+		_store: Config
+			.instanceOf(MetalStore)
+			.internal()
+	},
 
-	/**
-	 * Allow opening/closing contextual sidebar
-	 * @default true
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-
-	_contextualSidebarVisible: Config.bool()
-		.internal()
-		.value(true),
-
-	/**
-	 * When true, it indicates that are changes pending to save.
-	 * @default false
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-
-	_dirty: Config.bool()
-		.internal()
-		.value(false),
-
-	/**
-	 * CSS class for the fragments drop target.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	_dropTargetClass: Config.string().internal().value('dropTarget'),
-
-	/**
-	 * If true, editable values should be highlighted.
-	 * @default false
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-
-	_highlightMapping: Config.bool()
-		.internal()
-		.value(false),
-
-	/**
-	 * Nearest border of the hovered fragment entry link when dragging.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	_hoveredFragmentEntryLinkBorder: Config.string().internal(),
-
-	/**
-	 * Id of the hovered fragment entry link when dragging.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	_hoveredFragmentEntryLinkId: Config.string().internal(),
-
-	/**
-	 * Last data when the autosave has been executed.
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @type {string}
-	 */
-
-	_lastSaveDate: Config.string()
-		.internal()
-		.value(''),
-
-	/**
-	 * Editable type of the field that is being mapped
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-
-	_selectMappingDialogEditableType: Config
-		.string()
-		.internal()
-		.value(''),
-
-	/**
-	 * EditableId of the field that is being mapped
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-
-	_selectMappingDialogEditableId: Config
-		.string()
-		.internal()
-		.value(''),
-
-	/**
-	 * FragmentEntryLinkId of the field that is being mapped
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-
-	_selectMappingDialogFragmentEntryLinkId: Config
-		.string()
-		.internal()
-		.value(''),
-
-	/**
-	 * Mapped field ID of the field that is being mapped
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-
-	_selectMappingDialogMappedFieldId: Config
-		.string()
-		.internal()
-		.value(''),
-
-	/**
-	 * Flag indicating if the SelectMappingDialog should be shown
-	 * @default false
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-
-	_selectMappingDialogVisible: Config
-		.bool()
-		.internal()
-		.value(false),
-
-	/**
-	 * Flag indicating if the SelectMappingTypeDialog should be shown
-	 * @default false
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-
-	_selectMappingTypeDialogVisible: Config
-		.bool()
-		.internal()
-		.value(false),
-
-	/**
-	 * Store instance
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {MetalStore}
-	 */
-
-	_store: Config
-		.instanceOf(MetalStore)
-		.internal(),
-};
+	DRAG_DROP_INITIAL_STATE
+);
 
 Soy.register(FragmentsEditor, templates);
 

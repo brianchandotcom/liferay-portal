@@ -5,7 +5,9 @@ import position from 'metal-position';
 import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarCard.es';
+import MetalStore from '../store/MetalStore.es';
 import templates from './SidebarAvailableFragments.soy';
+import {UPDATE_DRAG_TARGET} from '../store/dragDrop.es';
 
 /**
  * List of values that the dragging border can take
@@ -45,8 +47,6 @@ class SidebarAvailableFragments extends Component {
 
 	/**
 	 * Callback that is executed when an item is being dragged.
-	 * It propagates an fragmentDrag event with the id of the fragment
-	 * that is being hovered and the nearest border.
 	 * @param {!MouseEvent} event
 	 * @private
 	 * @review
@@ -65,11 +65,11 @@ class SidebarAvailableFragments extends Component {
 				nearestBorder = DRAGGING_BORDERS.top;
 			}
 
-			this.emit(
-				'fragmentEntryDrag',
+			this.store.dispatchAction(
+				UPDATE_DRAG_TARGET,
 				{
-					hoveredFragmentEntryLinkId: targetItem.dataset.fragmentEntryLinkId,
-					nearestBorder: nearestBorder
+					hoveredFragmentEntryLinkBorder: nearestBorder,
+					hoveredFragmentEntryLinkId: targetItem.dataset.fragmentEntryLinkId
 				}
 			);
 		}
@@ -232,7 +232,18 @@ SidebarAvailableFragments.STATE = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf SidebarAvailableFragments
+	 * @review
+	 * @type {MetalStore}
+	 */
+
+	store: Config.instanceOf(MetalStore)
 };
 
 Soy.register(SidebarAvailableFragments, templates);

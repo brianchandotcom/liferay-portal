@@ -15,8 +15,8 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
@@ -212,8 +212,10 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 			if (classInfo.isDeprecatedClass()) {
 				log(
-					literalNewAST.getLineNo(), _MSG_DEPRECATED_CONSTRUCTOR_CALL,
-					constructorName);
+					literalNewAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL,
+					fullyQualifiedClassName);
+
+				continue;
 			}
 
 			List<String> parameterTypeNames = _getParameterTypeNames(
@@ -295,7 +297,16 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 			String fieldName = matcher.group(4);
 
-			if (deprecatedFieldNames.contains(fieldName)) {
+			if (!deprecatedFieldNames.contains(fieldName)) {
+				continue;
+			}
+
+			if (classInfo.isDeprecatedClass()) {
+				log(
+					dotAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL,
+					fullyQualifiedClassName);
+			}
+			else {
 				log(dotAST.getLineNo(), _MSG_DEPRECATED_FIELD_CALL, fieldName);
 			}
 		}
@@ -333,8 +344,10 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 			if (classInfo.isDeprecatedClass()) {
 				log(
-					methodCallAST.getLineNo(), _MSG_DEPRECATED_METHOD_CALL,
-					methodName);
+					methodCallAST.getLineNo(), _MSG_DEPRECATED_TYPE_CALL,
+					fullyQualifiedClassName);
+
+				continue;
 			}
 
 			List<String> parameterTypeNames = _getParameterTypeNames(
@@ -641,10 +654,12 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		if ((packageName != null) &&
 			fullyQualifiedName.startsWith(packageName)) {
 
-			int y = fullyQualifiedName.lastIndexOf(".");
-
-			String fileName =
-				directoryPath + fullyQualifiedName.substring(y + 1) + ".java";
+			String fileName = StringBundler.concat(
+				directoryPath,
+				StringUtil.replace(
+					fullyQualifiedName.substring(packageName.length() + 1),
+					CharPool.PERIOD, CharPool.SLASH),
+				".java");
 
 			file = new File(fileName);
 

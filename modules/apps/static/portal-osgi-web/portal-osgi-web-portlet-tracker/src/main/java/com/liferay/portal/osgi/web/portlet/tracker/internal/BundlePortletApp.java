@@ -206,7 +206,7 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public boolean isWARFile() {
-		return true;
+		return _warFile;
 	}
 
 	@Override
@@ -258,7 +258,7 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public void setWARFile(boolean warFile) {
-		_portletApp.setWARFile(warFile);
+		_warFile = warFile;
 	}
 
 	private String _defaultNamespace;
@@ -274,5 +274,6 @@ public class BundlePortletApp implements PortletApp {
 	private int _specMajorVersion = 2;
 	private int _specMinorVersion;
 	private final Map<String, SpriteImage> _spriteImagesMap = new HashMap<>();
+	private boolean _warFile = true;
 
 }

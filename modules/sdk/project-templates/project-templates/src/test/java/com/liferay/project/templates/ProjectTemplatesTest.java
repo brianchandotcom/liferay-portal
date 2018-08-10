@@ -172,7 +172,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			"apply plugin: \"com.liferay.plugin\"");
+			"apply plugin: \"com.liferay.plugin\"",
+			_DEPENDENCY_OSGI_CORE + ", version: \"6.0.0\"");
 		_testContains(
 			gradleProjectDir, "src/main/java/bar/activator/BarActivator.java",
 			"public class BarActivator implements BundleActivator {");
@@ -197,20 +198,10 @@ public class ProjectTemplatesTest {
 			"--dependency-management-enabled");
 
 		_testNotContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\", " +
-				"version: \"6.0.0\"");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\"");
-	}
 			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		_testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\", " +
-				"version: \"6.0.0\"");
+			gradleProjectDir, "build.gradle", _DEPENDENCY_OSGI_CORE + "\n");
 	}
 
 	@Test
@@ -221,7 +212,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			"apply plugin: \"com.liferay.plugin\"");
+			"apply plugin: \"com.liferay.plugin\"",
+			_DEPENDENCY_OSGI_CORE + ", version: \"6.0.0\"");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/api/Foo.java",
 			"public interface Foo");
@@ -268,20 +260,10 @@ public class ProjectTemplatesTest {
 			"--dependency-management-enabled");
 
 		_testNotContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\", " +
-				"version: \"6.0.0\"");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\"");
-	}
 			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		_testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"org.osgi\", name: \"org.osgi.core\", " +
-				"version: \"6.0.0\"");
+			gradleProjectDir, "build.gradle", _DEPENDENCY_OSGI_CORE + "\n");
 	}
 
 	@Test
@@ -5264,6 +5246,9 @@ public class ProjectTemplatesTest {
 			"Archiver-Version", "Build-Jdk", "Built-By", "Javac-Debug",
 			"Javac-Deprecation", "Javac-Encoding"),
 		',');
+
+	private static final String _DEPENDENCY_OSGI_CORE =
+		"compileOnly group: \"org.osgi\", name: \"org.osgi.core\"";
 
 	private static final String _DEPENDENCY_PORTAL_KERNEL =
 		"compileOnly group: \"com.liferay.portal\", name: " +

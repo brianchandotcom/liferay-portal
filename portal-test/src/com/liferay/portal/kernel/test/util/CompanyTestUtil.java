@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -88,6 +89,9 @@ public class CompanyTestUtil {
 		// Reset thread locals
 
 		CompanyThreadLocal.setCompanyId(companyId);
+
+		LocaleThreadLocal.setDefaultLocale(
+			LocaleUtil.fromLanguageId(defaultLanguageId));
 	}
 
 }

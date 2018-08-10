@@ -1,0 +1,701 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LayoutSupport add a new field to column to the context 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "spritemap": "icons.svg",
+                "type": "text",
+              },
+            ],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutSupport add a new row to the context and reorder 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "type": "newRow",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutSupport should add a new fields to column void 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "spritemap": "icons.svg",
+                "type": "text",
+              },
+            ],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutSupport should get a column from context 1`] = `
+Array [
+  Object {
+    "items": Array [
+      Object {
+        "name": "Foo",
+      },
+      Object {
+        "name": "Bar",
+      },
+    ],
+    "label": "Select",
+    "required": true,
+    "type": "select",
+  },
+]
+`;
+
+exports[`LayoutSupport should get a row from context 1`] = `
+Object {
+  "columns": Array [
+    Object {
+      "fields": Array [
+        Object {
+          "label": "Text",
+          "required": true,
+          "type": "text",
+        },
+      ],
+      "size": 4,
+    },
+    Object {
+      "fields": Array [
+        Object {
+          "items": Array [
+            Object {
+              "name": "Foo",
+            },
+            Object {
+              "name": "Bar",
+            },
+          ],
+          "label": "Select",
+          "required": true,
+          "type": "select",
+        },
+      ],
+      "size": 6,
+    },
+    Object {
+      "fields": Array [],
+      "size": 2,
+    },
+  ],
+}
+`;
+
+exports[`LayoutSupport should not add an empty object to the column when the field is not passed 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutSupport should not add new fields to the column as a way to remove 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutSupport should remove a column from context and reorder 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutSupport should remove a fields to column from context 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutSupport should remove a row from context and reorder 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Radio",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutSupport should replace column fields 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Foo",
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Text",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "items": Array [
+                  Object {
+                    "name": "Foo",
+                  },
+                  Object {
+                    "name": "Bar",
+                  },
+                ],
+                "label": "Select",
+                "required": true,
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "label": "Second row",
+                "required": true,
+                "type": "text",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;

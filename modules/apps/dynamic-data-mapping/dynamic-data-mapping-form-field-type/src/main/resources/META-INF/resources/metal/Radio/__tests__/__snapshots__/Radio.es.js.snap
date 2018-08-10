@@ -1,0 +1,230 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Field Radio should be not edidable 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 1</span>
+      </span>
+    </label>
+  </div>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 2</span>
+      </span>
+    </label>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Radio should have a helptext 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 1</span>
+      </span>
+    </label>
+  </div>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 2</span>
+      </span>
+    </label>
+  </div>
+  <span class="form-text">Type something</span>
+</div>
+`;
+
+exports[`Field Radio should have a label 1`] = `
+<div class="form-group">
+  <label>label </label>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 1</span>
+      </span>
+    </label>
+  </div>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 2</span>
+      </span>
+    </label>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Radio should have a predefined Value 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 1</span>
+      </span>
+    </label>
+  </div>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 2</span>
+      </span>
+    </label>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Radio should have a spritemap 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 1</span>
+      </span>
+    </label>
+  </div>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 2</span>
+      </span>
+    </label>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Radio should have a value 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 1</span>
+      </span>
+    </label>
+  </div>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 2</span>
+      </span>
+    </label>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Radio should have an id 1`] = `
+<div class="form-group">
+  <label for="ID"></label>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 1</span>
+      </span>
+    </label>
+  </div>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 2</span>
+      </span>
+    </label>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Radio should not be required 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 1</span>
+      </span>
+    </label>
+  </div>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 2</span>
+      </span>
+    </label>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Radio should render Label if showLabel is true 1`] = `
+<div class="form-group">
+  <label>text </label>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 1</span>
+      </span>
+    </label>
+  </div>
+  <div class="custom-control custom-radio">
+    <label>
+      <input class="custom-control-input" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">Option 2</span>
+      </span>
+    </label>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Radio should render items 1`] = `
+<div class="form-group">
+  <label></label>
+  <div class="custom-control custom-radio" id="id">
+    <label>
+      <input class="custom-control-input" name="name" value="item" ref="input" type="radio" role="radio">
+      <span class="custom-control-label">
+        <span class="custom-control-label-text">label</span>
+      </span>
+    </label>
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`Field Radio should render no items when items is empty 1`] = `
+<div class="form-group">
+  <label></label>
+  <span class="form-text"></span>
+</div>
+`;

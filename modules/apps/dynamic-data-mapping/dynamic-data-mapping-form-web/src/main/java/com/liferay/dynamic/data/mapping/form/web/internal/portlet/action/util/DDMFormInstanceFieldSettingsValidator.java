@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util;
 
+import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextVisitor;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
@@ -198,7 +199,7 @@ public class DDMFormInstanceFieldSettingsValidator {
 			ddmForm.getDDMFormFieldsMap(true);
 
 		String serializedFormBuilderContext = ParamUtil.getString(
-			portletRequest, "serializedFormBuilderContext");
+			portletRequest, DDMWebKeys.SERIALIZED_FORM_BUILDER_CONTEXT);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			serializedFormBuilderContext);

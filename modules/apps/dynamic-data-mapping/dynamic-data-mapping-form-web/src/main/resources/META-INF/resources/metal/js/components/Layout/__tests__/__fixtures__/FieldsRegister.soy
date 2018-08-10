@@ -1,0 +1,19 @@
+{namespace FieldsRegister}
+
+{deltemplate LayoutRenderer.RegisterFieldType variant="'radio'"}
+	{call Fields.render data="all"}
+		{param type: 'radio' /}
+	{/call}
+{/deltemplate}
+
+{deltemplate LayoutRenderer.RegisterFieldType variant="'text'"}
+	{call Fields.render data="all"}
+		{param type: 'text' /}
+	{/call}
+{/deltemplate}
+
+{deltemplate LayoutRenderer.RegisterFieldType variant="'select'"}
+	{call Fields.render data="all"}
+		{param type: 'select' /}
+	{/call}
+{/deltemplate}

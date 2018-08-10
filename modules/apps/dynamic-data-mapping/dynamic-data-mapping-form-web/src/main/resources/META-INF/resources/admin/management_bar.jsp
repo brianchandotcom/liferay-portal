@@ -49,7 +49,7 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 
 			submitForm(form, '<portlet:actionURL name="deleteFormInstance"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
-	}
+	};
 
 	var deleteStructures = function() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
@@ -62,7 +62,7 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 
 			submitForm(form, '<portlet:actionURL name="deleteStructure"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="currentTab" value="element-set" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
-	}
+	};
 
 	var ACTIONS = {
 		'deleteFormInstances': deleteFormInstances,

@@ -56,11 +56,8 @@ PortletURL portletURL = editPasswordPolicyAssignmentsManagementToolbarDisplayCon
 
 <liferay-util:include page="/edit_password_policy_tabs.jsp" servletContext="<%= application %>" />
 
-<liferay-ui:tabs
-	names="users,organizations"
-	param="tabs2"
-	type="tabs nav-tabs-default"
-	url="<%= portletURL.toString() %>"
+<clay:navigation-bar
+	navigationItems="<%= passwordPolicyDisplayContext.getEditPasswordPolicyAssignmentsNavigationItems(portletURL) %>"
 />
 
 <clay:management-toolbar

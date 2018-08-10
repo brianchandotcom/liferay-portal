@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marcellus Tavares
+ * @deprecated As of Judson (7.1.x), replaced by {@link DDMFormValuesDeserializer}
  */
+@Deprecated
 @ProviderType
 public interface DDMFormValuesJSONDeserializer {
 

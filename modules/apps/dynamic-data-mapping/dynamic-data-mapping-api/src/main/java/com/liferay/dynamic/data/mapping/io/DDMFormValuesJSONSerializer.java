@@ -20,7 +20,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 /**
  * @author Marcellus Tavares
+ * @deprecated As of Judson (7.1.x), replaced by {@link DDMFormValuesSerializer}
  */
+@Deprecated
 @ProviderType
 public interface DDMFormValuesJSONSerializer {
 

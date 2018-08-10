@@ -17,6 +17,7 @@ package com.liferay.asset.tags.internal.exportimport.data.handler;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
+import com.liferay.asset.tags.internal.configuration.AssetTagsServiceConfigurationValues;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -70,7 +71,9 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 
 		PortletDataHandlerBoolean mergeTagsByNamePortletDataHandlerBoolean =
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "merge-tags-by-name", false, false, null);
+				NAMESPACE, "merge-tags-by-name",
+				AssetTagsServiceConfigurationValues.STAGING_MERGE_TAGS_BY_NAME,
+				false, null);
 
 		setImportControls(
 			tagsPortletDataHandlerBoolean,

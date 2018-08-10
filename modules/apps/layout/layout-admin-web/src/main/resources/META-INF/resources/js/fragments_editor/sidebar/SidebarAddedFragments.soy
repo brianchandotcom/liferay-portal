@@ -10,6 +10,7 @@
 		name: string
 	]>}
 	{@param? _handleFragmentRemoveButtonClick: any}
+	{@param? store: ?}
 
 	<div class="sidebar-added-fragments">
 		{if $fragmentEntryLinks}
@@ -21,6 +22,7 @@
 					{param itemName: $fragmentEntryLink.name /}
 					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
 					{param spritemap: $spritemap /}
+					{param store: $store /}
 				{/call}
 			{/foreach}
 		{/if}

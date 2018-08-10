@@ -20,6 +20,7 @@
 		label: string
 	]>}
 	{@param? _tooltipLabel: string}
+	{@param? store: ?}
 
 	<lfr-editable
 		data-onclick="{$_handleEditableClick}"
@@ -41,6 +42,7 @@
 				] /}
 				{param label: $_tooltipLabel /}
 				{param portalElement: 'body' /}
+				{param store: $store /}
 			{/call}
 		{/if}
 	</lfr-editable>

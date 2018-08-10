@@ -8,6 +8,7 @@ import './fragment_entry_link/FragmentEntryLinkList.es';
 import './sidebar/FragmentsEditorSidebar.es';
 import './toolbar/FragmentsEditorToolbar.es';
 import FragmentEntryLink from './fragment_entry_link/FragmentEntryLink.es';
+import MetalStore from './store/MetalStore.es';
 import templates from './FragmentsEditor.soy';
 
 /**
@@ -16,6 +17,29 @@ import templates from './FragmentsEditor.soy';
  */
 
 class FragmentsEditor extends Component {
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	constructor(attributes) {
+		super(attributes);
+
+		this._store = new MetalStore(
+			attributes,
+			[]
+		);
+
+		this._store.on(
+			'change',
+			(nextState) => Object.entries(nextState).forEach(
+				([key, value]) => {
+					this[key] = value;
+				}
+			)
+		);
+	}
 
 	/**
 	 * @inheritDoc
@@ -1201,7 +1225,21 @@ FragmentsEditor.STATE = {
 	_selectMappingTypeDialogVisible: Config
 		.bool()
 		.internal()
-		.value(false)
+		.value(false),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {MetalStore}
+	 */
+
+	_store: Config
+		.instanceOf(MetalStore)
+		.internal(),
 };
 
 Soy.register(FragmentsEditor, templates);

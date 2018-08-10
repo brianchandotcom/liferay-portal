@@ -34,6 +34,7 @@
 			label: string
 		]
 	]}
+	{@param? store: ?}
 
 	{let $entryLinksClasses kind="text"}
 		fragment-entry-link-list
@@ -72,6 +73,7 @@
 						{param selectedMappingTypes: $selectedMappingTypes /}
 						{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
 						{param spritemap: $spritemap /}
+						{param store: $store /}
 					{/call}
 				</div>
 			{/foreach}

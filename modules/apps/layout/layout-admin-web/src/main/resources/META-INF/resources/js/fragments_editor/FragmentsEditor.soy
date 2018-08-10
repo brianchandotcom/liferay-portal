@@ -75,6 +75,7 @@
 	]}
 	{@param? status: string}
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
+	{@param? _store: ?}
 
 	<div class="fragments-editor" id="{$id}">
 		{call com.liferay.layout.admin.web.FragmentsEditorToolbar.render}
@@ -90,6 +91,7 @@
 			{param portletNamespace: $portletNamespace /}
 			{param savingChanges: $_dirty ?: false /}
 			{param spritemap: $spritemap /}
+			{param store: $_store /}
 			{param translationAvailableLanguages: $availableLanguages /}
 			{param translationDefaultLanguageId: $defaultLanguageId /}
 			{param translationLanguageId: $languageId /}
@@ -112,6 +114,7 @@
 			{param selectedMappingTypes: $selectedMappingTypes /}
 			{param sidebarTabs: $sidebarTabs /}
 			{param spritemap: $spritemap /}
+			{param store: $_store /}
 			{param visible: $_contextualSidebarVisible ?: true /}
 		{/call}
 
@@ -135,6 +138,7 @@
 				{param ref: 'fragmentsEditorRender' /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
+				{param store: $_store /}
 				{param translating: $languageId != $defaultLanguageId /}
 			{/call}
 		</div>
@@ -153,6 +157,7 @@
 				{param portletNamespace: $portletNamespace /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
+				{param store: $_store /}
 				{param visible: $_selectMappingDialogVisible ?: false /}
 			{/call}
 		{/if}
@@ -168,6 +173,7 @@
 				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param spritemap: $spritemap /}
+				{param store: $_store /}
 				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
 				{param visible: $_selectMappingTypeDialogVisible ?: false /}
 			{/call}

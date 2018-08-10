@@ -113,6 +113,10 @@ gradle.beforeProject {
 					filter(ReplaceTokens, tokens: projectTemplateTokens)
 				}
 
+				outputs.upToDateWhen {
+					false
+				}
+
 				rename "gitignore", ".gitignore"
 			}
 		}

@@ -170,7 +170,9 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			detailAST, true, TokenTypes.LITERAL_NEW);
 
 		for (DetailAST literalNewAST : literalNewASTList) {
-			if (_hasDeprecatedParent(literalNewAST)) {
+			if (_hasDeprecatedParent(literalNewAST) ||
+				_hasSuppressDeprecationWarningsAnnotation(literalNewAST)) {
+
 				continue;
 			}
 
@@ -249,7 +251,9 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			detailAST, true, TokenTypes.DOT);
 
 		for (DetailAST dotAST : dotASTList) {
-			if (_hasDeprecatedParent(dotAST)) {
+			if (_hasDeprecatedParent(dotAST) ||
+				_hasSuppressDeprecationWarningsAnnotation(dotAST)) {
+
 				continue;
 			}
 
@@ -320,7 +324,9 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			detailAST, true, TokenTypes.METHOD_CALL);
 
 		for (DetailAST methodCallAST : methodCallASTList) {
-			if (_hasDeprecatedParent(methodCallAST)) {
+			if (_hasDeprecatedParent(methodCallAST) ||
+				_hasSuppressDeprecationWarningsAnnotation(methodCallAST)) {
+
 				continue;
 			}
 
@@ -410,7 +416,9 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		DetailAST detailAST, String packageName, List<String> importNames,
 		String directoryPath) {
 
-		if (_hasDeprecatedParent(detailAST)) {
+		if (_hasDeprecatedParent(detailAST) ||
+			_hasSuppressDeprecationWarningsAnnotation(detailAST)) {
+
 			return;
 		}
 
@@ -993,6 +1001,39 @@ public class DeprecatedUsageCheck extends BaseCheck {
 				AnnotationUtil.containsAnnotation(parentAST, "Deprecated")) {
 
 				return true;
+			}
+
+			parentAST = parentAST.getParent();
+		}
+	}
+
+	private boolean _hasSuppressDeprecationWarningsAnnotation(
+		DetailAST detailAST) {
+
+		DetailAST parentAST = detailAST.getParent();
+
+		while (true) {
+			if (parentAST == null) {
+				return false;
+			}
+
+			if (parentAST.findFirstToken(TokenTypes.MODIFIERS) != null) {
+				DetailAST annotationAST = AnnotationUtil.getAnnotation(
+					parentAST, "SuppressWarnings");
+
+				if (annotationAST != null) {
+					List<DetailAST> literalStringASTList =
+						DetailASTUtil.getAllChildTokens(
+							annotationAST, true, TokenTypes.STRING_LITERAL);
+
+					for (DetailAST literalStringAST : literalStringASTList) {
+						String s = literalStringAST.getText();
+
+						if (s.equals("\"deprecation\"")) {
+							return true;
+						}
+					}
+				}
 			}
 
 			parentAST = parentAST.getParent();

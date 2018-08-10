@@ -130,6 +130,11 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 			}
 		);
 
+	</aui:script>
+</c:if>
+
+	<aui:script sandbox="<%= true %>">
+
 		window.<portlet:namespace />closeDialog = function() {
 			var namespace = window.parent.namespace;
 
@@ -144,9 +149,8 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		<c:if test="<%= !company.isStrangers() && (user == null) %>">
 			<portlet:namespace />closeDialog();
 		</c:if>
-	</aui:script>
 
-	<aui:script sandbox="<%= true %>">
+
 		var afterLogin;
 		var namespace;
 		var randomNamespace;
@@ -195,4 +199,3 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 			}
 		}
 	</aui:script>
-</c:if>

@@ -25,13 +25,16 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -127,7 +130,8 @@ public class StructuredContentControllerTest {
 		//When: The Journal Articles are requested
 		PageItems<JournalArticleWrapper> pageItems =
 			_structuredContentController.getPageItems(
-				PaginationTestUtil.of(10, 1), _group.getGroupId(), null);
+				PaginationTestUtil.of(10, 1), _group.getGroupId(),
+				_getThemeDisplay(_group));
 
 		//Then: The Article is returned
 
@@ -136,6 +140,19 @@ public class StructuredContentControllerTest {
 		Collection<JournalArticleWrapper> items = pageItems.getItems();
 
 		Assert.assertTrue("Items " + items, items.contains(journalArticle));
+	}
+
+	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = CompanyLocalServiceUtil.getCompanyById(
+			group.getCompanyId());
+
+		themeDisplay.setCompany(company);
+
+		themeDisplay.setScopeGroupId(group.getGroupId());
+
+		return themeDisplay;
 	}
 
 	private static final Locale[] _locales =

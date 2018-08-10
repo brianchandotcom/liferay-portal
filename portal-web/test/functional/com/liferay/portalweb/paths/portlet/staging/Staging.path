@@ -29,6 +29,11 @@
 	<td>xpath=(//span[contains(@data-qa-id,'processResult')])[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROCESS_SUMMARY_PAGES_TITLE</td>
+	<td>//div[contains(@class,'process-summary-section')]//div[contains(.,'Pages Option:')]</td>
+	<td></td>
+</tr>
 <!--STAGING-->
 <tr>
 	<td>STAGING_NEW_PUBLICATION_PROCESS_NAVIGATION</td>

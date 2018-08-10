@@ -13,6 +13,10 @@
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Sites" />
 		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -29,10 +33,91 @@
 		</if>
 	</tear-down>
 
-	<command name="DeleteRecycleBinOnStagingActivation" priority="4">
-		<execute macro="Site#addBlankCP">
+	<command name="CheckPublicationSummaryLocal" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Publishing" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Staging Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive">
+			<var name="publicationName" value="summCheck" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Publishing" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#viewPublicationSummary">
+			<var name="publicationTitle" value="summCheck" />
+		</execute>
+	</command>
+
+	<command name="CheckPublicationSummaryRemote" priority="4">
+		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Staging#remoteStagingSetUp">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Staging Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive">
+			<var name="publicationName" value="summCheck" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Publishing" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#viewPublicationSummary">
+			<var name="publicationTitle" value="summCheck" />
+		</execute>
+	</command>
+
+	<command name="DeleteRecycleBinOnStagingActivation" priority="4">
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

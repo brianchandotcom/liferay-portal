@@ -194,6 +194,11 @@
 	<td>//span[contains(.,'From Last Publish Date')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PUBLICATION_TITLE</td>
+	<td>//input[contains(@id,'StagingProcessesPortlet_name')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

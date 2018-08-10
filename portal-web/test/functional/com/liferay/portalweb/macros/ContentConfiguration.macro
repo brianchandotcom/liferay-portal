@@ -124,6 +124,10 @@
 		<execute function="Click" locator1="Checkbox#PERMISSIONS" />
 	</command>
 
+	<command name="setTitle">
+		<execute function="Type" locator1="StagingPublishToLive#PUBLICATION_TITLE" value1="${publicationTitle}" />
+	</command>
+
 	<command name="uncheckContentNameList">
 		<for list="${uncheckContentNameList}" param="contentName">
 			<execute function="Uncheck#uncheckToggleSwitch" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL">

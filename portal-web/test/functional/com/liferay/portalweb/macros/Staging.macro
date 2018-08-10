@@ -1140,6 +1140,19 @@
 		<execute function="AssertTextEquals" locator1="Staging#PAGE_VARIATION" value1="${pageVariationName}" />
 	</command>
 
+	<command name="viewPublicationSummary">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Summary" />
+			<var name="rowEntry" value="${publicationTitle}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertElementPresent" locator1="Staging#PROCESS_SUMMARY_PAGES_TITLE" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
 	<command name="viewPublishContentCountViaPortletStagingCP">
 		<execute macro="LexiconEntry#gotoHeaderMenuItem">
 			<var name="menuItem" value="Staging" />

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -150,7 +149,7 @@ public class LoginUtil {
 
 		String login = request.getParameter(paramName);
 
-		if ((login == null) || login.equals(StringPool.NULL)) {
+		if ((login == null) || login.equals("null")) {
 			login = CookieKeys.getCookie(request, CookieKeys.LOGIN, false);
 
 			if (PropsValues.COMPANY_LOGIN_PREPOPULATE_DOMAIN &&

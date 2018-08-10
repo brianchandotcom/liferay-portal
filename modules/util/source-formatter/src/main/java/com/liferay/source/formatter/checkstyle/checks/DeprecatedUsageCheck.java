@@ -979,8 +979,8 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		}
 	}
 
-	private boolean _hasDeprecatedParent(DetailAST methodCallAST) {
-		DetailAST parentAST = methodCallAST.getParent();
+	private boolean _hasDeprecatedParent(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
 
 		while (true) {
 			if (parentAST == null) {

@@ -793,19 +793,37 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var controlTrigger = container.one('.form-builder-page-header .form-builder-controls-trigger');
+						var controlTriggers = container.all('.form-builder-controls-trigger');
 
-						var controlTriggerButton = controlTrigger.one('.dropdown-toggle');
+						var controlTriggerButtons = controlTriggers.all('.dropdown-toggle');
 
 						if (instance.isEditMode()) {
 							instance._destroySortable(instance.sortable1);
 							container.addClass('edit-mode');
-							controlTrigger.addClass('disabled');
-							controlTriggerButton.addClass('disabled');
+							controlTriggers.each(
+								function(item) {
+									item.addClass('disabled');
+								}
+							);
+							controlTriggerButtons.each(
+								function(item) {
+									item.addClass('disabled');
+								}
+							);
 						}
 						else {
 							instance._applyDragAndDrop();
 							container.removeClass('edit-mode');
+							controlTriggers.each(
+								function(item) {
+									item.removeClass('disabled');
+								}
+							);
+							controlTriggerButtons.each(
+								function(item) {
+									item.removeClass('disabled');
+								}
+							);
 						}
 					},
 

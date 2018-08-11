@@ -171,7 +171,7 @@ public class LPKGBundleTrackerCustomizer
 						LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
 							bundle, url.getPath());
 
-					if (_checkOverridden(symbolicName, url, location)) {
+					if (_isOverridden(symbolicName, url, location)) {
 						continue;
 					}
 
@@ -210,7 +210,7 @@ public class LPKGBundleTrackerCustomizer
 						LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
 							bundle, url.getPath());
 
-					if (_checkOverridden(symbolicName, url, location)) {
+					if (_isOverridden(symbolicName, url, location)) {
 						continue;
 					}
 
@@ -389,39 +389,6 @@ public class LPKGBundleTrackerCustomizer
 		return sb.toString();
 	}
 
-	private boolean _checkOverridden(
-			String symbolicName, URL url, String location)
-		throws Throwable {
-
-		String path = url.getPath();
-
-		Matcher matcher = _pattern.matcher(path);
-
-		if (matcher.matches()) {
-			path = matcher.group(1) + matcher.group(4);
-		}
-
-		path = StringUtil.toLowerCase(path);
-
-		if (_overrideFileNames.contains(path)) {
-			Bundle bundle = _bundleContext.getBundle(location);
-
-			if (bundle != null) {
-				_uninstallBundle(symbolicName.concat(StringPool.DASH), bundle);
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Disabled ", symbolicName, ":", url.getPath()));
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isBundleInstalled(Bundle bundle, URL url)
 		throws IOException {
 
@@ -464,6 +431,38 @@ public class LPKGBundleTrackerCustomizer
 					return true;
 				}
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isOverridden(String symbolicName, URL url, String location)
+		throws Throwable {
+
+		String path = url.getPath();
+
+		Matcher matcher = _pattern.matcher(path);
+
+		if (matcher.matches()) {
+			path = matcher.group(1) + matcher.group(3);
+		}
+
+		path = StringUtil.toLowerCase(path);
+
+		if (_overrideFileNames.contains(path)) {
+			Bundle bundle = _bundleContext.getBundle(location);
+
+			if (bundle != null) {
+				_uninstallBundle(symbolicName.concat(StringPool.DASH), bundle);
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Disabled ", symbolicName, ":", url.getPath()));
+			}
+
+			return true;
 		}
 
 		return false;
@@ -741,7 +740,7 @@ public class LPKGBundleTrackerCustomizer
 		LPKGBundleTrackerCustomizer.class);
 
 	private static final Pattern _pattern = Pattern.compile(
-		"/(.*?)(-\\d+\\.\\d+\\.\\d+)(\\..+)?(\\.[jw]ar)");
+		"/(.*?)-\\d+\\.\\d+\\.\\d+(\\..+)?(\\.[jw]ar)");
 	private static final List<String> _staticLPKGBundleSymbolicNames =
 		StaticLPKGResolver.getStaticLPKGBundleSymbolicNames();
 

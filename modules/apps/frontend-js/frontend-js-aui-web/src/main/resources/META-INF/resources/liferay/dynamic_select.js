@@ -32,6 +32,9 @@ AUI.add(
 		 * array[i].selectDesc {string}: A JSON object field name for an option description.
 		 * array[i].selectVal {string}: The value that is displayed in an option field.
 		 *
+		 * Optional
+		 * array[i].selectDisableOnEmpty {boolean}: Whether or not to disable the select field when selectData returns no results
+		 *
 		 * Callbacks
 		 * array[i].selectData {function}: Returns a JSON array to populate the next select box.
 		 */
@@ -104,6 +107,7 @@ AUI.add(
 
 				var select = A.one('#' + options.select);
 				var selectDesc = options.selectDesc;
+				var selectDisableOnEmpty = !!options.selectDisableOnEmpty;
 				var selectId = options.selectId;
 				var selectNullable = options.selectNullable !== false;
 				var selectSort = options.selectSort;
@@ -139,6 +143,15 @@ AUI.add(
 
 				if (select) {
 					select.empty().append(selectOptions);
+
+					if (selectDisableOnEmpty) {
+						if (!list.length) {
+							select.setAttribute('disabled', '');
+						}
+						else {
+							select.removeAttribute('disabled');
+						}
+					}
 				}
 			}
 		};

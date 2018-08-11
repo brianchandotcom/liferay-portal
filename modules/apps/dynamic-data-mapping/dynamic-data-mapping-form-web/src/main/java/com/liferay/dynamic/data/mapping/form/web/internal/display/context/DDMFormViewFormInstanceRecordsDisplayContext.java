@@ -476,7 +476,11 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 							orderByCol.equals(getOrderByCol()));
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", orderByCol);
-						dropdownItem.setLabel(orderByCol);
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								PortalUtil.getHttpServletRequest(
+									_renderRequest),
+								orderByCol));
 					});
 			}
 		};

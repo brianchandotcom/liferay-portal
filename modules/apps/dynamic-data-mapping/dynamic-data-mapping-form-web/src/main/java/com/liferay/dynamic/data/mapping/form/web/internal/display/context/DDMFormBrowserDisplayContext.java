@@ -321,7 +321,9 @@ public class DDMFormBrowserDisplayContext {
 		return dropdownItem -> {
 			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
 			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
-			dropdownItem.setLabel(orderByCol);
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_formWebRequestHelper.getRequest(), orderByCol));
 		};
 	}
 

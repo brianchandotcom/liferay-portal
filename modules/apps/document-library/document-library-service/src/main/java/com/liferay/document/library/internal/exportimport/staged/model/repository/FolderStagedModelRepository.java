@@ -121,6 +121,7 @@ public class FolderStagedModelRepository
 
 				dynamicQuery.add(property.in(exportableRepositoryIds));
 			});
+
 		exportActionableDynamicQuery.setPerformActionMethod(
 			(DLFolder dlFolder) -> {
 				if (dlFolder.isInTrash()) {

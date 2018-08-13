@@ -15,6 +15,9 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextRequest;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -42,6 +45,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceNameComparator;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -57,6 +61,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -77,6 +82,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -97,6 +103,7 @@ public class DDMFormAdminDisplayContext {
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
+		DDMFormBuilderContextFactory ddmFormBuilderContextFactory,
 		DDMFormWebConfiguration formWebConfiguration,
 		DDMFormInstanceRecordLocalService formInstanceRecordLocalService,
 		DDMFormInstanceRecordWriterTracker ddmFormInstanceRecordWriterTracker,
@@ -107,12 +114,14 @@ public class DDMFormAdminDisplayContext {
 		DDMFormRenderer formRenderer, DDMFormValuesFactory formValuesFactory,
 		DDMFormValuesMerger formValuesMerger,
 		DDMStructureLocalService structureLocalService,
-		DDMStructureService structureService, JSONFactory jsonFactory) {
+		DDMStructureService structureService, JSONFactory jsonFactory,
+		NPMResolver npmResolver) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener =
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
+		_ddmFormBuilderContextFactory = ddmFormBuilderContextFactory;
 		_ddmFormWebConfiguration = formWebConfiguration;
 		_ddmFormInstanceRecordLocalService = formInstanceRecordLocalService;
 		_ddmFormInstanceRecordWriterTracker =
@@ -127,6 +136,7 @@ public class DDMFormAdminDisplayContext {
 		_ddmStructureLocalService = structureLocalService;
 		_ddmStructureService = structureService;
 		_jsonFactory = jsonFactory;
+		_npmResolver = npmResolver;
 
 		formAdminRequestHelper = new DDMFormAdminRequestHelper(renderRequest);
 
@@ -206,9 +216,10 @@ public class DDMFormAdminDisplayContext {
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/admin/edit_form_instance.jsp", "redirect",
-							PortalUtil.getCurrentURL(request), "groupId",
+							_renderResponse.createRenderURL(),
+							"mvcRenderCommandName", "/admin/edit_form_instance",
+							"redirect", PortalUtil.getCurrentURL(request),
+							"groupId",
 							String.valueOf(themeDisplay.getScopeGroupId()));
 
 						dropdownItem.setLabel(
@@ -516,6 +527,11 @@ public class DDMFormAdminDisplayContext {
 		return sb.toString();
 	}
 
+	public String getMainRequire() {
+		return _npmResolver.resolveModuleName("dynamic-data-mapping-form-web") +
+			" as main";
+	}
+
 	public List<NavigationItem> getNavigationItems() {
 		HttpServletRequest request = formAdminRequestHelper.getRequest();
 
@@ -686,6 +702,41 @@ public class DDMFormAdminDisplayContext {
 
 	public String getSearchContainerId() {
 		return "formInstance";
+	}
+
+	public String getSerializedFormBuilderContext() throws PortalException {
+		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
+
+		String serializedFormBuilderContext = ParamUtil.getString(
+			_renderRequest, "serializedFormBuilderContext");
+
+		if (Validator.isNotNull(serializedFormBuilderContext)) {
+			return serializedFormBuilderContext;
+		}
+
+		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
+
+		Optional<DDMStructure> ddmStructureOptional = Optional.ofNullable(
+			_ddmStructureLocalService.fetchDDMStructure(getDDMStructureId()));
+
+		Locale defaultLocale = themeDisplay.getSiteDefaultLocale();
+
+		if (ddmStructureOptional.isPresent()) {
+			DDMStructure ddmStructure = ddmStructureOptional.get();
+
+			DDMForm ddmForm = ddmStructure.getDDMForm();
+
+			defaultLocale = ddmForm.getDefaultLocale();
+		}
+
+		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
+			_ddmFormBuilderContextFactory.create(
+				DDMFormBuilderContextRequest.with(
+					ddmStructureOptional, themeDisplay.getRequest(),
+					themeDisplay.getResponse(), defaultLocale, true));
+
+		return jsonSerializer.serializeDeep(
+			ddmFormBuilderContextResponse.getContext());
 	}
 
 	public String getSharedFormURL() {
@@ -1068,6 +1119,7 @@ public class DDMFormAdminDisplayContext {
 
 	private final AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
+	private final DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
 	private final DDMFormFieldTypesJSONSerializer
@@ -1091,6 +1143,7 @@ public class DDMFormAdminDisplayContext {
 	private final FormInstancePermissionCheckerHelper
 		_formInstancePermissionCheckerHelper;
 	private final JSONFactory _jsonFactory;
+	private final NPMResolver _npmResolver;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 

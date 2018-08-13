@@ -1,10 +1,8 @@
 'use strict';
 
 window.YUI_config = {
-	"filter":"raw"
+	'filter': 'raw'
 };
-
-var A = AUI();
 
 describe(
 	'Liferay.DDM.FormBuilderCalculator',
@@ -31,11 +29,13 @@ describe(
 
 						calculator.render();
 
-						calculator.on('clickedKey', function(event) {
-							console.log(event.key);
-							assert.isNotNull(event.key);
-							done();
-						});
+						calculator.on(
+							'clickedKey',
+							function(event) {
+								assert.isNotNull(event.key);
+								done();
+							}
+						);
 
 						var buttons = calculator.get('boundingBox').all('.calculator-button');
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.architect.controller;
+package com.liferay.structured.content.apio.architect.router;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -23,11 +23,11 @@ import com.liferay.structured.content.apio.architect.form.StructuredContentUpdat
 import com.liferay.structured.content.apio.architect.model.JournalArticleWrapper;
 
 /**
- * Public API for the Structured Content Controller.
+ * Public API for the Structured Content Router.
  *
  * @author Cristina González
  */
-public interface StructuredContentController {
+public interface StructuredContentRouter {
 
 	public JournalArticleWrapper addJournalArticle(
 			long contentSpaceId,

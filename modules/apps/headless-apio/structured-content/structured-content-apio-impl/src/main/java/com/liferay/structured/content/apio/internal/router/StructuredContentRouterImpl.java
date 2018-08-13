@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.internal.controller;
+package com.liferay.structured.content.apio.internal.router;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.structured.content.apio.architect.controller.StructuredContentController;
 import com.liferay.structured.content.apio.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.architect.form.StructuredContentUpdaterForm;
 import com.liferay.structured.content.apio.architect.model.JournalArticleWrapper;
+import com.liferay.structured.content.apio.architect.router.StructuredContentRouter;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(immediate = true)
-public class StructuredContentControllerImpl
-	implements StructuredContentController {
+public class StructuredContentRouterImpl implements StructuredContentRouter {
 
 	@Override
 	public JournalArticleWrapper addJournalArticle(

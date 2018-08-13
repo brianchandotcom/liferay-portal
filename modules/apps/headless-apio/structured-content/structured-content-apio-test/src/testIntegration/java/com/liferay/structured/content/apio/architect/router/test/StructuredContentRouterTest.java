@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.architect.controller.test;
+package com.liferay.structured.content.apio.architect.router.test;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -42,8 +42,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.structured.content.apio.architect.controller.StructuredContentController;
 import com.liferay.structured.content.apio.architect.model.JournalArticleWrapper;
+import com.liferay.structured.content.apio.architect.router.StructuredContentRouter;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
 import java.util.Calendar;
@@ -63,7 +63,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class StructuredContentControllerTest {
+public class StructuredContentRouterTest {
 
 	@ClassRule
 	@Rule
@@ -129,7 +129,7 @@ public class StructuredContentControllerTest {
 
 		//When: The Journal Articles are requested
 		PageItems<JournalArticleWrapper> pageItems =
-			_structuredContentController.getPageItems(
+			_structuredContentRouter.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
 				_getThemeDisplay(_group));
 
@@ -165,6 +165,6 @@ public class StructuredContentControllerTest {
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
-	private StructuredContentController _structuredContentController;
+	private StructuredContentRouter _structuredContentRouter;
 
 }

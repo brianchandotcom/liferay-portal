@@ -53,11 +53,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
-import com.liferay.structured.content.apio.architect.controller.StructuredContentController;
 import com.liferay.structured.content.apio.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.architect.form.StructuredContentUpdaterForm;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 import com.liferay.structured.content.apio.architect.model.JournalArticleWrapper;
+import com.liferay.structured.content.apio.architect.router.StructuredContentRouter;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
 import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle;
 
@@ -89,9 +89,9 @@ public class StructuredContentNestedCollectionResource
 				builder) {
 
 		return builder.addGetter(
-			_structuredContentController::getPageItems, ThemeDisplay.class
+			_structuredContentRouter::getPageItems, ThemeDisplay.class
 		).addCreator(
-			_structuredContentController::addJournalArticle, ThemeDisplay.class,
+			_structuredContentRouter::addJournalArticle, ThemeDisplay.class,
 			_hasPermission.forAddingIn(ContentSpaceIdentifier.class),
 			StructuredContentCreatorForm::buildForm
 		).build();
@@ -109,12 +109,11 @@ public class StructuredContentNestedCollectionResource
 		return builder.addGetter(
 			this::_getJournalArticleWrapper, ThemeDisplay.class
 		).addRemover(
-			idempotent(_structuredContentController::deleteJournalArticle),
+			idempotent(_structuredContentRouter::deleteJournalArticle),
 			_hasPermission::forDeleting
 		).addUpdater(
-			_structuredContentController::updateJournalArticle,
-			ThemeDisplay.class, _hasPermission::forUpdating,
-			StructuredContentUpdaterForm::buildForm
+			_structuredContentRouter::updateJournalArticle, ThemeDisplay.class,
+			_hasPermission::forUpdating, StructuredContentUpdaterForm::buildForm
 		).build();
 	}
 
@@ -428,6 +427,6 @@ public class StructuredContentNestedCollectionResource
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private StructuredContentController _structuredContentController;
+	private StructuredContentRouter _structuredContentRouter;
 
 }

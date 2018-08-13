@@ -414,7 +414,7 @@ public class GitWorkingDirectory {
 					Lists.partition(
 						new ArrayList<String>(
 							remoteURLBranchNamesEntry.getValue()),
-							_DELETE_BRANCHES_BATCH_SIZE)) {
+						_DELETE_BRANCHES_BATCH_SIZE)) {
 
 				_deleteRemoteGitBranches(
 					remoteURL,

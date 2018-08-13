@@ -17,7 +17,8 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class RemoteGitRef extends BaseGitRef implements Comparable<RemoteGitRef> {
+public class RemoteGitRef
+	extends BaseGitRef implements Comparable<RemoteGitRef> {
 
 	@Override
 	public int compareTo(RemoteGitRef o) {

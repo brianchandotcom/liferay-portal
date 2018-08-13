@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class RemoteGitBranch extends RemoteGitRef  {
+public class RemoteGitBranch extends RemoteGitRef {
 
 	protected RemoteGitBranch(
 		RemoteRepository remoteRepository, String name, String sha) {

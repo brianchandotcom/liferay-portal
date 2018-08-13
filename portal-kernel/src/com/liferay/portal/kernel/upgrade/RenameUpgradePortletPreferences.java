@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.upgrade.v6_2_0.BaseUpgradePortletPreferences;
 
 import java.util.Map;
 

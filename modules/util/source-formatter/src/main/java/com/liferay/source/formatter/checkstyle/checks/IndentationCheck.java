@@ -361,6 +361,15 @@ public class IndentationCheck extends BaseCheck {
 			detailAST, true, TokenTypes.GENERIC_END, TokenTypes.GENERIC_START);
 
 		for (DetailAST genericAST : genericASTList) {
+			DetailAST exprAST = DetailASTUtil.getParentWithTokenType(
+				genericAST, TokenTypes.EXPR);
+
+			if ((exprAST != null) &&
+				!lineNumbers.contains(DetailASTUtil.getStartLine(exprAST))) {
+
+				continue;
+			}
+
 			int lineNo = genericAST.getLineNo();
 
 			if (lineNo < lineNumber) {

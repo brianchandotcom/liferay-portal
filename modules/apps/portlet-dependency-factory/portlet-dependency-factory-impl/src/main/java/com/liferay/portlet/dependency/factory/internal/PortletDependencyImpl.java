@@ -48,12 +48,11 @@ public class PortletDependencyImpl implements PortletDependency {
 		}
 		else if (Validator.isNotNull(markup)) {
 			markup = StringUtil.trim(markup);
-			markup = StringUtil.lowerCase(markup);
 
-			if (markup.startsWith("<script")) {
+			if (markup.regionMatches(true, 0, "<script", 0, 7)) {
 				_type = Type.JAVASCRIPT;
 			}
-			else if (markup.startsWith("<link")) {
+			else if (markup.regionMatches(true, 0, "<link", 0, 5)) {
 				_type = Type.CSS;
 			}
 			else {

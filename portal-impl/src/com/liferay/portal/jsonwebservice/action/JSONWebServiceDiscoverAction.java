@@ -237,6 +237,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 	}
 
 	private List<Map<String, Object>> _buildTypes() {
+		_completeTypes();
+
 		List<Map<String, Object>> types = new ArrayList<>();
 
 		for (Class<?> type : _types) {
@@ -244,23 +246,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 			types.add(map);
 
-			Class<?> modelType = type;
-
-			if (type.isInterface()) {
-				try {
-					Class<?> clazz = getClass();
-
-					ClassLoader classLoader = clazz.getClassLoader();
-
-					String modelImplClassName =
-						_jsonWebServiceNaming.convertModelClassToImplClassName(
-							type);
-
-					modelType = classLoader.loadClass(modelImplClassName);
-				}
-				catch (ClassNotFoundException cnfe) {
-				}
-			}
+			Class<?> modelType = _getInterfaceType(type);
 
 			if (modelType.isInterface() ||
 				Modifier.isAbstract(modelType.getModifiers())) {
@@ -279,6 +265,21 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		}
 
 		return types;
+	}
+
+	private void _completeTypes() {
+		int typesSize;
+
+		do {
+			typesSize = _types.size();
+
+			for (Class<?> type : new ArrayList<>(_types)) {
+				Class<?> modelType = _getInterfaceType(type);
+
+				_buildPropertiesList(modelType);
+			}
+		}
+		while (typesSize != _types.size());
 	}
 
 	private String _formatType(
@@ -408,6 +409,28 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		}
 
 		return genericReturnTypes;
+	}
+
+	private Class<?> _getInterfaceType(Class<?> type) {
+		Class<?> modelType = type;
+
+		if (type.isInterface()) {
+			try {
+				Class<?> clazz = getClass();
+
+				ClassLoader classLoader = clazz.getClassLoader();
+
+				String modelImplClassName =
+					_jsonWebServiceNaming.convertModelClassToImplClassName(
+						type);
+
+				modelType = classLoader.loadClass(modelImplClassName);
+			}
+			catch (ClassNotFoundException cnfe) {
+			}
+		}
+
+		return modelType;
 	}
 
 	private String _getName(

@@ -30,11 +30,6 @@ public abstract class TopLevelBuildRunner extends BaseBuildRunner {
 		super(job);
 	}
 
-	@Override
-	protected boolean synchronizeBranches() {
-		return true;
-	}
-
 	private final List<String> _batchNames = new ArrayList<>();
 
 }

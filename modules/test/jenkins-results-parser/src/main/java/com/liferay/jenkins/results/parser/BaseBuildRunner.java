@@ -119,8 +119,6 @@ public abstract class BaseBuildRunner {
 		return null;
 	}
 
-	protected abstract boolean synchronizeBranches();
-
 	private final Job _job;
 	private final List<LocalGitBranch> _localGitBranches = new ArrayList<>();
 	private PortalLocalGitBranch _portalLocalGitBranch;

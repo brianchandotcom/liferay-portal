@@ -29,11 +29,6 @@ public abstract class BatchBuildRunner extends BaseBuildRunner {
 		_batchName = batchName;
 	}
 
-	@Override
-	protected boolean synchronizeBranches() {
-		return false;
-	}
-
 	private final String _batchName;
 
 }

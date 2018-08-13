@@ -999,11 +999,27 @@ public class LocalGitSyncUtil {
 
 		long start = System.currentTimeMillis();
 
-		GitWorkingDirectory.Remote localGitRemote = getRandomRemote(
-			localGitRemotes);
+		List<RemoteGitBranch> cacheRemoteGitBranches = null;
+		GitWorkingDirectory.Remote localGitRemote = null;
 
-		List<RemoteGitBranch> cacheRemoteGitBranches =
-			getCacheRemoteGitBranches(localGitRemote);
+		while (cacheRemoteGitBranches == null) {
+			try {
+				localGitRemote = getRandomRemote(localGitRemotes);
+
+				cacheRemoteGitBranches = getCacheRemoteGitBranches(
+					localGitRemote);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+
+				localGitRemotes.remove(localGitRemote);
+
+				if (localGitRemotes.isEmpty()) {
+					throw new RuntimeException(
+						"No remote repositories could be reached", e);
+				}
+			}
+		}
 
 		boolean updated = false;
 

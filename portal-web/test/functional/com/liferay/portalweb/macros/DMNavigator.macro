@@ -97,7 +97,7 @@
 	</command>
 
 	<command name="gotoHomeCP">
-		<execute function="AssertClick#assertTextClickAt" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="HOME" />
+		<execute function="AssertClick#assertTextClickAt" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 	</command>
 
 	<command name="gotoMetadataSets">

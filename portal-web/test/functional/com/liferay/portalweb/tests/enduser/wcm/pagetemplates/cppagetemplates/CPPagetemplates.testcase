@@ -210,7 +210,9 @@
 			<var name="menuItem" value="Public Page" />
 		</execute>
 
-		<execute macro="NavItem#gotoGlobalTemplates" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Global Templates" />
+		</execute>
 
 		<execute macro="Page#viewPageTemplateTypeNotPresent">
 			<var name="pageTemplateName" value="Page Template Name" />
@@ -250,7 +252,9 @@
 			<var name="menuItem" value="Public Page" />
 		</execute>
 
-		<execute macro="NavItem#gotoGlobalTemplates" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Global Templates" />
+		</execute>
 
 		<execute macro="Page#viewPageTemplateTypePresent">
 			<var name="pageTemplateName" value="Page Template Name" />

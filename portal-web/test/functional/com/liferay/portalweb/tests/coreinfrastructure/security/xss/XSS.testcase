@@ -168,6 +168,73 @@
 		</execute>
 	</command>
 
+	<command name="ViewCustomFieldDocumentsFolderNoXSS" priority="4">
+		<description message="This is a use case for LPS-72807." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName"><![CDATA[<script>alert(123);</script>]]></var>
+			<var name="customFieldType" value="Localized Text" />
+			<var name="resourceName" value="Documents Folder" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Folder" />
+		</execute>
+
+		<execute function="AssertAlertNotPresent" />
+
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Custom Fields" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#CUSTOM_FIELD_NAME" value1="${actualScript}">
+			<var name="key_customFieldName" value="${actualScript}" />
+		</execute>
+
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="${actualScript}" />
+			<var name="locale" value="zh_CN" />
+		</execute>
+
+		<execute function="Click" locator1="DocumentsAndMedia#CUSTOM_FIELD" />
+
+		<execute function="Type" locator1="DocumentsAndMedia#CUSTOM_FIELD" value1="测试" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute function="AssertAlertNotPresent" />
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="DM Folder Name">
+			<var name="key_dmDocumentTitle" value="DM Folder Name" />
+		</execute>
+	</command>
+
 	<command name="ViewGoogleAnalyticsIDNoXSS" priority="5">
 		<execute macro="Navigator#openURL" />
 

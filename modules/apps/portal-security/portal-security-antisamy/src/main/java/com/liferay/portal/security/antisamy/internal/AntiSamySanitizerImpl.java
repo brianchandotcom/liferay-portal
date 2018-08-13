@@ -15,13 +15,13 @@
 package com.liferay.portal.security.antisamy.internal;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
@@ -86,8 +86,7 @@ public class AntiSamySanitizerImpl extends BaseSanitizer {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringBundler.concat(
-					"Sanitizing ", className, "#", String.valueOf(classPK)));
+				StringBundler.concat("Sanitizing ", className, "#", classPK));
 		}
 
 		if (Validator.isNull(content)) {

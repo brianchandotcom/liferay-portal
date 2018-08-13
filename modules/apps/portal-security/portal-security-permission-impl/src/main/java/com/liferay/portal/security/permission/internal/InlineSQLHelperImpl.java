@@ -16,6 +16,7 @@ package com.liferay.portal.security.permission.internal;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.internal.configuration.InlinePermissionConfiguration;
@@ -387,8 +387,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 						_log.debug(
 							StringBundler.concat(
 								"Unable to get resource permissions for ",
-								className, " with group ",
-								String.valueOf(groupId)),
+								className, " with group ", groupId),
 							pe);
 					}
 				}
@@ -434,7 +433,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				_log.debug(
 					StringBundler.concat(
 						"Unable to get resource permissions for ", className,
-						" with company ", String.valueOf(companyId)),
+						" with company ", companyId),
 					pe);
 			}
 		}

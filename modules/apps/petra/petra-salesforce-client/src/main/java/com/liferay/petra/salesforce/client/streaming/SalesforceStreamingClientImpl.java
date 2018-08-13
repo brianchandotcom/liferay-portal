@@ -15,7 +15,7 @@
 package com.liferay.petra.salesforce.client.streaming;
 
 import com.liferay.petra.salesforce.client.BaseSalesforceClientImpl;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import com.sforce.soap.partner.PartnerConnection;
 import com.sforce.ws.ConnectionException;

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.security.audit.router.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.audit.formatter.LogMessageFormatter;
 import com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration;
 

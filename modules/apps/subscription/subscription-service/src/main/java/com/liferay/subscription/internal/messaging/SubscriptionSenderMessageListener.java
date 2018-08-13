@@ -14,13 +14,13 @@
 
 package com.liferay.subscription.internal.messaging;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
 
@@ -60,8 +60,7 @@ public class SubscriptionSenderMessageListener extends BaseMessageListener {
 				StringBundler.concat(
 					"Sending notifications for {mailId=",
 					subscriptionSender.getMailId(), "} completed in ",
-					String.valueOf(stopWatch.getTime() / Time.SECOND),
-					" seconds"));
+					stopWatch.getTime() / Time.SECOND, " seconds"));
 		}
 	}
 

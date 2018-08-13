@@ -17,6 +17,7 @@ package com.liferay.portal.template.velocity.internal;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.template.URLResourceParser;
 
@@ -84,7 +84,7 @@ public class VelocityServletResourceParser extends URLResourceParser {
 			_log.debug(
 				StringBundler.concat(
 					name, " is associated with the servlet context ",
-					servletContextName, " ", String.valueOf(servletContext)));
+					servletContextName, " ", servletContext));
 		}
 
 		URL url = servletContext.getResource(name);

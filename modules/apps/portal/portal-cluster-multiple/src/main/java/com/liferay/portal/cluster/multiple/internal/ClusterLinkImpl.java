@@ -15,6 +15,7 @@
 package com.liferay.portal.cluster.multiple.internal;
 
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterLink;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -130,8 +130,8 @@ public class ClusterLinkImpl implements ClusterLink {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Select channel number ", String.valueOf(channelIndex),
-					" for priority ", String.valueOf(priority)));
+					"Select channel number ", channelIndex, " for priority ",
+					priority));
 		}
 
 		return _clusterChannels.get(channelIndex);
@@ -235,8 +235,8 @@ public class ClusterLinkImpl implements ClusterLink {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Sending local cluster link message ",
-						String.valueOf(message), " to ", destinationName));
+						"Sending local cluster link message ", message, " to ",
+						destinationName));
 			}
 
 			ClusterInvokeThreadLocal.setEnabled(false);

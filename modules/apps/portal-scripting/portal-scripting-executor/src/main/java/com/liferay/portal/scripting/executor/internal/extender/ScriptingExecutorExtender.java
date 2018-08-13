@@ -15,6 +15,7 @@
 package com.liferay.portal.scripting.executor.internal.extender;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.scripting.ScriptBundleProvider;
 import com.liferay.portal.scripting.executor.internal.ScriptingExecutorMessagingConstants;
 import com.liferay.portal.scripting.executor.internal.constants.ScriptingExecutorConstants;

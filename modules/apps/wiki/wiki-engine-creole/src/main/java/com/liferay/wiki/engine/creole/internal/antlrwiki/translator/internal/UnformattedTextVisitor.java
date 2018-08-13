@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.engine.creole.internal.antlrwiki.translator.internal;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.wiki.engine.creole.internal.parser.ast.BoldTextNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.FormattedTextNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.ItalicTextNode;

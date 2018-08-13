@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -245,7 +245,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				StringBundler.concat(
 					"(&(release.bundle.symbolic.name=",
 					_bundle.getSymbolicName(), ")(release.schema.version=",
-					String.valueOf(_bundle.getVersion()), "))"));
+					_bundle.getVersion(), "))"));
 
 			_component.add(serviceDependency);
 		}
@@ -323,7 +323,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 							catch (Exception e) {
 								throw new UpgradeException(
 									StringBundler.concat(
-										"Bundle ", String.valueOf(_bundle),
+										"Bundle ", _bundle,
 										" has invalid content in ",
 										"tables.sql:\n", tablesSQL),
 									e);
@@ -338,7 +338,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 							catch (Exception e) {
 								throw new UpgradeException(
 									StringBundler.concat(
-										"Bundle ", String.valueOf(_bundle),
+										"Bundle ", _bundle,
 										" has invalid content in ",
 										"sequences.sql:\n", sequencesSQL),
 									e);
@@ -352,7 +352,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 							catch (Exception e) {
 								throw new UpgradeException(
 									StringBundler.concat(
-										"Bundle ", String.valueOf(_bundle),
+										"Bundle ", _bundle,
 										" has invalid content in ",
 										"indexes.sql:\n", indexesSQL),
 									e);

@@ -15,6 +15,7 @@
 package com.liferay.portal.security.ldap.internal;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.PortalLDAP;
@@ -547,8 +547,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 					_log.debug(
 						StringBundler.concat(
 							"No LDAP server configuration available for LDAP ",
-							"server ", String.valueOf(ldapServerId),
-							" and company ", String.valueOf(companyId)));
+							"server ", ldapServerId, " and company ",
+							companyId));
 				}
 
 				return null;
@@ -636,9 +636,9 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				_log.debug(
 					StringBundler.concat(
 						"Unable to retrieve user with LDAP server ",
-						String.valueOf(ldapServerId), ", company ",
-						String.valueOf(companyId), ", loginMapping ",
-						loginMapping, ", and login ", login));
+						ldapServerId, ", company ", companyId,
+						", loginMapping ", loginMapping, ", and login ",
+						login));
 			}
 
 			return null;

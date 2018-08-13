@@ -14,13 +14,13 @@
 
 package com.liferay.portal.workflow.kaleo.internal.model.upgrade;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.upgrade.util.BaseUpgradeTableListener;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,8 +60,8 @@ public class BaseKaleoUpgradeTableListener extends BaseUpgradeTableListener {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"{", keyColumnName, "=", String.valueOf(key), ", ",
-							valueColumnName, "=", String.valueOf(value), "}"));
+							"{", keyColumnName, "=", key, ", ", valueColumnName,
+							"=", value, "}"));
 				}
 
 				keyValueMap.put(key, value);

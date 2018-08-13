@@ -15,6 +15,7 @@
 package com.liferay.sync.service.impl;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.sync.model.SyncDLFileVersionDiff;
 import com.liferay.sync.service.base.SyncDLFileVersionDiffLocalServiceBaseImpl;
 import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;

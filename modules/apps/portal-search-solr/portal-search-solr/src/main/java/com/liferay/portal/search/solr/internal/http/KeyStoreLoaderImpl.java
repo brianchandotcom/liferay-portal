@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.solr.internal.http;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.solr.http.KeyStoreLoader;
 
 import java.io.FileInputStream;

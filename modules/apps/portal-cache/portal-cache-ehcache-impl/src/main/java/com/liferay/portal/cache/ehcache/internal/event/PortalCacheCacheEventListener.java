@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.cache.ehcache.internal.SerializableEhcachePortalCache;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -86,8 +86,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Evicted ", String.valueOf(getKey(element)), " from ",
-					ehcache.getName()));
+					"Evicted ", getKey(element), " from ", ehcache.getName()));
 		}
 
 		if (_aggregatedPortalCacheListener.isEmpty()) {
@@ -107,8 +106,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Expired ", String.valueOf(getKey(element)), " from ",
-					ehcache.getName()));
+					"Expired ", getKey(element), " from ", ehcache.getName()));
 		}
 
 		if (_aggregatedPortalCacheListener.isEmpty()) {
@@ -130,8 +128,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Put ", String.valueOf(getKey(element)), " into ",
-					ehcache.getName()));
+					"Put ", getKey(element), " into ", ehcache.getName()));
 		}
 
 		if (_aggregatedPortalCacheListener.isEmpty()) {
@@ -153,8 +150,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Removed ", String.valueOf(getKey(element)), " from ",
-					ehcache.getName()));
+					"Removed ", getKey(element), " from ", ehcache.getName()));
 		}
 
 		if (_aggregatedPortalCacheListener.isEmpty()) {
@@ -176,8 +172,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Updated ", String.valueOf(getKey(element)), " in ",
-					ehcache.getName()));
+					"Updated ", getKey(element), " in ", ehcache.getName()));
 		}
 
 		if (_aggregatedPortalCacheListener.isEmpty()) {

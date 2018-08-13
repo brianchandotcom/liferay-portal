@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.sso.ntlm.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetlogonAuthenticator;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetlogonIdentityInfo;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetlogonNetworkInfo;

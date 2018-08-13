@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.internal.filter;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.TermsSetFilter;
 
@@ -82,8 +82,8 @@ public class TermsSetFilterImpl implements TermsSetFilter {
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			"{(", _fieldName, "=", String.valueOf(_values),
-			"), (minimum_should_match_field=", _minimumShouldMatchField, ")}");
+			"{(", _fieldName, "=", _values, "), (minimum_should_match_field=",
+			_minimumShouldMatchField, ")}");
 	}
 
 	private final String _fieldName;

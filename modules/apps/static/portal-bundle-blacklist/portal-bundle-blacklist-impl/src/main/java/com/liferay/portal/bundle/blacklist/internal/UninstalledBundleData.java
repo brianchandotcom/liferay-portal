@@ -14,7 +14,7 @@
 
 package com.liferay.portal.bundle.blacklist.internal;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Matthew Tambara

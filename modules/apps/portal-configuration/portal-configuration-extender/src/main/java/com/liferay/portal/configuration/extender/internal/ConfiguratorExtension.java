@@ -14,9 +14,9 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Supplier;
 
 import java.io.IOException;
@@ -141,8 +141,7 @@ public class ConfiguratorExtension implements Extension {
 			_logger.log(
 				Logger.LOG_WARNING,
 				StringBundler.concat(
-					"Supplier from description ",
-					String.valueOf(configurationDescription),
+					"Supplier from description ", configurationDescription,
 					" threw an exception: "),
 				t);
 

@@ -18,6 +18,7 @@ import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Address;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PortalInetSocketAddressEventListener;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -155,8 +155,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 						_log.warn(
 							StringBundler.concat(
 								"Unable to get cluster node ", clusterNodeId,
-								" while executing ",
-								String.valueOf(clusterRequest)));
+								" while executing ", clusterRequest));
 					}
 
 					continue;
@@ -337,8 +336,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 				clusterRequest.getUuid(),
 				new ClusterException(
 					StringBundler.concat(
-						String.valueOf(methodHandler), " returned value ",
-						String.valueOf(result), " that is not serializable")));
+						methodHandler, " returned value ", result,
+						" that is not serializable")));
 		}
 		catch (Exception e) {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.internal.buffer;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.buffer.IndexerRequest;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferExecutor;
@@ -58,9 +58,8 @@ public class DefaultIndexerRequestBufferExecutor
 
 			_log.debug(
 				StringBundler.concat(
-					"Indexer request buffer size ",
-					String.valueOf(indexerRequests.size()), " to execute ",
-					String.valueOf(numRequests), " requests"));
+					"Indexer request buffer size ", indexerRequests.size(),
+					" to execute ", numRequests, " requests"));
 		}
 
 		int i = 0;
@@ -71,8 +70,8 @@ public class DefaultIndexerRequestBufferExecutor
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Executing indexer request ", String.valueOf(i++), ": ",
-						String.valueOf(indexerRequest)));
+						"Executing indexer request ", i++, ": ",
+						indexerRequest));
 			}
 
 			executeIndexerRequest(searchEngineIds, indexerRequest);

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.multiple.internal.bootstrap;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.cache.ehcache.spi.EhcacheUnwrapUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;

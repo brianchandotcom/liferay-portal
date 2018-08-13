@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:portal-mobile-device-detection-fiftyonedegrees:portal-mobile-device-detection-fiftyonedegrees-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal:portal-profile-api")
+	compileOnly project(":core:petra:petra-string")
 }
 
 processResources {

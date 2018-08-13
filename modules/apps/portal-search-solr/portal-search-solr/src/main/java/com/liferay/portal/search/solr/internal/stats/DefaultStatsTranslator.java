@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.solr.internal.stats;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.solr.stats.StatsTranslator;
 
 import java.util.ArrayList;

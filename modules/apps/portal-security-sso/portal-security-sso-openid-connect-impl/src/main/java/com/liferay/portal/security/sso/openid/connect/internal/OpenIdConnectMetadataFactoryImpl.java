@@ -14,10 +14,10 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectMetadataFactory;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
@@ -188,8 +188,8 @@ public class OpenIdConnectMetadataFactoryImpl
 					_log.info(
 						StringBundler.concat(
 							"Getting OpenId Connect provider metadata from ",
-							String.valueOf(_discoveryEndPointURL), " took ",
-							String.valueOf(stopWatch.getTime()), "ms"));
+							_discoveryEndPointURL, " took ",
+							stopWatch.getTime(), "ms"));
 				}
 			}
 		}

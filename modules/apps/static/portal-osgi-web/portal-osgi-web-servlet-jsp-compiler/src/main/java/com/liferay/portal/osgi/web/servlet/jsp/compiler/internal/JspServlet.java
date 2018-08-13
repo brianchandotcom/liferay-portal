@@ -14,9 +14,9 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.servlet.JspFactorySwapper;
 
@@ -314,8 +314,7 @@ public class JspServlet extends HttpServlet {
 
 				_jspServlet.log(
 					StringBundler.concat(
-						"[JSP DEBUG] ", String.valueOf(_bundle), " invoking ",
-						path));
+						"[JSP DEBUG] ", _bundle, " invoking ", path));
 			}
 
 			_jspServlet.service(request, response);

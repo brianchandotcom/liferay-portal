@@ -14,6 +14,7 @@
 
 package com.liferay.push.notifications.service.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.push.notifications.constants.PushNotificationsActionKeys;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
@@ -109,7 +109,7 @@ public class PushNotificationsDeviceServiceImpl
 				_log.info(
 					StringBundler.concat(
 						"Device found with token ", token,
-						" does not belong to user ", String.valueOf(userId)));
+						" does not belong to user ", userId));
 			}
 		}
 

@@ -335,16 +335,14 @@ public class HeaderResponseImpl
 			scope = StringPool.BLANK;
 		}
 
-		SemVer semVer;
-		String versionKey;
+		SemVer semVer = SemVer._DEFAULT;
+		String versionKey = version;
 
 		if (Validator.isNull(version)) {
-			semVer = SemVer._DEFAULT;
 			versionKey = StringUtil.randomId();
 		}
 		else {
 			semVer = new SemVer(version);
-			versionKey = version;
 		}
 
 		HeaderRequest headerRequest = (HeaderRequest)getPortletRequest();

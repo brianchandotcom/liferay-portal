@@ -93,8 +93,14 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public static final String FIND_BY_USERS_ORGS_GROUP =
 		UserFinder.class.getName() + ".findByUsersOrgsGroup";
 
+	public static final String FIND_BY_USERS_ORGS_GT_USER_ID =
+		UserFinder.class.getName() + ".findByUsersOrgsGtUserId";
+
 	public static final String FIND_BY_USERS_USER_GROUPS =
 		UserFinder.class.getName() + ".findByUsersUserGroups";
+
+	public static final String FIND_BY_USERS_USER_GROUPS_GT_USER_ID =
+		UserFinder.class.getName() + ".findByUsersUserGroupsGtUserId";
 
 	public static final String FIND_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".findByC_FN_MN_LN_SN_EA_S";
@@ -716,6 +722,63 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		}
 		finally {
 			closeSession(session);
+		}
+	}
+
+	public List<User> findByUsersOrgsGtUserId(
+		long companyId, long organizationId, long gtUserId, int size) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_USERS_ORGS_GT_USER_ID);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("User_", UserImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(organizationId);
+			qPos.add(companyId);
+			qPos.add(Boolean.FALSE);
+			qPos.add(gtUserId);
+
+			return (List<User>)QueryUtil.list(q, getDialect(), 0, size);
+		}
+		finally {
+			session.close();
+		}
+	}
+
+	public List<User> findByUsersUserGroupsGtUserId(
+		long companyId, long userGroupId, long gtUserId, int size) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				FIND_BY_USERS_USER_GROUPS_GT_USER_ID);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("User_", UserImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userGroupId);
+			qPos.add(companyId);
+			qPos.add(Boolean.FALSE);
+			qPos.add(gtUserId);
+
+			return (List<User>)QueryUtil.list(q, getDialect(), 0, size);
+		}
+		finally {
+			session.close();
 		}
 	}
 

@@ -1677,6 +1677,24 @@
 				(User_.status = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.findByUsersOrgsGtUserId">
+		<![CDATA[
+			SELECT
+				DISTINCT {User_.*}
+			FROM
+				User_
+			INNER JOIN
+				Users_Orgs ON
+					User_.userId = Users_Orgs.userId
+			WHERE
+				(Users_Orgs.organizationId = ?) AND
+				(User_.companyId = ?) AND
+				(User_.defaultUser = ?) AND
+				(User_.userId > ?)
+			ORDER BY
+				User_.userId ASC
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.findByUsersUserGroups">
 		<![CDATA[
 			SELECT
@@ -1694,6 +1712,24 @@
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
 				(User_.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.findByUsersUserGroupsGtUserId">
+		<![CDATA[
+			SELECT
+				DISTINCT {User_.*}
+			FROM
+				User_
+			INNER JOIN
+				Users_UserGroups ON
+					User_.userId = Users_UserGroups.userId
+			WHERE
+				(Users_UserGroups.userGroupId = ?) AND
+				(User_.companyId = ?) AND
+				(User_.defaultUser = ?) AND
+				(User_.userId > ?)
+			ORDER BY
+				User_.userId ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.findByC_FN_MN_LN_SN_EA_S">

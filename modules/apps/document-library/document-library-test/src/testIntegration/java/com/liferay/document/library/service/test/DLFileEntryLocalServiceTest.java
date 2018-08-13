@@ -426,6 +426,37 @@ public class DLFileEntryLocalServiceTest {
 			fileEntry.getFileEntryId(), dlFileEntry.getFileEntryId());
 	}
 
+	@Test
+	public void testKeepsOriginalExtensionAfterChangingTheTitle()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		String content = StringUtil.randomString();
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
+			StringPool.BLANK, -1, new HashMap<>(), null,
+			new ByteArrayInputStream(content.getBytes()), 0, serviceContext);
+
+		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
+			dlFileEntry.getFileEntryId(), "file.pdf", null, "file.pdf",
+			StringPool.BLANK, StringPool.BLANK, false, null, 0, serviceContext);
+
+		Assert.assertEquals(
+			content, StringUtil.read(fileEntry.getContentStream()));
+
+		Assert.assertEquals("txt", fileEntry.getExtension());
+
+		Assert.assertEquals("file.pdf.txt", fileEntry.getFileName());
+
+		Assert.assertEquals(ContentTypes.TEXT_PLAIN, fileEntry.getMimeType());
+	}
+
 	@Test(expected = NoSuchFolderException.class)
 	public void testMoveFileEntryToInvalidDLFolder() throws Exception {
 		DLFolder originDLFolder = DLTestUtil.addDLFolder(_group.getGroupId());

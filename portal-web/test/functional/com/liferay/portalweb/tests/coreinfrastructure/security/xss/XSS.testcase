@@ -87,6 +87,7 @@
 
 	<command name="ViewBookmarkNoXSS" priority="4">
 		<property name="portal.release" value="false" />
+		<property name="osgi.app.includes" value="bookmarks" />
 
 		<execute macro="Navigator#openURL" />
 

@@ -12,18 +12,31 @@
  * details.
  */
 
-package com.liferay.apio.architect.form;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.apio.architect.impl.wiring.osgi.validator;
 
 /**
- * @author Alejandro Hernández
+ * Check if a resource name is valid.
+ *
+ * @author Víctor Galán
+ * @review
  */
-@ProviderType
-public enum FieldType {
+public interface NameValidator {
 
-	BOOLEAN, BOOLEAN_LIST, DATE, DATE_LIST, DOUBLE, DOUBLE_LIST, FILE,
-	FILE_LIST, LINKED_MODEL, LINKED_MODEL_LIST, LONG, LONG_LIST, STRING,
-	STRING_LIST
+	/**
+	 * Returns the validation error.
+	 *
+	 * @return the validation error.
+	 * @review
+	 */
+	public String getValidationError();
+
+	/**
+	 * Validates the name passed
+	 *
+	 * @param  name the name to validate.
+	 * @return the result of the validation.
+	 * @review
+	 */
+	public boolean validate(String name);
 
 }

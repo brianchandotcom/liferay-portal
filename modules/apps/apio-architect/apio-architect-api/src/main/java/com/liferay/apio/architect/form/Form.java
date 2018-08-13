@@ -310,6 +310,29 @@ public interface Form<T> {
 				BiConsumer<T, C> biConsumer);
 
 			/**
+			 * Requests an optional list of linked models from the HTTP request
+			 * body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor} method)
+			 * and the field value. A {@code BadRequestException} is thrown if
+			 * the field isn't found, or it's found but it isn't a linked model
+			 * list.
+			 * </p>
+			 *
+			 * @param  key the field's key
+			 * @param  aClass the identifier class to extract the class ID and
+			 *         return it
+			 * @param  biConsumer the consumer to call
+			 * @return the updated builder
+			 * @review
+			 */
+			public <C> FieldStep<T> addOptionalLinkedModelList(
+				String key, Class<? extends Identifier<C>> aClass,
+				BiConsumer<T, List<C>> biConsumer);
+
+			/**
 			 * Requests an optional long from the HTTP request body.
 			 *
 			 * <p>
@@ -538,6 +561,29 @@ public interface Form<T> {
 			public <C> FieldStep<T> addRequiredLinkedModel(
 				String key, Class<? extends Identifier<C>> aClass,
 				BiConsumer<T, C> biConsumer);
+
+			/**
+			 * Requests a mandatory list of linked models from the HTTP request
+			 * body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor} method)
+			 * and the field value. A {@code BadRequestException} is thrown if
+			 * the field isn't found, or it's found but it isn't a required
+			 * linked model list.
+			 * </p>
+			 *
+			 * @param  key the field's key
+			 * @param  aClass the identifier class to extract the class ID and
+			 *         return it
+			 * @param  biConsumer the consumer to call
+			 * @return the updated builder
+			 * @review
+			 */
+			public <C> FieldStep<T> addRequiredLinkedModelList(
+				String key, Class<? extends Identifier<C>> aClass,
+				BiConsumer<T, List<C>> biConsumer);
 
 			/**
 			 * Requests a mandatory long from the HTTP request body.

@@ -27,6 +27,7 @@ import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.impl.representor.RepresentorImpl.BuilderImpl;
 import com.liferay.apio.architect.impl.unsafe.Unsafe;
 import com.liferay.apio.architect.impl.wiring.osgi.manager.base.BaseManager;
+import com.liferay.apio.architect.impl.wiring.osgi.validator.NameValidator;
 import com.liferay.apio.architect.related.RelatedCollection;
 import com.liferay.apio.architect.representor.Representable;
 import com.liferay.apio.architect.representor.Representor;
@@ -47,6 +48,7 @@ import java.util.stream.Stream;
 
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import org.slf4j.Logger;
 
@@ -122,6 +124,14 @@ public class RepresentableManagerImpl
 			(clazz, representable) -> {
 				String name = representable.getName();
 
+				if (!_nameValidator.validate(name)) {
+					_logger.warn(
+						"Invalid representable name {}. {}", name,
+						_nameValidator.getValidationError());
+
+					return;
+				}
+
 				Optional<Map<String, String>> optional =
 					INSTANCE.getNamesOptional();
 
@@ -182,5 +192,8 @@ public class RepresentableManagerImpl
 	}
 
 	private Logger _logger = getLogger(getClass());
+
+	@Reference
+	private NameValidator _nameValidator;
 
 }

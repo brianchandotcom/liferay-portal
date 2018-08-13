@@ -23,6 +23,7 @@ import static com.liferay.apio.architect.form.FieldType.DOUBLE_LIST;
 import static com.liferay.apio.architect.form.FieldType.FILE;
 import static com.liferay.apio.architect.form.FieldType.FILE_LIST;
 import static com.liferay.apio.architect.form.FieldType.LINKED_MODEL;
+import static com.liferay.apio.architect.form.FieldType.LINKED_MODEL_LIST;
 import static com.liferay.apio.architect.form.FieldType.LONG;
 import static com.liferay.apio.architect.form.FieldType.LONG_LIST;
 import static com.liferay.apio.architect.form.FieldType.STRING;
@@ -37,6 +38,7 @@ import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalFile;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalFileList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalFormFieldStream;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalLinkedModel;
+import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalLinkedModelList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalLong;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalLongList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalString;
@@ -51,6 +53,7 @@ import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredFile;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredFileList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredFormFieldStream;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredLinkedModel;
+import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredLinkedModelList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredLong;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredLongList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredString;
@@ -94,6 +97,8 @@ public class FormImpl<T> implements Form<T> {
 		_optionalFiles.forEach(getOptionalFile(body, t));
 		_optionalLinkedModel.forEach(
 			getOptionalLinkedModel(body, t, _pathToIdentifierFunction));
+		_optionalLinkedModelList.forEach(
+			getOptionalLinkedModelList(body, t, _pathToIdentifierFunction));
 		_optionalLongs.forEach(getOptionalLong(body, t));
 		_optionalStrings.forEach(getOptionalString(body, t));
 		_requiredBooleans.forEach(getRequiredBoolean(body, t));
@@ -102,6 +107,8 @@ public class FormImpl<T> implements Form<T> {
 		_requiredFiles.forEach(getRequiredFile(body, t));
 		_requiredLinkedModel.forEach(
 			getRequiredLinkedModel(body, t, _pathToIdentifierFunction));
+		_requiredLinkedModelList.forEach(
+			getRequiredLinkedModelList(body, t, _pathToIdentifierFunction));
 		_requiredLongs.forEach(getRequiredLong(body, t));
 		_requiredStrings.forEach(getRequiredString(body, t));
 		_optionalBooleanLists.forEach(getOptionalBooleanList(body, t));
@@ -136,6 +143,9 @@ public class FormImpl<T> implements Form<T> {
 			getOptionalFormFieldStream(_optionalDoubleLists, DOUBLE_LIST),
 			getOptionalFormFieldStream(_optionalFiles, FILE),
 			getOptionalFormFieldStream(_optionalFileLists, FILE_LIST),
+			getOptionalFormFieldStream(_optionalLinkedModel, LINKED_MODEL),
+			getOptionalFormFieldStream(
+				_optionalLinkedModelList, LINKED_MODEL_LIST),
 			getOptionalFormFieldStream(_optionalLongs, LONG),
 			getOptionalFormFieldStream(_optionalLongLists, LONG_LIST),
 			getOptionalFormFieldStream(_optionalStrings, STRING),
@@ -149,6 +159,8 @@ public class FormImpl<T> implements Form<T> {
 			getRequiredFormFieldStream(_requiredFiles, FILE),
 			getRequiredFormFieldStream(_requiredFileLists, FILE_LIST),
 			getRequiredFormFieldStream(_requiredLinkedModel, LINKED_MODEL),
+			getRequiredFormFieldStream(
+				_requiredLinkedModelList, LINKED_MODEL_LIST),
 			getRequiredFormFieldStream(_requiredLongs, LONG),
 			getRequiredFormFieldStream(_requiredLongLists, LONG_LIST),
 			getRequiredFormFieldStream(_requiredStrings, STRING),
@@ -299,6 +311,17 @@ public class FormImpl<T> implements Form<T> {
 		}
 
 		@Override
+		public <C> FieldStep<T> addOptionalLinkedModelList(
+			String key, Class<? extends Identifier<C>> aClass,
+			BiConsumer<T, List<C>> biConsumer) {
+
+			_form._optionalLinkedModelList.put(
+				key, t -> c -> biConsumer.accept(t, (List)c));
+
+			return this;
+		}
+
+		@Override
 		public FieldStep<T> addOptionalLong(
 			String key, BiConsumer<T, Long> biConsumer) {
 
@@ -430,6 +453,17 @@ public class FormImpl<T> implements Form<T> {
 		}
 
 		@Override
+		public <C> FieldStep<T> addRequiredLinkedModelList(
+			String key, Class<? extends Identifier<C>> aClass,
+			BiConsumer<T, List<C>> biConsumer) {
+
+			_form._requiredLinkedModelList.put(
+				key, t -> c -> biConsumer.accept(t, (List)c));
+
+			return this;
+		}
+
+		@Override
 		public FieldStep<T> addRequiredLong(
 			String key, BiConsumer<T, Long> biConsumer) {
 
@@ -530,6 +564,8 @@ public class FormImpl<T> implements Form<T> {
 		_optionalFiles = new HashMap<>();
 	private final Map<String, Function<T, Consumer<?>>> _optionalLinkedModel =
 		new HashMap<>();
+	private final Map<String, Function<T, Consumer<List<?>>>>
+		_optionalLinkedModelList = new HashMap<>();
 	private final Map<String, Function<T, Consumer<List<Long>>>>
 		_optionalLongLists = new HashMap<>();
 	private final Map<String, Function<T, Consumer<Long>>> _optionalLongs =
@@ -555,8 +591,10 @@ public class FormImpl<T> implements Form<T> {
 		_requiredFileLists = new HashMap<>();
 	private final Map<String, Function<T, Consumer<BinaryFile>>>
 		_requiredFiles = new HashMap<>();
-	private final Map<String, Function<T, Consumer>> _requiredLinkedModel =
+	private final Map<String, Function<T, Consumer<?>>> _requiredLinkedModel =
 		new HashMap<>();
+	private final Map<String, Function<T, Consumer<List<?>>>>
+		_requiredLinkedModelList = new HashMap<>();
 	private final Map<String, Function<T, Consumer<List<Long>>>>
 		_requiredLongLists = new HashMap<>();
 	private final Map<String, Function<T, Consumer<Long>>> _requiredLongs =

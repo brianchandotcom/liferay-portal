@@ -27,6 +27,7 @@ import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalFile;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalFileList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalFormFieldStream;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalLinkedModel;
+import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalLinkedModelList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalLong;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalLongList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getOptionalString;
@@ -41,6 +42,7 @@ import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredFile;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredFileList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredFormFieldStream;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredLinkedModel;
+import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredLinkedModelList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredLong;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredLongList;
 import static com.liferay.apio.architect.impl.form.FormUtil.getRequiredString;
@@ -50,6 +52,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 
@@ -306,6 +309,25 @@ public class FormUtilTest {
 			"Apio", __ -> string -> list.add(String.valueOf(string)));
 
 		_validateStringList(list);
+	}
+
+	@Test
+	public void testGetOptionalLinkedModelListExtractsLinkedModelList() {
+		List<String> list = new ArrayList<>();
+
+		BiConsumer<String, Function<List<String>, Consumer<List<?>>>>
+			fieldFormBiConsumer = getOptionalLinkedModelList(
+				_valueListBody(
+					"https://localhost:8080/p/string/1",
+					"https://localhost:8080/p/string/2"),
+				list, __ -> "Apio");
+
+		fieldFormBiConsumer.accept(
+			"Apio", __ -> objects -> list.addAll((List<String>)objects));
+
+		assertThat(list, hasSize(2));
+
+		assertThat(list, hasItem("Apio"));
 	}
 
 	@Test
@@ -614,11 +636,23 @@ public class FormUtilTest {
 	public void testGetRequiredLinkedModelFailsIfNotPresent() {
 		List<String> list = new ArrayList<>();
 
-		BiConsumer<String, Function<List<String>, Consumer>>
+		BiConsumer<String, Function<List<String>, Consumer<?>>>
 			requiredLinkedModel = getRequiredLinkedModel(
 				__ -> Optional.empty(), list, path -> "");
 
 		requiredLinkedModel.accept(
+			"linkedModel", strings -> o -> list.addAll(strings));
+	}
+
+	@Test(expected = BadRequestException.class)
+	public void testGetRequiredLinkedModelListFailsIfNotPresent() {
+		List<String> list = new ArrayList<>();
+
+		BiConsumer<String, Function<List<String>, Consumer<List<?>>>>
+			requiredLinkedModelList = getRequiredLinkedModelList(
+				__ -> Optional.empty(), list, path -> "");
+
+		requiredLinkedModelList.accept(
 			"linkedModel", strings -> o -> list.addAll(strings));
 	}
 

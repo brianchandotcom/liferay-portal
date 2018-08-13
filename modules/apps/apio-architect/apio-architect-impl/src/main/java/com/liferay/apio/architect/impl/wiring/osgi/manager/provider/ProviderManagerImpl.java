@@ -66,6 +66,14 @@ public class ProviderManagerImpl
 	public <T> T provideMandatory(
 		HttpServletRequest httpServletRequest, Class<T> clazz) {
 
+		Optional<Provider> providerOptional = getServiceOptional(clazz);
+
+		if (!providerOptional.isPresent()) {
+			_logger.warn("Missing provider for mandatory class: {}", clazz);
+
+			throw new NotFoundException();
+		}
+
 		Optional<T> optional = provideOptional(httpServletRequest, clazz);
 
 		if (clazz.equals(Credentials.class) && !optional.isPresent()) {
@@ -74,7 +82,8 @@ public class ProviderManagerImpl
 
 		return optional.orElseThrow(
 			() -> {
-				_logger.warn("Missing provider for mandatory class: {}", clazz);
+				_logger.warn(
+					"Mandatory provider for class {} returned null", clazz);
 
 				return new NotFoundException();
 			});

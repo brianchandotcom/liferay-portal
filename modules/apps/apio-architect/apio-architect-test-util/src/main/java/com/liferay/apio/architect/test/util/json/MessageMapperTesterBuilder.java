@@ -371,7 +371,7 @@ public class MessageMapperTesterBuilder {
 					"Unable to create the file with path: " + newPath);
 			}
 
-			throw new AssertionError("File doesn't exist. Creating...");
+			throw new AssertionError("File does not exist. Creating...");
 		}
 
 		private void _validateMessageMapper(

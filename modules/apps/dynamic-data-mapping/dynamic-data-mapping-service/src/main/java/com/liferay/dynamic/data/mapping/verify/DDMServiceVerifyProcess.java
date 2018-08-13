@@ -33,10 +33,10 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorValidateRequest;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidatorValidateRequest;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorValidateRequest;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -225,7 +225,8 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 		throws PortalException {
 
 		DDMFormLayoutValidatorValidateRequest.Builder builder =
-			DDMFormLayoutValidatorValidateRequest.Builder.newBuilder(ddmFormLayout);
+			DDMFormLayoutValidatorValidateRequest.Builder.newBuilder(
+				ddmFormLayout);
 
 		_ddmFormLayoutValidator.validate(builder.build());
 	}

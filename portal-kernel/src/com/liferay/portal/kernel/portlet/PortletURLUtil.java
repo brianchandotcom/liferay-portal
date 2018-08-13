@@ -149,15 +149,17 @@ public class PortletURLUtil {
 
 			// Do not set parameter values that are over 32 kb. See LEP-1755.
 
-			for (String value : values) {
-				if ((value != null) &&
-					(value.length() > _CURRENT_URL_PARAMETER_THRESHOLD)) {
+			if (values != null) {
+				for (String value : values) {
+					if ((value != null) &&
+						(value.length() > _CURRENT_URL_PARAMETER_THRESHOLD)) {
 
-					continue renderParameter;
+						continue renderParameter;
+					}
 				}
-			}
 
-			mutableRenderParameters.setValues(renderParameterName, values);
+				mutableRenderParameters.setValues(renderParameterName, values);
+			}
 		}
 
 		liferayPortletRequest.setAttribute(

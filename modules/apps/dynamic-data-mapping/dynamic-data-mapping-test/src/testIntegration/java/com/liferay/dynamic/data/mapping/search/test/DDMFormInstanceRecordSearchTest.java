@@ -192,7 +192,7 @@ public class DDMFormInstanceRecordSearchTest {
 		ddmFormValues.addDDMFormFieldValue(descriptionDDMFormFieldValue);
 
 		_ddmFormInstanceRecordTestHelper.addDDMFormInstanceRecord(
-			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+			ddmFormValues);
 	}
 
 	protected void addDDMFormInstanceRecord(String name, String description)

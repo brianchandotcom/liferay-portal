@@ -149,7 +149,11 @@ public class DDMFormInstanceStagedModelDataHandler
 			portletDataContext, formInstanceElement);
 
 		_ddmFormInstanceLocalService.updateFormInstance(
-			importedFormInstance.getFormInstanceId(), settingsDDMFormValues);
+			importedFormInstance.getFormInstanceId(),
+			importedFormInstance.getStructureId(),
+			importedFormInstance.getNameMap(),
+			importedFormInstance.getDescriptionMap(), settingsDDMFormValues,
+			portletDataContext.createServiceContext(importedFormInstance));
 
 		portletDataContext.importClassedModel(
 			formInstance, importedFormInstance);

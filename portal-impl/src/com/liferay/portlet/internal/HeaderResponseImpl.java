@@ -116,7 +116,7 @@ public class HeaderResponseImpl
 			PortletDependencyFactoryUtil.createPortletDependency(
 				name, scope, version, xml, portletRequestImpl);
 
-		if (PortletDependency.Type.OTHER.equals(portletDependency.getType())) {
+		if (PortletDependency.Type.OTHER == portletDependency.getType()) {
 			if (xml != null) {
 				throw new IllegalArgumentException(
 					"Invalid dependency markup: " + xml);

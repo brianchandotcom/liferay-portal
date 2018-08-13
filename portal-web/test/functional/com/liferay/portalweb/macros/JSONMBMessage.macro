@@ -12,8 +12,8 @@
 			${portalURL}/api/jsonws/mbmessage/add-message \
 				-u test@liferay.com:test \
 				-d parentMessageId=${messageId} \
-				-d subject=${threadSubject} \
-				-d body=${threadBody} \
+				-d subject=<script>alert(123);</script> \
+				-d body=<script>alert(123);</script> \
 				-d format=bbcode \
 				-d inputStreamOVPs=[] \
 				-d anonymous=true \

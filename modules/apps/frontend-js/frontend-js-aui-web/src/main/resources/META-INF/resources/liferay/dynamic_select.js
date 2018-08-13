@@ -145,12 +145,7 @@ AUI.add(
 					select.empty().append(selectOptions);
 
 					if (selectDisableOnEmpty) {
-						if (!list.length) {
-							select.setAttribute('disabled', '');
-						}
-						else {
-							select.removeAttribute('disabled');
-						}
+						Liferay.Util.toggleDisabled(select, !list.length);
 					}
 				}
 			}

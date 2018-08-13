@@ -22,19 +22,19 @@ public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
 	protected PortalTopLevelBuildRunner(Job job, String portalGitHubURL) {
 		super(job);
 
-		if (!(job instanceof PortalTestClassJob)) {
-			throw new RuntimeException("Invalid job type");
+		String portalUpstreamBranchName =
+			JenkinsResultsParserUtil.getPortalUpstreamBranchName(job);
+
+		baseWorkspace = WorkspaceFactory.newTopLevelWorkspace(
+			portalGitHubURL, portalUpstreamBranchName);
+
+		if (!(baseWorkspace instanceof PortalWorkspace)) {
+			throw new RuntimeException("Invalid workspace");
 		}
 
-		PortalLocalGitBranch portalLocalGitBranch = getPortalLocalGitBranch(
-			portalGitHubURL);
+		PortalWorkspace portalWorkspace = (PortalWorkspace)baseWorkspace;
 
-		addLocalGitBranch(portalLocalGitBranch);
-
-		PortalLocalRepository portalLocalRepository =
-			getPortalLocalRepository();
-
-		portalLocalRepository.setJobProperties(getJob());
+		portalWorkspace.setPortalJobProperties(getJob());
 	}
 
 }

@@ -20,23 +20,21 @@ package com.liferay.jenkins.results.parser;
 public class BuildRunnerFactory {
 
 	public static BatchBuildRunner newBatchBuildRunner(
-		Job job, String batchName, String gitHubURL) {
+		Job job, String gitHubURL, String batchName) {
 
-		if (batchName.contains("functional")) {
-			return new FunctionalPortalBatchBuildRunner(
-				job, batchName, gitHubURL);
-		}
-		else if (batchName.contains("integration") ||
-				 batchName.contains("unit")) {
-
-			return new JunitPortalBatchBuildRunner(job, batchName, gitHubURL);
+		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
+			throw new RuntimeException("Unsupported github url " + gitHubURL);
 		}
 
-		return new PortalBatchBuildRunner(job, batchName, gitHubURL);
+		return new PortalBatchBuildRunner(job, gitHubURL, batchName);
 	}
 
 	public static TopLevelBuildRunner newTopLevelBuildRunner(
 		Job job, String gitHubURL) {
+
+		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
+			throw new RuntimeException("Unsupported github url " + gitHubURL);
+		}
 
 		return new PortalTopLevelBuildRunner(job, gitHubURL);
 	}

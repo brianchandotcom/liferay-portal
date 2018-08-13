@@ -14,114 +14,33 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseBuildRunner {
 
 	public void setup() {
-		for (LocalGitBranch localGitBranch : _localGitBranches) {
-			localGitBranch.setupWorkspace();
+		setupWorkspace();
+	}
 
-			LocalRepository localRepository =
-				localGitBranch.getLocalRepository();
-
-			localRepository.writeRepositoryPropertiesFiles();
+	public void setupWorkspace() {
+		if (baseWorkspace == null) {
+			throw new RuntimeException("Workspace is null");
 		}
+
+		baseWorkspace.setup();
 	}
 
 	protected BaseBuildRunner(Job job) {
 		_job = job;
 	}
 
-	protected void addLocalGitBranch(LocalGitBranch localGitBranch) {
-		if (localGitBranch != null) {
-			_localGitBranches.add(localGitBranch);
-		}
-	}
-
 	protected Job getJob() {
 		return _job;
 	}
 
-	protected PortalLocalGitBranch getPortalLocalGitBranch() {
-		return _portalLocalGitBranch;
-	}
-
-	protected PortalLocalGitBranch getPortalLocalGitBranch(
-		String portalGitHubURL) {
-
-		if (_portalLocalGitBranch != null) {
-			return _portalLocalGitBranch;
-		}
-
-		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)_job;
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			portalTestClassJob.getPortalGitWorkingDirectory();
-
-		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
-			portalGitWorkingDirectory.getRepositoryName(),
-			portalGitWorkingDirectory.getUpstreamBranchName());
-
-		if (!(localRepository instanceof PortalLocalRepository)) {
-			throw new RuntimeException(
-				"Invalid local repository " + localRepository);
-		}
-
-		_portalLocalRepository = (PortalLocalRepository)localRepository;
-
-		LocalGitBranch localGitBranch;
-
-		if (PullRequest.isValidGitHubPullRequestURL(portalGitHubURL)) {
-			PullRequest pullRequest = new PullRequest(
-				portalGitHubURL, getTestSuiteName());
-
-			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
-				_portalLocalRepository, pullRequest, synchronizeBranches());
-		}
-		else if (GitUtil.isValidGitHubRefURL(portalGitHubURL)) {
-			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
-				portalGitHubURL);
-
-			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
-				_portalLocalRepository, remoteGitRef, synchronizeBranches());
-		}
-		else {
-			throw new RuntimeException(
-				"Invalid portal github url " + portalGitHubURL);
-		}
-
-		if (!(localGitBranch instanceof PortalLocalGitBranch)) {
-			throw new RuntimeException(
-				"Invalid local git branch " + localGitBranch);
-		}
-
-		_portalLocalGitBranch = (PortalLocalGitBranch)localGitBranch;
-
-		return _portalLocalGitBranch;
-	}
-
-	protected PortalLocalRepository getPortalLocalRepository() {
-		return _portalLocalRepository;
-	}
-
-	protected String getTestSuiteName() {
-		if (_job instanceof TestSuiteJob) {
-			TestSuiteJob testSuiteJob = (TestSuiteJob)_job;
-
-			return testSuiteJob.getTestSuiteName();
-		}
-
-		return null;
-	}
+	protected BaseWorkspace baseWorkspace;
 
 	private final Job _job;
-	private final List<LocalGitBranch> _localGitBranches = new ArrayList<>();
-	private PortalLocalGitBranch _portalLocalGitBranch;
-	private PortalLocalRepository _portalLocalRepository;
 
 }

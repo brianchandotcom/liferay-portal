@@ -301,30 +301,44 @@ public class HeaderResponseImpl
 	}
 
 	private String _addClosingTags(String xml, String opening, String closing) {
-		int openingBegin = xml.indexOf(opening);
+		StringBundler sb = null;
 
-		while (openingBegin >= 0) {
-			int openingEnd = xml.indexOf(">", openingBegin);
+		int fromIndex = 0;
+		int index = 0;
+		int sbIndex = 0;
 
-			if (openingEnd > 0) {
-				String remainingXML = xml.substring(openingEnd + 1);
+		while ((index = xml.indexOf(opening, fromIndex)) != -1) {
+			int openingEnd = xml.indexOf(CharPool.GREATER_THAN, index);
 
-				if (!remainingXML.startsWith(closing)) {
-					String modifiedXML = xml.substring(0, openingEnd + 1);
-
-					modifiedXML = modifiedXML.concat(closing);
-					modifiedXML = modifiedXML.concat(
-						xml.substring(openingEnd + 1));
-
-					xml = modifiedXML;
-				}
+			if (openingEnd == -1) {
+				break;
 			}
 
-			openingBegin = xml.indexOf(
-				opening, openingBegin + opening.length());
+			fromIndex = openingEnd + 1;
+
+			if (xml.regionMatches(fromIndex, closing, 0, closing.length())) {
+				fromIndex += closing.length();
+			}
+			else {
+				if (sb == null) {
+					sb = new StringBundler();
+				}
+
+				sb.append(xml.substring(sbIndex, fromIndex));
+
+				sbIndex = fromIndex;
+
+				sb.append(closing);
+			}
 		}
 
-		return xml;
+		if (sb == null) {
+			return xml;
+		}
+
+		sb.append(xml.substring(sbIndex));
+
+		return sb.toString();
 	}
 
 	private void _addDependencyToHead(

@@ -206,8 +206,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 											formSubmitURL: '<%= addLayoutURL %>',
 											idFieldName: 'TypeSettingsProperties--layoutPageTemplateEntryId--',
 											idFieldValue: actionElement.dataset.layoutPageTemplateEntryId,
-											mainFieldName: 'name',
 											mainFieldLabel: '<liferay-ui:message key="name" />',
+											mainFieldName: 'name',
 											namespace: '<portlet:namespace />',
 											spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 										}
@@ -215,7 +215,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 								}
 							);
 
-							function handleDestroyPortlet () {
+							function handleDestroyPortlet() {
 								addLayoutActionOptionQueryClickHandler.removeListener();
 
 								Liferay.detach('destroyPortlet', handleDestroyPortlet);

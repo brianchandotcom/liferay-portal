@@ -1147,6 +1147,256 @@ public class UserGroupUtil {
 	}
 
 	/**
+	* Returns all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @return the matching user groups
+	*/
+	public static List<UserGroup> findByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId) {
+		return getPersistence()
+				   .findByU_C_P(userGroupId, companyId, parentUserGroupId);
+	}
+
+	/**
+	* Returns a range of all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param start the lower bound of the range of user groups
+	* @param end the upper bound of the range of user groups (not inclusive)
+	* @return the range of matching user groups
+	*/
+	public static List<UserGroup> findByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId, int start, int end) {
+		return getPersistence()
+				   .findByU_C_P(userGroupId, companyId, parentUserGroupId,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param start the lower bound of the range of user groups
+	* @param end the upper bound of the range of user groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user groups
+	*/
+	public static List<UserGroup> findByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId, int start, int end,
+		OrderByComparator<UserGroup> orderByComparator) {
+		return getPersistence()
+				   .findByU_C_P(userGroupId, companyId, parentUserGroupId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param start the lower bound of the range of user groups
+	* @param end the upper bound of the range of user groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching user groups
+	*/
+	public static List<UserGroup> findByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId, int start, int end,
+		OrderByComparator<UserGroup> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByU_C_P(userGroupId, companyId, parentUserGroupId,
+			start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user group
+	* @throws NoSuchUserGroupException if a matching user group could not be found
+	*/
+	public static UserGroup findByU_C_P_First(long userGroupId, long companyId,
+		long parentUserGroupId, OrderByComparator<UserGroup> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchUserGroupException {
+		return getPersistence()
+				   .findByU_C_P_First(userGroupId, companyId,
+			parentUserGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the first user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user group, or <code>null</code> if a matching user group could not be found
+	*/
+	public static UserGroup fetchByU_C_P_First(long userGroupId,
+		long companyId, long parentUserGroupId,
+		OrderByComparator<UserGroup> orderByComparator) {
+		return getPersistence()
+				   .fetchByU_C_P_First(userGroupId, companyId,
+			parentUserGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user group
+	* @throws NoSuchUserGroupException if a matching user group could not be found
+	*/
+	public static UserGroup findByU_C_P_Last(long userGroupId, long companyId,
+		long parentUserGroupId, OrderByComparator<UserGroup> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchUserGroupException {
+		return getPersistence()
+				   .findByU_C_P_Last(userGroupId, companyId, parentUserGroupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user group, or <code>null</code> if a matching user group could not be found
+	*/
+	public static UserGroup fetchByU_C_P_Last(long userGroupId, long companyId,
+		long parentUserGroupId, OrderByComparator<UserGroup> orderByComparator) {
+		return getPersistence()
+				   .fetchByU_C_P_Last(userGroupId, companyId,
+			parentUserGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns all the user groups that the user has permission to view where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @return the matching user groups that the user has permission to view
+	*/
+	public static List<UserGroup> filterFindByU_C_P(long userGroupId,
+		long companyId, long parentUserGroupId) {
+		return getPersistence()
+				   .filterFindByU_C_P(userGroupId, companyId, parentUserGroupId);
+	}
+
+	/**
+	* Returns a range of all the user groups that the user has permission to view where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param start the lower bound of the range of user groups
+	* @param end the upper bound of the range of user groups (not inclusive)
+	* @return the range of matching user groups that the user has permission to view
+	*/
+	public static List<UserGroup> filterFindByU_C_P(long userGroupId,
+		long companyId, long parentUserGroupId, int start, int end) {
+		return getPersistence()
+				   .filterFindByU_C_P(userGroupId, companyId,
+			parentUserGroupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the user groups that the user has permissions to view where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @param start the lower bound of the range of user groups
+	* @param end the upper bound of the range of user groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user groups that the user has permission to view
+	*/
+	public static List<UserGroup> filterFindByU_C_P(long userGroupId,
+		long companyId, long parentUserGroupId, int start, int end,
+		OrderByComparator<UserGroup> orderByComparator) {
+		return getPersistence()
+				   .filterFindByU_C_P(userGroupId, companyId,
+			parentUserGroupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Removes all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63; from the database.
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	*/
+	public static void removeByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId) {
+		getPersistence().removeByU_C_P(userGroupId, companyId, parentUserGroupId);
+	}
+
+	/**
+	* Returns the number of user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @return the number of matching user groups
+	*/
+	public static int countByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId) {
+		return getPersistence()
+				   .countByU_C_P(userGroupId, companyId, parentUserGroupId);
+	}
+
+	/**
+	* Returns the number of user groups that the user has permission to view where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* @param userGroupId the user group ID
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @return the number of matching user groups that the user has permission to view
+	*/
+	public static int filterCountByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId) {
+		return getPersistence()
+				   .filterCountByU_C_P(userGroupId, companyId, parentUserGroupId);
+	}
+
+	/**
 	* Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or throws a {@link NoSuchUserGroupException} if it could not be found.
 	*
 	* @param companyId the company ID

@@ -125,7 +125,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
 	public static final long NAME_COLUMN_BITMASK = 4L;
 	public static final long PARENTUSERGROUPID_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long USERGROUPID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -415,7 +416,19 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	@Override
 	public void setUserGroupId(long userGroupId) {
+		_columnBitmask |= USERGROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserGroupId) {
+			_setOriginalUserGroupId = true;
+
+			_originalUserGroupId = _userGroupId;
+		}
+
 		_userGroupId = userGroupId;
+	}
+
+	public long getOriginalUserGroupId() {
+		return _originalUserGroupId;
 	}
 
 	@JSON
@@ -708,6 +721,10 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 		userGroupModelImpl._originalExternalReferenceCode = userGroupModelImpl._externalReferenceCode;
 
+		userGroupModelImpl._originalUserGroupId = userGroupModelImpl._userGroupId;
+
+		userGroupModelImpl._setOriginalUserGroupId = false;
+
 		userGroupModelImpl._originalCompanyId = userGroupModelImpl._companyId;
 
 		userGroupModelImpl._setOriginalCompanyId = false;
@@ -912,6 +929,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	private String _externalReferenceCode;
 	private String _originalExternalReferenceCode;
 	private long _userGroupId;
+	private long _originalUserGroupId;
+	private boolean _setOriginalUserGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

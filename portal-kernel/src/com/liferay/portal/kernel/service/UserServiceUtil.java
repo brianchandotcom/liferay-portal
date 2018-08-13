@@ -505,6 +505,25 @@ public class UserServiceUtil {
 		return getService().getGroupUsersCount(groupId, status);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.User> getGtCompanyUsers(
+		long gtUserId, long companyId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getGtCompanyUsers(gtUserId, companyId, size);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.User> getGtOrganizationUsers(
+		long gtUserId, long organizationId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getGtOrganizationUsers(gtUserId, organizationId, size);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.User> getGtUserGroupUsers(
+		long gtUserId, long userGroupId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getGtUserGroupUsers(gtUserId, userGroupId, size);
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*
@@ -639,14 +658,6 @@ public class UserServiceUtil {
 		return getService().getUserGroupUsers(userGroupId);
 	}
 
-	/**
-	* Returns the users belonging to the user group with the status.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @return the matching users
-	*/
 	public static java.util.List<com.liferay.portal.kernel.model.User> getUserGroupUsers(
 		long userGroupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

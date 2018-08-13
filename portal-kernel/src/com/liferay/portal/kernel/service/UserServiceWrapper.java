@@ -512,6 +512,28 @@ public class UserServiceWrapper implements UserService,
 		return _userService.getGroupUsersCount(groupId, status);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getGtCompanyUsers(
+		long gtUserId, long companyId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getGtCompanyUsers(gtUserId, companyId, size);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getGtOrganizationUsers(
+		long gtUserId, long organizationId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getGtOrganizationUsers(gtUserId, organizationId,
+			size);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getGtUserGroupUsers(
+		long gtUserId, long userGroupId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getGtUserGroupUsers(gtUserId, userGroupId, size);
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*
@@ -657,14 +679,6 @@ public class UserServiceWrapper implements UserService,
 		return _userService.getUserGroupUsers(userGroupId);
 	}
 
-	/**
-	* Returns the users belonging to the user group with the status.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @return the matching users
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.User> getUserGroupUsers(
 		long userGroupId, int start, int end)

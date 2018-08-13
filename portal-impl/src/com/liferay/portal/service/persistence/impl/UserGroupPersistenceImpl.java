@@ -4075,6 +4075,617 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	private static final String _FINDER_COLUMN_C_N_NAME_1 = "userGroup.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "lower(userGroup.name) = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(userGroup.name IS NULL OR userGroup.name = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_P = new FinderPath(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
+			UserGroupModelImpl.FINDER_CACHE_ENABLED, UserGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C_P = new FinderPath(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
+			UserGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_C_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @return the matching user groups
+	 */
+	@Override
+	public List<UserGroup> findByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId) {
+		return findByU_C_P(userGroupId, companyId, parentUserGroupId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param start the lower bound of the range of user groups
+	 * @param end the upper bound of the range of user groups (not inclusive)
+	 * @return the range of matching user groups
+	 */
+	@Override
+	public List<UserGroup> findByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId, int start, int end) {
+		return findByU_C_P(userGroupId, companyId, parentUserGroupId, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param start the lower bound of the range of user groups
+	 * @param end the upper bound of the range of user groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user groups
+	 */
+	@Override
+	public List<UserGroup> findByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId, int start, int end,
+		OrderByComparator<UserGroup> orderByComparator) {
+		return findByU_C_P(userGroupId, companyId, parentUserGroupId, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param start the lower bound of the range of user groups
+	 * @param end the upper bound of the range of user groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching user groups
+	 */
+	@Override
+	public List<UserGroup> findByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId, int start, int end,
+		OrderByComparator<UserGroup> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_P;
+		finderArgs = new Object[] {
+				userGroupId, companyId, parentUserGroupId,
+				
+				start, end, orderByComparator
+			};
+
+		List<UserGroup> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<UserGroup>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (UserGroup userGroup : list) {
+					if ((userGroupId >= userGroup.getUserGroupId()) ||
+							(companyId != userGroup.getCompanyId()) ||
+							(parentUserGroupId != userGroup.getParentUserGroupId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_USERGROUP_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_P_USERGROUPID_2);
+
+			query.append(_FINDER_COLUMN_U_C_P_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_U_C_P_PARENTUSERGROUPID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(UserGroupModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userGroupId);
+
+				qPos.add(companyId);
+
+				qPos.add(parentUserGroupId);
+
+				if (!pagination) {
+					list = (List<UserGroup>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<UserGroup>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user group
+	 * @throws NoSuchUserGroupException if a matching user group could not be found
+	 */
+	@Override
+	public UserGroup findByU_C_P_First(long userGroupId, long companyId,
+		long parentUserGroupId, OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
+		UserGroup userGroup = fetchByU_C_P_First(userGroupId, companyId,
+				parentUserGroupId, orderByComparator);
+
+		if (userGroup != null) {
+			return userGroup;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userGroupId=");
+		msg.append(userGroupId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(", parentUserGroupId=");
+		msg.append(parentUserGroupId);
+
+		msg.append("}");
+
+		throw new NoSuchUserGroupException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
+	 */
+	@Override
+	public UserGroup fetchByU_C_P_First(long userGroupId, long companyId,
+		long parentUserGroupId, OrderByComparator<UserGroup> orderByComparator) {
+		List<UserGroup> list = findByU_C_P(userGroupId, companyId,
+				parentUserGroupId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user group
+	 * @throws NoSuchUserGroupException if a matching user group could not be found
+	 */
+	@Override
+	public UserGroup findByU_C_P_Last(long userGroupId, long companyId,
+		long parentUserGroupId, OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
+		UserGroup userGroup = fetchByU_C_P_Last(userGroupId, companyId,
+				parentUserGroupId, orderByComparator);
+
+		if (userGroup != null) {
+			return userGroup;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userGroupId=");
+		msg.append(userGroupId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(", parentUserGroupId=");
+		msg.append(parentUserGroupId);
+
+		msg.append("}");
+
+		throw new NoSuchUserGroupException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
+	 */
+	@Override
+	public UserGroup fetchByU_C_P_Last(long userGroupId, long companyId,
+		long parentUserGroupId, OrderByComparator<UserGroup> orderByComparator) {
+		int count = countByU_C_P(userGroupId, companyId, parentUserGroupId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<UserGroup> list = findByU_C_P(userGroupId, companyId,
+				parentUserGroupId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns all the user groups that the user has permission to view where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @return the matching user groups that the user has permission to view
+	 */
+	@Override
+	public List<UserGroup> filterFindByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId) {
+		return filterFindByU_C_P(userGroupId, companyId, parentUserGroupId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the user groups that the user has permission to view where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param start the lower bound of the range of user groups
+	 * @param end the upper bound of the range of user groups (not inclusive)
+	 * @return the range of matching user groups that the user has permission to view
+	 */
+	@Override
+	public List<UserGroup> filterFindByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId, int start, int end) {
+		return filterFindByU_C_P(userGroupId, companyId, parentUserGroupId,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the user groups that the user has permissions to view where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @param start the lower bound of the range of user groups
+	 * @param end the upper bound of the range of user groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user groups that the user has permission to view
+	 */
+	@Override
+	public List<UserGroup> filterFindByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId, int start, int end,
+		OrderByComparator<UserGroup> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByU_C_P(userGroupId, companyId, parentUserGroupId,
+				start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_USERGROUP_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_U_C_P_USERGROUPID_2);
+
+		query.append(_FINDER_COLUMN_U_C_P_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_U_C_P_PARENTUSERGROUPID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(UserGroupModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(UserGroupModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, UserGroupImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, UserGroupImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userGroupId);
+
+			qPos.add(companyId);
+
+			qPos.add(parentUserGroupId);
+
+			return (List<UserGroup>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Removes all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63; from the database.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 */
+	@Override
+	public void removeByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId) {
+		for (UserGroup userGroup : findByU_C_P(userGroupId, companyId,
+				parentUserGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(userGroup);
+		}
+	}
+
+	/**
+	 * Returns the number of user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @return the number of matching user groups
+	 */
+	@Override
+	public int countByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C_P;
+
+		Object[] finderArgs = new Object[] {
+				userGroupId, companyId, parentUserGroupId
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_USERGROUP_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_P_USERGROUPID_2);
+
+			query.append(_FINDER_COLUMN_U_C_P_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_U_C_P_PARENTUSERGROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userGroupId);
+
+				qPos.add(companyId);
+
+				qPos.add(parentUserGroupId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of user groups that the user has permission to view where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param companyId the company ID
+	 * @param parentUserGroupId the parent user group ID
+	 * @return the number of matching user groups that the user has permission to view
+	 */
+	@Override
+	public int filterCountByU_C_P(long userGroupId, long companyId,
+		long parentUserGroupId) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByU_C_P(userGroupId, companyId, parentUserGroupId);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_USERGROUP_WHERE);
+
+		query.append(_FINDER_COLUMN_U_C_P_USERGROUPID_2);
+
+		query.append(_FINDER_COLUMN_U_C_P_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_U_C_P_PARENTUSERGROUPID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userGroupId);
+
+			qPos.add(companyId);
+
+			qPos.add(parentUserGroupId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_U_C_P_USERGROUPID_2 = "userGroup.userGroupId > ? AND ";
+	private static final String _FINDER_COLUMN_U_C_P_COMPANYID_2 = "userGroup.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_U_C_P_PARENTUSERGROUPID_2 = "userGroup.parentUserGroupId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_ERC = new FinderPath(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 			UserGroupModelImpl.FINDER_CACHE_ENABLED, UserGroupImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",

@@ -165,6 +165,10 @@ public interface OrganizationService extends BaseService {
 	public Organization fetchOrganization(long organizationId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Organization> getGtOrganizations(long gtOrganizationId,
+		long companyId, long parentOrganizationId, int size);
+
 	/**
 	* Returns the organization with the primary key.
 	*

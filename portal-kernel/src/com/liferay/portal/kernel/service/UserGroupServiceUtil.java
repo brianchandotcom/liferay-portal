@@ -127,6 +127,13 @@ public class UserGroupServiceUtil {
 		return getService().fetchUserGroup(userGroupId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getGtUserGroups(
+		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
+		return getService()
+				   .getGtUserGroups(gtUserGroupId, companyId,
+			parentUserGroupId, size);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

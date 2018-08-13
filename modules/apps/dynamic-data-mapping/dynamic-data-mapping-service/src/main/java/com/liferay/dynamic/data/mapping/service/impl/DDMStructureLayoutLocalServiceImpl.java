@@ -124,7 +124,8 @@ public class DDMStructureLayoutLocalServiceImpl
 		throws PortalException {
 
 		DDMFormLayoutValidatorValidateRequest.Builder builder =
-			DDMFormLayoutValidatorValidateRequest.Builder.newBuilder(ddmFormLayout);
+			DDMFormLayoutValidatorValidateRequest.Builder.newBuilder(
+				ddmFormLayout);
 
 		ddmFormLayoutValidator.validate(builder.build());
 	}

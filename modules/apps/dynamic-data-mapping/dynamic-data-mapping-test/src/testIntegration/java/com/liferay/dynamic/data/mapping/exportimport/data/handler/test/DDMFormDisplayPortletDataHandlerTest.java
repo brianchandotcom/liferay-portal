@@ -57,19 +57,4 @@ public class DDMFormDisplayPortletDataHandlerTest
 		return DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM;
 	}
 
-	@Override
-	protected boolean isDataPortalLevel() {
-		return false;
-	}
-
-	@Override
-	protected boolean isDataPortletInstanceLevel() {
-		return true;
-	}
-
-	@Override
-	protected boolean isDataSiteLevel() {
-		return false;
-	}
-
 }

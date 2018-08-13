@@ -70,19 +70,4 @@ public class DDMFormAdminPortletDataHandlerTest
 		return DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN;
 	}
 
-	@Override
-	protected boolean isDataPortalLevel() {
-		return false;
-	}
-
-	@Override
-	protected boolean isDataPortletInstanceLevel() {
-		return false;
-	}
-
-	@Override
-	protected boolean isDataSiteLevel() {
-		return true;
-	}
-
 }

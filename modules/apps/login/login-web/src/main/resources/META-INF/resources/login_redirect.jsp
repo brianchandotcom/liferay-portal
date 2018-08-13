@@ -146,10 +146,6 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		);
 	};
 
-	<c:if test="<%= !company.isStrangers() && (user == null) %>">
-		<portlet:namespace />closeDialog();
-	</c:if>
-
 	var afterLogin;
 	var namespace;
 	var randomNamespace;
@@ -163,7 +159,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		if (typeof afterLogin == 'function') {
 			afterLogin('<%= HtmlUtil.escape(emailAddress) %>', <%= anonymousAccount %>);
 
-			if (<%= !anonymousAccount %>) {
+			if (<%= !anonymousAccount || !company.isStrangers() %>) {
 				window.opener.parent.Liferay.fire(
 					'closeWindow',
 					{
@@ -188,7 +184,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 
 		afterLogin('<%= HtmlUtil.escape(emailAddress) %>', <%= anonymousAccount %>);
 
-		if (<%= !anonymousAccount %>) {
+		if (<%= !anonymousAccount || !company.isStrangers() %>) {
 			Liferay.fire(
 				'closeWindow',
 				{

@@ -985,6 +985,19 @@ public class JenkinsResultsParserUtil {
 		return (PortalGitWorkingDirectory)gitWorkingDirectory;
 	}
 
+	public static String getPortalUpstreamBranchName(Job job) {
+		if (!(job instanceof PortalTestClassJob)) {
+			throw new RuntimeException("Invalid job type");
+		}
+
+		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			portalTestClassJob.getPortalGitWorkingDirectory();
+
+		return portalGitWorkingDirectory.getUpstreamBranchName();
+	}
+
 	public static Properties getProperties(File... propertiesFiles) {
 		Properties properties = new Properties();
 

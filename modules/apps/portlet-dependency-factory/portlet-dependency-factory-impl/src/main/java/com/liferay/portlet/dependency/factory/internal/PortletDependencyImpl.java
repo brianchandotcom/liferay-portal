@@ -40,32 +40,28 @@ public class PortletDependencyImpl implements PortletDependency {
 		if (_name == null) {
 			_type = Type.OTHER;
 		}
-		else {
-			if (_name.endsWith(".css")) {
-				_type = Type.CSS;
-			}
-			else if (_name.endsWith(".js")) {
+		else if (_name.endsWith(".css")) {
+			_type = Type.CSS;
+		}
+		else if (_name.endsWith(".js")) {
+			_type = Type.JAVASCRIPT;
+		}
+		else if (Validator.isNotNull(markup)) {
+			markup = StringUtil.trim(markup);
+			markup = StringUtil.lowerCase(markup);
+
+			if (markup.startsWith("<script")) {
 				_type = Type.JAVASCRIPT;
 			}
-			else {
-				if (Validator.isNotNull(markup)) {
-					markup = StringUtil.trim(markup);
-					markup = StringUtil.lowerCase(markup);
-
-					if (markup.startsWith("<script")) {
-						_type = Type.JAVASCRIPT;
-					}
-					else if (markup.startsWith("<link")) {
-						_type = Type.CSS;
-					}
-					else {
-						_type = Type.OTHER;
-					}
-				}
-				else {
-					_type = Type.OTHER;
-				}
+			else if (markup.startsWith("<link")) {
+				_type = Type.CSS;
 			}
+			else {
+				_type = Type.OTHER;
+			}
+		}
+		else {
+			_type = Type.OTHER;
 		}
 	}
 

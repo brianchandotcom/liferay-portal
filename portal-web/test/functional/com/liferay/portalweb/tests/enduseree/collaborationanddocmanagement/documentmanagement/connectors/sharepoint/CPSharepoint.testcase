@@ -350,6 +350,14 @@
 			<var name="dmDocumentTitle" value="Document_3.doc" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
 		<execute macro="DMDocument#editCP">
 			<var name="dmDocumentFileEdit" value="Document_2.jpg" />
 			<var name="dmDocumentTitle" value="Document_3.doc" />

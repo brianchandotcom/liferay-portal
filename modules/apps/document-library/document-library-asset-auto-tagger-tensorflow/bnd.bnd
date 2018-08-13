@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Document Library Asset Auto Tagger TensorFlow
 Bundle-SymbolicName: com.liferay.document.library.asset.auto.tagger.tensorflow
 Bundle-Version: 1.0.0
+Web-ContextPath: /document-library-asset-auto-tagger-tensorflow
 -includeresource: META-INF/tensorflow=@org.tensorflow.models.inception-*.jar

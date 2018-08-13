@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
@@ -65,6 +66,14 @@ public class DeprecatedUsageCheck extends BaseCheck {
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.CLASS_DEF};
+	}
+
+	public void setAllowedFullyQualifiedClassNames(
+		String allowedFullyQualifiedClassNames) {
+
+		_allowedFullyQualifiedClassNames = ArrayUtil.append(
+			_allowedFullyQualifiedClassNames,
+			StringUtil.split(allowedFullyQualifiedClassNames));
 	}
 
 	@Override
@@ -200,7 +209,10 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			}
 
 			if ((fullyQualifiedClassName == null) ||
-				!fullyQualifiedClassName.startsWith("com.liferay.")) {
+				!fullyQualifiedClassName.startsWith("com.liferay.") ||
+				ArrayUtil.contains(
+					_allowedFullyQualifiedClassNames,
+					fullyQualifiedClassName)) {
 
 				continue;
 			}
@@ -285,7 +297,10 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			}
 
 			if ((fullyQualifiedClassName == null) ||
-				!fullyQualifiedClassName.startsWith("com.liferay.")) {
+				!fullyQualifiedClassName.startsWith("com.liferay.") ||
+				ArrayUtil.contains(
+					_allowedFullyQualifiedClassNames,
+					fullyQualifiedClassName)) {
 
 				continue;
 			}
@@ -334,7 +349,10 @@ public class DeprecatedUsageCheck extends BaseCheck {
 				methodCallAST, className, packageName, importNames);
 
 			if ((fullyQualifiedClassName == null) ||
-				!fullyQualifiedClassName.startsWith("com.liferay.")) {
+				!fullyQualifiedClassName.startsWith("com.liferay.") ||
+				ArrayUtil.contains(
+					_allowedFullyQualifiedClassNames,
+					fullyQualifiedClassName)) {
 
 				continue;
 			}
@@ -446,7 +464,10 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		}
 
 		if ((fullyQualifiedClassName == null) ||
-			!fullyQualifiedClassName.startsWith("com.liferay.")) {
+			!fullyQualifiedClassName.startsWith("com.liferay.") ||
+			ArrayUtil.contains(
+				_allowedFullyQualifiedClassNames,
+				fullyQualifiedClassName)) {
 
 			return;
 		}
@@ -1079,6 +1100,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 	private static final Pattern _fieldNamePattern = Pattern.compile(
 		"((.*\\.)?([A-Z]\\w+))\\.(\\w+)");
 
+	private String[] _allowedFullyQualifiedClassNames = new String[0];
 	private Map<String, String> _bundleSymbolicNamesMap;
 	private final Map<String, ClassInfo> _classInfoMap = new HashMap<>();
 	private String _rootDirName;

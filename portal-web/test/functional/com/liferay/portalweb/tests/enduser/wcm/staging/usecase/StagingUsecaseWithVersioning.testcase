@@ -899,6 +899,7 @@
 
 		<execute macro="Site#changeSiteLogo">
 			<var name="logoFile" value="Document_2.png" />
+			<var name="pageName" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">

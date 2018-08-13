@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-TensorFlowImageAssetAutoTagProviderCompanyConfiguration
-	tensorFlowImageAssetAutoTagProviderCompanyConfiguration = (TensorFlowImageAssetAutoTagProviderCompanyConfiguration)request.getAttribute(TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class.getName());
+TensorFlowImageAssetAutoTagProviderCompanyConfiguration tensorFlowImageAssetAutoTagProviderCompanyConfiguration = (TensorFlowImageAssetAutoTagProviderCompanyConfiguration)request.getAttribute(TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class.getName());
 %>
 
 <aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="<%= PortalSettingsTensorflowAssetAutoTagProviderConstants.ACTION_NAME %>" />

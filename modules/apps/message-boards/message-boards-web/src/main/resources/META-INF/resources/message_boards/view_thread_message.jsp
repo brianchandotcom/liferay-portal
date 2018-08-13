@@ -402,7 +402,7 @@ if (message.isAnonymous()) {
 				assetTagNames="<%= assetTagNames %>"
 				className="<%= MBMessage.class.getName() %>"
 				classPK="<%= message.getMessageId() %>"
-				portletURL="<%= renderResponse.createRenderURL() %>"
+				portletURL="<%= liferayPortletResponse.createRenderURL() %>"
 			/>
 		</div>
 

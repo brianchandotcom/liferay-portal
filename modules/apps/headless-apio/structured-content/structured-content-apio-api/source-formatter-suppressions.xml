@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaAPISignatureCheck" files="modules/apps/headless-apio/structured-content/structured-content-apio-api/src/main/java/com/liferay/structured/content/apio/architect/router/StructuredContentRouter\.java" />
+	</source-check>
+</suppressions>

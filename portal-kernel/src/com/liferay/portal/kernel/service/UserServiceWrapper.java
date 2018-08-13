@@ -427,6 +427,13 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getCompanyUsers(
+		long gtUserId, long companyId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getCompanyUsers(gtUserId, companyId, size);
+	}
+
+	@Override
 	public int getCompanyUsersCount(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userService.getCompanyUsersCount(companyId);
@@ -574,6 +581,13 @@ public class UserServiceWrapper implements UserService,
 		return _userService.getOrganizationUsers(organizationId, status, obc);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getOrganizationUsers(
+		long gtUserId, long organizationId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getOrganizationUsers(gtUserId, organizationId, size);
+	}
+
 	/**
 	* Returns the number of users with the status belonging to the
 	* organization.
@@ -657,19 +671,18 @@ public class UserServiceWrapper implements UserService,
 		return _userService.getUserGroupUsers(userGroupId);
 	}
 
-	/**
-	* Returns the users belonging to the user group with the status.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @return the matching users
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.User> getUserGroupUsers(
 		long userGroupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userService.getUserGroupUsers(userGroupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getUserGroupUsers(
+		long gtUserId, long userGroupId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getUserGroupUsers(gtUserId, userGroupId, size);
 	}
 
 	/**

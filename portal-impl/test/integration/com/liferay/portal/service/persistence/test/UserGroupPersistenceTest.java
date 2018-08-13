@@ -216,6 +216,14 @@ public class UserGroupPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_C_P() throws Exception {
+		_persistence.countByU_C_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByU_C_P(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testCountByC_ERC() throws Exception {
 		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
 

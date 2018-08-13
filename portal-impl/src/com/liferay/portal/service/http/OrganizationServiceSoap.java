@@ -369,6 +369,23 @@ public class OrganizationServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.OrganizationSoap[] getOrganizations(
+		long gtOrganizationId, long companyId, long parentOrganizationId,
+		int size) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Organization> returnValue =
+				OrganizationServiceUtil.getOrganizations(gtOrganizationId,
+					companyId, parentOrganizationId, size);
+
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the number of organizations belonging to the parent organization.
 	*

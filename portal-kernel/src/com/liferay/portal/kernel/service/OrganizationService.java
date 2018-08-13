@@ -225,6 +225,10 @@ public interface OrganizationService extends BaseService {
 	public List<Organization> getOrganizations(long companyId,
 		long parentOrganizationId, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Organization> getOrganizations(long gtOrganizationId,
+		long companyId, long parentOrganizationId, int size);
+
 	/**
 	* Returns the number of organizations belonging to the parent organization.
 	*

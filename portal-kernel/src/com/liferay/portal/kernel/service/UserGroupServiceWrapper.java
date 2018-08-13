@@ -164,6 +164,13 @@ public class UserGroupServiceWrapper implements UserGroupService,
 		return _userGroupService.getUserGroups(companyId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
+		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
+		return _userGroupService.getUserGroups(gtUserGroupId, companyId,
+			parentUserGroupId, size);
+	}
+
 	/**
 	* Returns all the user groups to which the user belongs.
 	*

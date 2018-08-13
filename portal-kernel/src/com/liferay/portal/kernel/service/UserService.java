@@ -378,6 +378,10 @@ public interface UserService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getCompanyUsers(long gtUserId, long companyId, int size)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyUsersCount(long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -489,6 +493,10 @@ public interface UserService extends BaseService {
 	public List<User> getOrganizationUsers(long organizationId, int status,
 		OrderByComparator<User> obc) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getOrganizationUsers(long gtUserId, long organizationId,
+		int size) throws PortalException;
+
 	/**
 	* Returns the number of users with the status belonging to the
 	* organization.
@@ -552,17 +560,13 @@ public interface UserService extends BaseService {
 	public List<User> getUserGroupUsers(long userGroupId)
 		throws PortalException;
 
-	/**
-	* Returns the users belonging to the user group with the status.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @return the matching users
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getUserGroupUsers(long userGroupId, int start, int end)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getUserGroupUsers(long gtUserId, long userGroupId,
+		int size) throws PortalException;
 
 	/**
 	* Returns the primary key of the user with the email address.

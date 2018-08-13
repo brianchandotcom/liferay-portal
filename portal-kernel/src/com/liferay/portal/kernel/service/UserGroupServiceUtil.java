@@ -165,6 +165,13 @@ public class UserGroupServiceUtil {
 		return getService().getUserGroups(companyId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
+		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
+		return getService()
+				   .getUserGroups(gtUserGroupId, companyId, parentUserGroupId,
+			size);
+	}
+
 	/**
 	* Returns all the user groups to which the user belongs.
 	*

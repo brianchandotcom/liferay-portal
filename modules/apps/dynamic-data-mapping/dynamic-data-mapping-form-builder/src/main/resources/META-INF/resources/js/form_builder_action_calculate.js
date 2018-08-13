@@ -162,6 +162,7 @@ AUI.add(
 								fieldName: instance.get('index') + '-action',
 								label: Liferay.Language.get('choose-a-field-to-show-the-result'),
 								options: instance._getNumericFields(),
+								showLabel: true,
 								value: value,
 								visible: true
 							}

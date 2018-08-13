@@ -19,9 +19,6 @@ package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.const
  */
 public class PortalSettingsTensorflowAssetAutoTagProviderConstants {
 
-	public static final String ACTION_NAME =
-		"/portal_settings/document_library_asset_auto_tagger_tensorflow";
-
 	public static final String FORM_PARAMETER_NAMESPACE =
 		"documentLibraryAssetAutoTaggerTensorflow_";
 

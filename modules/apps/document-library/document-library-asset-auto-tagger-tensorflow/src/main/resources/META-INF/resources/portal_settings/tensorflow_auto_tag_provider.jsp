@@ -20,7 +20,7 @@
 TensorFlowImageAssetAutoTagProviderCompanyConfiguration tensorFlowImageAssetAutoTagProviderCompanyConfiguration = (TensorFlowImageAssetAutoTagProviderCompanyConfiguration)request.getAttribute(TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class.getName());
 %>
 
-<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="<%= PortalSettingsTensorflowAssetAutoTagProviderConstants.ACTION_NAME %>" />
+<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/document_library_asset_auto_tagger_tensorflow" />
 
 <aui:input id="enabled" label="enabled" name='<%= PortalSettingsTensorflowAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled() %>" />
 

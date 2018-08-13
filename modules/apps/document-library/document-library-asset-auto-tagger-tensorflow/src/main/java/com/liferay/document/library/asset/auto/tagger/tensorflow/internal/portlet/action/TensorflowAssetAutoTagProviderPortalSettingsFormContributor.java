@@ -47,7 +47,7 @@ public class TensorflowAssetAutoTagProviderPortalSettingsFormContributor
 	@Override
 	public Optional<String> getSaveMVCActionCommandNameOptional() {
 		return Optional.of(
-			PortalSettingsTensorflowAssetAutoTagProviderConstants.ACTION_NAME);
+			"/portal_settings/document_library_asset_auto_tagger_tensorflow");
 	}
 
 	@Override

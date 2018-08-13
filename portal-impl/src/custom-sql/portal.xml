@@ -1787,6 +1787,16 @@
 				Users_Orgs.organizationId = ?
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUsersOrgsGtUserId">
+		<![CDATA[
+			INNER JOIN
+				Users_Orgs ON
+					Users_Orgs.userId = User_.userId
+			WHERE
+				(Users_Orgs.organizationId = ?) AND
+				(Users_Orgs.userId > ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUsersOrgsTree">
 		<![CDATA[
 			INNER JOIN
@@ -1832,6 +1842,16 @@
 					Users_UserGroups.userId = User_.userId
 			WHERE
 				Users_UserGroups.userGroupId = ?
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUsersUserGroupsGtUserId">
+		<![CDATA[
+			INNER JOIN
+				Users_UserGroups ON
+					Users_UserGroups.userId = User_.userId
+			WHERE
+				(Users_UserGroups.userGroupId = ?) AND
+				(Users_UserGroups.userId > ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByAnnouncementsDeliveryEmailOrSms">

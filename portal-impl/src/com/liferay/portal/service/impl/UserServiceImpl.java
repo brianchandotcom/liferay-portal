@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.comparator.UserIdComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.base.UserServiceBaseImpl;
@@ -72,6 +73,7 @@ import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -686,6 +688,20 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	@Override
+	public List<User> getCompanyUsers(long gtUserId, long companyId, int size)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(companyId)) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
+
+		return userPersistence.findByU_C(
+			gtUserId, companyId, 0, size, new UserIdComparator(true));
+	}
+
+	@Override
 	public int getCompanyUsersCount(long companyId) throws PortalException {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
@@ -864,6 +880,23 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			organizationId, status, obc);
 	}
 
+	@Override
+	public List<User> getOrganizationUsers(
+			long gtUserId, long organizationId, int size)
+		throws PortalException {
+
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("usersOrgsGtUserId", new Long[] {organizationId, gtUserId});
+
+		return userLocalService.search(
+			organization.getCompanyId(), null, WorkflowConstants.STATUS_ANY,
+			params, 0, size, new UserIdComparator(true));
+	}
+
 	/**
 	 * Returns the number of users with the status belonging to the
 	 * organization.
@@ -970,6 +1003,24 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			getPermissionChecker(), userGroupId, ActionKeys.VIEW_MEMBERS);
 
 		return userLocalService.getUserGroupUsers(userGroupId, start, end);
+	}
+
+	@Override
+	public List<User> getUserGroupUsers(
+			long gtUserId, long userGroupId, int size)
+		throws PortalException {
+
+		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
+			userGroupId);
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put(
+			"usersUserGroupsGtUserId", new Long[] {userGroupId, gtUserId});
+
+		return userLocalService.search(
+			userGroup.getCompanyId(), null, WorkflowConstants.STATUS_ANY,
+			params, 0, size, new UserIdComparator(true));
 	}
 
 	/**

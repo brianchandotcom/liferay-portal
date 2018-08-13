@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.util.comparator.OrganizationIdComparator;
 import com.liferay.portal.service.base.OrganizationServiceBaseImpl;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -373,6 +374,16 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 		return organizationPersistence.filterFindByC_P(
 			companyId, parentOrganizationId, start, end);
+	}
+
+	@Override
+	public List<Organization> getOrganizations(
+		long gtOrganizationId, long companyId, long parentOrganizationId,
+		int size) {
+
+		return organizationPersistence.filterFindByO_C_P(
+			gtOrganizationId, companyId, parentOrganizationId, 0, size,
+			new OrganizationIdComparator(true));
 	}
 
 	/**

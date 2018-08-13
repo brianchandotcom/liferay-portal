@@ -120,6 +120,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public static final String JOIN_BY_USERS_ORGS =
 		UserFinder.class.getName() + ".joinByUsersOrgs";
 
+	public static final String JOIN_BY_USERS_ORGS_GT_USER_ID =
+		UserFinder.class.getName() + ".joinByUsersOrgsGtUserId";
+
 	public static final String JOIN_BY_USERS_ORGS_TREE =
 		UserFinder.class.getName() + ".joinByUsersOrgsTree";
 
@@ -134,6 +137,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 	public static final String JOIN_BY_USERS_USER_GROUPS =
 		UserFinder.class.getName() + ".joinByUsersUserGroups";
+
+	public static final String JOIN_BY_USERS_USER_GROUPS_GT_USER_ID =
+		UserFinder.class.getName() + ".joinByUsersUserGroupsGtUserId";
 
 	public static final String JOIN_BY_ANNOUNCEMENTS_DELIVERY_EMAIL_OR_SMS =
 		UserFinder.class.getName() + ".joinByAnnouncementsDeliveryEmailOrSms";
@@ -934,6 +940,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		else if (key.equals("usersOrgs")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_ORGS);
 		}
+		else if (key.equals("usersOrgsGtUserId")) {
+			join = CustomSQLUtil.get(JOIN_BY_USERS_ORGS_GT_USER_ID);
+		}
 		else if (key.equals("usersOrgsTree")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_ORGS_TREE);
 		}
@@ -948,6 +957,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		}
 		else if (key.equals("usersUserGroups")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_USER_GROUPS);
+		}
+		else if (key.equals("usersUserGroupsGtUserId")) {
+			join = CustomSQLUtil.get(JOIN_BY_USERS_USER_GROUPS_GT_USER_ID);
 		}
 		else if (key.equals("announcementsDeliveryEmailOrSms")) {
 			join = CustomSQLUtil.get(

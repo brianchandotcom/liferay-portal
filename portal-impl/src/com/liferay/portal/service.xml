@@ -2693,6 +2693,10 @@
 		<finder name="PortraitId" return-type="User">
 			<finder-column name="portraitId" />
 		</finder>
+		<finder db-index="false" name="U_C" return-type="Collection" where="defaultUser = [$FALSE$]">
+			<finder-column comparator="&gt;" name="userId" />
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="C_U" return-type="User" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
@@ -2821,6 +2825,11 @@
 		<finder name="C_N" return-type="UserGroup" unique="true">
 			<finder-column name="companyId" />
 			<finder-column case-sensitive="false" name="name" />
+		</finder>
+		<finder db-index="false" name="U_C_P" return-type="Collection">
+			<finder-column comparator="&gt;" name="userGroupId" />
+			<finder-column name="companyId" />
+			<finder-column name="parentUserGroupId" />
 		</finder>
 
 		<!-- References -->

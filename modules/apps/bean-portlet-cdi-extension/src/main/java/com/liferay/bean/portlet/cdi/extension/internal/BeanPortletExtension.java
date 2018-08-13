@@ -133,7 +133,7 @@ public class BeanPortletExtension implements Extension {
 						});
 				}
 				catch (Exception e) {
-					_log.error(e.getMessage(), e);
+					_log.error(e, e);
 				}
 			}
 
@@ -248,7 +248,7 @@ public class BeanPortletExtension implements Extension {
 					);
 				}
 				catch (Exception e) {
-					_log.error(e.getMessage(), e);
+					_log.error(e, e);
 				}
 			}
 
@@ -280,7 +280,7 @@ public class BeanPortletExtension implements Extension {
 					);
 				}
 				catch (Exception e) {
-					_log.error(e.getMessage(), e);
+					_log.error(e, e);
 				}
 			}
 
@@ -289,7 +289,7 @@ public class BeanPortletExtension implements Extension {
 			afterBeanDiscovery.addContext(new RenderStateBeanContext());
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 
 			throw e;
 		}
@@ -370,7 +370,7 @@ public class BeanPortletExtension implements Extension {
 				);
 			}
 			catch (Exception e) {
-				_log.error(e.getMessage(), e);
+				_log.error(e, e);
 			}
 		}
 
@@ -397,7 +397,7 @@ public class BeanPortletExtension implements Extension {
 				);
 			}
 			catch (Exception e) {
-				_log.error(e.getMessage(), e);
+				_log.error(e, e);
 			}
 		}
 
@@ -751,7 +751,7 @@ public class BeanPortletExtension implements Extension {
 			return Class.forName(portletClass);
 		}
 		catch (ClassNotFoundException cnfe) {
-			_log.error(cnfe.getMessage(), cnfe);
+			_log.error(cnfe, cnfe);
 
 			return null;
 		}
@@ -804,7 +804,7 @@ public class BeanPortletExtension implements Extension {
 				}
 			}
 			catch (NoSuchMethodException nsme) {
-				_log.error(nsme.getMessage(), nsme);
+				_log.error(nsme, nsme);
 			}
 		}
 
@@ -821,7 +821,7 @@ public class BeanPortletExtension implements Extension {
 				}
 			}
 			catch (NoSuchMethodException nsme) {
-				_log.error(nsme.getMessage(), nsme);
+				_log.error(nsme, nsme);
 			}
 		}
 
@@ -840,7 +840,7 @@ public class BeanPortletExtension implements Extension {
 				}
 			}
 			catch (NoSuchMethodException nsme) {
-				_log.error(nsme.getMessage(), nsme);
+				_log.error(nsme, nsme);
 			}
 		}
 
@@ -860,7 +860,7 @@ public class BeanPortletExtension implements Extension {
 				}
 			}
 			catch (NoSuchMethodException nsme) {
-				_log.error(nsme.getMessage(), nsme);
+				_log.error(nsme, nsme);
 			}
 		}
 	}

@@ -506,7 +506,7 @@ public class HeaderResponseImpl
 
 						elementAttributes = null;
 						elementName = null;
-						elementTextSB = null;
+						elementTextSB.setIndex(0);
 					}
 				}
 				else if (event == XMLStreamConstants.START_ELEMENT) {

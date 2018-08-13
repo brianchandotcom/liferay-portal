@@ -768,13 +768,25 @@ public class GitWorkingDirectory {
 		String classPackagePath = classPackageName.replaceAll("\\.", "/");
 
 		for (String javaDirPath : _javaDirPaths) {
-			if (javaDirPath.contains(classPackagePath)) {
-				File classFile = new File(javaDirPath, classFileName);
-
-				if (classFile.exists()) {
-					return classFile;
-				}
+			if (!javaDirPath.contains(classPackagePath)) {
+				continue;
 			}
+
+			File classFile = new File(javaDirPath, classFileName);
+
+			if (!classFile.exists()) {
+				continue;
+			}
+
+			String classFilePath = classFile.getPath();
+
+			if (!classFilePath.contains(
+					classPackagePath + "/" + classFileName)) {
+
+				continue;
+			}
+
+			return classFile;
 		}
 
 		return null;

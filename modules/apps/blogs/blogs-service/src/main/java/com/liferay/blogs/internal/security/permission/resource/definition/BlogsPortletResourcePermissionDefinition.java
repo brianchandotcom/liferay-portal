@@ -39,7 +39,7 @@ public class BlogsPortletResourcePermissionDefinition
 
 		return new PortletResourcePermissionLogic[] {
 			new StagedPortletPermissionLogic(
-				_stagingPermission, BlogsPortletKeys.BLOGS)
+				_stagingPermission, BlogsPortletKeys.BLOGS_ADMIN)
 		};
 	}
 

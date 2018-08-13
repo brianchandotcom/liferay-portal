@@ -48,7 +48,7 @@ public class DLPortletResourcePermissionRegistrar {
 			PortletResourcePermissionFactory.create(
 				DLConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
-					_stagingPermission, DLPortletKeys.DOCUMENT_LIBRARY)),
+					_stagingPermission, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)),
 			properties);
 	}
 

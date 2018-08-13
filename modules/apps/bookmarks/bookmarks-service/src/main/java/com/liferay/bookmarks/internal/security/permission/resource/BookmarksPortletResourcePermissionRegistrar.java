@@ -48,7 +48,7 @@ public class BookmarksPortletResourcePermissionRegistrar {
 			PortletResourcePermissionFactory.create(
 				BookmarksConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
-					_stagingPermission, BookmarksPortletKeys.BOOKMARKS)),
+					_stagingPermission, BookmarksPortletKeys.BOOKMARKS_ADMIN)),
 			properties);
 	}
 

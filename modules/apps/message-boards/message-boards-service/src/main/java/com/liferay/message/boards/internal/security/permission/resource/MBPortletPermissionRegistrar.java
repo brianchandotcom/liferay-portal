@@ -50,7 +50,7 @@ public class MBPortletPermissionRegistrar {
 				MBConstants.RESOURCE_NAME,
 				new MBPortletPermissionLogic(_mbBanLocalService),
 				new StagedPortletPermissionLogic(
-					_stagingPermission, MBPortletKeys.MESSAGE_BOARDS)),
+					_stagingPermission, MBPortletKeys.MESSAGE_BOARDS_ADMIN)),
 			properties);
 	}
 

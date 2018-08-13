@@ -48,7 +48,7 @@ public class WikiPortletResourcePermissionRegistrar {
 			PortletResourcePermissionFactory.create(
 				WikiConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
-					_stagingPermission, WikiPortletKeys.WIKI)),
+					_stagingPermission, WikiPortletKeys.WIKI_ADMIN)),
 			properties);
 	}
 

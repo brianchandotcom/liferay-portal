@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.portlet.PortletRequest;
 
@@ -335,10 +336,22 @@ public class LanguageUtil {
 		return Validator.isNotNull(value);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #process(
+	 *            Supplier, Locale, String)}
+	 */
+	@Deprecated
 	public static String process(
 		ResourceBundle resourceBundle, Locale locale, String content) {
 
 		return getLanguage().process(resourceBundle, locale, content);
+	}
+
+	public static String process(
+		Supplier<ResourceBundle> resourceBundleSupplier, Locale locale,
+		String content) {
+
+		return getLanguage().process(resourceBundleSupplier, locale, content);
 	}
 
 	public static void resetAvailableGroupLocales(long groupId) {

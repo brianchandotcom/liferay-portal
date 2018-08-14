@@ -334,7 +334,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		throws PortalException {
 
 		return getAllDescendantKBArticles(
-			resourcePrimKey, status, orderByComparator, true);
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, resourcePrimKey, status,
+			orderByComparator, true);
 	}
 
 	/**
@@ -381,7 +382,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			themeDisplay.getPortalURL(), false);
 
 		List<KBArticle> kbArticles = getAllDescendantKBArticles(
-			resourcePrimKey, status, new KBArticleModifiedDateComparator());
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, resourcePrimKey, status,
+			new KBArticleModifiedDateComparator());
 
 		return exportToRSS(
 			rssDisplayStyle, rssFormat, name, description, feedURL,

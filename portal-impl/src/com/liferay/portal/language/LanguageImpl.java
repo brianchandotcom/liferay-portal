@@ -1541,7 +1541,7 @@ public class LanguageImpl implements Language, Serializable {
 	public String process(
 		ResourceBundle resourceBundle, Locale locale, String content) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = null;
 
 		Matcher matcher = _pattern.matcher(content);
 
@@ -1551,6 +1551,10 @@ public class LanguageImpl implements Language, Serializable {
 			int y = matcher.start(0);
 
 			String key = matcher.group(1);
+
+			if (sb == null) {
+				sb = new StringBundler();
+			}
 
 			sb.append(content.substring(x, y));
 			sb.append(StringPool.APOSTROPHE);
@@ -1562,6 +1566,10 @@ public class LanguageImpl implements Language, Serializable {
 			sb.append(StringPool.APOSTROPHE);
 
 			x = matcher.end(0);
+		}
+
+		if (sb == null) {
+			return content;
 		}
 
 		sb.append(content.substring(x));

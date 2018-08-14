@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.User;
@@ -550,13 +549,15 @@ public class UserNotificationEventLocalServiceImpl
 
 					message.setPayload(notificationEvent.getPayload());
 
-					MessageBusUtil.sendMessage(
-						DestinationNames.PUSH_NOTIFICATION, message);
+					MessageBusUtil.sendMessage(_PUSH_NOTIFICATION, message);
 
 					return null;
 				}
 
 			});
 	}
+
+	private static final String _PUSH_NOTIFICATION =
+		"liferay/push_notification";
 
 }

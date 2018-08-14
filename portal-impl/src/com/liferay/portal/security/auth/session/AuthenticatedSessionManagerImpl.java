@@ -284,7 +284,7 @@ public class AuthenticatedSessionManagerImpl
 
 			userUUIDCookie.setPath(StringPool.SLASH);
 
-			session.setAttribute(WebKeys.USER_UUID, userUUID);
+			session.setAttribute(CookieKeys.USER_UUID, userUUID);
 
 			if (rememberMe) {
 				userUUIDCookie.setMaxAge(loginMaxAge);

@@ -2202,7 +2202,6 @@ public class ProjectTemplatesTest {
 			"--liferayVersion", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-
 		_testExists(gradleProjectDir, "build.gradle");
 
 		_testContains(

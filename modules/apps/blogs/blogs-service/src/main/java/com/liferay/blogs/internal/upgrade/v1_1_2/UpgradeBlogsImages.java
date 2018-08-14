@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
+import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -41,6 +41,10 @@ import java.sql.ResultSet;
  * @author István András Dézsi
  */
 public class UpgradeBlogsImages extends UpgradeProcess {
+
+	public UpgradeBlogsImages(ImageLocalService imageLocalService) {
+		_imageLocalService = imageLocalService;
+	}
 
 	protected Folder addFolder(long userId, long groupId, String folderName)
 		throws PortalException {
@@ -80,7 +84,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 				long smallImageId = rs.getLong("smallImageId");
 				long userId = rs.getLong("userId");
 
-				Image smallImage = ImageLocalServiceUtil.getImage(smallImageId);
+				Image smallImage = _imageLocalService.getImage(smallImageId);
 
 				if (smallImage == null) {
 					continue;
@@ -131,5 +135,7 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 			ps2.executeBatch();
 		}
 	}
+
+	private final ImageLocalService _imageLocalService;
 
 }

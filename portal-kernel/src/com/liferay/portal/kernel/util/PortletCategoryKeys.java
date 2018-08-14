@@ -70,9 +70,7 @@ public class PortletCategoryKeys {
 		PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT,
 		PortletCategoryKeys.SITE_ADMINISTRATION_MEMBERS,
 		PortletCategoryKeys.SITE_ADMINISTRATION_NAVIGATION,
-		PortletCategoryKeys.SITE_ADMINISTRATION_PAGES,
-		PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING,
-		PortletCategoryKeys.SITE_ADMINISTRATION_USERS
+		PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING
 	};
 
 	public static final String SITE_ADMINISTRATION_CONFIGURATION =

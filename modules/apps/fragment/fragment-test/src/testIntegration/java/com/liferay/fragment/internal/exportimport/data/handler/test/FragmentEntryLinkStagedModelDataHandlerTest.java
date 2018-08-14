@@ -15,15 +15,21 @@
 package com.liferay.fragment.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -31,9 +37,11 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -53,6 +61,48 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		super.setUp();
 
 		LayoutTestUtil.addLayout(stagingGroup);
+	}
+
+	@Test
+	public void testStageFragmentEntryLink() throws Exception {
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.
+				fetchFragmentEntryLinkByUuidAndGroupId(
+					stagedModel.getUuid(), stagingGroup.getGroupId());
+
+		stagedModel = FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
+			TestPropsValues.getUserId(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			fragmentEntryLink.getFragmentEntryId(),
+			PortalUtil.getClassNameId(Layout.class),
+			fragmentEntryLink.getClassPK(), "css", "html", "js",
+			StringPool.BLANK, fragmentEntryLink.getPosition() + 1,
+			serviceContext);
+
+		try {
+			exportImportStagedModel(stagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		StagedModel importedStagedModel = getStagedModel(
+			stagedModel.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedStagedModel);
+
+		validateImportedStagedModel(stagedModel, importedStagedModel);
 	}
 
 	@Override
@@ -81,6 +131,26 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return FragmentEntryLink.class;
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink = (FragmentEntryLink)stagedModel;
+		FragmentEntryLink importedFragmentEntryLink =
+			(FragmentEntryLink)importedStagedModel;
+
+		Assert.assertEquals(
+			importedFragmentEntryLink.getHtml(), fragmentEntryLink.getHtml());
+		Assert.assertEquals(
+			importedFragmentEntryLink.getCss(), fragmentEntryLink.getCss());
+		Assert.assertEquals(
+			importedFragmentEntryLink.getJs(), fragmentEntryLink.getJs());
+		Assert.assertEquals(
+			importedFragmentEntryLink.getPosition(),
+			fragmentEntryLink.getPosition());
 	}
 
 }

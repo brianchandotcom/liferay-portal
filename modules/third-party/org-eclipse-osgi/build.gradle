@@ -1,31 +1,26 @@
-task jarPatched(type: Zip)
+import com.liferay.gradle.plugins.patcher.PatchTask
 
-sourceCompatibility = "1.6"
-targetCompatibility = "1.6"
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
 
 dependencies {
-	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1-LIFERAY-CACHED"
+	compileOnly group: "org.eclipse.platform", name: "org.eclipse.osgi", version: "3.13.0"
 }
 
-jar {
-	deleteAllActions()
-
-	dependsOn jarPatched
+liferay {
+	deployDir = file("${liferayHome}/osgi/core")
 }
 
-jarPatched {
-	archiveName = jar.archiveName
-	destinationDir = jar.destinationDir
-	duplicatesStrategy = "exclude"
-
-	exclude "META-INF/ECLIPSE_.RSA"
-	exclude "META-INF/ECLIPSE_.SF"
-
-	from sourceSets.main.output
-
-	from {
-		zipTree(configurations.compileOnly.singleFile)
+patch {
+	ext {
+		autoClean = false
 	}
+
+	originalLibModuleName = "org.eclipse.osgi"
 }
 
 updateFileVersions {

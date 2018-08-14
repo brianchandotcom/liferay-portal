@@ -280,14 +280,28 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 			if (ddmFormField != null) {
 				validateFormValuesResponseErrors.addAll(
-					validateDDMFormFieldValue(
-						ddmFormFieldsMap.get(ddmFormFieldValue.getName()),
-						ddmFormFieldValue));
+					validateDDMFormFieldValue(ddmFormField, ddmFormFieldValue));
 
 				validateFormValuesResponseErrors.addAll(
 					traverseDDMFormFieldValues(
 						ddmFormFieldValue.getNestedDDMFormFieldValues(),
 						ddmFormField.getNestedDDMFormFieldsMap()));
+			}
+			else {
+				String errorMessage = String.format(
+					"There is no field name %s defined on form",
+					ddmFormFieldValue.getName());
+
+				DDMFormValuesValidatorError.Builder builder =
+					DDMFormValuesValidatorError.Builder.newBuilder(
+						errorMessage,
+						DDMFormValuesValidatorErrorStatus.
+							MUST_SET_VALID_FIELD_EXCEPTION
+					).withProperty(
+						"field", ddmFormFieldValue.getName()
+					);
+
+				validateFormValuesResponseErrors.add(builder.build());
 			}
 		}
 
@@ -345,23 +359,6 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 		List<DDMFormValuesValidatorError> validateFormValuesResponseErrors =
 			new ArrayList<>();
-
-		if (ddmFormField == null) {
-			String errorMessage = String.format(
-				"There is no field name %s defined on form",
-				ddmFormFieldValue.getName());
-
-			DDMFormValuesValidatorError.Builder builder =
-				DDMFormValuesValidatorError.Builder.newBuilder(
-					errorMessage,
-					DDMFormValuesValidatorErrorStatus.
-						MUST_SET_VALID_FIELD_EXCEPTION
-				).withProperty(
-					"field", ddmFormFieldValue.getName()
-				);
-
-			validateFormValuesResponseErrors.add(builder.build());
-		}
 
 		DDMFormValues ddmFormValues = ddmFormFieldValue.getDDMFormValues();
 

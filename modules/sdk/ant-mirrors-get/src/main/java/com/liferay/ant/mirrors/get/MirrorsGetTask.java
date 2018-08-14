@@ -336,8 +336,6 @@ public class MirrorsGetTask extends Task {
 		catch (Exception e) {
 			if (_verbose) {
 				System.out.println("Unable to access MD5 file");
-
-				e.printStackTrace();
 			}
 
 			return true;

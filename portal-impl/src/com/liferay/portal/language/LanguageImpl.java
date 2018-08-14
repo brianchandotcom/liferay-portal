@@ -72,6 +72,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1537,11 +1538,26 @@ public class LanguageImpl implements Language, Serializable {
 		return language1.equals(language2);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #process(
+	 *            Supplier, Locale, String)}
+	 */
+	@Deprecated
 	@Override
 	public String process(
 		ResourceBundle resourceBundle, Locale locale, String content) {
 
-		StringBundler sb = new StringBundler();
+		return process(() -> resourceBundle, locale, content);
+	}
+
+	@Override
+	public String process(
+		Supplier<ResourceBundle> resourceBundleSupplier, Locale locale,
+		String content) {
+
+		StringBundler sb = null;
+
+		ResourceBundle resourceBundle = null;
 
 		Matcher matcher = _pattern.matcher(content);
 
@@ -1552,8 +1568,16 @@ public class LanguageImpl implements Language, Serializable {
 
 			String key = matcher.group(1);
 
+			if (sb == null) {
+				sb = new StringBundler();
+			}
+
 			sb.append(content.substring(x, y));
 			sb.append(StringPool.APOSTROPHE);
+
+			if (resourceBundle == null) {
+				resourceBundle = resourceBundleSupplier.get();
+			}
 
 			String value = get(resourceBundle, key);
 
@@ -1562,6 +1586,10 @@ public class LanguageImpl implements Language, Serializable {
 			sb.append(StringPool.APOSTROPHE);
 
 			x = matcher.end(0);
+		}
+
+		if (sb == null) {
+			return content;
 		}
 
 		sb.append(content.substring(x));

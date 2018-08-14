@@ -103,15 +103,20 @@ public class LanguageFilter extends BasePortalFilter {
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-			locale);
+		return LanguageUtil.process(
+			() -> {
+				ResourceBundle resourceBundle =
+					LanguageResources.getResourceBundle(locale);
 
-		if (_portletConfig != null) {
-			resourceBundle = new AggregateResourceBundle(
-				_portletConfig.getResourceBundle(locale), resourceBundle);
-		}
+				if (_portletConfig != null) {
+					resourceBundle = new AggregateResourceBundle(
+						_portletConfig.getResourceBundle(locale),
+						resourceBundle);
+				}
 
-		return LanguageUtil.process(resourceBundle, locale, content);
+				return resourceBundle;
+			},
+			locale, content);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LanguageFilter.class);

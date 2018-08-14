@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -82,10 +81,9 @@ public class LanguageFilter extends BasePortalFilter {
 	protected String translateResponse(String languageId, String content) {
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		return LanguageUtil.process(resourceBundle, locale, content);
+		return LanguageUtil.process(
+			() -> _resourceBundleLoader.loadResourceBundle(locale), locale,
+			content);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LanguageFilter.class);

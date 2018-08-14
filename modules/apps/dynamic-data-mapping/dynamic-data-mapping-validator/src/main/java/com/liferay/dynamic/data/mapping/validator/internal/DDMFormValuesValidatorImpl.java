@@ -427,6 +427,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 					);
 
 				validateFormValuesResponseErrors.add(builder.build());
+
+				return validateFormValuesResponseErrors;
 			}
 
 			if ((ddmFormField.isLocalizable() && !value.isLocalized()) ||

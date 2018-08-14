@@ -138,6 +138,8 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 				);
 
 			validateFormResponseErrors.add(validateFormResponseError);
+
+			return validateFormResponseErrors;
 		}
 
 		if ((defaultLocale != null) &&

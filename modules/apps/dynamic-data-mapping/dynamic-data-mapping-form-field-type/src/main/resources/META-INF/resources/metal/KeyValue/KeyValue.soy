@@ -1,0 +1,82 @@
+{namespace KeyValue}
+
+{template .render}
+	{@param? _handleValueChange: any}
+	{@param? _handleKeyChange: any}
+	{@param? editable: bool}
+	{@param? helpText: string}
+	{@param? id: string}
+	{@param? keyValue: string}
+	{@param? label: string}
+	{@param? placeholder: string}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? value: string}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param _handleValueChange: $_handleValueChange /}
+				{param _handleKeyChange: $_handleKeyChange /}
+				{param editable: $editable /}
+				{param id: $id /}
+				{param keyValue: $keyValue /}
+				{param placeholder: $placeholder /}
+				{param value: $value /}
+			{/call}
+		{/param}
+
+		{param helpText: $helpText /}
+		{param id: $id /}
+		{param label: $label /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param? _handleValueChange: any}
+	{@param? _handleKeyChange: any}
+	{@param? editable: bool}
+	{@param? keyValue: string}
+	{@param? placeholder: string}
+	{@param? value: string}
+
+	{let $inputAttributes kind="attributes"}
+		class="form-control"
+
+		{if $placeholder}
+			placeholder="{$placeholder}"
+		{/if}
+
+		type="text"
+
+		data-oninput="{$_handleValueChange}"
+
+		{if not $editable}
+			disabled="disabled"
+		{/if}
+
+		value = "{$value}"
+	{/let}
+
+	<input {$inputAttributes}>
+
+	{let $keyAttributes kind="attributes"}
+		class="key-value-input"
+
+		type="text"
+
+		data-oninput="{$_handleKeyChange}"
+
+			value="{$keyValue}"
+		{/if}
+	{/let}
+
+	<div class="form-text key-value-editor">
+		<label class="control-label key-value-label">Field Name:</label>
+		<input {$keyAttributes}>
+	</div>
+{/template}

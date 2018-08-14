@@ -301,18 +301,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		upgradeDDMContentReferences(sb.toString());
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeDynamicDataMapping.class);
-
-	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private final DDMFormJSONSerializer _ddmFormJSONSerializer;
-	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
-	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
-	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
-	private final Map<Long, DDMForm> _fullHierarchyDDMForms = new HashMap<>();
-	private final JSONFactory _jsonFactory;
-
-	private class RadioDDMFormFieldValueTransformer
+	protected class RadioDDMFormFieldValueTransformer
 		implements DDMFormFieldValueTransformer {
 
 		@Override
@@ -326,20 +315,23 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			Value value = ddmFormFieldValue.getValue();
 
-			for (Locale locale : value.getAvailableLocales()) {
-				String valueString = value.getString(locale);
+			if (value != null) {
+				for (Locale locale : value.getAvailableLocales()) {
+					String valueString = value.getString(locale);
 
-				if (Validator.isNull(valueString)) {
-					continue;
+					if (Validator.isNull(valueString)) {
+						continue;
+					}
+
+					value.addString(
+						locale, convertJSONArrayToString(valueString));
 				}
-
-				value.addString(locale, convertJSONArrayToString(valueString));
 			}
 		}
 
 	}
 
-	private class SelectDDMFormFieldValueTransformer
+	protected class SelectDDMFormFieldValueTransformer
 		implements DDMFormFieldValueTransformer {
 
 		@Override
@@ -353,12 +345,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			Value value = ddmFormFieldValue.getValue();
 
-			for (Locale locale : value.getAvailableLocales()) {
-				String valueString = value.getString(locale);
+			if (value != null) {
+				for (Locale locale : value.getAvailableLocales()) {
+					String valueString = value.getString(locale);
 
-				JSONArray jsonArray = convertToJSONArray(valueString);
+					JSONArray jsonArray = convertToJSONArray(valueString);
 
-				value.addString(locale, jsonArray.toString());
+					value.addString(locale, jsonArray.toString());
+				}
 			}
 		}
 
@@ -384,5 +378,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeDynamicDataMapping.class);
+
+	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private final DDMFormJSONSerializer _ddmFormJSONSerializer;
+	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
+	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
+	private final Map<Long, DDMForm> _fullHierarchyDDMForms = new HashMap<>();
+	private final JSONFactory _jsonFactory;
 
 }

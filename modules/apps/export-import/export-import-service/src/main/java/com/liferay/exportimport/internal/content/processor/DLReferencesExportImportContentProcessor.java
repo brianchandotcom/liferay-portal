@@ -562,10 +562,10 @@ public class DLReferencesExportImportContentProcessor
 				boolean relativePortalURL = false;
 
 				if (content.regionMatches(
-						true, beginPos - HREF_ATTRIBUTE_OFFSET, "href=", 0,
+						true, beginPos - _OFFSET_HREF_ATTRIBUTE, "href=", 0,
 						5) ||
 					content.regionMatches(
-						true, beginPos - SRC_ATTRIBUTE_OFFSET, "src=", 0, 4)) {
+						true, beginPos - _OFFSET_SRC_ATTRIBUTE, "src=", 0, 4)) {
 
 					relativePortalURL = true;
 				}
@@ -648,12 +648,12 @@ public class DLReferencesExportImportContentProcessor
 		StringPool.QUOTE, StringPool.QUOTE_ENCODED, StringPool.SPACE
 	};
 
+	private static final int _OFFSET_HREF_ATTRIBUTE = 6;
+
+	private static final int _OFFSET_SRC_ATTRIBUTE = 5;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLReferencesExportImportContentProcessor.class);
-
-	private static final int HREF_ATTRIBUTE_OFFSET = 6;
-
-	private static final int SRC_ATTRIBUTE_OFFSET = 5;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

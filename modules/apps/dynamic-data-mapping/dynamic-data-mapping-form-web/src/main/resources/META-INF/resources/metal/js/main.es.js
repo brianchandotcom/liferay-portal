@@ -1,6 +1,5 @@
 import {Config} from 'metal-state';
 import Builder from './pages/builder/index.es';
-import ClayNavigationBar from 'clay-navigation-bar';
 import Component from 'metal-jsx';
 import LayoutProvider from './components/LayoutProvider/index.es';
 import loader from './components/FieldsLoader/index.es';
@@ -42,25 +41,8 @@ class Form extends Component {
 	 */
 
 	render() {
-		const {spritemap} = this.props;
-
 		return (
 			<div>
-				<ClayNavigationBar
-					inverted={true}
-					items={[
-						{
-							active: true,
-							href: '#',
-							label: 'Builder'
-						},
-						{
-							href: '#',
-							label: 'Rules'
-						}
-					]}
-					spritemap={spritemap}
-				/>
 				<LayoutProviderWithAppComposer {...this.props}>
 					<Builder />
 				</LayoutProviderWithAppComposer>
@@ -71,9 +53,19 @@ class Form extends Component {
 
 const DDMForm = (props, container, callback) => {
 	loader(
-		() => callback(new Form(props, container)),
+		(...args) => {
+			callback(
+				new Form(
+					{
+						...props,
+						translationManager: args[args.length - 1].default
+					},
+					container
+				)
+			);
+		},
 		props.modules,
-		props.dependencies
+		[...props.dependencies]
 	);
 };
 

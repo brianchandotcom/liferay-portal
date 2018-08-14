@@ -410,7 +410,7 @@ public class PortletDataContextReferencesTest {
 				_bookmarksEntry, BookmarksFolder.class);
 
 		Assert.assertEquals(
-			referencesElements.toString(), 2, referencesElements.size());
+			referencesElements.toString(), 1, referencesElements.size());
 
 		for (Element referenceElement : referencesElements) {
 			Assert.assertTrue(

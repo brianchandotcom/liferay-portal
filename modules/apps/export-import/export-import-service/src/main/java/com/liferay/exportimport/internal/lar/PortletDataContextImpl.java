@@ -2345,6 +2345,25 @@ public class PortletDataContextImpl implements PortletDataContext {
 		ClassedModel classedModel, String className, String binPath,
 		String referenceType, boolean missing) {
 
+		if (!missing) {
+			Element originalImportDataRootElement = getImportDataRootElement();
+
+			try {
+				setImportDataRootElement(element);
+
+				Element referenceElement = getReferenceElement(
+					ExportImportClassedModelUtil.getClassName(classedModel),
+					classedModel.getPrimaryKeyObj());
+
+				if (referenceElement != null) {
+					return referenceElement;
+				}
+			}
+			finally {
+				setImportDataRootElement(originalImportDataRootElement);
+			}
+		}
+
 		Element referenceElement = null;
 
 		if (missing) {

@@ -144,9 +144,7 @@ public class LiferaySerializer extends AbstractSerializer {
 						continue;
 					}
 
-					if (!field.isAccessible()) {
-						field.setAccessible(true);
-					}
+					field.setAccessible(true);
 
 					if (fieldName.startsWith("_")) {
 						fieldName = fieldName.substring(1);
@@ -378,9 +376,7 @@ public class LiferaySerializer extends AbstractSerializer {
 						continue;
 					}
 
-					if (!field.isAccessible()) {
-						field.setAccessible(true);
-					}
+					field.setAccessible(true);
 
 					if (fieldName.startsWith("_")) {
 						fieldName = fieldName.substring(1);

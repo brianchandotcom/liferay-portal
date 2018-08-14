@@ -2,23 +2,6 @@
 
 exports[`Builder should render the default markup 1`] = `
 <div>
-  <div>
-    <nav class="management-bar management-bar-light navbar navbar-expand-md">
-      <div class="container-fluid container-fluid-max-xl">
-        <ul class="navbar-nav"></ul>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <button class="btn nav-btn nav-btn-monospaced btn-primary" aria-label="plus" title="new" type="button">
-              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-                <title>plus</title>
-                <use xlink:href="icons.svg#plus"></use>
-              </svg>
-            </button>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
   <div class="container">
     <div class="sheet">
       <p>Drag from sidebar and drop here</p>

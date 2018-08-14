@@ -1,7 +1,7 @@
 import Component from 'metal-jsx';
+import dom from 'metal-dom';
 import LayoutRenderer from '../../components/Layout/index.es';
 import Sidebar from '../../components/Sidebar/index.es';
-import {ClayManagementToolbar} from 'clay-management-toolbar';
 
 /**
  * Builder.
@@ -76,6 +76,10 @@ class Builder extends Component {
 		Sidebar.show();
 	}
 
+	attached() {
+		dom.on('#addFieldButton', 'click', this._handleCreationButtonClicked.bind(this));
+	}
+
 	/**
 	 * @inheritDoc
 	 */
@@ -100,18 +104,8 @@ class Builder extends Component {
 			fieldEdited: this._handleFieldEdited.bind(this)
 		};
 
-		const clayManagementToolbarEvents = {
-			creationButtonClicked: this._handleCreationButtonClicked.bind(this)
-		};
-
 		return (
 			<div>
-				<ClayManagementToolbar
-					events={clayManagementToolbarEvents}
-					ref="managementToolbar"
-					showSearch={false}
-					spritemap={spritemap}
-				/>
 				<div class="container">
 					<div class="sheet">
 						<LayoutRenderer

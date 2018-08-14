@@ -27,9 +27,6 @@
 	{@param? _dirty: bool}
 	{@param? _dropTargetClass: string}
 	{@param? _handleEditableChanged: any}
-	{@param? _handleFragmentDragEnd: any}
-	{@param? _handleFragmentDrop: any}
-	{@param? _handleFragmentEntryClick: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
@@ -105,9 +102,6 @@
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
 			{param dropTargetClass: $_dropTargetClass /}
 			{param events: [
-				'fragmentEntryDragEnd': $_handleFragmentDragEnd,
-				'fragmentEntryDrop': $_handleFragmentDrop,
-				'fragmentEntryClick': $_handleFragmentEntryClick,
 				'fragmentRemoveButtonClick': $_handleFragmentRemove,
 				'hide': $_handleHideContextualSidebar,
 				'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,

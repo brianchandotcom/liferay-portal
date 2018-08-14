@@ -229,7 +229,7 @@ public class ActionUtil {
 		}
 
 		List<JournalArticle> articles = JournalArticleServiceUtil.getArticles(
-			groupId, parentFolderId);
+			groupId, parentFolderId, LocaleUtil.getMostRelevantLocale());
 
 		for (JournalArticle article : articles) {
 			JournalArticleServiceUtil.expireArticle(

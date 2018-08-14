@@ -19,6 +19,7 @@
 package org.apache.felix.scr.impl.manager;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -664,13 +665,69 @@ public abstract class RegionConfigurationSupport implements ConfigurationListene
      */
     static final String escape(String value)
     {
-        return value.replaceAll( "([\\\\\\*\\(\\)])", "\\\\$1" );
+		StringBuilder sb = null;
+
+		int index = 0;
+
+		char[] chars;
+
+		try {
+			chars = (char[])_valueField.get(value);
+		}
+		catch (ReflectiveOperationException roe) {
+			throw new RuntimeException(roe);
+		}
+
+		for (int i = 0; i < chars.length; i++) {
+			char c = chars[i];
+
+			switch (c) {
+				case '\\':
+				case '*':
+				case '(':
+				case ')':
+					if (sb == null) {
+						sb = new StringBuilder();
+					}
+
+					sb.append(value, index, i);
+					sb.append('\\');
+					sb.append(c);
+
+					index = i + 1;
+
+					break;
+			}
+		}
+
+		if (sb == null) {
+			return value;
+		}
+
+		if (index < value.length()) {
+			sb.append(value, index, value.length());
+		}
+
+		return sb.toString();
     }
 
     private ConfigurationAdmin getConfigAdmin(BundleContext bundleContext)
     {
         return bundleContext.getService( caReference );
     }
+
+	private static final Field _valueField;
+
+	static {
+		try {
+			_valueField = String.class.getDeclaredField("value");
+		}
+		catch (ReflectiveOperationException roe) {
+			throw new ExceptionInInitializerError(roe);
+		}
+
+		_valueField.setAccessible(true);
+	}
 
 }
 /* @generated */

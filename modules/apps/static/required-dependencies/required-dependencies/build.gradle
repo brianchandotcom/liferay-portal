@@ -16,7 +16,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "javax.servlet.jsp.jstl", version: "1.2.3.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay", name: "org.apache.felix.configadmin", version: "1.8.8.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-3"
-	compileOnly group: "com.liferay", name: "org.apache.felix.scr", version: "2.0.6.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.apache.felix.scr", version: "2.0.6.LIFERAY-PATCHED-3"
 	compileOnly group: "com.liferay", name: "org.eclipse.equinox.console", version: "1.1.100-20150308.220103-2-LIFERAY-CACHED"
 	compileOnly group: "com.liferay", name: "org.eclipse.equinox.metatype", version: "1.4.200-20150831.175616-1-LIFERAY-CACHED"
 	compileOnly group: "com.liferay", name: "org.osgi.service.http", version: "3.5.0-20150611.165350-3.LIFERAY-PATCHED-2"

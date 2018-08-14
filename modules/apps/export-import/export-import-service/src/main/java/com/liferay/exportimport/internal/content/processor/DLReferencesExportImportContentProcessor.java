@@ -595,8 +595,7 @@ public class DLReferencesExportImportContentProcessor
 						_companyLocalService.getCompanies();
 
 					for (Company company : companies) {
-						portalHosts.add(
-							Http.HTTP_WITH_SLASH + company.getWebId());
+						portalHosts.add(company.getWebId());
 					}
 
 					for (String portalHost : portalHosts) {

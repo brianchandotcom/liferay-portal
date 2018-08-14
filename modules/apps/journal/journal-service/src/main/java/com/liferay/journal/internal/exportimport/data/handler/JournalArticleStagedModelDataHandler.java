@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -256,7 +257,11 @@ public class JournalArticleStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		JournalArticle existingArticle = fetchExistingArticle(
+		if (!preloaded) {
+			return super.validateMissingReference(uuid, groupId);
+		}
+
+		JournalArticle existingArticle = fetchExistingArticleWithParentGroups(
 			uuid, articleResourceUuid, groupId, articleArticleId, null, 0.0,
 			preloaded);
 
@@ -482,11 +487,16 @@ public class JournalArticleStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		JournalArticle existingArticle = null;
+		JournalArticle existingArticle;
 
-		existingArticle = fetchExistingArticle(
-			uuid, articleResourceUuid, groupId, articleArticleId, null, 0.0,
-			preloaded);
+		if (!preloaded) {
+			existingArticle = fetchMissingReference(uuid, groupId);
+		}
+		else {
+			existingArticle = fetchExistingArticleWithParentGroups(
+				uuid, articleResourceUuid, groupId, articleArticleId, null, 0.0,
+				preloaded);
+		}
 
 		Map<String, String> articleArticleIds =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
@@ -502,6 +512,12 @@ public class JournalArticleStagedModelDataHandler
 			referenceElement.attributeValue("class-pk"));
 
 		articleIds.put(articleId, existingArticle.getId());
+
+		Map<String, Long> articleGroupIds =
+			(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
+				JournalArticle.class + ".groupId");
+
+		articleGroupIds.put(articleArticleId, existingArticle.getGroupId());
 	}
 
 	@Override
@@ -1061,6 +1077,38 @@ public class JournalArticleStagedModelDataHandler
 			groupId, articleId, version);
 	}
 
+	protected JournalArticle fetchExistingArticleWithParentGroups(
+		String articleUuid, String articleResourceUuid, long groupId,
+		String articleId, String newArticleId, double version,
+		boolean preloaded) {
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		long companyId = group.getCompanyId();
+
+		while (group != null) {
+			JournalArticle article = fetchExistingArticle(
+				articleUuid, articleResourceUuid, groupId, articleId,
+				newArticleId, version, preloaded);
+
+			if (article != null) {
+				return article;
+			}
+
+			group = group.getParentGroup();
+		}
+
+		Group companyGroup = _groupLocalService.fetchCompanyGroup(companyId);
+
+		if (companyGroup == null) {
+			return null;
+		}
+
+		return fetchExistingArticle(
+			articleUuid, articleResourceUuid, companyGroup.getGroupId(),
+			articleId, newArticleId, version, preloaded);
+	}
+
 	@Override
 	protected String[] getSkipImportReferenceStagedModelNames() {
 		return _SKIP_IMPORT_REFERENCE_STAGED_MODEL_NAMES;
@@ -1345,6 +1393,9 @@ public class JournalArticleStagedModelDataHandler
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	private ImageLocalService _imageLocalService;
 

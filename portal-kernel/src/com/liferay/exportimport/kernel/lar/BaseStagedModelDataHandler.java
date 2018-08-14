@@ -189,17 +189,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				existingStagedModel = fetchStagedModelByUuidAndGroupId(
 					uuid, group.getGroupId());
 
-				if (existingStagedModel != null) {
-					break;
+				if ((existingStagedModel != null) &&
+					!isStagedModelInTrash(existingStagedModel)) {
+
+					return existingStagedModel;
 				}
 
 				group = group.getParentGroup();
-			}
-
-			if ((existingStagedModel != null) &&
-				!isStagedModelInTrash(existingStagedModel)) {
-
-				return existingStagedModel;
 			}
 
 			List<T> existingStagedModels = fetchStagedModelsByUuidAndCompanyId(

@@ -183,6 +183,10 @@ public class DDMStructureStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
+		if (!preloaded) {
+			return super.validateMissingReference(uuid, groupId);
+		}
+
 		DDMStructure existingStructure = fetchExistingStructureWithParentGroups(
 			uuid, groupId, classNameId, structureKey, preloaded);
 
@@ -259,8 +263,15 @@ public class DDMStructureStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		DDMStructure existingStructure = fetchExistingStructureWithParentGroups(
-			uuid, groupId, classNameId, structureKey, preloaded);
+		DDMStructure existingStructure;
+
+		if (!preloaded) {
+			existingStructure = fetchMissingReference(uuid, groupId);
+		}
+		else {
+			existingStructure = fetchExistingStructureWithParentGroups(
+				uuid, groupId, classNameId, structureKey, preloaded);
+		}
 
 		Map<Long, Long> structureIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -490,6 +501,8 @@ public class DDMStructureStagedModelDataHandler
 
 		Group group = _groupLocalService.fetchGroup(groupId);
 
+		long companyId = group.getCompanyId();
+
 		while (group != null) {
 			DDMStructure existingStructure = fetchExistingStructure(
 				uuid, group.getGroupId(), classNameId, structureKey, preloaded);
@@ -501,7 +514,15 @@ public class DDMStructureStagedModelDataHandler
 			group = group.getParentGroup();
 		}
 
-		return null;
+		Group companyGroup = _groupLocalService.fetchCompanyGroup(companyId);
+
+		if (companyGroup == null) {
+			return null;
+		}
+
+		return fetchExistingStructure(
+			uuid, companyGroup.getGroupId(), classNameId, structureKey,
+			preloaded);
 	}
 
 	protected DDMForm getImportDDMForm(

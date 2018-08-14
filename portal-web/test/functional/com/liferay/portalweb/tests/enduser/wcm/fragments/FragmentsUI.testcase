@@ -1,0 +1,130 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Fragments" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Test Site Name" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name" />
+				</execute>
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AddCollectionFragmentWithSnippets" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Fragment#addCollection">
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Fragment Name" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return name="htmlSnippet" />
+			<var name="fileName" value="fragment_button.html" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return name="cssSnippet" />
+			<var name="fileName" value="fragment_button.css" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="css" />
+			<var name="templateScript" value="${cssSnippet}" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return name="javascriptSnippet" />
+			<var name="fileName" value="fragment_button.js" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="javascript" />
+			<var name="templateScript" value="${javascriptSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Fragment Name" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
+
+		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
+		<execute function="AssertElementPresent" locator1="Button#CANCEL" />
+
+		<execute function="AssertClickNoError" locator1="Button#SUBMIT" value1="Submit" />
+
+		<execute function="Confirm" value1="Form submitted" />
+
+		<execute function="SelectFrameTop" />
+	</command>
+</definition>

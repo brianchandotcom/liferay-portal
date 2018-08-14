@@ -70,12 +70,17 @@ class SidebarAvailableFragments extends Component {
 		}
 	}
 
-	_handleDragEnd(data, event) {
-		const targetItem = data.target;
+	/**
+	 * Callback that is executed when we leave a drag target.
+	 * @param {!MouseEvent} event
+	 * @private
+	 * @review
+	 */
 
-		if ('fragmentEntryLinkId' in targetItem.dataset) {
-			this.emit('fragmentEntryDragEnd');
-		}
+	_handleDragEnd(data, event) {
+		this.store.dispatchAction(
+			CLEAR_DRAG_TARGET
+		);
 	}
 
 	/**

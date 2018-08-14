@@ -27,19 +27,20 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustNotSetValue;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidAvailableLocales;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidDefaultLocale;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValue;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValuesSize;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.RequiredValue;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorError;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorErrorStatus;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorValidateRequest;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,10 +59,83 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 		setUpDDMFormValuesValidator();
 	}
 
-	@Test(expected = MustSetValidValue.class)
-	public void testNumericValidationWithWrongValueForDoubleTypeExpression()
-		throws Exception {
+	@Test
+	public void testFormThrowsMultipleValidationExceptions() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
+		DDMFormField ddmFormField1 = new DDMFormField("fieldset", "fieldset");
+
+		DDMFormTestUtil.addNestedTextDDMFormFields(ddmFormField1, "name");
+
+		DDMFormField ddmFormField2 =
+			DDMFormTestUtil.createLocalizableTextDDMFormField("country");
+
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField1, ddmFormField2);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"fieldset", new UnlocalizedValue("Value"));
+
+		List<DDMFormFieldValue> nestedDDMFormFieldValues =
+			ddmFormFieldValue.getNestedDDMFormFieldValues();
+
+		nestedDDMFormFieldValues.add(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", new UnlocalizedValue("Joe")));
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		LocalizedValue localizedValue1 = new LocalizedValue(LocaleUtil.BRAZIL);
+
+		localizedValue1.addString(LocaleUtil.US, "Brazil");
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"country", localizedValue1));
+
+		LocalizedValue localizedValue2 = new LocalizedValue(LocaleUtil.BRAZIL);
+
+		localizedValue2.addString(LocaleUtil.US, "Recife");
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"city", localizedValue2));
+
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_NOT_SET_VALUE_EXCEPTION));
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_DEFAULT_LOCALE_EXCEPTION));
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_FIELD_EXCEPTION));
+		}
+	}
+
+	@Test
+	public void testNumericValidationWithWrongValueForDoubleTypeExpression() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("Height", "numeric");
@@ -85,13 +159,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"Height", new UnlocalizedValue("4.3")));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = MustSetValidValue.class)
-	public void testNumericValidationWithWrongValueForIntegerTypeExpression()
-		throws Exception {
-
+	@Test
+	public void testNumericValidationWithWrongValueForIntegerTypeExpression() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("Age", "numeric");
@@ -115,7 +204,24 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"Age", new UnlocalizedValue("14")));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_VALUE_EXCEPTION));
+		}
 	}
 
 	@Test
@@ -142,11 +248,16 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"Country", "Spain"));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		_ddmFormValuesValidatorImpl.validate(builder.build());
 	}
 
 	@Test
-	public void testValidationWithInvalidFieldName() throws Exception {
+	public void testValidationWithInvalidFieldName() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("firstName");
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
@@ -155,7 +266,24 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue("lastName", null));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_FIELD_EXCEPTION));
+		}
 	}
 
 	@Test
@@ -189,11 +317,27 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_FIELD_EXCEPTION));
+		}
 	}
 
-	@Test(expected = MustSetValidValue.class)
-	public void testValidationWithLocalizableField() throws Exception {
+	@Test
+	public void testValidationWithLocalizableField() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField =
@@ -208,13 +352,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"name", new UnlocalizedValue("Joe")));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = RequiredValue.class)
-	public void testValidationWithMissingNestedRequiredField()
-		throws Exception {
-
+	@Test
+	public void testValidationWithMissingNestedRequiredField() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("name", "text");
@@ -236,13 +395,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						REQUIRED_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = RequiredValue.class)
-	public void testValidationWithMissingNestedRequiredFieldValue()
-		throws Exception {
-
+	@Test
+	public void testValidationWithMissingNestedRequiredFieldValue() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("name", "text");
@@ -270,11 +444,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						REQUIRED_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = RequiredValue.class)
-	public void testValidationWithMissingRequiredField() throws Exception {
+	@Test
+	public void testValidationWithMissingRequiredField() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField =
@@ -287,11 +478,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						REQUIRED_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = RequiredValue.class)
-	public void testValidationWithMissingRequiredFieldValue() throws Exception {
+	@Test
+	public void testValidationWithMissingRequiredFieldValue() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField =
@@ -307,7 +515,24 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue("name", null));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						REQUIRED_VALUE_EXCEPTION));
+		}
 	}
 
 	@Test
@@ -336,7 +561,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		_ddmFormValuesValidatorImpl.validate(builder.build());
 	}
 
 	@Test
@@ -353,7 +583,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		_ddmFormValuesValidatorImpl.validate(builder.build());
 	}
 
 	@Test
@@ -385,7 +620,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				instanceId, "option", new UnlocalizedValue("[\"A\"]")));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		_ddmFormValuesValidatorImpl.validate(builder.build());
 	}
 
 	@Test
@@ -419,20 +659,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				instanceId, "option", new UnlocalizedValue("[\"\"]")));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		_ddmFormValuesValidatorImpl.validate(builder.build());
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testValidationWithoutDDMFormReference() throws Exception {
 		DDMFormValues ddmFormValues = new DDMFormValues(null);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		_ddmFormValuesValidatorImpl.validate(builder.build());
 	}
 
-	@Test(expected = RequiredValue.class)
-	public void testValidationWithRequiredFieldAndEmptyDefaultLocaleValue()
-		throws Exception {
-
+	@Test
+	public void testValidationWithRequiredFieldAndEmptyDefaultLocaleValue() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
 			LocaleUtil.US);
@@ -457,13 +705,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						REQUIRED_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = RequiredValue.class)
-	public void testValidationWithRequiredFieldAndEmptyTranslatedValue()
-		throws Exception {
-
+	@Test
+	public void testValidationWithRequiredFieldAndEmptyTranslatedValue() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			DDMFormTestUtil.createAvailableLocales(
 				LocaleUtil.US, LocaleUtil.BRAZIL),
@@ -493,11 +756,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						REQUIRED_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = MustSetValidAvailableLocales.class)
-	public void testValidationWithRequiredFieldAndNullValue() throws Exception {
+	@Test
+	public void testValidationWithRequiredFieldAndNullValue() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
 			LocaleUtil.US);
@@ -520,13 +800,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_AVAILABLE_LOCALES_EXCEPTION));
+		}
 	}
 
-	@Test(expected = RequiredValue.class)
-	public void testValidationWithRequiredFieldAndWithNoValue()
-		throws Exception {
-
+	@Test
+	public void testValidationWithRequiredFieldAndWithNoValue() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
 			LocaleUtil.US);
@@ -539,7 +834,24 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						REQUIRED_VALUE_EXCEPTION));
+		}
 	}
 
 	@Test
@@ -571,11 +883,16 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				instanceId, "option", new UnlocalizedValue("[\"A\"]")));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		_ddmFormValuesValidatorImpl.validate(builder.build());
 	}
 
-	@Test(expected = MustNotSetValue.class)
-	public void testValidationWithSeparatorField() throws Exception {
+	@Test
+	public void testValidationWithSeparatorField() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createSeparatorDDMFormField(
@@ -590,11 +907,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"separator", new UnlocalizedValue("separator value")));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_NOT_SET_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = MustSetValidValue.class)
-	public void testValidationWithUnlocalizableField() throws Exception {
+	@Test
+	public void testValidationWithUnlocalizableField() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
@@ -613,11 +947,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"name", localizedValue));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = MustNotSetValue.class)
-	public void testValidationWithValueSetForTransientField() throws Exception {
+	@Test
+	public void testValidationWithValueSetForTransientField() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("fieldset", "fieldset");
@@ -642,11 +993,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_NOT_SET_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = MustSetValidAvailableLocales.class)
-	public void testValidationWithWrongAvailableLocales() throws Exception {
+	@Test
+	public void testValidationWithWrongAvailableLocales() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField =
@@ -666,11 +1034,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"name", localizedValue));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_AVAILABLE_LOCALES_EXCEPTION));
+		}
 	}
 
-	@Test(expected = MustSetValidDefaultLocale.class)
-	public void testValidationWithWrongDefaultLocale() throws Exception {
+	@Test
+	public void testValidationWithWrongDefaultLocale() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField =
@@ -689,13 +1074,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"name", localizedValue));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_DEFAULT_LOCALE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = MustSetValidValue.class)
-	public void testValidationWithWrongValueSetDueValidationExpression()
-		throws Exception {
-
+	@Test
+	public void testValidationWithWrongValueSetDueValidationExpression() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("Age", "text");
@@ -719,13 +1119,28 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"Age", new UnlocalizedValue("5")));
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = MustSetValidValuesSize.class)
-	public void testValidationWithWrongValuesForNonrepeatableField()
-		throws Exception {
-
+	@Test
+	public void testValidationWithWrongValuesForNonrepeatableField() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("name", "text");
@@ -758,20 +1173,61 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		try {
+			_ddmFormValuesValidatorImpl.validate(builder.build());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_VALUES_SIZE_EXCEPTION));
+		}
+	}
+
+	protected List<DDMFormValuesValidatorErrorStatus>
+		getDDMFormValuesValidatorErrorStatus(
+			DDMFormValuesValidationException ddmfvve) {
+
+		List<DDMFormValuesValidatorError> ddmFormValuesValidatorErrors =
+			ddmfvve.getDDMFormValuesValidatorErrors();
+
+		Stream<DDMFormValuesValidatorError> ddmFormValuesValidatorErrorStream =
+			ddmFormValuesValidatorErrors.stream();
+
+		return ddmFormValuesValidatorErrorStream.map(
+			ddmFormValidatorError -> ddmFormValidatorError.getErrorStatus()
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	protected void setUpDDMFormValuesValidator() throws Exception {
-		_ddmFormValuesValidatorImpl.setDDMExpressionFactory(
-			new DDMExpressionFactoryImpl());
-
-		_ddmFormValuesValidatorImpl.setJSONFactory(new JSONFactoryImpl());
+		field(
+			DDMFormValuesValidatorImpl.class, "ddmExpressionFactory"
+		).set(
+			_ddmFormValuesValidatorImpl, new DDMExpressionFactoryImpl()
+		);
 
 		field(
-			DDMFormValuesValidatorImpl.class, "_ddmFormFieldTypeServicesTracker"
+			DDMFormValuesValidatorImpl.class, "ddmFormFieldTypeServicesTracker"
 		).set(
 			_ddmFormValuesValidatorImpl,
 			mock(DDMFormFieldTypeServicesTracker.class)
+		);
+
+		field(
+			DDMFormValuesValidatorImpl.class, "jsonFactory"
+		).set(
+			_ddmFormValuesValidatorImpl, new JSONFactoryImpl()
 		);
 	}
 

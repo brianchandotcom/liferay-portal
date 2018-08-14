@@ -17,7 +17,7 @@ package com.liferay.blogs.internal.upgrade;
 import com.liferay.blogs.internal.upgrade.v1_1_0.UpgradeClassNames;
 import com.liferay.blogs.internal.upgrade.v1_1_0.UpgradeFriendlyURL;
 import com.liferay.blogs.internal.upgrade.v1_1_1.UpgradeUrlTitle;
-import com.liferay.blogs.internal.upgrade.v1_1_2.UpgradeBlogs;
+import com.liferay.blogs.internal.upgrade.v1_1_2.UpgradeBlogsImages;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -40,7 +40,7 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register("1.1.0", "1.1.1", new UpgradeUrlTitle());
 
-		registry.register("1.1.1", "1.1.2", new UpgradeBlogs());
+		registry.register("1.1.1", "1.1.2", new UpgradeBlogsImages());
 	}
 
 	@Reference(unbind = "-")

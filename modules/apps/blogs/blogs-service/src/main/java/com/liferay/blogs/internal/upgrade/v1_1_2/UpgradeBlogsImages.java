@@ -40,7 +40,7 @@ import java.sql.ResultSet;
 /**
  * @author István András Dézsi
  */
-public class UpgradeBlogs extends UpgradeProcess {
+public class UpgradeBlogsImages extends UpgradeProcess {
 
 	protected Folder addFolder(long userId, long groupId, String folderName)
 		throws PortalException {

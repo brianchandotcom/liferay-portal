@@ -14,6 +14,7 @@
 
 package com.liferay.portal.properties.swapper.internal.portal.profile;
 
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
 import com.liferay.portal.properties.swapper.internal.DefaultCompanyLogoSwapper;
@@ -25,6 +26,7 @@ import java.util.Collections;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -41,5 +43,8 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			DefaultCompanyNameSwapper.class.getName(),
 			DefaultGuestGroupLogoSwapper.class.getName());
 	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

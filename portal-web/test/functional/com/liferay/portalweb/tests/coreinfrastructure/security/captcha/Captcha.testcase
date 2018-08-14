@@ -61,6 +61,18 @@
 
 		<!-- LPS-84310 -->
 
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Security Tools" />
+			<var name="configurationName" value="CAPTCHA" />
+			<var name="configurationScope" value="System Scope" />
+		</execute>
+
 		<execute macro="SystemSettings#resetConfiguration" />
 
 		<execute macro="SystemSettings#editTextSetting">

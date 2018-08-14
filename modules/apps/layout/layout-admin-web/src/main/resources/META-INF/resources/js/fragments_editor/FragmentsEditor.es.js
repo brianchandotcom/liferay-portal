@@ -7,8 +7,10 @@ import './dialogs/SelectMappingTypeDialog.es';
 import './fragment_entry_link/FragmentEntryLinkList.es';
 import './sidebar/FragmentsEditorSidebar.es';
 import './toolbar/FragmentsEditorToolbar.es';
-import {DRAG_DROP_INITIAL_STATE, updateDragTargetReducer} from './store/dragDrop.es';
+import {addFragmentEntryLinkReducer} from './store/reducers/fragmentEntryLink.es';
+import {updateDragTargetReducer} from './store/reducers/dragDrop.es';
 import FragmentEntryLink from './fragment_entry_link/FragmentEntryLink.es';
+import {INITIAL_STATE} from './store/initialState.es';
 import MetalStore from './store/MetalStore.es';
 import templates from './FragmentsEditor.soy';
 
@@ -29,7 +31,10 @@ class FragmentsEditor extends Component {
 
 		this._store = new MetalStore(
 			attributes,
-			[updateDragTargetReducer]
+			[
+				addFragmentEntryLinkReducer,
+				updateDragTargetReducer
+			]
 		);
 
 		this._store.on(
@@ -1371,7 +1376,7 @@ FragmentsEditor.STATE = Object.assign(
 			.internal()
 	},
 
-	DRAG_DROP_INITIAL_STATE
+	INITIAL_STATE
 );
 
 Soy.register(FragmentsEditor, templates);

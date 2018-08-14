@@ -5241,12 +5241,12 @@ go]]></replacevalue>
 														<echo file="@{module.dir.path}/.lfrbuild-portal" />
 													</then>
 												</if>
+
+												<gradle-execute dir="@{app.dir}" task="deploy">
+													<arg value="clean" />
+												</gradle-execute>
 											</sequential>
 										</for>
-
-										<gradle-execute dir="@{app.dir}" task="deploy">
-											<arg value="clean" />
-										</gradle-execute>
 
 										<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
 											<property name="app.name" value="${osgi.app.name}" />

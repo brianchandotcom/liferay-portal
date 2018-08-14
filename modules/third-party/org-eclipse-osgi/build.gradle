@@ -20,6 +20,11 @@ patch {
 		autoClean = false
 	}
 
+	fileNames "org/eclipse/osgi/container/ModuleDatabase.java"
+	fileNames "org/eclipse/osgi/internal/framework/EquinoxConfiguration.java"
+	fileNames "org/eclipse/osgi/internal/framework/EquinoxContainerAdaptor.java"
+	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java"
+
 	originalLibModuleName = "org.eclipse.osgi"
 }
 

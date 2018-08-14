@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.test.util;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
@@ -28,16 +27,12 @@ import com.liferay.portal.kernel.service.persistence.GroupUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.Serializable;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-
-import java.util.Map;
 
 /**
  * @author Victor Ware
@@ -85,12 +80,6 @@ public class DDMFormStagingTestUtil {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(remoteStagingGroup.getGroupId());
 
-		Map<String, Serializable> attributes = serviceContext.getAttributes();
-
-		attributes.putAll(
-			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap());
-
 		addStagingAttribute(
 			serviceContext,
 			StagingUtil.getStagedPortletId(
@@ -101,15 +90,13 @@ public class DDMFormStagingTestUtil {
 		addStagingAttribute(
 			serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL, false);
 
-		int serverPort = PortalUtil.getPortalServerPort(false);
-		String pathContext = PortalUtil.getPathContext();
-
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		StagingLocalServiceUtil.enableRemoteStaging(
 			TestPropsValues.getUserId(), remoteStagingGroup, false, false,
-			"localhost", serverPort, pathContext, false,
-			remoteLiveGroup.getGroupId(), serviceContext);
+			"localhost", PortalUtil.getPortalServerPort(false),
+			PortalUtil.getPathContext(), false, remoteLiveGroup.getGroupId(),
+			serviceContext);
 
 		GroupUtil.clearCache();
 	}

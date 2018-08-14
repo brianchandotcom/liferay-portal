@@ -176,7 +176,7 @@ public class KBAttachmentEditorConfigContributor
 
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				portletURL.toString(),
+				null, portletURL.toString(),
 				ResourceBundleUtil.getString(
 					resourceBundle, "article-attachments"));
 

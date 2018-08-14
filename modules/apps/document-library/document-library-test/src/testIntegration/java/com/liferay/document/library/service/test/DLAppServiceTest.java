@@ -26,7 +26,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
-import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.sync.constants.DLSyncConstants;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
 import com.liferay.petra.string.StringPool;
@@ -1914,7 +1913,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		dictionary.put(key, value);
 
 		return new ConfigurationTemporarySwapper(
-			DLValidator.class, _DL_CONFIGURATION_PID, dictionary);
+			_DL_CONFIGURATION_PID, dictionary);
 	}
 
 	private static final String _DL_CONFIGURATION_PID =

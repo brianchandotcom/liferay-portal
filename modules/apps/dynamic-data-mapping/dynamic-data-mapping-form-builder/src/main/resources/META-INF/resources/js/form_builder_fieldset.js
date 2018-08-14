@@ -47,7 +47,7 @@ AUI.add(
 						},
 						fieldClass: Liferay.DDM.Renderer.Field,
 						icon: config.icon,
-						label: config.name
+						label: A.Lang.String.escapeHTML(config.name)
 					}
 				);
 

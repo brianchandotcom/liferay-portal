@@ -572,7 +572,7 @@ AUI.add(
 							items.push(
 								{
 									state: (activePageNumber === i) ? 'active' : '',
-									title: title
+									title: A.Lang.String.escapeHTML(title)
 								}
 							);
 						}

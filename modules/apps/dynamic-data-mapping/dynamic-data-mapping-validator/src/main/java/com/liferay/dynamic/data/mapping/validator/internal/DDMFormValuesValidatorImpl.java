@@ -349,7 +349,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		if (ddmFormField == null) {
 			String errorMessage = String.format(
 				"There is no field name %s defined on form",
-				ddmFormField.getName());
+				ddmFormFieldValue.getName());
 
 			DDMFormValuesValidatorError.Builder builder =
 				DDMFormValuesValidatorError.Builder.newBuilder(
@@ -357,7 +357,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 					DDMFormValuesValidatorErrorStatus.
 						MUST_SET_VALID_FIELD_EXCEPTION
 				).withProperty(
-					"field", ddmFormField.getName()
+					"field", ddmFormFieldValue.getName()
 				);
 
 			validateFormValuesResponseErrors.add(builder.build());

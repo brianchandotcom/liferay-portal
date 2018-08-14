@@ -368,26 +368,9 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	protected ClusterNode getClusterNode(Address address) {
-		for (ClusterNodeStatus clusterNodeStatus :
-				_clusterNodeStatuses.values()) {
-
-			if (address.equals(clusterNodeStatus.getAddress())) {
-				return clusterNodeStatus.getClusterNode();
-			}
-		}
-
-		if (!_isMasterAddress(address)) {
-			return null;
-		}
-
 		CompletableFuture<ClusterNode> completableFuture =
-			_masterNodeCompletableFuture;
-
-		if (completableFuture == null) {
-			completableFuture = new CompletableFuture<>();
-
-			_masterNodeCompletableFuture = completableFuture;
-		}
+			_clusterNodeCompletableFutures.computeIfAbsent(
+				address, key -> new CompletableFuture<>());
 
 		try {
 			return completableFuture.get(
@@ -395,13 +378,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 				TimeUnit.MILLISECONDS);
 		}
 		catch (Exception e) {
-			_log.error("Unable to get cluster node with address " + address);
+			_log.error("Unable to get cluster node with address " + address, e);
+		}
 
-			return null;
-		}
-		finally {
-			_masterNodeCompletableFuture = null;
-		}
+		return null;
 	}
 
 	protected InetSocketAddress getConfiguredPortalInetSocketAddress(
@@ -577,19 +557,15 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	protected boolean memberJoined(ClusterNodeStatus clusterNodeStatus) {
-		ClusterNodeStatus oldClusterNodeStatus;
+		CompletableFuture<ClusterNode> completableFuture =
+			_clusterNodeCompletableFutures.computeIfAbsent(
+				clusterNodeStatus.getAddress(),
+				key -> new CompletableFuture<>());
 
-		oldClusterNodeStatus = _clusterNodeStatuses.put(
+		completableFuture.complete(clusterNodeStatus.getClusterNode());
+
+		ClusterNodeStatus oldClusterNodeStatus = _clusterNodeStatuses.put(
 			clusterNodeStatus.getClusterNodeId(), clusterNodeStatus);
-
-		if (_isMasterAddress(clusterNodeStatus.getAddress())) {
-			CompletableFuture<ClusterNode> completableFuture =
-				_masterNodeCompletableFuture;
-
-			if (completableFuture != null) {
-				completableFuture.complete(clusterNodeStatus.getClusterNode());
-			}
-		}
 
 		if (oldClusterNodeStatus != null) {
 			if (!oldClusterNodeStatus.equals(clusterNodeStatus)) {
@@ -612,6 +588,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	protected void memberRemoved(List<Address> departAddresses) {
+		for (Address address : departAddresses) {
+			_clusterNodeCompletableFutures.remove(address);
+		}
+
 		List<ClusterNode> departClusterNodes = new ArrayList<>();
 
 		Collection<ClusterNodeStatus> clusterNodeStatusCollection =
@@ -682,14 +662,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	protected volatile ClusterExecutorConfiguration
 		clusterExecutorConfiguration;
 
-	private boolean _isMasterAddress(Address address) {
-		ClusterReceiver clusterReceiver = _clusterChannel.getClusterReceiver();
-
-		Address coordinatorAddress = clusterReceiver.getCoordinatorAddress();
-
-		return coordinatorAddress.equals(address);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterExecutorImpl.class);
 
@@ -697,6 +669,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	private ClusterChannelFactory _clusterChannelFactory;
 	private final CopyOnWriteArrayList<ClusterEventListener>
 		_clusterEventListeners = new CopyOnWriteArrayList<>();
+	private final Map<Address, CompletableFuture<ClusterNode>>
+		_clusterNodeCompletableFutures = new ConcurrentHashMap<>();
 	private final Map<String, ClusterNodeStatus> _clusterNodeStatuses =
 		new ConcurrentHashMap<>();
 	private ClusterEventListener _debugClusterEventListener;
@@ -706,7 +680,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private ClusterNodeStatus _localClusterNodeStatus;
-	private CompletableFuture<ClusterNode> _masterNodeCompletableFuture = null;
 	private PortalExecutorManager _portalExecutorManager;
 	private Props _props;
 	private ServiceRegistration<PortalInetSocketAddressEventListener>

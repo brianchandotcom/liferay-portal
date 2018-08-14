@@ -57,11 +57,6 @@ public class PasswordPolicyDisplayContext {
 		throws PortletException {
 
 		String tabs2 = ParamUtil.getString(_request, "tabs2", "users");
-		String redirect = ParamUtil.getString(_request, "redirect");
-
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
-			"passwordPolicyId", String.valueOf(_passwordPolicyId));
 
 		List<NavigationItem> navigationItems = new ArrayList<>();
 

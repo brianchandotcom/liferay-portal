@@ -118,7 +118,7 @@ AUI.add(
 								}
 							);
 
-							// Reception Type is an Assignment attribute but never a type of Assignment
+							// Reception type is an assignment attribute but never a type of assignment
 
 							if (item1 !== 'receptionType' && AArray.some(
 								assignmentValue,

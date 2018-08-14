@@ -1,4 +1,5 @@
 import {ADD_FRAGMENT_ENTRY_LINK} from '../actionTypes.es';
+import {DRAG_POSITIONS} from './dragDrop.es';
 
 /**
  * @param {!MetalStore} state
@@ -37,9 +38,20 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 					.then(
 						fragmentEntryLink => {
 							nextState.fragmentEntryLinks = [
-								...nextState.fragmentEntryLinks,
-								fragmentEntryLink
+								...nextState.fragmentEntryLinks
 							];
+
+							const position = _getDropFragmentPosition(
+								state.fragmentEntryLinks,
+								state.hoveredFragmentEntryLinkId,
+								state.hoveredFragmentEntryLinkBorder
+							);
+
+							nextState.fragmentEntryLinks.splice(
+								position,
+								0,
+								fragmentEntryLink
+							);
 
 							resolve(nextState);
 						}
@@ -93,6 +105,31 @@ function _addFragmentEntryLink(
 			};
 		}
 	);
+}
+
+function _getDropFragmentPosition(
+	fragmentEntryLinks,
+	targetFragmentEntryLinkId,
+	targetBorder
+) {
+	let position = fragmentEntryLinks.length;
+
+	const targetPosition = fragmentEntryLinks.findIndex(
+		fragmentEntryLink => (
+			fragmentEntryLink.fragmentEntryLinkId === targetFragmentEntryLinkId
+		)
+	);
+
+	if (targetPosition > -1 && targetBorder) {
+		if (targetBorder === DRAG_POSITIONS.top) {
+			position = targetPosition;
+		}
+		else {
+			position = targetPosition + 1;
+		}
+	}
+
+	return position;
 }
 
 function _getFragmentEntryLinkContent(

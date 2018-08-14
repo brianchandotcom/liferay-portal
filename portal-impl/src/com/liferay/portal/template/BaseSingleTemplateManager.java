@@ -99,7 +99,7 @@ public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
 		public Template run() {
 			return doGetTemplate(
 				_templateResource, errorTemplateResource, restricted,
-				helperUtilities, true);
+				helperUtilities);
 		}
 
 		private final TemplateResource _templateResource;

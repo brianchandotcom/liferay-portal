@@ -793,7 +793,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			return;
 		}
 
-		indexerClassName = indexer.getClassNames()[0];
+		indexerClassName = indexer.getSearchClassNames()[0];
 
 		Indexer existingIndexer = IndexerRegistryUtil.getIndexer(
 			indexerClassName);
@@ -1285,7 +1285,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 		searchContext.setEnd(end);
 
-		String modelClassName = indexer.getClassNames()[0];
+		String modelClassName = indexer.getSearchClassNames()[0];
 
 		int pos = modelClassName.indexOf(".model.");
 

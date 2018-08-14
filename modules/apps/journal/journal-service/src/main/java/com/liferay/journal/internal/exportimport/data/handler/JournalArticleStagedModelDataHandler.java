@@ -505,6 +505,7 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, JournalArticle article)
 		throws Exception {

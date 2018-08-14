@@ -85,7 +85,7 @@ public class BuildCSSTask extends JavaExec {
 		Project project = getProject();
 
 		List<String> dirNames = getDirNames();
-		File docrootDir = getDocrootDir();
+		File docrootDir = getBaseDir();
 
 		if (dirNames.isEmpty() || (docrootDir == null)) {
 			return project.files();

@@ -249,13 +249,13 @@ public class SyncDownloadServlet extends HttpServlet {
 			_dlFileVersionLocalService.getDLFileVersion(sourceVersionId);
 
 		File sourceFile = _dlFileEntryLocalService.getFile(
-			userId, fileEntryId, sourceDLFileVersion.getVersion(), false);
+			fileEntryId, sourceDLFileVersion.getVersion(), false);
 
 		DLFileVersion targetDLFileVersion =
 			_dlFileVersionLocalService.getDLFileVersion(targetVersionId);
 
 		File targetFile = _dlFileEntryLocalService.getFile(
-			userId, fileEntryId, targetDLFileVersion.getVersion(), false);
+			fileEntryId, targetDLFileVersion.getVersion(), false);
 
 		return _syncHelper.getFileDelta(sourceFile, targetFile);
 	}

@@ -75,7 +75,7 @@ public class MessageDatagramReceiveHandlerTest {
 
 	@Test
 	public void testDeprecatedConstructor() {
-		new MessageDatagramReceiveHandler(null);
+		new MessageDatagramReceiveHandler();
 	}
 
 	@Test

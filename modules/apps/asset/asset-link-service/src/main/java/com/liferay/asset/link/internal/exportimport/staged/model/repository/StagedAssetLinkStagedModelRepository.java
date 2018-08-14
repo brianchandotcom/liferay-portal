@@ -178,8 +178,7 @@ public class StagedAssetLinkStagedModelRepository
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
-		return _assetLinkLocalService.getExportActionbleDynamicQuery(
-			portletDataContext);
+		return new ExportActionableDynamicQuery();
 	}
 
 	@Override

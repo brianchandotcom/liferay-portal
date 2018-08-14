@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.constants;
 
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
@@ -30,7 +29,7 @@ public class KBPortletKeys extends PortletKeys {
 		"com_liferay_knowledge_base_web_portlet_ArticlePortlet";
 
 	public static final String KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE =
-		KNOWLEDGE_BASE_ARTICLE + PortletConstants.INSTANCE_SEPARATOR + "0000";
+		KNOWLEDGE_BASE_ARTICLE + KBPortletKeys._INSTANCE_SEPARATOR + "0000";
 
 	public static final String KNOWLEDGE_BASE_DISPLAY =
 		"com_liferay_knowledge_base_web_portlet_DisplayPortlet";
@@ -40,5 +39,7 @@ public class KBPortletKeys extends PortletKeys {
 
 	public static final String KNOWLEDGE_BASE_SECTION =
 		"com_liferay_knowledge_base_web_portlet_SectionPortlet";
+
+	private static final String _INSTANCE_SEPARATOR = "_INSTANCE_";
 
 }

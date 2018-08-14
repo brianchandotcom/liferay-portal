@@ -1,0 +1,38 @@
+<definition>
+	<command name="setFilterAndOrder">
+		<if>
+			<isset var="filterBy" />
+			<then>
+				<var name="menuItem" value="${filterBy}" />
+			</then>
+			<elseif>
+				<isset var="orderBy" />
+				<then>
+					<var name="menuItem" value="${orderBy}" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute function="Click" locator1="ManagementBar#FILTER_AND_ORDER" />
+
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+
+	<command name="toggleViewOrder">
+		<if>
+			<condition function="IsElementNotPresent" locator1="ManagementBar#ORDER_ICON_SPECIFIC">
+				<var name="key_order" value="${order}" />
+			</condition>
+
+			<then>
+				<execute function="Click" locator1="ManagementBar#ORDER_ICON_GENERIC" />
+			</then>
+		</if>
+
+		<execute function="AssertElementPresent" locator1="ManagementBar#ORDER_ICON_SPECIFIC">
+			<var name="key_order" value="${order}" />
+		</execute>
+	</command>
+</definition>

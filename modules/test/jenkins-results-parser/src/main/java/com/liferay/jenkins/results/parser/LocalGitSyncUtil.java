@@ -85,8 +85,8 @@ public class LocalGitSyncUtil {
 				"local-git-remote-" +
 					localGitRemoteURLs.indexOf(localGitRemoteURL);
 
-			BaseGitRemote baseGitRemote =
-				gitWorkingDirectory.getGitRemote(localGitRemoteName);
+			BaseGitRemote baseGitRemote = gitWorkingDirectory.getGitRemote(
+				localGitRemoteName);
 
 			if ((baseGitRemote == null) ||
 				!localGitRemoteURL.equals(baseGitRemote.getRemoteURL())) {
@@ -128,8 +128,8 @@ public class LocalGitSyncUtil {
 
 	protected static void cacheBranches(
 		final GitWorkingDirectory gitWorkingDirectory,
-		final LocalGitBranch localGitBranch, List<BaseGitRemote> localGitGitRemotes,
-		final String upstreamUsername) {
+		final LocalGitBranch localGitBranch,
+		List<BaseGitRemote> localGitGitRemotes, final String upstreamUsername) {
 
 		String currentBranchName = gitWorkingDirectory.getCurrentBranchName();
 		String localGitBranchName = localGitBranch.getName();

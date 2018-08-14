@@ -451,6 +451,10 @@ public class GitWorkingDirectory {
 		System.out.println();
 	}
 
+	public void fetch(BaseGitRemote baseGitRemote) {
+		fetch(baseGitRemote.getRemoteURL());
+	}
+
 	public LocalGitBranch fetch(LocalGitBranch localGitBranch) {
 		return fetch(null, localGitBranch);
 	}
@@ -563,10 +567,6 @@ public class GitWorkingDirectory {
 		LocalGitBranch localGitBranch, RemoteGitBranch remoteGitBranch) {
 
 		return fetch(localGitBranch, true, remoteGitBranch);
-	}
-
-	public void fetch(BaseGitRemote baseGitRemote) {
-		fetch(baseGitRemote.getRemoteURL());
 	}
 
 	public LocalGitBranch fetch(RemoteGitBranch remoteGitBranch) {
@@ -800,6 +800,125 @@ public class GitWorkingDirectory {
 
 	public File getGitDirectory() {
 		return _gitDirectory;
+	}
+
+	public BaseGitRemote getGitRemote(String name) {
+		if (name.equals("upstream")) {
+			name = "upstream-temp";
+		}
+
+		Map<String, BaseGitRemote> gitRemotes = getGitRemotes();
+
+		name = name.trim();
+
+		BaseGitRemote gitRemote = gitRemotes.get(name);
+
+		if ((gitRemote == null) && name.equals("upstream-temp")) {
+			JenkinsResultsParserUtil.sleep(1000);
+
+			gitRemotes = getGitRemotes();
+
+			return gitRemotes.get(name);
+		}
+
+		return gitRemote;
+	}
+
+	public Set<String> getGitRemoteNames() {
+		Map<String, BaseGitRemote> gitRemotes = getGitRemotes();
+
+		return gitRemotes.keySet();
+	}
+
+	public Map<String, BaseGitRemote> getGitRemotes() {
+		Map<String, BaseGitRemote> gitRemotes = new HashMap<>();
+
+		int retries = 0;
+
+		String standardOut = null;
+
+		while (true) {
+			if (retries > 1) {
+				return gitRemotes;
+			}
+
+			ExecutionResult executionResult = executeBashCommands(
+				GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
+				"git remote -v");
+
+			if (executionResult.getExitValue() != 0) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to get list of git remotes\n",
+						executionResult.getStandardError()));
+			}
+
+			standardOut = executionResult.getStandardOut();
+
+			standardOut = standardOut.trim();
+
+			if (!standardOut.isEmpty()) {
+				break;
+			}
+
+			retries++;
+
+			JenkinsResultsParserUtil.sleep(1000);
+		}
+
+		String[] lines = standardOut.split("\n");
+
+		Arrays.sort(lines);
+
+		int x = 0;
+
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i];
+
+			if (line == null) {
+				continue;
+			}
+
+			line = line.trim();
+
+			if (line.isEmpty()) {
+				continue;
+			}
+
+			x = i;
+
+			break;
+		}
+
+		lines = Arrays.copyOfRange(lines, x, lines.length);
+
+		try {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Found git remotes: ");
+
+			for (int i = 0; i < lines.length; i = i + 2) {
+				BaseGitRemote baseGitRemote = new BaseGitRemote(
+					this, Arrays.copyOfRange(lines, i, i + 2));
+
+				if (i > 0) {
+					sb.append(", ");
+				}
+
+				sb.append(baseGitRemote.getName());
+
+				gitRemotes.put(baseGitRemote.getName(), baseGitRemote);
+			}
+
+			System.out.println(sb);
+		}
+		catch (Throwable t) {
+			System.out.println("Unable to parse git remotes\n" + standardOut);
+
+			throw t;
+		}
+
+		return gitRemotes;
 	}
 
 	public File getJavaFileFromFullClassName(String fullClassName) {
@@ -1068,28 +1187,6 @@ public class GitWorkingDirectory {
 			pullRequest.getLiferayRemoteBranchSHA());
 	}
 
-	public BaseGitRemote getGitRemote(String name) {
-		if (name.equals("upstream")) {
-			name = "upstream-temp";
-		}
-
-		Map<String, BaseGitRemote> gitRemotes = getGitRemotes();
-
-		name = name.trim();
-
-		BaseGitRemote gitRemote = gitRemotes.get(name);
-
-		if ((gitRemote == null) && name.equals("upstream-temp")) {
-			JenkinsResultsParserUtil.sleep(1000);
-
-			gitRemotes = getGitRemotes();
-
-			return gitRemotes.get(name);
-		}
-
-		return gitRemote;
-	}
-
 	public RemoteGitBranch getRemoteGitBranch(
 		String remoteGitBranchName, BaseGitRemote baseGitRemote) {
 
@@ -1268,103 +1365,6 @@ public class GitWorkingDirectory {
 		return null;
 	}
 
-	public Set<String> getGitRemoteNames() {
-		Map<String, BaseGitRemote> gitRemotes = getGitRemotes();
-
-		return gitRemotes.keySet();
-	}
-
-	public Map<String, BaseGitRemote> getGitRemotes() {
-		Map<String, BaseGitRemote> gitRemotes = new HashMap<>();
-
-		int retries = 0;
-
-		String standardOut = null;
-
-		while (true) {
-			if (retries > 1) {
-				return gitRemotes;
-			}
-
-			ExecutionResult executionResult = executeBashCommands(
-				GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
-				"git remote -v");
-
-			if (executionResult.getExitValue() != 0) {
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"Unable to get list of git remotes\n",
-						executionResult.getStandardError()));
-			}
-
-			standardOut = executionResult.getStandardOut();
-
-			standardOut = standardOut.trim();
-
-			if (!standardOut.isEmpty()) {
-				break;
-			}
-
-			retries++;
-
-			JenkinsResultsParserUtil.sleep(1000);
-		}
-
-		String[] lines = standardOut.split("\n");
-
-		Arrays.sort(lines);
-
-		int x = 0;
-
-		for (int i = 0; i < lines.length; i++) {
-			String line = lines[i];
-
-			if (line == null) {
-				continue;
-			}
-
-			line = line.trim();
-
-			if (line.isEmpty()) {
-				continue;
-			}
-
-			x = i;
-
-			break;
-		}
-
-		lines = Arrays.copyOfRange(lines, x, lines.length);
-
-		try {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Found git remotes: ");
-
-			for (int i = 0; i < lines.length; i = i + 2) {
-				BaseGitRemote baseGitRemote = new BaseGitRemote(
-					this, Arrays.copyOfRange(lines, i, i + 2));
-
-				if (i > 0) {
-					sb.append(", ");
-				}
-
-				sb.append(baseGitRemote.getName());
-
-				gitRemotes.put(baseGitRemote.getName(), baseGitRemote);
-			}
-
-			System.out.println(sb);
-		}
-		catch (Throwable t) {
-			System.out.println("Unable to parse git remotes\n" + standardOut);
-
-			throw t;
-		}
-
-		return gitRemotes;
-	}
-
 	public String getRepositoryName() {
 		return _repositoryName;
 	}
@@ -1386,6 +1386,14 @@ public class GitWorkingDirectory {
 
 	public File getWorkingDirectory() {
 		return _workingDirectory;
+	}
+
+	public boolean gitRemoteExists(String gitRemoteName) {
+		if (getGitRemote(gitRemoteName) != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isRemoteRepositoryAlive(String remoteURL) {
@@ -1573,14 +1581,6 @@ public class GitWorkingDirectory {
 					"Unable to abort rebase\n",
 					executionResult.getStandardError()));
 		}
-	}
-
-	public boolean gitRemoteExists(String gitRemoteName) {
-		if (getGitRemote(gitRemoteName) != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean remoteGitBranchExists(

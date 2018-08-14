@@ -1,5 +1,7 @@
 import {Config} from 'metal-state';
 
+import {DRAG_POSITIONS} from './reducers/dragDrop.es';
+
 /**
  * Initial state
  * @review
@@ -38,8 +40,29 @@ const INITIAL_STATE = {
 		)
 	).value([]),
 
-	hoveredFragmentEntryLinkBorder: Config.string().value(null),
-	hoveredFragmentEntryLinkId: Config.string().value(null)
+	/**
+	 * Position where a fragment is being dragged to
+	 * @default null
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+
+	hoveredFragmentEntryLinkBorder: Config
+		.oneOf(Object.values(DRAG_POSITIONS))
+		.value(null),
+
+	/**
+	 * FragmentEntryLinkId where a fragment is being dragged over
+	 * @default null
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+
+	hoveredFragmentEntryLinkId: Config
+		.string()
+		.value(null)
 };
 
 export {INITIAL_STATE};

@@ -10,18 +10,9 @@ import {
 	CLEAR_DRAG_TARGET,
 	UPDATE_DRAG_TARGET
 } from '../store/actionTypes.es';
+import {DRAG_POSITIONS} from '../store/reducers/dragDrop.es';
 import MetalStore from '../store/MetalStore.es';
 import templates from './SidebarAvailableFragments.soy';
-
-/**
- * List of values that the dragging border can take
- * @review
- */
-
-const DRAGGING_BORDERS = {
-	bottom: 'drag-bottom',
-	top: 'drag-top'
-};
 
 /**
  * SidebarAvailableFragments
@@ -63,10 +54,10 @@ class SidebarAvailableFragments extends Component {
 			const mouseY = event.target.mousePos_.y;
 			const targetItemRegion = position.getRegion(targetItem);
 
-			let nearestBorder = DRAGGING_BORDERS.bottom;
+			let nearestBorder = DRAG_POSITIONS.bottom;
 
 			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
-				nearestBorder = DRAGGING_BORDERS.top;
+				nearestBorder = DRAG_POSITIONS.top;
 			}
 
 			this.store.dispatchAction(

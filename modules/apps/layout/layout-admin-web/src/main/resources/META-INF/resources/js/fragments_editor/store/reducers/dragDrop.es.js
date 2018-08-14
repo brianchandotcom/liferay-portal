@@ -1,6 +1,17 @@
 import {CLEAR_DRAG_TARGET, UPDATE_DRAG_TARGET} from '../actionTypes.es';
 
 /**
+ * Available drag positions
+ * @review
+ * @type {!object}
+ */
+
+const DRAG_POSITIONS = {
+	bottom: 'drag-bottom',
+	top: 'drag-top'
+};
+
+/**
  * @param {!MetalStore} state
  * @param {!string} actionType
  * @param {!object} payload
@@ -25,4 +36,4 @@ function updateDragTargetReducer(state, actionType, payload) {
 	return nextState;
 }
 
-export {updateDragTargetReducer};
+export {DRAG_POSITIONS, updateDragTargetReducer};

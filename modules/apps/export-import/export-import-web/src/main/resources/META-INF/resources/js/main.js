@@ -121,14 +121,14 @@ AUI.add(
 						return dateRangeChecker;
 					},
 
-					showNotification: function(dateChecker) {
+					showNotification: function(dateChecker, rangeEndsLater) {
 						var instance = this;
 
 						if (instance._notice) {
 							instance._notice.remove();
 						}
 
-						var message = instance._getNotificationMessage(dateChecker);
+						var message = instance._getNotificationMessage(dateChecker, rangeEndsLater);
 
 						instance._notice = new Liferay.Notice(
 							{
@@ -602,12 +602,12 @@ AUI.add(
 						return globalConfigurationDialog;
 					},
 
-					_getNotificationMessage: function(dateChecker) {
+					_getNotificationMessage: function(dateChecker, rangeEndsLater) {
 						var instance = this;
 
 						var message;
 
-						if (!instance._rangeEndsLater()) {
+						if (!instance._rangeEndsLater() || rangeEndsLater) {
 							message = Liferay.Language.get('end-date-must-be-greater-than-start-date');
 						}
 						else if (!instance._rangeEndsInPast(dateChecker.todayUsed) || !instance._rangeStartsInPast(dateChecker.todayUsed)) {

@@ -1428,16 +1428,6 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureCategoriesFilterPG">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Categories Navigation" />
 		</execute>

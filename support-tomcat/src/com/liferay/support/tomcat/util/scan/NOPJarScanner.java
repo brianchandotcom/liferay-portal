@@ -39,7 +39,6 @@ public class NOPJarScanner implements JarScanner {
 
 	@Override
 	public void setJarScanFilter(JarScanFilter jarScanFilter) {
-		throw new UnsupportedOperationException();
 	}
 
 	private static final JarScanFilter _nopJarScanFilter =

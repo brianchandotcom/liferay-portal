@@ -10,12 +10,7 @@
 <tbody>
 <tr>
 	<td>ANY_MENU_ITEM</td>
-	<td>xpath=(//div | //li)[contains(@class,'open') or contains(@class,'show') or contains(@id,'dropdown')]//*[contains(@class,'menu')]//*[normalize-space(text())='${key_menuItem}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MENU_ITEM</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//a[contains(.,'${key_menuItem}')]</td>
+	<td>xpath=(//div | //li)[contains(@class,'open') or contains(@class,'show')]//*[normalize-space(text())='${key_menuItem}']</td>
 	<td></td>
 </tr>
 <tr>

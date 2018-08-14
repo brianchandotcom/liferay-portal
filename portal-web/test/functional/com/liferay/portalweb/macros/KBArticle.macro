@@ -960,10 +960,8 @@
 	</command>
 
 	<command name="importCP">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="AssertClick" locator1="MenuItem#MENU_ITEM" value1="Import">
-			<var name="key_menuItem" value="Import" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Import" />
 		</execute>
 
 		<execute function="UploadCommonFile" locator1="TextInput#UPLOAD_FILE" value1="${kbZipFile}" />

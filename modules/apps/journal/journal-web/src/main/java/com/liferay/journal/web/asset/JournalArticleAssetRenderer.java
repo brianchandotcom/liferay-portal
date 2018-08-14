@@ -101,8 +101,6 @@ public class JournalArticleAssetRenderer
 
 	public JournalArticleAssetRenderer(JournalArticle article) {
 		_article = article;
-
-		setJournalServiceConfiguration();
 	}
 
 	public JournalArticle getArticle() {

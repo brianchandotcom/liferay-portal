@@ -97,14 +97,13 @@ public class ContactsCenterUserNotificationHandler
 				SocialRelationConstants.TYPE_BI_CONNECTION) {
 
 			title = ResourceBundleUtil.getString(
-				resourceBundle, serviceContext.getLocale(),
+				resourceBundle,
 				"request-social-networking-summary-add-connection",
 				new Object[] {creatorUserName});
 		}
 		else {
 			title = ResourceBundleUtil.getString(
-				resourceBundle, serviceContext.getLocale(),
-				"x-sends-you-a-social-relationship-request",
+				resourceBundle, "x-sends-you-a-social-relationship-request",
 				new Object[] {creatorUserName});
 		}
 

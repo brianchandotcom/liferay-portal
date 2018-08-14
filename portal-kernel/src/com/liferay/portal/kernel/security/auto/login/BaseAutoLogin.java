@@ -50,7 +50,7 @@ public abstract class BaseAutoLogin implements AutoLogin {
 			return doLogin(request, response);
 		}
 		catch (Exception e) {
-			return handleException(request, response, e);
+			return doHandleException(request, response, e);
 		}
 	}
 

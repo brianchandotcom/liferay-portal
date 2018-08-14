@@ -594,7 +594,7 @@ public class DDMStructureStagedModelDataHandler
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, DDMDataProviderInstance.class,
-				newDDMDataProviderInstanceId);
+				Long.valueOf(newDDMDataProviderInstanceId));
 		}
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();

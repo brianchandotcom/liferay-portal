@@ -119,7 +119,6 @@ class SidebarAvailableFragments extends Component {
 
 	/**
 	 * Callback that is executed when a fragment entry is clicked.
-	 * It propagates a fragmentEntryClick event with the fragment information.
 	 * @param {{
 	 *   itemId: !string,
 	 *   itemName: !string
@@ -128,8 +127,8 @@ class SidebarAvailableFragments extends Component {
 	 */
 
 	_handleEntryClick(event) {
-		this.emit(
-			'fragmentEntryClick',
+		this.store.dispatchAction(
+			ADD_FRAGMENT_ENTRY_LINK,
 			{
 				fragmentEntryId: event.itemId,
 				fragmentName: event.itemName

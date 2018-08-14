@@ -282,6 +282,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 	}
 
 	private static final Pattern _singleModuleBatchNamePattern =
-		Pattern.compile("modules-unit-(?<moduleName>\\S+)-jdk*");
+		Pattern.compile("modules-unit-(?<moduleName>\\S+)-jdk\\d+");
 
 }

@@ -172,7 +172,7 @@ AUI.add(
 						var fieldName = settingsFormFieldContext.fieldName;
 
 						if (settingsFormFieldContext.localizable) {
-							var localizedValue = settingsFormFieldContext.localizedValue[locale] || settingsFormFieldContext.localizedValue[defaultLocale] || '';
+							var localizedValue = settingsFormFieldContext.localizedValue[locale] || settingsFormFieldContext.localizedValue[defaultLocale] || settingsFormFieldContext.value;
 
 							settings[fieldName] = localizedValue;
 

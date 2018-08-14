@@ -30,45 +30,48 @@ AUI.add(
 								var cachedContextJSON = CACHE[type];
 
 								if (settingsContext) {
-									resolve(settingsContext);
+									return resolve(settingsContext);
 								}
 								else if (cachedContextJSON) {
 									settingsContext = resolveJSON(cachedContextJSON);
 
 									field.set('context.settingsContext', settingsContext);
+
+									return settingsContext;
 								}
-								else {
-									var payload = {
-										languageId: themeDisplay.getLanguageId(),
-										pathThemeImages: themeDisplay.getPathThemeImages(),
-										portletNamespace: Liferay.DDM.Settings.portletNamespace,
-										scopeGroupId: themeDisplay.getScopeGroupId(),
-										type: type
-									};
 
-									A.io.request(
-										Liferay.DDM.Settings.getFieldTypeSettingFormContextURL,
-										{
-											data: payload,
-											dataType: 'JSON',
-											method: 'GET',
-											on: {
-												failure: function(error) {
-													reject(error);
-												},
-												success: function(event, status, xhr) {
-													var contextJSON = xhr.responseText;
+								var payload = {
+									languageId: themeDisplay.getLanguageId(),
+									pathThemeImages: themeDisplay.getPathThemeImages(),
+									portletNamespace: Liferay.DDM.Settings.portletNamespace,
+									scopeGroupId: themeDisplay.getScopeGroupId(),
+									type: type
+								};
 
-													CACHE[type] = contextJSON;
+								A.io.request(
+									Liferay.DDM.Settings.getFieldTypeSettingFormContextURL,
+									{
+										data: payload,
+										dataType: 'JSON',
+										method: 'GET',
+										on: {
+											failure: function(error) {
+												reject(error);
+											},
+											success: function(event, status, xhr) {
+												var contextJSON = xhr.responseText;
 
-													settingsContext = resolveJSON(contextJSON);
+												CACHE[type] = contextJSON;
 
-													field.set('context.settingsContext', settingsContext);
-												}
+												settingsContext = resolveJSON(contextJSON);
+
+												field.set('context.settingsContext', settingsContext);
+
+												return settingsContext;
 											}
 										}
-									);
-								}
+									}
+								);
 							}
 						);
 					}

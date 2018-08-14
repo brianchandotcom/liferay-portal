@@ -1,7 +1,7 @@
 {namespace DDMFieldSettingsToolbar}
 
 /**
- * Prints the DDM form checkbox field.
+ * Prints DDM Form Field actions dropdown.
  */
 {template .render}
 	{@param toolbarButtonIcon: html}
@@ -25,7 +25,7 @@
 {/template}
 
 /**
- * Prints the DDM form checkbox field.
+ * Prints DDM Form Field actions dropdown items.
  */
 {template .field_settings_toolbar_list}
 	{@param options: list<[buttonClass: string, handler: string, label: string]>}
@@ -40,10 +40,10 @@
 {/template}
 
 /**
- * Prints the DDM form checkbox field.
+ * Prints the DDM Form Field actions dropdown item.
  */
 {template .field_settings_toolbar_item}
 	{@param option: [buttonClass: string, handler: string, label: string]}
 
-	<a class="dropdown-item {$option.buttonClass or ''}" data-handler="{$option.handler}" href="javascript:;" title="{$option.label}">{$option.label}</a>
+	<a class="dropdown-item ddm-form-field-actions-item {$option.buttonClass or ''}" data-handler="{$option.handler}" href="javascript:;" title="{$option.label}">{$option.label}</a>
 {/template}

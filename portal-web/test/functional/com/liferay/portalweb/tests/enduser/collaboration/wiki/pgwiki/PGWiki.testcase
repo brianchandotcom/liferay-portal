@@ -1146,6 +1146,10 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
+
 		<execute function="Click" locator1="AlloyEditor#EDITOR">
 			<var name="key_editor" value="content" />
 		</execute>

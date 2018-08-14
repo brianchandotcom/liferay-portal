@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.support.tomcat.poller.comet,\
 	com.liferay.support.tomcat.session,\
 	com.liferay.support.tomcat.startup,\
+	com.liferay.support.tomcat.util.scan,\
 	com.liferay.support.tomcat.webresources
 Import-Package:\
 	com.liferay.*,\

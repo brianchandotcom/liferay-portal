@@ -688,7 +688,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	@Override
-	public List<User> getCompanyUsers(long gtUserId, long companyId, int size)
+	public List<User> getGtCompanyUsers(long gtUserId, long companyId, int size)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -881,7 +881,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	@Override
-	public List<User> getOrganizationUsers(
+	public List<User> getGtOrganizationUsers(
 			long gtUserId, long organizationId, int size)
 		throws PortalException {
 
@@ -1006,7 +1006,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	@Override
-	public List<User> getUserGroupUsers(
+	public List<User> getGtUserGroupUsers(
 			long gtUserId, long userGroupId, int size)
 		throws PortalException {
 

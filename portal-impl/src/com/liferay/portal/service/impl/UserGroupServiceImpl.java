@@ -205,7 +205,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	}
 
 	@Override
-	public List<UserGroup> getUserGroups(
+	public List<UserGroup> getGtUserGroups(
 		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
 
 		return userGroupPersistence.filterFindByU_C_P(

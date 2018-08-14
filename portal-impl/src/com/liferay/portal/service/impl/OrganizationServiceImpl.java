@@ -377,7 +377,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	}
 
 	@Override
-	public List<Organization> getOrganizations(
+	public List<Organization> getGtOrganizations(
 		long gtOrganizationId, long companyId, long parentOrganizationId,
 		int size) {
 

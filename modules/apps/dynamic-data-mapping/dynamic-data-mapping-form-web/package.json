@@ -121,7 +121,7 @@
 		"build": "npm run soy && babel --ignore '**/__tests__/*.js,**/__tests__/*/*.js' --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && npm run clean",
 		"checkFormat": "npm run csf",
 		"clean": "rimraf src/**/*.soy.js",
-		"csf": "csf src/main/resources/META-INF/resources/metal/js/**/*.es.js src/main/resources/META-INF/resources/metal/**/*.soy src/**/*.jsp",
+		"csf": "csf src/main/resources/META-INF/resources/metal/js/**/*.es.js src/main/resources/META-INF/resources/metal/**/*.soy src/**/*.jsp --fail-on-errors",
 		"format": "npm run csf -- -i",
 		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
 		"test": "npm run soy && NODE_ENV=test jest --coverage && npm run clean",

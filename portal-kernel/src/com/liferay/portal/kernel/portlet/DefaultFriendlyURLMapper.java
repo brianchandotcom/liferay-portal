@@ -155,7 +155,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		String namespace = null;
 
-		String portletInstanceKey = getPortletId(routeParameters);
+		String portletInstanceKey = getPortletInstanceKey(routeParameters);
 
 		if (Validator.isNotNull(portletInstanceKey)) {
 			namespace = PortalUtil.getPortletNamespace(portletInstanceKey);

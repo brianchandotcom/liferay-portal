@@ -66,7 +66,7 @@ public class BooleanClauseFactoryUtil {
 		SearchContext searchContext, Filter filter,
 		BooleanClauseOccur booleanClauseOccur) {
 
-		return getBooleanClauseFactory(searchContext).createFilter(
+		return getBooleanClauseFactory().createFilter(
 			filter, booleanClauseOccur);
 	}
 
@@ -74,7 +74,7 @@ public class BooleanClauseFactoryUtil {
 		SearchContext searchContext, String field, String value,
 		BooleanClauseOccur booleanClauseOccur) {
 
-		return getBooleanClauseFactory(searchContext).createFilter(
+		return getBooleanClauseFactory().createFilter(
 			field, value, booleanClauseOccur);
 	}
 

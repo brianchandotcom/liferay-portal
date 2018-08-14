@@ -235,6 +235,8 @@ public class EquinoxConfiguration implements EnvironmentInfo {
 	public static final String PROP_ACTIVE_THREAD_TYPE = "osgi.framework.activeThreadType"; //$NON-NLS-1$
 	public static final String ACTIVE_THREAD_TYPE_NORMAL = "normal"; //$NON-NLS-1$
 
+	public static final String PROP_OSGI_HOME = "osgi.home";
+
 	public static final class ConfigValues {
 		/**
 		 * Value of {@link #localConfig} properties that should be considered
@@ -607,6 +609,16 @@ public class EquinoxConfiguration implements EnvironmentInfo {
 		// Must ensure the check configuration property is set if in osgi.dev mode (bug 443340)
 		if (inCheckConfigurationMode && getConfiguration(PROP_CHECK_CONFIGURATION) == null) {
 			setConfiguration(PROP_CHECK_CONFIGURATION, "true"); //$NON-NLS-1$
+		}
+
+		if (getConfiguration(PROP_OSGI_HOME) == null) {
+			Location location = equinoxLocations.getInstallLocation();
+
+			URL url = location.getURL();
+
+			File file = new File(url.getPath());
+
+			setConfiguration(PROP_OSGI_HOME, file.getParent());
 		}
 	}
 

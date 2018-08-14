@@ -367,9 +367,9 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		return _clusterChannel;
 	}
 
-	protected ClusterNode getClusterNode(Address address) {
-		CompletableFuture<ClusterNode> completableFuture =
-			_clusterNodeCompletableFutures.computeIfAbsent(
+	protected String getClusterNodeId(Address address) {
+		CompletableFuture<String> completableFuture =
+			_clusterNodeIdCompletableFutures.computeIfAbsent(
 				address, key -> new CompletableFuture<>());
 
 		try {
@@ -557,12 +557,12 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	protected boolean memberJoined(ClusterNodeStatus clusterNodeStatus) {
-		CompletableFuture<ClusterNode> completableFuture =
-			_clusterNodeCompletableFutures.computeIfAbsent(
+		CompletableFuture<String> completableFuture =
+			_clusterNodeIdCompletableFutures.computeIfAbsent(
 				clusterNodeStatus.getAddress(),
 				key -> new CompletableFuture<>());
 
-		completableFuture.complete(clusterNodeStatus.getClusterNode());
+		completableFuture.complete(clusterNodeStatus.getClusterNodeId());
 
 		ClusterNodeStatus oldClusterNodeStatus = _clusterNodeStatuses.put(
 			clusterNodeStatus.getClusterNodeId(), clusterNodeStatus);
@@ -589,7 +589,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 	protected void memberRemoved(List<Address> departAddresses) {
 		for (Address address : departAddresses) {
-			_clusterNodeCompletableFutures.remove(address);
+			_clusterNodeIdCompletableFutures.remove(address);
 		}
 
 		List<ClusterNode> departClusterNodes = new ArrayList<>();
@@ -669,8 +669,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	private ClusterChannelFactory _clusterChannelFactory;
 	private final CopyOnWriteArrayList<ClusterEventListener>
 		_clusterEventListeners = new CopyOnWriteArrayList<>();
-	private final Map<Address, CompletableFuture<ClusterNode>>
-		_clusterNodeCompletableFutures = new ConcurrentHashMap<>();
+	private final Map<Address, CompletableFuture<String>>
+		_clusterNodeIdCompletableFutures = new ConcurrentHashMap<>();
 	private final Map<String, ClusterNodeStatus> _clusterNodeStatuses =
 		new ConcurrentHashMap<>();
 	private ClusterEventListener _debugClusterEventListener;

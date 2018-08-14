@@ -13,6 +13,7 @@ class MetalStore extends State {
 	/**
 	 * @param {object} [initialState={}]
 	 * @param {function[]} [reducers=[]]
+	 * @review
 	 */
 
 	constructor(initialState = {}, reducers = []) {
@@ -28,24 +29,39 @@ class MetalStore extends State {
 	 * any kind of information.
 	 * @param {!string} actionType
 	 * @param {string|number|array|object|undefined} [payload=undefined]
+	 * @review
 	 */
 
 	dispatchAction(actionType, payload = undefined) {
-		this._state = this._reducers.reduce(
-			(nextState, reducer) => {
-				return this._getFrozenState(
-					reducer(nextState, actionType, payload)
-				);
-			},
-			this._state
-		);
+		this._dispatchPromise = this._dispatchPromise.then(
+			() => {
+				return this._reducers.reduce(
+					(promiseNextState, reducer) => {
+						return promiseNextState.then(
+							nextState => {
+								return Promise.resolve(
+									reducer(nextState, actionType, payload)
+								);
+							}
+						);
+					},
+					Promise.resolve(this._state)
+				).then(
+					nextState => {
+						this._state = this._getFrozenState(nextState);
+						this.emit('change', this._state);
 
-		this.emit('change', this._state);
+						return this;
+					}
+				);
+			}
+		);
 	}
 
 	/**
 	 * Returns current state.
 	 * Warning: that state cannot be modified anyway.
+	 * @review
 	 */
 
 	getState() {
@@ -60,6 +76,7 @@ class MetalStore extends State {
 	 * altering the original one.
 	 *
 	 * @param {!function} reducer
+	 * @review
 	 */
 
 	registerReducer(reducer) {
@@ -69,6 +86,7 @@ class MetalStore extends State {
 	/**
 	 * Adds a list of reducers to the store.
 	 * @param {!function[]} reducers
+	 * @review
 	 * @see {MetalStore.registerReducer}
 	 */
 
@@ -81,6 +99,7 @@ class MetalStore extends State {
 	 * @param {object} state
 	 * @private
 	 * @return {object} Frozen state
+	 * @review
 	 */
 
 	_getFrozenState(state) {
@@ -93,6 +112,7 @@ class MetalStore extends State {
 	 * Sets the store state to the given state.
 	 * This function should not be called after setting the initialState.
 	 * @param {!object} initialState
+	 * @review
 	 */
 
 	_setInitialState(initialState) {
@@ -110,10 +130,25 @@ class MetalStore extends State {
 MetalStore.STATE = {
 
 	/**
+	 * @default Promise.resolve()
+	 * @instance
+	 * @memberOf MetalStore
+	 * @private
+	 * @review
+	 * @type {Promise}
+	 */
+
+	_dispatchPromise: Config
+		.instanceOf(Promise)
+		.internal()
+		.value(Promise.resolve()),
+
+	/**
 	 * @default []
 	 * @instance
 	 * @memberOf MetalStore
 	 * @private
+	 * @review
 	 * @type {function[]}
 	 */
 
@@ -127,6 +162,7 @@ MetalStore.STATE = {
 	 * @instance
 	 * @memberOf MetalStore
 	 * @private
+	 * @review
 	 * @type {object}
 	 */
 

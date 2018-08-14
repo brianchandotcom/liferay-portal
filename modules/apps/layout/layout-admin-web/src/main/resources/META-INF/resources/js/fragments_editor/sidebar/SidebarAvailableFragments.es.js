@@ -5,9 +5,13 @@ import position from 'metal-position';
 import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarCard.es';
+import {
+	ADD_FRAGMENT_ENTRY_LINK,
+	CLEAR_DRAG_TARGET,
+	UPDATE_DRAG_TARGET
+} from '../store/actionTypes.es';
 import MetalStore from '../store/MetalStore.es';
 import templates from './SidebarAvailableFragments.soy';
-import {UPDATE_DRAG_TARGET} from '../store/dragDrop.es';
 
 /**
  * List of values that the dragging border can take
@@ -85,7 +89,6 @@ class SidebarAvailableFragments extends Component {
 
 	/**
 	 * Callback that is executed when an item is dropped.
-	 * It propagates an itemDrop event with the item id.
 	 * @param {!MouseEvent} event
 	 * @private
 	 * @review
@@ -104,12 +107,16 @@ class SidebarAvailableFragments extends Component {
 				}
 			);
 
-			this.emit(
-				'fragmentEntryDrop',
+			this.store.dispatchAction(
+				ADD_FRAGMENT_ENTRY_LINK,
 				{
 					fragmentEntryId: itemId,
 					fragmentName: itemName
 				}
+			);
+
+			this.store.dispatchAction(
+				CLEAR_DRAG_TARGET
 			);
 		}
 	}

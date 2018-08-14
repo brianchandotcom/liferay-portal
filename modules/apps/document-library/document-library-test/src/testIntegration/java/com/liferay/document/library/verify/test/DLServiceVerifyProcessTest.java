@@ -29,7 +29,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
-import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
@@ -501,7 +500,6 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		dictionary.put(key, value);
 
 		return new ConfigurationTemporarySwapper(
-			DLValidator.class,
 			"com.liferay.document.library.configuration.DLConfiguration",
 			dictionary);
 	}

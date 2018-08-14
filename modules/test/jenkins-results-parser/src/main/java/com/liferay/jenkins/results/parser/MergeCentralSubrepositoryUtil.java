@@ -427,9 +427,8 @@ public class MergeCentralSubrepositoryUtil {
 			"git@github.com:", receiverUserName, "/", centralRepositoryName,
 			".git");
 
-		BaseGitRemote originGitRemote =
-			centralGitWorkingDirectory.addGitRemote(
-				true, "tempRemote", originRemoteURL);
+		BaseGitRemote originGitRemote = centralGitWorkingDirectory.addGitRemote(
+			true, "tempRemote", originRemoteURL);
 
 		try {
 			centralGitWorkingDirectory.pushToRemoteRepository(

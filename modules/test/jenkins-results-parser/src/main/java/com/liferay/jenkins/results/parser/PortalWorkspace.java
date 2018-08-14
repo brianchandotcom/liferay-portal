@@ -170,7 +170,7 @@ public class PortalWorkspace extends BaseWorkspace {
 				branchName));
 
 		LocalGitBranch localGitBranch =
-			LocalGitSyncUtil.createCachedLocalGitBranch(
+			GitHubDevSyncUtil.createCachedLocalGitBranch(
 				localRepository, remoteGitRef, _synchronizeBranches);
 
 		_otherPortalLocalGitBranch = (PortalLocalGitBranch)localGitBranch;
@@ -294,14 +294,14 @@ public class PortalWorkspace extends BaseWorkspace {
 		if (PullRequest.isValidGitHubPullRequestURL(portalGitHubURL)) {
 			PullRequest pullRequest = new PullRequest(portalGitHubURL);
 
-			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
 				portalLocalRepository, pullRequest, _synchronizeBranches);
 		}
 		else if (GitUtil.isValidGitHubRefURL(portalGitHubURL)) {
 			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
 				portalGitHubURL);
 
-			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
 				portalLocalRepository, remoteGitRef, _synchronizeBranches);
 		}
 		else {
@@ -327,7 +327,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		LocalGitBranch localGitBranch = null;
 
 		if (gitCommitFileContent.matches("[0-9a-f]{5,40}")) {
-			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
 				localRepository, localRepository.getUpstreamBranchName(),
 				gitCommitFileContent, synchronizeBranches);
 		}
@@ -336,14 +336,14 @@ public class PortalWorkspace extends BaseWorkspace {
 
 			PullRequest pullRequest = new PullRequest(gitCommitFileContent);
 
-			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
 				localRepository, pullRequest, synchronizeBranches);
 		}
 		else if (GitUtil.isValidGitHubRefURL(gitCommitFileContent)) {
 			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
 				gitCommitFileContent);
 
-			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
 				localRepository, remoteGitRef, synchronizeBranches);
 		}
 

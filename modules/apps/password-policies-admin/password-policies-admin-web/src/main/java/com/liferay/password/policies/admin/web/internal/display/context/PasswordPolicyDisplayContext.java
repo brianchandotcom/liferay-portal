@@ -53,7 +53,8 @@ public class PasswordPolicyDisplayContext {
 		_permissionChecker = themeDisplay.getPermissionChecker();
 	}
 
-	public List<NavigationItem> getEditPasswordPolicyAssignmentsNavigationItems(PortletURL portletURL)
+	public List<NavigationItem> getEditPasswordPolicyAssignmentsNavigationItems(
+			PortletURL portletURL)
 		throws PortletException {
 
 		String tabs2 = ParamUtil.getString(_request, "tabs2", "users");
@@ -64,15 +65,15 @@ public class PasswordPolicyDisplayContext {
 
 		usersNavigationItem.setActive(tabs2.equals("users"));
 		usersNavigationItem.setHref(portletURL, "tabs2", "users");
-		usersNavigationItem.setLabel(
-			LanguageUtil.get(_request, "users"));
+		usersNavigationItem.setLabel(LanguageUtil.get(_request, "users"));
 
 		navigationItems.add(usersNavigationItem);
 
 		NavigationItem organizationsNavigationItem = new NavigationItem();
 
 		organizationsNavigationItem.setActive(tabs2.equals("organizations"));
-		organizationsNavigationItem.setHref(portletURL, "tabs2", "organizations");
+		organizationsNavigationItem.setHref(
+			portletURL, "tabs2", "organizations");
 		organizationsNavigationItem.setLabel(
 			LanguageUtil.get(_request, "organizations"));
 

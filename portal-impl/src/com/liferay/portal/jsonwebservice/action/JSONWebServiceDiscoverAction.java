@@ -277,7 +277,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 				_buildPropertiesList(modelType);
 			}
 
-			if (typesSize != _types.size()) {
+			if (typesSize == _types.size()) {
 				break;
 			}
 		}

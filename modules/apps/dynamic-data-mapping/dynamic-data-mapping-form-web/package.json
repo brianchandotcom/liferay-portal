@@ -78,7 +78,9 @@
 		"babel-plugin-transform-runtime": "^6.23.0",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-metal-jsx": "^0.1.1",
+		"browser-sync": "^2.24.6",
 		"check-source-formatting": "^2.0.4",
+		"cross-spawn": "^6.0.5",
 		"eslint": "^4.10.0",
 		"eslint-config-liferay": "^2.0.8",
 		"eslint-plugin-react": "^7.4.0",
@@ -124,6 +126,7 @@
 		"csf": "csf src/main/resources/META-INF/resources/metal/js/**/*.es.js src/main/resources/META-INF/resources/metal/**/*.soy src/**/*.jsp --fail-on-errors",
 		"format": "npm run csf -- -i",
 		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
+		"start": "browser-sync start --config bs-config.js",
 		"test": "npm run soy && NODE_ENV=test jest --coverage && npm run clean",
 		"test:snapshots": "npm run soy && NODE_ENV=test jest --coverage -u && npm run clean"
 	},

@@ -64,24 +64,6 @@ public class DDMDataProviderTestUtil {
 			createDDMRestDataProviderInstanceDDMFormValues(
 				ddmForm, inputParameterSettings, outputParameterSettings);
 
-		if (inputParameterSettings != null) {
-			for (DDMDataProviderInputParametersSettings inputParameterSetting :
-					inputParameterSettings) {
-
-				ddmFormValues.addDDMFormFieldValue(
-					createInputParameter(inputParameterSetting));
-			}
-		}
-
-		if (outputParameterSettings != null) {
-			for (DDMDataProviderOutputParametersSettings
-					outputParameterSetting : outputParameterSettings) {
-
-				ddmFormValues.addDDMFormFieldValue(
-					createOutputParameter(outputParameterSetting));
-			}
-		}
-
 		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getSiteDefault(), "Data provider");

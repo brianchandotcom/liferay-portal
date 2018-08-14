@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.internal.upgrade.v1_0_0;
+package com.liferay.blogs.internal.upgrade.v1_1_2;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;

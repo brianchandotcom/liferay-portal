@@ -657,6 +657,11 @@
 			<var name="sitePagesVariationName" value="Summer" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Page 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Staging#markAsReadyForPublication" />
 
 		<execute macro="Navigator#gotoStagedSitePage">

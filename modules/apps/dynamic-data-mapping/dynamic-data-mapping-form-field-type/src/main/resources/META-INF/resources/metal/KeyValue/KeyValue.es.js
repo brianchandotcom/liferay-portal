@@ -126,20 +126,12 @@ class KeyValue extends Component {
 	_formatInput(str) {
 		let key = '';
 
-		/**
-		* Remove spaces and apply camelCase
-		*/
-
 		key = str.replace(
 			/\s(.)/g,
 			x => {
 				return x.toUpperCase();
 			}
 		);
-
-		/**
-		 * Remove underscores and non characters
-		*/
 
 		key = key.replace(/_|\W/g, '');
 
@@ -149,7 +141,7 @@ class KeyValue extends Component {
 	_handleValueChange(event) {
 		const {key} = this;
 
-		if (typeof this.generateName === 'undefined') {
+		if (!this.generateName) {
 			this._handleKeyChange(
 				{
 					target: {
@@ -157,7 +149,7 @@ class KeyValue extends Component {
 						value: event.target.value
 					}
 				}
-			);
+			); 
 		}
 
 		this.emit(

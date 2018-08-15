@@ -30,7 +30,7 @@ class KeyValue extends Component {
 		 * @type {?bool}
 		 */
 
-		generateName: Config.bool().internal(),
+		generateKey: Config.bool().internal(),
 
 		/**
 		 * @default undefined
@@ -49,6 +49,15 @@ class KeyValue extends Component {
 		 */
 
 		id: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof KeyValue
+		 * @type {?(string|undefined)}
+		*/
+
+		key: Config.string(),
 
 		/**
 		 * @default undefined
@@ -102,84 +111,63 @@ class KeyValue extends Component {
 			 * @type {?(bool)}
 			 */
 
-		value: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof KeyValue
-		 * @type {?(string|undefined)}
-		*/
-
-		key: Config.string(),
-
-		/**
-		 * @default undefined
-		* @instance
-		* @memberof KeyValue
-		* @type {?(string|undefined)}
-		*/
-
-		keyValue: Config.string().internal()
+		value: Config.string()
 	}
 
-	_formatInput(str) {
-		let key = '';
+	_handleKeyInputChanged(event) {
+		const {target} = event;
+		const originalEvent = target.originalEvent;
 
-		key = str.replace(
+		this._updateKey(target.value);
+
+		this.generateKey = false;
+
+		this.emit(
+			'fieldEdit',
+			{
+				key: 'key',
+				originalEvent,
+				value: this.key
+			}
+		);
+	}
+
+	_handleValueInputChanged(event) {
+		const {target} = event;
+		const {value} = target;
+		const originalEvent = target.originalEvent;
+
+		if (this.generateKey) {
+			this._updateKey(value);
+		}
+
+		this.emit(
+			'fieldEdit',
+			{
+				key: 'value',
+				originalEvent,
+				value
+			}
+		);
+	}
+
+	_updateKey(str) {
+		this.setState(
+			{
+				key: this.getGeneratedKey(str)
+			}
+		);
+	}
+
+	getGeneratedKey(str) {
+		let key = str.replace(
 			/\s(.)/g,
 			x => {
 				return x.toUpperCase();
 			}
 		);
 
-		key = key.replace(/_|\W/g, '');
-
-		return key;
-	}
-
-	_handleValueChange(event) {
-		const {key} = this;
-
-		if (!this.generateName) {
-			this._handleKeyChange(
-				{
-					target: {
-						originalEvent: event,
-						value: event.target.value
-					}
-				}
-			);
-		}
-
-		this.emit(
-			'fieldEdit',
-			{
-				key,
-				originalEvent: event,
-				value: event.target.value
-			}
-		);
-	}
-
-	_handleKeyChange(event) {
-		const {target} = event;
-		const originalEvent = target.originalEvent;
-
-		if (event.target.className == 'key-value-input') {
-			this.generateName = false;
-		}
-
-		this.keyValue = this._formatInput(target.value);
-
-		this.emit(
-			'fieldEdit',
-			{
-				key: 'keyValue',
-				originalEvent,
-				value: this.keyValue
-			}
-		);
+		return key.replace(/_|\W/g, '');
 	}
 }
 

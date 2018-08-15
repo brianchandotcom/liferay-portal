@@ -1,12 +1,12 @@
 {namespace KeyValue}
 
 {template .render}
-	{@param? _handleValueChange: any}
-	{@param? _handleKeyChange: any}
+	{@param? _handleValueInputChanged: any}
+	{@param? _handleKeyInputChanged: any}
 	{@param? editable: bool}
 	{@param? helpText: string}
 	{@param? id: string}
-	{@param? keyValue: string}
+	{@param? key: string}
 	{@param? label: string}
 	{@param? placeholder: string}
 	{@param? required: bool}
@@ -17,11 +17,11 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
-				{param _handleValueChange: $_handleValueChange /}
-				{param _handleKeyChange: $_handleKeyChange /}
+				{param _handleValueInputChanged: $_handleValueInputChanged /}
+				{param _handleKeyInputChanged: $_handleKeyInputChanged /}
 				{param editable: $editable /}
 				{param id: $id /}
-				{param keyValue: $keyValue /}
+				{param key: $key /}
 				{param placeholder: $placeholder /}
 				{param value: $value /}
 			{/call}
@@ -37,10 +37,10 @@
 {/template}
 
 {template .content}
-	{@param? _handleValueChange: any}
-	{@param? _handleKeyChange: any}
+	{@param? _handleValueInputChanged: any}
+	{@param? _handleKeyInputChanged: any}
 	{@param? editable: bool}
-	{@param? keyValue: string}
+	{@param? key: string}
 	{@param? placeholder: string}
 	{@param? value: string}
 
@@ -53,7 +53,7 @@
 
 		type="text"
 
-		data-oninput="{$_handleValueChange}"
+		data-oninput="{$_handleValueInputChanged}"
 
 		{if not $editable}
 			disabled="disabled"
@@ -69,9 +69,10 @@
 
 		type="text"
 
-		data-oninput="{$_handleKeyChange}"
+		data-oninput="{$_handleKeyInputChanged}"
 
-			value="{$keyValue}"
+		{if $key}
+			value="{$key}"
 		{/if}
 	{/let}
 

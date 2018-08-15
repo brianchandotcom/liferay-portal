@@ -159,6 +159,7 @@ test {
 	systemProperty "maven.repo.local", System.properties["maven.repo.local"]
 	systemProperty "nodejs.npm.ci.registry", project.property("nodejs.npm.ci.registry")
 	systemProperty "nodejs.npm.ci.sass.binary.site", project.property("nodejs.npm.ci.sass.binary.site")
+	systemProperty "project.templates.test.builds", project.property("project.templates.test.builds")
 	systemProperty "repository.url", System.properties["repository.url"]
 	systemProperty "test.debug.bundle.diffs", System.properties["test.debug.bundle.diffs"]
 

@@ -2,6 +2,8 @@
 
 {template .render}
 	{@param spritemap: string}
+	{@param? _handleChangePageDescription: any}
+	{@param? _handleChangePageTitle: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
@@ -15,6 +17,8 @@
 	{let $contentRenderer: $modeRenderer ?: 'grid' /}
 
 	{delcall LayoutRenderer.pages variant="$contentRenderer"}
+		{param _handleChangePageDescription: $_handleChangePageDescription /}
+		{param _handleChangePageTitle: $_handleChangePageTitle /}
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 		{param _handleFieldChanged: $_handleFieldChanged /}
@@ -30,6 +34,8 @@
 
 {deltemplate LayoutRenderer.pages variant="'grid'"}
 	{@param spritemap: string}
+	{@param? _handleChangePageDescription: any}
+	{@param? _handleChangePageTitle: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
@@ -41,6 +47,26 @@
 	{@param? pages: ?}
 
 	{for $page in $pages}
+
+		{let $pageTitleAttributes kind="attributes"}
+			class="form-builder-page-header-title form-control"
+			data-onchange="{$_handleChangePageTitle}"
+			data-page-id="{index($page)}"
+			maxlength="120"
+			placeholder="Untitled Page (1 of 1)"
+		{/let}
+
+		{let $pageDescriptionAttributes kind="attributes"}
+			class="form-builder-page-header-description form-control"
+			data-onchange="{$_handleChangePageDescription}"
+			data-page-id="{index($page)}"
+			maxlength="120"
+			placeholder="Add a short description for this page."
+		{/let}
+
+		<textarea {$pageTitleAttributes}></textarea>
+		<textarea {$pageDescriptionAttributes}></textarea>
+
 		<div class="form-builder-layout">
 			{delcall LayoutRenderer.page variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}

@@ -466,8 +466,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		if ((fullyQualifiedClassName == null) ||
 			!fullyQualifiedClassName.startsWith("com.liferay.") ||
 			ArrayUtil.contains(
-				_allowedFullyQualifiedClassNames,
-				fullyQualifiedClassName)) {
+				_allowedFullyQualifiedClassNames, fullyQualifiedClassName)) {
 
 			return;
 		}

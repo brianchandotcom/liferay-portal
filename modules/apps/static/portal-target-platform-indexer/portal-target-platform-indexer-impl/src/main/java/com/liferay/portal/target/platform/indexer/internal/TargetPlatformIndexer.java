@@ -37,8 +37,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import java.security.MessageDigest;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,6 +47,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -99,7 +98,7 @@ public class TargetPlatformIndexer implements Indexer {
 		try {
 			Object[] objects = _processSystemBundle(tempDir, jarFiles);
 
-			String sha256sum = (String)objects[0];
+			String crc32 = (String)objects[0];
 			int size = (int)objects[1];
 
 			for (String dirName : _dirNames) {
@@ -141,22 +140,11 @@ public class TargetPlatformIndexer implements Indexer {
 
 			outputStream.write(
 				_fixSystemBundleOSGiContent(
-					byteArrayOutputStream.toString("UTF-8"), sha256sum, size));
+					byteArrayOutputStream.toString("UTF-8"), crc32, size));
 		}
 		finally {
 			PathUtil.deltree(tempPath);
 		}
-	}
-
-	private static String _bytesToHexString(byte[] bytes) {
-		char[] chars = new char[bytes.length * 2];
-
-		for (int i = 0; i < bytes.length; i++) {
-			chars[i * 2] = _HEX_DIGITS[(bytes[i] & 0xFF) >> 4];
-			chars[i * 2 + 1] = _HEX_DIGITS[bytes[i] & 0x0F];
-		}
-
-		return new String(chars);
 	}
 
 	private static String _filterJavaSEVesions(String versions) {
@@ -194,7 +182,7 @@ public class TargetPlatformIndexer implements Indexer {
 	}
 
 	private byte[] _fixSystemBundleOSGiContent(
-			String content, String sha256sum, long size)
+			String content, String crc32, long size)
 		throws UnsupportedEncodingException {
 
 		String url =
@@ -226,7 +214,7 @@ public class TargetPlatformIndexer implements Indexer {
 
 		String postfix = content.substring(end);
 
-		String newContent = prefix.concat(sha256sum).concat(postfix);
+		String newContent = prefix.concat(crc32).concat(postfix);
 
 		index = newContent.indexOf(url);
 
@@ -383,13 +371,12 @@ public class TargetPlatformIndexer implements Indexer {
 					}
 				}
 
-				MessageDigest messageDigest = MessageDigest.getInstance(
-					"SHA-256");
+				CRC32 crc32 = new CRC32();
 
-				messageDigest.update(byteArrayOutputStream.toByteArray());
+				crc32.update(byteArrayOutputStream.toByteArray());
 
 				return new Object[] {
-					_bytesToHexString(messageDigest.digest()),
+					Long.toHexString(crc32.getValue()),
 					byteArrayOutputStream.size()
 				};
 			}
@@ -401,11 +388,6 @@ public class TargetPlatformIndexer implements Indexer {
 
 	private static final String _ATTRIBUTE_PREFIX_SIZE =
 		"<attribute name=\"size\" type=\"Long\" value=\"";
-
-	private static final char[] _HEX_DIGITS = {
-		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
-		'e', 'f'
-	};
 
 	private static final String _MAX_SUPPORTED_JAVA_SE_VERSION = "1.8.0";
 

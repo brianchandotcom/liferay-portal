@@ -48,8 +48,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.security.MessageDigest;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -63,6 +61,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.CRC32;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -404,11 +403,11 @@ public class LPKGIndexValidator {
 			content = start.concat(end);
 		}
 
-		MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+		CRC32 crc32 = new CRC32();
 
-		messageDigest.update(content.getBytes(StandardCharsets.UTF_8));
+		crc32.update(content.getBytes(StandardCharsets.UTF_8));
 
-		return StringUtil.bytesToHexString(messageDigest.digest());
+		return StringUtil.toHexString(crc32.getValue());
 	}
 
 	private String _toIntegrityKey(URI uri) {

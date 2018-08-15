@@ -66,10 +66,16 @@
 
 		<execute function="Refresh" />
 
-		<execute macro="LAR#viewProcessesInListView" />
+		<execute macro="LexiconEntry#changeExportDisplayStyle">
+			<var name="displayStyle" value="table" />
+		</execute>
 
-		<execute macro="LAR#filterCompletedProcesses" />
+		<execute macro="ManagementBar#setFilterAndOrder">
+			<var name="filterBy" value="Completed" />
+		</execute>
 
-		<execute macro="LAR#viewProcessesInDescendingOrder" />
+		<execute macro="ManagementBar#toggleViewOrder">
+			<var name="order" value="Descending" />
+		</execute>
 	</command>
 </definition>

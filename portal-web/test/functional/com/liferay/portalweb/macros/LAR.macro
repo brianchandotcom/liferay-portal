@@ -868,14 +868,4 @@
 		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
 		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
 	</command>
-
-	<command name="viewProcessesInDescendingOrder">
-		<execute function="Click" locator1="Icon#CARET_DESCENDING" />
-	</command>
-
-	<command name="viewProcessesInListView">
-		<execute macro="LexiconEntry#changeExportDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
-	</command>
 </definition>

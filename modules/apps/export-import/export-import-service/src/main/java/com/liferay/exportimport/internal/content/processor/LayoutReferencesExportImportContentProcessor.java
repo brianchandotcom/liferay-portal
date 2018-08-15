@@ -797,7 +797,8 @@ public class LayoutReferencesExportImportContentProcessor
 					urlWithoutLocale.startsWith(
 						_PRIVATE_USER_SERVLET_MAPPING) ||
 					urlWithoutLocale.startsWith(
-						_PUBLIC_GROUP_SERVLET_MAPPING)) {
+						_PUBLIC_GROUP_SERVLET_MAPPING) ||
+					_isVirtualHostDefined(urlSB)) {
 
 					url = urlWithoutLocale;
 				}
@@ -913,6 +914,21 @@ public class LayoutReferencesExportImportContentProcessor
 
 				throw eicve;
 			}
+		}
+	}
+
+	private boolean _isVirtualHostDefined(StringBundler urlSB) {
+		String urlSBString = urlSB.toString();
+
+		if (urlSBString.contains(_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL) ||
+			urlSBString.contains(_DATA_HANDLER_PUBLIC_LAYOUT_SET_URL) ||
+			urlSBString.contains(_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
+			urlSBString.contains(_DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
+
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 

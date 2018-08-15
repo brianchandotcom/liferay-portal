@@ -175,7 +175,7 @@ public class LPKGBundleTrackerCustomizer
 						continue;
 					}
 
-					if (_isBundleInstalled(bundle, url)) {
+					if (_isBundleInstalled(bundle, url, location)) {
 						continue;
 					}
 
@@ -389,7 +389,7 @@ public class LPKGBundleTrackerCustomizer
 		return sb.toString();
 	}
 
-	private boolean _isBundleInstalled(Bundle bundle, URL url)
+	private boolean _isBundleInstalled(Bundle bundle, URL url, String location)
 		throws IOException {
 
 		try (InputStream inputStream = url.openStream();
@@ -404,10 +404,6 @@ public class LPKGBundleTrackerCustomizer
 
 			Version version = new Version(
 				attributes.getValue(Constants.BUNDLE_VERSION));
-
-			String location =
-				LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
-					bundle, url.getPath());
 
 			for (Bundle installedBundle : _bundleContext.getBundles()) {
 				if (symbolicName.equals(installedBundle.getSymbolicName()) &&

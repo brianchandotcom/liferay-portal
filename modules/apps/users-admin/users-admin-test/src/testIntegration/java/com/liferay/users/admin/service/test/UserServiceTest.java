@@ -15,6 +15,7 @@
 package com.liferay.users.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -62,45 +63,10 @@ public class UserServiceTest {
 			_users.add(UserTestUtil.addUser());
 		}
 
-		List<User> retrievedUsers = _userService.getGtCompanyUsers(
-			0L, TestPropsValues.getCompanyId(), size);
-
-		Assert.assertFalse("It should return users", retrievedUsers.isEmpty());
-
-		Assert.assertEquals(
-			"It should return the correct number of users", size,
-			retrievedUsers.size());
-
-		User lastUser = retrievedUsers.get(retrievedUsers.size() - 1);
-
-		retrievedUsers = _userService.getGtCompanyUsers(
-			lastUser.getUserId(), TestPropsValues.getCompanyId(), size);
-
-		Assert.assertFalse("It should return users", retrievedUsers.isEmpty());
-
-		Assert.assertEquals(
-			"It should return the correct number of users", size,
-			retrievedUsers.size());
-
-		long previousUserId = 0;
-
-		for (User user : retrievedUsers) {
-			long userId = user.getUserId();
-
-			Assert.assertTrue(
-				"The returned userId " + userId +
-					" should be greater than the given gtUserId: " +
-						lastUser.getUserId(),
-				userId > lastUser.getUserId());
-
-			Assert.assertTrue(
-				"The userId " + userId +
-					" should be greater than the previous userId " +
-						previousUserId,
-				userId > previousUserId);
-
-			previousUserId = userId;
-		}
+		assertGtUserIdCall(
+			size,
+			gtUserId -> _userService.getGtCompanyUsers(
+				gtUserId, TestPropsValues.getCompanyId(), size));
 	}
 
 	@Test
@@ -116,45 +82,10 @@ public class UserServiceTest {
 					_organization, RoleConstants.ORGANIZATION_USER));
 		}
 
-		List<User> retrievedUsers = _userService.getGtOrganizationUsers(
-			0L, _organization.getOrganizationId(), size);
-
-		Assert.assertFalse("It should return users", retrievedUsers.isEmpty());
-
-		Assert.assertEquals(
-			"It should return the correct number of users", size,
-			retrievedUsers.size());
-
-		User lastUser = retrievedUsers.get(retrievedUsers.size() - 1);
-
-		retrievedUsers = _userService.getGtOrganizationUsers(
-			lastUser.getUserId(), _organization.getOrganizationId(), size);
-
-		Assert.assertFalse("It should return users", retrievedUsers.isEmpty());
-
-		Assert.assertEquals(
-			"It should return the correct number of users", size,
-			retrievedUsers.size());
-
-		long previousUserId = 0;
-
-		for (User user : retrievedUsers) {
-			long userId = user.getUserId();
-
-			Assert.assertTrue(
-				"The returned userId " + userId +
-					" should be greater than the given gtUserId: " +
-						lastUser.getUserId(),
-				userId > lastUser.getUserId());
-
-			Assert.assertTrue(
-				"The userId " + userId +
-					" should be greater than the previous userId " +
-						previousUserId,
-				userId > previousUserId);
-
-			previousUserId = userId;
-		}
+		assertGtUserIdCall(
+			size,
+			gtUserId -> _userService.getGtOrganizationUsers(
+				gtUserId, _organization.getOrganizationId(), size));
 	}
 
 	@Test
@@ -177,8 +108,18 @@ public class UserServiceTest {
 		_userLocalService.setUserGroupUsers(
 			_userGroup.getUserGroupId(), userIds);
 
-		List<User> retrievedUsers = _userService.getGtUserGroupUsers(
-			0L, _userGroup.getUserGroupId(), size);
+		assertGtUserIdCall(
+			size,
+			gtUserId -> _userService.getGtUserGroupUsers(
+				gtUserId, _userGroup.getUserGroupId(), size));
+	}
+
+	protected void assertGtUserIdCall(
+			int size,
+			UnsafeFunction<Long, List<User>, Exception> gtUserIdFunction)
+		throws Exception {
+
+		List<User> retrievedUsers = gtUserIdFunction.apply(0L);
 
 		Assert.assertFalse("It should return users", retrievedUsers.isEmpty());
 
@@ -188,8 +129,7 @@ public class UserServiceTest {
 
 		User lastUser = retrievedUsers.get(retrievedUsers.size() - 1);
 
-		retrievedUsers = _userService.getGtUserGroupUsers(
-			lastUser.getUserId(), _userGroup.getUserGroupId(), size);
+		retrievedUsers = gtUserIdFunction.apply(lastUser.getUserId());
 
 		Assert.assertFalse("It should return users", retrievedUsers.isEmpty());
 

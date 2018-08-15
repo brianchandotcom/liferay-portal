@@ -422,18 +422,7 @@ public class TLiferayOutputProperties
 			List<Action> actionList = operationStream.map(
 				Operation::getMethod
 			).map(
-				method -> {
-					Stream<Action> actionStream = Arrays.stream(
-						Action.values());
-
-					return actionStream.filter(
-						action -> method.equals(action.getMethodName())
-					).findFirst(
-					).orElseThrow(
-						() -> new UnsupportedOperationException(
-							String.format("Unsupported operation: %s.", method))
-					);
-				}
+				this::_methodToAction
 			).collect(
 				Collectors.toList()
 			);
@@ -451,6 +440,18 @@ public class TLiferayOutputProperties
 			refreshLayout(getForm(Form.REFERENCE));
 
 			return validationResultMutable;
+		}
+
+		private Action _methodToAction(String method) {
+			Stream<Action> actionStream = Arrays.stream(Action.values());
+
+			return actionStream.filter(
+				action -> method.equals(action.getMethodName())
+			).findFirst(
+			).orElseThrow(
+				() -> new UnsupportedOperationException(
+					String.format("Unsupported operation: %s.", method))
+			);
 		}
 
 	}

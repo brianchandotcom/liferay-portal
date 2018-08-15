@@ -149,7 +149,7 @@ class KeyValue extends Component {
 						value: event.target.value
 					}
 				}
-			); 
+			);
 		}
 
 		this.emit(

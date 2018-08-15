@@ -1954,6 +1954,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public void removePrimaryKey(String path) {
+		String primaryKeyString = getPrimaryKeyString(String.class, path);
+
+		_scopedPrimaryKeys.remove(primaryKeyString);
+		_primaryKeys.remove(primaryKeyString);
+	}
+
+	@Override
 	public void setClassLoader(ClassLoader classLoader) {
 		_xStream.setClassLoader(classLoader);
 	}
@@ -2338,14 +2346,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return serviceContext;
-	}
-
-	@Override
-	public void removePrimaryKey(String path) {
-		String primaryKeyString = getPrimaryKeyString(String.class, path);
-
-		_scopedPrimaryKeys.remove(primaryKeyString);
-		_primaryKeys.remove(primaryKeyString);
 	}
 
 	protected Element doAddReferenceElement(

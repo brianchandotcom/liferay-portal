@@ -2675,6 +2675,375 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	private static final String _FINDER_COLUMN_PORTRAITID_PORTRAITID_2 = "user.portraitId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_C",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the users where userId &gt; &#63; and companyId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param companyId the company ID
+	 * @return the matching users
+	 */
+	@Override
+	public List<User> findByU_C(long userId, long companyId) {
+		return findByU_C(userId, companyId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the users where userId &gt; &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @return the range of matching users
+	 */
+	@Override
+	public List<User> findByU_C(long userId, long companyId, int start, int end) {
+		return findByU_C(userId, companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the users where userId &gt; &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching users
+	 */
+	@Override
+	public List<User> findByU_C(long userId, long companyId, int start,
+		int end, OrderByComparator<User> orderByComparator) {
+		return findByU_C(userId, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the users where userId &gt; &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching users
+	 */
+	@Override
+	public List<User> findByU_C(long userId, long companyId, int start,
+		int end, OrderByComparator<User> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C;
+		finderArgs = new Object[] {
+				userId, companyId,
+				
+				start, end, orderByComparator
+			};
+
+		List<User> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<User>)finderCache.getResult(finderPath, finderArgs,
+					this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (User user : list) {
+					if ((userId >= user.getUserId()) ||
+							(companyId != user.getCompanyId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_USER_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_C_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(UserModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(companyId);
+
+				if (!pagination) {
+					list = (List<User>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<User>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first user in the ordered set where userId &gt; &#63; and companyId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user
+	 * @throws NoSuchUserException if a matching user could not be found
+	 */
+	@Override
+	public User findByU_C_First(long userId, long companyId,
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+		User user = fetchByU_C_First(userId, companyId, orderByComparator);
+
+		if (user != null) {
+			return user;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append("}");
+
+		throw new NoSuchUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user in the ordered set where userId &gt; &#63; and companyId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user, or <code>null</code> if a matching user could not be found
+	 */
+	@Override
+	public User fetchByU_C_First(long userId, long companyId,
+		OrderByComparator<User> orderByComparator) {
+		List<User> list = findByU_C(userId, companyId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user in the ordered set where userId &gt; &#63; and companyId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user
+	 * @throws NoSuchUserException if a matching user could not be found
+	 */
+	@Override
+	public User findByU_C_Last(long userId, long companyId,
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+		User user = fetchByU_C_Last(userId, companyId, orderByComparator);
+
+		if (user != null) {
+			return user;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append("}");
+
+		throw new NoSuchUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user in the ordered set where userId &gt; &#63; and companyId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user, or <code>null</code> if a matching user could not be found
+	 */
+	@Override
+	public User fetchByU_C_Last(long userId, long companyId,
+		OrderByComparator<User> orderByComparator) {
+		int count = countByU_C(userId, companyId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<User> list = findByU_C(userId, companyId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the users where userId &gt; &#63; and companyId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param companyId the company ID
+	 */
+	@Override
+	public void removeByU_C(long userId, long companyId) {
+		for (User user : findByU_C(userId, companyId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(user);
+		}
+	}
+
+	/**
+	 * Returns the number of users where userId &gt; &#63; and companyId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param companyId the company ID
+	 * @return the number of matching users
+	 */
+	@Override
+	public int countByU_C(long userId, long companyId) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C;
+
+		Object[] finderArgs = new Object[] { userId, companyId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_USER_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_C_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_U_C_USERID_2 = "user.userId > ? AND ";
+	private static final String _FINDER_COLUMN_U_C_COMPANYID_2 = "user.companyId = ? AND user.defaultUser = [$FALSE$]";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_U = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",

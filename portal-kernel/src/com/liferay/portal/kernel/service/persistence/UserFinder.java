@@ -61,6 +61,12 @@ public interface UserFinder {
 		String socialRelationTypeComparator, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc);
 
+	public java.util.List<com.liferay.portal.kernel.model.User> findByUsersOrgsGtUserId(
+		long companyId, long organizationId, long gtUserId, int size);
+
+	public java.util.List<com.liferay.portal.kernel.model.User> findByUsersUserGroupsGtUserId(
+		long companyId, long userGroupId, long gtUserId, int size);
+
 	public java.util.List<com.liferay.portal.kernel.model.User> findByC_FN_MN_LN_SN_EA_S(
 		long companyId, String firstName, String middleName, String lastName,
 		String screenName, String emailAddress, int status,

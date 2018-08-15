@@ -120,6 +120,10 @@ public interface UserGroupService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UserGroup fetchUserGroup(long userGroupId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserGroup> getGtUserGroups(long gtUserGroupId, long companyId,
+		long parentUserGroupId, int size);
+
 	/**
 	* Returns the OSGi service identifier.
 	*

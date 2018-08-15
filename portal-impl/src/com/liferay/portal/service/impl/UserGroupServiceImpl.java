@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.util.comparator.UserGroupIdComparator;
 import com.liferay.portal.service.base.UserGroupServiceBaseImpl;
 
 import java.io.Serializable;
@@ -159,6 +160,15 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		}
 
 		return userGroup;
+	}
+
+	@Override
+	public List<UserGroup> getGtUserGroups(
+		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
+
+		return userGroupPersistence.filterFindByU_C_P(
+			gtUserGroupId, companyId, parentUserGroupId, 0, size,
+			new UserGroupIdComparator(true));
 	}
 
 	/**

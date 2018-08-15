@@ -723,6 +723,51 @@ public class UserServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.UserSoap[] getGtCompanyUsers(
+		long gtUserId, long companyId, int size) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.User> returnValue = UserServiceUtil.getGtCompanyUsers(gtUserId,
+					companyId, size);
+
+			return com.liferay.portal.kernel.model.UserSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.UserSoap[] getGtOrganizationUsers(
+		long gtUserId, long organizationId, int size) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.User> returnValue = UserServiceUtil.getGtOrganizationUsers(gtUserId,
+					organizationId, size);
+
+			return com.liferay.portal.kernel.model.UserSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.UserSoap[] getGtUserGroupUsers(
+		long gtUserId, long userGroupId, int size) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.User> returnValue = UserServiceUtil.getGtUserGroupUsers(gtUserId,
+					userGroupId, size);
+
+			return com.liferay.portal.kernel.model.UserSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*
@@ -937,14 +982,6 @@ public class UserServiceSoap {
 		}
 	}
 
-	/**
-	* Returns the users belonging to the user group with the status.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @return the matching users
-	*/
 	public static com.liferay.portal.kernel.model.UserSoap[] getUserGroupUsers(
 		long userGroupId, int start, int end) throws RemoteException {
 		try {

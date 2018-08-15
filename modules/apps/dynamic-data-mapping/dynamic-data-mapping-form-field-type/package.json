@@ -32,6 +32,7 @@
 					"rules": {
 						"no-console": 0,
 						"no-unknown-property": 0,
+						"react/jsx-uses-react": 0,
 						"react/jsx-uses-vars": 2,
 						"require-jsdoc": 0
 					}
@@ -103,7 +104,8 @@
 		"format": "npm run csf -- -i",
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
-		"test": "npm run soy && NODE_ENV=test jest --coverage && npm run clean"
+		"test": "npm run soy && NODE_ENV=test jest --coverage && npm run clean",
+		"test:snapshots": "npm run soy && NODE_ENV=test jest --coverage -u && npm run clean"
 	},
 	"version": "4.0.0"
 }

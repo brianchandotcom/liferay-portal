@@ -295,7 +295,7 @@ public class LiferayConnectionProperties
 		referencedComponent = new ComponentReferenceProperties<>(
 			"referencedComponent", TLiferayConnectionDefinition.COMPONENT_NAME);
 	public PresentationItem testConnection = new PresentationItem(
-		"testConnection", "Test Connection");
+		"testConnection");
 	public Property<String> userId = PropertyFactory.newString("userId");
 
 	public enum LoginType {

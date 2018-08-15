@@ -318,7 +318,7 @@ public class TLiferayOutputProperties
 	}
 
 	public transient PresentationItem calculateSchema = new PresentationItem(
-		"calculateSchema", "Calculate Schema");
+		"calculateSchema");
 	public Property<Boolean> dieOnError = PropertyFactory.newBoolean(
 		"dieOnError");
 	public Property<Action> operations = PropertyFactory.newEnum(

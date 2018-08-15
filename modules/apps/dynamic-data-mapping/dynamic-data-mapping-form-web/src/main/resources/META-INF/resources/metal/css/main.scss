@@ -124,7 +124,7 @@
 	.ddm-resize-handle-right {
 		right: -1px;
 	}
-	
+
 	.ddm-resize-handle-left,
 	.ddm-resize-handle-right {
 		background-color: #1C67FB;
@@ -162,15 +162,15 @@
 }
 
 textarea[class^="form-builder-page-header"] {
-	height: 26px;
 	background: transparent;
-	margin: 0;
 	border: none;
+	height: 26px;
+	margin: 0;
 	padding-top: 0;
-	
+
 	&:focus {
-		border: none;
 		background: none;
+		border: none;
 	}
 }
 

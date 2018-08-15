@@ -93,8 +93,14 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public static final String FIND_BY_USERS_ORGS_GROUP =
 		UserFinder.class.getName() + ".findByUsersOrgsGroup";
 
+	public static final String FIND_BY_USERS_ORGS_GT_USER_ID =
+		UserFinder.class.getName() + ".findByUsersOrgsGtUserId";
+
 	public static final String FIND_BY_USERS_USER_GROUPS =
 		UserFinder.class.getName() + ".findByUsersUserGroups";
+
+	public static final String FIND_BY_USERS_USER_GROUPS_GT_USER_ID =
+		UserFinder.class.getName() + ".findByUsersUserGroupsGtUserId";
 
 	public static final String FIND_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".findByC_FN_MN_LN_SN_EA_S";
@@ -120,9 +126,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public static final String JOIN_BY_USERS_ORGS =
 		UserFinder.class.getName() + ".joinByUsersOrgs";
 
-	public static final String JOIN_BY_USERS_ORGS_GT_USER_ID =
-		UserFinder.class.getName() + ".joinByUsersOrgsGtUserId";
-
 	public static final String JOIN_BY_USERS_ORGS_TREE =
 		UserFinder.class.getName() + ".joinByUsersOrgsTree";
 
@@ -137,9 +140,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 	public static final String JOIN_BY_USERS_USER_GROUPS =
 		UserFinder.class.getName() + ".joinByUsersUserGroups";
-
-	public static final String JOIN_BY_USERS_USER_GROUPS_GT_USER_ID =
-		UserFinder.class.getName() + ".joinByUsersUserGroupsGtUserId";
 
 	public static final String JOIN_BY_ANNOUNCEMENTS_DELIVERY_EMAIL_OR_SMS =
 		UserFinder.class.getName() + ".joinByAnnouncementsDeliveryEmailOrSms";
@@ -725,6 +725,63 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		}
 	}
 
+	public List<User> findByUsersOrgsGtUserId(
+		long companyId, long organizationId, long gtUserId, int size) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_USERS_ORGS_GT_USER_ID);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("User_", UserImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(organizationId);
+			qPos.add(companyId);
+			qPos.add(Boolean.FALSE);
+			qPos.add(gtUserId);
+
+			return (List<User>)QueryUtil.list(q, getDialect(), 0, size);
+		}
+		finally {
+			session.close();
+		}
+	}
+
+	public List<User> findByUsersUserGroupsGtUserId(
+		long companyId, long userGroupId, long gtUserId, int size) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				FIND_BY_USERS_USER_GROUPS_GT_USER_ID);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("User_", UserImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userGroupId);
+			qPos.add(companyId);
+			qPos.add(Boolean.FALSE);
+			qPos.add(gtUserId);
+
+			return (List<User>)QueryUtil.list(q, getDialect(), 0, size);
+		}
+		finally {
+			session.close();
+		}
+	}
+
 	@Override
 	public List<User> findByC_FN_MN_LN_SN_EA_S(
 		long companyId, String firstName, String middleName, String lastName,
@@ -940,9 +997,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		else if (key.equals("usersOrgs")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_ORGS);
 		}
-		else if (key.equals("usersOrgsGtUserId")) {
-			join = CustomSQLUtil.get(JOIN_BY_USERS_ORGS_GT_USER_ID);
-		}
 		else if (key.equals("usersOrgsTree")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_ORGS_TREE);
 		}
@@ -957,9 +1011,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		}
 		else if (key.equals("usersUserGroups")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_USER_GROUPS);
-		}
-		else if (key.equals("usersUserGroupsGtUserId")) {
-			join = CustomSQLUtil.get(JOIN_BY_USERS_USER_GROUPS_GT_USER_ID);
 		}
 		else if (key.equals("announcementsDeliveryEmailOrSms")) {
 			join = CustomSQLUtil.get(

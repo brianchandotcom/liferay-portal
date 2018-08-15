@@ -387,6 +387,22 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="assertNoPublishCP">
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute function="Click" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN" />
+
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Publish to Live" />
+		</execute>
+	</command>
+
 	<command name="disableSocialBookmarkSites">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />

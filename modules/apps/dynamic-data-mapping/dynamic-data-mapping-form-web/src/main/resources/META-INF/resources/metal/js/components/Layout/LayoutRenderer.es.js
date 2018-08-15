@@ -154,6 +154,17 @@ class LayoutRenderer extends Component {
 		this.emit('updatePages', pages);
 	}
 
+
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleChangePageDescription(event) {
+		const pages = this._changePageProperty(event, 'title');
+		this.emit('updatePages', pages);
+	}
+
 	/**
 	 * @param {!Event} event
 	 * @private

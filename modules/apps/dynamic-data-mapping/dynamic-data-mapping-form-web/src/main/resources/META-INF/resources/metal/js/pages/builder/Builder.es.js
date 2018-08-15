@@ -86,6 +86,16 @@ class Builder extends Component {
 		Sidebar.show();
 	}
 
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_handleUpdatePages(pages) {
+		this.emit('updatePages', pages);
+	}
+
 	attached() {
 		dom.on('#addFieldButton', 'click', this._handleCreationButtonClicked.bind(this));
 	}
@@ -108,7 +118,8 @@ class Builder extends Component {
 			deleteButtonClicked: this._handleDeleteButtonClicked.bind(this),
 			duplicateButtonClicked: this._handleDuplicateButtonClicked.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
-			fieldMoved: this._handleFieldMoved.bind(this)
+			fieldMoved: this._handleFieldMoved.bind(this),
+			updatePages: this._handleUpdatePages.bind(this)
 		};
 
 		const sidebarEvents = {

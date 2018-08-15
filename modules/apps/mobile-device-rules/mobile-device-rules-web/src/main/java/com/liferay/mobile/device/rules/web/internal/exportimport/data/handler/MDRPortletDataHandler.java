@@ -60,9 +60,19 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MDRPortletDataHandler extends BasePortletDataHandler {
 
+	public static final String[] CLASS_NAMES = {
+		MDRAction.class.getName(), MDRRule.class.getName(),
+		MDRRuleGroup.class.getName(), MDRRuleGroupInstance.class.getName()
+	};
+
 	public static final String NAMESPACE = "mobile_device_rules";
 
 	public static final String SCHEMA_VERSION = "1.0.0";
+
+	@Override
+	public String[] getClassNames() {
+		return CLASS_NAMES;
+	}
 
 	@Override
 	public String getSchemaVersion() {

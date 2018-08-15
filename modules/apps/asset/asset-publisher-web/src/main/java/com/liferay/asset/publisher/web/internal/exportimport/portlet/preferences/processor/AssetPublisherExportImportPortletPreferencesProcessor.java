@@ -34,6 +34,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -361,7 +362,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(primaryKeyLong);
 
-			if (ddmStructure != null) {
+			if ((ddmStructure != null) &&
+				stagingGroupHelper.isStagedPortletData(
+					portletDataContext.getGroupId(),
+					ddmStructure.getClassName())) {
+
 				uuid = ddmStructure.getUuid();
 				groupId = ddmStructure.getGroupId();
 
@@ -373,7 +378,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			DLFileEntryType dlFileEntryType =
 				_dlFileEntryTypeLocalService.fetchFileEntryType(primaryKeyLong);
 
-			if (dlFileEntryType != null) {
+			if ((dlFileEntryType != null) &&
+				stagingGroupHelper.isStagedPortletData(
+					portletDataContext.getGroupId(),
+					DLFileEntry.class.getName())) {
+
 				uuid = dlFileEntryType.getUuid();
 				groupId = dlFileEntryType.getGroupId();
 
@@ -1379,6 +1388,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	private CompanyLocalService _companyLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private OrganizationLocalService _organizationLocalService;

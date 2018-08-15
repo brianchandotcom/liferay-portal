@@ -99,16 +99,6 @@
 	min-height: 97px;
 }
 
-.ddm-field-container:hover {
-	border-color: #CDCED9;
-}
-
-.ddm-field-container {
-	border: 1px solid transparent;
-	cursor: -webkit-grab;
-	position: relative;
-}
-
 .ddm-field-actions-container {
 	display: flex;
 	justify-content: space-around;
@@ -122,43 +112,66 @@
 	z-index: 11;
 }
 
-.ddm-field-container:hover .ddm-field-actions-container {
-	opacity: 1;
-	visibility: visible;
-}
+.ddm-field-container {
+	border: 1px solid transparent;
+	cursor: -webkit-grab;
+	position: relative;
 
-.ddm-field-container .ddm-resize-handle-left,
-.ddm-field-container .ddm-resize-handle-right {
-	background-color: #1C67FB;
-	height: 100%;
-	opacity: 0;
-	position: absolute;
-	top: 0;
-	transition: all ease-out 0.3s;
-	visibility: hidden;
-	width: 5px;
-	z-index: 10;
-}
+	.ddm-resize-handle-left {
+		left: -1px;
+	}
 
-.ddm-field-container:hover .ddm-resize-handle-left,
-.ddm-field-container:hover .ddm-resize-handle-right {
-	cursor: col-resize;
-	opacity: 1;
-	transition: all ease-out 0.3s;
-	visibility: visible;
-}
+	.ddm-resize-handle-right {
+		right: -1px;
+	}
+	
+	.ddm-resize-handle-left,
+	.ddm-resize-handle-right {
+		background-color: #1C67FB;
+		height: 100%;
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		transition: all ease-out 0.3s;
+		visibility: hidden;
+		width: 5px;
+		z-index: 10;
+	}
 
-.ddm-field-container .ddm-resize-handle-left {
-	left: -1px;
-}
+	&:hover {
+		border-color: #CDCED9;
 
-.ddm-field-container .ddm-resize-handle-right {
-	right: -1px;
+		.ddm-resize-handle-left,
+		.ddm-resize-handle-right {
+			cursor: col-resize;
+			opacity: 1;
+			transition: all ease-out 0.3s;
+			visibility: visible;
+		}
+
+		.ddm-field-actions-container {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
 }
 
 .ddm-target {
 	height: 100%;
 	width: 100%;
+}
+
+textarea[class^="form-builder-page-header"] {
+	height: 26px;
+	background: transparent;
+	margin: 0;
+	border: none;
+	padding-top: 0;
+	
+	&:focus {
+		border: none;
+		background: none;
+	}
 }
 
 .form-builder-select-field {

@@ -359,17 +359,21 @@ public class CSSBuilder implements AutoCloseable {
 
 		String cssBasePath = filePath;
 
-		int pos = filePath.lastIndexOf(File.separator + "css" + File.separator);
+		String cssSegment = "css" + File.separator;
+
+		int pos = filePath.lastIndexOf(File.separator + cssSegment);
 
 		if (pos >= 0) {
-			cssBasePath = filePath.substring(0, pos + 4);
+			cssBasePath = filePath.substring(0, pos + cssSegment.length());
 		}
 		else {
-			pos = filePath.lastIndexOf(
-				File.separator + "resources" + File.separator);
+			String resourcesSegment = "resources" + File.separator;
+
+			pos = filePath.lastIndexOf(File.separator + resourcesSegment);
 
 			if (pos >= 0) {
-				cssBasePath = filePath.substring(0, pos + 10);
+				cssBasePath = filePath.substring(
+					0, pos + resourcesSegment.length());
 			}
 		}
 

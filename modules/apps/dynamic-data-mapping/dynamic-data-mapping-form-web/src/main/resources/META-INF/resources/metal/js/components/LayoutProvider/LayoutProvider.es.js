@@ -290,6 +290,20 @@ class LayoutProvider extends Component {
 		);
 	}
 
+
+	/**
+	 * @param {!Object} pages
+	 * @private
+	 */
+
+	_handleUpdatePages(pages) {
+		this.setState(
+			{
+				context: pages
+			}
+		);
+	}
+
 	/**
 	 * @param {!Array} context
 	 * @param {!Object} source
@@ -357,7 +371,8 @@ class LayoutProvider extends Component {
 				fieldAdded: this._handleFieldAdd.bind(this),
 				fieldClicked: this._handleClickedField.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
-				fieldMoved: this._handleFieldMoved.bind(this)
+				fieldMoved: this._handleFieldMoved.bind(this),
+				updatePages: this._handleUpdatePages.bind(this)
 			};
 
 			Object.assign(

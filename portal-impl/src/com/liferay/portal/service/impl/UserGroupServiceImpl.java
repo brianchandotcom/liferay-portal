@@ -162,6 +162,15 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		return userGroup;
 	}
 
+	@Override
+	public List<UserGroup> getGtUserGroups(
+		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
+
+		return userGroupPersistence.filterFindByU_C_P(
+			gtUserGroupId, companyId, parentUserGroupId, 0, size,
+			new UserGroupIdComparator(true));
+	}
+
 	/**
 	 * Returns the user group with the primary key.
 	 *
@@ -202,15 +211,6 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		throws PortalException {
 
 		return filterUserGroups(userGroupLocalService.getUserGroups(companyId));
-	}
-
-	@Override
-	public List<UserGroup> getGtUserGroups(
-		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
-
-		return userGroupPersistence.filterFindByU_C_P(
-			gtUserGroupId, companyId, parentUserGroupId, 0, size,
-			new UserGroupIdComparator(true));
 	}
 
 	/**

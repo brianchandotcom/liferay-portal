@@ -135,14 +135,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			return _ENUMERATION_MODEL_FACTORY.create(object, this);
 		}
 
-		if (object instanceof Collection) {
-			return _COLLECTION_MODEL_FACTORY.create(object, this);
-		}
-
-		if (object instanceof Map) {
-			return _MAP_MODEL_FACTORY.create(object, this);
-		}
-
 		_modelFactories.put(object.getClass(), _STRING_MODEL_FACTORY);
 
 		return _STRING_MODEL_FACTORY.create(object, this);

@@ -71,8 +71,7 @@ public class BlogPostingForm {
 		).addOptionalLinkedModel(
 			"image", MediaObjectIdentifier.class, BlogPostingForm::setImageId
 		).addOptionalLinkedModelList(
-			"category", CategoryIdentifier.class,
-			BlogPostingForm::setCategories
+			"category", CategoryIdentifier.class, BlogPostingForm::setCategories
 		).addOptionalString(
 			"alternativeHeadline", BlogPostingForm::setAlternativeHeadline
 		).addOptionalString(

@@ -4,7 +4,7 @@ exports[`KeyValue should be not edidable 1`] = `
 <div class="form-group">
   <label></label>
   <input class="form-control" type="text" disabled="disabled">
-  <div class="key-value-editor form-text">
+  <div class="form-text key-value-editor">
     <label class="control-label key-value-label">Field Name:</label>
     <input class="key-value-input" type="text">
   </div>
@@ -16,7 +16,7 @@ exports[`KeyValue should have a helptext 1`] = `
 <div class="form-group">
   <label></label>
   <input class="form-control" type="text" disabled="disabled">
-  <div class="key-value-editor form-text">
+  <div class="form-text key-value-editor">
     <label class="control-label key-value-label">Field Name:</label>
     <input class="key-value-input" type="text">
   </div>
@@ -24,23 +24,11 @@ exports[`KeyValue should have a helptext 1`] = `
 </div>
 `;
 
-exports[`KeyValue should have a keyValue 1`] = `
-<div class="form-group">
-  <label></label>
-  <input class="form-control" type="text" disabled="disabled">
-  <div class="key-value-editor form-text">
-    <label class="control-label key-value-label">Field Name:</label>
-    <input class="key-value-input" type="text" value="keyValue">
-  </div>
-  <span class="form-text"></span>
-</div>
-`;
-
 exports[`KeyValue should have a label 1`] = `
 <div class="form-group">
   <label>label </label>
   <input class="form-control" type="text" disabled="disabled">
-  <div class="key-value-editor form-text">
+  <div class="form-text key-value-editor">
     <label class="control-label key-value-label">Field Name:</label>
     <input class="key-value-input" type="text">
   </div>
@@ -52,7 +40,7 @@ exports[`KeyValue should have a predefined Value 1`] = `
 <div class="form-group">
   <label></label>
   <input class="form-control" placeholder="Option 1" type="text" disabled="disabled">
-  <div class="key-value-editor form-text">
+  <div class="form-text key-value-editor">
     <label class="control-label key-value-label">Field Name:</label>
     <input class="key-value-input" type="text">
   </div>
@@ -64,7 +52,7 @@ exports[`KeyValue should have a spritemap 1`] = `
 <div class="form-group">
   <label></label>
   <input class="form-control" type="text" disabled="disabled">
-  <div class="key-value-editor form-text">
+  <div class="form-text key-value-editor">
     <label class="control-label key-value-label">Field Name:</label>
     <input class="key-value-input" type="text">
   </div>
@@ -76,7 +64,7 @@ exports[`KeyValue should have a value 1`] = `
 <div class="form-group">
   <label></label>
   <input class="form-control" type="text" disabled="disabled" value="value">
-  <div class="key-value-editor form-text">
+  <div class="form-text key-value-editor">
     <label class="control-label key-value-label">Field Name:</label>
     <input class="key-value-input" type="text">
   </div>
@@ -88,7 +76,7 @@ exports[`KeyValue should have an id 1`] = `
 <div class="form-group">
   <label for="ID"></label>
   <input class="form-control" type="text" disabled="disabled">
-  <div class="key-value-editor form-text">
+  <div class="form-text key-value-editor">
     <label class="control-label key-value-label">Field Name:</label>
     <input class="key-value-input" type="text">
   </div>
@@ -100,7 +88,7 @@ exports[`KeyValue should not be required 1`] = `
 <div class="form-group">
   <label></label>
   <input class="form-control" type="text" disabled="disabled">
-  <div class="key-value-editor form-text">
+  <div class="form-text key-value-editor">
     <label class="control-label key-value-label">Field Name:</label>
     <input class="key-value-input" type="text">
   </div>
@@ -112,9 +100,21 @@ exports[`KeyValue should render Label if showLabel is true 1`] = `
 <div class="form-group">
   <label>text </label>
   <input class="form-control" type="text" disabled="disabled">
-  <div class="key-value-editor form-text">
+  <div class="form-text key-value-editor">
     <label class="control-label key-value-label">Field Name:</label>
     <input class="key-value-input" type="text">
+  </div>
+  <span class="form-text"></span>
+</div>
+`;
+
+exports[`KeyValue should render component with a key 1`] = `
+<div class="form-group">
+  <label></label>
+  <input class="form-control" type="text" disabled="disabled">
+  <div class="form-text key-value-editor">
+    <label class="control-label key-value-label">Field Name:</label>
+    <input class="key-value-input" type="text" value="key">
   </div>
   <span class="form-text"></span>
 </div>

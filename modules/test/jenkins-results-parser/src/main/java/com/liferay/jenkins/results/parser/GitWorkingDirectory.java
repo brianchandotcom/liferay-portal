@@ -994,7 +994,11 @@ public class GitWorkingDirectory {
 		return modifiedFiles;
 	}
 
-	public LocalGitBranch getRebasedLocalGitBranch(PullRequest pullRequest) {
+	public LocalGitBranch getRebasedLocalGitBranch(
+		String rebasedLocalGitBranchName, String senderBranchName,
+		String senderRemoteURL, String senderSHA, String upstreamBranchName,
+		String upstreamBranchSHA) {
+
 		LocalGitBranch currentLocalGitBranch = getCurrentLocalGitBranch();
 
 		String currentBranchName = null;
@@ -1007,8 +1011,7 @@ public class GitWorkingDirectory {
 
 		try {
 			if ((currentBranchName == null) ||
-				currentBranchName.equals(
-					pullRequest.getLocalSenderBranchName())) {
+				currentBranchName.equals(rebasedLocalGitBranchName)) {
 
 				tempLocalGitBranch = createLocalGitBranch(
 					"temp-" + System.currentTimeMillis());
@@ -1017,19 +1020,21 @@ public class GitWorkingDirectory {
 			}
 
 			RemoteGitBranch senderRemoteGitBranch = getRemoteGitBranch(
-				pullRequest.getSenderBranchName(),
-				pullRequest.getSenderRemoteURL(), true);
+				senderBranchName, senderRemoteURL, true);
 
 			fetch(senderRemoteGitBranch);
 
 			LocalGitBranch rebasedLocalGitBranch = createLocalGitBranch(
-				pullRequest.getLocalSenderBranchName(), true,
-				pullRequest.getSenderSHA());
+				rebasedLocalGitBranchName, true, senderSHA);
 
 			RemoteGitBranch upstreamRemoteGitBranch = getRemoteGitBranch(
-				pullRequest.getUpstreamBranchName(), getUpstreamRemote(), true);
+				upstreamBranchName, getUpstreamRemote(), true);
 
-			if (!localSHAExists(upstreamRemoteGitBranch.getSHA())) {
+			if (upstreamBranchSHA == null) {
+				upstreamBranchSHA = upstreamRemoteGitBranch.getSHA();
+			}
+
+			if (!localSHAExists(upstreamBranchSHA)) {
 				fetch(upstreamRemoteGitBranch);
 			}
 
@@ -1040,10 +1045,6 @@ public class GitWorkingDirectory {
 			rebasedLocalGitBranch = rebase(
 				true, upstreamLocalGitBranch, rebasedLocalGitBranch);
 
-			clean();
-
-			reset("--hard");
-
 			return rebasedLocalGitBranch;
 		}
 		finally {
@@ -1051,6 +1052,14 @@ public class GitWorkingDirectory {
 				deleteLocalGitBranch(tempLocalGitBranch);
 			}
 		}
+	}
+
+	public LocalGitBranch getRebaseLocalGitBranch(PullRequest pullRequest) {
+		return getRebasedLocalGitBranch(
+			pullRequest.getLocalSenderBranchName(),
+			pullRequest.getSenderBranchName(), pullRequest.getSenderRemoteURL(),
+			pullRequest.getSenderSHA(), pullRequest.getUpstreamBranchName(),
+			pullRequest.getLiferayRemoteBranchSHA());
 	}
 
 	public Remote getRemote(String name) {

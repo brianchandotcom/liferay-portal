@@ -46,8 +46,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author André de Oliveira
+ * @author     André de Oliveira
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 @RunWith(Arquillian.class)
 public class AssetEntriesFacetTest {
 

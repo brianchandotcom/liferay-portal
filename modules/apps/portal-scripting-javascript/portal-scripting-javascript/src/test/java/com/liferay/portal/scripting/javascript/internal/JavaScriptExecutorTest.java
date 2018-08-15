@@ -36,8 +36,10 @@ import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
- * @author Bruno Basto
+ * @author     Bruno Basto
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 @RunWith(PowerMockRunner.class)
 public class JavaScriptExecutorTest extends ScriptingExecutorTestCase {
 

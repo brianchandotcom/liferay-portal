@@ -132,7 +132,7 @@ public class TLiferayInputProperties
 	}
 
 	public transient PresentationItem guessSchema = new PresentationItem(
-		"guessSchema", "Guess Schema");
+		"guessSchema");
 
 	@Override
 	protected Set<PropertyPathConnector> getAllSchemaPropertiesConnectors(

@@ -392,7 +392,7 @@ public class LiferayResourceProperties
 	public Property<Boolean> siteFilter = PropertyFactory.newBoolean(
 		"siteFilter");
 	public transient PresentationItem validateCondition = new PresentationItem(
-		"validateCondition", "Validate Condition");
+		"validateCondition");
 	public Property<String> webSite = PropertyFactory.newString("webSite");
 	public StringProperty webSiteURL = PropertyFactory.newString("webSiteURL");
 

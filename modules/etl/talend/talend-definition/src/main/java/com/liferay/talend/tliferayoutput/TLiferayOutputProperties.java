@@ -443,7 +443,7 @@ public class TLiferayOutputProperties
 		}
 
 		private Action _methodToAction(String method) {
-			Stream<Action> actionStream = Arrays.stream(Action.values());
+			Stream<Action> actionStream = Action.getActionStream();
 
 			return actionStream.filter(
 				action -> method.equals(action.getMethodName())

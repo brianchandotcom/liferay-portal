@@ -73,7 +73,6 @@ import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -688,20 +687,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	@Override
-	public List<User> getGtCompanyUsers(long gtUserId, long companyId, int size)
-		throws PortalException {
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isCompanyAdmin(companyId)) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
-		}
-
-		return userPersistence.findByU_C(
-			gtUserId, companyId, 0, size, new UserIdComparator(true));
-	}
-
-	@Override
 	public int getCompanyUsersCount(long companyId) throws PortalException {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
@@ -803,6 +788,56 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.getGroupUsersCount(groupId, status);
 	}
 
+	@Override
+	public List<User> getGtCompanyUsers(long gtUserId, long companyId, int size)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(companyId)) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
+
+		return userPersistence.findByU_C(
+			gtUserId, companyId, 0, size, new UserIdComparator(true));
+	}
+
+	@Override
+	public List<User> getGtOrganizationUsers(
+			long gtUserId, long organizationId, int size)
+		throws PortalException {
+
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(organization.getCompanyId())) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
+
+		return userFinder.findByUsersOrgsGtUserId(
+			organization.getCompanyId(), organizationId, gtUserId, size);
+	}
+
+	@Override
+	public List<User> getGtUserGroupUsers(
+			long gtUserId, long userGroupId, int size)
+		throws PortalException {
+
+		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
+			userGroupId);
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(userGroup.getCompanyId())) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
+
+		return userFinder.findByUsersUserGroupsGtUserId(
+			userGroup.getCompanyId(), userGroupId, gtUserId, size);
+	}
+
 	/**
 	 * Returns the primary keys of all the users belonging to the organization.
 	 *
@@ -878,23 +913,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		return userLocalService.getOrganizationUsers(
 			organizationId, status, obc);
-	}
-
-	@Override
-	public List<User> getGtOrganizationUsers(
-			long gtUserId, long organizationId, int size)
-		throws PortalException {
-
-		Organization organization = organizationPersistence.findByPrimaryKey(
-			organizationId);
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("usersOrgsGtUserId", new Long[] {organizationId, gtUserId});
-
-		return userLocalService.search(
-			organization.getCompanyId(), null, WorkflowConstants.STATUS_ANY,
-			params, 0, size, new UserIdComparator(true));
 	}
 
 	/**
@@ -1003,24 +1021,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			getPermissionChecker(), userGroupId, ActionKeys.VIEW_MEMBERS);
 
 		return userLocalService.getUserGroupUsers(userGroupId, start, end);
-	}
-
-	@Override
-	public List<User> getGtUserGroupUsers(
-			long gtUserId, long userGroupId, int size)
-		throws PortalException {
-
-		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
-			userGroupId);
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put(
-			"usersUserGroupsGtUserId", new Long[] {userGroupId, gtUserId});
-
-		return userLocalService.search(
-			userGroup.getCompanyId(), null, WorkflowConstants.STATUS_ANY,
-			params, 0, size, new UserIdComparator(true));
 	}
 
 	/**

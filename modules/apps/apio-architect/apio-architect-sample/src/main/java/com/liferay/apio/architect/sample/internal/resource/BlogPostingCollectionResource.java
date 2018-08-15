@@ -127,7 +127,7 @@ public class BlogPostingCollectionResource
 		).addString(
 			"articleBody", BlogPostingModel::getContent
 		).addString(
-			"fileFormat", __ -> "text/html"
+			"encodingFormat", __ -> "text/html"
 		).addString(
 			"headline", BlogPostingModel::getTitle
 		).build();

@@ -175,15 +175,15 @@ public class LPKGBundleTrackerCustomizer
 						continue;
 					}
 
-					if (_isBundleInstalled(bundle, url, location)) {
-						continue;
-					}
-
 					Bundle newBundle = _bundleContext.getBundle(location);
 
 					if (newBundle != null) {
 						bundles.add(newBundle);
 
+						continue;
+					}
+
+					if (_isBundleInstalled(bundle, url, location)) {
 						continue;
 					}
 

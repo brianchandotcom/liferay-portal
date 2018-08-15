@@ -378,10 +378,6 @@ public interface UserService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getCompanyUsers(long gtUserId, long companyId, int size)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyUsersCount(long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -444,6 +440,18 @@ public interface UserService extends BaseService {
 	public int getGroupUsersCount(long groupId, int status)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getGtCompanyUsers(long gtUserId, long companyId, int size)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getGtOrganizationUsers(long gtUserId,
+		long organizationId, int size) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getGtUserGroupUsers(long gtUserId, long userGroupId,
+		int size) throws PortalException;
+
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*
@@ -492,10 +500,6 @@ public interface UserService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getOrganizationUsers(long organizationId, int status,
 		OrderByComparator<User> obc) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getOrganizationUsers(long gtUserId, long organizationId,
-		int size) throws PortalException;
 
 	/**
 	* Returns the number of users with the status belonging to the
@@ -563,10 +567,6 @@ public interface UserService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getUserGroupUsers(long userGroupId, int start, int end)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getUserGroupUsers(long gtUserId, long userGroupId,
-		int size) throws PortalException;
 
 	/**
 	* Returns the primary key of the user with the email address.

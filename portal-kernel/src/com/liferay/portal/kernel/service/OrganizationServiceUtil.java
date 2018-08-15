@@ -179,6 +179,14 @@ public class OrganizationServiceUtil {
 		return getService().fetchOrganization(organizationId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Organization> getGtOrganizations(
+		long gtOrganizationId, long companyId, long parentOrganizationId,
+		int size) {
+		return getService()
+				   .getGtOrganizations(gtOrganizationId, companyId,
+			parentOrganizationId, size);
+	}
+
 	/**
 	* Returns the organization with the primary key.
 	*
@@ -243,14 +251,6 @@ public class OrganizationServiceUtil {
 		long companyId, long parentOrganizationId, int start, int end) {
 		return getService()
 				   .getOrganizations(companyId, parentOrganizationId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
-		long gtOrganizationId, long companyId, long parentOrganizationId,
-		int size) {
-		return getService()
-				   .getOrganizations(gtOrganizationId, companyId,
-			parentOrganizationId, size);
 	}
 
 	/**

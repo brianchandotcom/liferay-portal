@@ -97,6 +97,20 @@ public class UserFinderUtil {
 			socialRelationTypeComparator, status, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.User> findByUsersOrgsGtUserId(
+		long companyId, long organizationId, long gtUserId, int size) {
+		return getFinder()
+				   .findByUsersOrgsGtUserId(companyId, organizationId,
+			gtUserId, size);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.User> findByUsersUserGroupsGtUserId(
+		long companyId, long userGroupId, long gtUserId, int size) {
+		return getFinder()
+				   .findByUsersUserGroupsGtUserId(companyId, userGroupId,
+			gtUserId, size);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.User> findByC_FN_MN_LN_SN_EA_S(
 		long companyId, String firstName, String middleName, String lastName,
 		String screenName, String emailAddress, int status,

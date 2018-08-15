@@ -427,13 +427,6 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.User> getCompanyUsers(
-		long gtUserId, long companyId, int size)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getCompanyUsers(gtUserId, companyId, size);
-	}
-
-	@Override
 	public int getCompanyUsersCount(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userService.getCompanyUsersCount(companyId);
@@ -519,6 +512,28 @@ public class UserServiceWrapper implements UserService,
 		return _userService.getGroupUsersCount(groupId, status);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getGtCompanyUsers(
+		long gtUserId, long companyId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getGtCompanyUsers(gtUserId, companyId, size);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getGtOrganizationUsers(
+		long gtUserId, long organizationId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getGtOrganizationUsers(gtUserId, organizationId,
+			size);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getGtUserGroupUsers(
+		long gtUserId, long userGroupId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getGtUserGroupUsers(gtUserId, userGroupId, size);
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*
@@ -579,13 +594,6 @@ public class UserServiceWrapper implements UserService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userService.getOrganizationUsers(organizationId, status, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.User> getOrganizationUsers(
-		long gtUserId, long organizationId, int size)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getOrganizationUsers(gtUserId, organizationId, size);
 	}
 
 	/**
@@ -676,13 +684,6 @@ public class UserServiceWrapper implements UserService,
 		long userGroupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userService.getUserGroupUsers(userGroupId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.User> getUserGroupUsers(
-		long gtUserId, long userGroupId, int size)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getUserGroupUsers(gtUserId, userGroupId, size);
 	}
 
 	/**

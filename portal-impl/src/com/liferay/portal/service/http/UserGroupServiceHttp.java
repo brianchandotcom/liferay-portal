@@ -235,12 +235,40 @@ public class UserGroupServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getGtUserGroups(
+		HttpPrincipal httpPrincipal, long gtUserGroupId, long companyId,
+		long parentUserGroupId, int size) {
+		try {
+			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
+					"getGtUserGroups", _getGtUserGroupsParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					gtUserGroupId, companyId, parentUserGroupId, size);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portal.kernel.model.UserGroup>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.UserGroup getUserGroup(
 		HttpPrincipal httpPrincipal, long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"getUserGroup", _getUserGroupParameterTypes6);
+					"getUserGroup", _getUserGroupParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					userGroupId);
@@ -272,7 +300,7 @@ public class UserGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"getUserGroup", _getUserGroupParameterTypes7);
+					"getUserGroup", _getUserGroupParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name);
 
@@ -303,7 +331,7 @@ public class UserGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"getUserGroups", _getUserGroupsParameterTypes8);
+					"getUserGroups", _getUserGroupsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, companyId);
 
@@ -317,34 +345,6 @@ public class UserGroupServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.portal.kernel.model.UserGroup>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
-		HttpPrincipal httpPrincipal, long gtUserGroupId, long companyId,
-		long parentUserGroupId, int size) {
-		try {
-			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"getUserGroups", _getUserGroupsParameterTypes9);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					gtUserGroupId, companyId, parentUserGroupId, size);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -532,17 +532,17 @@ public class UserGroupServiceHttp {
 	private static final Class<?>[] _fetchUserGroupParameterTypes5 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getUserGroupParameterTypes6 = new Class[] {
-			long.class
+	private static final Class<?>[] _getGtUserGroupsParameterTypes6 = new Class[] {
+			long.class, long.class, long.class, int.class
 		};
 	private static final Class<?>[] _getUserGroupParameterTypes7 = new Class[] {
-			String.class
-		};
-	private static final Class<?>[] _getUserGroupsParameterTypes8 = new Class[] {
 			long.class
 		};
+	private static final Class<?>[] _getUserGroupParameterTypes8 = new Class[] {
+			String.class
+		};
 	private static final Class<?>[] _getUserGroupsParameterTypes9 = new Class[] {
-			long.class, long.class, long.class, int.class
+			long.class
 		};
 	private static final Class<?>[] _getUserUserGroupsParameterTypes10 = new Class[] {
 			long.class

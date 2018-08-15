@@ -122,6 +122,13 @@ public class UserGroupServiceWrapper implements UserGroupService,
 		return _userGroupService.fetchUserGroup(userGroupId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup> getGtUserGroups(
+		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
+		return _userGroupService.getGtUserGroups(gtUserGroupId, companyId,
+			parentUserGroupId, size);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -162,13 +169,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupService.getUserGroups(companyId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
-		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
-		return _userGroupService.getUserGroups(gtUserGroupId, companyId,
-			parentUserGroupId, size);
 	}
 
 	/**

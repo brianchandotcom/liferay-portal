@@ -263,6 +263,23 @@ public class OrganizationServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.OrganizationSoap[] getGtOrganizations(
+		long gtOrganizationId, long companyId, long parentOrganizationId,
+		int size) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Organization> returnValue =
+				OrganizationServiceUtil.getGtOrganizations(gtOrganizationId,
+					companyId, parentOrganizationId, size);
+
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the organization with the primary key.
 	*
@@ -359,23 +376,6 @@ public class OrganizationServiceSoap {
 			java.util.List<com.liferay.portal.kernel.model.Organization> returnValue =
 				OrganizationServiceUtil.getOrganizations(companyId,
 					parentOrganizationId, start, end);
-
-			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portal.kernel.model.OrganizationSoap[] getOrganizations(
-		long gtOrganizationId, long companyId, long parentOrganizationId,
-		int size) throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.kernel.model.Organization> returnValue =
-				OrganizationServiceUtil.getOrganizations(gtOrganizationId,
-					companyId, parentOrganizationId, size);
 
 			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModels(returnValue);
 		}

@@ -172,6 +172,14 @@ public class OrganizationServiceWrapper implements OrganizationService,
 		return _organizationService.fetchOrganization(organizationId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Organization> getGtOrganizations(
+		long gtOrganizationId, long companyId, long parentOrganizationId,
+		int size) {
+		return _organizationService.getGtOrganizations(gtOrganizationId,
+			companyId, parentOrganizationId, size);
+	}
+
 	/**
 	* Returns the organization with the primary key.
 	*
@@ -241,14 +249,6 @@ public class OrganizationServiceWrapper implements OrganizationService,
 		long companyId, long parentOrganizationId, int start, int end) {
 		return _organizationService.getOrganizations(companyId,
 			parentOrganizationId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
-		long gtOrganizationId, long companyId, long parentOrganizationId,
-		int size) {
-		return _organizationService.getOrganizations(gtOrganizationId,
-			companyId, parentOrganizationId, size);
 	}
 
 	/**

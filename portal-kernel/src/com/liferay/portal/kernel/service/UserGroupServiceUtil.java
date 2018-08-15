@@ -127,6 +127,13 @@ public class UserGroupServiceUtil {
 		return getService().fetchUserGroup(userGroupId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getGtUserGroups(
+		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
+		return getService()
+				   .getGtUserGroups(gtUserGroupId, companyId,
+			parentUserGroupId, size);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -163,13 +170,6 @@ public class UserGroupServiceUtil {
 		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserGroups(companyId);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
-		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
-		return getService()
-				   .getUserGroups(gtUserGroupId, companyId, parentUserGroupId,
-			size);
 	}
 
 	/**

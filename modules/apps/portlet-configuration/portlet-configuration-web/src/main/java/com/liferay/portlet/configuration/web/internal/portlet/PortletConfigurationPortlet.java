@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
+import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -235,8 +236,12 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		for (PublicRenderParameter publicRenderParameter :
 				portlet.getPublicRenderParameters()) {
 
+			String publicRenderParameterName =
+				PortletQNameUtil.getPublicRenderParameterName(
+					publicRenderParameter.getQName());
+
 			String ignoreKey = PublicRenderParameterConfiguration.getIgnoreKey(
-				publicRenderParameter);
+				publicRenderParameterName);
 
 			boolean ignoreValue = ParamUtil.getBoolean(
 				actionRequest, ignoreKey);
@@ -248,7 +253,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			else {
 				String mappingKey =
 					PublicRenderParameterConfiguration.getMappingKey(
-						publicRenderParameter);
+						publicRenderParameterName);
 
 				String mappingValue = ParamUtil.getString(
 					actionRequest, mappingKey);

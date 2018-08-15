@@ -46,9 +46,7 @@ public class PortalUpgradeProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() throws SQLException {
-		try (Connection connection =
-				DataAccess.getUpgradeOptimizedConnection()) {
-
+		try (Connection connection = DataAccess.getConnection()) {
 			_currentSchemaVersion =
 				PortalUpgradeProcess.getCurrentSchemaVersion(connection);
 		}
@@ -104,9 +102,7 @@ public class PortalUpgradeProcessTest {
 		_innerPortalUpgradeProcess.updateSchemaVersion(
 			PortalUpgradeProcess.getLatestSchemaVersion());
 
-		try (Connection connection =
-				DataAccess.getUpgradeOptimizedConnection()) {
-
+		try (Connection connection = DataAccess.getConnection()) {
 			Assert.assertTrue(
 				PortalUpgradeProcess.isInLatestSchemaVersion(connection));
 		}
@@ -117,9 +113,7 @@ public class PortalUpgradeProcessTest {
 		_innerPortalUpgradeProcess.updateSchemaVersion(
 			PortalUpgradeProcess.getRequiredSchemaVersion());
 
-		try (Connection connection =
-				DataAccess.getUpgradeOptimizedConnection()) {
-
+		try (Connection connection = DataAccess.getConnection()) {
 			Assert.assertTrue(
 				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
 		}
@@ -130,9 +124,7 @@ public class PortalUpgradeProcessTest {
 		_innerPortalUpgradeProcess.updateSchemaVersion(
 			_ORIGINAL_SCHEMA_VERSION);
 
-		try (Connection connection =
-				DataAccess.getUpgradeOptimizedConnection()) {
-
+		try (Connection connection = DataAccess.getConnection()) {
 			Assert.assertFalse(
 				PortalUpgradeProcess.isInLatestSchemaVersion(connection));
 		}
@@ -143,9 +135,7 @@ public class PortalUpgradeProcessTest {
 		_innerPortalUpgradeProcess.updateSchemaVersion(
 			_ORIGINAL_SCHEMA_VERSION);
 
-		try (Connection connection =
-				DataAccess.getUpgradeOptimizedConnection()) {
-
+		try (Connection connection = DataAccess.getConnection()) {
 			Assert.assertFalse(
 				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
 		}
@@ -168,9 +158,7 @@ public class PortalUpgradeProcessTest {
 				"No upgrade processes should have been executed", e);
 		}
 
-		try (Connection connection =
-				DataAccess.getUpgradeOptimizedConnection()) {
-
+		try (Connection connection = DataAccess.getConnection()) {
 			Assert.assertTrue(
 				PortalUpgradeProcess.isInLatestSchemaVersion(connection));
 		}
@@ -196,9 +184,7 @@ public class PortalUpgradeProcessTest {
 				e);
 		}
 
-		try (Connection connection =
-				DataAccess.getUpgradeOptimizedConnection()) {
-
+		try (Connection connection = DataAccess.getConnection()) {
 			Assert.assertTrue(
 				PortalUpgradeProcess.isInLatestSchemaVersion(connection));
 		}
@@ -208,9 +194,7 @@ public class PortalUpgradeProcessTest {
 	public void testValidateCoreIsInRequiredSchemaVersion()
 		throws SQLException {
 
-		try (Connection connection =
-				DataAccess.getUpgradeOptimizedConnection()) {
-
+		try (Connection connection = DataAccess.getConnection()) {
 			Assert.assertTrue(
 				"You must first upgrade the portal to the required schema " +
 					"version " +
@@ -234,7 +218,7 @@ public class PortalUpgradeProcessTest {
 		}
 
 		private InnerPortalUpgradeProcess() throws SQLException {
-			connection = DataAccess.getUpgradeOptimizedConnection();
+			connection = DataAccess.getConnection();
 		}
 
 	}

@@ -16,7 +16,6 @@ package com.liferay.social.bookmarks.taglib.internal.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -48,8 +47,7 @@ public class DeprecatedSocialBookmark implements SocialBookmark {
 	@Override
 	public String getPostURL(String title, String url) {
 		return StringUtil.replace(
-			PropsUtil.get(
-				PropsKeys.SOCIAL_BOOKMARK_POST_URL, new Filter(_type)),
+			PropsUtil.get(_SOCIAL_BOOKMARK_POST_URL, new Filter(_type)),
 			new String[] {
 				"${liferay:social-bookmark:title}",
 				"${liferay:social-bookmark:url}"
@@ -68,6 +66,9 @@ public class DeprecatedSocialBookmark implements SocialBookmark {
 
 		requestDispatcher.include(request, response);
 	}
+
+	private static final String _SOCIAL_BOOKMARK_POST_URL =
+		"social.bookmark.post.url";
 
 	private final String _type;
 

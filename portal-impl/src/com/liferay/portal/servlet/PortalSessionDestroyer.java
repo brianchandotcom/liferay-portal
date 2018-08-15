@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStoreUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionContext;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -112,7 +113,7 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 
 			if (PropsValues.AUTH_USER_UUID_STORE_ENABLED) {
 				String userUUID = (String)_httpSession.getAttribute(
-					WebKeys.USER_UUID);
+					CookieKeys.USER_UUID);
 
 				if (Validator.isNotNull(userUUID)) {
 					AuthenticatedUserUUIDStoreUtil.unregister(userUUID);

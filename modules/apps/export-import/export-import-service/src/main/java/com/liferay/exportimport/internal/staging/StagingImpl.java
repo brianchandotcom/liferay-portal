@@ -1849,7 +1849,8 @@ public class StagingImpl implements Staging {
 		User user = _userLocalService.fetchUser(userId);
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
+			_stagingURLHelper.buildRemoteURL(
+				stagingGroup.getTypeSettingsProperties()),
 			user.getLogin(), user.getPassword(), user.isPasswordEncrypted());
 
 		Layout layout = _layoutLocalService.fetchLayout(plid);
@@ -2153,7 +2154,8 @@ public class StagingImpl implements Staging {
 
 		try {
 			HttpPrincipal httpPrincipal = new HttpPrincipal(
-				buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
+				_stagingURLHelper.buildRemoteURL(
+					stagingGroup.getTypeSettingsProperties()),
 				user.getLogin(), user.getPassword(),
 				user.isPasswordEncrypted());
 
@@ -3494,7 +3496,7 @@ public class StagingImpl implements Staging {
 
 		User user = permissionChecker.getUser();
 
-		String remoteURL = buildRemoteURL(
+		String remoteURL = _stagingURLHelper.buildRemoteURL(
 			remoteAddress, remotePort, remotePathContext, secureConnection);
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
@@ -3941,7 +3943,8 @@ public class StagingImpl implements Staging {
 				targetGroupId = stagingGroup.getRemoteLiveGroupId();
 
 				HttpPrincipal httpPrincipal = new HttpPrincipal(
-					buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
+					_stagingURLHelper.buildRemoteURL(
+						stagingGroup.getTypeSettingsProperties()),
 					user.getLogin(), user.getPassword(),
 					user.isPasswordEncrypted());
 

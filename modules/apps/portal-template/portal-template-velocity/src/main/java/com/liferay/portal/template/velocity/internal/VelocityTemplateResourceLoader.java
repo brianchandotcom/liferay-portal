@@ -82,7 +82,7 @@ public class VelocityTemplateResourceLoader implements TemplateResourceLoader {
 			VelocityEngineConfiguration.class, properties);
 
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
-			TemplateConstants.LANG_TYPE_VM, null,
+			TemplateConstants.LANG_TYPE_VM,
 			_velocityEngineConfiguration.resourceModificationCheckInterval(),
 			_multiVMPool, _singleVMPool);
 	}

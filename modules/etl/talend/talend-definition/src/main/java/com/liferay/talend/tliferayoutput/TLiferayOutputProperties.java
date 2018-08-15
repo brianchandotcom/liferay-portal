@@ -68,6 +68,8 @@ import org.talend.daikon.sandbox.SandboxedInstance;
 public class TLiferayOutputProperties
 	extends LiferayConnectionResourceBaseProperties {
 
+	public static final String ADD_QUOTES = "ADD_QUOTES";
+
 	public static final String FIELD_ERROR_MESSAGE = "_errorMessage";
 
 	public static final List<String> rejectSchemaFieldNames;
@@ -219,7 +221,9 @@ public class TLiferayOutputProperties
 		super.setupProperties();
 
 		dieOnError.setValue(true);
-		operations.setValue(Action.Upsert);
+		operations.setValue(null);
+		operations.setPossibleValues((List<?>)null);
+		operations.setTaggedValue(ADD_QUOTES, true);
 
 		resource = new ResourcePropertiesHelper("resource");
 
@@ -400,6 +404,8 @@ public class TLiferayOutputProperties
 
 				resource.setValue("");
 				resourceURL.setValue("");
+				operations.setValue(null);
+				operations.setPossibleValues((List<?>)null);
 			}
 
 			refreshLayout(getForm(Form.MAIN));

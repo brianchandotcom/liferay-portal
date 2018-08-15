@@ -89,12 +89,13 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						<%
 						Group siteGroup = themeDisplay.getSiteGroup();
 
+						boolean canSubscribe = !stagingGroupHelper.isLocalStagingGroup(siteGroup) && !stagingGroupHelper.isRemoteStagingGroup(siteGroup) && themeDisplay.isSignedIn() && discussionPermission.hasSubscribePermission(company.getCompanyId(), siteGroup.getGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK());
 						boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK());
 
 						String subscriptionURL = "javascript:" + randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
-						<c:if test="<%= !stagingGroupHelper.isLocalStagingGroup(siteGroup) && !stagingGroupHelper.isRemoteStagingGroup(siteGroup) && themeDisplay.isSignedIn() %>">
+						<c:if test="<%= canSubscribe %>">
 							<c:choose>
 								<c:when test="<%= subscribed %>">
 									<liferay-ui:icon
@@ -144,7 +145,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 												<aui:input name="postReplyBody0" type="hidden" />
 
-												<c:if test="<%= !subscribed && themeDisplay.isSignedIn() %>">
+												<c:if test="<%= !subscribed && canSubscribe %>">
 													<aui:input helpMessage="comments-subscribe-me-help" label="subscribe-me" name="subscribe" type="checkbox" value="<%= PropsValues.DISCUSSION_SUBSCRIBE_BY_DEFAULT %>" />
 												</c:if>
 

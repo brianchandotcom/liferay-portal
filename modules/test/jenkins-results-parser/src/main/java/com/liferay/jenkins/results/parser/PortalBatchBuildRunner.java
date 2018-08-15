@@ -24,11 +24,21 @@ public class PortalBatchBuildRunner extends BatchBuildRunner {
 
 		super(job, batchName);
 
-		String portalUpstreamBranchName =
-			JenkinsResultsParserUtil.getPortalUpstreamBranchName(job);
+		if (!(job instanceof PortalTestClassJob)) {
+			Class<? extends Job> clazz = job.getClass();
+
+			throw new RuntimeException(
+				"Invalid job type " + clazz.getSimpleName());
+		}
+
+		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			portalTestClassJob.getPortalGitWorkingDirectory();
 
 		baseWorkspace = WorkspaceFactory.newBatchWorkspace(
-			portalGitHubURL, portalUpstreamBranchName, batchName);
+			portalGitHubURL, portalGitWorkingDirectory.getUpstreamBranchName(),
+			batchName);
 
 		if (!(baseWorkspace instanceof PortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");

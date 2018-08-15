@@ -62,9 +62,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MBAdminPortletDataHandler extends BasePortletDataHandler {
 
+	public static final String[] CLASS_NAMES = {
+		MBBan.class.getName(), MBCategory.class.getName(),
+		MBMessage.class.getName(), MBThread.class.getName(),
+		MBThreadFlag.class.getName()
+	};
+
 	public static final String NAMESPACE = "message_boards";
 
 	public static final String SCHEMA_VERSION = "1.0.0";
+
+	@Override
+	public String[] getClassNames() {
+		return CLASS_NAMES;
+	}
 
 	@Override
 	public String getNamespace() {

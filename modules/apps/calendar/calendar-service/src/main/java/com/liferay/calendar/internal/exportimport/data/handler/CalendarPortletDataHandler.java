@@ -63,9 +63,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
+	public static final String[] CLASS_NAMES = {
+		Calendar.class.getName(), CalendarBooking.class.getName(),
+		CalendarNotificationTemplate.class.getName(),
+		CalendarResource.class.getName()
+	};
+
 	public static final String NAMESPACE = "calendar";
 
 	public static final String SCHEMA_VERSION = "1.0.0";
+
+	@Override
+	public String[] getClassNames() {
+		return CLASS_NAMES;
+	}
 
 	@Override
 	public String getSchemaVersion() {

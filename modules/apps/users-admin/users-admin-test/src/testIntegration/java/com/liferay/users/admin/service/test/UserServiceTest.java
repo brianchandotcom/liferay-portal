@@ -56,14 +56,13 @@ public class UserServiceTest {
 
 	@Test
 	public void testGetGtCompanyUsers() throws Exception {
-		int numberOfUsers = 10;
-		int size = 5;
-
-		for (int i = 0; i < numberOfUsers; i++) {
+		for (int i = 0; i < 10; i++) {
 			_users.add(UserTestUtil.addUser());
 		}
 
-		assertGtUserIdCall(
+		int size = 5;
+
+		_assert(
 			size,
 			gtUserId -> _userService.getGtCompanyUsers(
 				gtUserId, TestPropsValues.getCompanyId(), size));
@@ -73,16 +72,15 @@ public class UserServiceTest {
 	public void testGetGtOrganizationUsers() throws Exception {
 		_organization = OrganizationTestUtil.addOrganization();
 
-		int numberOfUsers = 10;
-		int size = 5;
-
-		for (int i = 0; i < numberOfUsers; i++) {
+		for (int i = 0; i < 10; i++) {
 			_users.add(
 				UserTestUtil.addOrganizationUser(
 					_organization, RoleConstants.ORGANIZATION_USER));
 		}
 
-		assertGtUserIdCall(
+		int size = 5;
+
+		_assert(
 			size,
 			gtUserId -> _userService.getGtOrganizationUsers(
 				gtUserId, _organization.getOrganizationId(), size));
@@ -92,12 +90,9 @@ public class UserServiceTest {
 	public void testGetGtUserGroupUsers() throws Exception {
 		_userGroup = UserGroupTestUtil.addUserGroup();
 
-		int numberOfUsers = 10;
-		int size = 5;
+		long[] userIds = new long[10];
 
-		long[] userIds = new long[numberOfUsers];
-
-		for (int i = 0; i < numberOfUsers; i++) {
+		for (int i = 0; i < userIds.length; i++) {
 			User user = UserTestUtil.addUser();
 
 			_users.add(user);
@@ -108,51 +103,38 @@ public class UserServiceTest {
 		_userLocalService.setUserGroupUsers(
 			_userGroup.getUserGroupId(), userIds);
 
-		assertGtUserIdCall(
+		int size = 5;
+
+		_assert(
 			size,
 			gtUserId -> _userService.getGtUserGroupUsers(
 				gtUserId, _userGroup.getUserGroupId(), size));
 	}
 
-	protected void assertGtUserIdCall(
+	private void _assert(
 			int size,
-			UnsafeFunction<Long, List<User>, Exception> gtUserIdFunction)
+			UnsafeFunction<Long, List<User>, Exception> unsafeFunction)
 		throws Exception {
 
-		List<User> retrievedUsers = gtUserIdFunction.apply(0L);
+		List<User> users = unsafeFunction.apply(0L);
 
-		Assert.assertFalse("It should return users", retrievedUsers.isEmpty());
+		Assert.assertFalse(users.isEmpty());
+		Assert.assertEquals(users.toString(), size, users.size());
 
-		Assert.assertEquals(
-			"It should return the correct number of users", size,
-			retrievedUsers.size());
+		User lastUser = users.get(users.size() - 1);
 
-		User lastUser = retrievedUsers.get(retrievedUsers.size() - 1);
+		users = unsafeFunction.apply(lastUser.getUserId());
 
-		retrievedUsers = gtUserIdFunction.apply(lastUser.getUserId());
-
-		Assert.assertFalse("It should return users", retrievedUsers.isEmpty());
-
-		Assert.assertEquals(
-			"It should return the correct number of users", size,
-			retrievedUsers.size());
+		Assert.assertFalse(users.isEmpty());
+		Assert.assertEquals(users.toString(), size, users.size());
 
 		long previousUserId = 0;
 
-		for (User user : retrievedUsers) {
+		for (User user : users) {
 			long userId = user.getUserId();
 
-			Assert.assertTrue(
-				"The returned userId " + userId +
-					" should be greater than the given gtUserId: " +
-						lastUser.getUserId(),
-				userId > lastUser.getUserId());
-
-			Assert.assertTrue(
-				"The userId " + userId +
-					" should be greater than the previous userId " +
-						previousUserId,
-				userId > previousUserId);
+			Assert.assertTrue(userId > lastUser.getUserId());
+			Assert.assertTrue(userId > previousUserId);
 
 			previousUserId = userId;
 		}

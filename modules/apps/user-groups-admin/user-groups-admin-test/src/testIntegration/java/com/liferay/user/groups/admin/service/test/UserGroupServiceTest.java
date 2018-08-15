@@ -49,55 +49,35 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testGetGtUserGroups() throws Exception {
-		long parentUserGroupId = 0;
-
-		int numberOfUserGroups = 10;
-		int size = 5;
-
-		for (int i = 0; i < numberOfUserGroups; i++) {
+		for (int i = 0; i < 10; i++) {
 			_userGroups.add(UserGroupTestUtil.addUserGroup());
 		}
 
-		List<UserGroup> retrievedUserGroups = _userGroupService.getGtUserGroups(
+		long parentUserGroupId = 0;
+		int size = 5;
+
+		List<UserGroup> userGroups = _userGroupService.getGtUserGroups(
 			0, TestPropsValues.getCompanyId(), parentUserGroupId, size);
 
-		Assert.assertFalse(
-			"It should return user groups", retrievedUserGroups.isEmpty());
+		Assert.assertFalse(userGroups.isEmpty());
+		Assert.assertEquals(userGroups.toString(), size, userGroups.size());
 
-		Assert.assertEquals(
-			"It should return the correct number of user groups", size,
-			retrievedUserGroups.size());
+		UserGroup lastUserGroup = userGroups.get(userGroups.size() - 1);
 
-		UserGroup lastUserGroup = retrievedUserGroups.get(
-			retrievedUserGroups.size() - 1);
-
-		retrievedUserGroups = _userGroupService.getGtUserGroups(
+		userGroups = _userGroupService.getGtUserGroups(
 			lastUserGroup.getUserGroupId(), TestPropsValues.getCompanyId(),
 			parentUserGroupId, size);
 
-		Assert.assertFalse(
-			"It should return user groups", retrievedUserGroups.isEmpty());
-
-		Assert.assertEquals(
-			"It should return the correct number of user groups", size,
-			retrievedUserGroups.size());
+		Assert.assertFalse(userGroups.isEmpty());
+		Assert.assertEquals(userGroups.toString(), size, userGroups.size());
 
 		long previousUserGroupId = 0;
 
-		for (UserGroup userGroup : retrievedUserGroups) {
+		for (UserGroup userGroup : userGroups) {
 			long userGroupId = userGroup.getUserGroupId();
 
-			Assert.assertTrue(
-				"The returned userGroupId " + userGroupId +
-					" should be greater than the given gtUserGroupId: " +
-						lastUserGroup.getUserGroupId(),
-				userGroupId > lastUserGroup.getUserGroupId());
-
-			Assert.assertTrue(
-				"The userGroupId " + userGroupId +
-					" should be greater than the previous userGroupId " +
-						previousUserGroupId,
-				userGroupId > previousUserGroupId);
+			Assert.assertTrue(userGroupId > lastUserGroup.getUserGroupId());
+			Assert.assertTrue(userGroupId > previousUserGroupId);
 
 			previousUserGroupId = userGroupId;
 		}

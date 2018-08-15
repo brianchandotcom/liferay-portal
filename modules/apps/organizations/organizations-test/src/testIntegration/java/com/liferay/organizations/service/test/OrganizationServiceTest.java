@@ -49,56 +49,40 @@ public class OrganizationServiceTest {
 
 	@Test
 	public void testGetGtOrganizations() throws Exception {
-		long parentOrganizationId = 0;
-
-		int numberOfOrganizations = 10;
-		int size = 5;
-
-		for (int i = 0; i < numberOfOrganizations; i++) {
+		for (int i = 0; i < 10; i++) {
 			_organizations.add(OrganizationTestUtil.addOrganization());
 		}
 
-		List<Organization> retrievedOrganizations =
+		long parentOrganizationId = 0;
+		int size = 5;
+
+		List<Organization> organizations =
 			_organizationService.getGtOrganizations(
 				0, TestPropsValues.getCompanyId(), parentOrganizationId, size);
 
-		Assert.assertFalse(
-			"It should return organizations", retrievedOrganizations.isEmpty());
-
+		Assert.assertFalse(organizations.isEmpty());
 		Assert.assertEquals(
-			"It should return the correct number of organizations", size,
-			retrievedOrganizations.size());
+			organizations.toString(), size, organizations.size());
 
-		Organization lastOrganization = retrievedOrganizations.get(
-			retrievedOrganizations.size() - 1);
+		Organization lastOrganization = organizations.get(
+			organizations.size() - 1);
 
-		retrievedOrganizations = _organizationService.getGtOrganizations(
+		organizations = _organizationService.getGtOrganizations(
 			lastOrganization.getOrganizationId(),
 			TestPropsValues.getCompanyId(), parentOrganizationId, size);
 
-		Assert.assertFalse(
-			"It should return organizations", retrievedOrganizations.isEmpty());
-
+		Assert.assertFalse(organizations.isEmpty());
 		Assert.assertEquals(
-			"It should return the correct number of organizations", size,
-			retrievedOrganizations.size());
+			organizations.toString(), size, organizations.size());
 
 		long previousOrganizationId = 0;
 
-		for (Organization organization : retrievedOrganizations) {
+		for (Organization organization : organizations) {
 			long organizationId = organization.getOrganizationId();
 
 			Assert.assertTrue(
-				"The returned organizationId " + organizationId +
-					" should be greater than the given gtOrganizationId: " +
-						lastOrganization.getOrganizationId(),
 				organizationId > lastOrganization.getOrganizationId());
-
-			Assert.assertTrue(
-				"The organizationId " + organizationId +
-					" should be greater than the previous organizationId " +
-						previousOrganizationId,
-				organizationId > previousOrganizationId);
+			Assert.assertTrue(organizationId > previousOrganizationId);
 
 			previousOrganizationId = organizationId;
 		}

@@ -191,12 +191,52 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		_synchronize = synchronize;
 	}
 
-	private String _getGitCommit(String gitCommitFileName) {
+	private LocalGitBranch _getLocalGitBranchFromGitCommit(
+		String gitCommitFileName, LocalRepository localRepository) {
+
+		String gitCommitFileContent = _getPortalRepositoryFileContent(
+			gitCommitFileName);
+
+		LocalGitBranch localGitBranch = null;
+
+		if (gitCommitFileContent.matches("[0-9a-f]{5,40}")) {
+			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+				localRepository, localRepository.getUpstreamBranchName(),
+				gitCommitFileContent, _synchronize);
+		}
+		else if (PullRequest.isValidGitHubPullRequestURL(
+					 gitCommitFileContent)) {
+
+			PullRequest pullRequest = new PullRequest(gitCommitFileContent);
+
+			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+				localRepository, pullRequest, _synchronize);
+		}
+		else if (GitUtil.isValidGitHubRefURL(gitCommitFileContent)) {
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
+				gitCommitFileContent);
+
+			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
+				localRepository, remoteGitRef, _synchronize);
+		}
+
+		if (localGitBranch == null) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Invalid ", gitCommitFileName, " ", gitCommitFileContent));
+		}
+
+		return localGitBranch;
+	}
+
+	private String _getPortalRepositoryFileContent(
+		String portalRepositoryFileName) {
+
 		PortalLocalRepository portalLocalRepository =
 			getPortalLocalRepository();
 
 		File gitCommitFile = new File(
-			portalLocalRepository.getDirectory(), gitCommitFileName);
+			portalLocalRepository.getDirectory(), portalRepositoryFileName);
 
 		try {
 			String gitCommit = JenkinsResultsParserUtil.read(gitCommitFile);
@@ -206,40 +246,6 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
-	}
-
-	private LocalGitBranch _getLocalGitBranchFromGitCommit(
-		String gitCommitFileName, LocalRepository localRepository) {
-
-		String gitCommit = _getGitCommit(gitCommitFileName);
-
-		LocalGitBranch localGitBranch = null;
-
-		if (gitCommit.matches("[0-9a-f]{5,40}")) {
-			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
-				localRepository, localRepository.getUpstreamBranchName(),
-				gitCommit, _synchronize);
-		}
-		else if (PullRequest.isValidGitHubPullRequestURL(gitCommit)) {
-			PullRequest pullRequest = new PullRequest(gitCommit);
-
-			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
-				localRepository, pullRequest, _synchronize);
-		}
-		else if (GitUtil.isValidGitHubRefURL(gitCommit)) {
-			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(gitCommit);
-
-			localGitBranch = LocalGitSyncUtil.createCachedLocalGitBranch(
-				localRepository, remoteGitRef, _synchronize);
-		}
-
-		if (localGitBranch == null) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Invalid ", gitCommitFileName, " ", gitCommit));
-		}
-
-		return localGitBranch;
 	}
 
 	private void _setupBasePortalWorkspace() {

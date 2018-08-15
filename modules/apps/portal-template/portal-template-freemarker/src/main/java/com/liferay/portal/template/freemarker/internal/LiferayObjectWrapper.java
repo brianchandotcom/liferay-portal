@@ -127,10 +127,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			return wrapDomNode(object);
 		}
 
-		if (object instanceof TemplateNode) {
-			return new LiferayTemplateModel((TemplateNode)object, this);
-		}
-
 		if (object instanceof ResourceBundle) {
 			return _RESOURCE_BUNDLE_MODEL_FACTORY.create(object, this);
 		}

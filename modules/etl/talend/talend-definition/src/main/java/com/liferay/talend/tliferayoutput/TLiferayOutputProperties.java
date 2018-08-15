@@ -224,6 +224,7 @@ public class TLiferayOutputProperties
 
 		dieOnError.setValue(true);
 		operations.setValue(null);
+
 		operations.setPossibleValues((List<?>)null);
 		operations.setTaggedValue(ADD_QUOTES, true);
 
@@ -414,6 +415,7 @@ public class TLiferayOutputProperties
 				resource.setValue("");
 				resourceURL.setValue("");
 				operations.setValue(null);
+
 				operations.setPossibleValues((List<?>)null);
 			}
 

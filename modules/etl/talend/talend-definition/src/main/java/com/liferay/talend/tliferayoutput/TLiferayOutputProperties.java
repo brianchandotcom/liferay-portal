@@ -68,6 +68,8 @@ import org.talend.daikon.sandbox.SandboxedInstance;
 public class TLiferayOutputProperties
 	extends LiferayConnectionResourceBaseProperties {
 
+	public static final String ADD_QUOTES = "ADD_QUOTES";
+
 	public static final String FIELD_ERROR_MESSAGE = "_errorMessage";
 
 	public static final List<String> rejectSchemaFieldNames;
@@ -195,6 +197,8 @@ public class TLiferayOutputProperties
 
 		Form mainForm = getForm(Form.MAIN);
 
+		operations.setRequired();
+
 		Widget operationsWidget = Widget.widget(operations);
 
 		operationsWidget.setLongRunning(true);
@@ -219,7 +223,10 @@ public class TLiferayOutputProperties
 		super.setupProperties();
 
 		dieOnError.setValue(true);
-		operations.setValue(Action.Upsert);
+		operations.setValue(null);
+
+		operations.setPossibleValues((List<?>)null);
+		operations.setTaggedValue(ADD_QUOTES, true);
 
 		resource = new ResourcePropertiesHelper("resource");
 
@@ -340,6 +347,8 @@ public class TLiferayOutputProperties
 				_log.debug("Resource URL: " + resourceURL.getValue());
 			}
 
+			List<Operation> supportedOperations = new ArrayList<>();
+
 			ValidationResultMutable validationResultMutable =
 				new ValidationResultMutable();
 
@@ -376,6 +385,11 @@ public class TLiferayOutputProperties
 									resourceURI.toString());
 
 						resource.setValue(resourceCollectionType);
+
+						supportedOperations.addAll(
+							liferaySourceOrSinkRuntime.
+								getResourceSupportedOperations(
+									resourceURI.toString()));
 					}
 					catch (IOException ioe) {
 						validationResult =
@@ -400,12 +414,46 @@ public class TLiferayOutputProperties
 
 				resource.setValue("");
 				resourceURL.setValue("");
+				operations.setValue(null);
+
+				operations.setPossibleValues((List<?>)null);
 			}
+
+			Stream<Operation> operationStream = supportedOperations.stream();
+
+			List<Action> actionList = operationStream.map(
+				Operation::getMethod
+			).map(
+				this::_methodToAction
+			).collect(
+				Collectors.toList()
+			);
+
+			if (!actionList.isEmpty()) {
+				operations.setPossibleValues(actionList);
+			}
+			else {
+				operations.setPossibleValues(Action.Unavailable);
+			}
+
+			operations.setValue(null);
 
 			refreshLayout(getForm(Form.MAIN));
 			refreshLayout(getForm(Form.REFERENCE));
 
 			return validationResultMutable;
+		}
+
+		private Action _methodToAction(String method) {
+			Stream<Action> actionStream = Action.getActionStream();
+
+			return actionStream.filter(
+				action -> method.equals(action.getMethodName())
+			).findFirst(
+			).orElseThrow(
+				() -> new UnsupportedOperationException(
+					String.format("Unsupported operation: %s.", method))
+			);
 		}
 
 	}

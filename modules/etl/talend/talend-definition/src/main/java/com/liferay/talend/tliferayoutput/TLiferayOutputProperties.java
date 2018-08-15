@@ -344,6 +344,8 @@ public class TLiferayOutputProperties
 				_log.debug("Resource URL: " + resourceURL.getValue());
 			}
 
+			List<Operation> supportedOperations = new ArrayList<>();
+
 			ValidationResultMutable validationResultMutable =
 				new ValidationResultMutable();
 
@@ -380,6 +382,11 @@ public class TLiferayOutputProperties
 									resourceURI.toString());
 
 						resource.setValue(resourceCollectionType);
+
+						supportedOperations.addAll(
+							liferaySourceOrSinkRuntime.
+								getResourceSupportedOperations(
+									resourceURI.toString()));
 					}
 					catch (IOException ioe) {
 						validationResult =
@@ -407,6 +414,36 @@ public class TLiferayOutputProperties
 				operations.setValue(null);
 				operations.setPossibleValues((List<?>)null);
 			}
+
+			Stream<Operation> operationStream = supportedOperations.stream();
+
+			List<Action> actionList = operationStream.map(
+				Operation::getMethod
+			).map(
+				method -> {
+					Stream<Action> actionStream = Arrays.stream(
+						Action.values());
+
+					return actionStream.filter(
+						action -> method.equals(action.getMethodName())
+					).findFirst(
+					).orElseThrow(
+						() -> new UnsupportedOperationException(
+							String.format("Unsupported operation: %s.", method))
+					);
+				}
+			).collect(
+				Collectors.toList()
+			);
+
+			if (!actionList.isEmpty()) {
+				operations.setPossibleValues(actionList);
+			}
+			else {
+				operations.setPossibleValues(Action.Unavailable);
+			}
+
+			operations.setValue(null);
 
 			refreshLayout(getForm(Form.MAIN));
 			refreshLayout(getForm(Form.REFERENCE));

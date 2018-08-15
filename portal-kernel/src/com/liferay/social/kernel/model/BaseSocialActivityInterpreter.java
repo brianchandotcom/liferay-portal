@@ -165,15 +165,6 @@ public abstract class BaseSocialActivityInterpreter
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		SocialActivityFeedEntry socialActivityFeedEntry = doInterpret(
-			activity, themeDisplay);
-
-		if (socialActivityFeedEntry !=
-				_deprecatedMarkerSocialActivityFeedEntry) {
-
-			return socialActivityFeedEntry;
-		}
-
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 

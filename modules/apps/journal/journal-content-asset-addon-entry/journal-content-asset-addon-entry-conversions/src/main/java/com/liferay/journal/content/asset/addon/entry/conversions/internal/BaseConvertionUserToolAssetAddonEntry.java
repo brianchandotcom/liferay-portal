@@ -14,13 +14,13 @@
 
 package com.liferay.journal.content.asset.addon.entry.conversions.internal;
 
+import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 
 import java.io.IOException;
 

@@ -535,7 +535,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				referenceElement.attributeValue("class-pk"));
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, className, classPK);
+				portletDataContext, className, Long.valueOf(classPK));
 		}
 	}
 

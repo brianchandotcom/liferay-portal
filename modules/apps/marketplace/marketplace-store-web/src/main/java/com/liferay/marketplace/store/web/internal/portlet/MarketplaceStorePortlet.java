@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -513,10 +512,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 
 		parameterMap.put("installedPatches", PatcherUtil.getInstalledPatches());
 		parameterMap.put(
-			"supportsHotDeploy",
-			new String[] {
-				String.valueOf(ServerDetector.isSupportsHotDeploy())
-			});
+			"supportsHotDeploy", new String[] {Boolean.TRUE.toString()});
 	}
 
 	@Reference(unbind = "-")

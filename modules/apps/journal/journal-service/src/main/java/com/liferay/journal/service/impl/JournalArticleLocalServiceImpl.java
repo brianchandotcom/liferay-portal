@@ -4289,7 +4289,9 @@ public class JournalArticleLocalServiceImpl
 
 		folderIds.add(folderId);
 
-		return search(groupId, folderIds, status, start, end);
+		return search(
+			groupId, folderIds, LocaleUtil.getMostRelevantLocale(), status,
+			start, end);
 	}
 
 	/**

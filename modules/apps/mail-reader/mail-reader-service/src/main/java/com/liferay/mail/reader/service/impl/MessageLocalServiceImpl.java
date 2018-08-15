@@ -295,7 +295,7 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 			message.setFlags(StringUtil.add(flags, flagString));
 		}
 		else if (!value && StringUtil.contains(flags, flagString)) {
-			message.setFlags(StringUtil.remove(flags, flagString));
+			message.setFlags(StringUtil.removeFromList(flags, flagString));
 		}
 
 		return messagePersistence.update(message);

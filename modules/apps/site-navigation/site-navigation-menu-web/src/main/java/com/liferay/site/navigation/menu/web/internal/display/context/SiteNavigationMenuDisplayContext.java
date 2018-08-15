@@ -131,7 +131,7 @@ public class SiteNavigationMenuDisplayContext {
 		}
 
 		String defaultExpandedLevels =
-			_siteNavigationMenuPortletInstanceConfiguration.includedLayouts();
+			_siteNavigationMenuPortletInstanceConfiguration.expandedLevels();
 
 		if (Validator.isNull(defaultExpandedLevels)) {
 			defaultExpandedLevels =
@@ -180,7 +180,7 @@ public class SiteNavigationMenuDisplayContext {
 		}
 
 		int defaultRootMenuItemLevel =
-			_siteNavigationMenuPortletInstanceConfiguration.rootLayoutLevel();
+			_siteNavigationMenuPortletInstanceConfiguration.rootMenuItemLevel();
 
 		if (defaultRootMenuItemLevel == 0) {
 			defaultRootMenuItemLevel =
@@ -225,7 +225,7 @@ public class SiteNavigationMenuDisplayContext {
 		}
 
 		String defaultRootMenuItemType =
-			_siteNavigationMenuPortletInstanceConfiguration.rootLayoutType();
+			_siteNavigationMenuPortletInstanceConfiguration.rootMenuItemType();
 
 		if (Validator.isNull(defaultRootMenuItemType)) {
 			defaultRootMenuItemType =

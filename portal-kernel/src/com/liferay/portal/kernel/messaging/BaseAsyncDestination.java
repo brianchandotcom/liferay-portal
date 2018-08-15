@@ -169,7 +169,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			return;
 		}
 
-		ThreadPoolExecutor threadPoolExecutor = getThreadPoolExecutor();
+		ThreadPoolExecutor threadPoolExecutor = _threadPoolExecutor;
 
 		if (threadPoolExecutor.isShutdown()) {
 			throw new IllegalStateException(

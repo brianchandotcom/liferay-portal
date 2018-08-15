@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,7 +38,7 @@ public class DLFileEntryMetadataDDMTemplatePermissionSupport
 
 	@Override
 	public String getResourceName(long classNameId) {
-		return DLPermission.RESOURCE_NAME;
+		return DLConstants.RESOURCE_NAME;
 	}
 
 }

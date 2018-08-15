@@ -119,7 +119,7 @@ public class ReferencedStagedModelImporterCapability implements Capability {
 				}
 
 				StagedModelDataHandlerUtil.importReferenceStagedModel(
-					portletDataContext, className, classPK);
+					portletDataContext, className, Long.valueOf(classPK));
 			}
 			finally {
 				portletDataContext.setScopeGroupId(originalScopeGroupId);

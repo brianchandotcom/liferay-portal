@@ -14,8 +14,6 @@
 
 package com.liferay.mail.reader.service.impl;
 
-import com.liferay.document.library.kernel.exception.DuplicateDirectoryException;
-import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.mail.reader.model.Attachment;
 import com.liferay.mail.reader.model.Message;
@@ -80,7 +78,7 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 				DLStoreUtil.addDirectory(
 					attachment.getCompanyId(), _REPOSITORY_ID, directoryPath);
 			}
-			catch (DuplicateDirectoryException dde) {
+			catch (DirectoryNameException dne) {
 
 				// LPS-52675
 
@@ -95,9 +93,9 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 				DLStoreUtil.addFile(
 					attachment.getCompanyId(), _REPOSITORY_ID, filePath, file);
 			}
-			catch (DuplicateFileException dfe) {
+			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(dfe, dfe);
+					_log.debug(pe, pe);
 				}
 			}
 		}

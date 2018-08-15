@@ -19,12 +19,13 @@ import com.liferay.contacts.exception.EntryEmailAddressException;
 import com.liferay.contacts.exception.RequiredEntryEmailAddressException;
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.base.EntryLocalServiceBaseImpl;
-import com.liferay.portal.kernel.exception.ContactFullNameException;
+import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.FullNameValidatorFactory;
 
 import java.util.Date;
 import java.util.List;
@@ -126,7 +127,8 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(fullName)) {
-			throw new ContactFullNameException();
+			throw new ContactNameException.MustHaveValidFullName(
+				FullNameValidatorFactory.getInstance());
 		}
 
 		if (Validator.isNull(emailAddress)) {

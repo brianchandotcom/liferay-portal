@@ -135,6 +135,25 @@ class LayoutRenderer extends Component {
 		}
 	}
 
+
+	/**
+	 * @param {Object} event
+	 * @param {String} pageProperty
+	 * @private
+	 */
+
+	_changePageProperty(event, pageProperty) {
+		const {srcElement} = event;
+		const {dataset, value} = srcElement;
+		const {pageId} = dataset;
+		const pages = [...this.pages];
+
+		pages[pageId] = {...pages[pageId]};
+		pages[pageId][pageProperty] = value;
+
+		return pages;
+	}
+
 	/**
 	 * @param {!Object} data
 	 * @private

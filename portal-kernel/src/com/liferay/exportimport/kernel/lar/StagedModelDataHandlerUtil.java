@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,12 +32,21 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -521,7 +531,114 @@ public class StagedModelDataHandlerUtil {
 			}
 		}
 
-		importStagedModel(portletDataContext, referenceElement);
+		boolean findReference = false;
+
+		try {
+			importStagedModel(portletDataContext, referenceElement);
+		}
+		catch (PortletDataException pde) {
+			if (pde.getCause() instanceof NullPointerException) {
+				findReference = true;
+			}
+		}
+
+		if (!findReference) {
+			return;
+		}
+
+		Element importDataRootElement =
+			portletDataContext.getImportDataRootElement();
+
+		try {
+			ZipReader zipReader = portletDataContext.getZipReader();
+
+			List<String> entries = zipReader.getEntries();
+
+			Iterator<String> iterator = entries.iterator();
+
+			StagedModel stagedModel = _getStagedModel(
+				portletDataContext, referenceElement);
+
+			while (iterator.hasNext()) {
+				String entry = iterator.next();
+
+				if (entry.endsWith(".xml")) {
+					if (_containsStagedModel(
+							portletDataContext, entry, stagedModel)) {
+
+						try {
+							Document document = SAXReaderUtil.read(
+								portletDataContext.getZipEntryAsString(entry));
+
+							portletDataContext.setImportDataRootElement(
+								document.getRootElement());
+
+							String path = ExportImportPathUtil.getModelPath(
+								stagedModel);
+
+							portletDataContext.removePrimaryKey(path);
+
+							importStagedModel(
+								portletDataContext, referenceElement);
+
+							return;
+						}
+						catch (Exception e) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(e, e);
+							}
+						}
+					}
+				}
+			}
+
+			PortletDataException pde = new PortletDataException();
+
+			pde.setStagedModel(stagedModel);
+			pde.setType(PortletDataException.MISSING_REFERENCE);
+
+			throw pde;
+		}
+		finally {
+			portletDataContext.setImportDataRootElement(importDataRootElement);
+		}
+	}
+
+	private static boolean _containsStagedModel(
+		PortletDataContext portletDataContext, String path,
+		StagedModel stagedModel) {
+
+		XMLInputFactory xmlInputFactory =
+			SecureXMLFactoryProviderUtil.newXMLInputFactory();
+
+		try {
+			XMLStreamReader xmlStreamReader =
+				xmlInputFactory.createXMLStreamReader(
+					portletDataContext.getZipEntryAsInputStream(path));
+
+			Class<?> modelClass = stagedModel.getModelClass();
+
+			String simpleName = modelClass.getSimpleName();
+
+			while (xmlStreamReader.hasNext()) {
+				int event = xmlStreamReader.next();
+
+				if (event == XMLStreamConstants.START_ELEMENT) {
+					QName qName = xmlStreamReader.getName();
+
+					if (Objects.equals(qName.getLocalPart(), simpleName)) {
+						return true;
+					}
+				}
+			}
+		}
+		catch (XMLStreamException xmlse) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(xmlse, xmlse);
+			}
+		}
+
+		return false;
 	}
 
 	private static StagedModel _getReferenceStagedModel(

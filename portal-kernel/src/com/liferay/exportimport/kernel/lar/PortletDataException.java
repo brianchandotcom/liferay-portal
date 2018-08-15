@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Raymond Augé
@@ -59,6 +60,8 @@ public class PortletDataException extends PortalException {
 	public static final int INVALID_GROUP = 4;
 
 	public static final int MISSING_DEPENDENCY = 5;
+
+	public static final int MISSING_REFERENCE = 14;
 
 	public static final int PREPARE_MANIFEST_SUMMARY = 13;
 
@@ -112,15 +115,39 @@ public class PortletDataException extends PortalException {
 	}
 
 	public String getStagedModelClassName() {
-		return _stagedModelClassName;
+		if (!Validator.isBlank(_stagedModelClassName)) {
+			return _stagedModelClassName;
+		}
+
+		if (_stagedModel != null) {
+			return _stagedModel.getModelClassName();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getStagedModelClassPK() {
-		return _stagedModelClassPK;
+		if (!Validator.isBlank(_stagedModelClassPK)) {
+			return _stagedModelClassPK;
+		}
+
+		if (_stagedModel != null) {
+			return String.valueOf(_stagedModel.getPrimaryKeyObj());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getStagedModelDisplayName() {
-		return _stagedModelDisplayName;
+		if (!Validator.isBlank(_stagedModelDisplayName)) {
+			return _stagedModelDisplayName;
+		}
+
+		if (_stagedModel != null) {
+			return _stagedModel.getUuid();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public int getType() {

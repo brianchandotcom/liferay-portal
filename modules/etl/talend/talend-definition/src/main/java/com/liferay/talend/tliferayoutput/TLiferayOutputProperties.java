@@ -197,6 +197,8 @@ public class TLiferayOutputProperties
 
 		Form mainForm = getForm(Form.MAIN);
 
+		operations.setRequired();
+
 		Widget operationsWidget = Widget.widget(operations);
 
 		operationsWidget.setLongRunning(true);

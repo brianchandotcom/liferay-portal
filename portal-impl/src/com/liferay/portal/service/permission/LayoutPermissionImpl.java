@@ -564,6 +564,10 @@ public class LayoutPermissionImpl
 		else if (!checkViewableGroup && group.isUserGroup() &&
 				 actionId.equals(ActionKeys.VIEW)) {
 
+			if (permissionChecker.isGroupAdmin(group.getGroupId())) {
+				return true;
+			}
+
 			try {
 				UserBag userBag = permissionChecker.getUserBag();
 

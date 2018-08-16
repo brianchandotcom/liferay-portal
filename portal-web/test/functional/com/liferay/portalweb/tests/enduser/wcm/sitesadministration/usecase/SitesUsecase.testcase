@@ -243,6 +243,18 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
+			<var name="pageName" value="search" />
+			<var name="pageTemplateName" value="Search" />
+			<var name="siteTemplateName" value="Community Site" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Sites" />
 		</execute>
 

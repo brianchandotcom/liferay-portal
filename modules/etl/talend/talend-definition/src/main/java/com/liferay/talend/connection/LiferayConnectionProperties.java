@@ -241,19 +241,23 @@ public class LiferayConnectionProperties
 			useOtherConnection = true;
 		}
 
-		String formName = form.getName();
+		PropertiesUtils.setHidden(form, anonymousLogin, useOtherConnection);
+		PropertiesUtils.setHidden(form, endpoint, useOtherConnection);
+		PropertiesUtils.setHidden(form, loginType, useOtherConnection);
+		PropertiesUtils.setHidden(form, password, useOtherConnection);
+		PropertiesUtils.setHidden(form, siteFilter, useOtherConnection);
+		PropertiesUtils.setHidden(form, userId, useOtherConnection);
+		PropertiesUtils.setHidden(form, webSite, useOtherConnection);
+		PropertiesUtils.setHidden(form, webSiteURL, useOtherConnection);
 
-		if (formName.equals(Form.MAIN) || formName.equals(FORM_WIZARD)) {
-			PropertiesUtils.setHidden(form, endpoint, useOtherConnection);
-			PropertiesUtils.setHidden(form, loginType, useOtherConnection);
-			PropertiesUtils.setHidden(form, userId, useOtherConnection);
-			PropertiesUtils.setHidden(form, password, useOtherConnection);
-			PropertiesUtils.setHidden(form, anonymousLogin, useOtherConnection);
+		if (!useOtherConnection && anonymousLogin.getValue()) {
+			PropertiesUtils.setHidden(form, userId, true);
+			PropertiesUtils.setHidden(form, password, true);
+		}
 
-			if (!useOtherConnection && anonymousLogin.getValue()) {
-				PropertiesUtils.setHidden(form, userId, true);
-				PropertiesUtils.setHidden(form, password, true);
-			}
+		if (!useOtherConnection && !siteFilter.getValue()) {
+			PropertiesUtils.setHidden(form, webSite, true);
+			PropertiesUtils.setHidden(form, webSiteURL, true);
 		}
 	}
 

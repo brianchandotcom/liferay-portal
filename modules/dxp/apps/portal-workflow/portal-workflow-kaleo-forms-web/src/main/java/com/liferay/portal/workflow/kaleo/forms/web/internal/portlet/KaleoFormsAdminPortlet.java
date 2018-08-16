@@ -564,7 +564,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected DDMFormFieldValue getByNameAndInstanceIdDDMFormFieldValue(
+	protected DDMFormFieldValue getNameAndInstanceIdDDMFormFieldValue(
 		List<DDMFormFieldValue> ddmFormFieldValues, String name,
 		String instanceId) {
 
@@ -689,7 +689,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 				beforeReviewDDMFormFieldValues) {
 
 			DDMFormFieldValue actualDDMFormFieldValue =
-				getByNameAndInstanceIdDDMFormFieldValue(
+				getNameAndInstanceIdDDMFormFieldValue(
 					reviewedDDMFormFieldValues,
 					beforeReviewDDMFormFieldValue.getName(),
 					beforeReviewDDMFormFieldValue.getInstanceId());
@@ -752,7 +752,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 				currentDDMFormFieldValues) {
 
 			DDMFormFieldValue actualDDMFormFieldValue =
-				getByNameAndInstanceIdDDMFormFieldValue(
+				getNameAndInstanceIdDDMFormFieldValue(
 					removedByReviewerDDMFormFieldValues,
 					currentDDMFormFieldValue.getName(),
 					currentDDMFormFieldValue.getInstanceId());

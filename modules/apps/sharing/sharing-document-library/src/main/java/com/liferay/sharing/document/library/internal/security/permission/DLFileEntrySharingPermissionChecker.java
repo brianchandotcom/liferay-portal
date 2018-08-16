@@ -22,6 +22,7 @@ import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.document.library.internal.security.permission.resource.SharingEntryDLFileEntryModelResourcePermissionRegistrar;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -65,13 +66,10 @@ public class DLFileEntrySharingPermissionChecker
 	}
 
 	private static final Set<SharingEntryActionKey> _actionKeysSet =
-		new HashSet<SharingEntryActionKey>() {
-			{
-				add(SharingEntryActionKey.ADD_DISCUSSION);
-				add(SharingEntryActionKey.UPDATE);
-				add(SharingEntryActionKey.VIEW);
-			}
-		};
+		new HashSet<>(
+			Arrays.asList(
+				SharingEntryActionKey.ADD_DISCUSSION,
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW));
 
 	@Reference(
 		target = "(&(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)(!(component.name=" + SharingEntryDLFileEntryModelResourcePermissionRegistrar.COMPONENT_NAME + ")))"

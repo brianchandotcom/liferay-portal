@@ -110,6 +110,7 @@ String statusLabelPending = StringUtil.toUpperCase(LanguageUtil.get(request, "pe
 
 				<liferay-ui:search-iterator
 					markupView="lexicon"
+					searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 				/>
 			</liferay-ui:search-container>
 		</div>

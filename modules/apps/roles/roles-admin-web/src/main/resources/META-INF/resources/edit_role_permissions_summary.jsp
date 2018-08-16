@@ -241,6 +241,7 @@
 
 		<liferay-ui:search-iterator
 			searchContainer="<%= searchContainer %>"
+			searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 		/>
 	</div>
 </div>

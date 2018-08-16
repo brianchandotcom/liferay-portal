@@ -2352,9 +2352,9 @@ public class ParamUtil {
 	public static String[] getStringValues(
 		HttpServletRequest request, String param, String[] defaultValue) {
 
-		return _normalize(
-			GetterUtil.getStringValues(
-				getParameterValues(request, param, null), defaultValue));
+		return GetterUtil.getStringValues(
+			getParameterValues(request, param, null),
+			() -> _normalize(defaultValue));
 	}
 
 	/**
@@ -2387,9 +2387,9 @@ public class ParamUtil {
 	public static String[] getStringValues(
 		PortletRequest portletRequest, String param, String[] defaultValue) {
 
-		return _normalize(
-			GetterUtil.getStringValues(
-				getParameterValues(portletRequest, param, null), defaultValue));
+		return GetterUtil.getStringValues(
+			getParameterValues(portletRequest, param, null),
+			() -> _normalize(defaultValue));
 	}
 
 	/**
@@ -2422,9 +2422,8 @@ public class ParamUtil {
 	public static String[] getStringValues(
 		ServiceContext serviceContext, String param, String[] defaultValue) {
 
-		return _normalize(
-			GetterUtil.getStringValues(
-				serviceContext.getAttribute(param), defaultValue));
+		return GetterUtil.getStringValues(
+			serviceContext.getAttribute(param), () -> _normalize(defaultValue));
 	}
 
 	/**

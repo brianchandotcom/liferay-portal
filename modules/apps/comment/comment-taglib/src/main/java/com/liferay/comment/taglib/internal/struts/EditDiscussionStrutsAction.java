@@ -157,6 +157,13 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 		String className = ParamUtil.getString(request, "className");
 		long classPK = ParamUtil.getLong(request, "classPK");
 
+		DiscussionPermission discussionPermission = _getDiscussionPermission(
+			themeDisplay);
+
+		discussionPermission.checkSubscribePermission(
+			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+			className, classPK);
+
 		if (subscribe) {
 			_commentManager.subscribeDiscussion(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),

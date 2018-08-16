@@ -83,14 +83,18 @@ else {
 
 		<aui:model-context bean="<%= website %>" model="<%= Website.class %>" />
 
-		<div class="lfr-form-row lfr-form-row-inline">
-			<div class="row-fields">
-				<aui:input name='<%= "websiteId" + websitesIndex %>' type="hidden" value="<%= website.getWebsiteId() %>" />
+		<div class="form-group-autofit lfr-form-row">
+			<aui:input name='<%= "websiteId" + websitesIndex %>' type="hidden" value="<%= website.getWebsiteId() %>" />
 
+			<div class="form-group-item">
 				<aui:input cssClass="url-field" fieldParam='<%= "websiteUrl" + websitesIndex %>' id='<%= "websiteUrl" + websitesIndex %>' inlineField="<%= true %>" name="url" />
+			</div>
 
+			<div class="form-group-item">
 				<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.WEBSITE %>" name='<%= "websiteTypeId" + websitesIndex %>' />
+			</div>
 
+			<div class="form-group-item form-group-item-label-spacer">
 				<aui:input checked="<%= website.isPrimary() %>" cssClass="primary-ctrl" id='<%= "websitePrimary" + websitesIndex %>' inlineField="<%= true %>" label="primary" name="websitePrimary" type="radio" value="<%= websitesIndex %>" />
 			</div>
 		</div>

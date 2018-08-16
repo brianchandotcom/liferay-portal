@@ -358,6 +358,10 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+		</execute>
+
 		<execute macro="DMDocument#editCP">
 			<var name="dmDocumentFileEdit" value="Document_2.jpg" />
 			<var name="dmDocumentTitle" value="Document_3.doc" />

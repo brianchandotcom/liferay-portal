@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -532,62 +533,86 @@ public class DLReferencesExportImportContentProcessor
 	protected void validateDLReferences(long groupId, String content)
 		throws PortalException {
 
-		String portalURL = _portal.getPathContext();
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if ((serviceContext != null) &&
-			(serviceContext.getThemeDisplay() != null)) {
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-			portalURL =
-				_portal.getPortalURL(themeDisplay) + _portal.getPathContext();
-		}
+		String pathContext = _portal.getPathContext();
 
 		String[] patterns = {
-			portalURL.concat("/c/document_library/get_file?"),
-			portalURL.concat("/documents/"),
-			portalURL.concat("/image/image_gallery?")
+			pathContext.concat("/c/document_library/get_file?"),
+			pathContext.concat("/documents/"),
+			pathContext.concat("/image/image_gallery?")
 		};
 
-		String[] completePatterns = new String[patterns.length];
+		int beginPos = -1;
+		int endPos = content.length();
 
-		long[] companyIds = _portal.getCompanyIds();
+		while (true) {
+			beginPos = StringUtil.lastIndexOfAny(content, patterns, endPos);
 
-		for (long companyId : companyIds) {
-			Company company = _companyLocalService.getCompany(companyId);
-
-			String webId = company.getWebId();
-
-			int i = 0;
-
-			for (String pattern : patterns) {
-				completePatterns[i] = webId.concat(pattern);
-
-				i++;
+			if (beginPos == -1) {
+				break;
 			}
 
-			int beginPos = -1;
-			int endPos = content.length();
+			Map<String, String[]> dlReferenceParameters =
+				getDLReferenceParameters(
+					groupId, content, beginPos + pathContext.length(), endPos);
 
-			while (true) {
-				beginPos = StringUtil.lastIndexOfAny(
-					content, completePatterns, endPos);
+			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
 
-				if (beginPos == -1) {
-					break;
+			if (fileEntry == null) {
+				boolean absolutePortalURL = false;
+				boolean relativePortalURL = false;
+
+				if (content.regionMatches(
+						true, beginPos - _OFFSET_HREF_ATTRIBUTE, "href=", 0,
+						5) ||
+					content.regionMatches(
+						true, beginPos - _OFFSET_SRC_ATTRIBUTE, "src=", 0, 4)) {
+
+					relativePortalURL = true;
 				}
 
-				Map<String, String[]> dlReferenceParameters =
-					getDLReferenceParameters(
-						groupId, content,
-						beginPos + portalURL.length() + webId.length(), endPos);
+				if (!relativePortalURL) {
+					List<String> hostNames = new ArrayList<>();
 
-				FileEntry fileEntry = getFileEntry(dlReferenceParameters);
+					String portalURL = pathContext;
 
-				if (fileEntry == null) {
+					if (Validator.isNull(portalURL)) {
+						ServiceContext serviceContext =
+							ServiceContextThreadLocal.getServiceContext();
+
+						if ((serviceContext != null) &&
+							(serviceContext.getThemeDisplay() != null)) {
+
+							ThemeDisplay themeDisplay =
+								serviceContext.getThemeDisplay();
+
+							portalURL = _portal.getPortalURL(themeDisplay);
+						}
+					}
+
+					hostNames.add(portalURL);
+
+					List<Company> companies =
+						_companyLocalService.getCompanies();
+
+					for (Company company : companies) {
+						hostNames.add(company.getWebId());
+					}
+
+					for (String hostName : hostNames) {
+						int curBeginPos = beginPos - hostName.length();
+
+						String substring = content.substring(
+							curBeginPos, endPos);
+
+						if (substring.startsWith(hostName)) {
+							absolutePortalURL = true;
+
+							continue;
+						}
+					}
+				}
+
+				if (absolutePortalURL || relativePortalURL) {
 					ExportImportContentValidationException eicve =
 						new ExportImportContentValidationException(
 							DLReferencesExportImportContentProcessor.class.
@@ -601,9 +626,9 @@ public class DLReferencesExportImportContentProcessor
 
 					throw eicve;
 				}
-
-				endPos = beginPos - 1;
 			}
+
+			endPos = beginPos - 1;
 		}
 	}
 
@@ -622,6 +647,10 @@ public class DLReferencesExportImportContentProcessor
 		StringPool.LESS_THAN, StringPool.PIPE, StringPool.QUESTION,
 		StringPool.QUOTE, StringPool.QUOTE_ENCODED, StringPool.SPACE
 	};
+
+	private static final int _OFFSET_HREF_ATTRIBUTE = 6;
+
+	private static final int _OFFSET_SRC_ATTRIBUTE = 5;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLReferencesExportImportContentProcessor.class);

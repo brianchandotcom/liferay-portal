@@ -80,6 +80,4 @@ public class SyncServiceConfigurationKeys {
 
 	public static final String SYNC_SERVICES_ENABLED = "sync.services.enabled";
 
-	public static final String SYNC_VERIFY = "sync.verify";
-
 }

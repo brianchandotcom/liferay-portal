@@ -27,7 +27,7 @@ public final class DDMFormLayoutValidatorError {
 		return _errorMessage;
 	}
 
-	public DDMFormLayoutValidatorErrorStatus getErrorStatus() {
+	public Status getErrorStatus() {
 		return _errorStatus;
 	}
 
@@ -38,15 +38,13 @@ public final class DDMFormLayoutValidatorError {
 	public static class Builder {
 
 		public static Builder newBuilder(
-			String errorMessage,
-			DDMFormLayoutValidatorErrorStatus errorStatus) {
+			String errorMessage, Status errorStatus) {
 
 			return new Builder(errorMessage, errorStatus);
 		}
 
 		public static DDMFormLayoutValidatorError of(
-			String errorMessage,
-			DDMFormLayoutValidatorErrorStatus errorStatus) {
+			String errorMessage, Status errorStatus) {
 
 			return newBuilder(
 				errorMessage, errorStatus
@@ -63,10 +61,7 @@ public final class DDMFormLayoutValidatorError {
 			return this;
 		}
 
-		private Builder(
-			String errorMessage,
-			DDMFormLayoutValidatorErrorStatus errorStatus) {
-
+		private Builder(String errorMessage, Status errorStatus) {
 			_validateFormLayoutError._errorMessage = errorMessage;
 			_validateFormLayoutError._errorStatus = errorStatus;
 		}
@@ -76,11 +71,20 @@ public final class DDMFormLayoutValidatorError {
 
 	}
 
+	public enum Status {
+
+		INVALID_COLUMN_SIZE_EXCEPTION, INVALID_ROW_SIZE_EXCEPTION,
+		MUST_NOT_DUPLICATE_FIELD_NAME_EXCEPTION,
+		MUST_SET_DEFAULT_LOCALE_EXCEPTION,
+		MUST_SET_EQUAL_LOCALE_FOR_LAYOUT_EXCEPTION
+
+	}
+
 	private DDMFormLayoutValidatorError() {
 	}
 
 	private String _errorMessage;
-	private DDMFormLayoutValidatorErrorStatus _errorStatus;
+	private Status _errorStatus;
 	private final Map<String, Object> _properties = new HashMap<>();
 
 }

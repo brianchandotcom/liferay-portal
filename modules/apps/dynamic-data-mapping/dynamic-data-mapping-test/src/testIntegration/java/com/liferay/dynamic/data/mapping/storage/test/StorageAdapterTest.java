@@ -38,7 +38,6 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorError;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorErrorStatus;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -178,13 +177,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_VALUE_EXCEPTION));
 		}
 	}
@@ -211,13 +209,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						REQUIRED_VALUE_EXCEPTION));
 		}
 	}
@@ -646,13 +643,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						REQUIRED_VALUE_EXCEPTION));
 		}
 	}
@@ -694,7 +690,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		return values;
 	}
 
-	protected List<DDMFormValuesValidatorErrorStatus>
+	protected List<DDMFormValuesValidatorError.Status>
 		getDDMFormValuesValidatorErrorStatus(
 			DDMFormValuesValidationException ddmfvve) {
 

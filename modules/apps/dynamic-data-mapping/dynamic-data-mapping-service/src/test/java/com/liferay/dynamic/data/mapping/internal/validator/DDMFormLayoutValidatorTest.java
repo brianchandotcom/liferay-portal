@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorError;
-import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorErrorStatus;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorValidateRequest;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -68,13 +67,12 @@ public class DDMFormLayoutValidatorTest {
 			_ddmFormLayoutValidator.validate(builder.build());
 		}
 		catch (DDMFormLayoutValidationException ddmflve) {
-			List<DDMFormLayoutValidatorErrorStatus>
-				ddmFormLayoutValidatorErrorStatus =
-					getDDMFormLayoutValidatorErrorStatus(ddmflve);
+			List<DDMFormLayoutValidatorError.Status> errorStatusList =
+				getDDMFormLayoutValidatorErrorStatus(ddmflve);
 
 			Assert.assertTrue(
-				ddmFormLayoutValidatorErrorStatus.contains(
-					DDMFormLayoutValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormLayoutValidatorError.Status.
 						MUST_NOT_DUPLICATE_FIELD_NAME_EXCEPTION));
 		}
 	}
@@ -108,23 +106,22 @@ public class DDMFormLayoutValidatorTest {
 			_ddmFormLayoutValidator.validate(builder.build());
 		}
 		catch (DDMFormLayoutValidationException ddmflve) {
-			List<DDMFormLayoutValidatorErrorStatus>
-				ddmFormLayoutValidatorErrorStatus =
-					getDDMFormLayoutValidatorErrorStatus(ddmflve);
+			List<DDMFormLayoutValidatorError.Status> status =
+				getDDMFormLayoutValidatorErrorStatus(ddmflve);
 
 			Assert.assertTrue(
-				ddmFormLayoutValidatorErrorStatus.contains(
-					DDMFormLayoutValidatorErrorStatus.
+				status.contains(
+					DDMFormLayoutValidatorError.Status.
 						INVALID_ROW_SIZE_EXCEPTION));
 
 			Assert.assertTrue(
-				ddmFormLayoutValidatorErrorStatus.contains(
-					DDMFormLayoutValidatorErrorStatus.
+				status.contains(
+					DDMFormLayoutValidatorError.Status.
 						INVALID_COLUMN_SIZE_EXCEPTION));
 
 			Assert.assertTrue(
-				ddmFormLayoutValidatorErrorStatus.contains(
-					DDMFormLayoutValidatorErrorStatus.
+				status.contains(
+					DDMFormLayoutValidatorError.Status.
 						MUST_NOT_DUPLICATE_FIELD_NAME_EXCEPTION));
 		}
 	}
@@ -153,13 +150,12 @@ public class DDMFormLayoutValidatorTest {
 			_ddmFormLayoutValidator.validate(builder.build());
 		}
 		catch (DDMFormLayoutValidationException ddmflve) {
-			List<DDMFormLayoutValidatorErrorStatus>
-				ddmFormLayoutValidatorErrorStatus =
-					getDDMFormLayoutValidatorErrorStatus(ddmflve);
+			List<DDMFormLayoutValidatorError.Status> status =
+				getDDMFormLayoutValidatorErrorStatus(ddmflve);
 
 			Assert.assertTrue(
-				ddmFormLayoutValidatorErrorStatus.contains(
-					DDMFormLayoutValidatorErrorStatus.
+				status.contains(
+					DDMFormLayoutValidatorError.Status.
 						INVALID_COLUMN_SIZE_EXCEPTION));
 		}
 	}
@@ -188,13 +184,12 @@ public class DDMFormLayoutValidatorTest {
 			_ddmFormLayoutValidator.validate(builder.build());
 		}
 		catch (DDMFormLayoutValidationException ddmflve) {
-			List<DDMFormLayoutValidatorErrorStatus>
-				ddmFormLayoutValidatorErrorStatus =
-					getDDMFormLayoutValidatorErrorStatus(ddmflve);
+			List<DDMFormLayoutValidatorError.Status> status =
+				getDDMFormLayoutValidatorErrorStatus(ddmflve);
 
 			Assert.assertTrue(
-				ddmFormLayoutValidatorErrorStatus.contains(
-					DDMFormLayoutValidatorErrorStatus.
+				status.contains(
+					DDMFormLayoutValidatorError.Status.
 						INVALID_COLUMN_SIZE_EXCEPTION));
 		}
 	}
@@ -228,13 +223,12 @@ public class DDMFormLayoutValidatorTest {
 			_ddmFormLayoutValidator.validate(builder.build());
 		}
 		catch (DDMFormLayoutValidationException ddmflve) {
-			List<DDMFormLayoutValidatorErrorStatus>
-				ddmFormLayoutValidatorErrorStatus =
-					getDDMFormLayoutValidatorErrorStatus(ddmflve);
+			List<DDMFormLayoutValidatorError.Status> status =
+				getDDMFormLayoutValidatorErrorStatus(ddmflve);
 
 			Assert.assertTrue(
-				ddmFormLayoutValidatorErrorStatus.contains(
-					DDMFormLayoutValidatorErrorStatus.
+				status.contains(
+					DDMFormLayoutValidatorError.Status.
 						INVALID_ROW_SIZE_EXCEPTION));
 		}
 	}
@@ -253,13 +247,12 @@ public class DDMFormLayoutValidatorTest {
 			_ddmFormLayoutValidator.validate(builder.build());
 		}
 		catch (DDMFormLayoutValidationException ddmflve) {
-			List<DDMFormLayoutValidatorErrorStatus>
-				ddmFormLayoutValidatorErrorStatus =
-					getDDMFormLayoutValidatorErrorStatus(ddmflve);
+			List<DDMFormLayoutValidatorError.Status> status =
+				getDDMFormLayoutValidatorErrorStatus(ddmflve);
 
 			Assert.assertTrue(
-				ddmFormLayoutValidatorErrorStatus.contains(
-					DDMFormLayoutValidatorErrorStatus.
+				status.contains(
+					DDMFormLayoutValidatorError.Status.
 						MUST_SET_DEFAULT_LOCALE_EXCEPTION));
 		}
 	}
@@ -311,18 +304,17 @@ public class DDMFormLayoutValidatorTest {
 			_ddmFormLayoutValidator.validate(builder.build());
 		}
 		catch (DDMFormLayoutValidationException ddmflve) {
-			List<DDMFormLayoutValidatorErrorStatus>
-				ddmFormLayoutValidatorErrorStatus =
-					getDDMFormLayoutValidatorErrorStatus(ddmflve);
+			List<DDMFormLayoutValidatorError.Status> status =
+				getDDMFormLayoutValidatorErrorStatus(ddmflve);
 
 			Assert.assertTrue(
-				ddmFormLayoutValidatorErrorStatus.contains(
-					DDMFormLayoutValidatorErrorStatus.
+				status.contains(
+					DDMFormLayoutValidatorError.Status.
 						MUST_SET_EQUAL_LOCALE_FOR_LAYOUT_EXCEPTION));
 		}
 	}
 
-	protected List<DDMFormLayoutValidatorErrorStatus>
+	protected List<DDMFormLayoutValidatorError.Status>
 		getDDMFormLayoutValidatorErrorStatus(
 			DDMFormLayoutValidationException ddmflve) {
 

@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorError;
-import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorErrorStatus;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorValidateRequest;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -98,7 +97,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 						DDMFormLayoutValidatorError.Builder builder =
 							DDMFormLayoutValidatorError.Builder.newBuilder(
 								errorMessage,
-								DDMFormLayoutValidatorErrorStatus.
+								DDMFormLayoutValidatorError.Status.
 									MUST_NOT_DUPLICATE_FIELD_NAME_EXCEPTION
 							).withProperty(
 								"fields", intersectDDMFormFieldNames
@@ -125,7 +124,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 			DDMFormLayoutValidatorError validateFormLayoutResponseError =
 				DDMFormLayoutValidatorError.Builder.of(
 					"DDM form layout does not have a default locale",
-					DDMFormLayoutValidatorErrorStatus.
+					DDMFormLayoutValidatorError.Status.
 						MUST_SET_DEFAULT_LOCALE_EXCEPTION);
 
 			return Arrays.asList(validateFormLayoutResponseError);
@@ -159,7 +158,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 				DDMFormLayoutValidatorError validateFormLayoutResponseError =
 					DDMFormLayoutValidatorError.Builder.of(
 						errorMessage,
-						DDMFormLayoutValidatorErrorStatus.
+						DDMFormLayoutValidatorError.Status.
 							MUST_SET_EQUAL_LOCALE_FOR_LAYOUT_EXCEPTION);
 
 				validateFormLayoutResponseErrors.add(
@@ -210,7 +209,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 				DDMFormLayoutValidatorError.Builder.of(
 					"Column size must be positive and less than maximum row " +
 						"size of 12",
-					DDMFormLayoutValidatorErrorStatus.
+					DDMFormLayoutValidatorError.Status.
 						INVALID_COLUMN_SIZE_EXCEPTION);
 
 			validateFormLayoutResponseErrors.add(
@@ -222,7 +221,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 				DDMFormLayoutValidatorError.Builder.of(
 					"The sum of all column sizes of a row must be less than " +
 						"the maximum row size of 12",
-					DDMFormLayoutValidatorErrorStatus.
+					DDMFormLayoutValidatorError.Status.
 						INVALID_ROW_SIZE_EXCEPTION);
 
 			validateFormLayoutResponseErrors.add(

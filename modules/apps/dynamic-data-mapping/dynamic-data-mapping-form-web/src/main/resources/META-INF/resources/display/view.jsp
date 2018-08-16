@@ -84,7 +84,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
 
 						<%
-						for (DDMFormValuesValidatorErrorStatus errorStatus : DDMFormValuesValidatorErrorStatus.values()) {
+						for (DDMFormValuesValidatorError.Status errorStatus : DDMFormValuesValidatorError.Status.values()) {
 						%>
 
 							<liferay-ui:error key="<%= errorStatus.name() %>" />

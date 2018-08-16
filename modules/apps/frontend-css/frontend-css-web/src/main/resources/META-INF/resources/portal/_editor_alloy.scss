@@ -1,8 +1,8 @@
 * [class*="ae-toolbar-"][role="toolbar"] {
-	z-index: 1000;
+	z-index: 980;
 
-	@include media-query($screen-sm) {
-		z-index: 1050;
+	@media (max-width: $screen-sm) {
+		z-index: 1000;
 	}
 }
 

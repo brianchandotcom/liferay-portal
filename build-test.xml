@@ -2925,9 +2925,64 @@ go</echo>
 					</then>
 				</elseif>
 				<elseif>
-					<contains string="@{liferay.portal.bundle}" substring="6.2" />
+					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.4" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.5" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.14" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.15" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.16" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.17" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.18" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.19" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.20" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.21" />
+					</or>
 					<then>
 						<var name="app.server.tomcat.version" value="7.0.62" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="@{liferay.portal.bundle}" substring="6.2" />
+					<then>
+						<var name="app.server.tomcat.version" value="7.0.90" />
+					</then>
+				</elseif>
+				<elseif>
+					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.0" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.1" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.2" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.3" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.4" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.5" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.6" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.1" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.2" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.3" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.4" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.5" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.6" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.7" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.8" />
+					</or>
+					<then>
+						<var name="app.server.tomcat.version" value="8.0.32" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="@{liferay.portal.bundle}" substring="7.0" />
+					<then>
+						<var name="app.server.tomcat.version" value="8.0.53" />
+					</then>
+				</elseif>
+				<elseif>
+					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.1.0" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.1.10" />
+					</or>
+					<then>
+						<var name="app.server.tomcat.version" value="9.0.6" />
 					</then>
 				</elseif>
 			</if>

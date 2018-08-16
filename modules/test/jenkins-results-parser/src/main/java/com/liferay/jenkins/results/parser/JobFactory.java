@@ -95,6 +95,13 @@ public class JobFactory {
 			return _jobs.get(jobName);
 		}
 
+		if (jobName.equals("test-portal-hotfix-release")) {
+			_jobs.put(
+				jobName, new PortalHotfixReleaseJob(jobName, portalBranchName));
+
+			return _jobs.get(jobName);
+		}
+
 		if (jobName.equals("test-portal-release")) {
 			_jobs.put(jobName, new PortalReleaseJob(jobName, portalBranchName));
 

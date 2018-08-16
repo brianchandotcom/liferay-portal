@@ -225,8 +225,8 @@ name = HtmlUtil.escapeJS(name);
 					onInitMethod: '<%= HtmlUtil.escapeJS(namespace + onInitMethod) %>',
 				</c:if>
 
-				portletId: '<%= portletId %>',
 				plugins: plugins,
+				portletId: '<%= portletId %>',
 				textMode: <%= (editorOptions != null) ? editorOptions.isTextMode() : Boolean.FALSE.toString() %>,
 
 				<%
@@ -236,6 +236,17 @@ name = HtmlUtil.escapeJS(name);
 				useCustomDataProcessor: <%= useCustomDataProcessor %>
 			}
 		).render();
+
+		CKEDITOR.dom.selection.prototype.selectElement = function(element) {
+			this.isLocked = 0;
+
+			var range = new CKEDITOR.dom.range(this.root);
+
+			range.setStartBefore(element);
+			range.setEndAfter(element);
+
+			this.selectRanges([range]);
+		};
 
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.alloyeditor.web#" + editorName + "#onEditorCreate" %>' />
 

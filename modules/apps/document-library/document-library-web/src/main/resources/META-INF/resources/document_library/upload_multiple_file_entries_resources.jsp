@@ -182,6 +182,8 @@ else {
 								}
 					%>
 
+								<aui:input name="ddmFormFieldNamespace" type="hidden" value="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>" />
+
 								<div class="document-type-fields">
 									<liferay-ddm:html
 										classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"

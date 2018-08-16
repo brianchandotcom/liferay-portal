@@ -291,7 +291,7 @@ public class HeaderResponseImpl
 		}
 	}
 
-	private String _addClosingTags(String xml) {
+	private static String _addClosingTags(String xml) {
 		xml = _addClosingTags(xml, "<link", "</link>");
 		xml = _addClosingTags(xml, "<LINK", "</LINK>");
 		xml = _addClosingTags(xml, "<meta", "</meta>");
@@ -300,7 +300,9 @@ public class HeaderResponseImpl
 		return xml;
 	}
 
-	private String _addClosingTags(String xml, String opening, String closing) {
+	private static String _addClosingTags(
+		String xml, String opening, String closing) {
+
 		StringBundler sb = null;
 
 		int fromIndex = 0;

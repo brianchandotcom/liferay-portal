@@ -60,6 +60,28 @@ public class DDMDataProviderTestUtil {
 		DDMForm ddmForm = DDMFormFactory.create(
 			restDDMDataProvider.getSettings());
 
+		DDMFormValues ddmFormValues =
+			createDDMRestDataProviderInstanceDDMFormValues(
+				ddmForm, inputParameterSettings, outputParameterSettings);
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getSiteDefault(), "Data provider");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
+
+		return DDMDataProviderInstanceLocalServiceUtil.addDataProviderInstance(
+			TestPropsValues.getUserId(), group.getGroupId(), nameMap, nameMap,
+			ddmFormValues, "rest", serviceContext);
+	}
+
+	public static DDMFormValues createDDMRestDataProviderInstanceDDMFormValues(
+		DDMForm ddmForm,
+		List<DDMDataProviderInputParametersSettings> inputParameterSettings,
+		List<DDMDataProviderOutputParametersSettings> outputParameterSettings) {
+
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
@@ -113,17 +135,7 @@ public class DDMDataProviderTestUtil {
 			}
 		}
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getSiteDefault(), "Data provider");
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group, TestPropsValues.getUserId());
-
-		return DDMDataProviderInstanceLocalServiceUtil.addDataProviderInstance(
-			TestPropsValues.getUserId(), group.getGroupId(), nameMap, nameMap,
-			ddmFormValues, "rest", serviceContext);
+		return ddmFormValues;
 	}
 
 	protected static DDMFormFieldValue createInputParameter(

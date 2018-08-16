@@ -37,6 +37,8 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorError;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorErrorStatus;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -61,6 +63,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -137,7 +141,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		validate(structure.getStructureId(), fields);
 	}
 
-	@Test(expected = DDMFormValuesValidationException.MustSetValidValue.class)
+	@Test
 	public void testCreateWithInvalidDDMFieldValue() throws Exception {
 		DDMStructure structure = addStructure(
 			_classNameId, "Default Structure");
@@ -167,13 +171,25 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_jsonStorageAdapter.create(
-			TestPropsValues.getCompanyId(), structure.getStructureId(),
-			ddmFormValues,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		try {
+			_jsonStorageAdapter.create(
+				TestPropsValues.getCompanyId(), structure.getStructureId(),
+				ddmFormValues,
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						MUST_SET_VALID_VALUE_EXCEPTION));
+		}
 	}
 
-	@Test(expected = DDMFormValuesValidationException.RequiredValue.class)
+	@Test
 	public void testCreateWithInvalidDDMFormValues() throws Exception {
 		DDMStructure structure = addStructure(
 			_classNameId, "Default Structure");
@@ -188,10 +204,22 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		_jsonStorageAdapter.create(
-			TestPropsValues.getCompanyId(), structure.getStructureId(),
-			ddmFormValues,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		try {
+			_jsonStorageAdapter.create(
+				TestPropsValues.getCompanyId(), structure.getStructureId(),
+				ddmFormValues,
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						REQUIRED_VALUE_EXCEPTION));
+		}
 	}
 
 	@Test
@@ -584,7 +612,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		validate(structure.getStructureId(), fields);
 	}
 
-	@Test(expected = DDMFormValuesValidationException.RequiredValue.class)
+	@Test
 	public void testUpdateWithInvalidDDMFormValues() throws Exception {
 		DDMStructure structure = addStructure(
 			_classNameId, "Default Structure");
@@ -612,9 +640,21 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
 
-		_jsonStorageAdapter.update(
-			classPK, ddmFormValues,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		try {
+			_jsonStorageAdapter.update(
+				classPK, ddmFormValues,
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			List<DDMFormValuesValidatorErrorStatus>
+				ddmFormValuesValidatorErrorStatus =
+					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+
+			Assert.assertTrue(
+				ddmFormValuesValidatorErrorStatus.contains(
+					DDMFormValuesValidatorErrorStatus.
+						REQUIRED_VALUE_EXCEPTION));
+		}
 	}
 
 	protected long create(
@@ -652,6 +692,23 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		}
 
 		return values;
+	}
+
+	protected List<DDMFormValuesValidatorErrorStatus>
+		getDDMFormValuesValidatorErrorStatus(
+			DDMFormValuesValidationException ddmfvve) {
+
+		List<DDMFormValuesValidatorError> ddmFormValuesValidatorErrors =
+			ddmfvve.getDDMFormValuesValidatorErrors();
+
+		Stream<DDMFormValuesValidatorError> ddmFormValuesValidatorErrorStream =
+			ddmFormValuesValidatorErrors.stream();
+
+		return ddmFormValuesValidatorErrorStream.map(
+			ddmFormValidatorError -> ddmFormValidatorError.getErrorStatus()
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	protected String getDocLibraryFieldValue(FileEntry fileEntry) {

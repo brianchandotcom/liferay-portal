@@ -26,8 +26,8 @@ import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocal
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMDataProviderTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -228,33 +228,8 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		DDMForm ddmForm = DDMFormFactory.create(ddmDataProviderSettings);
 
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"cacheable", Boolean.FALSE.toString()));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"key", "countryId"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"password", "test"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"url",
-				"http://localhost:8080/api/jsonws/country/get-countries"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"username", "test@liferay.com"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"timeout", "1000"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"value", "nameCurrentValue"));
-
-		return ddmFormValues;
+		return DDMDataProviderTestUtil.
+			createDDMRestDataProviderInstanceDDMFormValues(ddmForm, null, null);
 	}
 
 	protected DDMFormValues getDDMDataProviderInstanceFormValues(

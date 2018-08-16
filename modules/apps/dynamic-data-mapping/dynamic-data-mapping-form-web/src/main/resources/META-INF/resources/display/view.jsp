@@ -79,23 +79,15 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 						<liferay-ui:error exception="<%= DDMFormRenderingException.class %>" message="unable-to-render-the-selected-form" />
 						<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
 
-						<liferay-ui:error exception="<%= DDMFormValuesValidationException.MustSetValidValue.class %>">
+						<%
+						for (DDMFormValuesValidatorErrorStatus errorStatus : DDMFormValuesValidatorErrorStatus.values()) {
+						%>
 
-							<%
-							DDMFormValuesValidationException.MustSetValidValue msvv = (DDMFormValuesValidationException.MustSetValidValue)errorException;
-							%>
+							<liferay-ui:error key="<%= errorStatus.name() %>" />
 
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(msvv.getFieldName()) %>" key="validation-failed-for-field-x" translateArguments="<%= false %>" />
-						</liferay-ui:error>
-
-						<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">
-
-							<%
-							DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
-							%>
-
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(rv.getFieldName()) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
-						</liferay-ui:error>
+						<%
+						}
+						%>
 
 						<liferay-ui:error exception="<%= NoSuchFormInstanceException.class %>" message="the-selected-form-no-longer-exists" />
 						<liferay-ui:error exception="<%= NoSuchStructureException.class %>" message="unable-to-retrieve-the-definition-of-the-selected-form" />

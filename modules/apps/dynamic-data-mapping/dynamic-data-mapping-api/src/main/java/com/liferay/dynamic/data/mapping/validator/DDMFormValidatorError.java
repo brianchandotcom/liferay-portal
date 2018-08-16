@@ -27,7 +27,7 @@ public final class DDMFormValidatorError {
 		return _errorMessage;
 	}
 
-	public DDMFormValidatorErrorStatus getErrorStatus() {
+	public Status getErrorStatus() {
 		return _errorStatus;
 	}
 
@@ -38,13 +38,13 @@ public final class DDMFormValidatorError {
 	public static class Builder {
 
 		public static Builder newBuilder(
-			String errorMessage, DDMFormValidatorErrorStatus errorStatus) {
+			String errorMessage, Status errorStatus) {
 
 			return new Builder(errorMessage, errorStatus);
 		}
 
 		public static DDMFormValidatorError of(
-			String errorMessage, DDMFormValidatorErrorStatus errorStatus) {
+			String errorMessage, Status errorStatus) {
 
 			return newBuilder(
 				errorMessage, errorStatus
@@ -61,9 +61,7 @@ public final class DDMFormValidatorError {
 			return this;
 		}
 
-		private Builder(
-			String errorMessage, DDMFormValidatorErrorStatus errorStatus) {
-
+		private Builder(String errorMessage, Status errorStatus) {
 			_validateFormError._errorMessage = errorMessage;
 			_validateFormError._errorStatus = errorStatus;
 		}
@@ -73,11 +71,30 @@ public final class DDMFormValidatorError {
 
 	}
 
+	public enum Status {
+
+		MUST_NOT_DUPLICATE_FIELD_NAME_EXCEPTION,
+		MUST_SET_AVAILABLE_LOCALES_EXCEPTION,
+		MUST_SET_DEFAULT_LOCALE_AS_AVAILABLE_LOCALE_EXCEPTION,
+		MUST_SET_DEFAULT_LOCALE_EXCEPTION, MUST_SET_FIELD_TYPE_EXCEPTION,
+		MUST_SET_FIELDS_FOR_FORM_EXCEPTION,
+		MUST_SET_OPTIONS_FOR_FIELD_EXCEPTION,
+		MUST_SET_VALID_AVAILABLE_LOCALES_FOR_PROPERTY_EXCEPTION,
+		MUST_SET_VALID_CHARACTERS_FOR_FIELD_NAME_EXCEPTION,
+		MUST_SET_VALID_CHARACTERS_FOR_FIELD_TYPE_EXCEPTION,
+		MUST_SET_VALID_DEFAULT_LOCALE_FOR_PROPERTY_EXCEPTION,
+		MUST_SET_VALID_FORM_RULE_EXPRESSION_EXCEPTION,
+		MUST_SET_VALID_INDEX_TYPE_EXCEPTION,
+		MUST_SET_VALID_VALIDATION_EXPRESSION_EXCEPTION,
+		MUST_SET_VALID_VISIBILITY_EXPRESSION_EXCEPTION
+
+	}
+
 	private DDMFormValidatorError() {
 	}
 
 	private String _errorMessage;
-	private DDMFormValidatorErrorStatus _errorStatus;
+	private Status _errorStatus;
 	private final Map<String, Object> _properties = new HashMap<>();
 
 }

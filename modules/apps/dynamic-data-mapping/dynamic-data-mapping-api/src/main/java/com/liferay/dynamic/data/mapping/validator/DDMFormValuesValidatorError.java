@@ -27,7 +27,7 @@ public final class DDMFormValuesValidatorError {
 		return _errorMessage;
 	}
 
-	public DDMFormValuesValidatorErrorStatus getErrorStatus() {
+	public Status getErrorStatus() {
 		return _errorStatus;
 	}
 
@@ -38,15 +38,13 @@ public final class DDMFormValuesValidatorError {
 	public static class Builder {
 
 		public static Builder newBuilder(
-			String errorMessage,
-			DDMFormValuesValidatorErrorStatus errorStatus) {
+			String errorMessage, Status errorStatus) {
 
 			return new Builder(errorMessage, errorStatus);
 		}
 
 		public static DDMFormValuesValidatorError of(
-			String errorMessage,
-			DDMFormValuesValidatorErrorStatus errorStatus) {
+			String errorMessage, Status errorStatus) {
 
 			return newBuilder(
 				errorMessage, errorStatus
@@ -63,10 +61,7 @@ public final class DDMFormValuesValidatorError {
 			return this;
 		}
 
-		private Builder(
-			String errorMessage,
-			DDMFormValuesValidatorErrorStatus errorStatus) {
-
+		private Builder(String errorMessage, Status errorStatus) {
 			_validateFormValuesError._errorMessage = errorMessage;
 			_validateFormValuesError._errorStatus = errorStatus;
 		}
@@ -76,11 +71,21 @@ public final class DDMFormValuesValidatorError {
 
 	}
 
+	public enum Status {
+
+		MUST_NOT_SET_VALUE_EXCEPTION,
+		MUST_SET_VALID_AVAILABLE_LOCALES_EXCEPTION,
+		MUST_SET_VALID_DEFAULT_LOCALE_EXCEPTION, MUST_SET_VALID_FIELD_EXCEPTION,
+		MUST_SET_VALID_VALUE_EXCEPTION, MUST_SET_VALID_VALUES_SIZE_EXCEPTION,
+		REQUIRED_VALUE_EXCEPTION
+
+	}
+
 	private DDMFormValuesValidatorError() {
 	}
 
 	private String _errorMessage;
-	private DDMFormValuesValidatorErrorStatus _errorStatus;
+	private Status _errorStatus;
 	private final Map<String, Object> _properties = new HashMap<>();
 
 }

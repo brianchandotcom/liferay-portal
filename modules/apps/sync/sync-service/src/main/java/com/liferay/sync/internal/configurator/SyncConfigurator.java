@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.sync.internal.messaging.SyncMaintenanceMessageListener;
-import com.liferay.sync.internal.util.VerifyUtil;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.util.SyncHelper;
@@ -66,15 +65,6 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-
-		try {
-			if (SyncServiceConfigurationValues.SYNC_VERIFY) {
-				_verifyUtil.doVerify();
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 
 		_dlSyncEventProcessorServiceRegistration = registerMessageListener(
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
@@ -142,8 +132,5 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 
 	private ServiceRegistration<Destination>
 		_syncMaintenanceProcessorServiceRegistration;
-
-	@Reference
-	private VerifyUtil _verifyUtil;
 
 }

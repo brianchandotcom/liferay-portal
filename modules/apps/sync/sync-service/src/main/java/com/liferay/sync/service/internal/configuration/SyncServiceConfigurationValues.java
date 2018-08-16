@@ -115,8 +115,4 @@ public class SyncServiceConfigurationValues {
 		SyncServiceConfigurationUtil.get(
 			SyncServiceConfigurationKeys.SYNC_SERVICES_ENABLED));
 
-	public static final boolean SYNC_VERIFY = GetterUtil.getBoolean(
-		SyncServiceConfigurationUtil.get(
-			SyncServiceConfigurationKeys.SYNC_VERIFY));
-
 }

@@ -87,6 +87,14 @@ public class JobFactory {
 			return _jobs.get(jobName);
 		}
 
+		if (jobName.equals("test-portal-fixpack-release")) {
+			_jobs.put(
+				jobName,
+				new PortalFixpackReleaseJob(jobName, portalBranchName));
+
+			return _jobs.get(jobName);
+		}
+
 		if (jobName.equals("test-portal-release")) {
 			_jobs.put(jobName, new PortalReleaseJob(jobName, portalBranchName));
 

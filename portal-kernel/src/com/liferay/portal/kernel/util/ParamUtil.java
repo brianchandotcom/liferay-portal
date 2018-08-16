@@ -2507,22 +2507,23 @@ public class ParamUtil {
 	private static final Form _FORM;
 
 	static {
-		String form = PropsUtil.get(PropsKeys.UNICODE_TEXT_NORMALIZER_FORM);
+		String formString = PropsUtil.get(
+			PropsKeys.UNICODE_TEXT_NORMALIZER_FORM);
 
-		if (form.equals("NFC")) {
-			_FORM = Normalizer.Form.NFC;
-		}
-		else if (form.equals("NFD")) {
-			_FORM = Normalizer.Form.NFD;
-		}
-		else if (form.equals("NFKC")) {
-			_FORM = Normalizer.Form.NFKC;
-		}
-		else if (form.equals("NFKD")) {
-			_FORM = Normalizer.Form.NFKD;
+		if ((formString == null) || formString.isEmpty()) {
+			_FORM = null;
 		}
 		else {
-			_FORM = null;
+			Form form = null;
+
+			try {
+				form = Normalizer.Form.valueOf(formString);
+			}
+			catch (IllegalArgumentException iae) {
+				form = null;
+			}
+
+			_FORM = form;
 		}
 	}
 

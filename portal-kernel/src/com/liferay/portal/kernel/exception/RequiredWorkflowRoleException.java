@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.exception;
 
-import com.liferay.portal.kernel.exception.RequiredRoleException;
-
 /**
  * @author István András Dézsi
  */
@@ -50,7 +48,6 @@ public class RequiredWorkflowRoleException extends RequiredRoleException {
 		extends RequiredWorkflowRoleException {
 
 		public MustNotDeleteRoleReferencedByWorkflowDefinition(long roleId) {
-
 			super(
 				String.format(
 					"Role %s cannot be deleted because it is referenced by " +
@@ -68,7 +65,7 @@ public class RequiredWorkflowRoleException extends RequiredRoleException {
 		RequiredWorkflowRoleException.
 			MustNotDeleteRoleReferencedByCurrentWorkflowTask.class,
 		RequiredWorkflowRoleException.
-			MustNotDeleteRoleReferencedByWorkflowDefinition.class,
+			MustNotDeleteRoleReferencedByWorkflowDefinition.class
 	};
 
 }

@@ -223,7 +223,7 @@ public class LiferayConnectionProperties
 				"null",
 			getReferencedComponentId());
 
-		return null;
+		return getLiferayConnectionProperties();
 	}
 
 	@Override

@@ -73,7 +73,6 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 
 	@Override
 	protected String getPage() {
-		String searchResultCssClass = _searchResultCssClass;
 		String displayStyle = _displayStyle;
 
 		if (Validator.isNull(displayStyle)) {

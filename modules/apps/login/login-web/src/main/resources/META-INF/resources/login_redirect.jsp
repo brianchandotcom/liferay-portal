@@ -158,7 +158,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 
 		if (typeof afterLogin == 'function') {
 			window.opener.parent.document.getElementsByName('p_auth')[0].value = '<%= AuthTokenUtil.getToken(request) %>';
-			afterLogin('<%= HtmlUtil.escape(emailAddress) %>', <%= anonymousAccount %>);
+			afterLogin('<%= HtmlUtil.escapeJS(emailAddress) %>', <%= anonymousAccount %>);
 
 			if (<%= !anonymousAccount || !company.isStrangers() %>) {
 				window.opener.parent.Liferay.fire(

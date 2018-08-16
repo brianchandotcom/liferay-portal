@@ -4078,6 +4078,10 @@ log.sanitizer.enabled=false</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="modules-unit-project-templates-jdk8">
+		<antcall target="modules-unit-jdk8" />
+	</target>
+
 	<target name="oracle-service-start">
 		<exec executable="service" failonerror="true">
 			<arg line="oracledb start" />

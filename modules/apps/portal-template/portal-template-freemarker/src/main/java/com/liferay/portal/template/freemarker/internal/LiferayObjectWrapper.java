@@ -102,11 +102,11 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			}
 
 			if (object instanceof Collection) {
-				return _COLLECTION_MODEL_FACTORY.create(object, this);
+				return new SimpleSequence((Collection)object, this);
 			}
 
 			if (object instanceof Map) {
-				return _MAP_MODEL_FACTORY.create(object, this);
+				return new MapModel((Map)object, this);
 			}
 
 			return _STRING_MODEL_FACTORY.create(object, this);
@@ -140,18 +140,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 		return _STRING_MODEL_FACTORY.create(object, this);
 	}
 
-	private static final ModelFactory _COLLECTION_MODEL_FACTORY =
-		new ModelFactory() {
-
-			@Override
-			public TemplateModel create(
-				Object object, ObjectWrapper objectWrapper) {
-
-				return new SimpleSequence((Collection)object, objectWrapper);
-			}
-
-		};
-
 	private static final ModelFactory _ENUMERATION_MODEL_FACTORY =
 		new ModelFactory() {
 
@@ -164,17 +152,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			}
 
 		};
-
-	private static final ModelFactory _MAP_MODEL_FACTORY = new ModelFactory() {
-
-		@Override
-		public TemplateModel create(
-			Object object, ObjectWrapper objectWrapper) {
-
-			return new MapModel((Map)object, (BeansWrapper)objectWrapper);
-		}
-
-	};
 
 	private static final ModelFactory _RESOURCE_BUNDLE_MODEL_FACTORY =
 		new ModelFactory() {

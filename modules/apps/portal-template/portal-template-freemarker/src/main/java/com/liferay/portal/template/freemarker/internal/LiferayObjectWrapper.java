@@ -113,7 +113,7 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			return _STRING_MODEL_FACTORY.create(object, this);
 		}
 
-		ModelFactory modelFactory = _modelFactories.get(object.getClass());
+		ModelFactory modelFactory = _modelFactories.get(clazz);
 
 		if (modelFactory != null) {
 			return modelFactory.create(object, this);

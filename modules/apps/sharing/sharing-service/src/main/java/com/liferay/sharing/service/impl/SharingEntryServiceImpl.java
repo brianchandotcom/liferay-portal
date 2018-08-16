@@ -17,6 +17,8 @@ package com.liferay.sharing.service.impl;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -54,6 +56,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			sharingEntryActionKeys, serviceContext);
 	}
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
@@ -73,6 +76,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			});
 	}
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public void destroy() {
 		super.destroy();

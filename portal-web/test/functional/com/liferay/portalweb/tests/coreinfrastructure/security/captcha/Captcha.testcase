@@ -61,6 +61,8 @@
 
 		<!-- LPS-84310 -->
 
+		<execute macro="SystemSettings#resetConfiguration" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />

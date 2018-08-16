@@ -17,33 +17,36 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
+import java.lang.reflect.Method;
+
 import org.apache.struts.mock.MockHttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Preston Crary
  */
-@RunWith(PowerMockRunner.class)
-public class ParamUtilTest extends PowerMockito {
+public class ParamUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Props props = mock(Props.class);
+		final Method getMethod = Props.class.getMethod("get", String.class);
 
-		when(
-			props.get(PropsKeys.UNICODE_TEXT_NORMALIZER_FORM)
-		).thenReturn(
-			"NFC"
-		);
+		Props props = (Props)ProxyUtil.newProxyInstance(
+			Props.class.getClassLoader(), new Class<?>[] {Props.class},
+			(proxy, method, args) -> {
+				if (getMethod.equals(method) &&
+					args[0].equals(PropsKeys.UNICODE_TEXT_NORMALIZER_FORM)) {
+
+					return "NFC";
+				}
+
+				throw new UnsupportedOperationException();
+			});
 
 		PropsUtil.setProps(props);
 	}

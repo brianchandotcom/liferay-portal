@@ -31,14 +31,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Igor Spasic
  */
-public class JSONServiceActionTest extends PowerMockito {
+public class JSONServiceActionTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

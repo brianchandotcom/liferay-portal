@@ -26,10 +26,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -60,25 +57,20 @@ public class DLFileEntrySharingPermissionChecker
 					sharingEntryActionKey.getActionId())) {
 
 				return false;
-			};
+			}
 		}
 
 		return true;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
+	private static final Set<SharingEntryActionKey> _actionKeysSet =
+		new HashSet<>();
+
+	static {
 		_actionKeysSet.add(SharingEntryActionKey.ADD_DISCUSSION);
 		_actionKeysSet.add(SharingEntryActionKey.UPDATE);
 		_actionKeysSet.add(SharingEntryActionKey.VIEW);
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		_actionKeysSet.clear();
-	}
-
-	private final Set<SharingEntryActionKey> _actionKeysSet = new HashSet<>();
 
 	@Reference(
 		target = "(&(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)(!(component.name=" + SharingEntryDLFileEntryModelResourcePermissionRegistrar.COMPONENT_NAME + ")))"

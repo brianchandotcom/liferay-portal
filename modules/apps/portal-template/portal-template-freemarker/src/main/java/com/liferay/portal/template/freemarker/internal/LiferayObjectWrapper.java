@@ -24,6 +24,7 @@ import freemarker.ext.beans.EnumerationModel;
 import freemarker.ext.beans.MapModel;
 import freemarker.ext.beans.ResourceBundleModel;
 import freemarker.ext.beans.StringModel;
+import freemarker.ext.dom.NodeModel;
 import freemarker.ext.util.ModelFactory;
 
 import freemarker.template.Configuration;
@@ -123,21 +124,24 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 	@Override
 	protected TemplateModel handleUnknownType(Object object) {
+		ModelFactory modelFactory = null;
+
 		if (object instanceof Node) {
-			return wrapDomNode(object);
+			modelFactory = _NODE_MODEL_FACTORY;
+		}
+		else if (object instanceof ResourceBundle) {
+			modelFactory = _RESOURCE_BUNDLE_MODEL_FACTORY;
+		}
+		else if (object instanceof Enumeration) {
+			modelFactory = _ENUMERATION_MODEL_FACTORY;
+		}
+		else {
+			modelFactory = _STRING_MODEL_FACTORY;
 		}
 
-		if (object instanceof ResourceBundle) {
-			return _RESOURCE_BUNDLE_MODEL_FACTORY.create(object, this);
-		}
+		_modelFactories.put(object.getClass(), modelFactory);
 
-		if (object instanceof Enumeration) {
-			return _ENUMERATION_MODEL_FACTORY.create(object, this);
-		}
-
-		_modelFactories.put(object.getClass(), _STRING_MODEL_FACTORY);
-
-		return _STRING_MODEL_FACTORY.create(object, this);
+		return modelFactory.create(object, this);
 	}
 
 	private static final ModelFactory _ENUMERATION_MODEL_FACTORY =
@@ -152,6 +156,17 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			}
 
 		};
+
+	private static final ModelFactory _NODE_MODEL_FACTORY = new ModelFactory() {
+
+		@Override
+		public TemplateModel create(
+			Object object, ObjectWrapper objectWrapper) {
+
+			return NodeModel.wrap((Node)object);
+		}
+
+	};
 
 	private static final ModelFactory _RESOURCE_BUNDLE_MODEL_FACTORY =
 		new ModelFactory() {

@@ -25,6 +25,7 @@ import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -38,13 +39,16 @@ import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryModel;
+import com.liferay.sharing.model.SharingEntrySoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,6 +64,7 @@ import java.util.Map;
  * @see SharingEntryModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	implements SharingEntryModel {
@@ -122,6 +127,55 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	public static final long TOUSERID_COLUMN_BITMASK = 32L;
 	public static final long UUID_COLUMN_BITMASK = 64L;
 	public static final long SHARINGENTRYID_COLUMN_BITMASK = 128L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static SharingEntry toModel(SharingEntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		SharingEntry model = new SharingEntryImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setSharingEntryId(soapModel.getSharingEntryId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setFromUserId(soapModel.getFromUserId());
+		model.setToUserId(soapModel.getToUserId());
+		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassPK(soapModel.getClassPK());
+		model.setActionIds(soapModel.getActionIds());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<SharingEntry> toModels(SharingEntrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<SharingEntry> models = new ArrayList<SharingEntry>(soapModels.length);
+
+		for (SharingEntrySoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.sharing.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.sharing.model.SharingEntry"));
 
@@ -249,6 +303,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -272,6 +327,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getSharingEntryId() {
 		return _sharingEntryId;
@@ -282,6 +338,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		_sharingEntryId = sharingEntryId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -304,6 +361,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -326,6 +384,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -336,6 +395,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -352,6 +412,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getFromUserId() {
 		return _fromUserId;
@@ -390,6 +451,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		return _originalFromUserId;
 	}
 
+	@JSON
 	@Override
 	public long getToUserId() {
 		return _toUserId;
@@ -448,6 +510,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		setClassNameId(classNameId);
 	}
 
+	@JSON
 	@Override
 	public long getClassNameId() {
 		return _classNameId;
@@ -470,6 +533,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		return _originalClassNameId;
 	}
 
+	@JSON
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -492,6 +556,7 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		return _originalClassPK;
 	}
 
+	@JSON
 	@Override
 	public long getActionIds() {
 		return _actionIds;

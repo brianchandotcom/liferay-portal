@@ -8,5 +8,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.sharing.service.impl.SharingEntryLocalServiceImpl" id="com.liferay.sharing.service.SharingEntryLocalService" />
+	<bean class="com.liferay.sharing.service.impl.SharingEntryServiceImpl" id="com.liferay.sharing.service.SharingEntryService" />
 	<bean class="com.liferay.sharing.service.persistence.impl.SharingEntryPersistenceImpl" id="com.liferay.sharing.service.persistence.SharingEntryPersistence" parent="basePersistence" />
 </beans>

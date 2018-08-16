@@ -43,11 +43,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 
+	public static final String COMPONENT_NAME =
+		"com.liferay.sharing.document.library.internal.security.permission." +
+			"resource.SharingEntryDLFileEntryModelResourcePermission";
+
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("component.name", _COMPONENT_NAME);
+		properties.put("component.name", COMPONENT_NAME);
 		properties.put("model.class.name", DLFileEntry.class.getName());
 		properties.put("service.ranking", 100);
 
@@ -70,10 +74,6 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 		_serviceRegistration.unregister();
 	}
 
-	private static final String _COMPONENT_NAME =
-		"com.liferay.sharing.document.library.internal.security.permission." +
-			"resource.SharingEntryDLFileEntryModelResourcePermission";
-
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
@@ -81,7 +81,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference(
-		target = "(&(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)(!(component.name=" + _COMPONENT_NAME + ")))"
+		target = "(&(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)(!(component.name=" + COMPONENT_NAME + ")))"
 	)
 	private ModelResourcePermission<DLFileEntry>
 		_dlFileEntryModelResourcePermission;

@@ -39,10 +39,6 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		return _searchResultCssClass;
 	}
 
-	public void setSearchResultCssClass(String searchResultCssClass) {
-		_searchResultCssClass = searchResultCssClass;
-	}
-
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
@@ -58,6 +54,10 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 
 	public void setResultRowSplitter(ResultRowSplitter resultRowSplitter) {
 		_resultRowSplitter = resultRowSplitter;
+	}
+
+	public void setSearchResultCssClass(String searchResultCssClass) {
+		_searchResultCssClass = searchResultCssClass;
 	}
 
 	@Override
@@ -102,7 +102,8 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		request.setAttribute(
 			"liferay-ui:search-iterator:resultRowSplitter", _resultRowSplitter);
 		request.setAttribute(
-			"liferay-ui:search-iterator:searchResultCssClass", getSearchResultCssClass());
+			"liferay-ui:search-iterator:searchResultCssClass",
+			getSearchResultCssClass());
 	}
 
 	private String _displayStyle = DEFAULT_DISPLAY_STYLE;

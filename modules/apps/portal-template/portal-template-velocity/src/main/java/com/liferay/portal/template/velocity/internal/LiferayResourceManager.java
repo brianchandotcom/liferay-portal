@@ -139,6 +139,8 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 					TemplateResource.class.getName(), StringPool.POUND,
 					TemplateConstants.LANG_TYPE_VM));
 
+		_portalCache.removeAll();
+
 		super.initialize(runtimeServices);
 	}
 

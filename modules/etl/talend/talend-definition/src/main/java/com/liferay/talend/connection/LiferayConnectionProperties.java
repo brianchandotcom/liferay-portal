@@ -292,6 +292,22 @@ public class LiferayConnectionProperties
 
 		wizardForm.addRow(anonymousLogin);
 
+		wizardForm.addRow(siteFilter);
+
+		Widget webSiteURLWizardWidget = Widget.widget(webSiteURL);
+
+		webSiteURLWizardWidget.setCallAfter(true);
+		webSiteURLWizardWidget.setWidgetType(
+			Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
+
+		wizardForm.addRow(webSiteURLWizardWidget);
+
+		Widget webSiteWizardWidget = Widget.widget(webSite);
+
+		webSiteWizardWidget.setReadonly(true);
+
+		wizardForm.addColumn(webSiteWizardWidget);
+
 		Widget testConnectionWidget = Widget.widget(testConnection);
 
 		testConnectionWidget.setLongRunning(true);

@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorError;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorErrorStatus;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorValidateRequest;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -113,23 +112,22 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_NOT_SET_VALUE_EXCEPTION));
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_DEFAULT_LOCALE_EXCEPTION));
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_FIELD_EXCEPTION));
 		}
 	}
@@ -168,13 +166,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_VALUE_EXCEPTION));
 		}
 	}
@@ -213,13 +210,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_VALUE_EXCEPTION));
 		}
 	}
@@ -275,13 +271,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_FIELD_EXCEPTION));
 		}
 	}
@@ -325,13 +320,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_FIELD_EXCEPTION));
 		}
 	}
@@ -361,13 +355,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_VALUE_EXCEPTION));
 		}
 	}
@@ -404,13 +397,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						REQUIRED_VALUE_EXCEPTION));
 		}
 	}
@@ -453,13 +445,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						REQUIRED_VALUE_EXCEPTION));
 		}
 	}
@@ -487,13 +478,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						REQUIRED_VALUE_EXCEPTION));
 		}
 	}
@@ -524,13 +514,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						REQUIRED_VALUE_EXCEPTION));
 		}
 	}
@@ -714,13 +703,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						REQUIRED_VALUE_EXCEPTION));
 		}
 	}
@@ -765,13 +753,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						REQUIRED_VALUE_EXCEPTION));
 		}
 	}
@@ -809,13 +796,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_AVAILABLE_LOCALES_EXCEPTION));
 		}
 	}
@@ -843,13 +829,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						REQUIRED_VALUE_EXCEPTION));
 		}
 	}
@@ -916,13 +901,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_NOT_SET_VALUE_EXCEPTION));
 		}
 	}
@@ -956,13 +940,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_VALUE_EXCEPTION));
 		}
 	}
@@ -1002,13 +985,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_NOT_SET_VALUE_EXCEPTION));
 		}
 	}
@@ -1043,13 +1025,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_AVAILABLE_LOCALES_EXCEPTION));
 		}
 	}
@@ -1083,13 +1064,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_DEFAULT_LOCALE_EXCEPTION));
 		}
 	}
@@ -1128,13 +1108,12 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_VALUE_EXCEPTION));
 		}
 	}
@@ -1182,18 +1161,17 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 			_ddmFormValuesValidatorImpl.validate(builder.build());
 		}
 		catch (DDMFormValuesValidationException ddmfvve) {
-			List<DDMFormValuesValidatorErrorStatus>
-				ddmFormValuesValidatorErrorStatus =
-					getDDMFormValuesValidatorErrorStatus(ddmfvve);
+			List<DDMFormValuesValidatorError.Status> errorStatusList =
+				getDDMFormValuesValidatorErrorStatus(ddmfvve);
 
 			Assert.assertTrue(
-				ddmFormValuesValidatorErrorStatus.contains(
-					DDMFormValuesValidatorErrorStatus.
+				errorStatusList.contains(
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_VALUES_SIZE_EXCEPTION));
 		}
 	}
 
-	protected List<DDMFormValuesValidatorErrorStatus>
+	protected List<DDMFormValuesValidatorError.Status>
 		getDDMFormValuesValidatorErrorStatus(
 			DDMFormValuesValidationException ddmfvve) {
 

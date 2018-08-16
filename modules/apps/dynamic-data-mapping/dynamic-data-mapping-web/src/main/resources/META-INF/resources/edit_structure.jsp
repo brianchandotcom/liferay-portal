@@ -106,7 +106,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
 
 		<%
-		for (DDMFormLayoutValidatorErrorStatus errorStatus : DDMFormLayoutValidatorErrorStatus.values()) {
+		for (DDMFormLayoutValidatorError.Status errorStatus : DDMFormLayoutValidatorError.Status.values()) {
 		%>
 
 			<liferay-ui:error key="<%= errorStatus.name() %>" />
@@ -118,7 +118,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 		<liferay-ui:error exception="<%= DDMFormValidationException.class %>" message="please-enter-a-valid-form-definition" />
 
 		<%
-		for (DDMFormValidatorErrorStatus errorStatus : DDMFormValidatorErrorStatus.values()) {
+		for (DDMFormValidatorError.Status errorStatus : DDMFormValidatorError.Status.values()) {
 		%>
 
 			<liferay-ui:error key="<%= errorStatus.name() %>" />

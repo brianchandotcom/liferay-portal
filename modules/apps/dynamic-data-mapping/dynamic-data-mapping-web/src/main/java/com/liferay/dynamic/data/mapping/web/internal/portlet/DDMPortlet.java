@@ -40,10 +40,8 @@ import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorError;
-import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidatorErrorStatus;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidatorError;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValidatorErrorStatus;
 import com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.web.internal.display.context.DDMDisplayContext;
 import com.liferay.petra.string.StringPool;
@@ -235,7 +233,7 @@ public class DDMPortlet extends MVCPortlet {
 		DDMFormLayoutValidatorError ddmFormLayoutValidatorError,
 		ActionRequest actionRequest) {
 
-		DDMFormLayoutValidatorErrorStatus errorStatus =
+		DDMFormLayoutValidatorError.Status errorStatus =
 			ddmFormLayoutValidatorError.getErrorStatus();
 
 		Map<String, Object> properties =
@@ -247,7 +245,7 @@ public class DDMPortlet extends MVCPortlet {
 		Locale locale = themeDisplay.getLocale();
 
 		if (errorStatus ==
-				DDMFormLayoutValidatorErrorStatus.
+				DDMFormLayoutValidatorError.Status.
 					MUST_NOT_DUPLICATE_FIELD_NAME_EXCEPTION) {
 
 			Set<String> fields = (Set<String>)properties.get("fields");
@@ -274,7 +272,7 @@ public class DDMPortlet extends MVCPortlet {
 		DDMFormValidatorError ddmFormValidatorError,
 		ActionRequest actionRequest) {
 
-		DDMFormValidatorErrorStatus errorStatus =
+		DDMFormValidatorError.Status errorStatus =
 			ddmFormValidatorError.getErrorStatus();
 
 		Map<String, Object> properties = ddmFormValidatorError.getProperties();
@@ -285,7 +283,7 @@ public class DDMPortlet extends MVCPortlet {
 		Locale locale = themeDisplay.getLocale();
 
 		if (errorStatus ==
-				DDMFormValidatorErrorStatus.
+				DDMFormValidatorError.Status.
 					MUST_NOT_DUPLICATE_FIELD_NAME_EXCEPTION) {
 
 			String field = HtmlUtil.escape(
@@ -299,7 +297,7 @@ public class DDMPortlet extends MVCPortlet {
 			SessionErrors.add(actionRequest, errorStatus.name(), value);
 		}
 		else if (errorStatus ==
-					 DDMFormValidatorErrorStatus.
+					 DDMFormValidatorError.Status.
 						 MUST_SET_OPTIONS_FOR_FIELD_EXCEPTION) {
 
 			String field = HtmlUtil.escape(
@@ -312,7 +310,7 @@ public class DDMPortlet extends MVCPortlet {
 			SessionErrors.add(actionRequest, errorStatus.name(), value);
 		}
 		else if (errorStatus ==
-					 DDMFormValidatorErrorStatus.
+					 DDMFormValidatorError.Status.
 						 MUST_SET_VALID_CHARACTERS_FOR_FIELD_NAME_EXCEPTION) {
 
 			String field = HtmlUtil.escape(

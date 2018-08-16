@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidatorError;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValidatorErrorStatus;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidatorValidateRequest;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -72,7 +71,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError validateFormResponseError =
 				DDMFormValidatorError.Builder.of(
 					"At least one field must be set",
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_FIELDS_FOR_FORM_EXCEPTION);
 
 			validateFormErrors.add(validateFormResponseError);
@@ -110,7 +109,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_VALID_FORM_RULE_EXPRESSION_EXCEPTION
 				).withProperty(
 					"expression", ddmExpressionString
@@ -133,7 +132,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 				DDMFormValidatorError.Builder.of(
 					"The available locales property was not set for the DDM " +
 						"form",
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_AVAILABLE_LOCALES_EXCEPTION
 				);
 
@@ -152,7 +151,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_DEFAULT_LOCALE_AS_AVAILABLE_LOCALE_EXCEPTION
 				).withProperty(
 					"locale", defaultLocale
@@ -179,7 +178,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_VALID_INDEX_TYPE_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
@@ -208,7 +207,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_VALID_CHARACTERS_FOR_FIELD_NAME_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
@@ -227,7 +226,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_NOT_DUPLICATE_FIELD_NAME_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
@@ -281,7 +280,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_OPTIONS_FOR_FIELD_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
@@ -321,7 +320,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_VALID_DEFAULT_LOCALE_FOR_PROPERTY_EXCEPTION
 				).withProperty(
 					"field", fieldName
@@ -343,7 +342,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_VALID_AVAILABLE_LOCALES_FOR_PROPERTY_EXCEPTION
 				).withProperty(
 					"field", fieldName
@@ -424,7 +423,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.MUST_SET_FIELD_TYPE_EXCEPTION
+					DDMFormValidatorError.Status.MUST_SET_FIELD_TYPE_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
 				);
@@ -443,7 +442,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_VALID_CHARACTERS_FOR_FIELD_TYPE_EXCEPTION
 				).withProperty(
 					"type", ddmFormField.getType()
@@ -483,7 +482,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_VALID_VALIDATION_EXPRESSION_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
@@ -518,7 +517,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError.Builder builder =
 				DDMFormValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_VALID_VISIBILITY_EXPRESSION_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
@@ -544,7 +543,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormValidatorError validateFormResponseError =
 				DDMFormValidatorError.Builder.of(
 					"The default locale property was not set for the DDM form",
-					DDMFormValidatorErrorStatus.
+					DDMFormValidatorError.Status.
 						MUST_SET_DEFAULT_LOCALE_EXCEPTION
 				);
 

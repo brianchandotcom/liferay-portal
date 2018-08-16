@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.service.util;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredWorkflowRoleException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -72,8 +70,7 @@ public class RolesWorkflowUtil {
 					count =
 						KaleoInstanceLocalServiceUtil.getKaleoInstancesCount(
 							kaleoDefinitionVersion.
-								getKaleoDefinitionVersionId(),
-									false);
+								getKaleoDefinitionVersionId(), false);
 
 					if (count > 0) {
 						throw new RequiredWorkflowRoleException.

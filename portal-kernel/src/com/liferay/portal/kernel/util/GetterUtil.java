@@ -1951,6 +1951,10 @@ public class GetterUtil {
 	public static String[] getStringValues(
 		Object[] values, Supplier<String[]> defaultValueSupplier) {
 
+		if (values instanceof String[]) {
+			return (String[])values;
+		}
+
 		if (values == null) {
 			return defaultValueSupplier.get();
 		}

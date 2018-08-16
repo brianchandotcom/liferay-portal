@@ -62,8 +62,6 @@ import javax.naming.ldap.Control;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -782,38 +780,6 @@ public class LDAPAuth implements Authenticator {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
-	}
-
-	private String _escapeCharacters(String attribute) {
-		if (attribute.contains(StringPool.BACK_SLASH)) {
-			String escapedSingleBackSlash = StringPool.DOUBLE_BACK_SLASH.concat(
-				StringPool.BACK_SLASH);
-
-			attribute = attribute.replace(
-				StringPool.BACK_SLASH, escapedSingleBackSlash);
-		}
-		else {
-			attribute = StringEscapeUtils.escapeJava(attribute);
-		}
-
-		String[] characters = {
-			StringPool.GREATER_THAN, StringPool.LESS_THAN, StringPool.PLUS,
-			StringPool.POUND, StringPool.QUOTE, StringPool.SEMICOLON
-		};
-
-		String[] newCharacters = {
-			StringPool.DOUBLE_BACK_SLASH.concat(StringPool.GREATER_THAN),
-			StringPool.DOUBLE_BACK_SLASH.concat(StringPool.LESS_THAN),
-			StringPool.DOUBLE_BACK_SLASH.concat(StringPool.PLUS),
-			StringPool.DOUBLE_BACK_SLASH.concat(StringPool.POUND),
-			StringPool.DOUBLE_BACK_SLASH.concat(StringPool.QUOTE),
-			StringPool.DOUBLE_BACK_SLASH.concat(StringPool.SEMICOLON)
-		};
-
-		String escapedAttribute = StringUtil.replace(
-			attribute, characters, newCharacters);
-
-		return escapedAttribute;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LDAPAuth.class);

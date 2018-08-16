@@ -666,12 +666,17 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
+		catch (PortalException pe) {
+			if (_log.isInfoEnabled()) {
+				_log.info(pe.getMessage());
+			}
+
+			_handleException(renderRequest, renderResponse, pe);
+		}
 		catch (Exception e) {
 			_log.error(e.getMessage());
 
-			SessionErrors.add(renderRequest, e.getClass());
-
-			include("/error.jsp", renderRequest, renderResponse);
+			_handleException(renderRequest, renderResponse, e);
 		}
 	}
 
@@ -1049,6 +1054,16 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		portletPreferences.store();
+	}
+
+	private void _handleException(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			Exception e)
+		throws IOException, PortletException {
+
+		SessionErrors.add(renderRequest, e.getClass());
+
+		include("/error.jsp", renderRequest, renderResponse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

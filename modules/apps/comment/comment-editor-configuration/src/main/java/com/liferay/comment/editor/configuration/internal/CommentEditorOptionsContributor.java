@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	property = {"editor.config.key=commentEditor"},
+	property = "editor.config.key=commentEditor",
 	service = EditorOptionsContributor.class
 )
 public class CommentEditorOptionsContributor

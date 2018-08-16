@@ -671,15 +671,13 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				_log.info(pe.getMessage());
 			}
 
-			SessionErrors.add(renderRequest, pe.getClass());
+			_handleException(renderRequest, renderResponse, pe);
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage());
 
-			SessionErrors.add(renderRequest, e.getClass());
+			_handleException(renderRequest, renderResponse, e);
 		}
-
-		include("/error.jsp", renderRequest, renderResponse);
 	}
 
 	protected String[] getActionIds(
@@ -1056,6 +1054,16 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		portletPreferences.store();
+	}
+
+	private void _handleException(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			Exception e)
+		throws IOException, PortletException {
+
+		SessionErrors.add(renderRequest, e.getClass());
+
+		include("/error.jsp", renderRequest, renderResponse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

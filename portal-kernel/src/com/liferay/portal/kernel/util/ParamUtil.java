@@ -183,7 +183,7 @@ public class ParamUtil {
 			request.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
-			return normalize(StringUtil.trim(returnValue));
+			return _normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -343,7 +343,7 @@ public class ParamUtil {
 			portletRequest.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
-			return normalize(StringUtil.trim(returnValue));
+			return _normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -503,7 +503,7 @@ public class ParamUtil {
 			serviceContext.getAttribute(param), defaultValue);
 
 		if (returnValue != null) {
-			return normalize(StringUtil.trim(returnValue));
+			return _normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -1982,14 +1982,14 @@ public class ParamUtil {
 		String[] values = request.getParameterValues(param);
 
 		if (values == null) {
-			return normalize(defaultValue);
+			return _normalize(defaultValue);
 		}
 
 		if (split && (values.length == 1)) {
-			return normalize(StringUtil.split(values[0]));
+			return _normalize(StringUtil.split(values[0]));
 		}
 
-		return normalize(values);
+		return _normalize(values);
 	}
 
 	/**
@@ -2242,7 +2242,7 @@ public class ParamUtil {
 	 * @return the request parameter value as a String
 	 */
 	public static String getString(HttpServletRequest request, String param) {
-		return normalize(GetterUtil.getString(request.getParameter(param)));
+		return _normalize(GetterUtil.getString(request.getParameter(param)));
 	}
 
 	/**
@@ -2272,7 +2272,7 @@ public class ParamUtil {
 	public static String getString(
 		PortletRequest portletRequest, String param) {
 
-		return normalize(
+		return _normalize(
 			GetterUtil.getString(portletRequest.getParameter(param)));
 	}
 
@@ -2304,7 +2304,7 @@ public class ParamUtil {
 	public static String getString(
 		ServiceContext serviceContext, String param) {
 
-		return normalize(
+		return _normalize(
 			GetterUtil.getString(serviceContext.getAttribute(param)));
 	}
 
@@ -2352,7 +2352,7 @@ public class ParamUtil {
 	public static String[] getStringValues(
 		HttpServletRequest request, String param, String[] defaultValue) {
 
-		return normalize(
+		return _normalize(
 			GetterUtil.getStringValues(
 				getParameterValues(request, param, null), defaultValue));
 	}
@@ -2387,7 +2387,7 @@ public class ParamUtil {
 	public static String[] getStringValues(
 		PortletRequest portletRequest, String param, String[] defaultValue) {
 
-		return normalize(
+		return _normalize(
 			GetterUtil.getStringValues(
 				getParameterValues(portletRequest, param, null), defaultValue));
 	}
@@ -2422,7 +2422,7 @@ public class ParamUtil {
 	public static String[] getStringValues(
 		ServiceContext serviceContext, String param, String[] defaultValue) {
 
-		return normalize(
+		return _normalize(
 			GetterUtil.getStringValues(
 				serviceContext.getAttribute(param), defaultValue));
 	}
@@ -2484,7 +2484,7 @@ public class ParamUtil {
 		}
 	}
 
-	protected static String normalize(String input) {
+	private static String _normalize(String input) {
 		if ((_FORM == null) || Validator.isNull(input)) {
 			return input;
 		}
@@ -2492,7 +2492,7 @@ public class ParamUtil {
 		return Normalizer.normalize(input, _FORM);
 	}
 
-	protected static String[] normalize(String[] input) {
+	private static String[] _normalize(String[] input) {
 		if ((_FORM == null) || ArrayUtil.isEmpty(input)) {
 			return input;
 		}

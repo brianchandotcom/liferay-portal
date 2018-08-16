@@ -43,7 +43,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.util.introspection.SecureUberspector;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -207,7 +206,7 @@ public class VelocityManager extends BaseSingleTemplateManager {
 
 			extendedProperties.setProperty(
 				RuntimeConstants.UBERSPECT_CLASSNAME,
-				SecureUberspector.class.getName());
+				LiferaySecureUberspector.class.getName());
 
 			extendedProperties.setProperty(
 				VelocityEngine.VM_LIBRARY,

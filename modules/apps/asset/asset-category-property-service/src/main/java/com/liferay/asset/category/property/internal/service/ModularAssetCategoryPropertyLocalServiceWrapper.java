@@ -14,9 +14,9 @@
 
 package com.liferay.asset.category.property.internal.service;
 
-import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
-import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalServiceWrapper;
+import com.liferay.asset.kernel.model.AssetCategoryProperty;
+import com.liferay.asset.kernel.service.AssetCategoryPropertyLocalServiceWrapper;
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -38,7 +38,8 @@ public class ModularAssetCategoryPropertyLocalServiceWrapper
 	}
 
 	public ModularAssetCategoryPropertyLocalServiceWrapper(
-		AssetCategoryPropertyLocalService assetCategoryPropertyLocalService) {
+		com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService
+			assetCategoryPropertyLocalService) {
 
 		super(assetCategoryPropertyLocalService);
 	}
@@ -63,7 +64,9 @@ public class ModularAssetCategoryPropertyLocalServiceWrapper
 	public void deleteCategoryProperty(AssetCategoryProperty categoryProperty) {
 		_assetCategoryPropertyLocalService.deleteCategoryProperty(
 			ModelAdapterUtil.adapt(
-				AssetCategoryProperty.class, categoryProperty));
+				com.liferay.asset.category.property.model.AssetCategoryProperty.
+					class,
+				categoryProperty));
 	}
 
 	@Override

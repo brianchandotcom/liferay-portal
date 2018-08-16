@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.organizations.service.test;
+package com.liferay.portal.service;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.service.OrganizationServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -32,12 +30,10 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Drew Brokke
  */
-@RunWith(Arquillian.class)
 public class OrganizationServiceTest {
 
 	@ClassRule
@@ -57,7 +53,7 @@ public class OrganizationServiceTest {
 		int size = 5;
 
 		List<Organization> organizations =
-			_organizationService.getGtOrganizations(
+			OrganizationServiceUtil.getGtOrganizations(
 				0, TestPropsValues.getCompanyId(), parentOrganizationId, size);
 
 		Assert.assertFalse(organizations.isEmpty());
@@ -67,7 +63,7 @@ public class OrganizationServiceTest {
 		Organization lastOrganization = organizations.get(
 			organizations.size() - 1);
 
-		organizations = _organizationService.getGtOrganizations(
+		organizations = OrganizationServiceUtil.getGtOrganizations(
 			lastOrganization.getOrganizationId(),
 			TestPropsValues.getCompanyId(), parentOrganizationId, size);
 
@@ -87,9 +83,6 @@ public class OrganizationServiceTest {
 			previousOrganizationId = organizationId;
 		}
 	}
-
-	@Inject
-	private static OrganizationService _organizationService;
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();

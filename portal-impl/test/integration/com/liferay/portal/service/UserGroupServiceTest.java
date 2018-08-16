@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.service.test;
+package com.liferay.portal.service;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.UserGroupService;
+import com.liferay.portal.kernel.service.UserGroupServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -32,12 +30,10 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Drew Brokke
  */
-@RunWith(Arquillian.class)
 public class UserGroupServiceTest {
 
 	@ClassRule
@@ -56,7 +52,7 @@ public class UserGroupServiceTest {
 		long parentUserGroupId = 0;
 		int size = 5;
 
-		List<UserGroup> userGroups = _userGroupService.getGtUserGroups(
+		List<UserGroup> userGroups = UserGroupServiceUtil.getGtUserGroups(
 			0, TestPropsValues.getCompanyId(), parentUserGroupId, size);
 
 		Assert.assertFalse(userGroups.isEmpty());
@@ -64,7 +60,7 @@ public class UserGroupServiceTest {
 
 		UserGroup lastUserGroup = userGroups.get(userGroups.size() - 1);
 
-		userGroups = _userGroupService.getGtUserGroups(
+		userGroups = UserGroupServiceUtil.getGtUserGroups(
 			lastUserGroup.getUserGroupId(), TestPropsValues.getCompanyId(),
 			parentUserGroupId, size);
 
@@ -82,9 +78,6 @@ public class UserGroupServiceTest {
 			previousUserGroupId = userGroupId;
 		}
 	}
-
-	@Inject
-	private static UserGroupService _userGroupService;
 
 	@DeleteAfterTestRun
 	private final List<UserGroup> _userGroups = new ArrayList<>();

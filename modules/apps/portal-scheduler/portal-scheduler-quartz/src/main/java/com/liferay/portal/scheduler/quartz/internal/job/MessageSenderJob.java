@@ -14,13 +14,13 @@
 
 package com.liferay.portal.scheduler.quartz.internal.job;
 
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Map;
 
@@ -57,6 +57,22 @@ public class MessageSenderJob implements Job {
 		}
 	}
 
+	public void setClusterExecutor(ClusterExecutor clusterExecutor) {
+		_clusterExecutor = clusterExecutor;
+	}
+
+	public void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
+	public void setMessageBus(MessageBus messageBus) {
+		_messageBus = messageBus;
+	}
+
+	public void setProps(Props props) {
+		_props = props;
+	}
+
 	protected void doExecute(JobExecutionContext jobExecutionContext)
 		throws Exception {
 
@@ -74,7 +90,7 @@ public class MessageSenderJob implements Job {
 				"Message retrieved from job data map is null");
 		}
 
-		Message message = (Message)JSONFactoryUtil.deserialize(messageJSON);
+		Message message = (Message)_jsonFactory.deserialize(messageJSON);
 
 		message.put(SchedulerEngine.DESTINATION_NAME, destinationName);
 
@@ -92,7 +108,7 @@ public class MessageSenderJob implements Job {
 			message.put(SchedulerEngine.DISABLE, true);
 
 			if (GetterUtil.getBoolean(
-					PropsUtil.get(PropsKeys.CLUSTER_LINK_ENABLED)) &&
+					_props.get(PropsKeys.CLUSTER_LINK_ENABLED)) &&
 				(storageType == StorageType.MEMORY_CLUSTERED)) {
 
 				notifyClusterMember(jobKey, storageType);
@@ -108,7 +124,7 @@ public class MessageSenderJob implements Job {
 		message.put(SchedulerEngine.JOB_STATE, jobState);
 		message.put(SchedulerEngine.STORAGE_TYPE, storageType);
 
-		MessageBusUtil.sendMessage(destinationName, message);
+		_messageBus.sendMessage(destinationName, message);
 	}
 
 	protected void notifyClusterMember(JobKey jobKey, StorageType storageType)
@@ -121,7 +137,7 @@ public class MessageSenderJob implements Job {
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
 
-		ClusterExecutorUtil.execute(clusterRequest);
+		_clusterExecutor.execute(clusterRequest);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -130,5 +146,10 @@ public class MessageSenderJob implements Job {
 	private static final MethodKey _deleteJobMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "delete", String.class, String.class,
 		StorageType.class);
+
+	private ClusterExecutor _clusterExecutor;
+	private JSONFactory _jsonFactory;
+	private MessageBus _messageBus;
+	private Props _props;
 
 }

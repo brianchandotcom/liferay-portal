@@ -15,6 +15,7 @@
 package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -64,6 +65,7 @@ import org.quartz.JobKey;
 import org.quartz.JobPersistenceException;
 import org.quartz.ObjectAlreadyExistsException;
 import org.quartz.Scheduler;
+import org.quartz.SchedulerContext;
 import org.quartz.Trigger;
 import org.quartz.TriggerKey;
 import org.quartz.TriggerUtils;
@@ -768,7 +770,16 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		schedulerFactory.initialize(properties);
 
-		return schedulerFactory.getScheduler();
+		Scheduler scheduler = schedulerFactory.getScheduler();
+
+		SchedulerContext schedulerContext = scheduler.getContext();
+
+		schedulerContext.put("clusterExecutor", _clusterExecutor);
+		schedulerContext.put("jSONFactory", _jsonFactory);
+		schedulerContext.put("messageBus", _messageBus);
+		schedulerContext.put("props", _props);
+
+		return scheduler;
 	}
 
 	protected void initJobState() throws Exception {
@@ -849,10 +860,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				_log.info("Message is already scheduled");
 			}
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setMessageBus(MessageBus messageBus) {
 	}
 
 	@Reference(unbind = "-")
@@ -988,6 +995,9 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		QuartzSchedulerEngine.class);
 
+	@Reference
+	private ClusterExecutor _clusterExecutor;
+
 	private int _descriptionMaxLength;
 	private int _groupNameMaxLength;
 	private int _jobNameMaxLength;
@@ -996,6 +1006,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private JSONFactory _jsonFactory;
 
 	private Scheduler _memoryScheduler;
+
+	@Reference
+	private MessageBus _messageBus;
+
 	private Scheduler _persistedScheduler;
 	private Props _props;
 	private volatile boolean _schedulerEngineEnabled;

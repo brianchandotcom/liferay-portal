@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.comparator.UserIdComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.base.UserServiceBaseImpl;
@@ -787,6 +788,56 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.getGroupUsersCount(groupId, status);
 	}
 
+	@Override
+	public List<User> getGtCompanyUsers(long gtUserId, long companyId, int size)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(companyId)) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
+
+		return userPersistence.findByU_C(
+			gtUserId, companyId, 0, size, new UserIdComparator(true));
+	}
+
+	@Override
+	public List<User> getGtOrganizationUsers(
+			long gtUserId, long organizationId, int size)
+		throws PortalException {
+
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(organization.getCompanyId())) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
+
+		return userFinder.findByUsersOrgsGtUserId(
+			organization.getCompanyId(), organizationId, gtUserId, size);
+	}
+
+	@Override
+	public List<User> getGtUserGroupUsers(
+			long gtUserId, long userGroupId, int size)
+		throws PortalException {
+
+		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
+			userGroupId);
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(userGroup.getCompanyId())) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
+
+		return userFinder.findByUsersUserGroupsGtUserId(
+			userGroup.getCompanyId(), userGroupId, gtUserId, size);
+	}
+
 	/**
 	 * Returns the primary keys of all the users belonging to the organization.
 	 *
@@ -962,14 +1013,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userGroupPersistence.getUsers(userGroupId);
 	}
 
-	/**
-	 * Returns the users belonging to the user group with the status.
-	 *
-	 * @param  userGroupId the primary key of the user group
-	 * @param  start the lower bound of the range of users
-	 * @param  end the upper bound of the range of users (not inclusive)
-	 * @return the matching users
-	 */
 	@Override
 	public List<User> getUserGroupUsers(long userGroupId, int start, int end)
 		throws PortalException {

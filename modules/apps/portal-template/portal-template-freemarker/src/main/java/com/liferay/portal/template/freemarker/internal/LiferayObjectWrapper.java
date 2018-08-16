@@ -102,11 +102,11 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			}
 
 			if (object instanceof Collection) {
-				return new SimpleSequence((Collection)object, this);
+				return _COLLECTION_MODEL_FACTORY.create(object, this);
 			}
 
 			if (object instanceof Map) {
-				return new MapModel((Map)object, this);
+				return _MAP_MODEL_FACTORY.create(object, this);
 			}
 
 			return _STRING_MODEL_FACTORY.create(object, this);
@@ -128,17 +128,66 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 		}
 
 		if (object instanceof ResourceBundle) {
-			return new ResourceBundleModel((ResourceBundle)object, this);
+			return _RESOURCE_BUNDLE_MODEL_FACTORY.create(object, this);
 		}
 
 		if (object instanceof Enumeration) {
-			return new EnumerationModel((Enumeration)object, this);
+			return _ENUMERATION_MODEL_FACTORY.create(object, this);
 		}
 
 		_modelFactories.put(object.getClass(), _STRING_MODEL_FACTORY);
 
 		return _STRING_MODEL_FACTORY.create(object, this);
 	}
+
+	private static final ModelFactory _COLLECTION_MODEL_FACTORY =
+		new ModelFactory() {
+
+			@Override
+			public TemplateModel create(
+				Object object, ObjectWrapper objectWrapper) {
+
+				return new SimpleSequence((Collection)object, objectWrapper);
+			}
+
+		};
+
+	private static final ModelFactory _ENUMERATION_MODEL_FACTORY =
+		new ModelFactory() {
+
+			@Override
+			public TemplateModel create(
+				Object object, ObjectWrapper objectWrapper) {
+
+				return new EnumerationModel(
+					(Enumeration)object, (BeansWrapper)objectWrapper);
+			}
+
+		};
+
+	private static final ModelFactory _MAP_MODEL_FACTORY = new ModelFactory() {
+
+		@Override
+		public TemplateModel create(
+			Object object, ObjectWrapper objectWrapper) {
+
+			return new MapModel((Map)object, (BeansWrapper)objectWrapper);
+		}
+
+	};
+
+	private static final ModelFactory _RESOURCE_BUNDLE_MODEL_FACTORY =
+		new ModelFactory() {
+
+			@Override
+			public TemplateModel create(
+				Object object, ObjectWrapper objectWrapper) {
+
+				return new ResourceBundleModel(
+					(ResourceBundle)object, (BeansWrapper)objectWrapper);
+			}
+
+		};
 
 	private static final ModelFactory _STRING_MODEL_FACTORY =
 		new ModelFactory() {

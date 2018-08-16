@@ -31,7 +31,6 @@ import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorError;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorErrorStatus;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorValidateRequest;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -197,7 +196,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			DDMFormValuesValidatorError.Builder builder =
 				DDMFormValuesValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValuesValidatorErrorStatus.
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_VALUE_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
@@ -295,7 +294,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				DDMFormValuesValidatorError.Builder builder =
 					DDMFormValuesValidatorError.Builder.newBuilder(
 						errorMessage,
-						DDMFormValuesValidatorErrorStatus.
+						DDMFormValuesValidatorError.Status.
 							MUST_SET_VALID_FIELD_EXCEPTION
 					).withProperty(
 						"field", ddmFormFieldValue.getName()
@@ -341,7 +340,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				DDMFormValuesValidatorError.Builder builder =
 					DDMFormValuesValidatorError.Builder.newBuilder(
 						errorMessage,
-						DDMFormValuesValidatorErrorStatus.
+						DDMFormValuesValidatorError.Status.
 							MUST_SET_VALID_VALUE_EXCEPTION
 					).withProperty(
 						"field", ddmFormField.getName()
@@ -396,7 +395,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				DDMFormValuesValidatorError.Builder builder =
 					DDMFormValuesValidatorError.Builder.newBuilder(
 						errorMessage,
-						DDMFormValuesValidatorErrorStatus.
+						DDMFormValuesValidatorError.Status.
 							MUST_NOT_SET_VALUE_EXCEPTION
 					).withProperty(
 						"field", ddmFormField.getName()
@@ -417,7 +416,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				DDMFormValuesValidatorError.Builder builder =
 					DDMFormValuesValidatorError.Builder.newBuilder(
 						errorMessage,
-						DDMFormValuesValidatorErrorStatus.
+						DDMFormValuesValidatorError.Status.
 							REQUIRED_VALUE_EXCEPTION
 					).withProperty(
 						"field", ddmFormField.getName()
@@ -438,7 +437,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				DDMFormValuesValidatorError.Builder builder =
 					DDMFormValuesValidatorError.Builder.newBuilder(
 						errorMessage,
-						DDMFormValuesValidatorErrorStatus.
+						DDMFormValuesValidatorError.Status.
 							MUST_SET_VALID_VALUE_EXCEPTION
 					).withProperty(
 						"field", ddmFormField.getName()
@@ -478,7 +477,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			DDMFormValuesValidatorError.Builder builder =
 				DDMFormValuesValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValuesValidatorErrorStatus.
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_AVAILABLE_LOCALES_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
@@ -495,7 +494,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			DDMFormValuesValidatorError.Builder builder =
 				DDMFormValuesValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValuesValidatorErrorStatus.
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_DEFAULT_LOCALE_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
@@ -520,7 +519,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			DDMFormValuesValidatorError.Builder builder =
 				DDMFormValuesValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValuesValidatorErrorStatus.REQUIRED_VALUE_EXCEPTION
+					DDMFormValuesValidatorError.Status.REQUIRED_VALUE_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()
 				);
@@ -536,7 +535,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			DDMFormValuesValidatorError.Builder builder =
 				DDMFormValuesValidatorError.Builder.newBuilder(
 					errorMessage,
-					DDMFormValuesValidatorErrorStatus.
+					DDMFormValuesValidatorError.Status.
 						MUST_SET_VALID_VALUES_SIZE_EXCEPTION
 				).withProperty(
 					"field", ddmFormField.getName()

@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServi
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorError;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorErrorStatus;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -178,7 +177,7 @@ public class DDMFormPortlet extends MVCPortlet {
 		DDMFormValuesValidatorError ddmFormValuesValidatorError,
 		ActionRequest actionRequest) {
 
-		DDMFormValuesValidatorErrorStatus errorStatus =
+		DDMFormValuesValidatorError.Status errorStatus =
 			ddmFormValuesValidatorError.getErrorStatus();
 
 		Map<String, Object> properties =
@@ -190,8 +189,8 @@ public class DDMFormPortlet extends MVCPortlet {
 		Locale locale = themeDisplay.getLocale();
 
 		if (errorStatus ==
-				DDMFormValuesValidatorErrorStatus.
-					MUST_SET_VALID_VALUE_EXCEPTION) {
+				DDMFormValuesValidatorError.
+					Status.MUST_SET_VALID_VALUE_EXCEPTION) {
 
 			String field = HtmlUtil.escape(
 				MapUtil.getString(properties, "field"));
@@ -202,8 +201,8 @@ public class DDMFormPortlet extends MVCPortlet {
 			SessionErrors.add(actionRequest, errorStatus.name(), value);
 		}
 		else if (errorStatus ==
-					 DDMFormValuesValidatorErrorStatus.
-						 REQUIRED_VALUE_EXCEPTION) {
+					 DDMFormValuesValidatorError.
+						 Status.REQUIRED_VALUE_EXCEPTION) {
 
 			String field = HtmlUtil.escape(
 				MapUtil.getString(properties, "field"));

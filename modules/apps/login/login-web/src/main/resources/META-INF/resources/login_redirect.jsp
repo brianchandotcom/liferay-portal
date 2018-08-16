@@ -55,7 +55,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 
 					dom.addClasses(messageContainer, 'alert alert-' + type);
 
-					messageContainer.innerHTML(message);
+					messageContainer.innerHTML = message;
 
 					dom.removeClasses(messageContainer, 'hide');
 				}

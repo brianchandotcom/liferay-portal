@@ -10,6 +10,11 @@
 			&[style*="float: right;"], &[style*="float:right;"] {
 				margin-left: 24px;
 			}
+
+			&[style*="float: left;"], &[style*="float:left;"], &[style*="float: right;"], &[style*="float:right;"] {
+				margin-bottom: 24px;
+				margin-top: 24px;
+			}
 		}
 	}
 

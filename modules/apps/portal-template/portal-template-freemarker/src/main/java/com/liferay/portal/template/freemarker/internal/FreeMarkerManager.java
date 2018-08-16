@@ -227,8 +227,6 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 		templateContextHelper.removeAllHelperUtilities();
 
-		templateContextHelper = null;
-
 		_templateModels.clear();
 
 		if (isEnableDebuggerService()) {

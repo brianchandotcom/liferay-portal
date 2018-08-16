@@ -115,6 +115,7 @@ if (portletTitleBasedNavigation) {
 
 									var commonFileMetadataContainer = A.one('#<portlet:namespace />commonFileMetadataContainer');
 									var selectedFileNameContainer = A.one('#<portlet:namespace />selectedFileNameContainer');
+									var ddmFormFieldNamespaces = A.all('#<portlet:namespace />ddmFormFieldNamespace').val();
 
 									var inputTpl = '<input id="<portlet:namespace />selectedFileName{0}" name="<portlet:namespace />selectedFileName" type="hidden" value="{1}" />';
 
@@ -136,6 +137,14 @@ if (portletTitleBasedNavigation) {
 									commonFileMetadataContainer.plug(A.LoadingMask);
 
 									commonFileMetadataContainer.loadingmask.show();
+
+									for (var i = 0; i < ddmFormFieldNamespaces.length; i++){
+										var ddmFormFieldNamespace = ddmFormFieldNamespaces[i];
+
+										var ddmForm = Liferay.component('<portlet:namespace />' + ddmFormFieldNamespace + 'ddmForm');
+
+										ddmForm.updateDDMFormInputValue();
+									}
 
 									A.io.request(
 										document.<portlet:namespace />fm2.action,

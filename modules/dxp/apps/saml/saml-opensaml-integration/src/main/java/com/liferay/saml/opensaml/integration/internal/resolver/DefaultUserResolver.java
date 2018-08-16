@@ -239,6 +239,10 @@ public class DefaultUserResolver implements UserResolver {
 
 		String format = userResolverSAMLContext.resolveSubjectNameFormat();
 
+		if (Validator.isNull(format)) {
+			return _SUBJECT_NAME_TYPE_UNSPECIFIED;
+		}
+
 		if (format.equals(NameIDType.EMAIL)) {
 			return _SUBJECT_NAME_TYPE_EMAIL_ADDRESS;
 		}
@@ -483,6 +487,8 @@ public class DefaultUserResolver implements UserResolver {
 		"emailAddress";
 
 	private static final String _SUBJECT_NAME_TYPE_SCREENNAME = "screenName";
+
+	private static final String _SUBJECT_NAME_TYPE_UNSPECIFIED = "unspecified";
 
 	private static final String _SUBJECT_NAME_TYPE_UUID = "uuid";
 

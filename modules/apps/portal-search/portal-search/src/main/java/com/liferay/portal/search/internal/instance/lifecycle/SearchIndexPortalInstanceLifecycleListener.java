@@ -32,18 +32,6 @@ public class SearchIndexPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
-	public void portalInstancePreregistered(long companyId) {
-		try {
-			_searchEngineHelper.initialize(companyId);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to initialize search engine for company " + companyId,
-				e);
-		}
-	}
-
-	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		try {
 			_searchEngineHelper.initialize(company.getCompanyId());

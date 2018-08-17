@@ -540,7 +540,8 @@ public class HeaderResponseImpl
 			}
 		}
 		catch (XMLStreamException xmlse) {
-			_log.error(xmlse.getMessage());
+			_log.error(xmlse, xmlse);
+
 			parsedElements.add(new ParsedElement(null, null, null, false));
 		}
 		finally {

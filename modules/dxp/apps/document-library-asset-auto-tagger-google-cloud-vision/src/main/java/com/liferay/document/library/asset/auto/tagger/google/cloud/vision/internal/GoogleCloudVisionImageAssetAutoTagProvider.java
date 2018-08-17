@@ -15,9 +15,9 @@
 package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
-import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderConfiguration;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GoogleCloudVisionAssetAutoTagProviderConstants;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -25,9 +25,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -40,20 +43,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderConfiguration",
+	configurationPid = "com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = AssetAutoTagProvider.class
@@ -63,14 +63,21 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 
 	@Override
 	public List<String> getTagNames(FileEntry fileEntry) {
-		if (!_googleCloudVisionConfiguration.enabled() ||
-			_isTemporary(fileEntry) || !_isSupportedFormat(fileEntry)) {
-
-			return Collections.emptyList();
-		}
-
 		try {
+			GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration
+				googleCloudVisionAssetAutoTagProviderCompanyConfiguration =
+					_getConfiguration(fileEntry);
+
+			if (!googleCloudVisionAssetAutoTagProviderCompanyConfiguration.
+					enabled() ||
+				_isTemporary(fileEntry) || !_isSupportedFormat(fileEntry)) {
+
+				return Collections.emptyList();
+			}
+
 			JSONObject responseJSONObject = _queryGoogleCloudVisionJSONObject(
+				googleCloudVisionAssetAutoTagProviderCompanyConfiguration.
+					apiKey(),
 				_getPayloadJSON(fileEntry));
 
 			JSONArray responsesJSONArray = responseJSONObject.getJSONArray(
@@ -96,12 +103,14 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 		return Collections.emptyList();
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_googleCloudVisionConfiguration = ConfigurableUtil.createConfigurable(
-			GoogleCloudVisionAssetAutoTagProviderConfiguration.class,
-			properties);
+	private GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration
+		_getConfiguration(FileEntry fileEntry) throws ConfigurationException {
+
+		return _configurationProvider.getConfiguration(
+			GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration.class,
+			new CompanyServiceSettingsLocator(
+				fileEntry.getCompanyId(),
+				GoogleCloudVisionAssetAutoTagProviderConstants.SERVICE_NAME));
 	}
 
 	private String _getPayloadJSON(FileEntry fileEntry) throws Exception {
@@ -140,7 +149,8 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			TemporaryFileEntriesCapability.class);
 	}
 
-	private JSONObject _queryGoogleCloudVisionJSONObject(String payloadJSON)
+	private JSONObject _queryGoogleCloudVisionJSONObject(
+			String apiKey, String payloadJSON)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -149,8 +159,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 		options.setBody(
 			payloadJSON, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation(
-			"https://vision.googleapis.com/v1/images:annotate?key=" +
-				_googleCloudVisionConfiguration.apiKey());
+			"https://vision.googleapis.com/v1/images:annotate?key=" + apiKey);
 		options.setPost(true);
 
 		String responseJSON = _http.URLtoString(options);
@@ -173,8 +182,8 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 		Arrays.asList(
 			"BMP", "GIF", "ICO", "JPEG", "JPG", "PNG", "RAW", "WEBP"));
 
-	private volatile GoogleCloudVisionAssetAutoTagProviderConfiguration
-		_googleCloudVisionConfiguration;
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Http _http;

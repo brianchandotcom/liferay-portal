@@ -16,26 +16,30 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.inter
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GoogleCloudVisionAssetAutoTagProviderConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Alejandro Tardín
  */
-@ExtendedObjectClassDefinition(category = "documents-and-media")
+@ExtendedObjectClassDefinition(
+	category = "documents-and-media",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	description = "google-cloud-vision-asset-auto-tag-provider-description",
-	id = "com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderConfiguration",
+	id = "com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration",
 	localization = "content/Language",
 	name = "google-cloud-vision-asset-auto-tag-provider-configuration-name"
 )
-public interface GoogleCloudVisionAssetAutoTagProviderConfiguration {
+public interface GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration {
 
 	/**
 	 * Sets the API Key for Google Cloud Vision API.
 	 */
 	@ExtendedAttributeDefinition(
-		descriptionArguments = "https://cloud.google.com/docs/authentication/api-keys"
+		descriptionArguments = GoogleCloudVisionAssetAutoTagProviderConstants.API_KEY_DOCS_URL
 	)
 	@Meta.AD(description = "api-key-description", name = "api-key")
 	public String apiKey();

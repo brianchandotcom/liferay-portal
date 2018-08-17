@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.model.Company;
 public abstract class BasePortalInstanceLifecycleListener
 	implements PortalInstanceLifecycleListener {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void portalInstancePreregistered(long companyId) {
 	}

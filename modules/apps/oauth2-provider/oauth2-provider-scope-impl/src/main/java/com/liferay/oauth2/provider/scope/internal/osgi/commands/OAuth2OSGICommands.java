@@ -47,14 +47,15 @@ public class OAuth2OSGICommands {
 		Collection<String> scopeAliases = ListUtil.sort(
 			new ArrayList<>(_scopeLocator.getScopeAliases(companyId)));
 
-		for (String alias : scopeAliases) {
+		for (String scopeAlias : scopeAliases) {
 			System.out.println();
 
-			System.out.println(alias);
+			System.out.println(scopeAlias);
 
 			Collection<LiferayOAuth2Scope> liferayOAuth2Scopes = ListUtil.sort(
 				new ArrayList<>(
-					_scopeLocator.getLiferayOAuth2Scopes(companyId, alias)),
+					_scopeLocator.getLiferayOAuth2Scopes(
+						companyId, scopeAlias)),
 				Comparator.comparing(LiferayOAuth2Scope::getScope));
 
 			for (LiferayOAuth2Scope liferayOAuth2Scope : liferayOAuth2Scopes) {

@@ -71,9 +71,7 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException {
 
-		return MBDiscussionPermission.contains(
-			_permissionChecker, companyId, groupId, className, classPK,
-			ActionKeys.SUBSCRIBE);
+		return hasViewPermission(companyId, groupId, className, classPK);
 	}
 
 	@Override

@@ -59,10 +59,8 @@ public class HttpServiceRuntimeOSGICommands {
 			servletContextDTOs.add(servletContextDTO);
 		}
 
-		for (Map.Entry<String, Set<ServletContextDTO>> entry :
-				contextPathMap.entrySet()) {
-
-			Set<ServletContextDTO> servletContextDTOs = entry.getValue();
+		for (Set<ServletContextDTO> servletContextDTOs :
+				contextPathMap.values()) {
 
 			if (servletContextDTOs.size() < 2) {
 				continue;

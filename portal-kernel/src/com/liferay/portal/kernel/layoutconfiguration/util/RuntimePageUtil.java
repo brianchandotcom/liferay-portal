@@ -50,6 +50,15 @@ public class RuntimePageUtil {
 			request, response, templateResource);
 	}
 
+	public static void processCustomizationSettings(
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource, String langType)
+		throws Exception {
+
+		getRuntimePage().processCustomizationSettings(
+			request, response, templateResource, langType);
+	}
+
 	public static void processTemplate(
 			HttpServletRequest request, HttpServletResponse response,
 			String portletId, TemplateResource templateResource)

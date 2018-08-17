@@ -22,9 +22,11 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 boolean curFreeformLayout = false;
 boolean prototypeGroup = false;
 
-String velocityTemplateId = null;
+String langType = null;
 
-String velocityTemplateContent = null;
+String templateId = null;
+
+String templateContent = null;
 
 Group group = null;
 
@@ -55,11 +57,12 @@ if (selLayout != null) {
 		if (layoutTemplate != null) {
 			themeId = layoutTemplate.getThemeId();
 
-			velocityTemplateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + curLayoutTypePortlet.getLayoutTemplateId();
+			templateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + curLayoutTypePortlet.getLayoutTemplateId();
 
-			velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent(curLayoutTypePortlet.getLayoutTemplateId(), false, themeId);
+			templateContent = LayoutTemplateLocalServiceUtil.getContent(curLayoutTypePortlet.getLayoutTemplateId(), false, themeId);
 		}
 	}
+	langType = LayoutTemplateLocalServiceUtil.getLangType(layoutTemplateId, false, themeId);
 }
 %>
 
@@ -87,8 +90,8 @@ if (selLayout != null) {
 		<div class="customization-settings" id="<portlet:namespace />customizationSettingsOptions">
 
 			<%
-			if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
-				RuntimePageUtil.processCustomizationSettings(request, response, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
+			if (Validator.isNotNull(templateId) && Validator.isNotNull(templateContent)) {
+				RuntimePageUtil.processCustomizationSettings(request, response, new StringTemplateResource(templateId, templateContent), langType);
 			}
 			%>
 

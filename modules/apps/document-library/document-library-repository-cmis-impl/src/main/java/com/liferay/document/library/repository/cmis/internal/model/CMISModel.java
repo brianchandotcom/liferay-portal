@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -135,7 +136,10 @@ public abstract class CMISModel {
 
 	private static final Map<String, Action> _mappedActionKeys =
 		new HashMap<>();
-	private static final Set<String> _unsupportedActionKeys = new HashSet<>();
+	private static final Set<String> _unsupportedActionKeys = new HashSet<>(
+		Arrays.asList(
+			ActionKeys.ADD_SHORTCUT, ActionKeys.OVERRIDE_CHECKOUT,
+			ActionKeys.PERMISSIONS, ActionKeys.SUBSCRIBE));
 
 	static {
 		_mappedActionKeys.put(ActionKeys.ACCESS, Action.CAN_GET_FOLDER_TREE);
@@ -153,11 +157,6 @@ public abstract class CMISModel {
 		_mappedActionKeys.put(
 			ActionKeys.UPDATE_DISCUSSION, Action.CAN_UPDATE_PROPERTIES);
 		_mappedActionKeys.put(ActionKeys.VIEW, Action.CAN_GET_PROPERTIES);
-
-		_unsupportedActionKeys.add(ActionKeys.ADD_SHORTCUT);
-		_unsupportedActionKeys.add(ActionKeys.OVERRIDE_CHECKOUT);
-		_unsupportedActionKeys.add(ActionKeys.PERMISSIONS);
-		_unsupportedActionKeys.add(ActionKeys.SUBSCRIBE);
 	}
 
 	private Folder _parentFolder;

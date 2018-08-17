@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -504,7 +505,10 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 		BaseCmisSearchQueryBuilder.class);
 
 	private static final Map<String, String> _cmisFields;
-	private static final Set<String> _supportedFields;
+	private static final Set<String> _supportedFields = new HashSet<>(
+		Arrays.asList(
+			Field.CREATE_DATE, Field.FOLDER_ID, Field.MODIFIED_DATE, Field.NAME,
+			Field.TITLE, Field.USER_ID, Field.USER_NAME));
 
 	static {
 		_cmisFields = new HashMap<>();
@@ -515,16 +519,6 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 		_cmisFields.put(Field.TITLE, "cmis:name");
 		_cmisFields.put(Field.USER_ID, "cmis:createdBy");
 		_cmisFields.put(Field.USER_NAME, "cmis:createdBy");
-
-		_supportedFields = new HashSet<>();
-
-		_supportedFields.add(Field.CREATE_DATE);
-		_supportedFields.add(Field.FOLDER_ID);
-		_supportedFields.add(Field.MODIFIED_DATE);
-		_supportedFields.add(Field.NAME);
-		_supportedFields.add(Field.TITLE);
-		_supportedFields.add(Field.USER_ID);
-		_supportedFields.add(Field.USER_NAME);
 	}
 
 	private final RepositoryEntryLocalService _repositoryEntryLocalService;

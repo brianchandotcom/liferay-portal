@@ -36,6 +36,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -294,54 +295,20 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStagingHandler.class);
 
-	private static final Set<String> _layoutRevisionMethodNames =
-		new HashSet<>();
-
-	static {
-		_layoutRevisionMethodNames.add("getColorScheme");
-		_layoutRevisionMethodNames.add("getColorSchemeId");
-		_layoutRevisionMethodNames.add("getCss");
-		_layoutRevisionMethodNames.add("getCssText");
-		_layoutRevisionMethodNames.add("getDescription");
-		_layoutRevisionMethodNames.add("getGroupId");
-		_layoutRevisionMethodNames.add("getHTMLTitle");
-		_layoutRevisionMethodNames.add("getIconImage");
-		_layoutRevisionMethodNames.add("getIconImageId");
-		_layoutRevisionMethodNames.add("getKeywords");
-		_layoutRevisionMethodNames.add("getLayoutSet");
-		_layoutRevisionMethodNames.add("getName");
-		_layoutRevisionMethodNames.add("getRobots");
-		_layoutRevisionMethodNames.add("getTheme");
-		_layoutRevisionMethodNames.add("getThemeId");
-		_layoutRevisionMethodNames.add("getThemeSetting");
-		_layoutRevisionMethodNames.add("getTitle");
-		_layoutRevisionMethodNames.add("getTypeSettings");
-		_layoutRevisionMethodNames.add("getTypeSettingsProperties");
-		_layoutRevisionMethodNames.add("getTypeSettingsProperty");
-		_layoutRevisionMethodNames.add("isContentDisplayPage");
-		_layoutRevisionMethodNames.add("isEscapedModel");
-		_layoutRevisionMethodNames.add("isIconImage");
-		_layoutRevisionMethodNames.add("isInheritLookAndFeel");
-		_layoutRevisionMethodNames.add("setColorSchemeId");
-		_layoutRevisionMethodNames.add("setCss");
-		_layoutRevisionMethodNames.add("setDescription");
-		_layoutRevisionMethodNames.add("setDescriptionMap");
-		_layoutRevisionMethodNames.add("setEscapedModel");
-		_layoutRevisionMethodNames.add("setGroupId");
-		_layoutRevisionMethodNames.add("setIconImage");
-		_layoutRevisionMethodNames.add("setIconImageId");
-		_layoutRevisionMethodNames.add("setKeywords");
-		_layoutRevisionMethodNames.add("setKeywordsMap");
-		_layoutRevisionMethodNames.add("setName");
-		_layoutRevisionMethodNames.add("setNameMap");
-		_layoutRevisionMethodNames.add("setRobots");
-		_layoutRevisionMethodNames.add("setRobotsMap");
-		_layoutRevisionMethodNames.add("setThemeId");
-		_layoutRevisionMethodNames.add("setTitle");
-		_layoutRevisionMethodNames.add("setTitleMap");
-		_layoutRevisionMethodNames.add("setTypeSettings");
-		_layoutRevisionMethodNames.add("setTypeSettingsProperties");
-	}
+	private static final Set<String> _layoutRevisionMethodNames = new HashSet<>(
+		Arrays.asList(
+			"getColorScheme", "getColorSchemeId", "getCss", "getCssText",
+			"getDescription", "getGroupId", "getHTMLTitle", "getIconImage",
+			"getIconImageId", "getKeywords", "getLayoutSet", "getName",
+			"getRobots", "getTheme", "getThemeId", "getThemeSetting",
+			"getTitle", "getTypeSettings", "getTypeSettingsProperties",
+			"getTypeSettingsProperty", "isContentDisplayPage", "isEscapedModel",
+			"isIconImage", "isInheritLookAndFeel", "setColorSchemeId", "setCss",
+			"setDescription", "setDescriptionMap", "setEscapedModel",
+			"setGroupId", "setIconImage", "setIconImageId", "setKeywords",
+			"setKeywordsMap", "setName", "setNameMap", "setRobots",
+			"setRobotsMap", "setThemeId", "setTitle", "setTitleMap",
+			"setTypeSettings", "setTypeSettingsProperties"));
 
 	private final Layout _layout;
 	private LayoutRevision _layoutRevision;

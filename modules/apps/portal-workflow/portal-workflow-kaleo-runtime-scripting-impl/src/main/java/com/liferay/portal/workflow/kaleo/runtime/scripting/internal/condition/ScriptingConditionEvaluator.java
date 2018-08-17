@@ -21,6 +21,7 @@ import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -64,12 +65,9 @@ public class ScriptingConditionEvaluator implements ConditionEvaluator {
 
 	private static final String _RETURN_VALUE = "returnValue";
 
-	private static final Set<String> _outputNames = new HashSet<>();
-
-	static {
-		_outputNames.add(_RETURN_VALUE);
-		_outputNames.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
-	}
+	private static final Set<String> _outputNames = new HashSet<>(
+		Arrays.asList(
+			_RETURN_VALUE, WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
 
 	@Reference
 	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;

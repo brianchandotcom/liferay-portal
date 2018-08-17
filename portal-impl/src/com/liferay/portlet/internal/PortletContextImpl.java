@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -263,14 +264,10 @@ public class PortletContextImpl implements LiferayPortletContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletContextImpl.class);
 
-	private static final Set<String> _supportedRuntimeOptions = new HashSet<>();
-
-	static {
-		_supportedRuntimeOptions.add(
-			LiferayPortletConfig.RUNTIME_OPTION_ESCAPE_XML);
-		_supportedRuntimeOptions.add(
-			LiferayPortletConfig.RUNTIME_OPTION_PORTAL_CONTEXT);
-	}
+	private static final Set<String> _supportedRuntimeOptions = new HashSet<>(
+		Arrays.asList(
+			LiferayPortletConfig.RUNTIME_OPTION_ESCAPE_XML,
+			LiferayPortletConfig.RUNTIME_OPTION_PORTAL_CONTEXT));
 
 	private final Portlet _portlet;
 	private final ServletContext _servletContext;

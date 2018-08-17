@@ -4282,28 +4282,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final BackupFilesBuildAdapter _backupFilesBuildAdapter =
 		new BackupFilesBuildAdapter();
-	private static final Set<String> _copyrightedExtensions;
+	private static final Set<String> _copyrightedExtensions = new HashSet<>(
+		Arrays.asList(
+			"ftl", "groovy", "htm", "html", "js", "jsp", "jspf", "txt", "vm",
+			"xml"));
 	private static final Spec<File> _javaSpec = new NameSuffixFileSpec(".java");
 	private static final Spec<File> _jsdocSpec = new NameSuffixFileSpec(
 		".es.js", ".jsdoc", ".jsx");
 	private static final Spec<File> _jspSpec = new NameSuffixFileSpec(
 		".jsp", ".jspf");
 	private static final Spec<File> _tldSpec = new NameSuffixFileSpec(".tld");
-
-	static {
-		_copyrightedExtensions = new HashSet<>();
-
-		_copyrightedExtensions.add("ftl");
-		_copyrightedExtensions.add("groovy");
-		_copyrightedExtensions.add("htm");
-		_copyrightedExtensions.add("html");
-		_copyrightedExtensions.add("java");
-		_copyrightedExtensions.add("js");
-		_copyrightedExtensions.add("jsp");
-		_copyrightedExtensions.add("jspf");
-		_copyrightedExtensions.add("txt");
-		_copyrightedExtensions.add("vm");
-		_copyrightedExtensions.add("xml");
-	}
 
 }

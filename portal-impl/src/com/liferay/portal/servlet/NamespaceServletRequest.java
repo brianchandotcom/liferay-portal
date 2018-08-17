@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -40,26 +41,23 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NamespaceServletRequest extends DynamicServletRequest {
 
-	public static Set<String> reservedAttrs = new HashSet<>();
-
-	static {
-		reservedAttrs.add(JavaConstants.JAVAX_PORTLET_CONFIG);
-		reservedAttrs.add(JavaConstants.JAVAX_PORTLET_PORTLET);
-		reservedAttrs.add(JavaConstants.JAVAX_PORTLET_REQUEST);
-		reservedAttrs.add(JavaConstants.JAVAX_PORTLET_RESPONSE);
-		reservedAttrs.add(JavaConstants.JAVAX_SERVLET_FORWARD_CONTEXT_PATH);
-		reservedAttrs.add(JavaConstants.JAVAX_SERVLET_FORWARD_PATH_INFO);
-		reservedAttrs.add(JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
-		reservedAttrs.add(JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI);
-		reservedAttrs.add(JavaConstants.JAVAX_SERVLET_FORWARD_SERVLET_PATH);
-		reservedAttrs.add(JavaConstants.JAVAX_SERVLET_INCLUDE_CONTEXT_PATH);
-		reservedAttrs.add(JavaConstants.JAVAX_SERVLET_INCLUDE_PATH_INFO);
-		reservedAttrs.add(JavaConstants.JAVAX_SERVLET_INCLUDE_QUERY_STRING);
-		reservedAttrs.add(JavaConstants.JAVAX_SERVLET_INCLUDE_REQUEST_URI);
-		reservedAttrs.add(JavaConstants.JAVAX_SERVLET_INCLUDE_SERVLET_PATH);
-		reservedAttrs.add(MimeResponse.MARKUP_HEAD_ELEMENT);
-		reservedAttrs.add(PortletRequest.LIFECYCLE_PHASE);
-	}
+	public static Set<String> reservedAttrs = new HashSet<>(
+		Arrays.asList(
+			JavaConstants.JAVAX_PORTLET_CONFIG,
+			JavaConstants.JAVAX_PORTLET_PORTLET,
+			JavaConstants.JAVAX_PORTLET_REQUEST,
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			JavaConstants.JAVAX_SERVLET_FORWARD_CONTEXT_PATH,
+			JavaConstants.JAVAX_SERVLET_FORWARD_PATH_INFO,
+			JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING,
+			JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI,
+			JavaConstants.JAVAX_SERVLET_FORWARD_SERVLET_PATH,
+			JavaConstants.JAVAX_SERVLET_INCLUDE_CONTEXT_PATH,
+			JavaConstants.JAVAX_SERVLET_INCLUDE_PATH_INFO,
+			JavaConstants.JAVAX_SERVLET_INCLUDE_QUERY_STRING,
+			JavaConstants.JAVAX_SERVLET_INCLUDE_REQUEST_URI,
+			JavaConstants.JAVAX_SERVLET_INCLUDE_SERVLET_PATH,
+			MimeResponse.MARKUP_HEAD_ELEMENT, PortletRequest.LIFECYCLE_PHASE));
 
 	public NamespaceServletRequest(
 		HttpServletRequest request, String attrNamespace,

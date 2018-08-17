@@ -40,24 +40,25 @@ public class LiferaySecureUberspector extends SecureUberspector {
 		ExtendedProperties extendedProperties =
 			_runtimeServices.getConfiguration();
 
-		String[] restrictedClasses = extendedProperties.getStringArray(
+		String[] restrictedClassNames = extendedProperties.getStringArray(
 			RuntimeConstants.INTROSPECTOR_RESTRICT_CLASSES);
 
-		_restrictedClasses = new ArrayList<>(restrictedClasses.length);
+		_restrictedClasses = new ArrayList<>(restrictedClassNames.length);
 
-		for (String restrictedClass : restrictedClasses) {
-			restrictedClass = StringUtil.trim(restrictedClass);
+		for (String restrictedClassName : restrictedClassNames) {
+			restrictedClassName = StringUtil.trim(restrictedClassName);
 
-			if (Validator.isBlank(restrictedClass)) {
+			if (Validator.isBlank(restrictedClassName)) {
 				continue;
 			}
 
 			try {
-				_restrictedClasses.add(Class.forName(restrictedClass));
+				_restrictedClasses.add(Class.forName(restrictedClassName));
 			}
 			catch (ClassNotFoundException cnfe) {
 				super.log.error(
-					"Unable to find restricted class " + restrictedClass, cnfe);
+					"Unable to find restricted class " + restrictedClassName,
+					cnfe);
 			}
 		}
 
@@ -105,7 +106,7 @@ public class LiferaySecureUberspector extends SecureUberspector {
 		public boolean checkObjectExecutePermission(
 			Class clazz, String methodName) {
 
-			for (Class restrictedClass : _restrictedClasses) {
+			for (Class<?> restrictedClass : _restrictedClasses) {
 				if (restrictedClass.isAssignableFrom(clazz)) {
 					throw new IllegalArgumentException(
 						StringBundler.concat(

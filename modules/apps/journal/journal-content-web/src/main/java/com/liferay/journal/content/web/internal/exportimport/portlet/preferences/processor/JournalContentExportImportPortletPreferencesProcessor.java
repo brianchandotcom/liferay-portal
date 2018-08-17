@@ -298,7 +298,8 @@ public class JournalContentExportImportPortletPreferencesProcessor
 				Group importedArticleGroup = _groupLocalService.getGroup(
 					groupId);
 
-				if (importedArticleGroup.isStagedPortlet(
+				if (!ExportImportThreadLocal.isStagingInProcess() ||
+					importedArticleGroup.isStagedPortlet(
 						JournalPortletKeys.JOURNAL)) {
 
 					Map<String, String> articleIds =

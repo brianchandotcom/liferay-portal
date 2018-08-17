@@ -22,7 +22,7 @@ class Builder extends Component {
 		this.emit('fieldClicked', indexAllocateField);
 	}
 
-	_handleAddPage(pages){
+	_handleAddPage(pages) {
 		const Sidebar = this.refs.sidebar;
 
 		Sidebar._setMode('add');
@@ -97,7 +97,6 @@ class Builder extends Component {
 
 	render() {
 		const {
-			activePage,
 			fieldContext,
 			fieldsList,
 			focusedField,

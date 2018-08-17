@@ -1912,6 +1912,16 @@ public class GetterUtil {
 		return defaultValue;
 	}
 
+	public static String[] getStringValues(
+		Object value, Supplier<String[]> defaultValueSupplier) {
+
+		if (value instanceof String[]) {
+			return getStringValues((String[])value, defaultValueSupplier);
+		}
+
+		return defaultValueSupplier.get();
+	}
+
 	/**
 	 * Returns the String array values as a String array. If the values array is
 	 * <code>null</code>, the default value is returned. In the returned array,
@@ -1927,6 +1937,26 @@ public class GetterUtil {
 
 		if (values == null) {
 			return defaultValue;
+		}
+
+		String[] stringValues = new String[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			stringValues[i] = String.valueOf(values[i]);
+		}
+
+		return stringValues;
+	}
+
+	public static String[] getStringValues(
+		Object[] values, Supplier<String[]> defaultValueSupplier) {
+
+		if (values instanceof String[]) {
+			return (String[])values;
+		}
+
+		if (values == null) {
+			return defaultValueSupplier.get();
 		}
 
 		String[] stringValues = new String[values.length];

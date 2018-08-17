@@ -6,7 +6,7 @@ class SidebarProvider extends Component {
 	static PROPS = {
 		fieldContext: Config.array(),
 
-		context: Config.array(),
+		pages: Config.array(),
 
 		focusedField: Config.object()
 	};
@@ -15,16 +15,16 @@ class SidebarProvider extends Component {
 		fieldContext: Config.array()
 	};
 
-	constructor(props, context) {
-		super(props, context);
+	constructor(props, pages) {
+		super(props, pages);
 
 		this.state.fieldContext = props.fieldContext;
 	}
 
 	willReceiveProps(nextProps) {
 		if (
-			typeof nextProps.context !== 'undefined' &&
-			nextProps.context.newVal.length
+			typeof nextProps.pages !== 'undefined' &&
+			nextProps.pages.newVal.length
 		) {
 
 			// this._syncContextWithFieldContext();
@@ -44,11 +44,11 @@ class SidebarProvider extends Component {
 	}
 
 	_syncContextWithFieldContext() {
-		const {context, focusedField} = this.props;
+		const {focusedField, pages} = this.props;
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
 
 		const field = LayoutSupport.getColumn(
-			context,
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex

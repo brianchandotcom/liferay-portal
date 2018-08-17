@@ -247,7 +247,7 @@ describe(
 				const spy = jest.spyOn(component, '_startDrag');
 				const spyDrag = jest.spyOn(component._dragAndDrop, 'disposeInternal');
 
-				component.props.context = [
+				component.props.pages = [
 					{
 						title: 'Untitled page'
 					}

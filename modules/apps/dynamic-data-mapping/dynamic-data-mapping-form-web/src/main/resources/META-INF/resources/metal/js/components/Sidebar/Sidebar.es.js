@@ -51,7 +51,7 @@ class Sidebar extends Component {
 		 * @type {?(array<object>|undefined)}
 		 */
 
-		context: Config.array().value([]),
+		pages: Config.array().value([]),
 
 		/**
 		 * @default undefined
@@ -355,8 +355,8 @@ class Sidebar extends Component {
 
 	willReceiveProps(nextProps) {
 		if (
-			typeof nextProps.context !== 'undefined' &&
-			nextProps.context.newVal.length
+			typeof nextProps.pages !== 'undefined' &&
+			nextProps.pages.newVal.length
 		) {
 			this._dragAndDrop.disposeInternal();
 			this._startDrag();

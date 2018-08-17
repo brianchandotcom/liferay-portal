@@ -4,7 +4,7 @@ import Component from 'metal-jsx';
 
 /**
  * LayoutProvider listens to your children's events to
- * control the `context` and make manipulations.
+ * control the `pages` and make manipulations.
  * @extends Component
  */
 
@@ -18,7 +18,7 @@ class LayoutProvider extends Component {
 		 * @type {?(array|undefined)}
 		 */
 
-		context: Config.array(),
+		pages: Config.array(),
 
 		/**
 		 * @default undefined
@@ -39,7 +39,7 @@ class LayoutProvider extends Component {
 		 * @type {?array}
 		 */
 
-		context: Config.array(),
+		pages: Config.array(),
 
 		/**
 		 * @default undefined
@@ -76,10 +76,10 @@ class LayoutProvider extends Component {
 	 * @inheritDoc
 	 */
 
-	constructor(props, context) {
-		super(props, context);
+	constructor(props, pages) {
+		super(props, pages);
 
-		this.state.context = props.context;
+		this.state.pages = props.pages;
 	}
 
 	/**
@@ -103,7 +103,7 @@ class LayoutProvider extends Component {
 
 	_handleFieldAdd({target, fieldProperties}) {
 		const {spritemap} = this.props;
-		const {context} = this.state;
+		const {pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = target;
 
 		fieldProperties = Object.assign({}, fieldProperties, {spritemap});
@@ -114,7 +114,7 @@ class LayoutProvider extends Component {
 			const newRow = LayoutSupport.implAddRow(12, [fieldProperties]);
 
 			newContext = LayoutSupport.addRow(
-				context,
+				pages,
 				rowIndex,
 				pageIndex,
 				newRow
@@ -122,7 +122,7 @@ class LayoutProvider extends Component {
 		}
 		else {
 			newContext = LayoutSupport.addFieldToColumn(
-				context,
+				pages,
 				pageIndex,
 				rowIndex,
 				columnIndex,
@@ -132,14 +132,14 @@ class LayoutProvider extends Component {
 
 		this.setState(
 			{
-				context: newContext,
 				focusedField: {
 					columnIndex,
 					pageIndex,
 					rowIndex,
 					type: fieldProperties.type
 				},
-				mode: 'edit'
+				mode: 'edit',
+				pages: newContext
 			}
 		);
 	}
@@ -150,9 +150,9 @@ class LayoutProvider extends Component {
 	 */
 
 	_handleDeleteField({rowIndex, pageIndex, columnIndex}) {
-		const {context} = this.state;
+		const {pages} = this.state;
 		let newContext = LayoutSupport.removeFields(
-			context,
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex
@@ -169,8 +169,8 @@ class LayoutProvider extends Component {
 
 		this.setState(
 			{
-				context: newContext,
-				focusedField: {}
+				focusedField: {},
+				pages: newContext
 			}
 		);
 	}
@@ -181,8 +181,8 @@ class LayoutProvider extends Component {
 	 */
 
 	_handleDuplicatedField({rowIndex, pageIndex, columnIndex}) {
-		const {context} = this.state;
-		const field = LayoutSupport.getField(context, pageIndex, rowIndex, columnIndex);
+		const {pages} = this.state;
+		const field = LayoutSupport.getField(pages, pageIndex, rowIndex, columnIndex);
 
 		const duplicatedField = {
 			...field,
@@ -191,13 +191,13 @@ class LayoutProvider extends Component {
 
 		const newRowIndex = rowIndex + 1;
 
-		const newContext = LayoutSupport.addRow(context, newRowIndex, pageIndex);
+		const newContext = LayoutSupport.addRow(pages, newRowIndex, pageIndex);
 
 		LayoutSupport.addFieldToColumn(newContext, pageIndex, newRowIndex, columnIndex, duplicatedField);
 
 		this.setState(
 			{
-				context: newContext
+				pages: newContext
 			}
 		);
 	}
@@ -208,10 +208,10 @@ class LayoutProvider extends Component {
 	 */
 
 	_handleFieldEdited({value, key}) {
-		const {context, focusedField} = this.state;
+		const {focusedField, pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
 		const column = LayoutSupport.getColumn(
-			context,
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex
@@ -228,7 +228,7 @@ class LayoutProvider extends Component {
 		);
 
 		LayoutSupport.changeFieldsFromColumn(
-			context,
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex,
@@ -237,7 +237,7 @@ class LayoutProvider extends Component {
 
 		this.setState(
 			{
-				context: this.state.context
+				pages: this.state.pages
 			}
 		);
 	}
@@ -248,10 +248,10 @@ class LayoutProvider extends Component {
 	 */
 
 	_handleFieldMoved({target, source}) {
-		const {context} = this.state;
+		const {pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = source;
 		const column = LayoutSupport.getColumn(
-			context,
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex
@@ -259,7 +259,7 @@ class LayoutProvider extends Component {
 		const {fields} = column;
 
 		let newContext = LayoutSupport.removeFields(
-			context,
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex
@@ -284,8 +284,8 @@ class LayoutProvider extends Component {
 
 		this.setState(
 			{
-				context: newContext,
-				focusedField: fields[0]
+				focusedField: fields[0],
+				pages: newContext
 			}
 		);
 	}
@@ -305,50 +305,50 @@ class LayoutProvider extends Component {
 	}
 
 	/**
-	 * @param {!Array} context
+	 * @param {!Array} pages
 	 * @param {!Object} source
 	 * @private
 	 * @return {Object}
 	 */
 
-	_removeEmptyRow(context, source) {
+	_removeEmptyRow(pages, source) {
 		const {pageIndex, rowIndex} = source;
 
-		if (!LayoutSupport.hasFieldsRow(context, pageIndex, rowIndex)) {
-			context = LayoutSupport.removeRow(context, pageIndex, rowIndex);
+		if (!LayoutSupport.hasFieldsRow(pages, pageIndex, rowIndex)) {
+			pages = LayoutSupport.removeRow(pages, pageIndex, rowIndex);
 		}
 
-		return context;
+		return pages;
 	}
 
 	/**
-	 * @param {!Array} context
+	 * @param {!Array} pages
 	 * @param {!Object} target
 	 * @param {!Object} field
 	 * @private
 	 * @return {Object}
 	 */
 
-	_addRow(context, target, fields) {
+	_addRow(pages, target, fields) {
 		const {pageIndex, rowIndex} = target;
 		const newRow = LayoutSupport.implAddRow(12, fields);
 
-		return LayoutSupport.addRow(context, rowIndex, pageIndex, newRow);
+		return LayoutSupport.addRow(pages, rowIndex, pageIndex, newRow);
 	}
 
 	/**
-	 * @param {!Array} context
+	 * @param {!Array} pages
 	 * @param {!Object} target
 	 * @param {!Object} field
 	 * @private
 	 * @return {Object}
 	 */
 
-	_setColumnFields(context, target, fields) {
+	_setColumnFields(pages, target, fields) {
 		const {columnIndex, pageIndex, rowIndex} = target;
 
 		return LayoutSupport.setColumnFields(
-			context,
+			pages,
 			pageIndex,
 			rowIndex,
 			columnIndex,
@@ -358,7 +358,7 @@ class LayoutProvider extends Component {
 
 	render() {
 		const {children, spritemap} = this.props;
-		const {context, focusedField, mode} = this.state;
+		const {focusedField, mode, pages} = this.state;
 
 		let child;
 
@@ -379,10 +379,10 @@ class LayoutProvider extends Component {
 				Child.props,
 				{
 					...this.otherProps(),
-					context,
 					events,
 					focusedField,
 					mode,
+					pages,
 					spritemap
 				}
 			);

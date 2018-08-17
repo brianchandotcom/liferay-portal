@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LayoutProvider Field events deleteField should listen the deleteField event and delete the field in the column to the context 1`] = `
+exports[`LayoutProvider Field events deleteField should listen the fieldDeleted event and delete the field in the column to the pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -71,7 +71,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events duplicateField should listen the duplicate field event and add this field in the context 1`] = `
+exports[`LayoutProvider Field events duplicateField should listen the duplicate field event and add this field in the pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -162,7 +162,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the column to the context 1`] = `
+exports[`LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the column to the pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -244,7 +244,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the row to the context 1`] = `
+exports[`LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the row to the pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -334,7 +334,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldEdited should listen the fieldEdited event and edit the field to the context 1`] = `
+exports[`LayoutProvider Field events fieldEdited should listen the fieldEdited event and edit the field to the pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -411,7 +411,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMoved should listen to the fieldMoved event and move the field to the column in context 1`] = `
+exports[`LayoutProvider Field events fieldMoved should listen to the fieldMoved event and move the field to the column in pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -488,7 +488,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMoved should listen to the fieldMoved event and move the field to the row in context 1`] = `
+exports[`LayoutProvider Field events fieldMoved should listen to the fieldMoved event and move the field to the row in pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -573,7 +573,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMoved should move the field to the column in context and remove the row if there are no fields 1`] = `
+exports[`LayoutProvider Field events fieldMoved should move the field to the column in pages and remove the row if there are no fields 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -642,7 +642,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMoved should move the field to the row in context and remove the row if there are no fields 1`] = `
+exports[`LayoutProvider Field events fieldMoved should move the field to the row in pages and remove the row if there are no fields 1`] = `
 Array [
   Object {
     "rows": Array [

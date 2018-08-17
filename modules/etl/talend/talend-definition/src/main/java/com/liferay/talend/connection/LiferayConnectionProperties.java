@@ -261,6 +261,13 @@ public class LiferayConnectionProperties
 		testConnectionWidget.setLongRunning(true);
 		testConnectionWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
 
+		Widget advancedFormWizardWidget = Widget.widget(advanced);
+
+		advancedFormWizardWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
+
+		wizardForm.addRow(advancedFormWizardWidget);
+
+		wizardForm.addColumn(testConnectionWidget);
 
 		// Main form
 
@@ -355,6 +362,8 @@ public class LiferayConnectionProperties
 		advancedForm.addRow(followRedirects);
 
 		advancedForm.addRow(forceHttps);
+
+		advanced.setFormtoShow(advancedForm);
 	}
 
 	@Override
@@ -401,6 +410,7 @@ public class LiferayConnectionProperties
 		}
 	}
 
+	public PresentationItem advanced = new PresentationItem("advanced");
 	public Property<Boolean> anonymousLogin = PropertyFactory.newBoolean(
 		"anonymousLogin");
 	public Property<Integer> connectTimeout = PropertyFactory.newInteger(

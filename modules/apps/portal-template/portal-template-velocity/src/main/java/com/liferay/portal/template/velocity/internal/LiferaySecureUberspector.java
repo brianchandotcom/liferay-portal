@@ -106,6 +106,15 @@ public class LiferaySecureUberspector extends SecureUberspector {
 		public boolean checkObjectExecutePermission(
 			Class clazz, String methodName) {
 
+			if ((methodName != null) && (methodName.equals("wait") ||
+			 methodName.equals("notify")))
+			{
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"It is not allowed to execute ", methodName,
+						" method"));
+			}
+
 			for (Class<?> restrictedClass : _restrictedClasses) {
 				if (restrictedClass.isAssignableFrom(clazz)) {
 					throw new IllegalArgumentException(

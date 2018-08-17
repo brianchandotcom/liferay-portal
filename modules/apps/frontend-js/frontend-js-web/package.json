@@ -19,7 +19,7 @@
 		"clay": "2.2.0",
 		"clay-alert": "2.2.0",
 		"jquery": "^3.3.1",
-		"liferay-amd-loader": "3.1.1",
+		"liferay-amd-loader": "3.1.2",
 		"lodash": "4.17.4",
 		"metal": "^2.16.2",
 		"metal-anim": "^2.0.0",

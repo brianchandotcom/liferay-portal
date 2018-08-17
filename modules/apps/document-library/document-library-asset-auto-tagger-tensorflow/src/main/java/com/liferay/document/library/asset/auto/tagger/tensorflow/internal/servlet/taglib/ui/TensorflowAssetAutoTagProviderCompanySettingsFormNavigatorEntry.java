@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.servlet.taglib.ui;
 
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.constants.FormNavigatorAssetAutoTaggerConstants;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.constants.TensorflowAssetAutoTagProviderConstants;
@@ -110,7 +112,11 @@ public class TensorflowAssetAutoTagProviderCompanySettingsFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Company company) {
-		return true;
+		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
+			_assetAutoTaggerConfigurationFactory.
+				getAssetAutoTaggerConfiguration(company);
+
+		return assetAutoTaggerConfiguration.isAvailable();
 	}
 
 	@Override
@@ -129,6 +135,10 @@ public class TensorflowAssetAutoTagProviderCompanySettingsFormNavigatorEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TensorflowAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class);
+
+	@Reference
+	private AssetAutoTaggerConfigurationFactory
+		_assetAutoTaggerConfigurationFactory;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

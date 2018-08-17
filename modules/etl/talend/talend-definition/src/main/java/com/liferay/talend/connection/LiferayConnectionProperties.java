@@ -285,6 +285,7 @@ public class LiferayConnectionProperties
 		Widget webSiteURLWidget = Widget.widget(webSiteURL);
 
 		webSiteURLWidget.setCallAfter(true);
+		webSiteURLWidget.setLongRunning(true);
 		webSiteURLWidget.setWidgetType(
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 

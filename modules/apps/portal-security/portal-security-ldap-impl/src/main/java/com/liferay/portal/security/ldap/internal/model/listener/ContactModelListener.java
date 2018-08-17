@@ -67,7 +67,7 @@ public class ContactModelListener extends BaseLDAPExportModelListener<Contact> {
 			return;
 		}
 
-		User user = _userLocalService.fetchUser(contact.getUserId());
+		User user = _userLocalService.fetchUser(contact.getClassPK());
 
 		exportToLDAP(user, _userExporter, _ldapSettings);
 	}

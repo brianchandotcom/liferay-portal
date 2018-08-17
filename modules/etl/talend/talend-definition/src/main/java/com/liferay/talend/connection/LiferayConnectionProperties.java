@@ -35,7 +35,6 @@ import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.PresentationItem;
-import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
 import org.talend.daikon.properties.ValidationResultMutable;
@@ -44,7 +43,6 @@ import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
 import org.talend.daikon.properties.property.StringProperty;
-import org.talend.daikon.properties.service.Repository;
 import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
@@ -65,32 +63,6 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(FORM_WIZARD));
 	}
 
-	public ValidationResult afterFormFinishWizard(Repository<Properties> repo) {
-		try (SandboxedInstance sandboxedInstance =
-				getRuntimeSandboxedInstance()) {
-
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
-
-			liferaySourceOrSinkRuntime.initialize(null, this);
-
-			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.validateConnection(this);
-
-			if (validationResult.getStatus() != ValidationResult.Result.OK) {
-				return validationResult;
-			}
-
-			repo.storeProperties(
-				this, name.getValue(), repositoryLocation, null);
-
-			return ValidationResult.OK;
-		}
-		catch (Exception e) {
-			return new ValidationResult(Result.ERROR, e.getMessage());
-		}
-	}
-
 	public void afterReferencedComponent() {
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
@@ -99,6 +71,7 @@ public class LiferayConnectionProperties
 	public void afterSiteFilter() {
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
+		refreshLayout(getForm(FORM_WIZARD));
 	}
 
 	public ValidationResult afterWebSiteURL() {
@@ -148,12 +121,9 @@ public class LiferayConnectionProperties
 			}
 		}
 
-		if (validationResultMutable.getStatus() ==
-				ValidationResult.Result.ERROR) {
-		}
-
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
+		refreshLayout(getForm(FORM_WIZARD));
 
 		return validationResultMutable;
 	}
@@ -261,12 +231,6 @@ public class LiferayConnectionProperties
 		}
 	}
 
-	public LiferayConnectionProperties setRepositoryLocation(String location) {
-		repositoryLocation = location;
-
-		return this;
-	}
-
 	@Override
 	public void setupLayout() {
 		super.setupLayout();
@@ -292,28 +256,11 @@ public class LiferayConnectionProperties
 
 		wizardForm.addRow(anonymousLogin);
 
-		wizardForm.addRow(siteFilter);
-
-		Widget webSiteURLWizardWidget = Widget.widget(webSiteURL);
-
-		webSiteURLWizardWidget.setCallAfter(true);
-		webSiteURLWizardWidget.setWidgetType(
-			Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
-
-		wizardForm.addRow(webSiteURLWizardWidget);
-
-		Widget webSiteWizardWidget = Widget.widget(webSite);
-
-		webSiteWizardWidget.setReadonly(true);
-
-		wizardForm.addColumn(webSiteWizardWidget);
-
 		Widget testConnectionWidget = Widget.widget(testConnection);
 
 		testConnectionWidget.setLongRunning(true);
 		testConnectionWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
 
-		wizardForm.addRow(testConnectionWidget);
 
 		// Main form
 
@@ -515,14 +462,6 @@ public class LiferayConnectionProperties
 		i18nMessages = i18nMessageProvider.getI18nMessages(
 			LiferayConnectionProperties.class);
 	}
-
-	/**
-	 * This must be named <code>repositoryLocation</code> since Talend uses
-	 * reflection to get a field named this. See <a
-	 * href="https://github.com/Talend/tdi-studio-se/blob/125a8144597e5d5faa1f7001ce345cdfd6dc1fe3/main/plugins/org.talend.repository.generic/src/main/java/org/talend/repository/generic/ui/GenericConnWizard.java#L111">here</a>
-	 * for more information.
-	 */
-	protected String repositoryLocation;
 
 	private static final int _CONNECT_TIMEOUT = 30;
 

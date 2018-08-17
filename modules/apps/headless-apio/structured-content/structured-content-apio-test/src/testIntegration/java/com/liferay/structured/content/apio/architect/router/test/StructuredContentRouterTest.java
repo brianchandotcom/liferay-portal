@@ -43,6 +43,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.structured.content.apio.architect.model.JournalArticleWrapper;
+import com.liferay.structured.content.apio.architect.model.StructuredContentRenderContext;
 import com.liferay.structured.content.apio.architect.router.StructuredContentRouter;
 import com.liferay.structured.content.apio.architect.util.test.PaginationTestUtil;
 
@@ -131,7 +132,7 @@ public class StructuredContentRouterTest {
 		PageItems<JournalArticleWrapper> pageItems =
 			_structuredContentRouter.getPageItems(
 				PaginationTestUtil.of(10, 1), _group.getGroupId(),
-				_getThemeDisplay(_group));
+				_getStructuredContentRenderContext(_group));
 
 		//Then: The Article is returned
 
@@ -142,7 +143,10 @@ public class StructuredContentRouterTest {
 		Assert.assertTrue("Items " + items, items.contains(journalArticle));
 	}
 
-	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {
+	private StructuredContentRenderContext _getStructuredContentRenderContext(
+			Group group)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(
@@ -152,7 +156,7 @@ public class StructuredContentRouterTest {
 
 		themeDisplay.setScopeGroupId(group.getGroupId());
 
-		return themeDisplay;
+		return new StructuredContentRenderContext(themeDisplay);
 	}
 
 	private static final Locale[] _locales =

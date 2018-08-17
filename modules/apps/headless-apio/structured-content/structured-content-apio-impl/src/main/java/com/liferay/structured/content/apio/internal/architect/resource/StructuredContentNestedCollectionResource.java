@@ -18,6 +18,8 @@ import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.aggregate.rating.apio.architect.identifier.AggregateRatingIdentifier;
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.pagination.PageItems;
+import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
@@ -57,6 +59,7 @@ import com.liferay.structured.content.apio.architect.form.StructuredContentCreat
 import com.liferay.structured.content.apio.architect.form.StructuredContentUpdaterForm;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 import com.liferay.structured.content.apio.architect.model.JournalArticleWrapper;
+import com.liferay.structured.content.apio.architect.model.StructuredContentRenderContext;
 import com.liferay.structured.content.apio.architect.router.StructuredContentRouter;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
 import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle;
@@ -89,9 +92,9 @@ public class StructuredContentNestedCollectionResource
 				builder) {
 
 		return builder.addGetter(
-			_structuredContentRouter::getPageItems, ThemeDisplay.class
+			this::_getPageItems, ThemeDisplay.class
 		).addCreator(
-			_structuredContentRouter::addJournalArticle, ThemeDisplay.class,
+			this::_addJournalArticle, ThemeDisplay.class,
 			_hasPermission.forAddingIn(ContentSpaceIdentifier.class),
 			StructuredContentCreatorForm::buildForm
 		).build();
@@ -112,7 +115,7 @@ public class StructuredContentNestedCollectionResource
 			idempotent(_structuredContentRouter::deleteJournalArticle),
 			_hasPermission::forDeleting
 		).addUpdater(
-			_structuredContentRouter::updateJournalArticle, ThemeDisplay.class,
+			this::_updateJournalArticle, ThemeDisplay.class,
 			_hasPermission::forUpdating, StructuredContentUpdaterForm::buildForm
 		).build();
 	}
@@ -199,6 +202,17 @@ public class StructuredContentNestedCollectionResource
 		).addStringList(
 			"keywords", this::_getJournalArticleAssetTags
 		).build();
+	}
+
+	private JournalArticleWrapper _addJournalArticle(
+			long contentSpaceId,
+			StructuredContentCreatorForm structuredContentCreatorForm,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _structuredContentRouter.addJournalArticle(
+			contentSpaceId, structuredContentCreatorForm,
+			new StructuredContentRenderContext(themeDisplay));
 	}
 
 	private ClassNameClassPK _createClassNameClassPK(
@@ -350,6 +364,16 @@ public class StructuredContentNestedCollectionResource
 		);
 	}
 
+	private PageItems<JournalArticleWrapper> _getPageItems(
+			Pagination pagination, long contentSpaceId,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _structuredContentRouter.getPageItems(
+			pagination, contentSpaceId,
+			new StructuredContentRenderContext(themeDisplay));
+	}
+
 	private String _getRenderedContent(
 		JournalArticleWrapper journalArticleWrapper, DDMTemplate ddmTemplate,
 		Locale locale) {
@@ -404,6 +428,17 @@ public class StructuredContentNestedCollectionResource
 		).orElse(
 			null
 		);
+	}
+
+	private JournalArticleWrapper _updateJournalArticle(
+			long journalArticleId,
+			StructuredContentUpdaterForm structuredContentUpdaterForm,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _structuredContentRouter.updateJournalArticle(
+			journalArticleId, structuredContentUpdaterForm,
+			new StructuredContentRenderContext(themeDisplay));
 	}
 
 	@Reference

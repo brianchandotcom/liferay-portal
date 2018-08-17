@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.structured.content.apio.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.architect.form.StructuredContentUpdaterForm;
 import com.liferay.structured.content.apio.architect.model.JournalArticleWrapper;
+import com.liferay.structured.content.apio.architect.model.StructuredContentRenderContext;
 import com.liferay.structured.content.apio.architect.router.StructuredContentRouter;
 
 import java.util.List;
@@ -47,8 +48,11 @@ public class StructuredContentRouterImpl implements StructuredContentRouter {
 	public JournalArticleWrapper addJournalArticle(
 			long contentSpaceId,
 			StructuredContentCreatorForm structuredContentCreatorForm,
-			ThemeDisplay themeDisplay)
+			StructuredContentRenderContext structuredContentRenderContext)
 		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			structuredContentRenderContext.getThemeDisplay();
 
 		Locale locale = themeDisplay.getLocale();
 
@@ -87,7 +91,7 @@ public class StructuredContentRouterImpl implements StructuredContentRouter {
 	@Override
 	public PageItems<JournalArticleWrapper> getPageItems(
 			Pagination pagination, long contentSpaceId,
-			ThemeDisplay themeDisplay)
+			StructuredContentRenderContext structuredContentRenderContext)
 		throws PortalException {
 
 		List<JournalArticleWrapper> journalArticleWrappers = Stream.of(
@@ -99,7 +103,8 @@ public class StructuredContentRouterImpl implements StructuredContentRouter {
 			List::stream
 		).map(
 			journalArticle -> new JournalArticleWrapper(
-				journalArticle, themeDisplay)
+				journalArticle,
+				structuredContentRenderContext.getThemeDisplay())
 		).collect(
 			Collectors.toList()
 		);
@@ -113,7 +118,7 @@ public class StructuredContentRouterImpl implements StructuredContentRouter {
 	public JournalArticleWrapper updateJournalArticle(
 			long journalArticleId,
 			StructuredContentUpdaterForm structuredContentUpdaterForm,
-			ThemeDisplay themeDisplay)
+			StructuredContentRenderContext structuredContentRenderContext)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -131,7 +136,8 @@ public class StructuredContentRouterImpl implements StructuredContentRouter {
 			structuredContentUpdaterForm.getDescriptionMap(),
 			structuredContentUpdaterForm.getText(), null, serviceContext);
 
-		return new JournalArticleWrapper(journalArticle, themeDisplay);
+		return new JournalArticleWrapper(
+			journalArticle, structuredContentRenderContext.getThemeDisplay());
 	}
 
 	@Reference

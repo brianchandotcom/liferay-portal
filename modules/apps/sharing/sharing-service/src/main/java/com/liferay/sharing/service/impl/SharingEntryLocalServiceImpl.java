@@ -110,11 +110,11 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public SharingEntry deleteSharingEntry(
-			long toUserId, long classNameId, long classPK)
+			long fromUserId, long toUserId, long classNameId, long classPK)
 		throws PortalException {
 
-		SharingEntry sharingEntry = sharingEntryPersistence.findByTU_C_C(
-			toUserId, classNameId, classPK);
+		SharingEntry sharingEntry = sharingEntryPersistence.findByFU_TU_C_C(
+			fromUserId, toUserId, classNameId, classPK);
 
 		return sharingEntryPersistence.remove(sharingEntry);
 	}
@@ -147,7 +147,7 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
-	public SharingEntry getSharingEntry(
+	public List<SharingEntry> getSharingEntries(
 			long toUserId, long classNameId, long classPK)
 		throws PortalException {
 
@@ -172,20 +172,44 @@ public class SharingEntryLocalServiceImpl
 		long toUserId, long classNameId, long classPK,
 		SharingEntryActionKey sharingEntryActionKey) {
 
-		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTU_C_C(
-			toUserId, classNameId, classPK);
+		List<SharingEntry> sharingEntries =
+			sharingEntryPersistence.findByTU_C_C(
+				toUserId, classNameId, classPK);
 
-		if (sharingEntry == null) {
-			return false;
-		}
+		for (SharingEntry sharingEntry : sharingEntries) {
+			long actionIds = sharingEntry.getActionIds();
 
-		long actionIds = sharingEntry.getActionIds();
-
-		if ((actionIds & sharingEntryActionKey.getBitwiseVaue()) != 0) {
-			return true;
+			if ((actionIds & sharingEntryActionKey.getBitwiseVaue()) != 0) {
+				return true;
+			}
 		}
 
 		return false;
+	}
+
+	@Override
+	public SharingEntry updateSharingEntry(
+			long sharingEntryId,
+			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+		throws PortalException {
+
+		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
+			sharingEntryId);
+
+		_validateSharingEntryActionKeys(sharingEntryActionKeys);
+
+		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
+			sharingEntryActionKeys.stream();
+
+		sharingEntryActionKeyStream.map(
+			SharingEntryActionKey::getBitwiseVaue
+		).reduce(
+			(bitwiseValue1, bitwiseValue2) -> bitwiseValue1 | bitwiseValue2
+		).ifPresent(
+			actionIds -> sharingEntry.setActionIds(actionIds)
+		);
+
+		return sharingEntryPersistence.update(sharingEntry);
 	}
 
 	private void _validateSharingEntryActionKeys(

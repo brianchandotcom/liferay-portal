@@ -84,6 +84,24 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		_serviceTrackerMap.close();
 	}
 
+	@Override
+	public SharingEntry updateSharingEntry(
+			long sharingEntryId,
+			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+		throws PortalException {
+
+		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
+			sharingEntryId);
+
+		_checkSharingPermission(
+			getUserId(), sharingEntry.getClassNameId(),
+			sharingEntry.getClassPK(), sharingEntry.getGroupId(),
+			sharingEntryActionKeys);
+
+		return sharingEntryLocalService.updateSharingEntry(
+			sharingEntryId, sharingEntryActionKeys);
+	}
+
 	@ServiceReference(type = ClassNameLocalService.class)
 	protected ClassNameLocalService classNameLocalService;
 

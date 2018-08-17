@@ -114,9 +114,11 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.sharing.model.SharingEntry deleteSharingEntry(
-		long toUserId, long classNameId, long classPK)
+		long fromUserId, long toUserId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteSharingEntry(toUserId, classNameId, classPK);
+		return getService()
+				   .deleteSharingEntry(fromUserId, toUserId, classNameId,
+			classPK);
 	}
 
 	/**
@@ -288,6 +290,12 @@ public class SharingEntryLocalServiceUtil {
 		return getService().getSharingEntries(classNameId, classPK);
 	}
 
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntries(
+		long toUserId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSharingEntries(toUserId, classNameId, classPK);
+	}
+
 	/**
 	* Returns all the sharing entries matching the UUID and company.
 	*
@@ -340,12 +348,6 @@ public class SharingEntryLocalServiceUtil {
 		return getService().getSharingEntry(sharingEntryId);
 	}
 
-	public static com.liferay.sharing.model.SharingEntry getSharingEntry(
-		long toUserId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSharingEntry(toUserId, classNameId, classPK);
-	}
-
 	/**
 	* Returns the sharing entry matching the UUID and group.
 	*
@@ -376,6 +378,14 @@ public class SharingEntryLocalServiceUtil {
 		return getService()
 				   .hasSharingPermission(toUserId, classNameId, classPK,
 			sharingEntryActionKey);
+	}
+
+	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
+		long sharingEntryId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSharingEntry(sharingEntryId, sharingEntryActionKeys);
 	}
 
 	/**

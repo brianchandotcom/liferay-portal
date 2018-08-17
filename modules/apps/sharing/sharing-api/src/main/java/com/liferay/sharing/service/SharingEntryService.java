@@ -66,4 +66,8 @@ public interface SharingEntryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public String getOSGiServiceIdentifier();
+
+	public SharingEntry updateSharingEntry(long sharingEntryId,
+		Collection<SharingEntryActionKey> sharingEntryActionKeys)
+		throws PortalException;
 }

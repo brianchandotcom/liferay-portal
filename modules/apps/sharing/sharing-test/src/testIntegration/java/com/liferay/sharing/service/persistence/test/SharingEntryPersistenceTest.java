@@ -247,6 +247,15 @@ public class SharingEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByFU_TU_C_C() throws Exception {
+		_persistence.countByFU_TU_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByFU_TU_C_C(0L, 0L, 0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SharingEntry newSharingEntry = addSharingEntry();
 
@@ -485,6 +494,9 @@ public class SharingEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
 				"getOriginalGroupId", new Class<?>[0]));
 
+		Assert.assertEquals(Long.valueOf(existingSharingEntry.getFromUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
+				"getOriginalFromUserId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(existingSharingEntry.getToUserId()),
 			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
 				"getOriginalToUserId", new Class<?>[0]));

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.scope.internal.debug.osgi.commands;
+package com.liferay.oauth2.provider.scope.internal.osgi.commands;
 
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,9 +36,9 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.command.function=listScopes", "osgi.command.scope=oauth2"
 	},
-	service = OAuth2ProviderScopeOsgiCommands.class
+	service = OAuth2OSGICommands.class
 )
-public class OAuth2ProviderScopeOsgiCommands {
+public class OAuth2OSGICommands {
 
 	public void listScopes() {
 		listScopes(_portal.getDefaultCompanyId());

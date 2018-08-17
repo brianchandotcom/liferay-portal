@@ -45,10 +45,16 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 							<div class="form-group">
 
 								<%
+								String title = StringPool.BLANK;
+
 								KBArticle kbArticle = KBArticleServiceUtil.fetchLatestKBArticle(kbArticlePortletInstanceConfiguration.resourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
+
+								if (kbArticle != null) {
+									title = kbArticle.getTitle();
+								}
 								%>
 
-								<aui:input label="article" name="configurationKBArticle" type="resource" value="<%= (kbArticle != null) ? kbArticle.getTitle() : StringPool.BLANK %>" />
+								<aui:input label="article" name="configurationKBObject" type="resource" value="<%= title %>" />
 
 								<aui:button name="selectKBArticleButton" value="select" />
 							</div>

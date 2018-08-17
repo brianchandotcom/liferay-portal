@@ -84,10 +84,10 @@ public class LiferaySecureUberspector extends SecureUberspector {
 	}
 
 	@Override
-	public void setRuntimeServices(RuntimeServices rs) {
-		super.setRuntimeServices(rs);
+	public void setRuntimeServices(RuntimeServices runtimeServices) {
+		super.setRuntimeServices(runtimeServices);
 
-		_runtimeServices = rs;
+		_runtimeServices = runtimeServices;
 	}
 
 	private List<Class> _restrictedClasses;

@@ -2,7 +2,7 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1.LIFERAY-PATCHED-3"
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:registry-api")
 }

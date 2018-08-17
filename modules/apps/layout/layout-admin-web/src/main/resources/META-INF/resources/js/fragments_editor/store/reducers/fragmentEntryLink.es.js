@@ -1,4 +1,7 @@
-import {ADD_FRAGMENT_ENTRY_LINK} from '../actionTypes.es';
+import {
+	ADD_FRAGMENT_ENTRY_LINK,
+	REMOVE_FRAGMENT_ENTRY_LINK
+} from '../actionTypes.es';
 import {DRAG_POSITIONS} from './dragDrop.es';
 
 /**
@@ -59,6 +62,50 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 			}
 			else {
 				resolve(nextState);
+			}
+		}
+	);
+}
+
+/**
+ * @param {!MetalStore} state
+ * @param {!string} actionType
+ * @param {!object} payload
+ * @param {!string} payload.fragmentEntryLinkId
+ * @return {MetalStore}
+ * @review
+ */
+
+function removeFragmentEntryLinkReducer(state, actionType, payload) {
+	return new Promise(
+		resolve => {
+			if (actionType === REMOVE_FRAGMENT_ENTRY_LINK) {
+				const fragmentEntryLinkId = payload.fragmentEntryLinkId;
+				const nextState = Object.assign({}, state);
+
+				_removeFragmentEntryLink(
+					state.deleteFragmentEntryLinkURL,
+					state.portletNamespace,
+					fragmentEntryLinkId
+				).then(
+					() => {
+						const index = state.fragmentEntryLinks.findIndex(
+							fragmentEntryLink => (
+								fragmentEntryLink.fragmentEntryLinkId === fragmentEntryLinkId
+							)
+						);
+
+						nextState.fragmentEntryLinks = [
+							...nextState.fragmentEntryLinks.slice(0, index),
+							...nextState.fragmentEntryLinks.slice(index + 1)
+						];
+
+						resolve(nextState);
+					}
+				);
+			}
+			else {
+				resolve(state);
 			}
 		}
 	);
@@ -168,4 +215,29 @@ function _getFragmentEntryLinkContent(
 	);
 }
 
-export {addFragmentEntryLinkReducer};
+function _removeFragmentEntryLink(
+	deleteFragmentEntryLinkURL,
+	portletNamespace,
+	fragmentEntryLinkId
+) {
+	const formData = new FormData();
+
+	formData.append(
+		`${portletNamespace}fragmentEntryLinkId`,
+		fragmentEntryLinkId
+	);
+
+	return fetch(
+		deleteFragmentEntryLinkURL,
+		{
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		}
+	);
+}
+
+export {
+	addFragmentEntryLinkReducer,
+	removeFragmentEntryLinkReducer
+};

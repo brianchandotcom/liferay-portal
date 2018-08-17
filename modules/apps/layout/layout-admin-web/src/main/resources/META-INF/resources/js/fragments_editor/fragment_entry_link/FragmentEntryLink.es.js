@@ -5,6 +5,8 @@ import {addClasses, removeClasses} from 'metal-dom';
 import {isFunction, isObject, object} from 'metal';
 
 import FragmentEditableField from './FragmentEditableField.es';
+import MetalStore from '../store/MetalStore.es';
+import {REMOVE_FRAGMENT_ENTRY_LINK} from '../store/actionTypes.es';
 import templates from './FragmentEntryLink.soy';
 
 const ARROW_DOWN_KEYCODE = 40;
@@ -303,17 +305,13 @@ class FragmentEntryLink extends Component {
 
 	/**
 	 * Callback executed when the fragment remove button is clicked.
-	 * It emits a 'remove' event with
-	 * the FragmentEntryLink id.
 	 * @private
 	 */
 
 	_handleFragmentRemoveButtonClick() {
-		this.emit(
-			'remove',
-			{
-				fragmentEntryLinkId: this.fragmentEntryLinkId
-			}
+		this.store.dispatchAction(
+			REMOVE_FRAGMENT_ENTRY_LINK,
+			{fragmentEntryLinkId: this.fragmentEntryLinkId}
 		);
 	}
 
@@ -611,6 +609,17 @@ FragmentEntryLink.STATE = {
 	 */
 
 	showMapping: Config.bool().value(false),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {MetalStore}
+	 */
+
+	store: Config.instanceOf(MetalStore),
 
 	/**
 	 * CSS class to modify style

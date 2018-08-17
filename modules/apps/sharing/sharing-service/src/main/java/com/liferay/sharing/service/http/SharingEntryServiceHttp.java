@@ -91,10 +91,46 @@ public class SharingEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
+		HttpPrincipal httpPrincipal, long sharingEntryId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SharingEntryServiceUtil.class,
+					"updateSharingEntry", _updateSharingEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					sharingEntryId, sharingEntryActionKeys);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.sharing.model.SharingEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(SharingEntryServiceHttp.class);
 	private static final Class<?>[] _addSharingEntryParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, long.class,
 			java.util.Collection.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateSharingEntryParameterTypes3 = new Class[] {
+			long.class, java.util.Collection.class
 		};
 }

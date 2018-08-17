@@ -61,6 +61,14 @@ public class SharingEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
+		long sharingEntryId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSharingEntry(sharingEntryId, sharingEntryActionKeys);
+	}
+
 	public static SharingEntryService getService() {
 		return _serviceTracker.getService();
 	}

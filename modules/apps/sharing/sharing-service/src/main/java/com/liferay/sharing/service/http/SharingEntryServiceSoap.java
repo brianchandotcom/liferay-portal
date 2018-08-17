@@ -84,5 +84,22 @@ public class SharingEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.sharing.model.SharingEntrySoap updateSharingEntry(
+		long sharingEntryId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		throws RemoteException {
+		try {
+			com.liferay.sharing.model.SharingEntry returnValue = SharingEntryServiceUtil.updateSharingEntry(sharingEntryId,
+					sharingEntryActionKeys);
+
+			return com.liferay.sharing.model.SharingEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(SharingEntryServiceSoap.class);
 }

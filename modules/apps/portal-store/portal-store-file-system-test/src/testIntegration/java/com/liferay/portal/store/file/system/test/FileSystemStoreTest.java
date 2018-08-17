@@ -22,12 +22,14 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
  * @author Preston Crary
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class FileSystemStoreTest extends BaseStoreTestCase {
 

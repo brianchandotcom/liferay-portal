@@ -53,6 +53,15 @@ public class SharingEntryServiceWrapper implements SharingEntryService,
 	}
 
 	@Override
+	public com.liferay.sharing.model.SharingEntry updateSharingEntry(
+		long sharingEntryId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sharingEntryService.updateSharingEntry(sharingEntryId,
+			sharingEntryActionKeys);
+	}
+
+	@Override
 	public SharingEntryService getWrappedService() {
 		return _sharingEntryService;
 	}

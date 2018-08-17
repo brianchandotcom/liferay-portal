@@ -12,6 +12,7 @@ function callback() {
 }
 
 module.exports = {
+	cors: true,
 	files: [
 		"src/main/resources/META-INF/resources/metal",
 		{
@@ -21,6 +22,14 @@ module.exports = {
 	],
 	port: 3000,
 	proxy: "http://localhost:8080/",
+	rewriteRules: [
+		{
+			match: /localhost\:8080/g,
+			fn: function(req, res, match) {
+				return 'localhost:3000';
+			}
+		}
+	],
 	serveStatic: [
 		{
 			route: `/o/js/resolved-module/${name}@${version}/metal`,

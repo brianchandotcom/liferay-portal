@@ -19,6 +19,7 @@ import org.eclipse.osgi.framework.eventmgr.*;
 import org.eclipse.osgi.internal.debug.Debug;
 import org.eclipse.osgi.internal.framework.BundleContextImpl;
 import org.eclipse.osgi.internal.framework.EquinoxContainer;
+import org.eclipse.osgi.internal.framework.FilterImpl;
 import org.eclipse.osgi.internal.messages.Msg;
 import org.eclipse.osgi.storage.BundleInfo.Generation;
 import org.eclipse.osgi.util.NLS;
@@ -991,6 +992,12 @@ public class ServiceRegistry {
 	 * @return List<ServiceRegistrationImpl>
 	 */
 	private List<ServiceRegistrationImpl<?>> lookupServiceRegistrations(String clazz, Filter filter) {
+		if ((clazz == null) && (filter instanceof FilterImpl)) {
+			FilterImpl filterImpl = (FilterImpl)filter;
+
+			clazz = filterImpl.getRequiredObjectClass();
+		}
+
 		List<ServiceRegistrationImpl<?>> result;
 		synchronized (this) {
 			if (clazz == null) { /* all services */
@@ -1400,3 +1407,4 @@ public class ServiceRegistry {
 		return container;
 	}
 }
+/* @generated */

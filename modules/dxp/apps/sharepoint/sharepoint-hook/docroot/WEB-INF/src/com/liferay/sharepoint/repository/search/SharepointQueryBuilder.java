@@ -69,6 +69,7 @@ import com.liferay.sharepoint.repository.model.SharepointWSFolder;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -665,7 +666,10 @@ public class SharepointQueryBuilder {
 		new LiferayQueryExplainer();
 	private static final Map<String, String> _sharepointFields =
 		new HashMap<>();
-	private static final Set<String> _supportedFields = new HashSet<>();
+	private static final Set<String> _supportedFields = new HashSet<>(
+		Arrays.asList(
+			Field.CREATE_DATE, Field.FOLDER_ID, Field.MODIFIED_DATE, Field.NAME,
+			Field.TITLE, Field.USER_ID, Field.USER_NAME));
 
 	static {
 		_sharepointFields.put(Field.CREATE_DATE, SharepointField.CREATE_DATE);
@@ -676,14 +680,6 @@ public class SharepointQueryBuilder {
 		_sharepointFields.put(Field.TITLE, SharepointField.NAME);
 		_sharepointFields.put(Field.USER_ID, SharepointField.MODIFIED_BY);
 		_sharepointFields.put(Field.USER_NAME, SharepointField.MODIFIED_BY);
-
-		_supportedFields.add(Field.CREATE_DATE);
-		_supportedFields.add(Field.FOLDER_ID);
-		_supportedFields.add(Field.MODIFIED_DATE);
-		_supportedFields.add(Field.NAME);
-		_supportedFields.add(Field.TITLE);
-		_supportedFields.add(Field.USER_ID);
-		_supportedFields.add(Field.USER_NAME);
 	}
 
 	private final ExtRepositoryQueryMapper _extRepositoryQueryMapper;

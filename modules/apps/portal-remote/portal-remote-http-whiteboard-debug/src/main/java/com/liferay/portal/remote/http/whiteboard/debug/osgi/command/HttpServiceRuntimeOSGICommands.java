@@ -40,34 +40,37 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 @Component(
 	immediate = true,
 	property = {"osgi.command.function=check", "osgi.command.scope=http"},
-	service = HttpServiceRuntimeOsgiCommands.class
+	service = HttpServiceRuntimeOSGICommands.class
 )
-public class HttpServiceRuntimeOsgiCommands {
+public class HttpServiceRuntimeOSGICommands {
 
 	public void check() {
 		RuntimeDTO runtimeDTO = _httpServiceRuntime.getRuntimeDTO();
 
-		Map<String, Set<ServletContextDTO>> map = new HashMap<>();
+		Map<String, Set<ServletContextDTO>> contextPathMap = new HashMap<>();
 
 		for (ServletContextDTO servletContextDTO :
 				runtimeDTO.servletContextDTOs) {
 
-			Set<ServletContextDTO> set = map.computeIfAbsent(
-				servletContextDTO.contextPath, a -> new HashSet<>());
+			Set<ServletContextDTO> servletContextDTOs =
+				contextPathMap.computeIfAbsent(
+					servletContextDTO.contextPath, key -> new HashSet<>());
 
-			set.add(servletContextDTO);
+			servletContextDTOs.add(servletContextDTO);
 		}
 
-		for (Map.Entry<String, Set<ServletContextDTO>> entry : map.entrySet()) {
-			Set<ServletContextDTO> set = entry.getValue();
+		for (Map.Entry<String, Set<ServletContextDTO>> entry :
+				contextPathMap.entrySet()) {
 
-			if (set.size() < 2) {
+			Set<ServletContextDTO> servletContextDTOs = entry.getValue();
+
+			if (servletContextDTOs.size() < 2) {
 				continue;
 			}
 
 			NavigableSet<ServiceReference<?>> navigableSet = new TreeSet<>();
 
-			for (ServletContextDTO servletContextDTO : set) {
+			for (ServletContextDTO servletContextDTO : servletContextDTOs) {
 				navigableSet.add(
 					getServiceReference(servletContextDTO.serviceId));
 			}

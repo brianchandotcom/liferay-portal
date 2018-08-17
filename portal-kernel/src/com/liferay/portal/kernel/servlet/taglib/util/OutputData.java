@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.Mergeable;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -202,8 +202,8 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final Map<DataKey, StringBundler> _dataMap = new HashMap<>();
-	private final Set<String> _outputKeys = new HashSet<>();
+	private final Map<DataKey, StringBundler> _dataMap = new LinkedHashMap<>();
+	private final Set<String> _outputKeys = new LinkedHashSet<>();
 
 	private static class DataKey implements Serializable {
 

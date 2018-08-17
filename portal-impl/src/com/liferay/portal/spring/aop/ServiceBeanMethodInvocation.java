@@ -56,9 +56,7 @@ public class ServiceBeanMethodInvocation
 		_method = method;
 		_arguments = arguments;
 
-		if (!_method.isAccessible()) {
-			_method.setAccessible(true);
-		}
+		_method.setAccessible(true);
 
 		if (_method.getDeclaringClass() == Object.class) {
 			String methodName = _method.getName();

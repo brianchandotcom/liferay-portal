@@ -31,9 +31,7 @@ public class ReferenceEntry {
 		_object = object;
 		_field = field;
 
-		if (!_field.isAccessible()) {
-			_field.setAccessible(true);
-		}
+		_field.setAccessible(true);
 	}
 
 	public Field getField() {

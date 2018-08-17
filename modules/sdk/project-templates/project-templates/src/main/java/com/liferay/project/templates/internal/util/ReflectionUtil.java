@@ -24,9 +24,7 @@ public class ReflectionUtil {
 	public static Field getField(Class<?> clazz, String name) throws Exception {
 		Field field = clazz.getDeclaredField(name);
 
-		if (!field.isAccessible()) {
-			field.setAccessible(true);
-		}
+		field.setAccessible(true);
 
 		return field;
 	}

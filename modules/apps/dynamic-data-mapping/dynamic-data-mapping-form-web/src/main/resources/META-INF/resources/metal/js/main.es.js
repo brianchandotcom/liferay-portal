@@ -95,7 +95,7 @@ class Form extends Component {
 
 	_setContext(context) {
 		if (!context.pages.length) {
-			return {
+			context = {
 				...context,
 				pages: [
 					{
@@ -107,7 +107,7 @@ class Form extends Component {
 			};
 		}
 
-		return value;
+		return context;
 	}
 
 	_getLocalizedName() {

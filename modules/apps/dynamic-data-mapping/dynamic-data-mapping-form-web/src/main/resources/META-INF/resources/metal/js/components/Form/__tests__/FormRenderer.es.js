@@ -193,8 +193,6 @@ describe(
 					}
 				);
 
-				const spy = jest.spyOn(component, 'emit');
-
 				jest.runAllTimers();
 
 				const pageWizard = component.element.querySelector('.multi-step-item[data-page-id="1"]');
@@ -443,9 +441,13 @@ describe(
 
 				delegateTarget.value = 'My Page Title';
 
-				MetalTestUtil.triggerEvent(delegateTarget, 'change', {
-					delegateTarget
-				});
+				MetalTestUtil.triggerEvent(
+					delegateTarget,
+					'change',
+					{
+						delegateTarget
+					}
+				);
 
 				jest.runAllTimers();
 
@@ -469,8 +471,8 @@ describe(
 				delegateTarget.value = 'My Page Description';
 
 				MetalTestUtil.triggerEvent(
-					delegateTarget, 
-					'change', 
+					delegateTarget,
+					'change',
 					{
 						delegateTarget
 					}
@@ -496,13 +498,15 @@ describe(
 							}
 						);
 
-						component._handleSettingsPageClicked({
-							data: {
-								item: {
-									settingsItem: 'add-page'
+						component._handleSettingsPageClicked(
+							{
+								data: {
+									item: {
+										settingsItem: 'add-page'
+									}
 								}
 							}
-						});
+						);
 
 						jest.runAllTimers();
 
@@ -510,6 +514,6 @@ describe(
 					}
 				);
 			}
-		)
+		);
 	}
 );

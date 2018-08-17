@@ -564,21 +564,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected DDMFormFieldValue getNameAndInstanceIdDDMFormFieldValue(
-		List<DDMFormFieldValue> ddmFormFieldValues, String name,
-		String instanceId) {
-
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			if (name.equals(ddmFormFieldValue.getName()) &&
-				instanceId.equals(ddmFormFieldValue.getInstanceId())) {
-
-				return ddmFormFieldValue;
-			}
-		}
-
-		return null;
-	}
-
 	/**
 	 * Returns an array of the DDL record IDs obtained from the action request.
 	 *
@@ -676,6 +661,21 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		catch (DocumentException de) {
 			return defaultName;
 		}
+	}
+
+	protected DDMFormFieldValue getNameAndInstanceIdDDMFormFieldValue(
+		List<DDMFormFieldValue> ddmFormFieldValues, String name,
+		String instanceId) {
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (name.equals(ddmFormFieldValue.getName()) &&
+				instanceId.equals(ddmFormFieldValue.getInstanceId())) {
+
+				return ddmFormFieldValue;
+			}
+		}
+
+		return null;
 	}
 
 	protected List<DDMFormFieldValue> getRemovedByReviewerDDMFormFieldValues(

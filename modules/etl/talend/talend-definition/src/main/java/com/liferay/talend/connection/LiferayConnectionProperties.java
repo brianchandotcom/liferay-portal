@@ -71,7 +71,6 @@ public class LiferayConnectionProperties
 	public void afterSiteFilter() {
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
-		refreshLayout(getForm(FORM_WIZARD));
 	}
 
 	public ValidationResult afterWebSiteURL() {

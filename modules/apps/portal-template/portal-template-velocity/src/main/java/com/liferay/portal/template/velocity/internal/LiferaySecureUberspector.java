@@ -121,13 +121,13 @@ public class LiferaySecureUberspector extends SecureUberspector {
 			if (clazzPackage != null) {
 				String packageName = clazzPackage.getName() + StringPool.PERIOD;
 
-				for (String restrictedPackage : _restrictedPackageNames) {
-					if (packageName.startsWith(restrictedPackage)) {
+				for (String restrictedPackageName : _restrictedPackageNames) {
+					if (packageName.startsWith(restrictedPackageName)) {
 						throw new IllegalArgumentException(
 							StringBundler.concat(
 								"Denied to resolve class ", clazz.getName(),
 								" due to security reasons, restricted by ",
-								restrictedPackage));
+								restrictedPackageName));
 					}
 				}
 			}

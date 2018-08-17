@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 
+import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -59,10 +60,13 @@ public class OAuth2OSGICommands {
 				Comparator.comparing(LiferayOAuth2Scope::getScope));
 
 			for (LiferayOAuth2Scope liferayOAuth2Scope : liferayOAuth2Scopes) {
+				Bundle bundle = liferayOAuth2Scope.getBundle();
+
 				System.out.println(
 					StringBundler.concat(
 						"    ", liferayOAuth2Scope.getScope(), " (",
-						liferayOAuth2Scope.getApplicationName(), ")"));
+						liferayOAuth2Scope.getApplicationName(), " [",
+						bundle.getBundleId(), "])"));
 			}
 		}
 

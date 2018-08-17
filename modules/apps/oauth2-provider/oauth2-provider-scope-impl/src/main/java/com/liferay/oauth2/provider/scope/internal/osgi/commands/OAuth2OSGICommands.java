@@ -17,7 +17,6 @@ package com.liferay.oauth2.provider.scope.internal.osgi.commands;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -68,9 +67,6 @@ public class OAuth2OSGICommands {
 
 		System.out.println();
 	}
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private Portal _portal;

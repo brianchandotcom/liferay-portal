@@ -30,6 +30,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -162,34 +163,17 @@ public class LayoutSetStagingHandler
 		LayoutSetStagingHandler.class);
 
 	private static final Set<String> _layoutSetBranchMethodNames =
-		new HashSet<>();
-
-	static {
-		_layoutSetBranchMethodNames.add("getColorScheme");
-		_layoutSetBranchMethodNames.add("getColorSchemeId");
-		_layoutSetBranchMethodNames.add("getCss");
-		_layoutSetBranchMethodNames.add("getLayoutSetPrototypeLinkEnabled");
-		_layoutSetBranchMethodNames.add("getLayoutSetPrototypeUuid");
-		_layoutSetBranchMethodNames.add("getLogo");
-		_layoutSetBranchMethodNames.add("getLogoId");
-		_layoutSetBranchMethodNames.add("getSettings");
-		_layoutSetBranchMethodNames.add("getSettingsProperties");
-		_layoutSetBranchMethodNames.add("getSettingsProperty");
-		_layoutSetBranchMethodNames.add("getTheme");
-		_layoutSetBranchMethodNames.add("getThemeId");
-		_layoutSetBranchMethodNames.add("getThemeSetting");
-		_layoutSetBranchMethodNames.add("isEscapedModel");
-		_layoutSetBranchMethodNames.add("isLayoutSetPrototypeLinkActive");
-		_layoutSetBranchMethodNames.add("isLogo");
-		_layoutSetBranchMethodNames.add("setColorSchemeId");
-		_layoutSetBranchMethodNames.add("setCss");
-		_layoutSetBranchMethodNames.add("setLayoutSetPrototypeLinkEnabled");
-		_layoutSetBranchMethodNames.add("setLayoutSetPrototypeUuid");
-		_layoutSetBranchMethodNames.add("setLogoId");
-		_layoutSetBranchMethodNames.add("setSettings");
-		_layoutSetBranchMethodNames.add("setSettingsProperties");
-		_layoutSetBranchMethodNames.add("setThemeId");
-	}
+		new HashSet<>(
+			Arrays.asList(
+				"getColorScheme", "getColorSchemeId", "getCss",
+				"getLayoutSetPrototypeLinkEnabled", "getLayoutSetPrototypeUuid",
+				"getLogo", "getLogoId", "getSettings", "getSettingsProperties",
+				"getSettingsProperty", "getTheme", "getThemeId",
+				"getThemeSetting", "isEscapedModel",
+				"isLayoutSetPrototypeLinkActive", "isLogo", "setColorSchemeId",
+				"setCss", "setLayoutSetPrototypeLinkEnabled",
+				"setLayoutSetPrototypeUuid", "setLogoId", "setSettings",
+				"setSettingsProperties", "setThemeId"));
 
 	private final LayoutSet _layoutSet;
 	private LayoutSetBranch _layoutSetBranch;

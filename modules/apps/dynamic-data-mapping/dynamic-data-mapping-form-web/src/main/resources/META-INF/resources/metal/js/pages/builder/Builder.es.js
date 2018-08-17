@@ -1,5 +1,4 @@
 import Component from 'metal-jsx';
-import dom from 'metal-dom';
 import LayoutRenderer from '../../components/Layout/index.es';
 import Sidebar from '../../components/Sidebar/index.es';
 
@@ -79,25 +78,8 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleCreationButtonClicked() {
-		const Sidebar = this.refs.sidebar;
-
-		Sidebar.props.mode = 'add';
-		Sidebar.show();
-	}
-
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
-
 	_handleUpdatePages(pages) {
 		this.emit('updatePages', pages);
-	}
-
-	attached() {
-		dom.on('#addFieldButton', 'click', this._handleCreationButtonClicked.bind(this));
 	}
 
 	/**

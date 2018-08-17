@@ -50,8 +50,8 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 								KBArticle kbArticle = KBArticleServiceUtil.fetchLatestKBArticle(kbArticlePortletInstanceConfiguration.resourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
 
 								if (kbArticle != null) {
-										title = kbArticle.getTitle();
-									}
+									title = kbArticle.getTitle();
+								}
 								%>
 
 								<aui:input label="article" name="configurationKBObject" type="resource" value="<%= title %>" />

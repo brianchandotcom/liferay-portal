@@ -101,14 +101,14 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 		_allowedClassNames = new ArrayList(allowedClassNames.length);
 
-		for (String allowedClass : allowedClassNames) {
-			allowedClass = StringUtil.trim(allowedClass);
+		for (String allowedClassName : allowedClassNames) {
+			allowedClassName = StringUtil.trim(allowedClassName);
 
-			if (Validator.isBlank(allowedClass)) {
+			if (Validator.isBlank(allowedClassName)) {
 				continue;
 			}
 
-			_allowedClassNames.add(allowedClass);
+			_allowedClassNames.add(allowedClassName);
 		}
 
 		_restrictedPackageNames = new ArrayList<>();

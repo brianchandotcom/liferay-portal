@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.text.DateFormat;
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 
 import java.util.Date;
 import java.util.Enumeration;
@@ -181,7 +183,7 @@ public class ParamUtil {
 			request.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
-			return StringUtil.trim(returnValue);
+			return _normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -341,7 +343,7 @@ public class ParamUtil {
 			portletRequest.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
-			return StringUtil.trim(returnValue);
+			return _normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -501,7 +503,7 @@ public class ParamUtil {
 			serviceContext.getAttribute(param), defaultValue);
 
 		if (returnValue != null) {
-			return StringUtil.trim(returnValue);
+			return _normalize(StringUtil.trim(returnValue));
 		}
 
 		return null;
@@ -1980,14 +1982,14 @@ public class ParamUtil {
 		String[] values = request.getParameterValues(param);
 
 		if (values == null) {
-			return defaultValue;
+			return _normalize(defaultValue);
 		}
 
 		if (split && (values.length == 1)) {
-			return StringUtil.split(values[0]);
+			return _normalize(StringUtil.split(values[0]));
 		}
 
-		return values;
+		return _normalize(values);
 	}
 
 	/**
@@ -2240,7 +2242,7 @@ public class ParamUtil {
 	 * @return the request parameter value as a String
 	 */
 	public static String getString(HttpServletRequest request, String param) {
-		return GetterUtil.getString(request.getParameter(param));
+		return _normalize(GetterUtil.getString(request.getParameter(param)));
 	}
 
 	/**
@@ -2270,7 +2272,8 @@ public class ParamUtil {
 	public static String getString(
 		PortletRequest portletRequest, String param) {
 
-		return GetterUtil.getString(portletRequest.getParameter(param));
+		return _normalize(
+			GetterUtil.getString(portletRequest.getParameter(param)));
 	}
 
 	/**
@@ -2301,7 +2304,8 @@ public class ParamUtil {
 	public static String getString(
 		ServiceContext serviceContext, String param) {
 
-		return GetterUtil.getString(serviceContext.getAttribute(param));
+		return _normalize(
+			GetterUtil.getString(serviceContext.getAttribute(param)));
 	}
 
 	/**
@@ -2349,7 +2353,8 @@ public class ParamUtil {
 		HttpServletRequest request, String param, String[] defaultValue) {
 
 		return GetterUtil.getStringValues(
-			getParameterValues(request, param, null), defaultValue);
+			getParameterValues(request, param, null),
+			() -> _normalize(defaultValue));
 	}
 
 	/**
@@ -2383,7 +2388,8 @@ public class ParamUtil {
 		PortletRequest portletRequest, String param, String[] defaultValue) {
 
 		return GetterUtil.getStringValues(
-			getParameterValues(portletRequest, param, null), defaultValue);
+			getParameterValues(portletRequest, param, null),
+			() -> _normalize(defaultValue));
 	}
 
 	/**
@@ -2417,7 +2423,7 @@ public class ParamUtil {
 		ServiceContext serviceContext, String param, String[] defaultValue) {
 
 		return GetterUtil.getStringValues(
-			serviceContext.getAttribute(param), defaultValue);
+			serviceContext.getAttribute(param), () -> _normalize(defaultValue));
 	}
 
 	/**
@@ -2474,6 +2480,49 @@ public class ParamUtil {
 		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
 			System.out.println(
 				entry.getKey() + " = " + String.valueOf(entry.getValue()));
+		}
+	}
+
+	private static String _normalize(String input) {
+		if ((_FORM == null) || Validator.isNull(input)) {
+			return input;
+		}
+
+		return Normalizer.normalize(input, _FORM);
+	}
+
+	private static String[] _normalize(String[] input) {
+		if ((_FORM == null) || ArrayUtil.isEmpty(input)) {
+			return input;
+		}
+
+		for (int i = 0; i < input.length; i++) {
+			input[i] = Normalizer.normalize(input[i], _FORM);
+		}
+
+		return input;
+	}
+
+	private static final Form _FORM;
+
+	static {
+		String formString = PropsUtil.get(
+			PropsKeys.UNICODE_TEXT_NORMALIZER_FORM);
+
+		if ((formString == null) || formString.isEmpty()) {
+			_FORM = null;
+		}
+		else {
+			Form form = null;
+
+			try {
+				form = Normalizer.Form.valueOf(formString);
+			}
+			catch (IllegalArgumentException iae) {
+				form = null;
+			}
+
+			_FORM = form;
 		}
 	}
 

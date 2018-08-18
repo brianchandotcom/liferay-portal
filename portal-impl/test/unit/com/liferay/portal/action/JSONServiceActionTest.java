@@ -18,12 +18,17 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.RoleServiceUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
-import junit.framework.TestCase;
+import java.util.Arrays;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -31,9 +36,14 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Igor Spasic
  */
-public class JSONServiceActionTest extends TestCase {
+public class JSONServiceActionTest {
 
-	@Override
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		PropsUtil.setProps(new PropsImpl());
+	}
+
+	@Before
 	public void setUp() throws Exception {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -66,7 +76,7 @@ public class JSONServiceActionTest extends TestCase {
 			mockHttpServletRequest, RoleServiceUtil.class, method.getName(),
 			parameters[2], parameterTypes[2]);
 
-		assertEquals("[]", value.toString());
+		Assert.assertEquals("[]", value.toString());
 
 		mockHttpServletRequest.setParameter(
 			"excludedNames",
@@ -77,7 +87,7 @@ public class JSONServiceActionTest extends TestCase {
 			mockHttpServletRequest, RoleServiceUtil.class, method.getName(),
 			parameters[2], parameterTypes[2]);
 
-		assertEquals(
+		Assert.assertEquals(
 			"{class=com.liferay.portal.kernel.dao.orm.EntityCacheUtil}",
 			value.toString());
 	}
@@ -108,11 +118,11 @@ public class JSONServiceActionTest extends TestCase {
 
 		Class<?> clazz = value.getClass();
 
-		assertTrue(clazz.isArray());
+		Assert.assertTrue(clazz.isArray());
 
 		long[] arrayValue = (long[])value;
 
-		assertEquals(3, arrayValue.length);
+		Assert.assertEquals(Arrays.toString(arrayValue), 3, arrayValue.length);
 	}
 
 }

@@ -36,20 +36,19 @@ public class HeaderResponseImplTest {
 
 			String actual = ReflectionTestUtil.invoke(
 				HeaderResponseImpl.class, "_addClosingTags",
-				new Class<?>[] {String.class}, new String[] {openTag});
+				new Class<?>[] {String.class}, openTag);
 
 			Assert.assertEquals(openTagCloseTag, actual);
 
 			actual = ReflectionTestUtil.invoke(
 				HeaderResponseImpl.class, "_addClosingTags",
-				new Class<?>[] {String.class}, new String[] {openTagCloseTag});
+				new Class<?>[] {String.class}, openTagCloseTag);
 
 			Assert.assertEquals(openTagCloseTag, actual);
 
 			actual = ReflectionTestUtil.invoke(
 				HeaderResponseImpl.class, "_addClosingTags",
-				new Class<?>[] {String.class},
-				new String[] {"<head>" + openTag + "</head>"});
+				new Class<?>[] {String.class}, "<head>" + openTag + "</head>");
 
 			String openCloseTagInsideHead =
 				"<head>" + openTagCloseTag + "</head>";
@@ -58,8 +57,7 @@ public class HeaderResponseImplTest {
 
 			actual = ReflectionTestUtil.invoke(
 				HeaderResponseImpl.class, "_addClosingTags",
-				new Class<?>[] {String.class},
-				new String[] {openCloseTagInsideHead});
+				new Class<?>[] {String.class}, openCloseTagInsideHead);
 
 			Assert.assertEquals(openCloseTagInsideHead, actual);
 		}

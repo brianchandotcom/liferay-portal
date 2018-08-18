@@ -1569,6 +1569,13 @@ public class StagingImpl implements Staging {
 						"during-the-process",
 					new String[] {modelResource, referrerDisplayName}, false);
 			}
+			else if (pde.getType() == PortletDataException.MISSING_REFERENCE) {
+				errorMessage = LanguageUtil.format(
+					locale,
+					"the-x-x-missing-reference-could-not-be-found-during-the-" +
+						"process",
+					new String[] {modelResource, referrerDisplayName}, false);
+			}
 			else if (pde.getType() ==
 						 PortletDataException.PREPARE_MANIFEST_SUMMARY) {
 

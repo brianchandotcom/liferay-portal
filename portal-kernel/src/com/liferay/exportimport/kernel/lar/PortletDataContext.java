@@ -627,6 +627,8 @@ public interface PortletDataContext extends Serializable {
 
 	public void putNotUniquePerLayout(String dataKey);
 
+	public void removePrimaryKey(String path);
+
 	public void setClassLoader(ClassLoader classLoader);
 
 	public void setCompanyGroupId(long companyGroupId);

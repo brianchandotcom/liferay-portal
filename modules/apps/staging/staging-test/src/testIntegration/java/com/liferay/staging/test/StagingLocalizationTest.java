@@ -59,7 +59,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -88,21 +88,23 @@ public class StagingLocalizationTest {
 		_defaultLocale = LocaleThreadLocal.getDefaultLocale();
 	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		LanguageUtil.init();
+
+		CompanyTestUtil.resetCompanyLocales(
+			TestPropsValues.getCompanyId(), _availableLocales, _defaultLocale);
+	}
+
 	@Before
 	public void setUp() throws Exception {
+		LanguageUtil.init();
+
 		CompanyTestUtil.resetCompanyLocales(
 			TestPropsValues.getCompanyId(), _locales, Locale.US);
 
 		_sourceGroup = GroupTestUtil.addGroup();
 		_targetGroup = GroupTestUtil.addGroup();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		CompanyTestUtil.resetCompanyLocales(
-			TestPropsValues.getCompanyId(), _availableLocales, _defaultLocale);
-
-		LocaleThreadLocal.setDefaultLocale(_defaultLocale);
 	}
 
 	@Test
@@ -186,6 +188,8 @@ public class StagingLocalizationTest {
 
 		File file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
+
+		LanguageUtil.init();
 
 		CompanyTestUtil.resetCompanyLocales(
 			TestPropsValues.getCompanyId(), languageIds, defaultLanguageId);

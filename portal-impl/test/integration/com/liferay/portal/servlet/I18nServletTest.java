@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -185,9 +186,11 @@ public class I18nServletTest {
 	public void testI18nUseDefaultNonexistentLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = true;
 
-		Locale expectedLocale = LocaleUtil.CHINA;
+		Locale invalidLocale = LocaleUtil.CHINA;
 
-		testGetI18nData(expectedLocale, getI18nData(expectedLocale));
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		testGetI18nData(invalidLocale, getI18nData(defaultLocale));
 	}
 
 	@Test
@@ -211,7 +214,9 @@ public class I18nServletTest {
 		testIsNotDefaultOrFirstI18nData(_group, LocaleUtil.US, LocaleUtil.UK);
 	}
 
-	protected I18nServlet.I18nData getI18nData(Locale locale) {
+	protected I18nServlet.I18nData getI18nData(Locale locale)
+		throws PortalException {
+
 		return _i18nServlet.getI18nData(locale);
 	}
 
@@ -322,7 +327,9 @@ public class I18nServletTest {
 		}
 	}
 
-	private I18nServlet.I18nData _getI18nData(Group group, String path) {
+	private I18nServlet.I18nData _getI18nData(Group group, String path)
+		throws PortalException {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 

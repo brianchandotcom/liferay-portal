@@ -26,8 +26,6 @@ public class HeaderResponseImplTest {
 
 	@Test
 	public void testWellFormedXML() {
-		HeaderResponseImpl headerResponseImpl = new HeaderResponseImpl();
-
 		String[] tagNames = {"link", "LINK", "meta", "META"};
 
 		for (String tagName : tagNames) {
@@ -37,19 +35,19 @@ public class HeaderResponseImplTest {
 			String openTagCloseTag = openTag + closeTag;
 
 			String actual = ReflectionTestUtil.invoke(
-				headerResponseImpl, "_addClosingTags",
+				HeaderResponseImpl.class, "_addClosingTags",
 				new Class<?>[] {String.class}, new String[] {openTag});
 
 			Assert.assertEquals(openTagCloseTag, actual);
 
 			actual = ReflectionTestUtil.invoke(
-				headerResponseImpl, "_addClosingTags",
+				HeaderResponseImpl.class, "_addClosingTags",
 				new Class<?>[] {String.class}, new String[] {openTagCloseTag});
 
 			Assert.assertEquals(openTagCloseTag, actual);
 
 			actual = ReflectionTestUtil.invoke(
-				headerResponseImpl, "_addClosingTags",
+				HeaderResponseImpl.class, "_addClosingTags",
 				new Class<?>[] {String.class},
 				new String[] {"<head>" + openTag + "</head>"});
 
@@ -59,7 +57,7 @@ public class HeaderResponseImplTest {
 			Assert.assertEquals(openCloseTagInsideHead, actual);
 
 			actual = ReflectionTestUtil.invoke(
-				headerResponseImpl, "_addClosingTags",
+				HeaderResponseImpl.class, "_addClosingTags",
 				new Class<?>[] {String.class},
 				new String[] {openCloseTagInsideHead});
 

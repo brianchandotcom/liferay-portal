@@ -52,7 +52,7 @@
 							AssignableScopes assignableScopes = scopeAliasAssignableScopesEntry.getKey();
 							AssignScopesDisplayContext.Relations relations = scopeAliasAssignableScopesEntry.getValue();
 
-							String scopeAlias = relations.getScopeAlias();
+							Set<String> scopeAliases = relations.getScopeAliases();
 
 							Set<String> globalScopeAliases = relations.getGlobalScopeAliases();
 
@@ -68,11 +68,16 @@
 							<li class="list-group-item list-group-item-flex">
 								<div class="autofit-col">
 									<c:choose>
-										<c:when test="<%= Validator.isBlank(scopeAlias) %>">
-											<aui:input checked="<%= assignedScopes.contains(scopeAlias) %>" data="<%= data %>" disabled="<%= true %>" id="<%= id %>" label="" name="<%= id %>" onClick="return false;" title="<%= HtmlUtil.escapeAttribute(scopeAlias) %>" type="checkbox" />
+										<c:when test="<%= scopeAliases.size() == 0 %>">
+											<aui:input data="<%= data %>" disabled="<%= true %>" id="<%= id %>" label="" name="<%= id %>" onClick="return false;" title="<%= HtmlUtil.escapeAttribute(scopeAliases.toString()) %>" type="checkbox" />
 										</c:when>
 										<c:otherwise>
-											<aui:input checked="<%= assignedScopes.contains(scopeAlias) %>" data="<%= data %>" id="<%= id %>" label="" name="scopeAliases" onChange='<%= renderResponse.getNamespace() + "recalculateDependants(this)" %>' title="<%= HtmlUtil.escapeAttribute(scopeAlias) %>" type="checkbox" value="<%= HtmlUtil.escapeAttribute(scopeAlias) %>" />
+
+											<%
+											String scopeAliasesStr = StringUtil.merge(scopeAliases, StringPool.SPACE);
+											%>
+
+											<aui:input checked="<%= !Collections.disjoint(assignedScopes, scopeAliases) %>" data="<%= data %>" id="<%= id %>" label="" name="scopeAliases" onChange='<%= renderResponse.getNamespace() + "recalculateDependants(this)" %>' title="<%= scopeAliasesStr %>" type="checkbox" value="<%= scopeAliasesStr %>" />
 										</c:otherwise>
 									</c:choose>
 								</div>
@@ -86,7 +91,7 @@
 
 									<c:if test="<%= globalScopeAliasesString.length() > 0 %>">
 										<c:choose>
-											<c:when test="<%= scopeAlias.length() > 0 %>">
+											<c:when test="<%= scopeAliases.size() > 0 %>">
 												<span>
 													<aui:a data="<%= data %>" href="#1">
 														<liferay-ui:message key="can-be-assigned-via-a-global-scope" />
@@ -108,8 +113,8 @@
 										<%
 										List<String> relatedScopeAliases = new ArrayList<>(globalScopeAliases);
 
-										if (Validator.isNotNull(scopeAlias)) {
-											relatedScopeAliases.add(scopeAlias);
+										if (scopeAliases.size() > 0) {
+											relatedScopeAliases.addAll(scopeAliases);
 										}
 
 										Collections.sort(relatedScopeAliases);
@@ -118,7 +123,7 @@
 										%>
 
 											<span class="badge badge-secondary">
-												<span class="badge-item<c:if test="<%= !relatedScopeAlias.equals(scopeAlias) %>"> global-scope-alias-reference</c:if>"><%= HtmlUtil.escapeAttribute(relatedScopeAlias) %></span>
+												<span class="badge-item<c:if test="<%= !scopeAliases.contains(relatedScopeAlias) %>"> global-scope-alias-reference</c:if>"><%= HtmlUtil.escapeAttribute(relatedScopeAlias) %></span>
 											</span>
 
 										<%

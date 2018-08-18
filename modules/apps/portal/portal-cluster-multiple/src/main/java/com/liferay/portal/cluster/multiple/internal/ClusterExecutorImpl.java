@@ -62,9 +62,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -365,16 +367,19 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		return _clusterChannel;
 	}
 
-	protected ClusterNode getClusterNode(Address address) {
-		for (ClusterNodeStatus clusterNodeStatus :
-				_clusterNodeStatuses.values()) {
+	protected String getClusterNodeId(Address address) {
+		CompletableFuture<String> completableFuture =
+			_clusterNodeIdCompletableFutures.computeIfAbsent(
+				address, key -> new CompletableFuture<>());
 
-			if (address.equals(clusterNodeStatus.getAddress())) {
-				return clusterNodeStatus.getClusterNode();
-			}
+		try {
+			return completableFuture.get(
+				clusterExecutorConfiguration.clusterNodeAddressTimeout(),
+				TimeUnit.MILLISECONDS);
 		}
-
-		_log.error("Unable to get cluster node with address " + address);
+		catch (Exception e) {
+			_log.error("Unable to get cluster node with address " + address, e);
+		}
 
 		return null;
 	}
@@ -552,6 +557,13 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	protected boolean memberJoined(ClusterNodeStatus clusterNodeStatus) {
+		CompletableFuture<String> completableFuture =
+			_clusterNodeIdCompletableFutures.computeIfAbsent(
+				clusterNodeStatus.getAddress(),
+				key -> new CompletableFuture<>());
+
+		completableFuture.complete(clusterNodeStatus.getClusterNodeId());
+
 		ClusterNodeStatus oldClusterNodeStatus = _clusterNodeStatuses.put(
 			clusterNodeStatus.getClusterNodeId(), clusterNodeStatus);
 
@@ -576,6 +588,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	protected void memberRemoved(List<Address> departAddresses) {
+		for (Address address : departAddresses) {
+			_clusterNodeIdCompletableFutures.remove(address);
+		}
+
 		List<ClusterNode> departClusterNodes = new ArrayList<>();
 
 		Collection<ClusterNodeStatus> clusterNodeStatusCollection =
@@ -653,6 +669,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	private ClusterChannelFactory _clusterChannelFactory;
 	private final CopyOnWriteArrayList<ClusterEventListener>
 		_clusterEventListeners = new CopyOnWriteArrayList<>();
+	private final Map<Address, CompletableFuture<String>>
+		_clusterNodeIdCompletableFutures = new ConcurrentHashMap<>();
 	private final Map<String, ClusterNodeStatus> _clusterNodeStatuses =
 		new ConcurrentHashMap<>();
 	private ClusterEventListener _debugClusterEventListener;

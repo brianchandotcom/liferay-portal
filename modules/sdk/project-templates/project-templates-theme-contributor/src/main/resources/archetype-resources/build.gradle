@@ -12,9 +12,6 @@
 
 apply plugin: "com.liferay.plugin"
 
-#end
-#if (${projectType} != "workspace")
-
 repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"

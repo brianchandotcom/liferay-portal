@@ -2049,6 +2049,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=SEVERE]]>
 		<replace
 			file="${app.server.tomcat.dir}/conf/web.xml"
 		>
+			<replacetoken><![CDATA[<web-app]]></replacetoken>
+			<replacevalue><![CDATA[<web-app metadata-complete="true"]]></replacevalue>
+		</replace>
+		<replace
+			file="${app.server.tomcat.dir}/conf/web.xml"
+		>
 			<replacetoken><![CDATA[<load-on-startup>3</load-on-startup>]]></replacetoken>
 			<replacevalue>
 				<![CDATA[

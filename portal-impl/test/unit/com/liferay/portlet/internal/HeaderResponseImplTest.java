@@ -26,41 +26,43 @@ public class HeaderResponseImplTest {
 
 	@Test
 	public void testWellFormedXML() {
-		String[] tagNames = {"link", "LINK", "meta", "META"};
+		_testTagName("link");
+		_testTagName("LINK");
+		_testTagName("meta");
+		_testTagName("META");
+	}
 
-		for (String tagName : tagNames) {
-			String openTag = "<" + tagName + ">";
-			String closeTag = "</" + tagName + ">";
+	private void _testTagName(String tagName) {
+		String openTag = "<" + tagName + ">";
+		String closeTag = "</" + tagName + ">";
 
-			String openTagCloseTag = openTag + closeTag;
+		String openTagCloseTag = openTag + closeTag;
 
-			String actual = ReflectionTestUtil.invoke(
-				HeaderResponseImpl.class, "_addClosingTags",
-				new Class<?>[] {String.class}, openTag);
+		String actual = ReflectionTestUtil.invoke(
+			HeaderResponseImpl.class, "_addClosingTags",
+			new Class<?>[] {String.class}, openTag);
 
-			Assert.assertEquals(openTagCloseTag, actual);
+		Assert.assertEquals(openTagCloseTag, actual);
 
-			actual = ReflectionTestUtil.invoke(
-				HeaderResponseImpl.class, "_addClosingTags",
-				new Class<?>[] {String.class}, openTagCloseTag);
+		actual = ReflectionTestUtil.invoke(
+			HeaderResponseImpl.class, "_addClosingTags",
+			new Class<?>[] {String.class}, openTagCloseTag);
 
-			Assert.assertEquals(openTagCloseTag, actual);
+		Assert.assertEquals(openTagCloseTag, actual);
 
-			actual = ReflectionTestUtil.invoke(
-				HeaderResponseImpl.class, "_addClosingTags",
-				new Class<?>[] {String.class}, "<head>" + openTag + "</head>");
+		actual = ReflectionTestUtil.invoke(
+			HeaderResponseImpl.class, "_addClosingTags",
+			new Class<?>[] {String.class}, "<head>" + openTag + "</head>");
 
-			String openCloseTagInsideHead =
-				"<head>" + openTagCloseTag + "</head>";
+		String openCloseTagInsideHead = "<head>" + openTagCloseTag + "</head>";
 
-			Assert.assertEquals(openCloseTagInsideHead, actual);
+		Assert.assertEquals(openCloseTagInsideHead, actual);
 
-			actual = ReflectionTestUtil.invoke(
-				HeaderResponseImpl.class, "_addClosingTags",
-				new Class<?>[] {String.class}, openCloseTagInsideHead);
+		actual = ReflectionTestUtil.invoke(
+			HeaderResponseImpl.class, "_addClosingTags",
+			new Class<?>[] {String.class}, openCloseTagInsideHead);
 
-			Assert.assertEquals(openCloseTagInsideHead, actual);
-		}
+		Assert.assertEquals(openCloseTagInsideHead, actual);
 	}
 
 }

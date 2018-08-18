@@ -135,14 +135,14 @@ public class DDMFormInstanceStagingTest {
 	}
 
 	protected DDMFormInstance createFormInstance(Group group) throws Exception {
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		_ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DDMFormInstance.class.getName());
 
 		DDMFormInstanceTestHelper ddmFormInstanceTestHelper =
 			new DDMFormInstanceTestHelper(group);
 
 		DDMFormInstance ddmFormInstance =
-			ddmFormInstanceTestHelper.addDDMFormInstance(ddmStructure);
+			ddmFormInstanceTestHelper.addDDMFormInstance(_ddmStructure);
 
 		return ddmFormInstance;
 	}
@@ -155,7 +155,12 @@ public class DDMFormInstanceStagingTest {
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 	}
 
+	@DeleteAfterTestRun
+	private DDMStructure _ddmStructure;
+
+	@DeleteAfterTestRun
 	private DDMFormInstance _formInstance;
+
 	private Group _liveGroup;
 	private PermissionChecker _originalPermissionChecker;
 	private Group _remoteLiveGroup;

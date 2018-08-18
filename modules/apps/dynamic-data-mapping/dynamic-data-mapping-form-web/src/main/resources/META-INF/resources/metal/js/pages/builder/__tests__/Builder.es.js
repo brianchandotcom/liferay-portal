@@ -76,7 +76,7 @@ describe(
 		);
 
 		it(
-			'should continue to propagate the fieldDeleted event',
+			'should continue to propagate the deleteField event',
 			() => {
 				const spy = jest.spyOn(component, 'emit');
 				const {layoutRenderer} = component.refs;
@@ -85,7 +85,7 @@ describe(
 				layoutRenderer.emit('deleteButtonClicked', mockEvent);
 
 				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('fieldDeleted', expect.anything());
+				expect(spy).toHaveBeenCalledWith('deleteField', expect.anything());
 			}
 		);
 
@@ -103,6 +103,22 @@ describe(
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('fieldClicked', expect.anything());
 				expect(sidebar.state.show).toBeTruthy();
+			}
+		);
+
+		it(
+			'should continue to propagate the duplicateField event',
+			() => {
+				const spy = jest.spyOn(component, 'emit');
+				const {layoutRenderer} = component.refs;
+				const mockEvent = jest.fn();
+
+				layoutRenderer.emit('duplicateButtonClicked', mockEvent);
+
+				jest.runAllTimers();
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('duplicateField', expect.anything());
 			}
 		);
 	}

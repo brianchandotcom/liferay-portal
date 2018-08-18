@@ -42,7 +42,7 @@ exports[`LayoutRenderer should render a layout in editable mode 1`] = `
             <p>Radio Field</p>
           </div>
           <div class="ddm-field-actions-container">
-            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                 <title>paste</title>
                 <use xlink:href="icons.svg#paste"></use>
@@ -75,7 +75,7 @@ exports[`LayoutRenderer should render a layout in editable mode 1`] = `
             <p>Text Field</p>
           </div>
           <div class="ddm-field-actions-container">
-            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                 <title>paste</title>
                 <use xlink:href="icons.svg#paste"></use>
@@ -98,7 +98,7 @@ exports[`LayoutRenderer should render a layout in editable mode 1`] = `
             <p>Select Field</p>
           </div>
           <div class="ddm-field-actions-container">
-            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                 <title>paste</title>
                 <use xlink:href="icons.svg#paste"></use>
@@ -131,7 +131,7 @@ exports[`LayoutRenderer should render a layout in editable mode 1`] = `
             <p>Text Field</p>
           </div>
           <div class="ddm-field-actions-container">
-            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                 <title>paste</title>
                 <use xlink:href="icons.svg#paste"></use>
@@ -173,7 +173,7 @@ exports[`LayoutRenderer should render a layout with an empty field only in edita
             <p>Radio Field</p>
           </div>
           <div class="ddm-field-actions-container">
-            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                 <title>paste</title>
                 <use xlink:href="icons.svg#paste"></use>
@@ -206,7 +206,7 @@ exports[`LayoutRenderer should render a layout with an empty field only in edita
             <p>Text Field</p>
           </div>
           <div class="ddm-field-actions-container">
-            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                 <title>paste</title>
                 <use xlink:href="icons.svg#paste"></use>
@@ -229,7 +229,7 @@ exports[`LayoutRenderer should render a layout with an empty field only in edita
             <p>Select Field</p>
           </div>
           <div class="ddm-field-actions-container">
-            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                 <title>paste</title>
                 <use xlink:href="icons.svg#paste"></use>
@@ -252,7 +252,7 @@ exports[`LayoutRenderer should render a layout with an empty field only in edita
             <div class="ddm-field-not-found">Field doesn't exist.</div>
           </div>
           <div class="ddm-field-actions-container">
-            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                 <title>paste</title>
                 <use xlink:href="icons.svg#paste"></use>
@@ -282,7 +282,7 @@ exports[`LayoutRenderer should render a layout with an empty field only in edita
             <p>Text Field</p>
           </div>
           <div class="ddm-field-actions-container">
-            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" disabled="disabled" type="button">
+            <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                 <title>paste</title>
                 <use xlink:href="icons.svg#paste"></use>

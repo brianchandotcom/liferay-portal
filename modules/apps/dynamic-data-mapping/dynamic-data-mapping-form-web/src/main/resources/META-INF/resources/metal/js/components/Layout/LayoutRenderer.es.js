@@ -180,6 +180,22 @@ class LayoutRenderer extends Component {
 	}
 
 	/**
+     * @param {!Event} event
+     * @private
+     */
+
+	_handleDuplicateButtonClicked(event) {
+		const index = LayoutSupport.getIndexes(dom.closest(event.target, '.col-ddm'));
+
+		this.emit(
+			'duplicateButtonClicked',
+			{
+				...index
+			}
+		);
+	}
+
+	/**
 	 * @param {!Object} data
 	 * @private
 	 */

@@ -12,13 +12,6 @@ exports[`Builder should render the default markup 1`] = `
       <nav class="component-tbar tbar">
         <div class="container-fluid">
           <ul class="tbar-nav">
-            <li class="tbar-item tbar-item-expand text-left">
-              <div class="tbar-section">
-                <span class="text-truncate-inline">
-                  <span class="text-truncate">Add Elements</span>
-                </span>
-              </div>
-            </li>
             <li class="tbar-item">
               <a class="component-action" href="#1" ref="close" role="button">
                 <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">

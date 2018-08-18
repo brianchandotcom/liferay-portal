@@ -116,10 +116,9 @@ describe(
 						spritemap
 					}
 				);
+
 				component.show();
 				component.close();
-
-				jest.runAllTimers();
 
 				expect(component).toMatchSnapshot();
 			}
@@ -135,6 +134,10 @@ describe(
 					}
 				);
 
+				component.show();
+
+				jest.runAllTimers();
+
 				expect(component).toMatchSnapshot();
 			}
 		);
@@ -147,6 +150,10 @@ describe(
 						spritemap
 					}
 				);
+
+				component.show();
+
+				jest.runAllTimers();
 
 				expect(component).toMatchSnapshot();
 			}
@@ -406,6 +413,9 @@ describe(
 							}
 						);
 
+						component.show();
+						jest.runAllTimers();
+
 						expect(component).toMatchSnapshot();
 					}
 				);
@@ -419,6 +429,9 @@ describe(
 								spritemap
 							}
 						);
+
+						component.show();
+						jest.runAllTimers();
 
 						expect(component._isEditMode()).toBeFalsy();
 						expect(component).toMatchSnapshot();
@@ -443,6 +456,7 @@ describe(
 							}
 						);
 
+						component.show();
 						jest.runAllTimers();
 
 						expect(component).toMatchSnapshot();
@@ -609,6 +623,10 @@ describe(
 								spritemap
 							}
 						);
+
+						component.show();
+
+						jest.runAllTimers();
 
 						const {previousButton} = component.refs;
 

@@ -60,7 +60,17 @@ class Builder extends Component {
 	 */
 
 	_handleDeleteButtonClicked(indexes) {
-		this.emit('fieldDeleted', indexes);
+		this.emit('deleteField', indexes);
+	}
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Object}
+	 * @private
+	 */
+
+	_handleDuplicateButtonClicked(indexes) {
+		this.emit('duplicateField', indexes);
 	}
 
 	/**
@@ -87,6 +97,7 @@ class Builder extends Component {
 	render() {
 		const {
 			context,
+			fieldContext,
 			fieldsList,
 			focusedField,
 			mode,
@@ -95,6 +106,7 @@ class Builder extends Component {
 
 		const layoutRendererEvents = {
 			deleteButtonClicked: this._handleDeleteButtonClicked.bind(this),
+			duplicateButtonClicked: this._handleDuplicateButtonClicked.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this)
 		};
@@ -120,6 +132,7 @@ class Builder extends Component {
 				<Sidebar
 					context={context}
 					events={sidebarEvents}
+					fieldContext={fieldContext}
 					fieldLists={fieldsList}
 					focusedField={focusedField}
 					mode={mode}

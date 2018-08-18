@@ -71,6 +71,24 @@ describe(
 		);
 
 		it(
+			'should get a specific field through the context',
+			() => {
+				const indexColumn = 0;
+				const indexPage = 0;
+				const indexRow = 0;
+
+				expect(
+					LayoutSupport.getField(
+						context,
+						indexPage,
+						indexRow,
+						indexColumn
+					)
+				).toMatchSnapshot();
+			}
+		);
+
+		it(
 			'add a new field to column to the context',
 			() => {
 				const columnIndex = 1;
@@ -125,7 +143,7 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					LayoutSupport.addFields(
+					LayoutSupport.setColumnFields(
 						context,
 						pageIndex,
 						rowIndex,
@@ -144,7 +162,7 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					LayoutSupport.addFields(context, pageIndex, rowIndex, columnIndex)
+					LayoutSupport.setColumnFields(context, pageIndex, rowIndex, columnIndex)
 				).toMatchSnapshot();
 			}
 		);

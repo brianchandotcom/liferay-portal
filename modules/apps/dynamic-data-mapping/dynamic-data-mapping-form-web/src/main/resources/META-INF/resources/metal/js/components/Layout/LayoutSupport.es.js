@@ -9,14 +9,14 @@ const implAddRow = (size, fields) => {
 	};
 };
 
-const addRow = (pages, indexToAddRow, pageIndex, newRow) => {
+const addRow = (pages, indexToAddRow, pageIndex, newRow = implAddRow(12, [])) => {
 	pages[Number(pageIndex)].rows.splice(Number(indexToAddRow), 0, newRow);
 
 	return pages;
 };
 
-const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, fields) => {
-	if (!fields) {
+const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, field) => {
+	if (!field) {
 		console.warn(
 			`It is not possible to add the field to column (${pageIndex}, ${rowIndex}, ${columnIndex}) when the field is not passed.`
 		);
@@ -24,13 +24,13 @@ const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, fields) => {
 	else {
 		pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
 			Number(columnIndex)
-		].fields.push(fields);
+		].fields.push(field);
 	}
 
 	return pages;
 };
 
-const addFields = (pages, pageIndex, rowIndex, columnIndex, fields = []) => {
+const setColumnFields = (pages, pageIndex, rowIndex, columnIndex, fields = []) => {
 	if (!fields.length) {
 		console.warn(
 			`Can not add empty fields to column (${pageIndex}, ${rowIndex}, ${columnIndex}), use removeFields for this.`
@@ -63,10 +63,18 @@ const removeRow = (pages, pageIndex, rowIndex) => {
 	return pages;
 };
 
+const generateFieldName = field => {
+	return field.name + Date.now();
+};
+
 const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {
-	return pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
-		Number(columnIndex)
-	].fields;
+	const row = getRow(pages, pageIndex, rowIndex);
+
+	return row.columns[Number(columnIndex)];
+};
+
+const getField = (pages, pageIndex, rowIndex, columnIndex) => {
+	return getColumn(pages, pageIndex, rowIndex, columnIndex).fields[0];
 };
 
 const getRow = (pages, pageIndex, rowIndex) => {
@@ -105,16 +113,18 @@ const changeFieldsFromColumn = (
 };
 
 export default {
-	addFields,
 	addFieldToColumn,
 	addRow,
 	changeFieldsFromColumn,
+	generateFieldName,
 	getColumn,
+	getField,
 	getIndexes,
 	getRow,
 	hasFieldsRow,
 	implAddRow,
 	removeColumn,
 	removeFields,
-	removeRow
+	removeRow,
+	setColumnFields
 };

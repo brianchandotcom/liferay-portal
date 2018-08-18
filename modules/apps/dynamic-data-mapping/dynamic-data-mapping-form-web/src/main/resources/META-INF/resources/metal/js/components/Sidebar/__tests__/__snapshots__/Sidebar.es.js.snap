@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Sidebar Edit mode should go into edit mode with just fieldContext, fieldLists and focusedField 1`] = `
-<div class="sidebar-container" ref="sidebar">
+<div class="sidebar-container show" ref="sidebar">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
@@ -73,7 +73,7 @@ exports[`Sidebar Edit mode should go into edit mode with just fieldContext, fiel
 `;
 
 exports[`Sidebar Edit mode should not enter editing mode with only \`edit\` in mode 1`] = `
-<div class="sidebar-container" ref="sidebar">
+<div class="sidebar-container show" ref="sidebar">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
@@ -118,7 +118,7 @@ exports[`Sidebar Edit mode should not enter editing mode with only \`edit\` in m
 `;
 
 exports[`Sidebar Edit mode should not go into edit mode with just fieldContext 1`] = `
-<div class="sidebar-container" ref="sidebar">
+<div class="sidebar-container show" ref="sidebar">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
@@ -168,13 +168,6 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
     <nav class="component-tbar tbar">
       <div class="container-fluid">
         <ul class="tbar-nav">
-          <li class="tbar-item tbar-item-expand text-left">
-            <div class="tbar-section">
-              <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
-              </span>
-            </div>
-          </li>
           <li class="tbar-item">
             <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
@@ -253,7 +246,7 @@ exports[`Sidebar should render a Sidebar open 1`] = `
 `;
 
 exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
-<div class="sidebar-container" ref="sidebar">
+<div class="sidebar-container show" ref="sidebar">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
@@ -394,7 +387,7 @@ exports[`Sidebar should render a Sidebar with fieldLists 1`] = `
 `;
 
 exports[`Sidebar should render a Sidebar with spritemap 1`] = `
-<div class="sidebar-container" ref="sidebar">
+<div class="sidebar-container show" ref="sidebar">
   <div class="sidebar sidebar-light">
     <nav class="component-tbar tbar">
       <div class="container-fluid">
@@ -444,13 +437,6 @@ exports[`Sidebar should render the default markup 1`] = `
     <nav class="component-tbar tbar">
       <div class="container-fluid">
         <ul class="tbar-nav">
-          <li class="tbar-item tbar-item-expand text-left">
-            <div class="tbar-section">
-              <span class="text-truncate-inline">
-                <span class="text-truncate">Add Elements</span>
-              </span>
-            </div>
-          </li>
           <li class="tbar-item">
             <a class="component-action" href="#1" ref="close" role="button">
               <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">

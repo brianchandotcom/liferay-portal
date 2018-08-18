@@ -254,21 +254,24 @@ Array [
 `;
 
 exports[`LayoutSupport should get a column from context 1`] = `
-Array [
-  Object {
-    "items": Array [
-      Object {
-        "name": "Foo",
-      },
-      Object {
-        "name": "Bar",
-      },
-    ],
-    "label": "Select",
-    "required": true,
-    "type": "select",
-  },
-]
+Object {
+  "fields": Array [
+    Object {
+      "items": Array [
+        Object {
+          "name": "Foo",
+        },
+        Object {
+          "name": "Bar",
+        },
+      ],
+      "label": "Select",
+      "required": true,
+      "type": "select",
+    },
+  ],
+  "size": 6,
+}
 `;
 
 exports[`LayoutSupport should get a row from context 1`] = `
@@ -307,6 +310,13 @@ Object {
       "size": 2,
     },
   ],
+}
+`;
+
+exports[`LayoutSupport should get a specific field through the context 1`] = `
+Object {
+  "label": "Radio",
+  "type": "radio",
 }
 `;
 

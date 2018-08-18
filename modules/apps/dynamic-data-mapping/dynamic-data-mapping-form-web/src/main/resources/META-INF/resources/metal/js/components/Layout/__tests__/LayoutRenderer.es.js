@@ -102,7 +102,7 @@ describe(
 		);
 
 		it(
-			'should render a layout and emit an event on button delete clicked',
+			'should render a layout and emit an event when delete button is clicked',
 			() => {
 				component = new LayoutRenderer(
 					{
@@ -118,6 +118,26 @@ describe(
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('deleteButtonClicked', expect.any(Object));
+			}
+		);
+
+		it(
+			'should render a layout and emit an event when duplicate button is clicked',
+			() => {
+				component = new LayoutRenderer(
+					{
+						editable: true,
+						pages: context,
+						spritemap
+					}
+				);
+
+				const spy = jest.spyOn(component, 'emit');
+
+				component.element.querySelector('button[aria-label=\'paste\']').click();
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('duplicateButtonClicked', expect.any(Object));
 			}
 		);
 
@@ -371,7 +391,7 @@ describe(
 				const pageIndex = 0;
 				const rowIndex = 1;
 
-				const newContext = LayoutSupport.addFields(
+				const newContext = LayoutSupport.setColumnFields(
 					context,
 					pageIndex,
 					rowIndex,
@@ -404,7 +424,7 @@ describe(
 				const pageIndex = 0;
 				const rowIndex = 1;
 
-				const newContext = LayoutSupport.addFields(
+				const newContext = LayoutSupport.setColumnFields(
 					context,
 					pageIndex,
 					rowIndex,

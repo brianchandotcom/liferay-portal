@@ -3,6 +3,7 @@
 {template .render}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
@@ -15,6 +16,7 @@
 
 	{delcall LayoutRenderer.pages variant="$contentRenderer"}
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 		{param _handleFieldChanged: $_handleFieldChanged /}
 		{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 		{param _handleOnClickResize: $_handleOnClickResize /}
@@ -29,6 +31,7 @@
 {deltemplate LayoutRenderer.pages variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
@@ -41,6 +44,7 @@
 		<div class="form-builder-layout">
 			{delcall LayoutRenderer.page variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+				{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
 				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 				{param _handleOnClickResize: $_handleOnClickResize /}
@@ -121,6 +125,7 @@
 {deltemplate LayoutRenderer.page variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
@@ -142,6 +147,7 @@
 
 			{delcall LayoutRenderer.row variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+				{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
 				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 				{param _handleOnClickResize: $_handleOnClickResize /}
@@ -168,6 +174,7 @@
 {deltemplate LayoutRenderer.row variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
@@ -181,6 +188,7 @@
 		{for $column in $row.columns}
 			{delcall LayoutRenderer.column variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+				{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
 				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 				{param _handleOnClickResize: $_handleOnClickResize /}
@@ -231,6 +239,7 @@
 {deltemplate LayoutRenderer.column variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
@@ -289,6 +298,7 @@
 
 					{call .fieldActions}
 						{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+						{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 						{param spritemap: $spritemap /}
 					{/call}
 
@@ -311,14 +321,17 @@
 {template .fieldActions}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
 
 	<div class="ddm-field-actions-container">
 		{call ClayButton.render}
+			{param events: [
+				'click': $_handleDuplicateButtonClicked
+			] /}
 			{param style: 'secondary' /}
 			{param size: 'sm' /}
 			{param spritemap: $spritemap /}
 			{param icon: 'paste' /}
-			{param disabled: true /}
 			{param monospaced: true /}
 		{/call}
 		{call ClayButton.render}

@@ -95,8 +95,8 @@
 		"coverageDirectory": "build/coverage",
 		"coverageThreshold": {
 			"global": {
-				"functions": 70,
-				"lines": 70
+				"functions": 80,
+				"lines": 80
 			}
 		},
 		"moduleNameMapper": {

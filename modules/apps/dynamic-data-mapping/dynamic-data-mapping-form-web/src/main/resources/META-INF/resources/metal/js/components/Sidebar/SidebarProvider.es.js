@@ -47,19 +47,19 @@ class SidebarProvider extends Component {
 		const {context, focusedField} = this.props;
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
 
-		const fieldSelected = LayoutSupport.getColumn(
+		const field = LayoutSupport.getColumn(
 			context,
 			pageIndex,
 			rowIndex,
 			columnIndex
-		)[0];
+		).fields[0];
 
 		const depth = array => {
 			for (let i = 0; i < array.length; i++) {
 				const item = array[i];
 
 				if (item.key) {
-					const propName = fieldSelected[item.key] || '';
+					const propName = field[item.key] || '';
 
 					item[item.key] = propName;
 				}

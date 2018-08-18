@@ -69,9 +69,9 @@ describe(
 
 				expect(provider.props.children[0].props.events).toMatchObject(
 					{
+						deleteField: expect.any(Function),
 						fieldAdded: expect.any(Function),
 						fieldClicked: expect.any(Function),
-						fieldDeleted: expect.any(Function),
 						fieldEdited: expect.any(Function),
 						fieldMoved: expect.any(Function)
 					}
@@ -345,10 +345,10 @@ describe(
 				);
 
 				describe(
-					'fieldDeleted',
+					'deleteField',
 					() => {
 						it(
-							'should listen the fieldDeleted event and delete the field in the column to the context',
+							'should listen the deleteField event and delete the field in the column to the context',
 							() => {
 								component = new Parent();
 
@@ -359,7 +359,33 @@ describe(
 									rowIndex: 1
 								};
 
-								child.emit('fieldDeleted', mockEvent);
+								child.emit('deleteField', mockEvent);
+
+								jest.runAllTimers();
+
+								expect(provider.state.context).toMatchSnapshot();
+								expect(child.props.context).toEqual(provider.state.context);
+							}
+						);
+					}
+				);
+
+				describe(
+					'duplicateField',
+					() => {
+						it(
+							'should listen the duplicate field event and add this field in the context',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+								const mockEvent = {
+									columnIndex: 0,
+									pageIndex: 0,
+									rowIndex: 0
+								};
+
+								child.emit('duplicateField', mockEvent);
 
 								jest.runAllTimers();
 

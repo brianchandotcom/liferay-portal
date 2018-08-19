@@ -16,6 +16,7 @@ package com.liferay.portlet.dependency.factory.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.portlet.PortletDependency;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.BuildableAbsolutePortalURLBuilder;
@@ -39,16 +40,27 @@ public class PortletDependencyImpl implements PortletDependency {
 		if (_name == null) {
 			_type = Type.OTHER;
 		}
-		else {
-			if (_name.endsWith(".css")) {
-				_type = Type.CSS;
-			}
-			else if (_name.endsWith(".js")) {
+		else if (_name.endsWith(".css")) {
+			_type = Type.CSS;
+		}
+		else if (_name.endsWith(".js")) {
+			_type = Type.JAVASCRIPT;
+		}
+		else if (Validator.isNotNull(markup)) {
+			markup = StringUtil.trim(markup);
+
+			if (markup.regionMatches(true, 0, "<script", 0, 7)) {
 				_type = Type.JAVASCRIPT;
+			}
+			else if (markup.regionMatches(true, 0, "<link", 0, 5)) {
+				_type = Type.CSS;
 			}
 			else {
 				_type = Type.OTHER;
 			}
+		}
+		else {
+			_type = Type.OTHER;
 		}
 	}
 

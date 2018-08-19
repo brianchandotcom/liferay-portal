@@ -36,10 +36,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.Constants;
-import org.osgi.framework.namespace.HostNamespace;
-import org.osgi.framework.wiring.BundleRevision;
-import org.osgi.framework.wiring.BundleWire;
-import org.osgi.framework.wiring.BundleWiring;
+import org.osgi.framework.VersionRange;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -56,7 +53,7 @@ public class JSPServletFactoryImpl implements JSPServletFactory {
 	public void activate(BundleContext bundleContext) {
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.RESOLVED,
-			new JspFragmentBundleTrackerCustomizer());
+			new JspFragmentBundleTrackerCustomizer(bundleContext));
 
 		_bundleTracker.open();
 	}
@@ -76,13 +73,13 @@ public class JSPServletFactoryImpl implements JSPServletFactory {
 	private static final String _WORK_DIR = StringBundler.concat(
 		PropsValues.LIFERAY_HOME, File.separator, "work", File.separator);
 
-	private BundleTracker<List<String>> _bundleTracker;
+	private BundleTracker<Tracked> _bundleTracker;
 
-	private class JspFragmentBundleTrackerCustomizer
-		implements BundleTrackerCustomizer<List<String>> {
+	private static class JspFragmentBundleTrackerCustomizer
+		implements BundleTrackerCustomizer<Tracked> {
 
 		@Override
-		public List<String> addingBundle(Bundle bundle, BundleEvent event) {
+		public Tracked addingBundle(Bundle bundle, BundleEvent event) {
 			Dictionary<String, String> headers = bundle.getHeaders(
 				StringPool.BLANK);
 
@@ -97,6 +94,21 @@ public class JSPServletFactoryImpl implements JSPServletFactory {
 
 			if (enumeration == null) {
 				return null;
+			}
+
+			String[] fragmentHostParts = StringUtil.split(
+				fragmentHost, CharPool.SEMICOLON);
+
+			String symbolicName = StringUtil.trim(fragmentHostParts[0]);
+
+			VersionRange versionRange = null;
+
+			if (fragmentHostParts.length > 1) {
+				String[] versionParts = StringUtil.split(
+					fragmentHostParts[1], CharPool.EQUAL);
+
+				versionRange = new VersionRange(
+					StringUtil.unquote(StringUtil.trim(versionParts[1])));
 			}
 
 			List<String> paths = new ArrayList<>();
@@ -116,55 +128,83 @@ public class JSPServletFactoryImpl implements JSPServletFactory {
 					"/org/apache/jsp/".concat(pathString).concat("_jsp.class"));
 			}
 
-			_deleteJSPServletClasses(bundle, paths);
+			Tracked tracked = new Tracked(symbolicName, versionRange, paths);
 
-			return paths;
+			_deleteJSPServletClasses(tracked);
+
+			return tracked;
 		}
 
 		@Override
 		public void modifiedBundle(
-			Bundle bundle, BundleEvent event, List<String> paths) {
+			Bundle bundle, BundleEvent event, Tracked tracked) {
 		}
 
 		@Override
 		public void removedBundle(
-			Bundle bundle, BundleEvent event, List<String> paths) {
+			Bundle bundle, BundleEvent event, Tracked tracked) {
 
-			_deleteJSPServletClasses(bundle, paths);
+			_deleteJSPServletClasses(tracked);
 		}
 
-		private void _deleteJSPServletClasses(
-			Bundle fragmentBundle, List<String> paths) {
+		private JspFragmentBundleTrackerCustomizer(
+			BundleContext bundleContext) {
 
-			BundleWiring bundleWiring = fragmentBundle.adapt(
-				BundleWiring.class);
+			_bundleContext = bundleContext;
+		}
 
-			List<BundleWire> bundleWires = bundleWiring.getRequiredWires(
-				HostNamespace.HOST_NAMESPACE);
-
-			if ((bundleWires == null) || bundleWires.isEmpty()) {
-				return;
-			}
-
-			for (BundleWire bundleWire : bundleWires) {
-				BundleRevision hostBundleRevision = bundleWire.getProvider();
+		private void _deleteJSPServletClasses(Tracked tracked) {
+			for (Bundle bundle : _bundleContext.getBundles()) {
+				if (!tracked.match(bundle)) {
+					continue;
+				}
 
 				StringBundler sb = new StringBundler(4);
 
 				sb.append(_WORK_DIR);
-				sb.append(hostBundleRevision.getSymbolicName());
+				sb.append(bundle.getSymbolicName());
 				sb.append(StringPool.DASH);
-				sb.append(hostBundleRevision.getVersion());
+				sb.append(bundle.getVersion());
 
 				String scratchDir = sb.toString();
 
-				for (String path : paths) {
+				for (String path : tracked._paths) {
 					File file = new File(scratchDir, path);
 
 					file.delete();
 				}
 			}
 		}
+
+		private final BundleContext _bundleContext;
+
+	}
+
+	private static class Tracked {
+
+		public boolean match(Bundle bundle) {
+			if (_symbolicName.equals(bundle.getSymbolicName()) &&
+				((_versionRange == null) ||
+				 _versionRange.includes(bundle.getVersion()))) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		private Tracked(
+			String symbolicName, VersionRange versionRange,
+			List<String> paths) {
+
+			_symbolicName = symbolicName;
+			_versionRange = versionRange;
+			_paths = paths;
+		}
+
+		private final List<String> _paths;
+		private final String _symbolicName;
+		private final VersionRange _versionRange;
 
 	}
 

@@ -11,6 +11,7 @@ import {
 	addFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer
 } from './store/reducers/fragmentEntryLink.es';
+import {translationStatusReducer} from './store/reducers/translationStatus';
 import {updateDragTargetReducer} from './store/reducers/dragDrop.es';
 import FragmentEntryLink from './fragment_entry_link/FragmentEntryLink.es';
 import {INITIAL_STATE} from './store/initialState.es';
@@ -37,6 +38,7 @@ class FragmentsEditor extends Component {
 			[
 				addFragmentEntryLinkReducer,
 				removeFragmentEntryLinkReducer,
+				translationStatusReducer,
 				updateDragTargetReducer
 			]
 		);

@@ -58,7 +58,7 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 	viewTypeItems="<%= viewRolesManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="get" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="get" name="fm">
 	<aui:input name="deleteRoleIds" type="hidden" />
 
 	<liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />

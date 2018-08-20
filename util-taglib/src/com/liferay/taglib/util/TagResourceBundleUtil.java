@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -109,6 +110,25 @@ public class TagResourceBundleUtil {
 				ResourceBundleLoaderUtil.
 					getResourceBundleLoaderByServletContextName(
 						servletContextName);
+
+			PortletConfig portletConfig = (PortletConfig)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
+
+			if (portletConfig != null) {
+				LiferayPortletContext liferayPortletContext =
+					(LiferayPortletContext)portletConfig.getPortletContext();
+
+				ServletContext portletServletContext =
+					liferayPortletContext.getServletContext();
+
+				String portletServletContextName =
+					portletServletContext.getServletContextName();
+
+				if (servletContextName.equals(portletServletContextName)) {
+					resourceBundleLoader =
+						locale -> portletConfig.getResourceBundle(locale);
+				}
+			}
 		}
 
 		if (resourceBundleLoader == null) {

@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"metal-component": "^2.13.2",
+		"metal-soy": "^2.13.2"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.2.1",
+		"metal-cli": "^4.0.1"
+	},
+	"name": "sharing-web",
+	"version": "1.0.0"
+}

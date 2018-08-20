@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Sharing Web
+Bundle-SymbolicName: com.liferay.sharing.web
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	soy;\
+		type="sharing-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	soy;\
+		filter:="(type=frontend-js-web)"
+Web-ContextPath: /sharing-web

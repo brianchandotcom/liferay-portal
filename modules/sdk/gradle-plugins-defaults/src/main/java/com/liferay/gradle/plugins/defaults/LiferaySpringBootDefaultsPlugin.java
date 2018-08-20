@@ -55,26 +55,22 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 
 		_configureProject(project);
 
-		BootRunTask bootRunTask = (BootRunTask)GradleUtil.getTask(
-			project, "bootRun");
+		_addTaskRun(project);
 
-		_addTaskRun(bootRunTask);
-		_configureTaskBootRun(bootRunTask);
-
-		Task checkTask = GradleUtil.getTask(
-			project, LifecycleBasePlugin.CHECK_TASK_NAME);
-
-		_configureTaskCheck(checkTask);
+		_configureTaskBootRun(project);
+		_configureTaskCheck(project);
 	}
 
-	private Task _addTaskRun(BootRunTask bootRunTask) {
-		Project project = bootRunTask.getProject();
-
+	private Task _addTaskRun(Project project) {
 		Task task = project.task(ApplicationPlugin.TASK_RUN_NAME);
+
+		BootRunTask bootRunTask = (BootRunTask)GradleUtil.getTask(
+			project, "bootRun");
 
 		task.dependsOn(bootRunTask);
 		task.setDescription(
 			"Runs Spring Boot '" + bootRunTask.getName() + "' task.");
+
 		task.setGroup(BasePlugin.BUILD_GROUP);
 
 		return task;
@@ -97,18 +93,23 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 		project.setGroup(group);
 	}
 
-	private void _configureTaskBootRun(BootRunTask bootRunTask) {
+	private void _configureTaskBootRun(Project project) {
 		String springBootJavaOpts = System.getenv("SPRING_BOOT_JAVA_OPTS");
 
 		if (Validator.isNotNull(springBootJavaOpts)) {
+			BootRunTask bootRunTask = (BootRunTask)GradleUtil.getTask(
+				project, "bootRun");
+
 			bootRunTask.setJvmArgs(Collections.singleton(springBootJavaOpts));
 		}
 	}
 
-	private void _configureTaskCheck(Task checkTask) {
+	private void _configureTaskCheck(Project project) {
+		Task checkTask = GradleUtil.getTask(
+			project, LifecycleBasePlugin.CHECK_TASK_NAME);
+
 		Task testIntegrationTask = GradleUtil.getTask(
-			checkTask.getProject(),
-			TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
+			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
 
 		checkTask.dependsOn(testIntegrationTask);
 	}

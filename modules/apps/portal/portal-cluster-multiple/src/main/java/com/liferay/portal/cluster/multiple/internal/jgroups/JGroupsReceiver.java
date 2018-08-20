@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.AggregateClassLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;
@@ -33,12 +34,16 @@ import org.jgroups.View;
  */
 public class JGroupsReceiver extends ReceiverAdapter {
 
-	public JGroupsReceiver(ClusterReceiver clusterReceiver) {
+	public JGroupsReceiver(
+		ClusterReceiver clusterReceiver,
+		Map<ClassLoader, ClassLoader> classLoaders) {
+
 		if (clusterReceiver == null) {
 			throw new NullPointerException("Cluster receiver is null");
 		}
 
 		_clusterReceiver = clusterReceiver;
+		_classLoaders = classLoaders;
 	}
 
 	@Override
@@ -57,9 +62,10 @@ public class JGroupsReceiver extends ReceiverAdapter {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassLoader aggregatedClassLoader =
-			AggregateClassLoader.getAggregateClassLoader(
-				contextClassLoader, JGroupsReceiver.class.getClassLoader());
+		ClassLoader aggregatedClassLoader = _classLoaders.computeIfAbsent(
+			contextClassLoader,
+			keyClassLoader -> AggregateClassLoader.getAggregateClassLoader(
+				keyClassLoader, JGroupsReceiver.class.getClassLoader()));
 
 		currentThread.setContextClassLoader(aggregatedClassLoader);
 
@@ -107,6 +113,7 @@ public class JGroupsReceiver extends ReceiverAdapter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsReceiver.class);
 
+	private final Map<ClassLoader, ClassLoader> _classLoaders;
 	private final ClusterReceiver _clusterReceiver;
 
 }

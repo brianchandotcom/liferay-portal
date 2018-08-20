@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.osgi.commands.TensorflowAssetAutoTagProviderOSGiCommands;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.TensorFlowDaemonProcessCallable;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
@@ -66,6 +67,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = TensorflowProcess.class)
 public class TensorflowProcess {
+
+	public void resetCounter() {
+		_processStarts = 0;
+	}
 
 	public <T extends Serializable> T run(ProcessCallable<T> processCallable) {
 		ProcessChannel<String> processChannel = _processChannel;
@@ -219,7 +224,12 @@ public class TensorflowProcess {
 						StringBundler.concat(
 							"The tensorflow process has crashed more than ",
 							_MAX_PROCESS_STARTS,
-							" times. It is now disabled."));
+							" times. It is now disabled. To enable it again ",
+							"please run ",
+							TensorflowAssetAutoTagProviderOSGiCommands.SCOPE,
+							StringPool.COLON,
+							TensorflowAssetAutoTagProviderOSGiCommands.
+								RESET_PROCESS_COUNTER));
 				}
 
 				_processChannel = _processExecutor.execute(

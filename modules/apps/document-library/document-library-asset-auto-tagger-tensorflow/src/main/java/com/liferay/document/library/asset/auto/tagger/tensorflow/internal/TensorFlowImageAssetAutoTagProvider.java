@@ -17,7 +17,8 @@ package com.liferay.document.library.asset.auto.tagger.tensorflow.internal;
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.constants.TensorflowAssetAutoTagProviderConstants;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.InceptionImageLabeler;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.GetLabelProbabilitiesProcessCallable;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -27,14 +28,26 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.IOException;
+
+import java.net.URL;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -67,7 +80,7 @@ public class TensorFlowImageAssetAutoTagProvider
 				FileVersion fileVersion = fileEntry.getFileVersion();
 
 				if (_isSupportedMimeType(fileVersion.getMimeType())) {
-					return _inceptionImageLabeler.label(
+					return _label(
 						FileUtil.getBytes(fileVersion.getContentStream(false)),
 						fileVersion.getMimeType(),
 						tensorFlowImageAssetAutoTagProviderCompanyConfiguration.
@@ -82,6 +95,41 @@ public class TensorFlowImageAssetAutoTagProvider
 		return Collections.emptyList();
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) throws IOException {
+		Bundle bundle = bundleContext.getBundle();
+
+		_initializeLabels(bundle);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_tensorflowProcess.stop();
+	}
+
+	private Stream<Integer> _getBestIndexesStream(
+		float[] probabilities, float confidenceThreshold) {
+
+		List<Integer> bestIndexes = new ArrayList<>();
+
+		for (int i = 0; i < probabilities.length; i++) {
+			if ((probabilities[i] >= confidenceThreshold) &&
+				(i < _labels.length)) {
+
+				bestIndexes.add(i);
+			}
+		}
+
+		return bestIndexes.stream();
+	}
+
+	private void _initializeLabels(Bundle bundle) throws IOException {
+		URL url = bundle.getResource(
+			"META-INF/tensorflow/imagenet_comp_graph_label_strings.txt");
+
+		_labels = StringUtil.splitLines(StringUtil.read(url.openStream()));
+	}
+
 	private boolean _isSupportedMimeType(String mimeType) {
 		return _supportedMimeTypes.contains(mimeType);
 	}
@@ -89,6 +137,22 @@ public class TensorFlowImageAssetAutoTagProvider
 	private boolean _isTemporary(FileEntry fileEntry) {
 		return fileEntry.isRepositoryCapabilityProvided(
 			TemporaryFileEntriesCapability.class);
+	}
+
+	private List<String> _label(
+		byte[] imageBytes, String mimeType, float confidenceThreshold) {
+
+		float[] labelProbabilities = _tensorflowProcess.run(
+			new GetLabelProbabilitiesProcessCallable(imageBytes, mimeType));
+
+		Stream<Integer> stream = _getBestIndexesStream(
+			labelProbabilities, confidenceThreshold);
+
+		return stream.map(
+			i -> _labels[i]
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -102,7 +166,9 @@ public class TensorFlowImageAssetAutoTagProvider
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
+	private String[] _labels;
+
 	@Reference
-	private InceptionImageLabeler _inceptionImageLabeler;
+	private TensorflowProcess _tensorflowProcess;
 
 }

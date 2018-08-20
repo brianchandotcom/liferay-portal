@@ -178,16 +178,11 @@ public class MediaObjectNestedCollectionResource
 		String mimeType = fileEntry.getMimeType();
 
 		if (_amImageMimeTypeProvider.isMimeTypeSupported(mimeType)) {
-			List<MediaQuery> mediaQueries = null;
-
-			try {
-				mediaQueries = _mediaQueryProvider.getMediaQueries(fileEntry);
-			}
-			catch (PortalException pe) {
-				pe.printStackTrace();
-			}
-
-			return mediaQueries;
+			return Try.fromFallible(
+				() -> _mediaQueryProvider.getMediaQueries(fileEntry)
+			).orElse(
+				null
+			);
 		}
 
 		return null;

@@ -157,8 +157,8 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected PortletPreferences doImportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data) {
+		PortletDataContext portletDataContext, String portletId,
+		PortletPreferences portletPreferences, String data) {
 
 		_exportImportProcessCallbackRegistry.registerCallback(
 			portletDataContext.getExportImportProcessId(),

@@ -1285,7 +1285,7 @@ public class LocalGitSyncUtil {
 				JenkinsResultsParserUtil.combine(
 					gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
 					String.valueOf(System.currentTimeMillis())),
-				remoteGitBranch.getSHA(), synchronize);
+				remoteGitBranch.getSHA());
 
 		return gitWorkingDirectory.createLocalGitBranch(cachedLocalGitBranch);
 	}

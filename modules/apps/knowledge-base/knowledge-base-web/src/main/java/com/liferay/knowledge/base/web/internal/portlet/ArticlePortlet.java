@@ -132,17 +132,18 @@ public class ArticlePortlet extends BaseKBPortlet {
 
 			long resourcePrimKey = getResourcePrimKey(renderRequest);
 
+			int status = ParamUtil.getInteger(
+				renderRequest, "status", WorkflowConstants.STATUS_APPROVED);
+
 			if (resourcePrimKey > 0) {
 				kbArticle = kbArticleService.getLatestKBArticle(
-					resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+					resourcePrimKey, status);
 			}
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
 
-			renderRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_STATUS,
-				WorkflowConstants.STATUS_APPROVED);
+			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||

@@ -108,9 +108,7 @@ public class VocabularyNestedCollectionResource
 		).addLocalizedStringByLocale(
 			"description", AssetVocabulary::getDescription
 		).addLocalizedStringByLocale(
-			"title", AssetVocabulary::getTitle
-		).addString(
-			"name", AssetVocabulary::getName
+			"name", AssetVocabulary::getTitle
 		).build();
 	}
 

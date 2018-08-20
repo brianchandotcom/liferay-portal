@@ -158,10 +158,10 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	protected PortletPreferences doImportData(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
-		throws Exception {
+			PortletPreferences portletPreferences, String data) {
 
 		_exportImportProcessCallbackRegistry.registerCallback(
+			portletDataContext.getExportImportProcessId(),
 			new ImportCommentsCallable(_commentManager, portletDataContext));
 
 		return null;

@@ -245,7 +245,7 @@ if (portletTitleBasedNavigation) {
 								<liferay-util:include page="/wiki/edit_page_attachment.jsp" servletContext="<%= application %>" />
 							</c:if>
 
-							<liferay-util:include page="/wiki/view_attachments.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/wiki/edit_page_view_attachments.jsp" servletContext="<%= application %>" />
 						</aui:fieldset>
 					</c:if>
 

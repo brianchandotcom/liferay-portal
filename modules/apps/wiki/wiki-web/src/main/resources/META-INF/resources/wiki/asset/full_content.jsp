@@ -69,6 +69,8 @@ WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(
 
 <%= pageDisplay.getFormattedContent() %>
 
+<liferay-util:include page="/wiki/view_attachments.jsp" servletContext="<%= application %>" />
+
 <liferay-expando:custom-attributes-available
 	className="<%= WikiPage.class.getName() %>"
 >

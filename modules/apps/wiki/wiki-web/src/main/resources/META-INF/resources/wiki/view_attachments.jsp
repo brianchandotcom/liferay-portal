@@ -17,81 +17,39 @@
 <%@ include file="/wiki/init.jsp" %>
 
 <%
-WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
-
-boolean copyPageAttachments = ParamUtil.getBoolean(request, "copyPageAttachments", true);
-
-List<FileEntry> attachmentsFileEntries = null;
-
-if (wikiPage != null) {
-	attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
-}
-
-long templateNodeId = ParamUtil.getLong(request, "templateNodeId");
-String templateTitle = ParamUtil.getString(request, "templateTitle");
-
-WikiPage templatePage = null;
-
-if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
-	try {
-		templatePage = WikiPageServiceUtil.getPage(templateNodeId, templateTitle);
-
-		attachmentsFileEntries = templatePage.getAttachmentsFileEntries();
-	}
-	catch (Exception e) {
-	}
-}
-
-int deletedAttachmentsCount = 0;
-
-if (wikiPage != null) {
-	deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
-}
+final WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 %>
 
-<c:if test="<%= trashHelper.isTrashEnabled(scopeGroupId) && (deletedAttachmentsCount > 0) %>">
-	<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/wiki/view_trash_page_attachments" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-		<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-		<portlet:param name="viewTrashAttachments" value="<%= Boolean.TRUE.toString() %>" />
-	</portlet:renderURL>
+<c:if test="<%= wikiPage.getAttachmentsFileEntriesCount() > 0 %>">
+	<div class="page-attachments">
+		<h5><liferay-ui:message key="attachments" /></h5>
 
-	<div align="right">
-		<a href="javascript:;" id="view-removed-attachments-link"><liferay-ui:message arguments="<%= deletedAttachmentsCount %>" key='<%= (deletedAttachmentsCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments" %>' /> &raquo;</a>
-	</div>
+		<div class="row">
 
-	<aui:script use="liferay-util-window">
-		var viewRemovedAttachmentsLink = A.one('#view-removed-attachments-link');
+			<%
+			List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
 
-		viewRemovedAttachmentsLink.on(
-			'click',
-			function(event) {
-				Liferay.Util.openWindow(
-					{
-						id: '<portlet:namespace />openRemovedPageAttachments',
-						title: '<%= LanguageUtil.get(request, "removed-attachments") %>',
-						uri: '<%= viewTrashAttachmentsURL %>'
-					}
-				);
+			DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute(WikiWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT);
+
+			for (FileEntry fileEntry : attachmentsFileEntries) {
+				String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
+			%>
+
+				<div class="col-md-4">
+					<liferay-frontend:horizontal-card
+						text="<%= fileEntry.getTitle() %>"
+						url="<%= rowURL %>"
+					>
+						<liferay-frontend:horizontal-card-col>
+							<span class="icon-monospaced sticker <%= (dlMimeTypeDisplayContext != null) ? dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) : "file-icon-color-0" %>"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
+						</liferay-frontend:horizontal-card-col>
+					</liferay-frontend:horizontal-card>
+				</div>
+
+			<%
 			}
-		);
-	</aui:script>
-</c:if>
+			%>
 
-<c:if test="<%= attachmentsFileEntries != null %>">
-	<c:if test="<%= (templatePage != null) && !attachmentsFileEntries.isEmpty() %>">
-		<aui:input name="copyPageAttachments" type="checkbox" value="<%= copyPageAttachments %>" />
-	</c:if>
-
-	<%
-	int attachmentsFileEntriesCount = attachmentsFileEntries.size();
-	String emptyResultsMessage = "this-page-does-not-have-file-attachments";
-	boolean paginate = false;
-	boolean showPageAttachmentAction = (templateNodeId == 0);
-	int status = WorkflowConstants.STATUS_APPROVED;
-	%>
-
-	<%@ include file="/wiki/attachments_list.jspf" %>
+		</div>
+	</div>
 </c:if>

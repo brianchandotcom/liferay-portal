@@ -137,6 +137,8 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 			(TemplateResourceLoader)extendedProperties.get(
 				VelocityTemplateResourceLoader.class.getName());
 
+		_portalCache.removeAll();
+
 		super.initialize(runtimeServices);
 	}
 

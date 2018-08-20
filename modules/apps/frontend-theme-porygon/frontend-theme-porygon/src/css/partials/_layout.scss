@@ -27,11 +27,11 @@
 
 .grid-4-columns {
 	@include sm {
-		grid-template-columns: auto auto;
+		grid-template-columns: 50% 50%;
 	}
 
 	@include md {
-		grid-template-columns: auto auto auto auto;
+		grid-template-columns: 25% 25% 25% 25%;
 	}
 }
 
@@ -39,9 +39,9 @@
 	grid-gap: 30px;
 }
 
-.grip-gap-inside {
+.grid-gap-inside {
 	.grid-col {
-		padding: 0 15px
+		padding: 0 15px;
 	}
 }
 

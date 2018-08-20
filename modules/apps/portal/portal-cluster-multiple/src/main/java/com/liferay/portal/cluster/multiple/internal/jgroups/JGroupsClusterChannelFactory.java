@@ -14,6 +14,8 @@
 
 package com.liferay.portal.cluster.multiple.internal.jgroups;
 
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.cluster.multiple.internal.ClusterChannel;
@@ -36,6 +38,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -64,7 +67,7 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 		return new JGroupsClusterChannel(
 			channleLogicName, channelProperties, clusterName, clusterReceiver,
-			_bindInetAddress, _clusterExecutorConfiguration);
+			_bindInetAddress, _clusterExecutorConfiguration, _classLoaders);
 	}
 
 	@Override
@@ -131,6 +134,8 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		if (_bundleTracker != null) {
 			_bundleTracker.close();
 		}
+
+		_classLoaders.clear();
 	}
 
 	protected void initBindAddress(String autodetectAddress) {
@@ -229,6 +234,9 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 	private InetAddress _bindInetAddress;
 	private NetworkInterface _bindNetworkInterface;
 	private BundleTracker<ClassLoader> _bundleTracker;
+	private final ConcurrentMap<ClassLoader, ClassLoader> _classLoaders =
+		new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private volatile ClusterExecutorConfiguration _clusterExecutorConfiguration;
 	private Props _props;
 

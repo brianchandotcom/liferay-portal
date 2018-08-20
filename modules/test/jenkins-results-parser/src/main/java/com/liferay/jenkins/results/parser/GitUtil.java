@@ -145,7 +145,7 @@ public class GitUtil {
 		}
 
 		System.out.println(
-			"getRemoteGitRefs found " + remoteGitRefs.size() + " resf at " +
+			"getRemoteGitRefs found " + remoteGitRefs.size() + " refs at " +
 				remoteURL + ".");
 
 		return remoteGitRefs;

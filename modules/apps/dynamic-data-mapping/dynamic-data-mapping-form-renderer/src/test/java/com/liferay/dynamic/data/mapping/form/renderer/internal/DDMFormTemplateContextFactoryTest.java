@@ -43,10 +43,12 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
 import com.liferay.portal.util.PortalImpl;
+import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Field;
 
@@ -63,6 +65,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -77,6 +80,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @RunWith(PowerMockRunner.class)
 public class DDMFormTemplateContextFactoryTest extends PowerMockito {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		PropsUtil.setProps(new PropsImpl());
+	}
 
 	@Before
 	public void setUp() throws Exception {

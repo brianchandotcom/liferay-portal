@@ -33,7 +33,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsImpl;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -44,6 +46,7 @@ import javax.portlet.RenderRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -64,6 +67,11 @@ import org.springframework.mock.web.portlet.MockRenderResponse;
 @PrepareForTest(LocaleUtil.class)
 @RunWith(PowerMockRunner.class)
 public class DDMFormDisplayContextTest extends PowerMockito {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		PropsUtil.setProps(new PropsImpl());
+	}
 
 	@Before
 	public void setUp() throws PortalException {

@@ -4355,6 +4355,12 @@ applies the `com.liferay.test.integration.base` plugin. Configure the
 - [LPS-84039]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.108.
 
+## 5.5.16 - 2018-08-15
+
+### Changed
+- [LPS-84473]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.109.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4813,6 +4819,7 @@ applies the `com.liferay.test.integration.base` plugin. Configure the
 [LPS-84213]: https://issues.liferay.com/browse/LPS-84213
 [LPS-84307]: https://issues.liferay.com/browse/LPS-84307
 [LPS-84313]: https://issues.liferay.com/browse/LPS-84313
+[LPS-84473]: https://issues.liferay.com/browse/LPS-84473
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

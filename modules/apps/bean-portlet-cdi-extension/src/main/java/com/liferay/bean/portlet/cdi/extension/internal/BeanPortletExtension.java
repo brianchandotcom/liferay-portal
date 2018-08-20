@@ -239,8 +239,6 @@ public class BeanPortletExtension implements Extension {
 
 					portletNamesStream.map(
 						portletName -> _beanPortlets.get(portletName)
-					).filter(
-						Objects::nonNull
 					).forEach(
 						beanPortlet -> beanPortlet.addLiferayConfiguration(
 							liferayDescriptor.getPortletConfiguration(

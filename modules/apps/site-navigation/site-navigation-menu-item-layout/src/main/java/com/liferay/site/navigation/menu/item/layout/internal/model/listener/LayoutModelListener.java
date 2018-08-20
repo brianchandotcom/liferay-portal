@@ -89,6 +89,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		SiteNavigationMenu siteNavigationMenu, Layout layout) {
 
 		if (ExportImportThreadLocal.isStagingInProcess() ||
+			ExportImportThreadLocal.isImportInProcess() ||
 			_menuItemExists(siteNavigationMenu, layout)) {
 
 			return;

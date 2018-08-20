@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
+import com.liferay.gradle.plugins.tlddoc.builder.tasks.ValidateSchemaTask;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -55,6 +56,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		_configureTasksExecuteNode(project);
 		_configureTasksExecuteNpm(project);
 		_configureTasksNpmInstall(project);
+		_configureTasksValidateSchema(project);
 
 		GradleUtil.withPlugin(
 			project, TestIntegrationPlugin.class,
@@ -240,6 +242,21 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			});
 	}
 
+	private void _configureTasksValidateSchema(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			ValidateSchemaTask.class,
+			new Action<ValidateSchemaTask>() {
+
+				@Override
+				public void execute(ValidateSchemaTask validateSchemaTask) {
+					_configureTaskValidateSchema(validateSchemaTask);
+				}
+
+			});
+	}
+
 	private void _configureTaskTestIntegration(Project project) {
 		Task testIntegrationTask = GradleUtil.getTask(
 			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
@@ -290,6 +307,12 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		};
 
 		testIntegrationTask.doFirst(action);
+	}
+
+	private void _configureTaskValidateSchema(
+		ValidateSchemaTask validateSchemaTask) {
+
+		validateSchemaTask.setEnabled(false);
 	}
 
 	private static final File _NODE_MODULES_CACHE_DIR = new File(

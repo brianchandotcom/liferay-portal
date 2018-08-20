@@ -245,7 +245,7 @@ public class TensorflowProcess {
 							"The tensorflow process has crashed more than ",
 							maximumNumberOfCrashes,
 							" times. It is now disabled. To enable it again ",
-							"please run ",
+							"please open the Gogo shell and run ",
 							TensorflowAssetAutoTagProviderOSGiCommands.SCOPE,
 							StringPool.COLON,
 							TensorflowAssetAutoTagProviderOSGiCommands.

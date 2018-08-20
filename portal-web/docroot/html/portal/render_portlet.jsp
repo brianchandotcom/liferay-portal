@@ -672,7 +672,7 @@ if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 		int portletSpecMajorVersion = portletApp.getSpecMajorVersion();
 		MutableRenderParameters urlMaxRenderParameters = null;
 
-		if (portletSpecMajorVersion == 3) {
+		if (portletSpecMajorVersion >= 3) {
 			urlMaxRenderParameters = urlMax.getRenderParameters();
 		}
 

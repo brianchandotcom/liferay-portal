@@ -63,7 +63,7 @@ public class ActionRequestImpl
 		String portletNamespace = PortalUtil.getPortletNamespace(
 			getPortletName());
 
-		if (getPortletSpecMajorVersion() == 3) {
+		if (getPortletSpecMajorVersion() >= 3) {
 			_actionParameters = new ActionParametersImpl(
 				getPortletParameterMap(request, portletNamespace),
 				portletNamespace);

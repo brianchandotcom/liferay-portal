@@ -789,7 +789,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					if (publicRenderParametersMap.containsKey(
 							publicRenderParameterName)) {
 
-						if (_portletSpecMajorVersion == 3) {
+						if (_portletSpecMajorVersion >= 3) {
 							publicRenderParametersMap.put(
 								publicRenderParameterName,
 								privateRenderParameter.getValues());
@@ -958,7 +958,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 				if (publicRenderParameterNames.contains(
 						requestParameter.getName())) {
 
-					if (_portletSpecMajorVersion == 3) {
+					if (_portletSpecMajorVersion >= 3) {
 						String publicRenderParameterName =
 							PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE;
 
@@ -1394,7 +1394,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 				_privateRenderNamespaced = false;
 			}
 
-			if ((values != null) && (portletSpecMajorVersion == 3)) {
+			if ((values != null) && (portletSpecMajorVersion >= 3)) {
 				for (int i = 0; i < values.length; i++) {
 					if ((values[i] != null) && values[i].isEmpty()) {
 						values[i] = null;

@@ -148,7 +148,7 @@ public class ResourceRequestImpl
 		String portletNamespace = PortalUtil.getPortletNamespace(
 			getPortletName());
 
-		if (getPortletSpecMajorVersion() == 3) {
+		if (getPortletSpecMajorVersion() >= 3) {
 			_resourceParameters = new ResourceParametersImpl(
 				getPortletParameterMap(request, portletNamespace),
 				portletNamespace);

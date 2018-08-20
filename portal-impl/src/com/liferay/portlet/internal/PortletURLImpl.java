@@ -612,7 +612,7 @@ public class PortletURLImpl
 
 		LiferayMutablePortletParameters liferayMutablePortletParameters = null;
 
-		if (_portletSpecMajorVersion == 3) {
+		if (_portletSpecMajorVersion >= 3) {
 			liferayMutablePortletParameters = _getMutablePortletParameters(
 				name);
 
@@ -636,7 +636,7 @@ public class PortletURLImpl
 			}
 		}
 
-		if (_portletSpecMajorVersion == 3) {
+		if (_portletSpecMajorVersion >= 3) {
 			liferayMutablePortletParameters.setValues(name, values, append);
 
 			return;
@@ -694,7 +694,7 @@ public class PortletURLImpl
 				}
 			}
 
-			if (_portletSpecMajorVersion == 3) {
+			if (_portletSpecMajorVersion >= 3) {
 				_mutableRenderParameters.clear();
 
 				if (_mutableActionParameters != null) {
@@ -1245,7 +1245,7 @@ public class PortletURLImpl
 			_copyCurrentRenderParameters = true;
 		}
 
-		if (_portletSpecMajorVersion == 3) {
+		if (_portletSpecMajorVersion >= 3) {
 			if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
 				_mutableActionParameters = new MutableActionParametersImpl(
 					new LinkedHashMap<>());

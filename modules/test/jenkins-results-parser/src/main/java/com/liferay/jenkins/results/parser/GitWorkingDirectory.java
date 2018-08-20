@@ -1039,8 +1039,7 @@ public class GitWorkingDirectory {
 			}
 
 			LocalGitBranch upstreamLocalGitBranch = createLocalGitBranch(
-				upstreamRemoteGitBranch.getName(), true,
-				upstreamRemoteGitBranch.getSHA());
+				upstreamRemoteGitBranch.getName(), true, upstreamBranchSHA);
 
 			rebasedLocalGitBranch = rebase(
 				true, upstreamLocalGitBranch, rebasedLocalGitBranch);
@@ -1519,6 +1518,10 @@ public class GitWorkingDirectory {
 
 			return localGitBranch;
 		}
+
+		checkoutLocalGitBranch(baseLocalGitBranch);
+
+		reset("--hard " + baseLocalGitBranch.getSHA());
 
 		String rebaseCommand = JenkinsResultsParserUtil.combine(
 			"git rebase ", baseLocalGitBranch.getName(), " ",

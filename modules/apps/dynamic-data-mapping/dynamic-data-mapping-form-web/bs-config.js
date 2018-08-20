@@ -15,7 +15,7 @@ module.exports = {
 	files: [
 		"src/main/resources/META-INF/resources/metal",
 		{
-			match: ["src/**/*.es.js"],
+			match: ["src/**/*.es.js", "src/**/*.soy"],
 			fn: callback
 		}
 	],

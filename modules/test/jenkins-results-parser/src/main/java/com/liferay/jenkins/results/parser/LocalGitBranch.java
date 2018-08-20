@@ -43,10 +43,6 @@ public class LocalGitBranch extends BaseGitRef {
 		return localRepository.getUpstreamBranchName();
 	}
 
-	public void setupWorkspace() {
-		setupWorkspace(this);
-	}
-
 	@Override
 	public String toString() {
 		LocalRepository localRepository = getLocalRepository();
@@ -61,27 +57,6 @@ public class LocalGitBranch extends BaseGitRef {
 		sb.append(")");
 
 		return sb.toString();
-	}
-
-	protected static void setupWorkspace(LocalGitBranch localGitBranch) {
-		System.out.println();
-		System.out.println("##");
-		System.out.println("## " + localGitBranch.toString());
-		System.out.println("##");
-		System.out.println();
-
-		GitWorkingDirectory gitWorkingDirectory =
-			localGitBranch.getGitWorkingDirectory();
-
-		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
-
-		gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch);
-
-		gitWorkingDirectory.reset("--hard " + localGitBranch.getSHA());
-
-		gitWorkingDirectory.clean();
-
-		gitWorkingDirectory.displayLog();
 	}
 
 	protected LocalGitBranch(

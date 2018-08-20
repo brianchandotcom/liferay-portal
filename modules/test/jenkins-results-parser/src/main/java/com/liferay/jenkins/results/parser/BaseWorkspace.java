@@ -14,31 +14,32 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseWorkspace {
 
-	public void setup() {
-		for (LocalGitBranch localGitBranch : _localGitBranches) {
-			localGitBranch.setupWorkspace();
+	public abstract void setupWorkspace();
 
-			LocalRepository localRepository =
-				localGitBranch.getLocalRepository();
+	protected void checkoutBranch(LocalGitBranch localGitBranch) {
+		System.out.println();
+		System.out.println("##");
+		System.out.println("## " + localGitBranch.toString());
+		System.out.println("##");
+		System.out.println();
 
-			localRepository.writeRepositoryPropertiesFiles();
-		}
+		GitWorkingDirectory gitWorkingDirectory =
+			localGitBranch.getGitWorkingDirectory();
+
+		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
+
+		gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch);
+
+		gitWorkingDirectory.reset("--hard " + localGitBranch.getSHA());
+
+		gitWorkingDirectory.clean();
+
+		gitWorkingDirectory.displayLog();
 	}
-
-	protected void addLocalGitBranch(LocalGitBranch localGitBranch) {
-		if (localGitBranch != null) {
-			_localGitBranches.add(localGitBranch);
-		}
-	}
-
-	private final List<LocalGitBranch> _localGitBranches = new ArrayList<>();
 
 }

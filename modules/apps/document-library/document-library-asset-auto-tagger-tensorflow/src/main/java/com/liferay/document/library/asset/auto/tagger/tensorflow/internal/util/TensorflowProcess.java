@@ -28,6 +28,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -240,7 +241,7 @@ public class TensorflowProcess {
 						maximumNumberOfCrashes();
 
 				if (_processStarts++ > maximumNumberOfCrashes) {
-					_log.error(
+					throw new SystemException(
 						StringBundler.concat(
 							"The tensorflow process has crashed more than ",
 							maximumNumberOfCrashes,

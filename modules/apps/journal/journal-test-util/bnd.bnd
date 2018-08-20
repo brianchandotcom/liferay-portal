@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Journal Test Utilities
+Bundle-SymbolicName: com.liferay.journal.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.journal.test.util

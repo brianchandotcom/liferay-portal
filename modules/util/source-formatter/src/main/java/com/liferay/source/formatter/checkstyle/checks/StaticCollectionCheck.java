@@ -51,6 +51,15 @@ public class StaticCollectionCheck extends BaseCheck {
 	private void _checkVariable(
 		DetailAST variableDefAST, DetailAST staticBlockAST) {
 
+		DetailAST modifiersAST = variableDefAST.findFirstToken(
+			TokenTypes.MODIFIERS);
+
+		if (!modifiersAST.branchContains(TokenTypes.FINAL) ||
+			!modifiersAST.branchContains(TokenTypes.LITERAL_STATIC)) {
+
+			return;
+		}
+
 		String typeName = DetailASTUtil.getTypeName(variableDefAST, false);
 
 		if (!typeName.equals("Set")) {

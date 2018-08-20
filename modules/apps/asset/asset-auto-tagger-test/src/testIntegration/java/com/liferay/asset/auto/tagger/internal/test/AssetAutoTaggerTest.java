@@ -17,6 +17,8 @@ package com.liferay.asset.auto.tagger.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.AssetAutoTagger;
+import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
+import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -108,6 +110,34 @@ public class AssetAutoTaggerTest {
 				AssetEntry assetEntry = _addFileEntryAssetEntry();
 
 				_assertContainsAssetTagName(assetEntry, _ASSET_TAG_NAME_AUTO);
+			});
+	}
+
+	@Test
+	public void testDeletesAssetAutoTaggerEntriesWhenAssetIsDeleted()
+		throws Exception {
+
+		_withAutoTaggerEnabled(
+			() -> {
+				AssetEntry assetEntry = _addFileEntryAssetEntry();
+
+				List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
+					_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+						assetEntry);
+
+				Assert.assertEquals(
+					assetAutoTaggerEntries.toString(), 1,
+					assetAutoTaggerEntries.size());
+
+				DLAppServiceUtil.deleteFileEntry(assetEntry.getClassPK());
+
+				assetAutoTaggerEntries =
+					_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+						assetEntry);
+
+				Assert.assertEquals(
+					assetAutoTaggerEntries.toString(), 0,
+					assetAutoTaggerEntries.size());
 			});
 	}
 
@@ -221,6 +251,9 @@ public class AssetAutoTaggerTest {
 
 	@Inject
 	private AssetAutoTagger _assetAutoTagger;
+
+	@Inject
+	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 	private ServiceRegistration<AssetAutoTagProvider>
 		_assetAutoTagProviderServiceRegistration;

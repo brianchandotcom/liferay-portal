@@ -6528,20 +6528,22 @@ public class ServiceBuilder {
 		// Copied columns
 
 		for (Element columnElement : columnElements) {
-			String dbName = columnElement.attributeValue("db-name");
 			String name = columnElement.attributeValue("name");
-			String type = columnElement.attributeValue("type");
 
 			if (!name.equals("mvccVersion") && !name.equals("headId")) {
 				versionEntityColumnElement = versionEntityElement.addElement(
 					"column");
 
-				if (Validator.isNotNull(dbName)) {
-					versionEntityColumnElement.addAttribute("db-name", dbName);
-				}
+				List<Attribute> columnAttributes = columnElement.attributes();
 
-				versionEntityColumnElement.addAttribute("name", name);
-				versionEntityColumnElement.addAttribute("type", type);
+				for (Attribute attribute : columnAttributes) {
+					String attributeName = attribute.getName();
+
+					if (!Objects.equals(attributeName, "primary")) {
+						versionEntityColumnElement.addAttribute(
+							attributeName, attribute.getValue());
+					}
+				}
 			}
 		}
 

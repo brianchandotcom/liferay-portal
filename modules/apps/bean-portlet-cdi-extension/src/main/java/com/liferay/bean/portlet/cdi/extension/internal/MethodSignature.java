@@ -135,9 +135,9 @@ public class MethodSignature {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MethodSignature.class);
 
-	private Class<? extends Annotation> _annotation;
-	private Class<?>[] _parameterTypes;
-	private boolean _variant1;
-	private boolean _variant2;
+	private final Class<? extends Annotation> _annotation;
+	private final Class<?>[] _parameterTypes;
+	private final boolean _variant1;
+	private final boolean _variant2;
 
 }

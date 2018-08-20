@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.osgi.commands.TensorflowAssetAutoTagProviderOSGiCommands;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.TensorFlowDaemonProcessCallable;
 import com.liferay.petra.process.ProcessCallable;
@@ -26,6 +27,7 @@ import com.liferay.petra.process.ProcessLog.Level;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -48,6 +50,7 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.Dictionary;
+import java.util.Map;
 import java.util.concurrent.Future;
 
 import org.osgi.framework.Bundle;
@@ -56,6 +59,7 @@ import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -65,7 +69,10 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Alejandro Tardín
  */
-@Component(service = TensorflowProcess.class)
+@Component(
+	configurationPid = "com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration",
+	service = TensorflowProcess.class
+)
 public class TensorflowProcess {
 
 	public void resetCounter() {
@@ -104,7 +111,10 @@ public class TensorflowProcess {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws IOException {
+	protected void activate(
+			BundleContext bundleContext, Map<String, Object> properties)
+		throws IOException {
+
 		Bundle bundle = bundleContext.getBundle();
 
 		_tensorflowWorkDir = bundle.getDataFile("tensorflow-workdir");
@@ -113,6 +123,8 @@ public class TensorflowProcess {
 
 		_processConfig = _createProcessConfig(
 			bundle, _tensorflowWorkDir.toPath());
+
+		modified(properties);
 	}
 
 	@Deactivate
@@ -120,6 +132,14 @@ public class TensorflowProcess {
 		stop();
 
 		FileUtil.deltree(_tensorflowWorkDir);
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) throws IOException {
+		_tensorFlowImageAssetAutoTagProviderProcessConfiguration =
+			ConfigurableUtil.createConfigurable(
+				TensorFlowImageAssetAutoTagProviderProcessConfiguration.class,
+				properties);
 	}
 
 	private static String _createClassPath(Bundle bundle, Path tempPath)
@@ -219,11 +239,15 @@ public class TensorflowProcess {
 
 		if (_processChannel == null) {
 			try {
-				if (_processStarts++ > _MAX_PROCESS_STARTS) {
+				int maximumNumberOfCrashes =
+					_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
+						maximumNumberOfCrashes();
+
+				if (_processStarts++ > maximumNumberOfCrashes) {
 					_log.error(
 						StringBundler.concat(
 							"The tensorflow process has crashed more than ",
-							_MAX_PROCESS_STARTS,
+							maximumNumberOfCrashes,
 							" times. It is now disabled. To enable it again ",
 							"please run ",
 							TensorflowAssetAutoTagProviderOSGiCommands.SCOPE,
@@ -245,8 +269,6 @@ public class TensorflowProcess {
 		return processChannel;
 	}
 
-	private static final int _MAX_PROCESS_STARTS = 4;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		TensorflowProcess.class);
 
@@ -257,6 +279,8 @@ public class TensorflowProcess {
 	private ProcessExecutor _processExecutor;
 
 	private int _processStarts;
+	private volatile TensorFlowImageAssetAutoTagProviderProcessConfiguration
+		_tensorFlowImageAssetAutoTagProviderProcessConfiguration;
 	private File _tensorflowWorkDir;
 
 }

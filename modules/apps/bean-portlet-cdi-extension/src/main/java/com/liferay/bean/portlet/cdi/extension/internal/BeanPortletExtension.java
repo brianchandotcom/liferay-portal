@@ -567,26 +567,29 @@ public class BeanPortletExtension implements Extension {
 	protected void applicationScopedBeforeDestroyed(
 		@Destroyed(ApplicationScoped.class) @Observes Object ignore) {
 
-		_filterRegistrations.removeIf(
-			serviceRegistration -> {
-				serviceRegistration.unregister();
+		for (ServiceRegistration<PortletFilter> serviceRegistration :
+				_filterRegistrations) {
 
-				return true;
-			});
+			serviceRegistration.unregister();
+		}
 
-		_portletRegistrations.removeIf(
-			serviceRegistration -> {
-				serviceRegistration.unregister();
+		_filterRegistrations.clear();
 
-				return true;
-			});
+		for (ServiceRegistration<Portlet> serviceRegistration :
+				_portletRegistrations) {
 
-		_resourceBundleLoaderRegistrations.removeIf(
-			serviceRegistration -> {
-				serviceRegistration.unregister();
+			serviceRegistration.unregister();
+		}
 
-				return true;
-			});
+		_portletRegistrations.clear();
+
+		for (ServiceRegistration<ResourceBundleLoader> serviceRegistration :
+				_resourceBundleLoaderRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_resourceBundleLoaderRegistrations.clear();
 	}
 
 	protected void associateMethods(

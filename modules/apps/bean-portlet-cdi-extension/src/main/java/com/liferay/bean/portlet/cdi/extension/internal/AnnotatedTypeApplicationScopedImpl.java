@@ -52,9 +52,7 @@ public class AnnotatedTypeApplicationScopedImpl<X>
 			}
 		}
 
-		_annotations.add(
-			DefaultApplicationScoped.class.getAnnotation(
-				ApplicationScoped.class));
+		_annotations.add(_applicationScoped);
 	}
 
 	@Override
@@ -91,6 +89,16 @@ public class AnnotatedTypeApplicationScopedImpl<X>
 
 		return false;
 	}
+
+	private static final ApplicationScoped _applicationScoped =
+		new ApplicationScoped() {
+
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return ApplicationScoped.class;
+			}
+
+		};
 
 	private final Set<Annotation> _annotations;
 

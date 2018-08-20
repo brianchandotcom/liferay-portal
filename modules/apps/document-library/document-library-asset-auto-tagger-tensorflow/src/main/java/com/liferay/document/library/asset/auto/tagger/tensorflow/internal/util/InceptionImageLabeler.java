@@ -229,18 +229,7 @@ public class InceptionImageLabeler {
 
 		if (processChannel == null) {
 			synchronized (this) {
-				if (_processChannel == null) {
-					try {
-						_processChannel = _processExecutor.execute(
-							_processConfig,
-							new TensorFlowDaemonProcessCallable());
-					}
-					catch (ProcessException pe) {
-						ReflectionUtil.throwException(pe);
-					}
-				}
-
-				processChannel = _processChannel;
+				processChannel = _startProcess();
 			}
 		}
 
@@ -266,6 +255,33 @@ public class InceptionImageLabeler {
 						"/imagenet_comp_graph_label_strings.txt")));
 	}
 
+	private ProcessChannel<String> _startProcess() {
+		ProcessChannel<String> processChannel;
+
+		if (_processChannel == null) {
+			try {
+				if (_processStarts > _MAX_PROCESS_STARTS) {
+					_log.error(
+						StringBundler.concat(
+							"The tensorflow process has crashed more than ",
+							_MAX_PROCESS_STARTS,
+							" times. It is now disabled."));
+				}
+
+				_processChannel = _processExecutor.execute(
+					_processConfig, new TensorFlowDaemonProcessCallable());
+				_processStarts++;
+			}
+			catch (ProcessException pe) {
+				ReflectionUtil.throwException(pe);
+			}
+		}
+
+		processChannel = _processChannel;
+
+		return processChannel;
+	}
+
 	private synchronized void _stopProcess() {
 		if (_processChannel != null) {
 			Future<?> future = _processChannel.getProcessNoticeableFuture();
@@ -275,6 +291,8 @@ public class InceptionImageLabeler {
 			_processChannel = null;
 		}
 	}
+
+	private static final int _MAX_PROCESS_STARTS = 4;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InceptionImageLabeler.class);
@@ -286,6 +304,7 @@ public class InceptionImageLabeler {
 	@Reference
 	private ProcessExecutor _processExecutor;
 
+	private int _processStarts;
 	private File _tensorflowWorkDir;
 
 }

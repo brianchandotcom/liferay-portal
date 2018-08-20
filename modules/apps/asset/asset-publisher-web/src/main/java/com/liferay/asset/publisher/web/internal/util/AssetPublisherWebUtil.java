@@ -22,8 +22,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
-import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringPool;
@@ -441,11 +441,11 @@ public class AssetPublisherWebUtil {
 			long companyGroupId, Layout layout, boolean checkPermission)
 		throws PortalException {
 
-		long groupId = _assetPublisherUtil.getGroupIdFromScopeId(
+		long groupId = _assetPublisherHelper.getGroupIdFromScopeId(
 			scopeId, layout.getGroupId(), layout.isPrivateLayout());
 
 		if (scopeId.startsWith(
-				AssetPublisherUtil.SCOPE_ID_CHILD_GROUP_PREFIX)) {
+				AssetPublisherHelper.SCOPE_ID_CHILD_GROUP_PREFIX)) {
 
 			Group group = _groupLocalService.getGroup(groupId);
 
@@ -454,7 +454,7 @@ public class AssetPublisherWebUtil {
 			}
 		}
 		else if (scopeId.startsWith(
-					 AssetPublisherUtil.SCOPE_ID_PARENT_GROUP_PREFIX)) {
+					 AssetPublisherHelper.SCOPE_ID_PARENT_GROUP_PREFIX)) {
 
 			Group siteGroup = layout.getGroup();
 
@@ -643,11 +643,12 @@ public class AssetPublisherWebUtil {
 
 	private final List<AssetEntryQueryProcessor> _assetEntryQueryProcessors =
 		new CopyOnWriteArrayList<>();
-	private AssetPublisherPortletInstanceConfiguration
-		_assetPublisherPortletInstanceConfiguration;
 
 	@Reference
-	private AssetPublisherUtil _assetPublisherUtil;
+	private AssetPublisherHelper _assetPublisherHelper;
+
+	private AssetPublisherPortletInstanceConfiguration
+		_assetPublisherPortletInstanceConfiguration;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

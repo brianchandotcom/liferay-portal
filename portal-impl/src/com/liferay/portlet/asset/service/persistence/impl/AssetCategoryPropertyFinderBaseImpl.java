@@ -30,7 +30,8 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+            com.liferay.asset.category.property.service.persistence.impl.AssetCategoryPropertyFinderImpl}
  * @generated
  */
 @Deprecated

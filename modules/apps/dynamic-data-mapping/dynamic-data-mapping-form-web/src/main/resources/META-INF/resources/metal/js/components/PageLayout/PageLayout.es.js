@@ -11,6 +11,7 @@ class PageLayout extends Component {
 		 * @memberof FormPage
 		 * @type {?string}
 		 */
+
 		description: Config.string(),
 
 		/**
@@ -18,6 +19,7 @@ class PageLayout extends Component {
 		 * @memberof FormPage
 		 * @type {?string}
 		 */
+
 		descriptionPlaceholder: Config.string()
 			.value(Liferay.Language.get('add-a-short-description-for-this-page')),
 
@@ -27,6 +29,7 @@ class PageLayout extends Component {
 		 * @memberof FormPage
 		 * @type {?number}
 		 */
+
 		pageIndex: Config.number().value(0),
 
 		/**
@@ -34,7 +37,7 @@ class PageLayout extends Component {
 		 * @instance
 		 * @memberof LayoutRenderer
 		 * @type {!string}
-		 */ 
+		 */
 
 		spritemap: Config.string().required(),
 
@@ -44,6 +47,7 @@ class PageLayout extends Component {
 		 * @memberof FormPage
 		 * @type {?number}
 		 */
+
 		total: Config.number().value(1),
 
 		/**
@@ -51,6 +55,7 @@ class PageLayout extends Component {
 		 * @memberof FormPage
 		 * @type {?string}
 		 */
+
 		title: Config.string(),
 
 		/**
@@ -58,6 +63,7 @@ class PageLayout extends Component {
 		 * @memberof FormPage
 		 * @type {?string}
 		 */
+
 		titlePlaceholder: Config.string(),
 
 		/**
@@ -65,6 +71,7 @@ class PageLayout extends Component {
 		 * @memberof FormPage
 		 * @type {function}
 		 */
+
 		_handleChangePageTitle: Config.func().required(),
 
 		/**
@@ -72,6 +79,7 @@ class PageLayout extends Component {
 		 * @memberof FormPage
 		 * @type {function}
 		 */
+
 		_handleChangePageDescription: Config.func().required()
 	}
 
@@ -79,7 +87,7 @@ class PageLayout extends Component {
 		this.titlePlaceholder = this._getTitlePlaceholder();
 	}
 
-	willReceiveState(){
+	willReceiveState() {
 		this.titlePlaceholder = this._getTitlePlaceholder();
 	}
 
@@ -87,6 +95,7 @@ class PageLayout extends Component {
 	 * @param {number} pageIndex
 	 * @private
 	 */
+
 	_getTitlePlaceholder() {
 		return Liferay.Language.get(`untitled-page-${this.pageIndex + 1}-of-${this.total}`);
 	}

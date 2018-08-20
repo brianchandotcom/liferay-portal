@@ -91,7 +91,7 @@
 			{call ClayActionsDropdown.render}
 				{param items: $pageSettingsItem /}
 				{param events: [
-					'itemClicked': $_handleSettingsPageClicked
+					'itemClicked': $_handleClickSettingsPage
 				] /}
 				{param spritemap: $spritemap /}
 			{/call}
@@ -369,6 +369,9 @@
 
 	<div class="ddm-field-actions-container">
 		{call ClayButton.render}
+			{param events: [
+				'click': $_handleDuplicateButtonClicked
+			] /}
 			{param style: 'secondary' /}
 			{param size: 'sm' /}
 			{param spritemap: $spritemap /}
@@ -376,11 +379,11 @@
 			{param disabled: true /}
 			{param monospaced: true /}
 		{/call}
+
 		{call ClayButton.render}
 			{param events: [
 				'click': $_handleDeleteButtonClicked
 			] /}
-
 			{param size: 'sm' /}
 			{param style: 'secondary' /}
 			{param spritemap: $spritemap /}

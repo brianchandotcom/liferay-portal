@@ -7,7 +7,7 @@ import LayoutSupport from './LayoutSupport.es';
 import Soy from 'metal-soy';
 import templates from './LayoutRenderer.soy.js';
 import {ClayActionsDropdown} from 'clay-dropdown';
-import  '../PageLayout/PageLayout.es'; 
+import '../PageLayout/PageLayout.es';
 
 /**
  * LayoutRenderer.
@@ -16,6 +16,7 @@ import  '../PageLayout/PageLayout.es';
 
 class LayoutRenderer extends Component {
 	static STATE = {
+
 		/**
 		 * @default 0
 		 * @instance
@@ -153,7 +154,8 @@ class LayoutRenderer extends Component {
 	/**
 	 * Add a page to the context
 	 * @private
-	 */ 
+	 */
+
 	_addPage() {
 		const pages = [...this.pages];
 

@@ -4,12 +4,10 @@
 	{@param? description: string}
 	{@param? descriptionPlaceholder: string}
 	{@param? pageIndex: int}
-	{@param pageSettingsItem: list<?>}
 	{@param? title: string}
 	{@param? titlePlaceholder: string}
 	{@param? _handleChangePageTitle: any}
 	{@param? _handleChangePageDescription: any}
-	{@param? _handleClickSettingsPage: any}
 
 	<div>
 		{call .form}
@@ -18,7 +16,6 @@
 			{param pageIndex: $pageIndex /}
 			{param title: $title /}
 			{param titlePlaceholder: $titlePlaceholder /}
-			{param spritemap: $spritemap /}
 			{param _handleChangePageTitle: $_handleChangePageTitle /}
 			{param _handleChangePageDescription: $_handleChangePageDescription /}
 		{/call}
@@ -33,7 +30,7 @@
 	{@param? titlePlaceholder: string}
 	{@param? _handleChangePageTitle: any}
 	{@param? _handleChangePageDescription: any}
-	
+
 	{let $pageTitleAttributes kind="attributes"}
 		class="form-builder-page-header-title form-control"
 		data-onchange="{$_handleChangePageTitle}"
@@ -51,7 +48,7 @@
 		value="{$description}"
 		placeholder="{$descriptionPlaceholder}"
 	{/let}
-	
+
 	<textarea {$pageTitleAttributes}></textarea>
 	<textarea {$pageDescriptionAttributes}></textarea>
 {/template}

@@ -1002,7 +1002,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testInviteNonStagedSiteCalendarCreatesLiveSiteCalendarBooking()
+	public void testInviteNonstagedSiteCalendarCreatesLiveSiteCalendarBooking()
 		throws Exception {
 
 		_liveGroup = GroupTestUtil.addGroup();
@@ -1026,7 +1026,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testInviteNonStagedSiteResourceCalendarCreatesLiveSiteResourceCalendarBooking()
+	public void testInviteNonstagedSiteResourceCalendarCreatesLiveSiteResourceCalendarBooking()
 		throws Exception {
 
 		_liveGroup = GroupTestUtil.addGroup();

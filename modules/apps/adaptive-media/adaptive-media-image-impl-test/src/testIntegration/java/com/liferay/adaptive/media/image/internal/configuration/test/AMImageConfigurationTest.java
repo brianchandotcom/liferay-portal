@@ -180,7 +180,7 @@ public class AMImageConfigurationTest extends BaseAMImageConfigurationTestCase {
 	}
 
 	@Test
-	public void testNonEmptyConfiguration() throws Exception {
+	public void testNonemptyConfiguration() throws Exception {
 		Map<String, String> properties = new HashMap<>();
 
 		properties.put("max-height", "100");
@@ -199,7 +199,7 @@ public class AMImageConfigurationTest extends BaseAMImageConfigurationTestCase {
 	}
 
 	@Test
-	public void testNonExistantConfigurationEntry() throws Exception {
+	public void testNonexistantConfigurationEntry() throws Exception {
 		Map<String, String> properties = new HashMap<>();
 
 		properties.put("max-height", "100");

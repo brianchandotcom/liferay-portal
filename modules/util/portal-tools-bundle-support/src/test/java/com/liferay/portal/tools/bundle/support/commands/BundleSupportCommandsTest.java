@@ -241,7 +241,7 @@ public class BundleSupportCommandsTest {
 	}
 
 	@Test
-	public void testInitBundleTarProxyNonProxyHosts() throws Exception {
+	public void testInitBundleTarProxyNonproxyHosts() throws Exception {
 		_testInitBundleTar(
 			"localhost", _HTTP_PROXY_SERVER_PORT, null, null,
 			"localhost2.localdomain", _httpProxyHit, Boolean.TRUE);

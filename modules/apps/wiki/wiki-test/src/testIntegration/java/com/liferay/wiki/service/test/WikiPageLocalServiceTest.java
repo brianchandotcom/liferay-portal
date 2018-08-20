@@ -559,7 +559,7 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
-	public void testGetRecentChangesWithANonRecentCreatedPage()
+	public void testGetRecentChangesWithANonrecentCreatedPage()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -592,7 +592,7 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
-	public void testGetRecentChangesWithAnUpdatedNonRecentCreatedPage()
+	public void testGetRecentChangesWithAnUpdatedNonrecentCreatedPage()
 		throws Exception {
 
 		ServiceContext serviceContext =

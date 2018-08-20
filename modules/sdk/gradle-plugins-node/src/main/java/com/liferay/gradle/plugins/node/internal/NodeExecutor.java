@@ -279,7 +279,7 @@ public class NodeExecutor {
 		return windowsArgs;
 	}
 
-	private void _setNonProxyHosts(Map<String, String> environment) {
+	private void _setNonproxyHosts(Map<String, String> environment) {
 		if (environment.containsKey(_NO_PROXY_KEY) ||
 			environment.containsKey(_NO_PROXY_KEY.toUpperCase())) {
 
@@ -373,7 +373,7 @@ public class NodeExecutor {
 		GUtil.addToMap(environment, getEnvironment());
 
 		if (isInheritProxy()) {
-			_setNonProxyHosts(environment);
+			_setNonproxyHosts(environment);
 			_setProxy(environment, "http");
 			_setProxy(environment, "https");
 		}

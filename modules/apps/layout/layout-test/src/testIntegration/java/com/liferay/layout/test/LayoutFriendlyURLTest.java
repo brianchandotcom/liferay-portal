@@ -264,7 +264,7 @@ public class LayoutFriendlyURLTest {
 	}
 
 	@Test(expected = LayoutFriendlyURLsException.class)
-	public void testInvalidFriendlyURLMapperURLInNonDefaultLocale()
+	public void testInvalidFriendlyURLMapperURLInNondefaultLocale()
 		throws Exception {
 
 		Map<Locale, String> friendlyURLMap = new HashMap<>();
@@ -486,7 +486,7 @@ public class LayoutFriendlyURLTest {
 	}
 
 	@Test
-	public void testValidFriendlyURLMapperURLInNonDefaultLocale()
+	public void testValidFriendlyURLMapperURLInNondefaultLocale()
 		throws Exception {
 
 		Map<Locale, String> friendlyURLMap = new HashMap<>();

@@ -192,7 +192,7 @@ public class EntryAttachmentContentUpdaterTest {
 	}
 
 	@Test(expected = NoSuchFileEntryException.class)
-	public void testUpdateContentWithNonExistingFileEntryReference()
+	public void testUpdateContentWithNonexistingFileEntryReference()
 		throws Exception {
 
 		long tempFileEntryId = RandomTestUtil.randomLong();

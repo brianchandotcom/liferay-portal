@@ -141,7 +141,7 @@ public class ModuleNameUtilTest {
 	}
 
 	@Test
-	public void testToModuleNameWithNonJsExtensions() {
+	public void testToModuleNameWithNonjsExtensions() {
 		Assert.assertEquals(
 			"a-module.es", ModuleNameUtil.toModuleName("a-module.es"));
 

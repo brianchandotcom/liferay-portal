@@ -759,7 +759,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testToLowerCaseWithNonASCIICharacters() {
+	public void testToLowerCaseWithNonasciiCharacters() {
 		Assert.assertEquals("\u00F1", StringUtil.toLowerCase("\u00D1"));
 		Assert.assertEquals(
 			"hello world \u00F1", StringUtil.toLowerCase("hello world \u00D1"));
@@ -780,7 +780,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testToUpperCaseWithNonASCIICharacters() {
+	public void testToUpperCaseWithNonasciiCharacters() {
 		Assert.assertEquals("\u00D1", StringUtil.toUpperCase("\u00F1"));
 		Assert.assertEquals(
 			"HELLO WORLD \u00D1", StringUtil.toUpperCase("hello world \u00F1"));

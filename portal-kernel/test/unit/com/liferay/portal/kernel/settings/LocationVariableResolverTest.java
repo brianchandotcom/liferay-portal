@@ -51,7 +51,7 @@ public class LocationVariableResolverTest extends PowerMockito {
 	}
 
 	@Test
-	public void testIsLocationVariableWithNonVariable() {
+	public void testIsLocationVariableWithNonvariable() {
 		Assert.assertFalse(
 			_locationVariableResolver.isLocationVariable(
 				"this is obviously not a location variable"));

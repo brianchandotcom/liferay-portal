@@ -104,7 +104,7 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		FileEntry fileEntry = _addNonImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addNonimageFileEntry(serviceContext);
 
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
 			_amImageFinder.getAdaptiveMediaStream(
@@ -140,7 +140,7 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		FileEntry fileEntry = _addNonImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addNonimageFileEntry(serviceContext);
 
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
 			_amImageFinder.getAdaptiveMediaStream(
@@ -176,7 +176,7 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addNonImageFileEntry(serviceContext);
+		final FileEntry fileEntry = _addNonimageFileEntry(serviceContext);
 
 		_amImageProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
 
@@ -199,14 +199,14 @@ public class AMImageProcessorTest {
 			_getImageBytes(), serviceContext);
 	}
 
-	private FileEntry _addNonImageFileEntry(ServiceContext serviceContext)
+	private FileEntry _addNonimageFileEntry(ServiceContext serviceContext)
 		throws Exception {
 
 		return _dlAppLocalService.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
-			ContentTypes.APPLICATION_OCTET_STREAM, _getNonImageBytes(),
+			ContentTypes.APPLICATION_OCTET_STREAM, _getNonimageBytes(),
 			serviceContext);
 	}
 
@@ -227,7 +227,7 @@ public class AMImageProcessorTest {
 			"/com/liferay/adaptive/media/image/image.jpg");
 	}
 
-	private byte[] _getNonImageBytes() {
+	private byte[] _getNonimageBytes() {
 		String s = RandomTestUtil.randomString();
 
 		return s.getBytes();

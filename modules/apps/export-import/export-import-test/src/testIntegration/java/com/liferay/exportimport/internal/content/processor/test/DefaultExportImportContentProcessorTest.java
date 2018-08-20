@@ -144,7 +144,7 @@ public class DefaultExportImportContentProcessorTest {
 	@Before
 	public void setUp() throws Exception {
 		_defaultLocale = LocaleUtil.getDefault();
-		_nonDefaultLocale = getNonDefaultLocale();
+		_nondefaultLocale = getNondefaultLocale();
 
 		_externalGroup = GroupTestUtil.addGroup();
 		_liveGroup = GroupTestUtil.addGroup();
@@ -785,7 +785,7 @@ public class DefaultExportImportContentProcessorTest {
 		Map<Locale, String> nameMap = new HashMap<>();
 		Map<Locale, String> firendlyURLMap = new HashMap<>();
 
-		for (Locale locale : new Locale[] {_defaultLocale, _nonDefaultLocale}) {
+		for (Locale locale : new Locale[] {_defaultLocale, _nondefaultLocale}) {
 			String name = RandomTestUtil.randomString(
 				FriendlyURLRandomizerBumper.INSTANCE,
 				NumericStringRandomizerBumper.INSTANCE,
@@ -966,7 +966,7 @@ public class DefaultExportImportContentProcessorTest {
 		return scanner.next();
 	}
 
-	protected Locale getNonDefaultLocale() throws Exception {
+	protected Locale getNondefaultLocale() throws Exception {
 		for (Locale locale : _locales) {
 			if (!locale.equals(_defaultLocale)) {
 				return locale;
@@ -1071,9 +1071,9 @@ public class DefaultExportImportContentProcessorTest {
 				_liveGroup.getFriendlyURL(),
 				String.valueOf(_liveGroup.getGroupId()),
 				_livePublicLayout.getFriendlyURL(),
-				livePublicLayoutFriendlyURLMap.get(_nonDefaultLocale),
-				stagingPrivateLayoutFriendlyURLMap.get(_nonDefaultLocale),
-				stagingPublicLayoutFriendlyURLMap.get(_nonDefaultLocale),
+				livePublicLayoutFriendlyURLMap.get(_nondefaultLocale),
+				stagingPrivateLayoutFriendlyURLMap.get(_nondefaultLocale),
+				stagingPublicLayoutFriendlyURLMap.get(_nondefaultLocale),
 				PortalUtil.getPathContext(),
 				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
 				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING,
@@ -1218,7 +1218,7 @@ public class DefaultExportImportContentProcessorTest {
 
 	private Layout _livePrivateLayout;
 	private Layout _livePublicLayout;
-	private Locale _nonDefaultLocale;
+	private Locale _nondefaultLocale;
 	private final Pattern _pattern = Pattern.compile("href=|\\{|\\[");
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;

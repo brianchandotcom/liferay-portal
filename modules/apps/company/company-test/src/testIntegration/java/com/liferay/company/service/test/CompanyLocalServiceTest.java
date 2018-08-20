@@ -512,7 +512,7 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchPasswordPolicyException.class)
-	public void testDeleteCompanyDeletesNonDefaultPasswordPolicies()
+	public void testDeleteCompanyDeletesNondefaultPasswordPolicies()
 		throws Throwable {
 
 		final Company company = addCompany();

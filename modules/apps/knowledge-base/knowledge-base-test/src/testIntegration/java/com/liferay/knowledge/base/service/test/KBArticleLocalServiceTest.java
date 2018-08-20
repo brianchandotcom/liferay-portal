@@ -132,7 +132,7 @@ public class KBArticleLocalServiceTest {
 	}
 
 	@Test
-	public void testAddApprovedKBArticleInsideNonLatestApprovedKBArticle()
+	public void testAddApprovedKBArticleInsideNonlatestApprovedKBArticle()
 		throws Exception {
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);

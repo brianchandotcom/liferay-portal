@@ -44,7 +44,7 @@ public class KeywordsUtilTest {
 	}
 
 	@Test
-	public void testToFuzzyNonFuzzyText() {
+	public void testToFuzzyNonfuzzyText() {
 		Assert.assertEquals("abc~", KeywordsUtil.toFuzzy("abc"));
 	}
 

@@ -170,7 +170,7 @@ public class PathInterpreterTest {
 	}
 
 	@Test
-	public void testNonMatchingPathInfo() {
+	public void testNonmatchingPathInfo() {
 		Optional<Tuple<FileVersion, Map<String, String>>> resultOptional =
 			_pathInterpreter.interpretPath("/" + RandomTestUtil.randomString());
 

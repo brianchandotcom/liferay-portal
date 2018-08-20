@@ -159,7 +159,7 @@ public class InjectTestCallbackTest {
 	}
 
 	@Test
-	public void testInjectNonBlockingNonStaticWithFilter() throws Exception {
+	public void testInjectNonblockingNonstaticWithFilter() throws Exception {
 		Description description = Description.createTestDescription(
 			TestCase2.class, TestCase2.class.getName());
 		TestCase2 testCase2 = new TestCase2();

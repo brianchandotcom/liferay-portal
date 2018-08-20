@@ -910,7 +910,7 @@ public class LocalProcessExecutorTest {
 	}
 
 	@Test
-	public void testSubprocessReactorPipingBackNonProcessCallable()
+	public void testSubprocessReactorPipingBackNonprocessCallable()
 		throws Exception {
 
 		List<ProcessLog> processLogs = new ArrayList<>();

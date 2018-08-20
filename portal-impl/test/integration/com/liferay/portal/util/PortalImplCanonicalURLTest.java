@@ -347,14 +347,14 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void testNonLocalhostDefaultSiteFirstPage() throws Exception {
+	public void testNonlocalhostDefaultSiteFirstPage() throws Exception {
 		testCanonicalURL(
 			"localhost", "liferay.com", _defaultGroup, _defaultGrouplayout1,
 			null, null, "/en", StringPool.BLANK, false, false);
 	}
 
 	@Test
-	public void testNonLocalhostDefaultSiteSecondPage() throws Exception {
+	public void testNonlocalhostDefaultSiteSecondPage() throws Exception {
 		testCanonicalURL(
 			"localhost", "liferay.com", _defaultGroup, _defaultGrouplayout2,
 			null, null, "/en", _defaultGrouplayout2.getFriendlyURL(), false,
@@ -362,14 +362,14 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void testNonLocalhostPortalDomainFirstLayout() throws Exception {
+	public void testNonlocalhostPortalDomainFirstLayout() throws Exception {
 		testCanonicalURL(
 			"localhost", "liferay.com", _group, _layout1, null, null, "/en",
 			StringPool.BLANK, false, false);
 	}
 
 	@Test
-	public void testNonLocalhostPortalDomainForceLayoutFriendlyURL()
+	public void testNonlocalhostPortalDomainForceLayoutFriendlyURL()
 		throws Exception {
 
 		testCanonicalURL(
@@ -378,7 +378,7 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void testNonLocalhostPortalDomainSecondLayout() throws Exception {
+	public void testNonlocalhostPortalDomainSecondLayout() throws Exception {
 		testCanonicalURL(
 			"localhost", "liferay.com", _group, _layout2, null, null, "/en",
 			"/home2", false, false);

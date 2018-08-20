@@ -129,7 +129,7 @@ public class DDMIndexerImplTest {
 	}
 
 	@Test
-	public void testFormWithTwoAvailableLocalesAndFieldWithNonDefaultLocale() {
+	public void testFormWithTwoAvailableLocalesAndFieldWithNondefaultLocale() {
 		Locale defaultLocale = LocaleUtil.US;
 		Locale translationLocale = LocaleUtil.JAPAN;
 

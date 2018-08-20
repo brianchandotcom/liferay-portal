@@ -118,7 +118,7 @@ public class WelderFactoryUtilTest {
 
 	@AdviseWith(adviceClasses = {FIFOUtilAdvice.class, OSDetectorAdvice.class})
 	@Test
-	public void testGetWelderClassOnNonWindowsWithFIFO() {
+	public void testGetWelderClassOnNonwindowsWithFIFO() {
 		FIFOUtilAdvice._fifoSupported = true;
 		OSDetectorAdvice._windows = false;
 
@@ -127,7 +127,7 @@ public class WelderFactoryUtilTest {
 
 	@AdviseWith(adviceClasses = {FIFOUtilAdvice.class, OSDetectorAdvice.class})
 	@Test
-	public void testGetWelderClassOnNonWindowsWithoutFIFO() {
+	public void testGetWelderClassOnnonWindowsWithoutFIFO() {
 		FIFOUtilAdvice._fifoSupported = false;
 		OSDetectorAdvice._windows = false;
 

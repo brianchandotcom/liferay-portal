@@ -87,7 +87,7 @@ public class AMImageQueryBuilderImplTest {
 	}
 
 	@Test
-	public void testNonMatchingConfigurationAttributeQuery() {
+	public void testNonmatchingConfigurationAttributeQuery() {
 		FileVersion fileVersion = Mockito.mock(FileVersion.class);
 
 		_amImageQueryBuilderImpl.forFileVersion(
@@ -108,7 +108,7 @@ public class AMImageQueryBuilderImplTest {
 	}
 
 	@Test
-	public void testNonNullOptionalAttributeQuery() {
+	public void testNonnullOptionalAttributeQuery() {
 		FileVersion fileVersion = Mockito.mock(FileVersion.class);
 
 		_amImageQueryBuilderImpl.forFileVersion(

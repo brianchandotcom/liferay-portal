@@ -82,7 +82,8 @@ public class JGroupsClusterChannel implements ClusterChannel {
 				tp.setBindAddress(bindInetAddress);
 			}
 
-			_jChannel.setReceiver(new JGroupsReceiver(clusterReceiver));
+			_jChannel.setReceiver(
+				new JGroupsReceiver(clusterReceiver, classLoaders));
 
 			_jChannel.connect(_clusterName);
 

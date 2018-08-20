@@ -431,6 +431,9 @@ public class AssetEntriesCheckerUtil {
 	private AssetHelper _assetHelper;
 
 	@Reference
+	private AssetPublisherUtil _assetPublisherUtil;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 }

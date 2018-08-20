@@ -393,7 +393,7 @@ public class BeanPortletExtension implements Extension {
 		Set<Type> typeClosure = annotatedType.getTypeClosure();
 
 		if (typeClosure.contains(PortletConfig.class)) {
-			annotatedType = new AnnotatedTypePortletConfigImpl(annotatedType);
+			annotatedType = new AnnotatedTypePortletConfigImpl<>(annotatedType);
 
 			processAnnotatedType.setAnnotatedType(annotatedType);
 		}
@@ -405,7 +405,7 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		if (annotationClasses.contains(RequestScoped.class)) {
-			annotatedType = new AnnotatedTypeRequestScopedImpl(
+			annotatedType = new AnnotatedTypeRequestScopedImpl<>(
 				annotatedType, annotationClasses);
 
 			processAnnotatedType.setAnnotatedType(annotatedType);
@@ -449,7 +449,7 @@ public class BeanPortletExtension implements Extension {
 		if (Portlet.class.isAssignableFrom(annotatedClass) &&
 			!annotationClasses.contains(ApplicationScoped.class)) {
 
-			annotatedType = new AnnotatedTypeApplicationScopedImpl(
+			annotatedType = new AnnotatedTypeApplicationScopedImpl<>(
 				annotatedType);
 
 			processAnnotatedType.setAnnotatedType(annotatedType);

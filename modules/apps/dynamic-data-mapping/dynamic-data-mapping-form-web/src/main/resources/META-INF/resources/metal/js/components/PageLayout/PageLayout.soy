@@ -1,0 +1,57 @@
+{namespace PageLayout}
+
+{template .render}
+	{@param? description: string}
+	{@param? descriptionPlaceholder: string}
+	{@param? pageIndex: int}
+	{@param pageSettingsItem: list<?>}
+	{@param? title: string}
+	{@param? titlePlaceholder: string}
+	{@param? _handleChangePageTitle: any}
+	{@param? _handleChangePageDescription: any}
+	{@param? _handleClickSettingsPage: any}
+
+	<div>
+		{call .form}
+			{param description: $description /}
+			{param descriptionPlaceholder: $descriptionPlaceholder /}
+			{param pageIndex: $pageIndex /}
+			{param title: $title /}
+			{param titlePlaceholder: $titlePlaceholder /}
+			{param spritemap: $spritemap /}
+			{param _handleChangePageTitle: $_handleChangePageTitle /}
+			{param _handleChangePageDescription: $_handleChangePageDescription /}
+		{/call}
+	</div>
+{/template}
+
+{template .form}
+	{@param? description: string}
+	{@param? descriptionPlaceholder: string}
+	{@param? pageIndex: int}
+	{@param? title: string}
+	{@param? titlePlaceholder: string}
+	{@param? _handleChangePageTitle: any}
+	{@param? _handleChangePageDescription: any}
+	
+	{let $pageTitleAttributes kind="attributes"}
+		class="form-builder-page-header-title form-control"
+		data-onchange="{$_handleChangePageTitle}"
+		data-page-id="{$pageIndex}"
+		maxlength="120"
+		value="{$title}"
+		placeholder="{$titlePlaceholder}"
+	{/let}
+
+	{let $pageDescriptionAttributes kind="attributes"}
+		class="form-builder-page-header-description form-control"
+		data-onchange="{$_handleChangePageDescription}"
+		data-page-id="{$pageIndex}"
+		maxlength="120"
+		value="{$description}"
+		placeholder="{$descriptionPlaceholder}"
+	{/let}
+	
+	<textarea {$pageTitleAttributes}></textarea>
+	<textarea {$pageDescriptionAttributes}></textarea>
+{/template}

@@ -115,7 +115,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 		}
 
-		if (group == null) {
+		if ((group == null) || !group.isActive()) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("{companyId=");

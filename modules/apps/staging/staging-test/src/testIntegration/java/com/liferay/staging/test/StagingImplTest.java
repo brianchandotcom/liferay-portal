@@ -267,7 +267,8 @@ public class StagingImplTest {
 				portletDataContext, ChangesetPortletKeys.CHANGESET);
 
 			portletData = portletDataContext.getZipEntryAsString(
-				changesetPortletPath + "/0/portlet-data.xml");
+				changesetPortletPath + StringPool.SLASH + _group.getGroupId() +
+					"/portlet-data.xml");
 		}
 
 		Document document = SAXReaderUtil.read(portletData);

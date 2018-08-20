@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.preferences-unique-per-layout=false",
 		"com.liferay.portlet.scopeable=false",
 		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
 		"javax.portlet.resource-bundle=content.Language",

@@ -117,47 +117,42 @@ public class BeanPortletExtension implements Extension {
 
 					_beanFilters.addAll(portletDescriptor.getBeanFilters());
 
-					List<BeanPortlet> portletDescriptorBeanPortlets =
-						portletDescriptor.getBeanPortlets();
+					for (BeanPortlet beanPortlet :
+							portletDescriptor.getBeanPortlets()) {
 
-					portletDescriptorBeanPortlets.forEach(
-						beanPortlet -> {
-							_beanPortlets.put(
-								beanPortlet.getPortletName(), beanPortlet);
-							scanBeanPortletClass(
-								loadBeanPortletClass(
-									beanPortlet.getPortletClass()),
-								beanPortlet.getPortletName());
-						});
+						_beanPortlets.put(
+							beanPortlet.getPortletName(), beanPortlet);
+
+						scanBeanPortletClass(
+							loadBeanPortletClass(beanPortlet.getPortletClass()),
+							beanPortlet.getPortletName());
+					}
 				}
 				catch (Exception e) {
 					_log.error(e, e);
 				}
 			}
 
-			_portletConfigurationsClasses.forEach(
-				clazz -> {
-					PortletConfigurations portletConfigurations =
-						clazz.getAnnotation(PortletConfigurations.class);
+			for (Class<?> clazz : _portletConfigurationsClasses) {
+				PortletConfigurations portletConfigurations =
+					clazz.getAnnotation(PortletConfigurations.class);
 
-					for (PortletConfiguration portletConfiguration :
-							portletConfigurations.value()) {
-
-						addBeanPortlet(clazz, portletConfiguration);
-						scanBeanPortletClass(
-							clazz, portletConfiguration.portletName());
-					}
-				});
-
-			_portletConfigurationClasses.forEach(
-				clazz -> {
-					PortletConfiguration portletConfiguration =
-						clazz.getAnnotation(PortletConfiguration.class);
+				for (PortletConfiguration portletConfiguration :
+						portletConfigurations.value()) {
 
 					addBeanPortlet(clazz, portletConfiguration);
 					scanBeanPortletClass(
 						clazz, portletConfiguration.portletName());
-				});
+				}
+			}
+
+			for (Class<?> clazz : _portletConfigurationClasses) {
+				PortletConfiguration portletConfiguration = clazz.getAnnotation(
+					PortletConfiguration.class);
+
+				addBeanPortlet(clazz, portletConfiguration);
+				scanBeanPortletClass(clazz, portletConfiguration.portletName());
+			}
 
 			for (Class<?> annotatedClass : _portletLifecycleFilterClasses) {
 				_beanFilters.add(
@@ -293,12 +288,14 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		_beanFilters.forEach(
-			beanFilter -> beanFilter.getPortletNames().forEach(
-				portletName -> _filterRegistrations.addAll(
+		for (BeanFilter beanFilter : _beanFilters) {
+			for (String portletName : beanFilter.getPortletNames()) {
+				_filterRegistrations.addAll(
 					RegistrationUtil.registerBeanFilter(
 						bundleContext, portletName, _beanPortlets.keySet(),
-						beanFilter, beanManager, servletContext))));
+						beanFilter, beanManager, servletContext));
+			}
+		}
 
 		URL liferayDescriptorURL = bundle.getEntry(
 			"WEB-INF/liferay-portlet.xml");
@@ -616,15 +613,9 @@ public class BeanPortletExtension implements Extension {
 				}
 			}
 			else if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
-				Set<String> beanPortletNames = _beanPortlets.keySet();
-
-				beanPortletNames.forEach(
-					portletName -> {
-						BeanPortlet beanPortlet = _beanPortlets.get(
-							portletName);
-
-						beanPortlet.addBeanMethod(beanMethod);
-					});
+				for (BeanPortlet beanPortlet : _beanPortlets.values()) {
+					beanPortlet.addBeanMethod(beanMethod);
+				}
 			}
 			else {
 				for (String portletName : portletNames) {

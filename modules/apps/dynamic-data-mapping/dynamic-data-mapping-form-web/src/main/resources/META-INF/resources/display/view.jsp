@@ -20,9 +20,6 @@
 String redirect = ParamUtil.getString(request, "redirect", currentURL);
 
 long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
-
-String languageId = LanguageUtil.getLanguageId(request);
-Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 %>
 
 <c:choose>
@@ -32,6 +29,13 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 		</div>
 	</c:when>
 	<c:otherwise>
+
+		<%
+		String languageId = ddmFormDisplayContext.getDefaultLanguageId();
+
+		Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
+		%>
+
 		<c:choose>
 			<c:when test="<%= ddmFormDisplayContext.isShowSuccessPage() %>">
 

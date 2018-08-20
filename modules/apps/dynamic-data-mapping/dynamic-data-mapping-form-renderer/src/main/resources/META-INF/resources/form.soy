@@ -27,6 +27,7 @@
 {template .form_renderer_js}
 	{@param containerId: string}
 	{@param context: ?}
+	{@param defaultLanguageId: string}
 	{@param evaluatorURL: string}
 	{@param fieldTypes: string}
 	{@param portletNamespace: string}
@@ -72,6 +73,7 @@
 {template .render_form kind="js"}
 	{@param containerId: string}
 	{@param context: ?}
+	{@param defaultLanguageId: string}
 	{@param evaluatorURL: string}
 	{@param portletNamespace: string}
 	{@param readOnly: bool}
@@ -82,6 +84,7 @@
 			{lb}
 				container: '#{$containerId}',
 				context: {$context},
+				defaultLanguageId: {$defaultLanguageId},
 				evaluatorURL: '{$evaluatorURL}',
 				portletNamespace: '{$portletNamespace}',
 				readOnly: {if $readOnly}true{else}false{/if}

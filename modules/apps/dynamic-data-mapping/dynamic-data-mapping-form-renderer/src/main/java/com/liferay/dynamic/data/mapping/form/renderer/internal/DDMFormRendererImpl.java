@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.template.soy.utils.SoyRawData;
 
@@ -205,6 +206,10 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		template.put(
 			"context", jsonSerializer.serializeDeep(ddmFormTemplateContext));
+
+		template.put(
+			"defaultLanguageId",
+			LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()));
 	}
 
 	protected void removeDDMFormFieldRenderer(

@@ -17,6 +17,10 @@ AUI.add(
 						value: ''
 					},
 
+					defaultLanguageId: {
+						value: themeDisplay.getDefaultLanguageId()
+					},
+
 					enableEvaluations: {
 						value: true
 					},
@@ -86,7 +90,7 @@ AUI.add(
 						var languageId = instance._getURLParameter(portletNamespace, 'languageId');
 
 						if (!languageId) {
-							languageId = themeDisplay.getDefaultLanguageId();
+							languageId = instance.get('defaultLanguageId');
 						}
 
 						return {

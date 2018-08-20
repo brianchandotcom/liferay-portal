@@ -77,7 +77,6 @@ setting the property `testIntegrationTomcat.hostName`. The default value is
 [Liferay Portal Test]: https://github.com/liferay/liferay-portal/tree/master/portal-test
 [Liferay Portal Test Integration]: https://github.com/liferay/liferay-portal/tree/master/portal-test-integration
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
-[LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-69492]: https://issues.liferay.com/browse/LPS-69492
 [LPS-71117]: https://issues.liferay.com/browse/LPS-71117
 [LPS-72365]: https://issues.liferay.com/browse/LPS-72365

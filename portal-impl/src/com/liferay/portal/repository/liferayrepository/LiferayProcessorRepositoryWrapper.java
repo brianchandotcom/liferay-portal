@@ -91,8 +91,6 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
-		_processorCapability.cleanUp(fileEntry.getLatestFileVersion());
-
 		super.checkInFileEntry(
 			userId, fileEntryId, majorVersion, changeLog, serviceContext);
 
@@ -106,8 +104,6 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 		throws PortalException {
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
-
-		_processorCapability.cleanUp(fileEntry.getLatestFileVersion());
 
 		super.checkInFileEntry(userId, fileEntryId, lockUuid, serviceContext);
 

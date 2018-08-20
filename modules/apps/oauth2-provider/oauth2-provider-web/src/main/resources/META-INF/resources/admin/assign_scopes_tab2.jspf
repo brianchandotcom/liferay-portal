@@ -18,7 +18,15 @@
 
 	<%
 	for (Map.Entry<AssignableScopes, AssignScopesDisplayContext.Relations> scopeAliasAssignableScopesEntry : assignScopesDisplayContext.getGlobalAssignableScopesRelations().entrySet()) {
-		String scopeAlias = scopeAliasAssignableScopesEntry.getValue().getScopeAliases().stream().findAny().get();
+		AssignScopesDisplayContext.Relations relations = scopeAliasAssignableScopesEntry.getValue();
+
+		Set<String> scopeAliases = relations.getScopeAliases();
+
+		String scopeAlias = StringPool.BLANK;
+
+		if (!scopeAliases.isEmpty()) {
+			scopeAlias = scopeAliases.iterator().next();
+		}
 	%>
 
 		<div class="panel panel-secondary" id="<portlet:namespace /><%= scopeAlias %>">

@@ -68,7 +68,7 @@
 							<li class="list-group-item list-group-item-flex">
 								<div class="autofit-col">
 									<c:choose>
-										<c:when test="<%= scopeAliases.size() == 0 %>">
+										<c:when test="<%= scopeAliases.isEmpty() %>">
 											<aui:input data="<%= data %>" disabled="<%= true %>" id="<%= id %>" label="" name="<%= id %>" onClick="return false;" title="<%= HtmlUtil.escapeAttribute(scopeAliases.toString()) %>" type="checkbox" />
 										</c:when>
 										<c:otherwise>
@@ -91,7 +91,7 @@
 
 									<c:if test="<%= globalScopeAliasesString.length() > 0 %>">
 										<c:choose>
-											<c:when test="<%= scopeAliases.size() > 0 %>">
+											<c:when test="<%= !scopeAliases.isEmpty() %>">
 												<span>
 													<aui:a data="<%= data %>" href="#1">
 														<liferay-ui:message key="can-be-assigned-via-a-global-scope" />
@@ -113,7 +113,7 @@
 										<%
 										List<String> relatedScopeAliases = new ArrayList<>(globalScopeAliases);
 
-										if (scopeAliases.size() > 0) {
+										if (!scopeAliases.isEmpty()) {
 											relatedScopeAliases.addAll(scopeAliases);
 										}
 

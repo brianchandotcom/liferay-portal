@@ -81,7 +81,7 @@ public class AssignScopesDisplayContext
 				assignableScopes,
 				(key, existingValue) -> {
 					if (existingValue != null) {
-						existingValue._scopeAlias.add(scopeAlias);
+						existingValue._scopeAliases.add(scopeAlias);
 
 						return existingValue;
 					}
@@ -265,11 +265,11 @@ public class AssignScopesDisplayContext
 	public class Relations {
 
 		public Relations() {
-			_scopeAlias = new HashSet<>();
+			_scopeAliases = new HashSet<>();
 		}
 
-		public Relations(Set<String> scopeAlias) {
-			_scopeAlias = new HashSet<>(scopeAlias);
+		public Relations(Set<String> scopeAliases) {
+			_scopeAliases = new HashSet<>(scopeAliases);
 		}
 
 		@Override
@@ -287,7 +287,7 @@ public class AssignScopesDisplayContext
 			if (Objects.equals(
 					_globalAssignableScopes,
 					relations._globalAssignableScopes) &&
-				Objects.equals(_scopeAlias, relations._scopeAlias)) {
+				Objects.equals(_scopeAliases, relations._scopeAliases)) {
 
 				return true;
 			}
@@ -308,16 +308,16 @@ public class AssignScopesDisplayContext
 		}
 
 		public Set<String> getScopeAliases() {
-			return _scopeAlias;
+			return _scopeAliases;
 		}
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(_globalAssignableScopes, _scopeAlias);
+			return Objects.hash(_globalAssignableScopes, _scopeAliases);
 		}
 
 		private Set<AssignableScopes> _globalAssignableScopes = new HashSet<>();
-		private final Set<String> _scopeAlias;
+		private final Set<String> _scopeAliases;
 
 	}
 

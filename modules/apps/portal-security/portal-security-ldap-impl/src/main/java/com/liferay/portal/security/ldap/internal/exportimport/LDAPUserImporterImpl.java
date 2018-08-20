@@ -170,7 +170,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				_ldapServerConfigurationProvider.getConfiguration(
 					companyId, ldapServerId);
 
-			String baseDN = ldapServerConfiguration.baseDN();
+			String baseDN = LDAPUtil.escapeCharacters(
+				ldapServerConfiguration.baseDN());
 
 			ldapContext = _portalLDAP.getContext(ldapServerId, companyId);
 

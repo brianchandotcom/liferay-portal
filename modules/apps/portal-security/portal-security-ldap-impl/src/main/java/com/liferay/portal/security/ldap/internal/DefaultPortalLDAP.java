@@ -36,6 +36,7 @@ import com.liferay.portal.security.ldap.UserConverterKeys;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration;
+import com.liferay.portal.security.ldap.util.LDAPUtil;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
 
 import java.util.ArrayList;
@@ -557,7 +558,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				_ldapServerConfigurationProvider.getConfiguration(
 					companyId, ldapServerId);
 
-			String baseDN = ldapServerConfiguration.baseDN();
+			String baseDN = LDAPUtil.escapeCharacters(
+				ldapServerConfiguration.baseDN());
 
 			String userSearchFilter =
 				ldapServerConfiguration.userSearchFilter();
@@ -936,6 +938,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			int maxResults, String baseDN, String filter, String[] attributeIds,
 			List<SearchResult> searchResults)
 		throws Exception {
+
+		baseDN = LDAPUtil.escapeCharacters(baseDN);
 
 		SearchControls searchControls = new SearchControls(
 			SearchControls.SUBTREE_SCOPE, maxResults, 0, attributeIds, false,

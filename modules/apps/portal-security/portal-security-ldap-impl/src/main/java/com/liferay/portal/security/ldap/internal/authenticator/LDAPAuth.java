@@ -43,6 +43,7 @@ import com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration;
 import com.liferay.portal.security.ldap.constants.LDAPConstants;
 import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
+import com.liferay.portal.security.ldap.util.LDAPUtil;
 
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -299,7 +300,8 @@ public class LDAPAuth implements Authenticator {
 				_ldapServerConfigurationProvider.getConfiguration(
 					companyId, ldapServerId);
 
-			String baseDN = ldapServerConfiguration.baseDN();
+			String baseDN = LDAPUtil.escapeCharacters(
+				ldapServerConfiguration.baseDN());
 
 			//  Process LDAP auth search filter
 

@@ -16,9 +16,15 @@ package com.liferay.media.object.apio.internal.architect.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
+import com.liferay.adaptive.media.image.media.query.Condition;
+import com.liferay.adaptive.media.image.media.query.MediaQuery;
+import com.liferay.adaptive.media.image.media.query.MediaQueryProvider;
+import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
+import com.liferay.apio.architect.representor.NestedRepresentor;
+import com.liferay.apio.architect.representor.NestedRepresentor.Builder;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
@@ -106,6 +112,9 @@ public class MediaObjectNestedCollectionResource
 			"dateModified", FileEntry::getModifiedDate
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, FileEntry::getUserId
+		).addNestedList(
+			"versions", this::_getMediaObjectVersions,
+			this::_getMediaObjectVersion
 		).addNumber(
 			"sizeInBytes", FileEntry::getSize
 		).addRelatedCollection(
@@ -151,6 +160,55 @@ public class MediaObjectNestedCollectionResource
 		return ListUtil.toList(assetTags, AssetTag::getName);
 	}
 
+	private NestedRepresentor<MediaQuery> _getMediaObjectVersion(
+		Builder<MediaQuery> builder) {
+
+		return builder.types(
+			"MediaObjectVersion"
+		).addNestedList(
+			"conditions", this::_getMediaQueryConditions,
+			this::_getMediaQueryCondition
+		).addRelativeURL(
+			"url", this::_getMediaQuerySrc
+		).build();
+	}
+
+	private List<MediaQuery> _getMediaObjectVersions(FileEntry fileEntry) {
+		String mimeType = fileEntry.getMimeType();
+
+		if (_amImageMimeTypeProvider.isMimeTypeSupported(mimeType)) {
+			return Try.fromFallible(
+				() -> _mediaQueryProvider.getMediaQueries(fileEntry)
+			).orElse(
+				null
+			);
+		}
+
+		return null;
+	}
+
+	private NestedRepresentor<Condition> _getMediaQueryCondition(
+		Builder<Condition> builder) {
+
+		return builder.types(
+			"MediaObjectVersionConditions"
+		).addString(
+			"attribute", Condition::getAttribute
+		).addString(
+			"value", Condition::getValue
+		).build();
+	}
+
+	private List<Condition> _getMediaQueryConditions(MediaQuery mediaQuery) {
+		return mediaQuery.getConditions();
+	}
+
+	private String _getMediaQuerySrc(MediaQuery mediaQuery) {
+		String src = mediaQuery.getSrc();
+
+		return src.split(", ")[0];
+	}
+
 	private PageItems<FileEntry> _getPageItems(
 			Pagination pagination, long groupId)
 		throws PortalException {
@@ -158,10 +216,14 @@ public class MediaObjectNestedCollectionResource
 		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
 			groupId, 0, pagination.getStartPosition(),
 			pagination.getEndPosition(), null);
+
 		int count = _dlAppService.getFileEntriesCount(groupId, 0);
 
 		return new PageItems<>(fileEntries, count);
 	}
+
+	@Reference
+	private AMImageMimeTypeProvider _amImageMimeTypeProvider;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
@@ -176,5 +238,8 @@ public class MediaObjectNestedCollectionResource
 
 	@Reference
 	private MediaObjectHelper _mediaObjectHelper;
+
+	@Reference
+	private MediaQueryProvider _mediaQueryProvider;
 
 }

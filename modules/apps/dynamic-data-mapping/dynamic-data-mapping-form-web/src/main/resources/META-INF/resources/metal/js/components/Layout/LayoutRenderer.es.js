@@ -6,6 +6,7 @@ import dom from 'metal-dom';
 import LayoutSupport from './LayoutSupport.es';
 import Soy from 'metal-soy';
 import templates from './LayoutRenderer.soy.js';
+import {ClayActionsDropdown} from 'clay-dropdown';
 
 /**
  * LayoutRenderer.
@@ -50,6 +51,20 @@ class LayoutRenderer extends Component {
 		 */
 
 		modeRenderer: Config.oneOf(['grid', 'list']).value('grid'),
+
+
+		/**
+		 * @default array
+		 * @memberof LayoutRenderer
+		 * @type {?array<object>}
+		 */
+
+		pageSettingsItem: Config.array().value([
+			{
+				'label': Liferay.Language.get('add-page'),
+				'settingsItem': 'add-page'
+			}
+		]),
 
 		/**
 		 * @default []
@@ -152,6 +167,19 @@ class LayoutRenderer extends Component {
 		pages[pageId][pageProperty] = value;
 
 		return pages;
+	}
+
+	/**
+	 * @param {Object} data
+	 * @private
+	 */
+
+	_handleClickSettingsPage({data}) {
+		const {settingsItem} = data.item;
+
+		if (settingsItem == 'add-page') {
+			return this._addPage();
+		}
 	}
 
 	/**

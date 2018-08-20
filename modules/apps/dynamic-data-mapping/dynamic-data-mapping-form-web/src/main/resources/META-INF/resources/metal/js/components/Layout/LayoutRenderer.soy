@@ -2,6 +2,7 @@
 
 {template .render}
 	{@param spritemap: string}
+	{@param? _handleClickSettingsPage: any}
 	{@param? _handleChangePageDescription: any}
 	{@param? _handleChangePageTitle: any}
 	{@param? _handleDeleteButtonClicked: any}
@@ -13,6 +14,7 @@
 	{@param? editable: bool}
 	{@param? modeRenderer: string}
 	{@param? pages: ?}
+	{@param? pageSettingsItem: ?}
 
 	{let $contentRenderer: $modeRenderer ?: 'grid' /}
 
@@ -23,11 +25,13 @@
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 		{param _handleFieldChanged: $_handleFieldChanged /}
 		{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
+		{param _handleClickSettingsPage: $_handleClickSettingsPage /}
 		{param _handleOnClickResize: $_handleOnClickResize /}
 		{param activePage: $activePage /}
 		{param contentRenderer: $contentRenderer /}
 		{param editable: $editable /}
 		{param pages: $pages /}
+		{param pageSettingsItem: $pageSettingsItem /}
 		{param spritemap: $spritemap /}
 	{/delcall}
 {/template}
@@ -40,55 +44,65 @@
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleSelectFieldFocused: any}
+	{@param? _handleClickSettingsPage: any}
 	{@param? _handleOnClickResize: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
 	{@param? pages: ?}
+	{@param? pageSettingsItem: ?}
 
-	{for $page in $pages}
+	{let $total: length($pages) /}
 
-		{let $pageTitleAttributes kind="attributes"}
-			class="form-builder-page-header-title form-control"
-			data-onchange="{$_handleChangePageTitle}"
-			data-page-id="{index($page)}"
-			maxlength="120"
-			placeholder="Untitled Page (1 of 1)"
-		{/let}
+	<div class="position-relative">
+		{for $page in $pages}
+			{let $pageTitle: $page.title ? $page.title : '' /}
+			{let $pageDescription: $page.description ? $page.description : '' /}
 
-		{let $pageDescriptionAttributes kind="attributes"}
-			class="form-builder-page-header-description form-control"
-			data-onchange="{$_handleChangePageDescription}"
-			data-page-id="{index($page)}"
-			maxlength="120"
-			placeholder="Add a short description for this page."
-		{/let}
-
-		<textarea {$pageTitleAttributes}></textarea>
-		<textarea {$pageDescriptionAttributes}></textarea>
-
-		<div class="form-builder-layout">
-			{delcall LayoutRenderer.page variant="$contentRenderer"}
-				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
-				{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
-				{param _handleFieldChanged: $_handleFieldChanged /}
-				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
-				{param _handleOnClickResize: $_handleOnClickResize /}
-				{param contentRenderer: $contentRenderer /}
-				{param editable: $editable /}
-				{param page: $page /}
-				{param pageId: index($page) /}
+			{call PageLayout.render}
+				{param description: $pageDescription /}
+				{param pageIndex: index($page) /}
 				{param spritemap: $spritemap /}
-			{/delcall}
+				{param title: $pageTitle /}
+				{param total: $total /}
+				{param _handleChangePageTitle: $_handleChangePageTitle /}
+				{param _handleChangePageDescription: $_handleChangePageDescription /}
+			{/call}
+
+			<div class="form-builder-layout">
+				{delcall LayoutRenderer.page variant="$contentRenderer"}
+					{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+					{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+					{param _handleFieldChanged: $_handleFieldChanged /}
+					{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
+					{param _handleOnClickResize: $_handleOnClickResize /}
+					{param contentRenderer: $contentRenderer /}
+					{param editable: $editable /}
+					{param page: $page /}
+					{param pageId: index($page) /}
+					{param spritemap: $spritemap /}
+				{/delcall}
+			</div>
+		{ifempty}
+			<p>Drag from sidebar and drop here</p>
+		{/for}
+
+		<div class="btn-group dmm-page-settings" role="group">
+			{call ClayActionsDropdown.render}
+				{param items: $pageSettingsItem /}
+				{param events: [
+					'itemClicked': $_handleSettingsPageClicked
+				] /}
+				{param spritemap: $spritemap /}
+			{/call}
 		</div>
-	{ifempty}
-		<p>Drag from sidebar and drop here</p>
-	{/for}
+	</div>
 {/deltemplate}
 
 {deltemplate LayoutRenderer.pages variant="'list'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
@@ -108,6 +122,7 @@
 		<div aria-labelledby="sidebarLightFormsFieldTab" class="{$classes}" id="sidebarLightDetails" role="tabpanel">
 			{delcall LayoutRenderer.page variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+				{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
 				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 				{param _handleOnClickResize: $_handleOnClickResize /}
@@ -124,6 +139,7 @@
 {deltemplate LayoutRenderer.page variant="'list'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
@@ -135,6 +151,7 @@
 	{for $row in $page.rows}
 		{delcall LayoutRenderer.row variant="'grid'"}
 			{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+			{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 			{param _handleFieldChanged: $_handleFieldChanged /}
 			{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 			{param _handleOnClickResize: $_handleOnClickResize /}
@@ -232,6 +249,7 @@
 {deltemplate LayoutRenderer.column variant="'list'"}
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
@@ -351,13 +369,11 @@
 
 	<div class="ddm-field-actions-container">
 		{call ClayButton.render}
-			{param events: [
-				'click': $_handleDuplicateButtonClicked
-			] /}
 			{param style: 'secondary' /}
 			{param size: 'sm' /}
 			{param spritemap: $spritemap /}
 			{param icon: 'paste' /}
+			{param disabled: true /}
 			{param monospaced: true /}
 		{/call}
 		{call ClayButton.render}

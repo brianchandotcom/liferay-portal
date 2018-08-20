@@ -34,9 +34,9 @@ public interface TensorFlowImageAssetAutoTagProviderProcessConfiguration {
 	 * it is permanently disabled.
 	 */
 	@Meta.AD(
-		deflt = "5", description = "maximum-number-of-crashes-description",
-		name = "maximum-number-of-crashes", required = false
+		deflt = "5", description = "maximum-number-of-relaunches-description",
+		name = "maximum-number-of-relaunches", required = false
 	)
-	public int maximumNumberOfCrashes();
+	public int maximumNumberOfRelaunches();
 
 }

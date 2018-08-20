@@ -236,15 +236,15 @@ public class TensorflowProcess {
 
 		if (_processChannel == null) {
 			try {
-				int maximumNumberOfCrashes =
+				int maximumNumberOfRelaunches =
 					_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
-						maximumNumberOfCrashes();
+						maximumNumberOfRelaunches();
 
-				if (_processStarts++ > maximumNumberOfCrashes) {
+				if (_processStarts++ > maximumNumberOfRelaunches) {
 					throw new SystemException(
 						StringBundler.concat(
 							"The tensorflow process has crashed more than ",
-							maximumNumberOfCrashes,
+							maximumNumberOfRelaunches,
 							" times. It is now disabled. To enable it again ",
 							"please open the Gogo shell and run ",
 							TensorflowAssetAutoTagProviderOSGiCommands.SCOPE,

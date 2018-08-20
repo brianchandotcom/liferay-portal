@@ -536,30 +536,31 @@ public class BeanPortletExtension implements Extension {
 
 		String configuredPortletName = portletConfiguration.portletName();
 
-		if (Validator.isNotNull(configuredPortletName)) {
-			if (_portletApplicationClass == null) {
-				_beanPortlets.putIfAbsent(
-					configuredPortletName,
-					BeanPortletFactory.create(
-						portletConfiguration,
-						getLiferayPortletConfiguration(configuredPortletName),
-						beanPortletClass.getName()));
-			}
-			else {
-				_beanPortlets.putIfAbsent(
-					configuredPortletName,
-					BeanPortletFactory.create(
-						_portletApplicationClass.getAnnotation(
-							PortletApplication.class),
-						portletConfiguration,
-						getLiferayPortletConfiguration(configuredPortletName),
-						beanPortletClass.getName()));
-			}
-		}
-		else {
+		if (Validator.isNull(configuredPortletName)) {
 			_log.error(
 				"Invalid portletName attribute for " +
 					beanPortletClass.getName());
+
+			return;
+		}
+
+		if (_portletApplicationClass == null) {
+			_beanPortlets.putIfAbsent(
+				configuredPortletName,
+				BeanPortletFactory.create(
+					portletConfiguration,
+					getLiferayPortletConfiguration(configuredPortletName),
+					beanPortletClass.getName()));
+		}
+		else {
+			_beanPortlets.putIfAbsent(
+				configuredPortletName,
+				BeanPortletFactory.create(
+					_portletApplicationClass.getAnnotation(
+						PortletApplication.class),
+					portletConfiguration,
+					getLiferayPortletConfiguration(configuredPortletName),
+					beanPortletClass.getName()));
 		}
 	}
 

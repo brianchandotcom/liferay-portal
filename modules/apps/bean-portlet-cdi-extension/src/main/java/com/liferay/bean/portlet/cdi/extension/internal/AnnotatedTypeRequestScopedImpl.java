@@ -62,7 +62,7 @@ public class AnnotatedTypeRequestScopedImpl<X> extends AnnotatedTypeWrapper<X> {
 				annotation.annotationType();
 
 			if (curAnnotationType.equals(annotationType)) {
-				return (T)annotation;
+				return annotationType.cast(annotation);
 			}
 		}
 

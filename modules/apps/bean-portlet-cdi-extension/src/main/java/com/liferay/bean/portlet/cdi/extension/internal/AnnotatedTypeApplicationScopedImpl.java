@@ -64,7 +64,7 @@ public class AnnotatedTypeApplicationScopedImpl<X>
 				annotation.annotationType();
 
 			if (curAnnotationType.equals(annotationType)) {
-				return (T)annotation;
+				return annotationType.cast(annotation);
 			}
 		}
 

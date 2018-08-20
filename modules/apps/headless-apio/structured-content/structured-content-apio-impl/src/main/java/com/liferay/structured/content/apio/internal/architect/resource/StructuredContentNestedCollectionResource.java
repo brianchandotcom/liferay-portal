@@ -51,17 +51,17 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
+import com.liferay.structured.content.apio.architect.form.StructuredContentCreatorForm;
+import com.liferay.structured.content.apio.architect.form.StructuredContentUpdaterForm;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
+import com.liferay.structured.content.apio.architect.model.JournalArticleWrapper;
+import com.liferay.structured.content.apio.architect.model.StructuredContentRenderContext;
+import com.liferay.structured.content.apio.architect.router.StructuredContentRouter;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
-import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
-import com.liferay.structured.content.apio.internal.architect.form.StructuredContentUpdaterForm;
-import com.liferay.structured.content.apio.internal.model.JournalArticleWrapper;
 import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle;
 
 import java.util.List;
@@ -112,7 +112,8 @@ public class StructuredContentNestedCollectionResource
 		return builder.addGetter(
 			this::_getJournalArticleWrapper, ThemeDisplay.class
 		).addRemover(
-			idempotent(this::_deleteJournalArticle), _hasPermission::forDeleting
+			idempotent(_structuredContentRouter::deleteJournalArticle),
+			_hasPermission::forDeleting
 		).addUpdater(
 			this::_updateJournalArticle, ThemeDisplay.class,
 			_hasPermission::forUpdating, StructuredContentUpdaterForm::buildForm
@@ -209,26 +210,9 @@ public class StructuredContentNestedCollectionResource
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Locale locale = themeDisplay.getLocale();
-
-		ServiceContext serviceContext =
-			structuredContentCreatorForm.getServiceContext(contentSpaceId);
-
-		JournalArticle journalArticle = _journalArticleService.addArticle(
-			contentSpaceId, 0, 0, 0, null, true,
-			structuredContentCreatorForm.getTitleMap(locale),
-			structuredContentCreatorForm.getDescriptionMap(locale),
-			structuredContentCreatorForm.getText(),
-			structuredContentCreatorForm.getStructure(),
-			structuredContentCreatorForm.getTemplate(), null,
-			structuredContentCreatorForm.getDisplayDateMonth(),
-			structuredContentCreatorForm.getDisplayDateDay(),
-			structuredContentCreatorForm.getDisplayDateYear(),
-			structuredContentCreatorForm.getDisplayDateHour(),
-			structuredContentCreatorForm.getDisplayDateMinute(), 0, 0, 0, 0, 0,
-			true, 0, 0, 0, 0, 0, true, true, null, serviceContext);
-
-		return new JournalArticleWrapper(journalArticle, themeDisplay);
+		return _structuredContentRouter.addJournalArticle(
+			contentSpaceId, structuredContentCreatorForm,
+			new StructuredContentRenderContext(themeDisplay));
 	}
 
 	private ClassNameClassPK _createClassNameClassPK(
@@ -237,17 +221,6 @@ public class StructuredContentNestedCollectionResource
 		return ClassNameClassPK.create(
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());
-	}
-
-	private void _deleteJournalArticle(long journalArticleId)
-		throws PortalException {
-
-		JournalArticle journalArticle = _journalArticleService.getArticle(
-			journalArticleId);
-
-		_journalArticleService.deleteArticle(
-			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			journalArticle.getArticleResourceUuid(), new ServiceContext());
 	}
 
 	private List<DDMFormFieldValue> _getFormFieldValues(
@@ -396,23 +369,9 @@ public class StructuredContentNestedCollectionResource
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<JournalArticleWrapper> journalArticleWrappers = Stream.of(
-			_journalArticleService.getGroupArticles(
-				contentSpaceId, 0, 0, WorkflowConstants.STATUS_APPROVED,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null)
-		).flatMap(
-			List::stream
-		).map(
-			journalArticle -> new JournalArticleWrapper(
-				journalArticle, themeDisplay)
-		).collect(
-			Collectors.toList()
-		);
-		int count = _journalArticleService.getGroupArticlesCount(
-			contentSpaceId, 0, 0, WorkflowConstants.STATUS_APPROVED);
-
-		return new PageItems<>(journalArticleWrappers, count);
+		return _structuredContentRouter.getPageItems(
+			pagination, contentSpaceId,
+			new StructuredContentRenderContext(themeDisplay));
 	}
 
 	private String _getRenderedContent(
@@ -477,22 +436,9 @@ public class StructuredContentNestedCollectionResource
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(structuredContentUpdaterForm.getGroup());
-
-		JournalArticle journalArticle = _journalArticleService.updateArticle(
-			structuredContentUpdaterForm.getUser(),
-			structuredContentUpdaterForm.getGroup(), 0,
-			String.valueOf(journalArticleId),
-			structuredContentUpdaterForm.getVersion(),
-			structuredContentUpdaterForm.getTitleMap(),
-			structuredContentUpdaterForm.getDescriptionMap(),
-			structuredContentUpdaterForm.getText(), null, serviceContext);
-
-		return new JournalArticleWrapper(journalArticle, themeDisplay);
+		return _structuredContentRouter.updateJournalArticle(
+			journalArticleId, structuredContentUpdaterForm,
+			new StructuredContentRenderContext(themeDisplay));
 	}
 
 	@Reference
@@ -514,5 +460,8 @@ public class StructuredContentNestedCollectionResource
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private StructuredContentRouter _structuredContentRouter;
 
 }

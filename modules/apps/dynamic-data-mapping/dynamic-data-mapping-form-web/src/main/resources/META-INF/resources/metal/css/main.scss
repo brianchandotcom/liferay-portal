@@ -1,7 +1,5 @@
-.sheet {
-	margin-top: 50px;
-	padding-bottom: 1.5rem;
-}
+@import "./config/base";
+@import "./components/page-settings";
 
 .col-empty > p {
 	margin: 0;
@@ -164,7 +162,7 @@
 textarea[class^="form-builder-page-header"] {
 	background: transparent;
 	border: none;
-	height: 26px;
+	height: 36px;
 	margin: 0;
 	padding-top: 0;
 

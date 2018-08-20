@@ -173,7 +173,7 @@ AUI.add(
 					_addEntries: function() {
 						var instance = this;
 
-						var text = Lang.String.escapeHTML(instance.inputNode.val());
+						var text = Lang.String.escapeHTML(instance.inputNode.val()).trim();
 
 						if (text) {
 							if (text.indexOf(',') > -1) {

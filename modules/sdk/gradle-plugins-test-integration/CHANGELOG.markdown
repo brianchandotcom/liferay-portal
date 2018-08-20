@@ -74,6 +74,12 @@ a file already exists in the `osgi/test` directory before copying it from the
 setting the property `testIntegrationTomcat.hostName`. The default value is
 `localhost`.
 
+## 2.3.1 - 2018-08-15
+
+### Changed
+- [LPS-83790]: Update the `setUpTestableTomcat.zipUrl` property to
+`http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.10/bin/apache-tomcat-9.0.10.zip`.
+
 [Liferay Portal Test]: https://github.com/liferay/liferay-portal/tree/master/portal-test
 [Liferay Portal Test Integration]: https://github.com/liferay/liferay-portal/tree/master/portal-test-integration
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -85,3 +91,4 @@ setting the property `testIntegrationTomcat.hostName`. The default value is
 [LPS-75239]: https://issues.liferay.com/browse/LPS-75239
 [LPS-78750]: https://issues.liferay.com/browse/LPS-78750
 [LPS-83520]: https://issues.liferay.com/browse/LPS-83520
+[LPS-83790]: https://issues.liferay.com/browse/LPS-83790

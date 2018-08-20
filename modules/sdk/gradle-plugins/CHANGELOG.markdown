@@ -5407,6 +5407,14 @@ to version 2.3.237.
 - [LPS-84473]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
 version 2.2.2.
 
+## 3.12.110 - 2018-08-15
+
+### Changed
+- [LPS-83790]: Update the default value of the
+`liferay.appServers.tomcat.version` property to `9.0.10`.
+- [LPS-83790]: Update the [Liferay Gradle Plugins Test Integration] dependency
+to version 2.3.1.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -5833,6 +5841,7 @@ version 2.2.2.
 [LPS-83576]: https://issues.liferay.com/browse/LPS-83576
 [LPS-83705]: https://issues.liferay.com/browse/LPS-83705
 [LPS-83761]: https://issues.liferay.com/browse/LPS-83761
+[LPS-83790]: https://issues.liferay.com/browse/LPS-83790
 [LPS-84039]: https://issues.liferay.com/browse/LPS-84039
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-84213]: https://issues.liferay.com/browse/LPS-84213

@@ -30,29 +30,32 @@ String title = GetterUtil.getString(request.getAttribute(WebKeys.TITLE));
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="<%= (selLayout != null) ? selLayout.getUuid() : StringPool.BLANK %>">
-	<aui:validator name="required" />
-</aui:input>
-
 <aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= (selLayout != null) ? selLayout.isPrivateLayout() : StringPool.BLANK %>">
 	<aui:validator name="required" />
 </aui:input>
 
-<p class="text-default">
-	<span id="<portlet:namespace />layoutItemRemove" role="button">
+<div class="form-group input-text-wrapper text-default">
+	<div class="d-inline-block" id="<portlet:namespace />layoutItemRemove" role="button">
 		<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-	</span>
-	<span id="<portlet:namespace />layoutNameInput">
-		<c:choose>
-			<c:when test="<%= selLayout != null %>">
-				<%= HtmlUtil.escape(selLayout.getName(locale)) %>
-			</c:when>
-			<c:otherwise>
-				<span class="text-muted"><liferay-ui:message key="none" /></span>
-			</c:otherwise>
-		</c:choose>
-	</span>
-</p>
+	</div>
+
+	<div class="d-inline-block">
+		<span id="<portlet:namespace />layoutNameInput">
+			<c:choose>
+				<c:when test="<%= selLayout != null %>">
+					<%= HtmlUtil.escape(selLayout.getName(locale)) %>
+				</c:when>
+				<c:otherwise>
+					<span class="text-muted"><liferay-ui:message key="none" /></span>
+				</c:otherwise>
+			</c:choose>
+		</span>
+	</div>
+
+	<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="<%= (selLayout != null) ? selLayout.getUuid() : StringPool.BLANK %>">
+		<aui:validator name="required" />
+	</aui:input>
+</div>
 
 <aui:button name="chooseLayout" value="choose" />
 

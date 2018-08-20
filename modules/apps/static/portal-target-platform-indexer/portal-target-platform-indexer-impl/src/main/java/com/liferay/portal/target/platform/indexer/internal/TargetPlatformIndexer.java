@@ -38,6 +38,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -395,16 +396,13 @@ public class TargetPlatformIndexer implements Indexer {
 		"eclipse.platform;osgi.os=linux;osgi.arch=x86_64;osgi.ws=gtk;osgi.nl=" +
 			"en_US";
 
-	private static final Set<String> _ignoredNamespaces = new HashSet<>();
-
-	static {
-		_ignoredNamespaces.add(BundleNamespace.BUNDLE_NAMESPACE);
-		_ignoredNamespaces.add(ContentNamespace.CONTENT_NAMESPACE);
-		_ignoredNamespaces.add(HostNamespace.HOST_NAMESPACE);
-		_ignoredNamespaces.add(IdentityNamespace.IDENTITY_NAMESPACE);
-		_ignoredNamespaces.add(NativeNamespace.NATIVE_NAMESPACE);
-		_ignoredNamespaces.add(PackageNamespace.PACKAGE_NAMESPACE);
-	}
+	private static final Set<String> _ignoredNamespaces = new HashSet<>(
+		Arrays.asList(
+			BundleNamespace.BUNDLE_NAMESPACE,
+			ContentNamespace.CONTENT_NAMESPACE, HostNamespace.HOST_NAMESPACE,
+			IdentityNamespace.IDENTITY_NAMESPACE,
+			NativeNamespace.NATIVE_NAMESPACE,
+			PackageNamespace.PACKAGE_NAMESPACE));
 
 	private final List<File> _additionalJarFiles;
 	private final Map<String, String> _config = new HashMap<>();

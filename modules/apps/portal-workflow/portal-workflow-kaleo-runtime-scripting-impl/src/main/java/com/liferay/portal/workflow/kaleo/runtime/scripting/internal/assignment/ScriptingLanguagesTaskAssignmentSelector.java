@@ -22,6 +22,7 @@ import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelect
 import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -63,13 +64,10 @@ public class ScriptingLanguagesTaskAssignmentSelector
 		return getKaleoTaskAssignments(results);
 	}
 
-	private static final Set<String> _outputNames = new HashSet<>();
-
-	static {
-		_outputNames.add(ROLES_ASSIGNMENT);
-		_outputNames.add(USER_ASSIGNMENT);
-		_outputNames.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
-	}
+	private static final Set<String> _outputNames = new HashSet<>(
+		Arrays.asList(
+			ROLES_ASSIGNMENT, USER_ASSIGNMENT,
+			WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
 
 	@Reference
 	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;

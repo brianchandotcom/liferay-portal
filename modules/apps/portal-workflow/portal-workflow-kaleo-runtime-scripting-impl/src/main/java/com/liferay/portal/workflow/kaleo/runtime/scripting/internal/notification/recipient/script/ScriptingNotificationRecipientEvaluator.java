@@ -22,6 +22,7 @@ import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.S
 import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -58,15 +59,11 @@ public class ScriptingNotificationRecipientEvaluator
 		return results;
 	}
 
-	private static final Set<String> _outputNames = new HashSet<>();
-
-	static {
-		_outputNames.add(
-			ScriptingNotificationRecipientConstants.ROLES_RECIPIENT);
-		_outputNames.add(
-			ScriptingNotificationRecipientConstants.USER_RECIPIENT);
-		_outputNames.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
-	}
+	private static final Set<String> _outputNames = new HashSet<>(
+		Arrays.asList(
+			ScriptingNotificationRecipientConstants.ROLES_RECIPIENT,
+			ScriptingNotificationRecipientConstants.USER_RECIPIENT,
+			WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
 
 	@Reference
 	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;

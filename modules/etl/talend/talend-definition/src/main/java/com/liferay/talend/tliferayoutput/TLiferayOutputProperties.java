@@ -72,12 +72,8 @@ public class TLiferayOutputProperties
 
 	public static final String FIELD_ERROR_MESSAGE = "_errorMessage";
 
-	public static final List<String> rejectSchemaFieldNames;
-
-	static {
-		rejectSchemaFieldNames = new ArrayList<>(
-			Arrays.asList(FIELD_ERROR_MESSAGE));
-	}
+	public static final List<String> rejectSchemaFieldNames = Arrays.asList(
+		FIELD_ERROR_MESSAGE);
 
 	public static Schema createRejectSchema(Schema inputSchema) {
 		final List<Schema.Field> rejectFields = new ArrayList<>();

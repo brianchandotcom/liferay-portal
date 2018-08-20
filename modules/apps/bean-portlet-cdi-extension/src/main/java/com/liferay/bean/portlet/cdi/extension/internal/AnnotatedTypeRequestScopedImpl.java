@@ -51,7 +51,7 @@ public class AnnotatedTypeRequestScopedImpl<X> extends AnnotatedTypeWrapper<X> {
 		}
 
 		if (!annotationClasses.contains(PortletRequestScoped.class)) {
-			_annotations.add(new PortletRequestScopedAnnotation());
+			_annotations.add(_portletRequestScoped);
 		}
 	}
 
@@ -90,16 +90,16 @@ public class AnnotatedTypeRequestScopedImpl<X> extends AnnotatedTypeWrapper<X> {
 		return false;
 	}
 
+	private static final PortletRequestScoped _portletRequestScoped =
+		new PortletRequestScoped() {
+
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return PortletRequestScoped.class;
+			}
+
+		};
+
 	private final Set<Annotation> _annotations;
-
-	private static class PortletRequestScopedAnnotation
-		implements Annotation, PortletRequestScoped {
-
-		@Override
-		public Class<? extends Annotation> annotationType() {
-			return PortletRequestScoped.class;
-		}
-
-	}
 
 }

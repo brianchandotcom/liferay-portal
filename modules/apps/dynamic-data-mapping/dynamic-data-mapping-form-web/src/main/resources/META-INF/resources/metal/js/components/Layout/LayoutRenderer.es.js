@@ -166,9 +166,8 @@ class LayoutRenderer extends Component {
 	 * @private
 	 */
 
-	_changePageProperty(event, pageProperty) {
-		const {srcElement} = event;
-		const {dataset, value} = srcElement;
+	_changePageProperty({delegateTarget}, pageProperty) {
+		const {dataset, value} = delegateTarget;
 		const {pageId} = dataset;
 		const pages = [...this.pages];
 

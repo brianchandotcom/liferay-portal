@@ -84,6 +84,14 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 				}
 			);
 
+			var formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
+
+			formValidator.validate();
+
+			if (formValidator.hasErrors()) {
+				return;
+			}
+
 			fetch(
 				form.action,
 				{

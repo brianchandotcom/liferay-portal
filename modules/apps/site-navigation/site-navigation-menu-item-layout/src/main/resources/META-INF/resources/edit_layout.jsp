@@ -22,13 +22,11 @@ Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
 String title = GetterUtil.getString(request.getAttribute(WebKeys.TITLE));
 %>
 
-<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="TypeSettingsProperties--name--" type="text" value="<%= title %>" />
-
-<aui:input id="groupId" name="TypeSettingsProperties--groupId--" type="hidden" value="<%= (selLayout != null) ? selLayout.getGroupId() : StringPool.BLANK %>">
+<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="TypeSettingsProperties--name--" type="text" value="<%= title %>">
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="<%= (selLayout != null) ? selLayout.getUuid() : StringPool.BLANK %>">
+<aui:input id="groupId" name="TypeSettingsProperties--groupId--" type="hidden" value="<%= (selLayout != null) ? selLayout.getGroupId() : StringPool.BLANK %>">
 	<aui:validator name="required" />
 </aui:input>
 
@@ -36,21 +34,28 @@ String title = GetterUtil.getString(request.getAttribute(WebKeys.TITLE));
 	<aui:validator name="required" />
 </aui:input>
 
-<p class="text-default">
-	<span id="<portlet:namespace />layoutItemRemove" role="button">
+<div class="form-group input-text-wrapper text-default">
+	<div class="d-inline-block" id="<portlet:namespace />layoutItemRemove" role="button">
 		<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-	</span>
-	<span id="<portlet:namespace />layoutNameInput">
-		<c:choose>
-			<c:when test="<%= selLayout != null %>">
-				<%= HtmlUtil.escape(selLayout.getName(locale)) %>
-			</c:when>
-			<c:otherwise>
-				<span class="text-muted"><liferay-ui:message key="none" /></span>
-			</c:otherwise>
-		</c:choose>
-	</span>
-</p>
+	</div>
+
+	<div class="d-inline-block">
+		<span id="<portlet:namespace />layoutNameInput">
+			<c:choose>
+				<c:when test="<%= selLayout != null %>">
+					<%= HtmlUtil.escape(selLayout.getName(locale)) %>
+				</c:when>
+				<c:otherwise>
+					<span class="text-muted"><liferay-ui:message key="none" /></span>
+				</c:otherwise>
+			</c:choose>
+		</span>
+	</div>
+
+	<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="<%= (selLayout != null) ? selLayout.getUuid() : StringPool.BLANK %>">
+		<aui:validator name="required" />
+	</aui:input>
+</div>
 
 <aui:button name="chooseLayout" value="choose" />
 

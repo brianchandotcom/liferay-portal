@@ -145,12 +145,17 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	var siteNavigationMenuItemRemoveButtonKeyupHandler = null;
 
 	var closeSidebar = function() {
+		let form = document.querySelector('#<portlet:namespace />fm');
+		let error = form ? form.querySelector("[role='alert']") : null;
+
 		var saveChanges = false;
 
 		if (changed) {
-			saveChanges = confirm(
-				'<liferay-ui:message key="you-have-unsaved-changes.-do-you-want-to-save-them" />'
-			);
+			if (!error) {
+				saveChanges = confirm(
+					'<liferay-ui:message key="you-have-unsaved-changes.-do-you-want-to-save-them" />'
+				);
+			}
 		}
 
 		if (saveChanges) {
@@ -166,16 +171,18 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			);
 		}
 		else {
-			if (sidebarBodyChangeHandler) {
-				sidebarBodyChangeHandler.detach();
+			if (!error) {
+				if (sidebarBodyChangeHandler) {
+					sidebarBodyChangeHandler.detach();
 
-				sidebarBodyChangeHandler = null;
+					sidebarBodyChangeHandler = null;
+				}
+
+				sidebar.body = '';
+				sidebar.visible = false;
+
+				changed = false;
 			}
-
-			sidebar.body = '';
-			sidebar.visible = false;
-
-			changed = false;
 		}
 
 		return !saveChanges;

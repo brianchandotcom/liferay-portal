@@ -93,7 +93,7 @@ public class PasswordPolicyDisplayContext {
 		portletURL.setParameter(
 			"passwordPolicyId", String.valueOf(_passwordPolicyId));
 
-		return new NavigationItemList() {
+		List<NavigationItem> navigationItems = new NavigationItemList() {
 			{
 				if ((_passwordPolicyId == 0) ||
 					_hasPermission(ActionKeys.UPDATE)) {
@@ -141,6 +141,12 @@ public class PasswordPolicyDisplayContext {
 				}
 			}
 		};
+
+		if (navigationItems.isEmpty()) {
+			return null;
+		}
+
+		return navigationItems;
 	}
 
 	public List<NavigationItem> getSelectMembersNavigationItems() {

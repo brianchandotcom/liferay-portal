@@ -24,6 +24,8 @@ import com.liferay.gradle.util.Validator;
 import java.io.File;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -31,6 +33,10 @@ import org.gradle.api.Task;
 import org.gradle.api.plugins.ApplicationPlugin;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.tasks.testing.Test;
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat;
+import org.gradle.api.tasks.testing.logging.TestLogEvent;
+import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
@@ -59,6 +65,8 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 
 		_configureTaskBootRun(project);
 		_configureTaskCheck(project);
+		_configureTaskTest(project);
+		_configureTaskTestIntegration(project);
 	}
 
 	private Task _addTaskRun(Project project) {
@@ -112,6 +120,42 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
 
 		checkTask.dependsOn(testIntegrationTask);
+	}
+
+	private void _configureTaskTest(Project project) {
+		Test test = (Test)GradleUtil.getTask(
+			project, JavaPlugin.TEST_TASK_NAME);
+
+		test.setIgnoreFailures(false);
+
+		_configureTaskTestLogging(test);
+	}
+
+	private void _configureTaskTestIntegration(Project project) {
+		Test test = (Test)GradleUtil.getTask(
+			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
+
+		test.setIgnoreFailures(false);
+
+		_configureTaskTestLogging(test);
+	}
+
+	private void _configureTaskTestLogging(Test test) {
+		Set<TestLogEvent> testLogEvents = new HashSet<>();
+
+		testLogEvents.add(TestLogEvent.FAILED);
+		testLogEvents.add(TestLogEvent.PASSED);
+		testLogEvents.add(TestLogEvent.SKIPPED);
+		testLogEvents.add(TestLogEvent.STANDARD_ERROR);
+		testLogEvents.add(TestLogEvent.STARTED);
+
+		TestLoggingContainer testLoggingContainer = test.getTestLogging();
+
+		testLoggingContainer.setEvents(testLogEvents);
+		testLoggingContainer.setExceptionFormat(TestExceptionFormat.FULL);
+		testLoggingContainer.setShowCauses(true);
+		testLoggingContainer.setShowExceptions(true);
+		testLoggingContainer.setShowStackTraces(true);
 	}
 
 	private static final String _GROUP = "com.liferay";

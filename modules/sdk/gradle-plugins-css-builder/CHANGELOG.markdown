@@ -50,7 +50,7 @@
 ### Changed
 - [LPS-75589]: Update the [Liferay CSS Builder] dependency to version 2.0.1.
 
-## 2.1.6 - 2017-11-01
+## 2.1.7 - 2017-11-07
 
 ### Changed
 - [LPS-75633]: Update the [Liferay CSS Builder] dependency to version 2.0.2.

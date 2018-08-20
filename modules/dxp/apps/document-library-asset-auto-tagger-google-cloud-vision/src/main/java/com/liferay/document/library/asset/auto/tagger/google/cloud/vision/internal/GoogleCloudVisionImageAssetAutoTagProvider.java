@@ -46,15 +46,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = AssetAutoTagProvider.class
 )

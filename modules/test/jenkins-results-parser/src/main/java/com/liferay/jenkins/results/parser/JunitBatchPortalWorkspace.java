@@ -31,7 +31,7 @@ public class JunitBatchPortalWorkspace extends PortalWorkspace {
 
 	private void _setPortalBuildProperties() {
 		PortalLocalGitBranch otherPortalLocalGitBranch =
-			portalLocalGitBranch.getOtherPortalLocalGitBranch();
+			getOtherPortalLocalGitBranch();
 
 		if (otherPortalLocalGitBranch == null) {
 			return;
@@ -42,6 +42,9 @@ public class JunitBatchPortalWorkspace extends PortalWorkspace {
 		properties.put(
 			"release.versions.test.other.dir",
 			String.valueOf(otherPortalLocalGitBranch.getDirectory()));
+
+		PortalLocalRepository portalLocalRepository =
+			getPrimaryPortalRepository();
 
 		portalLocalRepository.setBuildProperties(properties);
 	}

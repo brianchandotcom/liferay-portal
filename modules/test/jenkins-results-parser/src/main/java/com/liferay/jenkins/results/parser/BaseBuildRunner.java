@@ -28,7 +28,7 @@ public abstract class BaseBuildRunner {
 			throw new RuntimeException("Workspace is null");
 		}
 
-		baseWorkspace.setup();
+		baseWorkspace.setupWorkspace();
 	}
 
 	protected BaseBuildRunner(Job job) {

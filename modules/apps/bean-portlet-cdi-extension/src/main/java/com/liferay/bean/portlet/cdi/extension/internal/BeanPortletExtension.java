@@ -226,24 +226,22 @@ public class BeanPortletExtension implements Extension {
 
 					Stream<String> portletNamesStream = portletNames.stream();
 
-					portletNamesStream.filter(
-						portletName ->
-							!_beanPortlets.containsKey(portletName)
-					).forEach(
-						portletName -> _beanPortlets.put(
-							portletName,
-							new BeanPortletDefaultImpl(portletName))
-					);
+					portletNamesStream.forEach(
+						portletName -> {
+							BeanPortlet beanPortlet = _beanPortlets.get(
+								portletName);
 
-					portletNamesStream = portletNames.stream();
+							if (beanPortlet == null) {
+								beanPortlet = new BeanPortletDefaultImpl(
+									portletName);
 
-					portletNamesStream.map(
-						portletName -> _beanPortlets.get(portletName)
-					).forEach(
-						beanPortlet -> beanPortlet.addLiferayConfiguration(
-							liferayDescriptor.getPortletConfiguration(
-								beanPortlet.getPortletName()))
-					);
+								_beanPortlets.put(portletName, beanPortlet);
+							}
+
+							beanPortlet.addLiferayConfiguration(
+								liferayDescriptor.getPortletConfiguration(
+									portletName));
+						});
 				}
 				catch (Exception e) {
 					_log.error(e, e);
@@ -693,19 +691,17 @@ public class BeanPortletExtension implements Extension {
 			else {
 				Stream<String> portletNamesStream = Arrays.stream(portletNames);
 
-				portletNamesStream.filter(
-					portletName -> !_beanPortlets.containsKey(portletName)
-				).forEach(
-					portletName -> _beanPortlets.put(
-						portletName, new BeanPortletDefaultImpl(portletName))
-				);
-
-				portletNamesStream = Arrays.stream(portletNames);
-
 				portletNamesStream.forEach(
 					portletName -> {
 						BeanPortlet beanPortlet = _beanPortlets.get(
 							portletName);
+
+						if (beanPortlet == null) {
+							beanPortlet = new BeanPortletDefaultImpl(
+								portletName);
+
+							_beanPortlets.put(portletName, beanPortlet);
+						}
 
 						beanPortlet.addBeanMethod(beanMethod);
 					});

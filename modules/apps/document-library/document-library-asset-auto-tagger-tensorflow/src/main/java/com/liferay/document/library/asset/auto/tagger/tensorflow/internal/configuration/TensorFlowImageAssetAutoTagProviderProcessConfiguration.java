@@ -39,4 +39,14 @@ public interface TensorFlowImageAssetAutoTagProviderProcessConfiguration {
 	)
 	public int maximumNumberOfRelaunches();
 
+	/**
+	 * Sets the time in seconds after which the counter is reset.
+	 */
+	@Meta.AD(
+		deflt = "60",
+		description = "maximum-number-of-relaunches-timeout-description",
+		name = "maximum-number-of-relaunches-timeout", required = false
+	)
+	public long maximumNumberOfRelaunchesTimeout();
+
 }

@@ -240,6 +240,16 @@ public class TensorflowProcess {
 					_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
 						maximumNumberOfRelaunches();
 
+				long maximumNumberOfRelaunchesTimeoutMillis =
+					_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
+						maximumNumberOfRelaunchesTimeout() * 1000;
+
+				if ((System.currentTimeMillis() - _lastProcessStartMillis) >
+						maximumNumberOfRelaunchesTimeoutMillis) {
+
+					_processStarts = 0;
+				}
+
 				if (_processStarts++ > maximumNumberOfRelaunches) {
 					throw new SystemException(
 						StringBundler.concat(
@@ -255,6 +265,8 @@ public class TensorflowProcess {
 
 				_processChannel = _processExecutor.execute(
 					_processConfig, new TensorFlowDaemonProcessCallable());
+
+				_lastProcessStartMillis = System.currentTimeMillis();
 			}
 			catch (ProcessException pe) {
 				ReflectionUtil.throwException(pe);
@@ -269,6 +281,7 @@ public class TensorflowProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TensorflowProcess.class);
 
+	private long _lastProcessStartMillis;
 	private volatile ProcessChannel<String> _processChannel;
 	private ProcessConfig _processConfig;
 

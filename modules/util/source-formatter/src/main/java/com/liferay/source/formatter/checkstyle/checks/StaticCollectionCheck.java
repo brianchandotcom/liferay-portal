@@ -62,7 +62,7 @@ public class StaticCollectionCheck extends BaseCheck {
 
 		String typeName = DetailASTUtil.getTypeName(variableDefAST, false);
 
-		if (!typeName.equals("Set")) {
+		if (!typeName.equals("List") && !typeName.equals("Set")) {
 			return;
 		}
 
@@ -92,7 +92,9 @@ public class StaticCollectionCheck extends BaseCheck {
 		}
 
 		if (methodCallASTList.size() == variableNameCount) {
-			log(variableDefAST, _MSG_UNNEEDED_STATIC_BLOCK, variableName);
+			log(
+				variableDefAST, _MSG_UNNEEDED_STATIC_BLOCK, typeName,
+				variableName);
 		}
 	}
 

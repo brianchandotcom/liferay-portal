@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -77,8 +77,18 @@ public class AssignScopesDisplayContext
 				scopeLocator.getLiferayOAuth2Scopes(
 					themeDisplay.getCompanyId(), scopeAlias));
 
-			_assignableScopesRelations.put(
-				assignableScopes, new Relations(scopeAlias));
+			_assignableScopesRelations.compute(
+				assignableScopes,
+				(key, existingValue) -> {
+					if (existingValue != null) {
+						existingValue._scopeAliases.add(scopeAlias);
+
+						return existingValue;
+					}
+					else {
+						return new Relations(Collections.singleton(scopeAlias));
+					}
+				});
 
 			Set<String> applicationNames =
 				assignableScopes.getApplicationNames();
@@ -255,11 +265,11 @@ public class AssignScopesDisplayContext
 	public class Relations {
 
 		public Relations() {
-			_scopeAlias = StringPool.BLANK;
+			_scopeAliases = new HashSet<>();
 		}
 
-		public Relations(String scopeAlias) {
-			_scopeAlias = scopeAlias;
+		public Relations(Set<String> scopeAliases) {
+			_scopeAliases = new HashSet<>(scopeAliases);
 		}
 
 		@Override
@@ -277,7 +287,7 @@ public class AssignScopesDisplayContext
 			if (Objects.equals(
 					_globalAssignableScopes,
 					relations._globalAssignableScopes) &&
-				Objects.equals(_scopeAlias, relations._scopeAlias)) {
+				Objects.equals(_scopeAliases, relations._scopeAliases)) {
 
 				return true;
 			}
@@ -290,24 +300,24 @@ public class AssignScopesDisplayContext
 
 			return stream.map(
 				_assignableScopesRelations::get
-			).map(
-				Relations::getScopeAlias
+			).flatMap(
+				relations -> relations.getScopeAliases().stream()
 			).collect(
 				Collectors.toSet()
 			);
 		}
 
-		public String getScopeAlias() {
-			return _scopeAlias;
+		public Set<String> getScopeAliases() {
+			return _scopeAliases;
 		}
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(_globalAssignableScopes, _scopeAlias);
+			return Objects.hash(_globalAssignableScopes, _scopeAliases);
 		}
 
 		private Set<AssignableScopes> _globalAssignableScopes = new HashSet<>();
-		private final String _scopeAlias;
+		private final Set<String> _scopeAliases;
 
 	}
 
@@ -347,14 +357,14 @@ public class AssignScopesDisplayContext
 
 			Relations relations = assignableScopesRelationsEntry.getValue();
 
-			String scopeAlias = relations.getScopeAlias();
+			Set<String> scopeAliases = relations.getScopeAliases();
 
 			AssignableScopes assignableScopes =
 				assignableScopesRelationsEntry.getKey();
 
 			// Preserve assignable scopes that are assigned an alias
 
-			if (!Validator.isBlank(scopeAlias)) {
+			if ((scopeAliases != null) && !scopeAliases.isEmpty()) {
 				combinedAssignableScopesRelations.put(
 					assignableScopes, relations);
 

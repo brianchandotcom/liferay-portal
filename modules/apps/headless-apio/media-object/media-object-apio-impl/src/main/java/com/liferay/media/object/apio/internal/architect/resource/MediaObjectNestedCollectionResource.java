@@ -165,12 +165,11 @@ public class MediaObjectNestedCollectionResource
 
 		return builder.types(
 			"MediaObjectVersion"
+		).addNestedList(
+			"conditions", this::_getMediaQueryConditions,
+			this::_getMediaQueryCondition
 		).addRelativeURL(
-			"url", MediaQuery::getSrc
-		).addString(
-			"maxWidth", this::_getVersionMaxWidth
-		).addString(
-			"maxHeight", this::_getVersionMaxHeight
+			"url", this::_getMediaQuerySrc
 		).build();
 	}
 
@@ -188,8 +187,26 @@ public class MediaObjectNestedCollectionResource
 		return null;
 	}
 
+	private NestedRepresentor<Condition> _getMediaQueryCondition(
+		Builder<Condition> builder) {
+
+		return builder.types(
+			"MediaObjectVersionConditions"
+		).addString(
+			"attribute", Condition::getAttribute
+		).addString(
+			"value", Condition::getValue
+		).build();
+	}
+
 	private List<Condition> _getMediaQueryConditions(MediaQuery mediaQuery) {
 		return mediaQuery.getConditions();
+	}
+
+	private String _getMediaQuerySrc(MediaQuery mediaQuery) {
+		String src = mediaQuery.getSrc();
+
+		return src.split(", ")[0];
 	}
 
 	private PageItems<FileEntry> _getPageItems(
@@ -203,18 +220,6 @@ public class MediaObjectNestedCollectionResource
 		int count = _dlAppService.getFileEntriesCount(groupId, 0);
 
 		return new PageItems<>(fileEntries, count);
-	}
-
-	private String _getVersionMaxHeight(MediaQuery mediaQuery) {
-		Condition condition = _getMediaQueryConditions(mediaQuery).get(1);
-
-		return condition.getValue();
-	}
-
-	private String _getVersionMaxWidth(MediaQuery mediaQuery) {
-		Condition condition = _getMediaQueryConditions(mediaQuery).get(0);
-
-		return condition.getValue();
 	}
 
 	@Reference

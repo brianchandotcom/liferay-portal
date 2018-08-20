@@ -147,7 +147,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	var closeSidebar = function() {
 		let form = document.querySelector('#<portlet:namespace />fm');
 		let error = form ? form.querySelector("[role='alert']") : null;
-		
+
 		var saveChanges = false;
 
 		if (changed) {
@@ -171,16 +171,16 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			);
 		}
 		else {
-			if (!error){
+			if (!error) {
 				if (sidebarBodyChangeHandler) {
 					sidebarBodyChangeHandler.detach();
-	
+
 					sidebarBodyChangeHandler = null;
 				}
-	
+
 				sidebar.body = '';
 				sidebar.visible = false;
-	
+
 				changed = false;
 			}
 		}

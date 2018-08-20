@@ -31,12 +31,37 @@ public class IndexRequestExecutorFixture {
 	public IndexRequestExecutor createExecutor() {
 		return new ElasticsearchIndexRequestExecutor() {
 			{
+				analyzeIndexRequestExecutor =
+					createAnalyzeIndexRequestExecutor();
+				flushIndexRequestExecutor = createFlushIndexRequestExecutor();
 				getFieldMappingIndexRequestExecutor =
 					createGetFieldMappingIndexRequestExecutor();
 				getMappingIndexRequestExecutor =
 					createGetMappingIndexRequestExecutor();
 				putMappingIndexRequestExecutor =
 					createPutMappingIndexRequestExecutor();
+				refreshIndexRequestExecutor =
+					createRefreshIndexRequestExecutor();
+			}
+		};
+	}
+
+	protected AnalyzeIndexRequestExecutor createAnalyzeIndexRequestExecutor() {
+		return new AnalyzeIndexRequestExecutorImpl() {
+			{
+				elasticsearchConnectionManager =
+					_elasticsearchConnectionManager;
+			}
+		};
+	}
+
+	protected FlushIndexRequestExecutor createFlushIndexRequestExecutor() {
+		return new FlushIndexRequestExecutorImpl() {
+			{
+				elasticsearchConnectionManager =
+					_elasticsearchConnectionManager;
+				indexRequestShardFailureTranslator =
+					new IndexRequestShardFailureTranslatorImpl();
 			}
 		};
 	}
@@ -70,6 +95,17 @@ public class IndexRequestExecutorFixture {
 			{
 				elasticsearchConnectionManager =
 					_elasticsearchConnectionManager;
+			}
+		};
+	}
+
+	protected RefreshIndexRequestExecutor createRefreshIndexRequestExecutor() {
+		return new RefreshIndexRequestExecutorImpl() {
+			{
+				elasticsearchConnectionManager =
+					_elasticsearchConnectionManager;
+				indexRequestShardFailureTranslator =
+					new IndexRequestShardFailureTranslatorImpl();
 			}
 		};
 	}

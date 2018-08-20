@@ -16,9 +16,8 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import java.lang.annotation.Annotation;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.ConversationScoped;
@@ -38,24 +37,20 @@ public class AnnotatedTypeApplicationScopedImpl<X>
 	public AnnotatedTypeApplicationScopedImpl(AnnotatedType<X> annotatedType) {
 		super(annotatedType);
 
-		Set<Annotation> annotations = annotatedType.getAnnotations();
+		_annotations = new HashSet<>();
 
-		Stream<Annotation> annotationsStream = annotations.stream();
+		for (Annotation annotation : annotatedType.getAnnotations()) {
+			Class<? extends Annotation> clazz = annotation.annotationType();
 
-		_annotations = annotationsStream.filter(
-			annotation -> {
-				Class<? extends Annotation> curAnnotationType =
-					annotation.annotationType();
+			if (!clazz.equals(ConversationScoped.class) &&
+				!clazz.equals(RequestScoped.class) &&
+				!clazz.equals(PortletRequestScoped.class) &&
+				!clazz.equals(PortletSessionScoped.class) &&
+				!clazz.equals(SessionScoped.class)) {
 
-				return !curAnnotationType.equals(ConversationScoped.class) &&
-					   !curAnnotationType.equals(RequestScoped.class) &&
-					   !curAnnotationType.equals(PortletRequestScoped.class) &&
-					   !curAnnotationType.equals(PortletSessionScoped.class) &&
-					   !curAnnotationType.equals(SessionScoped.class);
+				_annotations.add(annotation);
 			}
-		).collect(
-			Collectors.toSet()
-		);
+		}
 
 		_annotations.add(
 			DefaultApplicationScoped.class.getAnnotation(

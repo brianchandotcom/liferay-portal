@@ -17,8 +17,6 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 import java.lang.reflect.Type;
 
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.enterprise.inject.spi.AnnotatedType;
 
@@ -36,15 +34,9 @@ public class AnnotatedTypePortletConfigImpl<X> extends AnnotatedTypeWrapper<X> {
 	public AnnotatedTypePortletConfigImpl(AnnotatedType<X> annotatedType) {
 		super(annotatedType);
 
-		Set<Type> typeClosure = annotatedType.getTypeClosure();
+		_types = annotatedType.getTypeClosure();
 
-		Stream<Type> typeClosureStream = typeClosure.stream();
-
-		_types = typeClosureStream.filter(
-			type -> !type.equals(PortletConfig.class)
-		).collect(
-			Collectors.toSet()
-		);
+		_types.remove(PortletConfig.class);
 	}
 
 	@Override

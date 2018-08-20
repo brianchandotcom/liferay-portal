@@ -29,15 +29,13 @@ import java.lang.reflect.Type;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
@@ -142,15 +140,13 @@ public class BeanPortletExtension implements Extension {
 					PortletConfigurations portletConfigurations =
 						clazz.getAnnotation(PortletConfigurations.class);
 
-					Stream<PortletConfiguration> portletConfigurationStream =
-						Arrays.stream(portletConfigurations.value());
+					for (PortletConfiguration portletConfiguration :
+							portletConfigurations.value()) {
 
-					portletConfigurationStream.forEach(
-						portletConfiguration -> {
-							addBeanPortlet(clazz, portletConfiguration);
-							scanBeanPortletClass(
-								clazz, portletConfiguration.portletName());
-						});
+						addBeanPortlet(clazz, portletConfiguration);
+						scanBeanPortletClass(
+							clazz, portletConfiguration.portletName());
+					}
 				});
 
 			_portletConfigurationClasses.forEach(
@@ -163,55 +159,32 @@ public class BeanPortletExtension implements Extension {
 						clazz, portletConfiguration.portletName());
 				});
 
-			Stream<Class<?>> portletLifecycleFilterClassesStream =
-				_portletLifecycleFilterClasses.stream();
-
-			_beanFilters.addAll(
-				portletLifecycleFilterClassesStream.map(
-					annotatedClass -> BeanFilterFactory.create(
+			for (Class<?> annotatedClass : _portletLifecycleFilterClasses) {
+				_beanFilters.add(
+					BeanFilterFactory.create(
 						annotatedClass,
 						annotatedClass.getAnnotation(
-							PortletLifecycleFilter.class))
-				).collect(
-					Collectors.toList()
-				)
-			);
+							PortletLifecycleFilter.class)));
+			}
 
-			Stream<Class<?>> beanPortletListenerClassesStream =
-				_portletListenerClasses.stream();
+			for (Class<?> portletListenerClass : _portletListenerClasses) {
+				PortletListener portletListenerAnnotation =
+					portletListenerClass.getAnnotation(PortletListener.class);
 
-			beanPortletListenerClassesStream.map(
-				portletListenerClass -> {
-					PortletListener portletListenerAnnotation =
-						portletListenerClass.getAnnotation(
-							PortletListener.class);
-
-					return new URLGenerationListener(
+				URLGenerationListener urlGenerationListener =
+					new URLGenerationListener(
 						portletListenerAnnotation.ordinal(),
 						portletListenerClass.getName());
+
+				for (BeanPortlet beanPortlet : _beanPortlets.values()) {
+					BeanApp beanApp = beanPortlet.getBeanApp();
+
+					List<URLGenerationListener> urlGenerationListeners =
+						beanApp.getURLGenerationListeners();
+
+					urlGenerationListeners.add(urlGenerationListener);
 				}
-			).forEach(
-				urlGenerationListener -> {
-					Set<Map.Entry<String, BeanPortlet>> beanPortletEntrySet =
-						_beanPortlets.entrySet();
-
-					Stream<Map.Entry<String, BeanPortlet>>
-						beanPortletEntrySetStream =
-							beanPortletEntrySet.stream();
-
-					beanPortletEntrySetStream.forEach(
-						entry -> {
-							BeanPortlet beanPortlet = entry.getValue();
-
-							BeanApp beanApp = beanPortlet.getBeanApp();
-
-							List<URLGenerationListener> urlGenerationListeners =
-								beanApp.getURLGenerationListeners();
-
-							urlGenerationListeners.add(urlGenerationListener);
-						});
-				}
-			);
+			}
 
 			URL liferayDescriptorURL = bundle.getEntry(
 				"WEB-INF/liferay-portlet.xml");
@@ -221,27 +194,23 @@ public class BeanPortletExtension implements Extension {
 					LiferayDescriptor liferayDescriptor =
 						LiferayDescriptorParser.parse(liferayDescriptorURL);
 
-					Set<String> portletNames =
-						liferayDescriptor.getPortletNames();
+					for (String portletName :
+							liferayDescriptor.getPortletNames()) {
 
-					Stream<String> portletNamesStream = portletNames.stream();
+						BeanPortlet beanPortlet = _beanPortlets.get(
+							portletName);
 
-					portletNamesStream.forEach(
-						portletName -> {
-							BeanPortlet beanPortlet = _beanPortlets.get(
+						if (beanPortlet == null) {
+							beanPortlet = new BeanPortletDefaultImpl(
 								portletName);
 
-							if (beanPortlet == null) {
-								beanPortlet = new BeanPortletDefaultImpl(
-									portletName);
+							_beanPortlets.put(portletName, beanPortlet);
+						}
 
-								_beanPortlets.put(portletName, beanPortlet);
-							}
-
-							beanPortlet.addLiferayConfiguration(
-								liferayDescriptor.getPortletConfiguration(
-									portletName));
-						});
+						beanPortlet.addLiferayConfiguration(
+							liferayDescriptor.getPortletConfiguration(
+								portletName));
+					}
 				}
 				catch (Exception e) {
 					_log.error(e, e);
@@ -256,24 +225,16 @@ public class BeanPortletExtension implements Extension {
 					Map<String, String> categoryMap =
 						DisplayDescriptorParser.parse(displayDescriptorURL);
 
-					Set<Map.Entry<String, String>> categoryEntrySet =
-						categoryMap.entrySet();
+					for (Entry<String, String> entry : categoryMap.entrySet()) {
+						BeanPortlet beanPortlet = _beanPortlets.get(
+							entry.getKey());
 
-					Stream<Map.Entry<String, String>> categoryEntryStream =
-						categoryEntrySet.stream();
-
-					categoryEntryStream.filter(
-						entry -> _beanPortlets.containsKey(entry.getKey())
-					).forEach(
-						entry -> {
-							BeanPortlet beanPortlet = _beanPortlets.get(
-								entry.getKey());
-
+						if (beanPortlet != null) {
 							beanPortlet.addLiferayConfiguration(
 								"com.liferay.portlet.display-category",
 								entry.getValue());
 						}
-					);
+					}
 				}
 				catch (Exception e) {
 					_log.error(e, e);
@@ -309,31 +270,28 @@ public class BeanPortletExtension implements Extension {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		Set<Map.Entry<String, BeanPortlet>> beanPortletEntrySet =
-			_beanPortlets.entrySet();
+		_portletRegistrations = new ArrayList<>();
+		_resourceBundleLoaderRegistrations = new ArrayList<>();
 
-		Stream<Map.Entry<String, BeanPortlet>> beanPortletEntrySetStream =
-			beanPortletEntrySet.stream();
+		for (BeanPortlet beanPortlet : _beanPortlets.values()) {
+			ServiceRegistration<Portlet> portletServiceRegistration =
+				RegistrationUtil.registerBeanPortlet(
+					bundleContext, beanPortlet, servletContext);
 
-		_portletRegistrations = beanPortletEntrySetStream.map(
-			entry -> RegistrationUtil.registerBeanPortlet(
-				bundleContext, entry.getValue(), servletContext)
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
+			if (portletServiceRegistration != null) {
+				_portletRegistrations.add(portletServiceRegistration);
+			}
 
-		beanPortletEntrySetStream = beanPortletEntrySet.stream();
+			ServiceRegistration<ResourceBundleLoader>
+				resourceBundleLoaderserviceRegistration =
+					RegistrationUtil.registerResourceBundleLoader(
+						bundleContext, beanPortlet, servletContext);
 
-		_resourceBundleLoaderRegistrations = beanPortletEntrySetStream.map(
-			entry -> RegistrationUtil.registerResourceBundleLoader(
-				bundleContext, entry.getValue(), servletContext)
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
+			if (resourceBundleLoaderserviceRegistration != null) {
+				_resourceBundleLoaderRegistrations.add(
+					resourceBundleLoaderserviceRegistration);
+			}
+		}
 
 		_beanFilters.forEach(
 			beanFilter -> beanFilter.getPortletNames().forEach(
@@ -345,25 +303,23 @@ public class BeanPortletExtension implements Extension {
 		URL liferayDescriptorURL = bundle.getEntry(
 			"WEB-INF/liferay-portlet.xml");
 
-		if (liferayDescriptorURL != null) {
+		if ((liferayDescriptorURL != null) && _log.isWarnEnabled()) {
 			try {
 				LiferayDescriptor liferayDescriptor =
 					LiferayDescriptorParser.parse(liferayDescriptorURL);
 
-				Set<String> portletNames = liferayDescriptor.getPortletNames();
+				for (String portletName : liferayDescriptor.getPortletNames()) {
+					if (_beanPortlets.containsKey(portletName)) {
+						continue;
+					}
 
-				Stream<String> portletNamesStream = portletNames.stream();
-
-				portletNamesStream.filter(
-					portletName -> !_beanPortlets.containsKey(portletName)
-				).forEach(
-					portletName -> _log.warn(
+					_log.warn(
 						StringBundler.concat(
 							"Portlet with the name ", portletName,
 							" is described in liferay-portlet.xml but does ",
 							"not have a matching entry in portlet.xml or ",
-							"@PortletConfiguration annotation"))
-				);
+							"@PortletConfiguration annotation"));
+				}
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -378,19 +334,15 @@ public class BeanPortletExtension implements Extension {
 				Map<String, String> categoryMap = DisplayDescriptorParser.parse(
 					displayDescriptorURL);
 
-				Set<Map.Entry<String, String>> categoryEntrySet =
-					categoryMap.entrySet();
+				for (String portletName : categoryMap.keySet()) {
+					if (_beanPortlets.containsKey(portletName)) {
+						continue;
+					}
 
-				Stream<Map.Entry<String, String>> categoryEntrySetStream =
-					categoryEntrySet.stream();
-
-				categoryEntrySetStream.filter(
-					entry -> !_beanPortlets.containsKey(entry.getKey())
-				).forEach(
-					entry -> _log.error(
-						"Unknown portletId " + entry.getKey() +
-							" found in liferay-display.xml")
-				);
+					_log.error(
+						"Unknown portletId " + portletName +
+							" found in liferay-display.xml");
+				}
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -449,16 +401,11 @@ public class BeanPortletExtension implements Extension {
 			processAnnotatedType.setAnnotatedType(annotatedType);
 		}
 
-		Set<Annotation> annotations = annotatedType.getAnnotations();
+		Set<Class<? extends Annotation>> annotationClasses = new HashSet<>();
 
-		Stream<Annotation> annotationsStream = annotations .stream();
-
-		Set<Class<? extends Annotation>> annotationClasses =
-			annotationsStream.map(
-				Annotation::annotationType
-			).collect(
-				Collectors.toSet()
-			);
+		for (Annotation annotation : annotatedType.getAnnotations()) {
+			annotationClasses.add(annotation.annotationType());
+		}
 
 		if (annotationClasses.contains(RequestScoped.class)) {
 			annotatedType = new AnnotatedTypeRequestScopedImpl(
@@ -662,20 +609,11 @@ public class BeanPortletExtension implements Extension {
 			if (portletNames == null) {
 				String beanClassName = beanClass.getName();
 
-				Set<Map.Entry<String, BeanPortlet>> beanPortletEntries =
-					_beanPortlets.entrySet();
-
-				Stream<Map.Entry<String, BeanPortlet>>
-					beanPortletEntriesStream = beanPortletEntries.stream();
-
-				beanPortletEntriesStream.map(
-					Map.Entry::getValue
-				).filter(
-					beanPortlet -> beanClassName.equals(
-						beanPortlet.getPortletClass())
-				).forEach(
-					beanPortlet -> beanPortlet.addBeanMethod(beanMethod)
-				);
+				for (BeanPortlet beanPortlet : _beanPortlets.values()) {
+					if (beanClassName.equals(beanPortlet.getPortletClass())) {
+						beanPortlet.addBeanMethod(beanMethod);
+					}
+				}
 			}
 			else if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
 				Set<String> beanPortletNames = _beanPortlets.keySet();
@@ -689,22 +627,17 @@ public class BeanPortletExtension implements Extension {
 					});
 			}
 			else {
-				Stream<String> portletNamesStream = Arrays.stream(portletNames);
+				for (String portletName : portletNames) {
+					BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
-				portletNamesStream.forEach(
-					portletName -> {
-						BeanPortlet beanPortlet = _beanPortlets.get(
-							portletName);
+					if (beanPortlet == null) {
+						beanPortlet = new BeanPortletDefaultImpl(portletName);
 
-						if (beanPortlet == null) {
-							beanPortlet = new BeanPortletDefaultImpl(
-								portletName);
+						_beanPortlets.put(portletName, beanPortlet);
+					}
 
-							_beanPortlets.put(portletName, beanPortlet);
-						}
-
-						beanPortlet.addBeanMethod(beanMethod);
-					});
+					beanPortlet.addBeanMethod(beanMethod);
+				}
 			}
 		}
 	}
@@ -864,16 +797,18 @@ public class BeanPortletExtension implements Extension {
 		Class<? extends Annotation> annotationClass,
 		MethodSignature methodSignature) {
 
-		Stream<Method> methodsStream = Arrays.stream(javaClass.getMethods());
+		List<ScannedMethod> scannedMethods = new ArrayList<>();
 
-		return methodsStream.filter(
-			method -> (method.getAnnotation(annotationClass) != null) &&
-			methodSignature.isMatch(method)
-		).map(
-			method -> ScannedMethod.create(javaClass, methodType, method)
-		).collect(
-			Collectors.toList()
-		);
+		for (Method method : javaClass.getMethods()) {
+			if ((method.getAnnotation(annotationClass) != null) &&
+				methodSignature.isMatch(method)) {
+
+				scannedMethods.add(
+					ScannedMethod.create(javaClass, methodType, method));
+			}
+		}
+
+		return scannedMethods;
 	}
 
 	protected void sessionScopeBeforeDestroyed(
@@ -881,21 +816,19 @@ public class BeanPortletExtension implements Extension {
 
 		HttpSession httpSession = (HttpSession)httpSessionObject;
 
-		ArrayList<String> sessionAttributeNames = Collections.list(
-			httpSession.getAttributeNames());
+		Enumeration<String> enumeration = httpSession.getAttributeNames();
 
-		Stream<String> sessionAttributeNamesStream =
-			sessionAttributeNames.stream();
+		while (enumeration.hasMoreElements()) {
+			String name = enumeration.nextElement();
 
-		sessionAttributeNamesStream.map(
-			httpSession::getAttribute
-		).filter(
-			Objects::nonNull
-		).filter(
-			attributeValue -> attributeValue instanceof ScopedBean
-		).forEach(
-			scopedBean -> ((ScopedBean)scopedBean).destroy()
-		);
+			Object value = httpSession.getAttribute(name);
+
+			if (value instanceof ScopedBean) {
+				ScopedBean<?> scopedBean = (ScopedBean<?>)value;
+
+				scopedBean.destroy();
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -16,9 +16,8 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import java.lang.annotation.Annotation;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.spi.AnnotatedType;
@@ -36,20 +35,16 @@ public class AnnotatedTypeSessionScopedImpl<X> extends AnnotatedTypeWrapper<X> {
 
 		super(annotatedType);
 
-		Set<Annotation> annotations = annotatedType.getAnnotations();
+		_annotations = new HashSet<>();
 
-		Stream<Annotation> annotationsStream = annotations.stream();
+		for (Annotation annotation : annotatedType.getAnnotations()) {
+			Class<? extends Annotation> annotationType =
+				annotation.annotationType();
 
-		_annotations = annotationsStream.filter(
-			annotation -> {
-				Class<? extends Annotation> annotationType =
-					annotation.annotationType();
-
-				return !annotationType.equals(SessionScoped.class);
+			if (!annotationType.equals(SessionScoped.class)) {
+				_annotations.add(annotation);
 			}
-		).collect(
-			Collectors.toSet()
-		);
+		}
 
 		if (!annotationClasses.contains(PortletSessionScoped.class)) {
 			_annotations.add(

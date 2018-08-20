@@ -41,7 +41,9 @@ public interface GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration {
 	@ExtendedAttributeDefinition(
 		descriptionArguments = GoogleCloudVisionAssetAutoTagProviderConstants.API_KEY_DOCS_URL
 	)
-	@Meta.AD(description = "api-key-description", name = "api-key")
+	@Meta.AD(
+		description = "api-key-description", name = "api-key", required = false
+	)
 	public String apiKey();
 
 	/**

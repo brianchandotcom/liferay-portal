@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.ldap;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.List;
 
 import javax.naming.Binding;
@@ -25,6 +27,7 @@ import javax.naming.ldap.LdapContext;
 /**
  * @author Edward C. Han
  */
+@ProviderType
 public interface PortalLDAP {
 
 	public String encodeFilterAttribute(String attribute, boolean rdnEscape);

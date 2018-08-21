@@ -17,23 +17,23 @@ package com.liferay.email.apio.internal.architect.router;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.email.apio.architect.identifier.EmailIdentifier;
 import com.liferay.email.apio.internal.architect.router.base.BaseUserAccountEmailsNestedCollectionRouter;
-import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.person.apio.architect.identifier.MyUserAccountIdentifier;
 import com.liferay.portal.kernel.model.EmailAddress;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/Email">Email</a> resources contained inside an <a
- * href="http://schema.org/Person">Person</a> through a web API. The resources
- * are mapped from the internal model {@link EmailAddress}.
+ * href="http://schema.org/Email">Email</a> resources contained inside an
+ * myUserAccount through a web API. The resources are mapped from the internal
+ * model {@link EmailAddress}.
  *
- * @author Javier Gamarra
+ * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class PersonEmailsNestedCollectionRouter extends
-	BaseUserAccountEmailsNestedCollectionRouter<PersonIdentifier> implements
-		NestedCollectionRouter<EmailAddress, Long, EmailIdentifier, Long,
-			PersonIdentifier> {
+public class MyUserAccountEmailsNestedCollectionRouter extends
+	BaseUserAccountEmailsNestedCollectionRouter<MyUserAccountIdentifier>
+	implements NestedCollectionRouter<EmailAddress, Long, EmailIdentifier, Long,
+		MyUserAccountIdentifier> {
 }

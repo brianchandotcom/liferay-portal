@@ -25,7 +25,10 @@ import java.util.List;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.apache.maven.project.MavenProject;
+
+import org.codehaus.plexus.component.repository.ComponentDependency;
 
 import org.eclipse.aether.RepositorySystem;
 import org.eclipse.aether.RepositorySystemSession;
@@ -46,6 +49,9 @@ public class BuildThemeMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
+		boolean styledThemePresent = false;
+		boolean unstyledThemepresent = false;
+
 		try {
 			for (Dependency dependency : _project.getDependencies()) {
 				String artifactId = dependency.getArtifactId();
@@ -60,6 +66,8 @@ public class BuildThemeMojo extends AbstractMojo {
 					if (artifact != null) {
 						_themeBuilderArgs.setParentDir(artifact.getFile());
 					}
+
+					styledThemePresent = true;
 				}
 				else if (artifactId.equals(
 							 "com.liferay.frontend.theme.unstyled") &&
@@ -69,6 +77,42 @@ public class BuildThemeMojo extends AbstractMojo {
 
 					if (artifact != null) {
 						_themeBuilderArgs.setUnstyledDir(artifact.getFile());
+					}
+
+					unstyledThemepresent = true;
+				}
+			}
+
+			if (!styledThemePresent | !unstyledThemepresent) {
+				for (ComponentDependency componentDependency :
+						_pluginDescriptor.getDependencies()) {
+
+					String artifactId = componentDependency.getArtifactId();
+
+					if (artifactId.equals(
+							"com.liferay.frontend.theme.styled") &&
+						(_themeBuilderArgs.getParentDir() == null) &&
+						ThemeBuilder.STYLED.equals(
+							_themeBuilderArgs.getParentName())) {
+
+						Artifact artifact = _resolveArtifact(
+							componentDependency);
+
+						if (artifact != null) {
+							_themeBuilderArgs.setParentDir(artifact.getFile());
+						}
+					}
+					else if (artifactId.equals(
+								 "com.liferay.frontend.theme.unstyled") &&
+							 (_themeBuilderArgs.getUnstyledDir() == null)) {
+
+						Artifact artifact = _resolveArtifact(
+							componentDependency);
+
+						if (artifact != null) {
+							_themeBuilderArgs.setUnstyledDir(
+								artifact.getFile());
+						}
 					}
 				}
 			}
@@ -131,12 +175,8 @@ public class BuildThemeMojo extends AbstractMojo {
 		_themeBuilderArgs.setUnstyledDir(unstyledDir);
 	}
 
-	private Artifact _resolveArtifact(Dependency dependency)
+	private Artifact _resolveArtifact(Artifact artifact)
 		throws ArtifactResolutionException {
-
-		Artifact artifact = new DefaultArtifact(
-			dependency.getGroupId(), dependency.getArtifactId(),
-			dependency.getType(), dependency.getVersion());
 
 		ArtifactRequest artifactRequest = new ArtifactRequest();
 
@@ -154,6 +194,34 @@ public class BuildThemeMojo extends AbstractMojo {
 
 		return artifactResult.getArtifact();
 	}
+
+	private Artifact _resolveArtifact(ComponentDependency componentDependency)
+		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			componentDependency.getGroupId(),
+			componentDependency.getArtifactId(), componentDependency.getType(),
+			componentDependency.getVersion());
+
+		return _resolveArtifact(artifact);
+	}
+
+	private Artifact _resolveArtifact(Dependency dependency)
+		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			dependency.getGroupId(), dependency.getArtifactId(),
+			dependency.getType(), dependency.getVersion());
+
+		return _resolveArtifact(artifact);
+	}
+
+	/**
+	 * @parameter default-value="${plugin}"
+	 * @readonly
+	 * @required
+	 */
+	private PluginDescriptor _pluginDescriptor;
 
 	/**
 	 * @parameter property="project"

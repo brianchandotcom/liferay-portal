@@ -1187,7 +1187,15 @@
 				<then>
 					<execute macro="Alert#viewRequestFailedToComplete" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password uses common words. Please enter a password that is harder to guess (i.e. contains a mix of numbers and letters)." />
+					<if>
+						<isset var="minimumNumbers" />
+						<then>
+							<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password must contain at least ${minimumNumbers} numbers." />
+						</then>
+						<else>
+							<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password must contain at least 1 numbers." />
+						</else>
+					</if>
 				</then>
 			</elseif>
 			<elseif>

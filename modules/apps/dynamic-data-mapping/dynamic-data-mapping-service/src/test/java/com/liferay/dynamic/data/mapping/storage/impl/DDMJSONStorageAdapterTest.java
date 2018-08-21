@@ -133,12 +133,6 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
-		DDMFormValuesDeserializerDeserializeRequest
-			ddmFormValuesDeserializerDeserializeRequest =
-				DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
-					data, ddmForm
-				).build();
-
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
 				DDMFormValuesDeserializerDeserializeResponse.Builder.newBuilder(
@@ -147,7 +141,7 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 		when(
 			_ddmFormValuesDeserializer.deserialize(
-				ddmFormValuesDeserializerDeserializeRequest)
+				Mockito.any(DDMFormValuesDeserializerDeserializeRequest.class))
 		).thenReturn(
 			ddmFormValuesDeserializerDeserializeResponse
 		);
@@ -169,7 +163,7 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 		Mockito.verify(
 			_ddmFormValuesDeserializer, Mockito.times(1)
 		).deserialize(
-			ddmFormValuesDeserializerDeserializeRequest
+			Mockito.any(DDMFormValuesDeserializerDeserializeRequest.class)
 		);
 	}
 
@@ -210,12 +204,6 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
-		DDMFormValuesSerializerSerializeRequest
-			ddmFormValuesSerializerSerializeRequest =
-				DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
-					ddmFormValues
-				).build();
-
 		DDMFormValuesSerializerSerializeResponse
 			ddmFormValuesSerializerSerializeResponse =
 				DDMFormValuesSerializerSerializeResponse.Builder.newBuilder(
@@ -224,7 +212,7 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 		when(
 			_ddmFormValuesSerializer.serialize(
-				ddmFormValuesSerializerSerializeRequest)
+				Mockito.any(DDMFormValuesSerializerSerializeRequest.class))
 		).thenReturn(
 			ddmFormValuesSerializerSerializeResponse
 		);
@@ -244,7 +232,7 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 		Mockito.verify(
 			_ddmFormValuesSerializer, Mockito.times(1)
 		).serialize(
-			ddmFormValuesSerializerSerializeRequest
+			Mockito.any(DDMFormValuesSerializerSerializeRequest.class)
 		);
 
 		Mockito.verify(
@@ -293,12 +281,6 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
-		DDMFormValuesSerializerSerializeRequest
-			ddmFormValuesSerializerSerializeRequest =
-				DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
-					ddmFormValues
-				).build();
-
 		DDMFormValuesSerializerSerializeResponse
 			ddmFormValuesSerializerSerializeResponse =
 				DDMFormValuesSerializerSerializeResponse.Builder.newBuilder(
@@ -307,7 +289,7 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 		when(
 			_ddmFormValuesSerializer.serialize(
-				ddmFormValuesSerializerSerializeRequest)
+				Mockito.any(DDMFormValuesSerializerSerializeRequest.class))
 		).thenReturn(
 			ddmFormValuesSerializerSerializeResponse
 		);
@@ -341,7 +323,7 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 		Mockito.verify(
 			_ddmFormValuesSerializer, Mockito.times(1)
 		).serialize(
-			ddmFormValuesSerializerSerializeRequest
+			Mockito.any(DDMFormValuesSerializerSerializeRequest.class)
 		);
 
 		Mockito.verify(

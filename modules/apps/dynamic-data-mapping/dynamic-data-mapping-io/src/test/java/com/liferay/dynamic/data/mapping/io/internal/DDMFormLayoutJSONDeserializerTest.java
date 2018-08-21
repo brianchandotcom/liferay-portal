@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.io.internal;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
@@ -49,8 +51,16 @@ public class DDMFormLayoutJSONDeserializerTest extends BaseDDMTestCase {
 		String serializedDDMFormLayout = read(
 			"ddm-form-layout-json-deserializer-test-data.json");
 
+		DDMFormLayoutDeserializerDeserializeRequest.Builder builder =
+				DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
+					serializedDDMFormLayout);
+
+		DDMFormLayoutDeserializerDeserializeResponse
+			ddmFormLayoutDeserializerDeserializeResponse =
+				_ddmFormLayoutJSONDeserializer.deserialize(builder.build());
+
 		DDMFormLayout ddmFormLayout =
-			_ddmFormLayoutJSONDeserializer.deserialize(serializedDDMFormLayout);
+			ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();
 
 		Assert.assertEquals(LocaleUtil.US, ddmFormLayout.getDefaultLocale());
 

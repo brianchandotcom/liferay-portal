@@ -25,6 +25,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.organization.apio.architect.identifier.OrganizationIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.person.apio.internal.architect.form.PersonCreatorForm;
 import com.liferay.person.apio.internal.architect.form.PersonUpdaterForm;
@@ -123,6 +124,8 @@ public class PersonCollectionResource
 			_userAccountRepresentorBulderHelper.buildUserWrapperFirstStep(
 				builder);
 
+		userWrapperFirstStep.addRelatedCollection(
+			"organizations", OrganizationIdentifier.class);
 		userWrapperFirstStep.addRelatedCollection(
 			"websites", WebSiteIdentifier.class);
 

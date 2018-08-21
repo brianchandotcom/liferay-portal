@@ -1,0 +1,6 @@
+dependencies {
+	compile group: "org.xmlresolver", name: "xmlresolver", version: "0.12.5"
+
+	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.6.6"
+	compileInclude group: "org.slf4j", name: "slf4j-simple", version: "1.6.6"
+}

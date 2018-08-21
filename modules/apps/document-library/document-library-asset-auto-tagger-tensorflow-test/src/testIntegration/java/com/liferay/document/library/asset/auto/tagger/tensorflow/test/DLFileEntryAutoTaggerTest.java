@@ -75,7 +75,7 @@ public class DLFileEntryAutoTaggerTest {
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 					_serviceContext.getScopeGroupId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					"indigobunting.bmp", ContentTypes.IMAGE_JPEG,
+					"indigobunting.bmp", ContentTypes.IMAGE_BMP,
 					"indigobunting", StringUtil.randomString(),
 					StringUtil.randomString(),
 					FileUtil.getBytes(getClass(), "indigobunting.bmp"),
@@ -116,7 +116,7 @@ public class DLFileEntryAutoTaggerTest {
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 					_serviceContext.getScopeGroupId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					"hummingbird.png", ContentTypes.IMAGE_JPEG, "hummingbird",
+					"hummingbird.png", ContentTypes.IMAGE_PNG, "hummingbird",
 					StringUtil.randomString(), StringUtil.randomString(),
 					FileUtil.getBytes(getClass(), "hummingbird.png"),
 					_serviceContext);

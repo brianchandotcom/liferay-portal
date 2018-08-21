@@ -1,5 +1,5 @@
 <#if entries?has_content>
-	<ul class="breadcrumb breadcrumb-vertical">
+	<ul aria-label="${languageUtil.get(locale, "breadcrumb")}" class="breadcrumb breadcrumb-vertical" role="navigation">
 		<#assign cssClass = "" />
 
 		<#list entries as entry>
@@ -7,7 +7,7 @@
 				<#assign cssClass = "active" />
 			</#if>
 
-			<li class="${cssClass}">
+			<li class="${cssClass}" <#if entry?is_last>aria-current="page"</#if>>
 				<#if entry?has_next>
 					<a
 

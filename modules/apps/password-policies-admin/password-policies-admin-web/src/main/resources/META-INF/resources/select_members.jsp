@@ -96,17 +96,15 @@ SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbar
 
 			if (selectedItems.size()) {
 				result = {
-					item: selectedItems.attr('value').join(','),
-					memberType: '<%= HtmlUtil.escapeJS(tabs2) %>'
+					data: {
+						item: selectedItems.attr('value').join(','),
+						memberType: '<%= HtmlUtil.escapeJS(tabs2) %>'
+					}
 				};
 			}
 
 			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(eventName) %>',
-				{
-					data: result
-				}
-			);
+				'<%= HtmlUtil.escapeJS(eventName) %>', result);
 		}
 	);
 </aui:script>

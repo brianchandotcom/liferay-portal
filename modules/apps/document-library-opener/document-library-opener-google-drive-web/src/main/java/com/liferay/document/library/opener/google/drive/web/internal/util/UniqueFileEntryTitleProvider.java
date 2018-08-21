@@ -14,15 +14,15 @@
 
 package com.liferay.document.library.opener.google.drive.web.internal.util;
 
-import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.upload.UniqueFileNameProvider;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -33,50 +33,40 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = UniqueFileEntryTitleGenerator.class)
-public class UniqueFileEntryTitleGenerator {
+@Component(immediate = true, service = UniqueFileEntryTitleProvider.class)
+public class UniqueFileEntryTitleProvider {
 
-	public String getUniqueFileEntryTitle(
-			long groupId, long folderId, Locale locale)
+	public String provide(long groupId, long folderId, Locale locale)
 		throws PortalException {
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		for (int i = 1; i < _MAXIMUM_TRIES; i++) {
-			String title = _getTitle(resourceBundle, i);
+		return _uniqueFileNameProvider.provide(
+			_language.get(resourceBundle, "untitled"),
+			curFileName -> _exists(groupId, folderId, curFileName));
+	}
 
-			try {
-				_dlAppLocalService.getFileEntry(groupId, folderId, title);
-			}
-			catch (NoSuchFileEntryException nsfee) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Unique file entry title ", title,
-							" successfully generated in folder ", folderId),
-						nsfee);
-				}
+	private boolean _exists(long groupId, long folderId, String curFileName) {
+		try {
+			_dlAppLocalService.getFileEntry(groupId, folderId, curFileName);
 
-				return title;
+			return true;
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfee, nsfee);
 			}
 		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 
-		throw new FileNameException(
-			StringBundler.concat(
-				"Could not generate an unique file name in Folder ", folderId,
-				" after ", _MAXIMUM_TRIES, " tries"));
+		return false;
 	}
-
-	private String _getTitle(ResourceBundle resourceBundle, int n) {
-		return String.format(
-			"%s %d", _language.get(resourceBundle, "untitled"), n);
-	}
-
-	private static final int _MAXIMUM_TRIES = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UniqueFileEntryTitleGenerator.class);
+		UniqueFileEntryTitleProvider.class);
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
@@ -88,5 +78,8 @@ public class UniqueFileEntryTitleGenerator {
 		target = "(bundle.symbolic.name=com.liferay.document.library.opener.google.drive.web)"
 	)
 	private ResourceBundleLoader _resourceBundleLoader;
+
+	@Reference
+	private UniqueFileNameProvider _uniqueFileNameProvider;
 
 }

@@ -35,8 +35,6 @@ SearchContainer searchContainer = viewRolesManagementToolbarDisplayContext.getSe
 PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL();
 %>
 
-<liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />
-
 <clay:navigation-bar
 	inverted="<%= true %>"
 	navigationItems="<%= roleDisplayContext.getViewRoleNavigationItems(liferayPortletResponse, portletURL) %>"
@@ -60,8 +58,12 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 	viewTypeItems="<%= viewRolesManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="get" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="get" name="fm">
 	<aui:input name="deleteRoleIds" type="hidden" />
+
+	<liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />
+	<liferay-ui:error exception="<%= RequiredWorkflowRoleException.MustNotDeleteRoleReferencedByCurrentWorkflowTask.class %>" message="the-role-cannot-be-deleted-because-it-is-referenced-by-one-or-more-current-workflow-tasks" />
+	<liferay-ui:error exception="<%= RequiredWorkflowRoleException.MustNotDeleteRoleReferencedByWorkflowDefinition.class %>" message="the-role-cannot-be-deleted-because-it-is-referenced-by-one-or-more-active-workflow-definitions" />
 
 	<liferay-ui:search-container
 		id="roleSearch"

@@ -44,6 +44,7 @@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateRoleException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchRoleException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredRoleException" %><%@
+page import="com.liferay.portal.kernel.exception.RequiredWorkflowRoleException" %><%@
 page import="com.liferay.portal.kernel.exception.RoleAssignmentException" %><%@
 page import="com.liferay.portal.kernel.exception.RoleNameException" %><%@
 page import="com.liferay.portal.kernel.exception.RolePermissionsException" %><%@

@@ -15,27 +15,24 @@
 package com.liferay.structure.apio.internal.util;
 
 import static com.liferay.structure.apio.internal.util.LocalizedValueUtil.getLocalizedString;
-import static com.liferay.structure.apio.internal.util.StructureRepresentorUtil.getFieldOptions;
-import static com.liferay.structure.apio.internal.util.StructureRepresentorUtil.getFieldProperty;
-import static com.liferay.structure.apio.internal.util.StructureRepresentorUtil.hasFormRules;
 
 import com.liferay.apio.architect.representor.NestedRepresentor;
 import com.liferay.apio.architect.representor.NestedRepresentor.Builder;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
-import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.structure.apio.architect.model.FormLayoutPage;
 import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelper;
-import com.liferay.structure.apio.internal.model.FormLayoutPage;
+import com.liferay.structure.apio.architect.util.StructureRepresentorUtil;
 
 import java.util.Arrays;
 import java.util.Map.Entry;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose Structure resources through a
@@ -47,6 +44,77 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = StructureRepresentorBuilderHelper.class)
 public class StructureRepresentorBuilderHelperImpl
 	implements StructureRepresentorBuilderHelper {
+
+	@Override
+	public NestedRepresentor.FirstStep<DDMFormField> buildDDMFormFieldFirstStep(
+		Builder<DDMFormField> builder) {
+
+		return builder.types(
+			"FormField"
+		).addBoolean(
+			"autocomplete",
+			_structureRepresentorUtil.getFieldProperty(
+				Boolean.class::cast, "autocomplete")
+		).addBoolean(
+			"inline",
+			_structureRepresentorUtil.getFieldProperty(
+				Boolean.class::cast, "inline")
+		).addBoolean(
+			"localizable", DDMFormField::isLocalizable
+		).addBoolean(
+			"multiple", DDMFormField::isMultiple
+		).addBoolean(
+			"readOnly", DDMFormField::isReadOnly
+		).addBoolean(
+			"repeatable", DDMFormField::isRepeatable
+		).addBoolean(
+			"required", DDMFormField::isRequired
+		).addBoolean(
+			"showAsSwitcher",
+			_structureRepresentorUtil.getFieldProperty(
+				Boolean.class::cast, "showAsSwitcher")
+		).addBoolean(
+			"showLabel", DDMFormField::isShowLabel
+		).addLocalizedStringByLocale(
+			"label", getLocalizedString(DDMFormField::getLabel)
+		).addLocalizedStringByLocale(
+			"placeholder",
+			_structureRepresentorUtil.getLocalizedString("placeholder")
+		).addLocalizedStringByLocale(
+			"predefinedValue",
+			getLocalizedString(DDMFormField::getPredefinedValue)
+		).addLocalizedStringByLocale(
+			"style", getLocalizedString(DDMFormField::getStyle)
+		).addLocalizedStringByLocale(
+			"tip", getLocalizedString(DDMFormField::getTip)
+		).addNested(
+			"validation", DDMFormField::getDDMFormFieldValidation,
+			StructureRepresentorBuilderHelperImpl::_buildValidationProperties
+		).addNestedList(
+			"options",
+			_structureRepresentorUtil.getFieldOptions(
+				DDMFormField::getDDMFormFieldOptions),
+			StructureRepresentorBuilderHelperImpl::_buildFieldOptions
+		).addString(
+			"additionalType", DDMFormField::getType
+		).addString(
+			"dataSourceType",
+			_structureRepresentorUtil.getFieldProperty(
+				String.class::cast, "dataSourceType")
+		).addString(
+			"dataType", DDMFormField::getDataType
+		).addString(
+			"displayStyle",
+			_structureRepresentorUtil.getFieldProperty(
+				String.class::cast, "displayStyle")
+		).addString(
+			"name", DDMFormField::getName
+		).addString(
+			"text",
+			_structureRepresentorUtil.getFieldProperty(
+				String.class::cast, "text")
+		);
+	}
 
 	@Override
 	public Representor.FirstStep<DDMStructure> buildDDMStructureFirstStep(
@@ -66,19 +134,31 @@ public class StructureRepresentorBuilderHelperImpl
 			"description", DDMStructure::getDescription
 		).addLocalizedStringByLocale(
 			"name", DDMStructure::getName
-		).addNested(
-			"successPage", StructureRepresentorUtil::getSuccessPage,
-			StructureRepresentorBuilderHelperImpl::_buildSuccessPageSettings
-		).addNested(
-			"version", StructureRepresentorUtil::getVersion,
-			StructureRepresentorBuilderHelperImpl::_buildVersion
 		).addNestedList(
-			"formPages", StructureRepresentorUtil::getPages,
-			StructureRepresentorBuilderHelperImpl::_buildFormPages
+			"formPages", _structureRepresentorUtil::getPages,
+			formLayoutPageBuilder ->
+				buildFormLayoutPageFirstStep(formLayoutPageBuilder).build()
 		).addStringList(
 			"availableLanguages",
 			ddmStructure -> Arrays.asList(
 				ddmStructure.getAvailableLanguageIds())
+		);
+	}
+
+	@Override
+	public NestedRepresentor.FirstStep<FormLayoutPage>
+		buildFormLayoutPageFirstStep(Builder<FormLayoutPage> builder) {
+
+		return builder.types(
+			"FormLayoutPage"
+		).addLocalizedStringByLocale(
+			"headline", FormLayoutPage::getTitle
+		).addLocalizedStringByLocale(
+			"text", FormLayoutPage::getDescription
+		).addNestedList(
+			"fields", FormLayoutPage::getFields,
+			ddmFormFieldBuilder -> buildDDMFormFieldFirstStep(
+				ddmFormFieldBuilder).build()
 		);
 	}
 
@@ -94,117 +174,6 @@ public class StructureRepresentorBuilderHelperImpl
 		).build();
 	}
 
-	private static NestedRepresentor<DDMFormField> _buildFormFields(
-		Builder<DDMFormField> builder) {
-
-		return builder.types(
-			"FormField"
-		).addBoolean(
-			"autocomplete",
-			getFieldProperty(Boolean.class::cast, "autocomplete")
-		).addBoolean(
-			"hasFormRules", hasFormRules()
-		).addBoolean(
-			"inline", getFieldProperty(Boolean.class::cast, "inline")
-		).addBoolean(
-			"localizable", DDMFormField::isLocalizable
-		).addBoolean(
-			"multiple", DDMFormField::isMultiple
-		).addBoolean(
-			"readOnly", DDMFormField::isReadOnly
-		).addBoolean(
-			"repeatable", DDMFormField::isRepeatable
-		).addBoolean(
-			"required", DDMFormField::isRequired
-		).addBoolean(
-			"showAsSwitcher",
-			getFieldProperty(Boolean.class::cast, "showAsSwitcher")
-		).addBoolean(
-			"showLabel", DDMFormField::isShowLabel
-		).addBoolean(
-			"transient", DDMFormField::isTransient
-		).addLocalizedStringByLocale(
-			"label", getLocalizedString(DDMFormField::getLabel)
-		).addLocalizedStringByLocale(
-			"placeholder",
-			StructureRepresentorUtil.getLocalizedString("placeholder")
-		).addLocalizedStringByLocale(
-			"predefinedValue",
-			getLocalizedString(DDMFormField::getPredefinedValue)
-		).addLocalizedStringByLocale(
-			"style", getLocalizedString(DDMFormField::getStyle)
-		).addLocalizedStringByLocale(
-			"tip", getLocalizedString(DDMFormField::getTip)
-		).addNested(
-			"grid", ddmFormField -> ddmFormField,
-			StructureRepresentorBuilderHelperImpl::_buildGridProperties
-		).addNested(
-			"validation", DDMFormField::getDDMFormFieldValidation,
-			StructureRepresentorBuilderHelperImpl::_buildValidationProperties
-		).addNestedList(
-			"options", getFieldOptions(DDMFormField::getDDMFormFieldOptions),
-			StructureRepresentorBuilderHelperImpl::_buildFieldOptions
-		).addString(
-			"additionalType", DDMFormField::getType
-		).addString(
-			"dataSourceType",
-			getFieldProperty(String.class::cast, "dataSourceType")
-		).addString(
-			"dataType", DDMFormField::getDataType
-		).addString(
-			"displayStyle", getFieldProperty(String.class::cast, "displayStyle")
-		).addString(
-			"indexType", DDMFormField::getIndexType
-		).addString(
-			"name", DDMFormField::getName
-		).addString(
-			"text", getFieldProperty(String.class::cast, "text")
-		).build();
-	}
-
-	private static NestedRepresentor<FormLayoutPage> _buildFormPages(
-		Builder<FormLayoutPage> builder) {
-
-		return builder.types(
-			"FormLayoutPage"
-		).addLocalizedStringByLocale(
-			"headline", FormLayoutPage::getTitle
-		).addLocalizedStringByLocale(
-			"text", FormLayoutPage::getDescription
-		).addNestedList(
-			"fields", FormLayoutPage::getFields,
-			StructureRepresentorBuilderHelperImpl::_buildFormFields
-		).build();
-	}
-
-	private static NestedRepresentor<DDMFormField> _buildGridProperties(
-		Builder<DDMFormField> builder) {
-
-		return builder.types(
-			"FormFieldProperties"
-		).addNestedList(
-			"columns", getFieldOptions("columns"),
-			StructureRepresentorBuilderHelperImpl::_buildFieldOptions
-		).addNestedList(
-			"rows", getFieldOptions("rows"),
-			StructureRepresentorBuilderHelperImpl::_buildFieldOptions
-		).build();
-	}
-
-	private static NestedRepresentor<DDMFormSuccessPageSettings>
-		_buildSuccessPageSettings(Builder<DDMFormSuccessPageSettings> builder) {
-
-		return builder.types(
-			"FormSuccessPageSettings"
-		).addBoolean(
-			"isEnabled", DDMFormSuccessPageSettings::isEnabled
-		).addLocalizedStringByLocale(
-			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
-		).addLocalizedStringByLocale(
-			"text", getLocalizedString(DDMFormSuccessPageSettings::getBody)
-		).build();
-	}
-
 	private static NestedRepresentor<DDMFormFieldValidation>
 		_buildValidationProperties(Builder<DDMFormFieldValidation> builder) {
 
@@ -217,16 +186,7 @@ public class StructureRepresentorBuilderHelperImpl
 		).build();
 	}
 
-	private static NestedRepresentor<DDMStructureVersion> _buildVersion(
-		Builder<DDMStructureVersion> nestedBuilder) {
-
-		return nestedBuilder.types(
-			"StructureVersion"
-		).addLinkedModel(
-			"creator", PersonIdentifier.class, DDMStructureVersion::getUserId
-		).addString(
-			"name", DDMStructureVersion::getVersion
-		).build();
-	}
+	@Reference
+	private StructureRepresentorUtil _structureRepresentorUtil;
 
 }

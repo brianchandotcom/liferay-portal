@@ -228,5 +228,3 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <%@ include file="/html/common/init-ext.jsp" %>
-
-<%@ include file="/html/common/init-compat.jsp" %>

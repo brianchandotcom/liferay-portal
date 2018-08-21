@@ -1,5 +1,5 @@
 import debounce from 'metal-debounce';
-import {getClosestAssetElement} from '../utils/assets';
+import {getClosestAssetElement, getNumberOfWords} from '../utils/assets';
 import {onReady} from '../utils/events.js';
 import {ScrollTracker} from '../utils/scroll';
 
@@ -65,6 +65,9 @@ function trackBlogViewed(analytics) {
 			.forEach(element => {
 				let payload = getBlogPayload(element);
 				const title = element.dataset.analyticsAssetTitle;
+				const numberOfWords = getNumberOfWords(element);
+
+				payload = {numberOfWords, ...payload};
 
 				if (title) {
 					payload = {title, ...payload};

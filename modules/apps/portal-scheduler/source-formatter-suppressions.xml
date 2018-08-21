@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="MethodNameCheck" files="modules/apps/portal-scheduler/portal-scheduler-multiple/src/main/java/com/liferay/portal/scheduler/multiple/internal/ClusterSchedulerEngineConfigurator\.java" />
+	</checkstyle>
+</suppressions>

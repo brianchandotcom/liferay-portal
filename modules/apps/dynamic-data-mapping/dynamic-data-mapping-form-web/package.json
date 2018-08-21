@@ -91,6 +91,7 @@
 		"liferay-npm-bundler": "^2.1.0",
 		"metal-jest-serializer": "^2.0.0",
 		"metal-tools-soy": "^6.0.0",
+		"opn-cli": "^3.1.0",
 		"rimraf": "^2.6.2"
 	},
 	"jest": {
@@ -112,6 +113,7 @@
 		"snapshotSerializers": [
 			"metal-jest-serializer"
 		],
+		"setupTestFrameworkScriptFile": "<rootDir>/src/main/resources/META-INF/resources/metal/js/test/setup.js",
 		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
 		"testURL": "http://localhost",
 		"transformIgnorePatterns": [
@@ -130,7 +132,8 @@
 		"soy": "metalsoy --soyDeps './node_modules/com.liferay.frontend.taglib.clay/META-INF/resources/node_modules/*/src/*.soy'",
 		"start": "browser-sync start --config bs-config.js",
 		"test": "npm run soy && NODE_ENV=test jest --coverage && npm run clean",
-		"test:snapshots": "npm run soy && NODE_ENV=test jest --coverage -u && npm run clean"
+		"test:snapshots": "npm run soy && NODE_ENV=test jest --coverage -u && npm run clean",
+		"test:coverage:open": "opn build/coverage/lcov-report/index.html"
 	},
 	"version": "2.0.0"
 }

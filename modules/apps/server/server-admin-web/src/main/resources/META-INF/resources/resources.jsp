@@ -25,8 +25,6 @@ long seconds = (uptimeDiff / Time.SECOND) % 60;
 
 Runtime runtime = Runtime.getRuntime();
 
-NumberFormat basicNumberFormat = NumberFormat.getInstance(locale);
-
 long totalMemory = runtime.totalMemory();
 long usedMemory = totalMemory - runtime.freeMemory();
 %>
@@ -46,7 +44,14 @@ long usedMemory = totalMemory - runtime.freeMemory();
 					<%= days %> <%= LanguageUtil.get(request, ((days > 1) ? "days" : "day")) %>,
 				</c:if>
 
-				<%= numberFormat.format(hours) %>:<%= numberFormat.format(minutes) %>:<%= numberFormat.format(seconds) %>
+				<%
+				NumberFormat timeNumberFormat = NumberFormat.getInstance();
+
+				timeNumberFormat.setMaximumIntegerDigits(2);
+				timeNumberFormat.setMinimumIntegerDigits(2);
+				%>
+
+				<%= timeNumberFormat.format(hours) %>:<%= timeNumberFormat.format(minutes) %>:<%= timeNumberFormat.format(seconds) %>
 			</div>
 
 			<div class="meter-wrapper text-center">
@@ -68,6 +73,10 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			</div>
 
 			<br />
+
+			<%
+			NumberFormat basicNumberFormat = NumberFormat.getInstance(locale);
+			%>
 
 			<table class="lfr-table memory-status-table">
 				<tr>

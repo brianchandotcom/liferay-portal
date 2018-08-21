@@ -9,6 +9,13 @@
 			visibility: hidden;
 		}
 
+		:target::before {
+			content: '';
+			display: block;
+			height: $has-control-menu-margin-top-mobile;
+			margin: -$has-control-menu-margin-top-mobile 0 0;
+		}
+
 		@include sm() {
 			margin-top: $has-control-menu-margin-top-desktop;
 
@@ -17,6 +24,13 @@
 				position: relative;
 				top: -$has-control-menu-margin-top-desktop;
 				visibility: hidden;
+			}
+
+			:target::before {
+				content: '';
+				display: block;
+				height: $has-control-menu-margin-top-desktop;
+				margin: -$has-control-menu-margin-top-desktop 0 0;
 			}
 		}
 	}
@@ -31,6 +45,13 @@
 			visibility: hidden;
 		}
 
+		:target::before {
+			content: '';
+			display: block;
+			height: ($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile);
+			margin: -($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile) 0 0;
+		}
+
 		@include sm() {
 			margin-top: ($has-control-menu-margin-top-desktop + $has-customization-menu-margin-top-desktop);
 
@@ -39,6 +60,13 @@
 				position: relative;
 				top: -($has-control-menu-margin-top-desktop + $has-customization-menu-margin-top-desktop);
 				visibility: hidden;
+			}
+
+			:target::before {
+				content: '';
+				display: block;
+				height: ($has-control-menu-margin-top-desktop + $has-customization-menu-margin-top-desktop);
+				margin: -($has-control-menu-margin-top-desktop + $has-customization-menu-margin-top-desktop) 0 0;
 			}
 		}
 	}

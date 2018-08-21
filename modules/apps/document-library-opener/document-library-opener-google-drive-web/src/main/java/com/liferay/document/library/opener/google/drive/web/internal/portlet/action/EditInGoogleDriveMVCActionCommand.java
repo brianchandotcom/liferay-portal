@@ -23,7 +23,7 @@ import com.liferay.document.library.opener.google.drive.web.internal.constants.D
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebKeys;
 import com.liferay.document.library.opener.google.drive.web.internal.util.OAuth2Helper;
 import com.liferay.document.library.opener.google.drive.web.internal.util.State;
-import com.liferay.document.library.opener.google.drive.web.internal.util.UniqueFileEntryTitleGenerator;
+import com.liferay.document.library.opener.google.drive.web.internal.util.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -95,7 +95,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		String title = _uniqueFileEntryTitleGenerator.getUniqueFileEntryTitle(
+		String title = _uniqueFileEntryTitleProvider.provide(
 			serviceContext.getScopeGroupId(), folderId,
 			serviceContext.getLocale());
 
@@ -272,6 +272,6 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private UniqueFileEntryTitleGenerator _uniqueFileEntryTitleGenerator;
+	private UniqueFileEntryTitleProvider _uniqueFileEntryTitleProvider;
 
 }

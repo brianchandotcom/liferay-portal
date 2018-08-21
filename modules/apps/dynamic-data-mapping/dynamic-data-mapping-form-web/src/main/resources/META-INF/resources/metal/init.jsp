@@ -18,6 +18,7 @@
 
 <%
 String mainRequire = ddmFormAdminDisplayContext.getMainRequire();
+String serializedDDMFormRules = ddmFormAdminDisplayContext.getSerializedDDMFormRules();
 String serializedFormBuilderContext = ddmFormAdminDisplayContext.getSerializedFormBuilderContext();
 %>
 

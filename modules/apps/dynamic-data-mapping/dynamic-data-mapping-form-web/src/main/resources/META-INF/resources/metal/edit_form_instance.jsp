@@ -274,6 +274,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
 			modules: Liferay.MODULES,
 			namespace: '<portlet:namespace />',
+			rulesList: <%= serializedDDMFormRules %>,
 			spritemap
 		},
 		'#<portlet:namespace />-container',

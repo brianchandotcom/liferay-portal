@@ -22,12 +22,14 @@ import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
+import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.ValidateSchemaTask;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +40,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.tasks.SourceSet;
@@ -312,7 +315,25 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	private void _configureTaskValidateSchema(
 		ValidateSchemaTask validateSchemaTask) {
 
-		validateSchemaTask.setEnabled(false);
+		Project project = validateSchemaTask.getProject();
+
+		Configuration xmlParserConfiguration = GradleUtil.getConfiguration(
+			project, TLDDocBuilderPlugin.XML_PARSER_CONFIGURATION_NAME);
+
+		Set<Dependency> dependencies = xmlParserConfiguration.getDependencies();
+
+		Iterator<Dependency> iterator = dependencies.iterator();
+
+		while (iterator.hasNext()) {
+			iterator.remove();
+		}
+
+		GradleUtil.addDependency(
+			project, xmlParserConfiguration.getName(), "com.liferay",
+			"com.liferay.xml.local.resolver", "latest.release");
+
+		validateSchemaTask.setXMLParserClassName(
+			"com.liferay.xml.local.resolver.XMLCIResolver");
 	}
 
 	private static final File _NODE_MODULES_CACHE_DIR = new File(

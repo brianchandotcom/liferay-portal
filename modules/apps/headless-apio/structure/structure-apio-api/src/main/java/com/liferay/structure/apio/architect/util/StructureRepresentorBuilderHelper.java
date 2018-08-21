@@ -14,8 +14,11 @@
 
 package com.liferay.structure.apio.architect.util;
 
+import com.liferay.apio.architect.representor.NestedRepresentor;
 import com.liferay.apio.architect.representor.Representor;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.structure.apio.architect.model.FormLayoutPage;
 
 /**
  * Provides the information necessary to expose Structure resources through a
@@ -27,7 +30,14 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
  */
 public interface StructureRepresentorBuilderHelper {
 
+	public NestedRepresentor.FirstStep<DDMFormField> buildDDMFormFieldFirstStep(
+		NestedRepresentor.Builder<DDMFormField> builder);
+
 	public Representor.FirstStep<DDMStructure> buildDDMStructureFirstStep(
 		Representor.Builder<DDMStructure, Long> builder);
+
+	public NestedRepresentor.FirstStep<FormLayoutPage>
+		buildFormLayoutPageFirstStep(
+			NestedRepresentor.Builder<FormLayoutPage> builder);
 
 }

@@ -170,20 +170,20 @@ public final class AMAttribute<T, V> {
 		new AMAttribute<>("file-name", value -> value, String::compareTo);
 
 	private static final Map<String, AMAttribute<?, ?>> _allowedAMAttributes =
-		new HashMap<>();
-
-	static {
-		_allowedAMAttributes.put(
-			_AM_ATTRIBUTE_CONFIGURATION_UUID.getName(),
-			_AM_ATTRIBUTE_CONFIGURATION_UUID);
-		_allowedAMAttributes.put(
-			_AM_ATTRIBUTE_CONTENT_LENGTH.getName(),
-			_AM_ATTRIBUTE_CONTENT_LENGTH);
-		_allowedAMAttributes.put(
-			_AM_ATTRIBUTE_CONTENT_TYPE.getName(), _AM_ATTRIBUTE_CONTENT_TYPE);
-		_allowedAMAttributes.put(
-			_AM_ATTRIBUTE_FILE_NAME.getName(), _AM_ATTRIBUTE_FILE_NAME);
-	}
+		new HashMap<String, AMAttribute<?, ?>>() {
+			{
+				put(
+					_AM_ATTRIBUTE_CONFIGURATION_UUID.getName(),
+					_AM_ATTRIBUTE_CONFIGURATION_UUID);
+				put(
+					_AM_ATTRIBUTE_CONTENT_LENGTH.getName(),
+					_AM_ATTRIBUTE_CONTENT_LENGTH);
+				put(
+					_AM_ATTRIBUTE_CONTENT_TYPE.getName(),
+					_AM_ATTRIBUTE_CONTENT_TYPE);
+				put(_AM_ATTRIBUTE_FILE_NAME.getName(), _AM_ATTRIBUTE_FILE_NAME);
+			}
+		};
 
 	private final AMDistanceComparator<V> _amDistanceComparator;
 	private final Function<String, V> _converterFunction;

@@ -198,20 +198,23 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 	}
 
 	private static final Map<String, String> _functionNameOperatorMap =
-		new HashMap<>();
-	private static final Map<String, String> _operatorMap = new HashMap<>();
-
-	static {
-		_operatorMap.put("<", "less-than");
-		_operatorMap.put("<=", "less-than-equals");
-		_operatorMap.put(">", "greater-than");
-		_operatorMap.put(">=", "greater-than-equals");
-
-		_functionNameOperatorMap.put("belongsTo", "belongs-to");
-		_functionNameOperatorMap.put("contains", "contains");
-		_functionNameOperatorMap.put("equals", "equals-to");
-		_functionNameOperatorMap.put("isEmpty", "is-empty");
-	}
+		new HashMap<String, String>() {
+			{
+				put("belongsTo", "belongs-to");
+				put("contains", "contains");
+				put("equals", "equals-to");
+				put("isEmpty", "is-empty");
+			}
+		};
+	private static final Map<String, String> _operatorMap =
+		new HashMap<String, String>() {
+			{
+				put("<", "less-than");
+				put("<=", "less-than-equals");
+				put(">", "greater-than");
+				put(">=", "greater-than-equals");
+			}
+		};
 
 	private boolean _andOperator = true;
 	private final Stack<DDMFormRuleCondition> _conditions = new Stack<>();

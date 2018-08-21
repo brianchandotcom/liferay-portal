@@ -1440,13 +1440,14 @@ public class PortletURLImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletURLImpl.class);
 
-	private static final Map<String, String> _cacheabilities = new HashMap<>();
-
-	static {
-		_cacheabilities.put("FULL", ResourceURL.FULL);
-		_cacheabilities.put("PAGE", ResourceURL.PAGE);
-		_cacheabilities.put("PORTLET", ResourceURL.PORTLET);
-	}
+	private static final Map<String, String> _cacheabilities =
+		new HashMap<String, String>() {
+			{
+				put("FULL", ResourceURL.FULL);
+				put("PAGE", ResourceURL.PAGE);
+				put("PORTLET", ResourceURL.PORTLET);
+			}
+		};
 
 	private boolean _anchor = true;
 	private String _cacheability = ResourceURL.PAGE;

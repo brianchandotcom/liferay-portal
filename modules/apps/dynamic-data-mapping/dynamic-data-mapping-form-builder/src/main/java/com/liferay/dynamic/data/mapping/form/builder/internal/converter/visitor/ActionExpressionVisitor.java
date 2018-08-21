@@ -68,16 +68,16 @@ public class ActionExpressionVisitor extends ExpressionVisitor<Object> {
 	}
 
 	private static final Map<String, String> _functionToActionMap =
-		new HashMap<>();
-
-	static {
-		_functionToActionMap.put("calculate", "calculate");
-		_functionToActionMap.put("call", "auto-fill");
-		_functionToActionMap.put("jumpPage", "jump-to-page");
-		_functionToActionMap.put("setEnabled", "enable");
-		_functionToActionMap.put("setInvalid", "invalidate");
-		_functionToActionMap.put("setRequired", "require");
-		_functionToActionMap.put("setVisible", "show");
-	}
+		new HashMap<String, String>() {
+			{
+				put("calculate", "calculate");
+				put("call", "auto-fill");
+				put("jumpPage", "jump-to-page");
+				put("setEnabled", "enable");
+				put("setInvalid", "invalidate");
+				put("setRequired", "require");
+				put("setVisible", "show");
+			}
+		};
 
 }

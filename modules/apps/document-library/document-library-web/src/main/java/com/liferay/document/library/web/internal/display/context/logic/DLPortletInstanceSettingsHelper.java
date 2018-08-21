@@ -445,13 +445,14 @@ public class DLPortletInstanceSettingsHelper {
 		}
 	}
 
-	private static final Map<String, String> _displayViews = new HashMap();
-
-	static {
-		_displayViews.put("descriptive", "list");
-		_displayViews.put("icon", "cards");
-		_displayViews.put("list", "table");
-	}
+	private static final Map<String, String> _displayViews =
+		new HashMap<String, String>() {
+			{
+				put("descriptive", "list");
+				put("icon", "cards");
+				put("list", "table");
+			}
+		};
 
 	private List<KeyValuePair> _availableDisplayViews;
 	private List<KeyValuePair> _availableEntryColumns;

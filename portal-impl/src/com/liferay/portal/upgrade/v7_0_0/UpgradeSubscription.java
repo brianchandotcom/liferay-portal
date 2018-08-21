@@ -219,48 +219,48 @@ public class UpgradeSubscription extends UpgradeProcess {
 		UpgradeSubscription.class);
 
 	private static final Map<String, String> _getGroupIdSQLPartsMap =
-		new HashMap<>();
-
-	static {
-		_getGroupIdSQLPartsMap.put(
-			DLFileEntry.class.getName(), "DLFileEntry,groupId,fileEntryId");
-		_getGroupIdSQLPartsMap.put(
-			DLFileEntryType.class.getName(),
-			"DLFileEntryType,groupId,fileEntryTypeId");
-		_getGroupIdSQLPartsMap.put(
-			DLFolder.class.getName(), "DLFolder,groupId,folderId");
-		_getGroupIdSQLPartsMap.put(
-			Layout.class.getName(), "Layout,groupId,plid");
-		_getGroupIdSQLPartsMap.put(
-			"com.liferay.message.boards.kernel.model.MBCategory",
-			"MBCategory,groupId,categoryId");
-		_getGroupIdSQLPartsMap.put(
-			"com.liferay.message.boards.kernel.model.MBThread",
-			"MBThread,groupId,threadId");
-		_getGroupIdSQLPartsMap.put(
-			WorkflowInstanceLink.class.getName(),
-			"WorkflowInstanceLink,groupId,workflowInstanceId");
-		_getGroupIdSQLPartsMap.put(
-			"com.liferay.blogs.kernel.model.BlogsEntry",
-			"BlogsEntry,groupId,entryId");
-		_getGroupIdSQLPartsMap.put(
-			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
-			"BookmarksEntry,groupId,entryId");
-		_getGroupIdSQLPartsMap.put(
-			"com.liferay.portlet.bookmarks.model.BookmarksFolder",
-			"BookmarksFolder,groupId,folderId");
-		_getGroupIdSQLPartsMap.put(
-			"com.liferay.portlet.dynamic.data.mapping.kernel.DDMStructure",
-			"DDMStructure,groupId,structureId");
-		_getGroupIdSQLPartsMap.put(
-			"com.liferay.portlet.journal.model.JournalFolder",
-			"JournalFolder,groupId,folderId");
-		_getGroupIdSQLPartsMap.put(
-			"com.liferay.portlet.wiki.model.WikiNode",
-			"WikiNode,groupId,nodeId");
-		_getGroupIdSQLPartsMap.put(
-			"com.liferay.portlet.wiki.model.WikiPage",
-			"WikiPage,groupId,resourcePrimKey");
-	}
+		new HashMap<String, String>() {
+			{
+				put(
+					DLFileEntry.class.getName(),
+					"DLFileEntry,groupId,fileEntryId");
+				put(
+					DLFileEntryType.class.getName(),
+					"DLFileEntryType,groupId,fileEntryTypeId");
+				put(DLFolder.class.getName(), "DLFolder,groupId,folderId");
+				put(Layout.class.getName(), "Layout,groupId,plid");
+				put(
+					"com.liferay.message.boards.kernel.model.MBCategory",
+					"MBCategory,groupId,categoryId");
+				put(
+					"com.liferay.message.boards.kernel.model.MBThread",
+					"MBThread,groupId,threadId");
+				put(
+					WorkflowInstanceLink.class.getName(),
+					"WorkflowInstanceLink,groupId,workflowInstanceId");
+				put(
+					"com.liferay.blogs.kernel.model.BlogsEntry",
+					"BlogsEntry,groupId,entryId");
+				put(
+					"com.liferay.portlet.bookmarks.model.BookmarksEntry",
+					"BookmarksEntry,groupId,entryId");
+				put(
+					"com.liferay.portlet.bookmarks.model.BookmarksFolder",
+					"BookmarksFolder,groupId,folderId");
+				put(
+					"com.liferay.portlet.dynamic.data.mapping.kernel." +
+						"DDMStructure",
+					"DDMStructure,groupId,structureId");
+				put(
+					"com.liferay.portlet.journal.model.JournalFolder",
+					"JournalFolder,groupId,folderId");
+				put(
+					"com.liferay.portlet.wiki.model.WikiNode",
+					"WikiNode,groupId,nodeId");
+				put(
+					"com.liferay.portlet.wiki.model.WikiPage",
+					"WikiPage,groupId,resourcePrimKey");
+			}
+		};
 
 }

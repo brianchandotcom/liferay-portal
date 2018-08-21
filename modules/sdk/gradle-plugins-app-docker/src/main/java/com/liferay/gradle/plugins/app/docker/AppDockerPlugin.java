@@ -388,13 +388,13 @@ public class AppDockerPlugin implements Plugin<Project> {
 		return imageRepository + ":" + imageTag;
 	}
 
-	private static final Map<String, Object> _fixCrLfArgs = new HashMap<>();
-
-	static {
-		_fixCrLfArgs.put(
-			"eof", FixCrLfFilter.AddAsisRemove.newInstance("remove"));
-		_fixCrLfArgs.put("eol", FixCrLfFilter.CrLf.newInstance("lf"));
-		_fixCrLfArgs.put("fixlast", false);
-	}
+	private static final Map<String, Object> _fixCrLfArgs =
+		new HashMap<String, Object>() {
+			{
+				put("eof", FixCrLfFilter.AddAsisRemove.newInstance("remove"));
+				put("eol", FixCrLfFilter.CrLf.newInstance("lf"));
+				put("fixlast", false);
+			}
+		};
 
 }

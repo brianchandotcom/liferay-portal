@@ -285,22 +285,25 @@ public class DDMFormRuleConverter {
 	private static final String _NOT_EXPRESSION_FORMAT = "not(%s)";
 
 	private static final Map<String, String> _operatorFunctionNameMap =
-		new HashMap<>();
-	private static final Map<String, String> _operatorMap = new HashMap<>();
-
-	static {
-		_operatorFunctionNameMap.put("belongs-to", "belongsTo");
-		_operatorFunctionNameMap.put("contains", "contains");
-		_operatorFunctionNameMap.put("equals-to", "equals");
-		_operatorFunctionNameMap.put("is-empty", "isEmpty");
-		_operatorFunctionNameMap.put("not-contains", "contains");
-		_operatorFunctionNameMap.put("not-equals-to", "equals");
-		_operatorFunctionNameMap.put("not-is-empty", "isEmpty");
-
-		_operatorMap.put("greater-than", ">");
-		_operatorMap.put("greater-than-equals", ">=");
-		_operatorMap.put("less-than", "<");
-		_operatorMap.put("less-than-equals", "<=");
-	}
+		new HashMap<String, String>() {
+			{
+				put("belongs-to", "belongsTo");
+				put("contains", "contains");
+				put("equals-to", "equals");
+				put("is-empty", "isEmpty");
+				put("not-contains", "contains");
+				put("not-equals-to", "equals");
+				put("not-is-empty", "isEmpty");
+			}
+		};
+	private static final Map<String, String> _operatorMap =
+		new HashMap<String, String>() {
+			{
+				put("greater-than", ">");
+				put("greater-than-equals", ">=");
+				put("less-than", "<");
+				put("less-than-equals", "<=");
+			}
+		};
 
 }

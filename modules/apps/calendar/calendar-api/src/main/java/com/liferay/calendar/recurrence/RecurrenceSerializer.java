@@ -219,16 +219,16 @@ public class RecurrenceSerializer {
 		RecurrenceSerializer.class);
 
 	private static final Map<Weekday, com.google.ical.values.Weekday>
-		_weekdaysMap = new HashMap<>();
-
-	static {
-		_weekdaysMap.put(Weekday.SUNDAY, com.google.ical.values.Weekday.SU);
-		_weekdaysMap.put(Weekday.MONDAY, com.google.ical.values.Weekday.MO);
-		_weekdaysMap.put(Weekday.TUESDAY, com.google.ical.values.Weekday.TU);
-		_weekdaysMap.put(Weekday.WEDNESDAY, com.google.ical.values.Weekday.WE);
-		_weekdaysMap.put(Weekday.THURSDAY, com.google.ical.values.Weekday.TH);
-		_weekdaysMap.put(Weekday.FRIDAY, com.google.ical.values.Weekday.FR);
-		_weekdaysMap.put(Weekday.SATURDAY, com.google.ical.values.Weekday.SA);
-	}
+		_weekdaysMap = new HashMap<Weekday, com.google.ical.values.Weekday>() {
+			{
+				put(Weekday.SUNDAY, com.google.ical.values.Weekday.SU);
+				put(Weekday.MONDAY, com.google.ical.values.Weekday.MO);
+				put(Weekday.TUESDAY, com.google.ical.values.Weekday.TU);
+				put(Weekday.WEDNESDAY, com.google.ical.values.Weekday.WE);
+				put(Weekday.THURSDAY, com.google.ical.values.Weekday.TH);
+				put(Weekday.FRIDAY, com.google.ical.values.Weekday.FR);
+				put(Weekday.SATURDAY, com.google.ical.values.Weekday.SA);
+			}
+		};
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.phone.apio.internal.architect.router;
 
 import com.liferay.apio.architect.router.NestedCollectionRouter;
-import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.person.apio.architect.identifier.MyUserAccountIdentifier;
 import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
 import com.liferay.phone.apio.internal.architect.router.base.BaseUserAccountPhonesNestedCollectionRouter;
 import com.liferay.portal.kernel.model.Phone;
@@ -25,15 +25,15 @@ import org.osgi.service.component.annotations.Component;
 /**
  * Provides the information necessary to expose the <a
  * href="http://schema.org/Telephone">Telephone</a> resources contained inside
- * an <a href="http://schema.org/Person">Person</a> through a web API. The
- * resources are mapped from the internal model {@link Phone}.
+ * a myUserAccount through a web API. The resources are mapped from the internal
+ * model {@link Phone}.
  *
- * @author Javier Gamarra
+ * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class PersonPhonesNestedCollectionRouter extends
-	BaseUserAccountPhonesNestedCollectionRouter<PersonIdentifier> implements
-		NestedCollectionRouter<Phone, Long, PhoneIdentifier, Long,
-			PersonIdentifier> {
+public class MyUserAccountPhonesNestedCollectionRouter extends
+	BaseUserAccountPhonesNestedCollectionRouter<MyUserAccountIdentifier>
+	implements NestedCollectionRouter<Phone, Long, PhoneIdentifier, Long,
+		MyUserAccountIdentifier> {
 }

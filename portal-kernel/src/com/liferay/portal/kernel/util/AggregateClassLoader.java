@@ -51,6 +51,30 @@ public class AggregateClassLoader extends ClassLoader {
 
 		if (parentClassLoader instanceof AggregateClassLoader) {
 			aggregateClassLoader = (AggregateClassLoader)parentClassLoader;
+
+			List<ClassLoader> existingClassLoaders =
+				aggregateClassLoader.getClassLoaders();
+
+			boolean requiresNew = false;
+
+			for (ClassLoader classLoader : classLoaders) {
+				if (!classLoader.equals(parentClassLoader) &&
+					!existingClassLoaders.contains(classLoader)) {
+
+					requiresNew = true;
+
+					break;
+				}
+			}
+
+			if (!requiresNew) {
+				return aggregateClassLoader;
+			}
+
+			aggregateClassLoader = new AggregateClassLoader(
+				parentClassLoader.getParent());
+
+			aggregateClassLoader.addClassLoader(parentClassLoader);
 		}
 		else {
 			aggregateClassLoader = new AggregateClassLoader(parentClassLoader);

@@ -352,11 +352,14 @@ public class LDAPServerConfigurationProviderImpl
 		synchronized (_configurations) {
 			Long companyId = _pidCompanyConfigurations.remove(pid);
 			Long ldapServerId = _pidServerConfigurations.remove(pid);
-
 			Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
-				objectValuePairs = _configurations.get(companyId);
+				objectValuePairs = null;
 
-			if (!MapUtil.isEmpty(objectValuePairs)) {
+			if (companyId != null) {
+				objectValuePairs = _configurations.get(companyId);
+			}
+
+			if ((ldapServerId != null) && !MapUtil.isEmpty(objectValuePairs)) {
 				objectValuePairs.remove(ldapServerId);
 			}
 		}

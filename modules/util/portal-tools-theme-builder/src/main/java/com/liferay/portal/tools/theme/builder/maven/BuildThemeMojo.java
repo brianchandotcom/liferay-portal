@@ -83,7 +83,7 @@ public class BuildThemeMojo extends AbstractMojo {
 				}
 			}
 
-			if (!themeStyledArtifactPresent | !themeUnstyledArtifactPresent) {
+			if (!themeStyledArtifactPresent) {
 				for (ComponentDependency componentDependency :
 						_pluginDescriptor.getDependencies()) {
 
@@ -100,11 +100,22 @@ public class BuildThemeMojo extends AbstractMojo {
 
 						if (artifact != null) {
 							_themeBuilderArgs.setParentDir(artifact.getFile());
+
+							break;
 						}
 					}
-					else if (artifactId.equals(
-								 "com.liferay.frontend.theme.unstyled") &&
-							 (_themeBuilderArgs.getUnstyledDir() == null)) {
+				}
+			}
+
+			if (!themeUnstyledArtifactPresent) {
+				for (ComponentDependency componentDependency :
+						_pluginDescriptor.getDependencies()) {
+
+					String artifactId = componentDependency.getArtifactId();
+
+					if (artifactId.equals(
+							"com.liferay.frontend.theme.unstyled") &&
+						(_themeBuilderArgs.getUnstyledDir() == null)) {
 
 						Artifact artifact = _resolveArtifact(
 							componentDependency);
@@ -112,6 +123,8 @@ public class BuildThemeMojo extends AbstractMojo {
 						if (artifact != null) {
 							_themeBuilderArgs.setUnstyledDir(
 								artifact.getFile());
+
+							break;
 						}
 					}
 				}

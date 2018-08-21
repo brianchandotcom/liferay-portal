@@ -212,8 +212,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
 
 		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			ddmFormJSONSerializer.serialize(
-				builder.build());
+			ddmFormJSONSerializer.serialize(builder.build());
 
 		_createDDMTemplate = createTemplate(
 			RandomTestUtil.randomLong(), "Test Create Mode Form Template",
@@ -300,9 +299,9 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		throws Exception {
 
 		DDMFormDeserializerDeserializeRequest.Builder builder =
-				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-					ddmTemplate.getScript()
-				);
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				ddmTemplate.getScript()
+			);
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
@@ -479,8 +478,8 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 			DDMTemplate ddmTemplate, DDMForm templateDDMForm) {
 
 			DDMFormSerializerSerializeRequest.Builder builder =
-					DDMFormSerializerSerializeRequest.Builder.newBuilder(
-						templateDDMForm);
+				DDMFormSerializerSerializeRequest.Builder.newBuilder(
+					templateDDMForm);
 
 			DDMFormSerializerSerializeResponse
 				ddmFormSerializerSerializeResponse =

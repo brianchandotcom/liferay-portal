@@ -735,7 +735,7 @@ public class DDLRecordSetLocalServiceImpl
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
-			ddmFormValuesDeserializer.deserialize(builder.build());
+				ddmFormValuesDeserializer.deserialize(builder.build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
@@ -875,7 +875,7 @@ public class DDLRecordSetLocalServiceImpl
 
 		DDMFormValuesSerializerSerializeResponse
 			ddmFormValuesSerializerSerializeResponse =
-			ddmFormValuesSerializer.serialize(builder.build());
+				ddmFormValuesSerializer.serialize(builder.build());
 
 		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}

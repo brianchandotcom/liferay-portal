@@ -118,7 +118,7 @@ public class DDLRecordSetStagedModelDataHandler
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
-			ddmFormValuesDeserializer.deserialize(builder.build());
+				ddmFormValuesDeserializer.deserialize(builder.build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}

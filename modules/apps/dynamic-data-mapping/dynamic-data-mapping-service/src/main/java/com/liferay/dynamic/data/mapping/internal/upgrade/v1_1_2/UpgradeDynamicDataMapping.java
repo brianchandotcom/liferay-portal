@@ -351,17 +351,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		upgradeDDMContentReferences(sb.toString());
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeDynamicDataMapping.class);
-
-	private final DDMFormDeserializer _ddmFormDeserializer;
-	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
-	private final DDMFormSerializer _ddmFormSerializer;
-	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer;
-	private final DDMFormValuesSerializer _ddmFormValuesSerializer;
-	private final Map<Long, DDMForm> _fullHierarchyDDMForms = new HashMap<>();
-	private final JSONFactory _jsonFactory;
-
 	protected class RadioDDMFormFieldValueTransformer
 		implements DDMFormFieldValueTransformer {
 
@@ -440,5 +429,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeDynamicDataMapping.class);
+
+	private final DDMFormDeserializer _ddmFormDeserializer;
+	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
+	private final DDMFormSerializer _ddmFormSerializer;
+	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer;
+	private final DDMFormValuesSerializer _ddmFormValuesSerializer;
+	private final Map<Long, DDMForm> _fullHierarchyDDMForms = new HashMap<>();
+	private final JSONFactory _jsonFactory;
 
 }

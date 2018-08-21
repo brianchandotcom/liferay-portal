@@ -517,7 +517,7 @@ public class FileSystemImporter extends BaseImporter {
 			ddmForm = deserializeXSD(content);
 		}
 		else {
-			ddmForm = deserializeJSON(content);
+			ddmForm = deserializeJSONDDMForm(content);
 		}
 
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
@@ -1408,13 +1408,13 @@ public class FileSystemImporter extends BaseImporter {
 		primaryKeys.add(primaryKey);
 	}
 
-	protected DDMForm deserializeJSON(String content) {
+	protected DDMForm deserializeJSONDDMForm(String content) {
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
-			ddmFormJSONDeserializer.deserialize(builder.build());
+				ddmFormJSONDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}

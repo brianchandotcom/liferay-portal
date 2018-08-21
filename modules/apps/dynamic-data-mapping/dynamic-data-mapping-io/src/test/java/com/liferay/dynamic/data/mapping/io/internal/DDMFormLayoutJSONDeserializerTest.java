@@ -52,8 +52,8 @@ public class DDMFormLayoutJSONDeserializerTest extends BaseDDMTestCase {
 			"ddm-form-layout-json-deserializer-test-data.json");
 
 		DDMFormLayoutDeserializerDeserializeRequest.Builder builder =
-				DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
-					serializedDDMFormLayout);
+			DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
+				serializedDDMFormLayout);
 
 		DDMFormLayoutDeserializerDeserializeResponse
 			ddmFormLayoutDeserializerDeserializeResponse =

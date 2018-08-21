@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
@@ -54,9 +55,25 @@ public class MinimalWorkflowCapability
 		doUpdateStatus(userId, fileEntry, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #checkInFileEntry(long, FileEntry, DLVersionNumberIncrease, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(
 			long userId, FileEntry fileEntry, boolean majorVersion,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		checkInFileEntry(
+			userId, fileEntry,
+			DLVersionNumberIncrease.fromBoolean(majorVersion), serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, FileEntry fileEntry,
+			DLVersionNumberIncrease dlVersionNumberIncrease,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -78,9 +95,25 @@ public class MinimalWorkflowCapability
 		doUpdateStatus(userId, fileEntry, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, FileEntry, DLVersionNumberIncrease, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void updateFileEntry(
 			long userId, FileEntry fileEntry, boolean majorVersion,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		updateFileEntry(
+			userId, fileEntry,
+			DLVersionNumberIncrease.fromBoolean(majorVersion), serviceContext);
+	}
+
+	@Override
+	public void updateFileEntry(
+			long userId, FileEntry fileEntry,
+			DLVersionNumberIncrease dlVersionNumberIncrease,
 			ServiceContext serviceContext)
 		throws PortalException {
 

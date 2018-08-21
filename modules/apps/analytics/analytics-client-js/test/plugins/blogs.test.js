@@ -13,6 +13,7 @@ const createBlogElement = () => {
 	blogElement.dataset.analyticsAssetId = 'assetId';
 	blogElement.dataset.analyticsAssetTitle = 'Blog Title 1';
 	blogElement.dataset.analyticsAssetType = 'blog';
+	blogElement.innerText = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
 	document.body.appendChild(blogElement);
 	return blogElement;
 }

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay XML Local Resolver
+Bundle-SymbolicName: com.liferay.xml.local.resolver
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.xml.local.resolver
+Main-Class: com.liferay.xml.local.resolver.XMLLocalResolver

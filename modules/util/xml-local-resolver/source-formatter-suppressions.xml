@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaLongLinesCheck" files="modules/util/xml-local-resolver/src/main/java/com/liferay/xml/local/resolver/internal/util/DefinitionsUtil\.java" />
+	</source-check>
+</suppressions>

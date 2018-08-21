@@ -16,10 +16,10 @@ package com.liferay.xml.local.resolver.internal.util;
 
 import java.io.InputStream;
 
-import org.xml.sax.InputSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.xml.sax.InputSource;
 
 /**
  * @author Peter Shin
@@ -96,9 +96,6 @@ public class DefinitionsUtil {
 
 		return null;
 	}
-
-	private static final Logger _logger = LoggerFactory.getLogger(
-		DefinitionsUtil.class);
 
 	private static final String _DEFINITIONS_PATH =
 		"com/liferay/xml/local/resolver/dependencies/definitions/";
@@ -269,5 +266,8 @@ public class DefinitionsUtil {
 		{"http://www.liferay.com/dtd/liferay-workflow-definition_7_0_0.xsd", "liferay-workflow-definition_7_0_0.xsd"},
 		{"http://www.liferay.com/dtd/liferay-workflow-definition_7_1_0.xsd", "liferay-workflow-definition_7_1_0.xsd"}
 	};
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		DefinitionsUtil.class);
 
 }

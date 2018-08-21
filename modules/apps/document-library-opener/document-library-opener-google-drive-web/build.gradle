@@ -10,5 +10,6 @@ dependencies {
 	compileOnly project(":apps:document-library-opener:document-library-opener-api")
 	compileOnly project(":apps:document-library-opener:document-library-opener-google-drive-api")
 	compileOnly project(":apps:document-library:document-library-api")
+	compileOnly project(":apps:upload:upload-api")
 	compileOnly project(":core:petra:petra-string")
 }

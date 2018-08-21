@@ -27,6 +27,7 @@
 							path: 'sidebar_panel/js/sidebar_panel.js',
 							requires: [
 								'aui-base',
+								'aui-debounce',
 								'aui-io-request',
 								'aui-parse-content',
 								'liferay-portlet-base'

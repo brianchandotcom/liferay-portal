@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
@@ -37,13 +38,14 @@ public class MethodNamingCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		_checkDoMethodName(detailAST);
+		String methodName = _getMethodName(detailAST);
+
+		_checkDoMethodName(detailAST, methodName);
+		_checkNonMethodName(detailAST, methodName);
 	}
 
-	private void _checkDoMethodName(DetailAST detailAST) {
-		String name = _getMethodName(detailAST);
-
-		Matcher matcher = _doMethodNamePattern.matcher(name);
+	private void _checkDoMethodName(DetailAST detailAST, String methodName) {
+		Matcher matcher = _doMethodNamePattern.matcher(methodName);
 
 		if (!matcher.find()) {
 			return;
@@ -51,7 +53,7 @@ public class MethodNamingCheck extends BaseCheck {
 
 		String noDoName =
 			"_" + StringUtil.toLowerCase(matcher.group(1)) + matcher.group(2);
-		String noUnderscoreName = name.substring(1);
+		String noUnderscoreName = methodName.substring(1);
 
 		DetailAST parentAST = detailAST.getParent();
 
@@ -59,10 +61,10 @@ public class MethodNamingCheck extends BaseCheck {
 			parentAST, false, TokenTypes.METHOD_DEF);
 
 		for (DetailAST methodDefAST : methodDefASTList) {
-			String methodName = _getMethodName(methodDefAST);
+			String curMethodName = _getMethodName(methodDefAST);
 
-			if (methodName.equals(noUnderscoreName) ||
-				(methodName.equals(noDoName) &&
+			if (curMethodName.equals(noUnderscoreName) ||
+				(curMethodName.equals(noDoName) &&
 				 Objects.equals(
 					 DetailASTUtil.getSignature(detailAST),
 					 DetailASTUtil.getSignature(methodDefAST)))) {
@@ -71,7 +73,36 @@ public class MethodNamingCheck extends BaseCheck {
 			}
 		}
 
-		log(detailAST.getLineNo(), _MSG_RENAME_METHOD, name, noDoName);
+		log(detailAST.getLineNo(), _MSG_RENAME_METHOD, methodName, noDoName);
+	}
+
+	private void _checkNonMethodName(DetailAST detailAST, String methodName) {
+		Matcher matcher = _nonMethodNamePattern.matcher(methodName);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(matcher.group(1));
+		sb.append(StringUtil.lowerCase(matcher.group(2)));
+
+		String s = matcher.group(3);
+
+		int i = StringUtil.startsWithWeight(s, StringUtil.upperCase(s));
+
+		if (i == 0) {
+			sb.append(s);
+		}
+		else {
+			sb.append(StringUtil.lowerCase(s.substring(0, i - 1)));
+			sb.append(s.substring(i - 1));
+		}
+
+		log(
+			detailAST.getLineNo(), _MSG_RENAME_METHOD, methodName,
+			sb.toString());
 	}
 
 	private String _getMethodName(DetailAST detailAST) {
@@ -84,5 +115,7 @@ public class MethodNamingCheck extends BaseCheck {
 
 	private final Pattern _doMethodNamePattern = Pattern.compile(
 		"^_do([A-Z])(.*)$");
+	private final Pattern _nonMethodNamePattern = Pattern.compile(
+		"(^non|.*Non)([A-Z])(.*)");
 
 }

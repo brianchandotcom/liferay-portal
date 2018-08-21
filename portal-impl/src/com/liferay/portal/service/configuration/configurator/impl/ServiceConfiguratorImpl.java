@@ -66,11 +66,25 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 			ClassLoader classLoader)
 		throws Exception {
 
-		initServiceComponent(serviceComponentConfiguration, classLoader);
+		_initServiceComponent(serviceComponentConfiguration, classLoader);
 
-		reconfigureCaches(classLoader);
+		Configuration configuration = null;
 
-		readResourceActions(classLoader);
+		try {
+			configuration = ConfigurationFactoryUtil.getConfiguration(
+				classLoader, "portlet");
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to read portlet.properties");
+			}
+
+			return;
+		}
+
+		_reconfigureCaches(classLoader, configuration);
+
+		_readResourceActions(classLoader, configuration);
 	}
 
 	public void setResourceActionLocalService(
@@ -111,7 +125,7 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		return classLoader.getResource(cacheConfigurationLocation);
 	}
 
-	protected void initServiceComponent(
+	private void _initServiceComponent(
 		ServiceComponentConfiguration serviceComponentConfiguration,
 		ClassLoader classLoader) {
 
@@ -162,20 +176,8 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		}
 	}
 
-	protected void readResourceActions(ClassLoader classLoader) {
-		Configuration configuration = null;
-
-		try {
-			configuration = ConfigurationFactoryUtil.getConfiguration(
-				classLoader, "portlet");
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read portlet.properties");
-			}
-
-			return;
-		}
+	private void _readResourceActions(
+		ClassLoader classLoader, Configuration configuration) {
 
 		try {
 			String portlets = configuration.get(
@@ -206,20 +208,9 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		}
 	}
 
-	protected void reconfigureCaches(ClassLoader classLoader) throws Exception {
-		Configuration configuration = null;
-
-		try {
-			configuration = ConfigurationFactoryUtil.getConfiguration(
-				classLoader, "portlet");
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read portlet.properties");
-			}
-
-			return;
-		}
+	private void _reconfigureCaches(
+			ClassLoader classLoader, Configuration configuration)
+		throws Exception {
 
 		String singleVMConfigurationLocation = configuration.get(
 			PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION);

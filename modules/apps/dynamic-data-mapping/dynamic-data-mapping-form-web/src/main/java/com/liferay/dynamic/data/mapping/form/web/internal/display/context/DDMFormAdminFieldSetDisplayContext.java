@@ -99,7 +99,7 @@ public class DDMFormAdminFieldSetDisplayContext
 			ddmFormBuilderContextFactory, ddmFormWebConfiguration,
 			formInstanceRecordLocalService, ddmFormInstanceRecordWriterTracker,
 			formInstanceService, formInstanceVersionLocalService,
-			formFieldTypeServicesTracker, formFieldTypesJSONSerializer,
+			formFieldTypeServicesTracker, formFieldTypesSerializerTracker,
 			formRenderer, formValuesFactory, formValuesMerger,
 			structureLocalService, structureService, jsonFactory, npmResolver);
 

@@ -123,7 +123,10 @@ public class WorkflowDefinitionDisplayContext {
 						dropdownItem.setHref(
 							response.createRenderURL(), "mvcPath",
 							"/definition/edit_workflow_definition.jsp");
-						dropdownItem.setLabel("new-workflow");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_workflowDefinitionRequestHelper.getRequest(),
+								"new-workflow"));
 					});
 			}
 		};

@@ -192,13 +192,12 @@ public class AxisExtender {
 			BundleWiring bundleContextBundleBundleWiring =
 				bundleContextBundle.adapt(BundleWiring.class);
 
-			AggregateClassLoader aggregateClassLoader =
-				new AggregateClassLoader(
-					bundleContextBundleBundleWiring.getClassLoader());
-
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-			aggregateClassLoader.addClassLoader(bundleWiring.getClassLoader());
+			ClassLoader aggregateClassLoader =
+				AggregateClassLoader.getAggregateClassLoader(
+					bundleContextBundleBundleWiring.getClassLoader(),
+					bundleWiring.getClassLoader());
 
 			Servlet servlet = (Servlet)ProxyUtil.newProxyInstance(
 				aggregateClassLoader, new Class<?>[] {Servlet.class},

@@ -25,6 +25,8 @@ import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKey
 import com.liferay.dynamic.data.mapping.exception.StructureNameException;
 import com.liferay.dynamic.data.mapping.internal.util.DDMFormTemplateSynchonizer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
@@ -164,7 +166,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
 		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
 		structure.setNameMap(nameMap, ddmForm.getDefaultLocale());
-		structure.setDefinition(serialize(ddmForm));
+		structure.setDefinition(serializeJSONDDMForm(ddmForm));
 		structure.setStorageType(storageType);
 		structure.setType(type);
 
@@ -242,7 +244,7 @@ public class DDMStructureLocalServiceImpl
 
 		ddmXML.validateXML(definition);
 
-		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
+		DDMForm ddmForm = deserializeXSDDDMForm(definition);
 
 		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
@@ -366,7 +368,7 @@ public class DDMStructureLocalServiceImpl
 
 		ddmXML.validateXML(definition);
 
-		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
+		DDMForm ddmForm = deserializeXSDDDMForm(definition);
 
 		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
@@ -921,7 +923,7 @@ public class DDMStructureLocalServiceImpl
 	public DDMForm getStructureDDMForm(DDMStructure structure)
 		throws PortalException {
 
-		return ddmFormJSONDeserializer.deserialize(structure.getDefinition());
+		return deserializeJSONDDMForm(structure.getDefinition());
 	}
 
 	/**
@@ -1183,7 +1185,7 @@ public class DDMStructureLocalServiceImpl
 		DDMForm ddmForm = ddm.updateDDMFormDefaultLocale(
 			structure.getDDMForm(), defaultImportLocale);
 
-		return serialize(ddmForm);
+		return serializeJSONDDMForm(ddmForm);
 	}
 
 	@Override
@@ -1456,7 +1458,7 @@ public class DDMStructureLocalServiceImpl
 
 		ddmXML.validateXML(definition);
 
-		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
+		DDMForm ddmForm = deserializeXSDDDMForm(definition);
 
 		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
@@ -1500,7 +1502,7 @@ public class DDMStructureLocalServiceImpl
 
 		ddmXML.validateXML(definition);
 
-		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
+		DDMForm ddmForm = deserializeXSDDDMForm(definition);
 
 		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
@@ -1536,7 +1538,7 @@ public class DDMStructureLocalServiceImpl
 
 		ddmXML.validateXML(definition);
 
-		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
+		DDMForm ddmForm = deserializeXSDDDMForm(definition);
 
 		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
@@ -1627,6 +1629,33 @@ public class DDMStructureLocalServiceImpl
 		return deletedStructureIds;
 	}
 
+	protected DDMForm deserializeDDMForm(
+		String content, DDMFormDeserializer ddmFormDeserializer) {
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
+	protected DDMForm deserializeJSONDDMForm(String content) {
+		DDMFormDeserializer ddmFormDeserializer =
+			ddmFormDeserializerTracker.getDDMFormDeserializer("json");
+
+		return deserializeDDMForm(content, ddmFormDeserializer);
+	}
+
+	protected DDMForm deserializeXSDDDMForm(String content) {
+		DDMFormDeserializer ddmFormDeserializer =
+			ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
+
+		return deserializeDDMForm(content, ddmFormDeserializer);
+	}
+
 	protected DDMStructure doUpdateStructure(
 			long userId, long parentStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,
@@ -1662,7 +1691,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersionUserId(user.getUserId());
 		structure.setVersionUserName(user.getFullName());
 		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
-		structure.setDefinition(serialize(ddmForm));
+		structure.setDefinition(serializeJSONDDMForm(ddmForm));
 
 		// Structure version
 
@@ -1895,7 +1924,7 @@ public class DDMStructureLocalServiceImpl
 			taskContextMap, serviceContext);
 	}
 
-	protected String serialize(DDMForm ddmForm) {
+	protected String serializeJSONDDMForm(DDMForm ddmForm) {
 		DDMFormSerializer ddmFormSerializer =
 			ddmFormSerializerTracker.getDDMFormSerializer("json");
 

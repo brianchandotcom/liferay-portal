@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="ResourceBundleCheck" files="src/main/java/com/liferay/frontend/editor/lang/internal/FrontendEditorLangResourceBundleLoader\.java" />
+	</source-check>
+</suppressions>

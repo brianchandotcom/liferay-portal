@@ -124,6 +124,7 @@
 		<suppress checks="PropertiesSourceFormatterFileCheck" files="source-formatter\.properties" />
 		<suppress checks="PropertiesWhitespaceCheck" files="build\.properties" />
 		<suppress checks="PropertiesWhitespaceCheck" files="sql/lportal\.properties" />
+		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ClassResourceBundleLoader\.java" />
 		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ResourceBundleUtil\.java" />
 		<suppress checks="StringUtilCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringUtilTest\.java" />
 		<suppress checks="XMLIndentationCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Calendar\.macro" />

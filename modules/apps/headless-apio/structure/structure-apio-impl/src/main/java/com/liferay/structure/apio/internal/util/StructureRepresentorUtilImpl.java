@@ -15,19 +15,17 @@
 package com.liferay.structure.apio.internal.util;
 
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
-import com.liferay.dynamic.data.mapping.model.DDMFormRule;
-import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.structure.apio.internal.model.FormLayoutPage;
+import com.liferay.structure.apio.architect.model.FormLayoutPage;
+import com.liferay.structure.apio.architect.util.StructureRepresentorUtil;
+import com.liferay.structure.apio.internal.model.FormLayoutPageImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,14 +38,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Paulo Cruz
  */
-public final class StructureRepresentorUtil {
+@Component(immediate = true, service = StructureRepresentorUtil.class)
+public final class StructureRepresentorUtilImpl implements
+	StructureRepresentorUtil {
 
-	public static Function
+	public Function
 		<DDMFormField, List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
-			Function<DDMFormField, DDMFormFieldOptions> function) {
+		Function<DDMFormField, DDMFormFieldOptions> function) {
 
 		return ddmFormField -> Try.fromFallible(
 			() -> function.apply(ddmFormField)
@@ -62,15 +64,16 @@ public final class StructureRepresentorUtil {
 		);
 	}
 
-	public static Function
+	public Function
 		<DDMFormField, List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
-			String key) {
+		String key) {
 
 		return getFieldOptions(
 			ddmFormField -> (DDMFormFieldOptions)ddmFormField.getProperty(key));
 	}
 
-	public static <T> Function<DDMFormField, T> getFieldProperty(
+	@Override
+	public <T> Function<DDMFormField, T> getFieldProperty(
 		Function<Object, T> parseFunction, String key) {
 
 		return ddmFormField -> Try.fromFallible(
@@ -82,14 +85,16 @@ public final class StructureRepresentorUtil {
 		);
 	}
 
-	public static BiFunction<DDMFormField, Locale, String> getLocalizedString(
+	@Override
+	public BiFunction<DDMFormField, Locale, String> getLocalizedString(
 		String key) {
 
 		return LocalizedValueUtil.getLocalizedString(
 			ddmFormField -> (LocalizedValue)ddmFormField.getProperty(key));
 	}
 
-	public static List<FormLayoutPage> getPages(DDMStructure ddmStructure) {
+	@Override
+	public List<FormLayoutPage> getPages(DDMStructure ddmStructure) {
 		return Try.fromFallible(
 			ddmStructure::getDDMFormLayout
 		).map(
@@ -102,38 +107,6 @@ public final class StructureRepresentorUtil {
 			_getFormLayoutPage(ddmStructure)
 		).collect(
 			Collectors.toList()
-		);
-	}
-
-	public static DDMFormSuccessPageSettings getSuccessPage(
-		DDMStructure ddmStructure) {
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		return ddmForm.getDDMFormSuccessPageSettings();
-	}
-
-	public static DDMStructureVersion getVersion(DDMStructure ddmStructure) {
-		return Try.fromFallible(
-			ddmStructure::getStructureVersion
-		).orElse(
-			null
-		);
-	}
-
-	public static Function<DDMFormField, Boolean> hasFormRules() {
-		return ddmFormField -> Try.fromFallible(
-			ddmFormField::getDDMForm
-		).map(
-			DDMForm::getDDMFormRules
-		).map(
-			List::stream
-		).orElseGet(
-			Stream::empty
-		).map(
-			DDMFormRule::getCondition
-		).anyMatch(
-			ruleCondition -> ruleCondition.contains(ddmFormField.getName())
 		);
 	}
 
@@ -185,7 +158,7 @@ public final class StructureRepresentorUtil {
 		).map(
 			_getFieldsPerPage(ddmStructure)
 		).map(
-			ddmFormFields -> new FormLayoutPage(
+			ddmFormFields -> new FormLayoutPageImpl(
 				ddmFormLayoutPage, ddmFormFields)
 		).orElse(
 			null

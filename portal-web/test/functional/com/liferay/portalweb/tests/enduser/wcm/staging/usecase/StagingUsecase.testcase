@@ -153,13 +153,10 @@
 	</command>
 
 	<command name="EditPublishTemplate" priority="4">
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
@@ -253,16 +250,18 @@
 			<var name="pageName" value="Page Name 2" />
 		</execute>
 
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Blogs" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewNoPG">
+		<execute macro="BlogsEntry#viewNoCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="Web Content Display" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedView" />
@@ -308,15 +307,6 @@
 			<var name="pageNameList" value="Staging Test Page" />
 		</execute>
 
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
 		<execute macro="Page#viewSpecificPG">
 			<var name="pageNameList" value="Page Name 2" />
 		</execute>
@@ -328,6 +318,16 @@
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewContent">
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 

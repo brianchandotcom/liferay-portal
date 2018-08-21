@@ -7,6 +7,7 @@ import LayoutSupport from './LayoutSupport.es';
 import Soy from 'metal-soy';
 import templates from './LayoutRenderer.soy.js';
 import {ClayActionsDropdown} from 'clay-dropdown';
+import {setLocalizedValue} from '../../util/internationalization.es';
 import '../PageLayout/PageLayout.es';
 
 /**
@@ -168,13 +169,16 @@ class LayoutRenderer extends Component {
 	 * @private
 	 */
 
-	_changePageProperty({delegateTarget}, pageProperty) {
+	_changePageForm({delegateTarget}, pageProperty) {
 		const {dataset, value} = delegateTarget;
 		const {pageId} = dataset;
+		
+		const languageId = Liferay.ThemeDisplay.getLanguageId();
 		const pages = [...this.pages];
 
 		pages[pageId] = {...pages[pageId]};
-		pages[pageId][pageProperty] = value;
+
+		setLocalizedValue(pages[pageId], languageId, pageProperty, value);
 
 		return pages;
 	}
@@ -207,7 +211,7 @@ class LayoutRenderer extends Component {
 	 */
 
 	_handleChangePageTitle(event) {
-		const pages = this._changePageProperty(event, 'title');
+		const pages = this._changePageForm(event, 'title');
 		this.emit('updatePages', pages);
 	}
 
@@ -218,7 +222,7 @@ class LayoutRenderer extends Component {
 	 */
 
 	_handleChangePageDescription(event) {
-		const pages = this._changePageProperty(event, 'title');
+		const pages = this._changePageForm(event, 'description');
 		this.emit('updatePages', pages);
 	}
 

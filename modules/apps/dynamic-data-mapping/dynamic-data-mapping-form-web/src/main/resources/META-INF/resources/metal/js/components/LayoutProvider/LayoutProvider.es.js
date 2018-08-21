@@ -299,7 +299,7 @@ class LayoutProvider extends Component {
 	_handleUpdatePages(pages) {
 		this.setState(
 			{
-				context: pages
+				pages
 			}
 		);
 	}

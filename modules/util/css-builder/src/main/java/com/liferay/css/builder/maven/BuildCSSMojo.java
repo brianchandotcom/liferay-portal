@@ -25,8 +25,10 @@ import java.util.List;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.apache.maven.project.MavenProject;
 
+import org.codehaus.plexus.component.repository.ComponentDependency;
 import org.codehaus.plexus.util.Scanner;
 
 import org.eclipse.aether.RepositorySystem;
@@ -52,6 +54,8 @@ public class BuildCSSMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
+			boolean artifactPresent = false;
+
 			for (Dependency dependency : _project.getDependencies()) {
 				String artifactId = dependency.getArtifactId();
 
@@ -64,7 +68,26 @@ public class BuildCSSMojo extends AbstractMojo {
 						_cssBuilderArgs.setImportDir(artifact.getFile());
 					}
 
+					artifactPresent = true;
+
 					break;
+				}
+			}
+
+			if (!artifactPresent) {
+				for (ComponentDependency componentDependency :
+						_pluginDescriptor.getDependencies()) {
+
+					String artifactId = componentDependency.getArtifactId();
+
+					if (artifactId.equals("com.liferay.frontend.css.common") &&
+						(_cssBuilderArgs.getImportDir() == null)) {
+
+						Artifact artifact = _resolveArtifact(
+							componentDependency);
+
+						_cssBuilderArgs.setImportDir(artifact.getFile());
+					}
 				}
 			}
 
@@ -187,12 +210,8 @@ public class BuildCSSMojo extends AbstractMojo {
 		}
 	}
 
-	private Artifact _resolveArtifact(Dependency dependency)
+	private Artifact _resolveArtifact(Artifact artifact)
 		throws ArtifactResolutionException {
-
-		Artifact artifact = new DefaultArtifact(
-			dependency.getGroupId(), dependency.getArtifactId(),
-			dependency.getType(), dependency.getVersion());
 
 		ArtifactRequest artifactRequest = new ArtifactRequest();
 
@@ -211,12 +230,40 @@ public class BuildCSSMojo extends AbstractMojo {
 		return artifactResult.getArtifact();
 	}
 
+	private Artifact _resolveArtifact(ComponentDependency componentDependency)
+		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			componentDependency.getGroupId(),
+			componentDependency.getArtifactId(), componentDependency.getType(),
+			componentDependency.getVersion());
+
+		return _resolveArtifact(artifact);
+	}
+
+	private Artifact _resolveArtifact(Dependency dependency)
+		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			dependency.getGroupId(), dependency.getArtifactId(),
+			dependency.getType(), dependency.getVersion());
+
+		return _resolveArtifact(artifact);
+	}
+
 	/**
 	 * @component
 	 */
 	private BuildContext _buildContext;
 
 	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();
+
+	/**
+	 * @parameter default-value="${plugin}"
+	 * @readonly
+	 * @required
+	 */
+	private PluginDescriptor _pluginDescriptor;
 
 	/**
 	 * @parameter property="project"

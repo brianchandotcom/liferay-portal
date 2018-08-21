@@ -17,27 +17,36 @@ package com.liferay.dynamic.data.mapping.validator;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 
 /**
- * @author Marcellus Tavares
+ * @author Leonardo Barros
  */
-public interface DDMFormValidator {
+public final class DDMFormValidatorValidateRequest {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by
-	 * {@link DDMFormValidator#validate(DDMFormValidatorValidateRequest)}
-	 */
-	@Deprecated
-	public default void validate(DDMForm ddmForm)
-		throws DDMFormValidationException {
-
-		DDMFormValidatorValidateRequest validateFormRequest =
-			DDMFormValidatorValidateRequest.Builder.newBuilder(
-				ddmForm
-			).build();
-
-		validate(validateFormRequest);
+	public DDMForm getDDMForm() {
+		return _ddmForm;
 	}
 
-	public void validate(DDMFormValidatorValidateRequest validateFormRequest)
-		throws DDMFormValidationException;
+	public static class Builder {
+
+		public static Builder newBuilder(DDMForm ddmForm) {
+			return new Builder(ddmForm);
+		}
+
+		public DDMFormValidatorValidateRequest build() {
+			return _validateFormRequest;
+		}
+
+		private Builder(DDMForm ddmForm) {
+			_validateFormRequest._ddmForm = ddmForm;
+		}
+
+		private final DDMFormValidatorValidateRequest _validateFormRequest =
+			new DDMFormValidatorValidateRequest();
+
+	}
+
+	private DDMFormValidatorValidateRequest() {
+	}
+
+	private DDMForm _ddmForm;
 
 }

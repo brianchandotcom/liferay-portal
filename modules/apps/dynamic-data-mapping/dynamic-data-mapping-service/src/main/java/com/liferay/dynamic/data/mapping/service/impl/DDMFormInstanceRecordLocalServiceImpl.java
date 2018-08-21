@@ -41,6 +41,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorValidateRequest;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -867,7 +868,12 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			return;
 		}
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				ddmFormValues
+			);
+
+		ddmFormValuesValidator.validate(builder.build());
 	}
 
 	protected void validate(long groupId, DDMFormInstance ddmFormInstance)

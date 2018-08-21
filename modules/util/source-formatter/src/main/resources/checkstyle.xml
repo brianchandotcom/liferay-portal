@@ -32,6 +32,18 @@
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Private non-static field ''{0}'' must match pattern ''{1}''" />
 		</module>
+		<module name="MethodNameCheck">
+			<property name="applyToPackage" value="false" />
+			<property name="applyToPrivate" value="false" />
+			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
+			<message key="name.invalidPattern" value="Protected or public method ''{0}'' must match pattern ''{1}''" />
+		</module>
+		<module name="MethodNameCheck">
+			<property name="applyToProtected" value="false" />
+			<property name="applyToPublic" value="false" />
+			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$|readObject|writeObject" />
+			<message key="name.invalidPattern" value="Private method ''{0}'' must match pattern ''{1}''" />
+		</module>
 		<module name="MethodParamPadCheck" />
 		<module name="MissingDeprecatedCheck" />
 		<module name="ModifierOrderCheck" />
@@ -182,19 +194,8 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MapIterationCheck">
 			<message key="entry.set.use" value="Use Map.entrySet() to retrieve values. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/map_iteration.markdown" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNameCheck">
-			<property name="applyToPackage" value="false" />
-			<property name="applyToPrivate" value="false" />
-			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
-			<message key="name.invalidPattern" value="Protected or public method ''{0}'' must match pattern ''{1}''" />
-		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNameCheck">
-			<property name="applyToProtected" value="false" />
-			<property name="applyToPublic" value="false" />
-			<property name="checkDoMethodName" value="true" />
-			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$|readObject|writeObject" />
+		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNamingCheck">
 			<message key="method.rename" value="Rename method ''{0}'' to ''{1}''" />
-			<message key="name.invalidPattern" value="Private method ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingAuthorCheck">
 			<message key="author.missing" value="Missing author" />

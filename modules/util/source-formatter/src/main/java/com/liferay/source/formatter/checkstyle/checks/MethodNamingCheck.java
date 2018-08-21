@@ -16,11 +16,9 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-import com.liferay.source.formatter.util.DebugUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,54 +28,16 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class MethodNameCheck
-	extends com.puppycrawl.tools.checkstyle.checks.naming.MethodNameCheck {
+public class MethodNamingCheck extends BaseCheck {
 
-	public void setCheckDoMethodName(boolean checkDoMethodName) {
-		_checkDoMethodName = checkDoMethodName;
-	}
-
-	public void setEnabled(boolean enabled) {
-		_enabled = enabled;
-	}
-
-	public void setShowDebugInformation(boolean showDebugInformation) {
-		_showDebugInformation = showDebugInformation;
+	@Override
+	public int[] getDefaultTokens() {
+		return new int[] {TokenTypes.METHOD_DEF};
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
-		if (!_enabled) {
-			return;
-		}
-
-		if (!_showDebugInformation) {
-			_checkMethodName(detailAST);
-
-			return;
-		}
-
-		long startTime = System.currentTimeMillis();
-
-		_checkMethodName(detailAST);
-
-		long endTime = System.currentTimeMillis();
-
-		Class<?> clazz = getClass();
-
-		DebugUtil.increaseProcessingTime(
-			clazz.getSimpleName(), endTime - startTime);
-	}
-
-	@Override
-	protected boolean mustCheckName(DetailAST detailAST) {
-		if (AnnotationUtil.containsAnnotation(detailAST, "Reference")) {
-			return false;
-		}
-
-		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);
-
-		return shouldCheckInScope(modifiersAST);
+	protected void doVisitToken(DetailAST detailAST) {
+		_checkDoMethodName(detailAST);
 	}
 
 	private void _checkDoMethodName(DetailAST detailAST) {
@@ -114,14 +74,6 @@ public class MethodNameCheck
 		log(detailAST.getLineNo(), _MSG_RENAME_METHOD, name, noDoName);
 	}
 
-	private void _checkMethodName(DetailAST detailAST) {
-		if (_checkDoMethodName) {
-			_checkDoMethodName(detailAST);
-		}
-
-		super.visitToken(detailAST);
-	}
-
 	private String _getMethodName(DetailAST detailAST) {
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
@@ -130,10 +82,7 @@ public class MethodNameCheck
 
 	private static final String _MSG_RENAME_METHOD = "method.rename";
 
-	private boolean _checkDoMethodName;
 	private final Pattern _doMethodNamePattern = Pattern.compile(
 		"^_do([A-Z])(.*)$");
-	private boolean _enabled = true;
-	private boolean _showDebugInformation;
 
 }

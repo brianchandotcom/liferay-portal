@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
+import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
@@ -80,6 +81,7 @@ public class DDMFormAdminFieldSetDisplayContext
 		AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 		DDMFormBuilderContextFactory ddmFormBuilderContextFactory,
+		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever,
 		DDMFormWebConfiguration ddmFormWebConfiguration,
 		DDMFormInstanceRecordLocalService formInstanceRecordLocalService,
 		DDMFormInstanceRecordWriterTracker ddmFormInstanceRecordWriterTracker,
@@ -96,12 +98,13 @@ public class DDMFormAdminFieldSetDisplayContext
 		super(
 			renderRequest, renderResponse,
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
-			ddmFormBuilderContextFactory, ddmFormWebConfiguration,
-			formInstanceRecordLocalService, ddmFormInstanceRecordWriterTracker,
-			formInstanceService, formInstanceVersionLocalService,
-			formFieldTypeServicesTracker, formFieldTypesSerializerTracker,
-			formRenderer, formValuesFactory, formValuesMerger,
-			structureLocalService, structureService, jsonFactory, npmResolver);
+			ddmFormBuilderContextFactory, ddmFormBuilderSettingsRetriever,
+			ddmFormWebConfiguration, formInstanceRecordLocalService,
+			ddmFormInstanceRecordWriterTracker, formInstanceService,
+			formInstanceVersionLocalService, formFieldTypeServicesTracker,
+			formFieldTypesSerializerTracker, formRenderer, formValuesFactory,
+			formValuesMerger, structureLocalService, structureService,
+			jsonFactory, npmResolver);
 
 		_fieldSetPermissionCheckerHelper = new FieldSetPermissionCheckerHelper(
 			formAdminRequestHelper);

@@ -19,11 +19,15 @@ import static com.liferay.forms.apio.internal.util.LocalizedValueUtil.getLocaliz
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.representor.NestedRepresentor;
 import com.liferay.apio.architect.representor.Representor;
+import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.structure.apio.architect.model.FormLayoutPage;
 import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelper;
 import com.liferay.structure.apio.architect.util.StructureRepresentorUtil;
@@ -52,43 +56,26 @@ public class FormStructureRepresentorBuilderHelper {
 	public Representor.FirstStep<DDMStructure> buildDDMStructureFirstStep(
 		Representor.Builder<DDMStructure, Long> builder) {
 
-		return _structureRepresentorBuilderHelper.buildDDMStructureFirstStep(
-			builder);
-	}
-
-	public NestedRepresentor.FirstStep<DDMFormField> buildFormFields(
-		NestedRepresentor.Builder<DDMFormField> builder) {
-
-		NestedRepresentor.FirstStep<DDMFormField> ddmFormFieldFirstStepBuilder =
-			_structureRepresentorBuilderHelper.buildDDMFormFieldFirstStep(
+		Representor.FirstStep<DDMStructure> ddmStructureFirstStep =
+			_structureRepresentorBuilderHelper.buildDDMStructureFirstStep(
 				builder);
 
-		ddmFormFieldFirstStepBuilder.addBoolean(
-			"hasFormRules", _hasFormRules()
-		).addBoolean(
-			"transient", DDMFormField::isTransient
+		Representor.FirstStep<DDMStructure> bidirectionalModelStepBuilder =
+			ddmStructureFirstStep.addBidirectionalModel(
+				"contentSpace", "formStructures", ContentSpaceIdentifier.class,
+				DDMStructure::getGroupId);
+
+		bidirectionalModelStepBuilder.addNested(
+			"version", this::_getVersion, this::_buildVersion
 		).addNested(
-			"grid", ddmFormField -> ddmFormField, this::_buildGridProperties
-		).addString(
-			"indexType", DDMFormField::getIndexType
+			"successPage", this::_getSuccessPage,
+			this::_buildSuccessPageSettings
+		).addNestedList(
+			"fields", _structureRepresentorUtil::getPages,
+			ddmFormFieldBuilder -> _buildFormPages(ddmFormFieldBuilder).build()
 		);
 
-		return ddmFormFieldFirstStepBuilder;
-	}
-
-	public NestedRepresentor.FirstStep<FormLayoutPage> buildFormPages(
-		NestedRepresentor.Builder<FormLayoutPage> builder) {
-
-		NestedRepresentor.FirstStep<FormLayoutPage> formLayoutPageFirstStep =
-			_structureRepresentorBuilderHelper.buildFormLayoutPageFirstStep(
-				builder);
-
-		formLayoutPageFirstStep.addNestedList(
-			"fields", FormLayoutPage::getFields,
-			ddmFormFieldBuilder -> buildFormFields(
-				ddmFormFieldBuilder).build());
-
-		return formLayoutPageFirstStep;
+		return ddmStructureFirstStep;
 	}
 
 	private static Function<DDMFormField, Boolean> _hasFormRules() {
@@ -121,6 +108,41 @@ public class FormStructureRepresentorBuilderHelper {
 		).build();
 	}
 
+	private NestedRepresentor.FirstStep<DDMFormField> _buildFormFields(
+		NestedRepresentor.Builder<DDMFormField> builder) {
+
+		NestedRepresentor.FirstStep<DDMFormField> ddmFormFieldFirstStepBuilder =
+			_structureRepresentorBuilderHelper.buildDDMFormFieldFirstStep(
+				builder);
+
+		ddmFormFieldFirstStepBuilder.addBoolean(
+			"hasFormRules", _hasFormRules()
+		).addBoolean(
+			"transient", DDMFormField::isTransient
+		).addNested(
+			"grid", ddmFormField -> ddmFormField, this::_buildGridProperties
+		).addString(
+			"indexType", DDMFormField::getIndexType
+		);
+
+		return ddmFormFieldFirstStepBuilder;
+	}
+
+	private NestedRepresentor.FirstStep<FormLayoutPage> _buildFormPages(
+		NestedRepresentor.Builder<FormLayoutPage> builder) {
+
+		NestedRepresentor.FirstStep<FormLayoutPage> formLayoutPageFirstStep =
+			_structureRepresentorBuilderHelper.buildFormLayoutPageFirstStep(
+				builder);
+
+		formLayoutPageFirstStep.addNestedList(
+			"fields", FormLayoutPage::getFields,
+			ddmFormFieldBuilder -> _buildFormFields(
+				ddmFormFieldBuilder).build());
+
+		return formLayoutPageFirstStep;
+	}
+
 	private NestedRepresentor<DDMFormField> _buildGridProperties(
 		NestedRepresentor.Builder<DDMFormField> builder) {
 
@@ -133,6 +155,49 @@ public class FormStructureRepresentorBuilderHelper {
 			"rows", _structureRepresentorUtil.getFieldOptions("rows"),
 			this::_buildFieldOptions
 		).build();
+	}
+
+	private NestedRepresentor<DDMFormSuccessPageSettings>
+		_buildSuccessPageSettings(
+			NestedRepresentor.Builder<DDMFormSuccessPageSettings> builder) {
+
+		return builder.types(
+			"FormSuccessPageSettings"
+		).addBoolean(
+			"isEnabled", DDMFormSuccessPageSettings::isEnabled
+		).addLocalizedStringByLocale(
+			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
+		).addLocalizedStringByLocale(
+			"text", getLocalizedString(DDMFormSuccessPageSettings::getBody)
+		).build();
+	}
+
+	private NestedRepresentor<DDMStructureVersion> _buildVersion(
+		NestedRepresentor.Builder<DDMStructureVersion> nestedBuilder) {
+
+		return nestedBuilder.types(
+			"StructureVersion"
+		).addLinkedModel(
+			"creator", PersonIdentifier.class, DDMStructureVersion::getUserId
+		).addString(
+			"name", DDMStructureVersion::getVersion
+		).build();
+	}
+
+	private DDMFormSuccessPageSettings _getSuccessPage(
+		DDMStructure ddmStructure) {
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		return ddmForm.getDDMFormSuccessPageSettings();
+	}
+
+	private DDMStructureVersion _getVersion(DDMStructure ddmStructure) {
+		return Try.fromFallible(
+			ddmStructure::getStructureVersion
+		).orElse(
+			null
+		);
 	}
 
 	@Reference

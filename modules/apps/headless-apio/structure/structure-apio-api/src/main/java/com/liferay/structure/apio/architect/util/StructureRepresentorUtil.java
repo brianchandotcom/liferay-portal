@@ -41,9 +41,9 @@ public interface StructureRepresentorUtil {
 	public <T> Function<DDMFormField, T> getFieldProperty(
 		Function<Object, T> parseFunction, String key);
 
+	public List<FormLayoutPage> getFormLayoutPages(DDMStructure ddmStructure);
+
 	public BiFunction<DDMFormField, Locale, String> getLocalizedString(
 		String key);
-
-	public List<FormLayoutPage> getPages(DDMStructure ddmStructure);
 
 }

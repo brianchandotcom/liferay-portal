@@ -135,7 +135,7 @@ public class StructureRepresentorBuilderHelperImpl
 		).addLocalizedStringByLocale(
 			"name", DDMStructure::getName
 		).addNestedList(
-			"formPages", _structureRepresentorUtil::getPages,
+			"formPages", _structureRepresentorUtil::getFormLayoutPages,
 			formLayoutPageBuilder ->
 				buildFormLayoutPageFirstStep(formLayoutPageBuilder).build()
 		).addStringList(

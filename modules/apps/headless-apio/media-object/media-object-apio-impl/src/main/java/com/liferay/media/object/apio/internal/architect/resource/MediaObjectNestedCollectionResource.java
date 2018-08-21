@@ -113,8 +113,8 @@ public class MediaObjectNestedCollectionResource
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, FileEntry::getUserId
 		).addNestedList(
-			"versions", this::_getMediaObjectVersions,
-			this::_getMediaObjectVersion
+			"encoding", this::_getMediaQueries,
+			this::_getMediaQueryNestedRepresentor
 		).addNumber(
 			"sizeInBytes", FileEntry::getSize
 		).addRelatedCollection(
@@ -160,20 +160,7 @@ public class MediaObjectNestedCollectionResource
 		return ListUtil.toList(assetTags, AssetTag::getName);
 	}
 
-	private NestedRepresentor<MediaQuery> _getMediaObjectVersion(
-		Builder<MediaQuery> builder) {
-
-		return builder.types(
-			"MediaObjectVersion"
-		).addNestedList(
-			"conditions", this::_getMediaQueryConditions,
-			this::_getMediaQueryCondition
-		).addRelativeURL(
-			"url", this::_getMediaQuerySrc
-		).build();
-	}
-
-	private List<MediaQuery> _getMediaObjectVersions(FileEntry fileEntry) {
+	private List<MediaQuery> _getMediaQueries(FileEntry fileEntry) {
 		String mimeType = fileEntry.getMimeType();
 
 		if (_amImageMimeTypeProvider.isMimeTypeSupported(mimeType)) {
@@ -187,20 +174,23 @@ public class MediaObjectNestedCollectionResource
 		return null;
 	}
 
-	private NestedRepresentor<Condition> _getMediaQueryCondition(
-		Builder<Condition> builder) {
+	private NestedRepresentor<MediaQuery> _getMediaQueryNestedRepresentor(
+		Builder<MediaQuery> builder) {
 
 		return builder.types(
-			"MediaObjectVersionConditions"
-		).addString(
-			"attribute", Condition::getAttribute
-		).addString(
-			"value", Condition::getValue
+			"ImageObject", "MediaObject"
+		).addNestedList(
+			"exifData", MediaQuery::getConditions,
+			nestedBuilder -> nestedBuilder.types(
+				"ExifData", "PropertyValue"
+			).addString(
+				"name", Condition::getAttribute
+			).addString(
+				"value", Condition::getValue
+			).build()
+		).addRelativeURL(
+			"url", this::_getMediaQuerySrc
 		).build();
-	}
-
-	private List<Condition> _getMediaQueryConditions(MediaQuery mediaQuery) {
-		return mediaQuery.getConditions();
 	}
 
 	private String _getMediaQuerySrc(MediaQuery mediaQuery) {

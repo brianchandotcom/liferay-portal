@@ -87,15 +87,7 @@ public final class StructureRepresentorUtilImpl implements
 	}
 
 	@Override
-	public BiFunction<DDMFormField, Locale, String> getLocalizedString(
-		String key) {
-
-		return LocalizedValueUtil.getLocalizedString(
-			ddmFormField -> (LocalizedValue)ddmFormField.getProperty(key));
-	}
-
-	@Override
-	public List<FormLayoutPage> getPages(DDMStructure ddmStructure) {
+	public List<FormLayoutPage> getFormLayoutPages(DDMStructure ddmStructure) {
 		return Try.fromFallible(
 			ddmStructure::getDDMFormLayout
 		).map(
@@ -109,6 +101,14 @@ public final class StructureRepresentorUtilImpl implements
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	@Override
+	public BiFunction<DDMFormField, Locale, String> getLocalizedString(
+		String key) {
+
+		return LocalizedValueUtil.getLocalizedString(
+			ddmFormField -> (LocalizedValue)ddmFormField.getProperty(key));
 	}
 
 	private static List<String> _getFieldNames(

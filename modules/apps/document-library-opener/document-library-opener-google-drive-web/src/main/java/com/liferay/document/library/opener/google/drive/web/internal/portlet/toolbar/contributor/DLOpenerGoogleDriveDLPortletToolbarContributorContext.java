@@ -41,12 +41,17 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLPortletToolbarContributorContext.class)
+@Component(
+	configurationPid = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = DLPortletToolbarContributorContext.class
+)
 public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 	implements DLPortletToolbarContributorContext {
 

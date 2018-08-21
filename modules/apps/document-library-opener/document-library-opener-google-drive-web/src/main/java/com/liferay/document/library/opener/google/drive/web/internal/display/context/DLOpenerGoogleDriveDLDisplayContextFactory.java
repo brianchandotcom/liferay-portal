@@ -31,12 +31,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLDisplayContextFactory.class)
+@Component(
+	configurationPid = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = DLDisplayContextFactory.class
+)
 public class DLOpenerGoogleDriveDLDisplayContextFactory
 	extends BaseDLDisplayContextFactory {
 

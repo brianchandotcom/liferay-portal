@@ -49,8 +49,8 @@ public class BuildThemeMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
-		boolean styledThemePresent = false;
-		boolean unstyledThemepresent = false;
+		boolean themeStyledArtifactPresent = false;
+		boolean themeUnstyledArtifactPresent = false;
 
 		try {
 			for (Dependency dependency : _project.getDependencies()) {
@@ -67,7 +67,7 @@ public class BuildThemeMojo extends AbstractMojo {
 						_themeBuilderArgs.setParentDir(artifact.getFile());
 					}
 
-					styledThemePresent = true;
+					themeStyledArtifactPresent = true;
 				}
 				else if (artifactId.equals(
 							 "com.liferay.frontend.theme.unstyled") &&
@@ -79,11 +79,11 @@ public class BuildThemeMojo extends AbstractMojo {
 						_themeBuilderArgs.setUnstyledDir(artifact.getFile());
 					}
 
-					unstyledThemepresent = true;
+					themeUnstyledArtifactPresent = true;
 				}
 			}
 
-			if (!styledThemePresent | !unstyledThemepresent) {
+			if (!themeStyledArtifactPresent | !themeUnstyledArtifactPresent) {
 				for (ComponentDependency componentDependency :
 						_pluginDescriptor.getDependencies()) {
 

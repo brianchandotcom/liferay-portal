@@ -87,6 +87,8 @@ public class BuildCSSMojo extends AbstractMojo {
 							componentDependency);
 
 						_cssBuilderArgs.setImportDir(artifact.getFile());
+
+						break;
 					}
 				}
 			}

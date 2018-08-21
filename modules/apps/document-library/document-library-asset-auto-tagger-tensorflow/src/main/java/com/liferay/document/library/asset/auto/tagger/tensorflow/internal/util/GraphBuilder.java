@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 
+import com.liferay.portal.kernel.util.ContentTypes;
+
 import org.tensorflow.DataType;
 import org.tensorflow.Graph;
 import org.tensorflow.OperationBuilder;
@@ -74,11 +76,13 @@ public class GraphBuilder {
 		}
 	}
 
-	public Output<UInt8> decodeJpeg(
-		Output<String> contentsOutput, long channels) {
+	public Output<UInt8> decodeImage(
+		Output<String> contentsOutput, String mimeType, long channels) {
+
+		String decodeOperationName = _getDecodeOperationName(mimeType);
 
 		OperationBuilder operationBuilder = _graph.opBuilder(
-			"DecodeJpeg", "DecodeJpeg");
+			decodeOperationName, decodeOperationName);
 
 		return operationBuilder.addInput(
 			contentsOutput
@@ -161,6 +165,21 @@ public class GraphBuilder {
 		).output(
 			0
 		);
+	}
+
+	private String _getDecodeOperationName(String mimeType) {
+		if (ContentTypes.IMAGE_BMP.equals(mimeType)) {
+			return "DecodeBmp";
+		}
+		else if (ContentTypes.IMAGE_JPEG.equals(mimeType)) {
+			return "DecodeJpeg";
+		}
+		else if (ContentTypes.IMAGE_PNG.equals(mimeType)) {
+			return "DecodePng";
+		}
+		else {
+			return "DecodeJpeg";
+		}
 	}
 
 	private final Graph _graph;

@@ -82,7 +82,7 @@ public class InceptionImageLabelerUtil {
 
 		Graph imageDecoderGraph = _buildGraph(
 			(graphBuilder, input) -> graphBuilder.cast(
-				graphBuilder.decodeJpeg(input, 3), Float.class),
+				graphBuilder.decodeImage(input, mimeType, 3), Float.class),
 			String.class);
 
 		return _getOutputTensor(

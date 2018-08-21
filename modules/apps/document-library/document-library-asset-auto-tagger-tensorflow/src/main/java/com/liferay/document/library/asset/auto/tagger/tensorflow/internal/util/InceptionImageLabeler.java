@@ -70,8 +70,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = InceptionImageLabeler.class)
 public class InceptionImageLabeler {
 
-	public List<String> label(byte[] imageBytes, float confidenceThreshold) {
-		float[] labelProbabilities = _getLabelProbabilities(imageBytes);
+	public List<String> label(
+		byte[] imageBytes, String mimeType, float confidenceThreshold) {
+
+		float[] labelProbabilities = _getLabelProbabilities(
+			imageBytes, mimeType);
 
 		Stream<Integer> stream = _getBestIndexesStream(
 			labelProbabilities, confidenceThreshold);
@@ -221,7 +224,7 @@ public class InceptionImageLabeler {
 		return url.openStream();
 	}
 
-	private float[] _getLabelProbabilities(byte[] imageBytes) {
+	private float[] _getLabelProbabilities(byte[] imageBytes, String mimeType) {
 		ProcessChannel<String> processChannel = _processChannel;
 
 		if (processChannel == null) {
@@ -242,7 +245,7 @@ public class InceptionImageLabeler {
 		}
 
 		Future<float[]> future = processChannel.write(
-			new GetLabelProbabilitiesProcessCallable(imageBytes));
+			new GetLabelProbabilitiesProcessCallable(imageBytes, mimeType));
 
 		try {
 			return future.get();

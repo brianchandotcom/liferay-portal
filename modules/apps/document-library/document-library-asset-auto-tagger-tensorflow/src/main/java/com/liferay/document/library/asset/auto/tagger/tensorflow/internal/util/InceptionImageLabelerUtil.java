@@ -37,8 +37,10 @@ import org.tensorflow.Tensor;
  */
 public class InceptionImageLabelerUtil {
 
-	public static float[] getLabelProbabilities(byte[] imageBytes) {
-		try (Tensor<Float> imageTensor = _normalizeImage(imageBytes);
+	public static float[] getLabelProbabilities(
+		byte[] imageBytes, String mimeType) {
+
+		try (Tensor<Float> imageTensor = _normalizeImage(imageBytes, mimeType);
 			Tensor<Float> resultTensor = _getOutputTensor(
 				_imageLabelerGraph, imageTensor)) {
 
@@ -75,7 +77,9 @@ public class InceptionImageLabelerUtil {
 		return graph;
 	}
 
-	private static Tensor<Float> _decodeImage(byte[] imageBytes) {
+	private static Tensor<Float> _decodeImage(
+		byte[] imageBytes, String mimeType) {
+
 		Graph imageDecoderGraph = _buildGraph(
 			(graphBuilder, input) -> graphBuilder.cast(
 				graphBuilder.decodeJpeg(input, 3), Float.class),
@@ -100,8 +104,10 @@ public class InceptionImageLabelerUtil {
 		}
 	}
 
-	private static Tensor<Float> _normalizeImage(byte[] imageBytes) {
-		try (Tensor<Float> tensor = _decodeImage(imageBytes)) {
+	private static Tensor<Float> _normalizeImage(
+		byte[] imageBytes, String mimeType) {
+
+		try (Tensor<Float> tensor = _decodeImage(imageBytes, mimeType)) {
 			return _getOutputTensor(_imageNormalizerGraph, tensor);
 		}
 	}

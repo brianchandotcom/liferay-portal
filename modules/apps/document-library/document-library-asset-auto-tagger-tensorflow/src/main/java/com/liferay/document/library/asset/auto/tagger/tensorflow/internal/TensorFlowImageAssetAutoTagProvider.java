@@ -69,6 +69,7 @@ public class TensorFlowImageAssetAutoTagProvider
 				if (_isSupportedMimeType(fileVersion.getMimeType())) {
 					return _inceptionImageLabeler.label(
 						FileUtil.getBytes(fileVersion.getContentStream(false)),
+						fileVersion.getMimeType(),
 						tensorFlowImageAssetAutoTagProviderCompanyConfiguration.
 							confidenceThreshold());
 				}

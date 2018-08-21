@@ -135,7 +135,7 @@ manually adding a dependency to the `cssBuilder` configuration:
 
 ```gradle
 dependencies {
-	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "2.1.2"
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "2.1.3"
 }
 ```
 

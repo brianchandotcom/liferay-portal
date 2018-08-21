@@ -53,8 +53,6 @@ describe('WebContent Plugin', () => {
 				eventId: 'webContentViewed',
 			});
 
-			console.log('events[0]', events[0]);
-
 			expect(events[0].properties.articleId).to.equal('assetId');
 
 			document.body.removeChild(webContentElement);

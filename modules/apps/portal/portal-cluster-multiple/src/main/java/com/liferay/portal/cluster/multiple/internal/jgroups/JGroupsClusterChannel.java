@@ -49,7 +49,8 @@ public class JGroupsClusterChannel implements ClusterChannel {
 	public JGroupsClusterChannel(
 		String channelLogicName, String channelProperties, String clusterName,
 		ClusterReceiver clusterReceiver, InetAddress bindInetAddress,
-		ClusterExecutorConfiguration clusterExecutorConfiguration) {
+		ClusterExecutorConfiguration clusterExecutorConfiguration,
+		Map<ClassLoader, ClassLoader> classLoaders) {
 
 		if (Validator.isNull(channelProperties)) {
 			throw new NullPointerException("Channel properties is null");
@@ -81,7 +82,8 @@ public class JGroupsClusterChannel implements ClusterChannel {
 				tp.setBindAddress(bindInetAddress);
 			}
 
-			_jChannel.setReceiver(new JGroupsReceiver(clusterReceiver));
+			_jChannel.setReceiver(
+				new JGroupsReceiver(clusterReceiver, classLoaders));
 
 			_jChannel.connect(_clusterName);
 

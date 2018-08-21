@@ -561,7 +561,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntryPersistence.fetchByG_N(groupId, name);
 
 		if (layoutPageTemplateEntry != null) {
-			throw new DuplicateLayoutPageTemplateEntryException(name);
+			throw new DuplicateLayoutPageTemplateEntryException(
+				"Duplicate layout page template: " + name);
 		}
 	}
 

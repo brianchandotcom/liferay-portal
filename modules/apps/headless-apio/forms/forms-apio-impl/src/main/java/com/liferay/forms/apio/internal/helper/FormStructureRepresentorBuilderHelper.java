@@ -66,13 +66,14 @@ public class FormStructureRepresentorBuilderHelper {
 				DDMStructure::getGroupId);
 
 		bidirectionalModelStepBuilder.addNested(
-			"version", this::_getVersion, this::_buildVersion
+			"version", this::_getDDMStructureVersion,
+			this::_buildDDMStructureVersion
 		).addNested(
-			"successPage", this::_getSuccessPage,
-			this::_buildSuccessPageSettings
+			"successPage", this::_getDDMFormSuccessPageSettings,
+			this::_buildDDMFormSuccessPageSettings
 		).addNestedList(
-			"fields", _structureRepresentorUtil::getPages,
-			ddmFormFieldBuilder -> _buildFormPages(ddmFormFieldBuilder).build()
+			"fields", _structureRepresentorUtil::getFormLayoutPages,
+			nestedBuilder -> _buildFormLayoutPage(nestedBuilder).build()
 		);
 
 		return ddmStructureFirstStep;
@@ -94,6 +95,67 @@ public class FormStructureRepresentorBuilderHelper {
 		);
 	}
 
+	private NestedRepresentor<DDMFormField> _buildDDMFormField(
+		NestedRepresentor.Builder<DDMFormField> builder) {
+
+		return builder.types(
+			"FormFieldProperties"
+		).addNestedList(
+			"columns", _structureRepresentorUtil.getFieldOptions("columns"),
+			this::_buildFieldOptions
+		).addNestedList(
+			"rows", _structureRepresentorUtil.getFieldOptions("rows"),
+			this::_buildFieldOptions
+		).build();
+	}
+
+	private NestedRepresentor.FirstStep<DDMFormField> _buildDDMFormFields(
+		NestedRepresentor.Builder<DDMFormField> builder) {
+
+		NestedRepresentor.FirstStep<DDMFormField> ddmFormFieldFirstStepBuilder =
+			_structureRepresentorBuilderHelper.buildDDMFormFieldFirstStep(
+				builder);
+
+		ddmFormFieldFirstStepBuilder.addBoolean(
+			"hasFormRules", _hasFormRules()
+		).addBoolean(
+			"transient", DDMFormField::isTransient
+		).addNested(
+			"grid", ddmFormField -> ddmFormField, this::_buildDDMFormField
+		).addString(
+			"indexType", DDMFormField::getIndexType
+		);
+
+		return ddmFormFieldFirstStepBuilder;
+	}
+
+	private NestedRepresentor<DDMFormSuccessPageSettings>
+		_buildDDMFormSuccessPageSettings(
+			NestedRepresentor.Builder<DDMFormSuccessPageSettings> builder) {
+
+		return builder.types(
+			"FormSuccessPageSettings"
+		).addBoolean(
+			"isEnabled", DDMFormSuccessPageSettings::isEnabled
+		).addLocalizedStringByLocale(
+			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
+		).addLocalizedStringByLocale(
+			"text", getLocalizedString(DDMFormSuccessPageSettings::getBody)
+		).build();
+	}
+
+	private NestedRepresentor<DDMStructureVersion> _buildDDMStructureVersion(
+		NestedRepresentor.Builder<DDMStructureVersion> nestedBuilder) {
+
+		return nestedBuilder.types(
+			"StructureVersion"
+		).addLinkedModel(
+			"creator", PersonIdentifier.class, DDMStructureVersion::getUserId
+		).addString(
+			"name", DDMStructureVersion::getVersion
+		).build();
+	}
+
 	private NestedRepresentor<Map.Entry<String, LocalizedValue>>
 		_buildFieldOptions(
 			NestedRepresentor.Builder<Map.Entry<String, LocalizedValue>>
@@ -108,27 +170,7 @@ public class FormStructureRepresentorBuilderHelper {
 		).build();
 	}
 
-	private NestedRepresentor.FirstStep<DDMFormField> _buildFormFields(
-		NestedRepresentor.Builder<DDMFormField> builder) {
-
-		NestedRepresentor.FirstStep<DDMFormField> ddmFormFieldFirstStepBuilder =
-			_structureRepresentorBuilderHelper.buildDDMFormFieldFirstStep(
-				builder);
-
-		ddmFormFieldFirstStepBuilder.addBoolean(
-			"hasFormRules", _hasFormRules()
-		).addBoolean(
-			"transient", DDMFormField::isTransient
-		).addNested(
-			"grid", ddmFormField -> ddmFormField, this::_buildGridProperties
-		).addString(
-			"indexType", DDMFormField::getIndexType
-		);
-
-		return ddmFormFieldFirstStepBuilder;
-	}
-
-	private NestedRepresentor.FirstStep<FormLayoutPage> _buildFormPages(
+	private NestedRepresentor.FirstStep<FormLayoutPage> _buildFormLayoutPage(
 		NestedRepresentor.Builder<FormLayoutPage> builder) {
 
 		NestedRepresentor.FirstStep<FormLayoutPage> formLayoutPageFirstStep =
@@ -137,54 +179,13 @@ public class FormStructureRepresentorBuilderHelper {
 
 		formLayoutPageFirstStep.addNestedList(
 			"fields", FormLayoutPage::getFields,
-			ddmFormFieldBuilder -> _buildFormFields(
+			ddmFormFieldBuilder -> _buildDDMFormFields(
 				ddmFormFieldBuilder).build());
 
 		return formLayoutPageFirstStep;
 	}
 
-	private NestedRepresentor<DDMFormField> _buildGridProperties(
-		NestedRepresentor.Builder<DDMFormField> builder) {
-
-		return builder.types(
-			"FormFieldProperties"
-		).addNestedList(
-			"columns", _structureRepresentorUtil.getFieldOptions("columns"),
-			this::_buildFieldOptions
-		).addNestedList(
-			"rows", _structureRepresentorUtil.getFieldOptions("rows"),
-			this::_buildFieldOptions
-		).build();
-	}
-
-	private NestedRepresentor<DDMFormSuccessPageSettings>
-		_buildSuccessPageSettings(
-			NestedRepresentor.Builder<DDMFormSuccessPageSettings> builder) {
-
-		return builder.types(
-			"FormSuccessPageSettings"
-		).addBoolean(
-			"isEnabled", DDMFormSuccessPageSettings::isEnabled
-		).addLocalizedStringByLocale(
-			"headline", getLocalizedString(DDMFormSuccessPageSettings::getTitle)
-		).addLocalizedStringByLocale(
-			"text", getLocalizedString(DDMFormSuccessPageSettings::getBody)
-		).build();
-	}
-
-	private NestedRepresentor<DDMStructureVersion> _buildVersion(
-		NestedRepresentor.Builder<DDMStructureVersion> nestedBuilder) {
-
-		return nestedBuilder.types(
-			"StructureVersion"
-		).addLinkedModel(
-			"creator", PersonIdentifier.class, DDMStructureVersion::getUserId
-		).addString(
-			"name", DDMStructureVersion::getVersion
-		).build();
-	}
-
-	private DDMFormSuccessPageSettings _getSuccessPage(
+	private DDMFormSuccessPageSettings _getDDMFormSuccessPageSettings(
 		DDMStructure ddmStructure) {
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
@@ -192,7 +193,9 @@ public class FormStructureRepresentorBuilderHelper {
 		return ddmForm.getDDMFormSuccessPageSettings();
 	}
 
-	private DDMStructureVersion _getVersion(DDMStructure ddmStructure) {
+	private DDMStructureVersion _getDDMStructureVersion(
+		DDMStructure ddmStructure) {
+
 		return Try.fromFallible(
 			ddmStructure::getStructureVersion
 		).orElse(

@@ -20,6 +20,7 @@ import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 
 import org.tensorflow.Graph;
 import org.tensorflow.Output;
@@ -58,8 +59,34 @@ public class InceptionImageLabelerUtil {
 		}
 	}
 
-	private static Tensor<Float> _getOutputTensor(
-		Graph graph, Tensor<Float> inputTensor) {
+	private static <I, O> Graph _buildGraph(
+		BiFunction<GraphBuilder, Output<I>, Output<O>> buildGraph,
+		Class<I> inputClass) {
+
+		Graph graph = new Graph();
+
+		GraphBuilder graphBuilder = new GraphBuilder(graph);
+
+		graphBuilder.rename(
+			buildGraph.apply(
+				graphBuilder, graphBuilder.placeholder("input", inputClass)),
+			"output");
+
+		return graph;
+	}
+
+	private static Tensor<Float> _decodeImage(byte[] imageBytes) {
+		Graph imageDecoderGraph = _buildGraph(
+			(graphBuilder, input) -> graphBuilder.cast(
+				graphBuilder.decodeJpeg(input, 3), Float.class),
+			String.class);
+
+		return _getOutputTensor(
+			imageDecoderGraph, Tensor.create(imageBytes, String.class));
+	}
+
+	private static <I, O> Tensor<O> _getOutputTensor(
+		Graph graph, Tensor<I> inputTensor) {
 
 		try (Session session = new Session(graph)) {
 			Session.Runner runner = session.runner();
@@ -69,14 +96,12 @@ public class InceptionImageLabelerUtil {
 
 			List<Tensor<?>> tensors = runner.run();
 
-			Tensor<?> resultTensor = tensors.get(0);
-
-			return resultTensor.expect(Float.class);
+			return (Tensor<O>)tensors.get(0);
 		}
 	}
 
 	private static Tensor<Float> _normalizeImage(byte[] imageBytes) {
-		try (Tensor tensor = Tensor.create(imageBytes, String.class)) {
+		try (Tensor<Float> tensor = _decodeImage(imageBytes)) {
 			return _getOutputTensor(_imageNormalizerGraph, tensor);
 		}
 	}
@@ -106,28 +131,17 @@ public class InceptionImageLabelerUtil {
 					byteArrayOutputStream.toByteArray());
 			}
 
-			_imageNormalizerGraph = new Graph();
-
-			GraphBuilder graphBuilder = new GraphBuilder(_imageNormalizerGraph);
-
-			Output<String> output = graphBuilder.placeholder(
-				"input", String.class);
-
-			graphBuilder.rename(
-				graphBuilder.div(
+			_imageNormalizerGraph = _buildGraph(
+				(graphBuilder, input) -> graphBuilder.div(
 					graphBuilder.sub(
 						graphBuilder.resizeBilinear(
 							graphBuilder.expandDims(
-								graphBuilder.cast(
-									graphBuilder.decodeJpeg(output, 3),
-									Float.class),
-								graphBuilder.constant("make_batch", 0)),
+								input, graphBuilder.constant("make_batch", 0)),
 							graphBuilder.constant(
 								"size", new int[] {224, 224})),
 						graphBuilder.constant("mean", 117F)),
 					graphBuilder.constant("scale", 1F)),
-				"output"
-			);
+				Float.class);
 		}
 		catch (IOException ioe) {
 			throw new ExceptionInInitializerError(ioe);

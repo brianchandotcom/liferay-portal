@@ -112,7 +112,7 @@ public class GraphBuilder {
 		);
 	}
 
-	public Output<Float> rename(Output<Float> output, String name) {
+	public <T> Output<T> rename(Output<T> output, String name) {
 		OperationBuilder operationBuilder = _graph.opBuilder("Identity", name);
 
 		return operationBuilder.addInput(

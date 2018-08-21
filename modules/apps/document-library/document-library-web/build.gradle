@@ -26,6 +26,7 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-changeset-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-dynamic-section")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:item-selector:item-selector-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")

@@ -1050,6 +1050,165 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
+	* Returns all the sharing entries where fromUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching sharing entries
+	*/
+	public java.util.List<SharingEntry> findByFU_C_C(long fromUserId,
+		long classNameId, long classPK);
+
+	/**
+	* Returns a range of all the sharing entries where fromUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SharingEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of sharing entries
+	* @param end the upper bound of the range of sharing entries (not inclusive)
+	* @return the range of matching sharing entries
+	*/
+	public java.util.List<SharingEntry> findByFU_C_C(long fromUserId,
+		long classNameId, long classPK, int start, int end);
+
+	/**
+	* Returns an ordered range of all the sharing entries where fromUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SharingEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of sharing entries
+	* @param end the upper bound of the range of sharing entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching sharing entries
+	*/
+	public java.util.List<SharingEntry> findByFU_C_C(long fromUserId,
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the sharing entries where fromUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SharingEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of sharing entries
+	* @param end the upper bound of the range of sharing entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching sharing entries
+	*/
+	public java.util.List<SharingEntry> findByFU_C_C(long fromUserId,
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first sharing entry in the ordered set where fromUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching sharing entry
+	* @throws NoSuchEntryException if a matching sharing entry could not be found
+	*/
+	public SharingEntry findByFU_C_C_First(long fromUserId, long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry> orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	* Returns the first sharing entry in the ordered set where fromUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
+	*/
+	public SharingEntry fetchByFU_C_C_First(long fromUserId, long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry> orderByComparator);
+
+	/**
+	* Returns the last sharing entry in the ordered set where fromUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching sharing entry
+	* @throws NoSuchEntryException if a matching sharing entry could not be found
+	*/
+	public SharingEntry findByFU_C_C_Last(long fromUserId, long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry> orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	* Returns the last sharing entry in the ordered set where fromUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
+	*/
+	public SharingEntry fetchByFU_C_C_Last(long fromUserId, long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry> orderByComparator);
+
+	/**
+	* Returns the sharing entries before and after the current sharing entry in the ordered set where fromUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param sharingEntryId the primary key of the current sharing entry
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next sharing entry
+	* @throws NoSuchEntryException if a sharing entry with the primary key could not be found
+	*/
+	public SharingEntry[] findByFU_C_C_PrevAndNext(long sharingEntryId,
+		long fromUserId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry> orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	* Removes all the sharing entries where fromUserId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	*/
+	public void removeByFU_C_C(long fromUserId, long classNameId, long classPK);
+
+	/**
+	* Returns the number of sharing entries where fromUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param fromUserId the from user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the number of matching sharing entries
+	*/
+	public int countByFU_C_C(long fromUserId, long classNameId, long classPK);
+
+	/**
 	* Returns all the sharing entries where toUserId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param toUserId the to user ID

@@ -82,6 +82,9 @@ public interface SharingEntryLocalService extends BaseLocalService,
 
 	public int countFromUserSharingEntries(long fromUserId);
 
+	public int countFromUserSharingEntries(long fromUserId, long classNameId,
+		long classPK);
+
 	public int countToUserSharingEntries(long toUserId);
 
 	/**
@@ -211,6 +214,14 @@ public interface SharingEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getFromUserSharingEntries(long fromUserId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getFromUserSharingEntries(long fromUserId,
+		long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getFromUserSharingEntries(long fromUserId,
+		long classNameId, long classPK, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getGroupSharingEntries(long groupId);

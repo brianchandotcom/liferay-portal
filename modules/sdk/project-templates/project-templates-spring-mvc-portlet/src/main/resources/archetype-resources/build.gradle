@@ -22,7 +22,6 @@ dependencies {
 	compileOnly group: "javax.portlet", name: "portlet-api"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
-}
 #else
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
@@ -33,8 +32,8 @@ dependencies {
 #end
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
-}
 #end
+}
 #if (${projectType} != "workspace")
 
 repositories {

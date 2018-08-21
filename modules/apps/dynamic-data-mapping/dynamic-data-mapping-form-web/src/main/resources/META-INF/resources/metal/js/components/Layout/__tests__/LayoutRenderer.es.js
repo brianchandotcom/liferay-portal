@@ -2,6 +2,7 @@ import './__fixtures__/Fields.es';
 import Context from './__mock__/mockContext.es';
 import LayoutRenderer from '../LayoutRenderer.es';
 import LayoutSupport from '../LayoutSupport.es';
+import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;
 let context = null;
@@ -98,6 +99,22 @@ describe(
 				);
 
 				expect(component._dragAndDrop).toBeUndefined();
+			}
+		);
+
+		it(
+			'should resize a specific column on the drag and drop layout',
+			() => {
+				component = new LayoutRenderer(
+					{
+						editable: true,
+						pages: context,
+						spritemap
+					}
+				);
+
+				component._handleOnClickResize();
+				expect(component).toMatchSnapshot();
 			}
 		);
 
@@ -443,5 +460,89 @@ describe(
 				expect(component).toMatchSnapshot();
 			}
 		);
+
+		it(
+			'should change the form page title',
+			() => {
+				component = new LayoutRenderer(
+					{
+						editable: true,
+						pages: context,
+						spritemap
+					}
+				);
+
+				const delegateTarget = component.element.querySelector('.form-builder-page-header-title');
+
+				delegateTarget.value = 'My Page Title';
+
+				MetalTestUtil.triggerEvent(delegateTarget, 'change', {
+					delegateTarget
+				});
+
+				jest.runAllTimers();
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should change the form page description',
+			() => {
+				component = new LayoutRenderer(
+					{
+						editable: true,
+						pages: context,
+						spritemap
+					}
+				);
+
+				const delegateTarget = component.element.querySelector('.form-builder-page-header-description');
+
+				delegateTarget.value = 'My Page Description';
+
+				MetalTestUtil.triggerEvent(
+					delegateTarget, 
+					'change', 
+					{
+						delegateTarget
+					}
+				);
+
+				jest.runAllTimers();
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		describe(
+			'PagesSettings',
+			() => {
+				it(
+					'should add a new page on the layout render',
+					() => {
+						component = new LayoutRenderer(
+							{
+								editable: true,
+								pages: context,
+								spritemap
+							}
+						);
+
+						component._handleClickSettingsPage({
+							data: {
+								item: {
+									settingsItem: 'add-page'
+								}
+							}
+						});
+
+						jest.runAllTimers();
+
+						expect(component).toMatchSnapshot();
+					}
+				);
+			}
+		)
 	}
 );

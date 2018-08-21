@@ -14,6 +14,8 @@
 
 package com.liferay.xml.local.resolver;
 
+import com.liferay.xml.local.resolver.internal.util.DefinitionsUtil;
+
 import java.io.IOException;
 
 import org.xml.sax.InputSource;
@@ -33,7 +35,16 @@ public class XMLLocalResolver extends ResolvingXMLReader {
 	public InputSource resolveEntity(String publicId, String systemId)
 		throws IOException, SAXException {
 
-		return super.resolveEntity(publicId, systemId);
+		Class<?> clazz = getClass();
+
+		InputSource inputSource = DefinitionsUtil.resolve(
+			publicId, systemId, clazz.getClassLoader());
+
+		if (inputSource == null) {
+			inputSource = super.resolveEntity(publicId, systemId);
+		}
+
+		return inputSource;
 	}
 
 	@Override
@@ -41,7 +52,17 @@ public class XMLLocalResolver extends ResolvingXMLReader {
 			String name, String publicId, String baseURI, String systemId)
 		throws IOException, SAXException {
 
-		return super.resolveEntity(name, publicId, baseURI, systemId);
+		Class<?> clazz = getClass();
+
+		InputSource inputSource = DefinitionsUtil.resolve(
+			publicId, systemId, clazz.getClassLoader());
+
+		if (inputSource == null) {
+			inputSource = super.resolveEntity(
+				name, publicId, baseURI, systemId);
+		}
+
+		return inputSource;
 	}
 
 }

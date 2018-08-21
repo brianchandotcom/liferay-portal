@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.css.builder</artifactId>
-	<version>2.1.2</version>
+	<version>2.1.3</version>
 	<goalPrefix>css-builder</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -27,6 +27,13 @@
 			<executionStrategy>once-per-session</executionStrategy>
 			<threadSafe>false</threadSafe>
 			<parameters>
+				<parameter>
+					<name>_pluginDescriptor</name>
+					<type>org.apache.maven.plugin.descriptor.PluginDescriptor</type>
+					<required>true</required>
+					<editable>false</editable>
+					<description/>
+				</parameter>
 				<parameter>
 					<name>_project</name>
 					<type>org.apache.maven.project.MavenProject</type>
@@ -129,6 +136,7 @@
 				</parameter>
 			</parameters>
 			<configuration>
+				<_pluginDescriptor default-value="${plugin}" implementation="org.apache.maven.plugin.descriptor.PluginDescriptor" />
 				<_project implementation="org.apache.maven.project.MavenProject">${project}</_project>
 				<_projectBaseDir default-value="${project.basedir}" implementation="java.io.File" />
 				<_repositorySystemSession implementation="org.eclipse.aether.RepositorySystemSession">${repositorySystemSession}</_repositorySystemSession>
@@ -183,7 +191,7 @@
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.frontend.css.common</artifactId>
 			<type>jar</type>
-			<version>2.0.4</version>
+			<version>3.0.1</version>
 		</dependency>
 	</dependencies>
 </plugin>

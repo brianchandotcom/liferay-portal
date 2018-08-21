@@ -7,7 +7,6 @@ copyLibs {
 
 dependencies {
 	compileOnly project(":apps:bookmarks:bookmarks-test")
-	compileOnly project(":apps:journal:journal-test")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

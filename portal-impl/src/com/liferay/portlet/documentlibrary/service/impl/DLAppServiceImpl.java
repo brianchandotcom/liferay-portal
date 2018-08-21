@@ -1127,15 +1127,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			return repository.getFileEntry(folderId, title);
 		}
 		catch (NoSuchFileEntryException nsfee) {
-			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				Repository repository = repositoryProvider.getFolderRepository(
-					folderId);
-
-				return repository.getFileEntry(folderId, title);
-			}
-			else {
+			if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				throw nsfee;
 			}
+
+			Repository repository = repositoryProvider.getFolderRepository(
+				folderId);
+
+			return repository.getFileEntry(folderId, title);
 		}
 	}
 

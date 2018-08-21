@@ -89,11 +89,16 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	@Override
 	public String encodeFilterAttribute(String attribute, boolean rdnEscape) {
 		String[] oldString = {
-			StringPool.STAR, StringPool.OPEN_PARENTHESIS,
+			StringPool.BACK_SLASH, StringPool.STAR, StringPool.OPEN_PARENTHESIS,
 			StringPool.CLOSE_PARENTHESIS, StringPool.NULL_CHAR
 		};
 
-		String[] newString = {"\\2a", "\\28", "\\29", "\\00"};
+		String[] newString = {"\\5c", "\\2a", "\\28", "\\29", "\\00"};
+
+		if (rdnEscape) {
+			ArrayUtil.remove(oldString, StringPool.BACK_SLASH);
+			ArrayUtil.remove(newString, "\\5c");
+		}
 
 		String newAttribute = StringUtil.replace(
 			attribute, oldString, newString);

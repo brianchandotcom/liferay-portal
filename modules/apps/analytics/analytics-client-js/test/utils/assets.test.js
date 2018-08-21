@@ -2,32 +2,28 @@ import {getNumberOfWords} from '../../src/utils/assets';
 import {expect} from 'chai';
 
 describe('getNumberOfWords', () => {
-	const element = document.createElement('div');
+	it('should return the number of words', () => {
+		const content = {
+			description: 'Build portals, intranets, websites and connected experiences on the most flexible platform around.',
+			title: 'Digital Experience Software Tailored to Your Needs',
+		};
 
-	it('1 should return the total of words', () => {
-		element.innerText = 'The standard Lorem Ipsum passage, used since the 1500s';
+		const markup = `<header class="header">
+							<h2>${content.title}</h2>
+							<p>${content.description}</p>
+						</header>`;
+
+		const element = document.createElement('div');
+		element.innerHTML = markup;
+
 		const numberOfWords = getNumberOfWords(element);
 
-		expect(numberOfWords).to.equal(9);
+		expect(numberOfWords).to.equal(20);
 	});
 
-	it('2 should return the total of words', () => {
-		element.innerText = '1914 translation by H. Rackham';
-		const numberOfWords = getNumberOfWords(element);
+	it('should return 0 if the number of words is empty', () => {
+		const element = document.createElement('div');
 
-		expect(numberOfWords).to.equal(5);
-	});
-
-	it('3 should return the total of words', () => {
-		element.innerText = `On the other hand, we denounce with righteous
-			indignation and dislike men who are so beguiled
-			and demoralized by the charms of pleasure of the moment`;
-		const numberOfWords = getNumberOfWords(element);
-
-		expect(numberOfWords).to.equal(26);
-	});
-
-	it('3 should return the total of words', () => {
 		element.innerText = '';
 		const numberOfWords = getNumberOfWords(element);
 

@@ -20,6 +20,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.organization.apio.architect.identifier.OrganizationIdentifier;
 import com.liferay.person.apio.architect.identifier.MyUserAccountIdentifier;
 import com.liferay.person.apio.internal.model.UserWrapper;
 import com.liferay.person.apio.internal.util.UserAccountRepresentorBulderHelper;
@@ -29,11 +30,13 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Arrays;
 
 import javax.ws.rs.NotFoundException;
-import java.util.Arrays;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose MyUserAccount resources through
@@ -52,8 +55,7 @@ public class MyUserAccountCollectionResource
 		CollectionRoutes.Builder<UserWrapper, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems,
-			ThemeDisplay.class, CurrentUser.class
+			this::_getPageItems, ThemeDisplay.class, CurrentUser.class
 		).build();
 	}
 
@@ -79,11 +81,12 @@ public class MyUserAccountCollectionResource
 			_userAccountRepresentorBulderHelper.buildUserWrapperFirstStep(
 				builder);
 
-		Representor.FirstStep<UserWrapper> customFirstStep =
-			userWrapperFirstStep.addRelatedCollection(
+		userWrapperFirstStep.addRelatedCollection(
+			"myOrganizations", OrganizationIdentifier.class);
+		userWrapperFirstStep.addRelatedCollection(
 			"myWebsites", WebSiteIdentifier.class);
 
-		return customFirstStep.build();
+		return userWrapperFirstStep.build();
 	}
 
 	private PageItems<UserWrapper> _getPageItems(

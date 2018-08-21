@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -121,6 +122,9 @@ public class PersonCollectionResource
 		Representor.FirstStep<UserWrapper> userWrapperFirstStep =
 			_userAccountRepresentorBulderHelper.buildUserWrapperFirstStep(
 				builder);
+
+		userWrapperFirstStep.addRelatedCollection(
+			"websites", WebSiteIdentifier.class);
 
 		return userWrapperFirstStep.build();
 	}

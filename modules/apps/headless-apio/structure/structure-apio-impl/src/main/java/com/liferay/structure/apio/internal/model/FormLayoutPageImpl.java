@@ -17,6 +17,7 @@ package com.liferay.structure.apio.internal.model;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.structure.apio.architect.model.FormLayoutPage;
 
 import java.util.List;
 import java.util.Locale;
@@ -24,9 +25,9 @@ import java.util.Locale;
 /**
  * @author Paulo Cruz
  */
-public class FormLayoutPage {
+public class FormLayoutPageImpl implements FormLayoutPage {
 
-	public FormLayoutPage(
+	public FormLayoutPageImpl(
 		DDMFormLayoutPage ddmFormLayoutPage, List<DDMFormField> fields) {
 
 		_description = ddmFormLayoutPage.getDescription();

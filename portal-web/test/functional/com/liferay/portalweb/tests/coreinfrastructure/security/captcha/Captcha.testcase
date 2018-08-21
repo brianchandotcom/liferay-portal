@@ -75,7 +75,12 @@
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#resetConfiguration" />
+		<if>
+			<condition function="IsElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+			<then>
+				<execute macro="SystemSettings#resetConfiguration" />
+			</then>
+		</if>
 
 		<execute macro="SystemSettings#editTextSetting">
 			<var name="settingName" value="Maximum Challenges" />

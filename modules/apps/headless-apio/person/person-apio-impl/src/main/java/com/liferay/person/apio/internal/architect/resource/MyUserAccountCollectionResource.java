@@ -14,7 +14,6 @@
 
 package com.liferay.person.apio.internal.architect.resource;
 
-import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -23,20 +22,18 @@ import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.person.apio.architect.identifier.MyUserAccountIdentifier;
 import com.liferay.person.apio.internal.model.UserWrapper;
-import com.liferay.person.apio.internal.query.FullNameQuery;
 import com.liferay.person.apio.internal.util.UserAccountRepresentorBulderHelper;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-
-import java.util.Arrays;
-
-import javax.ws.rs.NotFoundException;
-
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import javax.ws.rs.NotFoundException;
+import java.util.Arrays;
 
 /**
  * Provides the information necessary to expose MyUserAccount resources through
@@ -55,7 +52,7 @@ public class MyUserAccountCollectionResource
 		CollectionRoutes.Builder<UserWrapper, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, FullNameQuery.class, Credentials.class,
+			this::_getPageItems,
 			ThemeDisplay.class, CurrentUser.class
 		).build();
 	}
@@ -82,12 +79,15 @@ public class MyUserAccountCollectionResource
 			_userAccountRepresentorBulderHelper.buildUserWrapperFirstStep(
 				builder);
 
-		return userWrapperFirstStep.build();
+		Representor.FirstStep<UserWrapper> customFirstStep =
+			userWrapperFirstStep.addRelatedCollection(
+			"myWebsites", WebSiteIdentifier.class);
+
+		return customFirstStep.build();
 	}
 
 	private PageItems<UserWrapper> _getPageItems(
-			Pagination pagination, FullNameQuery fullNameQuery,
-			Credentials credentials, ThemeDisplay themeDisplay,
+			Pagination pagination, ThemeDisplay themeDisplay,
 			CurrentUser currentUser)
 		throws PortalException {
 

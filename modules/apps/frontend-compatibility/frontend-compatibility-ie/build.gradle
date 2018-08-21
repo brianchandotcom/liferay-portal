@@ -1,6 +1,7 @@
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
+	arrayFill
 	arrayFind
 	arrayFrom
 	fetch
@@ -10,6 +11,7 @@ configurations {
 	urlSearchParams
 }
 
+task buildArrayFill(type: Copy)
 task buildArrayFind(type: Copy)
 task buildArrayFrom(type: Copy)
 task buildFetch(type: Copy)
@@ -17,6 +19,22 @@ task buildObjectAssign(type: Copy)
 task buildObjectEntries(type: Copy)
 task buildObjectValues(type: Copy)
 task buildUrlSearchParams(type: Copy)
+
+buildArrayFill {
+	eachFile new StripPathSegmentsAction(5)
+
+	from {
+		zipTree(configurations.arrayFill.singleFile)
+	}
+
+	include "META-INF/resources/webjars/array.prototype.fill/1.0.2/index.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+
+	rename {
+		it.replace "index", "array.fill"
+	}
+}
 
 buildArrayFind {
 	eachFile new StripPathSegmentsAction(5)
@@ -127,6 +145,7 @@ buildUrlSearchParams {
 }
 
 classes {
+	dependsOn buildArrayFill
 	dependsOn buildArrayFind
 	dependsOn buildArrayFrom
 	dependsOn buildFetch
@@ -137,6 +156,8 @@ classes {
 }
 
 dependencies {
+	arrayFill group: "org.webjars.npm", name: "array.prototype.fill", transitive: false, version: "1.0.2"
+
 	arrayFind group: "org.webjars.bower", name: "Array.prototype.find", transitive: false, version: "1.0.0"
 
 	arrayFrom group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.8.0"

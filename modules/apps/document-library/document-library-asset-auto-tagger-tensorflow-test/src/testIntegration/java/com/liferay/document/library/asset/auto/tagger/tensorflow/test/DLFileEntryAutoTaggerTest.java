@@ -43,7 +43,6 @@ import java.util.Dictionary;
 
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -110,7 +109,6 @@ public class DLFileEntryAutoTaggerTest {
 			});
 	}
 
-	@Ignore
 	@Test
 	public void testAutoTagsAPNGImage() throws Exception {
 		_withAutoTaggerEnabled(

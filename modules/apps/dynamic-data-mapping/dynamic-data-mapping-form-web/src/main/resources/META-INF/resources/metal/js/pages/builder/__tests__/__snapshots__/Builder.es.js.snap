@@ -4,7 +4,19 @@ exports[`Builder should render the default markup 1`] = `
 <div>
   <div class="container">
     <div class="sheet">
-      <p>Drag from sidebar and drop here</p>
+      <div class="position-relative">
+        <p>Drag from sidebar and drop here</p>
+        <div class="btn-group dmm-page-settings" role="group">
+          <div class="dropdown dropdown-action">
+            <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
+                <title>ellipsis-v</title>
+                <use xlink:href="icons.svg#ellipsis-v"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="sidebar-container" ref="sidebar">
@@ -42,5 +54,12 @@ exports[`Builder should render the default markup 1`] = `
       <div class="ddm-sidebar-body"></div>
     </div>
   </div>
+</div>
+<div class="dropdown-menu" ref="menu">
+  <ul class="list-unstyled">
+    <li>
+      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
+    </li>
+  </ul>
 </div>
 `;

@@ -8169,6 +8169,8 @@ public class JournalArticleLocalServiceImpl
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setCompanyId(company.getCompanyId());
+		subscriptionSender.setClassName(JournalArticle.class.getName());
+		subscriptionSender.setClassPK(article.getPrimaryKey());
 		subscriptionSender.setContextAttributes(
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
 			article.getTitle(serviceContext.getLanguageId()), "[$ARTICLE_URL$]",
@@ -8176,6 +8178,8 @@ public class JournalArticleLocalServiceImpl
 			"[$ARTICLE_VERSION$]", article.getVersion());
 		subscriptionSender.setContextCreatorUserPrefix("ARTICLE");
 		subscriptionSender.setCreatorUserId(article.getUserId());
+		subscriptionSender.setEntryURL(articleURL);
+		subscriptionSender.setEntryTitle(article.getTitle(user.getLocale()));
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);

@@ -1392,6 +1392,7 @@
 		</execute>
 
 		<execute macro="User#editPasswordInvalidCP">
+			<var name="minimumNumbers" value="2" />
 			<var name="newPassword" value="abcABC" />
 			<var name="trivialPassword" value="true" />
 			<var name="userEmailAddress" value="test1@liferay.com" />

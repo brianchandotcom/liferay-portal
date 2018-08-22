@@ -473,7 +473,7 @@ public class LicenseUtil {
 	}
 
 	private static int _getProcessorCores() {
-		if (OSDetector.isAIX() || OSDetector.isLinux()) {
+		if (OSDetector.isLinux()) {
 			try {
 				Future<Entry<byte[], byte[]>> future = ProcessUtil.execute(
 					CollectorOutputProcessor.INSTANCE, "nproc");
@@ -488,7 +488,7 @@ public class LicenseUtil {
 			}
 		}
 
-		if (JavaDetector.isIBM()) {
+		if (OSDetector.isAIX() || JavaDetector.isIBM()) {
 			Runtime runtime = Runtime.getRuntime();
 
 			return runtime.availableProcessors();

@@ -72,13 +72,19 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public long getMaxAllowableSize() {
-		long fileMaxSize = _dlConfiguration.fileMaxSize();
+		long dlFileMaxSize = _dlConfiguration.fileMaxSize();
+		long uploadServletRequestFileMaxSize =
+			_uploadServletRequestConfigurationHelper.getMaxSize();
 
-		if (fileMaxSize == 0) {
-			fileMaxSize = _uploadServletRequestConfigurationHelper.getMaxSize();
+		if (dlFileMaxSize == 0) {
+			return uploadServletRequestFileMaxSize;
 		}
 
-		return fileMaxSize;
+		if (uploadServletRequestFileMaxSize == 0) {
+			return dlFileMaxSize;
+		}
+
+		return Math.min(dlFileMaxSize, uploadServletRequestFileMaxSize);
 	}
 
 	@Override
@@ -206,7 +212,7 @@ public final class DLValidatorImpl implements DLValidator {
 	public void validateFileSize(String fileName, long size)
 		throws FileSizeException {
 
-		long maxSize = _dlConfiguration.fileMaxSize();
+		long maxSize = getMaxAllowableSize();
 
 		if ((maxSize > 0) && (size > maxSize)) {
 			throw new FileSizeException(

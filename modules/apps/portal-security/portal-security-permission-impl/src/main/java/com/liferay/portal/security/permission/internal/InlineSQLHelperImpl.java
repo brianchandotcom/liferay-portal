@@ -438,11 +438,35 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			}
 		}
 
-		String permissionSQL = _customSQL.get(
+		String resourcePermissionSQL = _getResourcePermissionSQL(
+			companyId, className, userIdField, groupIds, bridgeJoin);
+
+		return _insertResourcePermissionSQL(
+			sql, classPKField, resourcePermissionSQL);
+	}
+
+	private void _appendPermissionSQL(
+		StringBundler sb, String classPKField, String permissionSQL) {
+
+		sb.append("(");
+		sb.append(classPKField);
+		sb.append(" IN (");
+		sb.append(permissionSQL);
+		sb.append(")) ");
+	}
+
+	private String _getResourcePermissionSQL(
+		long companyId, String className, String userIdField, long[] groupIds,
+		String bridgeJoin) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		String resourcePermissionSQL = _customSQL.get(
 			getClass(), FIND_BY_RESOURCE_PERMISSION);
 
 		if (Validator.isNotNull(bridgeJoin)) {
-			permissionSQL = bridgeJoin.concat(permissionSQL);
+			resourcePermissionSQL = bridgeJoin.concat(resourcePermissionSQL);
 		}
 
 		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(
@@ -481,8 +505,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			groupAdminSQL = groupAdminResourcePermissionSB.toString();
 		}
 
-		permissionSQL = StringUtil.replace(
-			permissionSQL,
+		resourcePermissionSQL = StringUtil.replace(
+			resourcePermissionSQL,
 			new String[] {
 				"[$CLASS_NAME$]", "[$COMPANY_ID$]",
 				"[$GROUP_ADMIN_RESOURCE_PERMISSION$]",
@@ -493,7 +517,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				String.valueOf(scope), roleIdsOrOwnerIdSQL
 			});
 
-		StringBundler sb = new StringBundler(8);
+		return resourcePermissionSQL;
+	}
+
+	private String _insertResourcePermissionSQL(
+		String sql, String classPKField, String permissionSQL) {
+
+		StringBundler sb = new StringBundler(4);
 
 		int pos = sql.indexOf(_WHERE_CLAUSE);
 
@@ -532,16 +562,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		return sb.toString();
-	}
-
-	private void _appendPermissionSQL(
-		StringBundler sb, String classPKField, String permissionSQL) {
-
-		sb.append("(");
-		sb.append(classPKField);
-		sb.append(" IN (");
-		sb.append(permissionSQL);
-		sb.append(")) ");
 	}
 
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";

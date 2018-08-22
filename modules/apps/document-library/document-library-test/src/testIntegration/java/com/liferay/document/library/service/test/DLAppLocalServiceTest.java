@@ -121,7 +121,7 @@ public class DLAppLocalServiceTest {
 		@Test
 		public void shouldReturnItIfExistsInRootFolder() throws Exception {
 			FileEntry fileEntry1 = DLAppLocalServiceUtil.addFileEntry(
-				group.getGroupId(), group.getGroupId(),
+				TestPropsValues.getUserId(), group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				StringUtil.randomString(),
 				ContentTypes.APPLICATION_OCTET_STREAM, new byte[0],

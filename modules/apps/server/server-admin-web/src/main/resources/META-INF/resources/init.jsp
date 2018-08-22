@@ -104,11 +104,6 @@ PortletMode portletMode = liferayPortletRequest.getPortletMode();
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "resources");
 String tabs2 = ParamUtil.getString(request, "tabs2");
-
-NumberFormat numberFormat = NumberFormat.getInstance();
-
-numberFormat.setMaximumIntegerDigits(2);
-numberFormat.setMinimumIntegerDigits(2);
 %>
 
 <%@ include file="/init-ext.jsp" %>

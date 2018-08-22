@@ -41,8 +41,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Perez
  */
 @Component(immediate = true)
-public class UserAccountRepresentorBulderHelperImpl
-	implements UserAccountRepresentorBulderHelper {
+public class UserAccountRepresentorBuilderHelperImpl
+	implements UserAccountRepresentorBuilderHelper {
 
 	@Override
 	public Representor.FirstStep<UserWrapper> buildUserWrapperFirstStep(
@@ -53,7 +53,7 @@ public class UserAccountRepresentorBulderHelperImpl
 		).identifier(
 			User::getUserId
 		).addDate(
-			"birthDate", UserAccountRepresentorBulderHelperImpl::_getBirthday
+			"birthDate", UserAccountRepresentorBuilderHelperImpl::_getBirthday
 		).addLocalizedStringByLocale(
 			"honorificPrefix", _getContactField(Contact::getPrefixId)
 		).addLocalizedStringByLocale(
@@ -92,7 +92,7 @@ public class UserAccountRepresentorBulderHelperImpl
 		).addString(
 			"familyName", User::getLastName
 		).addString(
-			"gender", UserAccountRepresentorBulderHelperImpl::_getGender
+			"gender", UserAccountRepresentorBuilderHelperImpl::_getGender
 		).addString(
 			"givenName", User::getFirstName
 		).addString(

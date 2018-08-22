@@ -20,7 +20,7 @@ import com.liferay.person.apio.internal.model.UserWrapper;
 /**
  * @author Eduardo Perez
  */
-public interface UserAccountRepresentorBulderHelper {
+public interface UserAccountRepresentorBuilderHelper {
 
 	public Representor.FirstStep<UserWrapper> buildUserWrapperFirstStep(
 		Representor.Builder<UserWrapper, Long> builder);

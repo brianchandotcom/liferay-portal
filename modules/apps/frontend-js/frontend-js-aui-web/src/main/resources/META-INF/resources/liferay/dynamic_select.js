@@ -107,7 +107,7 @@ AUI.add(
 
 				var select = A.one('#' + options.select);
 				var selectDesc = options.selectDesc;
-				var selectDisableOnEmpty = !!options.selectDisableOnEmpty;
+				var selectDisableOnEmpty = options.selectDisableOnEmpty;
 				var selectId = options.selectId;
 				var selectNullable = options.selectNullable !== false;
 				var selectSort = options.selectSort;

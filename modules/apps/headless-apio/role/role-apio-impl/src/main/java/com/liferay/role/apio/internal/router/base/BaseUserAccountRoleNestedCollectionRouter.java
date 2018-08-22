@@ -53,12 +53,11 @@ public abstract class BaseUserAccountRoleNestedCollectionRouter
 		List<Role> roles = roleService.getUserRoles(userId);
 
 		int count = roles.size();
-		
+
 		int endPosition = Math.min(count, pagination.getEndPosition());
 
 		return new PageItems<>(
-			roles.subList(pagination.getStartPosition(), endPosition),
-			count);
+			roles.subList(pagination.getStartPosition(), endPosition), count);
 	}
 
 }

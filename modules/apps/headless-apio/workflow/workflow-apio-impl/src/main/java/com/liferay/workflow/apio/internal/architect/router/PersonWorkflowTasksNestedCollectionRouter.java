@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Component;
  * @review
  */
 @Component(immediate = true)
-public class PersonWorkflowTasksNestedCollectionRouter extends
-	BaseUserAccountWorkflowTasksNestedCollectionRouter<PersonIdentifier>
+public class PersonWorkflowTasksNestedCollectionRouter
+	extends BaseUserAccountWorkflowTasksNestedCollectionRouter<PersonIdentifier>
 	implements NestedCollectionRouter
 		<WorkflowTask, Long, WorkflowTaskIdentifier, Long, PersonIdentifier> {
 }

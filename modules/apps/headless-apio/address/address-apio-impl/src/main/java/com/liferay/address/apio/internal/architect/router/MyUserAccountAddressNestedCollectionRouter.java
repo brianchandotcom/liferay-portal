@@ -15,7 +15,7 @@
 package com.liferay.address.apio.internal.architect.router;
 
 import com.liferay.address.apio.architect.identifier.AddressIdentifier;
-import com.liferay.address.apio.internal.architect.router.base.BaseUserAccountNestedCollectionRouter;
+import com.liferay.address.apio.internal.architect.router.base.BaseUserAccountAddressNestedCollectionRouter;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.person.apio.architect.identifier.MyUserAccountIdentifier;
 import com.liferay.portal.kernel.model.Address;
@@ -32,8 +32,9 @@ import org.osgi.service.component.annotations.Component;
  * @review
  */
 @Component(immediate = true)
-public class MyUserAccountAddressNestedCollectionRouter extends
-	BaseUserAccountNestedCollectionRouter<MyUserAccountIdentifier> implements
-		NestedCollectionRouter<Address, Long, AddressIdentifier, Long,
-			MyUserAccountIdentifier> {
+public class MyUserAccountAddressNestedCollectionRouter
+	extends BaseUserAccountAddressNestedCollectionRouter
+		<MyUserAccountIdentifier>
+	implements NestedCollectionRouter
+		<Address, Long, AddressIdentifier, Long, MyUserAccountIdentifier> {
 }

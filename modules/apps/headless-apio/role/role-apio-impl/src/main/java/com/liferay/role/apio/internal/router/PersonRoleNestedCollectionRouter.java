@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Component;
  * @review
  */
 @Component(immediate = true)
-public class PersonRoleNestedCollectionRouter extends
-	BaseUserAccountRoleNestedCollectionRouter<PersonIdentifier> implements
-		NestedCollectionRouter<Role, Long, RoleIdentifier, Long,
-			PersonIdentifier> {
+public class PersonRoleNestedCollectionRouter
+	extends BaseUserAccountRoleNestedCollectionRouter<PersonIdentifier>
+	implements NestedCollectionRouter
+		<Role, Long, RoleIdentifier, Long, PersonIdentifier> {
 }

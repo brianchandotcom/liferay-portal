@@ -23,7 +23,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.organization.apio.architect.identifier.OrganizationIdentifier;
 import com.liferay.person.apio.architect.identifier.MyUserAccountIdentifier;
 import com.liferay.person.apio.internal.model.UserWrapper;
-import com.liferay.person.apio.internal.util.UserAccountRepresentorBulderHelper;
+import com.liferay.person.apio.internal.util.UserAccountRepresentorBuilderHelper;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose MyUserAccount resources through
- * a web API. The resources are mapped from the internal model
- * {@link UserWrapper}.
+ * a web API. The resources are mapped from the internal model {@link
+ * UserWrapper}.
  *
  * @author Eduardo Perez
  * @review
@@ -78,7 +78,7 @@ public class MyUserAccountCollectionResource
 		Representor.Builder<UserWrapper, Long> builder) {
 
 		Representor.FirstStep<UserWrapper> userWrapperFirstStep =
-			_userAccountRepresentorBulderHelper.buildUserWrapperFirstStep(
+			_userAccountRepresentorBuilderHelper.buildUserWrapperFirstStep(
 				builder);
 
 		userWrapperFirstStep.addRelatedCollection(
@@ -118,8 +118,8 @@ public class MyUserAccountCollectionResource
 	}
 
 	@Reference
-	private UserAccountRepresentorBulderHelper
-		_userAccountRepresentorBulderHelper;
+	private UserAccountRepresentorBuilderHelper
+		_userAccountRepresentorBuilderHelper;
 
 	@Reference
 	private UserService _userService;

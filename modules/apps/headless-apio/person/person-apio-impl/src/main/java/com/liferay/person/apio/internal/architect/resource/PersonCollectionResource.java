@@ -31,7 +31,7 @@ import com.liferay.person.apio.internal.architect.form.PersonCreatorForm;
 import com.liferay.person.apio.internal.architect.form.PersonUpdaterForm;
 import com.liferay.person.apio.internal.model.UserWrapper;
 import com.liferay.person.apio.internal.query.FullNameQuery;
-import com.liferay.person.apio.internal.util.UserAccountRepresentorBulderHelper;
+import com.liferay.person.apio.internal.util.UserAccountRepresentorBuilderHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.apio.user.CurrentUser;
@@ -121,7 +121,7 @@ public class PersonCollectionResource
 		Representor.Builder<UserWrapper, Long> builder) {
 
 		Representor.FirstStep<UserWrapper> userWrapperFirstStep =
-			_userAccountRepresentorBulderHelper.buildUserWrapperFirstStep(
+			_userAccountRepresentorBuilderHelper.buildUserWrapperFirstStep(
 				builder);
 
 		userWrapperFirstStep.addRelatedCollection(
@@ -374,8 +374,8 @@ public class PersonCollectionResource
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private UserAccountRepresentorBulderHelper
-		_userAccountRepresentorBulderHelper;
+	private UserAccountRepresentorBuilderHelper
+		_userAccountRepresentorBuilderHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -32,8 +32,9 @@ import org.osgi.service.component.annotations.Component;
  * @review
  */
 @Component(immediate = true)
-public class MyUserAccountWebUrlsNestedCollectionRouter extends
-	BaseUserAccountWebUrlsNestedCollectionRouter<MyUserAccountIdentifier>
-	implements NestedCollectionRouter<Website, Long, WebUrlIdentifier, Long,
-		MyUserAccountIdentifier> {
+public class MyUserAccountWebUrlsNestedCollectionRouter
+	extends BaseUserAccountWebUrlsNestedCollectionRouter
+		<MyUserAccountIdentifier>
+	implements NestedCollectionRouter
+		<Website, Long, WebUrlIdentifier, Long, MyUserAccountIdentifier> {
 }

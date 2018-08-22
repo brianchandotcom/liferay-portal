@@ -70,12 +70,14 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
 @RunWith(PowerMockRunner.class)
+@SuppressStaticInitializationFor("com.liferay.portal.kernel.util.ParamUtil")
 public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 
 	@Before

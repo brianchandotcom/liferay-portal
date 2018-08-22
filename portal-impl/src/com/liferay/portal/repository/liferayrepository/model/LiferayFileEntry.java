@@ -223,16 +223,16 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	@Override
 	public Folder getFolder() {
-		Folder folder = null;
-
 		try {
-			folder = new LiferayFolder(_dlFileEntry.getFolder());
+			return new LiferayFolder(_dlFileEntry.getFolder());
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
 			return null;
 		}
-
-		return folder;
 	}
 
 	@Override
@@ -293,9 +293,12 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 			return dlFileVersion.getMimeType();
 		}
 		catch (Exception e) {
-		}
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 
-		return ContentTypes.APPLICATION_OCTET_STREAM;
+			return ContentTypes.APPLICATION_OCTET_STREAM;
+		}
 	}
 
 	@Override
@@ -490,6 +493,10 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 			return _dlFileEntry.isInTrashContainer();
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
 			return false;
 		}
 	}
@@ -558,7 +565,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Long)primaryKeyObj).longValue());
+		setPrimaryKey((Long)primaryKeyObj);
 	}
 
 	@Override

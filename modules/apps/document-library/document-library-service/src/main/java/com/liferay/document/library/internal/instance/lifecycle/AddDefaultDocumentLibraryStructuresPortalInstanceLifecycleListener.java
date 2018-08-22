@@ -20,7 +20,10 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.RawMetadataProcessor;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -153,7 +156,18 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 					"/document-library-structures.xml",
 				languageKey, locale);
 
-		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
+		DDMFormDeserializer ddmFormDeserializer =
+			_ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				definition);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 		serviceContext.setAttribute(
 			"ddmForm", _ddmBeanTranslator.translate(ddmForm));
@@ -257,8 +271,19 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 					groupId, _portal.getClassNameId(RawMetadataProcessor.class),
 					name);
 
-			DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(
-				structureElementRootXML);
+			DDMFormDeserializer ddmFormDeserializer =
+				_ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
+
+			DDMFormDeserializerDeserializeRequest.Builder builder =
+				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+					structureElementRootXML);
+
+			DDMFormDeserializerDeserializeResponse
+				ddmFormDeserializerDeserializeResponse =
+					ddmFormDeserializer.deserialize(builder.build());
+
+			DDMForm ddmForm =
+				ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 			if (ddmStructure != null) {
 				ddmStructure.setDDMForm(ddmForm);
@@ -366,10 +391,10 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormXSDDeserializer(
-		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
+	protected void setDDMFormDeserializerTracker(
+		DDMFormDeserializerTracker ddmFormDeserializerTracker) {
 
-		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
+		_ddmFormDeserializerTracker = ddmFormDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -433,7 +458,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 	private DDM _ddm;
 	private DDMBeanTranslator _ddmBeanTranslator;
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private volatile DLConfiguration _dlConfiguration;

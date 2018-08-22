@@ -163,18 +163,18 @@ public class WriteMavenSettingsTask extends DefaultTask {
 			XMLUtil.appendElement(
 				document, proxyElement, "port", proxyPort.toString());
 
-			_appendNonNullElement(
+			_appendNonnullElement(
 				document, proxyElement, "username", getProxyUser());
-			_appendNonNullElement(
+			_appendNonnullElement(
 				document, proxyElement, "password", getProxyPassword());
-			_appendNonNullElement(
+			_appendNonnullElement(
 				document, proxyElement, "nonProxyHosts", getNonProxyHosts());
 		}
 
 		XMLUtil.write(document, getOutputFile());
 	}
 
-	private static void _appendNonNullElement(
+	private static void _appendNonnullElement(
 		Document document, Element parentElement, String name, String text) {
 
 		if (Validator.isNull(text)) {

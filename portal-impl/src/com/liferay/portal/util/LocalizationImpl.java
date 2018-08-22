@@ -1015,7 +1015,7 @@ public class LocalizationImpl implements Localization {
 						_DEFAULT_LOCALE, defaultLanguageId);
 				}
 
-				_copyNonExempt(
+				_copyNonexempt(
 					xmlStreamReader, xmlStreamWriter, requestedLanguageId,
 					defaultLanguageId, cdata);
 
@@ -1241,7 +1241,7 @@ public class LocalizationImpl implements Localization {
 					_DEFAULT_LOCALE, defaultLanguageId);
 			}
 
-			_copyNonExempt(
+			_copyNonexempt(
 				xmlStreamReader, xmlStreamWriter, requestedLanguageId,
 				defaultLanguageId, cdata);
 
@@ -1311,7 +1311,7 @@ public class LocalizationImpl implements Localization {
 		}
 	}
 
-	private void _copyNonExempt(
+	private void _copyNonexempt(
 			XMLStreamReader xmlStreamReader, XMLStreamWriter xmlStreamWriter,
 			String exemptLanguageId, String defaultLanguageId, boolean cdata)
 		throws XMLStreamException {

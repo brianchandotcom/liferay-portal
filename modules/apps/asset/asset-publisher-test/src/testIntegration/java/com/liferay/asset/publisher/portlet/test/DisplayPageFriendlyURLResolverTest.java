@@ -161,7 +161,7 @@ public class DisplayPageFriendlyURLResolverTest {
 	}
 
 	@Test
-	public void testJournalArticleFriendlyURLWithNonExistentArticle()
+	public void testJournalArticleFriendlyURLWithNonexistentArticle()
 		throws Exception {
 
 		String urlTitle = "/-/nonexistent-test-journal-article";

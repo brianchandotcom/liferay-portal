@@ -189,7 +189,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 	}
 
 	@Test
-	public void testHasRelatedSuggestionsFalseWithDisabledAndNonEmptyList() {
+	public void testHasRelatedSuggestionsFalseWithDisabledAndNonemptyList() {
 		_displayBuilder.setRelatedQueriesSuggestions(
 			Arrays.asList(RandomTestUtil.randomString()));
 		_displayBuilder.setRelatedQueriesSuggestionsEnabled(false);
@@ -214,7 +214,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 	}
 
 	@Test
-	public void testHasRelatedSuggestionsTrueWithEnabledAndNonEmptyList() {
+	public void testHasRelatedSuggestionsTrueWithEnabledAndNonemptyList() {
 		_displayBuilder.setRelatedQueriesSuggestions(
 			Arrays.asList(RandomTestUtil.randomString()));
 		_displayBuilder.setRelatedQueriesSuggestionsEnabled(true);
@@ -260,7 +260,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 	}
 
 	@Test
-	public void testHasSpellCheckSuggestionsTrueWithEnabledAndNonEmptyList() {
+	public void testHasSpellCheckSuggestionsTrueWithEnabledAndNonemptyList() {
 		_displayBuilder.setSpellCheckSuggestion(RandomTestUtil.randomString());
 		_displayBuilder.setSpellCheckSuggestionEnabled(true);
 

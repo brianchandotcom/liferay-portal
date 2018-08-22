@@ -3,6 +3,7 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="JSONNamingCheck" files="modules/sdk/gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayThemePlugin\.java" />
+		<suppress checks="MethodNamingCheck" files="modules/sdk/gradle-plugins-maven-plugin-builder/src/main/java/com/liferay/gradle/plugins/maven/plugin/builder/tasks/WriteMavenSettingsTask\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDBundleInformationCheck" files="modules/sdk/gradle-plugins-target-platform/src/gradleTest/.*" />

@@ -321,39 +321,39 @@ public class XhtmlTranslationVisitorTest {
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyFirstHeadingBlock() {
+	public void testParseCorrectlyOneNonemptyFirstHeadingBlock() {
 		Assert.assertEquals(
 			"<h1> Level 1 (largest) </h1>", translate("heading-1.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlock() {
+	public void testParseCorrectlyOneNonemptyNoWikiBlock() {
 		Assert.assertEquals(
 			"<pre>This is a non \\empty\\ block</pre>",
 			translate("nowikiblock-4.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlockWithBraces() {
+	public void testParseCorrectlyOneNonemptyNoWikiBlockWithBraces() {
 		Assert.assertEquals(
 			"<p>Preserving </p><pre>.lfr-helper{span}</pre>",
 			translate("nowikiblock-6.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlockWithMultipleLines() {
+	public void testParseCorrectlyOneNonemptyNoWikiBlockWithMultipleLines() {
 		Assert.assertEquals(
 			"<pre>Multiple" + _NEW_LINE + "lines</pre>",
 			toUnix(translate("nowikiblock-5.creole")));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptySecondHeadingBlock() {
+	public void testParseCorrectlyOneNonemptySecondHeadingBlock() {
 		Assert.assertEquals("<h2>Level 2</h2>", translate("heading-4.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyThirdHeadingBlock() {
+	public void testParseCorrectlyOneNonemptyThirdHeadingBlock() {
 		Assert.assertEquals(
 			"<h3>This is a non closed heading</h3>",
 			translate("heading-9.creole"));

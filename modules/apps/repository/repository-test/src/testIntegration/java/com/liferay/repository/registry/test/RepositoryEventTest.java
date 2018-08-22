@@ -47,7 +47,7 @@ public class RepositoryEventTest {
 			liferayIntegrationTestRule = new LiferayIntegrationTestRule();
 
 		@Test
-		public void shouldAcceptAnyNonNullListener() {
+		public void shouldAcceptAnyNonnullListener() {
 			_repositoryEventRegistry.registerRepositoryEventListener(
 				RepositoryEventType.Add.class, FileEntry.class,
 				new NoOpRepositoryEventListener

@@ -723,7 +723,7 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 	}
 
 	@Test(expected = MustSetValidValuesSize.class)
-	public void testValidationWithWrongValuesForNonRepeatableField()
+	public void testValidationWithWrongValuesForNonrepeatableField()
 		throws Exception {
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();

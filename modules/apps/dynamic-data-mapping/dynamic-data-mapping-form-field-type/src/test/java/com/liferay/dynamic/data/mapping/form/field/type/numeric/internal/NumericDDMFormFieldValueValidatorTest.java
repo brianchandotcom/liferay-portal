@@ -54,7 +54,7 @@ public class NumericDDMFormFieldValueValidatorTest {
 	}
 
 	@Test
-	public void testValidationWithNonRequiredFieldAndEmptyValue()
+	public void testValidationWithNonrequiredFieldAndEmptyValue()
 		throws Exception {
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(

@@ -278,12 +278,12 @@ public class ServiceProxyFactoryTest {
 
 	@Test
 	public void testNonblockingProxy() throws Exception {
-		_testNonBlockingProxy(false);
+		_testNonblockingProxy(false);
 	}
 
 	@Test
 	public void testNonblockingProxyWithFilter() throws Exception {
-		_testNonBlockingProxy(true);
+		_testNonblockingProxy(true);
 	}
 
 	@Test
@@ -294,7 +294,7 @@ public class ServiceProxyFactoryTest {
 			TestService.class, TestServiceUtil.class, testServiceUtil,
 			"nonStaticField", null, false);
 
-		_testNonBlockingProxy(false, testService, testServiceUtil);
+		_testNonblockingProxy(false, testService, testServiceUtil);
 	}
 
 	@Test
@@ -508,7 +508,7 @@ public class ServiceProxyFactoryTest {
 		}
 	}
 
-	private void _testNonBlockingProxy(boolean filterEnabled) throws Exception {
+	private void _testNonblockingProxy(boolean filterEnabled) throws Exception {
 		TestService testService = null;
 
 		if (filterEnabled) {
@@ -521,10 +521,10 @@ public class ServiceProxyFactoryTest {
 				TestService.class, TestServiceUtil.class, "testService", false);
 		}
 
-		_testNonBlockingProxy(filterEnabled, testService, null);
+		_testNonblockingProxy(filterEnabled, testService, null);
 	}
 
-	private void _testNonBlockingProxy(
+	private void _testNonblockingProxy(
 			boolean filterEnabled, TestService testService,
 			TestServiceUtil testServiceUtil)
 		throws Exception {

@@ -31,7 +31,7 @@ import org.junit.Test;
 public class RouteImplTest {
 
 	@Test
-	public void testNonMatchingRoute() {
+	public void testNonmatchingRoute() {
 		HttpUtil httpUtil = new HttpUtil();
 
 		httpUtil.setHttp(new HttpImpl());

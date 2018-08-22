@@ -93,7 +93,7 @@ public class HtmlContentTransformerImplTest {
 	}
 
 	@Test
-	public void testReplacesAnAdaptableImgAfterANonAdaptableOne()
+	public void testReplacesAnAdaptableImgAfterANonadaptableOne()
 		throws Exception {
 
 		Mockito.when(

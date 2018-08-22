@@ -71,7 +71,7 @@ public class UpgradeMessageBoardsTest extends PowerMockito {
 	}
 
 	@Test
-	public void testUpgradeEmailSignatureWithNonHtmlFormat() throws Exception {
+	public void testUpgradeEmailSignatureWithNonhtmlFormat() throws Exception {
 		_portletPreferences.setValue(
 			"emailHtmlFormat", Boolean.FALSE.toString());
 		_portletPreferences.setValue("messageBody", "The Body");

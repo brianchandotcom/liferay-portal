@@ -61,7 +61,7 @@ public class AMUploadViewReturnTypeProviderTest extends PowerMockito {
 	}
 
 	@Test
-	public void testAddAMImageURLItemSelectorReturnTypeWithNonEmptyList()
+	public void testAddAMImageURLItemSelectorReturnTypeWithNonemptyList()
 		throws Exception {
 
 		ItemSelectorViewReturnTypeProvider itemSelectorViewReturnTypeProvider =

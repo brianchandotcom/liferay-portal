@@ -80,7 +80,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		}
 
 		String fieldType = _getFieldType(javaVariable);
-		boolean isFinal = _containsNonAccessModifier(javaVariable, "final");
+		boolean isFinal = _containsNonaccessModifier(javaVariable, "final");
 
 		if (!isFinal) {
 			classContent = _formatDefaultValue(
@@ -103,7 +103,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 					classContent, javaVariable.getContent(), fieldType);
 			}
 		}
-		else if (!_containsNonAccessModifier(javaVariable, "volatile")) {
+		else if (!_containsNonaccessModifier(javaVariable, "volatile")) {
 			classContent = _formatFinalableFieldType(
 				classContent, javaClass, javaVariable, fieldType);
 		}
@@ -111,7 +111,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		return classContent;
 	}
 
-	private boolean _containsNonAccessModifier(
+	private boolean _containsNonaccessModifier(
 		JavaVariable javaVariable, String modifier) {
 
 		Pattern pattern = Pattern.compile(

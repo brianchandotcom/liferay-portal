@@ -64,7 +64,7 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 	}
 
 	@Test
-	public void testSerializationWithNonEmptyParameterList() throws Exception {
+	public void testSerializationWithNonemptyParameterList() throws Exception {
 		List<DDMFormFieldType> ddmFormFieldTypes = new ArrayList<>();
 
 		DDMFormFieldType ddmFormFieldType = getMockedDDMFormFieldType();

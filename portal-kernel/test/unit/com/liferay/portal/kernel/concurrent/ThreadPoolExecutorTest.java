@@ -231,7 +231,7 @@ public class ThreadPoolExecutorTest {
 	}
 
 	@Test
-	public void testAdjustPoolSizeIncreaseCoreAndMaxPoolSizeWithNonEmptyTaskQueue()
+	public void testAdjustPoolSizeIncreaseCoreAndMaxPoolSizeWithNonemptyTaskQueue()
 		throws InterruptedException {
 
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(

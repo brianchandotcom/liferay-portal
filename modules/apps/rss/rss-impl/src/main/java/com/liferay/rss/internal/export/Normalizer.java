@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class Normalizer {
 
 	public static String normalizeToAscii(String s) {
-		if (!_hasNonASCIICode(s)) {
+		if (!_hasNonasciiCode(s)) {
 			return s;
 		}
 
@@ -36,7 +36,7 @@ public class Normalizer {
 			normalizedText, _UNICODE_TEXT, _NORMALIZED_TEXT);
 	}
 
-	private static boolean _hasNonASCIICode(String s) {
+	private static boolean _hasNonasciiCode(String s) {
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) > 127) {
 				return true;

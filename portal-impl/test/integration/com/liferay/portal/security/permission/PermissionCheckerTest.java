@@ -687,7 +687,7 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
-	public void testIsGroupMemberWithNonGroupMember() throws Exception {
+	public void testIsGroupMemberWithNongroupMember() throws Exception {
 		_user = UserTestUtil.addUser();
 
 		PermissionChecker permissionChecker = _getPermissionChecker(_user);

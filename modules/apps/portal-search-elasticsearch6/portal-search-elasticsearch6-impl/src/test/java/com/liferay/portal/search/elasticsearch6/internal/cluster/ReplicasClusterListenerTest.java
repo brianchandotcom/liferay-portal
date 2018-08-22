@@ -105,7 +105,7 @@ public class ReplicasClusterListenerTest {
 	}
 
 	@Test
-	public void testNonMasterLiferayNodeDoesNothing() {
+	public void testNonmasterLiferayNodeDoesNothing() {
 		setMasterExecutor(false);
 
 		processClusterEvent();

@@ -92,7 +92,7 @@ public class PortalBeanLocatorUtilTest extends PowerMockito {
 	}
 
 	@Test
-	public void testLocateNonExistingBean() {
+	public void testLocateNonexistingBean() {
 		when(
 			_beanLocator.locate("nonExistingBean")
 		).thenReturn(

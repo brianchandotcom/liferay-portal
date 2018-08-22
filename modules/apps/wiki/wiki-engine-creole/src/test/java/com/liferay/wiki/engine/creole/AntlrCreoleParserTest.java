@@ -296,7 +296,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseNoWikiBlockNonEmpty() throws Exception {
+	public void testParseNoWikiBlockNonempty() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("nowikiblock-4.creole");
 
 		NoWikiSectionNode noWikiSectionNode =

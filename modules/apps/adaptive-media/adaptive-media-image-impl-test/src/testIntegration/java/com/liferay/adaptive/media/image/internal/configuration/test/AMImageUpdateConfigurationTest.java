@@ -1114,7 +1114,7 @@ public class AMImageUpdateConfigurationTest
 	@Test(
 		expected = AMImageConfigurationException.NoSuchAMImageConfigurationException.class
 	)
-	public void testUpdateNonExistingConfiguration() throws Exception {
+	public void testUpdateNonexistingConfiguration() throws Exception {
 		Map<String, String> properties = new HashMap<>();
 
 		properties.put("max-height", "100");

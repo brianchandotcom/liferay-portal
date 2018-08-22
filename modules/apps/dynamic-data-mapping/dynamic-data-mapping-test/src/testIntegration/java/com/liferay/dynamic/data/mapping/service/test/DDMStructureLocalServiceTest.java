@@ -572,7 +572,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	public void testSearchByNonExistingStorageType() throws Exception {
+	public void testSearchByNonexistingStorageType() throws Exception {
 		addStructure(_classNameId, StringUtil.randomString());
 
 		List<DDMStructure> structures = DDMStructureLocalServiceUtil.search(

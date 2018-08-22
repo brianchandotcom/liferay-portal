@@ -33,7 +33,7 @@ import org.junit.Test;
 public abstract class BaseDDMFormFieldOptionsValidationTestCase {
 
 	@Test
-	public void testValidationWithNonRequiredOptionAndEmptyDefaultLocaleValue()
+	public void testValidationWithNonrequiredOptionAndEmptyDefaultLocaleValue()
 		throws Exception {
 
 		DDMFormField ddmFormField = new DDMFormField("option", "select");
@@ -61,7 +61,7 @@ public abstract class BaseDDMFormFieldOptionsValidationTestCase {
 	}
 
 	@Test(expected = DDMFormFieldValueValidationException.class)
-	public void testValidationWithNonRequiredOptionAndInvalidLocalizedValue()
+	public void testValidationWithNonrequiredOptionAndInvalidLocalizedValue()
 		throws Exception {
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();

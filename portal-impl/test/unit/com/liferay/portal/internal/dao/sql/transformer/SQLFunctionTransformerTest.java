@@ -110,7 +110,7 @@ public class SQLFunctionTransformerTest {
 	}
 
 	@Test
-	public void testNonUpperCaseFunctionPrefixThrowsException() {
+	public void testNonupperCaseFunctionPrefixThrowsException() {
 		try {
 			new SQLFunctionTransformer("World(", "", "", "Hello World()");
 

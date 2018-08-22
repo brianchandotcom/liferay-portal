@@ -338,7 +338,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyFirstHeadingBlock()
+	public void testParseCorrectlyOneNonemptyFirstHeadingBlock()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -346,14 +346,14 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlock() throws Exception {
+	public void testParseCorrectlyOneNonemptyNoWikiBlock() throws Exception {
 		Assert.assertEquals(
 			"<pre>This is a non \\empty\\ block</pre>",
 			translate("nowikiblock-4.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlockWithBraces()
+	public void testParseCorrectlyOneNonemptyNoWikiBlockWithBraces()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -362,7 +362,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlockWithMultipleLines()
+	public void testParseCorrectlyOneNonemptyNoWikiBlockWithMultipleLines()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -371,14 +371,14 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptySecondHeadingBlock()
+	public void testParseCorrectlyOneNonemptySecondHeadingBlock()
 		throws Exception {
 
 		Assert.assertEquals("<h2>Level 2</h2>", translate("heading-4.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyThirdHeadingBlock()
+	public void testParseCorrectlyOneNonemptyThirdHeadingBlock()
 		throws Exception {
 
 		Assert.assertEquals(

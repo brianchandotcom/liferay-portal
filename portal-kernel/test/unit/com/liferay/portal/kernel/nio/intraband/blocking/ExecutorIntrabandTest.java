@@ -247,7 +247,7 @@ public class ExecutorIntrabandTest {
 	}
 
 	@Test
-	public void testRegisterChannelDuplexWithNonSelectableChannel()
+	public void testRegisterChannelDuplexWithNonselectableChannel()
 		throws Exception {
 
 		// Normal register, with unselectable channel
@@ -379,7 +379,7 @@ public class ExecutorIntrabandTest {
 	}
 
 	@Test
-	public void testRegisterChannelReadWriteWithNonSelectableChannel()
+	public void testRegisterChannelReadWriteWithNonselectableChannel()
 		throws Exception {
 
 		// Normal register, with unselectable channel

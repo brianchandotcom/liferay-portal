@@ -24,7 +24,9 @@ if (displayStyle.equals("vertical")) {
 }
 %>
 
-<liferay-util:html-bottom outputKey="taglib_ui_social_bookmark_plusone">
+<liferay-util:html-bottom
+	outputKey="taglib_ui_social_bookmark_plusone"
+>
 	<script type="text/javascript">
 		window.___gcfg = {
 			lang: '<%= locale.getLanguage() %>-<%= locale.getCountry() %>'

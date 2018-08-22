@@ -43,7 +43,6 @@ else if (depth < 4) {
 }
 
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
-DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 
 DiscussionPermission discussionPermission = CommentManagerUtil.getDiscussionPermission(discussionRequestHelper.getPermissionChecker());
 
@@ -119,7 +118,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 												DiscussionComment parentDiscussionComment = discussionComment.getParentComment();
 												%>
 
-												<liferay-util:buffer var="parentCommentUserBuffer">
+												<liferay-util:buffer
+													var="parentCommentUserBuffer"
+												>
 
 													<%
 													User parentMessageUser = parentDiscussionComment.getUser();
@@ -143,7 +144,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 													</span>
 												</liferay-util:buffer>
 
-												<liferay-util:buffer var="parentCommentBodyBuffer">
+												<liferay-util:buffer
+													var="parentCommentBodyBuffer"
+												>
 													<a class="lfr-discussion-parent-link" data-metadata="<%= HtmlUtil.escape(parentDiscussionComment.getBody()) %>" data-title="<%= HtmlUtil.escape(parentCommentUserBuffer) %>">
 														<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
 													</a>
@@ -171,7 +174,16 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
 									<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style="<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>">
-										<liferay-ui:input-editor autoCreate="<%= false %>" configKey="commentEditor" contents="<%= discussionComment.getBody() %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "editReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "EditOnChange" %>' showSource="<%= false %>" skipEditorLoading="<%= skipEditorLoading %>" />
+										<liferay-ui:input-editor
+											autoCreate="<%= false %>"
+											configKey="commentEditor"
+											contents="<%= discussionComment.getBody() %>"
+											editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
+											name='<%= randomNamespace + "editReplyBody" + index %>'
+											onChangeMethod='<%= randomNamespace + index + "EditOnChange" %>'
+											showSource="<%= false %>"
+											skipEditorLoading="<%= skipEditorLoading %>"
+										/>
 
 										<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= discussionComment.getBody() %>" />
 
@@ -237,7 +249,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() && (index > 0) %>">
 						<div class="card-col-field">
-							<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+							<liferay-ui:icon-menu
+								direction="left-side"
+								icon="<%= StringPool.BLANK %>"
+								markupView="lexicon"
+								message="<%= StringPool.BLANK %>"
+								showWhenSingleIcon="<%= true %>"
+							>
 								<c:if test="<%= commentTreeDisplayContext.isEditActionControlVisible() %>">
 
 									<%
@@ -274,7 +292,17 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</div>
 
 					<div class="lfr-discussion-body">
-						<liferay-ui:input-editor autoCreate="<%= false %>" configKey="commentEditor" contents="" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "postReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "ReplyOnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" skipEditorLoading="<%= skipEditorLoading %>" />
+						<liferay-ui:input-editor
+							autoCreate="<%= false %>"
+							configKey="commentEditor"
+							contents=""
+							editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
+							name='<%= randomNamespace + "postReplyBody" + index %>'
+							onChangeMethod='<%= randomNamespace + index + "ReplyOnChange" %>'
+							placeholder="type-your-comment-here"
+							showSource="<%= false %>"
+							skipEditorLoading="<%= skipEditorLoading %>"
+						/>
 
 						<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 

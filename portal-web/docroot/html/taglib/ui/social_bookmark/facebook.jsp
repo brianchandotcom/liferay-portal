@@ -27,18 +27,13 @@ else if (displayStyle.equals("vertical")) {
 }
 %>
 
-<liferay-util:html-bottom outputKey="taglib_ui_social_bookmark_facebook">
+<liferay-util:html-bottom
+	outputKey="taglib_ui_social_bookmark_facebook"
+>
 	<script src="<%= HttpUtil.getProtocol(request) %>://connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/all.js#xfbml=1" type="text/javascript"></script>
 </liferay-util:html-bottom>
 
 <div id="fb-root"></div>
 
-<div class="fb-like"
-	data-font=""
-	data-height="<%= (facebookDisplayStyle.equals("standard") || facebookDisplayStyle.equals("button_count")) ? 20 : StringPool.BLANK %>"
-	data-href="<%= url %>"
-	data-layout="<%= facebookDisplayStyle %>"
-	data-send="false"
-	data-show_faces="true"
->
+<div class="fb-like" data-font="" data-height="<%= (facebookDisplayStyle.equals("standard") || facebookDisplayStyle.equals("button_count")) ? 20 : StringPool.BLANK %>" data-href="<%= url %>" data-layout="<%= facebookDisplayStyle %>" data-send="false" data-show_faces="true">
 </div>

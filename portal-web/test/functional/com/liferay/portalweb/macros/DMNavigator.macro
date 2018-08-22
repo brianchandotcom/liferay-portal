@@ -96,6 +96,12 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
+	<command name="gotoFolderViaBreadcrumb">
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute function="AssertClick#assertTextClickAt" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" />
+	</command>
+
 	<command name="gotoHomeCP">
 		<execute function="AssertClick#assertTextClickAt" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 	</command>

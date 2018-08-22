@@ -484,6 +484,22 @@
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 	</command>
 
+	<command name="publishFolderViaSAP">
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
+
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Publish to Live" />
+		</execute>
+
+		<execute function="Confirm" value1="Are you sure you want to publish the selected folder?" />
+
+		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
+	</command>
+
 	<command name="removeFolderViewPermissionsPG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />

@@ -66,28 +66,13 @@ public abstract class BaseRepositoryImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		InputStream is = null;
-		long size = 0;
-
-		try {
-			is = new FileInputStream(file);
-			size = file.length();
-
+		try (InputStream is = new FileInputStream(file)) {
 			return addFileEntry(
 				userId, folderId, sourceFileName, mimeType, title, description,
-				changeLog, is, size, serviceContext);
+				changeLog, is, file.length(), serviceContext);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
-		}
-		finally {
-			if (is != null) {
-				try {
-					is.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
 		}
 	}
 
@@ -632,29 +617,14 @@ public abstract class BaseRepositoryImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		InputStream is = null;
-		long size = 0;
-
-		try {
-			is = new FileInputStream(file);
-			size = file.length();
-
+		try (InputStream is = new FileInputStream(file)) {
 			return updateFileEntry(
 				userId, fileEntryId, sourceFileName, mimeType, title,
-				description, changeLog, dlVersionNumberIncrease, is, size,
-				serviceContext);
+				description, changeLog, dlVersionNumberIncrease, is,
+				file.length(), serviceContext);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
-		}
-		finally {
-			if (is != null) {
-				try {
-					is.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
 		}
 	}
 
@@ -755,17 +725,16 @@ public abstract class BaseRepositoryImpl
 			long fileEntryId, ServiceContext serviceContext)
 		throws NoSuchRepositoryEntryException {
 
-		boolean manualCheckInRequired = GetterUtil.getBoolean(
-			serviceContext.getAttribute(DL.MANUAL_CHECK_IN_REQUIRED));
+		if (!GetterUtil.getBoolean(
+				serviceContext.getAttribute(DL.MANUAL_CHECK_IN_REQUIRED))) {
 
-		if (!manualCheckInRequired) {
 			return;
 		}
 
 		RepositoryEntry repositoryEntry = RepositoryEntryUtil.findByPrimaryKey(
 			fileEntryId);
 
-		repositoryEntry.setManualCheckInRequired(manualCheckInRequired);
+		repositoryEntry.setManualCheckInRequired(true);
 
 		RepositoryEntryUtil.update(repositoryEntry);
 	}

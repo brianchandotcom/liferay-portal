@@ -153,6 +153,14 @@ AUI.add(
 						}
 					},
 
+					_afterAutoCompleteSelect: function() {
+						var instance = this;
+
+						instance.set('value', instance.getValue());
+
+						instance.evaluate();
+					},
+
 					_afterOptionsChange: function(event) {
 						var instance = this;
 
@@ -186,7 +194,7 @@ AUI.add(
 						instance._autoComplete = new A.AutoComplete(
 							{
 								after: {
-									select: A.bind(instance.evaluate, instance)
+									select: A.bind(instance._afterAutoCompleteSelect, instance)
 								},
 								inputNode: inputNode,
 								maxResults: 10,

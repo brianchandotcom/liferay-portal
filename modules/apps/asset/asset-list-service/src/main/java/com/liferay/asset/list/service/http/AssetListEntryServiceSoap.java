@@ -20,8 +20,12 @@ import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
@@ -65,6 +69,30 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class AssetListEntryServiceSoap {
+	public static com.liferay.asset.list.model.AssetListEntrySoap addAssetListEntry(
+		long userId, long groupId, String[] titleMapLanguageIds,
+		String[] titleMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.asset.list.model.AssetListEntry returnValue = AssetListEntryServiceUtil.addAssetListEntry(userId,
+					groupId, titleMap, descriptionMap, type, serviceContext);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.asset.list.model.AssetListEntrySoap deleteAssetListEntry(
 		long assetListEntryId) throws RemoteException {
 		try {
@@ -83,6 +111,28 @@ public class AssetListEntryServiceSoap {
 		long assetListEntryId) throws RemoteException {
 		try {
 			com.liferay.asset.list.model.AssetListEntry returnValue = AssetListEntryServiceUtil.fetchAssetListEntry(assetListEntryId);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntrySoap updateAssetListEntry(
+		long assetListEntryId, String[] titleMapLanguageIds,
+		String[] titleMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues) throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.asset.list.model.AssetListEntry returnValue = AssetListEntryServiceUtil.updateAssetListEntry(assetListEntryId,
+					titleMap, descriptionMap);
 
 			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModel(returnValue);
 		}

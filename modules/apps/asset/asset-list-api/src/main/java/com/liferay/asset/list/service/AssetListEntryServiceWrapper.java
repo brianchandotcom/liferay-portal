@@ -35,8 +35,9 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 
 	@Override
 	public com.liferay.asset.list.model.AssetListEntry addAssetListEntry(
-		long userId, long groupId, java.util.Map<String, String> titleMap,
-		java.util.Map<String, String> descriptionMap, int type,
+		long userId, long groupId,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetListEntryService.addAssetListEntry(userId, groupId,
@@ -69,8 +70,9 @@ public class AssetListEntryServiceWrapper implements AssetListEntryService,
 
 	@Override
 	public com.liferay.asset.list.model.AssetListEntry updateAssetListEntry(
-		long assetListEntryId, java.util.Map<String, String> titleMap,
-		java.util.Map<String, String> descriptionMap)
+		long assetListEntryId,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetListEntryService.updateAssetListEntry(assetListEntryId,
 			titleMap, descriptionMap);

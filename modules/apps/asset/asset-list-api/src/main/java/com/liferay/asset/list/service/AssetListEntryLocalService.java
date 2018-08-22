@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -80,7 +81,7 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	public AssetListEntry addAssetListEntry(AssetListEntry assetListEntry);
 
 	public AssetListEntry addAssetListEntry(long userId, long groupId,
-		Map<String, String> titleMap, Map<String, String> descriptionMap,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 		int type, ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -311,7 +312,7 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	public AssetListEntry updateAssetListEntry(AssetListEntry assetListEntry);
 
 	public AssetListEntry updateAssetListEntry(long assetListEntryId,
-		Map<String, String> titleMap, Map<String, String> descriptionMap)
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
 		throws PortalException;
 
 	public AssetListEntryLocalization updateAssetListEntryLocalization(

@@ -43,8 +43,9 @@ public class AssetListEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.asset.list.service.impl.AssetListEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.asset.list.model.AssetListEntry addAssetListEntry(
-		long userId, long groupId, java.util.Map<String, String> titleMap,
-		java.util.Map<String, String> descriptionMap, int type,
+		long userId, long groupId,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -74,8 +75,9 @@ public class AssetListEntryServiceUtil {
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntry(
-		long assetListEntryId, java.util.Map<String, String> titleMap,
-		java.util.Map<String, String> descriptionMap)
+		long assetListEntryId,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateAssetListEntry(assetListEntryId, titleMap,

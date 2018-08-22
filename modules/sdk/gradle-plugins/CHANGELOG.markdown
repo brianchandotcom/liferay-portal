@@ -5415,6 +5415,14 @@ version 2.2.2.
 - [LPS-83790]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 2.3.1.
 
+## 3.12.111 - 2018-08-21
+
+### Changed
+- [LPS-84615]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.55.
+- [LPS-84615]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.238.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -5847,4 +5855,5 @@ to version 2.3.1.
 [LPS-84213]: https://issues.liferay.com/browse/LPS-84213
 [LPS-84307]: https://issues.liferay.com/browse/LPS-84307
 [LPS-84473]: https://issues.liferay.com/browse/LPS-84473
+[LPS-84615]: https://issues.liferay.com/browse/LPS-84615
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

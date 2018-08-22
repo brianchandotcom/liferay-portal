@@ -37,12 +37,8 @@ public class ExternalRepositoryFactoryImpl
 
 		_className = className;
 
-		AggregateClassLoader aggregateClassLoader = new AggregateClassLoader(
-			ClassLoaderUtil.getPortalClassLoader());
-
-		aggregateClassLoader.addClassLoader(classLoader);
-
-		_classLoader = aggregateClassLoader;
+		_classLoader = AggregateClassLoader.getAggregateClassLoader(
+			ClassLoaderUtil.getPortalClassLoader(), classLoader);
 	}
 
 	@Override

@@ -51,6 +51,30 @@ public class AggregateClassLoader extends ClassLoader {
 
 		if (parentClassLoader instanceof AggregateClassLoader) {
 			aggregateClassLoader = (AggregateClassLoader)parentClassLoader;
+
+			List<ClassLoader> existingClassLoaders =
+				aggregateClassLoader.getClassLoaders();
+
+			boolean requiresNew = false;
+
+			for (ClassLoader classLoader : classLoaders) {
+				if (!classLoader.equals(parentClassLoader) &&
+					!existingClassLoaders.contains(classLoader)) {
+
+					requiresNew = true;
+
+					break;
+				}
+			}
+
+			if (!requiresNew) {
+				return aggregateClassLoader;
+			}
+
+			aggregateClassLoader = new AggregateClassLoader(
+				parentClassLoader.getParent());
+
+			aggregateClassLoader.addClassLoader(parentClassLoader);
 		}
 		else {
 			aggregateClassLoader = new AggregateClassLoader(parentClassLoader);
@@ -78,6 +102,10 @@ public class AggregateClassLoader extends ClassLoader {
 	}
 
 	public void addClassLoader(ClassLoader classLoader) {
+		if (classLoader.equals(getParent())) {
+			return;
+		}
+
 		List<ClassLoader> classLoaders = getClassLoaders();
 
 		if (classLoaders.contains(classLoader)) {
@@ -85,20 +113,18 @@ public class AggregateClassLoader extends ClassLoader {
 		}
 
 		if (classLoader instanceof AggregateClassLoader) {
-			ClassLoader classLoaderParent = classLoader.getParent();
+			AggregateClassLoader aggregateClassLoader =
+				(AggregateClassLoader)classLoader;
 
-			if (classLoaderParent.equals(getParent())) {
-				AggregateClassLoader aggregateClassLoader =
-					(AggregateClassLoader)classLoader;
+			addClassLoader(aggregateClassLoader.getParent());
 
-				for (ClassLoader curClassLoader :
-						aggregateClassLoader.getClassLoaders()) {
+			for (ClassLoader curClassLoader :
+					aggregateClassLoader.getClassLoaders()) {
 
-					addClassLoader(curClassLoader);
-				}
-
-				return;
+				addClassLoader(curClassLoader);
 			}
+
+			return;
 		}
 
 		_classLoaderReferences.add(new EqualityWeakReference<>(classLoader));

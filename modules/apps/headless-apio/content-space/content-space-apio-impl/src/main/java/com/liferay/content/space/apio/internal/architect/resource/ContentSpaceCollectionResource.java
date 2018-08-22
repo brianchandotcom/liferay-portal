@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
 
@@ -86,6 +87,8 @@ public class ContentSpaceCollectionResource
 			"creator", PersonIdentifier.class, Group::getCreatorUserId
 		).addLinkedModel(
 			"documentsRepository", RootFolderIdentifier.class, Group::getGroupId
+		).addLinkedModel(
+			"webSite", WebSiteIdentifier.class, Group::getGroupId
 		).addLocalizedStringByLocale(
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(

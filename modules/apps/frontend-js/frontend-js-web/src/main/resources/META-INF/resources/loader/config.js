@@ -27,4 +27,6 @@
 	__CONFIG__.explainResolutions = Liferay.EXPLAIN_RESOLUTIONS;
 
 	__CONFIG__.exposeGlobal = Liferay.EXPOSE_GLOBAL;
+
+	__CONFIG__.waitTimeout = Liferay.WAIT_TIMEOUT;
 }());

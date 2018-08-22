@@ -110,7 +110,7 @@
 		</style>
 	</@>
 
-	<div class="breadcrumb breadcrumb-arrows">
+	<div aria-label="${languageUtil.get(locale, "breadcrumb")}" class="breadcrumb breadcrumb-arrows" role="navigation">
 		<#assign cssClass = "" />
 
 		<#list entries as entry>
@@ -118,7 +118,7 @@
 				<#assign cssClass = "active" />
 			</#if>
 
-			<li class="${cssClass}">
+			<li class="${cssClass}" <#if entry?is_last>aria-current="page"</#if>>
 				<#if entry?has_next>
 					<a
 

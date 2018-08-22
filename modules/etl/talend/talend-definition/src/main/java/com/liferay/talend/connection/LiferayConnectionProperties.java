@@ -122,7 +122,6 @@ public class LiferayConnectionProperties
 
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
-		refreshLayout(getForm(FORM_WIZARD));
 
 		return validationResultMutable;
 	}

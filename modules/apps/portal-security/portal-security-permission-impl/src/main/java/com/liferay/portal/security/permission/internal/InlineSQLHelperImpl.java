@@ -474,9 +474,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		String className, String classPKField, String userIdField,
 		String groupIdField, long[] groupIds, String permissionSQL) {
 
-		StringBundler sb = new StringBundler(5);
+		String permissionSQLContributorsSQL = _getPermissionSQLContributorsSQL(
+			className, classPKField, userIdField, groupIdField, groupIds);
 
-		if (!_permissionSQLContributors.isEmpty()) {
+		StringBundler sb = new StringBundler(8);
+
+		if (Validator.isNotNull(permissionSQLContributorsSQL)) {
 			sb.append("(");
 		}
 
@@ -485,6 +488,25 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		sb.append(" IN (");
 		sb.append(permissionSQL);
 		sb.append("))");
+
+		if (Validator.isNotNull(permissionSQLContributorsSQL)) {
+			sb.append(permissionSQLContributorsSQL);
+			sb.append(") ");
+		}
+
+		return sb.toString();
+	}
+
+	private String _getPermissionSQLContributorsSQL(
+		String className, String classPKField, String userIdField,
+		String groupIdField, long[] groupIds) {
+
+		if (_permissionSQLContributors.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(
+			_permissionSQLContributors.size() * 3);
 
 		for (PermissionSQLContributor permissionSQLContributor :
 				_permissionSQLContributors) {
@@ -501,10 +523,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			sb.append(" OR (");
 			sb.append(contributorPermissionSQL);
 			sb.append(")");
-		}
-
-		if (!_permissionSQLContributors.isEmpty()) {
-			sb.append(") ");
 		}
 
 		return sb.toString();

@@ -1,5 +1,5 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1.LIFERAY-PATCHED-3"
 	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
 }
 

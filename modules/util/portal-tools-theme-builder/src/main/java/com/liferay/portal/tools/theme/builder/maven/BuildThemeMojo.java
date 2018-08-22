@@ -83,49 +83,56 @@ public class BuildThemeMojo extends AbstractMojo {
 				}
 			}
 
-			if (!themeStyledArtifactPresent) {
+			if (!themeStyledArtifactPresent &&
+				(_themeBuilderArgs.getParentDir() == null)) {
+
 				for (ComponentDependency componentDependency :
 						_pluginDescriptor.getDependencies()) {
 
 					String artifactId = componentDependency.getArtifactId();
 
-					if (artifactId.equals(
-							"com.liferay.frontend.theme.styled") &&
-						(_themeBuilderArgs.getParentDir() == null) &&
-						ThemeBuilder.STYLED.equals(
+					if (!artifactId.equals(
+							"com.liferay.frontend.theme.styled")) {
+
+						continue;
+					}
+
+					if (!ThemeBuilder.STYLED.equals(
 							_themeBuilderArgs.getParentName())) {
 
-						Artifact artifact = _resolveArtifact(
-							componentDependency);
+						continue;
+					}
 
-						if (artifact != null) {
-							_themeBuilderArgs.setParentDir(artifact.getFile());
+					Artifact artifact = _resolveArtifact(componentDependency);
 
-							break;
-						}
+					if (artifact != null) {
+						_themeBuilderArgs.setParentDir(artifact.getFile());
+
+						break;
 					}
 				}
 			}
 
-			if (!themeUnstyledArtifactPresent) {
+			if (!themeUnstyledArtifactPresent &&
+				(_themeBuilderArgs.getUnstyledDir() == null)) {
+
 				for (ComponentDependency componentDependency :
 						_pluginDescriptor.getDependencies()) {
 
 					String artifactId = componentDependency.getArtifactId();
 
-					if (artifactId.equals(
-							"com.liferay.frontend.theme.unstyled") &&
-						(_themeBuilderArgs.getUnstyledDir() == null)) {
+					if (!artifactId.equals(
+							"com.liferay.frontend.theme.unstyled")) {
 
-						Artifact artifact = _resolveArtifact(
-							componentDependency);
+						continue;
+					}
 
-						if (artifact != null) {
-							_themeBuilderArgs.setUnstyledDir(
-								artifact.getFile());
+					Artifact artifact = _resolveArtifact(componentDependency);
 
-							break;
-						}
+					if (artifact != null) {
+						_themeBuilderArgs.setUnstyledDir(artifact.getFile());
+
+						break;
 					}
 				}
 			}

@@ -54,41 +54,41 @@ public class BuildCSSMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
-			boolean artifactPresent = false;
+			if (_cssBuilderArgs.getImportDir() == null) {
+				boolean artifactPresent = false;
 
-			for (Dependency dependency : _project.getDependencies()) {
-				String artifactId = dependency.getArtifactId();
+				for (Dependency dependency : _project.getDependencies()) {
+					String artifactId = dependency.getArtifactId();
 
-				if (artifactId.equals("com.liferay.frontend.css.common") &&
-					(_cssBuilderArgs.getImportDir() == null)) {
+					if (artifactId.equals("com.liferay.frontend.css.common")) {
+						Artifact artifact = _resolveArtifact(dependency);
 
-					Artifact artifact = _resolveArtifact(dependency);
+						if (artifact != null) {
+							_cssBuilderArgs.setImportDir(artifact.getFile());
+						}
 
-					if (artifact != null) {
-						_cssBuilderArgs.setImportDir(artifact.getFile());
-					}
-
-					artifactPresent = true;
-
-					break;
-				}
-			}
-
-			if (!artifactPresent) {
-				for (ComponentDependency componentDependency :
-						_pluginDescriptor.getDependencies()) {
-
-					String artifactId = componentDependency.getArtifactId();
-
-					if (artifactId.equals("com.liferay.frontend.css.common") &&
-						(_cssBuilderArgs.getImportDir() == null)) {
-
-						Artifact artifact = _resolveArtifact(
-							componentDependency);
-
-						_cssBuilderArgs.setImportDir(artifact.getFile());
+						artifactPresent = true;
 
 						break;
+					}
+				}
+
+				if (!artifactPresent) {
+					for (ComponentDependency componentDependency :
+							_pluginDescriptor.getDependencies()) {
+
+						String artifactId = componentDependency.getArtifactId();
+
+						if (artifactId.equals(
+								"com.liferay.frontend.css.common")) {
+
+							Artifact artifact = _resolveArtifact(
+								componentDependency);
+
+							_cssBuilderArgs.setImportDir(artifact.getFile());
+
+							break;
+						}
 					}
 				}
 			}

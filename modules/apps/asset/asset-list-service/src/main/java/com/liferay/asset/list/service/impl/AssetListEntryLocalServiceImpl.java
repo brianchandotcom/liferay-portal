@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -37,8 +39,8 @@ public class AssetListEntryLocalServiceImpl
 
 	@Override
 	public AssetListEntry addAssetListEntry(
-			long userId, long groupId, Map<String, String> titleMap,
-			Map<String, String> descriptionMap, int type,
+			long userId, long groupId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -100,8 +102,8 @@ public class AssetListEntryLocalServiceImpl
 
 	@Override
 	public AssetListEntry updateAssetListEntry(
-			long assetListEntryId, Map<String, String> titleMap,
-			Map<String, String> descriptionMap)
+			long assetListEntryId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap)
 		throws PortalException {
 
 		AssetListEntry assetListEntry =
@@ -120,10 +122,12 @@ public class AssetListEntryLocalServiceImpl
 
 	private void _updateAssetListEntryLocalizations(
 		long assetListEntryId, long companyId, long groupId,
-		Map<String, String> titleMap, Map<String, String> descriptionMap) {
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap) {
 
-		for (Map.Entry<String, String> entry : titleMap.entrySet()) {
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
 			String title = entry.getValue();
+
+			String languageId = LocaleUtil.toLanguageId(entry.getKey());
 
 			if (Validator.isNull(title)) {
 				continue;
@@ -134,7 +138,7 @@ public class AssetListEntryLocalServiceImpl
 			AssetListEntryLocalization existingAssetListEntryLocalization =
 				assetListEntryLocalizationPersistence.
 					fetchByAssetListEntryId_LanguageId(
-						assetListEntryId, entry.getKey());
+						assetListEntryId, languageId);
 
 			if (existingAssetListEntryLocalization != null) {
 				existingAssetListEntryLocalization.setTitle(title);
@@ -158,7 +162,7 @@ public class AssetListEntryLocalServiceImpl
 			assetListEntryLocalization.setGroupId(groupId);
 			assetListEntryLocalization.setTitle(title);
 			assetListEntryLocalization.setDescription(description);
-			assetListEntryLocalization.setLanguageId(entry.getKey());
+			assetListEntryLocalization.setLanguageId(languageId);
 
 			assetListEntryLocalizationPersistence.update(
 				assetListEntryLocalization);

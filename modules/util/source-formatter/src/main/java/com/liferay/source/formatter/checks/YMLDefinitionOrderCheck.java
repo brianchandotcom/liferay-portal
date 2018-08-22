@@ -139,22 +139,22 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		}
 
 		private static final Map<String, Integer>
-			_travisDefinitionKeyWeightMap = new HashMap<>();
-
-		static {
-			_travisDefinitionKeyWeightMap.put("after_deploy", 11);
-			_travisDefinitionKeyWeightMap.put("after_failure", 8);
-			_travisDefinitionKeyWeightMap.put("after_script", 12);
-			_travisDefinitionKeyWeightMap.put("after_success", 7);
-			_travisDefinitionKeyWeightMap.put("before_cache", 5);
-			_travisDefinitionKeyWeightMap.put("before_deploy", 9);
-			_travisDefinitionKeyWeightMap.put("before_install", 1);
-			_travisDefinitionKeyWeightMap.put("before_script", 3);
-			_travisDefinitionKeyWeightMap.put("cache", 6);
-			_travisDefinitionKeyWeightMap.put("deploy", 10);
-			_travisDefinitionKeyWeightMap.put("install", 2);
-			_travisDefinitionKeyWeightMap.put("script", 4);
-		}
+			_travisDefinitionKeyWeightMap = new HashMap<String, Integer>() {
+				{
+					put("after_deploy", 11);
+					put("after_failure", 8);
+					put("after_script", 12);
+					put("after_success", 7);
+					put("before_cache", 5);
+					put("before_deploy", 9);
+					put("before_install", 1);
+					put("before_script", 3);
+					put("cache", 6);
+					put("deploy", 10);
+					put("install", 2);
+					put("script", 4);
+				}
+			};
 
 		private final Pattern _definitionKeyPattern = Pattern.compile("(.*?):");
 		private final String _fileName;

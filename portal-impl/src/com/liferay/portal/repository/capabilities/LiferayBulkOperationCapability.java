@@ -99,11 +99,11 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 	}
 
 	private static final Map<Class<? extends Field<?>>, String> _fieldNames =
-		new HashMap<>();
-
-	static {
-		_fieldNames.put(Field.CreateDate.class, "createDate");
-	}
+		new HashMap<Class<? extends Field<?>>, String>() {
+			{
+				put(Field.CreateDate.class, "createDate");
+			}
+		};
 
 	private final DLFileEntryServiceAdapter _dlFileEntryServiceAdapter;
 	private final DLFolderServiceAdapter _dlFolderServiceAdapter;

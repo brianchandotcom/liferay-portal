@@ -161,15 +161,16 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		return _nextReleaseVersion;
 	}
 
-	private static final Map<String, String> _releaseInfoMap = new HashMap<>();
-
-	static {
-		_releaseInfoMap.put("Bunyan", "6.0.x");
-		_releaseInfoMap.put("Judson", "7.1.x");
-		_releaseInfoMap.put("Newton", "6.2.x");
-		_releaseInfoMap.put("Paton", "6.1.x");
-		_releaseInfoMap.put("Wilberforce", "7.0.x");
-	}
+	private static final Map<String, String> _releaseInfoMap =
+		new HashMap<String, String>() {
+			{
+				put("Bunyan", "6.0.x");
+				put("Judson", "7.1.x");
+				put("Newton", "6.2.x");
+				put("Paton", "6.1.x");
+				put("Wilberforce", "7.0.x");
+			}
+		};
 
 	private final Pattern _deprecatedPattern = Pattern.compile(
 		"(\n\\s*\\* @deprecated)( As of (([\\w.]+)(,? \\(([\\w.]+)\\))?)" +

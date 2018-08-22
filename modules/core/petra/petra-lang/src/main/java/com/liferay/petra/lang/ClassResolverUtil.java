@@ -41,18 +41,18 @@ public class ClassResolverUtil {
 	}
 
 	private static final Map<String, Class<?>> _primitiveClasses =
-		new HashMap<>(9, 1.0F);
-
-	static {
-		_primitiveClasses.put("boolean", boolean.class);
-		_primitiveClasses.put("byte", byte.class);
-		_primitiveClasses.put("char", char.class);
-		_primitiveClasses.put("double", double.class);
-		_primitiveClasses.put("float", float.class);
-		_primitiveClasses.put("int", int.class);
-		_primitiveClasses.put("long", long.class);
-		_primitiveClasses.put("short", short.class);
-		_primitiveClasses.put("void", void.class);
-	}
+		new HashMap<String, Class<?>>(9, 1.0F) {
+			{
+				put("boolean", boolean.class);
+				put("byte", byte.class);
+				put("char", char.class);
+				put("double", double.class);
+				put("float", float.class);
+				put("int", int.class);
+				put("long", long.class);
+				put("short", short.class);
+				put("void", void.class);
+			}
+		};
 
 }

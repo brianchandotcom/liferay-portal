@@ -158,49 +158,49 @@ public abstract class BaseTinyMCEEditorConfigContributor
 		"font[face|size|color|style],span[class|align|style]");
 
 	private static final Map<String, String> _tinyMCELanguages =
-		new HashMap<>();
-
-	static {
-		_tinyMCELanguages.put("ar_SA", "ar");
-		_tinyMCELanguages.put("bg_BG", "bg_BG");
-		_tinyMCELanguages.put("ca_ES", "ca");
-		_tinyMCELanguages.put("cs_CZ", "cs");
-		_tinyMCELanguages.put("de_DE", "de");
-		_tinyMCELanguages.put("el_GR", "el");
-		_tinyMCELanguages.put("en_AU", "en_GB");
-		_tinyMCELanguages.put("en_GB", "en_GB");
-		_tinyMCELanguages.put("en_US", "en_GB");
-		_tinyMCELanguages.put("es_ES", "es");
-		_tinyMCELanguages.put("et_EE", "et");
-		_tinyMCELanguages.put("eu_ES", "eu");
-		_tinyMCELanguages.put("fa_IR", "fa");
-		_tinyMCELanguages.put("fi_FI", "fi");
-		_tinyMCELanguages.put("fr_FR", "fr_FR");
-		_tinyMCELanguages.put("gl_ES", "gl");
-		_tinyMCELanguages.put("hr_HR", "hr");
-		_tinyMCELanguages.put("hu_HU", "hu_HU");
-		_tinyMCELanguages.put("in_ID", "id");
-		_tinyMCELanguages.put("it_IT", "it");
-		_tinyMCELanguages.put("iw_IL", "he_IL");
-		_tinyMCELanguages.put("ja_JP", "ja");
-		_tinyMCELanguages.put("ko_KR", "ko_KR");
-		_tinyMCELanguages.put("lt_LT", "lt");
-		_tinyMCELanguages.put("nb_NO", "nb_NO");
-		_tinyMCELanguages.put("nl_NL", "nl");
-		_tinyMCELanguages.put("pl_PL", "pl");
-		_tinyMCELanguages.put("pt_BR", "pt_BR");
-		_tinyMCELanguages.put("pt_PT", "pt_PT");
-		_tinyMCELanguages.put("ro_RO", "ro");
-		_tinyMCELanguages.put("ru_RU", "ru");
-		_tinyMCELanguages.put("sk_SK", "sk");
-		_tinyMCELanguages.put("sl_SI", "sl_SI");
-		_tinyMCELanguages.put("sr_RS", "sr");
-		_tinyMCELanguages.put("sv_SE", "sv_SE");
-		_tinyMCELanguages.put("tr_TR", "tr_TR");
-		_tinyMCELanguages.put("uk_UA", "uk");
-		_tinyMCELanguages.put("vi_VN", "vi");
-		_tinyMCELanguages.put("zh_CN", "zh_CN");
-		_tinyMCELanguages.put("zh_TW", "zh_TW");
-	}
+		new HashMap<String, String>() {
+			{
+				put("ar_SA", "ar");
+				put("bg_BG", "bg_BG");
+				put("ca_ES", "ca");
+				put("cs_CZ", "cs");
+				put("de_DE", "de");
+				put("el_GR", "el");
+				put("en_AU", "en_GB");
+				put("en_GB", "en_GB");
+				put("en_US", "en_GB");
+				put("es_ES", "es");
+				put("et_EE", "et");
+				put("eu_ES", "eu");
+				put("fa_IR", "fa");
+				put("fi_FI", "fi");
+				put("fr_FR", "fr_FR");
+				put("gl_ES", "gl");
+				put("hr_HR", "hr");
+				put("hu_HU", "hu_HU");
+				put("in_ID", "id");
+				put("it_IT", "it");
+				put("iw_IL", "he_IL");
+				put("ja_JP", "ja");
+				put("ko_KR", "ko_KR");
+				put("lt_LT", "lt");
+				put("nb_NO", "nb_NO");
+				put("nl_NL", "nl");
+				put("pl_PL", "pl");
+				put("pt_BR", "pt_BR");
+				put("pt_PT", "pt_PT");
+				put("ro_RO", "ro");
+				put("ru_RU", "ru");
+				put("sk_SK", "sk");
+				put("sl_SI", "sl_SI");
+				put("sr_RS", "sr");
+				put("sv_SE", "sv_SE");
+				put("tr_TR", "tr_TR");
+				put("uk_UA", "uk");
+				put("vi_VN", "vi");
+				put("zh_CN", "zh_CN");
+				put("zh_TW", "zh_TW");
+			}
+		};
 
 }

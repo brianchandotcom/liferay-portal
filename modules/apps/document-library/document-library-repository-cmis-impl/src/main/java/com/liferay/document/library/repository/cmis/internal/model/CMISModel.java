@@ -135,29 +135,24 @@ public abstract class CMISModel {
 	}
 
 	private static final Map<String, Action> _mappedActionKeys =
-		new HashMap<>();
+		new HashMap<String, Action>() {
+			{
+				put(ActionKeys.ACCESS, Action.CAN_GET_FOLDER_TREE);
+				put(ActionKeys.ADD_DISCUSSION, Action.CAN_GET_PROPERTIES);
+				put(ActionKeys.ADD_DOCUMENT, Action.CAN_CREATE_DOCUMENT);
+				put(ActionKeys.ADD_FOLDER, Action.CAN_CREATE_FOLDER);
+				put(ActionKeys.ADD_SUBFOLDER, Action.CAN_CREATE_FOLDER);
+				put(ActionKeys.DELETE, Action.CAN_DELETE_OBJECT);
+				put(ActionKeys.DELETE_DISCUSSION, Action.CAN_DELETE_OBJECT);
+				put(ActionKeys.UPDATE, Action.CAN_UPDATE_PROPERTIES);
+				put(ActionKeys.UPDATE_DISCUSSION, Action.CAN_UPDATE_PROPERTIES);
+				put(ActionKeys.VIEW, Action.CAN_GET_PROPERTIES);
+			}
+		};
 	private static final Set<String> _unsupportedActionKeys = new HashSet<>(
 		Arrays.asList(
 			ActionKeys.ADD_SHORTCUT, ActionKeys.OVERRIDE_CHECKOUT,
 			ActionKeys.PERMISSIONS, ActionKeys.SUBSCRIBE));
-
-	static {
-		_mappedActionKeys.put(ActionKeys.ACCESS, Action.CAN_GET_FOLDER_TREE);
-		_mappedActionKeys.put(
-			ActionKeys.ADD_DISCUSSION, Action.CAN_GET_PROPERTIES);
-		_mappedActionKeys.put(
-			ActionKeys.ADD_DOCUMENT, Action.CAN_CREATE_DOCUMENT);
-		_mappedActionKeys.put(ActionKeys.ADD_FOLDER, Action.CAN_CREATE_FOLDER);
-		_mappedActionKeys.put(
-			ActionKeys.ADD_SUBFOLDER, Action.CAN_CREATE_FOLDER);
-		_mappedActionKeys.put(ActionKeys.DELETE, Action.CAN_DELETE_OBJECT);
-		_mappedActionKeys.put(
-			ActionKeys.DELETE_DISCUSSION, Action.CAN_DELETE_OBJECT);
-		_mappedActionKeys.put(ActionKeys.UPDATE, Action.CAN_UPDATE_PROPERTIES);
-		_mappedActionKeys.put(
-			ActionKeys.UPDATE_DISCUSSION, Action.CAN_UPDATE_PROPERTIES);
-		_mappedActionKeys.put(ActionKeys.VIEW, Action.CAN_GET_PROPERTIES);
-	}
 
 	private Folder _parentFolder;
 

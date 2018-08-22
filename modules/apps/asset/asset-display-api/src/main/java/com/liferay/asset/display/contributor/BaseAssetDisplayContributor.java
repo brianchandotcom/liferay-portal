@@ -159,15 +159,15 @@ public abstract class BaseAssetDisplayContributor<T>
 	}
 
 	private static final Map<String, String> _assetEntryModelFieldsMap =
-		new HashMap<>();
-
-	static {
-		_assetEntryModelFieldsMap.put("categoryIds", "categories");
-		_assetEntryModelFieldsMap.put("description", "description");
-		_assetEntryModelFieldsMap.put("publishDate", "publish-date");
-		_assetEntryModelFieldsMap.put("summary", "summary");
-		_assetEntryModelFieldsMap.put("tagNames", "tags");
-		_assetEntryModelFieldsMap.put("title", "title");
-	}
+		new HashMap<String, String>() {
+			{
+				put("categoryIds", "categories");
+				put("description", "description");
+				put("publishDate", "publish-date");
+				put("summary", "summary");
+				put("tagNames", "tags");
+				put("title", "title");
+			}
+		};
 
 }

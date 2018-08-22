@@ -62,7 +62,9 @@ public class StaticCollectionCheck extends BaseCheck {
 
 		String typeName = DetailASTUtil.getTypeName(variableDefAST, false);
 
-		if (!typeName.equals("List") && !typeName.equals("Set")) {
+		if (!typeName.equals("List") && !typeName.equals("Map") &&
+			!typeName.equals("Set")) {
+
 			return;
 		}
 
@@ -76,8 +78,16 @@ public class StaticCollectionCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
-			staticBlockAST, variableName, "add");
+		List<DetailAST> methodCallASTList = null;
+
+		if (typeName.equals("Map")) {
+			methodCallASTList = DetailASTUtil.getMethodCalls(
+				staticBlockAST, variableName, "put");
+		}
+		else {
+			methodCallASTList = DetailASTUtil.getMethodCalls(
+				staticBlockAST, variableName, "add");
+		}
 
 		for (DetailAST methodCallAST : methodCallASTList) {
 			DetailAST parentAST = methodCallAST.getParent();

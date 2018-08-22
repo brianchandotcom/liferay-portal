@@ -67,7 +67,7 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteUsers");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "delete"));
 						dropdownItem.setQuickAction(true);

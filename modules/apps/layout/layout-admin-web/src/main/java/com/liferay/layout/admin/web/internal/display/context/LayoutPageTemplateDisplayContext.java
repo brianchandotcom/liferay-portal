@@ -93,7 +93,7 @@ public class LayoutPageTemplateDisplayContext {
 					dropdownItem -> {
 						dropdownItem.putData(
 							"action", "deleteLayoutPageTemplateEntries");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

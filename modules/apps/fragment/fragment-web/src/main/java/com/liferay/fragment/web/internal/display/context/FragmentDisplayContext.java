@@ -349,7 +349,7 @@ public class FragmentDisplayContext {
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "deleteSelectedFragmentEntries");
-							dropdownItem.setIcon("trash");
+							dropdownItem.setIcon("times-circle");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "delete"));
 							dropdownItem.setQuickAction(true);

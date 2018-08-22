@@ -31,7 +31,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 </portlet:actionURL>
 
 <liferay-ui:icon-delete
-	icon="trash"
+	icon="times-circle"
 	linkCssClass="icon-monospaced text-default"
 	message="delete"
 	showIcon="<%= true %>"

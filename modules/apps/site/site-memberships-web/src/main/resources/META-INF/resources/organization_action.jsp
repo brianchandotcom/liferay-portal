@@ -30,7 +30,7 @@ Organization organization = (Organization)row.getObject();
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete
-		icon="trash"
+		icon="times-circle"
 		linkCssClass="icon-monospaced text-default"
 		message="remove-membership"
 		showIcon="<%= true %>"

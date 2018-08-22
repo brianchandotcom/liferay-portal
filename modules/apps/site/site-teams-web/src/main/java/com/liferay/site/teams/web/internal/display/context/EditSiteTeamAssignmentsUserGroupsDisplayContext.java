@@ -68,7 +68,7 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteUserGroups");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "delete"));
 						dropdownItem.setQuickAction(true);

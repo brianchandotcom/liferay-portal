@@ -67,7 +67,7 @@ public class OrphanPortletsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteOrphanPortlets");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

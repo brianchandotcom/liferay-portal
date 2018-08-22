@@ -24,6 +24,7 @@ import freemarker.ext.beans.EnumerationModel;
 import freemarker.ext.beans.MapModel;
 import freemarker.ext.beans.ResourceBundleModel;
 import freemarker.ext.beans.StringModel;
+import freemarker.ext.dom.NodeModel;
 import freemarker.ext.util.ModelFactory;
 
 import freemarker.template.Configuration;
@@ -102,17 +103,17 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			}
 
 			if (object instanceof Collection) {
-				return _COLLECTION_MODEL_FACTORY.create(object, this);
+				return new SimpleSequence((Collection)object, this);
 			}
 
 			if (object instanceof Map) {
-				return _MAP_MODEL_FACTORY.create(object, this);
+				return new MapModel((Map)object, this);
 			}
 
 			return _STRING_MODEL_FACTORY.create(object, this);
 		}
 
-		ModelFactory modelFactory = _modelFactories.get(object.getClass());
+		ModelFactory modelFactory = _modelFactories.get(clazz);
 
 		if (modelFactory != null) {
 			return modelFactory.create(object, this);
@@ -123,46 +124,25 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 	@Override
 	protected TemplateModel handleUnknownType(Object object) {
+		ModelFactory modelFactory = null;
+
 		if (object instanceof Node) {
-			return wrapDomNode(object);
+			modelFactory = _NODE_MODEL_FACTORY;
+		}
+		else if (object instanceof ResourceBundle) {
+			modelFactory = _RESOURCE_BUNDLE_MODEL_FACTORY;
+		}
+		else if (object instanceof Enumeration) {
+			modelFactory = _ENUMERATION_MODEL_FACTORY;
+		}
+		else {
+			modelFactory = _STRING_MODEL_FACTORY;
 		}
 
-		if (object instanceof TemplateNode) {
-			return new LiferayTemplateModel((TemplateNode)object, this);
-		}
+		_modelFactories.put(object.getClass(), modelFactory);
 
-		if (object instanceof ResourceBundle) {
-			return _RESOURCE_BUNDLE_MODEL_FACTORY.create(object, this);
-		}
-
-		if (object instanceof Enumeration) {
-			return _ENUMERATION_MODEL_FACTORY.create(object, this);
-		}
-
-		if (object instanceof Collection) {
-			return _COLLECTION_MODEL_FACTORY.create(object, this);
-		}
-
-		if (object instanceof Map) {
-			return _MAP_MODEL_FACTORY.create(object, this);
-		}
-
-		_modelFactories.put(object.getClass(), _STRING_MODEL_FACTORY);
-
-		return _STRING_MODEL_FACTORY.create(object, this);
+		return modelFactory.create(object, this);
 	}
-
-	private static final ModelFactory _COLLECTION_MODEL_FACTORY =
-		new ModelFactory() {
-
-			@Override
-			public TemplateModel create(
-				Object object, ObjectWrapper objectWrapper) {
-
-				return new SimpleSequence((Collection)object, objectWrapper);
-			}
-
-		};
 
 	private static final ModelFactory _ENUMERATION_MODEL_FACTORY =
 		new ModelFactory() {
@@ -177,13 +157,13 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 		};
 
-	private static final ModelFactory _MAP_MODEL_FACTORY = new ModelFactory() {
+	private static final ModelFactory _NODE_MODEL_FACTORY = new ModelFactory() {
 
 		@Override
 		public TemplateModel create(
 			Object object, ObjectWrapper objectWrapper) {
 
-			return new MapModel((Map)object, (BeansWrapper)objectWrapper);
+			return NodeModel.wrap((Node)object);
 		}
 
 	};

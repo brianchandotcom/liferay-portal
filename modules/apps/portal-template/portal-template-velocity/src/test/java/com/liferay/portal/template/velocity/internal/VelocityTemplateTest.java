@@ -16,6 +16,7 @@ package com.liferay.portal.template.velocity.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -34,6 +35,7 @@ import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 
 import java.io.IOException;
@@ -93,6 +95,10 @@ public class VelocityTemplateTest {
 				TemplateResourceParser.class, new ClassLoaderResourceParser(),
 				Collections.<String, Object>singletonMap(
 					"lang.type", TemplateConstants.LANG_TYPE_VM)));
+
+		_serviceReference = registry.getServiceReference(SingleVMPool.class);
+
+		_singleVMPool = registry.getService(_serviceReference);
 	}
 
 	@AfterClass
@@ -104,6 +110,10 @@ public class VelocityTemplateTest {
 		}
 
 		_serviceRegistrations.clear();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.ungetService(_serviceReference);
 	}
 
 	@Before
@@ -175,6 +185,8 @@ public class VelocityTemplateTest {
 		extendedProperties.setProperty(
 			VelocityEngine.VM_PERM_ALLOW_INLINE_REPLACE_GLOBAL,
 			String.valueOf(!cacheEnabled));
+		extendedProperties.setProperty(
+			PortalCacheManagerNames.SINGLE_VM, _singleVMPool);
 
 		_velocityEngine.setExtendedProperties(extendedProperties);
 
@@ -389,8 +401,10 @@ public class VelocityTemplateTest {
 
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
+	private static ServiceReference<SingleVMPool> _serviceReference;
 	private static final Set<ServiceRegistration<?>> _serviceRegistrations =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
+	private static SingleVMPool _singleVMPool;
 	private static MockTemplateResourceLoader _templateResourceLoader;
 
 	private TemplateContextHelper _templateContextHelper;

@@ -64,12 +64,7 @@ if (Objects.equals(mode, Constants.EDIT)) {
 	$('#<portlet:namespace />mode').on(
 		'change',
 		function(event) {
-			if (Liferay.SPA) {
-				Liferay.SPA.app.navigate('<%= redirect %>');
-			}
-			else {
-				location.href='<%= redirect %>'
-			}
+			Liferay.Util.navigate('<%= redirect %>');
 		}
 	);
 </aui:script>

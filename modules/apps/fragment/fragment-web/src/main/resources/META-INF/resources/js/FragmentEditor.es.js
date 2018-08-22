@@ -152,7 +152,7 @@ class FragmentEditor extends PortletBase {
 						this.urls.redirect
 					);
 
-					this.navigate(redirectURL);
+					Liferay.Util.navigate(redirectURL);
 				}
 			)
 			.catch (

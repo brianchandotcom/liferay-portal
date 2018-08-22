@@ -37,6 +37,10 @@ public abstract class BaseDDMFormBuilderTag extends com.liferay.taglib.util.Incl
 		return _ddmStructureId;
 	}
 
+	public java.lang.Long getDdmStructureVersionId() {
+		return _ddmStructureVersionId;
+	}
+
 	public java.lang.String getDefaultLanguageId() {
 		return _defaultLanguageId;
 	}
@@ -61,6 +65,10 @@ public abstract class BaseDDMFormBuilderTag extends com.liferay.taglib.util.Incl
 		_ddmStructureId = ddmStructureId;
 	}
 
+	public void setDdmStructureVersionId(java.lang.Long ddmStructureVersionId) {
+		_ddmStructureVersionId = ddmStructureVersionId;
+	}
+
 	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
 		_defaultLanguageId = defaultLanguageId;
 	}
@@ -69,7 +77,7 @@ public abstract class BaseDDMFormBuilderTag extends com.liferay.taglib.util.Incl
 		_editingLanguageId = editingLanguageId;
 	}
 
-	public void setFieldSetsClassNameId(long fieldSetClassNameId) {
+	public void setFieldSetClassNameId(long fieldSetClassNameId) {
 		_fieldSetClassNameId = fieldSetClassNameId;
 	}
 
@@ -93,6 +101,7 @@ public abstract class BaseDDMFormBuilderTag extends com.liferay.taglib.util.Incl
 		super.cleanUp();
 
 		_ddmStructureId = null;
+		_ddmStructureVersionId = null;
 		_defaultLanguageId = null;
 		_editingLanguageId = null;
 		_fieldSetClassNameId = 0;
@@ -113,6 +122,7 @@ public abstract class BaseDDMFormBuilderTag extends com.liferay.taglib.util.Incl
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-form:ddm-form-builder:ddmStructureId", _ddmStructureId);
+		request.setAttribute("liferay-form:ddm-form-builder:ddmStructureVersionId", _ddmStructureVersionId);
 		request.setAttribute("liferay-form:ddm-form-builder:defaultLanguageId", _defaultLanguageId);
 		request.setAttribute("liferay-form:ddm-form-builder:editingLanguageId", _editingLanguageId);
 		request.setAttribute("liferay-form:ddm-form-builder:fieldSetClassNameId", String.valueOf(_fieldSetClassNameId));
@@ -129,6 +139,7 @@ public abstract class BaseDDMFormBuilderTag extends com.liferay.taglib.util.Incl
 		"/ddm_form_builder/start.jsp";
 
 	private java.lang.Long _ddmStructureId = null;
+	private java.lang.Long _ddmStructureVersionId = null;
 	private java.lang.String _defaultLanguageId = null;
 	private java.lang.String _editingLanguageId = null;
 	private long _fieldSetClassNameId = 0;

@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.declaration;
 
-import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MicrosoftCognitiveServicesAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MSCognitiveServicesAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,20 +24,19 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component
-public class MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfigurationPidMapping
-	implements ConfigurationPidMapping {
+public class
+	MSCognitiveServicesAssetAutoTagProviderCompanyConfigurationPidMapping
+		implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return
-			MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
-				class;
+		return MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+			class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return MicrosoftCognitiveServicesAssetAutoTagProviderConstants.
-			SERVICE_NAME;
+		return MSCognitiveServicesAssetAutoTagProviderConstants.SERVICE_NAME;
 	}
 
 }

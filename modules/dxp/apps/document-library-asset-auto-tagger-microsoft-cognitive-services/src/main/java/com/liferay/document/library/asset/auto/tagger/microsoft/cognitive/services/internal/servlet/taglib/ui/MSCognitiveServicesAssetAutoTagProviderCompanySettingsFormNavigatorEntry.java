@@ -17,8 +17,8 @@ package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.servi
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.constants.FormNavigatorAssetAutoTaggerConstants;
-import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MicrosoftCognitiveServicesAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MSCognitiveServicesAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = FormNavigatorEntry.class)
 public class
-	MicrosoftCognitiveServicesAssetAutoTagProviderCompanySettingsFormNavigatorEntry
+	MSCognitiveServicesAssetAutoTagProviderCompanySettingsFormNavigatorEntry
 		extends BaseJSPFormNavigatorEntry<Company>
 		implements FormNavigatorEntry<Company> {
 
@@ -127,24 +127,24 @@ public class
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration
-			MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration =
+		MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration
+			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration =
 				_configurationProvider.getConfiguration(
-					MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+					MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
 						class,
 					new CompanyServiceSettingsLocator(
 						themeDisplay.getCompanyId(),
-						MicrosoftCognitiveServicesAssetAutoTagProviderConstants.
+						MSCognitiveServicesAssetAutoTagProviderConstants.
 							SERVICE_NAME));
 
 		request.setAttribute(
-			MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
 				class.getName(),
-			MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration);
+			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MicrosoftCognitiveServicesAssetAutoTagProviderCompanySettingsFormNavigatorEntry.
+		MSCognitiveServicesAssetAutoTagProviderCompanySettingsFormNavigatorEntry.
 			class);
 
 	@Reference

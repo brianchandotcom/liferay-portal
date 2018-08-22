@@ -15,8 +15,8 @@
 package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
-import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MicrosoftCognitiveServicesAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MSCognitiveServicesAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -56,17 +56,17 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = AssetAutoTagProvider.class
 )
-public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
+public class MSCognitiveServicesImageAssetAutoTagProvider
 	implements AssetAutoTagProvider<FileEntry> {
 
 	@Override
 	public List<String> getTagNames(FileEntry fileEntry) {
 		try {
-			MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration
-				microsoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration =
+			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration
+				MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration =
 					_getConfiguration(fileEntry);
 
-			if (!microsoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+			if (!MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
 					enabled() ||
 				_isTemporary(fileEntry) || (fileEntry.getSize() > _MAX_SIZE) ||
 				!_isSupportedFormat(fileEntry)) {
@@ -77,8 +77,10 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
 			JSONObject responseJSONObject = _queryComputerVisionJSONObject(
-				microsoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.apiEndpoint(),
-				microsoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.apiKey(),
+				MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+					apiEndpoint(),
+				MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+					apiKey(),
 				fileVersion);
 
 			JSONArray tagsJSONArray = responseJSONObject.getJSONArray("tags");
@@ -92,16 +94,14 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		}
 	}
 
-	private MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration
+	private MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration
 		_getConfiguration(FileEntry fileEntry) throws ConfigurationException {
 
 		return _configurationProvider.getConfiguration(
-			MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
-				class,
+			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.class,
 			new CompanyServiceSettingsLocator(
 				fileEntry.getCompanyId(),
-				MicrosoftCognitiveServicesAssetAutoTagProviderConstants.
-					SERVICE_NAME));
+				MSCognitiveServicesAssetAutoTagProviderConstants.SERVICE_NAME));
 	}
 
 	private boolean _isSupportedFormat(FileEntry fileEntry) {
@@ -155,7 +155,7 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 	private static final int _MAX_SIZE = 4 * 1024 * 1024;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MicrosoftCognitiveServicesImageAssetAutoTagProvider.class);
+		MSCognitiveServicesImageAssetAutoTagProvider.class);
 
 	private static final Set<String> _supportedFormats = new HashSet<>(
 		Arrays.asList("BMP", "GIF", "JPEG", "JPG", "PNG"));

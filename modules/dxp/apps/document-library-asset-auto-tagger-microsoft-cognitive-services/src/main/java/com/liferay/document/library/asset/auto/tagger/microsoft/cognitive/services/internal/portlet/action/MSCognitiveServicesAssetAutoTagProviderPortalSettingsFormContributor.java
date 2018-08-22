@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.portlet.action;
 
-import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MicrosoftCognitiveServicesAssetAutoTagProviderConstants;
-import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.PortalSettingsMicrosoftCognitiveServicesAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MSCognitiveServicesAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.PortalSettingsMSCognitiveServicesAssetAutoTagProviderConstants;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Optional;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = PortalSettingsFormContributor.class)
 public class
-	MicrosoftCognitiveServicesAssetAutoTagProviderPortalSettingsFormContributor
+	MSCognitiveServicesAssetAutoTagProviderPortalSettingsFormContributor
 		implements PortalSettingsFormContributor {
 
 	@Override
@@ -41,22 +41,20 @@ public class
 
 	@Override
 	public String getParameterNamespace() {
-		return PortalSettingsMicrosoftCognitiveServicesAssetAutoTagProviderConstants.
+		return PortalSettingsMSCognitiveServicesAssetAutoTagProviderConstants.
 			FORM_PARAMETER_NAMESPACE;
 	}
 
 	@Override
 	public Optional<String> getSaveMVCActionCommandNameOptional() {
 		return Optional.of(
-			"/portal_settings" +
-				"/document_library_asset_auto_tagger_microsoft_cognitive_" +
-					"services");
+			"/portal_settings/document_library_asset_auto_tagger_microsoft_" +
+				"cognitive_services");
 	}
 
 	@Override
 	public String getSettingsId() {
-		return MicrosoftCognitiveServicesAssetAutoTagProviderConstants.
-			SERVICE_NAME;
+		return MSCognitiveServicesAssetAutoTagProviderConstants.SERVICE_NAME;
 	}
 
 	@Override

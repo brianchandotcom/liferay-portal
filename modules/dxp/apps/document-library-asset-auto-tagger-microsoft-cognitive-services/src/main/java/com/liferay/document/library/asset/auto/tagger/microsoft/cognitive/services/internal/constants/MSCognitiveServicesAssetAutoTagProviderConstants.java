@@ -17,10 +17,17 @@ package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.servi
 /**
  * @author Alejandro Tardín
  */
-public class
-	PortalSettingsMicrosoftCognitiveServicesAssetAutoTagProviderConstants {
+public class MSCognitiveServicesAssetAutoTagProviderConstants {
 
-	public static final String FORM_PARAMETER_NAMESPACE =
-		"documentLibraryAssetAutoTaggerMicrosoftCognitiveServices_";
+	public static final String API_KEY_DOCS_URL =
+		"https://azure.microsoft.com/en-us/try/cognitive-services/my-apis" +
+			"/?apiSlug=computer-services";
+
+	public static final String SAMPLE_API_ENDPOINT =
+		"https://westcentralus.api.cognitive.microsoft.com/vision/v2.0";
+
+	public static final String SERVICE_NAME =
+		"com.liferay.document.library.asset.auto.tagger.microsoft.cognitive." +
+			"services";
 
 }

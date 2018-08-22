@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.declaration;
 
-import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,14 +23,14 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component
-public class MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class
+	MSCognitiveServicesAssetAutoTagProviderCompanyConfigurationBeanDeclaration
+		implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class getConfigurationBeanClass() {
-		return
-			MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
-				class;
+		return MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+			class;
 	}
 
 }

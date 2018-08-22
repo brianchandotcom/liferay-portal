@@ -98,7 +98,7 @@ public class OrganizationCollectionResource
 		).identifier(
 			Organization::getOrganizationId
 		).addBidirectionalModel(
-			"parentOrganization", "suborganization",
+			"parentOrganization", "subOrganization",
 			OrganizationIdentifier.class,
 			OrganizationCollectionResource::_getParentOrganizationId
 		).addLinkedModel(

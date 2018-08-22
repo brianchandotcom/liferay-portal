@@ -1,6 +1,6 @@
 import AnalyticsClient from '../../src/analytics';
 import dom from 'metal-dom';
-import {assert, expect} from 'chai';
+import {expect} from 'chai';
 
 const applicationId = 'Blog';
 
@@ -9,10 +9,11 @@ const googleUrl = 'http://google.com/';
 let Analytics;
 
 const createBlogElement = () => {
-	const blogElement = document.createElement('blog');
+	const blogElement = document.createElement('div');
 	blogElement.dataset.analyticsAssetId = 'assetId';
 	blogElement.dataset.analyticsAssetTitle = 'Blog Title 1';
 	blogElement.dataset.analyticsAssetType = 'blog';
+	blogElement.innerText = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
 	document.body.appendChild(blogElement);
 	return blogElement;
 }
@@ -27,7 +28,7 @@ describe('Blogs Plugin', () => {
 		// Force attaching DOM Content Loaded event
 		Object.defineProperty(document, 'readyState', {
 			value: 'loading',
-			writable: false
+			writable: false,
 		});
 
 		fetchMock.mock('*', () => 200);
@@ -42,14 +43,14 @@ describe('Blogs Plugin', () => {
 			document.dispatchEvent(domContentLoaded);
 
 			const events = Analytics.events.filter(
-				({eventId, properties}) => eventId === 'blogViewed'
+				({eventId}) => eventId === 'blogViewed'
 			);
 
 			expect(events.length).to.be.at.least(1, 'At least one event should have been fired');
 
 			events[0].should.deep.include({
-				applicationId: applicationId,
-				eventId: 'blogViewed'
+				applicationId,
+				eventId: 'blogViewed',
 			});
 			expect(events[0].properties.entryId).to.equal('assetId');
 
@@ -69,8 +70,8 @@ describe('Blogs Plugin', () => {
 			expect(Analytics.events.length).to.equal(1);
 
 			Analytics.events[0].should.deep.include({
-				applicationId: applicationId,
-				eventId: 'blogClicked'
+				applicationId,
+				eventId: 'blogClicked',
 			});
 
 			Analytics.events[0].properties.should.deep.include({
@@ -95,15 +96,15 @@ describe('Blogs Plugin', () => {
 			expect(Analytics.events.length).to.equal(1);
 
 			Analytics.events[0].should.deep.include({
-				applicationId: applicationId,
-				eventId: 'blogClicked'
+				applicationId,
+				eventId: 'blogClicked',
 			});
 
 			Analytics.events[0].properties.should.deep.include({
 				entryId: 'assetId',
 				href: googleUrl,
 				tagName: 'a',
-				text
+				text,
 			});
 
 			document.body.removeChild(blogElement);
@@ -121,13 +122,13 @@ describe('Blogs Plugin', () => {
 			expect(Analytics.events.length).to.equal(1);
 
 			Analytics.events[0].should.deep.include({
-				applicationId: applicationId,
-				eventId: 'blogClicked'
+				applicationId,
+				eventId: 'blogClicked',
 			});
 
 			Analytics.events[0].properties.should.deep.include({
 				entryId: 'assetId',
-				tagName: 'p'
+				tagName: 'p',
 			});
 
 			document.body.removeChild(blogElement);

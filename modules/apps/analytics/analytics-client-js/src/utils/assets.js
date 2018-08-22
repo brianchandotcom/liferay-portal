@@ -23,4 +23,15 @@ function closest(element, selector) {
 	return null;
 }
 
-export {closest, getClosestAssetElement};
+/**
+ * Return all words from an element
+ * @param {object} element
+ * @return {number} the total of words
+ */
+function getNumberOfWords({innerText}) {
+	const words = innerText.split(/\s+/).filter(Boolean);
+
+	return innerText !== '' ? words.length : 0;
+}
+
+export {closest, getClosestAssetElement, getNumberOfWords};

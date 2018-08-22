@@ -1,5 +1,5 @@
 import {onReady} from '../utils/events.js';
-import {getClosestAssetElement} from '../utils/assets';
+import {getClosestAssetElement, getNumberOfWords} from '../utils/assets';
 
 const applicationId = 'WebContent';
 
@@ -71,6 +71,9 @@ function trackWebContentViewed(analytics) {
 			.forEach(element => {
 				let payload = getWebContentPayload(element);
 				const title = element.dataset.analyticsAssetTitle;
+				const numberOfWords = getNumberOfWords(element);
+
+				payload = {numberOfWords, ...payload};
 
 				if (title) {
 					payload = {title, ...payload};

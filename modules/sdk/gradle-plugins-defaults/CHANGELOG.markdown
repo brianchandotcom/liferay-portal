@@ -4367,7 +4367,7 @@ applies the `com.liferay.test.integration.base` plugin. Configure the
 - [LPS-83790]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.110.
 
-## 5.5.18 - 2018-08-20
+## 5.5.19 - 2018-08-21
 
 ### Changed
 - [LPS-84624]: The `com.liferay.spring.boot.defaults` plugin configures the

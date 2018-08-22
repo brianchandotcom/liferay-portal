@@ -5020,13 +5020,17 @@ public class ProjectTemplatesTest {
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
 
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
 
-		_testExists(gradleProjectDir, jarFilePath);
+			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		_executeGradle(workspaceDir, ":modules:" + name + ":build");
+			_testExists(gradleProjectDir, jarFilePath);
 
-		_testExists(workspaceProjectDir, jarFilePath);
+			_executeGradle(workspaceDir, ":modules:" + name + ":build");
+
+			_testExists(workspaceProjectDir, jarFilePath);
+		}
 	}
 
 	private void _testPomXmlContainsDependency(

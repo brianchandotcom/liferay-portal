@@ -30,6 +30,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -59,29 +60,28 @@ public class AssetListServiceTest {
 
 	@Test
 	public void testAddAssetEntryList() throws PortalException {
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
+		Locale locale = LocaleUtil.getSiteDefault();
 
-		AssetListEntry assetListEntry = _addAssetListEntry(defaultLanguageId);
+		AssetListEntry assetListEntry = _addAssetListEntry(locale);
 
 		Assert.assertNotNull(
 			AssetListEntryServiceUtil.fetchAssetListEntry(
 				assetListEntry.getAssetListEntryId()));
 
 		Assert.assertEquals(
-			"Asset List Title", assetListEntry.getTitle(defaultLanguageId));
+			"Asset List Title",
+			assetListEntry.getTitle(LocaleUtil.toLanguageId(locale)));
 
 		Assert.assertEquals(
 			"Asset List Description",
-			assetListEntry.getDescription(defaultLanguageId));
+			assetListEntry.getDescription(LocaleUtil.toLanguageId(locale)));
 	}
 
 	@Test
 	public void testDeleteAssetList() throws PortalException {
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
+		Locale locale = LocaleUtil.getSiteDefault();
 
-		AssetListEntry assetListEntry = _addAssetListEntry(defaultLanguageId);
+		AssetListEntry assetListEntry = _addAssetListEntry(locale);
 
 		AssetListEntryServiceUtil.deleteAssetListEntry(
 			assetListEntry.getAssetListEntryId());
@@ -93,44 +93,44 @@ public class AssetListServiceTest {
 
 	@Test
 	public void testUpdateAssetList() throws PortalException {
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
+		Locale locale = LocaleUtil.getSiteDefault();
 
-		AssetListEntry assetListEntry = _addAssetListEntry(defaultLanguageId);
+		AssetListEntry assetListEntry = _addAssetListEntry(locale);
 
-		Map<String, String> titleMap = new HashMap<>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
-		titleMap.put(defaultLanguageId, "New Asset List Title");
+		titleMap.put(locale, "New Asset List Title");
 
-		Map<String, String> descriptionMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
-		descriptionMap.put(defaultLanguageId, "New Asset List Description");
+		descriptionMap.put(locale, "New Asset List Description");
 
 		assetListEntry = AssetListEntryServiceUtil.updateAssetListEntry(
 			assetListEntry.getAssetListEntryId(), titleMap, descriptionMap);
 
 		Assert.assertEquals(
-			"New Asset List Title", assetListEntry.getTitle(defaultLanguageId));
+			"New Asset List Title",
+			assetListEntry.getTitle(LocaleUtil.toLanguageId(locale)));
 
 		Assert.assertEquals(
 			"New Asset List Description",
-			assetListEntry.getDescription(defaultLanguageId));
+			assetListEntry.getDescription(LocaleUtil.toLanguageId(locale)));
 	}
 
-	private AssetListEntry _addAssetListEntry(String defaultLanguageId)
+	private AssetListEntry _addAssetListEntry(Locale locale)
 		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		Map<String, String> titleMap = new HashMap<>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
-		titleMap.put(defaultLanguageId, "Asset List Title");
+		titleMap.put(locale, "Asset List Title");
 
-		Map<String, String> descriptionMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
-		descriptionMap.put(defaultLanguageId, "Asset List Description");
+		descriptionMap.put(locale, "Asset List Description");
 
 		return AssetListEntryServiceUtil.addAssetListEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), titleMap,

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.runtime.RuntimeConstants;
@@ -90,9 +92,33 @@ public class LiferaySecureUberspector extends SecureUberspector {
 		_runtimeServices = runtimeServices;
 	}
 
+	private final Map<String, ClassRestrictionInformation>
+		_classRestrictionInformations = new ConcurrentHashMap<>();
 	private List<Class> _restrictedClasses;
 	private List<String> _restrictedPackageNames;
 	private RuntimeServices _runtimeServices;
+
+	private class ClassRestrictionInformation {
+
+		public ClassRestrictionInformation(
+			boolean restricted, String description) {
+
+			_restricted = restricted;
+			_description = description;
+		}
+
+		public String getDescription() {
+			return _description;
+		}
+
+		public boolean isRestricted() {
+			return _restricted;
+		}
+
+		private final String _description;
+		private final boolean _restricted;
+
+	}
 
 	private class LiferaySecureIntrospectorImpl extends SecureIntrospectorImpl {
 
@@ -115,33 +141,61 @@ public class LiferaySecureUberspector extends SecureUberspector {
 						" method"));
 			}
 
-			for (Class<?> restrictedClass : _restrictedClasses) {
-				if (restrictedClass.isAssignableFrom(clazz)) {
-					throw new IllegalArgumentException(
-						StringBundler.concat(
-							"Denied to resolve class ", clazz.getName(),
-							" due to security reasons, restricted by ",
-							restrictedClass.getName()));
-				}
-			}
-
-			Package clazzPackage = clazz.getPackage();
-
-			if (clazzPackage != null) {
-				String packageName = clazzPackage.getName() + StringPool.PERIOD;
-
-				for (String restrictedPackageName : _restrictedPackageNames) {
-					if (packageName.startsWith(restrictedPackageName)) {
-						throw new IllegalArgumentException(
-							StringBundler.concat(
-								"Denied to resolve class ", clazz.getName(),
-								" due to security reasons, restricted by ",
-								restrictedPackageName));
-					}
-				}
-			}
+			_checkClassIsRestricted(clazz);
 
 			return true;
+		}
+
+		private void _checkClassIsRestricted(Class<?> clazz) {
+			String className = clazz.getName();
+
+			ClassRestrictionInformation classRestrictionInformation =
+				_classRestrictionInformations.computeIfAbsent(
+					className,
+					a -> {
+						for (Class<?> restrictedClass : _restrictedClasses) {
+							if (restrictedClass.isAssignableFrom(clazz)) {
+								return new ClassRestrictionInformation(
+									true,
+									StringBundler.concat(
+										"Denied to resolve class ",
+										clazz.getName(),
+										" due to security reasons, restricted ",
+										"by ", restrictedClass.getName()));
+							}
+						}
+
+						Package clazzPackage = clazz.getPackage();
+
+						if (clazzPackage != null) {
+							String packageName =
+								clazzPackage.getName() + StringPool.PERIOD;
+
+							for (String restrictedPackageName :
+									_restrictedPackageNames) {
+
+								if (packageName.startsWith(
+										restrictedPackageName)) {
+
+									return new ClassRestrictionInformation(
+										true,
+										StringBundler.concat(
+											"Denied to resolve class ",
+											clazz.getName(),
+											" due to security reasons, ",
+											"restricted by ",
+											restrictedPackageName));
+								}
+							}
+						}
+
+						return new ClassRestrictionInformation(false, null);
+					});
+
+			if (classRestrictionInformation.isRestricted()) {
+				throw new IllegalArgumentException(
+					classRestrictionInformation.getDescription());
+			}
 		}
 
 	}

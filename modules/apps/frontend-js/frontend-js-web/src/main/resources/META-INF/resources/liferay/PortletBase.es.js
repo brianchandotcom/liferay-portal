@@ -158,20 +158,6 @@ class PortletBase extends Component {
 			`#p_p_id${this.portletNamespace || this.namespace}`
 		);
 	}
-
-	/**
-	 * Performs navigation to the given url.
-	 * @param {!string} url Where to navigate
-	 * @review
-	 */
-	navigate(url) {
-		if (Liferay.SPA) {
-			Liferay.SPA.app.navigate(url);
-		}
-		else {
-			window.location.assign(url);
-		}
-	}
 }
 
 /**

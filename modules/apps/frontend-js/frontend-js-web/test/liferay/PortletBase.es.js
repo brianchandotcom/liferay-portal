@@ -240,41 +240,6 @@ describe(
 		);
 
 		describe(
-			'PortletBase.navigate',
-			() => {
-				const sampleUrl = 'http://sampleurl.com';
-
-				it(
-					'should navigate to the given url using the provided Liferay.SPA.app.navigate helper',
-					() => {
-						Liferay = {
-							SPA: {
-								app: {
-									navigate: jest.fn()
-								} 
-							}
-						};
-
-						portletBase.navigate(sampleUrl);
-						expect(Liferay.SPA.app.navigate).toBeCalledWith(sampleUrl);
-					}
-				);
-
-				it(
-					'should navigate to the given url using window.location.assign',
-					() => {
-						window.location.assign = jest.fn();
-
-						portletBase.navigate(sampleUrl);
-						expect(window.location.assign).toBeCalledWith(sampleUrl);
-
-						window.location.assign.mockRestore();
-					}
-				);
-			}
-		);
-
-		describe(
 			'PortletBase.ns',
 			() => {
 				it(

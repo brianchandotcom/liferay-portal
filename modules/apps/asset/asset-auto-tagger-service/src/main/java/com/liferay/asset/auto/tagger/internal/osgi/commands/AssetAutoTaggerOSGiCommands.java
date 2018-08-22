@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AssetAutoTaggerOSGiCommands {
 
-	public void tagAllUntagged(String... classNames) {
+	public void tagAllUntagged(String companyId, String... classNames) {
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
 			_assetAutoTaggerConfigurationFactory.
 				getAssetAutoTaggerConfiguration();
@@ -82,7 +82,7 @@ public class AssetAutoTaggerOSGiCommands {
 		}
 
 		_forEachAssetEntry(
-			classNames,
+			Integer.valueOf(companyId), classNames,
 			assetEntry -> {
 				String[] oldAssetTagNames = assetEntry.getTagNames();
 
@@ -105,9 +105,9 @@ public class AssetAutoTaggerOSGiCommands {
 			});
 	}
 
-	public void untagAll(String... classNames) {
+	public void untagAll(String companyId, String... classNames) {
 		_forEachAssetEntry(
-			classNames,
+			Integer.valueOf(companyId), classNames,
 			assetEntry -> {
 				String[] oldAssetTagNames = assetEntry.getTagNames();
 
@@ -139,12 +139,14 @@ public class AssetAutoTaggerOSGiCommands {
 	}
 
 	private void _forEachAssetEntry(
-		String[] classNames,
+		long companyId, String[] classNames,
 		UnsafeConsumer<AssetEntry, PortalException> consumer) {
 
 		try {
 			ActionableDynamicQuery actionableDynamicQuery =
 				_assetEntryLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setCompanyId(companyId);
 
 			if (!ArrayUtil.isEmpty(classNames)) {
 				actionableDynamicQuery.setAddCriteriaMethod(

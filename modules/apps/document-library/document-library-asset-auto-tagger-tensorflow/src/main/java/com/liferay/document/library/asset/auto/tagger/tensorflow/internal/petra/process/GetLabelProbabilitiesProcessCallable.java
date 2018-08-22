@@ -24,17 +24,22 @@ import com.liferay.petra.process.ProcessException;
 public class GetLabelProbabilitiesProcessCallable
 	implements ProcessCallable<float[]> {
 
-	public GetLabelProbabilitiesProcessCallable(byte[] imageBytes) {
+	public GetLabelProbabilitiesProcessCallable(
+		byte[] imageBytes, String mimeType) {
+
 		_imageBytes = imageBytes;
+		_mimeType = mimeType;
 	}
 
 	@Override
 	public float[] call() throws ProcessException {
-		return InceptionImageLabelerUtil.getLabelProbabilities(_imageBytes);
+		return InceptionImageLabelerUtil.getLabelProbabilities(
+			_imageBytes, _mimeType);
 	}
 
 	private static final long serialVersionUID = 1L;
 
 	private final byte[] _imageBytes;
+	private final String _mimeType;
 
 }

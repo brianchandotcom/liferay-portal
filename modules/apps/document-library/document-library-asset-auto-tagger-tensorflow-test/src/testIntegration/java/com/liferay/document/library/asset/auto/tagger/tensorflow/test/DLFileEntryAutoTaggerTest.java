@@ -43,7 +43,6 @@ import java.util.Dictionary;
 
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,7 +75,7 @@ public class DLFileEntryAutoTaggerTest {
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 					_serviceContext.getScopeGroupId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					"indigobunting.bmp", ContentTypes.IMAGE_JPEG,
+					"indigobunting.bmp", ContentTypes.IMAGE_BMP,
 					"indigobunting", StringUtil.randomString(),
 					StringUtil.randomString(),
 					FileUtil.getBytes(getClass(), "indigobunting.bmp"),
@@ -110,7 +109,6 @@ public class DLFileEntryAutoTaggerTest {
 			});
 	}
 
-	@Ignore
 	@Test
 	public void testAutoTagsAPNGImage() throws Exception {
 		_withAutoTaggerEnabled(
@@ -118,7 +116,7 @@ public class DLFileEntryAutoTaggerTest {
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 					_serviceContext.getScopeGroupId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					"hummingbird.png", ContentTypes.IMAGE_JPEG, "hummingbird",
+					"hummingbird.png", ContentTypes.IMAGE_PNG, "hummingbird",
 					StringUtil.randomString(), StringUtil.randomString(),
 					FileUtil.getBytes(getClass(), "hummingbird.png"),
 					_serviceContext);

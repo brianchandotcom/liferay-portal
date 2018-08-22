@@ -24,6 +24,10 @@ import java.util.Collection;
  */
 public class DLOpenerGoogleDriveMimeTypes {
 
+	public static final String APPLICATION_VND_DOCX =
+		"application/vnd.openxmlformats-officedocument.wordprocessingml." +
+			"document";
+
 	public static final String APPLICATION_VND_GOOGLE_APPS_DOCUMENT =
 		"application/vnd.google-apps.document";
 
@@ -32,9 +36,7 @@ public class DLOpenerGoogleDriveMimeTypes {
 	}
 
 	private static final Collection<String> _mimeTypes = Arrays.asList(
-		ContentTypes.APPLICATION_TEXT,
-		"application/vnd.openxmlformats-officedocument.wordprocessingml." +
-			"document",
-		ContentTypes.TEXT, ContentTypes.TEXT_PLAIN);
+		ContentTypes.APPLICATION_TEXT, APPLICATION_VND_DOCX, ContentTypes.TEXT,
+		ContentTypes.TEXT_PLAIN);
 
 }

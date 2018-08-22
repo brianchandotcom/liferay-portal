@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -126,7 +127,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 
 		liferayPortletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/document_library/edit_in_google_docs");
-		liferayPortletURL.setParameter("cmd", cmd);
+		liferayPortletURL.setParameter(Constants.CMD, cmd);
 		liferayPortletURL.setParameter(
 			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
 

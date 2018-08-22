@@ -40,6 +40,8 @@ import java.io.InputStream;
 
 import java.security.GeneralSecurityException;
 
+import java.util.function.Supplier;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,7 +87,50 @@ public class DLOpenerGoogleDriveManagerImpl
 					userId, uploadedFile.getId(), fileEntry);
 
 			return new DLOpenerGoogleDriveFileReference(
-				uploadedFile.getId(), fileEntry.getFileEntryId());
+				uploadedFile.getId(), fileEntry.getFileEntryId(),
+				new CachingSupplier<>(
+					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
+				() -> _getContentFile(userId, fileEntry));
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
+		}
+	}
+
+	@Override
+	public DLOpenerGoogleDriveFileReference create(
+			long userId, FileEntry fileEntry)
+		throws PortalException {
+
+		try {
+			com.google.api.services.drive.model.File file =
+				new com.google.api.services.drive.model.File();
+
+			file.setMimeType(
+				DLOpenerGoogleDriveMimeTypes.
+					APPLICATION_VND_GOOGLE_APPS_DOCUMENT);
+			file.setName(fileEntry.getTitle());
+
+			Drive drive = new Drive.Builder(
+				_netHttpTransport, _jsonFactory, _getCredential(userId)
+			).build();
+
+			Drive.Files driveFiles = drive.files();
+
+			Drive.Files.Create driveFilesCreate = driveFiles.create(file);
+
+			com.google.api.services.drive.model.File uploadedFile =
+				driveFilesCreate.execute();
+
+			_dlOpenerFileEntryReferenceLocalService.
+				addDLOpenerFileEntryReference(
+					userId, uploadedFile.getId(), fileEntry);
+
+			return new DLOpenerGoogleDriveFileReference(
+				uploadedFile.getId(), fileEntry.getFileEntryId(),
+				new CachingSupplier<>(
+					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
+				() -> _getContentFile(userId, fileEntry));
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
@@ -119,31 +164,6 @@ public class DLOpenerGoogleDriveManagerImpl
 	@Override
 	public String getAuthorizationURL(String state, String redirectUri) {
 		return _oAuth2Manager.getAuthorizationURL(state, redirectUri);
-	}
-
-	@Override
-	public File getContentFile(long userId, FileEntry fileEntry)
-		throws PortalException {
-
-		try {
-			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory, _getCredential(userId)
-			).build();
-
-			Drive.Files driveFiles = drive.files();
-
-			Drive.Files.Export driveFilesExport = driveFiles.export(
-				_getGoogleDriveFileId(fileEntry), fileEntry.getMimeType());
-
-			try (InputStream is =
-					driveFilesExport.executeMediaAsInputStream()) {
-
-				return FileUtil.createTempFile(is);
-			}
-		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
-		}
 	}
 
 	@Override
@@ -202,7 +222,10 @@ public class DLOpenerGoogleDriveManagerImpl
 			_checkCredential(userId);
 
 			return new DLOpenerGoogleDriveFileReference(
-				googleDriveFileId, fileEntry.getFileEntryId());
+				googleDriveFileId, fileEntry.getFileEntryId(),
+				new CachingSupplier<>(
+					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
+				() -> _getContentFile(userId, fileEntry));
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
@@ -219,6 +242,28 @@ public class DLOpenerGoogleDriveManagerImpl
 		throws IOException, PrincipalException {
 
 		_getCredential(userId);
+	}
+
+	private File _getContentFile(long userId, FileEntry fileEntry) {
+		try {
+			Drive drive = new Drive.Builder(
+				_netHttpTransport, _jsonFactory, _getCredential(userId)
+			).build();
+
+			Drive.Files driveFiles = drive.files();
+
+			Drive.Files.Export driveFilesExport = driveFiles.export(
+				_getGoogleDriveFileId(fileEntry), fileEntry.getMimeType());
+
+			try (InputStream is =
+					driveFilesExport.executeMediaAsInputStream()) {
+
+				return FileUtil.createTempFile(is);
+			}
+		}
+		catch (IOException | PortalException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private Credential _getCredential(long userId)
@@ -254,6 +299,27 @@ public class DLOpenerGoogleDriveManagerImpl
 		return dlOpenerFileEntryReference.getReferenceKey();
 	}
 
+	private String _getGoogleDriveFileTitle(long userId, FileEntry fileEntry) {
+		try {
+			Drive drive = new Drive.Builder(
+				_netHttpTransport, _jsonFactory, _getCredential(userId)
+			).build();
+
+			Drive.Files driveFiles = drive.files();
+
+			Drive.Files.Get driveFilesGet = driveFiles.get(
+				_getGoogleDriveFileId(fileEntry));
+
+			com.google.api.services.drive.model.File file =
+				driveFilesGet.execute();
+
+			return file.getName();
+		}
+		catch (IOException | PortalException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@Reference
 	private DLOpenerFileEntryReferenceLocalService
 		_dlOpenerFileEntryReferenceLocalService;
@@ -263,5 +329,27 @@ public class DLOpenerGoogleDriveManagerImpl
 
 	@Reference
 	private OAuth2Manager _oAuth2Manager;
+
+	private static class CachingSupplier<T> implements Supplier<T> {
+
+		public CachingSupplier(Supplier<T> supplier) {
+			_supplier = supplier;
+		}
+
+		@Override
+		public T get() {
+			if (_value != null) {
+				return _value;
+			}
+
+			_value = _supplier.get();
+
+			return _value;
+		}
+
+		private final Supplier<T> _supplier;
+		private T _value;
+
+	}
 
 }

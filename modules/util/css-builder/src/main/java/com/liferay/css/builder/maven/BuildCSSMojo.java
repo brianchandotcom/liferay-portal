@@ -54,9 +54,9 @@ public class BuildCSSMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
-			if (_cssBuilderArgs.getImportDir() == null) {
-				boolean artifactPresent = false;
+			boolean artifactPresent = false;
 
+			if (_cssBuilderArgs.getImportDir() == null) {
 				for (Dependency dependency : _project.getDependencies()) {
 					String artifactId = dependency.getArtifactId();
 
@@ -72,23 +72,21 @@ public class BuildCSSMojo extends AbstractMojo {
 						break;
 					}
 				}
+			}
 
-				if (!artifactPresent) {
-					for (ComponentDependency componentDependency :
-							_pluginDescriptor.getDependencies()) {
+			if (!artifactPresent && (_cssBuilderArgs.getImportDir() == null)) {
+				for (ComponentDependency componentDependency :
+						_pluginDescriptor.getDependencies()) {
 
-						String artifactId = componentDependency.getArtifactId();
+					String artifactId = componentDependency.getArtifactId();
 
-						if (artifactId.equals(
-								"com.liferay.frontend.css.common")) {
+					if (artifactId.equals("com.liferay.frontend.css.common")) {
+						Artifact artifact = _resolveArtifact(
+							componentDependency);
 
-							Artifact artifact = _resolveArtifact(
-								componentDependency);
+						_cssBuilderArgs.setImportDir(artifact.getFile());
 
-							_cssBuilderArgs.setImportDir(artifact.getFile());
-
-							break;
-						}
+						break;
 					}
 				}
 			}

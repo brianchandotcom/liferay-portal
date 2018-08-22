@@ -37,8 +37,8 @@ dependencies {
 	compileOnly group: "org.apache.maven", name: "maven-core", version: "3.2.5"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
 
-	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "2.0.13"
-	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "2.0.13"
+	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "3.0.4"
+	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "3.0.4"
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 

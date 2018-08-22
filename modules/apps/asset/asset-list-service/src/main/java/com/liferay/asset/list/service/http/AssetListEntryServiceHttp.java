@@ -57,8 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class AssetListEntryServiceHttp {
 	public static com.liferay.asset.list.model.AssetListEntry addAssetListEntry(
 		HttpPrincipal httpPrincipal, long userId, long groupId,
-		java.util.Map<String, String> titleMap,
-		java.util.Map<String, String> descriptionMap, int type,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -156,8 +156,8 @@ public class AssetListEntryServiceHttp {
 
 	public static com.liferay.asset.list.model.AssetListEntry updateAssetListEntry(
 		HttpPrincipal httpPrincipal, long assetListEntryId,
-		java.util.Map<String, String> titleMap,
-		java.util.Map<String, String> descriptionMap)
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetListEntryServiceUtil.class,

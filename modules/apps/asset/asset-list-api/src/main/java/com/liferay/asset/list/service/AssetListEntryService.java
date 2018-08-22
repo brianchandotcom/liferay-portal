@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -56,7 +57,7 @@ public interface AssetListEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AssetListEntryServiceUtil} to access the asset list entry remote service. Add custom service methods to {@link com.liferay.asset.list.service.impl.AssetListEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public AssetListEntry addAssetListEntry(long userId, long groupId,
-		Map<String, String> titleMap, Map<String, String> descriptionMap,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 		int type, ServiceContext serviceContext) throws PortalException;
 
 	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
@@ -74,6 +75,6 @@ public interface AssetListEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public AssetListEntry updateAssetListEntry(long assetListEntryId,
-		Map<String, String> titleMap, Map<String, String> descriptionMap)
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
 		throws PortalException;
 }

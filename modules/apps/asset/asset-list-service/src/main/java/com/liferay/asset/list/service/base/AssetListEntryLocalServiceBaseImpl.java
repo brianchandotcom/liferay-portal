@@ -16,7 +16,6 @@ package com.liferay.asset.list.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.asset.list.exception.NoSuchEntryException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryLocalization;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
@@ -118,13 +117,12 @@ public abstract class AssetListEntryLocalServiceBaseImpl
 	 *
 	 * @param assetListEntryId the primary key of the asset list entry
 	 * @return the asset list entry that was removed
-	 * @throws NoSuchEntryException
 	 * @throws PortalException if a asset list entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
-		throws NoSuchEntryException, PortalException {
+		throws PortalException {
 		return assetListEntryPersistence.remove(assetListEntryId);
 	}
 

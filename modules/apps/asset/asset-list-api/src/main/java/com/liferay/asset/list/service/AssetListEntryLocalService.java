@@ -16,7 +16,6 @@ package com.liferay.asset.list.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.asset.list.exception.NoSuchEntryException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryLocalization;
 
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -80,7 +80,7 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	public AssetListEntry addAssetListEntry(AssetListEntry assetListEntry);
 
 	public AssetListEntry addAssetListEntry(long userId, long groupId,
-		Map<String, String> titleMap, Map<String, String> descriptionMap,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 		int type, ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -108,13 +108,12 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	*
 	* @param assetListEntryId the primary key of the asset list entry
 	* @return the asset list entry that was removed
-	* @throws NoSuchEntryException
 	* @throws PortalException if a asset list entry with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
-		throws NoSuchEntryException, PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -311,7 +310,7 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	public AssetListEntry updateAssetListEntry(AssetListEntry assetListEntry);
 
 	public AssetListEntry updateAssetListEntry(long assetListEntryId,
-		Map<String, String> titleMap, Map<String, String> descriptionMap)
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
 		throws PortalException;
 
 	public AssetListEntryLocalization updateAssetListEntryLocalization(

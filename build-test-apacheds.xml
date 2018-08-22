@@ -29,7 +29,6 @@
 
 	<macrodef name="unzip-apacheds-instance-custom">
 		<attribute default="" name="apacheds.instance.custom.zip.name" />
-		<attribute default="" name="apacheds.instance.custom.zip.source" />
 
 		<sequential>
 			<if>
@@ -39,7 +38,7 @@
 				<then>
 					<mirrors-get
 						dest="${apacheds.dir}/instances/@{apacheds.instance.custom.zip.name}"
-						src="@{apacheds.instance.custom.zip.source}"
+						src="${apacheds.instance.custom.base.url}/@{apacheds.instance.custom.zip.name}"
 						verbose="true"
 					/>
 				</then>
@@ -73,13 +72,11 @@
 			<then>
 				<unzip-apacheds-instance-custom
 					apacheds.instance.custom.zip.name="${apacheds.instance.blank.user.password.custom.zip.name}"
-					apacheds.instance.custom.zip.source="http://files.liferay.com/private/apps/apache/apacheds/${apacheds.instance.blank.user.password.custom.zip.name}"
 				/>
 			</then>
 			<else>
 				<unzip-apacheds-instance-custom
 					apacheds.instance.custom.zip.name="${apacheds.instance.custom.zip.name}"
-					apacheds.instance.custom.zip.source="http://files.liferay.com/private/apps/apache/apacheds/${apacheds.instance.custom.zip.name}"
 				/>
 			</else>
 		</if>

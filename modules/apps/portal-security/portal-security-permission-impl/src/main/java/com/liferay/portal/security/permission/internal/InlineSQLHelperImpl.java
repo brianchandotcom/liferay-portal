@@ -35,21 +35,28 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
 import com.liferay.portal.security.permission.internal.configuration.InlinePermissionConfiguration;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Raymond Augé
  * @author Connor McKay
+ * @author Sergio González
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.permission.internal.configuration.InlinePermissionConfiguration",
@@ -257,6 +264,17 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			InlinePermissionConfiguration.class, properties);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addPermissionSQLContributor(
+		PermissionSQLContributor permissionSQLContributor) {
+
+		_permissionSQLContributors.add(permissionSQLContributor);
+	}
+
 	protected long[] getRoleIds(long groupId) {
 		long[] roleIds = PermissionChecker.DEFAULT_ROLE_IDS;
 
@@ -342,6 +360,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		return userId;
+	}
+
+	protected void removePermissionSQLContributor(
+		PermissionSQLContributor permissionSQLContributor) {
+
+		_permissionSQLContributors.remove(permissionSQLContributor);
 	}
 
 	protected String replacePermissionCheckJoin(
@@ -442,17 +466,48 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			companyId, className, userIdField, groupIds, bridgeJoin);
 
 		return _insertResourcePermissionSQL(
-			sql, classPKField, resourcePermissionSQL);
+			sql, className, classPKField, userIdField, groupIdField, groupIds,
+			resourcePermissionSQL);
 	}
 
-	private void _appendPermissionSQL(
-		StringBundler sb, String classPKField, String permissionSQL) {
+	private String _appendPermissionSQL(
+		String className, String classPKField, String userIdField,
+		String groupIdField, long[] groupIds, String permissionSQL) {
+
+		StringBundler sb = new StringBundler(5);
+
+		if (!_permissionSQLContributors.isEmpty()) {
+			sb.append("(");
+		}
 
 		sb.append("(");
 		sb.append(classPKField);
 		sb.append(" IN (");
 		sb.append(permissionSQL);
-		sb.append(")) ");
+		sb.append("))");
+
+		for (PermissionSQLContributor permissionSQLContributor :
+				_permissionSQLContributors) {
+
+			String contributorPermissionSQL =
+				permissionSQLContributor.getPermissionSQL(
+					className, classPKField, userIdField, groupIdField,
+					groupIds);
+
+			if (Validator.isNull(contributorPermissionSQL)) {
+				continue;
+			}
+
+			sb.append(" OR (");
+			sb.append(contributorPermissionSQL);
+			sb.append(")");
+		}
+
+		if (!_permissionSQLContributors.isEmpty()) {
+			sb.append(") ");
+		}
+
+		return sb.toString();
 	}
 
 	private String _getResourcePermissionSQL(
@@ -521,7 +576,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private String _insertResourcePermissionSQL(
-		String sql, String classPKField, String permissionSQL) {
+		String sql, String className, String classPKField, String userIdField,
+		String groupIdField, long[] groupIds, String permissionSQL) {
 
 		StringBundler sb = new StringBundler(4);
 
@@ -543,7 +599,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			sb.append(_WHERE_CLAUSE);
 
-			_appendPermissionSQL(sb, classPKField, permissionSQL);
+			sb.append(
+				_appendPermissionSQL(
+					className, classPKField, userIdField, groupIdField,
+					groupIds, permissionSQL));
 
 			if (pos != -1) {
 				sb.append(sql.substring(pos));
@@ -554,7 +613,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			sb.append(sql.substring(0, pos));
 
-			_appendPermissionSQL(sb, classPKField, permissionSQL);
+			sb.append(
+				_appendPermissionSQL(
+					className, classPKField, userIdField, groupIdField,
+					groupIds, permissionSQL));
 
 			sb.append("AND ");
 
@@ -581,6 +643,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	private volatile InlinePermissionConfiguration
 		_inlinePermissionConfiguration;
+	private final Collection<PermissionSQLContributor>
+		_permissionSQLContributors = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

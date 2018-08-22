@@ -343,6 +343,13 @@
 		</if>
 
 		<if>
+			<isset var="uncheckPages" />
+			<then>
+				<execute macro="ContentConfiguration#uncheckPages" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="uncheckSubContent" />
 			<then>
 				<execute function="Check#checkHiddenToggleSwitch" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX">

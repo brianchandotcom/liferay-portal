@@ -8,9 +8,7 @@
 	</command>
 
 	<command name="checkPageName">
-		<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
-
-		<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+		<execute macro="ContentConfiguration#uncheckPages" />
 
 		<for list="${checkPageName}" param="pageName">
 			<var name="key_pageName" value="${pageName}" />
@@ -138,6 +136,12 @@
 
 	<command name="uncheckLogo">
 		<execute function="Click" locator1="PagesConfiguration#PAGES_LOGO_CHECKBOX" />
+	</command>
+
+	<command name="uncheckPages">
+		<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+
+		<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 	</command>
 
 	<command name="uncheckSitePagesSettings">

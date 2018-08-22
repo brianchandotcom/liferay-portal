@@ -17,6 +17,7 @@ package com.liferay.asset.auto.tagger.internal.osgi.commands.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.auto.tagger.test.BaseAssetAutoTaggerTestCase;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -71,7 +72,8 @@ public class AssetAutoTaggerOSGiCommandsTest
 
 		assertHasNoTags(assetEntryWithNoPreviousTags);
 
-		withAutoTaggerEnabled(() -> _tagAllUntagged());
+		withAutoTaggerEnabled(
+			() -> _tagAllUntagged(DLFileEntryConstants.getClassName()));
 
 		assertContainsAssetTagName(
 			assetEntryWithNoPreviousTags, ASSET_TAG_NAME_AUTO);
@@ -92,7 +94,7 @@ public class AssetAutoTaggerOSGiCommandsTest
 
 				assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
 
-				_untagAll();
+				_untagAll(DLFileEntryConstants.getClassName());
 
 				assertDoesNotContainAssetTagName(
 					assetEntry, ASSET_TAG_NAME_AUTO);
@@ -104,17 +106,23 @@ public class AssetAutoTaggerOSGiCommandsTest
 	private void _tagAllUntagged(String... classNames) throws Exception {
 		Class<?> clazz = _assetAutoTaggerOSGiCommands.getClass();
 
-		Method method = clazz.getMethod("tagAllUntagged", String[].class);
+		Method method = clazz.getMethod(
+			"tagAllUntagged", String.class, String[].class);
 
-		method.invoke(_assetAutoTaggerOSGiCommands, (Object)classNames);
+		method.invoke(
+			_assetAutoTaggerOSGiCommands, String.valueOf(group.getCompanyId()),
+			classNames);
 	}
 
 	private void _untagAll(String... classNames) throws Exception {
 		Class<?> clazz = _assetAutoTaggerOSGiCommands.getClass();
 
-		Method method = clazz.getMethod("untagAll", String[].class);
+		Method method = clazz.getMethod(
+			"untagAll", String.class, String[].class);
 
-		method.invoke(_assetAutoTaggerOSGiCommands, (Object)classNames);
+		method.invoke(
+			_assetAutoTaggerOSGiCommands, String.valueOf(group.getCompanyId()),
+			classNames);
 	}
 
 	private Object _assetAutoTaggerOSGiCommands;

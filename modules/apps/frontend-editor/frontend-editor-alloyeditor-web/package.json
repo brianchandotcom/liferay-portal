@@ -25,7 +25,7 @@
 		}
 	},
 	"dependencies": {
-		"alloyeditor": "^1.5.12",
+		"alloyeditor": "^1.5.13",
 		"liferay-module-config-generator": "^1.3.3"
 	},
 	"devDependencies": {
@@ -48,7 +48,8 @@
 		"testMatch": [
 			"**/test/**/*.js"
 		],
-		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter"
+		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
+		"testURL": "http://localhost"
 	},
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {

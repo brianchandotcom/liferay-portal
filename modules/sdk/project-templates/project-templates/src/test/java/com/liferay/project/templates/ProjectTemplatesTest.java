@@ -87,7 +87,6 @@ import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -3437,59 +3436,57 @@ public class ProjectTemplatesTest {
 			File mavenOutputDir, String... gradleTaskPath)
 		throws Exception {
 
-		String buildProjects = System.getProperty(
-			"project.templates.test.builds");
+		if (Validator.isNotNull(_BUILD_PROJECTS) &&
+			_BUILD_PROJECTS.equals("true")) {
 
-		Assume.assumeTrue(
-			Validator.isNotNull(buildProjects) && buildProjects.equals("true"));
+			_executeGradle(gradleProjectDir, gradleTaskPath);
 
-		_executeGradle(gradleProjectDir, gradleTaskPath);
+			Path gradleOutputPath = FileTestUtil.getFile(
+				gradleOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
 
-		Path gradleOutputPath = FileTestUtil.getFile(
-			gradleOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
+			Assert.assertNotNull(gradleOutputPath);
 
-		Assert.assertNotNull(gradleOutputPath);
+			Assert.assertTrue(Files.exists(gradleOutputPath));
 
-		Assert.assertTrue(Files.exists(gradleOutputPath));
+			File gradleOutputFile = gradleOutputPath.toFile();
 
-		File gradleOutputFile = gradleOutputPath.toFile();
+			String gradleOutputFileName = gradleOutputFile.getName();
 
-		String gradleOutputFileName = gradleOutputFile.getName();
+			_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
-		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
+			Path mavenOutputPath = FileTestUtil.getFile(
+				mavenOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
 
-		Path mavenOutputPath = FileTestUtil.getFile(
-			mavenOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
+			Assert.assertNotNull(mavenOutputPath);
 
-		Assert.assertNotNull(mavenOutputPath);
+			Assert.assertTrue(Files.exists(mavenOutputPath));
 
-		Assert.assertTrue(Files.exists(mavenOutputPath));
+			File mavenOutputFile = mavenOutputPath.toFile();
 
-		File mavenOutputFile = mavenOutputPath.toFile();
+			String mavenOutputFileName = mavenOutputFile.getName();
 
-		String mavenOutputFileName = mavenOutputFile.getName();
-
-		try {
-			if (gradleOutputFileName.endsWith(".jar")) {
-				_testBundlesDiff(gradleOutputFile, mavenOutputFile);
+			try {
+				if (gradleOutputFileName.endsWith(".jar")) {
+					_testBundlesDiff(gradleOutputFile, mavenOutputFile);
+				}
+				else if (gradleOutputFileName.endsWith(".war")) {
+					_testWarsDiff(gradleOutputFile, mavenOutputFile);
+				}
 			}
-			else if (gradleOutputFileName.endsWith(".war")) {
-				_testWarsDiff(gradleOutputFile, mavenOutputFile);
-			}
-		}
-		catch (Throwable t) {
-			if (_TEST_DEBUG_BUNDLE_DIFFS) {
-				Path dirPath = Paths.get("build");
+			catch (Throwable t) {
+				if (_TEST_DEBUG_BUNDLE_DIFFS) {
+					Path dirPath = Paths.get("build");
 
-				Files.copy(
-					gradleOutputFile.toPath(),
-					dirPath.resolve(gradleOutputFileName));
-				Files.copy(
-					mavenOutputFile.toPath(),
-					dirPath.resolve(mavenOutputFileName));
-			}
+					Files.copy(
+						gradleOutputFile.toPath(),
+						dirPath.resolve(gradleOutputFileName));
+					Files.copy(
+						mavenOutputFile.toPath(),
+						dirPath.resolve(mavenOutputFileName));
+				}
 
-			throw t;
+				throw t;
+			}
 		}
 	}
 

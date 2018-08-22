@@ -5091,6 +5091,9 @@ public class ProjectTemplatesTest {
 		Assert.assertTrue(missingDependencyString, foundDependency);
 	}
 
+	private static final String _BUILD_PROJECTS = System.getProperty(
+		"project.templates.test.builds");
+
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(
 		Arrays.asList(
 			"*.js.map", "*pom.properties", "*pom.xml", "*package.json",

@@ -128,7 +128,7 @@ public class JournalUserNotificationHandler
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.journal.web)", unbind = "-"
+		target = "(bundle.symbolic.name=com.liferay.journal.lang)", unbind = "-"
 	)
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {

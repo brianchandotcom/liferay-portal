@@ -66,8 +66,7 @@ public abstract class BaseUserAccountPhonesNestedCollectionRouter
 		int endPosition = Math.min(count, pagination.getEndPosition());
 
 		return new PageItems<>(
-			phones.subList(pagination.getStartPosition(), endPosition),
-			count);
+			phones.subList(pagination.getStartPosition(), endPosition), count);
 	}
 
 }

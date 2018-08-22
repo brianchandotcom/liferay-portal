@@ -18,7 +18,6 @@ import com.liferay.address.apio.architect.identifier.AddressIdentifier;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.email.apio.architect.identifier.EmailIdentifier;
-import com.liferay.person.apio.internal.architect.resource.PersonCollectionResource;
 import com.liferay.person.apio.internal.model.UserWrapper;
 import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
 import com.liferay.portal.kernel.language.LanguageUtil;

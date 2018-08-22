@@ -25,12 +25,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Marcela Cunha
  */
+@RunWith(PowerMockRunner.class)
+@SuppressStaticInitializationFor("com.liferay.portal.kernel.util.ParamUtil")
 public class CheckboxMultipleDDMFormFieldValueRequestParameterRetrieverTest {
 
 	@Before

@@ -52,7 +52,9 @@ public class LiferaySiteSelectorProperties
 		super(name);
 	}
 
-	public ValidationResult afterFormFinishMain(Repository<Properties> repo) {
+	public ValidationResult afterFormFinishMain(
+		Repository<Properties> repository) {
+
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -93,7 +95,7 @@ public class LiferaySiteSelectorProperties
 					webSiteURLSimpleNamedThing.getName());
 			}
 
-			repo.storeProperties(
+			repository.storeProperties(
 				connection, connection.name.getValue(), repositoryLocation,
 				null);
 
@@ -164,20 +166,14 @@ public class LiferaySiteSelectorProperties
 		return repositoryLocation;
 	}
 
-	public LiferaySiteSelectorProperties setConnection(
-		LiferayConnectionProperties connection) {
+	public void setConnection(
+		LiferayConnectionProperties liferayConnectionProperties) {
 
-		this.connection = connection;
-
-		return this;
+		connection = liferayConnectionProperties;
 	}
 
-	public LiferaySiteSelectorProperties setRepositoryLocation(
-		String location) {
-
-		repositoryLocation = location;
-
-		return this;
+	public void setRepositoryLocation(String repositoryLocation) {
+		this.repositoryLocation = repositoryLocation;
 	}
 
 	@Override

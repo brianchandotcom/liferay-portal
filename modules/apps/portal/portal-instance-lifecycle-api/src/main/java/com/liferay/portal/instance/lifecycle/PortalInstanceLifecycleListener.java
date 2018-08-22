@@ -24,6 +24,10 @@ import com.liferay.portal.kernel.model.Company;
 @ProviderType
 public interface PortalInstanceLifecycleListener {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void portalInstancePreregistered(long companyId);
 
 	public void portalInstanceRegistered(Company company) throws Exception;

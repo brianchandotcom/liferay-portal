@@ -198,34 +198,6 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			FieldNames.CONFIGURATION_MODEL_ID, configurationModel.getID());
 		document.addKeyword(Field.COMPANY_ID, CompanyConstants.SYSTEM);
 
-		ConfigurationCategory configurationCategory =
-			_configurationEntryRetriever.getConfigurationCategory(
-				configurationModel.getCategory());
-
-		if (configurationCategory != null) {
-			ResourceBundleLoader configurationCategoryResourceBundleLoader =
-				_resourceBundleLoaderProvider.getResourceBundleLoader(
-					configurationCategory.getBundleSymbolicName());
-
-			Map<Locale, String> configurationCategoryValues = _translate(
-				configurationCategoryResourceBundleLoader,
-				GetterUtil.getString(
-					"category." + configurationModel.getCategory()));
-
-			document.addLocalizedText(
-				FieldNames.CONFIGURATION_CATEGORY, configurationCategoryValues);
-		}
-
-		ResourceBundleLoader resourceBundleLoader =
-			_resourceBundleLoaderProvider.getResourceBundleLoader(
-				configurationModel.getBundleSymbolicName());
-
-		document.addLocalizedText(
-			Field.DESCRIPTION,
-			_translate(
-				resourceBundleLoader,
-				GetterUtil.getString(configurationModel.getDescription())));
-
 		document.addKeyword(Field.ENTRY_CLASS_NAME, getClassName());
 
 		AttributeDefinition[] requiredAttributeDefinitions =
@@ -253,11 +225,30 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			attributeDescriptions.toArray(
 				new String[attributeDescriptions.size()]));
 
-		document.addLocalizedText(
-			Field.TITLE,
-			_translate(
-				resourceBundleLoader,
-				GetterUtil.getString(configurationModel.getName())));
+		ResourceBundleLoader resourceBundleLoader =
+			_resourceBundleLoaderProvider.getResourceBundleLoader(
+				configurationModel.getBundleSymbolicName());
+
+		List<TranslationHelper> translationHelpers = new ArrayList<>(3);
+
+		ConfigurationCategory configurationCategory =
+			_configurationEntryRetriever.getConfigurationCategory(
+				configurationModel.getCategory());
+
+		if (configurationCategory != null) {
+			translationHelpers.add(
+				new TranslationHelper(
+					"category." + configurationModel.getCategory(),
+					FieldNames.CONFIGURATION_CATEGORY));
+		}
+
+		translationHelpers.add(
+			new TranslationHelper(
+				configurationModel.getDescription(), Field.DESCRIPTION));
+		translationHelpers.add(
+			new TranslationHelper(configurationModel.getName(), Field.TITLE));
+
+		_addLocalizedText(document, resourceBundleLoader, translationHelpers);
 
 		return document;
 	}
@@ -303,10 +294,9 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 	}
 
-	private Map<Locale, String> _translate(
-		ResourceBundleLoader resourceBundleLoader, String key) {
-
-		Map<Locale, String> values = new HashMap<>();
+	private void _addLocalizedText(
+		Document document, ResourceBundleLoader resourceBundleLoader,
+		List<TranslationHelper> translationHelpers) {
 
 		ResourceBundle defaultResourceBundle =
 			resourceBundleLoader.loadResourceBundle(LocaleUtil.getDefault());
@@ -315,25 +305,20 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			ResourceBundle resourceBundle =
 				resourceBundleLoader.loadResourceBundle(locale);
 
-			if (resourceBundle != null) {
-				String value = ResourceBundleUtil.getString(
-					resourceBundle, key);
-
-				if (Validator.isNotNull(value)) {
-					values.put(locale, value);
+			for (TranslationHelper translationHelper : translationHelpers) {
+				if (resourceBundle != null) {
+					translationHelper.accept(resourceBundle, locale);
 				}
-			}
-			else if (defaultResourceBundle != null) {
-				String value = ResourceBundleUtil.getString(
-					defaultResourceBundle, key);
-
-				if (Validator.isNotNull(value)) {
-					values.put(locale, value);
+				else if (defaultResourceBundle != null) {
+					translationHelper.accept(defaultResourceBundle, locale);
 				}
 			}
 		}
 
-		return values;
+		for (TranslationHelper translationHelper : translationHelpers) {
+			document.addLocalizedText(
+				translationHelper._name, translationHelper._values);
+		}
 	}
 
 	@Reference
@@ -347,5 +332,26 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
+
+	private static class TranslationHelper {
+
+		public void accept(ResourceBundle resourceBundle, Locale locale) {
+			String value = ResourceBundleUtil.getString(resourceBundle, _key);
+
+			if (Validator.isNotNull(value)) {
+				_values.put(locale, value);
+			}
+		}
+
+		private TranslationHelper(String key, String name) {
+			_key = GetterUtil.getString(key);
+			_name = name;
+		}
+
+		private final String _key;
+		private final String _name;
+		private final Map<Locale, String> _values = new HashMap<>();
+
+	}
 
 }

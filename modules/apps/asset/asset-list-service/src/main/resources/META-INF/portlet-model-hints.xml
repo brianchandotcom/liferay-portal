@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.asset.list.model.AssetListEntry">
+		<field name="uuid" type="String" />
+		<field name="defaultLanguageId" type="String" />
+		<field name="assetListEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="type" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.asset.list.model.AssetListEntryLocalization">
+		<field name="mvccVersion" type="long" />
+		<field name="assetListEntryLocalizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="assetListEntryId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="title" type="String" />
+		<field name="description" type="String" />
+		<field name="groupId" type="long" />
+	</model>
+</model-hints>

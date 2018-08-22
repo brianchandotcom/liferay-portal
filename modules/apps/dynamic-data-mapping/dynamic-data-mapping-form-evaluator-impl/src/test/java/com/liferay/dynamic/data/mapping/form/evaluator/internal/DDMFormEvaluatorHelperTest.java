@@ -49,6 +49,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -86,6 +88,8 @@ public class DDMFormEvaluatorHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
 		setUpLanguageUtil();
 		setUpPortalUtil();
 		setUpResourceBundleLoaderUtil();

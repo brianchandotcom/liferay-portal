@@ -47,6 +47,8 @@ import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -91,6 +93,8 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws PortalException {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
 		setUpPortalUtil();
 		setUpServiceTrackerCollections();
 

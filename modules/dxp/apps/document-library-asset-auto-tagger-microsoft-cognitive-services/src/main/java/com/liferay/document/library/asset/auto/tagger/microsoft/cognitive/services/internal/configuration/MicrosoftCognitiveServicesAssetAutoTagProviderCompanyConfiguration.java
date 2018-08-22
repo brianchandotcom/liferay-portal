@@ -16,28 +16,37 @@ package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.servi
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MicrosoftCognitiveServicesAssetAutoTagProviderConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Alejandro Tardín
  */
-@ExtendedObjectClassDefinition(category = "documents-and-media")
+@ExtendedObjectClassDefinition(
+	category = "documents-and-media",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	description = "microsoft-cognitive-services-asset-auto-tag-provider-description",
-	id = "com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration",
+	id = "com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration",
 	localization = "content/Language",
 	name = "microsoft-cognitive-services-asset-auto-tag-provider-configuration-name"
 )
-public interface MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration {
+public interface
+	MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration {
 
 	/**
 	 * Sets the API Key for the Computer Vision API V2.
 	 */
 	@ExtendedAttributeDefinition(
-		descriptionArguments = "https://azure.microsoft.com/en-us/try/cognitive-services/my-apis/?apiSlug=computer-services"
+		descriptionArguments =
+			MicrosoftCognitiveServicesAssetAutoTagProviderConstants.
+				API_KEY_DOCS_URL
 	)
-	@Meta.AD(description = "api-key-description", name = "api-key")
+	@Meta.AD(
+		description = "api-key-description", name = "api-key", required = false
+	)
 	public String apiKey();
 
 	/**
@@ -45,11 +54,16 @@ public interface MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration {
 	 */
 	@ExtendedAttributeDefinition(
 		descriptionArguments = {
-			"https://westcentralus.api.cognitive.microsoft.com/vision/v2.0",
-			"https://azure.microsoft.com/en-us/try/cognitive-services/my-apis/?apiSlug=computer-services"
+			MicrosoftCognitiveServicesAssetAutoTagProviderConstants.
+				SAMPLE_API_ENDPOINT,
+			MicrosoftCognitiveServicesAssetAutoTagProviderConstants.
+				API_KEY_DOCS_URL
 		}
 	)
-	@Meta.AD(description = "api-endpoint-description", name = "api-endpoint")
+	@Meta.AD(
+		description = "api-endpoint-description", name = "api-endpoint",
+		required = false
+	)
 	public String apiEndpoint();
 
 	/**

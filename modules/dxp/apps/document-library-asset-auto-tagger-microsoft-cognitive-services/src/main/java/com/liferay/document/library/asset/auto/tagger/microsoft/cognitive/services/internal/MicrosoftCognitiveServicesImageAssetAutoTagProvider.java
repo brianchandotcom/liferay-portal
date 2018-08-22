@@ -15,8 +15,8 @@
 package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
-import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.constants.MicrosoftCognitiveServicesAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,9 +24,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,21 +44,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = AssetAutoTagProvider.class
 )
@@ -64,17 +61,24 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 
 	@Override
 	public List<String> getTagNames(FileEntry fileEntry) {
-		if (!_microsoftCognitiveServicesConfiguration.enabled() ||
-			_isTemporary(fileEntry) || (fileEntry.getSize() > _MAX_SIZE) ||
-			!_isSupportedFormat(fileEntry)) {
-
-			return Collections.emptyList();
-		}
-
 		try {
+			MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration
+				microsoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration =
+					_getConfiguration(fileEntry);
+
+			if (!microsoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+					enabled() ||
+				_isTemporary(fileEntry) || (fileEntry.getSize() > _MAX_SIZE) ||
+				!_isSupportedFormat(fileEntry)) {
+
+				return Collections.emptyList();
+			}
+
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
 			JSONObject responseJSONObject = _queryComputerVisionJSONObject(
+				microsoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.apiEndpoint(),
+				microsoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.apiKey(),
 				fileVersion);
 
 			JSONArray tagsJSONArray = responseJSONObject.getJSONArray("tags");
@@ -88,14 +92,16 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		}
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_microsoftCognitiveServicesConfiguration =
-			ConfigurableUtil.createConfigurable(
-				MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration.
-					class,
-				properties);
+	private MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration
+		_getConfiguration(FileEntry fileEntry) throws ConfigurationException {
+
+		return _configurationProvider.getConfiguration(
+			MicrosoftCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+				class,
+			new CompanyServiceSettingsLocator(
+				fileEntry.getCompanyId(),
+				MicrosoftCognitiveServicesAssetAutoTagProviderConstants.
+					SERVICE_NAME));
 	}
 
 	private boolean _isSupportedFormat(FileEntry fileEntry) {
@@ -109,11 +115,11 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 			TemporaryFileEntriesCapability.class);
 	}
 
-	private JSONObject _queryComputerVisionJSONObject(FileVersion fileVersion)
+	private JSONObject _queryComputerVisionJSONObject(
+			String apiEnpoint, String apiKey, FileVersion fileVersion)
 		throws Exception {
 
-		URL url = new URL(
-			_microsoftCognitiveServicesConfiguration.apiEndpoint() + "/tag");
+		URL url = new URL(apiEnpoint + "/tag");
 
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();
@@ -123,8 +129,7 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		httpURLConnection.setRequestProperty(
 			"Content-Type", "application/octet-stream");
 		httpURLConnection.setRequestProperty(
-			"Ocp-Apim-Subscription-Key",
-			_microsoftCognitiveServicesConfiguration.apiKey());
+			"Ocp-Apim-Subscription-Key", apiKey);
 
 		try (OutputStream outputStream = httpURLConnection.getOutputStream()) {
 			outputStream.write(
@@ -156,9 +161,9 @@ public class MicrosoftCognitiveServicesImageAssetAutoTagProvider
 		Arrays.asList("BMP", "GIF", "JPEG", "JPG", "PNG"));
 
 	@Reference
-	private Http _http;
+	private ConfigurationProvider _configurationProvider;
 
-	private volatile MicrosoftCognitiveServicesAssetAutoTagProviderConfiguration
-		_microsoftCognitiveServicesConfiguration;
+	@Reference
+	private Http _http;
 
 }

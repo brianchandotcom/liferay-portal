@@ -870,7 +870,7 @@ message.
 		>
 			<link href="http://docs.liferay.com/portlet-api/3.0/javadocs" />
 			<link href="http://java.sun.com/javase/6/docs/api" />
-			<link href="http://docs.liferay.com/portal/${lp.version.major}/javadocs" />
+			<link href="http://docs.liferay.com/portal/${lp.version.major}-latest/javadocs" />
 
 			<packageset dir="${module.dir}/src" />
 
@@ -904,7 +904,7 @@ message.
 
 			<link href="http://docs.liferay.com/portlet-api/3.0/javadocs" />
 			<link href="http://java.sun.com/javase/6/docs/api" />
-			<link href="http://docs.liferay.com/portal/${lp.version.major}/javadocs" />
+			<link href="http://docs.liferay.com/portal/${lp.version.major}-latest/javadocs" />
 
 			<packageset dir="${module.dir}/src" />
 

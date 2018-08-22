@@ -114,7 +114,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			<aui:button-row>
 				<aui:button name="submitButton" type="submit" value="done" />
 
-				<aui:button onClick="window.close();" type="cancel" value="close" />
+				<aui:button onClick="window.close();" type="cancel" value="cancel" />
 			</aui:button-row>
 		</aui:form>
 

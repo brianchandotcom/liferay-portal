@@ -186,6 +186,11 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public boolean isShowBackURLInTitleBar() {
+		return true;
+	}
+
+	@Override
 	public boolean isShowConfirmSelectStructure() {
 		return true;
 	}

@@ -200,11 +200,10 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 			long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		FileEntry oldFileEntry = null;
 		FileVersion oldFileVersion = null;
 
 		if (is == null) {
-			oldFileEntry = getFileEntry(fileEntryId);
+			FileEntry oldFileEntry = getFileEntry(fileEntryId);
 
 			oldFileVersion = oldFileEntry.getLatestFileVersion(true);
 		}

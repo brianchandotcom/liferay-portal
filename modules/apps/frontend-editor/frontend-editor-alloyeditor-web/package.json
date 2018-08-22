@@ -48,7 +48,8 @@
 		"testMatch": [
 			"**/test/**/*.js"
 		],
-		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter"
+		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
+		"testURL": "http://localhost"
 	},
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {

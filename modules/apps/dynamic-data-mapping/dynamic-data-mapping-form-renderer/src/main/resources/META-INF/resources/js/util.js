@@ -6,35 +6,35 @@ AUI.add(
 				{
 					label: Liferay.Language.get('is-greater-than-or-equal-to'),
 					name: 'lt',
-					parameterMessage: Liferay.Language.get('number'),
+					parameterMessage: Liferay.Language.get('number-placeholder'),
 					regex: /^(.+)\<(\d+\.?\d*)$/,
 					template: '{name}<{parameter}'
 				},
 				{
 					label: Liferay.Language.get('is-greater-than'),
 					name: 'lteq',
-					parameterMessage: Liferay.Language.get('number'),
+					parameterMessage: Liferay.Language.get('number-placeholder'),
 					regex: /^(.+)\<\=(\d+\.?\d*)$/,
 					template: '{name}<={parameter}'
 				},
 				{
 					label: Liferay.Language.get('is-not-equal-to'),
 					name: 'eq',
-					parameterMessage: Liferay.Language.get('number'),
+					parameterMessage: Liferay.Language.get('number-placeholder'),
 					regex: /^(.+)\=\=(\d+\.?\d*)$/,
 					template: '{name}=={parameter}'
 				},
 				{
 					label: Liferay.Language.get('is-less-than-or-equal-to'),
 					name: 'gt',
-					parameterMessage: Liferay.Language.get('number'),
+					parameterMessage: Liferay.Language.get('number-placeholder'),
 					regex: /^(.+)\>(\d+\.?\d*)$/,
 					template: '{name}>{parameter}'
 				},
 				{
 					label: Liferay.Language.get('is-less-than'),
 					name: 'gteq',
-					parameterMessage: Liferay.Language.get('number'),
+					parameterMessage: Liferay.Language.get('number-placeholder'),
 					regex: /^(.+)\>\=(\d+\.?\d*)$/,
 					template: '{name}>={parameter}'
 				}

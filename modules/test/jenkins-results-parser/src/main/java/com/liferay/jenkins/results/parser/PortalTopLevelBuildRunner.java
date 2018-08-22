@@ -17,12 +17,10 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class PortalBatchBuildRunner extends BatchBuildRunner {
+public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
 
-	protected PortalBatchBuildRunner(
-		Job job, String portalGitHubURL, String batchName) {
-
-		super(job, batchName);
+	protected PortalTopLevelBuildRunner(Job job, String portalGitHubURL) {
+		super(job);
 
 		if (!(job instanceof PortalTestClassJob)) {
 			Class<? extends Job> clazz = job.getClass();
@@ -36,9 +34,8 @@ public class PortalBatchBuildRunner extends BatchBuildRunner {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			portalTestClassJob.getPortalGitWorkingDirectory();
 
-		baseWorkspace = WorkspaceFactory.newBatchWorkspace(
-			portalGitHubURL, portalGitWorkingDirectory.getUpstreamBranchName(),
-			batchName);
+		baseWorkspace = WorkspaceFactory.newTopLevelWorkspace(
+			portalGitHubURL, portalGitWorkingDirectory.getUpstreamBranchName());
 
 		if (!(baseWorkspace instanceof PortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");

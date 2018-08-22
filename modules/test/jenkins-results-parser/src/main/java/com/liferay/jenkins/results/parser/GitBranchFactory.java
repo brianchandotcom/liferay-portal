@@ -22,13 +22,25 @@ public class GitBranchFactory {
 	public static LocalGitBranch newLocalGitBranch(
 		LocalRepository localRepository, String name, String sha) {
 
+		if (localRepository instanceof PluginsLocalRepository) {
+			return new PluginsLocalGitBranch(localRepository, name, sha);
+		}
+		else if (localRepository instanceof PortalLocalRepository) {
+			return new PortalLocalGitBranch(localRepository, name, sha);
+		}
+
 		return new LocalGitBranch(localRepository, name, sha);
 	}
 
-	public static RemoteGitBranch newRemoteGitBranch(
-		RemoteRepository remoteRepository, String name, String sha) {
+	public static RemoteGitRef newRemoteGitRef(
+		RemoteRepository remoteRepository, String name, String sha,
+		String type) {
 
-		return new RemoteGitBranch(remoteRepository, name, sha);
+		if (type.equals("heads")) {
+			return new RemoteGitBranch(remoteRepository, name, sha);
+		}
+
+		return new RemoteGitRef(remoteRepository, name, sha);
 	}
 
 }

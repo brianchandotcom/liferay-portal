@@ -50,6 +50,12 @@ public class AntUtil {
 	}
 
 	public static void callTarget(
+		File baseDir, String buildFileName, String targetName) {
+
+		callTarget(baseDir, buildFileName, targetName, null);
+	}
+
+	public static void callTarget(
 		File baseDir, String buildFileName, String targetName,
 		Map<String, String> parameters) {
 

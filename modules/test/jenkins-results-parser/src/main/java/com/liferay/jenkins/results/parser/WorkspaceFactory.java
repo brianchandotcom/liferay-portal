@@ -17,26 +17,39 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class BuildRunnerFactory {
+public abstract class WorkspaceFactory {
 
-	public static BatchBuildRunner newBatchBuildRunner(
-		Job job, String gitHubURL, String batchName) {
+	public static BaseWorkspace newBatchWorkspace(
+		String gitHubURL, String upstreamBranchName, String batchName) {
 
 		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
 			throw new RuntimeException("Unsupported github url " + gitHubURL);
 		}
 
-		return new PortalBatchBuildRunner(job, gitHubURL, batchName);
+		if (batchName == null) {
+			batchName = "default";
+		}
+
+		if (batchName.contains("functional")) {
+			new FunctionalBatchPortalWorkspace(gitHubURL, upstreamBranchName);
+		}
+		else if (batchName.contains("integration") ||
+				 batchName.contains("unit")) {
+
+			new JunitBatchPortalWorkspace(gitHubURL, upstreamBranchName);
+		}
+
+		return new PortalWorkspace(gitHubURL, upstreamBranchName, false);
 	}
 
-	public static TopLevelBuildRunner newTopLevelBuildRunner(
-		Job job, String gitHubURL) {
+	public static BaseWorkspace newTopLevelWorkspace(
+		String gitHubURL, String upstreamBranchName) {
 
 		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
 			throw new RuntimeException("Unsupported github url " + gitHubURL);
 		}
 
-		return new PortalTopLevelBuildRunner(job, gitHubURL);
+		return new PortalWorkspace(gitHubURL, upstreamBranchName, true);
 	}
 
 }

@@ -14,26 +14,32 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Properties;
-
 /**
  * @author Michael Hashimoto
  */
-public class FunctionalPortalBatchBuildRunner extends PortalBatchBuildRunner {
+public abstract class BaseWorkspace {
 
-	protected FunctionalPortalBatchBuildRunner(Job job, String batchName) {
-		super(job, batchName);
+	public abstract void setupWorkspace();
 
-		_setPortalBuildProperties();
-	}
+	protected void checkoutBranch(LocalGitBranch localGitBranch) {
+		System.out.println();
+		System.out.println("##");
+		System.out.println("## " + localGitBranch.toString());
+		System.out.println("##");
+		System.out.println();
 
-	private void _setPortalBuildProperties() {
-		Properties properties = new Properties();
+		GitWorkingDirectory gitWorkingDirectory =
+			localGitBranch.getGitWorkingDirectory();
 
-		properties.put("jsp.precompile", "on");
-		properties.put("jsp.precompile.parallel", "on");
+		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
 
-		portalLocalRepository.setBuildProperties(properties);
+		gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch);
+
+		gitWorkingDirectory.reset("--hard " + localGitBranch.getSHA());
+
+		gitWorkingDirectory.clean();
+
+		gitWorkingDirectory.displayLog();
 	}
 
 }

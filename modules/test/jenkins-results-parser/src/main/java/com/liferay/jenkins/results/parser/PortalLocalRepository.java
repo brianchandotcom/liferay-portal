@@ -15,6 +15,8 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -27,6 +29,28 @@ public class PortalLocalRepository extends LocalRepository {
 
 	public void setBuildProperties(Properties properties) {
 		setProperties(_FILE_PATH_BUILD_PROPERTIES, properties);
+	}
+
+	public void setJobProperties(Job job) {
+		Properties properties = new Properties();
+
+		Properties jobProperties = job.getJobProperties();
+
+		for (String jobPropertyName : jobProperties.stringPropertyNames()) {
+			Matcher matcher = _pattern.matcher(jobPropertyName);
+
+			if (matcher.find()) {
+				String portalBuildPropertyName = matcher.group(
+					"portalBuildPropertyName");
+
+				properties.put(
+					portalBuildPropertyName,
+					JenkinsResultsParserUtil.getProperty(
+						jobProperties, jobPropertyName));
+			}
+		}
+
+		setBuildProperties(properties);
 	}
 
 	public void setSQLProperties(Properties properties) {
@@ -93,6 +117,9 @@ public class PortalLocalRepository extends LocalRepository {
 	private static final String _FILE_PATH_SQL_PROPERTIES;
 
 	private static final String _FILE_PATH_TEST_PROPERTIES;
+
+	private static final Pattern _pattern = Pattern.compile(
+		"portal.build.properties\\[(?<portalBuildPropertyName>[^\\]]+)\\]");
 
 	static {
 		String hostname = System.getenv("HOSTNAME");

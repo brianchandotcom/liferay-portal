@@ -14,29 +14,22 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
-public class BuildRunnerFactory {
+public abstract class TopLevelBuildRunner extends BaseBuildRunner {
 
-	public static BatchBuildRunner newBatchBuildRunner(
-		Job job, String gitHubURL, String batchName) {
-
-		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
-			throw new RuntimeException("Unsupported github url " + gitHubURL);
-		}
-
-		return new PortalBatchBuildRunner(job, gitHubURL, batchName);
+	public List<String> getBatchNames() {
+		return _batchNames;
 	}
 
-	public static TopLevelBuildRunner newTopLevelBuildRunner(
-		Job job, String gitHubURL) {
-
-		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
-			throw new RuntimeException("Unsupported github url " + gitHubURL);
-		}
-
-		return new PortalTopLevelBuildRunner(job, gitHubURL);
+	protected TopLevelBuildRunner(Job job) {
+		super(job);
 	}
+
+	private final List<String> _batchNames = new ArrayList<>();
 
 }

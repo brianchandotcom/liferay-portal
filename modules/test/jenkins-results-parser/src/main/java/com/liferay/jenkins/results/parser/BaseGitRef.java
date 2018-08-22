@@ -17,26 +17,34 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class BuildRunnerFactory {
+public abstract class BaseGitRef {
 
-	public static BatchBuildRunner newBatchBuildRunner(
-		Job job, String gitHubURL, String batchName) {
-
-		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
-			throw new RuntimeException("Unsupported github url " + gitHubURL);
-		}
-
-		return new PortalBatchBuildRunner(job, gitHubURL, batchName);
+	public String getName() {
+		return _name;
 	}
 
-	public static TopLevelBuildRunner newTopLevelBuildRunner(
-		Job job, String gitHubURL) {
+	public String getSHA() {
+		return _sha;
+	}
 
-		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
-			throw new RuntimeException("Unsupported github url " + gitHubURL);
+	protected BaseGitRef(String name, String sha) {
+		if ((name == null) || name.isEmpty()) {
+			throw new IllegalArgumentException("Name is null");
 		}
 
-		return new PortalTopLevelBuildRunner(job, gitHubURL);
+		if ((sha == null) || sha.isEmpty()) {
+			throw new IllegalArgumentException("SHA is null");
+		}
+
+		if (!sha.matches("[0-9a-f]{7,40}")) {
+			throw new IllegalArgumentException("SHA is invalid");
+		}
+
+		_name = name;
+		_sha = sha;
 	}
+
+	private final String _name;
+	private final String _sha;
 
 }

@@ -14,37 +14,31 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Properties;
+
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseGitBranch {
+public class FunctionalBatchPortalWorkspace extends PortalWorkspace {
 
-	public String getName() {
-		return _name;
+	protected FunctionalBatchPortalWorkspace(
+		String portalGitHubURL, String portalUpstreamBranchName) {
+
+		super(portalGitHubURL, portalUpstreamBranchName, false);
+
+		_setPortalBuildProperties();
 	}
 
-	public String getSHA() {
-		return _sha;
+	private void _setPortalBuildProperties() {
+		Properties properties = new Properties();
+
+		properties.put("jsp.precompile", "on");
+		properties.put("jsp.precompile.parallel", "on");
+
+		PortalLocalRepository portalLocalRepository =
+			getPrimaryPortalRepository();
+
+		portalLocalRepository.setBuildProperties(properties);
 	}
-
-	protected BaseGitBranch(String name, String sha) {
-		if ((name == null) || name.isEmpty()) {
-			throw new IllegalArgumentException("Name is null");
-		}
-
-		if ((sha == null) || sha.isEmpty()) {
-			throw new IllegalArgumentException("SHA is null");
-		}
-
-		if (!sha.matches("[0-9a-f]{7,40}")) {
-			throw new IllegalArgumentException("SHA is invalid");
-		}
-
-		_name = name;
-		_sha = sha;
-	}
-
-	private final String _name;
-	private final String _sha;
 
 }

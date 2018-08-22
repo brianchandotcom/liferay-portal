@@ -20,6 +20,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Component(
 	immediate = true,
@@ -27,6 +28,7 @@ import org.osgi.service.component.annotations.Component;
 		{"model.class.name=com.liferay.message.boards.model.MBThread"},
 	service = BaseModelPermissionChecker.class
 )
+@Deprecated
 public class MBThreadPermission
 	extends MBMessagePermission implements BaseModelPermissionChecker {
 }

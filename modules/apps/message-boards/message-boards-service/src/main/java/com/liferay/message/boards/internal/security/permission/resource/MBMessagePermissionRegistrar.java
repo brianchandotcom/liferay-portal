@@ -58,6 +58,7 @@ public class MBMessagePermissionRegistrar {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("model.class.name", MBMessage.class.getName());
+		properties.put("model.class.name", MBThread.class.getName());
 
 		_serviceRegistration = bundleContext.registerService(
 			ModelResourcePermission.class,

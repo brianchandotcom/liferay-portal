@@ -44,9 +44,7 @@ public class PortalBatchBuildRunner extends BatchBuildRunner {
 			throw new RuntimeException("Invalid workspace");
 		}
 
-		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
-
-		portalWorkspace.setPortalJobProperties(getJob());
+		workspace.setJobProperties(getJob());
 	}
 
 }

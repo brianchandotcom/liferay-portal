@@ -19,7 +19,7 @@ package com.liferay.jenkins.results.parser;
  */
 public abstract class WorkspaceFactory {
 
-	public static Workspace newBatchWorkspace(
+	public static BatchWorkspace newBatchWorkspace(
 		String gitHubURL, String upstreamBranchName, String batchName) {
 
 		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
@@ -31,15 +31,15 @@ public abstract class WorkspaceFactory {
 		}
 
 		if (batchName.contains("functional")) {
-			new FunctionalBatchPortalWorkspace(gitHubURL, upstreamBranchName);
+			return new FunctionalBatchPortalWorkspace(gitHubURL, upstreamBranchName);
 		}
 		else if (batchName.contains("integration") ||
 				 batchName.contains("unit")) {
 
-			new JunitBatchPortalWorkspace(gitHubURL, upstreamBranchName);
+			return new JunitBatchPortalWorkspace(gitHubURL, upstreamBranchName);
 		}
 
-		return new PortalWorkspace(gitHubURL, upstreamBranchName, false);
+		return new BatchPortalWorkspace(gitHubURL, upstreamBranchName, false);
 	}
 
 	public static TopLevelWorkspace newTopLevelWorkspace(

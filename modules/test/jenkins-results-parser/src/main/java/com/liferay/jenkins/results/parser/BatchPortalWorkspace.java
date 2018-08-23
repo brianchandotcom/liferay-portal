@@ -14,31 +14,23 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Properties;
-
 /**
- * @author Michael Hashimoto
+ * @author Peter Yoo
  */
-public class FunctionalBatchPortalWorkspace extends PortalWorkspace implements BatchWorkspace{
+public class BatchPortalWorkspace extends PortalWorkspace
+	implements BatchWorkspace {
 
-	protected FunctionalBatchPortalWorkspace(
+	protected BatchPortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {
 
 		super(portalGitHubURL, portalUpstreamBranchName, false);
-
-		_setPortalBuildProperties();
 	}
 
-	private void _setPortalBuildProperties() {
-		Properties properties = new Properties();
+	protected BatchPortalWorkspace(
+		String portalGitHubURL, String portalUpstreamBranchName,
+		boolean synchronizeBranches) {
 
-		properties.put("jsp.precompile", "on");
-		properties.put("jsp.precompile.parallel", "on");
-
-		PortalLocalRepository portalLocalRepository =
-			getPrimaryPortalRepository();
-
-		portalLocalRepository.setBuildProperties(properties);
+		super(portalGitHubURL, portalUpstreamBranchName, synchronizeBranches);
 	}
 
 }

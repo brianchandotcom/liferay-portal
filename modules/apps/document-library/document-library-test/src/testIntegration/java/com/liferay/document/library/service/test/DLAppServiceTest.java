@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.exception.DuplicateFileEntryException
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -917,6 +918,36 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				folder.getName());
 
 			DLAppServiceUtil.getFolder(subfolder.getFolderId());
+		}
+
+	}
+
+	@RunWith(Arquillian.class)
+	public static class WhenGettingAFileEntry extends BaseDLAppTestCase {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new LiferayIntegrationTestRule();
+
+		@Test(expected = NoSuchFileEntryException.class)
+		public void shouldFailIfNotPresentInRootFolder() throws Exception {
+			DLAppServiceUtil.getFileEntry(
+				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString());
+		}
+
+		@Test
+		public void shouldReturnItIfExistsInRootFolder() throws Exception {
+			FileEntry fileEntry1 = addFileEntry(
+				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			FileEntry fileEntry2 = DLAppServiceUtil.getFileEntry(
+				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				fileEntry1.getTitle());
+
+			Assert.assertEquals(
+				fileEntry1.getFileEntryId(), fileEntry2.getFileEntryId());
 		}
 
 	}

@@ -211,6 +211,8 @@
 	</command>
 
 	<command ignore="true" name="ViewHiddenSecurityCredential" priority="4">
+		<!-- Ignoring until LRQA-39644 is resolved -->
+
 		<description message="This is a use case for LPS-73381." />
 
 		<property name="test.name.skip.portal.instance" value="LDAP#ViewHiddenSecurityCredential" />

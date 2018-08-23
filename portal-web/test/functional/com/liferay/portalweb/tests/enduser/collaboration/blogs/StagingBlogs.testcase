@@ -53,6 +53,37 @@
 		</if>
 	</tear-down>
 
+	<command name="PublishDraftViaSAP" priority="5">
+		<description message="This test covers LPS-79000. It ensures that users can only publish an Approved blog entry. Draft entries should not have the Publish option." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addDraft">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Blogs Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#assertNoPublishOption">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
 	<command name="PublishEntryViaSAP" priority="4">
 		<description message="This test covers LPS-77658. It publishes a blog entry to live via Single Asset Publishing." />
 

@@ -26,6 +26,14 @@ property.
 - [LPS-71591]: Automatically configure the `validateTLD` task to use the version
 0.12.5 of the [XML Resolver].
 
+## 1.3.0 - 2018-08-23
+
+### Changed
+- [LPS-84621]: Update the `validateTLD` task to automatically search the parent
+directories for `portal/definitions` to use these files for TLD scheme validation.
+Set the properties `xmlParserClassName` and `xmlParserClasspath` to `null` to
+use the default XML parser provided by Ant.
+
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-68666]: https://issues.liferay.com/browse/LPS-68666
 [LPS-71591]: https://issues.liferay.com/browse/LPS-71591

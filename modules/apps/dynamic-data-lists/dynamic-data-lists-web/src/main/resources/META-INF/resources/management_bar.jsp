@@ -48,7 +48,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				if (searchContainer) {
 					form.setAttribute('method', 'post');
 
-					var recordSetIds = form.queryString('#<portlet:namespace />recordSetIds');
+					var recordSetIds = form.querySelector('#<portlet:namespace />recordSetIds');
 
 					if (recordSetIds) {
 						recordSetIds.setAttribute('value', Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));

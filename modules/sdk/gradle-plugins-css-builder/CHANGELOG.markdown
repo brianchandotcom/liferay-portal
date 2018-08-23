@@ -69,7 +69,14 @@ available, but they are deprecated.
 `BuildCSSTask`'s `dirNames` property contains more than one value.
 
 ## 2.2.2 - 2018-08-15
+
+### Changed
 - [LPS-84473]: Update the [Liferay CSS Builder] dependency to version 2.1.2.
+
+## 2.2.3 - 2018-08-22
+
+### Changed
+- [LPS-84218]: Update the [Liferay CSS Builder] dependency to version 2.1.3.
 
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -83,4 +90,5 @@ available, but they are deprecated.
 [LPS-75589]: https://issues.liferay.com/browse/LPS-75589
 [LPS-75633]: https://issues.liferay.com/browse/LPS-75633
 [LPS-76475]: https://issues.liferay.com/browse/LPS-76475
+[LPS-84218]: https://issues.liferay.com/browse/LPS-84218
 [LPS-84473]: https://issues.liferay.com/browse/LPS-84473

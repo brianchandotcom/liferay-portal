@@ -37,10 +37,6 @@
 		<execute macro="Staging#activateStagingCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
-	</set-up>
-
-	<command name="PublishSubfolderWithDocumentsViaSAP" priority="3">
-		<description message="This test covers LPS-82532. It ensures documents inside the subfolder that's being published to live are also published." />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging DM Page" />
@@ -52,6 +48,10 @@
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Documents and Media" />
 		</execute>
+	</set-up>
+
+	<command name="PublishSubfolderWithDocumentsViaSAP" priority="3">
+		<description message="This test covers LPS-82532. It ensures documents inside the subfolder that's being published to live are also published." />
 
 		<execute macro="DMFolder#addCP">
 			<var name="dmFolderDescription" value="DM Folder Description" />

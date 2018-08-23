@@ -36,6 +36,8 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = fixRedundantEmptyLines(content);
 
+		content = fixIncorrectEmptyLineAfterOpenCurlyBrace(content);
+
 		content = fixIncorrectEmptyLineBeforeCloseCurlyBrace(content);
 
 		content = fixMissingEmptyLineAfterSettingVariable(content);

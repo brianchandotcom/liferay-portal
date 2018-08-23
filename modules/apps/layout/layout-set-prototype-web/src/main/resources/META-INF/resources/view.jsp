@@ -74,7 +74,7 @@
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button
 			href="javascript:;"
-			icon="trash"
+			icon="times-circle"
 			id="deleteSelectedLayoutSetPrototypes"
 			label="delete"
 		/>

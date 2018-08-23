@@ -89,7 +89,7 @@ public class AssetTagsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteTags");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

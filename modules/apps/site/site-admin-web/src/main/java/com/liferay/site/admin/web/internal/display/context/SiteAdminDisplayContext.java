@@ -99,7 +99,7 @@ public class SiteAdminDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteSites");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

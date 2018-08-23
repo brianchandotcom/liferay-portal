@@ -42,14 +42,14 @@ public abstract class WorkspaceFactory {
 		return new PortalWorkspace(gitHubURL, upstreamBranchName, false);
 	}
 
-	public static Workspace newTopLevelWorkspace(
+	public static TopLevelWorkspace newTopLevelWorkspace(
 		String gitHubURL, String upstreamBranchName) {
 
 		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
 			throw new RuntimeException("Unsupported GitHub URL " + gitHubURL);
 		}
 
-		return new PortalWorkspace(gitHubURL, upstreamBranchName, true);
+		return new TopLevelPortalWorkspace(gitHubURL, upstreamBranchName, true);
 	}
 
 }

@@ -22,6 +22,9 @@ public abstract class BaseWorkspace implements Workspace {
 	@Override
 	public abstract void setupWorkspace();
 
+	@Override
+	public abstract void setJobProperties(Job job);
+
 	protected void checkoutBranch(LocalGitBranch localGitBranch) {
 		System.out.println();
 		System.out.println("##");

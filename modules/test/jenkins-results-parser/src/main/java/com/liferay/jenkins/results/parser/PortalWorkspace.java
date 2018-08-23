@@ -35,7 +35,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		return false;
 	}
 
-	public void setPortalJobProperties(Job job) {
+	public void setJobProperties(Job job) {
 		_primaryPortalLocalRepository.setJobProperties(job);
 	}
 

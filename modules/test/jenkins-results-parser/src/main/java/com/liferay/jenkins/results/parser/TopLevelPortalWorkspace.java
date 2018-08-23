@@ -15,11 +15,22 @@
 package com.liferay.jenkins.results.parser;
 
 /**
- * @author Michael Hashimoto
+ * @author Peter Yoo
  */
-public interface Workspace {
+public class TopLevelPortalWorkspace
+	extends PortalWorkspace implements TopLevelWorkspace {
 
-	public void setupWorkspace();
+	protected TopLevelPortalWorkspace(
+		String portalGitHubURL, String portalUpstreamBranchName) {
 
-	public void setJobProperties(Job job);
+		super(portalGitHubURL, portalUpstreamBranchName, false);
+	}
+
+	protected TopLevelPortalWorkspace(
+		String portalGitHubURL, String portalUpstreamBranchName,
+		boolean synchronizeBranches) {
+
+		super(portalGitHubURL, portalUpstreamBranchName, synchronizeBranches);
+	}
+
 }

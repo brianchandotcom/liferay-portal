@@ -16,9 +16,12 @@ package com.liferay.portal.json;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -31,6 +34,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -111,6 +116,33 @@ public class JSONFactoryTest {
 		Object values = deserializedMap.get("key");
 
 		Assert.assertTrue(values instanceof Integer[]);
+	}
+
+	@Test
+	public void testDeserializeNonWhitelistedClass() {
+		String json = JSONFactoryUtil.serialize(new JSONFactoryTest());
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LiferayJSONDeserializationWhitelist.class.getName(),
+					Level.WARNING)) {
+
+			Object object = JSONFactoryUtil.deserialize(json);
+
+			Assert.assertTrue(object instanceof Map);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertTrue(
+				StringUtil.startsWith(
+					logRecord.getMessage(),
+					"Unable to deserialize " +
+						JSONFactoryTest.class.getName()));
+		}
 	}
 
 	@Test

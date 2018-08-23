@@ -50,7 +50,7 @@
 		</execute>
 	</set-up>
 
-	<command name="PublishSubfolderWithDocumentsViaSAP" priority="3">
+	<command name="PublishSubfolderWithDocumentsViaSAP" priority="5">
 		<description message="This test covers LPS-82532. It ensures documents inside the subfolder that's being published to live are also published." />
 
 		<execute macro="DMFolder#addCP">

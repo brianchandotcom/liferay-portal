@@ -115,7 +115,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 		}
 
-		if ((group == null) || !group.isActive()) {
+		if (group == null) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("{companyId=");
@@ -185,6 +185,10 @@ public class FriendlyURLServlet extends HttpServlet {
 						requestContext);
 
 			Layout layout = layoutFriendlyURLSeparatorComposite.getLayout();
+
+			if (!group.isActive() && !layout.isTypeControlPanel()) {
+				throw new NoSuchLayoutException();
+			}
 
 			request.setAttribute(WebKeys.LAYOUT, layout);
 

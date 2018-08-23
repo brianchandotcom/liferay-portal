@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  * Facade to the auto tagging framework.
  *
  * @author Alejandro Tardín
+ * @review
  */
 public interface AssetAutoTagger {
 

@@ -30,6 +30,7 @@ import java.util.List;
  * 	model.class.name=com.liferay.document.library.kernel.model.DLFileEntry
  *
  * @author Alejandro Tardín
+ * @review
  */
 public interface AssetAutoTagProvider<T> {
 

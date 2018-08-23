@@ -511,7 +511,7 @@ public abstract class Baseline {
 			Version newerVersion = info.newerVersion;
 
 			if ((newerVersion != null) &&
-				newerVersion.compareTo(info.suggestedVersion) == 0) {
+				(newerVersion.compareTo(info.suggestedVersion) == 0)) {
 
 				writePackageInfoFile = false;
 			}

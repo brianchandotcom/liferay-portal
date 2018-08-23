@@ -4380,6 +4380,12 @@ applies the `com.liferay.test.integration.base` plugin. Configure the
 - [LPS-84624]: The `com.liferay.spring.boot.defaults` plugin configures the
 `test` and `testIntegration` tasks with sensible defaults.
 
+## 5.5.20 - 2018-08-22
+
+### Changed
+- [LPS-84218]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.112.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4837,6 +4843,7 @@ applies the `com.liferay.test.integration.base` plugin. Configure the
 [LPS-84055]: https://issues.liferay.com/browse/LPS-84055
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-84213]: https://issues.liferay.com/browse/LPS-84213
+[LPS-84218]: https://issues.liferay.com/browse/LPS-84218
 [LPS-84307]: https://issues.liferay.com/browse/LPS-84307
 [LPS-84313]: https://issues.liferay.com/browse/LPS-84313
 [LPS-84473]: https://issues.liferay.com/browse/LPS-84473

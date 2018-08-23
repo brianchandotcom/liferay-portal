@@ -5430,6 +5430,9 @@ version 1.0.238.
 to version 2.3.238.
 - [LPS-84119]: Update the [Liferay Source Formatter] dependency to version
 1.0.712.
+- [LPS-84218]: Update the [Liferay CSS Builder] dependency to version 2.1.3.
+- [LPS-84218]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.2.3.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -5861,6 +5864,7 @@ to version 2.3.238.
 [LPS-84039]: https://issues.liferay.com/browse/LPS-84039
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-84213]: https://issues.liferay.com/browse/LPS-84213
+[LPS-84218]: https://issues.liferay.com/browse/LPS-84218
 [LPS-84307]: https://issues.liferay.com/browse/LPS-84307
 [LPS-84473]: https://issues.liferay.com/browse/LPS-84473
 [LPS-84615]: https://issues.liferay.com/browse/LPS-84615

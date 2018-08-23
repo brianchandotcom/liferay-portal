@@ -73,19 +73,20 @@ FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDi
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand table-title"
 							href="<%= rowURL %>"
 							name="name"
 							value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand"
 							name="description"
 							value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
 						/>
 
 						<liferay-ui:search-container-column-date
+							cssClass="table-cell-expand-smaller"
 							name="modified-date"
 							value="<%= structure.getModifiedDate() %>"
 						/>

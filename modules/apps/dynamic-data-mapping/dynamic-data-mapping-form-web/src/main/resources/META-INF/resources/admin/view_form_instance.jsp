@@ -70,19 +70,20 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand table-title"
 							href="<%= rowURL %>"
 							name="name"
 							value="<%= HtmlUtil.escape(formInstance.getName(locale)) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand"
 							name="description"
 							value="<%= HtmlUtil.escape(formInstance.getDescription(locale)) %>"
 						/>
 
 						<liferay-ui:search-container-column-date
+							cssClass="table-cell-expand-smaller"
 							name="modified-date"
 							value="<%= formInstance.getModifiedDate() %>"
 						/>

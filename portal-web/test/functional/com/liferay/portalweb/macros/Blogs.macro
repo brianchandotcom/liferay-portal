@@ -387,6 +387,22 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="assertNoPublishOption">
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute function="Click" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN" />
+
+		<execute macro="MenuItem#viewNotPresent">
+			<var name="menuItem" value="Publish to Live" />
+		</execute>
+	</command>
+
 	<command name="disableSocialBookmarkSites">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
@@ -480,6 +496,26 @@
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
+	</command>
+
+	<command name="publishEntryViaSAP">
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute function="Click" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN" />
+
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Publish to Live" />
+		</execute>
+
+		<execute function="Confirm" value1="Are you sure you want to publish to live?" />
+
+		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
 	</command>
 
 	<command name="subscribePG">

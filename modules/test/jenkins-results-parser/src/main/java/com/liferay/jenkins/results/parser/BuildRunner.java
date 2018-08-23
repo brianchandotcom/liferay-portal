@@ -17,32 +17,10 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRunner implements BuildRunner {
+public interface BuildRunner {
 
-	@Override
-	public void setup() {
-		setupWorkspace();
-	}
+	public void setup();
 
-	@Override
-	public void setupWorkspace() {
-		if (baseWorkspace == null) {
-			throw new RuntimeException("Workspace is null");
-		}
-
-		baseWorkspace.setupWorkspace();
-	}
-
-	protected BaseBuildRunner(Job job) {
-		_job = job;
-	}
-
-	protected Job getJob() {
-		return _job;
-	}
-
-	protected BaseWorkspace baseWorkspace;
-
-	private final Job _job;
+	public void setupWorkspace();
 
 }

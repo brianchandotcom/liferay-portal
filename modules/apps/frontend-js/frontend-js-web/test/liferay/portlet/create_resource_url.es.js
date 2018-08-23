@@ -6,7 +6,7 @@ describe(
 		describe(
 			'createResourceUrl',
 			() => {
-				const ids = portlet.getIds();
+				const ids = global.portlet.getIds();
 				const portletA = ids[0];
 				const portletB = ids[1];
 
@@ -239,9 +239,9 @@ describe(
 							param2: ['paramValue2']
 						};
 
-						return hubB.createResourceUrl(parameters, cache).then(
+						return hubB.createResourceUrl(parameters, cache, 'myResourceId').then(
 							url => {
-								expect(portlet.resource.isResourceUrl(url)).toBeTruthy();
+								expect(global.portlet.resource.isResourceUrl(url)).toBeTruthy();
 							}
 						);
 					}
@@ -258,7 +258,7 @@ describe(
 
 						return hubB.createResourceUrl(parameters, cache).then(
 							url => {
-								const str = portlet.resource.getCacheability(url);
+								const str = global.portlet.resource.getCacheability(url);
 
 								expect(str).toEqual(cache);
 							}

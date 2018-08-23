@@ -31,7 +31,8 @@
 		"metal-position": "^2.1.1",
 		"metal-promise": "^3.0.4",
 		"metal-soy": "^2.16.4",
-		"svg4everybody": "^2.1.8"
+		"svg4everybody": "^2.1.8",
+		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
 		"babel-cli": "6.26.0",
@@ -72,7 +73,7 @@
 	"scripts": {
 		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && liferay-npm-bridge-generator",
 		"checkFormat": "npm run csf",
-		"csf": "csf src/**/liferay/**/*.js test/**/*.js",
+		"csf": "csf src/**/liferay/**/*.js test/**/*.js test/**/**/*.js",
 		"format": "npm run csf -- -i",
 		"start": "webpack-dev-server --config webpack.dev.js",
 		"test": "jest",

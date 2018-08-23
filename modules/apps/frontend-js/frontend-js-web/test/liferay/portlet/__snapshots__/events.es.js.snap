@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PortletHub should throw error if dispatchClientEvent is called with invalid args 1`] = `"Too many arguments provided: 1, 2, 3"`;
+
+exports[`PortletHub should throw error if dispatchClientEvent is called with invalid args 2`] = `"Too few arguments provided: Number of arguments: 1"`;
+
+exports[`PortletHub should throw error when attempting to dispatch event with protected name 1`] = `"Too few arguments provided: Number of arguments: 1"`;

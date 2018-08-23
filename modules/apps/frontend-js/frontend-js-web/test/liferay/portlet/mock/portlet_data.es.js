@@ -1,6 +1,6 @@
 const portlet = {
 	data: {
-		initialPageState: {
+		pageRenderState: {
 			encodedCurrentURL: 'http%3A%2F%2Flocalhost%3A8080%2F',
 			portlets: {
 				PortletA: {
@@ -140,12 +140,9 @@ const portlet = {
 	},
 
 	getIds() {
-		return Object.keys(portlet.data.initialPageState.portlets);
+		return Object.keys(portlet.data.pageRenderState.portlets);
 	},
 
-	getInitData() {
-		return JSON.parse(JSON.stringify(portlet.data.initialPageState));
-	},
 
 	resource: {
 		getCacheability(url) {
@@ -162,7 +159,8 @@ const portlet = {
 		},
 
 		isResourceUrl(url) {
-			const regex = /(p_p_hub=2)(&p_p_resource_id=\w+)?/g;
+			const regex = /(p_p_lifecycle=2)(&p_p_resource_id=\w+)?/g;
+
 			const str = regex.exec(url);
 
 			let found = false;

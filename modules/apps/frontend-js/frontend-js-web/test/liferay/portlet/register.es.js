@@ -12,18 +12,16 @@ describe(
 					() => {
 						expect.assertions(1);
 
-						return register().catch(
-							err => {
-								expect(err.message).toEqual('Invalid portlet ID');
-							}
-						);
+						const testFn = () => register();
+
+						expect(testFn).toThrow();
 					}
 				);
 
 				it(
 					'should return an instance of PortletInit',
 					() => {
-						return register('portletA').then(
+						return register('PortletA').then(
 							hub => {
 								expect(hub).toBeInstanceOf(PortletInit);
 							}
@@ -31,6 +29,6 @@ describe(
 					}
 				);
 			}
-		)
+		);
 	}
 );

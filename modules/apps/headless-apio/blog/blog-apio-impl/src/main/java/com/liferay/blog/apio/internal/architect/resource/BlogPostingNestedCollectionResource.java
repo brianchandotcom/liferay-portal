@@ -112,11 +112,9 @@ public class BlogPostingNestedCollectionResource
 		).addDate(
 			"dateCreated", BlogsEntry::getCreateDate
 		).addDate(
-			"dateDisplayed", BlogsEntry::getDisplayDate
-		).addDate(
 			"dateModified", BlogsEntry::getModifiedDate
 		).addDate(
-			"datePublished", BlogsEntry::getLastPublishDate
+			"datePublished", BlogsEntry::getDisplayDate
 		).addLinkedModel(
 			"aggregateRating", AggregateRatingIdentifier.class,
 			ClassNameClassPK::create

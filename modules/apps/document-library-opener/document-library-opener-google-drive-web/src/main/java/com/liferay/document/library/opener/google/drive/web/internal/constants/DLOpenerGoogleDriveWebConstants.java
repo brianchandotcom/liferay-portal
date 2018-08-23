@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.Constants;
  */
 public class DLOpenerGoogleDriveWebConstants {
 
+	public static final String GOOGLE_DRIVE_ADD = Constants.ADD;
+
 	public static final String GOOGLE_DRIVE_CANCEL_CHECKOUT =
 		Constants.CANCEL_CHECKOUT;
 

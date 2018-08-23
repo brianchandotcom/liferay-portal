@@ -16,6 +16,7 @@ package com.liferay.document.library.opener.google.drive.internal.service;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
+import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -111,13 +112,17 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		File file = _dlOpenerGoogleDriveManager.getContentFile(
-			serviceContext.getUserId(), fileEntry);
+		DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference =
+			_dlOpenerGoogleDriveManager.requestEditAccess(
+				serviceContext.getUserId(), fileEntry);
+
+		File file = dlOpenerGoogleDriveFileReference.getContentFile();
 
 		try {
 			updateFileEntry(
 				fileEntry.getFileEntryId(), fileEntry.getFileName(),
-				fileEntry.getMimeType(), fileEntry.getTitle(),
+				fileEntry.getMimeType(),
+				dlOpenerGoogleDriveFileReference.getTitle(),
 				fileEntry.getDescription(), StringPool.BLANK, false, file,
 				serviceContext);
 		}

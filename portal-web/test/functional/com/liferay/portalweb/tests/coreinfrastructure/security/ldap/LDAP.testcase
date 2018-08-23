@@ -95,7 +95,7 @@
 	</command>
 
 	<command name="ResetFieldsValueForImportedLDAPUser" priority="4">
-		<description message="This is a use case for LPS-30529 and LPS-77948." />
+		<description message="This is a use case for LPS-30529." />
 
 		<property name="apacheds.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="LDAP#ResetFieldsValueForImportedLDAPUser" />
@@ -195,19 +195,15 @@
 			<var name="portlet" value="Account Settings" />
 		</execute>
 
-		<!-- LPS-77948 -->
-
-		<!-- <execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECTED" value1="Female">
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECTED" value1="Female">
 			<var name="key_userGender" value="Female" />
-		</execute> -->
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD" value1="QA" />
 
-		<!-- LPS-77948 -->
-
-		<!-- <execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECTED" value1="Phd">
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECTED" value1="Phd">
 			<var name="key_userSuffix" value="Phd" />
-		</execute> -->
+		</execute>
 	</command>
 
 	<command ignore="true" name="ViewHiddenSecurityCredential" priority="4">

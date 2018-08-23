@@ -27,9 +27,8 @@ class RenderState {
 	}
 
 	/**
-	 * Returns an instance of RenderState based on a RenderState
+	 * Set the properties of a RenderState instance based on another RenderState
 	 * @memberof RenderState
-	 * @return {RenderState} A RenderState instance.
 	 * @review
 	 */
 
@@ -149,10 +148,8 @@ class RenderState {
 			throw new TypeError('Portlet Mode must be a string');
 		}
 
-		const mode = portletMode.toLowerCase();
-
-		if (mode === PortletConstants.EDIT || mode === PortletConstants.HELP || mode === PortletConstants.VIEW) {
-			this.portletMode = mode;
+		if (portletMode === PortletConstants.EDIT || portletMode === PortletConstants.HELP || portletMode === PortletConstants.VIEW) {
+			this.portletMode = portletMode;
 		}
 	}
 
@@ -208,10 +205,8 @@ class RenderState {
 			throw new TypeError('Window State must be a string');
 		}
 
-		const state = windowState.toLowerCase();
-
-		if (state === PortletConstants.MAXIMIZED || state === PortletConstants.MINIMIZED || state === PortletConstants.NORMAL) {
-			this.windowState = state;
+		if (windowState === PortletConstants.MAXIMIZED || windowState === PortletConstants.MINIMIZED || windowState === PortletConstants.NORMAL) {
+			this.windowState = windowState;
 		}
 	}
 }

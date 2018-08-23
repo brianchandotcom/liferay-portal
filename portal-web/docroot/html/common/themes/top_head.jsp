@@ -198,11 +198,9 @@ for (Portlet portlet : portlets) {
 	<script type="text/javascript">
 		var portlet = portlet || {};
 
-		portlet.impl = portlet.impl || {};
+		portlet.data = portlet.data || {};
 
-		portlet.impl.getInitData = function() {
-			return <%= RenderStateUtil.generateJSON(request, themeDisplay) %>;
-		}
+		portlet.data.pageRenderState = <%= RenderStateUtil.generateJSON(request, themeDisplay) %>;
 	</script>
 </c:if>
 

@@ -5,23 +5,21 @@ import {
 
 // Constants for URL generation
 
-const CACHE_LEVEL = 'p_p_cacheability';
+const AJAX_ACTION_VALUE = '0';
 
-const HUB = 'p_p_hub';
+const CACHE_LEVEL_KEY = 'p_p_cacheability';
 
-const HUB_ACTION = '0';
+const HUB_ACTION_KEY = 'p_p_hub';
 
-const HUB_PARTIAL_ACTION = '1';
+const PARTIAL_ACTION_VALUE = '1';
 
-const HUB_RESOURCE = '2';
+const PORTLET_MODE_KEY = 'p_p_mode';
 
-const PORTLET_MODE = 'p_p_mode';
+const PUBLIC_RENDER_PARAM_KEY = 'p_r_p_';
 
-const PUBLIC_RENDER_PARAM = 'p_r_p_';
+const RENDER_PARAM_KEY = 'priv_r_p_';
 
-const RENDER_PARAM = 'priv_r_p_';
-
-const RESOURCE_ID = 'p_p_resource_id';
+const RESOURCE_ID_KEY = 'p_p_resource_id';
 
 const TOKEN_DELIM = '&';
 
@@ -31,7 +29,7 @@ const VALUE_DELIM = '=';
 
 const VALUE_NULL = '';
 
-const WINDOW_STATE = 'p_p_state';
+const WINDOW_STATE_KEY = 'p_p_state';
 
 /**
  * Decodes the update strings.
@@ -45,13 +43,13 @@ const WINDOW_STATE = 'p_p_state';
  */
 
 const decodeUpdateString = function(pageRenderState, updateString) {
-	const portlets = {};
+	const portlets = pageRenderState && pageRenderState.portlets ?
+		pageRenderState.portlets : {};
 
 	try {
 		const newRenderState = JSON.parse(updateString);
-		const portlets = pageRenderState.portlets;
 
-		if (newRenderState.portlets && portlets) {
+		if (newRenderState.portlets) {
 			const keys = Object.keys(portlets);
 
 			for (const key of keys) {
@@ -62,7 +60,7 @@ const decodeUpdateString = function(pageRenderState, updateString) {
 					throw new Error(`Invalid update string.\nold state=${oldState}\nnew state=${newState}`);
 				}
 
-				if (stateChanged(newState, key)) {
+				if (stateChanged(pageRenderState, newState, key)) {
 					portlets[key] = newRenderState.portlets[key];
 				}
 			}
@@ -151,6 +149,58 @@ const encodeParameter = function(name, values) {
 };
 
 /**
+ * Generates the required options for an action URL request
+ * according to the portletId, action URL and optional form element.
+ *
+ * @param {string} portletId The id of the portlet.
+ * @param {string} url The action url.
+ * @param {HTMLFormElement} The form element.
+ * @return {Object}
+ * @review
+ */
+
+const generateActionUrl = function(portletId, url, form) {
+	const request = {
+		credentials: 'same-origin',
+		method: 'POST',
+		url: url
+	};
+
+	if (form) {
+		const enctype = form.enctype;
+
+		if (enctype === 'multipart\/form-data') {
+			const formData = new FormData(form);
+
+			request.body = formData;
+		}
+		else {
+			const formAsString = encodeFormAsString(portletId, form);
+			const method = form.method ? form.method.toUpperCase() : 'GET';
+
+			if (method === 'GET') {
+				if (url.indexOf('?') >= 0) {
+					url += `&${formAsString}`;
+				}
+				else {
+					url += `?${formAsString}`;
+				}
+
+				request.url = url;
+			}
+			else {
+				request.body = formAsString;
+				request.headers = {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				};
+			}
+		}
+	}
+
+	return request;
+};
+
+/**
  * Helper for generating parameter strings for the URL
  * @param {Object} pageRenderState The page render state.
  * @param {string} portletId The portlet ID.
@@ -160,7 +210,7 @@ const encodeParameter = function(name, values) {
  * @review
  */
 
-const	generateParameterString = function(pageRenderState, portletId, name, type, group) {
+const generateParameterString = function(pageRenderState, portletId, name, type, group) {
 	let str = '';
 
 	if (pageRenderState.portlets && pageRenderState.portlets[portletId]) {
@@ -173,11 +223,11 @@ const	generateParameterString = function(pageRenderState, portletId, name, type,
 
 				// If values are present, encode the mutlivalued parameter string
 
-				if (type === PUBLIC_RENDER_PARAM) {
+				if (type === PUBLIC_RENDER_PARAM_KEY) {
 					str += encodeParameter(group, values);
 				}
-				else if (type === RENDER_PARAM) {
-					str += encodeParameter(RENDER_PARAM + name, values);
+				else if (type === RENDER_PARAM_KEY) {
+					str += encodeParameter(RENDER_PARAM_KEY + name, values);
 				}
 				else {
 					str += encodeParameter(portletId + name, values);
@@ -206,8 +256,8 @@ const generatePortletModeAndWindowStateString = function(pageRenderState, portle
 		if (portletData.state) {
 			const state = portletData.state;
 
-			str += TOKEN_DELIM + PORTLET_MODE + VALUE_DELIM + encodeURIComponent(state.portletMode);
-			str += TOKEN_DELIM + WINDOW_STATE + VALUE_DELIM + encodeURIComponent(state.windowState);
+			str += TOKEN_DELIM + PORTLET_MODE_KEY + VALUE_DELIM + encodeURIComponent(state.portletMode);
+			str += TOKEN_DELIM + WINDOW_STATE_KEY + VALUE_DELIM + encodeURIComponent(state.windowState);
 		}
 	}
 
@@ -232,9 +282,9 @@ const getUpdatedPublicRenderParameters = function(pageRenderState, portletId, st
 
 		const portletData = pageRenderState.portlets[portletId];
 
-		if (portletData && portletData.pubParams) {
+		if (portletData && portletData.pubParms) {
 
-			const portletPublicParameters = portletData.pubParams;
+			const portletPublicParameters = portletData.pubParms;
 
 			const keys = Object.keys(portletPublicParameters);
 
@@ -242,7 +292,7 @@ const getUpdatedPublicRenderParameters = function(pageRenderState, portletId, st
 				if (!isParameterInStateEqual(pageRenderState, portletId, state, key)) {
 					const group = portletPublicParameters[key];
 
-					publicRenderParameters[group] = state.parameters[name];
+					publicRenderParameters[group] = state.parameters[key];
 				}
 			}
 		}
@@ -265,6 +315,7 @@ const getUpdatedPublicRenderParameters = function(pageRenderState, portletId, st
 
 const getUrl = function(pageRenderState, type, portletId, parameters, cache, resourceId) {
 	let cacheability = 'cacheLevelPage';
+	let str = '';
 	let url = '';
 
 	if (pageRenderState && pageRenderState.portlets) {
@@ -278,7 +329,6 @@ const getUrl = function(pageRenderState, type, portletId, parameters, cache, res
 		const portletData = pageRenderState.portlets[portletId];
 
 		if (portletData) {
-
 			if (type === 'RESOURCE') {
 				url = decodeURIComponent(portletData.encodedResourceURL);
 
@@ -286,11 +336,10 @@ const getUrl = function(pageRenderState, type, portletId, parameters, cache, res
 					cacheability = cache;
 				}
 
-				url += TOKEN_DELIM + HUB + VALUE_DELIM + encodeURIComponent(HUB_RESOURCE);
-				url += TOKEN_DELIM + CACHE_LEVEL + VALUE_DELIM + encodeURIComponent(cacheability);
+				url += TOKEN_DELIM + CACHE_LEVEL_KEY + VALUE_DELIM + encodeURIComponent(cacheability);
 
 				if (resourceId) {
-					url += TOKEN_DELIM + RESOURCE_ID + VALUE_DELIM + encodeURIComponent(resourceId);
+					url += TOKEN_DELIM + RESOURCE_ID_KEY + VALUE_DELIM + encodeURIComponent(resourceId);
 				}
 			}
 			else if (type === 'RENDER' && portletId !== null) {
@@ -301,11 +350,11 @@ const getUrl = function(pageRenderState, type, portletId, parameters, cache, res
 			}
 			else if (type === 'ACTION') {
 				url = decodeURIComponent(portletData.encodedActionURL);
-				url += TOKEN_DELIM + HUB + VALUE_DELIM + encodeURIComponent(HUB_ACTION);
+				url += TOKEN_DELIM + HUB_ACTION_KEY + VALUE_DELIM + encodeURIComponent(AJAX_ACTION_VALUE);
 			}
 			else if (type === 'PARTIAL_ACTION') {
 				url = decodeURIComponent(portletData.encodedActionURL);
-				url += TOKEN_DELIM + HUB + VALUE_DELIM + encodeURIComponent(HUB_PARTIAL_ACTION);
+				url += TOKEN_DELIM + HUB_ACTION_KEY + VALUE_DELIM + encodeURIComponent(PARTIAL_ACTION_VALUE);
 			}
 
 			// Now add the state to the URL, taking into account cacheability if
@@ -320,16 +369,23 @@ const getUrl = function(pageRenderState, type, portletId, parameters, cache, res
 				// been added previously)
 
 				if (portletId) {
+					url += generatePortletModeAndWindowStateString(pageRenderState, portletId);
+				}
+
+				// Add the state for the target portlet, if there is one.
+				// (for the render URL, pid can be null, and the state will have
+				// been added previously)
+
+				if (portletId) {
+					str = '';
 					if (portletData.state && portletData.state.parameters) {
 						const stateParameters = portletData.state.parameters;
 
-						let str = '';
-
 						const keys = Object.keys(stateParameters);
 
-						for (let key in keys) {
+						for (let key of keys) {
 							if (!isPublicParameter(pageRenderState, portletId, key)) {
-								str += generateParameterString(pageRenderState, portletId, key, RENDER_PARAM);
+								str += generateParameterString(pageRenderState, portletId, key, RENDER_PARAM_KEY);
 							}
 						}
 						url += str;
@@ -339,9 +395,9 @@ const getUrl = function(pageRenderState, type, portletId, parameters, cache, res
 				// Add the public render parameters for all portlets
 
 				if (pageRenderState.prpMap) {
-					const publicRenderParameters = {};
+					str = '';
 
-					let str = '';
+					const publicRenderParameters = {};
 
 					const mapKeys = Object.keys(pageRenderState.prpMap);
 					for (let mapKey of mapKeys) {
@@ -357,7 +413,7 @@ const getUrl = function(pageRenderState, type, portletId, parameters, cache, res
 									pageRenderState,
 									parts[0],
 									parts[1],
-									PUBLIC_RENDER_PARAM,
+									PUBLIC_RENDER_PARAM_KEY,
 									mapKey
 								);
 
@@ -365,16 +421,19 @@ const getUrl = function(pageRenderState, type, portletId, parameters, cache, res
 							}
 						}
 					}
+
 					url += str;
 				}
 			}
 		}
 	}
 
-	if (parameters) {
-		let str = '';
+	// Encode resource or action parameters
 
+	if (parameters) {
+		str = '';
 		const parameterKeys = Object.keys(parameters);
+
 		for (let parameterKey of parameterKeys) {
 			str += encodeParameter(portletId + parameterKey, parameters[parameterKey]);
 		}
@@ -464,9 +523,10 @@ const isPublicParameter = function(pageRenderState, portletId, name) {
 	if (pageRenderState && pageRenderState.portlets) {
 		const portletData = pageRenderState.portlets[portletId];
 
-		if (portletData && portletData.pubParams) {
-			const keys = Object.keys(portletData.pubParams);
-			result = keys.indexOf(name) !== -1;
+		if (portletData && portletData.pubParms) {
+			const keys = Object.keys(portletData.pubParms);
+
+			result = keys.includes(name);
 		}
 	}
 
@@ -526,6 +586,43 @@ const stateChanged = function(pageRenderState, newState, portletId) {
 	}
 
 	return result;
+};
+
+/**
+ * Used by the portlet hub methods to check the number and types of the
+ * arguments.
+ *
+ * @param {string[]} args The argument list to be checked.
+ * @param {number} min The minimum number of arguments.
+ * @param {number} max The maximum number of arguments. If this value is
+ * undefined, the function can take any number of arguments greater
+ * than max.
+ * @param {string[]} types An array containing the expected parameter types in the
+ * order of occurrance in the argument array.
+ * @throws {TypeError} Thrown if the parameters are in some manner incorrect.
+ * @review
+ */
+
+const validateArguments = function(args = [], min = 0, max = 1, types = []) {
+	if (args.length < min) {
+		throw new TypeError(`Too few arguments provided: Number of arguments: ${args.length}`);
+	}
+	else if (args.length > max) {
+		throw new TypeError(`Too many arguments provided: ${[].join.call(args, ', ')}`);
+	}
+	else if (Array.isArray(types)) {
+		let i = Math.min(args.length, types.length) - 1;
+
+		for (i; i >= 0; i--) {
+			if ((typeof args[i]) !== types[i]) {
+				throw new TypeError(`Parameter ${i} is of type ${(typeof args[i])} rather than the expected type ${types[i]}`);
+			}
+
+			if (args[i] === null || args[i] === undefined) {
+				throw new TypeError(`Argument is ${typeof args[i]}`);
+			}
+		}
+	}
 };
 
 /**
@@ -606,6 +703,20 @@ const validateParameters = function(parameters) {
 };
 
 /**
+ * Validates the specificed portletId against the list
+ * of current portlet in the pageRenderState.
+ *
+ * @param {string} portletId The ID of the portlet to be registered.
+ * @param {Object} pageRenderState The current pageRenderState.
+ * @return {boolean} A flag indicating if the specified portlet id is valid.
+ * @review
+ */
+
+const validatePortletId = function(pageRenderState = {}, portletId = '') {
+	return pageRenderState.portlets && Object.keys(pageRenderState.portlets).includes(portletId);
+};
+
+/**
  * Verifies that the input parameters are in valid format, that the portlet
  * mode and window state values are allowed for the portlet.
  * @param {RenderState} state The render state object to check.
@@ -614,7 +725,7 @@ const validateParameters = function(parameters) {
  * @review
  */
 
-const validateState = function(state, portletData) {
+const validateState = function(state = {}, portletData = {}) {
 	validateParameters(state.parameters);
 
 	const portletMode = state.portletMode;
@@ -647,10 +758,13 @@ const validateState = function(state, portletData) {
 export {
 	decodeUpdateString,
 	encodeFormAsString,
+	generateActionUrl,
 	generatePortletModeAndWindowStateString,
 	getUpdatedPublicRenderParameters,
 	getUrl,
+	validateArguments,
 	validateForm,
 	validateParameters,
+	validatePortletId,
 	validateState
 };

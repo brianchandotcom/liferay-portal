@@ -3,7 +3,6 @@ import register from '../../../src/main/resources/META-INF/resources/liferay/por
 describe(
 	'PortletHub',
 	() => {
-
 		beforeEach(
 			() => {
 				jest.useFakeTimers();
@@ -19,7 +18,7 @@ describe(
 		describe(
 			'action',
 			() => {
-				const ids = portlet.getIds();
+				const ids = global.portlet.getIds();
 				const onStateChange = jest.fn();
 				const portletA = ids[0];
 				const portletB = ids[1];
@@ -30,18 +29,9 @@ describe(
 
 				beforeEach(
 					() => {
-						fetchMock(
-							[
-								portletA
-							]
-						);
+						global.fetchMock([portletA]);
 
-						return Promise.all(
-							[
-								register(portletA),
-								register(portletB)
-							]
-						).then(
+						return Promise.all([register(portletA), register(portletB)]).then(
 							values => {
 								hubA = values[0];
 
@@ -58,7 +48,9 @@ describe(
 
 				afterEach(
 					() => {
-						hubA.removeEventListener(listenerA);
+						if (hubA !== null) {
+							hubA.removeEventListener(listenerA);
+						}
 						hubA = null;
 						hubB = null;
 					}
@@ -77,84 +69,70 @@ describe(
 						const element = document.createElement('form');
 						const parameters = {};
 
-						return hubA.action(parameters, element, 'param3').catch(
-							err => {
-								expect(err.name).toEqual('TypeError');
-								expect(err.message).toEqual('Invalid argument type. Argument 3 is of type [object String]');
-							}
-						);
+						const testFn = () => {
+							hubA.action(parameters, element, 'param3');
+						};
+
+						expect(testFn).toThrowError(TypeError);
 					}
 				);
 
 				it(
 					'throws a TypeError if a single argument is null',
 					() => {
-						return hubA.action(null).catch(
-							err => {
-								expect(err.name).toEqual('TypeError');
-								expect(err.message).toEqual('Invalid argument type. Argument 1 is of type [object Null]');
-							}
-						);
+						const testFn = () => {
+							hubA.action(null);
+						};
+
+						expect(testFn).toThrow(TypeError);
 					}
 				);
 
 				it(
 					'throws a TypeError if the element argument is null',
 					() => {
-						const parameters = {};
+						const testFn = () => {
+							hubA.action({}, null);
+						};
 
-						hubA.action(parameters, null).catch(
-							err => {
-								expect(err.name).toEqual('TypeError');
-								expect(err.message).toEqual('Invalid argument type. Argument 2 is of type [object Null]');
-							}
-						);
+						expect(testFn).toThrowError(TypeError);
 					}
 				);
 
 				it(
 					'throws a TypeError if action parameters is null',
 					() => {
-						const element = document.createElement('form');
+						const testFn = () => {
+							hubA.action(null, document.createElement('form'));
+						};
 
-						hubA.action(null, element).catch(
-							err => {
-								expect(err.name).toEqual('TypeError');
-								expect(err.message).toEqual('Invalid argument type. Argument 1 is of type [object Null]');
-							}
-						);
+						expect(testFn).toThrow(TypeError);
 					}
 				);
 
 				it(
 					'throws a TypeError if action parameters is invalid',
 					() => {
-						const element = document.createElement('form');
 						const parameters = {
 							a: 'value'
 						};
 
-						hubA.action(parameters, element).catch(
-							err => {
-								expect(err.name).toEqual('TypeError');
-								expect(err.message).toEqual('a parameter is not an array');
-							}
-						);
+						const testFn = () => {
+							hubA.action(parameters, document.createElement('form'));
+						};
+
+						expect(testFn).toThrow(TypeError);
 					}
 				);
 
 				it(
 					'throws a TypeError if the element argument is invalid',
 					() => {
-						const element = document.createElement('form');
-						const parameters = {};
+						const testFn = () => {
+							hubA.action({}, 'Invalid');
+						};
 
-						hubA.action(parameters, 'Invalid').catch(
-							err => {
-								expect(err.name).toEqual('TypeError');
-								expect(err.message).toEqual('Invalid argument type. Argument 2 is of type [object String]');
-							}
-						);
+						expect(testFn).toThrow(TypeError);
 					}
 				);
 
@@ -162,14 +140,11 @@ describe(
 					'throws a TypeError if there are 2 element arguments',
 					() => {
 						const element = document.createElement('form');
-						const parameters = {};
+						const testFn = () => {
+							hubA.action(element, element);
+						};
 
-						return hubA.action(element, element).catch(
-							err => {
-								expect(err.name).toEqual('TypeError');
-								expect(err.message).toEqual('Too many [object HTMLFormElement] arguments: [object HTMLFormElement], [object HTMLFormElement]');
-							}
-						);
+						expect(testFn).toThrow(TypeError);
 					}
 				);
 
@@ -177,13 +152,11 @@ describe(
 					'throws a TypeError if there are 2 action parameters arguments',
 					() => {
 						const parameters = {};
+						const testFn = () => {
+							hubA.action(parameters, parameters);
+						};
 
-						return hubA.action(parameters, parameters).catch(
-							err => {
-								expect(err.name).toEqual('TypeError');
-								expect(err.message).toEqual('Too many parameters arguments');
-							}
-						);
+						expect(testFn).toThrow(TypeError);
 					}
 				);
 
@@ -210,36 +183,27 @@ describe(
 						const element = document.createElement('form');
 						const parameters = {};
 
-						return Promise.all(
-							[
-								hubA.action(parameters, element),
-								hubA.action(parameters, element)
-							]
-						).catch(
-							err => {
-								expect(err.name).toEqual('AccessDeniedException');
-								expect(err.message).toEqual('Operation is already in progress');
-							}
-						);
+						hubA.action(parameters, element);
+
+						const testFn = () => hubA.action(parameters, element);
+
+						expect(testFn).toThrow();
 					}
 				);
 
 				it(
 					'throws an NotInitializedException if no onStateChange listener is registered.',
 					() => {
-						fetchMock([portletA]);
-
 						const element = document.createElement('form');
 						const parameters = {
 							param1: ['paramValue1']
 						};
 
-						return hubB.action(parameters, element).catch(
-							err => {
-								expect(err.name).toEqual('NotInitializedException');
-								expect(err.message).toEqual('No onStateChange listener registered for portlet: PortletB');
-							}
-						);
+						const testFn = () => {
+							hubB.action(parameters, element);
+						};
+
+						expect(testFn).toThrow();
 					}
 				);
 
@@ -268,7 +232,7 @@ describe(
 				const onStateChangeC = jest.fn();
 				const onStateChangeD = jest.fn();
 
-				const ids = portlet.getIds();
+				const ids = global.portlet.getIds();
 				const portletA = ids[0];
 				const portletB = ids[1];
 				const portletC = ids[2];
@@ -346,8 +310,8 @@ describe(
 
 				it(
 					'throws an AccessDeniedException if called before previous action completes',
-					done => {
-						fetchMock([portletA]);
+					() => {
+						global.fetchMock([portletA]);
 
 						const element = document.createElement('form');
 						const parameters = {};
@@ -355,28 +319,18 @@ describe(
 						onStateChangeA.mockClear();
 						onStateChangeB.mockClear();
 
-						const fnA = () => hubA.action(parameters, element);
+						hubA.action(parameters, element);
+						const testFn = () => hubB.action(parameters, element);
 
-						const fnB = () => hubB.action(parameters, element).catch(err => err);
-
-						return Promise.all([fnA(), fnB()]).then(
-							values => {
-								const err = values[1];
-
-								expect(err.message).toEqual('Operation is already in progress');
-								expect(err.name).toEqual('AccessDeniedException');
-								expect(onStateChangeB).not.toHaveBeenCalled();
-
-								done();
-							}
-						);
+						expect(testFn).toThrow();
+						expect(onStateChangeB).not.toHaveBeenCalled();
 					}
 				);
 
 				it(
 					'allows actions that update the state of 2 portlets. other portlets are not updated',
 					() => {
-						fetchMock([portletB, portletC]);
+						global.fetchMock([portletB, portletC]);
 
 						const element = document.createElement('form');
 						const parameters = {};

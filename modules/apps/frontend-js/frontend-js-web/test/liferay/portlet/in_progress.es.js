@@ -6,13 +6,13 @@ describe(
 		describe(
 			'allows the portlet client test for a blocking operation',
 			() => {
-				const ids = portlet.getIds();
+				const ids = global.portlet.getIds();
 				const portletA = ids[0];
 				const portletB = ids[1];
 				const portletC = ids[2];
 				const portletD = ids[3];
 
-				const pageState = portlet.getInitData();
+				const pageState = global.portlet.data.pageRenderState;
 
 				const listenerA = jest.fn();
 				const listenerB = jest.fn();
@@ -255,7 +255,7 @@ describe(
 				it(
 					'returns true when action has been called but the updates have not been dispatched',
 					() => {
-						fetchMock(
+						global.fetchMock(
 							[
 								portletA,
 								portletB,
@@ -277,7 +277,7 @@ describe(
 				it(
 					'returns true through a different hub when action has been called but the updates have not been dispatched',
 					() => {
-						fetchMock(
+						global.fetchMock(
 							[
 								portletA,
 								portletB,
@@ -303,7 +303,7 @@ describe(
 				it(
 					'returns false after action updates have been dispatched',
 					() => {
-						fetchMock(
+						global.fetchMock(
 							[
 								portletA,
 								portletB,
@@ -318,7 +318,6 @@ describe(
 						const testFn = () => hubB.action(parameters, element);
 
 						expect(testFn).not.toThrow();
-
 
 						jest.runAllTimers();
 
@@ -390,4 +389,3 @@ describe(
 		);
 	}
 );
-

@@ -128,7 +128,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 			ddmStructureId="<%= ddmFormAdminDisplayContext.getDDMStructureId() %>"
 			defaultLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
 			editingLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
-			fieldSetsClassNameId="<%= PortalUtil.getClassNameId(DDMFormInstance.class) %>"
+			fieldSetClassNameId="<%= PortalUtil.getClassNameId(DDMFormInstance.class) %>"
 			refererPortletNamespace="<%= liferayPortletResponse.getNamespace() %>"
 			showPagination="<%= false %>"
 		/>

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import java.util.HashMap;
 
 import org.jabsorb.JSONSerializer;
+import org.jabsorb.serializer.Serializer;
 import org.jabsorb.serializer.UnmarshallException;
 
 import org.json.JSONObject;
@@ -31,6 +32,17 @@ import org.json.JSONObject;
  * @author Tomas Polesovsky
  */
 public class LiferayJSONSerializer extends JSONSerializer {
+
+	@Override
+	public void registerSerializer(Serializer s) {
+		if (s != null) {
+			for (Class clazz : s.getSerializableClasses()) {
+				_liferayJSONDeserializationWhitelist.register(clazz.getName());
+			}
+		}
+
+		super.registerSerializer(s);
+	}
 
 	@Override
 	protected Class getClassFromHint(Object object) throws UnmarshallException {

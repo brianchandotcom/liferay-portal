@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsUtil;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * @author Tomas Polesovsky
  */
@@ -29,7 +32,10 @@ public class LiferayJSONDeserializationWhitelist {
 	public boolean isWhitelisted(String className) {
 		boolean whitelisted = false;
 
-		if (ArrayUtil.contains(
+		if (_registeredClassNames.contains(className)) {
+			whitelisted = true;
+		}
+		else if (ArrayUtil.contains(
 					 _JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES, className)) {
 
 			whitelisted = true;
@@ -49,6 +55,10 @@ public class LiferayJSONDeserializationWhitelist {
 		return whitelisted;
 	}
 
+	public void register(String className) {
+		_registeredClassNames.add(className);
+	}
+
 	private static final String[] _JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES =
 		PropsUtil.getArray(
 			PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES);
@@ -56,4 +66,6 @@ public class LiferayJSONDeserializationWhitelist {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayJSONDeserializationWhitelist.class);
 
+	private final List<String> _registeredClassNames =
+		new CopyOnWriteArrayList<>();
 }

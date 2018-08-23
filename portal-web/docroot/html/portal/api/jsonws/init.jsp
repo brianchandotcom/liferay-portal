@@ -29,6 +29,12 @@ page import="com.liferay.portal.kernel.util.MethodParameter" %>
 <%@ page import="java.lang.reflect.Method" %>
 
 <%
+if (!PropsValues.JSONWS_WEB_SERVICE_API_DISCOVERABLE) {
+	request.getRequestDispatcher("/api/jsonws").forward(request, response);
+
+	return;
+}
+
 String jsonWSPath = themeDisplay.getPathContext() + "/api/jsonws";
 
 String contextName = ParamUtil.getString(request, "contextName");

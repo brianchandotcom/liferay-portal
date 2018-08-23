@@ -20,10 +20,10 @@ package com.liferay.jenkins.results.parser;
 public abstract class BaseWorkspace implements Workspace {
 
 	@Override
-	public abstract void setupWorkspace();
+	public abstract void setJobProperties(Job job);
 
 	@Override
-	public abstract void setJobProperties(Job job);
+	public abstract void setupWorkspace();
 
 	protected void checkoutBranch(LocalGitBranch localGitBranch) {
 		System.out.println();

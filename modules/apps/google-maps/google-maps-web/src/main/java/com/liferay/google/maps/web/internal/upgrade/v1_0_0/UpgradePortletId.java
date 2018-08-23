@@ -25,9 +25,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
-				"1_WAR_googlemapsportlet", GoogleMapsPortletKeys.GOOGLE_MAPS
-			}
+			{"1_WAR_googlemapsportlet", GoogleMapsPortletKeys.GOOGLE_MAPS}
 		};
 	}
 

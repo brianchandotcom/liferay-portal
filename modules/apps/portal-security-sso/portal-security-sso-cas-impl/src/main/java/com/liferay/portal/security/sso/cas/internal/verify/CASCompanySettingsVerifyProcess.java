@@ -52,38 +52,36 @@ public class CASCompanySettingsVerifyProcess
 	@Override
 	protected String[][] getRenamePropertyKeysArray() {
 		return new String[][] {
-			new String[] {
+			{
 				LegacyCASPropsKeys.CAS_AUTH_ENABLED,
 				CASConfigurationKeys.AUTH_ENABLED
 			},
-			new String[] {
+			{
 				LegacyCASPropsKeys.CAS_IMPORT_FROM_LDAP,
 				CASConfigurationKeys.IMPORT_FROM_LDAP
 			},
-			new String[] {
-				LegacyCASPropsKeys.CAS_LOGIN_URL, CASConfigurationKeys.LOGIN_URL
-			},
-			new String[] {
+			{LegacyCASPropsKeys.CAS_LOGIN_URL, CASConfigurationKeys.LOGIN_URL},
+			{
 				LegacyCASPropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION,
 				CASConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION
 			},
-			new String[] {
+			{
 				LegacyCASPropsKeys.CAS_LOGOUT_URL,
 				CASConfigurationKeys.LOGOUT_URL
 			},
-			new String[] {
+			{
 				LegacyCASPropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
 				CASConfigurationKeys.NO_SUCH_USER_REDIRECT_URL
 			},
-			new String[] {
+			{
 				LegacyCASPropsKeys.CAS_SERVER_NAME,
 				CASConfigurationKeys.SERVER_NAME
 			},
-			new String[] {
+			{
 				LegacyCASPropsKeys.CAS_SERVER_URL,
 				CASConfigurationKeys.SERVER_URL
 			},
-			new String[] {
+			{
 				LegacyCASPropsKeys.CAS_SERVICE_URL,
 				CASConfigurationKeys.SERVICE_URL
 			}

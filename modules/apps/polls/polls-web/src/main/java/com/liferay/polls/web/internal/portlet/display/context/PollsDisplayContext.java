@@ -291,7 +291,6 @@ public class PollsDisplayContext {
 
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
 		return new DropdownItemList() {
-
 			{
 				add(
 					dropdownItem -> {
@@ -305,7 +304,6 @@ public class PollsDisplayContext {
 								_pollsRequestHelper.getRequest(), "all"));
 					});
 			}
-
 		};
 	}
 
@@ -324,12 +322,10 @@ public class PollsDisplayContext {
 
 	protected List<DropdownItem> getOrderByDropdownItems() {
 		return new DropdownItemList() {
-
 			{
 				add(getOrderByDropdownItem("create-date"));
 				add(getOrderByDropdownItem("title"));
 			}
-
 		};
 	}
 

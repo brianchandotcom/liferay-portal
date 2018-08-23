@@ -377,8 +377,7 @@ public class VariableNameCheck extends BaseCheck {
 	}
 
 	private static final String[][] _ALL_CAPS_STRINGS = {
-		new String[] {"DDL", "Ddl"}, new String[] {"DDM", "Ddm"},
-		new String[] {"DL", "Dl"}, new String[] {"PK", "Pk"}
+		{"DDL", "Ddl"}, {"DDM", "Ddm"}, {"DL", "Dl"}, {"PK", "Pk"}
 	};
 
 	private static final String _MSG_RENAME_VARIABLE = "variable.rename";

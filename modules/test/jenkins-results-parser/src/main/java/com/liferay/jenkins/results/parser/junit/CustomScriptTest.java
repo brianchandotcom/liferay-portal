@@ -31,9 +31,7 @@ public class CustomScriptTest {
 
 	@Parameters(name = "{0}")
 	public static Collection<Object[]> getTestNames() {
-		return Arrays.asList(new Object[][] {
-			new Object[] {System.getProperty("testName")}
-		});
+		return Arrays.asList(new Object[][] {{System.getProperty("testName")}});
 	}
 
 	public CustomScriptTest(String testName) {

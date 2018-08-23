@@ -25,7 +25,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"135", PortalInstancesPortletKeys.PORTAL_INSTANCES}
+			{"135", PortalInstancesPortletKeys.PORTAL_INSTANCES}
 		};
 	}
 

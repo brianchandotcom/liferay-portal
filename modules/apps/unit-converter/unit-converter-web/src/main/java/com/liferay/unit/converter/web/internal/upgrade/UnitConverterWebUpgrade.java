@@ -39,9 +39,7 @@ public class UnitConverterWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
-							"27", UnitConverterPortletKeys.UNIT_CONVERTER
-						}
+						{"27", UnitConverterPortletKeys.UNIT_CONVERTER}
 					};
 				}
 

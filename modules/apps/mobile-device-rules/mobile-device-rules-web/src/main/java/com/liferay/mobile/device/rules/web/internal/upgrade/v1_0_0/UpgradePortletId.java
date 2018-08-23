@@ -24,11 +24,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			new String[] {
-				"178", MDRPortletKeys.MOBILE_DEVICE_RULES
-			}
-		};
+		return new String[][] {{"178", MDRPortletKeys.MOBILE_DEVICE_RULES}};
 	}
 
 }

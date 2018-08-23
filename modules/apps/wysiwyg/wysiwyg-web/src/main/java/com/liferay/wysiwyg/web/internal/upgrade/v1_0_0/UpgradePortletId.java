@@ -25,7 +25,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"1_WAR_wysiwygportlet", WYSIWYGPortletKeys.WYSIWYG}
+			{"1_WAR_wysiwygportlet", WYSIWYGPortletKeys.WYSIWYG}
 		};
 	}
 

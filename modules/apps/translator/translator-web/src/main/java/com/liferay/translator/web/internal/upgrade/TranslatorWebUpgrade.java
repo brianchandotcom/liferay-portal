@@ -39,7 +39,7 @@ public class TranslatorWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {"26", TranslatorPortletKeys.TRANSLATOR}
+						{"26", TranslatorPortletKeys.TRANSLATOR}
 					};
 				}
 

@@ -38,7 +38,7 @@ public class JournalContentSearchWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
+						{
 							"77",
 							JournalContentSearchPortletKeys.
 								JOURNAL_CONTENT_SEARCH

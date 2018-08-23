@@ -126,7 +126,6 @@ public class DDLViewRecordsDisplayContext {
 						dropdownItem.setQuickAction(true);
 					});
 			}
-
 		};
 	}
 
@@ -167,7 +166,6 @@ public class DDLViewRecordsDisplayContext {
 								false));
 					});
 			}
-
 		};
 	}
 

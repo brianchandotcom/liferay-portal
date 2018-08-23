@@ -25,7 +25,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"64", RecentDocumentsPortletKeys.RECENT_DOCUMENTS}
+			{"64", RecentDocumentsPortletKeys.RECENT_DOCUMENTS}
 		};
 	}
 

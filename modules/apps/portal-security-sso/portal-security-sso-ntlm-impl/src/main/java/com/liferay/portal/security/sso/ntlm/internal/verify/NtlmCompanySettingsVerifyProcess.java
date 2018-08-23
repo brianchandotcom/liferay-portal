@@ -52,31 +52,31 @@ public class NtlmCompanySettingsVerifyProcess
 	@Override
 	protected String[][] getRenamePropertyKeysArray() {
 		return new String[][] {
-			new String[] {
+			{
 				LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN,
 				NtlmConfigurationKeys.AUTH_DOMAIN
 			},
-			new String[] {
+			{
 				LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER,
 				NtlmConfigurationKeys.AUTH_DOMAIN_CONTROLLER
 			},
-			new String[] {
+			{
 				LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER_NAME,
 				NtlmConfigurationKeys.AUTH_DOMAIN_CONTROLLER_NAME
 			},
-			new String[] {
+			{
 				LegacyNtlmPropsKeys.NTLM_AUTH_ENABLED,
 				NtlmConfigurationKeys.AUTH_ENABLED
 			},
-			new String[] {
+			{
 				LegacyNtlmPropsKeys.NTLM_AUTH_NEGOTIATE_FLAGS,
 				NtlmConfigurationKeys.AUTH_NEGOTIATE_FLAGS
 			},
-			new String[] {
+			{
 				LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_ACCOUNT,
 				NtlmConfigurationKeys.AUTH_SERVICE_ACCOUNT
 			},
-			new String[] {
+			{
 				LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_PASSWORD,
 				NtlmConfigurationKeys.AUTH_SERVICE_PASSWORD
 			}

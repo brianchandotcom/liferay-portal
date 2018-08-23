@@ -103,7 +103,7 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 	}
 
 	private static final String[][] _CONVERTED_KEYS = {
-		new String[] {
+		{
 			"blob/master/portal-impl/src/source-formatter.properties",
 			"blob/master/source-formatter.properties"
 		}

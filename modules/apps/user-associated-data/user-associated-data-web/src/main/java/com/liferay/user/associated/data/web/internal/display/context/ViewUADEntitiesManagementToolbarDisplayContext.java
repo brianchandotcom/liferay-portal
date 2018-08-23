@@ -69,7 +69,6 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 							LanguageUtil.get(request, "delete"));
 					});
 			}
-
 		};
 	}
 

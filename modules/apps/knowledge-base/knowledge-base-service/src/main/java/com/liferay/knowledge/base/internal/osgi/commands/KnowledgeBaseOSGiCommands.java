@@ -61,7 +61,6 @@ public class KnowledgeBaseOSGiCommands {
 					_addResourceAction(
 						resourcePermission, importKbArticlesAction);
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();

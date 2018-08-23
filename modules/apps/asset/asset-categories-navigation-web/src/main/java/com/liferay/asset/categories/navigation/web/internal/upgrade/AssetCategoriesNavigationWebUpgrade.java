@@ -39,7 +39,7 @@ public class AssetCategoriesNavigationWebUpgrade
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
+						{
 							"122",
 							AssetCategoriesNavigationPortletKeys.
 								ASSET_CATEGORIES_NAVIGATION

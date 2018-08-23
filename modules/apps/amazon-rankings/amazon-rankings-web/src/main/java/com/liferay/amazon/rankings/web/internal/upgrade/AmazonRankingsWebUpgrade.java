@@ -39,9 +39,7 @@ public class AmazonRankingsWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
-							"67", AmazonRankingsPortletKeys.AMAZON_RANKINGS
-						}
+						{"67", AmazonRankingsPortletKeys.AMAZON_RANKINGS}
 					};
 				}
 

@@ -39,7 +39,7 @@ public class DictionaryWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {"23", DictionaryPortletKeys.DICTIONARY}
+						{"23", DictionaryPortletKeys.DICTIONARY}
 					};
 				}
 

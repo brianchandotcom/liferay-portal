@@ -52,15 +52,15 @@ public class GoogleLoginCompanySettingsVerifyProcess
 	@Override
 	protected String[][] getRenamePropertyKeysArray() {
 		return new String[][] {
-			new String[] {
+			{
 				LegacyGoogleLoginPropsKeys.AUTH_ENABLED,
 				GoogleAuthorizationConfigurationKeys.AUTH_ENABLED
 			},
-			new String[] {
+			{
 				LegacyGoogleLoginPropsKeys.CLIENT_ID,
 				GoogleAuthorizationConfigurationKeys.CLIENT_ID
 			},
-			new String[] {
+			{
 				LegacyGoogleLoginPropsKeys.CLIENT_SECRET,
 				GoogleAuthorizationConfigurationKeys.CLIENT_SECRET
 			}

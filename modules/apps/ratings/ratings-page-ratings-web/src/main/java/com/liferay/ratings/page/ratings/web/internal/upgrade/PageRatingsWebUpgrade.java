@@ -37,7 +37,7 @@ public class PageRatingsWebUpgrade implements UpgradeStepRegistrator {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {"108", PageRatingsPortletKeys.PAGE_RATINGS}
+					{"108", PageRatingsPortletKeys.PAGE_RATINGS}
 				};
 			}
 

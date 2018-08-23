@@ -253,13 +253,11 @@ public class JournalHistoryDisplayContext {
 
 	public List<ViewTypeItem> getViewTypeItems() {
 		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
-
 			{
 				addCardViewTypeItem();
 				addListViewTypeItem();
 				addTableViewTypeItem();
 			}
-
 		};
 	}
 

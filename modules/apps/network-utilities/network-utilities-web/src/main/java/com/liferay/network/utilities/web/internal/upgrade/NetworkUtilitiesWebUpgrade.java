@@ -38,9 +38,7 @@ public class NetworkUtilitiesWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
-							"30", NetworkUtilitiesPortletKeys.NETWORK_UTILITIES
-						}
+						{"30", NetworkUtilitiesPortletKeys.NETWORK_UTILITIES}
 					};
 				}
 

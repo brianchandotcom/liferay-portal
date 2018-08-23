@@ -25,8 +25,8 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"25_WAR_pollsweb", PollsPortletKeys.POLLS},
-			new String[] {"59_WAR_pollsweb", PollsPortletKeys.POLLS_DISPLAY}
+			{"25_WAR_pollsweb", PollsPortletKeys.POLLS},
+			{"59_WAR_pollsweb", PollsPortletKeys.POLLS_DISPLAY}
 		};
 	}
 

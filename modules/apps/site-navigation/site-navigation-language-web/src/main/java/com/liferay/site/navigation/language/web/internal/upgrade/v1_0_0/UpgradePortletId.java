@@ -25,9 +25,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
-				"82", SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE
-			}
+			{"82", SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE}
 		};
 	}
 

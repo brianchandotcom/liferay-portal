@@ -42,9 +42,7 @@ public class RSSWebUpgrade implements UpgradeStepRegistrator {
 
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
-					return new String[][] {
-						new String[] {"39", RSSPortletKeys.RSS}
-					};
+					return new String[][] {{"39", RSSPortletKeys.RSS}};
 				}
 
 			});

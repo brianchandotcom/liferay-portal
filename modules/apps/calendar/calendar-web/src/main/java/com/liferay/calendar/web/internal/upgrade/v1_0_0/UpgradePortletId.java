@@ -25,9 +25,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
-				"1_WAR_calendarportlet", CalendarPortletKeys.CALENDAR
-			}
+			{"1_WAR_calendarportlet", CalendarPortletKeys.CALENDAR}
 		};
 	}
 

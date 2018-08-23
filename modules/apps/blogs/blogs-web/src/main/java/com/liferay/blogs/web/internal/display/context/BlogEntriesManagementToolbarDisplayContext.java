@@ -238,7 +238,6 @@ public class BlogEntriesManagementToolbarDisplayContext {
 
 				addTableViewTypeItem();
 			}
-
 		};
 	}
 

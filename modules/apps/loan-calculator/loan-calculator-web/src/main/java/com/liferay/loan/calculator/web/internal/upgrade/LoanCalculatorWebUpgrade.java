@@ -39,9 +39,7 @@ public class LoanCalculatorWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
-							"61", LoanCalculatorPortletKeys.LOAN_CALCULATOR
-						}
+						{"61", LoanCalculatorPortletKeys.LOAN_CALCULATOR}
 					};
 				}
 

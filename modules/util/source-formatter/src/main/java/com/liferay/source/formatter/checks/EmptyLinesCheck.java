@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
@@ -196,6 +197,52 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		return content;
 	}
 
+	protected String fixIncorrectEmptyLineAfterOpenCurlyBrace(String content) {
+		Matcher matcher = _incorrectOpenCurlyBracePattern.matcher(content);
+
+		while (matcher.find()) {
+			if (!isJavaSource(content, matcher.end())) {
+				continue;
+			}
+
+			boolean requiresEmptyLine = false;
+
+			String s = matcher.group(2);
+
+			if (s != null) {
+				if (getLevel(s) != 0) {
+					continue;
+				}
+
+				int x = _getMatchingClosingCurlyBracePos(
+					content, matcher.end() - 2);
+
+				s = StringUtil.trim(content.substring(x + 1));
+
+				if (!s.startsWith("}")) {
+					requiresEmptyLine = true;
+				}
+			}
+			else if (matcher.group(1) == null) {
+				requiresEmptyLine = true;
+			}
+
+			String lineBreaks = matcher.group(4);
+
+			if (requiresEmptyLine && lineBreaks.equals("\n")) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start(4));
+			}
+
+			if (!requiresEmptyLine && lineBreaks.equals("\n\n")) {
+				return StringUtil.replaceFirst(
+					content, "\n\n", "\n", matcher.start(4));
+			}
+		}
+
+		return content;
+	}
+
 	protected String fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 		String content) {
 
@@ -241,6 +288,43 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 
 				return StringUtil.replaceFirst(
 					content, "\n\n" + tabs + "}\n", "\n" + tabs + "}\n", pos);
+			}
+		}
+
+		matcher1 = _incorrectCloseCurlyBracePattern3.matcher(content);
+
+		while (matcher1.find()) {
+			if (!isJavaSource(content, matcher1.end())) {
+				continue;
+			}
+
+			String lineBreaks = matcher1.group(1);
+
+			int x = _getMatchingOpenCurlyBracePos(content, matcher1.end());
+
+			int lineNumber = getLineNumber(content, x);
+
+			String lineAfterOpenCurlyBrace = getLine(content, lineNumber + 1);
+
+			if (Validator.isNull(lineAfterOpenCurlyBrace) &&
+				lineBreaks.equals("\n")) {
+
+				String nextLineAfterOpenCurlyBrace = StringUtil.trim(
+					getLine(content, lineNumber + 2));
+
+				if (nextLineAfterOpenCurlyBrace.startsWith("//")) {
+					continue;
+				}
+
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher1.start(1));
+			}
+
+			if (Validator.isNotNull(lineAfterOpenCurlyBrace) &&
+				lineBreaks.equals("\n\n")) {
+
+				return StringUtil.replaceFirst(
+					content, "\n\n", "\n", matcher1.start(1));
 			}
 		}
 
@@ -513,6 +597,38 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		return true;
 	}
 
+	private int _getMatchingClosingCurlyBracePos(String content, int start) {
+		int x = start;
+
+		while (true) {
+			x = content.indexOf(CharPool.CLOSE_CURLY_BRACE, x + 1);
+
+			if (getLevel(content.substring(start, x + 1), "{", "}") == 0) {
+				return x;
+			}
+		}
+	}
+
+	private int _getMatchingOpenCurlyBracePos(String content, int start) {
+		int x = start;
+
+		while (true) {
+			x = content.lastIndexOf(CharPool.OPEN_CURLY_BRACE, x - 1);
+
+			int y = content.lastIndexOf("\n", x - 1);
+
+			String s = StringUtil.trim(content.substring(y, x));
+
+			if (s.startsWith("//") || s.startsWith("*")) {
+				continue;
+			}
+
+			if (getLevel(content.substring(x, start), "{", "}") == 0) {
+				return x;
+			}
+		}
+	}
+
 	private final Pattern _emptyLineBetweenTagsPattern1 = Pattern.compile(
 		"\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> \n]");
 	private final Pattern _emptyLineBetweenTagsPattern2 = Pattern.compile(
@@ -529,6 +645,10 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		"\n(.+)\n\n(\t+)}\n");
 	private final Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
 		"(\t| )@?(class|enum|interface|new)\\s");
+	private final Pattern _incorrectCloseCurlyBracePattern3 = Pattern.compile(
+		"\n\t*\\}(\n+)\t*\\}\\)*;\n");
+	private final Pattern _incorrectOpenCurlyBracePattern = Pattern.compile(
+		"\n.*?(\\Wnew (.*\\)) |\\[\\] (\\w+ = )?)?\\{(\n+)\t*\\{\n");
 	private final Pattern _missingEmptyLineAfterComment = Pattern.compile(
 		"\n\t*// .*\n[\t ]*(?!// )\\S");
 	private final Pattern _missingEmptyLineBeforeComment = Pattern.compile(

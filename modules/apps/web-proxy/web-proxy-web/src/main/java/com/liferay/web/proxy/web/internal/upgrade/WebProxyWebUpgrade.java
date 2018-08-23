@@ -38,9 +38,7 @@ public class WebProxyWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
-							"66", WebProxyPortletKeys.WEB_PROXY
-						}
+						{"66", WebProxyPortletKeys.WEB_PROXY}
 					};
 				}
 

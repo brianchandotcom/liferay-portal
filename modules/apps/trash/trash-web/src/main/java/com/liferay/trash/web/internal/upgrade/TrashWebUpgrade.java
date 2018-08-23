@@ -69,9 +69,7 @@ public class TrashWebUpgrade implements UpgradeStepRegistrator {
 
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
-					return new String[][] {
-						new String[] {"182", TrashPortletKeys.TRASH}
-					};
+					return new String[][] {{"182", TrashPortletKeys.TRASH}};
 				}
 
 			});

@@ -164,7 +164,6 @@ public class DDMDisplayContext {
 						dropdownItem.setQuickAction(true);
 					});
 			}
-
 		};
 	}
 

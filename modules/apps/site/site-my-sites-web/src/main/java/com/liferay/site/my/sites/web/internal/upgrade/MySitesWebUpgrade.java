@@ -37,11 +37,7 @@ public class MySitesWebUpgrade implements UpgradeStepRegistrator {
 
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
-					return new String[][] {
-						new String[] {
-							"29", MySitesPortletKeys.MY_SITES
-						}
-					};
+					return new String[][] {{"29", MySitesPortletKeys.MY_SITES}};
 				}
 
 			});

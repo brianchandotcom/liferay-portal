@@ -25,13 +25,11 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
-				"101", AssetPublisherPortletKeys.ASSET_PUBLISHER
-			},
-			new String[] {"173", AssetPublisherPortletKeys.RECENT_CONTENT},
-			new String[] {"175", AssetPublisherPortletKeys.RELATED_ASSETS},
-			new String[] {"193", AssetPublisherPortletKeys.MOST_VIEWED_ASSETS},
-			new String[] {"194", AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS}
+			{"101", AssetPublisherPortletKeys.ASSET_PUBLISHER},
+			{"173", AssetPublisherPortletKeys.RECENT_CONTENT},
+			{"175", AssetPublisherPortletKeys.RELATED_ASSETS},
+			{"193", AssetPublisherPortletKeys.MOST_VIEWED_ASSETS},
+			{"194", AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS}
 		};
 	}
 

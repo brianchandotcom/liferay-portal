@@ -79,7 +79,7 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 			_columnName = foreignColumnName;
 
 			_foreignNamesArray = new String[][] {
-				new String[] {foreignTableName, foreignColumnName}
+				{foreignTableName, foreignColumnName}
 			};
 		}
 

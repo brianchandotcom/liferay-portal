@@ -38,9 +38,7 @@ public class IFrameWebUpgrade implements UpgradeStepRegistrator {
 
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
-					return new String[][] {
-						new String[] {"48", IFramePortletKeys.IFRAME}
-					};
+					return new String[][] {{"48", IFramePortletKeys.IFRAME}};
 				}
 
 			});

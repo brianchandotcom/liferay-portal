@@ -56,9 +56,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_MIGRATED_PORTAL_KEYS",
-			new String[][] {
-				new String[] {migratedPortalKey, migratedPortalKey}
-			});
+			new String[][] {{migratedPortalKey, migratedPortalKey}});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
@@ -98,9 +96,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_MIGRATED_SYSTEM_KEYS",
-			new String[][] {
-				new String[] {migratedSystemKey, migratedSystemKey}
-			});
+			new String[][] {{migratedSystemKey, migratedSystemKey}});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
@@ -141,7 +137,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_MODULARIZED_PORTAL_KEYS",
 			new String[][] {
-				new String[] {
+				{
 					modularizedPortalKey, modularizedPortalKey,
 					modularizedPortalKey
 				}

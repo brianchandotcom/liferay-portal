@@ -39,9 +39,7 @@ public class SitesDirectoryWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
-							"184", SitesDirectoryPortletKeys.SITES_DIRECTORY
-						}
+						{"184", SitesDirectoryPortletKeys.SITES_DIRECTORY}
 					};
 				}
 

@@ -52,19 +52,19 @@ public class ShibbolethCompanySettingsVerifyProcess
 	@Override
 	protected String[][] getRenamePropertyKeysArray() {
 		return new String[][] {
-			new String[] {
+			{
 				LegacyTokenPropsKeys.SHIBBOLETH_AUTH_ENABLED,
 				TokenConfigurationKeys.AUTH_ENABLED
 			},
-			new String[] {
+			{
 				LegacyTokenPropsKeys.SHIBBOLETH_IMPORT_FROM_LDAP,
 				TokenConfigurationKeys.IMPORT_FROM_LDAP
 			},
-			new String[] {
+			{
 				LegacyTokenPropsKeys.SHIBBOLETH_LOGOUT_URL,
 				TokenConfigurationKeys.LOGOUT_REDIRECT_URL
 			},
-			new String[] {
+			{
 				LegacyTokenPropsKeys.SHIBBOLETH_USER_HEADER,
 				TokenConfigurationKeys.USER_HEADER
 			}

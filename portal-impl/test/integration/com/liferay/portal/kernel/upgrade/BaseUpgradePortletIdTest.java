@@ -342,8 +342,8 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 	protected String[][] getRenamePortletIdsArray() {
 		if (_testInstanceable) {
 			return new String[][] {
-				new String[] {_PORTLET_IDS[0], _PORTLET_IDS[0] + "_test"},
-				new String[] {_PORTLET_IDS[1], _PORTLET_IDS[1] + "_test"}
+				{_PORTLET_IDS[0], _PORTLET_IDS[0] + "_test"},
+				{_PORTLET_IDS[1], _PORTLET_IDS[1] + "_test"}
 			};
 		}
 

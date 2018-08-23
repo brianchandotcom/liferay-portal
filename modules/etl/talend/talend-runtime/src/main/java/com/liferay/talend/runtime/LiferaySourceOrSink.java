@@ -313,10 +313,15 @@ public class LiferaySourceOrSink
 				JsonNode webSiteNameJsonNode = jsonNode.path(
 					SchemaOrgConstants.Property.NAME);
 
+				String webSiteURL = webSiteURLJsonNode.asText();
+
+				int pos = webSiteURL.lastIndexOf("/");
+
+				String webSiteId = webSiteURL.substring(pos + 1);
+
 				webSitesList.add(
 					new SimpleNamedThing(
-						webSiteURLJsonNode.asText(),
-						webSiteNameJsonNode.asText()));
+						webSiteId, webSiteNameJsonNode.asText()));
 			}
 
 			actualPage = webSitesApioResourceCollection.getResourceActualPage();

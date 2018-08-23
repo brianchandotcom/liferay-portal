@@ -91,7 +91,7 @@ public class LiferaySiteSelectorProperties
 				connection.webSite.setValue(
 					webSiteURLSimpleNamedThing.getDisplayName());
 
-				connection.webSiteURL.setValue(
+				connection.webSiteProperty.setValue(
 					webSiteURLSimpleNamedThing.getName());
 			}
 
@@ -145,7 +145,8 @@ public class LiferaySiteSelectorProperties
 
 					wizardWebSiteURL.setPossibleNamedThingValues(_sites);
 
-					connection.webSiteURL.setPossibleNamedThingValues(_sites);
+					connection.webSiteProperty.setPossibleNamedThingValues(
+						_sites);
 
 					getForm(Form.MAIN).setAllowBack(true);
 					getForm(Form.MAIN).setAllowFinish(true);

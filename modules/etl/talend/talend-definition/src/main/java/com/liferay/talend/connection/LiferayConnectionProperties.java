@@ -16,6 +16,7 @@ package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.exception.ExceptionUtils;
+import com.liferay.talend.properties.WebSiteProperty;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.utils.PropertiesUtils;
@@ -42,7 +43,6 @@ import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
-import org.talend.daikon.properties.property.StringProperty;
 import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
@@ -63,6 +63,10 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(FORM_WIZARD));
 	}
 
+	public void afterEndpoint() {
+		webSiteProperty.setHost(endpoint.getValue());
+	}
+
 	public void afterReferencedComponent() {
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
@@ -73,9 +77,9 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
-	public ValidationResult afterWebSiteURL() {
+	public ValidationResult afterWebSiteId() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Website URL: " + webSiteURL.getValue());
+			_log.debug("Website URL: " + webSiteProperty.getWebSiteURL());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -106,7 +110,7 @@ public class LiferayConnectionProperties
 				try {
 					webSite.setValue(
 						liferaySourceOrSinkRuntime.getActualWebSiteName(
-							webSiteURL.getValue()));
+							webSiteProperty.getWebSiteURL()));
 				}
 				catch (IOException ioe) {
 					validationResult =
@@ -126,7 +130,7 @@ public class LiferayConnectionProperties
 		return validationResultMutable;
 	}
 
-	public ValidationResult beforeWebSiteURL() {
+	public ValidationResult beforeWebSiteId() {
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -158,7 +162,7 @@ public class LiferayConnectionProperties
 						validationResultMutable.setStatus(Result.ERROR);
 					}
 
-					webSiteURL.setPossibleNamedThingValues(webSites);
+					webSiteProperty.setPossibleNamedThingValues(webSites);
 				}
 				catch (Exception e) {
 					return ExceptionUtils.exceptionToValidationResult(e);
@@ -216,7 +220,7 @@ public class LiferayConnectionProperties
 		PropertiesUtils.setHidden(form, siteFilter, useOtherConnection);
 		PropertiesUtils.setHidden(form, userId, useOtherConnection);
 		PropertiesUtils.setHidden(form, webSite, useOtherConnection);
-		PropertiesUtils.setHidden(form, webSiteURL, useOtherConnection);
+		PropertiesUtils.setHidden(form, webSiteProperty, useOtherConnection);
 
 		if (!useOtherConnection && anonymousLogin.getValue()) {
 			PropertiesUtils.setHidden(form, userId, true);
@@ -225,7 +229,7 @@ public class LiferayConnectionProperties
 
 		if (!useOtherConnection && !siteFilter.getValue()) {
 			PropertiesUtils.setHidden(form, webSite, true);
-			PropertiesUtils.setHidden(form, webSiteURL, true);
+			PropertiesUtils.setHidden(form, webSiteProperty, true);
 		}
 	}
 
@@ -287,7 +291,7 @@ public class LiferayConnectionProperties
 
 		mainForm.addRow(siteFilter);
 
-		Widget webSiteURLWidget = Widget.widget(webSiteURL);
+		Widget webSiteURLWidget = Widget.widget(webSiteProperty);
 
 		webSiteURLWidget.setCallAfter(true);
 		webSiteURLWidget.setLongRunning(true);
@@ -330,7 +334,7 @@ public class LiferayConnectionProperties
 
 		referenceForm.addRow(siteFilter);
 
-		Widget webSiteURLReferenceWidget = Widget.widget(webSiteURL);
+		Widget webSiteURLReferenceWidget = Widget.widget(webSiteProperty);
 
 		webSiteURLReferenceWidget.setCallAfter(true);
 		webSiteURLReferenceWidget.setLongRunning(true);
@@ -376,7 +380,8 @@ public class LiferayConnectionProperties
 		siteFilter.setValue(false);
 		userId.setValue(_USER_ID);
 		webSite.setValue("");
-		webSiteURL.setValue("");
+		webSiteProperty.setHost(endpoint.getValue());
+		webSiteProperty.setValue("");
 	}
 
 	public ValidationResult validateTestConnection() {
@@ -439,7 +444,8 @@ public class LiferayConnectionProperties
 		"testConnection");
 	public Property<String> userId = PropertyFactory.newString("userId");
 	public Property<String> webSite = PropertyFactory.newString("webSite");
-	public StringProperty webSiteURL = PropertyFactory.newString("webSiteURL");
+	public WebSiteProperty webSiteProperty = new WebSiteProperty(
+		"webSiteProperty");
 
 	public enum LoginType {
 

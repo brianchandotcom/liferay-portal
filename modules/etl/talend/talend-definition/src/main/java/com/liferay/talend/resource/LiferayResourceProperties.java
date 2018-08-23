@@ -168,8 +168,8 @@ public class LiferayResourceProperties
 					if (liferayConnectionProperties.siteFilter.getValue()) {
 						resourceNames =
 							liferaySourceOrSinkRuntime.getResourceList(
-								liferayConnectionProperties.webSiteURL.
-									getValue());
+								liferayConnectionProperties.webSiteProperty.
+									getWebSiteURL());
 					}
 					else {
 						resourceNames =

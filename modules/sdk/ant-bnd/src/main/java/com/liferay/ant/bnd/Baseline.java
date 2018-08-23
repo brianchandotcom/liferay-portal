@@ -508,6 +508,14 @@ public abstract class Baseline {
 				}
 			}
 
+			Version newerVersion = info.newerVersion;
+
+			if ((newerVersion != null) &&
+				newerVersion.compareTo(info.suggestedVersion) == 0) {
+
+				writePackageInfoFile = false;
+			}
+
 			if (writePackageInfoFile) {
 				packageDir.mkdirs();
 

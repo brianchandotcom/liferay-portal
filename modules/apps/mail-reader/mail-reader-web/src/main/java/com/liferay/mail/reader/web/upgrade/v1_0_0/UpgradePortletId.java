@@ -24,9 +24,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			new String[] {"1_WAR_mailportlet", MailPortletKeys.MAIL}
-		};
+		return new String[][] {{"1_WAR_mailportlet", MailPortletKeys.MAIL}};
 	}
 
 }

@@ -41,8 +41,8 @@ public class UpgradeThemeId extends UpgradeProcess {
 		{"Layout", "LayoutRevision", "LayoutSet", "LayoutSetBranch"};
 
 	private static final String[][] _THEME_IDS = {
-		new String[] {"classic", "classic_WAR_classictheme"},
-		new String[] {"controlpanel", "admin_WAR_admintheme"}
+		{"classic", "classic_WAR_classictheme"},
+		{"controlpanel", "admin_WAR_admintheme"}
 	};
 
 }

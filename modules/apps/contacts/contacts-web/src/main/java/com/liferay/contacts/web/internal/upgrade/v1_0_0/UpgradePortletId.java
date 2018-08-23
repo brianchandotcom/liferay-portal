@@ -25,14 +25,10 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
-				"1_WAR_contactsportlet", ContactsPortletKeys.CONTACTS_CENTER
-			},
-			new String[] {"4_WAR_contactsportlet", ContactsPortletKeys.MEMBERS},
-			new String[] {
-				"3_WAR_contactsportlet", ContactsPortletKeys.MY_CONTACTS
-			},
-			new String[] {"2_WAR_contactsportlet", ContactsPortletKeys.PROFILE}
+			{"1_WAR_contactsportlet", ContactsPortletKeys.CONTACTS_CENTER},
+			{"4_WAR_contactsportlet", ContactsPortletKeys.MEMBERS},
+			{"3_WAR_contactsportlet", ContactsPortletKeys.MY_CONTACTS},
+			{"2_WAR_contactsportlet", ContactsPortletKeys.PROFILE}
 		};
 	}
 

@@ -3566,7 +3566,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		params.put(
 			"socialRelationType",
 			new Long[][] {
-				new Long[] {userId}, ArrayUtil.toLongArray(socialRelationTypes)
+				{
+					userId
+				}, ArrayUtil.toLongArray(socialRelationTypes)
 			});
 		params.put("wildcardMode", WildcardMode.TRAILING);
 
@@ -3602,7 +3604,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		params.put(
 			"socialRelationType",
 			new Long[][] {
-				new Long[] {userId}, ArrayUtil.toLongArray(socialRelationTypes)
+				{
+					userId
+				}, ArrayUtil.toLongArray(socialRelationTypes)
 			});
 		params.put("socialRelationTypeUnionUserGroups", true);
 		params.put("usersGroups", ArrayUtil.toLongArray(groupIds));

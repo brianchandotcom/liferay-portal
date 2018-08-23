@@ -52,15 +52,15 @@ public class SiteMinderCompanySettingsVerifyProcess
 	@Override
 	protected String[][] getRenamePropertyKeysArray() {
 		return new String[][] {
-			new String[] {
+			{
 				LegacyTokenPropsKeys.SITEMINDER_AUTH_ENABLED,
 				TokenConfigurationKeys.AUTH_ENABLED
 			},
-			new String[] {
+			{
 				LegacyTokenPropsKeys.SITEMINDER_IMPORT_FROM_LDAP,
 				TokenConfigurationKeys.IMPORT_FROM_LDAP
 			},
-			new String[] {
+			{
 				LegacyTokenPropsKeys.SITEMINDER_USER_HEADER,
 				TokenConfigurationKeys.USER_HEADER
 			}

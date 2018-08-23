@@ -25,10 +25,10 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"11", DirectoryPortletKeys.DIRECTORY},
-			new String[] {"186", DirectoryPortletKeys.FRIENDS_DIRECTORY},
-			new String[] {"187", DirectoryPortletKeys.SITE_MEMBERS_DIRECTORY},
-			new String[] {"188", DirectoryPortletKeys.MY_SITES_DIRECTORY}
+			{"11", DirectoryPortletKeys.DIRECTORY},
+			{"186", DirectoryPortletKeys.FRIENDS_DIRECTORY},
+			{"187", DirectoryPortletKeys.SITE_MEMBERS_DIRECTORY},
+			{"188", DirectoryPortletKeys.MY_SITES_DIRECTORY}
 		};
 	}
 

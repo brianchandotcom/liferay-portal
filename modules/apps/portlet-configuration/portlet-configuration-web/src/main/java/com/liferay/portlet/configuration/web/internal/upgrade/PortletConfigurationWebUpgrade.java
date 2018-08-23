@@ -38,7 +38,7 @@ public class PortletConfigurationWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
+						{
 							"86",
 							PortletConfigurationPortletKeys.
 								PORTLET_CONFIGURATION

@@ -25,9 +25,7 @@ public class UpgradeDDLDisplayPortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
-				"169", DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY
-			}
+			{"169", DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY}
 		};
 	}
 

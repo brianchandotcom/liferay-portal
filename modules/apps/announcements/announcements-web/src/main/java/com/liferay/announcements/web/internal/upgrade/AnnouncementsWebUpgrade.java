@@ -64,12 +64,12 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {
+					{
 						"1_WAR_soannouncementsportlet",
 						PortletKeys.ANNOUNCEMENTS
 					},
-					new String[] {"83", PortletKeys.ALERTS},
-					new String[] {"84", PortletKeys.ANNOUNCEMENTS}
+					{"83", PortletKeys.ALERTS},
+					{"84", PortletKeys.ANNOUNCEMENTS}
 				};
 			}
 

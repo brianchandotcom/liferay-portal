@@ -52,7 +52,7 @@ public class OpenIdCompanySettingsVerifyProcess
 	@Override
 	protected String[][] getRenamePropertyKeysArray() {
 		return new String[][] {
-			new String[] {
+			{
 				LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED,
 				OpenIdConfigurationKeys.AUTH_ENABLED
 			}

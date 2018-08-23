@@ -52,43 +52,43 @@ public class OpenSSOCompanySettingsVerifyProcess
 	@Override
 	protected String[][] getRenamePropertyKeysArray() {
 		return new String[][] {
-			new String[] {
+			{
 				LegacyOpenSSOPropsKeys.OPENSSO_EMAIL_ADDRESS_ATTR,
 				OpenSSOConfigurationKeys.EMAIL_ADDRESS_ATTR
 			},
-			new String[] {
+			{
 				LegacyOpenSSOPropsKeys.OPENSSO_AUTH_ENABLED,
 				OpenSSOConfigurationKeys.AUTH_ENABLED
 			},
-			new String[] {
+			{
 				LegacyOpenSSOPropsKeys.OPENSSO_FIRST_NAME_ATTR,
 				OpenSSOConfigurationKeys.FIRST_NAME_ATTR
 			},
-			new String[] {
+			{
 				LegacyOpenSSOPropsKeys.OPENSSO_IMPORT_FROM_LDAP,
 				OpenSSOConfigurationKeys.IMPORT_FROM_LDAP
 			},
-			new String[] {
+			{
 				LegacyOpenSSOPropsKeys.OPENSSO_LAST_NAME_ATTR,
 				OpenSSOConfigurationKeys.LAST_NAME_ATTR
 			},
-			new String[] {
+			{
 				LegacyOpenSSOPropsKeys.OPENSSO_LOGIN_URL,
 				OpenSSOConfigurationKeys.LOGIN_URL
 			},
-			new String[] {
+			{
 				LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_ON_SESSION_EXPIRATION,
 				OpenSSOConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION
 			},
-			new String[] {
+			{
 				LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_URL,
 				OpenSSOConfigurationKeys.LOGOUT_URL
 			},
-			new String[] {
+			{
 				LegacyOpenSSOPropsKeys.OPENSSO_SCREEN_NAME_ATTR,
 				OpenSSOConfigurationKeys.SCREEN_NAME_ATTR
 			},
-			new String[] {
+			{
 				LegacyOpenSSOPropsKeys.OPENSSO_SERVICE_URL,
 				OpenSSOConfigurationKeys.SERVICE_URL
 			}

@@ -38,9 +38,7 @@ public class XSLContentWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
-							"102", XSLContentPortletKeys.XSL_CONTENT
-						}
+						{"102", XSLContentPortletKeys.XSL_CONTENT}
 					};
 				}
 

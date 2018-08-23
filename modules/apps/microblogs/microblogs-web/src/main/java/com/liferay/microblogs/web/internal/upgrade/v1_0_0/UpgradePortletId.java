@@ -25,10 +25,8 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
-				"1_WAR_microblogsportlet", MicroblogsPortletKeys.MICROBLOGS
-			},
-			new String[] {
+			{"1_WAR_microblogsportlet", MicroblogsPortletKeys.MICROBLOGS},
+			{
 				"2_WAR_microblogsportlet",
 				MicroblogsPortletKeys.MICROBLOGS_STATUS_UPDATE
 			}

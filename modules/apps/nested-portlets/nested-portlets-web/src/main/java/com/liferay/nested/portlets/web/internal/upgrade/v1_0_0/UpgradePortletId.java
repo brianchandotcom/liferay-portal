@@ -39,9 +39,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
-				"118", NestedPortletsPortletKeys.NESTED_PORTLETS
-			}
+			{"118", NestedPortletsPortletKeys.NESTED_PORTLETS}
 		};
 	}
 

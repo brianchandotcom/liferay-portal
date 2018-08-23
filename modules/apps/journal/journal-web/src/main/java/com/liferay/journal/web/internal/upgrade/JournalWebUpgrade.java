@@ -37,9 +37,7 @@ public class JournalWebUpgrade implements UpgradeStepRegistrator {
 
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
-					return new String[][] {
-						new String[] {"15", JournalPortletKeys.JOURNAL}
-					};
+					return new String[][] {{"15", JournalPortletKeys.JOURNAL}};
 				}
 
 			});

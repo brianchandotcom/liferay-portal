@@ -39,7 +39,7 @@ public class PortletConfigurationCSSWebUpgrade
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
+						{
 							"113",
 							PortletConfigurationCSSPortletKeys.
 								PORTLET_CONFIGURATION_CSS

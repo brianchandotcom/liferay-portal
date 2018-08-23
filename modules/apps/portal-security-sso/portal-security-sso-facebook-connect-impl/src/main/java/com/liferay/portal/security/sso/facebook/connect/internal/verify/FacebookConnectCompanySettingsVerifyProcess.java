@@ -73,31 +73,31 @@ public class FacebookConnectCompanySettingsVerifyProcess
 	@Override
 	protected String[][] getRenamePropertyKeysArray() {
 		return new String[][] {
-			new String[] {
+			{
 				LegacyFacebookConnectPropsKeys.AUTH_ENABLED,
 				FacebookConnectConfigurationKeys.AUTH_ENABLED
 			},
-			new String[] {
+			{
 				LegacyFacebookConnectPropsKeys.APP_ID,
 				FacebookConnectConfigurationKeys.APP_ID
 			},
-			new String[] {
+			{
 				LegacyFacebookConnectPropsKeys.APP_SECRET,
 				FacebookConnectConfigurationKeys.APP_SECRET
 			},
-			new String[] {
+			{
 				LegacyFacebookConnectPropsKeys.GRAPH_URL,
 				FacebookConnectConfigurationKeys.GRAPH_URL
 			},
-			new String[] {
+			{
 				LegacyFacebookConnectPropsKeys.OAUTH_AUTH_URL,
 				FacebookConnectConfigurationKeys.OAUTH_AUTH_URL
 			},
-			new String[] {
+			{
 				LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL,
 				FacebookConnectConfigurationKeys.OAUTH_TOKEN_URL
 			},
-			new String[] {
+			{
 				LegacyFacebookConnectPropsKeys.VERIFIED_ACCOUNT_REQUIRED,
 				FacebookConnectConfigurationKeys.VERIFIED_ACCOUNT_REQUIRED
 			}

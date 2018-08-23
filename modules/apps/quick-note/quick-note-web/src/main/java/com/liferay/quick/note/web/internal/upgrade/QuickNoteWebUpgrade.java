@@ -39,7 +39,7 @@ public class QuickNoteWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {"97", QuickNotePortletKeys.QUICK_NOTE}
+						{"97", QuickNotePortletKeys.QUICK_NOTE}
 					};
 				}
 

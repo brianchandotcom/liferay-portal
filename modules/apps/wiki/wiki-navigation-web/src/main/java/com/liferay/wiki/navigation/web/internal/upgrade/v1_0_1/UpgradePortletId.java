@@ -25,11 +25,11 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
+			{
 				"1_WAR_wikinavigationportlet",
 				WikiNavigationPortletKeys.TREE_MENU
 			},
-			new String[] {
+			{
 				"2_WAR_wikinavigationportlet",
 				WikiNavigationPortletKeys.PAGE_MENU
 			}

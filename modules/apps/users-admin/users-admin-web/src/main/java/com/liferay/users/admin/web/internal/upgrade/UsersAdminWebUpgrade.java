@@ -57,9 +57,7 @@ public class UsersAdminWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {
-							"2", UsersAdminPortletKeys.MY_ACCOUNT
-						}
+						{"2", UsersAdminPortletKeys.MY_ACCOUNT}
 					};
 				}
 

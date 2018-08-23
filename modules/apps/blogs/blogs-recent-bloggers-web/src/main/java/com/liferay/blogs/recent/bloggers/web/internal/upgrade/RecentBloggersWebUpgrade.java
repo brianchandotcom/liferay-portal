@@ -37,9 +37,7 @@ public class RecentBloggersWebUpgrade implements UpgradeStepRegistrator {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {
-						"114", RecentBloggersPortletKeys.RECENT_BLOGGERS
-					}
+					{"114", RecentBloggersPortletKeys.RECENT_BLOGGERS}
 				};
 			}
 

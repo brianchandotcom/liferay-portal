@@ -25,9 +25,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
-				"181", SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS
-			}
+			{"181", SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS}
 		};
 	}
 

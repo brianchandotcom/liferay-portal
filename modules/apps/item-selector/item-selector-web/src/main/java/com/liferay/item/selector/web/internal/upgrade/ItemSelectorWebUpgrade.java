@@ -37,9 +37,7 @@ public class ItemSelectorWebUpgrade implements UpgradeStepRegistrator {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {
-						"200", ItemSelectorPortletKeys.ITEM_SELECTOR
-					}
+					{"200", ItemSelectorPortletKeys.ITEM_SELECTOR}
 				};
 			}
 

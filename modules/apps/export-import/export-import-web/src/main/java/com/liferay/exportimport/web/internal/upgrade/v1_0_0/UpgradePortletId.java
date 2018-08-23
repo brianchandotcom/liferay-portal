@@ -24,9 +24,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			new String[] {"200", ExportImportPortletKeys.EXPORT_IMPORT}
-		};
+		return new String[][] {{"200", ExportImportPortletKeys.EXPORT_IMPORT}};
 	}
 
 }

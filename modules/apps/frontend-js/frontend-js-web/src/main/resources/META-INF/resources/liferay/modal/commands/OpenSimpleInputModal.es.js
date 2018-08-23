@@ -99,17 +99,12 @@ function openSimpleInputModal(
 
 	function handleSimpleInputModalSubmission(serverResponseContent) {
 		if (serverResponseContent.redirectURL) {
-			if (Liferay.SPA) {
-				Liferay.SPA.app.navigate(serverResponseContent.redirectURL);
-
-				Liferay.once(
-					'beforeScreenFlip',
-					handleSimpleInputModalDisposal.bind(this)
-				);
-			}
-			else {
-				location.href = serverResponseContent.redirectURL;
-			}
+			Liferay.Util.navigate(
+				serverResponseContent.redirectURL,
+				{
+					'beforeScreenFlip': handleSimpleInputModalDisposal.bind(this)
+				}
+			);
 		}
 		else {
 			handleSimpleInputModalDisposal();

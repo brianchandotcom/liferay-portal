@@ -25,19 +25,17 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.Types;
 
-import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author José Ángel Jiménez
  */
 public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 
-	public BaseUpgradeSQLServerDatetime(
-		Class<?> tableClass, Collection<String> columnNames) {
-
-		_tableClass = tableClass;
-		_columnNames = columnNames;
+	public BaseUpgradeSQLServerDatetime(Class<?>[] tableClasses) {
+		_tableClasses = tableClasses;
 		_newType = "datetime2";
 		_newSize = 6;
 	}
@@ -47,11 +45,15 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 		DB db = DBManagerUtil.getDB();
 
 		if (db.getDBType() == DBType.SQLSERVER) {
-			_upgradeTable();
+			try (LoggingTimer loggingTimer = new LoggingTimer();) {
+				for (Class<?> tableClass : _tableClasses) {
+					_upgradeTable(tableClass);
+				}
+			}
 		}
 	}
 
-	private void _upgradeTable() throws Exception {
+	private void _upgradeTable(Class<?> tableClass) throws Exception {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 		DBInspector dbInspector = new DBInspector(connection);
 
@@ -59,10 +61,9 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 		String schema = dbInspector.getSchema();
 
 		String tableName = dbInspector.normalizeName(
-			getTableName(_tableClass), databaseMetaData);
+			getTableName(tableClass), databaseMetaData);
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			ResultSet tableRS = databaseMetaData.getTables(
+		try (ResultSet tableRS = databaseMetaData.getTables(
 				catalog, schema, tableName, null)) {
 
 			if (!tableRS.next()) {
@@ -78,9 +79,15 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 			String newTypeDefinition = StringBundler.concat(
 				newTypeName, "(", _newSize, ")");
 
-			for (String originalColumnName : _columnNames) {
+			for (Map.Entry<String, Integer> tableColumnEntry :
+					getTableColumnsMap(tableClass).entrySet()) {
+
 				String columnName = dbInspector.normalizeName(
-					originalColumnName, databaseMetaData);
+					tableColumnEntry.getKey(), databaseMetaData);
+
+				if (tableColumnEntry.getValue() != Types.TIMESTAMP) {
+					continue;
+				}
 
 				try (ResultSet columnRS = databaseMetaData.getColumns(
 						null, null, tableName, columnName)) {
@@ -106,7 +113,7 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 					}
 
 					alter(
-						_tableClass,
+						tableClass,
 						new AlterColumnType(columnName, newTypeDefinition));
 				}
 			}
@@ -116,9 +123,8 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUpgradeSQLServerDatetime.class);
 
-	private final Collection<String> _columnNames;
 	private final int _newSize;
 	private final String _newType;
-	private final Class<?> _tableClass;
+	private final Class<?>[] _tableClasses;
 
 }

@@ -1,3 +1,4 @@
+#parse ("definitions.vm")
 #if (${liferayVersion.startsWith("7.0")})
 {namespace ddm}
 
@@ -37,7 +38,7 @@
 /**
  * Defines the delegated template for the form field.
  */
-{deltemplate ddm.field variant="'${artifactId}'"}
+{deltemplate ddm.field variant="'${formFieldTypeName}'"}
 	{call .render data="all" /}
 {/deltemplate}
 

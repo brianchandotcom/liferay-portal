@@ -337,6 +337,12 @@ public class ProjectTemplateFilesTest {
 		Path archetypePomXmlPath = projectTemplateDirPath.resolve(
 			"src/main/resources/archetype-resources/pom.xml");
 
+		String pathString = archetypePomXmlPath.toString();
+
+		if (pathString.contains("ext")) {
+			return;
+		}
+
 		Document document = documentBuilder.parse(archetypePomXmlPath.toFile());
 
 		Element projectElement = document.getDocumentElement();
@@ -850,7 +856,13 @@ public class ProjectTemplateFilesTest {
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
 		_testGradleWrapper(archetypeResourcesDirPath);
 		_testMavenWrapper(archetypeResourcesDirPath);
-		_testPomXml(archetypeResourcesDirPath, documentBuilder);
+
+		String pathString = archetypeResourcesDirPath.toString();
+
+		if (!pathString.contains("ext")) {
+			_testPomXml(archetypeResourcesDirPath, documentBuilder);
+		}
+
 		_testProjectTemplateCustomizer(
 			projectTemplateDirName, projectTemplateDirPath);
 

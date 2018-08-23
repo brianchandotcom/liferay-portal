@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.util.HashMap;
+
 import org.jabsorb.JSONSerializer;
 import org.jabsorb.serializer.ObjectMatch;
 import org.jabsorb.serializer.SerializerState;
@@ -72,6 +74,22 @@ public class LiferayJSONSerializer extends JSONSerializer {
 
 				className = jsonObject.getString("javaClass");
 
+				if (!_liferayJSONDeserializationWhitelist.isWhitelisted(
+						className)) {
+
+					if (jsonObject.has("serializable")) {
+						jsonObject.put(
+							"map", jsonObject.remove("serializable"));
+					}
+					else {
+						jsonObject.put("map", new JSONObject());
+					}
+
+					jsonObject.put("javaClass", "java.util.HashMap");
+
+					return HashMap.class;
+				}
+
 				if (jsonObject.has("contextName")) {
 					String contextName = jsonObject.getString("contextName");
 
@@ -101,5 +119,9 @@ public class LiferayJSONSerializer extends JSONSerializer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayJSONSerializer.class);
+
+	private final LiferayJSONDeserializationWhitelist
+		_liferayJSONDeserializationWhitelist =
+			new LiferayJSONDeserializationWhitelist();
 
 }

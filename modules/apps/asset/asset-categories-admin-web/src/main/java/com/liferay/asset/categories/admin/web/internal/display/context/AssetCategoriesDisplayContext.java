@@ -227,7 +227,7 @@ public class AssetCategoriesDisplayContext {
 					dropdownItem -> {
 						dropdownItem.putData(
 							"action", "deleteSelectedCategories");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);
@@ -653,7 +653,7 @@ public class AssetCategoriesDisplayContext {
 					dropdownItem -> {
 						dropdownItem.putData(
 							"action", "deleteSelectedVocabularies");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

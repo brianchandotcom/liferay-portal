@@ -82,7 +82,7 @@ public class TrashDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteSelectedEntries");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

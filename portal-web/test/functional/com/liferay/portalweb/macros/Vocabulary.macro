@@ -164,7 +164,7 @@
 
 		<execute macro="PortletEntry#selectAll" />
 
-		<execute function="ClickNoError" locator1="Icon#DELETE" />
+		<execute function="ClickNoError" locator1="Icon#TIMES" />
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 

@@ -230,7 +230,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting" priority="3">
+	<command name="ViewLDAPInstanceSettingsDoNotAffectSystemSettings" priority="3">
 		<property name="test.name.skip.portal.instance" value="LDAP#ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting" />
 
 		<execute macro="ProductMenu#gotoPortlet">

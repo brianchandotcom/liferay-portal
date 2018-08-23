@@ -84,6 +84,14 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
+	public int countFromUserSharingEntries(
+		long fromUserId, long classNameId, long classPK) {
+
+		return sharingEntryPersistence.countByFU_C_C(
+			fromUserId, classNameId, classPK);
+	}
+
+	@Override
 	public int countToUserSharingEntries(long toUserId) {
 		return sharingEntryPersistence.countByToUserId(toUserId);
 	}
@@ -132,6 +140,22 @@ public class SharingEntryLocalServiceImpl
 	@Override
 	public List<SharingEntry> getFromUserSharingEntries(long fromUserId) {
 		return sharingEntryPersistence.findByFromUserId(fromUserId);
+	}
+
+	@Override
+	public List<SharingEntry> getFromUserSharingEntries(
+		long fromUserId, long classNameId, long classPK) {
+
+		return sharingEntryPersistence.findByFU_C_C(
+			fromUserId, classNameId, classPK);
+	}
+
+	@Override
+	public List<SharingEntry> getFromUserSharingEntries(
+		long fromUserId, long classNameId, long classPK, int start, int end) {
+
+		return sharingEntryPersistence.findByFU_C_C(
+			fromUserId, classNameId, classPK, start, end);
 	}
 
 	@Override

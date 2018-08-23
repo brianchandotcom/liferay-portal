@@ -46,6 +46,11 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="FU_C_C" return-type="Collection">
+			<finder-column name="fromUserId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 		<finder name="TU_C_C" return-type="Collection">
 			<finder-column name="toUserId" />
 			<finder-column name="classNameId" />

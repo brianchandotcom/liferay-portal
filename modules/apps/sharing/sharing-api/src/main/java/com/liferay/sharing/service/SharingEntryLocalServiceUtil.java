@@ -68,6 +68,12 @@ public class SharingEntryLocalServiceUtil {
 		return getService().countFromUserSharingEntries(fromUserId);
 	}
 
+	public static int countFromUserSharingEntries(long fromUserId,
+		long classNameId, long classPK) {
+		return getService()
+				   .countFromUserSharingEntries(fromUserId, classNameId, classPK);
+	}
+
 	public static int countToUserSharingEntries(long toUserId) {
 		return getService().countToUserSharingEntries(toUserId);
 	}
@@ -243,6 +249,19 @@ public class SharingEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.sharing.model.SharingEntry> getFromUserSharingEntries(
 		long fromUserId) {
 		return getService().getFromUserSharingEntries(fromUserId);
+	}
+
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getFromUserSharingEntries(
+		long fromUserId, long classNameId, long classPK) {
+		return getService()
+				   .getFromUserSharingEntries(fromUserId, classNameId, classPK);
+	}
+
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getFromUserSharingEntries(
+		long fromUserId, long classNameId, long classPK, int start, int end) {
+		return getService()
+				   .getFromUserSharingEntries(fromUserId, classNameId, classPK,
+			start, end);
 	}
 
 	public static java.util.List<com.liferay.sharing.model.SharingEntry> getGroupSharingEntries(

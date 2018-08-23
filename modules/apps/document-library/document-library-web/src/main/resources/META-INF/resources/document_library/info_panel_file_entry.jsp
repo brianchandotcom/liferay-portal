@@ -80,39 +80,43 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 				</div>
 			</c:if>
 
-			<div class="autofit-row sidebar-panel widget-metadata">
-				<div class="autofit-col inline-item-before">
+			<liferay-dynamic-section:dynamic-section
+				name="com.liferay.document.library.web#/document_library/info_panel_file_entry.jsp#fileEntryOwner"
+			>
+				<div class="autofit-row sidebar-panel widget-metadata">
+					<div class="autofit-col inline-item-before">
 
-					<%
-					User owner = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
+						<%
+						User owner = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
 
-					String ownerURL = StringPool.BLANK;
+						String ownerURL = StringPool.BLANK;
 
-					if ((owner != null) && !owner.isDefaultUser()) {
-						ownerURL = owner.getDisplayURL(themeDisplay);
-					}
-					%>
+						if ((owner != null) && !owner.isDefaultUser()) {
+							ownerURL = owner.getDisplayURL(themeDisplay);
+						}
+						%>
 
-					<liferay-ui:user-portrait
-						cssClass="user-icon-lg"
-						user="<%= owner %>"
-					/>
-				</div>
+						<liferay-ui:user-portrait
+							cssClass="user-icon-lg"
+							user="<%= owner %>"
+						/>
+					</div>
 
-				<div class="autofit-col autofit-col-expand">
-					<div class="autofit-row">
-						<div class="autofit-col autofit-col-expand">
-							<div class="component-title h4 username">
-								<a href="<%= ownerURL %>"><%= owner.getFullName() %></a>
+					<div class="autofit-col autofit-col-expand">
+						<div class="autofit-row">
+							<div class="autofit-col autofit-col-expand">
+								<div class="component-title h4 username">
+									<a href="<%= ownerURL %>"><%= owner.getFullName() %></a>
+								</div>
+
+								<small class="text-muted">
+									<liferay-ui:message key="owner" />
+								</small>
 							</div>
-
-							<small class="text-muted">
-								<liferay-ui:message key="owner" />
-							</small>
 						</div>
 					</div>
 				</div>
-			</div>
+			</liferay-dynamic-section:dynamic-section>
 
 			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
 				<div class="sidebar-section">

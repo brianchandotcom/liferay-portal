@@ -61,11 +61,6 @@
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
 
-		<!-- LPS-71630 -->
-		<execute macro="PortalSettings#configureLDAPSetting">
-			<var name="enableSettingList" value="${enableSettingList}" />
-		</execute>
-
 		<execute macro="PortalSettings#viewEnabledLDAPSetting">
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
@@ -124,11 +119,6 @@
 
 		<var name="enableSettingList" value="enabled,ldapExportEnabled,ldapImportEnabled,importOnStartup" />
 
-		<execute macro="PortalSettings#configureLDAPSetting">
-			<var name="enableSettingList" value="${enableSettingList}" />
-		</execute>
-
-		<!-- LPS-71630 -->
 		<execute macro="PortalSettings#configureLDAPSetting">
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
@@ -255,11 +245,6 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="PortalSettings#configureLDAPSetting">
-			<var name="enableSettingList" value="enabled" />
-		</execute>
-
-		<!-- LPS-71630 -->
 		<execute macro="PortalSettings#configureLDAPSetting">
 			<var name="enableSettingList" value="enabled" />
 		</execute>

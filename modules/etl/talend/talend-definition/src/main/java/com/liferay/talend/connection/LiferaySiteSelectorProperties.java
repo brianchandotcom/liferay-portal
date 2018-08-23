@@ -88,7 +88,7 @@ public class LiferaySiteSelectorProperties
 				SimpleNamedThing webSiteURLSimpleNamedThing =
 					webSiteURLStoredValues.get(0);
 
-				connection.webSite.setValue(
+				connection.webSiteName.setValue(
 					webSiteURLSimpleNamedThing.getDisplayName());
 
 				connection.webSiteProperty.setValue(

@@ -108,7 +108,7 @@ public class LiferayConnectionProperties
 					ValidationResult.Result.OK) {
 
 				try {
-					webSite.setValue(
+					webSiteName.setValue(
 						liferaySourceOrSinkRuntime.getActualWebSiteName(
 							webSiteProperty.getWebSiteURL()));
 				}
@@ -219,7 +219,7 @@ public class LiferayConnectionProperties
 		PropertiesUtils.setHidden(form, password, useOtherConnection);
 		PropertiesUtils.setHidden(form, siteFilter, useOtherConnection);
 		PropertiesUtils.setHidden(form, userId, useOtherConnection);
-		PropertiesUtils.setHidden(form, webSite, useOtherConnection);
+		PropertiesUtils.setHidden(form, webSiteName, useOtherConnection);
 		PropertiesUtils.setHidden(form, webSiteProperty, useOtherConnection);
 
 		if (!useOtherConnection && anonymousLogin.getValue()) {
@@ -228,7 +228,7 @@ public class LiferayConnectionProperties
 		}
 
 		if (!useOtherConnection && !siteFilter.getValue()) {
-			PropertiesUtils.setHidden(form, webSite, true);
+			PropertiesUtils.setHidden(form, webSiteName, true);
 			PropertiesUtils.setHidden(form, webSiteProperty, true);
 		}
 	}
@@ -300,7 +300,7 @@ public class LiferayConnectionProperties
 
 		mainForm.addRow(webSiteURLWidget);
 
-		Widget webSiteWidget = Widget.widget(webSite);
+		Widget webSiteWidget = Widget.widget(webSiteName);
 
 		webSiteWidget.setReadonly(true);
 
@@ -343,7 +343,7 @@ public class LiferayConnectionProperties
 
 		referenceForm.addRow(webSiteURLReferenceWidget);
 
-		Widget webSiteReferenceWidget = Widget.widget(webSite);
+		Widget webSiteReferenceWidget = Widget.widget(webSiteName);
 
 		webSiteReferenceWidget.setReadonly(true);
 
@@ -379,7 +379,7 @@ public class LiferayConnectionProperties
 		password.setValue(_PASSWORD);
 		siteFilter.setValue(false);
 		userId.setValue(_USER_ID);
-		webSite.setValue("");
+		webSiteName.setValue("");
 		webSiteProperty.setHost(endpoint.getValue());
 		webSiteProperty.setValue("");
 	}
@@ -443,7 +443,8 @@ public class LiferayConnectionProperties
 	public PresentationItem testConnection = new PresentationItem(
 		"testConnection");
 	public Property<String> userId = PropertyFactory.newString("userId");
-	public Property<String> webSite = PropertyFactory.newString("webSite");
+	public Property<String> webSiteName = PropertyFactory.newString(
+		"webSiteName");
 	public WebSiteProperty webSiteProperty = new WebSiteProperty(
 		"webSiteProperty");
 

@@ -19,20 +19,53 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Igor Spasic
  */
 public class JSONFactoryTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = new BasicRegistryImpl();
+
+		RegistryUtil.setRegistry(registry);
+
+		List<String> whitelist = new ArrayList<>();
+
+		whitelist.add(FooBean.class.getName());
+		whitelist.add(FooBean1.class.getName());
+		whitelist.add(FooBean2.class.getName());
+		whitelist.add(FooBean3.class.getName());
+		whitelist.add(FooBean4.class.getName());
+		whitelist.add(FooBean5.class.getName());
+		whitelist.add(FooBean6.class.getName());
+
+		registry.registerService(
+			Object.class, new Object(),
+			Collections.singletonMap(
+				PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES,
+				whitelist));
+
+		new LiferayJSONDeserializationWhitelist().afterPropertiesSet();
+	}
 
 	@Before
 	public void setUp() throws Exception {

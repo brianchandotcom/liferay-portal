@@ -3,16 +3,17 @@
 This project contains components for working with Liferay DXP from Talend
 Studio.
 
-Open Talend 6.5.1 (Components API v0.19.9).
+Open Talend 7.0.1
 
 ## Prerequisites
 
 * JDK 1.8+
 * Apache Maven 3.3+
-* Open Talend 6.5.1
-	* Components API v0.19.9
+* Open Talend 7.0.1
+	* Components API v0.23.1
 
-Download Talend Open Studio 6.5.1: https://www.talend.com/download/talend-open-studio/
+Download Talend Open Studio: https://www.talend.com/products/talend-open-studio/
+* Direct link: https://download-mirror2.talend.com/esb/release/V7.0.1/TOS_ESB-20180411_1414-V7.0.1.zip
 
 ## Build
 
@@ -34,7 +35,7 @@ Detailed steps of adding new components are described in the Talend Wiki:
 
 Here is a brief summary:
 
-1. From the root folder of the project, `/components-liferay/` in this example,
+1. From the root folder of the project, `liferay-portal/modules/etl/talend/` in this example,
 	execute `mvn clean install` to build the component.
 
 2. Let's assume that Studio has been extracted like this:
@@ -42,14 +43,14 @@ Here is a brief summary:
 	```sh
 	$ cd $HOME/tmp
 	... download distribution archive ...
-	$ unzip TOS_ESB-20180116_1512-V6.5.1.zip
-	$ STUDIO_ROOT=$HOME/tmp/TOS_ESB-20180116_1512-V6.5.1
+	$ unzip TOS_ESB-Version.zip
+	$ STUDIO_ROOT=$HOME/tmp/TOS_ESB-Version
 	```
 
 3. Now copy the component definition bundle into `$STUDIO_ROOT/plugins`
 
 	```sh
-	$ cp [COMPONENTS-LIFERAY]/talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar \
+	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar \
 		 $STUDIO_ROOT/plugins
 	```
 
@@ -84,8 +85,16 @@ with `org.eclipse`.
 * Now start the Studio, and you should be able to see new components on palette
 under `Business/Liferay` category.
 
-7. There is a bug in Talend Open Studio 6.5.1 which requires you to manually add
+7. There is a bug in Talend Open Studio which requires you to manually add
 	the component dependency and runtime artifacts to the job's classpath in
 	order to be able to run the job with a custom component.
 
 	See bug report: https://community.talend.com/t5/Design-and-Development/Component-definition-is-not-added-to-the-job-s-classpath-in/m-p/49285/highlight/true#M15736
+
+	Alternative workaround:
+	```
+	1. Right mouse click on `.Java` project or if you use TOS 7.0.1+ the project
+		called `LOCAL_PROJECT_$ActualJobName$` in `Navigator` view
+	2. Maven -> Update Project
+	3. Uncheck "Offline" and run Update
+	```

@@ -15,10 +15,12 @@
 package com.liferay.talend.wizard;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.connection.LiferaySiteSelectorProperties;
 
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.components.api.wizard.ComponentWizard;
 import org.talend.components.api.wizard.ComponentWizardDefinition;
+import org.talend.daikon.properties.presentation.Form;
 
 /**
  * @author Zoltán Takács
@@ -31,25 +33,30 @@ public class LiferayConnectionWizard extends ComponentWizard {
 
 		super(componentWizardDefinition, repositoryLocation);
 
-		liferayConnectionProperties = new LiferayConnectionProperties(
-			"connection");
+		connection = new LiferayConnectionProperties("connection");
 
-		liferayConnectionProperties.init();
+		connection.init();
 
-		liferayConnectionProperties.setRepositoryLocation(repositoryLocation);
+		addForm(connection.getForm(LiferayConnectionProperties.FORM_WIZARD));
 
-		addForm(
-			liferayConnectionProperties.getForm(
-				LiferayConnectionProperties.FORM_WIZARD));
+		siteSelector = new LiferaySiteSelectorProperties("siteSelector");
+
+		siteSelector.setConnection(connection);
+		siteSelector.setRepositoryLocation(getRepositoryLocation());
+
+		siteSelector.init();
+
+		addForm(siteSelector.getForm(Form.MAIN));
 	}
 
 	public void setupProperties(
 		LiferayConnectionProperties liferayConnectionProperties) {
 
-		this.liferayConnectionProperties.setupProperties();
+		this.connection.setupProperties();
 
-		this.liferayConnectionProperties.copyValuesFrom(
-			liferayConnectionProperties);
+		this.connection.copyValuesFrom(liferayConnectionProperties);
+
+		this.siteSelector.setConnection(liferayConnectionProperties);
 	}
 
 	public boolean supportsProperties(ComponentProperties componentProperties) {
@@ -60,6 +67,7 @@ public class LiferayConnectionWizard extends ComponentWizard {
 		return false;
 	}
 
-	protected LiferayConnectionProperties liferayConnectionProperties;
+	public LiferayConnectionProperties connection;
+	public LiferaySiteSelectorProperties siteSelector;
 
 }

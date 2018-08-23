@@ -15,26 +15,34 @@
 package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.utils.PropertiesUtils;
 
+import java.io.IOException;
+
 import java.util.EnumSet;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.properties.ComponentPropertiesImpl;
 import org.talend.components.api.properties.ComponentReferenceProperties;
+import org.talend.daikon.NamedThing;
+import org.talend.daikon.i18n.GlobalI18N;
+import org.talend.daikon.i18n.I18nMessageProvider;
+import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.PresentationItem;
-import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
+import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
-import org.talend.daikon.properties.service.Repository;
+import org.talend.daikon.properties.property.StringProperty;
 import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
@@ -55,35 +63,110 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(FORM_WIZARD));
 	}
 
-	public ValidationResult afterFormFinishWizard(Repository<Properties> repo) {
+	public void afterReferencedComponent() {
+		refreshLayout(getForm(Form.MAIN));
+		refreshLayout(getForm(Form.REFERENCE));
+	}
+
+	public void afterSiteFilter() {
+		refreshLayout(getForm(Form.MAIN));
+		refreshLayout(getForm(Form.REFERENCE));
+	}
+
+	public ValidationResult afterWebSiteURL() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Website URL: " + webSiteURL.getValue());
+		}
+
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
+
+		validationResultMutable.setStatus(Result.OK);
+
 		try (SandboxedInstance sandboxedInstance =
-				getRuntimeSandboxedInstance()) {
+				LiferayBaseComponentDefinition.getSandboxedInstance(
+					LiferayBaseComponentDefinition.
+						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
 
 			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
-			liferaySourceOrSinkRuntime.initialize(null, this);
+			liferaySourceOrSinkRuntime.initialize(
+				null, getReferencedConnectionProperties());
 
 			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.validateConnection(this);
+				liferaySourceOrSinkRuntime.validate(null);
 
-			if (validationResult.getStatus() != ValidationResult.Result.OK) {
-				return validationResult;
+			validationResultMutable.setMessage(validationResult.getMessage());
+			validationResultMutable.setStatus(validationResult.getStatus());
+
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.OK) {
+
+				try {
+					webSite.setValue(
+						liferaySourceOrSinkRuntime.getActualWebSiteName(
+							webSiteURL.getValue()));
+				}
+				catch (IOException ioe) {
+					validationResult =
+						ExceptionUtils.exceptionToValidationResult(ioe);
+
+					validationResultMutable.setMessage(
+						validationResult.getMessage());
+					validationResultMutable.setStatus(
+						validationResult.getStatus());
+				}
 			}
-
-			repo.storeProperties(
-				this, name.getValue(), repositoryLocation, null);
-
-			return ValidationResult.OK;
 		}
-		catch (Exception e) {
-			return new ValidationResult(Result.ERROR, e.getMessage());
-		}
-	}
 
-	public void afterReferencedComponent() {
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
+
+		return validationResultMutable;
+	}
+
+	public ValidationResult beforeWebSiteURL() {
+		try (SandboxedInstance sandboxedInstance =
+				LiferayBaseComponentDefinition.getSandboxedInstance(
+					LiferayBaseComponentDefinition.
+						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+
+			liferaySourceOrSinkRuntime.initialize(
+				null, getReferencedConnectionProperties());
+
+			ValidationResultMutable validationResultMutable =
+				new ValidationResultMutable();
+
+			ValidationResult validationResult =
+				liferaySourceOrSinkRuntime.validate(null);
+
+			validationResultMutable.setStatus(validationResult.getStatus());
+
+			if (validationResultMutable.getStatus() == Result.OK) {
+				try {
+					List<NamedThing> webSites =
+						liferaySourceOrSinkRuntime.getAvailableWebSites();
+
+					if (webSites.isEmpty()) {
+						validationResultMutable.setMessage(
+							i18nMessages.getMessage(
+								"error.validation.websites"));
+						validationResultMutable.setStatus(Result.ERROR);
+					}
+
+					webSiteURL.setPossibleNamedThingValues(webSites);
+				}
+				catch (Exception e) {
+					return ExceptionUtils.exceptionToValidationResult(e);
+				}
+			}
+
+			return validationResultMutable;
+		}
 	}
 
 	@Override
@@ -108,7 +191,7 @@ public class LiferayConnectionProperties
 				"null",
 			getReferencedComponentId());
 
-		return null;
+		return getLiferayConnectionProperties();
 	}
 
 	@Override
@@ -126,26 +209,24 @@ public class LiferayConnectionProperties
 			useOtherConnection = true;
 		}
 
-		String formName = form.getName();
+		PropertiesUtils.setHidden(form, anonymousLogin, useOtherConnection);
+		PropertiesUtils.setHidden(form, endpoint, useOtherConnection);
+		PropertiesUtils.setHidden(form, loginType, useOtherConnection);
+		PropertiesUtils.setHidden(form, password, useOtherConnection);
+		PropertiesUtils.setHidden(form, siteFilter, useOtherConnection);
+		PropertiesUtils.setHidden(form, userId, useOtherConnection);
+		PropertiesUtils.setHidden(form, webSite, useOtherConnection);
+		PropertiesUtils.setHidden(form, webSiteURL, useOtherConnection);
 
-		if (formName.equals(Form.MAIN) || formName.equals(FORM_WIZARD)) {
-			PropertiesUtils.setHidden(form, endpoint, useOtherConnection);
-			PropertiesUtils.setHidden(form, loginType, useOtherConnection);
-			PropertiesUtils.setHidden(form, userId, useOtherConnection);
-			PropertiesUtils.setHidden(form, password, useOtherConnection);
-			PropertiesUtils.setHidden(form, anonymousLogin, useOtherConnection);
-
-			if (!useOtherConnection && anonymousLogin.getValue()) {
-				PropertiesUtils.setHidden(form, userId, true);
-				PropertiesUtils.setHidden(form, password, true);
-			}
+		if (!useOtherConnection && anonymousLogin.getValue()) {
+			PropertiesUtils.setHidden(form, userId, true);
+			PropertiesUtils.setHidden(form, password, true);
 		}
-	}
 
-	public LiferayConnectionProperties setRepositoryLocation(String location) {
-		repositoryLocation = location;
-
-		return this;
+		if (!useOtherConnection && !siteFilter.getValue()) {
+			PropertiesUtils.setHidden(form, webSite, true);
+			PropertiesUtils.setHidden(form, webSiteURL, true);
+		}
 	}
 
 	@Override
@@ -178,7 +259,13 @@ public class LiferayConnectionProperties
 		testConnectionWidget.setLongRunning(true);
 		testConnectionWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
 
-		wizardForm.addRow(testConnectionWidget);
+		Widget advancedFormWizardWidget = Widget.widget(advanced);
+
+		advancedFormWizardWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
+
+		wizardForm.addRow(advancedFormWizardWidget);
+
+		wizardForm.addColumn(testConnectionWidget);
 
 		// Main form
 
@@ -198,6 +285,23 @@ public class LiferayConnectionProperties
 
 		mainForm.addRow(anonymousLogin);
 
+		mainForm.addRow(siteFilter);
+
+		Widget webSiteURLWidget = Widget.widget(webSiteURL);
+
+		webSiteURLWidget.setCallAfter(true);
+		webSiteURLWidget.setLongRunning(true);
+		webSiteURLWidget.setWidgetType(
+			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
+
+		mainForm.addRow(webSiteURLWidget);
+
+		Widget webSiteWidget = Widget.widget(webSite);
+
+		webSiteWidget.setReadonly(true);
+
+		mainForm.addColumn(webSiteWidget);
+
 		// A form for a reference to a connection, used in a tLiferayInput
 		// for example
 
@@ -210,7 +314,36 @@ public class LiferayConnectionProperties
 
 		referenceForm.addRow(referencedComponentWidget);
 
-		referenceForm.addRow(mainForm);
+		Widget loginReferenceWidget = Widget.widget(loginType);
+
+		loginReferenceWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
+
+		referenceForm.addRow(loginReferenceWidget);
+
+		referenceForm.addRow(endpoint);
+
+		referenceForm.addRow(userId);
+
+		referenceForm.addRow(password);
+
+		referenceForm.addRow(anonymousLogin);
+
+		referenceForm.addRow(siteFilter);
+
+		Widget webSiteURLReferenceWidget = Widget.widget(webSiteURL);
+
+		webSiteURLReferenceWidget.setCallAfter(true);
+		webSiteURLReferenceWidget.setLongRunning(true);
+		webSiteURLReferenceWidget.setWidgetType(
+			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
+
+		referenceForm.addRow(webSiteURLReferenceWidget);
+
+		Widget webSiteReferenceWidget = Widget.widget(webSite);
+
+		webSiteReferenceWidget.setReadonly(true);
+
+		referenceForm.addColumn(webSiteReferenceWidget);
 
 		refreshLayout(referenceForm);
 
@@ -227,6 +360,8 @@ public class LiferayConnectionProperties
 		advancedForm.addRow(followRedirects);
 
 		advancedForm.addRow(forceHttps);
+
+		advanced.setFormtoShow(advancedForm);
 	}
 
 	@Override
@@ -238,7 +373,10 @@ public class LiferayConnectionProperties
 		forceHttps.setValue(false);
 		loginType.setValue(LoginType.Basic);
 		password.setValue(_PASSWORD);
+		siteFilter.setValue(false);
 		userId.setValue(_USER_ID);
+		webSite.setValue("");
+		webSiteURL.setValue("");
 	}
 
 	public ValidationResult validateTestConnection() {
@@ -270,6 +408,7 @@ public class LiferayConnectionProperties
 		}
 	}
 
+	public PresentationItem advanced = new PresentationItem("advanced");
 	public Property<Boolean> anonymousLogin = PropertyFactory.newBoolean(
 		"anonymousLogin");
 	public Property<Integer> connectTimeout = PropertyFactory.newInteger(
@@ -294,9 +433,13 @@ public class LiferayConnectionProperties
 	public ComponentReferenceProperties<LiferayConnectionProperties>
 		referencedComponent = new ComponentReferenceProperties<>(
 			"referencedComponent", TLiferayConnectionDefinition.COMPONENT_NAME);
+	public Property<Boolean> siteFilter = PropertyFactory.newBoolean(
+		"siteFilter");
 	public PresentationItem testConnection = new PresentationItem(
-		"testConnection", "Test Connection");
+		"testConnection");
 	public Property<String> userId = PropertyFactory.newString("userId");
+	public Property<String> webSite = PropertyFactory.newString("webSite");
+	public StringProperty webSiteURL = PropertyFactory.newString("webSiteURL");
 
 	public enum LoginType {
 
@@ -319,13 +462,15 @@ public class LiferayConnectionProperties
 			LiferayBaseComponentDefinition.RUNTIME_SOURCE_OR_SINK_CLASS_NAME);
 	}
 
-	/**
-	 * This must be named <code>repositoryLocation</code> since Talend uses
-	 * reflection to get a field named this. See <a
-	 * href="https://github.com/Talend/tdi-studio-se/blob/125a8144597e5d5faa1f7001ce345cdfd6dc1fe3/main/plugins/org.talend.repository.generic/src/main/java/org/talend/repository/generic/ui/GenericConnWizard.java#L111">here</a>
-	 * for more information.
-	 */
-	protected String repositoryLocation;
+	protected static final I18nMessages i18nMessages;
+
+	static {
+		I18nMessageProvider i18nMessageProvider =
+			GlobalI18N.getI18nMessageProvider();
+
+		i18nMessages = i18nMessageProvider.getI18nMessages(
+			LiferayConnectionProperties.class);
+	}
 
 	private static final int _CONNECT_TIMEOUT = 30;
 

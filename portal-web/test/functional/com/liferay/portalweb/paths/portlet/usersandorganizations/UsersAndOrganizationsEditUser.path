@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>DETAILS_GENDER_SELECTED</td>
-	<td>//div[contains(.,'Gender')]/select/option[contains(.,'${key_userGender}') and contains(@selected,'')]</td>
+	<td>//div[contains(.,'Gender')]/select/option[contains(.,'${key_userGender}') and @selected]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>DETAILS_SUFFIX_SELECTED</td>
-	<td>//div[contains(.,'Suffix')]/select/option[contains(.,'${key_userSuffix}') and contains(@selected,'')]</td>
+	<td>//div[contains(.,'Suffix')]/select/option[contains(.,'${key_userSuffix}') and @selected]</td>
 	<td></td>
 </tr>
 <tr>

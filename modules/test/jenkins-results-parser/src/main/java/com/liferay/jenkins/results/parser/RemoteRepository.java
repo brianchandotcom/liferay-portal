@@ -32,10 +32,10 @@ public class RemoteRepository extends BaseRepository {
 		return username;
 	}
 
-	protected RemoteRepository(BaseGitRemote baseGitRemote) {
+	protected RemoteRepository(GitRemote gitRemote) {
 		this(
-			baseGitRemote.getHostname(), baseGitRemote.getRepositoryName(),
-			baseGitRemote.getUsername());
+			gitRemote.getHostname(), gitRemote.getRepositoryName(),
+			gitRemote.getUsername());
 	}
 
 	protected RemoteRepository(

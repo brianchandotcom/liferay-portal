@@ -55,16 +55,14 @@ public class RepositoryFactory {
 		return _localRepositories.get(key);
 	}
 
-	public static RemoteRepository getRemoteRepository(
-		BaseGitRemote baseGitRemote) {
-
-		String hostname = baseGitRemote.getHostname();
+	public static RemoteRepository getRemoteRepository(GitRemote gitRemote) {
+		String hostname = gitRemote.getHostname();
 
 		if (hostname.equalsIgnoreCase("github.com")) {
-			return new GitHubRemoteRepository(baseGitRemote);
+			return new GitHubRemoteRepository(gitRemote);
 		}
 
-		return new RemoteRepository(baseGitRemote);
+		return new RemoteRepository(gitRemote);
 	}
 
 	public static RemoteRepository getRemoteRepository(

@@ -250,8 +250,8 @@ public class GitHubRemoteRepository extends RemoteRepository {
 
 	}
 
-	protected GitHubRemoteRepository(BaseGitRemote baseGitRemote) {
-		super(baseGitRemote);
+	protected GitHubRemoteRepository(GitRemote gitRemote) {
+		super(gitRemote);
 
 		if (!hostname.equals("github.com")) {
 			throw new IllegalArgumentException(

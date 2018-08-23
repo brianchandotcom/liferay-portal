@@ -39,7 +39,7 @@ public class SubrepositoryGitWorkingDirectory extends GitWorkingDirectory {
 
 	@Override
 	protected void setUpstreamGitRemoteToPrivateRepository() {
-		BaseGitRemote upstreamGitRemote = getUpstreamGitRemote();
+		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		String remoteURL = upstreamGitRemote.getRemoteURL();
 
@@ -52,7 +52,7 @@ public class SubrepositoryGitWorkingDirectory extends GitWorkingDirectory {
 
 	@Override
 	protected void setUpstreamGitRemoteToPublicRepository() {
-		BaseGitRemote upstreamGitRemote = getUpstreamGitRemote();
+		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		String remoteURL = upstreamGitRemote.getRemoteURL();
 

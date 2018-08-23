@@ -90,7 +90,7 @@ public class MergeCentralSubrepositoryUtil {
 					centralSubrepository.getSubrepositoryUpstreamCommit());
 
 				if (centralSubrepository.isCentralPullRequestCandidate()) {
-					BaseGitRemote upstreamGitRemote =
+					GitRemote upstreamGitRemote =
 						centralGitWorkingDirectory.getGitRemote("upstream");
 
 					if (!centralGitWorkingDirectory.remoteGitBranchExists(
@@ -269,8 +269,8 @@ public class MergeCentralSubrepositoryUtil {
 			CentralSubrepository centralSubrepository, String mergeBranchName)
 		throws IOException {
 
-		BaseGitRemote upstreamGitRemote =
-			centralGitWorkingDirectory.getGitRemote("upstream");
+		GitRemote upstreamGitRemote = centralGitWorkingDirectory.getGitRemote(
+			"upstream");
 
 		if (_upstreamRemoteGitBranchNames == null) {
 			_upstreamRemoteGitBranchNames =
@@ -427,7 +427,7 @@ public class MergeCentralSubrepositoryUtil {
 			"git@github.com:", receiverUserName, "/", centralRepositoryName,
 			".git");
 
-		BaseGitRemote originGitRemote = centralGitWorkingDirectory.addGitRemote(
+		GitRemote originGitRemote = centralGitWorkingDirectory.addGitRemote(
 			true, "tempRemote", originRemoteURL);
 
 		try {

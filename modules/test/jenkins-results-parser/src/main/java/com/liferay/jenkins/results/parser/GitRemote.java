@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * @author Peter Yoo
  */
-public class BaseGitRemote implements Comparable<BaseGitRemote> {
+public class GitRemote implements Comparable<GitRemote> {
 
 	public static final Pattern gitLsRemotePattern = Pattern.compile(
 		"(?<sha>[^\\s]{40}+)[\\s]+refs/(?<type>[^/]+)+/(?<name>[^\\s]+)");
@@ -31,7 +31,7 @@ public class BaseGitRemote implements Comparable<BaseGitRemote> {
 			"(?<repositoryName>[^\\.]+)(.git)?"));
 
 	@Override
-	public int compareTo(BaseGitRemote otherGitRemote) {
+	public int compareTo(GitRemote otherGitRemote) {
 		int result = _name.compareTo(otherGitRemote._name);
 
 		if (result != 0) {
@@ -78,7 +78,7 @@ public class BaseGitRemote implements Comparable<BaseGitRemote> {
 			getName(), " (", getRemoteURL(), ")");
 	}
 
-	protected BaseGitRemote(
+	protected GitRemote(
 		GitWorkingDirectory gitWorkingDirectory, String[] remoteInputLines) {
 
 		_gitWorkingDirectory = gitWorkingDirectory;

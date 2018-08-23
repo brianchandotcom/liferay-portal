@@ -374,13 +374,11 @@ public class WorkflowInstanceViewDisplayContext
 
 	public ViewTypeItemList getViewTypes() {
 		return new ViewTypeItemList(getViewPortletURL(), getDisplayStyle()) {
-
 			{
 				addListViewTypeItem();
 
 				addTableViewTypeItem();
 			}
-
 		};
 	}
 

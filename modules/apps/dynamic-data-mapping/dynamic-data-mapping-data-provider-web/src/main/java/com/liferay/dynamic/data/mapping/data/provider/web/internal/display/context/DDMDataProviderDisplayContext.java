@@ -119,7 +119,6 @@ public class DDMDataProviderDisplayContext {
 
 	public List<DropdownItem> getActionItemsDropdownItems() {
 		return new DropdownItemList() {
-
 			{
 				add(
 					dropdownItem -> {
@@ -133,7 +132,6 @@ public class DDMDataProviderDisplayContext {
 						dropdownItem.setQuickAction(true);
 					});
 			}
-
 		};
 	}
 
@@ -152,14 +150,12 @@ public class DDMDataProviderDisplayContext {
 		}
 
 		return new CreationMenu() {
-
 			{
 				for (String ddmDataProviderType : getDDMDataProviderTypes()) {
 					addPrimaryDropdownItem(
 						getCreationMenuDropdownItem(ddmDataProviderType));
 				}
 			}
-
 		};
 	}
 
@@ -393,7 +389,6 @@ public class DDMDataProviderDisplayContext {
 
 	public List<ViewTypeItem> getViewTypesItems() {
 		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
-
 			{
 				String[] viewTypes = getDisplayViews();
 
@@ -406,7 +401,6 @@ public class DDMDataProviderDisplayContext {
 					}
 				}
 			}
-
 		};
 	}
 
@@ -520,7 +514,6 @@ public class DDMDataProviderDisplayContext {
 
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
 		return new DropdownItemList() {
-
 			{
 				add(
 					dropdownItem -> {
@@ -535,7 +528,6 @@ public class DDMDataProviderDisplayContext {
 								"all"));
 					});
 			}
-
 		};
 	}
 
@@ -555,12 +547,10 @@ public class DDMDataProviderDisplayContext {
 
 	protected List<DropdownItem> getOrderByDropdownItems() {
 		return new DropdownItemList() {
-
 			{
 				add(getOrderByDropdownItem("modified-date"));
 				add(getOrderByDropdownItem("name"));
 			}
-
 		};
 	}
 

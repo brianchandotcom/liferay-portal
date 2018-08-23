@@ -113,7 +113,6 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 					addTableViewTypeItem();
 				}
 			}
-
 		};
 	}
 

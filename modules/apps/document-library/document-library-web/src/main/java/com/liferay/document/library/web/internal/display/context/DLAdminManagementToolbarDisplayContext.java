@@ -388,7 +388,6 @@ public class DLAdminManagementToolbarDisplayContext {
 					addTableViewTypeItem();
 				}
 			}
-
 		};
 	}
 

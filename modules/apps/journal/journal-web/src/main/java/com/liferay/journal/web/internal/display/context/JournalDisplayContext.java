@@ -1354,7 +1354,6 @@ public class JournalDisplayContext {
 					addTableViewTypeItem();
 				}
 			}
-
 		};
 	}
 

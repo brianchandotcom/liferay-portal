@@ -225,7 +225,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 						userId, parentFolderId, folderName, StringPool.BLANK,
 						serviceContext);
 				}
-
 			});
 	}
 

@@ -191,6 +191,7 @@ public class SearchResultsPortletTest {
 		throws Exception {
 
 		SearchResultsPortlet searchResultsPortlet = new SearchResultsPortlet() {
+
 			{
 				assetEntryLocalService = Mockito.mock(
 					AssetEntryLocalService.class);
@@ -215,15 +216,15 @@ public class SearchResultsPortletTest {
 			}
 
 			@Override
+			protected String getCurrentURL(RenderRequest renderRequest) {
+				return RandomTestUtil.randomString();
+			}
+
+			@Override
 			protected HttpServletRequest getHttpServletRequest(
 				RenderRequest renderRequest) {
 
 				return Mockito.mock(HttpServletRequest.class);
-			}
-
-			@Override
-			protected String getCurrentURL(RenderRequest renderRequest) {
-				return RandomTestUtil.randomString();
 			}
 
 			@Override

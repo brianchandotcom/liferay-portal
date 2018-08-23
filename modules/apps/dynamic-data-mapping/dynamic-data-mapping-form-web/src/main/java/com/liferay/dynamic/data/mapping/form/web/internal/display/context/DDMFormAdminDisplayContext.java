@@ -146,7 +146,6 @@ public class DDMFormAdminDisplayContext {
 
 	public List<DropdownItem> getActionItemsDropdownItems() {
 		return new DropdownItemList() {
-
 			{
 				add(
 					dropdownItem -> {
@@ -158,7 +157,6 @@ public class DDMFormAdminDisplayContext {
 						dropdownItem.setQuickAction(true);
 					});
 			}
-
 		};
 	}
 
@@ -771,7 +769,6 @@ public class DDMFormAdminDisplayContext {
 			getPortletURL(), _renderResponse);
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
-
 			{
 				String[] viewTypes = getDisplayViews();
 
@@ -784,7 +781,6 @@ public class DDMFormAdminDisplayContext {
 					}
 				}
 			}
-
 		};
 	}
 

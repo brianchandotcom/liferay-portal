@@ -101,7 +101,6 @@ public class AssetAutoTaggerOSGiCommands {
 							newAssetTagNames.length - oldAssetTagNames.length,
 							assetEntry.getTitle()));
 				}
-
 			});
 	}
 

@@ -231,7 +231,6 @@ public class JournalFeedsDisplayContext {
 				addListViewTypeItem();
 				addTableViewTypeItem();
 			}
-
 		};
 	}
 

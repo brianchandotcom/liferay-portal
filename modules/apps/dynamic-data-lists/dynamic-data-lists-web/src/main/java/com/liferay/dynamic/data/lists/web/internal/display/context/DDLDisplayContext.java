@@ -136,7 +136,6 @@ public class DDLDisplayContext {
 						dropdownItem.setQuickAction(true);
 					});
 			}
-
 		};
 	}
 
@@ -192,7 +191,6 @@ public class DDLDisplayContext {
 								_ddlRequestHelper.getRequest(), "add"));
 					});
 			}
-
 		};
 	}
 
@@ -500,7 +498,6 @@ public class DDLDisplayContext {
 			getPortletURL(), _renderResponse);
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
-
 			{
 				if (ArrayUtil.contains(getDisplayViews(), "descriptive")) {
 					addListViewTypeItem();
@@ -510,7 +507,6 @@ public class DDLDisplayContext {
 					addTableViewTypeItem();
 				}
 			}
-
 		};
 	}
 

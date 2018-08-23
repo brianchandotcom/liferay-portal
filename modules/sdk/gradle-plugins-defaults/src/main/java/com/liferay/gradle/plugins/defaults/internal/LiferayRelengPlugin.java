@@ -332,6 +332,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			});
 
+		task.onlyIf(_skipIfMatchesIgnoreProjectRegexTaskSpec);
+
 		task.setDescription(
 			"Prints the project directory if this project contains " +
 				"dependencies to other projects.");

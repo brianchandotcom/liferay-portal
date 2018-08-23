@@ -17,9 +17,9 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class SubrepositoryLocalRepository extends LocalRepository {
+public class SubrepositoryLocalGitRepository extends LocalGitRepository {
 
-	protected SubrepositoryLocalRepository(
+	protected SubrepositoryLocalGitRepository(
 		String name, String upstreamBranchName) {
 
 		super(name, upstreamBranchName);
@@ -36,7 +36,7 @@ public class SubrepositoryLocalRepository extends LocalRepository {
 	}
 
 	@Override
-	protected String getDefaultRelativeRepositoryDirPath() {
+	protected String getDefaultRelativeGitRepositoryDirPath() {
 		String name = getName();
 
 		if (!name.endsWith("-private")) {

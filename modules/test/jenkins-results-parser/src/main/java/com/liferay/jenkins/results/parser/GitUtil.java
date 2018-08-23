@@ -68,12 +68,12 @@ public class GitUtil {
 			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
 		}
 
-		String remoteRepositoryURL = JenkinsResultsParserUtil.combine(
+		String remoteGitRepositoryURL = JenkinsResultsParserUtil.combine(
 			"git@github.com:", matcher.group("username"), "/",
 			matcher.group("repositoryName"), ".git");
 
 		return getRemoteGitRef(
-			matcher.group("refName"), new File("."), remoteRepositoryURL);
+			matcher.group("refName"), new File("."), remoteGitRepositoryURL);
 	}
 
 	public static RemoteGitRef getRemoteGitRef(
@@ -122,8 +122,8 @@ public class GitUtil {
 
 		List<RemoteGitRef> remoteGitRefs = new ArrayList<>();
 
-		RemoteRepository remoteRepository =
-			RepositoryFactory.getRemoteRepository(
+		RemoteGitRepository remoteGitRepository =
+			GitRepositoryFactory.getRemoteGitRepository(
 				remoteURLMatcher.group("hostname"),
 				remoteURLMatcher.group("repositoryName"),
 				remoteURLMatcher.group("username"));
@@ -139,7 +139,7 @@ public class GitUtil {
 
 			remoteGitRefs.add(
 				GitBranchFactory.newRemoteGitRef(
-					remoteRepository, gitLsRemoteMatcher.group("name"),
+					remoteGitRepository, gitLsRemoteMatcher.group("name"),
 					gitLsRemoteMatcher.group("sha"),
 					gitLsRemoteMatcher.group("type")));
 		}

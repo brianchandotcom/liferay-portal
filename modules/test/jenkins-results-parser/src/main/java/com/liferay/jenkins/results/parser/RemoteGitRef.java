@@ -27,23 +27,23 @@ public class RemoteGitRef
 		return name.compareTo(o.getName());
 	}
 
-	public RemoteRepository getRemoteRepository() {
-		return _remoteRepository;
+	public RemoteGitRepository getRemoteGitRepository() {
+		return _remoteGitRepository;
 	}
 
 	public String getUsername() {
-		RemoteRepository remoteRepository = getRemoteRepository();
+		RemoteGitRepository remoteGitRepository = getRemoteGitRepository();
 
-		return remoteRepository.getUsername();
+		return remoteGitRepository.getUsername();
 	}
 
 	@Override
 	public String toString() {
-		RemoteRepository remoteRepository = getRemoteRepository();
+		RemoteGitRepository remoteGitRepository = getRemoteGitRepository();
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(remoteRepository.getRemoteURL());
+		sb.append(remoteGitRepository.getRemoteURL());
 		sb.append(" (");
 		sb.append(getName());
 		sb.append(" - ");
@@ -54,17 +54,17 @@ public class RemoteGitRef
 	}
 
 	protected RemoteGitRef(
-		RemoteRepository remoteRepository, String name, String sha) {
+		RemoteGitRepository remoteGitRepository, String name, String sha) {
 
 		super(name, sha);
 
-		if (remoteRepository == null) {
+		if (remoteGitRepository == null) {
 			throw new IllegalArgumentException("Remote repository is null");
 		}
 
-		_remoteRepository = remoteRepository;
+		_remoteGitRepository = remoteGitRepository;
 	}
 
-	private final RemoteRepository _remoteRepository;
+	private final RemoteGitRepository _remoteGitRepository;
 
 }

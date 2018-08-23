@@ -17,8 +17,21 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Peter Yoo
  */
-public interface Repository {
+public class BaseGitRepository implements GitRepository {
 
-	public String getName();
+	public BaseGitRepository(String name) {
+		if ((name == null) || name.isEmpty()) {
+			throw new IllegalArgumentException("Name is null");
+		}
+
+		this.name = name;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	protected final String name;
 
 }

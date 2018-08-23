@@ -25,18 +25,18 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 		return (PortalGitWorkingDirectory)gitWorkingDirectory;
 	}
 
-	public PortalLocalRepository getPortalLocalRepository() {
-		LocalRepository localRepository = getLocalRepository();
+	public PortalLocalGitRepository getPortalLocalRepository() {
+		LocalGitRepository localRepository = getLocalRepository();
 
-		return (PortalLocalRepository)localRepository;
+		return (PortalLocalGitRepository)localRepository;
 	}
 
 	protected PortalLocalGitBranch(
-		LocalRepository localRepository, String name, String sha) {
+		LocalGitRepository localRepository, String name, String sha) {
 
 		super(localRepository, name, sha);
 
-		if (!(localRepository instanceof PortalLocalRepository)) {
+		if (!(localRepository instanceof PortalLocalGitRepository)) {
 			throw new IllegalArgumentException(
 				"Local repository is not a portal repository");
 		}

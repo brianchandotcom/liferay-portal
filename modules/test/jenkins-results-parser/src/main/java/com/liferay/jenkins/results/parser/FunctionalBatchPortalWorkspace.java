@@ -36,7 +36,7 @@ public class FunctionalBatchPortalWorkspace
 		properties.put("jsp.precompile", "on");
 		properties.put("jsp.precompile.parallel", "on");
 
-		PortalLocalRepository portalLocalRepository =
+		PortalLocalGitRepository portalLocalRepository =
 			getPrimaryPortalRepository();
 
 		portalLocalRepository.setBuildProperties(properties);

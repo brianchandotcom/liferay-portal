@@ -17,9 +17,11 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class PluginsLocalRepository extends LocalRepository {
+public class PluginsLocalGitRepository extends LocalGitRepository {
 
-	protected PluginsLocalRepository(String name, String upstreamBranchName) {
+	protected PluginsLocalGitRepository(
+		String name, String upstreamBranchName) {
+
 		super(name, upstreamBranchName);
 
 		if (upstreamBranchName.startsWith("ee-") ||
@@ -46,7 +48,7 @@ public class PluginsLocalRepository extends LocalRepository {
 	}
 
 	@Override
-	protected String getDefaultRelativeRepositoryDirPath() {
+	protected String getDefaultRelativeGitRepositoryDirPath() {
 		String upstreamBranchName = getUpstreamBranchName();
 
 		if (upstreamBranchName.equals("master")) {

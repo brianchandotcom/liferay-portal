@@ -120,8 +120,6 @@ public class MediaObjectNestedCollectionResource
 		).addRelatedCollection(
 			"category", CategoryIdentifier.class
 		).addString(
-			"contentSize", fileEntry -> String.valueOf(fileEntry.getSize())
-		).addString(
 			"description", FileEntry::getDescription
 		).addString(
 			"encodingFormat", FileEntry::getMimeType

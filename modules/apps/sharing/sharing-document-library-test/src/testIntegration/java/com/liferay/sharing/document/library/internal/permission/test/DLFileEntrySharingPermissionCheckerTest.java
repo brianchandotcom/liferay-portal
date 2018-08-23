@@ -421,7 +421,7 @@ public class DLFileEntrySharingPermissionCheckerTest {
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Inject(
-		filter = "model.class.name=com.liferay.portal.kernel.repository.model.DLFileEntry"
+		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
 	)
 	private SharingPermissionChecker _sharingPermissionChecker;
 

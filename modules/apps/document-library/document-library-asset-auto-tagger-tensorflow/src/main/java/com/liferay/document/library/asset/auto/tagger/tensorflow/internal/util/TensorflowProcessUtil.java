@@ -27,7 +27,6 @@ import com.liferay.petra.process.ProcessLog.Level;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,37 +50,53 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.Dictionary;
-import java.util.Map;
 import java.util.concurrent.Future;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	configurationPid = "com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration",
-	service = TensorflowProcess.class
-)
-public class TensorflowProcess {
+public class TensorflowProcessUtil {
 
-	public void resetCounter() {
+	public static void activate(BundleContext bundleContext)
+		throws IOException {
+
+		Bundle bundle = bundleContext.getBundle();
+
+		_tensorflowWorkDir = bundle.getDataFile("tensorflow-workdir");
+
+		_tensorflowWorkDir.mkdirs();
+
+		_processConfig = _createProcessConfig(
+			bundle, _tensorflowWorkDir.toPath());
+	}
+
+	public static void deactivate() {
+		stop();
+
+		FileUtil.deltree(_tensorflowWorkDir);
+	}
+
+	public static void resetCounter() {
 		_processStarts = 0;
 	}
 
-	public <T extends Serializable> T run(ProcessCallable<T> processCallable) {
+	public static <T extends Serializable> T run(
+		ProcessExecutor processExecutor,
+		TensorFlowImageAssetAutoTagProviderProcessConfiguration
+			tensorFlowImageAssetAutoTagProviderProcessConfiguration,
+		ProcessCallable<T> processCallable) {
+
 		ProcessChannel<String> processChannel = _processChannel;
 
 		if (processChannel == null) {
-			synchronized (this) {
-				processChannel = _startProcess();
+			synchronized (TensorflowProcessUtil.class) {
+				processChannel = _startProcess(
+					processExecutor,
+					tensorFlowImageAssetAutoTagProviderProcessConfiguration);
 			}
 		}
 
@@ -97,7 +112,7 @@ public class TensorflowProcess {
 		}
 	}
 
-	public synchronized void stop() {
+	public static synchronized void stop() {
 		if (_processChannel != null) {
 			Future<?> future = _processChannel.getProcessNoticeableFuture();
 
@@ -105,38 +120,6 @@ public class TensorflowProcess {
 
 			_processChannel = null;
 		}
-	}
-
-	@Activate
-	protected void activate(
-			BundleContext bundleContext, Map<String, Object> properties)
-		throws IOException {
-
-		Bundle bundle = bundleContext.getBundle();
-
-		_tensorflowWorkDir = bundle.getDataFile("tensorflow-workdir");
-
-		_tensorflowWorkDir.mkdirs();
-
-		_processConfig = _createProcessConfig(
-			bundle, _tensorflowWorkDir.toPath());
-
-		modified(properties);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		stop();
-
-		FileUtil.deltree(_tensorflowWorkDir);
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) throws IOException {
-		_tensorFlowImageAssetAutoTagProviderProcessConfiguration =
-			ConfigurableUtil.createConfigurable(
-				TensorFlowImageAssetAutoTagProviderProcessConfiguration.class,
-				properties);
 	}
 
 	private static String _createClassPath(Bundle bundle, Path tempPath)
@@ -172,7 +155,7 @@ public class TensorflowProcess {
 		}
 
 		ProtectionDomain protectionDomain =
-			TensorflowProcess.class.getProtectionDomain();
+			TensorflowProcessUtil.class.getProtectionDomain();
 
 		CodeSource codeSource = protectionDomain.getCodeSource();
 
@@ -225,23 +208,28 @@ public class TensorflowProcess {
 						processLog.getMessage(), processLog.getThrowable());
 				}
 			});
-		builder.setReactClassLoader(TensorflowProcess.class.getClassLoader());
+		builder.setReactClassLoader(
+			TensorflowProcessUtil.class.getClassLoader());
 		builder.setRuntimeClassPath(classPath);
 
 		return builder.build();
 	}
 
-	private ProcessChannel<String> _startProcess() {
+	private static ProcessChannel<String> _startProcess(
+		ProcessExecutor processExecutor,
+		TensorFlowImageAssetAutoTagProviderProcessConfiguration
+			tensorFlowImageAssetAutoTagProviderProcessConfiguration) {
+
 		ProcessChannel<String> processChannel;
 
 		if (_processChannel == null) {
 			try {
 				int maximumNumberOfRelaunches =
-					_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
+					tensorFlowImageAssetAutoTagProviderProcessConfiguration.
 						maximumNumberOfRelaunches();
 
 				long maximumNumberOfRelaunchesTimeoutMillis =
-					_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
+					tensorFlowImageAssetAutoTagProviderProcessConfiguration.
 						maximumNumberOfRelaunchesTimeout() * 1000;
 
 				if ((System.currentTimeMillis() - _lastProcessStartMillis) >
@@ -263,7 +251,7 @@ public class TensorflowProcess {
 								RESET_PROCESS_COUNTER));
 				}
 
-				_processChannel = _processExecutor.execute(
+				_processChannel = processExecutor.execute(
 					_processConfig, new TensorFlowDaemonProcessCallable());
 
 				_lastProcessStartMillis = System.currentTimeMillis();
@@ -279,18 +267,12 @@ public class TensorflowProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TensorflowProcess.class);
+		TensorflowProcessUtil.class);
 
-	private long _lastProcessStartMillis;
-	private volatile ProcessChannel<String> _processChannel;
-	private ProcessConfig _processConfig;
-
-	@Reference
-	private ProcessExecutor _processExecutor;
-
-	private int _processStarts;
-	private volatile TensorFlowImageAssetAutoTagProviderProcessConfiguration
-		_tensorFlowImageAssetAutoTagProviderProcessConfiguration;
-	private File _tensorflowWorkDir;
+	private static long _lastProcessStartMillis;
+	private static volatile ProcessChannel<String> _processChannel;
+	private static ProcessConfig _processConfig;
+	private static int _processStarts;
+	private static File _tensorflowWorkDir;
 
 }

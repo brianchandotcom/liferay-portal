@@ -16,9 +16,12 @@ package com.liferay.document.library.asset.auto.tagger.tensorflow.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.constants.TensorflowAssetAutoTagProviderConstants;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.GetLabelProbabilitiesProcessCallable;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcess;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcessUtil;
+import com.liferay.petra.process.ProcessExecutor;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -39,6 +42,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -48,12 +52,14 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(
+	configurationPid = "com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration",
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = AssetAutoTagProvider.class
 )
@@ -96,15 +102,30 @@ public class TensorFlowImageAssetAutoTagProvider
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws IOException {
+	protected void activate(
+			BundleContext bundleContext, Map<String, Object> properties)
+		throws IOException {
+
 		Bundle bundle = bundleContext.getBundle();
+
+		TensorflowProcessUtil.activate(bundleContext);
+
+		modified(properties);
 
 		_initializeLabels(bundle);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_tensorflowProcess.stop();
+		TensorflowProcessUtil.deactivate();
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_tensorFlowImageAssetAutoTagProviderProcessConfiguration =
+			ConfigurableUtil.createConfigurable(
+				TensorFlowImageAssetAutoTagProviderProcessConfiguration.class,
+				properties);
 	}
 
 	private Stream<Integer> _getBestIndexesStream(
@@ -142,7 +163,9 @@ public class TensorFlowImageAssetAutoTagProvider
 	private List<String> _label(
 		byte[] imageBytes, String mimeType, float confidenceThreshold) {
 
-		float[] labelProbabilities = _tensorflowProcess.run(
+		float[] labelProbabilities = TensorflowProcessUtil.run(
+			_processExecutor,
+			_tensorFlowImageAssetAutoTagProviderProcessConfiguration,
 			new GetLabelProbabilitiesProcessCallable(imageBytes, mimeType));
 
 		Stream<Integer> stream = _getBestIndexesStream(
@@ -169,6 +192,9 @@ public class TensorFlowImageAssetAutoTagProvider
 	private String[] _labels;
 
 	@Reference
-	private TensorflowProcess _tensorflowProcess;
+	private ProcessExecutor _processExecutor;
+
+	private volatile TensorFlowImageAssetAutoTagProviderProcessConfiguration
+		_tensorFlowImageAssetAutoTagProviderProcessConfiguration;
 
 }

@@ -14,10 +14,9 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.osgi.commands;
 
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcess;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcessUtil;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -38,10 +37,7 @@ public class TensorflowAssetAutoTagProviderOSGiCommands {
 	public static final String SCOPE = "tensorflowAssetAutoTagProvider";
 
 	public void resetProcessCounter() {
-		_tensorflowProcess.resetCounter();
+		TensorflowProcessUtil.resetCounter();
 	}
-
-	@Reference
-	private TensorflowProcess _tensorflowProcess;
 
 }

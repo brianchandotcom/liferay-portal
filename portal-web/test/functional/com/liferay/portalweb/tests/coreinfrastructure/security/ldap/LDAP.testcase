@@ -61,11 +61,11 @@
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
 
-		<!-- LPS-71630 -->
 		<execute macro="PortalSettings#configureLDAPSetting">
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
 
+		<!-- LPS-71630 -->
 		<execute macro="PortalSettings#viewEnabledLDAPSetting">
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
@@ -128,11 +128,11 @@
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
 
-		<!-- LPS-71630 -->
 		<execute macro="PortalSettings#configureLDAPSetting">
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
 
+		<!-- LPS-71630 -->
 		<execute macro="PortalSettings#viewEnabledLDAPSetting">
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>

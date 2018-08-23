@@ -1,4 +1,4 @@
-drop table KaleoTaskForm;
+drop table if exists KaleoTaskForm;
 
 create table KaleoTaskForm (
 	kaleoTaskFormId LONG not null primary key,
@@ -23,7 +23,7 @@ create table KaleoTaskForm (
 	priority INTEGER
 );
 
-drop table KaleoTaskFormInstance;
+drop table if exists KaleoTaskFormInstance;
 
 create table KaleoTaskFormInstance (
 	kaleoTaskFormInstanceId LONG not null primary key,
@@ -45,7 +45,7 @@ create table KaleoTaskFormInstance (
 	metadata STRING null
 );
 
-drop table KaleoDefinitionVersion;
+drop table if exists KaleoDefinitionVersion;
 
 create table KaleoDefinitionVersion (
 	kaleoDefinitionVersionId LONG not null primary key,
@@ -80,8 +80,6 @@ alter table KaleoNotificationRecipient add kaleoDefinitionVersionId LONG null;
 alter table KaleoTask add kaleoDefinitionVersionId LONG null;
 alter table KaleoTaskAssignment add kaleoDefinitionVersionId LONG null;
 alter table KaleoTaskAssignmentInstance add kaleoDefinitionVersionId LONG null;
-alter table KaleoTaskForm add kaleoDefinitionVersionId LONG null;
-alter table KaleoTaskFormInstance add kaleoDefinitionVersionId LONG null;
 alter table KaleoTaskInstanceToken add kaleoDefinitionVersionId LONG null;
 alter table KaleoTimer add kaleoDefinitionVersionId LONG null;
 alter table KaleoTimerInstanceToken add kaleoDefinitionVersionId LONG null;

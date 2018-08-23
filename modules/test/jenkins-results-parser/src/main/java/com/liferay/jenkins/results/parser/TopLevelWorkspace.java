@@ -15,11 +15,8 @@
 package com.liferay.jenkins.results.parser;
 
 /**
- * @author Michael Hashimoto
+ * @author Peter Yoo
  */
-public interface Workspace {
+public interface TopLevelWorkspace extends Workspace {
 
-	public void setupWorkspace();
-
-	public void setJobProperties(Job job);
 }

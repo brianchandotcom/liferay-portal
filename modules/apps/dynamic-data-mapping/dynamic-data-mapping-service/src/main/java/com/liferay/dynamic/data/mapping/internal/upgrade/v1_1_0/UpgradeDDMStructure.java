@@ -18,8 +18,12 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.expression.VariableDependencies;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
@@ -46,12 +50,12 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	public UpgradeDDMStructure(
 		DDMExpressionFactory ddmExpressionFactory,
-		DDMFormJSONDeserializer ddmFormJSONDeserializer,
-		DDMFormJSONSerializer ddmFormJSONSerializer) {
+		DDMFormDeserializer ddmFormDeserializer,
+		DDMFormSerializer ddmFormSerializer) {
 
 		_ddmExpressionFactory = ddmExpressionFactory;
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
-		_ddmFormJSONSerializer = ddmFormJSONSerializer;
+		_ddmFormDeserializer = ddmFormDeserializer;
+		_ddmFormSerializer = ddmFormSerializer;
 	}
 
 	@Override
@@ -101,7 +105,15 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	protected String updateDefinition(String definition)
 		throws PortalException {
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(definition);
+		DDMFormDeserializerDeserializeRequest.Builder deserializerBuilder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				definition);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(deserializerBuilder.build());
+
+		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
@@ -126,7 +138,13 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 		ddmForm.setDDMFormRules(ddmFormRules);
 
-		return _ddmFormJSONSerializer.serialize(ddmForm);
+		DDMFormSerializerSerializeRequest.Builder serializerBuilder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			_ddmFormSerializer.serialize(serializerBuilder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
 	protected void upgradeDDMStructureDefinition() throws Exception {
@@ -198,7 +216,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		UpgradeDDMStructure.class);
 
 	private final DDMExpressionFactory _ddmExpressionFactory;
-	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private final DDMFormJSONSerializer _ddmFormJSONSerializer;
+	private final DDMFormDeserializer _ddmFormDeserializer;
+	private final DDMFormSerializer _ddmFormSerializer;
 
 }

@@ -28,12 +28,21 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.dynamic.data.mapping.internal.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -132,12 +141,12 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	public UpgradeDynamicDataMapping(
 		AssetEntryLocalService assetEntryLocalService, DDM ddm,
-		DDMFormJSONDeserializer ddmFormJSONDeserializer,
-		DDMFormJSONSerializer ddmFormJSONSerializer,
-		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer,
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
-		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer,
-		DDMFormXSDDeserializer ddmFormXSDDeserializer,
+		DDMFormDeserializer ddmFormJSONDeserializer,
+		DDMFormDeserializer ddmFormXSDDeserializer,
+		DDMFormLayoutSerializer ddmFormLayoutSerializer,
+		DDMFormSerializer ddmFormSerializer,
+		DDMFormValuesDeserializer ddmFormValuesDeserializer,
+		DDMFormValuesSerializer ddmFormValuesSerializer,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileVersionLocalService dlFileVersionLocalService,
 		DLFolderLocalService dlFolderLocalService,
@@ -152,11 +161,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		_assetEntryLocalService = assetEntryLocalService;
 		_ddm = ddm;
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
-		_ddmFormJSONSerializer = ddmFormJSONSerializer;
-		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
-		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
 		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
+		_ddmFormLayoutSerializer = ddmFormLayoutSerializer;
+		_ddmFormSerializer = ddmFormSerializer;
+		_ddmFormValuesDeserializer = ddmFormValuesDeserializer;
+		_ddmFormValuesSerializer = ddmFormValuesSerializer;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_dlFileVersionLocalService = dlFileVersionLocalService;
 		_dlFolderLocalService = dlFolderLocalService;
@@ -247,6 +256,38 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				_ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	}
+
+	protected DDMForm deserialize(String content, String type) {
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializer ddmFormDeserializer = null;
+
+		if (StringUtil.equalsIgnoreCase(type, "json")) {
+			ddmFormDeserializer = _ddmFormJSONDeserializer;
+		}
+		else if (StringUtil.equalsIgnoreCase(type, "xsd")) {
+			ddmFormDeserializer = _ddmFormXSDDeserializer;
+		}
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		setUpClassNameIds();
@@ -301,12 +342,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					if (storageType.equals("expando") ||
 						storageType.equals("xml")) {
 
-						ddmForm = _ddmFormXSDDeserializer.deserialize(
-							definition);
+						ddmForm = deserialize(definition, "xsd");
 					}
 					else {
-						ddmForm = _ddmFormJSONDeserializer.deserialize(
-							definition);
+						ddmForm = deserialize(definition, "json");
 					}
 
 					try {
@@ -399,7 +438,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected String getDefaultDDMFormLayoutDefinition(DDMForm ddmForm) {
 		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
-		return _ddmFormLayoutJSONSerializer.serialize(ddmFormLayout);
+		DDMFormLayoutSerializerSerializeRequest.Builder builder =
+			DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormLayout);
+
+		DDMFormLayoutSerializerSerializeResponse
+			ddmFormLayoutSerializerSerializeResponse =
+				_ddmFormLayoutSerializer.serialize(builder.build());
+
+		return ddmFormLayoutSerializerSerializeResponse.getContent();
 	}
 
 	protected Map<String, String> getExpandoValuesMap(long expandoRowId)
@@ -611,11 +658,25 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected String toJSON(DDMForm ddmForm) {
-		return _ddmFormJSONSerializer.serialize(ddmForm);
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			_ddmFormSerializer.serialize(builder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
 	protected String toJSON(DDMFormValues ddmFormValues) {
-		return _ddmFormValuesJSONSerializer.serialize(ddmFormValues);
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				_ddmFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
 	protected String toXML(Map<String, String> expandoValuesMap) {
@@ -944,8 +1005,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getFullHierarchyDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues =
-					_ddmFormValuesJSONDeserializer.deserialize(ddmForm, data_);
+				DDMFormValues ddmFormValues = deserialize(data_, ddmForm);
 
 				transformFieldTypeDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
@@ -997,8 +1057,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getFullHierarchyDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues =
-					_ddmFormValuesJSONDeserializer.deserialize(ddmForm, data_);
+				DDMFormValues ddmFormValues = deserialize(data_, ddmForm);
 
 				transformFieldTypeDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
@@ -1370,8 +1429,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					classPK, script);
 
 				if (language.equals("xsd")) {
-					DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(
-						updatedScript);
+					DDMForm ddmForm = deserialize(updatedScript, "xsd");
 
 					ddmForm = updateDDMFormFields(ddmForm);
 
@@ -1617,13 +1675,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final DDM _ddm;
 	private long _ddmContentClassNameId;
-	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private final DDMFormJSONSerializer _ddmFormJSONSerializer;
-	private final DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
+	private final DDMFormDeserializer _ddmFormJSONDeserializer;
+	private final DDMFormLayoutSerializer _ddmFormLayoutSerializer;
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
-	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
-	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
-	private final DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	private final DDMFormSerializer _ddmFormSerializer;
+	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer;
+	private final DDMFormValuesSerializer _ddmFormValuesSerializer;
+	private final DDMFormDeserializer _ddmFormXSDDeserializer;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final DLFileVersionLocalService _dlFileVersionLocalService;
 	private final DLFolderLocalService _dlFolderLocalService;

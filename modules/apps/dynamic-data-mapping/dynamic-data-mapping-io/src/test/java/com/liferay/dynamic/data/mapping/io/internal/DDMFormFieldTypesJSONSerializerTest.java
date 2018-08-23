@@ -17,7 +17,9 @@ package com.liferay.dynamic.data.mapping.io.internal;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeResponse;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -57,8 +59,7 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 	public void testSerializationWithEmptyParameterList() throws Exception {
 		List<DDMFormFieldType> ddmFormFieldTypes = Collections.emptyList();
 
-		String actualJSON = _ddmFormFieldTypesJSONSerializer.serialize(
-			ddmFormFieldTypes);
+		String actualJSON = serialize(ddmFormFieldTypes);
 
 		Assert.assertEquals("[]", actualJSON);
 	}
@@ -71,8 +72,7 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 
 		ddmFormFieldTypes.add(ddmFormFieldType);
 
-		String actualJSON = _ddmFormFieldTypesJSONSerializer.serialize(
-			ddmFormFieldTypes);
+		String actualJSON = serialize(ddmFormFieldTypes);
 
 		JSONAssert.assertEquals(createExpectedJSON(), actualJSON, false);
 	}
@@ -133,19 +133,31 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		return ddmFormFieldTypeServicesTracker;
 	}
 
+	protected String serialize(List<DDMFormFieldType> ddmFormFieldTypes) {
+		DDMFormFieldTypesSerializerSerializeRequest.Builder builder =
+			DDMFormFieldTypesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormFieldTypes);
+
+		DDMFormFieldTypesSerializerSerializeResponse
+			ddmFormFieldTypesSerializerSerializeResponse =
+				_ddmFormFieldTypesSerializer.serialize(builder.build());
+
+		return ddmFormFieldTypesSerializerSerializeResponse.getContent();
+	}
+
 	protected void setUpDDMFormFieldTypesJSONSerializer() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormFieldTypesJSONSerializerImpl.class,
+			DDMFormFieldTypesJSONSerializer.class,
 			"_ddmFormFieldTypeServicesTracker");
 
 		field.set(
-			_ddmFormFieldTypesJSONSerializer,
+			_ddmFormFieldTypesSerializer,
 			getMockedDDMFormFieldTypeServicesTracker());
 
 		field = ReflectionUtil.getDeclaredField(
-			DDMFormFieldTypesJSONSerializerImpl.class, "_jsonFactory");
+			DDMFormFieldTypesJSONSerializer.class, "_jsonFactory");
 
-		field.set(_ddmFormFieldTypesJSONSerializer, new JSONFactoryImpl());
+		field.set(_ddmFormFieldTypesSerializer, new JSONFactoryImpl());
 	}
 
 	protected void whenDDMFormFieldTypeGetName(
@@ -158,8 +170,7 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		);
 	}
 
-	private final DDMFormFieldTypesJSONSerializer
-		_ddmFormFieldTypesJSONSerializer =
-			new DDMFormFieldTypesJSONSerializerImpl();
+	private final DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer =
+		new DDMFormFieldTypesJSONSerializer();
 
 }

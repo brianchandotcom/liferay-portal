@@ -17,7 +17,10 @@ package com.liferay.dynamic.data.mapping.data.provider.web.internal.portlet.acti
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.util.DDMDataProviderPortletUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -61,6 +64,22 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class UpdateDataProviderMVCActionCommand
 	extends AddDataProviderMVCActionCommand {
+
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -143,13 +162,12 @@ public class UpdateDataProviderMVCActionCommand
 	}
 
 	protected DDMFormValues getStoredDDMFormValues(
-			DDMForm dataProviderInstanceSettingsDDMForm,
-			String dataProviderInstanceDefinition)
-		throws PortalException {
+		DDMForm dataProviderInstanceSettingsDDMForm,
+		String dataProviderInstanceDefinition) {
 
-		return ddmFormValuesJSONDeserializer.deserialize(
-			dataProviderInstanceSettingsDDMForm,
-			dataProviderInstanceDefinition);
+		return deserialize(
+			dataProviderInstanceDefinition,
+			dataProviderInstanceSettingsDDMForm);
 	}
 
 	protected void restoreDDMFormFieldValue(
@@ -230,6 +248,6 @@ public class UpdateDataProviderMVCActionCommand
 	}
 
 	@Reference
-	protected DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;
+	protected DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker;
 
 }

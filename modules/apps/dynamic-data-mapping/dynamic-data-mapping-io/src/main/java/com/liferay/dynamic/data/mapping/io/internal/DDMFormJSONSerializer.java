@@ -18,7 +18,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -45,11 +47,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true)
-public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
+@Component(immediate = true, property = "ddm.form.serializer.type=json")
+public class DDMFormJSONSerializer implements DDMFormSerializer {
 
 	@Override
-	public String serialize(DDMForm ddmForm) {
+	public DDMFormSerializerSerializeResponse serialize(
+		DDMFormSerializerSerializeRequest ddmFormSerializerSerializeRequest) {
+
+		DDMForm ddmForm = ddmFormSerializerSerializeRequest.getDDMForm();
+
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addAvailableLanguageIds(jsonObject, ddmForm.getAvailableLocales());
@@ -59,7 +65,11 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		addSuccessPageSettings(
 			jsonObject, ddmForm.getDDMFormSuccessPageSettings());
 
-		return jsonObject.toString();
+		DDMFormSerializerSerializeResponse.Builder builder =
+			DDMFormSerializerSerializeResponse.Builder.newBuilder(
+				jsonObject.toString());
+
+		return builder.build();
 	}
 
 	protected void addAvailableLanguageIds(

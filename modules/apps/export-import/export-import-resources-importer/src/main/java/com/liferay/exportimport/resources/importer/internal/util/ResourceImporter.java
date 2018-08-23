@@ -20,8 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -69,8 +68,8 @@ public class ResourceImporter extends FileSystemImporter {
 
 	public ResourceImporter(
 		AssetTagLocalService assetTagLocalService,
-		DDMFormJSONDeserializer ddmFormJSONDeserializer,
-		DDMFormXSDDeserializer ddmFormXSDDeserializer,
+		DDMFormDeserializer ddmFormJSONDeserializer,
+		DDMFormDeserializer ddmFormXSDDeserializer,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService, DDMXML ddmxml,
 		DLAppLocalService dlAppLocalService,

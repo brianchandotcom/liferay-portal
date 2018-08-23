@@ -29,6 +29,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.spec.SkipIfMatchesIgnoreProjectRegexTaskSpec;
 import com.liferay.gradle.plugins.defaults.tasks.MergeFilesTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
@@ -46,8 +47,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Callable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
@@ -734,36 +733,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					String ignoreProjectRegex =
-						GradleUtil.getTaskPrefixedProperty(
-							task, "ignore.project.regex");
-
-					if (Validator.isNull(ignoreProjectRegex)) {
-						return true;
-					}
-
-					Project project = task.getProject();
-
-					String projectName = project.getName();
-
-					Pattern pattern = Pattern.compile(ignoreProjectRegex);
-
-					Matcher matcher = pattern.matcher(projectName);
-
-					if (!matcher.find()) {
-						return true;
-					}
-
-					return false;
-				}
-
-			});
-
-		task.onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
 					File relengIgnoreDir = GradleUtil.getRootDir(
 						task.getProject(), RELENG_IGNORE_FILE_NAME);
 
@@ -799,6 +768,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		task.onlyIf(_skipIfMatchesIgnoreProjectRegexTaskSpec);
 	}
 
 	private void _configureTaskPrintStaleArtifactForOSGi(Task task) {
@@ -1039,5 +1010,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		"liferay.releng.supported";
 
 	private static final String _RELENG_DIR_NAME = ".releng";
+
+	private static final Spec<Task> _skipIfMatchesIgnoreProjectRegexTaskSpec =
+		new SkipIfMatchesIgnoreProjectRegexTaskSpec();
 
 }

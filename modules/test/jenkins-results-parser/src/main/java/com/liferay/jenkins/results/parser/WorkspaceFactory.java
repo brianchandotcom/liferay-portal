@@ -31,7 +31,8 @@ public abstract class WorkspaceFactory {
 		}
 
 		if (batchName.contains("functional")) {
-			return new FunctionalBatchPortalWorkspace(gitHubURL, upstreamBranchName);
+			return new FunctionalBatchPortalWorkspace(
+				gitHubURL, upstreamBranchName);
 		}
 		else if (batchName.contains("integration") ||
 				 batchName.contains("unit")) {

@@ -19,7 +19,8 @@ import java.util.Properties;
 /**
  * @author Michael Hashimoto
  */
-public class FunctionalBatchPortalWorkspace extends PortalWorkspace implements BatchWorkspace{
+public class FunctionalBatchPortalWorkspace
+	extends PortalWorkspace implements BatchWorkspace {
 
 	protected FunctionalBatchPortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {

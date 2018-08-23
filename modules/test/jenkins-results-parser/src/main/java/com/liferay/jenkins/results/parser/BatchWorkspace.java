@@ -18,5 +18,4 @@ package com.liferay.jenkins.results.parser;
  * @author Peter Yoo
  */
 public interface BatchWorkspace extends Workspace {
-
 }

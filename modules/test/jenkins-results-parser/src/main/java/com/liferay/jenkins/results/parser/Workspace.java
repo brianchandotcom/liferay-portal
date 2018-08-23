@@ -19,7 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public interface Workspace {
 
+	public void setJobProperties(Job job);
+
 	public void setupWorkspace();
 
-	public void setJobProperties(Job job);
 }

@@ -19,7 +19,8 @@ import java.util.Properties;
 /**
  * @author Michael Hashimoto
  */
-public class JunitBatchPortalWorkspace extends PortalWorkspace implements BatchWorkspace{
+public class JunitBatchPortalWorkspace
+	extends PortalWorkspace implements BatchWorkspace {
 
 	protected JunitBatchPortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {

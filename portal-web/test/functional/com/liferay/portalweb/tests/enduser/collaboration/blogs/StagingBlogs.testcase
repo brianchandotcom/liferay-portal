@@ -91,7 +91,7 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Blogs#publishEntryCP">
+		<execute macro="Blogs#publishEntryViaSAP">
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
@@ -134,7 +134,7 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#assertNoPublishCP">
+		<execute macro="Blogs#assertNoPublishOption">
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>

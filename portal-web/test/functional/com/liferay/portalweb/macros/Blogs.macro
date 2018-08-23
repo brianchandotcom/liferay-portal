@@ -387,7 +387,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="assertNoPublishCP">
+	<command name="assertNoPublishOption">
 		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="list" />
 		</execute>
@@ -498,7 +498,7 @@
 		<execute macro="PortletEntry#publish" />
 	</command>
 
-	<command name="publishEntryCP">
+	<command name="publishEntryViaSAP">
 		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="list" />
 		</execute>

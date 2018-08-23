@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -80,13 +81,6 @@ public abstract class BaseAssetAutoTaggerTestCase {
 		_assetAutoTagProviderServiceRegistration.unregister();
 	}
 
-	@FunctionalInterface
-	public interface UnsafeRunnable {
-
-		public void run() throws Exception;
-
-	}
-
 	protected AssetEntry addFileEntryAssetEntry() throws PortalException {
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -142,7 +136,8 @@ public abstract class BaseAssetAutoTaggerTestCase {
 		Assert.assertEquals(tags.toString(), 0, tags.size());
 	}
 
-	protected void withAutoTaggerEnabled(UnsafeRunnable unsafeRunnable)
+	protected void withAutoTaggerEnabled(
+			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();

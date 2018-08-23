@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import java.util.HashMap;
 
 import org.jabsorb.JSONSerializer;
-import org.jabsorb.serializer.ObjectMatch;
-import org.jabsorb.serializer.SerializerState;
 import org.jabsorb.serializer.UnmarshallException;
 
 import org.json.JSONObject;
@@ -33,32 +31,6 @@ import org.json.JSONObject;
  * @author Tomas Polesovsky
  */
 public class LiferayJSONSerializer extends JSONSerializer {
-
-	@Override
-	public ObjectMatch tryUnmarshall(
-			SerializerState serializerState,
-			@SuppressWarnings("rawtypes") Class clazz, Object jsonObj)
-		throws UnmarshallException {
-
-		if (!(serializerState instanceof LiferaySerializerState)) {
-			serializerState = new LiferaySerializerState();
-		}
-
-		return super.tryUnmarshall(serializerState, clazz, jsonObj);
-	}
-
-	@Override
-	public Object unmarshall(
-			SerializerState serializerState,
-			@SuppressWarnings("rawtypes") Class clazz, Object jsonObj)
-		throws UnmarshallException {
-
-		if (!(serializerState instanceof LiferaySerializerState)) {
-			serializerState = new LiferaySerializerState();
-		}
-
-		return super.unmarshall(serializerState, clazz, jsonObj);
-	}
 
 	@Override
 	protected Class getClassFromHint(Object object) throws UnmarshallException {

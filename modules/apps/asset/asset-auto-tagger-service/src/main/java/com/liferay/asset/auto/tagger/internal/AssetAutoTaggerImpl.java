@@ -59,11 +59,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerConfiguration",
-	service = AssetAutoTagger.class
+	service = {AssetAutoTagger.class, AssetAutoTaggerImpl.class}
 )
 public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
-	@Override
 	public boolean isAutoTaggable(AssetEntry assetEntry) {
 		try {
 			AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =

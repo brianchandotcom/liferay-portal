@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface AssetAutoTagger {
 
-	public boolean isAutoTaggable(AssetEntry assetEntry);
-
 	public void tag(AssetEntry assetEntry) throws PortalException;
 
 	public void untag(AssetEntry assetEntry) throws PortalException;

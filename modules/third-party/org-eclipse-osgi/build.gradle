@@ -24,6 +24,7 @@ patch {
 	fileNames "org/eclipse/osgi/internal/framework/EquinoxConfiguration.java"
 	fileNames "org/eclipse/osgi/internal/framework/EquinoxContainerAdaptor.java"
 	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java"
+	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java"
 
 	originalLibModuleName = "org.eclipse.osgi"
 }

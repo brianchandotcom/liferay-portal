@@ -53,7 +53,7 @@
 		</if>
 	</tear-down>
 
-	<command name="PublishBlogEntryViaSAP" priority="3">
+	<command name="PublishEntryViaSAP" priority="3">
 		<description message="This test publishes a blog entry to live via Single Asset Publishing" />
 
 		<execute macro="Navigator#gotoStagedSitePage">

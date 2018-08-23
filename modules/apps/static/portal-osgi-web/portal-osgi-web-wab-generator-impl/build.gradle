@@ -4,7 +4,7 @@ targetCompatibility = "1.8"
 dependencies {
 	compileInclude group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.3.0"
 
-	compileOnly group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.53"
+	compileOnly group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.54"
 	compileOnly group: "com.liferay", name: "com.liferay.whip", version: "1.0.1"
 	compileOnly group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-3"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

@@ -22,30 +22,30 @@ import java.io.File;
 public class LocalGitBranch extends BaseGitRef {
 
 	public File getDirectory() {
-		LocalRepository localRepository = getLocalRepository();
+		LocalGitRepository localRepository = getLocalRepository();
 
 		return localRepository.getDirectory();
 	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
-		LocalRepository localRepository = getLocalRepository();
+		LocalGitRepository localRepository = getLocalRepository();
 
 		return localRepository.getGitWorkingDirectory();
 	}
 
-	public LocalRepository getLocalRepository() {
+	public LocalGitRepository getLocalRepository() {
 		return _localRepository;
 	}
 
 	public String getUpstreamBranchName() {
-		LocalRepository localRepository = getLocalRepository();
+		LocalGitRepository localRepository = getLocalRepository();
 
 		return localRepository.getUpstreamBranchName();
 	}
 
 	@Override
 	public String toString() {
-		LocalRepository localRepository = getLocalRepository();
+		LocalGitRepository localRepository = getLocalRepository();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -60,7 +60,7 @@ public class LocalGitBranch extends BaseGitRef {
 	}
 
 	protected LocalGitBranch(
-		LocalRepository localRepository, String name, String sha) {
+		LocalGitRepository localRepository, String name, String sha) {
 
 		super(name, sha);
 
@@ -71,6 +71,6 @@ public class LocalGitBranch extends BaseGitRef {
 		_localRepository = localRepository;
 	}
 
-	private final LocalRepository _localRepository;
+	private final LocalGitRepository _localRepository;
 
 }

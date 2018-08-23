@@ -20,9 +20,9 @@ import java.util.Map;
 /**
  * @author Peter Yoo
  */
-public class RepositoryFactory {
+public class GitRepositoryFactory {
 
-	public static LocalRepository getLocalRepository(
+	public static LocalGitRepository getLocalRepository(
 		String repositoryName, String upstreamBranchName) {
 
 		String key = repositoryName + "/" + upstreamBranchName;
@@ -31,22 +31,22 @@ public class RepositoryFactory {
 			return _localRepositories.get(key);
 		}
 
-		LocalRepository localRepository = null;
+		LocalGitRepository localRepository = null;
 
 		if (repositoryName.startsWith("com-liferay-")) {
-			localRepository = new SubrepositoryLocalRepository(
+			localRepository = new SubrepositoryLocalGitRepository(
 				repositoryName, upstreamBranchName);
 		}
 		else if (repositoryName.startsWith("liferay-plugins")) {
-			localRepository = new PluginsLocalRepository(
+			localRepository = new PluginsLocalGitRepository(
 				repositoryName, upstreamBranchName);
 		}
 		else if (repositoryName.startsWith("liferay-portal")) {
-			localRepository = new PortalLocalRepository(
+			localRepository = new PortalLocalGitRepository(
 				repositoryName, upstreamBranchName);
 		}
 		else {
-			localRepository = new LocalRepository(
+			localRepository = new LocalGitRepository(
 				repositoryName, upstreamBranchName);
 		}
 
@@ -55,27 +55,27 @@ public class RepositoryFactory {
 		return _localRepositories.get(key);
 	}
 
-	public static RemoteRepository getRemoteRepository(GitRemote gitRemote) {
-		String hostname = gitRemote.getHostname();
+	public static RemoteGitRepository getRemoteGitRepository(GitRemote remote) {
+		String hostname = remote.getHostname();
 
 		if (hostname.equalsIgnoreCase("github.com")) {
-			return new GitHubRemoteRepository(gitRemote);
+			return new GitHubRemoteGitRepository(remote);
 		}
 
-		return new RemoteRepository(gitRemote);
+		return new RemoteGitRepository(remote);
 	}
 
-	public static RemoteRepository getRemoteRepository(
+	public static RemoteGitRepository getRemoteGitRepository(
 		String hostname, String repositoryName, String username) {
 
 		if (hostname.equalsIgnoreCase("github.com")) {
-			return new GitHubRemoteRepository(repositoryName, username);
+			return new GitHubRemoteGitRepository(repositoryName, username);
 		}
 
-		return new RemoteRepository(hostname, repositoryName, username);
+		return new RemoteGitRepository(hostname, repositoryName, username);
 	}
 
-	private static final Map<String, LocalRepository> _localRepositories =
+	private static final Map<String, LocalGitRepository> _localRepositories =
 		new HashMap<>();
 
 }

@@ -23,7 +23,7 @@ import java.util.Properties;
 /**
  * @author Peter Yoo
  */
-public class LocalRepository extends BaseRepository {
+public class LocalGitRepository extends BaseGitRepository {
 
 	public File getDirectory() {
 		return directory;
@@ -37,14 +37,14 @@ public class LocalRepository extends BaseRepository {
 		return _upstreamBranchName;
 	}
 
-	public RemoteRepository getUpstreamRemoteRepository() {
+	public RemoteGitRepository getUpstreamRemoteGitRepository() {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		return RepositoryFactory.getRemoteRepository(
+		return GitRepositoryFactory.getRemoteGitRepository(
 			gitWorkingDirectory.getGitRemote("upstream"));
 	}
 
-	public void writeRepositoryPropertiesFiles() {
+	public void writeGitRepositoryPropertiesFiles() {
 		for (Map.Entry<String, Properties> entry :
 				_propertiesFilesMap.entrySet()) {
 
@@ -54,7 +54,7 @@ public class LocalRepository extends BaseRepository {
 		}
 	}
 
-	protected LocalRepository(String name, String upstreamBranchName) {
+	protected LocalGitRepository(String name, String upstreamBranchName) {
 		super(name);
 
 		if ((upstreamBranchName == null) || upstreamBranchName.isEmpty()) {
@@ -63,18 +63,19 @@ public class LocalRepository extends BaseRepository {
 
 		_upstreamBranchName = upstreamBranchName;
 
-		Properties repositoryProperties = _getProperties();
+		Properties gitRepositoryProperties = _getProperties();
 
-		String repositoryDirPropertyKey = getRepositoryDirPropertyKey();
+		String gitRepositoryDirPropertyKey = getGitRepositoryDirPropertyKey();
 
-		if (repositoryProperties.containsKey(repositoryDirPropertyKey)) {
+		if (gitRepositoryProperties.containsKey(gitRepositoryDirPropertyKey)) {
 			directory = new File(
-				repositoryProperties.getProperty(repositoryDirPropertyKey));
+				gitRepositoryProperties.getProperty(
+					gitRepositoryDirPropertyKey));
 		}
 		else {
 			directory = new File(
-				JenkinsResultsParserUtil.getBaseRepositoryDir(),
-				getDefaultRelativeRepositoryDirPath());
+				JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
+				getDefaultRelativeGitRepositoryDirPath());
 		}
 
 		if (!directory.exists()) {
@@ -96,17 +97,17 @@ public class LocalRepository extends BaseRepository {
 				upstreamBranchName, getDirectory(), getName());
 	}
 
-	protected String getDefaultRelativeRepositoryDirPath() {
+	protected String getDefaultRelativeGitRepositoryDirPath() {
 		return getName();
+	}
+
+	protected String getGitRepositoryDirPropertyKey() {
+		return JenkinsResultsParserUtil.combine(
+			"repository.dir[", name, "/" + getUpstreamBranchName(), "]");
 	}
 
 	protected Properties getProperties(String filePath) {
 		return _propertiesFilesMap.get(filePath);
-	}
-
-	protected String getRepositoryDirPropertyKey() {
-		return JenkinsResultsParserUtil.combine(
-			"repository.dir[", name, "/" + getUpstreamBranchName(), "]");
 	}
 
 	protected void setProperties(String filePath, Properties properties) {

@@ -14,7 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.GitHubRemoteRepository.Label;
+import com.liferay.jenkins.results.parser.GitHubRemoteGitRepository.Label;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.File;
@@ -68,8 +68,8 @@ public class PullRequest {
 			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
 		}
 
-		_gitHubRemoteRepositoryName = matcher.group(
-			"gitHubRemoteRepositoryName");
+		_gitHubRemoteGitRepositoryName = matcher.group(
+			"gitHubRemoteGitRepositoryName");
 		_number = Integer.parseInt(matcher.group("number"));
 		_ownerUsername = matcher.group("owner");
 
@@ -105,17 +105,17 @@ public class PullRequest {
 			return true;
 		}
 
-		GitHubRemoteRepository gitHubRemoteRepository =
-			getGitHubRemoteRepository();
+		GitHubRemoteGitRepository gitHubRemoteGitRepository =
+			getGitHubRemoteGitRepository();
 
-		Label repositoryLabel = gitHubRemoteRepository.getLabel(
+		Label repositoryLabel = gitHubRemoteGitRepository.getLabel(
 			label.getName());
 
 		if (repositoryLabel == null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Label ", label.getName(), " does not exist in ",
-					getGitHubRemoteRepositoryName()));
+					getGitHubRemoteGitRepositoryName()));
 
 			return false;
 		}
@@ -125,7 +125,7 @@ public class PullRequest {
 		jsonArray.put(label.getName());
 
 		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
-			getGitHubRemoteRepositoryName(), getOwnerUsername(),
+			getGitHubRemoteGitRepositoryName(), getOwnerUsername(),
 			"issues/" + getNumber() + "/labels");
 
 		try {
@@ -160,7 +160,7 @@ public class PullRequest {
 		List<Comment> comments = new ArrayList<>();
 
 		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
-			getGitHubRemoteRepositoryName(), getOwnerUsername(),
+			getGitHubRemoteGitRepositoryName(), getOwnerUsername(),
 			"issues/" + getNumber() + "/comments?page=");
 
 		int page = 1;
@@ -191,23 +191,24 @@ public class PullRequest {
 
 	public Commit getCommit() {
 		return CommitFactory.newCommit(
-			getOwnerUsername(), getGitHubRemoteRepositoryName(),
+			getOwnerUsername(), getGitHubRemoteGitRepositoryName(),
 			getSenderSHA());
 	}
 
-	public GitHubRemoteRepository getGitHubRemoteRepository() {
-		if (_gitHubRemoteRepository == null) {
-			_gitHubRemoteRepository =
-				(GitHubRemoteRepository)RepositoryFactory.getRemoteRepository(
-					"github.com", _gitHubRemoteRepositoryName,
-					getOwnerUsername());
+	public GitHubRemoteGitRepository getGitHubRemoteGitRepository() {
+		if (_gitHubRemoteGitRepository == null) {
+			_gitHubRemoteGitRepository =
+				(GitHubRemoteGitRepository)GitRepositoryFactory.
+					getRemoteGitRepository(
+						"github.com", _gitHubRemoteGitRepositoryName,
+						getOwnerUsername());
 		}
 
-		return _gitHubRemoteRepository;
+		return _gitHubRemoteGitRepository;
 	}
 
-	public String getGitHubRemoteRepositoryName() {
-		return _gitHubRemoteRepositoryName;
+	public String getGitHubRemoteGitRepositoryName() {
+		return _gitHubRemoteGitRepositoryName;
 	}
 
 	public String getHtmlURL() {
@@ -264,7 +265,7 @@ public class PullRequest {
 	}
 
 	public String getRepositoryName() {
-		return getGitHubRemoteRepositoryName();
+		return getGitHubRemoteGitRepositoryName();
 	}
 
 	public String getSenderBranchName() {
@@ -276,7 +277,7 @@ public class PullRequest {
 	public String getSenderRemoteURL() {
 		return JenkinsResultsParserUtil.combine(
 			"git@github.com:", getSenderUsername(), "/",
-			getGitHubRemoteRepositoryName());
+			getGitHubRemoteGitRepositoryName());
 	}
 
 	public String getSenderSHA() {
@@ -315,7 +316,7 @@ public class PullRequest {
 
 	public String getURL() {
 		return JenkinsResultsParserUtil.getGitHubApiUrl(
-			_gitHubRemoteRepositoryName, _ownerUsername, "pulls/" + _number);
+			_gitHubRemoteGitRepositoryName, _ownerUsername, "pulls/" + _number);
 	}
 
 	public boolean hasLabel(String labelName) {
@@ -355,7 +356,7 @@ public class PullRequest {
 				JSONObject labelJSONObject = labelJSONArray.getJSONObject(i);
 
 				_labels.add(
-					new Label(labelJSONObject, getGitHubRemoteRepository()));
+					new Label(labelJSONObject, getGitHubRemoteGitRepository()));
 			}
 		}
 		catch (IOException ioe) {
@@ -372,7 +373,7 @@ public class PullRequest {
 			"issues/", getNumber(), "/labels/", labelName);
 
 		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
-			getGitHubRemoteRepositoryName(), getOwnerUsername(), path);
+			getGitHubRemoteGitRepositoryName(), getOwnerUsername(), path);
 
 		try {
 			JenkinsResultsParserUtil.toString(
@@ -424,16 +425,18 @@ public class PullRequest {
 		sb.append(" - ");
 		sb.append(StringUtils.lowerCase(testSuiteStatus.toString()));
 
-		GitHubRemoteRepository gitHubRemoteRepository =
-			getGitHubRemoteRepository();
+		GitHubRemoteGitRepository gitHubRemoteGitRepository =
+			getGitHubRemoteGitRepository();
 
-		Label testSuiteLabel = gitHubRemoteRepository.getLabel(sb.toString());
+		Label testSuiteLabel = gitHubRemoteGitRepository.getLabel(
+			sb.toString());
 
 		if (testSuiteLabel == null) {
-			if (gitHubRemoteRepository.addLabel(
+			if (gitHubRemoteGitRepository.addLabel(
 					testSuiteStatus.getColor(), "", sb.toString())) {
 
-				testSuiteLabel = gitHubRemoteRepository.getLabel(sb.toString());
+				testSuiteLabel = gitHubRemoteGitRepository.getLabel(
+					sb.toString());
 			}
 		}
 
@@ -585,10 +588,10 @@ public class PullRequest {
 	private static final Pattern _gitHubPullRequestURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<owner>[^/]+)/",
-			"(?<gitHubRemoteRepositoryName>[^/]+)/pull/(?<number>\\d+)"));
+			"(?<gitHubRemoteGitRepositoryName>[^/]+)/pull/(?<number>\\d+)"));
 
-	private GitHubRemoteRepository _gitHubRemoteRepository;
-	private String _gitHubRemoteRepositoryName;
+	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;
+	private String _gitHubRemoteGitRepositoryName;
 	private JSONObject _jsonObject;
 	private final List<Label> _labels = new ArrayList<>();
 	private RemoteGitBranch _liferayRemoteGitBranch;

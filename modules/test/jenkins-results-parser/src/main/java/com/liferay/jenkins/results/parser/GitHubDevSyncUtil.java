@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 public class GitHubDevSyncUtil {
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalRepository localRepository, LocalGitBranch localGitBranch,
+		LocalGitRepository localRepository, LocalGitBranch localGitBranch,
 		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
@@ -44,7 +44,7 @@ public class GitHubDevSyncUtil {
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalRepository localRepository, PullRequest pullRequest,
+		LocalGitRepository localRepository, PullRequest pullRequest,
 		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
@@ -55,7 +55,7 @@ public class GitHubDevSyncUtil {
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalRepository localRepository, RemoteGitRef remoteGitRef,
+		LocalGitRepository localRepository, RemoteGitRef remoteGitRef,
 		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
@@ -65,7 +65,7 @@ public class GitHubDevSyncUtil {
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalRepository localRepository, String name, String sha,
+		LocalGitRepository localRepository, String name, String sha,
 		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
@@ -1201,7 +1201,7 @@ public class GitHubDevSyncUtil {
 
 				@Override
 				public String safeCall() {
-					if (gitWorkingDirectory.isRemoteRepositoryAlive(
+					if (gitWorkingDirectory.isRemoteGitRepositoryAlive(
 							gitHubDevRemoteURL)) {
 
 						return gitHubDevRemoteURL;
@@ -1230,7 +1230,7 @@ public class GitHubDevSyncUtil {
 	}
 
 	private static LocalGitBranch _createCachedLocalGitBranch(
-		LocalRepository localRepository, String receiverUsername,
+		LocalGitRepository localRepository, String receiverUsername,
 		String senderBranchName, String senderUsername, String senderBranchSHA,
 		String upstreamBranchSHA, boolean synchronize) {
 

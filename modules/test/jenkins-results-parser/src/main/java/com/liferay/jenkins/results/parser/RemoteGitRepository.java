@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Peter Yoo
  */
-public class RemoteRepository extends BaseRepository {
+public class RemoteGitRepository extends BaseGitRepository {
 
 	public String getHostname() {
 		return hostname;
@@ -32,13 +32,13 @@ public class RemoteRepository extends BaseRepository {
 		return username;
 	}
 
-	protected RemoteRepository(GitRemote gitRemote) {
+	protected RemoteGitRepository(GitRemote gitRemote) {
 		this(
 			gitRemote.getHostname(), gitRemote.getRepositoryName(),
 			gitRemote.getUsername());
 	}
 
-	protected RemoteRepository(
+	protected RemoteGitRepository(
 		String hostname, String repositoryName, String username) {
 
 		super(repositoryName);

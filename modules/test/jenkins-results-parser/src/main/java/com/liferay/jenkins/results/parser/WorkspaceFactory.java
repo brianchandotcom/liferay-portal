@@ -19,7 +19,7 @@ package com.liferay.jenkins.results.parser;
  */
 public abstract class WorkspaceFactory {
 
-	public static BaseWorkspace newBatchWorkspace(
+	public static Workspace newBatchWorkspace(
 		String gitHubURL, String upstreamBranchName, String batchName) {
 
 		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
@@ -42,7 +42,7 @@ public abstract class WorkspaceFactory {
 		return new PortalWorkspace(gitHubURL, upstreamBranchName, false);
 	}
 
-	public static BaseWorkspace newTopLevelWorkspace(
+	public static Workspace newTopLevelWorkspace(
 		String gitHubURL, String upstreamBranchName) {
 
 		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {

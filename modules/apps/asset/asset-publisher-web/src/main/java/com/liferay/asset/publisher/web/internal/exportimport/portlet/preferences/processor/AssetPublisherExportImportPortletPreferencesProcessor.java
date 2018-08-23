@@ -361,7 +361,12 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(primaryKeyLong);
 
-			if (ddmStructure != null) {
+			if ((ddmStructure != null) &&
+				(!ExportImportThreadLocal.isStagingInProcess() ||
+				 stagingGroupHelper.isStagedPortletData(
+					 portletDataContext.getGroupId(),
+					 ddmStructure.getClassName()))) {
+
 				uuid = ddmStructure.getUuid();
 				groupId = ddmStructure.getGroupId();
 
@@ -373,7 +378,12 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			DLFileEntryType dlFileEntryType =
 				_dlFileEntryTypeLocalService.fetchFileEntryType(primaryKeyLong);
 
-			if (dlFileEntryType != null) {
+			if ((dlFileEntryType != null) &&
+				(!ExportImportThreadLocal.isStagingInProcess() ||
+				 stagingGroupHelper.isStagedPortletData(
+					 portletDataContext.getGroupId(),
+					 DLFileEntry.class.getName()))) {
+
 				uuid = dlFileEntryType.getUuid();
 				groupId = dlFileEntryType.getGroupId();
 

@@ -72,6 +72,8 @@ public interface StagingGroupHelper {
 
 	public boolean isStagedPortlet(long groupId, String portletId);
 
+	public boolean isStagedPortletData(long groupId, String className);
+
 	public boolean isStagingGroup(Group group);
 
 	public boolean isStagingGroup(long groupId);

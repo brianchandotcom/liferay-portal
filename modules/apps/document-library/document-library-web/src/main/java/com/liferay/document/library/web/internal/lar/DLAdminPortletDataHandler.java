@@ -38,6 +38,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryReg
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.RepositoryEntry;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
@@ -65,9 +66,21 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 
+	public static final String[] CLASS_NAMES = {
+		DLFileEntryConstants.getClassName(), DLFileEntryType.class.getName(),
+		DLFileShortcutConstants.getClassName(),
+		DLFolderConstants.getClassName(), Repository.class.getName(),
+		RepositoryEntry.class.getName()
+	};
+
 	public static final String NAMESPACE = "document_library";
 
 	public static final String SCHEMA_VERSION = "1.0.0";
+
+	@Override
+	public String[] getClassNames() {
+		return CLASS_NAMES;
+	}
 
 	@Override
 	public String getNamespace() {

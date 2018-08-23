@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.GitWorkingDirectory.Remote;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,14 +55,16 @@ public class RepositoryFactory {
 		return _localRepositories.get(key);
 	}
 
-	public static RemoteRepository getRemoteRepository(Remote remote) {
-		String hostname = remote.getHostname();
+	public static RemoteRepository getRemoteRepository(
+		BaseGitRemote baseGitRemote) {
+
+		String hostname = baseGitRemote.getHostname();
 
 		if (hostname.equalsIgnoreCase("github.com")) {
-			return new GitHubRemoteRepository(remote);
+			return new GitHubRemoteRepository(baseGitRemote);
 		}
 
-		return new RemoteRepository(remote);
+		return new RemoteRepository(baseGitRemote);
 	}
 
 	public static RemoteRepository getRemoteRepository(

@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.GitWorkingDirectory.Remote;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -251,8 +250,8 @@ public class GitHubRemoteRepository extends RemoteRepository {
 
 	}
 
-	protected GitHubRemoteRepository(Remote remote) {
-		super(remote);
+	protected GitHubRemoteRepository(BaseGitRemote baseGitRemote) {
+		super(baseGitRemote);
 
 		if (!hostname.equals("github.com")) {
 			throw new IllegalArgumentException(

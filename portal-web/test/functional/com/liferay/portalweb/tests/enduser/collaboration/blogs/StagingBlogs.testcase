@@ -54,7 +54,7 @@
 	</tear-down>
 
 	<command name="PublishEntryViaSAP" priority="3">
-		<description message="This test publishes a blog entry to live via Single Asset Publishing" />
+		<description message="This test covers LPS-77658. It publishes a blog entry to live via Single Asset Publishing." />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Blogs Page" />
@@ -109,7 +109,7 @@
 	</command>
 
 	<command name="PublishDraftViaSAP" priority="3">
-		<description message="This test covers LPS-79000. This test makes sure that users can only publish a blog entry that has Approved as status. Draft entries should not have the Publish option" />
+		<description message="This test covers LPS-79000. It ensures that users can only publish an Approved blog entry. Draft entries should not have the Publish option." />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

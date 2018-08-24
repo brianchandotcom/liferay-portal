@@ -855,37 +855,38 @@ public class ServiceRegistry {
 		}
 
 		/* deliver the event to the snapshot */
-		for (Map.Entry<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>> bundleContextEntry :
-				listenerSnapshot.entrySet()) {
 
-			BundleContextImpl bundleContextImpl = bundleContextEntry.getKey();
+		EquinoxConfiguration equinoxConfiguration =
+			container.getConfiguration();
 
-			Set<Map.Entry<ServiceListener, FilteredServiceListener>>
-				serviceListenerSet =
-					bundleContextEntry.getValue();
+		Thread currentThread = null;
+		ClassLoader previousTCCL = null;
 
-			EquinoxConfiguration equinoxConfiguration =
-				container.getConfiguration();
+		if (equinoxConfiguration.BUNDLE_SET_TCCL) {
+			currentThread = Thread.currentThread();
 
-			Thread currentThread = null;
-			ClassLoader previousTCCL = null;
+			previousTCCL = currentThread.getContextClassLoader();
 
-			if (equinoxConfiguration.BUNDLE_SET_TCCL) {
-				currentThread = Thread.currentThread();
+			ClassLoader contextFinder = container.getContextFinder();
 
-				previousTCCL = currentThread.getContextClassLoader();
-
-				ClassLoader contextFinder = container.getContextFinder();
-
-				if (previousTCCL == contextFinder) {
-					previousTCCL = null;
-				}
-				else {
-					currentThread.setContextClassLoader(contextFinder);
-				}
+			if (previousTCCL == contextFinder) {
+				previousTCCL = null;
 			}
+			else {
+				currentThread.setContextClassLoader(contextFinder);
+			}
+		}
 
-			try {
+		try {
+			for (Map.Entry<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>> bundleContextEntry :
+					listenerSnapshot.entrySet()) {
+
+				BundleContextImpl bundleContextImpl = bundleContextEntry.getKey();
+
+				Set<Map.Entry<ServiceListener, FilteredServiceListener>>
+					serviceListenerSet =
+						bundleContextEntry.getValue();
+
 				for (Map.Entry<ServiceListener, FilteredServiceListener> serviceListenerEntry :
 						serviceListenerSet) {
 
@@ -914,10 +915,10 @@ public class ServiceRegistry {
 					}
 				}
 			}
-			finally {
-				if (previousTCCL != null) {
-					currentThread.setContextClassLoader(previousTCCL);
-				}
+		}
+		finally {
+			if (previousTCCL != null) {
+				currentThread.setContextClassLoader(previousTCCL);
 			}
 		}
 	}

@@ -354,9 +354,13 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<param name="todir" value="lib/development" />
 					</antcall>
 
+					<local name="test.app.server.lib.global.dir" />
+
+					<propertycopy from="app.server.${app.server.type}.lib.global.dir" name="test.app.server.lib.global.dir" />
+
 					<antcall inheritall="false" target="copy-optional-jars">
 						<param name="database.type" value="@{database.type}" />
-						<param name="todir" value="${app.server.lib.global.dir}" />
+						<param name="todir" value="${test.app.server.lib.global.dir}" />
 					</antcall>
 
 					<antcall inheritall="false" target="rebuild-database">

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -93,6 +94,9 @@ public class ContentSpaceCollectionResource
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(
 			"name", ContentSpaceUtil::getName
+		).addStringList(
+			"availableLanguages",
+			group -> Arrays.asList(group.getAvailableLanguageIds())
 		).build();
 	}
 

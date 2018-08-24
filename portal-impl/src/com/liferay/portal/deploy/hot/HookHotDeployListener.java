@@ -166,6 +166,9 @@ import javax.servlet.ServletContext;
 public class HookHotDeployListener
 	extends BaseHotDeployListener implements PropsKeys {
 
+	public static final String _PROP_KEY_UPGRADE_PROCESSES =
+		"upgrade.processes";
+
 	public static final String[] SUPPORTED_PROPERTIES = {
 		"admin.default.group.names", "admin.default.role.names",
 		"admin.default.user.group.names",
@@ -2347,9 +2350,6 @@ public class HookHotDeployListener
 		"phone.number.format.usa.regexp", "social.activity.sets.selector",
 		"theme.shortcut.icon"
 	};
-
-	public static final String _PROP_KEY_UPGRADE_PROCESSES =
-		"upgrade.processes";
 
 	private static final String[] _TOKEN_WHITELIST_NAMES = {
 		AUTH_TOKEN_IGNORE_ACTIONS, AUTH_TOKEN_IGNORE_ORIGINS,

@@ -19,7 +19,8 @@ import java.util.Properties;
 /**
  * @author Michael Hashimoto
  */
-public class JunitBatchPortalWorkspace extends PortalWorkspace {
+public class JunitBatchPortalWorkspace
+	extends PortalWorkspace implements BatchWorkspace {
 
 	protected JunitBatchPortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {
@@ -43,10 +44,10 @@ public class JunitBatchPortalWorkspace extends PortalWorkspace {
 			"release.versions.test.other.dir",
 			String.valueOf(otherPortalLocalGitBranch.getDirectory()));
 
-		PortalLocalRepository portalLocalRepository =
+		PortalLocalGitRepository portalLocalGitRepository =
 			getPrimaryPortalRepository();
 
-		portalLocalRepository.setBuildProperties(properties);
+		portalLocalGitRepository.setBuildProperties(properties);
 	}
 
 }

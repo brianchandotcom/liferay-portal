@@ -19,7 +19,8 @@ import java.util.Properties;
 /**
  * @author Michael Hashimoto
  */
-public class FunctionalBatchPortalWorkspace extends PortalWorkspace {
+public class FunctionalBatchPortalWorkspace
+	extends PortalWorkspace implements BatchWorkspace {
 
 	protected FunctionalBatchPortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {
@@ -35,10 +36,10 @@ public class FunctionalBatchPortalWorkspace extends PortalWorkspace {
 		properties.put("jsp.precompile", "on");
 		properties.put("jsp.precompile.parallel", "on");
 
-		PortalLocalRepository portalLocalRepository =
+		PortalLocalGitRepository portalLocalGitRepository =
 			getPrimaryPortalRepository();
 
-		portalLocalRepository.setBuildProperties(properties);
+		portalLocalGitRepository.setBuildProperties(properties);
 	}
 
 }

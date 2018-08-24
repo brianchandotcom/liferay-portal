@@ -17,8 +17,12 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseWorkspace {
+public abstract class BaseWorkspace implements Workspace {
 
+	@Override
+	public abstract void setJobProperties(Job job);
+
+	@Override
 	public abstract void setupWorkspace();
 
 	protected void checkoutBranch(LocalGitBranch localGitBranch) {

@@ -20,9 +20,9 @@ package com.liferay.jenkins.results.parser;
 public class RemoteGitBranch extends RemoteGitRef {
 
 	protected RemoteGitBranch(
-		RemoteRepository remoteRepository, String name, String sha) {
+		RemoteGitRepository remoteGitRepository, String name, String sha) {
 
-		super(remoteRepository, name, sha);
+		super(remoteGitRepository, name, sha);
 	}
 
 }

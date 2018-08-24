@@ -17,32 +17,13 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRunner implements BuildRunner {
+public class DefaultCommit extends BaseCommit {
 
-	@Override
-	public void setup() {
-		setupWorkspace();
+	protected DefaultCommit(
+		String gitHubUserName, String message, String repositoryName,
+		String sha, Type type) {
+
+		super(gitHubUserName, message, repositoryName, sha, type);
 	}
-
-	@Override
-	public void setupWorkspace() {
-		if (workspace == null) {
-			throw new RuntimeException("Workspace is null");
-		}
-
-		workspace.setupWorkspace();
-	}
-
-	protected BaseBuildRunner(Job job) {
-		_job = job;
-	}
-
-	protected Job getJob() {
-		return _job;
-	}
-
-	protected Workspace workspace;
-
-	private final Job _job;
 
 }

@@ -17,12 +17,14 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseGitRef {
+public abstract class BaseGitRef implements GitRef {
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public String getSHA() {
 		return _sha;
 	}

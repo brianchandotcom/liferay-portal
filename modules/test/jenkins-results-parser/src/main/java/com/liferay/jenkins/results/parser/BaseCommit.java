@@ -23,7 +23,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BaseCommit implements Commit {
+public abstract class BaseCommit implements Commit {
 
 	@Override
 	public boolean equals(Object object) {

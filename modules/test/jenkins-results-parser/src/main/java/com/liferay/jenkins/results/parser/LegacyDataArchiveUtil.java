@@ -88,7 +88,7 @@ public class LegacyDataArchiveUtil {
 		}
 
 		RemoteGitBranch remoteGitBranch =
-			_legacyGitWorkingDirectory.pushToRemoteRepository(
+			_legacyGitWorkingDirectory.pushToRemoteGitRepository(
 				true, _dataArchiveLocalGitBranch, dataArchiveBranchName,
 				_legacyGitWorkingDirectory.getUpstreamGitRemote());
 

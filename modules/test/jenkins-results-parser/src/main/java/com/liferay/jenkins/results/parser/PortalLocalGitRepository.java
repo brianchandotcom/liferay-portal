@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class PortalLocalRepository extends LocalRepository {
+public class PortalLocalGitRepository extends LocalGitRepository {
 
 	public void setAppServerProperties(Properties properties) {
 		setProperties(_FILE_PATH_APP_SERVER_PROPERTIES, properties);
@@ -61,7 +61,7 @@ public class PortalLocalRepository extends LocalRepository {
 		setProperties(_FILE_PATH_TEST_PROPERTIES, properties);
 	}
 
-	protected PortalLocalRepository(String name, String upstreamBranchName) {
+	protected PortalLocalGitRepository(String name, String upstreamBranchName) {
 		super(name, upstreamBranchName);
 
 		if (upstreamBranchName.startsWith("ee-") ||
@@ -81,7 +81,7 @@ public class PortalLocalRepository extends LocalRepository {
 	}
 
 	@Override
-	protected String getDefaultRelativeRepositoryDirPath() {
+	protected String getDefaultRelativeGitRepositoryDirPath() {
 		String upstreamBranchName = getUpstreamBranchName();
 
 		if (upstreamBranchName.equals("master")) {

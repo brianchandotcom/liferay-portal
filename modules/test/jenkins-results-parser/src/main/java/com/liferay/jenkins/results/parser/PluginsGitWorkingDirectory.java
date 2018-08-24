@@ -42,7 +42,7 @@ public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
 	}
 
 	@Override
-	protected void setUpstreamGitRemoteToPrivateRepository() {
+	protected void setUpstreamGitRemoteToPrivateGitRepository() {
 		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		String remoteURL = upstreamGitRemote.getRemoteURL();
@@ -55,7 +55,7 @@ public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
 	}
 
 	@Override
-	protected void setUpstreamGitRemoteToPublicRepository() {
+	protected void setUpstreamGitRemoteToPublicGitRepository() {
 		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		String remoteURL = upstreamGitRemote.getRemoteURL();

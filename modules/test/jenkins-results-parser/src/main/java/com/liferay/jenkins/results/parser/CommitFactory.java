@@ -66,7 +66,7 @@ public class CommitFactory {
 			type = Commit.Type.LEGACY_ARCHIVE;
 		}
 
-		Commit commit = new BaseCommit(
+		Commit commit = new DefaultCommit(
 			gitHubUserName, message, repositoryName, sha, type);
 
 		_commits.put(commitURL, commit);

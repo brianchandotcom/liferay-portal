@@ -29,7 +29,7 @@ import org.json.JSONObject;
 /**
  * @author Peter Yoo
  */
-public class GitHubRemoteRepository extends RemoteRepository {
+public class GitHubRemoteGitRepository extends RemoteGitRepository {
 
 	public boolean addLabel(String color, String description, String name) {
 		if (hasLabel(name)) {
@@ -187,10 +187,10 @@ public class GitHubRemoteRepository extends RemoteRepository {
 
 		public Label(
 			JSONObject jsonObject,
-			GitHubRemoteRepository gitHubRemoteRepository) {
+			GitHubRemoteGitRepository gitHubRemoteGitRepository) {
 
 			_jsonObject = jsonObject;
-			_gitHubRemoteRepository = gitHubRemoteRepository;
+			_gitHubRemoteGitRepository = gitHubRemoteGitRepository;
 		}
 
 		@Override
@@ -225,8 +225,8 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			return _jsonObject.optString("description");
 		}
 
-		public GitHubRemoteRepository getGitHubRemoteRepository() {
-			return _gitHubRemoteRepository;
+		public GitHubRemoteGitRepository getGitHubRemoteGitRepository() {
+			return _gitHubRemoteGitRepository;
 		}
 
 		public String getName() {
@@ -245,12 +245,12 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			return _jsonObject.toString(4);
 		}
 
-		private final GitHubRemoteRepository _gitHubRemoteRepository;
+		private final GitHubRemoteGitRepository _gitHubRemoteGitRepository;
 		private final JSONObject _jsonObject;
 
 	}
 
-	protected GitHubRemoteRepository(GitRemote gitRemote) {
+	protected GitHubRemoteGitRepository(GitRemote gitRemote) {
 		super(gitRemote);
 
 		if (!hostname.equals("github.com")) {
@@ -259,10 +259,10 @@ public class GitHubRemoteRepository extends RemoteRepository {
 		}
 	}
 
-	protected GitHubRemoteRepository(
-		String gitHubRemoteRepositoryName, String username) {
+	protected GitHubRemoteGitRepository(
+		String gitHubRemoteGitRepositoryName, String username) {
 
-		super("github.com", gitHubRemoteRepositoryName, username);
+		super("github.com", gitHubRemoteGitRepositoryName, username);
 	}
 
 	private String _getLabelRequestURL() {

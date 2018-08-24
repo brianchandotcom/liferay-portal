@@ -34,16 +34,16 @@ public class PortalTopLevelBuildRunner extends TopLevelBuildRunner {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			portalTestClassJob.getPortalGitWorkingDirectory();
 
-		baseWorkspace = WorkspaceFactory.newTopLevelWorkspace(
+		Workspace topLevelWorkspace = WorkspaceFactory.newTopLevelWorkspace(
 			portalGitHubURL, portalGitWorkingDirectory.getUpstreamBranchName());
 
-		if (!(baseWorkspace instanceof PortalWorkspace)) {
+		if (!(topLevelWorkspace instanceof TopLevelPortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
 		}
 
-		PortalWorkspace portalWorkspace = (PortalWorkspace)baseWorkspace;
+		topLevelWorkspace.setJobProperties(getJob());
 
-		portalWorkspace.setPortalJobProperties(getJob());
+		workspace = topLevelWorkspace;
 	}
 
 }

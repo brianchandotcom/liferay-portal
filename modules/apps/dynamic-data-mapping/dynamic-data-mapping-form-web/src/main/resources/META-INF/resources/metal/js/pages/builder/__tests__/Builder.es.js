@@ -65,10 +65,10 @@ describe(
 			'should continue to propagate the fieldMoved event',
 			() => {
 				const spy = jest.spyOn(component, 'emit');
-				const {layoutRenderer} = component.refs;
+				const {FormRenderer} = component.refs;
 				const mockEvent = jest.fn();
 
-				layoutRenderer.emit('fieldMoved', mockEvent);
+				FormRenderer.emit('fieldMoved', mockEvent);
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('fieldMoved', expect.anything());
@@ -79,10 +79,10 @@ describe(
 			'should continue to propagate the deleteField event',
 			() => {
 				const spy = jest.spyOn(component, 'emit');
-				const {layoutRenderer} = component.refs;
+				const {FormRenderer} = component.refs;
 				const mockEvent = jest.fn();
 
-				layoutRenderer.emit('deleteButtonClicked', mockEvent);
+				FormRenderer.emit('deleteButtonClicked', mockEvent);
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('deleteField', expect.anything());
@@ -90,13 +90,43 @@ describe(
 		);
 
 		it(
+			'should continue to propagate updatePages event',
+			() => {
+				const spy = jest.spyOn(component, 'emit');
+				const {FormRenderer} = component.refs;
+				const mockEvent = jest.fn();
+
+				FormRenderer.emit('updatePages', mockEvent);
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('updatePages', expect.anything());
+			}
+		);
+
+		it(
+			'should continue to propagate addPage event',
+			() => {
+				const spy = jest.spyOn(component, 'emit');
+				const {FormRenderer} = component.refs;
+				const mockEvent = jest.fn();
+
+				FormRenderer.emit('addPage', mockEvent);
+
+				jest.runAllTimers();
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('updatePages', expect.anything());
+			}
+		);
+
+		it(
 			'should continue to propagate the fieldClicked event and open the sidebar',
 			() => {
 				const spy = jest.spyOn(component, 'emit');
-				const {layoutRenderer, sidebar} = component.refs;
+				const {FormRenderer, sidebar} = component.refs;
 				const mockEvent = jest.fn();
 
-				layoutRenderer.emit('fieldClicked', mockEvent);
+				FormRenderer.emit('fieldClicked', mockEvent);
 
 				jest.runAllTimers();
 
@@ -110,10 +140,10 @@ describe(
 			'should continue to propagate the duplicateField event',
 			() => {
 				const spy = jest.spyOn(component, 'emit');
-				const {layoutRenderer} = component.refs;
+				const {FormRenderer} = component.refs;
 				const mockEvent = jest.fn();
 
-				layoutRenderer.emit('duplicateButtonClicked', mockEvent);
+				FormRenderer.emit('duplicateButtonClicked', mockEvent);
 
 				jest.runAllTimers();
 

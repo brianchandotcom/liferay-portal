@@ -5,17 +5,19 @@ exports[`Builder should render the default markup 1`] = `
   <div class="container">
     <div class="sheet">
       <div class="position-relative">
-        <p>Drag from sidebar and drop here</p>
-        <div class="btn-group dmm-page-settings" role="group">
-          <div class="dropdown dropdown-action">
-            <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
-              <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
-                <title>ellipsis-v</title>
-                <use xlink:href="icons.svg#ellipsis-v"></use>
-              </svg>
-            </button>
+        <div class="ddm-form-header">
+          <div class="btn-group dmm-page-settings" role="group">
+            <div class="dropdown dropdown-action">
+              <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
+                <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
+                  <title>ellipsis-v</title>
+                  <use xlink:href="icons.svg#ellipsis-v"></use>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
+        <p>Drag from sidebar and drop here</p>
       </div>
     </div>
   </div>

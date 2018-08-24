@@ -43,7 +43,10 @@ processSanitizerConfiguration {
 		}
 
 		if (line.contains('<regexp name="onsiteURL" value=')) {
-			line = '		<regexp name="onsiteURL" value="^(?![\\p{L}\\p{N}\\\\\\.\\#@\\$%\\+&amp;;\\-_~,\\?=/!]*(&amp;colon))[\\p{L}\\p{N}\\\\\\.\\#@\\$%\\+&amp;;\\-_~,\\?=/!]*"/>'
+			line = '		<regexp name="onsiteURL" value="^(?![\\p{L}\\p{N}\\\\\\.\\#@\\$%\\*\\+&amp;;\\-_~,\\?=/!]*(&amp;colon))[\\p{L}\\p{N}\\\\\\.\\#@\\$%\\*\\+&amp;;\\-_~,\\?=/!]*"/>'
+		}
+		else if (line.contains('<regexp name="offsiteURL" value=')) {
+			line = '		<regexp name="offsiteURL" value="(\\s)*((ht|f)tp(s?)://|mailto:)[\\p{L}\\p{N}]+[\\p{L}\\p{N}\\p{Zs}\\.\\#@\\$%\\*\\+&amp;;:\\-_~,\\?=/!\\(\\)]*(\\s)*"/>'
 		}
 		else if (line.contains('<tag-rules>')) {
 			line = """\

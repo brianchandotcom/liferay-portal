@@ -25,6 +25,7 @@ import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.email.apio.architect.identifier.EmailIdentifier;
 import com.liferay.organization.apio.architect.identifier.OrganizationIdentifier;
+import com.liferay.organization.apio.internal.model.OpeningHours;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
@@ -44,9 +45,7 @@ import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -146,20 +145,6 @@ public class OrganizationCollectionResource
 		return parentOrganizationId;
 	}
 
-	private String _formatHour(int integer) {
-		DecimalFormat decimalFormat = new DecimalFormat("00,00");
-
-		DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
-
-		decimalFormatSymbols.setGroupingSeparator(':');
-
-		decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
-
-		decimalFormat.setGroupingSize(2);
-
-		return decimalFormat.format(integer);
-	}
-
 	private String _getCountry(Organization organization, Locale locale) {
 		return Try.success(
 			organization.getCountryId()
@@ -172,16 +157,22 @@ public class OrganizationCollectionResource
 		);
 	}
 
-	private String _getHours(int hours) {
-		return Try.fromFallible(
-			() -> hours
-		).filter(
-			value -> value != -1
-		).map(
-			this::_formatHour
-		).orElse(
-			null
-		);
+	private List<OpeningHours> _getDay(OrgLabor orgLabor) {
+		return Arrays.asList(
+			new OpeningHours(
+				"Friday", orgLabor::getFriOpen, orgLabor::getFriClose),
+			new OpeningHours(
+				"Monday", orgLabor::getMonOpen, orgLabor::getMonClose),
+			new OpeningHours(
+				"Thursday", orgLabor::getThuOpen, orgLabor::getThuClose),
+			new OpeningHours(
+				"Tuesday", orgLabor::getTueOpen, orgLabor::getTueClose),
+			new OpeningHours(
+				"Saturday", orgLabor::getSatOpen, orgLabor::getSatClose),
+			new OpeningHours(
+				"Sunday", orgLabor::getSunOpen, orgLabor::getSunClose),
+			new OpeningHours(
+				"Wednesday", orgLabor::getWedOpen, orgLabor::getWedClose));
 	}
 
 	private String _getLogoURL(Organization organization) {
@@ -246,37 +237,20 @@ public class OrganizationCollectionResource
 		NestedRepresentor.Builder<OrgLabor> orgLaborBuilder) {
 
 		return orgLaborBuilder.types(
-			"OrgLabor"
+			"OrgLabor", "OpeningHoursSpecification"
 		).addString(
-			"type", this::_getOrgLaborType
-		).addString(
-			"fridayClose", orgLabor -> _getHours(orgLabor.getFriClose())
-		).addString(
-			"fridayOpen", orgLabor -> _getHours(orgLabor.getFriOpen())
-		).addString(
-			"mondayClose", orgLabor -> _getHours(orgLabor.getMonClose())
-		).addString(
-			"mondayOpen", orgLabor -> _getHours(orgLabor.getMonOpen())
-		).addString(
-			"saturdayClose", orgLabor -> _getHours(orgLabor.getSatClose())
-		).addString(
-			"saturdayOpen", orgLabor -> _getHours(orgLabor.getSatOpen())
-		).addString(
-			"sundayClose", orgLabor -> _getHours(orgLabor.getSunClose())
-		).addString(
-			"sundayOpen", orgLabor -> _getHours(orgLabor.getSunOpen())
-		).addString(
-			"thursdayClose", orgLabor -> _getHours(orgLabor.getThuClose())
-		).addString(
-			"thursdayOpen", orgLabor -> _getHours(orgLabor.getThuOpen())
-		).addString(
-			"tuesdayClose", orgLabor -> _getHours(orgLabor.getTueClose())
-		).addString(
-			"tuesdayOpen", orgLabor -> _getHours(orgLabor.getTueOpen())
-		).addString(
-			"wednesdayClose", orgLabor -> _getHours(orgLabor.getWedClose())
-		).addString(
-			"wednesdayOpen", orgLabor -> _getHours(orgLabor.getWedOpen())
+			"serviceType", this::_getOrgLaborType
+		).addNestedList(
+			"hoursAvailable", this::_getDay,
+			nestedBuilder -> nestedBuilder.types(
+				"OpeningHoursSpecification"
+			).addString(
+				"closes", OpeningHours::getCloses
+			).addString(
+				"dayOfWeek", OpeningHours::getDay
+			).addString(
+				"opens", OpeningHours::getOpens
+			).build()
 		).build();
 	}
 

@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_TITLE</td>
-	<td>//div[@class='title']</td>
+	<td>//div[@class='title'] | //h4/a[contains(.,'${key_portletName} ${key_publicationType} ${key_contentBody}')]</td>
 	<td></td>
 </tr>
 <tr>

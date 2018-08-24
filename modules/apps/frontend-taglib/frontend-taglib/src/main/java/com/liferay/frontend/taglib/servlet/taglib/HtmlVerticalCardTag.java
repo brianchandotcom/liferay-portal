@@ -14,14 +14,19 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import java.util.function.BiConsumer;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Alejandro Tardín
  */
 public class HtmlVerticalCardTag extends VerticalCardTag {
 
-	public void setHtml(String html) {
+	public void setHtml(
+		BiConsumer<HttpServletRequest, HttpServletResponse> html) {
+
 		_html = html;
 	}
 
@@ -49,6 +54,6 @@ public class HtmlVerticalCardTag extends VerticalCardTag {
 		request.setAttribute("liferay-frontend:card:html", _html);
 	}
 
-	private String _html;
+	private BiConsumer<HttpServletRequest, HttpServletResponse> _html;
 
 }

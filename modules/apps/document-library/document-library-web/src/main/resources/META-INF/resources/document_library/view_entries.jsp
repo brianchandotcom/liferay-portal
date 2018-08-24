@@ -184,21 +184,29 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 								<c:choose>
 									<c:when test="<%= dlViewFileVersionDisplayContext.hasCustomThumbnail() %>">
-										<liferay-util:buffer
-											var="customThumbnailHtml"
-										>
 
-											<%
-											dlViewFileVersionDisplayContext.renderCustomThumbnail(request, response);
-											%>
-
-										</liferay-util:buffer>
+										<%
+										final DLViewFileVersionDisplayContext finalDlViewFileVersionDisplayContext = dlViewFileVersionDisplayContext;
+										%>
 
 										<liferay-frontend:html-vertical-card
 											actionJsp="/document_library/file_entry_action.jsp"
 											actionJspServletContext="<%= application %>"
 											cssClass="entry-display-style"
-											html="<%= customThumbnailHtml %>"
+											html="<%= new BiConsumer<HttpServletRequest, HttpServletResponse>() {
+												@Override
+												public void accept(
+													HttpServletRequest httpServletRequest,
+													HttpServletResponse httpServletResponse) {
+
+													try {
+														finalDlViewFileVersionDisplayContext.renderCustomThumbnail(httpServletRequest, httpServletResponse);
+													}
+													catch (Exception e) {
+														throw new RuntimeException(e);
+													}
+												}
+											} %>"
 											resultRow="<%= row %>"
 											rowChecker="<%= entriesChecker %>"
 											title="<%= latestFileVersion.getTitle() %>"

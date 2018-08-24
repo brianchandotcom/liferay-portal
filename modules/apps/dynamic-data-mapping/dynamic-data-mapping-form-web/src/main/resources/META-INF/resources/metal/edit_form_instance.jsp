@@ -42,6 +42,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 <div class="portlet-forms" id="<portlet:namespace />formContainer">
 	<clay:navigation-bar
 		componentId="formsNavigationBar"
+		elementClasses="forms-management-bar"
 		inverted="<%= true %>"
 		navigationItems="<%= ddmFormAdminDisplayContext.getFormBuilderNavigationItems() %>"
 	/>
@@ -274,7 +275,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
 			modules: Liferay.MODULES,
 			namespace: '<portlet:namespace />',
-			rulesList: <%= serializedDDMFormRules %>,
+			rules: <%= serializedDDMFormRules %>,
 			spritemap
 		},
 		'#<portlet:namespace />-container',

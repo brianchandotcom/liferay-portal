@@ -41,6 +41,9 @@ processSanitizerConfiguration {
 		if (line.contains('<directive name="maxInputSize" value="20000"/>')) {
 			line = line.replace "20000", "200000"
 		}
+		if (line.contains('<regexp name="onsiteURL" value=')) {
+			line = '		<regexp name="onsiteURL" value="^(?![\\p{L}\\p{N}\\\\\\.\\#@\\$%\\+&amp;;\\-_~,\\?=/!]*(&amp;colon))[\\p{L}\\p{N}\\\\\\.\\#@\\$%\\+&amp;;\\-_~,\\?=/!]*"/>'
+		}
 		else if (line.contains('<tag-rules>')) {
 			line = """\
 				|	<allowed-empty-tags>

@@ -910,7 +910,7 @@ public class ServiceRegistry {
 							container.getEventPublisher();
 
 						equinoxEventPublisher.publishFrameworkEvent(
-							2, bundleContextImpl.getBundle(), t);
+							FrameworkEvent.ERROR, bundleContextImpl.getBundle(), t);
 					}
 				}
 			}

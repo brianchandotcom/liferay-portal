@@ -881,14 +881,8 @@ public class ServiceRegistry {
 			for (Map.Entry<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>> bundleContextEntry :
 					listenerSnapshot.entrySet()) {
 
-				BundleContextImpl bundleContextImpl = bundleContextEntry.getKey();
-
-				Set<Map.Entry<ServiceListener, FilteredServiceListener>>
-					serviceListenerSet =
-						bundleContextEntry.getValue();
-
 				for (Map.Entry<ServiceListener, FilteredServiceListener> serviceListenerEntry :
-						serviceListenerSet) {
+						bundleContextEntry.getValue()) {
 
 					FilteredServiceListener filteredServiceListener =
 						serviceListenerEntry.getValue();
@@ -909,6 +903,8 @@ public class ServiceRegistry {
 
 						EquinoxEventPublisher equinoxEventPublisher =
 							container.getEventPublisher();
+
+						BundleContextImpl bundleContextImpl = bundleContextEntry.getKey();
 
 						equinoxEventPublisher.publishFrameworkEvent(
 							FrameworkEvent.ERROR, bundleContextImpl.getBundle(), t);

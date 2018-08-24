@@ -37,7 +37,12 @@ public class ServletContextListenerExceptionAdapter
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 		if (ServerDetector.isJBoss() || ServerDetector.isWildfly()) {
-			Thread thread = new Thread() {
+			ServletContext servletContext =
+				servletContextEvent.getServletContext();
+
+			Thread thread = new Thread(
+				"Context destroyed thread for ".concat(
+					servletContext.getServletContextName())) {
 
 				@Override
 				public void run() {
@@ -45,6 +50,8 @@ public class ServletContextListenerExceptionAdapter
 				}
 
 			};
+
+			thread.setDaemon(true);
 
 			thread.start();
 
@@ -64,7 +71,12 @@ public class ServletContextListenerExceptionAdapter
 		final ServletContextEvent servletContextEvent) {
 
 		if (ServerDetector.isJBoss() || ServerDetector.isWildfly()) {
-			Thread thread = new Thread() {
+			ServletContext servletContext =
+				servletContextEvent.getServletContext();
+
+			Thread thread = new Thread(
+				"Context initialized thread for ".concat(
+					servletContext.getServletContextName())) {
 
 				@Override
 				public void run() {
@@ -72,6 +84,8 @@ public class ServletContextListenerExceptionAdapter
 				}
 
 			};
+
+			thread.setDaemon(true);
 
 			thread.start();
 

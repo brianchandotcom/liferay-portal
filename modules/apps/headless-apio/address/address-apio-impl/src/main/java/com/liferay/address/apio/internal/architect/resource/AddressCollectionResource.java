@@ -65,26 +65,26 @@ public class AddressCollectionResource
 		).identifier(
 			Address::getAddressId
 		).addLocalizedStringByLocale(
-			"country", this::_getCountry
+			"addressCountry", this::_getCountry
 		).addString(
-			"city", Address::getCity
+			"addressLocality", Address::getCity
 		).addString(
-			"postalCode", Address::getZip
+			"addressRegion", this::_getRegion
 		).addString(
-			"region", this::_getRegion
-		).addString(
-			"street1", Address::getStreet1
-		).addString(
-			"street2", Address::getStreet2
-		).addString(
-			"street3", Address::getStreet3
-		).addString(
-			"type",
+			"addressType",
 			address -> {
 				ListType type = address.getType();
 
 				return type.getName();
 			}
+		).addString(
+			"postalCode", Address::getZip
+		).addString(
+			"streetAddressLine1", Address::getStreet1
+		).addString(
+			"streetAddressLine2", Address::getStreet2
+		).addString(
+			"streetAddressLine3", Address::getStreet3
 		).build();
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 
+import com.liferay.portal.kernel.util.ServerDetector;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -34,6 +36,61 @@ public class ServletContextListenerExceptionAdapter
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+		if (ServerDetector.isJBoss() || ServerDetector.isWildfly()) {
+			Thread thread = new Thread() {
+
+				@Override
+				public void run() {
+					_destroyContext();
+				}
+
+			};
+
+			thread.start();
+
+			try {
+				thread.join();
+			}
+			catch (Exception e) {
+			}
+		}
+		else {
+			_destroyContext();
+		}
+	}
+
+	@Override
+	public void contextInitialized(
+		final ServletContextEvent servletContextEvent) {
+
+		if (ServerDetector.isJBoss() || ServerDetector.isWildfly()) {
+			Thread thread = new Thread() {
+
+				@Override
+				public void run() {
+					_initializeContext();
+				}
+
+			};
+
+			thread.start();
+
+			try {
+				thread.join();
+			}
+			catch (Exception e) {
+			}
+		}
+		else {
+			_initializeContext();
+		}
+	}
+
+	public Exception getException() {
+		return _exception;
+	}
+
+	private void _destroyContext() {
 		try {
 			_servletContextListener.contextDestroyed(
 				new ServletContextEvent(_servletContext));
@@ -43,10 +100,7 @@ public class ServletContextListenerExceptionAdapter
 		}
 	}
 
-	@Override
-	public void contextInitialized(
-		final ServletContextEvent servletContextEvent) {
-
+	private void _initializeContext() {
 		try {
 			_servletContextListener.contextInitialized(
 				new ServletContextEvent(_servletContext));
@@ -54,10 +108,6 @@ public class ServletContextListenerExceptionAdapter
 		catch (Exception e) {
 			_exception = e;
 		}
-	}
-
-	public Exception getException() {
-		return _exception;
 	}
 
 	private Exception _exception;

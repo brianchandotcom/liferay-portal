@@ -1,0 +1,92 @@
+diff --git a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+index e392941..63aecd3 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
++++ b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+@@ -18,8 +18,10 @@ import org.eclipse.osgi.container.ModuleRevision;
+ import org.eclipse.osgi.framework.eventmgr.*;
+ import org.eclipse.osgi.internal.debug.Debug;
+ import org.eclipse.osgi.internal.framework.BundleContextImpl;
++import org.eclipse.osgi.internal.framework.EquinoxConfiguration;
+ import org.eclipse.osgi.internal.framework.EquinoxContainer;
+ import org.eclipse.osgi.internal.framework.FilterImpl;
++import org.eclipse.osgi.internal.framework.EquinoxEventPublisher;
+ import org.eclipse.osgi.internal.messages.Msg;
+ import org.eclipse.osgi.storage.BundleInfo.Generation;
+ import org.eclipse.osgi.util.NLS;
+@@ -853,14 +855,68 @@ public class ServiceRegistry {
+ 		}
+ 
+ 		/* deliver the event to the snapshot */
+-		ListenerQueue<ServiceListener, FilteredServiceListener, ServiceEvent> queue = container.newListenerQueue();
+-		for (Map.Entry<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>> entry : listenerSnapshot.entrySet()) {
+-			@SuppressWarnings({"unchecked", "rawtypes"})
+-			EventDispatcher<ServiceListener, FilteredServiceListener, ServiceEvent> dispatcher = (EventDispatcher) entry.getKey();
+-			Set<Map.Entry<ServiceListener, FilteredServiceListener>> listenerSet = entry.getValue();
+-			queue.queueListeners(listenerSet, dispatcher);
+-		}
+-		queue.dispatchEventSynchronous(SERVICEEVENT, event);
++
++		EquinoxConfiguration equinoxConfiguration =
++			container.getConfiguration();
++
++		Thread currentThread = null;
++		ClassLoader previousTCCL = null;
++
++		if (equinoxConfiguration.BUNDLE_SET_TCCL) {
++			currentThread = Thread.currentThread();
++
++			previousTCCL = currentThread.getContextClassLoader();
++
++			ClassLoader contextFinder = container.getContextFinder();
++
++			if (previousTCCL == contextFinder) {
++				previousTCCL = null;
++			}
++			else {
++				currentThread.setContextClassLoader(contextFinder);
++			}
++		}
++
++		try {
++			for (Map.Entry<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>> bundleContextEntry :
++					listenerSnapshot.entrySet()) {
++
++				for (Map.Entry<ServiceListener, FilteredServiceListener> serviceListenerEntry :
++						bundleContextEntry.getValue()) {
++
++					FilteredServiceListener filteredServiceListener =
++						serviceListenerEntry.getValue();
++
++					try {
++						filteredServiceListener.serviceChanged(event);
++					}
++					catch (Throwable t) {
++						if (debug.DEBUG_GENERAL) {
++							Debug.println(
++								"Exception in bottom level event dispatcher: " +
++									t.getMessage());
++
++							Debug.printStackTrace(t);
++						}
++
++						container.handleRuntimeError(t);
++
++						EquinoxEventPublisher equinoxEventPublisher =
++							container.getEventPublisher();
++
++						BundleContextImpl bundleContextImpl = bundleContextEntry.getKey();
++
++						equinoxEventPublisher.publishFrameworkEvent(
++							FrameworkEvent.ERROR, bundleContextImpl.getBundle(), t);
++					}
++				}
++			}
++		}
++		finally {
++			if (previousTCCL != null) {
++				currentThread.setContextClassLoader(previousTCCL);
++			}
++		}
+ 	}
+ 
+ 	/**

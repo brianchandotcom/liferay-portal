@@ -88,7 +88,7 @@ public class GitUtil {
 	public static List<RemoteGitRef> getRemoteGitRefs(
 		String remoteGitBranchName, File workingDirectory, String remoteURL) {
 
-		Matcher remoteURLMatcher = BaseGitRemote.remoteURLPattern.matcher(
+		Matcher remoteURLMatcher = GitRemote.remoteURLPattern.matcher(
 			remoteURL);
 
 		if (!remoteURLMatcher.find()) {
@@ -129,7 +129,7 @@ public class GitUtil {
 				remoteURLMatcher.group("username"));
 
 		for (String line : input.split("\n")) {
-			Pattern gitLsRemotePattern = BaseGitRemote.gitLsRemotePattern;
+			Pattern gitLsRemotePattern = GitRemote.gitLsRemotePattern;
 
 			Matcher gitLsRemoteMatcher = gitLsRemotePattern.matcher(line);
 

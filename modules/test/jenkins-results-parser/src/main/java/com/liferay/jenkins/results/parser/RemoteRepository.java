@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.GitWorkingDirectory.Remote;
-
 /**
  * @author Peter Yoo
  */
@@ -34,10 +32,10 @@ public class RemoteRepository extends BaseRepository {
 		return username;
 	}
 
-	protected RemoteRepository(Remote remote) {
+	protected RemoteRepository(GitRemote gitRemote) {
 		this(
-			remote.getHostname(), remote.getRepositoryName(),
-			remote.getUsername());
+			gitRemote.getHostname(), gitRemote.getRepositoryName(),
+			gitRemote.getUsername());
 	}
 
 	protected RemoteRepository(

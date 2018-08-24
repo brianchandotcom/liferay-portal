@@ -1,7 +1,7 @@
-$c: '.dmm-page-settings';
+$c: '.ddm-page-settings';
 
 #{$c} {
 	position: absolute;
-	top: calc(#{$base-line} + 5px);
 	right: calc(#{$base-line} + 22px);
+	top: calc(#{$base-line} + 5px);
 }

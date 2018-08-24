@@ -10,13 +10,13 @@ export const pageStructure = Config.shapeOf(
 						Config.shapeOf(
 							{
 								fields: Config.array(),
-								size: Config.number(),
+								size: Config.number()
 							}
 						)
-					),
+					)
 				}
 			)
 		),
-		title: Config.string(),
+		title: Config.string()
 	}
 );

@@ -121,7 +121,7 @@ describe(
 				component._handleUpdatePage(context[0], 0);
 
 				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('updatePages', expect.any(Object));
+				expect(spy).toHaveBeenCalledWith('pagesUpdated', expect.any(Object));
 
 				expect(component).toMatchSnapshot();
 			}
@@ -496,7 +496,7 @@ describe(
 							}
 						);
 
-						component._handleClickSettingsPage({
+						component._handleSettingsPageClicked({
 							data: {
 								item: {
 									settingsItem: 'add-page'

@@ -90,16 +90,16 @@ describe(
 		);
 
 		it(
-			'should continue to propagate updatePages event',
+			'should continue to propagate pagesUpdated event',
 			() => {
 				const spy = jest.spyOn(component, 'emit');
 				const {FormRenderer} = component.refs;
 				const mockEvent = jest.fn();
 
-				FormRenderer.emit('updatePages', mockEvent);
+				FormRenderer.emit('pagesUpdated', mockEvent);
 
 				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('updatePages', expect.anything());
+				expect(spy).toHaveBeenCalledWith('pagesUpdated', expect.anything());
 			}
 		);
 
@@ -115,7 +115,7 @@ describe(
 				jest.runAllTimers();
 
 				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('updatePages', expect.anything());
+				expect(spy).toHaveBeenCalledWith('pagesUpdated', expect.anything());
 			}
 		);
 

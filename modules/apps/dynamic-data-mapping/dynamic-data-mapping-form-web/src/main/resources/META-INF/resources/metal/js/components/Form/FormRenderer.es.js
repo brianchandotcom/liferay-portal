@@ -135,7 +135,7 @@ class FormRenderer extends Component {
 	 * @private
 	 */
 
-	_handleClickSettingsPage({data}) {
+	_handleSettingsPageClicked({data}) {
 		const {settingsItem} = data.item;
 
 		if (settingsItem == 'add-page') {
@@ -217,7 +217,7 @@ class FormRenderer extends Component {
 	_handleUpdatePage({page, pageId}) {
 		this.pages[pageId] = page;
 
-		this.emit('updatePages', this.pages)
+		this.emit('pagesUpdated', this.pages)
 	}
 
 	/**

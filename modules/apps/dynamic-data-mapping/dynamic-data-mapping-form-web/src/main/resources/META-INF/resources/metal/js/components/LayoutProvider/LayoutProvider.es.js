@@ -303,7 +303,7 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleUpdatePages(pages) {
+	_handlePagesUpdated(pages) {
 		this.setState(
 			{
 				pages
@@ -379,7 +379,7 @@ class LayoutProvider extends Component {
 				fieldClicked: this._handleClickedField.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
 				fieldMoved: this._handleFieldMoved.bind(this),
-				updatePages: this._handleUpdatePages.bind(this)
+				pagesUpdated: this._handlePagesUpdated.bind(this)
 			};
 
 			Object.assign(

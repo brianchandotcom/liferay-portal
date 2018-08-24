@@ -22,7 +22,6 @@ const withAppComposer = WrappedComponent => {
          */
 
 		_handlePagesChanged(event) {
-			console.log(event);
 		}
 
 		/**

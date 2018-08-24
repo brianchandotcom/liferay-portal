@@ -53,9 +53,9 @@
 	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
 
-	<div>
+	<div class="ddm-page-container-layout">
 		{if $activePage == $pageId}
-			<div class="dmm-form-page pr-3 pl-3">
+			<div class="dmm-form-page pl-3 pr-3">
 				{call .form}
 					{param contentRenderer: $contentRenderer /}
 					{param descriptionPlaceholder: $descriptionPlaceholder /}
@@ -363,7 +363,6 @@
 		{/call}
 	{/if}
 {/deltemplate}
-
 
 {template .fieldActions}
 	{@param spritemap: string}

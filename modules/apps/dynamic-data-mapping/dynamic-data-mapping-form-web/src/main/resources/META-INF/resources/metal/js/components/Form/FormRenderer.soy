@@ -3,7 +3,7 @@
 {template .render}
 	{@param spritemap: string}
 	{@param? _handleChangePage: any}
-	{@param? _handleClickSettingsPage: any}
+	{@param? _handleSettingsPageClicked: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleUpdatePage: any}
@@ -18,7 +18,7 @@
 
 	{delcall FormRenderer.pages variant="$contentRenderer"}
 		{param _handleChangePage: $_handleChangePage /}
-		{param _handleClickSettingsPage: $_handleClickSettingsPage /}
+		{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 		{param _handleUpdatePage: $_handleUpdatePage /}
@@ -34,7 +34,7 @@
 {deltemplate FormRenderer.pages variant="'grid'"}
 	{@param spritemap: string}
 	{@param? _handleChangePage: any}
-	{@param? _handleClickSettingsPage: any}
+	{@param? _handleSettingsPageClicked: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleUpdatePage: any}
@@ -48,7 +48,7 @@
 	<div class="position-relative">
 		{delcall FormRenderer.formHeader}
 			{param _handleChangePage: $_handleChangePage /}
-			{param _handleClickSettingsPage: $_handleClickSettingsPage /}
+			{param _handleSettingsPageClicked: $_handleSettingsPageClicked /}
 			{param activePage: $activePage /}
 			{param contentRenderer: $contentRenderer /}
 			{param editable: $editable /}
@@ -56,7 +56,7 @@
 			{param pageSettingsItem: $pageSettingsItem /}
 			{param spritemap: $spritemap /}
 		{/delcall}
-	
+
 		{for $page in $pages}
 			{call PageRenderer.render}
 				{param activePage: $activePage /}
@@ -81,7 +81,7 @@
 {deltemplate FormRenderer.formHeader}
 	{@param spritemap: string}
 	{@param? _handleChangePage: any}
-	{@param? _handleClickSettingsPage: any}
+	{@param? _handleSettingsPageClicked: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
@@ -93,7 +93,7 @@
 	{let $classes kind="text"}
 		ddm-form-header
 		{if $multiple}
-		 	{sp}pt-2 pb-3 mb-4 multiple
+			{sp}pt-2 pb-3 mb-4 multiple
 		{/if}
 	{/let}
 
@@ -110,11 +110,11 @@
 			{/delcall}
 		{/if}
 
-		<div class="btn-group dmm-page-settings" role="group">
+		<div class="btn-group ddm-page-settings" role="group">
 			{call ClayActionsDropdown.render}
 				{param items: $pageSettingsItem /}
 				{param events: [
-					'itemClicked': $_handleClickSettingsPage
+					'itemClicked': $_handleSettingsPageClicked
 				] /}
 				{param spritemap: $spritemap /}
 			{/call}
@@ -126,8 +126,8 @@
 	{@param? _handleChangePage: any}
 	{@param? activePage: number}
 	{@param? pages: ?}
-	
-	<ol class="multi-step-nav multi-step-nav-collapse-sm multi-step-indicator-label-top">
+
+	<ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 		{for $page in $pages}
 			{let $title: $page.title ? $page.title : 'Untitled Page' /}
 			{let $pageId: index($page) /}

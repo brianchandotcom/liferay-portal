@@ -170,13 +170,13 @@ describe(
 						);
 
 						it(
-							'should listen to the updatePages event',
+							'should listen to the pagesUpdated event',
 							() => {
 								component = new Parent();
 
 								const {child, provider} = component.refs;
 
-								child.emit('updatePages', pages);
+								child.emit('pagesUpdated', pages);
 
 								jest.runAllTimers();
 

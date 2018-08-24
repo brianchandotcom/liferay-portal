@@ -28,7 +28,7 @@ class Builder extends Component {
 		Sidebar._setMode('add');
 		Sidebar.show();
 
-		this.emit('updatePages', pages);
+		this.emit('pagesUpdated', pages);
 	}
 
 	/**
@@ -87,8 +87,8 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleUpdatePages(pages) {
-		this.emit('updatePages', pages);
+	_handlePagesUpdated(pages) {
+		this.emit('pagesUpdated', pages);
 	}
 
 	/**
@@ -112,7 +112,7 @@ class Builder extends Component {
 			duplicateButtonClicked: this._handleDuplicateButtonClicked.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
-			updatePages: this._handleUpdatePages.bind(this)
+			pagesUpdated: this._handlePagesUpdated.bind(this)
 		};
 
 		const sidebarEvents = {

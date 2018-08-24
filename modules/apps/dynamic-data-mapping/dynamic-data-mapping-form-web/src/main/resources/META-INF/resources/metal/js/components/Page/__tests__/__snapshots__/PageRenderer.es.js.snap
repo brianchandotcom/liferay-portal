@@ -1,145 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FormRenderer should resize a specific column on the drag and drop layout 1`] = `
-<div>
-  <div class="dmm-form-page pr-3 pl-3">
-    <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
-    <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
-    <div class="form-builder-layout">
-      <div class="layout-page">
-        <div class="row">
-          <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-            <div class="ddm-field-container">
-              <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag">
-                <div class="ddm-field-not-found">Field doesn't exist.</div>
-              </div>
-              <div class="ddm-field-actions-container">
-                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
-                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
-                    <use xlink:href="icons.svg#paste"></use>
-                  </svg>
-                </button>
-                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
-                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
-                    <use xlink:href="icons.svg#trash"></use>
-                  </svg>
-                </button>
-              </div>
-              <div class="ddm-resize-handle-right"></div>
-            </div>
-          </div>
-          <div class="col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
-            <div class="col-empty ddm-target"></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-            <div class="ddm-field-container">
-              <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag">
-                <div class="ddm-field-not-found">Field doesn't exist.</div>
-              </div>
-              <div class="ddm-field-actions-container">
-                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
-                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
-                    <use xlink:href="icons.svg#paste"></use>
-                  </svg>
-                </button>
-                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
-                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
-                    <use xlink:href="icons.svg#trash"></use>
-                  </svg>
-                </button>
-              </div>
-              <div class="ddm-resize-handle-right"></div>
-            </div>
-          </div>
-          <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-            <div class="ddm-field-container">
-              <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag">
-                <div class="ddm-field-not-found">Field doesn't exist.</div>
-              </div>
-              <div class="ddm-field-actions-container">
-                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
-                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
-                    <use xlink:href="icons.svg#paste"></use>
-                  </svg>
-                </button>
-                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
-                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
-                    <use xlink:href="icons.svg#trash"></use>
-                  </svg>
-                </button>
-              </div>
-              <div class="ddm-resize-handle-right"></div>
-            </div>
-          </div>
-          <div class="col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
-            <div class="col-empty ddm-target"></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-            <div class="ddm-field-container">
-              <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag">
-                <div class="ddm-field-not-found">Field doesn't exist.</div>
-              </div>
-              <div class="ddm-field-actions-container">
-                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
-                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                    <title>paste</title>
-                    <use xlink:href="icons.svg#paste"></use>
-                  </svg>
-                </button>
-                <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
-                  <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                    <title>trash</title>
-                    <use xlink:href="icons.svg#trash"></use>
-                  </svg>
-                </button>
-              </div>
-              <div class="ddm-resize-handle-right"></div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
-            <div class="col-empty ddm-target"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`PageRenderer should change the page title 1`] = `
-<div>
-  <div class="dmm-form-page pr-3 pl-3">
+<div class="ddm-page-container-layout">
+  <div class="dmm-form-page pl-3 pr-3">
     <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
     <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
     <div class="form-builder-layout">
@@ -275,8 +138,8 @@ exports[`PageRenderer should change the page title 1`] = `
 `;
 
 exports[`PageRenderer should change the page title 2`] = `
-<div>
-  <div class="dmm-form-page pr-3 pl-3">
+<div class="ddm-page-container-layout">
+  <div class="dmm-form-page pl-3 pr-3">
     <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
     <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
     <div class="form-builder-layout">
@@ -412,8 +275,8 @@ exports[`PageRenderer should change the page title 2`] = `
 `;
 
 exports[`PageRenderer should resize a specific column on the drag and drop layout 1`] = `
-<div>
-  <div class="dmm-form-page pr-3 pl-3">
+<div class="ddm-page-container-layout">
+  <div class="dmm-form-page pl-3 pr-3">
     <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
     <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
     <div class="form-builder-layout">

@@ -3,7 +3,7 @@
 exports[`FormRenderer PagesSettings should add a new page on the layout render 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header pt-2 pb-3 mb-4 multiple">
-    <ol class="multi-step-nav multi-step-nav-collapse-sm multi-step-indicator-label-top">
+    <ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
       <li class="multi-step-item multi-step-item-expand" data-page-id="0">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
@@ -30,9 +30,9 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
       </div>
     </div>
   </div>
-  <div></div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout"></div>
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="1" maxlength="120" value="" placeholder="untitled-page-2-of-1"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="1" maxlength="120" value="" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -53,7 +53,7 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
 exports[`FormRenderer should change the active page 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header pt-2 pb-3 mb-4 multiple">
-    <ol class="multi-step-nav multi-step-nav-collapse-sm multi-step-indicator-label-top">
+    <ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
       <li class="multi-step-item multi-step-item-expand active" data-page-id="0">
         <div class="multi-step-divider"></div>
         <div class="multi-step-indicator">
@@ -80,8 +80,8 @@ exports[`FormRenderer should change the active page 1`] = `
       </div>
     </div>
   </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -214,7 +214,7 @@ exports[`FormRenderer should change the active page 1`] = `
       </div>
     </div>
   </div>
-  <div></div>
+  <div class="ddm-page-container-layout"></div>
 </div>
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
@@ -239,8 +239,8 @@ exports[`FormRenderer should change the form page description 1`] = `
       </div>
     </div>
   </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -397,8 +397,8 @@ exports[`FormRenderer should change the form page title 1`] = `
       </div>
     </div>
   </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -555,8 +555,8 @@ exports[`FormRenderer should not render the layout with the field empty in non-e
       </div>
     </div>
   </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -600,8 +600,8 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
       </div>
     </div>
   </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -758,8 +758,8 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
       </div>
     </div>
   </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -916,8 +916,8 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
       </div>
     </div>
   </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -1074,8 +1074,8 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
       </div>
     </div>
   </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -1232,8 +1232,8 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
       </div>
     </div>
   </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -1410,8 +1410,8 @@ exports[`FormRenderer should render a layout with pages 1`] = `
       </div>
     </div>
   </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
+  <div class="ddm-page-container-layout">
+    <div class="dmm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -1470,164 +1470,6 @@ exports[`FormRenderer should render default markup 1`] = `
     </div>
   </div>
   <p>Drag from sidebar and drop here</p>
-</div>
-<div class="dropdown-menu" ref="menu">
-  <ul class="list-unstyled">
-    <li>
-      <button class="btn dropdown-item btn-sm btn-link" aria-label="add-page" type="button">add-page</button>
-    </li>
-  </ul>
-</div>
-`;
-
-exports[`FormRenderer should test 1`] = `
-<div class="position-relative">
-  <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
-      <div class="dropdown dropdown-action">
-        <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
-          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
-            <title>ellipsis-v</title>
-            <use xlink:href="icons.svg#ellipsis-v"></use>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div class="dmm-form-page pr-3 pl-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
-      <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
-      <div class="form-builder-layout">
-        <div class="layout-page">
-          <div class="row">
-            <div class="col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
-              <div class="col-empty ddm-target"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
-                <div class="ddm-resize-handle-left"></div>
-                <div class="ddm-drag">
-                  <div class="ddm-field-not-found">Field doesn't exist.</div>
-                </div>
-                <div class="ddm-field-actions-container">
-                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
-                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                      <title>paste</title>
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg>
-                  </button>
-                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
-                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                      <title>trash</title>
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg>
-                  </button>
-                </div>
-                <div class="ddm-resize-handle-right"></div>
-              </div>
-            </div>
-            <div class="col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="col-empty ddm-target"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12" data-ddm-field-row="1" data-ddm-field-page="0">
-              <div class="col-empty ddm-target"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
-                <div class="ddm-resize-handle-left"></div>
-                <div class="ddm-drag">
-                  <div class="ddm-field-not-found">Field doesn't exist.</div>
-                </div>
-                <div class="ddm-field-actions-container">
-                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
-                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                      <title>paste</title>
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg>
-                  </button>
-                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
-                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                      <title>trash</title>
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg>
-                  </button>
-                </div>
-                <div class="ddm-resize-handle-right"></div>
-              </div>
-            </div>
-            <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
-                <div class="ddm-resize-handle-left"></div>
-                <div class="ddm-drag">
-                  <div class="ddm-field-not-found">Field doesn't exist.</div>
-                </div>
-                <div class="ddm-field-actions-container">
-                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
-                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                      <title>paste</title>
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg>
-                  </button>
-                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
-                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                      <title>trash</title>
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg>
-                  </button>
-                </div>
-                <div class="ddm-resize-handle-right"></div>
-              </div>
-            </div>
-            <div class="col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
-              <div class="col-empty ddm-target"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12" data-ddm-field-row="2" data-ddm-field-page="0">
-              <div class="col-empty ddm-target"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
-                <div class="ddm-resize-handle-left"></div>
-                <div class="ddm-drag">
-                  <div class="ddm-field-not-found">Field doesn't exist.</div>
-                </div>
-                <div class="ddm-field-actions-container">
-                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
-                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
-                      <title>paste</title>
-                      <use xlink:href="icons.svg#paste"></use>
-                    </svg>
-                  </button>
-                  <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button">
-                    <svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
-                      <title>trash</title>
-                      <use xlink:href="icons.svg#trash"></use>
-                    </svg>
-                  </button>
-                </div>
-                <div class="ddm-resize-handle-right"></div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12" data-ddm-field-row="3" data-ddm-field-page="0">
-              <div class="col-empty ddm-target"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">

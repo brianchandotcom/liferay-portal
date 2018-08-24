@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+exports[`RuleList should show message when rule list is empty 1`] = `
+<div class="form-builder-rule-builder-container">
+  <h1 class="form-builder-section-title text-default">Rule Builder</h1>
+  <div class="liferay-ddm-form-rule-rules-list-container">
+    <div class="form-builder-rule-list">
+      <div class="main-content-body">
+        <div class="sheet taglib-empty-result-message">
+          <div class="taglib-empty-result-message-header"></div>
+          <div class="sheet-text text-center text-muted">
+            <p class="text-default">there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

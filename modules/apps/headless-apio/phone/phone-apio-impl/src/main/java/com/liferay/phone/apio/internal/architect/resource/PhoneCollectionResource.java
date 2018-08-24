@@ -62,9 +62,9 @@ public class PhoneCollectionResource
 		).addString(
 			"extension", Phone::getExtension
 		).addString(
-			"number", Phone::getNumber
+			"phoneNumber", Phone::getNumber
 		).addString(
-			"type",
+			"phoneType",
 			phone -> Try.fromFallible(
 				phone::getType
 			).map(

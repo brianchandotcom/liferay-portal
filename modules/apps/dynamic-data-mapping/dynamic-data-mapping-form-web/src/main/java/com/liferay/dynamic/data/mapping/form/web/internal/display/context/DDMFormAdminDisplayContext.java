@@ -37,6 +37,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
@@ -511,6 +512,19 @@ public class DDMFormAdminDisplayContext {
 
 	public JSONFactory getJSONFactory() {
 		return _jsonFactory;
+	}
+
+	public long getLatestDDMStructureVersionId() throws PortalException {
+		DDMStructure structure = getDDMStructure();
+
+		if (structure == null) {
+			return 0;
+		}
+
+		DDMStructureVersion latestDDMStructureVersion =
+			structure.getLatestStructureVersion();
+
+		return latestDDMStructureVersion.getStructureVersionId();
 	}
 
 	public String getLexiconIconsPath() {

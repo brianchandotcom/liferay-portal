@@ -198,7 +198,7 @@ public class GitWorkingDirectory {
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to clean repository\n",
+					"Unable to clean git repository\n",
 					executionResult.getStandardError()));
 		}
 	}
@@ -469,7 +469,7 @@ public class GitWorkingDirectory {
 
 		if (localSHAExists(remoteGitBranchSHA)) {
 			System.out.println(
-				remoteGitBranchSHA + " already exists in repository");
+				remoteGitBranchSHA + " already exists in git repository");
 
 			if (localGitBranch != null) {
 				return createLocalGitBranch(
@@ -648,7 +648,7 @@ public class GitWorkingDirectory {
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to fetch from local repository ",
+					"Unable to fetch from local git repository ",
 					String.valueOf(localGitBranch.getDirectory()), "\n",
 					executionResult.getStandardError()));
 		}

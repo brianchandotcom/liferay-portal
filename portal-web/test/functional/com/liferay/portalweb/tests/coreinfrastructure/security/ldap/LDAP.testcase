@@ -61,11 +61,6 @@
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
 
-		<!-- LPS-71630 -->
-		<execute macro="PortalSettings#configureLDAPSetting">
-			<var name="enableSettingList" value="${enableSettingList}" />
-		</execute>
-
 		<execute macro="PortalSettings#viewEnabledLDAPSetting">
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
@@ -95,7 +90,7 @@
 	</command>
 
 	<command name="ResetFieldsValueForImportedLDAPUser" priority="4">
-		<description message="This is a use case for LPS-30529 and LPS-77948." />
+		<description message="This is a use case for LPS-30529." />
 
 		<property name="apacheds.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="LDAP#ResetFieldsValueForImportedLDAPUser" />
@@ -124,11 +119,6 @@
 
 		<var name="enableSettingList" value="enabled,ldapExportEnabled,ldapImportEnabled,importOnStartup" />
 
-		<execute macro="PortalSettings#configureLDAPSetting">
-			<var name="enableSettingList" value="${enableSettingList}" />
-		</execute>
-
-		<!-- LPS-71630 -->
 		<execute macro="PortalSettings#configureLDAPSetting">
 			<var name="enableSettingList" value="${enableSettingList}" />
 		</execute>
@@ -195,22 +185,20 @@
 			<var name="portlet" value="Account Settings" />
 		</execute>
 
-		<!-- LPS-77948 -->
-
-		<!-- <execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECTED" value1="Female">
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECTED" value1="Female">
 			<var name="key_userGender" value="Female" />
-		</execute> -->
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD" value1="QA" />
 
-		<!-- LPS-77948 -->
-
-		<!-- <execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECTED" value1="Phd">
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECTED" value1="Phd">
 			<var name="key_userSuffix" value="Phd" />
-		</execute> -->
+		</execute>
 	</command>
 
 	<command ignore="true" name="ViewHiddenSecurityCredential" priority="4">
+		<!-- Ignoring until LRQA-39644 is resolved -->
+
 		<description message="This is a use case for LPS-73381." />
 
 		<property name="test.name.skip.portal.instance" value="LDAP#ViewHiddenSecurityCredential" />
@@ -232,7 +220,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting" priority="3">
+	<command name="ViewLDAPInstanceSettingsDoNotAffectSystemSettings" priority="3">
 		<property name="test.name.skip.portal.instance" value="LDAP#ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -257,11 +245,6 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="PortalSettings#configureLDAPSetting">
-			<var name="enableSettingList" value="enabled" />
-		</execute>
-
-		<!-- LPS-71630 -->
 		<execute macro="PortalSettings#configureLDAPSetting">
 			<var name="enableSettingList" value="enabled" />
 		</execute>

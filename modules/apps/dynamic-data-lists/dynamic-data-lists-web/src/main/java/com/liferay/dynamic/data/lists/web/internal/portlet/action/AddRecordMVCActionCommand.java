@@ -20,8 +20,14 @@ import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -53,6 +59,22 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
+
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -95,7 +117,18 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		DDMTemplate ddmTemplate = ddmTemplateService.getTemplate(
 			formDDMTemplateId);
 
-		return ddmFormJSONDeserializer.deserialize(ddmTemplate.getScript());
+		DDMFormDeserializer ddmFormDeserializer =
+			ddmFormDeserializerTracker.getDDMFormDeserializer("json");
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				ddmTemplate.getScript());
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
 	protected DDMFormValues getDDMFormValues(ActionRequest actionRequest)
@@ -106,8 +139,7 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		String serializedDDMFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
 
-		return ddmFormValuesJSONDeserializer.deserialize(
-			ddmForm, serializedDDMFormValues);
+		return deserialize(serializedDDMFormValues, ddmForm);
 	}
 
 	@Reference(unbind = "-")
@@ -123,17 +155,18 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormJSONDeserializer(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
+	protected void setDDMFormDeserializerTracker(
+		DDMFormDeserializerTracker ddmFormDeserializerTracker) {
 
-		this.ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+		this.ddmFormDeserializerTracker = ddmFormDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormValuesJSONDeserializer(
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+	protected void setDDMFormValuesDeserializerTracker(
+		DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker) {
 
-		this.ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+		this.ddmFormValuesDeserializerTracker =
+			ddmFormValuesDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -145,8 +178,8 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 	protected DDLRecordService ddlRecordService;
 	protected DDLRecordSetService ddlRecordSetService;
-	protected DDMFormJSONDeserializer ddmFormJSONDeserializer;
-	protected DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;
+	protected DDMFormDeserializerTracker ddmFormDeserializerTracker;
+	protected DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker;
 	protected DDMTemplateService ddmTemplateService;
 
 }

@@ -15,13 +15,15 @@
 package com.liferay.dynamic.data.mapping.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -115,18 +117,34 @@ public class RenderStructureFieldMVCRenderCommand
 		ServletResponseUtil.write(httpServletResponse, ddmFormFieldHTML);
 	}
 
-	protected DDMFormField getDDMFormField(HttpServletRequest request)
-		throws PortalException {
-
+	protected DDMFormField getDDMFormField(HttpServletRequest request) {
 		String definition = ParamUtil.getString(request, "definition");
 		String fieldName = ParamUtil.getString(request, "fieldName");
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(definition);
+		DDMFormDeserializer ddmFormDeserializer =
+			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				definition);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
 		return ddmFormFieldsMap.get(fieldName);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormDeserializerTracker(
+		DDMFormDeserializerTracker ddmFormDeserializerTracker) {
+
+		_ddmFormDeserializerTracker = ddmFormDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -136,15 +154,8 @@ public class RenderStructureFieldMVCRenderCommand
 		_ddmFormFieldRendererRegistry = ddmFormFieldRendererRegistry;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormJSONDeserializer(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
-
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
-	}
-
+	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 	private DDMFormFieldRendererRegistry _ddmFormFieldRendererRegistry;
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 
 	@Reference
 	private Portal _portal;

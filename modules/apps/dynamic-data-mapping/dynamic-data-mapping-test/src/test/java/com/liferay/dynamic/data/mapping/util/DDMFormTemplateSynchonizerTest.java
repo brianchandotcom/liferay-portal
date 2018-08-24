@@ -16,6 +16,10 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.dynamic.data.mapping.internal.util.DDMFormTemplateSynchonizer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -204,15 +208,21 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 	}
 
 	protected void createFormTemplates(DDMForm ddmForm) {
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			ddmFormJSONSerializer.serialize(builder.build());
+
 		_createDDMTemplate = createTemplate(
 			RandomTestUtil.randomLong(), "Test Create Mode Form Template",
 			DDMTemplateConstants.TEMPLATE_MODE_CREATE,
-			ddmFormJSONSerializer.serialize(ddmForm));
+			ddmFormSerializerSerializeResponse.getContent());
 
 		_editDDMTemplate = createTemplate(
 			RandomTestUtil.randomLong(), "Test Edit Mode Form Template",
 			DDMTemplateConstants.TEMPLATE_MODE_EDIT,
-			ddmFormJSONSerializer.serialize(ddmForm));
+			ddmFormSerializerSerializeResponse.getContent());
 	}
 
 	protected DDMFormField createRadioDDMFormField(
@@ -288,8 +298,16 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 			DDMTemplate ddmTemplate)
 		throws Exception {
 
-		DDMForm ddmForm = ddmFormJSONDeserializer.deserialize(
-			ddmTemplate.getScript());
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				ddmTemplate.getScript()
+			);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormJSONDeserializer.deserialize(builder.build());
+
+		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 		return ddmForm.getDDMFormFieldsMap(true);
 	}
@@ -459,7 +477,15 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		protected void updateDDMTemplate(
 			DDMTemplate ddmTemplate, DDMForm templateDDMForm) {
 
-			String script = ddmFormJSONSerializer.serialize(templateDDMForm);
+			DDMFormSerializerSerializeRequest.Builder builder =
+				DDMFormSerializerSerializeRequest.Builder.newBuilder(
+					templateDDMForm);
+
+			DDMFormSerializerSerializeResponse
+				ddmFormSerializerSerializeResponse =
+					ddmFormJSONSerializer.serialize(builder.build());
+
+			String script = ddmFormSerializerSerializeResponse.getContent();
 
 			ddmTemplate.setScript(script);
 

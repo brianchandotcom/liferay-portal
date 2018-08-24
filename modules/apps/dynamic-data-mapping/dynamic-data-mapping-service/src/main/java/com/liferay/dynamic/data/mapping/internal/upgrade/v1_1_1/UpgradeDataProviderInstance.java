@@ -16,8 +16,13 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_1;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -45,12 +50,12 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 
 	public UpgradeDataProviderInstance(
 		DDMDataProviderTracker ddmDataProviderTracker,
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
-		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer,
+		DDMFormValuesSerializer ddmFormValuesSerializer) {
 
 		_ddmDataProviderTracker = ddmDataProviderTracker;
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
-		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
+		_ddmFormValuesDeserializer = ddmFormValuesDeserializer;
+		_ddmFormValuesSerializer = ddmFormValuesSerializer;
 	}
 
 	protected void addDefaultInputParameters(DDMFormValues ddmFormValues) {
@@ -187,6 +192,18 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 		return sb.toString();
 	}
 
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				_ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
@@ -218,17 +235,27 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 		}
 	}
 
+	protected String serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				_ddmFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
+	}
+
 	protected String upgradeDataProviderInstanceDefinition(
-			String dataProviderInstanceDefinition, String type)
-		throws Exception {
+		String dataProviderInstanceDefinition, String type) {
 
 		DDMDataProvider ddmDataProvider =
 			_ddmDataProviderTracker.getDDMDataProvider(type);
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				DDMFormFactory.create(ddmDataProvider.getSettings()),
-				dataProviderInstanceDefinition);
+		DDMFormValues ddmFormValues = deserialize(
+			dataProviderInstanceDefinition,
+			DDMFormFactory.create(ddmDataProvider.getSettings()));
 
 		addDefaultInputParameters(ddmFormValues);
 
@@ -238,7 +265,7 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 
 		addStartEndParameters(ddmFormValues);
 
-		return _ddmFormValuesJSONSerializer.serialize(ddmFormValues);
+		return serialize(ddmFormValues);
 	}
 
 	private static final String _DEFAULT_OUTPUT_PARAMETER_LABEL =
@@ -248,7 +275,7 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 		"Default-Output";
 
 	private final DDMDataProviderTracker _ddmDataProviderTracker;
-	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
-	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
+	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer;
+	private final DDMFormValuesSerializer _ddmFormValuesSerializer;
 
 }

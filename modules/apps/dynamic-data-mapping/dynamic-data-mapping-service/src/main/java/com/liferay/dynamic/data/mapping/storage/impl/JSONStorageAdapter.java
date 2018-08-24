@@ -14,9 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.storage.impl;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -54,8 +61,7 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 
 		long classNameId = _portal.getClassNameId(DDMContent.class.getName());
 
-		String serializedDDMFormValues = _ddmFormValuesJSONSerializer.serialize(
-			ddmFormValues);
+		String serializedDDMFormValues = serialize(ddmFormValues);
 
 		DDMContent ddmContent = _ddmContentLocalService.addContent(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
@@ -87,8 +93,7 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 
 		ddmContent.setModifiedDate(serviceContext.getModifiedDate(null));
 
-		String serializedDDMFormValues = _ddmFormValuesJSONSerializer.serialize(
-			ddmFormValues);
+		String serializedDDMFormValues = serialize(ddmFormValues);
 
 		ddmContent.setData(serializedDDMFormValues);
 
@@ -100,6 +105,22 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 	@Override
 	public String getStorageType() {
 		return StorageType.JSON.toString();
+	}
+
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
 	@Override
@@ -134,11 +155,23 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 			_ddmStructureVersionLocalService.getDDMStructureVersion(
 				ddmStorageLink.getStructureVersionId());
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmStructureVersion.getDDMForm(), ddmContent.getData());
+		return deserialize(
+			ddmContent.getData(), ddmStructureVersion.getDDMForm());
+	}
 
-		return ddmFormValues;
+	protected String serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializer ddmFormValuesSerializer =
+			_ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
+
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				ddmFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
 	@Reference(unbind = "-")
@@ -149,17 +182,17 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormValuesJSONDeserializer(
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+	protected void setDDMFormValuesDeserializerTracker(
+		DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker) {
 
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+		_ddmFormValuesDeserializerTracker = ddmFormValuesDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormValuesJSONSerializer(
-		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer) {
+	protected void setDDMFormValuesSerializerTracker(
+		DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker) {
 
-		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
+		_ddmFormValuesSerializerTracker = ddmFormValuesSerializerTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -205,8 +238,8 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 	}
 
 	private DDMContentLocalService _ddmContentLocalService;
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
-	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
+	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
 	private DDMFormValuesValidator _ddmFormValuesValidator;
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -19,7 +19,10 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParame
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
@@ -95,6 +98,22 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 		return parametersJSONObject;
 	}
 
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	}
+
 	@Override
 	protected void doGet(
 			HttpServletRequest request, HttpServletResponse response)
@@ -117,14 +136,12 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 	}
 
 	protected DDMFormValues getDataProviderFormValues(
-			DDMDataProvider ddmDataProvider,
-			DDMDataProviderInstance ddmDataProviderInstance)
-		throws PortalException {
+		DDMDataProvider ddmDataProvider,
+		DDMDataProviderInstance ddmDataProviderInstance) {
 
 		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
 
-		return _ddmFormValuesJSONDeserializer.deserialize(
-			ddmForm, ddmDataProviderInstance.getDefinition());
+		return deserialize(ddmDataProviderInstance.getDefinition(), ddmForm);
 	}
 
 	protected DDMDataProviderInstance getDDMDataProviderInstance(
@@ -275,7 +292,7 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 	private DDMDataProviderTracker _ddmDataProviderTracker;
 
 	@Reference
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 
 	@Reference
 	private JSONFactory _jsonFactory;

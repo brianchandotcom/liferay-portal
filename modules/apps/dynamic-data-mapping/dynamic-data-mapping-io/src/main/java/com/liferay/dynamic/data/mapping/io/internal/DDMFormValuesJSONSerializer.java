@@ -15,7 +15,9 @@
 package com.liferay.dynamic.data.mapping.io.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -44,12 +46,17 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true)
-public class DDMFormValuesJSONSerializerImpl
-	implements DDMFormValuesJSONSerializer {
+@Component(immediate = true, property = "ddm.form.values.serializer.type=json")
+public class DDMFormValuesJSONSerializer implements DDMFormValuesSerializer {
 
 	@Override
-	public String serialize(DDMFormValues ddmFormValues) {
+	public DDMFormValuesSerializerSerializeResponse serialize(
+		DDMFormValuesSerializerSerializeRequest
+			ddmFormValuesSerializerSerializeRequest) {
+
+		DDMFormValues ddmFormValues =
+			ddmFormValuesSerializerSerializeRequest.getDDMFormValues();
+
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addAvailableLanguageIds(
@@ -62,7 +69,11 @@ public class DDMFormValuesJSONSerializerImpl
 			jsonObject, ddmForm.getDDMFormFieldsMap(true),
 			ddmFormValues.getDDMFormFieldValues());
 
-		return jsonObject.toString();
+		DDMFormValuesSerializerSerializeResponse.Builder builder =
+			DDMFormValuesSerializerSerializeResponse.Builder.newBuilder(
+				jsonObject.toString());
+
+		return builder.build();
 	}
 
 	protected void addAvailableLanguageIds(

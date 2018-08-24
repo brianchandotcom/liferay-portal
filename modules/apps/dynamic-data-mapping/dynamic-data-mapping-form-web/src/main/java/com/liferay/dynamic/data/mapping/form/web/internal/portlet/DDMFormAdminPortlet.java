@@ -25,7 +25,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activato
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminDisplayContext;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminFieldSetDisplayContext;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -210,7 +210,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormInstanceService,
 					_ddmFormInstanceVersionLocalService,
 					_ddmFormFieldTypeServicesTracker,
-					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
+					_ddmFormFieldTypesSerializerTracker, _ddmFormRenderer,
 					_ddmFormValuesFactory, _ddmFormValuesMerger,
 					_ddmStructureLocalService, _ddmStructureService,
 					_jsonFactory, _npmResolver));
@@ -255,7 +255,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormInstanceService,
 					_ddmFormInstanceVersionLocalService,
 					_ddmFormFieldTypeServicesTracker,
-					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
+					_ddmFormFieldTypesSerializerTracker, _ddmFormRenderer,
 					_ddmFormValuesFactory, _ddmFormValuesMerger,
 					_ddmStructureLocalService, _ddmStructureService,
 					_jsonFactory, _npmResolver));
@@ -282,7 +282,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
-	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
+	private DDMFormFieldTypesSerializerTracker
+		_ddmFormFieldTypesSerializerTracker;
 
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;

@@ -14,8 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_1;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.petra.string.StringBundler;
@@ -35,11 +39,11 @@ import java.util.Objects;
 public class UpgradeAutocompleteDDMTextFieldSetting extends UpgradeProcess {
 
 	public UpgradeAutocompleteDDMTextFieldSetting(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer,
-		DDMFormJSONSerializer ddmFormJSONSerializer) {
+		DDMFormDeserializer ddmFormDeserializer,
+		DDMFormSerializer ddmFormSerializer) {
 
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
-		_ddmFormJSONSerializer = ddmFormJSONSerializer;
+		_ddmFormDeserializer = ddmFormDeserializer;
+		_ddmFormSerializer = ddmFormSerializer;
 	}
 
 	@Override
@@ -92,10 +96,16 @@ public class UpgradeAutocompleteDDMTextFieldSetting extends UpgradeProcess {
 		return false;
 	}
 
-	protected String upgradeDDMFormInstanceStructure(String definition)
-		throws Exception {
+	protected String upgradeDDMFormInstanceStructure(String definition) {
+		DDMFormDeserializerDeserializeRequest.Builder deserializerBuilder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				definition);
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(definition);
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(deserializerBuilder.build());
+
+		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			if (Objects.equals(ddmFormField.getType(), "text")) {
@@ -108,10 +118,16 @@ public class UpgradeAutocompleteDDMTextFieldSetting extends UpgradeProcess {
 			}
 		}
 
-		return _ddmFormJSONSerializer.serialize(ddmForm);
+		DDMFormSerializerSerializeRequest.Builder serializerBuilder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			_ddmFormSerializer.serialize(serializerBuilder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
-	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private final DDMFormJSONSerializer _ddmFormJSONSerializer;
+	private final DDMFormDeserializer _ddmFormDeserializer;
+	private final DDMFormSerializer _ddmFormSerializer;
 
 }

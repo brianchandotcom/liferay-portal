@@ -14,10 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializerImpl;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -112,9 +116,8 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		setUpJSONFactoryUtil();
 
 		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
-			null, null, null, null, null, _ddmFormValuesJSONDeserializer,
-			_ddmFormValuesJSONSerializer, null, null, null, null, null, null,
-			null,
+			null, null, null, null, null, null, _ddmFormValuesDeserializer,
+			_ddmFormValuesSerializer, null, null, null, null, null, null,
 			(ResourceActions)ProxyUtil.newProxyInstance(
 				UpgradeDynamicDataMappingTest.class.getClassLoader(),
 				new Class<?>[] {ResourceActions.class},
@@ -242,16 +245,14 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"name<!**>", "Joe Bloggs"));
 
-		String serializedDDMFormValues = _ddmFormValuesJSONSerializer.serialize(
-			ddmFormValues);
+		String serializedDDMFormValues = serialize(ddmFormValues);
 
 		String updatedSerializedDDMFormValues =
 			_upgradeDynamicDataMapping.renameInvalidDDMFormFieldNames(
 				structureId, serializedDDMFormValues);
 
-		DDMFormValues updatedDDMFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, updatedSerializedDDMFormValues);
+		DDMFormValues updatedDDMFormValues = deserialize(
+			updatedSerializedDDMFormValues, ddmForm);
 
 		List<DDMFormFieldValue> updatedDDMFormFieldValues =
 			updatedDDMFormValues.getDDMFormFieldValues();
@@ -390,8 +391,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 						"TextArea_INSTANCE_eepy"
 			});
 
-		String expectedJSON = _ddmFormValuesJSONSerializer.serialize(
-			ddmFormValues);
+		String expectedJSON = serialize(ddmFormValues);
 
 		DDMFormValues actualDDMFormValues =
 			_upgradeDynamicDataMapping.getDDMFormValues(
@@ -508,8 +508,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 						"TextArea_INSTANCE_eepy,Integer_INSTANCE_ckkp"
 			});
 
-		String expectedJSON = _ddmFormValuesJSONSerializer.serialize(
-			ddmFormValues);
+		String expectedJSON = serialize(ddmFormValues);
 
 		DDMFormValues actualDDMFormValues =
 			_upgradeDynamicDataMapping.getDDMFormValues(
@@ -589,8 +588,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 					"TextArea_INSTANCE_ycey,TextArea_INSTANCE_habt"
 			});
 
-		String expectedJSON = _ddmFormValuesJSONSerializer.serialize(
-			ddmFormValues);
+		String expectedJSON = serialize(ddmFormValues);
 
 		DDMFormValues actualDDMFormValues =
 			_upgradeDynamicDataMapping.getDDMFormValues(
@@ -820,6 +818,18 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		return value;
 	}
 
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				_ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	}
+
 	protected Map<String, List<String>> getLocalizedDataMap(
 		Element dynamicElementElement) {
 
@@ -836,19 +846,31 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		return localizedDataMap;
 	}
 
+	protected String serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				_ddmFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
+	}
+
 	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
 		field(
-			DDMFormValuesJSONDeserializerImpl.class, "_jsonFactory"
+			DDMFormValuesJSONDeserializer.class, "_jsonFactory"
 		).set(
-			_ddmFormValuesJSONDeserializer, new JSONFactoryImpl()
+			_ddmFormValuesDeserializer, new JSONFactoryImpl()
 		);
 	}
 
 	protected void setUpDDMFormValuesJSONSerializer() throws Exception {
 		field(
-			DDMFormValuesJSONSerializerImpl.class, "_jsonFactory"
+			DDMFormValuesJSONSerializer.class, "_jsonFactory"
 		).set(
-			_ddmFormValuesJSONSerializer, new JSONFactoryImpl()
+			_ddmFormValuesSerializer, new JSONFactoryImpl()
 		);
 	}
 
@@ -1008,10 +1030,10 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		);
 	}
 
-	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer =
-		new DDMFormValuesJSONDeserializerImpl();
-	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer =
-		new DDMFormValuesJSONSerializerImpl();
+	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer =
+		new DDMFormValuesJSONDeserializer();
+	private final DDMFormValuesSerializer _ddmFormValuesSerializer =
+		new DDMFormValuesJSONSerializer();
 
 	@Mock
 	private Language _language;

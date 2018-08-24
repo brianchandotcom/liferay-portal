@@ -15,8 +15,15 @@
 package com.liferay.dynamic.data.mapping.internal.exportimport.data.handler;
 
 import com.liferay.dynamic.data.mapping.exportimport.staged.model.repository.DDMFormInstanceRecordStagedModelRepository;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -59,6 +66,22 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 	@Override
 	public String getDisplayName(DDMFormInstanceRecord record) {
 		return record.getUuid();
+	}
+
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
 	@Override
@@ -161,8 +184,7 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 					true, false);
 
 		portletDataContext.addZipEntry(
-			ddmFormValuesPath,
-			_ddmFormValuesJSONSerializer.serialize(ddmFormValues));
+			ddmFormValuesPath, serialize(ddmFormValues));
 	}
 
 	protected DDMFormValues getImportDDMFormValues(
@@ -181,9 +203,8 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 		String serializedDDMFormValues = portletDataContext.getZipEntryAsString(
 			ddmFormValuesPath);
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmStructure.getDDMForm(), serializedDDMFormValues);
+		DDMFormValues ddmFormValues = deserialize(
+			serializedDDMFormValues, ddmStructure.getDDMForm());
 
 		return _ddmFormValuesExportImportContentProcessor.
 			replaceImportContentReferences(
@@ -195,6 +216,21 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 		getStagedModelRepository() {
 
 		return _ddmFormInstanceRecordStagedModelRepository;
+	}
+
+	protected String serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializer ddmFormValuesSerializer =
+			_ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
+
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				ddmFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
 	@Override
@@ -236,6 +272,9 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 	private DDMFormInstanceRecordStagedModelRepository
 		_ddmFormInstanceRecordStagedModelRepository;
 
+	@Reference(service = DDMFormValuesDeserializerTracker.class)
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
+
 	@Reference(
 		service = ExportImportContentProcessor.class,
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)"
@@ -243,10 +282,7 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 	private ExportImportContentProcessor<DDMFormValues>
 		_ddmFormValuesExportImportContentProcessor;
 
-	@Reference(service = DDMFormValuesJSONDeserializer.class)
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
-
-	@Reference(service = DDMFormValuesJSONSerializer.class)
-	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
+	@Reference(service = DDMFormValuesSerializerTracker.class)
+	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
 
 }

@@ -15,9 +15,14 @@
 package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -183,36 +188,59 @@ public class DefaultDDMStructureHelperImpl
 		return null;
 	}
 
-	protected DDMForm getDDMForm(Element structureElement, Locale locale)
-		throws Exception {
+	protected DDMForm deserialize(String content, String type) {
+		DDMFormDeserializer ddmFormDeserializer =
+			_ddmFormDeserializerTracker.getDDMFormDeserializer(type);
 
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
+	protected DDMForm getDDMForm(Element structureElement, Locale locale) {
 		Element structureElementDefinitionElement = structureElement.element(
 			"definition");
 
 		if (structureElementDefinitionElement != null) {
-			return _ddmFormJSONDeserializer.deserialize(
-				structureElementDefinitionElement.getTextTrim());
+			return deserialize(
+				structureElementDefinitionElement.getTextTrim(), "json");
 		}
 
 		Element structureElementRootElement = structureElement.element("root");
 
 		String definition = structureElementRootElement.asXML();
 
-		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
+		DDMForm ddmForm = deserialize(definition, "xsd");
 
 		return _ddm.updateDDMFormDefaultLocale(ddmForm, locale);
 	}
 
 	protected DDMFormLayout getDDMFormLayout(
-			Element structureElement, DDMForm ddmForm)
-		throws Exception {
+		Element structureElement, DDMForm ddmForm) {
 
 		Element structureElementLayoutElement = structureElement.element(
 			"layout");
 
 		if (structureElementLayoutElement != null) {
-			return _ddmFormLayoutJSONDeserializer.deserialize(
-				structureElementLayoutElement.getTextTrim());
+			DDMFormLayoutDeserializer ddmFormLayoutDeserializer =
+				_ddmFormLayoutDeserializerTracker.getDDMFormLayoutDeserializer(
+					"json");
+
+			DDMFormLayoutDeserializerDeserializeRequest.Builder builder =
+				DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
+					structureElementLayoutElement.getTextTrim());
+
+			DDMFormLayoutDeserializerDeserializeResponse
+				ddmFormLayoutDeserializerDeserializeResponse =
+					ddmFormLayoutDeserializer.deserialize(builder.build());
+
+			return ddmFormLayoutDeserializerDeserializeResponse.
+				getDDMFormLayout();
 		}
 
 		return _ddm.getDefaultDDMFormLayout(ddmForm);
@@ -239,24 +267,17 @@ public class DefaultDDMStructureHelperImpl
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormJSONDeserializer(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
+	protected void setDDMFormDeserializerTracker(
+		DDMFormDeserializerTracker ddmFormDeserializerTracker) {
 
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+		_ddmFormDeserializerTracker = ddmFormDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormLayoutJSONDeserializer(
-		DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer) {
+	protected void setDDMFormLayoutDeserializerTracker(
+		DDMFormLayoutDeserializerTracker ddmFormLayoutDeserializerTracker) {
 
-		_ddmFormLayoutJSONDeserializer = ddmFormLayoutJSONDeserializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormXSDDeserializer(
-		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
-
-		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
+		_ddmFormLayoutDeserializerTracker = ddmFormLayoutDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -279,9 +300,8 @@ public class DefaultDDMStructureHelperImpl
 	}
 
 	private DDM _ddm;
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
+	private DDMFormLayoutDeserializerTracker _ddmFormLayoutDeserializerTracker;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private DDMXML _ddmXML;

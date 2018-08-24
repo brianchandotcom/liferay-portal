@@ -18,7 +18,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -29,9 +31,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -49,18 +52,22 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true)
-public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
+@Component(immediate = true, property = "ddm.form.deserializer.type=json")
+public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 
 	@Override
-	public DDMForm deserialize(String serializedDDMForm)
-		throws PortalException {
+	public DDMFormDeserializerDeserializeResponse deserialize(
+		DDMFormDeserializerDeserializeRequest
+			ddmFormDeserializerDeserializeRequest) {
+
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormDeserializerDeserializeResponse.Builder builder =
+			DDMFormDeserializerDeserializeResponse.Builder.newBuilder(ddmForm);
 
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				serializedDDMForm);
-
-			DDMForm ddmForm = new DDMForm();
+				ddmFormDeserializerDeserializeRequest.getContent());
 
 			setDDMFormAvailableLocales(
 				jsonObject.getJSONArray("availableLanguageIds"), ddmForm);
@@ -68,15 +75,20 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 				jsonObject.getString("defaultLanguageId"), ddmForm);
 			setDDMFormFields(jsonObject.getJSONArray("fields"), ddmForm);
 			setDDMFormRules(jsonObject.getJSONArray("rules"), ddmForm);
+
 			setDDMFormLocalizedValuesDefaultLocale(ddmForm);
 			setDDMFormSuccessPageSettings(
 				jsonObject.getJSONObject("successPage"), ddmForm);
 
-			return ddmForm;
+			return builder.build();
 		}
-		catch (JSONException jsone) {
-			throw new PortalException(jsone);
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
+
+		return builder.build();
 	}
 
 	protected void addOptionValueLabels(
@@ -451,6 +463,9 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 
 		ddmFormField.setNestedDDMFormFields(nestedDDMFormFields);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormJSONDeserializer.class);
 
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private JSONFactory _jsonFactory;

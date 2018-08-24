@@ -16,10 +16,19 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializerImpl;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -27,6 +36,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -44,6 +54,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
@@ -650,11 +662,9 @@ public class DDMImplTest extends BaseDDMTestCase {
 			"dynamic-data-mapping-structure-definition.json");
 
 		DDMForm ddmForm = _ddm.updateDDMFormDefaultLocale(
-			ddmFormJSONDeserializer.deserialize(serializedDDMForm),
-			LocaleUtil.BRAZIL);
+			deserialize(serializedDDMForm), LocaleUtil.BRAZIL);
 
-		String actualSerializedDDMForm = ddmFormJSONSerializer.serialize(
-			ddmForm);
+		String actualSerializedDDMForm = serialize(ddmForm);
 
 		JSONAssert.assertEquals(
 			expectedSerializedDDMForm, actualSerializedDDMForm, false);
@@ -684,35 +694,97 @@ public class DDMImplTest extends BaseDDMTestCase {
 			DDMFormLayoutColumn.FULL, actualDDMFormLayoutColumn.getSize());
 	}
 
+	protected DDMForm deserialize(String content) {
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormJSONDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
+	protected String serialize(DDMForm ddmForm) {
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			ddmFormJSONSerializer.serialize(builder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
+	}
+
+	protected String serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				_ddmFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
+	}
+
 	protected void setUpDDM() throws Exception {
+		DDMFormSerializerTracker ddmFormSerializerTracker = Mockito.mock(
+			DDMFormSerializerTracker.class);
+
+		Mockito.when(
+			ddmFormSerializerTracker.getDDMFormSerializer(Mockito.anyString())
+		).thenReturn(
+			ddmFormJSONSerializer
+		);
+
 		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
-			DDMImpl.class, "_ddmFormJSONDeserializer");
+			DDMImpl.class, "_ddmFormSerializerTracker");
 
-		field.set(_ddm, ddmFormJSONDeserializer);
+		field.set(_ddm, ddmFormSerializerTracker);
+
+		DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker =
+			Mockito.mock(DDMFormValuesDeserializerTracker.class);
+
+		Mockito.when(
+			ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				Mockito.anyString())
+		).thenReturn(
+			_ddmFormValuesDeserializer
+		);
 
 		field = ReflectionUtil.getDeclaredField(
-			DDMImpl.class, "_ddmFormValuesJSONDeserializer");
+			DDMImpl.class, "_ddmFormValuesDeserializerTracker");
 
-		field.set(_ddm, _ddmFormValuesJSONDeserializer);
+		field.set(_ddm, ddmFormValuesDeserializerTracker);
+
+		DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker =
+			Mockito.mock(DDMFormValuesSerializerTracker.class);
+
+		Mockito.when(
+			ddmFormValuesSerializerTracker.getDDMFormValuesSerializer(
+				Mockito.anyString())
+		).thenReturn(
+			_ddmFormValuesSerializer
+		);
 
 		field = ReflectionUtil.getDeclaredField(
-			DDMImpl.class, "_ddmFormValuesJSONSerializer");
+			DDMImpl.class, "_ddmFormValuesSerializerTracker");
 
-		field.set(_ddm, _ddmFormValuesJSONSerializer);
+		field.set(_ddm, ddmFormValuesSerializerTracker);
 	}
 
 	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
 		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
-			DDMFormValuesJSONDeserializerImpl.class, "_jsonFactory");
+			DDMFormValuesJSONDeserializer.class, "_jsonFactory");
 
-		field.set(_ddmFormValuesJSONDeserializer, new JSONFactoryImpl());
+		field.set(_ddmFormValuesDeserializer, new JSONFactoryImpl());
 	}
 
 	protected void setUpDDMFormValuesJSONSerializer() throws Exception {
 		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
-			DDMFormValuesJSONSerializerImpl.class, "_jsonFactory");
+			DDMFormValuesJSONSerializer.class, "_jsonFactory");
 
-		field.set(_ddmFormValuesJSONSerializer, new JSONFactoryImpl());
+		field.set(_ddmFormValuesSerializer, new JSONFactoryImpl());
 	}
 
 	protected void testValues(
@@ -738,9 +810,9 @@ public class DDMImplTest extends BaseDDMTestCase {
 	}
 
 	private final DDMImpl _ddm = new DDMImpl();
-	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer =
-		new DDMFormValuesJSONDeserializerImpl();
-	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer =
-		new DDMFormValuesJSONSerializerImpl();
+	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer =
+		new DDMFormValuesJSONDeserializer();
+	private final DDMFormValuesSerializer _ddmFormValuesSerializer =
+		new DDMFormValuesJSONSerializer();
 
 }

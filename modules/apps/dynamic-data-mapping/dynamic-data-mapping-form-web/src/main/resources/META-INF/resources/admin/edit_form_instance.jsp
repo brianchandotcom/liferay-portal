@@ -140,10 +140,10 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveFormInstance" var="autoSaveFormInstanceURL" />
 
 		<liferay-form:ddm-form-builder
-			ddmStructureId="<%= ddmFormAdminDisplayContext.getDDMStructureId() %>"
+			ddmStructureVersionId="<%= ddmFormAdminDisplayContext.getLatestDDMStructureVersionId() %>"
 			defaultLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
 			editingLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
-			fieldSetsClassNameId="<%= PortalUtil.getClassNameId(DDMFormInstance.class) %>"
+			fieldSetClassNameId="<%= PortalUtil.getClassNameId(DDMFormInstance.class) %>"
 			refererPortletNamespace="<%= liferayPortletResponse.getNamespace() %>"
 		/>
 

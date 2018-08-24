@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -63,6 +64,7 @@ public class DDMFormBuilderContextFactoryHelper {
 
 	public DDMFormBuilderContextFactoryHelper(
 		Optional<DDMStructure> ddmStructureOptional,
+		Optional<DDMStructureVersion> ddmStructureVersionOptional,
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 		DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
 		HttpServletRequest httpServletRequest,
@@ -70,6 +72,7 @@ public class DDMFormBuilderContextFactoryHelper {
 		Locale locale, boolean readOnly) {
 
 		_ddmStructureOptional = ddmStructureOptional;
+		_ddmStructureVersionOptional = ddmStructureVersionOptional;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 		_ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
 		_httpServletRequest = httpServletRequest;
@@ -80,8 +83,17 @@ public class DDMFormBuilderContextFactoryHelper {
 	}
 
 	public Map<String, Object> create() {
-		Optional<Map<String, Object>> contextOptional =
-			_ddmStructureOptional.map(this::createFormContext);
+		Optional<Map<String, Object>> contextOptional = Optional.empty();
+
+		if (_ddmStructureVersionOptional.isPresent()) {
+			contextOptional = _ddmStructureVersionOptional.map(
+				this::createFormContext);
+		}
+
+		if (_ddmStructureOptional.isPresent()) {
+			contextOptional = _ddmStructureOptional.map(
+				this::createFormContext);
+		}
 
 		return contextOptional.orElseGet(this::createEmptyStateContext);
 	}
@@ -129,6 +141,19 @@ public class DDMFormBuilderContextFactoryHelper {
 	protected Map<String, Object> createFormContext(DDMStructure ddmStructure) {
 		try {
 			return doCreateFormContext(ddmStructure);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to create form context", pe);
+		}
+
+		return createEmptyStateContext();
+	}
+
+	protected Map<String, Object> createFormContext(
+		DDMStructureVersion ddmStructureVersion) {
+
+		try {
+			return doCreateFormContext(ddmStructureVersion);
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to create form context", pe);
@@ -275,14 +300,11 @@ public class DDMFormBuilderContextFactoryHelper {
 		return new UnlocalizedValue(jsonObject.toString());
 	}
 
-	protected Map<String, Object> doCreateFormContext(DDMStructure ddmStructure)
+	protected Map<String, Object> doCreateFormContext(
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout)
 		throws PortalException {
 
 		Map<String, Object> formContext = new HashMap<>();
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
 
 		formContext.put(
 			"pages", createFormContext(ddmForm, ddmFormLayout).get("pages"));
@@ -302,6 +324,22 @@ public class DDMFormBuilderContextFactoryHelper {
 		formContext.put("successPageSettings", successPage);
 
 		return formContext;
+	}
+
+	protected Map<String, Object> doCreateFormContext(DDMStructure ddmStructure)
+		throws PortalException {
+
+		return doCreateFormContext(
+			ddmStructure.getDDMForm(), ddmStructure.getDDMFormLayout());
+	}
+
+	protected Map<String, Object> doCreateFormContext(
+			DDMStructureVersion ddmStructureVersion)
+		throws PortalException {
+
+		return doCreateFormContext(
+			ddmStructureVersion.getDDMForm(),
+			ddmStructureVersion.getDDMFormLayout());
 	}
 
 	protected void populateDDMFormFieldSettingsContext(
@@ -355,6 +393,7 @@ public class DDMFormBuilderContextFactoryHelper {
 		_ddmFormFieldTypeServicesTracker;
 	private final DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 	private final Optional<DDMStructure> _ddmStructureOptional;
+	private final Optional<DDMStructureVersion> _ddmStructureVersionOptional;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final JSONFactory _jsonFactory;

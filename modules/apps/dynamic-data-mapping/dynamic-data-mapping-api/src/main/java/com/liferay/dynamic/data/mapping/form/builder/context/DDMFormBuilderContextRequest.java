@@ -36,8 +36,10 @@ public class DDMFormBuilderContextRequest {
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
 			new DDMFormBuilderContextRequest();
 
-		ddmFormBuilderContextRequest.addProperty(
-			"ddmStructureOptional", ddmStructureOptional);
+		if (ddmStructureOptional.isPresent()) {
+			ddmFormBuilderContextRequest.addProperty(
+				"ddmStructure", ddmStructureOptional.get());
+		}
 
 		ddmFormBuilderContextRequest.setHttpServletRequest(request);
 		ddmFormBuilderContextRequest.setHttpServletResponse(response);

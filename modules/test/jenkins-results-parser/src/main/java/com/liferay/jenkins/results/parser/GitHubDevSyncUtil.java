@@ -35,41 +35,42 @@ import java.util.regex.Pattern;
 public class GitHubDevSyncUtil {
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalGitRepository localRepository, LocalGitBranch localGitBranch,
+		LocalGitRepository localGitRepository, LocalGitBranch localGitBranch,
 		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
-			localRepository, "liferay", localGitBranch.getName(), "liferay",
+			localGitRepository, "liferay", localGitBranch.getName(), "liferay",
 			localGitBranch.getSHA(), localGitBranch.getSHA(), synchronize);
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalGitRepository localRepository, PullRequest pullRequest,
+		LocalGitRepository localGitRepository, PullRequest pullRequest,
 		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
-			localRepository, pullRequest.getReceiverUsername(),
+			localGitRepository, pullRequest.getReceiverUsername(),
 			pullRequest.getSenderBranchName(), pullRequest.getSenderUsername(),
 			pullRequest.getSenderSHA(), pullRequest.getLiferayRemoteBranchSHA(),
 			synchronize);
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalGitRepository localRepository, RemoteGitRef remoteGitRef,
+		LocalGitRepository localGitRepository, RemoteGitRef remoteGitRef,
 		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
-			localRepository, remoteGitRef.getUsername(), remoteGitRef.getName(),
-			remoteGitRef.getUsername(), remoteGitRef.getSHA(),
-			remoteGitRef.getSHA(), synchronize);
+			localGitRepository, remoteGitRef.getUsername(),
+			remoteGitRef.getName(), remoteGitRef.getUsername(),
+			remoteGitRef.getSHA(), remoteGitRef.getSHA(), synchronize);
 	}
 
 	public static LocalGitBranch createCachedLocalGitBranch(
-		LocalGitRepository localRepository, String name, String sha,
+		LocalGitRepository localGitRepository, String name, String sha,
 		boolean synchronize) {
 
 		return _createCachedLocalGitBranch(
-			localRepository, "liferay", name, "liferay", sha, sha, synchronize);
+			localGitRepository, "liferay", name, "liferay", sha, sha,
+			synchronize);
 	}
 
 	public static List<GitRemote> getGitHubDevGitRemotes(
@@ -117,10 +118,10 @@ public class GitHubDevSyncUtil {
 		GitWorkingDirectory gitWorkingDirectory, LocalGitBranch localGitBranch,
 		GitRemote gitRemote, long timestamp) {
 
-		gitWorkingDirectory.pushToRemoteRepository(
+		gitWorkingDirectory.pushToRemoteGitRepository(
 			true, localGitBranch, localGitBranch.getName(), gitRemote);
 
-		gitWorkingDirectory.pushToRemoteRepository(
+		gitWorkingDirectory.pushToRemoteGitRepository(
 			true, localGitBranch,
 			JenkinsResultsParserUtil.combine(
 				localGitBranch.getName(), "-", String.valueOf(timestamp)),
@@ -164,7 +165,7 @@ public class GitHubDevSyncUtil {
 							gitWorkingDirectory.getLocalGitBranch(
 								upstreamRemoteGitBranch.getName(), true);
 
-						gitWorkingDirectory.pushToRemoteRepository(
+						gitWorkingDirectory.pushToRemoteGitRepository(
 							true, upstreamLocalGitBranch,
 							upstreamRemoteGitBranch.getName(),
 							gitHubDevGitRemote);
@@ -707,8 +708,8 @@ public class GitHubDevSyncUtil {
 			gitHubDevRemoteURLs.add(
 				JenkinsResultsParserUtil.combine(
 					"git@", gitCacheHostname, ":",
-					gitWorkingDirectory.getRepositoryUsername(), "/",
-					gitWorkingDirectory.getRepositoryName(), ".git"));
+					gitWorkingDirectory.getGitRepositoryUsername(), "/",
+					gitWorkingDirectory.getGitRepositoryName(), ".git"));
 		}
 
 		return validateGitHubDevRemoteURLs(
@@ -767,7 +768,7 @@ public class GitHubDevSyncUtil {
 						gitRemote.getGitWorkingDirectory();
 
 					RemoteGitBranch remoteGitBranch =
-						gitWorkingDirectory.pushToRemoteRepository(
+						gitWorkingDirectory.pushToRemoteGitRepository(
 							force, localGitBranch, remoteGitBranchName,
 							gitRemote);
 
@@ -858,7 +859,7 @@ public class GitHubDevSyncUtil {
 			senderGitRemote = gitWorkingDirectory.addGitRemote(
 				true, "sender-temp",
 				getGitHubRemoteURL(
-					gitWorkingDirectory.getRepositoryName(), senderUsername));
+					gitWorkingDirectory.getGitRepositoryName(), senderUsername));
 
 			String cacheBranchName = getCacheBranchName(
 				receiverUsername, senderUsername, senderBranchSHA,
@@ -1230,13 +1231,13 @@ public class GitHubDevSyncUtil {
 	}
 
 	private static LocalGitBranch _createCachedLocalGitBranch(
-		LocalGitRepository localRepository, String receiverUsername,
+		LocalGitRepository localGitRepository, String receiverUsername,
 		String senderBranchName, String senderUsername, String senderBranchSHA,
 		String upstreamBranchSHA, boolean synchronize) {
 
 		if (!JenkinsResultsParserUtil.isCINode()) {
 			GitWorkingDirectory gitWorkingDirectory =
-				localRepository.getGitWorkingDirectory();
+				localGitRepository.getGitWorkingDirectory();
 
 			return gitWorkingDirectory.getRebasedLocalGitBranch(
 				JenkinsResultsParserUtil.combine(
@@ -1245,13 +1246,13 @@ public class GitHubDevSyncUtil {
 				senderBranchName,
 				JenkinsResultsParserUtil.combine(
 					"git@github.com:", senderUsername, "/",
-					localRepository.getName()),
+					localGitRepository.getName()),
 				senderBranchSHA, gitWorkingDirectory.getUpstreamBranchName(),
 				upstreamBranchSHA);
 		}
 
 		GitWorkingDirectory gitWorkingDirectory =
-			localRepository.getGitWorkingDirectory();
+			localGitRepository.getGitWorkingDirectory();
 
 		if (synchronize) {
 			synchronizeToGitHubDev(
@@ -1276,7 +1277,7 @@ public class GitHubDevSyncUtil {
 
 		LocalGitBranch cachedLocalGitBranch =
 			GitBranchFactory.newLocalGitBranch(
-				localRepository,
+				localGitRepository,
 				JenkinsResultsParserUtil.combine(
 					gitWorkingDirectory.getUpstreamBranchName(), "-temp-",
 					String.valueOf(System.currentTimeMillis())),

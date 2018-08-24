@@ -22,37 +22,37 @@ import java.util.Map;
  */
 public class GitRepositoryFactory {
 
-	public static LocalGitRepository getLocalRepository(
+	public static LocalGitRepository getLocalGitRepository(
 		String repositoryName, String upstreamBranchName) {
 
 		String key = repositoryName + "/" + upstreamBranchName;
 
-		if (_localRepositories.containsKey(key)) {
-			return _localRepositories.get(key);
+		if (_localGitRepositories.containsKey(key)) {
+			return _localGitRepositories.get(key);
 		}
 
-		LocalGitRepository localRepository = null;
+		LocalGitRepository localGitRepository = null;
 
 		if (repositoryName.startsWith("com-liferay-")) {
-			localRepository = new SubrepositoryLocalGitRepository(
+			localGitRepository = new SubrepositoryLocalGitRepository(
 				repositoryName, upstreamBranchName);
 		}
 		else if (repositoryName.startsWith("liferay-plugins")) {
-			localRepository = new PluginsLocalGitRepository(
+			localGitRepository = new PluginsLocalGitRepository(
 				repositoryName, upstreamBranchName);
 		}
 		else if (repositoryName.startsWith("liferay-portal")) {
-			localRepository = new PortalLocalGitRepository(
+			localGitRepository = new PortalLocalGitRepository(
 				repositoryName, upstreamBranchName);
 		}
 		else {
-			localRepository = new LocalGitRepository(
+			localGitRepository = new LocalGitRepository(
 				repositoryName, upstreamBranchName);
 		}
 
-		_localRepositories.put(key, localRepository);
+		_localGitRepositories.put(key, localGitRepository);
 
-		return _localRepositories.get(key);
+		return _localGitRepositories.get(key);
 	}
 
 	public static RemoteGitRepository getRemoteGitRepository(GitRemote remote) {
@@ -75,7 +75,7 @@ public class GitRepositoryFactory {
 		return new RemoteGitRepository(hostname, repositoryName, username);
 	}
 
-	private static final Map<String, LocalGitRepository> _localRepositories =
+	private static final Map<String, LocalGitRepository> _localGitRepositories =
 		new HashMap<>();
 
 }

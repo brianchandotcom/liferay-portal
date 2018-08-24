@@ -326,7 +326,7 @@ public class GitWorkingDirectory {
 		requestJSONObject.put("title", title);
 
 		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
-			_repositoryName, receiverUserName, "pulls");
+			_gitRepositoryName, receiverUserName, "pulls");
 
 		JSONObject responseJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			url, requestJSONObject.toString());
@@ -1005,15 +1005,15 @@ public class GitWorkingDirectory {
 		List<LocalGitBranch> localGitBranches = new ArrayList<>(
 			localGitBranchNames.size());
 
-		LocalGitRepository localRepository =
-			GitRepositoryFactory.getLocalRepository(
-				getRepositoryName(), getUpstreamBranchName());
+		LocalGitRepository localGitRepository =
+			GitRepositoryFactory.getLocalGitRepository(
+				getGitRepositoryName(), getUpstreamBranchName());
 
 		if (branchName != null) {
 			if (localGitBranchNames.contains(branchName)) {
 				localGitBranches.add(
 					GitBranchFactory.newLocalGitBranch(
-						localRepository, branchName,
+						localGitRepository, branchName,
 						getLocalGitBranchSHA(branchName)));
 			}
 
@@ -1023,7 +1023,7 @@ public class GitWorkingDirectory {
 		for (String localGitBranchName : localGitBranchNames) {
 			localGitBranches.add(
 				GitBranchFactory.newLocalGitBranch(
-					localRepository, localGitBranchName,
+					localGitRepository, localGitBranchName,
 					getLocalGitBranchSHA(localGitBranchName)));
 		}
 
@@ -1361,12 +1361,12 @@ public class GitWorkingDirectory {
 		return null;
 	}
 
-	public String getRepositoryName() {
-		return _repositoryName;
+	public String getGitRepositoryName() {
+		return _gitRepositoryName;
 	}
 
-	public String getRepositoryUsername() {
-		return _repositoryUsername;
+	public String getGitRepositoryUsername() {
+		return _gitRepositoryUsername;
 	}
 
 	public String getUpstreamBranchName() {
@@ -1377,7 +1377,7 @@ public class GitWorkingDirectory {
 		return getRemoteGitBranch(
 			getUpstreamBranchName(),
 			JenkinsResultsParserUtil.combine(
-				"git@github.com:liferay/", getRepositoryName()));
+				"git@github.com:liferay/", getGitRepositoryName()));
 	}
 
 	public File getWorkingDirectory() {
@@ -1451,25 +1451,25 @@ public class GitWorkingDirectory {
 		return commits;
 	}
 
-	public RemoteGitBranch pushToRemoteRepository(
+	public RemoteGitBranch pushToRemoteGitRepository(
 		boolean force, LocalGitBranch localGitBranch,
 		String remoteGitBranchName, GitRemote gitRemote) {
 
-		return pushToRemoteRepository(
+		return pushToRemoteGitRepository(
 			force, localGitBranch, remoteGitBranchName,
 			gitRemote.getRemoteURL());
 	}
 
-	public RemoteGitBranch pushToRemoteRepository(
+	public RemoteGitBranch pushToRemoteGitRepository(
 		boolean force, LocalGitBranch localGitBranch,
 		String remoteGitBranchName, RemoteGitRepository remoteGitRepository) {
 
-		return pushToRemoteRepository(
+		return pushToRemoteGitRepository(
 			force, localGitBranch, remoteGitBranchName,
 			remoteGitRepository.getRemoteURL());
 	}
 
-	public RemoteGitBranch pushToRemoteRepository(
+	public RemoteGitBranch pushToRemoteGitRepository(
 		boolean force, LocalGitBranch localGitBranch,
 		String remoteGitBranchName, String remoteURL) {
 
@@ -1680,7 +1680,7 @@ public class GitWorkingDirectory {
 
 	protected GitWorkingDirectory(
 			String upstreamBranchName, String workingDirectoryPath,
-			String repositoryName)
+			String gitRepositoryName)
 		throws IOException {
 
 		setWorkingDirectory(workingDirectoryPath);
@@ -1695,30 +1695,30 @@ public class GitWorkingDirectory {
 
 		waitForIndexLock();
 
-		if ((repositoryName == null) || repositoryName.equals("")) {
-			repositoryName = loadRepositoryName();
+		if ((gitRepositoryName == null) || gitRepositoryName.equals("")) {
+			gitRepositoryName = loadGitRepositoryName();
 		}
 
-		_repositoryName = repositoryName;
+		_gitRepositoryName = gitRepositoryName;
 
-		if (_publicOnlyRepositoryNames.contains(_repositoryName)) {
-			setUpstreamGitRemoteToPublicRepository();
+		if (_publicOnlyGitRepositoryNames.contains(_gitRepositoryName)) {
+			setUpstreamGitRemoteToPublicGitRepository();
 		}
 		else {
-			if (_privateOnlyRepositoryNames.contains(_repositoryName)) {
-				setUpstreamGitRemoteToPrivateRepository();
+			if (_privateOnlyGitRepositoryNames.contains(_gitRepositoryName)) {
+				setUpstreamGitRemoteToPrivateGitRepository();
 			}
 			else {
 				if (upstreamBranchName.equals("master")) {
-					setUpstreamGitRemoteToPublicRepository();
+					setUpstreamGitRemoteToPublicGitRepository();
 				}
 				else {
-					setUpstreamGitRemoteToPrivateRepository();
+					setUpstreamGitRemoteToPrivateGitRepository();
 				}
 			}
 		}
 
-		_repositoryUsername = loadRepositoryUsername();
+		_gitRepositoryUsername = loadGitRepositoryUsername();
 	}
 
 	protected ExecutionResult executeBashCommands(
@@ -1737,11 +1737,11 @@ public class GitWorkingDirectory {
 
 		String gitHubUserName = getGitHubUserName(getGitRemote("upstream"));
 		String message = matcher.group("message");
-		String repositoryName = getRepositoryName();
+		String gitRepositoryName = getGitRepositoryName();
 		String sha = matcher.group("sha");
 
 		return CommitFactory.newCommit(
-			gitHubUserName, message, repositoryName, sha);
+			gitHubUserName, message, gitRepositoryName, sha);
 	}
 
 	protected List<String> getLocalGitBranchNames() {
@@ -1794,7 +1794,7 @@ public class GitWorkingDirectory {
 		return gitRemote;
 	}
 
-	protected String loadRepositoryName() {
+	protected String loadGitRepositoryName() {
 		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		String remoteURL = upstreamGitRemote.getRemoteURL();
@@ -1807,29 +1807,29 @@ public class GitWorkingDirectory {
 			y = remoteURL.length();
 		}
 
-		String repositoryName = remoteURL.substring(x, y);
+		String gitRepositoryName = remoteURL.substring(x, y);
 
-		if (repositoryName.equals("liferay-jenkins-tools-private")) {
-			return repositoryName;
+		if (gitRepositoryName.equals("liferay-jenkins-tools-private")) {
+			return gitRepositoryName;
 		}
 
-		if ((repositoryName.equals("liferay-plugins-ee") ||
-			 repositoryName.equals("liferay-portal-ee")) &&
+		if ((gitRepositoryName.equals("liferay-plugins-ee") ||
+			 gitRepositoryName.equals("liferay-portal-ee")) &&
 			_upstreamBranchName.equals("master")) {
 
-			repositoryName = repositoryName.replace("-ee", "");
+			gitRepositoryName = gitRepositoryName.replace("-ee", "");
 		}
 
-		if (repositoryName.contains("-private") &&
+		if (gitRepositoryName.contains("-private") &&
 			!_upstreamBranchName.contains("-private")) {
 
-			repositoryName = repositoryName.replace("-private", "");
+			gitRepositoryName = gitRepositoryName.replace("-private", "");
 		}
 
-		return repositoryName;
+		return gitRepositoryName;
 	}
 
-	protected String loadRepositoryUsername() {
+	protected String loadGitRepositoryUsername() {
 		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		String remoteURL = upstreamGitRemote.getRemoteURL();
@@ -1840,13 +1840,13 @@ public class GitWorkingDirectory {
 		return remoteURL.substring(x, y);
 	}
 
-	protected void setUpstreamGitRemoteToPrivateRepository() {
+	protected void setUpstreamGitRemoteToPrivateGitRepository() {
 		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		addGitRemote(true, "upstream-temp", upstreamGitRemote.getRemoteURL());
 	}
 
-	protected void setUpstreamGitRemoteToPublicRepository() {
+	protected void setUpstreamGitRemoteToPublicGitRepository() {
 		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		addGitRemote(true, "upstream-temp", upstreamGitRemote.getRemoteURL());
@@ -2074,17 +2074,17 @@ public class GitWorkingDirectory {
 		"gitdir\\: (.*)\\s*");
 	private static final Pattern _gitLogEntityPattern = Pattern.compile(
 		"(?<sha>[0-9a-f]{40}) (?<message>.*)");
-	private static final List<String> _privateOnlyRepositoryNames =
+	private static final List<String> _privateOnlyGitRepositoryNames =
 		_getBuildPropertyAsList(
 			"git.working.directory.private.only.repository.names");
-	private static final List<String> _publicOnlyRepositoryNames =
+	private static final List<String> _publicOnlyGitRepositoryNames =
 		_getBuildPropertyAsList(
 			"git.working.directory.public.only.repository.names");
 
 	private File _gitDirectory;
 	private Set<String> _javaDirPaths;
-	private final String _repositoryName;
-	private final String _repositoryUsername;
+	private final String _gitRepositoryName;
+	private final String _gitRepositoryUsername;
 	private final String _upstreamBranchName;
 	private File _workingDirectory;
 

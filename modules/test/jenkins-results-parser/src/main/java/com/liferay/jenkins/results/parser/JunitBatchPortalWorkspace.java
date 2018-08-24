@@ -44,10 +44,10 @@ public class JunitBatchPortalWorkspace
 			"release.versions.test.other.dir",
 			String.valueOf(otherPortalLocalGitBranch.getDirectory()));
 
-		PortalLocalGitRepository portalLocalRepository =
+		PortalLocalGitRepository portalLocalGitRepository =
 			getPrimaryPortalRepository();
 
-		portalLocalRepository.setBuildProperties(properties);
+		portalLocalGitRepository.setBuildProperties(properties);
 	}
 
 }

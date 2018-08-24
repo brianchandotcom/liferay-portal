@@ -20,16 +20,16 @@ package com.liferay.jenkins.results.parser;
 public class GitBranchFactory {
 
 	public static LocalGitBranch newLocalGitBranch(
-		LocalGitRepository localRepository, String name, String sha) {
+		LocalGitRepository localGitRepository, String name, String sha) {
 
-		if (localRepository instanceof PluginsLocalGitRepository) {
-			return new PluginsLocalGitBranch(localRepository, name, sha);
+		if (localGitRepository instanceof PluginsLocalGitRepository) {
+			return new PluginsLocalGitBranch(localGitRepository, name, sha);
 		}
-		else if (localRepository instanceof PortalLocalGitRepository) {
-			return new PortalLocalGitBranch(localRepository, name, sha);
+		else if (localGitRepository instanceof PortalLocalGitRepository) {
+			return new PortalLocalGitBranch(localGitRepository, name, sha);
 		}
 
-		return new LocalGitBranch(localRepository, name, sha);
+		return new LocalGitBranch(localGitRepository, name, sha);
 	}
 
 	public static RemoteGitRef newRemoteGitRef(

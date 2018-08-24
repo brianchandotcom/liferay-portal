@@ -314,7 +314,7 @@ public class MergeCentralSubrepositoryUtil {
 
 			while (page < 10) {
 				String url = JenkinsResultsParserUtil.getGitHubApiUrl(
-					centralGitWorkingDirectory.getRepositoryName(),
+					centralGitWorkingDirectory.getGitRepositoryName(),
 					receiverUserName, "pulls?page=" + String.valueOf(page));
 
 				JSONArray jsonArray = JenkinsResultsParserUtil.toJSONArray(url);
@@ -421,7 +421,7 @@ public class MergeCentralSubrepositoryUtil {
 		LocalGitBranch mergeLocalGitBranch, String receiverUserName) {
 
 		String centralRepositoryName =
-			centralGitWorkingDirectory.getRepositoryName();
+			centralGitWorkingDirectory.getGitRepositoryName();
 
 		String originRemoteURL = JenkinsResultsParserUtil.combine(
 			"git@github.com:", receiverUserName, "/", centralRepositoryName,
@@ -431,7 +431,7 @@ public class MergeCentralSubrepositoryUtil {
 			true, "tempRemote", originRemoteURL);
 
 		try {
-			centralGitWorkingDirectory.pushToRemoteRepository(
+			centralGitWorkingDirectory.pushToRemoteGitRepository(
 				false, mergeLocalGitBranch, mergeLocalGitBranch.getName(),
 				originGitRemote);
 		}

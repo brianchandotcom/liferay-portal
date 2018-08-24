@@ -22,34 +22,34 @@ import java.io.File;
 public class LocalGitBranch extends BaseGitRef {
 
 	public File getDirectory() {
-		LocalGitRepository localRepository = getLocalRepository();
+		LocalGitRepository localGitRepository = getLocalGitRepository();
 
-		return localRepository.getDirectory();
+		return localGitRepository.getDirectory();
 	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
-		LocalGitRepository localRepository = getLocalRepository();
+		LocalGitRepository localGitRepository = getLocalGitRepository();
 
-		return localRepository.getGitWorkingDirectory();
+		return localGitRepository.getGitWorkingDirectory();
 	}
 
-	public LocalGitRepository getLocalRepository() {
-		return _localRepository;
+	public LocalGitRepository getLocalGitRepository() {
+		return _localGitRepository;
 	}
 
 	public String getUpstreamBranchName() {
-		LocalGitRepository localRepository = getLocalRepository();
+		LocalGitRepository localGitRepository = getLocalGitRepository();
 
-		return localRepository.getUpstreamBranchName();
+		return localGitRepository.getUpstreamBranchName();
 	}
 
 	@Override
 	public String toString() {
-		LocalGitRepository localRepository = getLocalRepository();
+		LocalGitRepository localGitRepository = getLocalGitRepository();
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(localRepository.getDirectory());
+		sb.append(localGitRepository.getDirectory());
 		sb.append(" (");
 		sb.append(getName());
 		sb.append(" - ");
@@ -60,17 +60,17 @@ public class LocalGitBranch extends BaseGitRef {
 	}
 
 	protected LocalGitBranch(
-		LocalGitRepository localRepository, String name, String sha) {
+		LocalGitRepository localGitRepository, String name, String sha) {
 
 		super(name, sha);
 
-		if (localRepository == null) {
+		if (localGitRepository == null) {
 			throw new IllegalArgumentException("Local repository is null");
 		}
 
-		_localRepository = localRepository;
+		_localGitRepository = localGitRepository;
 	}
 
-	private final LocalGitRepository _localRepository;
+	private final LocalGitRepository _localGitRepository;
 
 }

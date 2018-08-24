@@ -14,23 +14,13 @@
 
 package com.liferay.phone.apio.internal.architect.router;
 
-import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
-import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Contact;
+import com.liferay.phone.apio.internal.architect.router.base.BaseUserAccountPhonesNestedCollectionRouter;
 import com.liferay.portal.kernel.model.Phone;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.PhoneService;
-import com.liferay.portal.kernel.service.UserService;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
@@ -42,34 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class PersonPhonesNestedCollectionRouter implements
-	NestedCollectionRouter<Phone, Long, PhoneIdentifier, Long,
-		PersonIdentifier> {
-
-	@Override
-	public NestedCollectionRoutes<Phone, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Phone, Long, Long> builder) {
-
-		return builder.addGetter(
-			this::_getPageItems
-		).build();
-	}
-
-	private PageItems<Phone> _getPageItems(Pagination pagination, long personId)
-		throws PortalException {
-
-		User user = _userService.getUserById(personId);
-
-		List<Phone> phones = _phoneService.getPhones(
-			Contact.class.getName(), user.getContactId());
-
-		return new PageItems<>(phones, phones.size());
-	}
-
-	@Reference
-	private PhoneService _phoneService;
-
-	@Reference
-	private UserService _userService;
-
+public class PersonPhonesNestedCollectionRouter extends
+	BaseUserAccountPhonesNestedCollectionRouter<PersonIdentifier> implements
+		NestedCollectionRouter<Phone, Long, PhoneIdentifier, Long,
+			PersonIdentifier> {
 }

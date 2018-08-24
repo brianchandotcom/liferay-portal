@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.workflow.apio.internal.architect.router;
+package com.liferay.workflow.apio.internal.architect.router.base;
 
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -27,21 +27,15 @@ import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose user WorkflowTask resources
- * through a web API. The resources are mapped from the internal model {@link
- * WorkflowTask}.
- *
  * @author Sarai Díaz
  * @review
  */
-@Component(immediate = true)
-public class WorkflowTasksUserNestedCollectionRouter
-	implements NestedCollectionRouter
-		<WorkflowTask, Long, WorkflowTaskIdentifier, Long, PersonIdentifier> {
+public abstract class BaseUserAccountWorkflowTasksNestedCollectionRouter
+	<T extends Identifier<Long>> implements NestedCollectionRouter
+		<WorkflowTask, Long, WorkflowTaskIdentifier, Long, T> {
 
 	@Override
 	public NestedCollectionRoutes<WorkflowTask, Long, Long> collectionRoutes(
@@ -52,22 +46,22 @@ public class WorkflowTasksUserNestedCollectionRouter
 		).build();
 	}
 
+	@Reference
+	protected WorkflowTaskManager workflowTaskManager;
+
 	private PageItems<WorkflowTask> _getPageItems(
 			Pagination pagination, long userId, Company company)
 		throws WorkflowException {
 
 		List<WorkflowTask> workflowTasks =
-			_workflowTaskManager.getWorkflowTasksByUser(
+			workflowTaskManager.getWorkflowTasksByUser(
 				company.getCompanyId(), userId, null,
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
-		int count = _workflowTaskManager.getWorkflowTaskCountByUser(
+		int count = workflowTaskManager.getWorkflowTaskCountByUser(
 			company.getCompanyId(), userId, null);
 
 		return new PageItems<>(workflowTasks, count);
 	}
-
-	@Reference
-	private WorkflowTaskManager _workflowTaskManager;
 
 }

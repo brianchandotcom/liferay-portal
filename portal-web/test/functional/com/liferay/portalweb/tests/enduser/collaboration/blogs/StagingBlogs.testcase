@@ -137,5 +137,18 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="Notifications#viewBadgeCount">
+			<var name="activePanel" value="Notifications" />
+			<var name="notificationCount" value="3" />
+		</execute>
+
+		<execute macro="Notifications#gotoNotifications" />
+
+		<execute macro="Notifications#viewSuccessfulPublication">
+			<var name="contentBody" value="Publication Process Finished Successfully" />
+			<var name="portletName" value="Blogs Portlet" />
+			<var name="publicationType" value="Local" />
+		</execute>
 	</command>
 </definition>

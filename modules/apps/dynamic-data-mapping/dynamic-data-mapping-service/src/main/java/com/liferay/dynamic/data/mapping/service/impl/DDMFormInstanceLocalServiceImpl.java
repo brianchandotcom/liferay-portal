@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidatorValidateRequest;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -612,7 +613,12 @@ public class DDMFormInstanceLocalServiceImpl
 			DDMFormValues settingsDDMFormValues)
 		throws PortalException {
 
-		ddmFormValuesValidator.validate(settingsDDMFormValues);
+		DDMFormValuesValidatorValidateRequest.Builder builder =
+			DDMFormValuesValidatorValidateRequest.Builder.newBuilder(
+				settingsDDMFormValues
+			);
+
+		ddmFormValuesValidator.validate(builder.build());
 	}
 
 	protected void validateName(

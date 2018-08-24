@@ -21,6 +21,23 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
  */
 public interface DDMFormValidator {
 
-	public void validate(DDMForm ddmForm) throws DDMFormValidationException;
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by
+	 * {@link DDMFormValidator#validate(DDMFormValidatorValidateRequest)}
+	 */
+	@Deprecated
+	public default void validate(DDMForm ddmForm)
+		throws DDMFormValidationException {
+
+		DDMFormValidatorValidateRequest validateFormRequest =
+			DDMFormValidatorValidateRequest.Builder.newBuilder(
+				ddmForm
+			).build();
+
+		validate(validateFormRequest);
+	}
+
+	public void validate(DDMFormValidatorValidateRequest validateFormRequest)
+		throws DDMFormValidationException;
 
 }

@@ -1,11 +1,11 @@
 import Context from './__mock__/mockContext.es';
 import createElement from './__mock__/createElement.es';
-import LayoutSupport from '../LayoutSupport.es';
+import FormSupport from '../FormSupport.es';
 
 let context = null;
 
 describe(
-	'LayoutSupport',
+	'FormSupport',
 	() => {
 		beforeEach(
 			() => {
@@ -23,7 +23,7 @@ describe(
 			'add a new row to the context and reorder',
 			() => {
 				const indexToAddRow = 0;
-				const newRow = LayoutSupport.implAddRow(
+				const newRow = FormSupport.implAddRow(
 					12,
 					[
 						{
@@ -34,7 +34,7 @@ describe(
 				const pageIndex = 0;
 
 				expect(
-					LayoutSupport.addRow(context, indexToAddRow, pageIndex, newRow)
+					FormSupport.addRow(context, indexToAddRow, pageIndex, newRow)
 				).toMatchSnapshot();
 			}
 		);
@@ -51,7 +51,7 @@ describe(
 				const size = 12;
 
 				expect(
-					LayoutSupport.implAddRow(size, row)
+					FormSupport.implAddRow(size, row)
 				).toEqual(
 					{
 						columns: [
@@ -78,7 +78,7 @@ describe(
 				const indexRow = 0;
 
 				expect(
-					LayoutSupport.getField(
+					FormSupport.getField(
 						context,
 						indexPage,
 						indexRow,
@@ -100,7 +100,7 @@ describe(
 				const rowIndex = 0;
 
 				expect(
-					LayoutSupport.addFieldToColumn(
+					FormSupport.addFieldToColumn(
 						context,
 						pageIndex,
 						rowIndex,
@@ -119,7 +119,7 @@ describe(
 				const rowIndex = 0;
 
 				expect(
-					LayoutSupport.addFieldToColumn(
+					FormSupport.addFieldToColumn(
 						context,
 						pageIndex,
 						rowIndex,
@@ -143,7 +143,7 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					LayoutSupport.setColumnFields(
+					FormSupport.setColumnFields(
 						context,
 						pageIndex,
 						rowIndex,
@@ -162,7 +162,7 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					LayoutSupport.setColumnFields(context, pageIndex, rowIndex, columnIndex)
+					FormSupport.setColumnFields(context, pageIndex, rowIndex, columnIndex)
 				).toMatchSnapshot();
 			}
 		);
@@ -175,7 +175,7 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					LayoutSupport.removeColumn(
+					FormSupport.removeColumn(
 						context,
 						pageIndex,
 						rowIndex,
@@ -193,7 +193,7 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					LayoutSupport.removeFields(
+					FormSupport.removeFields(
 						context,
 						pageIndex,
 						rowIndex,
@@ -210,7 +210,7 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					LayoutSupport.removeRow(context, pageIndex, rowIndex)
+					FormSupport.removeRow(context, pageIndex, rowIndex)
 				).toMatchSnapshot();
 			}
 		);
@@ -223,7 +223,7 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					LayoutSupport.getColumn(context, pageIndex, rowIndex, columnIndex)
+					FormSupport.getColumn(context, pageIndex, rowIndex, columnIndex)
 				).toMatchSnapshot();
 			}
 		);
@@ -235,7 +235,7 @@ describe(
 				const rowIndex = 1;
 
 				expect(
-					LayoutSupport.getRow(context, pageIndex, rowIndex)
+					FormSupport.getRow(context, pageIndex, rowIndex)
 				).toMatchSnapshot();
 			}
 		);
@@ -247,7 +247,7 @@ describe(
 				const rowIndex = 0;
 
 				expect(
-					LayoutSupport.hasFieldsRow(context, pageIndex, rowIndex)
+					FormSupport.hasFieldsRow(context, pageIndex, rowIndex)
 				).toBeTruthy();
 			}
 		);
@@ -259,8 +259,8 @@ describe(
 				const rowIndex = 0;
 
 				expect(
-					LayoutSupport.hasFieldsRow(
-						LayoutSupport.removeFields(context, pageIndex, rowIndex, 0),
+					FormSupport.hasFieldsRow(
+						FormSupport.removeFields(context, pageIndex, rowIndex, 0),
 						pageIndex,
 						rowIndex
 					)
@@ -292,7 +292,7 @@ describe(
 				);
 
 				expect(
-					LayoutSupport.getIndexes(element)
+					FormSupport.getIndexes(element)
 				).toEqual(
 					{
 						columnIndex: 0,
@@ -323,7 +323,7 @@ describe(
 				);
 
 				expect(
-					LayoutSupport.getIndexes(element)
+					FormSupport.getIndexes(element)
 				).toEqual(
 					{
 						columnIndex: false,
@@ -348,7 +348,7 @@ describe(
 				const rowIndex = 0;
 
 				expect(
-					LayoutSupport.changeFieldsFromColumn(
+					FormSupport.changeFieldsFromColumn(
 						context,
 						pageIndex,
 						rowIndex,

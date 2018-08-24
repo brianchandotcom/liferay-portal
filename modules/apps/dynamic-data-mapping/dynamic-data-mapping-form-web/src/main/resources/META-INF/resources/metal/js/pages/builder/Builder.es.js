@@ -1,5 +1,5 @@
 import Component from 'metal-jsx';
-import LayoutRenderer from '../../components/Layout/index.es';
+import FormRenderer from '../../components/Form/index.es';
 import Sidebar from '../../components/Sidebar/index.es';
 
 /**
@@ -17,9 +17,18 @@ class Builder extends Component {
 
 	_handleFieldClicked(indexAllocateField) {
 		const Sidebar = this.refs.sidebar;
-
 		Sidebar.show();
+
 		this.emit('fieldClicked', indexAllocateField);
+	}
+
+	_handleAddPage(pages){
+		const Sidebar = this.refs.sidebar;
+
+		Sidebar._setMode('add');
+		Sidebar.show();
+
+		this.emit('updatePages', pages);
 	}
 
 	/**
@@ -74,7 +83,7 @@ class Builder extends Component {
 
 	/**
 	 * Continues the propagation of event.
-	 * @param {!Event} event
+	 * @param {Array} pages
 	 * @private
 	 */
 
@@ -88,6 +97,7 @@ class Builder extends Component {
 
 	render() {
 		const {
+			activePage,
 			fieldContext,
 			fieldsList,
 			focusedField,
@@ -96,7 +106,8 @@ class Builder extends Component {
 			spritemap
 		} = this.props;
 
-		const layoutRendererEvents = {
+		const FormRendererEvents = {
+			addPage: this._handleAddPage.bind(this),
 			deleteButtonClicked: this._handleDeleteButtonClicked.bind(this),
 			duplicateButtonClicked: this._handleDuplicateButtonClicked.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
@@ -113,11 +124,11 @@ class Builder extends Component {
 			<div>
 				<div class="container">
 					<div class="sheet">
-						<LayoutRenderer
+						<FormRenderer
 							editable={true}
-							events={layoutRendererEvents}
+							events={FormRendererEvents}
 							pages={pages}
-							ref="layoutRenderer"
+							ref="FormRenderer"
 							spritemap={spritemap}
 						/>
 					</div>

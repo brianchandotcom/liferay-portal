@@ -170,6 +170,22 @@ describe(
 						);
 
 						it(
+							'should listen to the updatePages event',
+							() => {
+								component = new Parent();
+
+								const {child, provider} = component.refs;
+
+								child.emit('updatePages', pages);
+
+								jest.runAllTimers();
+
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
+							}
+						);
+
+						it(
 							'should listen to the fieldMoved event and move the field to the column in pages',
 							() => {
 								component = new Parent();

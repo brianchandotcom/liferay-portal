@@ -1,6 +1,7 @@
 import {Config} from 'metal-state';
-import {LayoutSupport} from '../Layout/index.es';
+import {FormSupport} from '../Form/index.es';
 import Component from 'metal-jsx';
+import {pageStructure} from '../../util/config.es';
 
 /**
  * LayoutProvider listens to your children's events to
@@ -18,7 +19,7 @@ class LayoutProvider extends Component {
 		 * @type {?(array|undefined)}
 		 */
 
-		pages: Config.array(),
+		pages: Config.arrayOf(pageStructure).value([]),
 
 		/**
 		 * @default undefined
@@ -31,6 +32,13 @@ class LayoutProvider extends Component {
 	};
 
 	static STATE = {
+		/**
+		 * @instance
+		 * @memberof FormPage
+		 * @type {?number}
+		 */
+
+		activePage: Config.number().value(0),
 
 		/**
 		 * @default undefined
@@ -111,9 +119,9 @@ class LayoutProvider extends Component {
 		let newContext = null;
 
 		if (target.columnIndex === false) {
-			const newRow = LayoutSupport.implAddRow(12, [fieldProperties]);
+			const newRow = FormSupport.implAddRow(12, [fieldProperties]);
 
-			newContext = LayoutSupport.addRow(
+			newContext = FormSupport.addRow(
 				pages,
 				rowIndex,
 				pageIndex,
@@ -121,7 +129,7 @@ class LayoutProvider extends Component {
 			);
 		}
 		else {
-			newContext = LayoutSupport.addFieldToColumn(
+			newContext = FormSupport.addFieldToColumn(
 				pages,
 				pageIndex,
 				rowIndex,
@@ -151,7 +159,7 @@ class LayoutProvider extends Component {
 
 	_handleDeleteField({rowIndex, pageIndex, columnIndex}) {
 		const {pages} = this.state;
-		let newContext = LayoutSupport.removeFields(
+		let newContext = FormSupport.removeFields(
 			pages,
 			pageIndex,
 			rowIndex,
@@ -182,18 +190,18 @@ class LayoutProvider extends Component {
 
 	_handleDuplicatedField({rowIndex, pageIndex, columnIndex}) {
 		const {pages} = this.state;
-		const field = LayoutSupport.getField(pages, pageIndex, rowIndex, columnIndex);
+		const field = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
 
 		const duplicatedField = {
 			...field,
-			name: LayoutSupport.generateFieldName(field)
+			name: FormSupport.generateFieldName(field)
 		};
 
 		const newRowIndex = rowIndex + 1;
 
-		const newContext = LayoutSupport.addRow(pages, newRowIndex, pageIndex);
+		const newContext = FormSupport.addRow(pages, newRowIndex, pageIndex);
 
-		LayoutSupport.addFieldToColumn(newContext, pageIndex, newRowIndex, columnIndex, duplicatedField);
+		FormSupport.addFieldToColumn(newContext, pageIndex, newRowIndex, columnIndex, duplicatedField);
 
 		this.setState(
 			{
@@ -210,7 +218,7 @@ class LayoutProvider extends Component {
 	_handleFieldEdited({value, key}) {
 		const {focusedField, pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
-		const column = LayoutSupport.getColumn(
+		const column = FormSupport.getColumn(
 			pages,
 			pageIndex,
 			rowIndex,
@@ -227,7 +235,7 @@ class LayoutProvider extends Component {
 			implPropertiesField
 		);
 
-		LayoutSupport.changeFieldsFromColumn(
+		FormSupport.changeFieldsFromColumn(
 			pages,
 			pageIndex,
 			rowIndex,
@@ -250,7 +258,7 @@ class LayoutProvider extends Component {
 	_handleFieldMoved({target, source}) {
 		const {pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = source;
-		const column = LayoutSupport.getColumn(
+		const column = FormSupport.getColumn(
 			pages,
 			pageIndex,
 			rowIndex,
@@ -258,7 +266,7 @@ class LayoutProvider extends Component {
 		);
 		const {fields} = column;
 
-		let newContext = LayoutSupport.removeFields(
+		let newContext = FormSupport.removeFields(
 			pages,
 			pageIndex,
 			rowIndex,
@@ -290,9 +298,8 @@ class LayoutProvider extends Component {
 		);
 	}
 
-
 	/**
-	 * @param {!Object} pages
+	 * @param {!Array} pages
 	 * @private
 	 */
 
@@ -314,8 +321,8 @@ class LayoutProvider extends Component {
 	_removeEmptyRow(pages, source) {
 		const {pageIndex, rowIndex} = source;
 
-		if (!LayoutSupport.hasFieldsRow(pages, pageIndex, rowIndex)) {
-			pages = LayoutSupport.removeRow(pages, pageIndex, rowIndex);
+		if (!FormSupport.hasFieldsRow(pages, pageIndex, rowIndex)) {
+			pages = FormSupport.removeRow(pages, pageIndex, rowIndex);
 		}
 
 		return pages;
@@ -331,9 +338,9 @@ class LayoutProvider extends Component {
 
 	_addRow(pages, target, fields) {
 		const {pageIndex, rowIndex} = target;
-		const newRow = LayoutSupport.implAddRow(12, fields);
+		const newRow = FormSupport.implAddRow(12, fields);
 
-		return LayoutSupport.addRow(pages, rowIndex, pageIndex, newRow);
+		return FormSupport.addRow(pages, rowIndex, pageIndex, newRow);
 	}
 
 	/**
@@ -347,7 +354,7 @@ class LayoutProvider extends Component {
 	_setColumnFields(pages, target, fields) {
 		const {columnIndex, pageIndex, rowIndex} = target;
 
-		return LayoutSupport.setColumnFields(
+		return FormSupport.setColumnFields(
 			pages,
 			pageIndex,
 			rowIndex,

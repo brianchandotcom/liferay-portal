@@ -279,9 +279,9 @@ describe(
 				);
 
 				const spy = jest.spyOn(component, 'emit');
-				const {layoutRenderer} = component.refs;
+				const {FormRenderer} = component.refs;
 
-				layoutRenderer.emit('fieldEdited', {});
+				FormRenderer.emit('fieldEdited', {});
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));

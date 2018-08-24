@@ -1,0 +1,184 @@
+{namespace FormRenderer}
+
+{template .render}
+	{@param spritemap: string}
+	{@param? _handleChangePage: any}
+	{@param? _handleClickSettingsPage: any}
+	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleUpdatePage: any}
+	{@param? activePage: number}
+	{@param? editable: bool}
+	{@param? modeRenderer: string}
+	{@param? pages: ?}
+	{@param? pageSettingsItem: ?}
+
+	{let $contentRenderer: $modeRenderer ?: 'grid' /}
+	{let $total: length($pages) /}
+
+	{delcall FormRenderer.pages variant="$contentRenderer"}
+		{param _handleChangePage: $_handleChangePage /}
+		{param _handleClickSettingsPage: $_handleClickSettingsPage /}
+		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+		{param _handleUpdatePage: $_handleUpdatePage /}
+		{param activePage: $activePage /}
+		{param contentRenderer: $contentRenderer /}
+		{param editable: $editable /}
+		{param pages: $pages /}
+		{param pageSettingsItem: $pageSettingsItem /}
+		{param spritemap: $spritemap /}
+	{/delcall}
+{/template}
+
+{deltemplate FormRenderer.pages variant="'grid'"}
+	{@param spritemap: string}
+	{@param? _handleChangePage: any}
+	{@param? _handleClickSettingsPage: any}
+	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleUpdatePage: any}
+	{@param? activePage: number}
+	{@param? contentRenderer: string}
+	{@param? editable: bool}
+	{@param? pages: ?}
+	{@param? pageSettingsItem: ?}
+	{@param? total: int}
+
+	<div class="position-relative">
+		{delcall FormRenderer.formHeader}
+			{param _handleChangePage: $_handleChangePage /}
+			{param _handleClickSettingsPage: $_handleClickSettingsPage /}
+			{param activePage: $activePage /}
+			{param contentRenderer: $contentRenderer /}
+			{param editable: $editable /}
+			{param pages: $pages /}
+			{param pageSettingsItem: $pageSettingsItem /}
+			{param spritemap: $spritemap /}
+		{/delcall}
+	
+		{for $page in $pages}
+			{call PageRenderer.render}
+				{param activePage: $activePage /}
+				{param contentRenderer: $contentRenderer /}
+				{param editable: $editable /}
+				{param events: [
+					'deleteButtonClicked': $_handleDeleteButtonClicked,
+					'duplicateButtonClicked': $_handleDuplicateButtonClicked,
+					'updatePage': $_handleUpdatePage
+				] /}
+				{param page: $page /}
+				{param pageId: index($page) /}
+				{param spritemap: $spritemap /}
+				{param total: $total /}
+			{/call}
+		{ifempty}
+			<p>Drag from sidebar and drop here</p>
+		{/for}
+	</div>
+{/deltemplate}
+
+{deltemplate FormRenderer.formHeader}
+	{@param spritemap: string}
+	{@param? _handleChangePage: any}
+	{@param? _handleClickSettingsPage: any}
+	{@param? activePage: number}
+	{@param? contentRenderer: string}
+	{@param? editable: bool}
+	{@param? pages: ?}
+	{@param? pageSettingsItem: ?}
+	{@param? total: int}
+
+	{let $multiple: length($pages) > 1 /}
+	{let $classes kind="text"}
+		ddm-form-header
+		{if $multiple}
+		 	{sp}pt-2 pb-3 mb-4 multiple
+		{/if}
+	{/let}
+
+	<div class="{$classes}">
+		{if $multiple}
+			{delcall FormRenderer.wizard}
+				{param _handleChangePage: $_handleChangePage /}
+				{param activePage: $activePage /}
+				{param contentRenderer: $contentRenderer /}
+				{param editable: $editable /}
+				{param pages: $pages /}
+				{param pageSettingsItem: $pageSettingsItem /}
+				{param spritemap: $spritemap /}
+			{/delcall}
+		{/if}
+
+		<div class="btn-group dmm-page-settings" role="group">
+			{call ClayActionsDropdown.render}
+				{param items: $pageSettingsItem /}
+				{param events: [
+					'itemClicked': $_handleClickSettingsPage
+				] /}
+				{param spritemap: $spritemap /}
+			{/call}
+		</div>
+	</div>
+{/deltemplate}
+
+{deltemplate FormRenderer.wizard}
+	{@param? _handleChangePage: any}
+	{@param? activePage: number}
+	{@param? pages: ?}
+	
+	<ol class="multi-step-nav multi-step-nav-collapse-sm multi-step-indicator-label-top">
+		{for $page in $pages}
+			{let $title: $page.title ? $page.title : 'Untitled Page' /}
+			{let $pageId: index($page) /}
+			{let $step: $pageId + 1 /}
+			{let $classes kind="text"}
+				multi-step-item
+				{if $step != length($pages)}
+					{sp}multi-step-item-expand
+				{/if}
+
+				{if $pageId == $activePage}
+					{sp}active
+				{/if}
+			{/let}
+
+			<li class="{$classes}" data-onclick="{$_handleChangePage}" data-page-id="{$pageId}">
+				<div class="multi-step-divider"></div>
+				<div class="multi-step-indicator">
+					<div class="multi-step-indicator-label">{$title}</div>
+					<a class="multi-step-icon" data-multi-step-icon="{$step}" href="#1"></a>
+				</div>
+			</li>
+		{/for}
+	</ol>
+{/deltemplate}
+
+{deltemplate FormRenderer.pages variant="'list'"}
+	{@param spritemap: string}
+	{@param? _handleUpdatePage: any}
+	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
+	{@param? activePage: number}
+	{@param? contentRenderer: string}
+	{@param? editable: bool}
+	{@param? pages: ?}
+	{@param? total: int}
+
+	{for $page in $pages}
+		{call PageRenderer.render}
+			{param activePage: $activePage /}
+			{param contentRenderer: $contentRenderer /}
+			{param editable: $editable /}
+			{param events: [
+				'deleteButtonClicked': $_handleDeleteButtonClicked,
+				'duplicateButtonClicked': $_handleDuplicateButtonClicked,
+				'updatePage': $_handleUpdatePage
+			] /}
+			{param page: $page /}
+			{param pageId: index($page) /}
+			{param spritemap: $spritemap /}
+			{param total: $total /}
+		{/call}
+	{/for}
+{/deltemplate}

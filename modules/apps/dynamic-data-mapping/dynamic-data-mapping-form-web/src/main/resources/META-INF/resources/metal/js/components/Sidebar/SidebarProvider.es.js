@@ -1,6 +1,6 @@
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
-import {LayoutSupport} from '../Layout/index.es.js';
+import {FormSupport} from '../Form/index.es.js';
 
 class SidebarProvider extends Component {
 	static PROPS = {
@@ -47,7 +47,7 @@ class SidebarProvider extends Component {
 		const {focusedField, pages} = this.props;
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
 
-		const field = LayoutSupport.getColumn(
+		const field = FormSupport.getColumn(
 			pages,
 			pageIndex,
 			rowIndex,

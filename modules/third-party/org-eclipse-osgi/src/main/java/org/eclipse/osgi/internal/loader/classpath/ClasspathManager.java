@@ -583,12 +583,14 @@ public class ClasspathManager {
 	private Class<?> defineClass(String name, byte[] classbytes, ClasspathEntry classpathEntry, BundleEntry entry, List<ClassLoaderHook> hooks) {
 		DefineClassResult result = null;
 		boolean recursionDetected = false;
+		boolean threadLocalSet = false;
 		try {
 			definePackage(name, classpathEntry);
 			DefineContext context = currentDefineContext.get();
 			if (context == null) {
 				context = new DefineContext();
 				currentDefineContext.set(context);
+				threadLocalSet = true;
 			}
 
 			// First call the hooks that do not handle recursion themselves
@@ -641,6 +643,11 @@ public class ClasspathManager {
 				for (ClassLoaderHook hook : hooks) {
 					hook.recordClassDefine(name, defined, classbytes, classpathEntry, entry, this);
 				}
+			}
+
+			// clear the thread local if we set it
+			if (threadLocalSet) {
+				currentDefineContext.remove();
 			}
 		}
 		// return either the pre-loaded class or the newly defined class
@@ -827,3 +834,4 @@ public class ClasspathManager {
 		return classloader;
 	}
 }
+/* @generated */

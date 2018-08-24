@@ -14,9 +14,9 @@
 
 package com.liferay.portal.monitoring.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 

@@ -15,8 +15,8 @@
 package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 
@@ -88,8 +88,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 	@Override
 	protected void debug(Bundle bundle, String s) {
 		_logger.log(
-			Logger.LOG_DEBUG,
-			StringBundler.concat("[", String.valueOf(bundle), "] ", s));
+			Logger.LOG_DEBUG, StringBundler.concat("[", bundle, "] ", s));
 	}
 
 	@Override
@@ -153,8 +152,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 	@Override
 	protected void warn(Bundle bundle, String s, Throwable throwable) {
 		_logger.log(
-			Logger.LOG_WARNING,
-			StringBundler.concat("[", String.valueOf(bundle), "] ", s));
+			Logger.LOG_WARNING, StringBundler.concat("[", bundle, "] ", s));
 	}
 
 	private ConfigurationAdmin _configurationAdmin;

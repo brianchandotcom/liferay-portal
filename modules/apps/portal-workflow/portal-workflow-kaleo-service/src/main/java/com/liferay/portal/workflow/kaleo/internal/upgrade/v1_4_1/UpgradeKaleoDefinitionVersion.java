@@ -14,12 +14,12 @@
 
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1.util.KaleoActionTable;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1.util.KaleoConditionTable;

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.startup.monitor;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.ThreadUtil;
 
 import org.osgi.service.component.ComponentContext;

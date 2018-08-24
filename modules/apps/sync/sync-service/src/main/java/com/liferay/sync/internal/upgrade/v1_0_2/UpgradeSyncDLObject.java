@@ -17,6 +17,7 @@ package com.liferay.sync.internal.upgrade.v1_0_2;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
@@ -247,7 +247,7 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 					StringBundler.concat(
 						"update SyncDLObject set lockExpirationDate = ?, ",
 						"lockUserId = ?, lockUserName = ? where typePK = ? ",
-						"and repositoryId = ", String.valueOf(groupId)));
+						"and repositoryId = ", groupId));
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {

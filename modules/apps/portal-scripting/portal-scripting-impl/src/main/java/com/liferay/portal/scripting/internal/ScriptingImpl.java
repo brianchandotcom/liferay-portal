@@ -14,6 +14,7 @@
 
 package com.liferay.portal.scripting.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.scripting.UnsupportedLanguageException;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 import java.io.LineNumberReader;

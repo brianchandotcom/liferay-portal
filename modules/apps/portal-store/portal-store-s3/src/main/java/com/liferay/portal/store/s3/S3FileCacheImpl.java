@@ -17,6 +17,7 @@ package com.liferay.portal.store.s3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;

@@ -16,7 +16,7 @@ package com.liferay.petra.doulos.processor;
 
 import com.googlecode.concurrentlinkedhashmap.ConcurrentLinkedHashMap;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

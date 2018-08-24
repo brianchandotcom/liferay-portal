@@ -18,12 +18,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 

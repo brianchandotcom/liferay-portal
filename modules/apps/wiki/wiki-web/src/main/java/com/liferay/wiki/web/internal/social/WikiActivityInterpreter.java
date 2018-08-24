@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.social;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.indexer;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.search.index.UpdateDocumentIndexWriter;

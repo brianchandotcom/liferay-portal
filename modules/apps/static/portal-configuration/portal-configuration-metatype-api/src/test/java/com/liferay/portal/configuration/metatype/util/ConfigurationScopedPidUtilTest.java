@@ -14,9 +14,9 @@
 
 package com.liferay.portal.configuration.metatype.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import org.junit.Assert;
 import org.junit.Before;

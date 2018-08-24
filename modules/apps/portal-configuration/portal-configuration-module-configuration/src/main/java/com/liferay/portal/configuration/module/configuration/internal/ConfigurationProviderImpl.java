@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.module.configuration.internal;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;

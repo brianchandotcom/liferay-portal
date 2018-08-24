@@ -19,6 +19,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.search.index.UpdateDocumentIndexWriter;
 import com.liferay.portal.search.indexer.BaseModelDocumentFactory;

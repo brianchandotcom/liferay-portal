@@ -15,6 +15,7 @@
 package com.liferay.portal.search.internal;
 
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.search.dummy.DummyIndexer;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;

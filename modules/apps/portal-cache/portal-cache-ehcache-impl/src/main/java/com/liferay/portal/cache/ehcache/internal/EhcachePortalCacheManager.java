@@ -16,6 +16,7 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cache.BasePortalCacheManager;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -359,8 +359,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				_log.info(
 					StringBundler.concat(
 						"Reconfiguring caches in cache manager ",
-						getPortalCacheManagerName(), " using ",
-						String.valueOf(url)));
+						getPortalCacheManagerName(), " using ", url));
 			}
 
 			reconfigurePortalCaches(url);

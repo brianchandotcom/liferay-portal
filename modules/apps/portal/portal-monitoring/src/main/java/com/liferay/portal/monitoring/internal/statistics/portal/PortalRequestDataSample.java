@@ -14,7 +14,7 @@
 
 package com.liferay.portal.monitoring.internal.statistics.portal;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.monitoring.internal.BaseDataSample;
 import com.liferay.portal.monitoring.internal.MonitorNames;
 

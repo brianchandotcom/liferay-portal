@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceException;
@@ -47,7 +48,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
 
@@ -251,8 +251,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				_log.debug(
 					StringBundler.concat(
 						"Skipping presearch permission checking due to too ",
-						"many roles: ", String.valueOf(termsCount), " > ",
-						String.valueOf(permissionTermsLimit)));
+						"many roles: ", termsCount, " > ",
+						permissionTermsLimit));
 			}
 
 			return null;
@@ -275,8 +275,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				_log.debug(
 					StringBundler.concat(
 						"Skipping presearch permission checking due to too ",
-						"many roles and groups: ", String.valueOf(termsCount),
-						" > ", String.valueOf(permissionTermsLimit)));
+						"many roles and groups: ", termsCount, " > ",
+						permissionTermsLimit));
 			}
 
 			return null;
@@ -324,8 +324,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 						StringBundler.concat(
 							"Skipping presearch permission checking due to ",
 							"too many roles, groups, and group roles: ",
-							String.valueOf(termsCount), " > ",
-							String.valueOf(permissionTermsLimit)));
+							termsCount, " > ", permissionTermsLimit));
 				}
 
 				return null;

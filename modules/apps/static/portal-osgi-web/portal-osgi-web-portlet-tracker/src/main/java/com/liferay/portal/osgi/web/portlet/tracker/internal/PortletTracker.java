@@ -17,6 +17,7 @@ package com.liferay.portal.osgi.web.portlet.tracker.internal;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -53,7 +54,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -143,8 +143,7 @@ public class PortletTracker
 			_log.error(
 				StringBundler.concat(
 					"Portlet ID ", portletId, " has more than ",
-					String.valueOf(
-						PortletIdCodec.PORTLET_INSTANCE_KEY_MAX_LENGTH),
+					PortletIdCodec.PORTLET_INSTANCE_KEY_MAX_LENGTH,
 					" characters"));
 
 			_bundleContext.ungetService(serviceReference);
@@ -355,7 +354,7 @@ public class PortletTracker
 		catch (Exception e) {
 			_log.error(
 				StringBundler.concat(
-					"Portlet ", portletId, " from ", String.valueOf(bundle),
+					"Portlet ", portletId, " from ", bundle,
 					" failed to initialize"),
 				e);
 

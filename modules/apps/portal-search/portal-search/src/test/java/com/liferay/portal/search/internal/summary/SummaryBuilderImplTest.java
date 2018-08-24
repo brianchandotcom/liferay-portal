@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.internal.summary;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.summary.Summary;
 import com.liferay.portal.search.summary.SummaryBuilder;
 

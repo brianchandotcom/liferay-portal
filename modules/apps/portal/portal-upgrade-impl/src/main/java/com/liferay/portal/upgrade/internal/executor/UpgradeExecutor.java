@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.internal.executor;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
@@ -69,8 +69,8 @@ public class UpgradeExecutor {
 		if (size > 1) {
 			throw new IllegalStateException(
 				StringBundler.concat(
-					"There are ", String.valueOf(size),
-					" possible end nodes for ", schemaVersionString));
+					"There are ", size, " possible end nodes for ",
+					schemaVersionString));
 		}
 
 		if (size == 0) {

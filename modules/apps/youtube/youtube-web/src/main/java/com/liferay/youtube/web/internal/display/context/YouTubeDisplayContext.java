@@ -14,10 +14,10 @@
 
 package com.liferay.youtube.web.internal.display.context;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.solr.internal.filter;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;

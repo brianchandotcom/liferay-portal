@@ -14,8 +14,8 @@
 
 package com.liferay.portal.remote.soap.extender.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.remote.soap.extender.SoapDescriptorBuilder;
 import com.liferay.portal.remote.soap.extender.internal.configuration.SoapExtenderConfiguration;
 

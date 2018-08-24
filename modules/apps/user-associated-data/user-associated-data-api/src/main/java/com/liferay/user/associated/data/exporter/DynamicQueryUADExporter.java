@@ -14,12 +14,12 @@
 
 package com.liferay.user.associated.data.exporter;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.zip.ZipWriter;

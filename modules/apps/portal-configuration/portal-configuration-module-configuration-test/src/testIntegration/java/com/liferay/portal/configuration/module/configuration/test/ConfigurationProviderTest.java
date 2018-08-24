@@ -17,13 +17,13 @@ package com.liferay.portal.configuration.module.configuration.test;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 

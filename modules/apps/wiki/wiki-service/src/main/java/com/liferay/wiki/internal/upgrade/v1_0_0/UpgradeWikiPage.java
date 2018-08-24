@@ -14,10 +14,10 @@
 
 package com.liferay.wiki.internal.upgrade.v1_0_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.wiki.model.WikiPage;
 
 /**
@@ -34,7 +34,7 @@ public class UpgradeWikiPage extends UpgradeProcess {
 				StringBundler.concat(
 					"update WikiPage set createDate = (select createDate from ",
 					"AssetEntry where AssetEntry.classNameId = ",
-					String.valueOf(wikiPageClassNameId),
+					wikiPageClassNameId,
 					" and AssetEntry.classPK = WikiPage.resourcePrimKey)"));
 		}
 	}

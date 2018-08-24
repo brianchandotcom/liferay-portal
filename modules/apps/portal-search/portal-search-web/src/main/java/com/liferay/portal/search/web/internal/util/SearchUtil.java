@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -227,7 +227,7 @@ public class SearchUtil {
 			_log.error(
 				StringBundler.concat(
 					"Unable to get search result view URL for class ",
-					className, " with primary key ", String.valueOf(classPK)),
+					className, " with primary key ", classPK),
 				e);
 
 			return StringPool.BLANK;

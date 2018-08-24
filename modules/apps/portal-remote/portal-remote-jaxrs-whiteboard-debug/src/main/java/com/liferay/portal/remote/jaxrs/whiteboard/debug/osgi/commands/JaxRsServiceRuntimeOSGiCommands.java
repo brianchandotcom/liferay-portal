@@ -15,8 +15,8 @@
 package com.liferay.portal.remote.jaxrs.whiteboard.debug.osgi.commands;
 
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Arrays;
 
@@ -122,8 +122,7 @@ public class JaxRsServiceRuntimeOSGiCommands {
 		System.out.println(
 			StringBundler.concat(
 				"Application ", applicationDTO.name, " (",
-				String.valueOf(applicationDTO.serviceId), ") ",
-				applicationDTO.base));
+				applicationDTO.serviceId, ") ", applicationDTO.base));
 
 		if (ArrayUtil.isNotEmpty(applicationDTO.resourceMethods)) {
 			System.out.println();
@@ -143,8 +142,8 @@ public class JaxRsServiceRuntimeOSGiCommands {
 		for (ExtensionDTO extensionDTO : applicationDTO.extensionDTOs) {
 			System.out.println(
 				StringBundler.concat(
-					"        ", extensionDTO.name, " (",
-					String.valueOf(extensionDTO.serviceId), ")"));
+					"        ", extensionDTO.name, " (", extensionDTO.serviceId,
+					")"));
 		}
 
 		if (ArrayUtil.isNotEmpty(applicationDTO.resourceDTOs)) {
@@ -155,8 +154,8 @@ public class JaxRsServiceRuntimeOSGiCommands {
 		for (ResourceDTO resourceDTO : applicationDTO.resourceDTOs) {
 			System.out.println(
 				StringBundler.concat(
-					"        ", resourceDTO.name, " (",
-					String.valueOf(resourceDTO.serviceId), ")"));
+					"        ", resourceDTO.name, " (", resourceDTO.serviceId,
+					")"));
 
 			for (ResourceMethodInfoDTO resourceMethodInfoDTO :
 					resourceDTO.resourceMethods) {

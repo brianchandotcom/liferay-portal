@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.internal.portlet.action.ActionUtil;

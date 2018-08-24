@@ -16,13 +16,13 @@ package com.liferay.portal.security.auth.verifier.internal.tracker;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
 
 import java.util.Dictionary;

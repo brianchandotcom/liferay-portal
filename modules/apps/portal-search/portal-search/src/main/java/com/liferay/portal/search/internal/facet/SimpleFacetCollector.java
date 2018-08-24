@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.internal.facet;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.HashMap;
 import java.util.List;

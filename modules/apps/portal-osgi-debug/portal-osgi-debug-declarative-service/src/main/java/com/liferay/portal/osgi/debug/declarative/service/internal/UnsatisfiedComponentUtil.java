@@ -14,7 +14,7 @@
 
 package com.liferay.portal.osgi.debug.declarative.service.internal;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.Collection;
 

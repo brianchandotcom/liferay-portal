@@ -14,8 +14,8 @@
 
 package com.liferay.server.manager.internal.executor;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.File;
 

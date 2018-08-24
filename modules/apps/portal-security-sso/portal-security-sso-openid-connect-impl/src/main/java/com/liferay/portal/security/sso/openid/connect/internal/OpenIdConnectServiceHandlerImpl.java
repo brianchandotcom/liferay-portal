@@ -14,13 +14,13 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
@@ -138,10 +138,8 @@ public class OpenIdConnectServiceHandlerImpl
 			throw new OpenIdConnectServiceException.AuthenticationException(
 				StringBundler.concat(
 					"OpenId Connect login flow is not in the ",
-					String.valueOf(OpenIdConnectFlowState.AUTH_REQUESTED),
-					" state: ",
-					String.valueOf(
-						openIdConnectSession.getOpenIdConnectFlowState())));
+					OpenIdConnectFlowState.AUTH_REQUESTED, " state: ",
+					openIdConnectSession.getOpenIdConnectFlowState()));
 		}
 
 		validateState(

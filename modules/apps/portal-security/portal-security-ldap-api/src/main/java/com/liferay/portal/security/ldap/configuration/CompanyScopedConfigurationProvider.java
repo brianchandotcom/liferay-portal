@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.ldap.configuration;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.ldap.constants.LDAPConstants;
 
 import java.io.IOException;
@@ -66,8 +66,8 @@ public abstract class CompanyScopedConfigurationProvider
 				_log.debug(
 					StringBundler.concat(
 						"Deleted configuration ", getMetatypeId(),
-						" for company ", String.valueOf(companyId),
-						" with properties: ", String.valueOf(properties)));
+						" for company ", companyId, " with properties: ",
+						properties));
 			}
 		}
 		catch (IOException ioe) {
@@ -245,8 +245,8 @@ public abstract class CompanyScopedConfigurationProvider
 				_log.debug(
 					StringBundler.concat(
 						"Updated configuration ", getMetatypeId(),
-						" for company ", String.valueOf(companyId),
-						" with properties: ", String.valueOf(properties)));
+						" for company ", companyId, " with properties: ",
+						properties));
 			}
 		}
 		catch (IOException ioe) {

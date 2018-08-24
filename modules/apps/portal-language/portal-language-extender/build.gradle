@@ -8,4 +8,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:osgi-felix-util")
+	compileOnly project(":core:petra:petra-string")
 }

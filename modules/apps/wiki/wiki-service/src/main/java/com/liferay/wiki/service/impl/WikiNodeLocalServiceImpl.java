@@ -17,6 +17,7 @@ package com.liferay.wiki.service.impl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -118,8 +118,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Add failed, fetch {groupId=", String.valueOf(groupId),
-						", name=", name, "}"));
+						"Add failed, fetch {groupId=", groupId, ", name=", name,
+						"}"));
 			}
 
 			node = wikiNodePersistence.fetchByG_N(groupId, name, false);

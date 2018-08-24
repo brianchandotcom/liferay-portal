@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.buffer;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.buffer.IndexerRequest;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
@@ -155,8 +155,7 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 					_log.debug(
 						StringBundler.concat(
 							"Unable to get resource primary key for class ",
-							className, " with primary key ",
-							String.valueOf(classPK)));
+							className, " with primary key ", classPK));
 				}
 			}
 

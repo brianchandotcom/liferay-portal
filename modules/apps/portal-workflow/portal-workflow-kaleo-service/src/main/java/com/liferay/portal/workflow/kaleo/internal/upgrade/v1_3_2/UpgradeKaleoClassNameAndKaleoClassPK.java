@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_2;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 

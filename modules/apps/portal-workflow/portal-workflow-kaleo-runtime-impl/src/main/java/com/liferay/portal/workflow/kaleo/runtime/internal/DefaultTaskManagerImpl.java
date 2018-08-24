@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
@@ -365,8 +365,8 @@ public class DefaultTaskManagerImpl
 			throw new WorkflowException(
 				StringBundler.concat(
 					"Cannot complete an already completed task ",
-					String.valueOf(workflowTaskInstanceId), " for user ",
-					String.valueOf(serviceContext.getUserId())));
+					workflowTaskInstanceId, " for user ",
+					serviceContext.getUserId()));
 		}
 
 		serviceContext.setScopeGroupId(kaleoTaskInstanceToken.getGroupId());

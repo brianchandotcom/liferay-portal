@@ -21,13 +21,13 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoRowLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.background.task.internal.messaging;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.background.task.internal.SerialBackgroundTaskExecutor;
 import com.liferay.portal.background.task.internal.ThreadLocalAwareBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StackTraceUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -171,9 +171,8 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Completing background task ",
-						String.valueOf(backgroundTaskId), " with status: ",
-						String.valueOf(status)));
+						"Completing background task ", backgroundTaskId,
+						" with status: ", status));
 			}
 
 			_backgroundTaskManager.amendBackgroundTask(

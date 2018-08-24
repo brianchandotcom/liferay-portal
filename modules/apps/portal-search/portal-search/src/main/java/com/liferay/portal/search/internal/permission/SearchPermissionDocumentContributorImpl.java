@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.permission;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.log.Log;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.permission.SearchPermissionDocumentContributor;
 
@@ -143,7 +143,7 @@ public class SearchPermissionDocumentContributorImpl
 				_log.warn(
 					StringBundler.concat(
 						"Unable to get permission fields for class name ",
-						className, " and class PK ", String.valueOf(classPK)),
+						className, " and class PK ", classPK),
 					e);
 			}
 		}

@@ -15,6 +15,7 @@
 package com.liferay.portal.search.internal;
 
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PropsValues;
 
@@ -177,10 +177,8 @@ public class SearchEngineInitializer implements Runnable {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Reindexing with ", String.valueOf(indexer.getClass()),
-					" completed in ",
-					String.valueOf(stopWatch.getTime() / Time.SECOND),
-					" seconds"));
+					"Reindexing with ", indexer.getClass(), " completed in ",
+					stopWatch.getTime() / Time.SECOND, " seconds"));
 		}
 	}
 

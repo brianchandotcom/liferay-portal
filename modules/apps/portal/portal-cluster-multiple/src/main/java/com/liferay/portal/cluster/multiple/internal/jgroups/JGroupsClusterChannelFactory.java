@@ -17,6 +17,7 @@ package com.liferay.portal.cluster.multiple.internal.jgroups;
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.cluster.multiple.internal.ClusterChannel;
 import com.liferay.portal.cluster.multiple.internal.ClusterChannelFactory;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SocketUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -158,7 +158,7 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 			_log.info(
 				StringBundler.concat(
 					"Autodetecting JGroups outgoing IP address and interface ",
-					"for ", host, ":", String.valueOf(port)));
+					"for ", host, ":", port));
 		}
 
 		try {

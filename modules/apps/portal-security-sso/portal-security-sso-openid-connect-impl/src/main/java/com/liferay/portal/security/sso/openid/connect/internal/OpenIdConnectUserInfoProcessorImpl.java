@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectUserInfoProcessor;

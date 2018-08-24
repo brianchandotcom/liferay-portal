@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.orm.custom.sql.internal;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;

@@ -14,13 +14,13 @@
 
 package com.liferay.wiki.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.BaseRSSStrutsAction;

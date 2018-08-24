@@ -11,4 +11,5 @@ dependencies {
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:osgi-felix-util")
 	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-string")
 }

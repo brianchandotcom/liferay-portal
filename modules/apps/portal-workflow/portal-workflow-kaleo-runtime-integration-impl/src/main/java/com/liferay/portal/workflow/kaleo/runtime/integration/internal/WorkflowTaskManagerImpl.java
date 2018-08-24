@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -132,9 +132,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			if (pe instanceof DuplicateLockException) {
 				throw new WorkflowException(
 					StringBundler.concat(
-						"Workflow task ",
-						String.valueOf(workflowTaskInstanceId),
-						" is locked by user ", String.valueOf(userId)),
+						"Workflow task ", workflowTaskInstanceId,
+						" is locked by user ", userId),
 					pe);
 			}
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
 

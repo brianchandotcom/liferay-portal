@@ -14,13 +14,13 @@
 
 package com.liferay.portal.search.buffer;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.reflect.Method;
 

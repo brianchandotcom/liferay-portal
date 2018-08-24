@@ -15,10 +15,10 @@
 package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
@@ -339,7 +339,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_logger.log(
 				Logger.LOG_WARNING,
 				StringBundler.concat(
-					qName, " from web.xml in bundle ", String.valueOf(_bundle),
+					qName, " from web.xml in bundle ", _bundle,
 					" is not supported"));
 		}
 		else if (qName.equals("servlet")) {
@@ -1092,8 +1092,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_logger.log(
 				Logger.LOG_ERROR,
 				StringBundler.concat(
-					"Bundle ", String.valueOf(_bundle),
-					" is unable to load filter ", filterClassName));
+					"Bundle ", _bundle, " is unable to load filter ",
+					filterClassName));
 
 			return null;
 		}
@@ -1112,8 +1112,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_logger.log(
 				Logger.LOG_ERROR,
 				StringBundler.concat(
-					"Bundle ", String.valueOf(_bundle),
-					" is unable to load listener ", listenerClassName));
+					"Bundle ", _bundle, " is unable to load listener ",
+					listenerClassName));
 
 			return null;
 		}

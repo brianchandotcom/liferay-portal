@@ -15,12 +15,12 @@
 package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance;
@@ -89,8 +89,8 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 					_log.warn(
 						StringBundler.concat(
 							"No form value processor defined to for form: ",
-							String.valueOf(kaleoTaskForm.getKaleoTaskFormId()),
-							" and values: ", formValues));
+							kaleoTaskForm.getKaleoTaskFormId(), " and values: ",
+							formValues));
 				}
 			}
 		}

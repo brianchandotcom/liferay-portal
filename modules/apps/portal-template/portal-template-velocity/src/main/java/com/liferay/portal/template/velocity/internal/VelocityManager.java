@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.velocity.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.SingleVMPool;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.BaseSingleTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;

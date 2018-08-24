@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.solr.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.solr.connection.SolrClientManager;

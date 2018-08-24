@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashSet;
@@ -198,8 +198,8 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 				_log.info(
 					StringBundler.concat(
 						"Unable to get cluster node information for ",
-						"coordinator address ",
-						String.valueOf(coordinatorAddress), ". Trying again."));
+						"coordinator address ", coordinatorAddress,
+						". Trying again."));
 			}
 		}
 

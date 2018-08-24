@@ -16,6 +16,7 @@ package com.liferay.portal.security.ldap.internal.authenticator;
 
 import com.liferay.admin.kernel.util.Omniadmin;
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.PortalLDAP;
@@ -286,8 +286,7 @@ public class LDAPAuth implements Authenticator {
 				_log.debug(
 					StringBundler.concat(
 						"No LDAP server configuration available for LDAP ",
-						"server ", String.valueOf(ldapServerId),
-						" and company ", String.valueOf(companyId)));
+						"server ", ldapServerId, " and company ", companyId));
 			}
 
 			return FAILURE;
@@ -672,9 +671,8 @@ public class LDAPAuth implements Authenticator {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Using LDAP server ",
-					String.valueOf(user.getLdapServerId()),
-					" to authenticate user ", String.valueOf(userId)));
+					"Using LDAP server ", user.getLdapServerId(),
+					" to authenticate user ", userId));
 		}
 
 		return user.getLdapServerId();

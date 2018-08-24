@@ -19,6 +19,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
@@ -90,8 +90,8 @@ public class ReleaseManagerOSGiCommands {
 			if (size > 1) {
 				System.out.println(
 					StringBundler.concat(
-						"There are ", String.valueOf(size),
-						" possible end nodes for ", schemaVersionString));
+						"There are ", size, " possible end nodes for ",
+						schemaVersionString));
 			}
 
 			if (size == 0) {
@@ -226,7 +226,7 @@ public class ReleaseManagerOSGiCommands {
 			bundleContext, UpgradeStep.class,
 			StringBundler.concat(
 				"(&(upgrade.bundle.symbolic.name=*)(|(upgrade.db.type=any)",
-				"(upgrade.db.type=", String.valueOf(db.getDBType()), ")))"),
+				"(upgrade.db.type=", db.getDBType(), ")))"),
 			new PropertyServiceReferenceMapper<String, UpgradeStep>(
 				"upgrade.bundle.symbolic.name"),
 			new UpgradeServiceTrackerCustomizer(bundleContext),

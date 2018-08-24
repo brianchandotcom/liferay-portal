@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.solr.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import org.apache.solr.client.solrj.response.SolrResponseBase;
 

@@ -15,6 +15,7 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProgressTracker;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.search.UserSearch;

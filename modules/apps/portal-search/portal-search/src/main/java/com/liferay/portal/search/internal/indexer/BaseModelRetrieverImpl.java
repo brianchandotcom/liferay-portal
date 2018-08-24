@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.indexer;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.indexer.BaseModelRetriever;
 
 import java.util.Optional;
@@ -68,8 +68,7 @@ public class BaseModelRetrieverImpl implements BaseModelRetriever {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"No ", className, " found for class PK ",
-						String.valueOf(classPK)),
+						"No ", className, " found for class PK ", classPK),
 					pe);
 			}
 

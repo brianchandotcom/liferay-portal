@@ -601,7 +601,7 @@ public class JenkinsResultsParserUtil {
 		return "";
 	}
 
-	public static File getBaseRepositoryDir() {
+	public static File getBaseGitRepositoryDir() {
 		Properties buildProperties = null;
 
 		try {
@@ -753,8 +753,9 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static GitWorkingDirectory getJenkinsGitWorkingDirectory() {
-		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
-			"liferay-jenkins-ee", "master");
+		LocalGitRepository localRepository =
+			GitRepositoryFactory.getLocalRepository(
+				"liferay-jenkins-ee", "master");
 
 		return localRepository.getGitWorkingDirectory();
 	}
@@ -976,8 +977,9 @@ public class JenkinsResultsParserUtil {
 			portalRepositoryName += "-ee";
 		}
 
-		LocalRepository localRepository = RepositoryFactory.getLocalRepository(
-			portalRepositoryName, portalBranchName);
+		LocalGitRepository localRepository =
+			GitRepositoryFactory.getLocalRepository(
+				portalRepositoryName, portalBranchName);
 
 		GitWorkingDirectory gitWorkingDirectory =
 			localRepository.getGitWorkingDirectory();

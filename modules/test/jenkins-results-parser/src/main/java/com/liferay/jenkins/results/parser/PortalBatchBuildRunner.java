@@ -36,17 +36,15 @@ public class PortalBatchBuildRunner extends BatchBuildRunner {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			portalTestClassJob.getPortalGitWorkingDirectory();
 
-		baseWorkspace = WorkspaceFactory.newBatchWorkspace(
+		workspace = WorkspaceFactory.newBatchWorkspace(
 			portalGitHubURL, portalGitWorkingDirectory.getUpstreamBranchName(),
 			batchName);
 
-		if (!(baseWorkspace instanceof PortalWorkspace)) {
+		if (!(workspace instanceof PortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
 		}
 
-		PortalWorkspace portalWorkspace = (PortalWorkspace)baseWorkspace;
-
-		portalWorkspace.setPortalJobProperties(getJob());
+		workspace.setJobProperties(getJob());
 	}
 
 }

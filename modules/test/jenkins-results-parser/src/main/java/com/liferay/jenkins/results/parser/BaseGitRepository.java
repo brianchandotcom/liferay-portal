@@ -15,34 +15,23 @@
 package com.liferay.jenkins.results.parser;
 
 /**
- * @author Michael Hashimoto
+ * @author Peter Yoo
  */
-public abstract class BaseBuildRunner implements BuildRunner {
+public class BaseGitRepository implements GitRepository {
 
-	@Override
-	public void setup() {
-		setupWorkspace();
-	}
-
-	@Override
-	public void setupWorkspace() {
-		if (workspace == null) {
-			throw new RuntimeException("Workspace is null");
+	public BaseGitRepository(String name) {
+		if ((name == null) || name.isEmpty()) {
+			throw new IllegalArgumentException("Name is null");
 		}
 
-		workspace.setupWorkspace();
+		this.name = name;
 	}
 
-	protected BaseBuildRunner(Job job) {
-		_job = job;
+	@Override
+	public String getName() {
+		return name;
 	}
 
-	protected Job getJob() {
-		return _job;
-	}
-
-	protected Workspace workspace;
-
-	private final Job _job;
+	protected final String name;
 
 }

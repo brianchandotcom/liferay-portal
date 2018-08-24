@@ -25,18 +25,18 @@ public class PluginsLocalGitBranch extends LocalGitBranch {
 		return (PluginsGitWorkingDirectory)gitWorkingDirectory;
 	}
 
-	public PluginsLocalRepository getPluginsLocalRepository() {
-		LocalRepository localRepository = getLocalRepository();
+	public PluginsLocalGitRepository getPluginsLocalRepository() {
+		LocalGitRepository localRepository = getLocalRepository();
 
-		return (PluginsLocalRepository)localRepository;
+		return (PluginsLocalGitRepository)localRepository;
 	}
 
 	protected PluginsLocalGitBranch(
-		LocalRepository localRepository, String name, String sha) {
+		LocalGitRepository localRepository, String name, String sha) {
 
 		super(localRepository, name, sha);
 
-		if (!(localRepository instanceof PluginsLocalRepository)) {
+		if (!(localRepository instanceof PluginsLocalGitRepository)) {
 			throw new IllegalArgumentException(
 				"Local repository is not a plugins repository");
 		}

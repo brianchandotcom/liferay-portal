@@ -246,7 +246,7 @@ platform version.
 version 2.2.5.
 - [LPS-77875]: Update the [Liferay Portal Tools Bundle Support] dependency to
 version 3.2.6.
-- [LPS-82491]: Update the [Liferay Gradle Target Platform Plugin] dependency to
+- [LPS-82491]: Update the [Liferay Gradle Plugins Target Platform] dependency to
 version 1.1.0.
 
 ## 1.10.5 - 2018-07-23
@@ -254,7 +254,7 @@ version 1.1.0.
 ### Changed
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.84.
-- [LPS-82491]: Update the [Liferay Gradle Target Platform Plugin] dependency to
+- [LPS-82491]: Update the [Liferay Gradle Plugins Target Platform] dependency to
 version 1.1.1.
 
 ## 1.10.6 - 2018-08-07
@@ -269,8 +269,8 @@ version 2.0.4.
 ## 1.10.7 - 2018-08-08
 
 ### Fixed
-- [LPS-83922]: Adjust target platform configuration to use new BOM ids.
-- [LPS-83922]: Update the [Liferay Gradle Target Platform Plugin] dependency to
+- [LPS-83922]: Adjust the target platform configuration to use new BOM IDs.
+- [LPS-83922]: Update the [Liferay Gradle Plugins Target Platform] dependency to
 version 1.1.2.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/

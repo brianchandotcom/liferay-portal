@@ -5296,7 +5296,7 @@ to version 2.3.225.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.698.
 
-## 3.12.96 - 2018-08-02
+## 3.12.96 - 2018-08-01
 
 ### Changed
 - [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
@@ -5410,8 +5410,8 @@ version 2.2.2.
 ## 3.12.110 - 2018-08-15
 
 ### Changed
-- [LPS-83790]: Update the default value of the
-`liferay.appServers.tomcat.version` property to `9.0.10`.
+- [LPS-83790]: Update the `liferay.appServers.tomcat.version` property's default
+value to `9.0.10`.
 - [LPS-83790]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 2.3.1.
 

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashSet;
 import java.util.List;
@@ -60,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AssetAutoTaggerOSGiCommands {
 
-	public void tagAllUntagged(String... classNames) {
+	public void tagAllUntagged(String companyId, String... classNames) {
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
 			_assetAutoTaggerConfigurationFactory.
 				getAssetAutoTaggerConfiguration();
@@ -82,7 +83,7 @@ public class AssetAutoTaggerOSGiCommands {
 		}
 
 		_forEachAssetEntry(
-			classNames,
+			companyId, classNames,
 			assetEntry -> {
 				String[] oldAssetTagNames = assetEntry.getTagNames();
 
@@ -104,9 +105,9 @@ public class AssetAutoTaggerOSGiCommands {
 			});
 	}
 
-	public void untagAll(String... classNames) {
+	public void untagAll(String companyId, String... classNames) {
 		_forEachAssetEntry(
-			classNames,
+			companyId, classNames,
 			assetEntry -> {
 				String[] oldAssetTagNames = assetEntry.getTagNames();
 
@@ -138,12 +139,16 @@ public class AssetAutoTaggerOSGiCommands {
 	}
 
 	private void _forEachAssetEntry(
-		String[] classNames,
+		String companyId, String[] classNames,
 		UnsafeConsumer<AssetEntry, PortalException> consumer) {
 
 		try {
 			ActionableDynamicQuery actionableDynamicQuery =
 				_assetEntryLocalService.getActionableDynamicQuery();
+
+			if (Validator.isNotNull(companyId)) {
+				actionableDynamicQuery.setCompanyId(Long.valueOf(companyId));
+			}
 
 			if (!ArrayUtil.isEmpty(classNames)) {
 				actionableDynamicQuery.setAddCriteriaMethod(

@@ -4269,7 +4269,7 @@ to Maven.
 3.12.97.
 
 ### Fixed
-- [LPS-84055]: The `printDependentArtifact` task should print the project
+- [LPS-84055]: Fix the `printDependentArtifact` task so it prints the project
 directory when it has a dependency with version `default`.
 
 ## 5.5.3 - 2018-08-05
@@ -4303,7 +4303,7 @@ directory when it has a dependency with version `default`.
 3.12.102.
 
 ### Fixed
-- [LPS-84055]: The `printDependentArtifact` task should print the project
+- [LPS-84055]: Fix the `printDependentArtifact` task so it prints the project
 directory when it has a `compile*` dependency with the version `default`.
 
 ## 5.5.8 - 2018-08-07
@@ -4321,8 +4321,8 @@ directory when it has a `compile*` dependency with the version `default`.
 ## 5.5.10 - 2018-08-09
 
 ### Fixed
-- [LPS-84055]: The `writeArtifactPublishCommands` task should not be skipped if
-it has `test` dependency with the version `default`.
+- [LPS-84055]: Fix the `writeArtifactPublishCommands` task so it's not skipped
+when the `test` dependency is version `default`.
 
 ## 5.5.11 - 2018-08-09
 
@@ -4333,9 +4333,9 @@ it has `test` dependency with the version `default`.
 ## 5.5.12 - 2018-08-09
 
 ### Changed
-- [LPS-84313]: The `com.liferay.spring.boot.defaults` plugin now automatically
-applies the `com.liferay.test.integration.base` plugin. Configure the
-`check` task to depend on the `testIntegration` task.
+- [LPS-84313]: Update the `com.liferay.spring.boot.defaults` plugin to
+automatically apply the `com.liferay.test.integration.base` plugin. Configure
+the `check` task to depend on the `testIntegration` task.
 
 ## 5.5.13 - 2018-08-10
 
@@ -4377,8 +4377,8 @@ applies the `com.liferay.test.integration.base` plugin. Configure the
 ### Changed
 - [LPS-84615]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.111.
-- [LPS-84624]: The `com.liferay.spring.boot.defaults` plugin configures the
-`test` and `testIntegration` tasks with sensible defaults.
+- [LPS-84624]: Update the `com.liferay.spring.boot.defaults` plugin to configure
+the `test` and `testIntegration` tasks with sensible defaults.
 
 ## 5.5.20 - 2018-08-22
 

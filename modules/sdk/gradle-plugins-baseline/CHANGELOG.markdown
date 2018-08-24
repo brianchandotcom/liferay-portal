@@ -98,8 +98,8 @@ when checking against older versions.
 ## 1.3.2 - 2018-08-23
 
 ### Changed
-- [LPS-83067]: Only update the `packageinfo` file when the suggested verion and the
-newer version do not match.
+- [LPS-83067]: Only update the `packageinfo` file when the suggested version and
+the newer version do not match.
 
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

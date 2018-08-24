@@ -56,11 +56,11 @@ public class WebUrlCollectionResource
 		Representor.Builder<Website, Long> builder) {
 
 		return builder.types(
-			"Web"
+			"WebUrl"
 		).identifier(
 			Website::getWebsiteId
 		).addString(
-			"type",
+			"urlType",
 			website -> Try.fromFallible(
 				website::getType
 			).map(

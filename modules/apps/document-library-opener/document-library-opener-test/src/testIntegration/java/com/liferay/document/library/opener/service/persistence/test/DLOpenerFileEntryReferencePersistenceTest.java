@@ -139,6 +139,8 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 
 		newDLOpenerFileEntryReference.setFileEntryId(RandomTestUtil.nextLong());
 
+		newDLOpenerFileEntryReference.setType(RandomTestUtil.nextInt());
+
 		_dlOpenerFileEntryReferences.add(_persistence.update(
 				newDLOpenerFileEntryReference));
 
@@ -166,6 +168,8 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 			newDLOpenerFileEntryReference.getReferenceKey());
 		Assert.assertEquals(existingDLOpenerFileEntryReference.getFileEntryId(),
 			newDLOpenerFileEntryReference.getFileEntryId());
+		Assert.assertEquals(existingDLOpenerFileEntryReference.getType(),
+			newDLOpenerFileEntryReference.getType());
 	}
 
 	@Test
@@ -202,7 +206,8 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DLOpenerFileEntryReference",
 			"dlOpenerFileEntryReferenceId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "referenceKey", true, "fileEntryId", true);
+			"modifiedDate", true, "referenceKey", true, "fileEntryId", true,
+			"type", true);
 	}
 
 	@Test
@@ -451,6 +456,8 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 		dlOpenerFileEntryReference.setReferenceKey(RandomTestUtil.randomString());
 
 		dlOpenerFileEntryReference.setFileEntryId(RandomTestUtil.nextLong());
+
+		dlOpenerFileEntryReference.setType(RandomTestUtil.nextInt());
 
 		_dlOpenerFileEntryReferences.add(_persistence.update(
 				dlOpenerFileEntryReference));

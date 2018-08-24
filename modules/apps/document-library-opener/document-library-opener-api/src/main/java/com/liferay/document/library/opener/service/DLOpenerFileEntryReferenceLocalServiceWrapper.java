@@ -49,10 +49,10 @@ public class DLOpenerFileEntryReferenceLocalServiceWrapper
 	@Override
 	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference addDLOpenerFileEntryReference(
 		long userId, String referenceKey,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlOpenerFileEntryReferenceLocalService.addDLOpenerFileEntryReference(userId,
-			referenceKey, fileEntry);
+			referenceKey, fileEntry, type);
 	}
 
 	/**

@@ -30,7 +30,7 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 
 	@Override
 	public DLOpenerFileEntryReference addDLOpenerFileEntryReference(
-			long userId, String referenceKey, FileEntry fileEntry)
+			long userId, String referenceKey, FileEntry fileEntry, int type)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -47,6 +47,7 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 		dlOpenerFileEntryReference.setUserName(user.getFullName());
 		dlOpenerFileEntryReference.setReferenceKey(referenceKey);
 		dlOpenerFileEntryReference.setFileEntryId(fileEntry.getFileEntryId());
+		dlOpenerFileEntryReference.setType(type);
 
 		return dlOpenerFileEntryReferencePersistence.update(
 			dlOpenerFileEntryReference);

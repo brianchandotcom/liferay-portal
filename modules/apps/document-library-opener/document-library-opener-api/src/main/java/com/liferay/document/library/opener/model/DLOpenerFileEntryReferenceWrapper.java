@@ -70,6 +70,7 @@ public class DLOpenerFileEntryReferenceWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("referenceKey", getReferenceKey());
 		attributes.put("fileEntryId", getFileEntryId());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -129,6 +130,12 @@ public class DLOpenerFileEntryReferenceWrapper
 
 		if (fileEntryId != null) {
 			setFileEntryId(fileEntryId);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -230,6 +237,16 @@ public class DLOpenerFileEntryReferenceWrapper
 	@Override
 	public String getReferenceKey() {
 		return _dlOpenerFileEntryReference.getReferenceKey();
+	}
+
+	/**
+	* Returns the type of this dl opener file entry reference.
+	*
+	* @return the type of this dl opener file entry reference
+	*/
+	@Override
+	public int getType() {
+		return _dlOpenerFileEntryReference.getType();
 	}
 
 	/**
@@ -397,6 +414,16 @@ public class DLOpenerFileEntryReferenceWrapper
 	@Override
 	public void setReferenceKey(String referenceKey) {
 		_dlOpenerFileEntryReference.setReferenceKey(referenceKey);
+	}
+
+	/**
+	* Sets the type of this dl opener file entry reference.
+	*
+	* @param type the type of this dl opener file entry reference
+	*/
+	@Override
+	public void setType(int type) {
+		_dlOpenerFileEntryReference.setType(type);
 	}
 
 	/**

@@ -212,4 +212,7 @@ public interface DLOpenerFileEntryReferencePersistence extends BasePersistence<D
 	* @return the number of dl opener file entry references
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<String> getBadColumnNames();
 }

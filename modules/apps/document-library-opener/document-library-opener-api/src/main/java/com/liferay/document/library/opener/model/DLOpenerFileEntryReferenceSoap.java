@@ -43,6 +43,7 @@ public class DLOpenerFileEntryReferenceSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setReferenceKey(model.getReferenceKey());
 		soapModel.setFileEntryId(model.getFileEntryId());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -171,6 +172,14 @@ public class DLOpenerFileEntryReferenceSoap implements Serializable {
 		_fileEntryId = fileEntryId;
 	}
 
+	public int getType() {
+		return _type;
+	}
+
+	public void setType(int type) {
+		_type = type;
+	}
+
 	private long _dlOpenerFileEntryReferenceId;
 	private long _groupId;
 	private long _companyId;
@@ -180,4 +189,5 @@ public class DLOpenerFileEntryReferenceSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _referenceKey;
 	private long _fileEntryId;
+	private int _type;
 }

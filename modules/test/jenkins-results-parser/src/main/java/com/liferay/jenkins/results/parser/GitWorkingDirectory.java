@@ -919,6 +919,14 @@ public class GitWorkingDirectory {
 		return gitRemotes;
 	}
 
+	public String getGitRepositoryName() {
+		return _gitRepositoryName;
+	}
+
+	public String getGitRepositoryUsername() {
+		return _gitRepositoryUsername;
+	}
+
 	public File getJavaFileFromFullClassName(String fullClassName) {
 		if (_javaDirPaths == null) {
 			List<File> javaFiles = JenkinsResultsParserUtil.findFiles(
@@ -1359,14 +1367,6 @@ public class GitWorkingDirectory {
 		}
 
 		return null;
-	}
-
-	public String getGitRepositoryName() {
-		return _gitRepositoryName;
-	}
-
-	public String getGitRepositoryUsername() {
-		return _gitRepositoryUsername;
 	}
 
 	public String getUpstreamBranchName() {
@@ -2082,9 +2082,9 @@ public class GitWorkingDirectory {
 			"git.working.directory.public.only.repository.names");
 
 	private File _gitDirectory;
-	private Set<String> _javaDirPaths;
 	private final String _gitRepositoryName;
 	private final String _gitRepositoryUsername;
+	private Set<String> _javaDirPaths;
 	private final String _upstreamBranchName;
 	private File _workingDirectory;
 

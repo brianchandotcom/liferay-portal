@@ -859,7 +859,8 @@ public class GitHubDevSyncUtil {
 			senderGitRemote = gitWorkingDirectory.addGitRemote(
 				true, "sender-temp",
 				getGitHubRemoteURL(
-					gitWorkingDirectory.getGitRepositoryName(), senderUsername));
+					gitWorkingDirectory.getGitRepositoryName(),
+					senderUsername));
 
 			String cacheBranchName = getCacheBranchName(
 				receiverUsername, senderUsername, senderBranchSHA,

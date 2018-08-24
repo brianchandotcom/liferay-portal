@@ -229,6 +229,11 @@ public class BasicRegistryImpl implements Registry {
 	}
 
 	@Override
+	public String getSymbolicName(ClassLoader classLoader) {
+		return null;
+	}
+
+	@Override
 	public <T> ServiceRegistration<T> registerService(
 		Class<T> clazz, T service) {
 

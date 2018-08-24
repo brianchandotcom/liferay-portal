@@ -2,6 +2,6 @@ $c: '.dmm-page-settings';
 
 #{$c} {
 	position: absolute;
-	top: 0;
-	right: 0;
+	top: calc(#{$base-line} + 5px);
+	right: calc(#{$base-line} + 22px);
 }

@@ -20,17 +20,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.util.StringPlus;
+import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.registry.collections.ServiceTrackerMapFactory;
+import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -39,16 +33,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class LiferayJSONDeserializationWhitelist {
 
 	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
+		ServiceTrackerMapFactory serviceTrackerMapFactory =
+			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
 
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(
-				StringBundler.concat(
-					"(", PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES,
-					"=*)")),
-			new WhitelistServiceTrackerCustomizer());
-
-		_serviceTracker.open();
+		if (serviceTrackerMapFactory != null) {
+			_osgiAllowedClassNames =
+				serviceTrackerMapFactory.openSingleValueMap(
+					null, PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES);
+		}
 	}
 
 	public boolean isWhitelisted(String className) {
@@ -57,7 +49,9 @@ public class LiferayJSONDeserializationWhitelist {
 		if (_registeredClassNames.contains(className)) {
 			whitelisted = true;
 		}
-		else if (_osgiAllowedClassNames.contains(className)) {
+		else if ((_osgiAllowedClassNames != null) &&
+				 _osgiAllowedClassNames.containsKey(className)) {
+
 			whitelisted = true;
 		}
 		else if (ArrayUtil.contains(
@@ -91,68 +85,9 @@ public class LiferayJSONDeserializationWhitelist {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayJSONDeserializationWhitelist.class);
 
-	private static final List<String> _osgiAllowedClassNames =
-		new CopyOnWriteArrayList<>();
+	private static ServiceTrackerMap<String, ?> _osgiAllowedClassNames;
 
 	private final List<String> _registeredClassNames =
 		new CopyOnWriteArrayList<>();
-	private ServiceTracker<Object, List<String>> _serviceTracker;
-
-	private class WhitelistServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, List<String>> {
-
-		@Override
-		public List<String> addingService(
-			ServiceReference<Object> serviceReference) {
-
-			List<String> whitelist = StringPlus.asList(
-				serviceReference.getProperty(
-					PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES));
-
-			for (String className : whitelist) {
-				if (!_osgiAllowedClassNames.contains(className)) {
-					_osgiAllowedClassNames.add(className);
-				}
-			}
-
-			_osgiAllowedClassNamesList.add(whitelist);
-
-			return whitelist;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Object> serviceReference, List<String> whitelist) {
-
-			removedService(serviceReference, whitelist);
-
-			addingService(serviceReference);
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Object> serviceReference, List<String> whitelist) {
-
-			_osgiAllowedClassNamesList.remove(whitelist);
-
-			Set<String> allowedClassNames = new HashSet<>();
-
-			for (List<String> osgiAllowedClassNames :
-					_osgiAllowedClassNamesList) {
-
-				allowedClassNames.addAll(osgiAllowedClassNames);
-			}
-
-			for (String className : whitelist) {
-				if (!allowedClassNames.contains(className)) {
-					_osgiAllowedClassNames.remove(className);
-				}
-			}
-		}
-
-		private final List<List<String>> _osgiAllowedClassNamesList =
-			new ArrayList<>();
-
-	}
 
 }

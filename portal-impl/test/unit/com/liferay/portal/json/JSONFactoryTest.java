@@ -22,15 +22,13 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.registry.collections.ServiceTrackerMapFactory;
+import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,33 +39,72 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mockito;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Igor Spasic
  */
-public class JSONFactoryTest {
+@PrepareForTest(
+	{
+		ServiceTrackerMap.class, ServiceTrackerMapFactory.class,
+		ServiceTrackerMapFactoryUtil.class
+	}
+)
+@RunWith(PowerMockRunner.class)
+public class JSONFactoryTest extends PowerMockito {
 
 	@BeforeClass
 	public static void setUpClass() {
-		Registry registry = new BasicRegistryImpl();
+		ServiceTrackerMap<String, ?> serviceTrackerMap = mock(
+			ServiceTrackerMap.class);
 
-		RegistryUtil.setRegistry(registry);
+		List<String> allowedClassNames = Arrays.asList(
+			FooBean.class.getName(), FooBean1.class.getName(),
+			FooBean2.class.getName(), FooBean3.class.getName(),
+			FooBean4.class.getName(), FooBean5.class.getName(),
+			FooBean6.class.getName());
 
-		List<String> whitelist = new ArrayList<>();
+		when(
+			serviceTrackerMap.containsKey(
+				Mockito.argThat(
+					new ArgumentMatcher<String>() {
 
-		whitelist.add(FooBean.class.getName());
-		whitelist.add(FooBean1.class.getName());
-		whitelist.add(FooBean2.class.getName());
-		whitelist.add(FooBean3.class.getName());
-		whitelist.add(FooBean4.class.getName());
-		whitelist.add(FooBean5.class.getName());
-		whitelist.add(FooBean6.class.getName());
+						@Override
+						public boolean matches(Object o) {
+							return allowedClassNames.contains(o);
+						}
 
-		registry.registerService(
-			Object.class, new Object(),
-			Collections.singletonMap(
-				PropsKeys.JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES,
-				whitelist));
+					}
+				)
+			)
+		).thenReturn(
+			true
+		);
+
+		ServiceTrackerMapFactory serviceTrackerMapFactory = mock(
+			ServiceTrackerMapFactory.class);
+
+		when(
+			serviceTrackerMapFactory.openSingleValueMap(
+				(Class<?>)Mockito.any(Class.class), Mockito.anyString())
+		).thenReturn(
+			(ServiceTrackerMap)serviceTrackerMap
+		);
+
+		mockStatic(ServiceTrackerMapFactoryUtil.class);
+
+		when(
+			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory()
+		).thenReturn(
+			serviceTrackerMapFactory
+		);
 
 		new LiferayJSONDeserializationWhitelist().afterPropertiesSet();
 	}

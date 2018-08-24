@@ -1,0 +1,13 @@
+$c: '.ddm-form-header';
+
+#{$c} {
+	padding: 0 7rem 0 3rem;
+
+	&.multiple {
+		border-bottom: solid 1px $light-400;
+	}
+
+	.multi-step-item {
+		cursor: pointer;
+	}
+}

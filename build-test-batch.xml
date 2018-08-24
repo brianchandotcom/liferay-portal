@@ -2233,6 +2233,61 @@ app.server.type=@{app.server.type}]]></echo>
 								</elseif>
 							</if>
 
+							<gradle-execute dir="modules/core" task="deploy">
+								<arg value="--parallel" />
+								<arg value="-Dbuild.profile=portal-pre" />
+								<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+							</gradle-execute>
+
+							<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
+
+							<gradle-execute dir="modules/apps" task="deploy">
+								<arg value="--parallel" />
+								<arg value="-Dbuild.profile=portal-pre" />
+								<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+							</gradle-execute>
+
+							<parallel failonany="true" threadcount="${parallel.thread.count}">
+								<ant dir="portal-test" inheritAll="false" target="jar" />
+								<ant dir="support-tomcat" inheritAll="false" target="compile" />
+								<ant dir="util-bridges" inheritAll="false" target="compile" />
+
+								<sequential>
+									<ant dir="util-java" inheritAll="false" target="compile" />
+									<ant dir="util-taglib" inheritAll="false" target="compile" />
+								</sequential>
+
+								<ant dir="util-slf4j" inheritAll="false" target="compile" />
+							</parallel>
+
+							<ant dir="portal-impl" inheritAll="false" target="compile" />
+
+							<ant dir="portal-test-integration" inheritAll="false" target="jar" />
+
+							<copy
+								file="${project.dir}/portal-test/portal-test.jar"
+								overwrite="true"
+								tofile="${liferay.home}/osgi/modules/com.liferay.portal.test.jar"
+							/>
+
+							<copy
+								file="${project.dir}/portal-test/portal-test.jar"
+								overwrite="true"
+								tofile="${liferay.home}/osgi/test/com.liferay.portal.test.jar"
+							/>
+
+							<copy
+								file="${project.dir}/portal-test-integration/portal-test-integration.jar"
+								overwrite="true"
+								tofile="${liferay.home}/osgi/modules/com.liferay.portal.test.integration.jar"
+							/>
+
+							<copy
+								file="${project.dir}/portal-test-integration/portal-test-integration.jar"
+								overwrite="true"
+								tofile="${liferay.home}/osgi/test/com.liferay.portal.test.integration.jar"
+							/>
+
 							<local name="artifact.version" />
 
 							<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />

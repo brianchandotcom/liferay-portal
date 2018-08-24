@@ -57,11 +57,11 @@ public class DLOpenerFileEntryReferenceLocalServiceUtil {
 
 	public static com.liferay.document.library.opener.model.DLOpenerFileEntryReference addDLOpenerFileEntryReference(
 		long userId, String referenceKey,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addDLOpenerFileEntryReference(userId, referenceKey,
-			fileEntry);
+			fileEntry, type);
 	}
 
 	/**

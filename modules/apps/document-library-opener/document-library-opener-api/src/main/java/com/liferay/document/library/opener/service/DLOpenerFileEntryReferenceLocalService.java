@@ -73,7 +73,7 @@ public interface DLOpenerFileEntryReferenceLocalService extends BaseLocalService
 		DLOpenerFileEntryReference dlOpenerFileEntryReference);
 
 	public DLOpenerFileEntryReference addDLOpenerFileEntryReference(
-		long userId, String referenceKey, FileEntry fileEntry)
+		long userId, String referenceKey, FileEntry fileEntry, int type)
 		throws PortalException;
 
 	/**

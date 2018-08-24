@@ -222,6 +222,20 @@ public interface DLOpenerFileEntryReferenceModel extends BaseModel<DLOpenerFileE
 	 */
 	public void setFileEntryId(long fileEntryId);
 
+	/**
+	 * Returns the type of this dl opener file entry reference.
+	 *
+	 * @return the type of this dl opener file entry reference
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this dl opener file entry reference.
+	 *
+	 * @param type the type of this dl opener file entry reference
+	 */
+	public void setType(int type);
+
 	@Override
 	public boolean isNew();
 

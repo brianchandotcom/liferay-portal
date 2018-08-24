@@ -22,6 +22,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
 
+import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
@@ -84,7 +85,8 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			_dlOpenerFileEntryReferenceLocalService.
 				addDLOpenerFileEntryReference(
-					userId, uploadedFile.getId(), fileEntry);
+					userId, uploadedFile.getId(), fileEntry,
+					DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
 
 			return new DLOpenerGoogleDriveFileReference(
 				uploadedFile.getId(), fileEntry.getFileEntryId(),
@@ -124,7 +126,8 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			_dlOpenerFileEntryReferenceLocalService.
 				addDLOpenerFileEntryReference(
-					userId, uploadedFile.getId(), fileEntry);
+					userId, uploadedFile.getId(), fileEntry,
+					DLOpenerFileEntryReferenceConstants.TYPE_NEW);
 
 			return new DLOpenerGoogleDriveFileReference(
 				uploadedFile.getId(), fileEntry.getFileEntryId(),

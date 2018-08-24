@@ -16,9 +16,13 @@ package com.liferay.dynamic.data.mapping.validator;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,6 +31,12 @@ import java.util.Set;
 public class DDMFormLayoutValidationException extends PortalException {
 
 	public DDMFormLayoutValidationException() {
+	}
+
+	public DDMFormLayoutValidationException(
+		List<DDMFormLayoutValidatorError> ddmFormLayoutValidatorErrors) {
+
+		_ddmFormLayoutValidatorErrors = ddmFormLayoutValidatorErrors;
 	}
 
 	public DDMFormLayoutValidationException(String msg) {
@@ -41,6 +51,30 @@ public class DDMFormLayoutValidationException extends PortalException {
 		super(cause);
 	}
 
+	public List<DDMFormLayoutValidatorError> getDDMFormLayoutValidatorErrors() {
+		return _ddmFormLayoutValidatorErrors;
+	}
+
+	@Override
+	public String getMessage() {
+		if (_ddmFormLayoutValidatorErrors == null) {
+			return super.getMessage();
+		}
+
+		Stream<DDMFormLayoutValidatorError> stream =
+			_ddmFormLayoutValidatorErrors.stream();
+
+		return stream.map(
+			DDMFormLayoutValidatorError::getErrorMessage
+		).collect(
+			Collectors.joining(StringPool.NEW_LINE)
+		);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no replacement
+	 */
+	@Deprecated
 	public static class InvalidColumnSize
 		extends DDMFormLayoutValidationException {
 
@@ -52,6 +86,10 @@ public class DDMFormLayoutValidationException extends PortalException {
 
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no replacement
+	 */
+	@Deprecated
 	public static class InvalidRowSize
 		extends DDMFormLayoutValidationException {
 
@@ -63,6 +101,10 @@ public class DDMFormLayoutValidationException extends PortalException {
 
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no replacement
+	 */
+	@Deprecated
 	public static class MustNotDuplicateFieldName
 		extends DDMFormLayoutValidationException {
 
@@ -83,6 +125,10 @@ public class DDMFormLayoutValidationException extends PortalException {
 
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no replacement
+	 */
+	@Deprecated
 	public static class MustSetDefaultLocale
 		extends DDMFormLayoutValidationException {
 
@@ -92,6 +138,10 @@ public class DDMFormLayoutValidationException extends PortalException {
 
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no replacement
+	 */
+	@Deprecated
 	public static class MustSetEqualLocaleForLayoutAndTitle
 		extends DDMFormLayoutValidationException {
 
@@ -102,5 +152,7 @@ public class DDMFormLayoutValidationException extends PortalException {
 		}
 
 	}
+
+	private List<DDMFormLayoutValidatorError> _ddmFormLayoutValidatorErrors;
 
 }

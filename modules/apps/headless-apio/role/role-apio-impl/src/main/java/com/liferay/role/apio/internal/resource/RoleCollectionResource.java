@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.role.apio.identifier.RoleIdentifier;
 import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -90,6 +91,9 @@ public class RoleCollectionResource
 			"name", Role::getName
 		).addString(
 			"roleType", Role::getTypeLabel
+		).addStringList(
+			"availableLanguages",
+			role -> Arrays.asList(role.getAvailableLanguageIds())
 		).build();
 	}
 

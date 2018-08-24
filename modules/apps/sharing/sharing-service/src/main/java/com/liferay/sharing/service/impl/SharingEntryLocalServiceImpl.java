@@ -193,6 +193,30 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasShareableSharingPermission(
+		long toUserId, long classNameId, long classPK,
+		SharingEntryActionKey sharingEntryActionKey) {
+
+		List<SharingEntry> sharingEntries =
+			sharingEntryPersistence.findByTU_C_C(
+				toUserId, classNameId, classPK);
+
+		for (SharingEntry sharingEntry : sharingEntries) {
+			if (!sharingEntry.isShareable()) {
+				continue;
+			}
+
+			long actionIds = sharingEntry.getActionIds();
+
+			if ((actionIds & sharingEntryActionKey.getBitwiseVaue()) != 0) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean hasSharingPermission(
 		long toUserId, long classNameId, long classPK,
 		SharingEntryActionKey sharingEntryActionKey) {

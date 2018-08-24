@@ -587,6 +587,70 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testHasShareableSharingPermissionWithShareableViewAddDiscussionSharingEntryActionKey()
+		throws Exception {
+
+		long classNameId = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_sharingEntryLocalService.addSharingEntry(
+			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
+			_group.getGroupId(), true,
+			Arrays.asList(
+				SharingEntryActionKey.VIEW,
+				SharingEntryActionKey.ADD_DISCUSSION),
+			serviceContext);
+
+		Assert.assertTrue(
+			_sharingEntryLocalService.hasShareableSharingPermission(
+				_toUser.getUserId(), classNameId, classPK,
+				SharingEntryActionKey.ADD_DISCUSSION));
+		Assert.assertFalse(
+			_sharingEntryLocalService.hasShareableSharingPermission(
+				_toUser.getUserId(), classNameId, classPK,
+				SharingEntryActionKey.UPDATE));
+		Assert.assertTrue(
+			_sharingEntryLocalService.hasShareableSharingPermission(
+				_toUser.getUserId(), classNameId, classPK,
+				SharingEntryActionKey.VIEW));
+	}
+
+	@Test
+	public void testHasShareableSharingPermissionWithUnshareableViewAddDiscussionSharingEntryActionKey()
+		throws Exception {
+
+		long classNameId = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_sharingEntryLocalService.addSharingEntry(
+			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
+			_group.getGroupId(), false,
+			Arrays.asList(
+				SharingEntryActionKey.VIEW,
+				SharingEntryActionKey.ADD_DISCUSSION),
+			serviceContext);
+
+		Assert.assertFalse(
+			_sharingEntryLocalService.hasShareableSharingPermission(
+				_toUser.getUserId(), classNameId, classPK,
+				SharingEntryActionKey.ADD_DISCUSSION));
+		Assert.assertFalse(
+			_sharingEntryLocalService.hasShareableSharingPermission(
+				_toUser.getUserId(), classNameId, classPK,
+				SharingEntryActionKey.UPDATE));
+		Assert.assertFalse(
+			_sharingEntryLocalService.hasShareableSharingPermission(
+				_toUser.getUserId(), classNameId, classPK,
+				SharingEntryActionKey.VIEW));
+	}
+
+	@Test
 	public void testHasSharingPermissionWithTwoSharingEntries()
 		throws Exception {
 

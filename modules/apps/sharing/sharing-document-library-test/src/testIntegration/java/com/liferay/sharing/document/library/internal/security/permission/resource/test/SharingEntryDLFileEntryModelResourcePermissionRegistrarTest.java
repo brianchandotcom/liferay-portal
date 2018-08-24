@@ -172,7 +172,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(),
+			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.VIEW,
 				SharingEntryActionKey.ADD_DISCUSSION),
@@ -200,7 +200,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(),
+			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.VIEW,
 				SharingEntryActionKey.ADD_DISCUSSION),
@@ -228,7 +228,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(),
+			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
 			serviceContext);
@@ -255,7 +255,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(),
+			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(
 				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
 			serviceContext);
@@ -282,7 +282,7 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(),
+			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
 			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
 
 		PermissionChecker permissionChecker =

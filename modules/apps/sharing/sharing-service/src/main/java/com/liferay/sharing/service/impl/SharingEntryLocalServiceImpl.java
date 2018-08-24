@@ -38,7 +38,7 @@ public class SharingEntryLocalServiceImpl
 	@Override
 	public SharingEntry addSharingEntry(
 			long fromUserId, long toUserId, long classNameId, long classPK,
-			long groupId,
+			long groupId, boolean shareable,
 			Collection<SharingEntryActionKey> sharingEntryActionKeys,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -63,6 +63,7 @@ public class SharingEntryLocalServiceImpl
 		sharingEntry.setToUserId(toUserId);
 		sharingEntry.setClassNameId(classNameId);
 		sharingEntry.setClassPK(classPK);
+		sharingEntry.setShareable(shareable);
 
 		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
 			sharingEntryActionKeys.stream();

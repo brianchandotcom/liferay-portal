@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.search.engine.adapter.index;
+package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.engine.adapter.index.IndexRequestShardFailure;
+
+import org.elasticsearch.action.ShardOperationFailedException;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface IndexRequest<T extends IndexResponse> {
+public interface IndexRequestShardFailureTranslator {
 
-	public T accept(IndexRequestExecutor indexRequestExecutor);
-
-	public String[] getIndexNames();
+	public IndexRequestShardFailure translate(
+		ShardOperationFailedException shardOperationFailedException);
 
 }

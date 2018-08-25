@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.search.engine.adapter.index;
+package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.engine.adapter.index.FlushIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.FlushIndexResponse;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface IndexRequest<T extends IndexResponse> {
+public interface FlushIndexRequestExecutor {
 
-	public T accept(IndexRequestExecutor indexRequestExecutor);
-
-	public String[] getIndexNames();
+	public FlushIndexResponse execute(FlushIndexRequest flushIndexRequest);
 
 }

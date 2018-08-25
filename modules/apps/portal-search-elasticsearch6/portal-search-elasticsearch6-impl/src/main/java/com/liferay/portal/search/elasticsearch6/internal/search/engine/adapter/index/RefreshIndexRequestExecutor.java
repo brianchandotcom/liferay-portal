@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.engine.adapter.index;
+package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.RefreshIndexResponse;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface IndexRequest<T extends IndexResponse> {
+public interface RefreshIndexRequestExecutor {
 
-	public T accept(IndexRequestExecutor indexRequestExecutor);
-
-	public String[] getIndexNames();
+	public RefreshIndexResponse execute(
+		RefreshIndexRequest refreshIndexRequest);
 
 }

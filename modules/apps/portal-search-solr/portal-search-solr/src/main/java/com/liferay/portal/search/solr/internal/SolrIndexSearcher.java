@@ -496,18 +496,11 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		List<String> filterQueries = new ArrayList<>();
 
-		if (query.getPreBooleanFilter() != null) {
-			String filterQuery = _filterTranslator.translate(
-				query.getPreBooleanFilter(), searchContext);
+		_add(filterQueries, query.getPreBooleanFilter(), searchContext);
 
-			filterQueries.add(filterQuery);
-		}
+		_add(filterQueries, query.getPostFilter(), searchContext);
 
-		String[] postFilterQueries = solrQuery.getFilterQueries();
-
-		if (!ArrayUtil.isEmpty(postFilterQueries)) {
-			Collections.addAll(filterQueries, postFilterQueries);
-		}
+		_addAll(filterQueries, solrQuery.getFilterQueries());
 
 		if (!filterQueries.isEmpty()) {
 			solrQuery.setFilterQueries(
@@ -855,6 +848,24 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 	@Reference
 	protected Props props;
+
+	private void _add(
+		Collection<String> filterQueries, Filter filter,
+		SearchContext searchContext) {
+
+		if (filter != null) {
+			filterQueries.add(
+				_filterTranslator.translate(filter, searchContext));
+		}
+	}
+
+	private void _addAll(
+		List<String> filterQueries, String[] facetPostFilterQueries) {
+
+		if (!ArrayUtil.isEmpty(facetPostFilterQueries)) {
+			Collections.addAll(filterQueries, facetPostFilterQueries);
+		}
+	}
 
 	private static final String _VERSION_FIELD = "_version_";
 

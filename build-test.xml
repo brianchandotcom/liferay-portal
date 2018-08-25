@@ -10331,7 +10331,7 @@ server.detector.server.id=jboss</echo>
 				<equals arg1="${app.server.type}" arg2="tcserver" />
 				<then>
 					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
-extra.lib.dirs=runtimes/tomcat-9.0.6.B.RELEASE/lib
+extra.lib.dirs=runtimes/tomcat-9.0.10.A.RELEASE/lib
 global.lib.dir=instances/liferay/lib
 portal.dir=instances/liferay/webapps/ROOT
 server.detector.server.id=tomcat</echo>

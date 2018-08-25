@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -139,7 +140,8 @@ public class DLFileEntryAutoTaggerTest {
 		throw new AssertionError("The asset entry was not tagged with " + tag);
 	}
 
-	private void _withAutoTaggerEnabled(UnsafeRunnable unsafeRunnable)
+	private void _withAutoTaggerEnabled(
+			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
@@ -166,12 +168,5 @@ public class DLFileEntryAutoTaggerTest {
 	private Group _group;
 
 	private ServiceContext _serviceContext;
-
-	@FunctionalInterface
-	private interface UnsafeRunnable {
-
-		public void run() throws Exception;
-
-	}
 
 }

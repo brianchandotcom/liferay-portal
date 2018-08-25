@@ -18,7 +18,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldRenderer
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeResponse;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -43,21 +45,38 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bruno Basto
  */
-@Component(immediate = true)
-public class DDMFormFieldTypesJSONSerializerImpl
-	implements DDMFormFieldTypesJSONSerializer {
+@Component(
+	immediate = true, property = "ddm.form.field.types.serializer.type=json"
+)
+public class DDMFormFieldTypesJSONSerializer
+	implements DDMFormFieldTypesSerializer {
 
 	@Override
-	public String serialize(List<DDMFormFieldType> ddmFormFieldTypes)
-		throws PortalException {
+	public DDMFormFieldTypesSerializerSerializeResponse serialize(
+		DDMFormFieldTypesSerializerSerializeRequest
+			ddmFormFieldTypesSerializerSerializeRequest) {
+
+		List<DDMFormFieldType> ddmFormFieldTypes =
+			ddmFormFieldTypesSerializerSerializeRequest.getDdmFormFieldTypes();
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
-			jsonArray.put(toJSONObject(ddmFormFieldType));
+		try {
+			for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
+				jsonArray.put(toJSONObject(ddmFormFieldType));
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
 
-		return jsonArray.toString();
+		DDMFormFieldTypesSerializerSerializeResponse.Builder builder =
+			DDMFormFieldTypesSerializerSerializeResponse.Builder.newBuilder(
+				jsonArray.toJSONString());
+
+		return builder.build();
 	}
 
 	@Reference(unbind = "-")
@@ -153,7 +172,7 @@ public class DDMFormFieldTypesJSONSerializerImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormFieldTypesJSONSerializerImpl.class);
+		DDMFormFieldTypesJSONSerializer.class);
 
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private JSONFactory _jsonFactory;

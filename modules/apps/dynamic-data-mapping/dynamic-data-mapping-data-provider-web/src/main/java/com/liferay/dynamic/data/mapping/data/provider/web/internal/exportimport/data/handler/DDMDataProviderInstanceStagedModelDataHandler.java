@@ -17,7 +17,10 @@ package com.liferay.dynamic.data.mapping.data.provider.web.internal.exportimport
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.constants.DDMDataProviderPortletKeys;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
@@ -102,6 +105,22 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 		return dataProviderInstance.getNameCurrentValue();
 	}
 
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	}
+
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
@@ -153,9 +172,8 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 
 		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, dataProviderInstance.getDefinition());
+		DDMFormValues ddmFormValues = deserialize(
+			dataProviderInstance.getDefinition(), ddmForm);
 
 		if (existingDataProviderInstance == null) {
 			serviceContext.setUuid(dataProviderInstance.getUuid());
@@ -192,6 +210,6 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 	private DDMDataProviderTracker _ddmDataProviderTracker;
 
 	@Reference
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 
 }

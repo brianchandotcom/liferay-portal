@@ -16,8 +16,9 @@ package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.internal.test.util.DDMFixture;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -241,7 +242,7 @@ public class DDMIndexerImplTest {
 	}
 
 	protected DDMFormJSONSerializer createDDMFormJSONSerializer() {
-		return new DDMFormJSONSerializerImpl() {
+		return new DDMFormJSONSerializer() {
 			{
 				setDDMFormFieldTypeServicesTracker(
 					Mockito.mock(DDMFormFieldTypeServicesTracker.class));
@@ -276,7 +277,7 @@ public class DDMIndexerImplTest {
 	protected DDMStructure createDDMStructure(DDMForm ddmForm) {
 		DDMStructure ddmStructure = new DDMStructureImpl();
 
-		ddmStructure.setDefinition(ddmFormJSONSerializer.serialize(ddmForm));
+		ddmStructure.setDefinition(serialize(ddmForm));
 
 		ddmStructure.setDDMForm(ddmForm);
 
@@ -292,6 +293,16 @@ public class DDMIndexerImplTest {
 		return DocumentFixture.newDocument(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 			DDMForm.class.getName());
+	}
+
+	protected String serialize(DDMForm ddmForm) {
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			ddmFormJSONSerializer.serialize(builder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
 	protected final DDMFixture ddmFixture = new DDMFixture();

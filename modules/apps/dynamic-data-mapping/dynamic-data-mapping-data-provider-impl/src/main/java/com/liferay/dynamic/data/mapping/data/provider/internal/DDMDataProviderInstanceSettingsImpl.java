@@ -17,13 +17,15 @@ package com.liferay.dynamic.data.mapping.data.provider.internal;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInstanceSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,29 +40,38 @@ public class DDMDataProviderInstanceSettingsImpl
 	public <T> T getSettings(
 		DDMDataProviderInstance ddmDataProviderInstance, Class<T> clazz) {
 
-		try {
-			DDMDataProvider ddmDataProvider =
-				ddmDataProviderTracker.getDDMDataProvider(
-					ddmDataProviderInstance.getType());
+		DDMDataProvider ddmDataProvider =
+			ddmDataProviderTracker.getDDMDataProvider(
+				ddmDataProviderInstance.getType());
 
-			DDMForm ddmForm = DDMFormFactory.create(
-				ddmDataProvider.getSettings());
+		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
 
-			DDMFormValues ddmFormValues =
-				ddmFormValuesJSONDeserializer.deserialize(
-					ddmForm, ddmDataProviderInstance.getDefinition());
+		DDMFormValues ddmFormValues = deserialize(
+			ddmDataProviderInstance.getDefinition(), ddmForm);
 
-			return (T)DDMFormInstanceFactory.create(clazz, ddmFormValues);
-		}
-		catch (PortalException pe) {
-			throw new IllegalStateException(pe);
-		}
+		return (T)DDMFormInstanceFactory.create(clazz, ddmFormValues);
+	}
+
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
 	@Reference
 	protected DDMDataProviderTracker ddmDataProviderTracker;
 
 	@Reference
-	protected DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;
+	protected DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker;
 
 }

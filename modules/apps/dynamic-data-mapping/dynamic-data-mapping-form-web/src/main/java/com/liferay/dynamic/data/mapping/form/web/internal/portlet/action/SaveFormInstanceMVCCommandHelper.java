@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.exception.StructureLayoutException;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializerRequest;
 import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.DDMFormInstanceFieldSettingsValidator;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
@@ -279,9 +278,6 @@ public class SaveFormInstanceMVCCommandHelper {
 	)
 	protected DDMFormContextDeserializer<DDMFormValues>
 		ddmFormTemplateContextToDDMFormValues;
-
-	@Reference
-	protected DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;
 
 	@Reference
 	protected volatile DDMFormInstanceFieldSettingsValidator

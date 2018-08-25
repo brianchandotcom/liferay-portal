@@ -17,7 +17,10 @@ package com.liferay.dynamic.data.lists.model.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -76,7 +79,7 @@ public class DDLRecordSetImplTest {
 		DDMTemplate template = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class), "json",
-			_ddmFormJSONSerializer.serialize(ddmForm), LocaleUtil.US);
+			serialize(ddmForm), LocaleUtil.US);
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 
@@ -91,8 +94,21 @@ public class DDLRecordSetImplTest {
 		Assert.assertEquals(fieldNames, recordSetDDMStructure.getFieldNames());
 	}
 
+	protected String serialize(DDMForm ddmForm) {
+		DDMFormSerializer ddmFormSerializer =
+			_ddmFormSerializerTracker.getDDMFormSerializer("json");
+
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			ddmFormSerializer.serialize(builder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
+	}
+
 	@Inject
-	private static DDMFormJSONSerializer _ddmFormJSONSerializer;
+	private static DDMFormSerializerTracker _ddmFormSerializerTracker;
 
 	private DDLRecordSetTestHelper _ddlRecordSetTestHelper;
 

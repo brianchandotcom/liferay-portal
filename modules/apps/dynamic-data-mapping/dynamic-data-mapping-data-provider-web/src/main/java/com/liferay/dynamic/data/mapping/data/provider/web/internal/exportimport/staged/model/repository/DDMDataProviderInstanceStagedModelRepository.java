@@ -16,7 +16,10 @@ package com.liferay.dynamic.data.mapping.data.provider.web.internal.exportimport
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
@@ -66,9 +69,8 @@ public class DDMDataProviderInstanceStagedModelRepository
 		DDMForm ddmForm = getDataProviderSettingsDDMForm(
 			dataProviderInstance.getType());
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, dataProviderInstance.getDefinition());
+		DDMFormValues ddmFormValues = deserialize(
+			dataProviderInstance.getDefinition(), ddmForm);
 
 		return _ddmDataProviderInstanceLocalService.addDataProviderInstance(
 			userId, dataProviderInstance.getGroupId(),
@@ -174,15 +176,30 @@ public class DDMDataProviderInstanceStagedModelRepository
 		DDMForm ddmForm = getDataProviderSettingsDDMForm(
 			dataProviderInstance.getType());
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, dataProviderInstance.getDefinition());
+		DDMFormValues ddmFormValues = deserialize(
+			dataProviderInstance.getDefinition(), ddmForm);
 
 		return _ddmDataProviderInstanceLocalService.updateDataProviderInstance(
 			userId, dataProviderInstance.getDataProviderInstanceId(),
 			dataProviderInstance.getNameMap(),
 			dataProviderInstance.getDescriptionMap(), ddmFormValues,
 			serviceContext);
+	}
+
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
 	protected DDMForm getDataProviderSettingsDDMForm(String type) {
@@ -205,6 +222,6 @@ public class DDMDataProviderInstanceStagedModelRepository
 	private DDMDataProviderTracker _ddmDataProviderTracker;
 
 	@Reference
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 
 }

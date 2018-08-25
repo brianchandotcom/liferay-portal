@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.io.internal;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -57,10 +57,16 @@ public class DDMFormXSDDeserializerTest
 	}
 
 	@Override
-	protected DDMForm deserialize(String serializedDDMForm)
-		throws PortalException {
+	protected DDMForm deserialize(String serializedDDMForm) {
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				serializedDDMForm);
 
-		return _ddmFormXSDDeserializer.deserialize(serializedDDMForm);
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormXSDDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
 	@Override
@@ -75,7 +81,7 @@ public class DDMFormXSDDeserializerTest
 
 	protected void setUpDDMFormXSDDeserializer() throws Exception {
 		field(
-			DDMFormXSDDeserializerImpl.class, "_saxReader"
+			DDMFormXSDDeserializer.class, "_saxReader"
 		).set(
 			_ddmFormXSDDeserializer, new SAXReaderImpl()
 		);
@@ -109,6 +115,6 @@ public class DDMFormXSDDeserializerTest
 	}
 
 	private final DDMFormXSDDeserializer _ddmFormXSDDeserializer =
-		new DDMFormXSDDeserializerImpl();
+		new DDMFormXSDDeserializer();
 
 }

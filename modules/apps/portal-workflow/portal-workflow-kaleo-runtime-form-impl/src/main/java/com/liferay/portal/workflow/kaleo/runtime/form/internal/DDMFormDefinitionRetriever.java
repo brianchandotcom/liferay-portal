@@ -16,7 +16,10 @@ package com.liferay.portal.workflow.kaleo.runtime.form.internal;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,13 +49,22 @@ public class DDMFormDefinitionRetriever implements FormDefinitionRetriever {
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-		return _ddmFormJSONSerializer.serialize(ddmForm);
+		DDMFormSerializer ddmFormSerializer =
+			_ddmFormSerializerTracker.getDDMFormSerializer("json");
+
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			ddmFormSerializer.serialize(builder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 	@Reference
-	private DDMFormJSONSerializer _ddmFormJSONSerializer;
+	private DDMFormSerializerTracker _ddmFormSerializerTracker;
 
 }

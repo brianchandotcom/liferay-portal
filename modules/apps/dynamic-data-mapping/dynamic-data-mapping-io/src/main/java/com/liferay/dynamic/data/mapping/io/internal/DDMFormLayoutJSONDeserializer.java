@@ -14,16 +14,20 @@
 
 package com.liferay.dynamic.data.mapping.io.internal;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -37,27 +41,45 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true)
-public class DDMFormLayoutJSONDeserializerImpl
-	implements DDMFormLayoutJSONDeserializer {
+@Component(
+	immediate = true, property = "ddm.form.layout.deserializer.type=json"
+)
+public class DDMFormLayoutJSONDeserializer
+	implements DDMFormLayoutDeserializer {
 
 	@Override
-	public DDMFormLayout deserialize(String serializedDDMFormLayout)
-		throws PortalException {
+	public DDMFormLayoutDeserializerDeserializeResponse deserialize(
+		DDMFormLayoutDeserializerDeserializeRequest
+			ddmFormLayoutDeserializerDeserializeRequest) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			serializedDDMFormLayout);
+		String content =
+			ddmFormLayoutDeserializerDeserializeRequest.getContent();
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
-		setDDMFormLayoutDefaultLocale(
-			jsonObject.getString("defaultLanguageId"), ddmFormLayout);
-		setDDMFormLayoutPages(jsonObject.getJSONArray("pages"), ddmFormLayout);
-		setDDMFormLayoutPageTitlesDefaultLocale(ddmFormLayout);
-		setDDMFormLayoutPaginationMode(
-			jsonObject.getString("paginationMode"), ddmFormLayout);
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(content);
 
-		return ddmFormLayout;
+			setDDMFormLayoutDefaultLocale(
+				jsonObject.getString("defaultLanguageId"), ddmFormLayout);
+			setDDMFormLayoutPages(
+				jsonObject.getJSONArray("pages"), ddmFormLayout);
+
+			setDDMFormLayoutPageTitlesDefaultLocale(ddmFormLayout);
+			setDDMFormLayoutPaginationMode(
+				jsonObject.getString("paginationMode"), ddmFormLayout);
+		}
+		catch (JSONException jsone) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(jsone, jsone);
+			}
+		}
+
+		DDMFormLayoutDeserializerDeserializeResponse.Builder builder =
+			DDMFormLayoutDeserializerDeserializeResponse.Builder.newBuilder(
+				ddmFormLayout);
+
+		return builder.build();
 	}
 
 	protected DDMFormLayoutColumn getDDMFormLayoutColumn(
@@ -279,6 +301,9 @@ public class DDMFormLayoutJSONDeserializerImpl
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormLayoutJSONDeserializer.class);
 
 	private JSONFactory _jsonFactory;
 

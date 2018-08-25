@@ -18,8 +18,8 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
@@ -197,10 +197,18 @@ public class ImporterFactory {
 		importer.afterPropertiesSet();
 	}
 
+	protected DDMFormDeserializer getDDMFormJSONDeserializer() {
+		return _ddmFormDeserializerTracker.getDDMFormDeserializer("json");
+	}
+
+	protected DDMFormDeserializer getDDMFormXSDDeserializer() {
+		return _ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
+	}
+
 	protected FileSystemImporter getFileSystemImporter() {
 		return new FileSystemImporter(
-			_assetTagLocalService, _ddmFormJSONDeserializer,
-			_ddmFormXSDDeserializer, _ddmStructureLocalService,
+			_assetTagLocalService, getDDMFormJSONDeserializer(),
+			getDDMFormXSDDeserializer(), _ddmStructureLocalService,
 			_ddmTemplateLocalService, _ddmxml, _dlAppLocalService,
 			_dlFileEntryLocalService, _dlFolderLocalService,
 			_indexStatusManager, _indexerRegistry, _journalArticleLocalService,
@@ -218,8 +226,8 @@ public class ImporterFactory {
 
 	protected ResourceImporter getResourceImporter() {
 		return new ResourceImporter(
-			_assetTagLocalService, _ddmFormJSONDeserializer,
-			_ddmFormXSDDeserializer, _ddmStructureLocalService,
+			_assetTagLocalService, getDDMFormJSONDeserializer(),
+			getDDMFormXSDDeserializer(), _ddmStructureLocalService,
 			_ddmTemplateLocalService, _ddmxml, _dlAppLocalService,
 			_dlFileEntryLocalService, _dlFolderLocalService,
 			_indexStatusManager, _indexerRegistry, _journalArticleLocalService,
@@ -283,10 +291,7 @@ public class ImporterFactory {
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-
-	@Reference
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

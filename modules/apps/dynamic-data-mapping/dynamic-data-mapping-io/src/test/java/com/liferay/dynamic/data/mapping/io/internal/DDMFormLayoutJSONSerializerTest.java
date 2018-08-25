@@ -14,7 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.io.internal;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -49,8 +50,7 @@ public class DDMFormLayoutJSONSerializerTest extends BaseDDMTestCase {
 
 		DDMFormLayout ddmFormLayout = createDDMFormLayout();
 
-		String actualJSON = _ddmFormLayoutJSONSerializer.serialize(
-			ddmFormLayout);
+		String actualJSON = serialize(ddmFormLayout);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}
@@ -91,14 +91,26 @@ public class DDMFormLayoutJSONSerializerTest extends BaseDDMTestCase {
 		return ddmFormLayoutPage;
 	}
 
+	protected String serialize(DDMFormLayout ddmFormLayout) {
+		DDMFormLayoutSerializerSerializeRequest.Builder builder =
+			DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormLayout);
+
+		DDMFormLayoutSerializerSerializeResponse
+			ddmFormLayoutSerializerSerializeResponse =
+				_ddmFormLayoutJSONSerializer.serialize(builder.build());
+
+		return ddmFormLayoutSerializerSerializeResponse.getContent();
+	}
+
 	protected void setUpDDMFormLayoutJSONSerializer() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormLayoutJSONSerializerImpl.class, "_jsonFactory");
+			DDMFormLayoutJSONSerializer.class, "_jsonFactory");
 
 		field.set(_ddmFormLayoutJSONSerializer, new JSONFactoryImpl());
 	}
 
 	private final DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer =
-		new DDMFormLayoutJSONSerializerImpl();
+		new DDMFormLayoutJSONSerializer();
 
 }

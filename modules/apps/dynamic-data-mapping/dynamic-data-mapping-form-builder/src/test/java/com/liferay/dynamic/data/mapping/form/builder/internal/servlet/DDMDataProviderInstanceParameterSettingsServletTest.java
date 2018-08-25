@@ -17,8 +17,10 @@ package com.liferay.dynamic.data.mapping.form.builder.internal.servlet;
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSettings;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializerImpl;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -100,6 +102,21 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 			expectedValue, parametersJSONObject.toString(), false);
 	}
 
+	protected DDMFormValues deserialize(
+		String content,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm) {
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				_ddmFormValuesJSONDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	}
+
 	protected DDMFormValues getDataProviderFormValues(String file)
 		throws Exception {
 
@@ -108,8 +125,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 
 		String serializedDDMFormValues = read(file);
 
-		return _ddmFormValuesJSONDeserializer.deserialize(
-			ddmForm, serializedDDMFormValues);
+		return deserialize(serializedDDMFormValues, ddmForm);
 	}
 
 	protected String read(String fileName) throws IOException {
@@ -142,7 +158,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 
 	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
 		PowerMockito.field(
-			DDMFormValuesJSONDeserializerImpl.class, "_jsonFactory"
+			DDMFormValuesJSONDeserializer.class, "_jsonFactory"
 		).set(
 			_ddmFormValuesJSONDeserializer, _jsonFactory
 		);
@@ -203,8 +219,8 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 	private DDMDataProvider _ddmDataProvider;
 	private DDMDataProviderInstanceParameterSettingsServlet
 		_ddmDataProviderInstanceParameterSettingsServlet;
-	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer =
-		new DDMFormValuesJSONDeserializerImpl();
+	private final DDMFormValuesDeserializer _ddmFormValuesJSONDeserializer =
+		new DDMFormValuesJSONDeserializer();
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 	@DDMForm

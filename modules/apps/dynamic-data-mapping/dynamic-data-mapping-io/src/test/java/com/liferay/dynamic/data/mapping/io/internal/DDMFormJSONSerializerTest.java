@@ -18,7 +18,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
@@ -69,7 +70,7 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 		ddmForm.setDDMFormSuccessPageSettings(
 			createDDMFormSuccessPageSettings());
 
-		String actualJSON = _ddmFormJSONSerializer.serialize(ddmForm);
+		String actualJSON = serialize(ddmForm);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}
@@ -148,13 +149,22 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 		return ddmFormFieldTypeServicesTracker;
 	}
 
+	protected String serialize(DDMForm ddmForm) {
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			_ddmFormJSONSerializer.serialize(builder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
+	}
+
 	protected void setUpDDMFormJSONSerializer() throws Exception {
 
 		// DDM form field type services tracker
 
 		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormJSONSerializerImpl.class,
-			"_ddmFormFieldTypeServicesTracker");
+			DDMFormJSONSerializer.class, "_ddmFormFieldTypeServicesTracker");
 
 		field.set(
 			_ddmFormJSONSerializer, getMockedDDMFormFieldTypeServicesTracker());
@@ -162,7 +172,7 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 		// JSON factory
 
 		field = ReflectionUtil.getDeclaredField(
-			DDMFormJSONSerializerImpl.class, "_jsonFactory");
+			DDMFormJSONSerializer.class, "_jsonFactory");
 
 		field.set(_ddmFormJSONSerializer, new JSONFactoryImpl());
 	}
@@ -186,7 +196,7 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 	}
 
 	private final DDMFormJSONSerializer _ddmFormJSONSerializer =
-		new DDMFormJSONSerializerImpl();
+		new DDMFormJSONSerializer();
 
 	@Mock
 	private DDMFormFieldType _defaultDDMFormFieldType;

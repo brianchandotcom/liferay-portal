@@ -19,20 +19,26 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorContext;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.test.BaseDDMServiceTestCase;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,29 +57,18 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		setUpDDMFormJSONDeserializer();
-		setUpDDMFormValuesJSONDeserializer();
-	}
-
 	@Test
 	public void testSumValuesForRepeatableField() throws Exception {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-sum-values-repeatable-field.json");
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
-			serializedDDMForm);
+		DDMForm ddmForm = deserialize(serializedDDMForm);
 
 		String serializedDDMFormValues = read(
 			"ddm-form-evaluator-sum-values-repeatable-field-test-data.json");
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, serializedDDMFormValues);
+		DDMFormValues ddmFormValues = deserialize(
+			serializedDDMFormValues, ddmForm);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -104,15 +99,13 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-valid-fields-test-data.json");
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
-			serializedDDMForm);
+		DDMForm ddmForm = deserialize(serializedDDMForm);
 
 		String serializedDDMFormValues = read(
 			"ddm-form-evaluator-form-values-valid-fields-test-data.json");
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, serializedDDMFormValues);
+		DDMFormValues ddmFormValues = deserialize(
+			serializedDDMFormValues, ddmForm);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -143,15 +136,13 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-visible-fields-test-data-1.json");
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
-			serializedDDMForm);
+		DDMForm ddmForm = deserialize(serializedDDMForm);
 
 		String serializedDDMFormValues = read(
 			"ddm-form-evaluator-form-values-visible-fields-test-data-1.json");
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, serializedDDMFormValues);
+		DDMFormValues ddmFormValues = deserialize(
+			serializedDDMFormValues, ddmForm);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -178,15 +169,13 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-visible-fields-test-data-2.json");
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
-			serializedDDMForm);
+		DDMForm ddmForm = deserialize(serializedDDMForm);
 
 		String serializedDDMFormValues = read(
 			"ddm-form-evaluator-form-values-visible-fields-test-data-2.json");
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, serializedDDMFormValues);
+		DDMFormValues ddmFormValues = deserialize(
+			serializedDDMFormValues, ddmForm);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -213,15 +202,13 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-visible-fields-test-data-3.json");
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
-			serializedDDMForm);
+		DDMForm ddmForm = deserialize(serializedDDMForm);
 
 		String serializedDDMFormValues = read(
 			"ddm-form-evaluator-form-values-visible-fields-test-data-3.json");
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, serializedDDMFormValues);
+		DDMFormValues ddmFormValues = deserialize(
+			serializedDDMFormValues, ddmForm);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -248,15 +235,13 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-visible-fields-test-data-4.json");
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
-			serializedDDMForm);
+		DDMForm ddmForm = deserialize(serializedDDMForm);
 
 		String serializedDDMFormValues = read(
 			"ddm-form-evaluator-form-values-visible-fields-test-data-4.json");
 
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, serializedDDMFormValues);
+		DDMFormValues ddmFormValues = deserialize(
+			serializedDDMFormValues, ddmForm);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -278,21 +263,40 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		Assert.assertTrue(phoneDDMFormFieldEvaluationResult.isVisible());
 	}
 
-	protected void setUpDDMFormJSONDeserializer() {
-		Registry registry = RegistryUtil.getRegistry();
+	protected DDMForm deserialize(String content) {
+		DDMFormDeserializer ddmFormDeserializer =
+			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
 
-		_ddmFormJSONDeserializer = registry.getService(
-			DDMFormJSONDeserializer.class);
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
-	protected void setUpDDMFormValuesJSONDeserializer() {
-		Registry registry = RegistryUtil.getRegistry();
+	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializer ddmFormValuesDeserializer =
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+				"json");
 
-		_ddmFormValuesJSONDeserializer = registry.getService(
-			DDMFormValuesJSONDeserializer.class);
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				ddmFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	@Inject
+	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
+
+	@Inject
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 
 }

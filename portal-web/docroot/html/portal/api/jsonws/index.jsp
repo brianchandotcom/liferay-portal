@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portal/api/jsonws/init.jsp" %>
 
-<c:if test="<%= !PropsValues.JSONWS_WEB_SERVICE_API_DISCOVERABLE %>">
+<c:if test="<%= PropsValues.JSONWS_WEB_SERVICE_API_DISCOVERABLE %>">
 	<style>
 		<%@ include file="/html/portal/api/jsonws/css.jspf" %>
 	</style>

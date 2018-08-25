@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.site.apio.internal.model.GroupWrapper;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -101,6 +102,9 @@ public class WebSiteCollectionResource
 			"privateUrl", GroupWrapper::getPrivateURL
 		).addString(
 			"publicUrl", GroupWrapper::getPublicURL
+		).addStringList(
+			"availableLanguages",
+			group -> Arrays.asList(group.getAvailableLanguageIds())
 		).build();
 	}
 

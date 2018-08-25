@@ -29,6 +29,7 @@ import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelper;
 import com.liferay.structure.apio.internal.model.FormLayoutPage;
 
+import java.util.Arrays;
 import java.util.Map.Entry;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,6 +66,10 @@ public class StructureRepresentorBuilderHelperImpl
 		).addNestedList(
 			"formPages", StructureRepresentorUtil::getPages,
 			StructureRepresentorBuilderHelperImpl::_buildFormPages
+		).addStringList(
+			"availableLanguages",
+			ddmStructure -> Arrays.asList(
+				ddmStructure.getAvailableLanguageIds())
 		);
 	}
 

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.vocabulary.apio.architect.identifier.VocabularyIdentifier;
 import com.liferay.vocabulary.apio.internal.architect.form.VocabularyForm;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -109,6 +110,9 @@ public class VocabularyNestedCollectionResource
 			"description", AssetVocabulary::getDescription
 		).addLocalizedStringByLocale(
 			"name", AssetVocabulary::getTitle
+		).addStringList(
+			"availableLanguages",
+			vocabulary -> Arrays.asList(vocabulary.getAvailableLanguageIds())
 		).build();
 	}
 

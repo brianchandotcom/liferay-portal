@@ -127,8 +127,6 @@ public class BlogPostingNestedCollectionResource
 			"category", CategoryIdentifier.class
 		).addRelatedCollection(
 			"comment", CommentIdentifier.class
-		).addRelatedCollection(
-			"vocabularyAssignment", VocabularyIdentifier.class
 		).addString(
 			"alternativeHeadline", BlogsEntry::getSubtitle
 		).addString(

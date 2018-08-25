@@ -30,14 +30,21 @@ import com.liferay.structure.apio.architect.model.FormLayoutPage;
  */
 public interface StructureRepresentorBuilderHelper {
 
-	public NestedRepresentor.FirstStep<DDMFormField> buildDDMFormFieldFirstStep(
-		NestedRepresentor.Builder<DDMFormField> builder);
+	public default NestedRepresentor.FirstStep<DDMFormField>
+		buildDDMFormFieldFirstStep(
+			NestedRepresentor.Builder<DDMFormField> builder) {
+
+		return null;
+	}
 
 	public Representor.FirstStep<DDMStructure> buildDDMStructureFirstStep(
 		Representor.Builder<DDMStructure, Long> builder);
 
-	public NestedRepresentor.FirstStep<FormLayoutPage>
+	public default NestedRepresentor.FirstStep<FormLayoutPage>
 		buildFormLayoutPageFirstStep(
-			NestedRepresentor.Builder<FormLayoutPage> builder);
+			NestedRepresentor.Builder<FormLayoutPage> builder) {
+
+		return null;
+	}
 
 }

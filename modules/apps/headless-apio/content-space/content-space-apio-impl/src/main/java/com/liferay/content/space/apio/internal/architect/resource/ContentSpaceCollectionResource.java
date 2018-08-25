@@ -22,6 +22,7 @@ import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
 import com.liferay.content.space.apio.architect.util.ContentSpaceUtil;
+import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -87,7 +88,7 @@ public class ContentSpaceCollectionResource
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, Group::getCreatorUserId
 		).addLinkedModel(
-			"documentsRepository", RootFolderIdentifier.class, Group::getGroupId
+			"documentsRepository", FolderIdentifier.class, Group::getGroupId
 		).addLinkedModel(
 			"webSite", WebSiteIdentifier.class, Group::getGroupId
 		).addLocalizedStringByLocale(

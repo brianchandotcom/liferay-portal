@@ -142,11 +142,11 @@ public class PersonCollectionResource
 			contactBuilder -> contactBuilder.types(
 				"ContactInformation"
 			).addString(
-				"facebookSn", ContactModel::getSmsSn
+				"facebookSn", ContactModel::getFacebookSn
 			).addString(
-				"skypeSn", ContactModel::getSmsSn
+				"skypeSn", ContactModel::getSkypeSn
 			).addString(
-				"twitterSn", ContactModel::getSmsSn
+				"twitterSn", ContactModel::getTwitterSn
 			).build()
 		).addRelatedCollection(
 			"roles", RoleIdentifier.class

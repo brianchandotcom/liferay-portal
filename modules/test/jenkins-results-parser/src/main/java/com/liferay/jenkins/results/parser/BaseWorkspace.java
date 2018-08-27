@@ -20,6 +20,54 @@ package com.liferay.jenkins.results.parser;
 public abstract class BaseWorkspace implements Workspace {
 
 	@Override
+	public void addJenkinsLocalGitBranch(String jenkinsGitHubURL) {
+		if (jenkinsGitHubURL == null) {
+			return;
+		}
+
+		if (!JenkinsResultsParserUtil.isCINode()) {
+			return;
+		}
+
+		LocalGitRepository jenkinsLocalGitRepository =
+			GitRepositoryFactory.getLocalGitRepository(
+				"liferay-jenkins-ee", "master");
+
+		LocalGitBranch localGitBranch;
+
+		if (PullRequest.isValidGitHubPullRequestURL(jenkinsGitHubURL)) {
+			PullRequest pullRequest = new PullRequest(jenkinsGitHubURL);
+
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
+				jenkinsLocalGitRepository, pullRequest, true);
+
+			_jenkinsBranchName = GitHubDevSyncUtil.getCacheBranchName(
+				pullRequest);
+		}
+		else if (GitUtil.isValidGitHubRefURL(jenkinsGitHubURL)) {
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
+				jenkinsGitHubURL);
+
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
+				jenkinsLocalGitRepository, remoteGitRef, true);
+
+			_jenkinsBranchName = GitHubDevSyncUtil.getCacheBranchName(
+				remoteGitRef);
+		}
+		else {
+			throw new RuntimeException(
+				"Invalid jenkins GitHub url " + jenkinsGitHubURL);
+		}
+
+		_jenkinsLocalGitBranch = localGitBranch;
+	}
+
+	@Override
+	public String getJenkinsBranchName() {
+		return _jenkinsBranchName;
+	}
+
+	@Override
 	public abstract void setJobProperties(Job job);
 
 	@Override
@@ -39,6 +87,12 @@ public abstract class BaseWorkspace implements Workspace {
 		}
 
 		_synchronizeGitBranches = synchronizeGitBranches;
+	}
+
+	protected void checkoutJenkinsLocalGitBranch() {
+		if (_jenkinsLocalGitBranch != null) {
+			checkoutLocalGitBranch(_jenkinsLocalGitBranch);
+		}
 	}
 
 	protected void checkoutBranch(LocalGitBranch localGitBranch) {
@@ -66,6 +120,8 @@ public abstract class BaseWorkspace implements Workspace {
 		return _synchronizeGitBranches;
 	}
 
+	private String _jenkinsBranchName;
+	private LocalGitBranch _jenkinsLocalGitBranch;
 	private final boolean _synchronizeGitBranches;
 
 }

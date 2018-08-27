@@ -19,6 +19,10 @@ package com.liferay.jenkins.results.parser;
  */
 public interface Workspace {
 
+	public void addJenkinsLocalGitBranch(String jenkinsGitHubURL);
+
+	public String getJenkinsBranchName();
+
 	public void setJobProperties(Job job);
 
 	public void setupWorkspace();

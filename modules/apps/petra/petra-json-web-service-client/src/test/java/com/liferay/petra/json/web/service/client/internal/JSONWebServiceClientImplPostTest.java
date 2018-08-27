@@ -16,6 +16,7 @@ package com.liferay.petra.json.web.service.client.internal;
 
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+import com.liferay.petra.json.web.service.client.model.ResponseBody;
 import com.liferay.petra.json.web.service.client.server.simulator.HTTPServerSimulator;
 import com.liferay.petra.json.web.service.client.server.simulator.SimulatorConstants;
 
@@ -70,6 +71,43 @@ public class JSONWebServiceClientImplPostTest
 			json,
 			json.contains(
 				SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS));
+	}
+
+	@Test
+	public void testResponse200OnPostToObjectWithParametersArray()
+		throws Exception {
+
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
+		Map<String, Object> properties = getBaseProperties();
+
+		properties.put(
+			"headers", "headerKey1=headerValue1;Accept=application/json;");
+		properties.put("protocol", "http");
+
+		jsonWebServiceClientImpl.activate(properties);
+
+		Map<String, String> params = new HashMap<String, String>();
+
+		params.put(
+			SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS, "200");
+		params.put(
+			SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON, "true");
+		params.put("parameter1", "parameter1");
+		params.put("parameter2", "parameter2");
+		params.put("parameter3", "parameter3");
+
+		ResponseBody responseBody = jsonWebServiceClientImpl.doPutToObject(
+			ResponseBody.class, "/testPut/",
+			SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS, "200",
+			SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON, "true",
+			"parameter1", "parameter1", "parameter2", "parameter2",
+			"parameter3", "parameter3");
+
+		Assert.assertEquals("parameter1", responseBody.getParameter1());
+		Assert.assertEquals("parameter2", responseBody.getParameter2());
+		Assert.assertEquals("parameter3", responseBody.getParameter3());
 	}
 
 	@Test

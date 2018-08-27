@@ -156,7 +156,7 @@ public class JSONFactoryTest extends PowerMockito {
 	}
 
 	@Test
-	public void testDeserializeNonWhitelistedClass() {
+	public void testDeserializeNonwhitelistedClass() {
 		String json = JSONFactoryUtil.serialize(new JSONFactoryTest());
 
 		try (CaptureHandler captureHandler =

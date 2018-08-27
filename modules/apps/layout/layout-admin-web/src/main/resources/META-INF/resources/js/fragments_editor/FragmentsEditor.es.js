@@ -15,7 +15,7 @@ import {translationStatusReducer} from './store/reducers/translationStatus';
 import {updateDragTargetReducer} from './store/reducers/dragDrop.es';
 import FragmentEntryLink from './fragment_entry_link/FragmentEntryLink.es';
 import {INITIAL_STATE} from './store/initialState.es';
-import MetalStore from './store/MetalStore.es';
+import {connect, MetalStore} from './store/MetalStore.es';
 import templates from './FragmentsEditor.soy';
 
 /**
@@ -43,14 +43,7 @@ class FragmentsEditor extends Component {
 			]
 		);
 
-		this._store.on(
-			'change',
-			(nextState) => Object.entries(nextState).forEach(
-				([key, value]) => {
-					this[key] = value;
-				}
-			)
-		);
+		connect(this, this._store);
 	}
 
 	/**

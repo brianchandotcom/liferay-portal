@@ -1,6 +1,24 @@
 import State, {Config} from 'metal-state';
 
 /**
+ * Connects a given component to a given store, syncing
+ * it's properties with it.
+ * @param {Component} component
+ * @param {MetalStore} store
+ */
+
+const connect = function(component, store) {
+	store.on(
+		'change',
+		(nextState) => Object.entries(nextState).forEach(
+			([key, value]) => {
+				component[key] = value;
+			}
+		)
+	);
+};
+
+/**
  * Redux-like store that can be used for maintaining
  * an State that can only be modified with pure reducers.
  *
@@ -172,5 +190,5 @@ MetalStore.STATE = {
 		.value({})
 };
 
-export {MetalStore};
+export {connect, MetalStore};
 export default MetalStore;

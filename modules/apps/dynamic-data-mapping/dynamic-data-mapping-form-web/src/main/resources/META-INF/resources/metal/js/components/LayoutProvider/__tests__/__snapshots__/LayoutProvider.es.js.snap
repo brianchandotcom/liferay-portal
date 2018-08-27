@@ -573,7 +573,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMoved should listen to the updatePages event 1`] = `
+exports[`LayoutProvider Field events fieldMoved should listen to the pagesUpdated event 1`] = `
 Array [
   Object {
     "rows": Array [

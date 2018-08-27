@@ -19,7 +19,7 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
         </div>
       </li>
     </ol>
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -32,11 +32,15 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
   </div>
   <div class="ddm-page-container-layout"></div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="1" maxlength="120" value="" placeholder="untitled-page-2-of-1"></textarea>
-      <textarea class="form-builder-page-header-description form-control" data-page-id="1" maxlength="120" value="" placeholder="add-a-short-description-for-this-page"></textarea>
+    <div class="ddm-form-page pl-3 pr-3">
+      <textarea class="form-builder-page-header-title form-control" data-page-id="1" maxlength="120" value="" placeholder="untitled-page-x-of-x"></textarea>
+      <textarea class="form-builder-page-header-description form-control" data-page-id="1" maxlength="120" placeholder="add-a-short-description-for-this-page" value=""></textarea>
       <div class="form-builder-layout">
-        <div class="layout-page"></div>
+        <div class="layout-page">
+          <div class="col col-empty col-md-12 last-col lfr-initial-col">
+            <div id="lfr-initial-col-message">drag-from-sidebar-and-drop-here</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -69,7 +73,7 @@ exports[`FormRenderer should change the active page 1`] = `
         </div>
       </li>
     </ol>
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -81,8 +85,8 @@ exports[`FormRenderer should change the active page 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
+    <div class="ddm-form-page pl-3 pr-3">
+      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -228,7 +232,7 @@ exports[`FormRenderer should change the active page 1`] = `
 exports[`FormRenderer should change the form page description 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -240,8 +244,8 @@ exports[`FormRenderer should change the form page description 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
+    <div class="ddm-form-page pl-3 pr-3">
+      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -386,7 +390,7 @@ exports[`FormRenderer should change the form page description 1`] = `
 exports[`FormRenderer should change the form page title 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -398,8 +402,8 @@ exports[`FormRenderer should change the form page title 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
+    <div class="ddm-form-page pl-3 pr-3">
+      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -544,7 +548,7 @@ exports[`FormRenderer should change the form page title 1`] = `
 exports[`FormRenderer should not render the layout with the field empty in non-editable mode 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -556,7 +560,7 @@ exports[`FormRenderer should not render the layout with the field empty in non-e
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
+    <div class="ddm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -589,7 +593,7 @@ exports[`FormRenderer should not render the layout with the field empty in non-e
 exports[`FormRenderer should receive a delete button event and propage it 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -601,8 +605,8 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
+    <div class="ddm-form-page pl-3 pr-3">
+      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -747,7 +751,7 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
 exports[`FormRenderer should receive a duplicate button event and propage it 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -759,8 +763,8 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
+    <div class="ddm-form-page pl-3 pr-3">
+      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -905,7 +909,7 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
 exports[`FormRenderer should receive an update page event and propage it 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -917,8 +921,8 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
-      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-1-of-1"></textarea>
+    <div class="ddm-form-page pl-3 pr-3">
+      <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
@@ -1063,7 +1067,7 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
 exports[`FormRenderer should render a layout in editable mode 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -1075,7 +1079,7 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
+    <div class="ddm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -1221,7 +1225,7 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
 exports[`FormRenderer should render a layout with an empty field only in editable mode 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -1233,7 +1237,7 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
+    <div class="ddm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -1399,7 +1403,7 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
 exports[`FormRenderer should render a layout with pages 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -1411,7 +1415,7 @@ exports[`FormRenderer should render a layout with pages 1`] = `
     </div>
   </div>
   <div class="ddm-page-container-layout">
-    <div class="dmm-form-page pl-3 pr-3">
+    <div class="ddm-form-page pl-3 pr-3">
       <textarea class="form-builder-page-header-title form-control" data-page-id="0" maxlength="120" value="Untitled name"></textarea>
       <textarea class="form-builder-page-header-description form-control" data-page-id="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
@@ -1458,7 +1462,7 @@ exports[`FormRenderer should render a layout with pages in mode of list 1`] = `
 exports[`FormRenderer should render default markup 1`] = `
 <div class="position-relative">
   <div class="ddm-form-header">
-    <div class="btn-group dmm-page-settings" role="group">
+    <div class="btn-group ddm-page-settings" role="group">
       <div class="dropdown dropdown-action">
         <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -1469,7 +1473,6 @@ exports[`FormRenderer should render default markup 1`] = `
       </div>
     </div>
   </div>
-  <p>Drag from sidebar and drop here</p>
 </div>
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">

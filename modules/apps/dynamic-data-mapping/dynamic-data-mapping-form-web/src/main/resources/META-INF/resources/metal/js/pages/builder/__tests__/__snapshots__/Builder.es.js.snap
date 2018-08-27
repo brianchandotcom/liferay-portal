@@ -6,7 +6,7 @@ exports[`Builder should render the default markup 1`] = `
     <div class="sheet">
       <div class="position-relative">
         <div class="ddm-form-header">
-          <div class="btn-group dmm-page-settings" role="group">
+          <div class="btn-group ddm-page-settings" role="group">
             <div class="dropdown dropdown-action">
               <button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" title="actions" type="button">
                 <svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -17,7 +17,6 @@ exports[`Builder should render the default markup 1`] = `
             </div>
           </div>
         </div>
-        <p>Drag from sidebar and drop here</p>
       </div>
     </div>
   </div>

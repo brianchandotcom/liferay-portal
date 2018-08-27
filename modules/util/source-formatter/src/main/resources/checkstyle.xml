@@ -179,6 +179,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.LineBreakAfterCommaCheck">
 			<message key="line.break.incorrect" value="There should be a line break after ''{0}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.LineBreakBeforeGenericStartCheck">
+			<message key="line.break.incorrect" value="There should be a line break after ''{0}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LineEndCharacterCheck">
 			<message key="end.line.character.incorrect" value="Line should not end with ''{0}''" />
 		</module>

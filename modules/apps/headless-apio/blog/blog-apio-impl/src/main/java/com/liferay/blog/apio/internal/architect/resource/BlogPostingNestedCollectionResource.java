@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.vocabulary.apio.architect.identifier.VocabularyIdentifier;
 
 import java.util.List;
 
@@ -127,8 +126,6 @@ public class BlogPostingNestedCollectionResource
 			"category", CategoryIdentifier.class
 		).addRelatedCollection(
 			"comment", CommentIdentifier.class
-		).addRelatedCollection(
-			"vocabularyAssignment", VocabularyIdentifier.class
 		).addString(
 			"alternativeHeadline", BlogsEntry::getSubtitle
 		).addString(

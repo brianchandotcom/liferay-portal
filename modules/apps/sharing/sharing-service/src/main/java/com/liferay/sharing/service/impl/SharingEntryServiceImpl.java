@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -120,9 +121,22 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 					classNameId);
 		}
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		if (sharingPermissionChecker.hasPermission(
-				getPermissionChecker(), classPK, groupId,
-				sharingEntryActionKeys)) {
+				permissionChecker, classPK, groupId, sharingEntryActionKeys)) {
+
+			return;
+		}
+
+		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
+			sharingEntryActionKeys.stream();
+
+		if (sharingEntryActionKeyStream.allMatch(
+				sharingEntryActionKey ->
+					sharingEntryLocalService.hasShareableSharingPermission(
+						permissionChecker.getUserId(), classNameId, classPK,
+						sharingEntryActionKey))) {
 
 			return;
 		}
@@ -136,8 +150,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			resourceName = className.getClassName();
 		}
 
-		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
-			sharingEntryActionKeys.stream();
+		sharingEntryActionKeyStream = sharingEntryActionKeys.stream();
 
 		String[] actionIds = sharingEntryActionKeyStream.map(
 			SharingEntryActionKey::getActionId

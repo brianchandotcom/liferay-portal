@@ -18,11 +18,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.document.library.internal.security.permission.resource.SharingEntryDLFileEntryModelResourcePermissionRegistrar;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
-import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -49,9 +47,6 @@ public class DLFileEntrySharingPermissionChecker
 			Collection<SharingEntryActionKey> sharingEntryActionKeys)
 		throws PortalException {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			DLFileEntry.class.getName());
-
 		for (SharingEntryActionKey sharingEntryActionKey :
 				sharingEntryActionKeys) {
 
@@ -61,10 +56,7 @@ public class DLFileEntrySharingPermissionChecker
 
 			if (!_dlFileEntryModelResourcePermission.contains(
 					permissionChecker, classPK,
-					sharingEntryActionKey.getActionId()) &&
-				!_sharingEntryLocalService.hasShareableSharingPermission(
-					permissionChecker.getUserId(), classNameId, classPK,
-					sharingEntryActionKey)) {
+					sharingEntryActionKey.getActionId())) {
 
 				return false;
 			}
@@ -79,16 +71,10 @@ public class DLFileEntrySharingPermissionChecker
 				SharingEntryActionKey.ADD_DISCUSSION,
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW));
 
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
 	@Reference(
 		target = "(&(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)(!(component.name=" + SharingEntryDLFileEntryModelResourcePermissionRegistrar.COMPONENT_NAME + ")))"
 	)
 	private ModelResourcePermission<DLFileEntry>
 		_dlFileEntryModelResourcePermission;
-
-	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
 
 }

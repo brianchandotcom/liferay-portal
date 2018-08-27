@@ -15,7 +15,6 @@
 package com.liferay.sharing.document.library.internal.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -104,9 +103,6 @@ public class DLFileEntrySharingPermissionCheckerTest {
 
 		_powerUserRole = _roleLocalService.getRole(
 			_company.getCompanyId(), RoleConstants.POWER_USER);
-
-		_classNameId = _classNameLocalService.getClassNameId(
-			DLFileEntry.class.getName());
 	}
 
 	@Test
@@ -275,132 +271,6 @@ public class DLFileEntrySharingPermissionCheckerTest {
 	}
 
 	@Test
-	public void testUserWithShareableAddDiscussionSharingEntryActionKeyAndWithAddDiscussionPermissionCanShareWithAddDiscussion()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.VIEW),
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
-				new AddDLFileEntryResourcePermission(
-					_powerUserRole, ActionKeys.ADD_DISCUSSION);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
-
-			Assert.assertTrue(
-				_sharingPermissionChecker.hasPermission(
-					permissionChecker, _fileEntry.getFileEntryId(),
-					_fileEntry.getGroupId(),
-					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION)));
-		}
-	}
-
-	@Test
-	public void testUserWithShareableAddDiscussionSharingEntryActionKeyAndWithoutAddDiscussionPermissionCanShareWithAddDiscussion()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.VIEW),
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
-
-			Assert.assertTrue(
-				_sharingPermissionChecker.hasPermission(
-					permissionChecker, _fileEntry.getFileEntryId(),
-					_fileEntry.getGroupId(),
-					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION)));
-		}
-	}
-
-	@Test
-	public void testUserWithUnshareableAddDiscussionSharingEntryActionKeyAndWithAddDiscussionPermissionCanShareWithAddDiscussion()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), false,
-			Arrays.asList(
-				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.VIEW),
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
-				new AddDLFileEntryResourcePermission(
-					_powerUserRole, ActionKeys.ADD_DISCUSSION);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
-
-			Assert.assertTrue(
-				_sharingPermissionChecker.hasPermission(
-					permissionChecker, _fileEntry.getFileEntryId(),
-					_fileEntry.getGroupId(),
-					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION)));
-		}
-	}
-
-	@Test
-	public void testUserWithUnshareableAddDiscussionSharingEntryActionKeyAndWithoutAddDiscussionPermissionCannotShareWithAddDiscussion()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), false,
-			Arrays.asList(
-				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.VIEW),
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
-
-			Assert.assertFalse(
-				_sharingPermissionChecker.hasPermission(
-					permissionChecker, _fileEntry.getFileEntryId(),
-					_fileEntry.getGroupId(),
-					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION)));
-		}
-	}
-
-	@Test
 	public void testUserWithUpdatePermissionCannotShareWithAddDiscussion()
 		throws Exception {
 
@@ -526,8 +396,6 @@ public class DLFileEntrySharingPermissionCheckerTest {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntrySharingPermissionCheckerTest.class);
-
-	private long _classNameId;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

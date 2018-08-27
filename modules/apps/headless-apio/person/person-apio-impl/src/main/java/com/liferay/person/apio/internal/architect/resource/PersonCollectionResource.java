@@ -106,7 +106,7 @@ public class PersonCollectionResource
 
 	@Override
 	public String getName() {
-		return "person";
+		return "user-account";
 	}
 
 	@Override

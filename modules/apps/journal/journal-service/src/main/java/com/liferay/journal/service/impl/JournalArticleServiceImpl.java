@@ -792,12 +792,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	/**
 	 * Returns all the web content articles matching the group and folder.
 	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  folderId the primary key of the web content article folder
-	 * @return the matching web content articles
-	 *
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * 			   #getArticles(long groupId, long folderId, Locale locale)}
+	 * @param      groupId the primary key of the web content article's group
+	 * @param      folderId the primary key of the web content article folder
+	 * @return     the matching web content articles
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getArticles(long
+	 *             groupId, long folderId, Locale locale)}
 	 */
 	@Deprecated
 	@Override
@@ -821,18 +820,17 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * result set.
 	 * </p>
 	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  folderId the primary key of the web content article folder
-	 * @param  start the lower bound of the range of web content articles to
-	 *         return
-	 * @param  end the upper bound of the range of web content articles to
-	 *         return (not inclusive)
-	 * @param  obc the comparator to order the web content articles
-	 * @return the matching web content articles
-	 *
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * 			   #getArticles(long groupId, long folderId, Locale locale,
-	 * 			   int start, int end, OrderByComparator obc)}
+	 * @param      groupId the primary key of the web content article's group
+	 * @param      folderId the primary key of the web content article folder
+	 * @param      start the lower bound of the range of web content articles to
+	 *             return
+	 * @param      end the upper bound of the range of web content articles to
+	 *             return (not inclusive)
+	 * @param      obc the comparator to order the web content articles
+	 * @return     the matching web content articles
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getArticles(long
+	 *             groupId, long folderId, Locale locale, int start, int end,
+	 *             OrderByComparator obc)}
 	 */
 	@Deprecated
 	@Override
@@ -1463,6 +1461,24 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
+	}
+
+	@Override
+	public List<JournalArticle> getLatestArticles(
+		long groupId, int status, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
+
+		return journalArticleFinder.filterFindByG_ST(
+			groupId, status, queryDefinition);
+	}
+
+	@Override
+	public int getLatestArticlesCount(long groupId, int status) {
+		return journalArticleFinder.countByG_ST(
+			groupId, status, new QueryDefinition<JournalArticle>(status));
 	}
 
 	@Override

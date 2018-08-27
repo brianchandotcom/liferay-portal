@@ -4217,21 +4217,21 @@ public class JournalArticleLocalServiceImpl
 	 * result set.
 	 * </p>
 	 *
-	 * @param  groupId the primary key of the group (optionally <code>0</code>)
-	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link Collections#EMPTY_LIST})
-	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link WorkflowConstants} for constants starting
-	 *         with the "STATUS_" prefix.
-	 * @param  start the lower bound of the range of web content articles to
-	 *         return
-	 * @param  end the upper bound of the range of web content articles to
-	 *         return (not inclusive)
-	 * @return the matching web content articles
-	 *
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *  		   #search(long groupId, List folderIds, Locale locale,
-	 *  		   int status, int start, int end)}
+	 * @param      groupId the primary key of the group (optionally
+	 *             <code>0</code>)
+	 * @param      folderIds the primary keys of the web content article folders
+	 *             (optionally {@link Collections#EMPTY_LIST})
+	 * @param      status the web content article's workflow status. For more
+	 *             information see {@link WorkflowConstants} for constants
+	 *             starting with the "STATUS_" prefix.
+	 * @param      start the lower bound of the range of web content articles to
+	 *             return
+	 * @param      end the upper bound of the range of web content articles to
+	 *             return (not inclusive)
+	 * @return     the matching web content articles
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #search(long
+	 *             groupId, List folderIds, Locale locale, int status, int
+	 *             start, int end)}
 	 */
 	@Deprecated
 	@Override

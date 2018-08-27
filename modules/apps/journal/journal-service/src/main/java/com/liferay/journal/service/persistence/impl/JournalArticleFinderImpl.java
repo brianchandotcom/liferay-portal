@@ -63,6 +63,9 @@ public class JournalArticleFinderImpl
 	public static final String COUNT_BY_G_F =
 		JournalArticleFinder.class.getName() + ".countByG_F";
 
+	public static final String COUNT_BY_G_ST =
+		JournalArticleFinder.class.getName() + ".countByG_ST";
+
 	public static final String COUNT_BY_G_C_S =
 		JournalArticleFinder.class.getName() + ".countByG_C_S";
 
@@ -90,6 +93,9 @@ public class JournalArticleFinderImpl
 
 	public static final String FIND_BY_G_F =
 		JournalArticleFinder.class.getName() + ".findByG_F";
+
+	public static final String FIND_BY_G_ST =
+		JournalArticleFinder.class.getName() + ".findByG_ST";
 
 	public static final String FIND_BY_G_F_L =
 		JournalArticleFinder.class.getName() + ".findByG_F_L";
@@ -148,6 +154,14 @@ public class JournalArticleFinderImpl
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doCountByG_F(groupId, folderIds, queryDefinition, false);
+	}
+
+	@Override
+	public int countByG_ST(
+		long groupId, int status,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doCountByG_ST(groupId, status, queryDefinition, false);
 	}
 
 	@Override
@@ -267,6 +281,14 @@ public class JournalArticleFinderImpl
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doCountByG_F(groupId, folderIds, queryDefinition, true);
+	}
+
+	@Override
+	public int filterCountByG_ST(
+		long groupId, int status,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doCountByG_ST(groupId, status, queryDefinition, true);
 	}
 
 	@Override
@@ -391,6 +413,14 @@ public class JournalArticleFinderImpl
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_F(groupId, folderIds, queryDefinition, true);
+	}
+
+	@Override
+	public List<JournalArticle> filterFindByG_ST(
+		long groupId, int status,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_ST(groupId, status, queryDefinition, true);
 	}
 
 	@Override
@@ -708,6 +738,14 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
+	public List<JournalArticle> findByG_ST(
+		long groupId, int status,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_ST(groupId, status, queryDefinition, false);
+	}
+
+	@Override
 	public List<JournalArticle> findByG_F_L(
 		long groupId, List<Long> folderIds, Locale locale,
 		QueryDefinition<JournalArticle> queryDefinition) {
@@ -839,6 +877,54 @@ public class JournalArticleFinderImpl
 			for (Long folderId : folderIds) {
 				qPos.add(folderId);
 			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected int doCountByG_ST(
+		long groupId, int status,
+		QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(
+				getClass(), COUNT_BY_G_ST, queryDefinition, "JournalArticle");
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(status);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -1195,6 +1281,50 @@ public class JournalArticleFinderImpl
 			for (Long folderId : folderIds) {
 				qPos.add(folderId);
 			}
+
+			return (List<JournalArticle>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<JournalArticle> doFindByG_ST(
+		long groupId, int status,
+		QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(
+				getClass(), FIND_BY_G_ST, queryDefinition, "JournalArticle");
+
+			sql = _customSQL.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(status);
 
 			return (List<JournalArticle>)QueryUtil.list(
 				q, getDialect(), queryDefinition.getStart(),

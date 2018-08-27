@@ -29,6 +29,7 @@ import org.gradle.api.AntBuilder;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
@@ -116,16 +117,20 @@ public class ValidateSchemaTask extends SourceTask {
 
 			@SuppressWarnings("unused")
 			public void doCall() {
+				Project project = getProject();
 				FileTree fileTree = getSource();
 				Logger logger = getLogger();
 
 				fileTree.addToAntBuilder(
 					antBuilder, "fileset", FileCollection.AntType.FileSet);
 
+				Gradle gradle = project.getGradle();
+
 				for (File file : fileTree.getFiles()) {
 					try {
 						Map<String, File> dtdProperties =
-							TLDUtil.getDTDProperties(file);
+							TLDUtil.getDTDProperties(
+								file, gradle.getGradleHomeDir());
 
 						for (Map.Entry<String, File> entry :
 								dtdProperties.entrySet()) {
@@ -146,7 +151,8 @@ public class ValidateSchemaTask extends SourceTask {
 						}
 
 						Map<String, File> schemaProperties =
-							TLDUtil.getSchemaProperties(file);
+							TLDUtil.getSchemaProperties(
+								file, gradle.getGradleHomeDir());
 
 						for (Map.Entry<String, File> entry :
 								schemaProperties.entrySet()) {

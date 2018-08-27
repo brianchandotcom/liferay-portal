@@ -2474,6 +2474,12 @@ public interface PropsKeys {
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
+	public static final String UPGRADE_PROCESSES = "upgrade.processes";
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE = "com.liferay.portal.upload.UploadServletRequestImpl.max.size";
 
 	/**

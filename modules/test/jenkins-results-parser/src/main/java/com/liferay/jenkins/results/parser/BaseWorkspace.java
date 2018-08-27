@@ -25,6 +25,22 @@ public abstract class BaseWorkspace implements Workspace {
 	@Override
 	public abstract void setupWorkspace();
 
+	protected BaseWorkspace() {
+		boolean synchronizeGitBranches;
+
+		if (this instanceof BatchWorkspace) {
+			synchronizeGitBranches = false;
+		}
+		else if (this instanceof TopLevelWorkspace) {
+			synchronizeGitBranches = true;
+		}
+		else {
+			throw new RuntimeException("Invalid Workspace type");
+		}
+
+		_synchronizeGitBranches = synchronizeGitBranches;
+	}
+
 	protected void checkoutBranch(LocalGitBranch localGitBranch) {
 		System.out.println();
 		System.out.println("##");
@@ -45,5 +61,11 @@ public abstract class BaseWorkspace implements Workspace {
 
 		gitWorkingDirectory.displayLog();
 	}
+
+	protected boolean synchronizeGitBranches() {
+		return _synchronizeGitBranches;
+	}
+
+	private final boolean _synchronizeGitBranches;
 
 }

@@ -34,13 +34,13 @@ public class LineBreakAfterCommaCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parentAST = detailAST.getParent();
 
-		if (parentAST.getType() != TokenTypes.ELIST) {
+		if (parentAST.getType() == TokenTypes.TYPE_ARGUMENTS) {
 			return;
 		}
 
 		String line = getLine(detailAST.getLineNo() - 1);
 
-		if ((detailAST.getColumnNo() + 1) == line.length()) {
+		if (DetailASTUtil.isAtLineEnd(detailAST, line)) {
 			return;
 		}
 

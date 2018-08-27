@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.asset.list">
 	<namespace>AssetList</namespace>
-	<entity local-service="true" name="AssetListEntry" remote-service="true" uuid="true">
+	<entity local-service="true" name="AssetListEntry" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -25,7 +25,6 @@
 
 		<column name="title" type="String" />
 		<column name="type" type="int" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 

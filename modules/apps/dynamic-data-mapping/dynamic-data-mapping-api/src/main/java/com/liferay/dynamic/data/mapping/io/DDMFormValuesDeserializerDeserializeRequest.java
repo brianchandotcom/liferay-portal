@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
  * @author Leonardo Barros
  */
 public final class DDMFormValuesDeserializerDeserializeRequest {
+
 	public String getContent() {
 		return _content;
 	}

@@ -50,11 +50,10 @@ import net.sf.ehcache.event.NotificationScope;
  */
 public abstract class BaseEhcachePortalCacheManagerConfigurator {
 
-	public ObjectValuePair
-		<Configuration, PortalCacheManagerConfiguration>
-			getConfigurationObjectValuePair(
-				String portalCacheManagerName, URL configurationURL,
-				boolean usingDefault) {
+	public ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
+		getConfigurationObjectValuePair(
+			String portalCacheManagerName, URL configurationURL,
+			boolean usingDefault) {
 
 		if (configurationURL == null) {
 			throw new NullPointerException("Configuration path is null");

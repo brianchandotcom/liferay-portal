@@ -82,9 +82,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class StructuredContentNestedCollectionResource
-	implements
-		NestedCollectionResource<JournalArticleWrapper, Long,
-			StructuredContentIdentifier, Long, ContentSpaceIdentifier> {
+	implements NestedCollectionResource
+		<JournalArticleWrapper, Long, StructuredContentIdentifier, Long,
+			ContentSpaceIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<JournalArticleWrapper, Long, Long>

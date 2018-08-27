@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "service.ranking:Integer=100",
 	service = ItemSelectorReturnTypeResolver.class
 )
-public class WikiPageURLItemSelectorReturnTypeResolver implements
-	WikiPageItemSelectorReturnTypeResolver
+public class WikiPageURLItemSelectorReturnTypeResolver
+	implements WikiPageItemSelectorReturnTypeResolver
 		<WikiPageURLItemSelectorReturnType, WikiPage> {
 
 	@Override

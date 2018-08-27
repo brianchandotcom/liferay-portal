@@ -71,8 +71,9 @@ public abstract class BaseFormNavigatorEntryConfigurationRetrieverTestCase {
 	private final MockServiceTrackerMap _serviceTrackerMap =
 		new MockServiceTrackerMap();
 
-	private final class MockServiceTrackerMap implements
-		ServiceTrackerMap<String, List<FormNavigatorEntryConfigurationParser>> {
+	private final class MockServiceTrackerMap
+		implements ServiceTrackerMap
+			<String, List<FormNavigatorEntryConfigurationParser>> {
 
 		@Override
 		public void close() {

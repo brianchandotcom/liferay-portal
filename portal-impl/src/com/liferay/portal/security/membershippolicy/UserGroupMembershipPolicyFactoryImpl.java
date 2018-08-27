@@ -58,9 +58,8 @@ public class UserGroupMembershipPolicyFactoryImpl
 	private final ServiceTracker<?, UserGroupMembershipPolicy> _serviceTracker;
 
 	private static class UserGroupMembershipPolicyTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer
-				<UserGroupMembershipPolicy, UserGroupMembershipPolicy> {
+		implements ServiceTrackerCustomizer
+			<UserGroupMembershipPolicy, UserGroupMembershipPolicy> {
 
 		@Override
 		public UserGroupMembershipPolicy addingService(

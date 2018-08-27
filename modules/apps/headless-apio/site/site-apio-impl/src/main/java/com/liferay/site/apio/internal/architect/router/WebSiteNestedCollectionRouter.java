@@ -41,8 +41,8 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class WebSiteNestedCollectionRouter implements
-	NestedCollectionRouter
+public class WebSiteNestedCollectionRouter
+	implements NestedCollectionRouter
 		<GroupWrapper, Long, WebSiteIdentifier, Long, WebSiteIdentifier> {
 
 	@Override

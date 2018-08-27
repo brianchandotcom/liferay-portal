@@ -100,8 +100,7 @@ public class UnavailableComponentUtil {
 					sb.append("dependencies:\n\t\t");
 
 					for (ComponentDependencyDeclaration
-							componentDependencyDeclaration :
-								entry.getValue()) {
+							componentDependencyDeclaration : entry.getValue()) {
 
 						sb.append(componentDependencyDeclaration);
 						sb.append("\n\t\t");

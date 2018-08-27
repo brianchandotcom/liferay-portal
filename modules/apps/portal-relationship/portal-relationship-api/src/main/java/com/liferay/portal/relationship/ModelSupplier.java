@@ -22,8 +22,7 @@ import java.io.Serializable;
  * @author Mate Thurzo
  */
 @FunctionalInterface
-public interface ModelSupplier
-	<T extends Serializable, U extends ClassedModel> {
+public interface ModelSupplier<T extends Serializable, U extends ClassedModel> {
 
 	public U supply(T primKey);
 

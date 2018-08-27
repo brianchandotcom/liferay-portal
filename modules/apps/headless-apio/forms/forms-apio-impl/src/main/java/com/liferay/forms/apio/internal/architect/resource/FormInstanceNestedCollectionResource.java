@@ -48,8 +48,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class FormInstanceNestedCollectionResource
-	implements NestedCollectionResource<DDMFormInstance, Long,
-		FormInstanceIdentifier, Long, ContentSpaceIdentifier> {
+	implements NestedCollectionResource
+		<DDMFormInstance, Long, FormInstanceIdentifier, Long,
+			ContentSpaceIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<DDMFormInstance, Long, Long> collectionRoutes(

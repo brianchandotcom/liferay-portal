@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class AggregateRatingItemResource
-	implements ItemResource<RatingsStats, ClassNameClassPK,
-		AggregateRatingIdentifier> {
+	implements ItemResource
+		<RatingsStats, ClassNameClassPK, AggregateRatingIdentifier> {
 
 	@Override
 	public String getName() {

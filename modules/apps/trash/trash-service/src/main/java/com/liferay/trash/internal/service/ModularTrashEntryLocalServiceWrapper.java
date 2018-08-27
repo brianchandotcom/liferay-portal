@@ -297,9 +297,8 @@ public class ModularTrashEntryLocalServiceWrapper
 	private TrashEntryLocalService _trashEntryLocalService;
 
 	private static class TrashEntryOrderByComparatorAdapter
-		extends
-			OrderByComparatorAdapter
-				<com.liferay.trash.model.TrashEntry, TrashEntry> {
+		extends OrderByComparatorAdapter
+			<com.liferay.trash.model.TrashEntry, TrashEntry> {
 
 		public TrashEntryOrderByComparatorAdapter(
 			OrderByComparator<TrashEntry> orderByComparator) {

@@ -89,9 +89,8 @@ public class DDMFormFieldValueRendererRegistryImpl
 			_serviceTracker;
 
 	private class DDMFormFieldValueRendererServiceTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer
-				<DDMFormFieldValueRenderer, DDMFormFieldValueRenderer> {
+		implements ServiceTrackerCustomizer
+			<DDMFormFieldValueRenderer, DDMFormFieldValueRenderer> {
 
 		@Override
 		public DDMFormFieldValueRenderer addingService(

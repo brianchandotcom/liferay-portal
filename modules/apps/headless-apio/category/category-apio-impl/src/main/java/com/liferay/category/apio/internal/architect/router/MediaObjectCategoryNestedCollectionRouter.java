@@ -38,8 +38,8 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class MediaObjectCategoryNestedCollectionRouter extends
-	BaseCategoryNestedCollectionRouter<MediaObjectIdentifier>
+public class MediaObjectCategoryNestedCollectionRouter
+	extends BaseCategoryNestedCollectionRouter<MediaObjectIdentifier>
 	implements NestedCollectionRouter
 		<AssetCategory, Long, CategoryIdentifier, Long, MediaObjectIdentifier> {
 

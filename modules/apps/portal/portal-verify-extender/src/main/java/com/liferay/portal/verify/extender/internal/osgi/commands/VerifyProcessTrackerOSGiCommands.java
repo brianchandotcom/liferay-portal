@@ -228,10 +228,8 @@ public class VerifyProcessTrackerOSGiCommands {
 	protected void deactivate() {
 		_verifyProcesses.close();
 
-		for (Map.Entry
-				<String, ServiceRegistration<Object>>
-					serviceRegistrationEntry :
-						_serviceRegistrations.entrySet()) {
+		for (Map.Entry<String, ServiceRegistration<Object>>
+				serviceRegistrationEntry : _serviceRegistrations.entrySet()) {
 
 			ServiceRegistration<Object> serviceRegistration =
 				serviceRegistrationEntry.getValue();

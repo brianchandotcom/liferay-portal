@@ -62,8 +62,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class BlogPostingNestedCollectionResource
-	implements NestedCollectionResource<BlogsEntry, Long, BlogPostingIdentifier,
-		Long, ContentSpaceIdentifier> {
+	implements NestedCollectionResource
+		<BlogsEntry, Long, BlogPostingIdentifier, Long,
+			ContentSpaceIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<BlogsEntry, Long, Long> collectionRoutes(

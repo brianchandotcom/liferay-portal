@@ -231,8 +231,8 @@ public class Changeset implements Serializable {
 	}
 
 	private Map
-		<Supplier<? extends StagedModel>,
-			Function<StagedModel, Collection<?>>> _hierarchySuppliers;
+		<Supplier<? extends StagedModel>, Function<StagedModel, Collection<?>>>
+			_hierarchySuppliers;
 	private List<Supplier<Collection<? extends StagedModel>>> _multiSuppliers;
 	private boolean _rawMode;
 	private List<StagedModel> _rawModels;

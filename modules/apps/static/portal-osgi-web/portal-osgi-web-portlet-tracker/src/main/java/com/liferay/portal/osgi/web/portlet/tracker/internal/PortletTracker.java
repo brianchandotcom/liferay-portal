@@ -109,9 +109,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true, service = PortletTracker.class)
 public class PortletTracker
-	implements
-		ServiceTrackerCustomizer
-			<Portlet, com.liferay.portal.kernel.model.Portlet> {
+	implements ServiceTrackerCustomizer
+		<Portlet, com.liferay.portal.kernel.model.Portlet> {
 
 	@Override
 	public com.liferay.portal.kernel.model.Portlet addingService(

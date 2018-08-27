@@ -116,7 +116,6 @@ public class AMImageAttributeMapping {
 		return Optional.of(amAttribute.convert(value));
 	}
 
-	private final Map
-		<AMAttribute<AMImageProcessor, ?>, Optional<?>> _optionals;
+	private final Map<AMAttribute<AMImageProcessor, ?>, Optional<?>> _optionals;
 
 }

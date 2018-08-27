@@ -42,9 +42,9 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class PersonWebUrlsNestedCollectionRouter implements
-	NestedCollectionRouter<Website, Long, WebUrlIdentifier, Long,
-		PersonIdentifier> {
+public class PersonWebUrlsNestedCollectionRouter
+	implements NestedCollectionRouter
+		<Website, Long, WebUrlIdentifier, Long, PersonIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<Website, Long, Long> collectionRoutes(

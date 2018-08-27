@@ -109,10 +109,8 @@ public class AppResolverHook implements ResolverHook {
 		SortedMap<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
 			serviceReferences = _serviceTracker.getTracked();
 
-		for (Map.Entry
-				<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
-					entry :
-						serviceReferences.entrySet()) {
+		for (Map.Entry<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
+				entry : serviceReferences.entrySet()) {
 
 			ServiceReference<AppLicenseVerifier> serviceReference =
 				entry.getKey();

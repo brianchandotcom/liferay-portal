@@ -59,9 +59,8 @@ public class RoleMembershipPolicyFactoryImpl
 	private final ServiceTracker<?, RoleMembershipPolicy> _serviceTracker;
 
 	private static class RoleMembershipPolicyTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer
-				<RoleMembershipPolicy, RoleMembershipPolicy> {
+		implements ServiceTrackerCustomizer
+			<RoleMembershipPolicy, RoleMembershipPolicy> {
 
 		@Override
 		public RoleMembershipPolicy addingService(

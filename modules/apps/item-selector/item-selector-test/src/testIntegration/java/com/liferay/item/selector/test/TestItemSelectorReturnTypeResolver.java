@@ -20,8 +20,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 /**
  * @author Roberto Díaz
  */
-public class TestItemSelectorReturnTypeResolver implements
-	ItemSelectorReturnTypeResolver<TestItemSelectorReturnType, String> {
+public class TestItemSelectorReturnTypeResolver
+	implements ItemSelectorReturnTypeResolver
+		<TestItemSelectorReturnType, String> {
 
 	@Override
 	public Class<TestItemSelectorReturnType> getItemSelectorReturnTypeClass() {

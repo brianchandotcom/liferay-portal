@@ -24,8 +24,9 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 /**
  * @author Inácio Nery
  */
-public class KaleoDefinitionVersionOrderByComparator extends
-	OrderByComparatorAdapter<KaleoDefinitionVersion, WorkflowDefinition> {
+public class KaleoDefinitionVersionOrderByComparator
+	extends OrderByComparatorAdapter
+		<KaleoDefinitionVersion, WorkflowDefinition> {
 
 	public static OrderByComparator<KaleoDefinitionVersion>
 		getOrderByComparator(

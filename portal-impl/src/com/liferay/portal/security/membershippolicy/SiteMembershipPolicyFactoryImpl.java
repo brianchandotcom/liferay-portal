@@ -59,9 +59,8 @@ public class SiteMembershipPolicyFactoryImpl
 	private final ServiceTracker<?, SiteMembershipPolicy> _serviceTracker;
 
 	private static class SiteMembershipPolicyTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer
-				<SiteMembershipPolicy, SiteMembershipPolicy> {
+		implements ServiceTrackerCustomizer
+			<SiteMembershipPolicy, SiteMembershipPolicy> {
 
 		@Override
 		public SiteMembershipPolicy addingService(

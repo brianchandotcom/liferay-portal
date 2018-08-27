@@ -469,6 +469,19 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				}
 			}
 
+			if (trimmedPreviousLine.startsWith("<") &&
+				!trimmedLine.startsWith("<")) {
+
+				int previousLevel = getLevel(previousLine, "<", ">");
+				int level = getLevel(line, "<", ">");
+
+				if ((previousLevel > 0) && ((previousLevel + level) == 0)) {
+					return _getCombinedLinesContent(
+						content, line, trimmedLine, lineLength, lineNumber,
+						previousLine, null, false, true, 0);
+				}
+			}
+
 			if (line.endsWith(StringPool.SEMICOLON) &&
 				!previousLine.endsWith(StringPool.COLON) &&
 				!previousLine.endsWith(StringPool.OPEN_BRACKET) &&
@@ -569,9 +582,42 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					}
 				}
 			}
+
+			if (line.endsWith(") {") && trimmedPreviousLine.matches("\\w+ :") &&
+				(getLevel(line) == -1)) {
+
+				return _getCombinedLinesContent(
+					content, line, trimmedLine, lineLength, lineNumber,
+					previousLine, null, false, true, 0);
+			}
 		}
 
 		if ((trimmedLine.length() + previousLineLength) <= getMaxLineLength()) {
+			if (trimmedLine.startsWith("<")) {
+				int level = getLevel(line, "<", ">");
+
+				if (level == 0) {
+					String nextLine = StringUtil.trim(
+						getLine(content, lineNumber + 1));
+
+					if (!nextLine.startsWith("void")) {
+						return _getCombinedLinesContent(
+							content, line, trimmedLine, lineLength, lineNumber,
+							previousLine, null, false, false, 0);
+					}
+				}
+
+				if (trimmedPreviousLine.startsWith("<")) {
+					int previousLevel = getLevel(previousLine, "<", ">");
+
+					if ((previousLevel > 0) && ((previousLevel + level) == 0)) {
+						return _getCombinedLinesContent(
+							content, line, trimmedLine, lineLength, lineNumber,
+							previousLine, null, false, false, 0);
+					}
+				}
+			}
+
 			if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
 				!previousLine.matches("\t+\\)\\.[^\\)\\(]+\\(") &&
 				line.matches(".*\\)( \\{)?") && (getLevel(line) < 0)) {
@@ -918,6 +964,57 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 						return _getCombinedLinesContent(
 							content, line, trimmedLine, lineLength, lineNumber,
 							previousLine, null, false, true, i + 1);
+					}
+				}
+			}
+		}
+
+		if (trimmedPreviousLine.startsWith("<")) {
+			int previousLevel = getLevel(previousLine, "<", ">");
+
+			if (previousLevel > 0) {
+				int x = -1;
+
+				while (true) {
+					x = trimmedLine.indexOf("> ", x + 1);
+
+					if (x == -1) {
+						break;
+					}
+
+					if (ToolsUtil.isInsideQuotes(trimmedLine, x)) {
+						continue;
+					}
+
+					String linePart = StringUtil.trim(
+						trimmedLine.substring(x + 1));
+
+					if (linePart.equals("{")) {
+						break;
+					}
+
+					boolean extraSpace = false;
+					int newLineLength = 0;
+
+					if (trimmedLine.startsWith("<")) {
+						newLineLength = previousLineLength + x + 1;
+					}
+					else {
+						extraSpace = true;
+						newLineLength = previousLineLength + x + 2;
+					}
+
+					if (newLineLength > getMaxLineLength()) {
+						break;
+					}
+
+					linePart = trimmedLine.substring(0, x + 1);
+
+					if ((previousLevel + getLevel(linePart, "<", ">")) == 0) {
+						return _getCombinedLinesContent(
+							content, line, trimmedLine, lineLength, lineNumber,
+							previousLine, linePart + StringPool.SPACE, true,
+							extraSpace, 0);
 					}
 				}
 			}

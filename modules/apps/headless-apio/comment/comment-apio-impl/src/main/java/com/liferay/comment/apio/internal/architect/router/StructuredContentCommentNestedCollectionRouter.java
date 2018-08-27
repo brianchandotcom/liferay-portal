@@ -38,8 +38,8 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class StructuredContentCommentNestedCollectionRouter extends
-	BaseCommentNestedCollectionRouter<StructuredContentIdentifier>
+public class StructuredContentCommentNestedCollectionRouter
+	extends BaseCommentNestedCollectionRouter<StructuredContentIdentifier>
 	implements NestedCollectionRouter
 		<Comment, Long, CommentIdentifier, Long, StructuredContentIdentifier> {
 

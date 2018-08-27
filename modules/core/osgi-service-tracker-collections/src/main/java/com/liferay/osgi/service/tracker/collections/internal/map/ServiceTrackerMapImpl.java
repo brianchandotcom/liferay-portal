@@ -246,9 +246,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 	}
 
 	private class ServiceReferenceServiceTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer
-				<SR, KeyedServiceReferenceServiceTuple<SR, TS, K>> {
+		implements ServiceTrackerCustomizer
+			<SR, KeyedServiceReferenceServiceTuple<SR, TS, K>> {
 
 		@Override
 		@SuppressWarnings({"rawtypes", "unchecked"})

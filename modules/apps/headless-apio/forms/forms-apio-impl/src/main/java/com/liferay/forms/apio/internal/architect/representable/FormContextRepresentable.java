@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true)
 public class FormContextRepresentable
-	implements Representable<FormContextWrapper, String,
-		FormContextIdentifier> {
+	implements Representable
+		<FormContextWrapper, String, FormContextIdentifier> {
 
 	@Override
 	public String getName() {

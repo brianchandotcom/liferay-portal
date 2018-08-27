@@ -292,9 +292,8 @@ public class FinderCacheImpl
 			_localCache = null;
 		}
 
-		PortalCacheManager
-			<? extends Serializable, ? extends Serializable>
-				portalCacheManager = _multiVMPool.getPortalCacheManager();
+		PortalCacheManager<? extends Serializable, ? extends Serializable>
+			portalCacheManager = _multiVMPool.getPortalCacheManager();
 
 		portalCacheManager.registerPortalCacheManagerListener(this);
 	}

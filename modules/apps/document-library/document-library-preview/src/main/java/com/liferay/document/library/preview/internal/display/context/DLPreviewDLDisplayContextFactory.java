@@ -156,6 +156,12 @@ public class DLPreviewDLDisplayContextFactory
 			}
 
 			@Override
+			public boolean hasCustomThumbnail() {
+				return _serviceTrackerMap.containsKey(
+					fileVersion.getMimeType());
+			}
+
+			@Override
 			public boolean hasPreview() {
 				return true;
 			}
@@ -170,6 +176,26 @@ public class DLPreviewDLDisplayContextFactory
 			public boolean isVersionInfoVisible() throws PortalException {
 				return parentDLViewFileVersionDisplayContext.
 					isVersionInfoVisible();
+			}
+
+			@Override
+			public void renderCustomThumbnail(
+					HttpServletRequest request, HttpServletResponse response)
+				throws IOException, ServletException {
+
+				String mimeType = fileVersion.getMimeType();
+
+				DLPreviewRenderer dlPreviewRenderer =
+					_serviceTrackerMap.getService(mimeType);
+
+				if (dlPreviewRenderer != null) {
+					dlPreviewRenderer.renderThumbnail(
+						fileVersion, request, response);
+				}
+				else {
+					parentDLViewFileVersionDisplayContext.renderCustomThumbnail(
+						request, response);
+				}
 			}
 
 			@Override

@@ -32,4 +32,9 @@ public interface DLPreviewRenderer {
 			HttpServletResponse response)
 		throws IOException, ServletException;
 
+	public void renderThumbnail(
+			FileVersion fileVersion, HttpServletRequest request,
+			HttpServletResponse response)
+		throws IOException, ServletException;
+
 }

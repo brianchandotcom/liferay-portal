@@ -4388,10 +4388,22 @@ the `test` and `testIntegration` tasks with sensible defaults.
 
 ## 5.5.21 - 2018-08-23
 
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.113.
+
+## 5.5.22 - 2018-08-23
+
 ### Added
 - [LPS-83929]: Add the ability to exclude certain projects from executing the
 `printDependentArtifact` task by setting the property
 `printDependentArtifact.ignore.project.regex`.
+
+### Changed
+- [LPS-83067]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.114.
+- [LPS-83067]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.3.2.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin

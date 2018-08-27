@@ -27,12 +27,10 @@ public class PortalHotfixReleaseJob extends BasePortalReleaseJob {
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			getJenkinsGitWorkingDirectory();
 
-		jobProperties.putAll(
-			JenkinsResultsParserUtil.getProperties(
-				new File(
-					jenkinsGitWorkingDirectory.getWorkingDirectory(),
-					"commands/dependencies" +
-						"/test-portal-hotfix-release.properties")));
+		jobPropertiesFiles.add(
+			new File(
+				jenkinsGitWorkingDirectory.getWorkingDirectory(),
+				"commands/dependencies/test-portal-hotfix-release.properties"));
 	}
 
 }

@@ -37,17 +37,16 @@ public abstract class BasePortalReleaseJob
 			JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
 				portalBranchName);
 
-		jobProperties.putAll(
-			JenkinsResultsParserUtil.getProperties(
-				new File(
-					_portalGitWorkingDirectory.getWorkingDirectory(),
-					"test.properties")));
+		jobPropertiesFiles.add(
+			new File(
+				_portalGitWorkingDirectory.getWorkingDirectory(),
+				"test.properties"));
 	}
 
 	@Override
 	public Set<String> getBatchNames() {
 		String testBatchNamesString = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names[" + _portalBranchName + "]");
+			getJobProperties(), "test.batch.names[" + _portalBranchName + "]");
 
 		Set<String> testBatchNames = getSetFromString(testBatchNamesString);
 
@@ -57,7 +56,8 @@ public abstract class BasePortalReleaseJob
 	@Override
 	public Set<String> getDependentBatchNames() {
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names.smoke[" + _portalBranchName + "]");
+			getJobProperties(),
+			"test.batch.names.smoke[" + _portalBranchName + "]");
 
 		return getSetFromString(testBatchNames);
 	}

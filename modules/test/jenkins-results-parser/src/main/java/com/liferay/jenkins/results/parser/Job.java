@@ -30,4 +30,6 @@ public interface Job {
 
 	public Properties getJobProperties();
 
+	public void readJobProperties();
+
 }

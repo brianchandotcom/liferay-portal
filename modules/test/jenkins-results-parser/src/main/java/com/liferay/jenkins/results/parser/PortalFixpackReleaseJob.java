@@ -27,12 +27,11 @@ public class PortalFixpackReleaseJob extends BasePortalReleaseJob {
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			getJenkinsGitWorkingDirectory();
 
-		jobProperties.putAll(
-			JenkinsResultsParserUtil.getProperties(
-				new File(
-					jenkinsGitWorkingDirectory.getWorkingDirectory(),
-					"commands/dependencies" +
-						"/test-portal-fixpack-release.properties")));
+		jobPropertiesFiles.add(
+			new File(
+				jenkinsGitWorkingDirectory.getWorkingDirectory(),
+				"commands/dependencies" +
+					"/test-portal-fixpack-release.properties"));
 	}
 
 }

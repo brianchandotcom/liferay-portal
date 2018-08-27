@@ -36,6 +36,35 @@ public class JobFactory {
 	public static Job newJob(
 		String jobName, String testSuiteName, String portalBranchName) {
 
+		Job job = _newJob(jobName, testSuiteName, portalBranchName);
+
+		job.readJobProperties();
+
+		return job;
+	}
+
+	private static boolean _isCentralMergePullRequest(
+		GitWorkingDirectory gitWorkingDirectory) {
+
+		List<File> currentBranchModifiedFiles =
+			gitWorkingDirectory.getModifiedFilesList();
+
+		if (currentBranchModifiedFiles.size() == 1) {
+			File modifiedFile = currentBranchModifiedFiles.get(0);
+
+			String modifiedFileName = modifiedFile.getName();
+
+			if (modifiedFileName.equals("ci-merge")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static Job _newJob(
+		String jobName, String testSuiteName, String portalBranchName) {
+
 		Job job = _jobs.get(jobName);
 
 		if (job != null) {
@@ -122,25 +151,6 @@ public class JobFactory {
 		}
 
 		throw new IllegalArgumentException("Invalid job name " + jobName);
-	}
-
-	private static boolean _isCentralMergePullRequest(
-		GitWorkingDirectory gitWorkingDirectory) {
-
-		List<File> currentBranchModifiedFiles =
-			gitWorkingDirectory.getModifiedFilesList();
-
-		if (currentBranchModifiedFiles.size() == 1) {
-			File modifiedFile = currentBranchModifiedFiles.get(0);
-
-			String modifiedFileName = modifiedFile.getName();
-
-			if (modifiedFileName.equals("ci-merge")) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static final Map<String, Job> _jobs = new HashMap<>();

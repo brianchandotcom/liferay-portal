@@ -30,17 +30,16 @@ public class PortalUpstreamJob
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			JenkinsResultsParserUtil.getJenkinsGitWorkingDirectory();
 
-		jobProperties.putAll(
-			JenkinsResultsParserUtil.getProperties(
-				new File(
-					jenkinsGitWorkingDirectory.getWorkingDirectory(),
-					"commands/dependencies/test-upstream-batch.properties")));
+		jobPropertiesFiles.add(
+			new File(
+				jenkinsGitWorkingDirectory.getWorkingDirectory(),
+				"commands/dependencies/test-upstream-batch.properties"));
 	}
 
 	@Override
 	public Set<String> getBatchNames() {
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties,
+			getJobProperties(),
 			"test.batch.names[portal-upstream(" + getBranchName() + ")]");
 
 		return getSetFromString(testBatchNames);
@@ -49,7 +48,8 @@ public class PortalUpstreamJob
 	@Override
 	public Set<String> getDependentBatchNames() {
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names.smoke[" + getBranchName() + "]");
+			getJobProperties(),
+			"test.batch.names.smoke[" + getBranchName() + "]");
 
 		return getSetFromString(testBatchNames);
 	}

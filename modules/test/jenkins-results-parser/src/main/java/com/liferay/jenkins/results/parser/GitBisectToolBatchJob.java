@@ -27,11 +27,10 @@ public class GitBisectToolBatchJob extends GitBisectToolJob {
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			getJenkinsGitWorkingDirectory();
 
-		jobProperties.putAll(
-			JenkinsResultsParserUtil.getProperties(
-				new File(
-					jenkinsGitWorkingDirectory.getWorkingDirectory(),
-					"commands/dependencies/git-bisect-tool-batch.properties")));
+		jobPropertiesFiles.add(
+			new File(
+				jenkinsGitWorkingDirectory.getWorkingDirectory(),
+				"commands/dependencies/git-bisect-tool-batch.properties"));
 	}
 
 }

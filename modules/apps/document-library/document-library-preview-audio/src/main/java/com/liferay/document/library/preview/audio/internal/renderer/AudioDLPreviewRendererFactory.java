@@ -14,27 +14,33 @@
 
 package com.liferay.document.library.preview.audio.internal.renderer;
 
+import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.document.library.preview.renderer.DLPreviewRenderer;
 import com.liferay.document.library.preview.renderer.DLPreviewRendererProvider;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Dictionary;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	immediate = true, property = "content.type=audio/mpeg",
-	service = DLPreviewRendererProvider.class
-)
-public class AudioDLPreviewRenderer implements DLPreviewRendererProvider {
+@Component(immediate = true, service = AudioDLPreviewRendererFactory.class)
+public class AudioDLPreviewRendererFactory
+	implements DLPreviewRendererProvider {
 
 	@Override
 	public Optional<DLPreviewRenderer> getPreviewRenderer(
@@ -58,6 +64,27 @@ public class AudioDLPreviewRenderer implements DLPreviewRendererProvider {
 
 		return getPreviewRenderer(fileVersion);
 	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
+
+		Set<String> audioMimeTypes = AudioProcessorUtil.getAudioMimeTypes();
+
+		properties.put("content.type", audioMimeTypes.toArray());
+
+		_dlPreviewRendererProviderServiceRegistration =
+			bundleContext.registerService(
+				DLPreviewRendererProvider.class, this, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_dlPreviewRendererProviderServiceRegistration.unregister();
+	}
+
+	private ServiceRegistration<DLPreviewRendererProvider>
+		_dlPreviewRendererProviderServiceRegistration;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.audio)"

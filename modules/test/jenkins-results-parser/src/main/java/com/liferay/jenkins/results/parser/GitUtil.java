@@ -258,7 +258,7 @@ public class GitUtil {
 
 	private static final Pattern _gitHubRefURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
-			"https://github.com/(?<username>[^/]+)/(?<gitRepositoryName>[^/]+)/",
-			"tree/(?<refName>[^/]+)"));
+			"https://github.com/(?<username>[^/]+)/",
+			"(?<gitRepositoryName>[^/]+)/tree/(?<refName>[^/]+)"));
 
 }

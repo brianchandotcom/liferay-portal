@@ -211,6 +211,10 @@ public class PullRequest {
 		return _gitHubRemoteGitRepositoryName;
 	}
 
+	public String getGitRepositoryName() {
+		return getGitHubRemoteGitRepositoryName();
+	}
+
 	public String getHtmlURL() {
 		return _jsonObject.getString("html_url");
 	}
@@ -262,10 +266,6 @@ public class PullRequest {
 		JSONObject userJSONObject = baseJSONObject.getJSONObject("user");
 
 		return userJSONObject.getString("login");
-	}
-
-	public String getGitRepositoryName() {
-		return getGitHubRemoteGitRepositoryName();
 	}
 
 	public String getSenderBranchName() {

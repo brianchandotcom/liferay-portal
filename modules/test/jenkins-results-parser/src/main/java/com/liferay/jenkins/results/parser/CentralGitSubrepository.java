@@ -93,7 +93,8 @@ public class CentralGitSubrepository {
 			gitWorkingDirectory.fetch(
 				upstreamLocalGitBranch,
 				gitWorkingDirectory.getRemoteGitBranch(
-					_gitSubrepositoryUpstreamBranchName, upstreamGitRemote, true));
+					_gitSubrepositoryUpstreamBranchName, upstreamGitRemote,
+					true));
 		}
 		finally {
 			if ((upstreamLocalGitBranch != null) &&
@@ -116,7 +117,8 @@ public class CentralGitSubrepository {
 		}
 		catch (FileNotFoundException fnfe) {
 			System.out.println(
-				"Unable to find ci.properties in " + _gitSubrepositoryDirectory);
+				"Unable to find ci.properties in " +
+					_gitSubrepositoryDirectory);
 		}
 	}
 
@@ -130,7 +132,8 @@ public class CentralGitSubrepository {
 
 	public String getGitSubrepositoryUpstreamCommit() throws IOException {
 		if (_gitSubrepositoryUpstreamCommit == null) {
-			_gitSubrepositoryUpstreamCommit = _getGitSubrepositoryUpstreamCommit();
+			_gitSubrepositoryUpstreamCommit =
+				_getGitSubrepositoryUpstreamCommit();
 		}
 
 		return _gitSubrepositoryUpstreamCommit;
@@ -159,50 +162,16 @@ public class CentralGitSubrepository {
 		String gitSubrepositoryMergedCommit = _gitrepoProperties.getProperty(
 			"commit", "");
 
-		String gitSubrepositoryUpstreamCommit = getGitSubrepositoryUpstreamCommit();
+		String gitSubrepositoryUpstreamCommit =
+			getGitSubrepositoryUpstreamCommit();
 
-		if (gitSubrepositoryMergedCommit.equals(gitSubrepositoryUpstreamCommit)) {
+		if (gitSubrepositoryMergedCommit.equals(
+				gitSubrepositoryUpstreamCommit)) {
+
 			return true;
 		}
 
 		return false;
-	}
-
-	private String _getMergePullRequestURL() throws IOException {
-		String gitSubrepositoryUpstreamCommit = getGitSubrepositoryUpstreamCommit();
-
-		String path = JenkinsResultsParserUtil.combine(
-			"commits/", gitSubrepositoryUpstreamCommit, "/statuses");
-
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
-			_gitSubrepositoryName, _gitSubrepositoryUsername, path);
-
-		for (int i = 0; i < 15; i++) {
-			JSONArray statusesJSONArray = new JSONArray(
-				JenkinsResultsParserUtil.toString(
-					JenkinsResultsParserUtil.combine(
-						url, "?page=", String.valueOf(i + 1)),
-					true));
-
-			if ((statusesJSONArray == null) ||
-				(statusesJSONArray.length() == 0)) {
-
-				break;
-			}
-
-			for (int j = 0; j < statusesJSONArray.length(); j++) {
-				JSONObject statusesJSONObject = statusesJSONArray.getJSONObject(
-					j);
-
-				String context = statusesJSONObject.getString("context");
-
-				if (context.equals("liferay/central-pull-request")) {
-					return statusesJSONObject.getString("target_url");
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private String _getGitSubrepositoryName() {
@@ -257,6 +226,44 @@ public class CentralGitSubrepository {
 		return remote.substring(x, y);
 	}
 
+	private String _getMergePullRequestURL() throws IOException {
+		String gitSubrepositoryUpstreamCommit =
+			getGitSubrepositoryUpstreamCommit();
+
+		String path = JenkinsResultsParserUtil.combine(
+			"commits/", gitSubrepositoryUpstreamCommit, "/statuses");
+
+		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+			_gitSubrepositoryName, _gitSubrepositoryUsername, path);
+
+		for (int i = 0; i < 15; i++) {
+			JSONArray statusesJSONArray = new JSONArray(
+				JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.combine(
+						url, "?page=", String.valueOf(i + 1)),
+					true));
+
+			if ((statusesJSONArray == null) ||
+				(statusesJSONArray.length() == 0)) {
+
+				break;
+			}
+
+			for (int j = 0; j < statusesJSONArray.length(); j++) {
+				JSONObject statusesJSONObject = statusesJSONArray.getJSONObject(
+					j);
+
+				String context = statusesJSONObject.getString("context");
+
+				if (context.equals("liferay/central-pull-request")) {
+					return statusesJSONObject.getString("target_url");
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private Boolean _isCentralPullRequestCandidate() throws IOException {
 		if (!isAutoPullEnabled()) {
 			return false;
@@ -267,8 +274,8 @@ public class CentralGitSubrepository {
 				JenkinsResultsParserUtil.combine(
 					"SKIPPED: ", _gitSubrepositoryName,
 					" contains merged commit https://github.com/",
-					_gitSubrepositoryUsername, "/", _gitSubrepositoryName, "/commit/",
-					getGitSubrepositoryUpstreamCommit()));
+					_gitSubrepositoryUsername, "/", _gitSubrepositoryName,
+					"/commit/", getGitSubrepositoryUpstreamCommit()));
 
 			return false;
 		}

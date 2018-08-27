@@ -115,9 +115,9 @@ public class ValidationBuild extends BaseBuild {
 	}
 
 	protected Element getBaseBranchDetailsElement() {
-		String baseBranchURL =
-			"https://github.com/liferay/" + getBaseGitRepositoryName() + "/tree/" +
-				getBranchName();
+		String baseBranchURL = JenkinsResultsParserUtil.combine(
+			"https://github.com/liferay/", getBaseGitRepositoryName(), "/tree/",
+			getBranchName());
 
 		String baseGitRepositoryName = getBaseGitRepositoryName();
 
@@ -131,7 +131,8 @@ public class ValidationBuild extends BaseBuild {
 					0, baseGitRepositoryName.length() - 3));
 		}
 		else {
-			baseGitRepositorySHA = getBaseGitRepositorySHA(baseGitRepositoryName);
+			baseGitRepositorySHA = getBaseGitRepositorySHA(
+				baseGitRepositoryName);
 		}
 
 		String baseGitRepositoryCommitURL =

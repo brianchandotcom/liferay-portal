@@ -128,8 +128,8 @@ public abstract class BaseCommit implements Commit {
 	}
 
 	private final String _gitHubUserName;
-	private final String _message;
 	private final String _gitRepositoryName;
+	private final String _message;
 	private final String _sha;
 	private final Type _type;
 

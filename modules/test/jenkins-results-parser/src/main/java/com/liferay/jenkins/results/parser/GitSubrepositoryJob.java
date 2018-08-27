@@ -109,7 +109,8 @@ public abstract class GitSubrepositoryJob extends GitRepositoryJob {
 				"/test-subrepository-batch.properties"));
 
 		subrepositoryTestProperties = JenkinsResultsParserUtil.getProperties(
-			defaultPropertiesFile, new File(gitRepositoryDir, "test.properties"));
+			defaultPropertiesFile,
+			new File(gitRepositoryDir, "test.properties"));
 
 		return subrepositoryTestProperties;
 	}

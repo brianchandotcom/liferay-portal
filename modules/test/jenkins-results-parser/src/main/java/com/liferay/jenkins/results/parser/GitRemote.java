@@ -41,6 +41,10 @@ public class GitRemote implements Comparable<GitRemote> {
 		return _fetchRemoteURL.compareTo(otherGitRemote._fetchRemoteURL);
 	}
 
+	public String getGitRepositoryName() {
+		return _gitRepositoryName;
+	}
+
 	public GitWorkingDirectory getGitWorkingDirectory() {
 		return _gitWorkingDirectory;
 	}
@@ -63,10 +67,6 @@ public class GitRemote implements Comparable<GitRemote> {
 
 	public String getRemoteURL() {
 		return _fetchRemoteURL;
-	}
-
-	public String getGitRepositoryName() {
-		return _gitRepositoryName;
 	}
 
 	public String getUsername() {
@@ -162,11 +162,11 @@ public class GitRemote implements Comparable<GitRemote> {
 			"/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?+\\s*");
 
 	private final String _fetchRemoteURL;
+	private final String _gitRepositoryName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final String _hostname;
 	private final String _name;
 	private final String _pushRemoteURL;
-	private final String _gitRepositoryName;
 	private final String _username;
 
 }

@@ -480,9 +480,9 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getBaseBranchDetailsElement() {
-		String baseBranchURL =
-			"https://github.com/liferay/" + getBaseGitRepositoryName() + "/tree/" +
-				getBranchName();
+		String baseBranchURL = JenkinsResultsParserUtil.combine(
+			"https://github.com/liferay/", getBaseGitRepositoryName(), "/tree/",
+			getBranchName());
 
 		String baseGitRepositoryName = getBaseGitRepositoryName();
 
@@ -496,7 +496,8 @@ public class TopLevelBuild extends BaseBuild {
 					0, baseGitRepositoryName.length() - 3));
 		}
 		else {
-			baseGitRepositorySHA = getBaseGitRepositorySHA(baseGitRepositoryName);
+			baseGitRepositorySHA = getBaseGitRepositorySHA(
+				baseGitRepositoryName);
 		}
 
 		String baseGitRepositoryCommitURL =
@@ -663,9 +664,11 @@ public class TopLevelBuild extends BaseBuild {
 
 		companionGitRepositorySHA = getCompanionGitRepositorySHA();
 
-		String companionGitRepositoryCommitURL = JenkinsResultsParserUtil.combine(
-			"https://github.com/", companionUsername, "/",
-			companionGitRepositoryName, "/commit/", companionGitRepositorySHA);
+		String companionGitRepositoryCommitURL =
+			JenkinsResultsParserUtil.combine(
+				"https://github.com/", companionUsername, "/",
+				companionGitRepositoryName, "/commit/",
+				companionGitRepositorySHA);
 
 		Element companionBranchDetailsElement = Dom4JUtil.getNewElement(
 			"p", null, "Branch Name: ",
@@ -677,7 +680,8 @@ public class TopLevelBuild extends BaseBuild {
 				companionBranchDetailsElement, Dom4JUtil.getNewElement("br"),
 				"Branch GIT ID: ",
 				Dom4JUtil.getNewAnchorElement(
-					companionGitRepositoryCommitURL, companionGitRepositorySHA));
+					companionGitRepositoryCommitURL,
+					companionGitRepositorySHA));
 		}
 
 		return companionBranchDetailsElement;
@@ -777,7 +781,8 @@ public class TopLevelBuild extends BaseBuild {
 			TEMP_MAP_BASE_URL, topLevelBuildJenkinsMaster.getName(), "/",
 			topLevelBuild.getJobName(), "/",
 			String.valueOf(topLevelBuild.getBuildNumber()), "/",
-			topLevelBuild.getJobName(), "/git.", gitRepositoryType, ".properties");
+			topLevelBuild.getJobName(), "/git.", gitRepositoryType,
+			".properties");
 	}
 
 	protected Element getJenkinsReportBodyElement() {

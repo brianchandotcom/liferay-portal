@@ -101,7 +101,8 @@ public class GitHubRemoteGitRepository extends RemoteGitRepository {
 			catch (IOException ioe) {
 				throw new RuntimeException(
 					JenkinsResultsParserUtil.combine(
-						"Unable to get labels for ", getName(), " Git repository"),
+						"Unable to get labels for ", getName(),
+						" Git repository"),
 					ioe);
 			}
 

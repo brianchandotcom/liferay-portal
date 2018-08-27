@@ -221,7 +221,8 @@ public abstract class BaseBuild implements Build {
 
 			TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-			gitRepositoryName = topLevelBuild.getParameterValue("REPOSITORY_NAME");
+			gitRepositoryName = topLevelBuild.getParameterValue(
+				"REPOSITORY_NAME");
 
 			if ((gitRepositoryName != null) && !gitRepositoryName.isEmpty()) {
 				return gitRepositoryName;
@@ -2404,11 +2405,11 @@ public abstract class BaseBuild implements Build {
 	protected int consoleReadCursor;
 	protected List<Build> downstreamBuilds = new ArrayList<>();
 	protected boolean fromArchive;
+	protected String gitRepositoryName;
 	protected Long invokedTime;
 	protected String jobName;
 	protected List<ReinvokeRule> reinvokeRules =
 		ReinvokeRule.getReinvokeRules();
-	protected String gitRepositoryName;
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
 	protected Long startTime;

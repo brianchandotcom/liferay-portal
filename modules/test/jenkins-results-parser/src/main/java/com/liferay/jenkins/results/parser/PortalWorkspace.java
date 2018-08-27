@@ -66,7 +66,8 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		_synchronizeBranches = synchronizeBranches;
 
-		String portalGitRepositoryName = _getPortalGitRepositoryName(portalGitHubURL);
+		String portalGitRepositoryName = _getPortalGitRepositoryName(
+			portalGitHubURL);
 
 		_primaryPortalLocalGitRepository = _getPortalLocalGitRepository(
 			portalGitRepositoryName, portalUpstreamBranchName);
@@ -363,21 +364,6 @@ public class PortalWorkspace extends BaseWorkspace {
 		return localGitBranch;
 	}
 
-	private PortalLocalGitRepository _getPortalLocalGitRepository(
-		String portalGitRepositoryName, String portalUpstreamBranchName) {
-
-		LocalGitRepository localGitRepository =
-			GitRepositoryFactory.getLocalGitRepository(
-				portalGitRepositoryName, portalUpstreamBranchName);
-
-		if (!(localGitRepository instanceof PortalLocalGitRepository)) {
-			throw new RuntimeException(
-				"Invalid local Git repository " + localGitRepository);
-		}
-
-		return (PortalLocalGitRepository)localGitRepository;
-	}
-
 	private String _getPortalGitRepositoryFileContent(
 		String portalGitRepositoryFileName) {
 
@@ -406,8 +392,24 @@ public class PortalWorkspace extends BaseWorkspace {
 		return matcher.group("gitRepositoryName");
 	}
 
+	private PortalLocalGitRepository _getPortalLocalGitRepository(
+		String portalGitRepositoryName, String portalUpstreamBranchName) {
+
+		LocalGitRepository localGitRepository =
+			GitRepositoryFactory.getLocalGitRepository(
+				portalGitRepositoryName, portalUpstreamBranchName);
+
+		if (!(localGitRepository instanceof PortalLocalGitRepository)) {
+			throw new RuntimeException(
+				"Invalid local Git repository " + localGitRepository);
+		}
+
+		return (PortalLocalGitRepository)localGitRepository;
+	}
+
 	private static final Pattern _portalGitHubURLPattern = Pattern.compile(
-		"https://github.com/[^/]+/(?<gitRepositoryName>liferay-portal(-ee)?)/.*");
+		"https://github.com/[^/]+/(?<gitRepositoryName>" +
+			"liferay-portal(-ee)?)/.*");
 
 	private PortalLocalGitBranch _basePortalLocalGitBranch;
 	private PortalLocalGitBranch _companionPortalLocalGitBranch;

@@ -140,12 +140,14 @@ public abstract class BaseFailureMessageGenerator
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("https://github.com/");
-		sb.append(portalGitRepositoryGitDetailsTempMap.get("github.origin.name"));
+		sb.append(
+			portalGitRepositoryGitDetailsTempMap.get("github.origin.name"));
 		sb.append("/");
 		sb.append(gitRepositoryName);
 		sb.append("/blob/");
 		sb.append(
-			portalGitRepositoryGitDetailsTempMap.get("github.sender.branch.name"));
+			portalGitRepositoryGitDetailsTempMap.get(
+				"github.sender.branch.name"));
 		sb.append("/git-commit-plugins");
 
 		gitCommitPluginsAnchorElement.addAttribute("href", sb.toString());

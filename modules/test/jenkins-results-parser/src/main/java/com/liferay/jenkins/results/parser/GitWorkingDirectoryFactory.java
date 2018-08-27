@@ -26,7 +26,8 @@ import java.util.Map;
 public class GitWorkingDirectoryFactory {
 
 	public static GitWorkingDirectory newGitWorkingDirectory(
-		String upstreamBranchName, File gitRepositoryDir, String gitRepositoryName) {
+		String upstreamBranchName, File gitRepositoryDir,
+		String gitRepositoryName) {
 
 		if (!gitRepositoryDir.exists()) {
 			throw new RuntimeException(
@@ -45,22 +46,27 @@ public class GitWorkingDirectoryFactory {
 
 			if (gitRepositoryDirName.startsWith("com-liferay-")) {
 				gitWorkingDirectory = new GitSubrepositoryGitWorkingDirectory(
-					upstreamBranchName, gitRepositoryDirPath, gitRepositoryName);
+					upstreamBranchName, gitRepositoryDirPath,
+					gitRepositoryName);
 			}
 			else if (gitRepositoryDirName.startsWith("liferay-plugins")) {
 				gitWorkingDirectory = new PluginsGitWorkingDirectory(
-					upstreamBranchName, gitRepositoryDirPath, gitRepositoryName);
+					upstreamBranchName, gitRepositoryDirPath,
+					gitRepositoryName);
 			}
 			else if (gitRepositoryDirName.startsWith("liferay-portal")) {
 				gitWorkingDirectory = new PortalGitWorkingDirectory(
-					upstreamBranchName, gitRepositoryDirPath, gitRepositoryName);
+					upstreamBranchName, gitRepositoryDirPath,
+					gitRepositoryName);
 			}
 			else {
 				gitWorkingDirectory = new GitWorkingDirectory(
-					upstreamBranchName, gitRepositoryDirPath, gitRepositoryName);
+					upstreamBranchName, gitRepositoryDirPath,
+					gitRepositoryName);
 			}
 
-			_gitWorkingDirectories.put(gitRepositoryDirName, gitWorkingDirectory);
+			_gitWorkingDirectories.put(
+				gitRepositoryDirName, gitWorkingDirectory);
 
 			return gitWorkingDirectory;
 		}
@@ -85,7 +91,8 @@ public class GitWorkingDirectoryFactory {
 		String gitRepositoryName) {
 
 		return newGitWorkingDirectory(
-			upstreamBranchName, new File(gitRepositoryDirPath), gitRepositoryName);
+			upstreamBranchName, new File(gitRepositoryDirPath),
+			gitRepositoryName);
 	}
 
 	private static final Map<String, GitWorkingDirectory>

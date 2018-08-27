@@ -55,14 +55,14 @@ public abstract class GitRepositoryJob extends BaseJob {
 		return gitWorkingDirectory;
 	}
 
-	public void setGitRepositoryDir(File repositoryDir) {
+	public void setGitRepositoryDir(File gitRepositoryDir) {
 		if (this.gitRepositoryDir != null) {
 			throw new IllegalStateException(
 				"Repository directory is already set to " +
 					this.gitRepositoryDir.getPath());
 		}
 
-		this.gitRepositoryDir = repositoryDir;
+		this.gitRepositoryDir = gitRepositoryDir;
 	}
 
 	protected GitRepositoryJob(String jobName) {
@@ -80,8 +80,8 @@ public abstract class GitRepositoryJob extends BaseJob {
 		}
 	}
 
-	protected GitWorkingDirectory gitWorkingDirectory;
 	protected File gitRepositoryDir;
+	protected GitWorkingDirectory gitWorkingDirectory;
 
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");

@@ -29,7 +29,8 @@ public class CommitFactory {
 	public static Commit newCommit(
 		String gitHubUserName, String gitRepositoryName, String sha) {
 
-		String commitURL = _getCommitURL(gitHubUserName, gitRepositoryName, sha);
+		String commitURL = _getCommitURL(
+			gitHubUserName, gitRepositoryName, sha);
 
 		if (_commits.containsKey(commitURL)) {
 			return _commits.get(commitURL);
@@ -54,7 +55,8 @@ public class CommitFactory {
 		String gitHubUserName, String message, String gitRepositoryName,
 		String sha) {
 
-		String commitURL = _getCommitURL(gitHubUserName, gitRepositoryName, sha);
+		String commitURL = _getCommitURL(
+			gitHubUserName, gitRepositoryName, sha);
 
 		if (_commits.containsKey(commitURL)) {
 			return _commits.get(commitURL);

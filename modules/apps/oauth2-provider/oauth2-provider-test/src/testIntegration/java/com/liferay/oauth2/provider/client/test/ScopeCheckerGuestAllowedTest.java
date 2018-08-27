@@ -167,7 +167,7 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplication",
 				Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
-				Arrays.asList(new String[] {"everything.read", "GET"}));
+				Arrays.asList("everything.read", "GET"));
 		}
 
 	}

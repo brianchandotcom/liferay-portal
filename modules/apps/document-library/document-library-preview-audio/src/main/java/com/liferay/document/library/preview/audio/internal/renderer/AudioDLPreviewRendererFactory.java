@@ -46,6 +46,10 @@ public class AudioDLPreviewRendererFactory
 	public Optional<DLPreviewRenderer> getPreviewRenderer(
 		FileVersion fileVersion) {
 
+		if (!AudioProcessorUtil.isAudioSupported(fileVersion)) {
+			return Optional.empty();
+		}
+
 		return Optional.of(
 			(request, response) -> {
 				request.setAttribute(

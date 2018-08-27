@@ -36,11 +36,6 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	}
 
 	@Override
-	public void setGitRepositoryJobProperties(Job job) {
-		_primaryPortalLocalGitRepository.setJobProperties(job);
-	}
-
-	@Override
 	public void checkoutLocalGitBranches() {
 		checkoutJenkinsLocalGitBranch();
 
@@ -53,6 +48,11 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		_checkoutOtherPortalLocalGitBranch();
 
 		_checkoutPluginsLocalGitBranch();
+	}
+
+	@Override
+	public void setGitRepositoryJobProperties(Job job) {
+		_primaryPortalLocalGitRepository.setJobProperties(job);
 	}
 
 	@Override
@@ -304,40 +304,6 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		checkoutLocalGitBranch(_primaryPortalLocalGitBranch);
 	}
 
-	private PortalLocalGitBranch _getPortalLocalGitBranch(
-		PortalLocalGitRepository portalLocalGitRepository,
-		String portalGitHubURL) {
-
-		LocalGitBranch localGitBranch;
-
-		if (PullRequest.isValidGitHubPullRequestURL(portalGitHubURL)) {
-			PullRequest pullRequest = new PullRequest(portalGitHubURL);
-
-			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
-				portalLocalGitRepository, pullRequest,
-				synchronizeGitBranches());
-		}
-		else if (GitUtil.isValidGitHubRefURL(portalGitHubURL)) {
-			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
-				portalGitHubURL);
-
-			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
-				portalLocalGitRepository, remoteGitRef,
-				synchronizeGitBranches());
-		}
-		else {
-			throw new RuntimeException(
-				"Invalid portal GitHub URL " + portalGitHubURL);
-		}
-
-		if (!(localGitBranch instanceof PortalLocalGitBranch)) {
-			throw new RuntimeException(
-				"Invalid local Git branch " + localGitBranch);
-		}
-
-		return (PortalLocalGitBranch)localGitBranch;
-	}
-
 	private LocalGitBranch _getLocalGitBranchFromGitCommit(
 		String gitCommitFileName, LocalGitRepository localGitRepository) {
 
@@ -376,20 +342,6 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		return localGitBranch;
 	}
 
-	private String _getPortalLocalGitRepositoryFileContent(String fileName) {
-		File file = new File(
-			_primaryPortalLocalGitRepository.getDirectory(), fileName);
-
-		try {
-			String fileContent = JenkinsResultsParserUtil.read(file);
-
-			return fileContent.trim();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
 	private String _getPortalGitRepositoryName(String portalGitHubURL) {
 		Matcher matcher = _portalGitHubURLPattern.matcher(portalGitHubURL);
 
@@ -399,6 +351,40 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		}
 
 		return matcher.group("gitRepositoryName");
+	}
+
+	private PortalLocalGitBranch _getPortalLocalGitBranch(
+		PortalLocalGitRepository portalLocalGitRepository,
+		String portalGitHubURL) {
+
+		LocalGitBranch localGitBranch;
+
+		if (PullRequest.isValidGitHubPullRequestURL(portalGitHubURL)) {
+			PullRequest pullRequest = new PullRequest(portalGitHubURL);
+
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
+				portalLocalGitRepository, pullRequest,
+				synchronizeGitBranches());
+		}
+		else if (GitUtil.isValidGitHubRefURL(portalGitHubURL)) {
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
+				portalGitHubURL);
+
+			localGitBranch = GitHubDevSyncUtil.createCachedLocalGitBranch(
+				portalLocalGitRepository, remoteGitRef,
+				synchronizeGitBranches());
+		}
+		else {
+			throw new RuntimeException(
+				"Invalid portal GitHub URL " + portalGitHubURL);
+		}
+
+		if (!(localGitBranch instanceof PortalLocalGitBranch)) {
+			throw new RuntimeException(
+				"Invalid local Git branch " + localGitBranch);
+		}
+
+		return (PortalLocalGitBranch)localGitBranch;
 	}
 
 	private PortalLocalGitRepository _getPortalLocalGitRepository(
@@ -414,6 +400,20 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		}
 
 		return (PortalLocalGitRepository)localGitRepository;
+	}
+
+	private String _getPortalLocalGitRepositoryFileContent(String fileName) {
+		File file = new File(
+			_primaryPortalLocalGitRepository.getDirectory(), fileName);
+
+		try {
+			String fileContent = JenkinsResultsParserUtil.read(file);
+
+			return fileContent.trim();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private static final Pattern _portalGitHubURLPattern = Pattern.compile(

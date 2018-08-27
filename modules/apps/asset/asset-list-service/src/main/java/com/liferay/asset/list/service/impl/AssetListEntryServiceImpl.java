@@ -29,12 +29,11 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
 	public AssetListEntry addAssetListEntry(
-			long userId, long groupId, String title, int type,
-			ServiceContext serviceContext)
+			long groupId, String title, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		return assetListEntryLocalService.addAssetListEntry(
-			userId, groupId, title, type, serviceContext);
+			getUserId(), groupId, title, type, serviceContext);
 	}
 
 	@Override

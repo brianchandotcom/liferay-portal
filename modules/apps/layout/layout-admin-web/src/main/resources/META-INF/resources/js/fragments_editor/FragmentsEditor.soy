@@ -23,11 +23,10 @@
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
-	{@param? dropTargetClass: string}
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
+	{@param? _dropTargetClass: string}
 	{@param? _handleEditableChanged: any}
-	{@param? _handleFragmentEntryClick: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
@@ -60,6 +59,8 @@
 	]>}
 	{@param? getAssetClassTypesURL: any}
 	{@param? getAssetDisplayContributorsURL: any}
+	{@param? hoveredFragmentEntryLinkBorder: string}
+	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? id: string}
 	{@param? mappingFieldsURL: string}
 	{@param? publishLayoutPageTemplateEntryURL: string}
@@ -75,6 +76,7 @@
 	]}
 	{@param? status: string}
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
+	{@param? _store: ?}
 
 	<div class="fragments-editor" id="{$id}">
 		{call com.liferay.layout.admin.web.FragmentsEditorToolbar.render}
@@ -90,6 +92,7 @@
 			{param portletNamespace: $portletNamespace /}
 			{param savingChanges: $_dirty ?: false /}
 			{param spritemap: $spritemap /}
+			{param store: $_store /}
 			{param translationAvailableLanguages: $availableLanguages /}
 			{param translationDefaultLanguageId: $defaultLanguageId /}
 			{param translationLanguageId: $languageId /}
@@ -97,9 +100,8 @@
 		{/call}
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
-			{param dropTargetClass: $dropTargetClass /}
+			{param dropTargetClass: $_dropTargetClass /}
 			{param events: [
-				'fragmentEntryClick': $_handleFragmentEntryClick,
 				'fragmentRemoveButtonClick': $_handleFragmentRemove,
 				'hide': $_handleHideContextualSidebar,
 				'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
@@ -112,6 +114,7 @@
 			{param selectedMappingTypes: $selectedMappingTypes /}
 			{param sidebarTabs: $sidebarTabs /}
 			{param spritemap: $spritemap /}
+			{param store: $_store /}
 			{param visible: $_contextualSidebarVisible ?: true /}
 		{/call}
 
@@ -119,7 +122,7 @@
 			{call com.liferay.layout.admin.web.FragmentEntryLinkList.render}
 				{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 				{param defaultLanguageId: $defaultLanguageId /}
-				{param dropTargetClass: $dropTargetClass ?: '' /}
+				{param dropTargetClass: $_dropTargetClass ?: '' /}
 				{param events: [
 					'editableChanged': $_handleEditableChanged,
 					'mappeableFieldClicked': $_handleMappeableFieldClicked,
@@ -127,6 +130,8 @@
 					'remove': $_handleFragmentRemove
 				] /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
+				{param hoveredFragmentEntryLinkBorder: $hoveredFragmentEntryLinkBorder /}
+				{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
 				{param imageSelectorURL: $imageSelectorURL /}
 				{param languageId: $languageId /}
 				{param mapping: $_highlightMapping ?: false /}
@@ -135,6 +140,7 @@
 				{param ref: 'fragmentsEditorRender' /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
+				{param store: $_store /}
 				{param translating: $languageId != $defaultLanguageId /}
 			{/call}
 		</div>
@@ -153,6 +159,7 @@
 				{param portletNamespace: $portletNamespace /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
+				{param store: $_store /}
 				{param visible: $_selectMappingDialogVisible ?: false /}
 			{/call}
 		{/if}
@@ -168,6 +175,7 @@
 				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param spritemap: $spritemap /}
+				{param store: $_store /}
 				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
 				{param visible: $_selectMappingTypeDialogVisible ?: false /}
 			{/call}

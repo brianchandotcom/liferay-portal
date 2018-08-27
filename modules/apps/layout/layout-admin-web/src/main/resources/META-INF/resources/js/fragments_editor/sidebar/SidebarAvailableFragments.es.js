@@ -1,9 +1,17 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
+import position from 'metal-position';
 import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarCard.es';
+import {
+	ADD_FRAGMENT_ENTRY_LINK,
+	CLEAR_DRAG_TARGET,
+	UPDATE_DRAG_TARGET
+} from '../store/actionTypes.es';
+import {DRAG_POSITIONS} from '../store/reducers/dragDrop.es';
+import MetalStore from '../store/MetalStore.es';
 import templates from './SidebarAvailableFragments.soy';
 
 /**
@@ -19,19 +27,7 @@ class SidebarAvailableFragments extends Component {
 	 */
 
 	attached() {
-		this._dragDrop = new DragDrop(
-			{
-				dragPlaceholder: Drag.Placeholder.CLONE,
-				handles: '.drag-handler',
-				sources: '.drag-card',
-				targets: `.${this.dropTargetClass}`
-			}
-		);
-
-		this._dragDrop.on(
-			DragDrop.Events.END,
-			this._handleDrop.bind(this)
-		);
+		this._initializeDragAndDrop();
 	}
 
 	/**
@@ -45,8 +41,50 @@ class SidebarAvailableFragments extends Component {
 	}
 
 	/**
+	 * Callback that is executed when an item is being dragged.
+	 * @param {!MouseEvent} event
+	 * @private
+	 * @review
+	 */
+
+	_handleDrag(data, event) {
+		const targetItem = data.target;
+
+		if (targetItem && 'fragmentEntryLinkId' in targetItem.dataset) {
+			const mouseY = event.target.mousePos_.y;
+			const targetItemRegion = position.getRegion(targetItem);
+
+			let nearestBorder = DRAG_POSITIONS.bottom;
+
+			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
+				nearestBorder = DRAG_POSITIONS.top;
+			}
+
+			this.store.dispatchAction(
+				UPDATE_DRAG_TARGET,
+				{
+					hoveredFragmentEntryLinkBorder: nearestBorder,
+					hoveredFragmentEntryLinkId: targetItem.dataset.fragmentEntryLinkId
+				}
+			);
+		}
+	}
+
+	/**
+	 * Callback that is executed when we leave a drag target.
+	 * @param {!MouseEvent} event
+	 * @private
+	 * @review
+	 */
+
+	_handleDragEnd(data, event) {
+		this.store.dispatchAction(
+			CLEAR_DRAG_TARGET
+		);
+	}
+
+	/**
 	 * Callback that is executed when an item is dropped.
-	 * It propagates an itemDrop event with the item id.
 	 * @param {!MouseEvent} event
 	 * @private
 	 * @review
@@ -59,19 +97,28 @@ class SidebarAvailableFragments extends Component {
 			const itemId = data.source.dataset.itemId;
 			const itemName = data.source.dataset.itemName;
 
-			this.emit(
-				'fragmentEntryClick',
+			requestAnimationFrame(
+				() => {
+					this._initializeDragAndDrop();
+				}
+			);
+
+			this.store.dispatchAction(
+				ADD_FRAGMENT_ENTRY_LINK,
 				{
 					fragmentEntryId: itemId,
 					fragmentName: itemName
 				}
+			);
+
+			this.store.dispatchAction(
+				CLEAR_DRAG_TARGET
 			);
 		}
 	}
 
 	/**
 	 * Callback that is executed when a fragment entry is clicked.
-	 * It propagates a fragmentEntryClick event with the fragment information.
 	 * @param {{
 	 *   itemId: !string,
 	 *   itemName: !string
@@ -80,12 +127,47 @@ class SidebarAvailableFragments extends Component {
 	 */
 
 	_handleEntryClick(event) {
-		this.emit(
-			'fragmentEntryClick',
+		this.store.dispatchAction(
+			ADD_FRAGMENT_ENTRY_LINK,
 			{
 				fragmentEntryId: event.itemId,
 				fragmentName: event.itemName
 			}
+		);
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+
+	_initializeDragAndDrop() {
+		if (this._dragDrop) {
+			this._dragDrop.dispose();
+		}
+
+		this._dragDrop = new DragDrop(
+			{
+				dragPlaceholder: Drag.Placeholder.CLONE,
+				handles: '.drag-handler',
+				sources: '.drag-card',
+				targets: `.${this.dropTargetClass}`
+			}
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.DRAG,
+			this._handleDrag.bind(this)
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.END,
+			this._handleDrop.bind(this)
+		);
+
+		this._dragDrop.on(
+			DragDrop.Events.TARGET_LEAVE,
+			this._handleDragEnd.bind(this)
 		);
 	}
 }
@@ -152,7 +234,18 @@ SidebarAvailableFragments.STATE = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf SidebarAvailableFragments
+	 * @review
+	 * @type {MetalStore}
+	 */
+
+	store: Config.instanceOf(MetalStore)
 };
 
 Soy.register(SidebarAvailableFragments, templates);

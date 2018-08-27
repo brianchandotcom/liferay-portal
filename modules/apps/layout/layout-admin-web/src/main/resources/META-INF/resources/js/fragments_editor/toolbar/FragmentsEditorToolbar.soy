@@ -17,6 +17,7 @@
 	{@param? publishLayoutPageTemplateEntryURL: string}
 	{@param? publishRedirectURL: string}
 	{@param? publishStatus: string}
+	{@param? store: ?}
 	{@param? translationStatus: [
 		languageValues: list<[
 			languageId: string,
@@ -35,6 +36,7 @@
 						{param events: ['languageChange': $_handleTranslationLanguageChange] /}
 						{param languageId: $translationLanguageId /}
 						{param spritemap: $spritemap /}
+						{param store: $store /}
 						{param translationStatus: $translationStatus /}
 					{/call}
 				</li>

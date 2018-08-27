@@ -78,7 +78,7 @@ public class MediaObjectNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "media-object";
+		return "document";
 	}
 
 	@Override
@@ -119,8 +119,6 @@ public class MediaObjectNestedCollectionResource
 			"sizeInBytes", FileEntry::getSize
 		).addRelatedCollection(
 			"category", CategoryIdentifier.class
-		).addString(
-			"contentSize", fileEntry -> String.valueOf(fileEntry.getSize())
 		).addString(
 			"description", FileEntry::getDescription
 		).addString(

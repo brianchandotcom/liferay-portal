@@ -224,8 +224,8 @@ public class ContentTransformerHandlerImplTest {
 
 	}
 
-	private final class MockServiceTrackerMap implements
-		ServiceTrackerMap
+	private final class MockServiceTrackerMap
+		implements ServiceTrackerMap
 			<ContentTransformerContentType, List<ContentTransformer>> {
 
 		@Override

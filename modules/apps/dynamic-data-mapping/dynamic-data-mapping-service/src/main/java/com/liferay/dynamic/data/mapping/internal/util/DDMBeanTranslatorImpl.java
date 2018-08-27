@@ -94,8 +94,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 			translateLocalizedValue(ddmFormField.getTip()));
 
 		for (com.liferay.dynamic.data.mapping.kernel.DDMFormField
-				nestedDDMFormField :
-					ddmFormField.getNestedDDMFormFields()) {
+				nestedDDMFormField : ddmFormField.getNestedDDMFormFields()) {
 
 			translatedDDMFormField.addNestedDDMFormField(
 				translate(nestedDDMFormField));
@@ -121,8 +120,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 			ddmFormValues.getDefaultLocale());
 
 		for (com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue
-				ddmFormFieldValue :
-					ddmFormValues.getDDMFormFieldValues()) {
+				ddmFormFieldValue : ddmFormValues.getDDMFormFieldValues()) {
 
 			translatedDDMFormValues.addDDMFormFieldValue(
 				translate(ddmFormFieldValue));

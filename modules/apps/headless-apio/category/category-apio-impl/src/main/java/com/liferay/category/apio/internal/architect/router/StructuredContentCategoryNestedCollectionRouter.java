@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class StructuredContentCategoryNestedCollectionRouter extends
-	BaseCategoryNestedCollectionRouter<StructuredContentIdentifier>
+public class StructuredContentCategoryNestedCollectionRouter
+	extends BaseCategoryNestedCollectionRouter<StructuredContentIdentifier>
 	implements NestedCollectionRouter
 		<AssetCategory, Long, CategoryIdentifier, Long,
 			StructuredContentIdentifier> {

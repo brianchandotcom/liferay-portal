@@ -43,9 +43,8 @@ public class ClusterInvokeAcceptorUtil {
 		<ClusterInvokeAcceptor, ClusterInvokeAcceptor> _serviceTracker;
 
 	private static class ClusterInvokeAcceptorServiceTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer
-				<ClusterInvokeAcceptor, ClusterInvokeAcceptor> {
+		implements ServiceTrackerCustomizer
+			<ClusterInvokeAcceptor, ClusterInvokeAcceptor> {
 
 		@Override
 		public ClusterInvokeAcceptor addingService(

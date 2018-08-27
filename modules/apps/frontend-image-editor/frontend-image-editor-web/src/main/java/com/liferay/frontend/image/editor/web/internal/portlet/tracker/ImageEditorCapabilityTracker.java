@@ -210,8 +210,8 @@ public class ImageEditorCapabilityTracker {
 
 	}
 
-	private class ImageEditorCapabilityServiceTrackerMapListener implements
-		ServiceTrackerMapListener
+	private class ImageEditorCapabilityServiceTrackerMapListener
+		implements ServiceTrackerMapListener
 			<String, ImageEditorCapabilityDescriptor,
 				List<ImageEditorCapabilityDescriptor>> {
 

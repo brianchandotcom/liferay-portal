@@ -116,8 +116,8 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest extends PowerMockito {
 		);
 	}
 
-	private class TestFileEntryItemSelectorReturnTypeResolver implements
-		ItemSelectorReturnTypeResolver
+	private class TestFileEntryItemSelectorReturnTypeResolver
+		implements ItemSelectorReturnTypeResolver
 			<FileEntryItemSelectorReturnType, FileEntry> {
 
 		public Class<FileEntryItemSelectorReturnType>

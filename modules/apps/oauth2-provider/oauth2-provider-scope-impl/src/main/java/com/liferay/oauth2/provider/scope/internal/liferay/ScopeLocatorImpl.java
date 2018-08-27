@@ -372,9 +372,8 @@ public class ScopeLocatorImpl implements ScopeLocator {
 			_scopeFinderByNameServiceTrackerMap;
 
 	private static class ScopeFinderServiceTupleServiceTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer
-				<ScopeFinder, ServiceReferenceServiceTuple<?, ScopeFinder>> {
+		implements ServiceTrackerCustomizer
+			<ScopeFinder, ServiceReferenceServiceTuple<?, ScopeFinder>> {
 
 		public ScopeFinderServiceTupleServiceTrackerCustomizer(
 			BundleContext bundleContext) {

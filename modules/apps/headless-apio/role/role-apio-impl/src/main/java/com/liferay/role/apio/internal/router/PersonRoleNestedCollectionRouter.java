@@ -38,8 +38,8 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class PersonRoleNestedCollectionRouter implements
-	NestedCollectionRouter<Role, Long, RoleIdentifier, Long,
+public class PersonRoleNestedCollectionRouter
+	implements NestedCollectionRouter<Role, Long, RoleIdentifier, Long,
 		PersonIdentifier> {
 
 	@Override

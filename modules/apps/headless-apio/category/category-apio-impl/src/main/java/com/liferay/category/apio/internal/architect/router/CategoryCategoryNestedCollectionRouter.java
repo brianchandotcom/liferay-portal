@@ -44,8 +44,8 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class CategoryCategoryNestedCollectionRouter implements
-	NestedCollectionRouter
+public class CategoryCategoryNestedCollectionRouter
+	implements NestedCollectionRouter
 		<AssetCategory, Long, CategoryIdentifier, Long, CategoryIdentifier> {
 
 	@Override

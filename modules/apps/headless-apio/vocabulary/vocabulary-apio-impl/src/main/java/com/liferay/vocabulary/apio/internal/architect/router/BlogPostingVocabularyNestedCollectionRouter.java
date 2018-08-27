@@ -40,9 +40,10 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component
-public class BlogPostingVocabularyNestedCollectionRouter implements
-	NestedCollectionRouter<AssetVocabulary, Long, VocabularyIdentifier, Long,
-		BlogPostingIdentifier> {
+public class BlogPostingVocabularyNestedCollectionRouter
+	implements NestedCollectionRouter
+		<AssetVocabulary, Long, VocabularyIdentifier, Long,
+			BlogPostingIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<AssetVocabulary, Long, Long> collectionRoutes(

@@ -38,8 +38,8 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class BlogPostingCategoryNestedCollectionRouter extends
-	BaseCategoryNestedCollectionRouter<BlogPostingIdentifier>
+public class BlogPostingCategoryNestedCollectionRouter
+	extends BaseCategoryNestedCollectionRouter<BlogPostingIdentifier>
 	implements NestedCollectionRouter
 		<AssetCategory, Long, CategoryIdentifier, Long, BlogPostingIdentifier> {
 

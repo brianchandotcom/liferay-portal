@@ -44,9 +44,8 @@ public class IdentifiableOSGiServiceUtil {
 			_serviceTracker;
 
 	private static class IdentifiableOSGiServiceServiceTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer
-				<IdentifiableOSGiService, IdentifiableOSGiService> {
+		implements ServiceTrackerCustomizer
+			<IdentifiableOSGiService, IdentifiableOSGiService> {
 
 		@Override
 		public IdentifiableOSGiService addingService(

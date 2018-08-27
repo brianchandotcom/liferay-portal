@@ -41,9 +41,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true, service = JSBundleConfigTracker.class)
 public class JSBundleConfigTracker
-	implements
-		ServiceTrackerCustomizer
-			<ServletContext, ServiceReference<ServletContext>> {
+	implements ServiceTrackerCustomizer
+		<ServletContext, ServiceReference<ServletContext>> {
 
 	@Activate
 	public void activate(

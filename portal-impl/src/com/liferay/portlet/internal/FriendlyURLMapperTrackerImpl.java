@@ -168,9 +168,8 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 		_serviceTracker;
 
 	private class FriendlyURLMapperServiceTrackerCustomizer
-		extends
-			ServiceTrackerFieldUpdaterCustomizer
-				<FriendlyURLMapper, FriendlyURLMapper> {
+		extends ServiceTrackerFieldUpdaterCustomizer
+			<FriendlyURLMapper, FriendlyURLMapper> {
 
 		@Override
 		protected FriendlyURLMapper doAddingService(

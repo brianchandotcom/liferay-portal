@@ -115,9 +115,8 @@ public class LanguageFilterTracker {
 	}
 
 	private class ServletContextHelperServiceTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer
-				<ServletContextHelper, ServiceTracker<?, ?>> {
+		implements ServiceTrackerCustomizer
+			<ServletContextHelper, ServiceTracker<?, ?>> {
 
 		public ServletContextHelperServiceTrackerCustomizer(
 			BundleContext bundleContext) {
@@ -200,9 +199,8 @@ public class LanguageFilterTracker {
 		private final BundleContext _bundleContext;
 
 		private class ResourceBundleLoaderServiceTrackerCustomizer
-			implements
-				ServiceTrackerCustomizer
-					<ResourceBundleLoader, TrackedServletContextHelper> {
+			implements ServiceTrackerCustomizer
+				<ResourceBundleLoader, TrackedServletContextHelper> {
 
 			public ResourceBundleLoaderServiceTrackerCustomizer(
 				Map<String, Object> properties, String filterString,

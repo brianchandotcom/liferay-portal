@@ -15,17 +15,15 @@
 package com.liferay.document.library.preview.pdf.internal.renderer;
 
 import com.liferay.document.library.preview.renderer.DLPreviewRenderer;
+import com.liferay.document.library.preview.renderer.DLPreviewRendererProvider;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,38 +37,31 @@ import org.osgi.service.component.annotations.Reference;
 		"content.type=" + ContentTypes.APPLICATION_PDF,
 		"content.type=" + ContentTypes.APPLICATION_X_PDF
 	},
-	service = DLPreviewRenderer.class
+	service = DLPreviewRendererProvider.class
 )
-public class PDFDLPreviewRenderer implements DLPreviewRenderer {
+public class PDFDLPreviewRenderer implements DLPreviewRendererProvider {
 
 	@Override
-	public void renderPreview(
-			FileVersion fileVersion, HttpServletRequest request,
-			HttpServletResponse response)
-		throws IOException, ServletException {
+	public Optional<DLPreviewRenderer> getPreviewRenderer(
+		FileVersion fileVersion) {
 
-		request.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+		return Optional.of(
+			(request, response) -> {
+				request.setAttribute(
+					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/page.jsp");
+				RequestDispatcher requestDispatcher =
+					_servletContext.getRequestDispatcher("/page.jsp");
 
-		requestDispatcher.include(request, response);
+				requestDispatcher.include(request, response);
+			});
 	}
 
 	@Override
-	public void renderThumbnail(
-			FileVersion fileVersion, HttpServletRequest request,
-			HttpServletResponse response)
-		throws IOException, ServletException {
+	public Optional<DLPreviewRenderer> getThumbnailRenderer(
+		FileVersion fileVersion) {
 
-		request.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/page.jsp");
-
-		requestDispatcher.include(request, response);
+		return getPreviewRenderer(fileVersion);
 	}
 
 	@Reference(

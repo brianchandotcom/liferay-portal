@@ -14,18 +14,19 @@
 
 package com.liferay.document.library.preview.renderer;
 
-import java.io.IOException;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 /**
  * @author Alejandro Tardín
  */
-public interface DLPreviewRenderer {
+public interface DLPreviewRendererProvider {
 
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException;
+	public Optional<DLPreviewRenderer> getPreviewRenderer(
+		FileVersion fileVersion);
+
+	public Optional<DLPreviewRenderer> getThumbnailRenderer(
+		FileVersion fileVersion);
 
 }

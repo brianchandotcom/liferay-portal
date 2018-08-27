@@ -19,6 +19,7 @@ import com.liferay.document.library.display.context.DLEditFileEntryDisplayContex
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.preview.renderer.DLPreviewRenderer;
+import com.liferay.document.library.preview.renderer.DLPreviewRendererProvider;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -34,6 +35,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -157,13 +159,39 @@ public class DLPreviewDLDisplayContextFactory
 
 			@Override
 			public boolean hasCustomThumbnail() {
-				return _serviceTrackerMap.containsKey(
-					fileVersion.getMimeType());
+				DLPreviewRendererProvider dlPreviewRendererProvider =
+					_serviceTrackerMap.getService(fileVersion.getMimeType());
+
+				if (dlPreviewRendererProvider != null) {
+					Optional<DLPreviewRenderer> dlPreviewRendererOptional =
+						dlPreviewRendererProvider.getThumbnailRenderer(
+							fileVersion);
+
+					if (dlPreviewRendererOptional.isPresent()) {
+						return true;
+					}
+				}
+
+				return parentDLViewFileVersionDisplayContext.
+					hasCustomThumbnail();
 			}
 
 			@Override
 			public boolean hasPreview() {
-				return true;
+				DLPreviewRendererProvider dlPreviewRendererProvider =
+					_serviceTrackerMap.getService(fileVersion.getMimeType());
+
+				if (dlPreviewRendererProvider != null) {
+					Optional<DLPreviewRenderer> dlPreviewRendererOptional =
+						dlPreviewRendererProvider.getPreviewRenderer(
+							fileVersion);
+
+					if (dlPreviewRendererOptional.isPresent()) {
+						return true;
+					}
+				}
+
+				return parentDLViewFileVersionDisplayContext.hasPreview();
 			}
 
 			@Override
@@ -185,17 +213,26 @@ public class DLPreviewDLDisplayContextFactory
 
 				String mimeType = fileVersion.getMimeType();
 
-				DLPreviewRenderer dlPreviewRenderer =
+				DLPreviewRendererProvider dlPreviewRendererProvider =
 					_serviceTrackerMap.getService(mimeType);
 
-				if (dlPreviewRenderer != null) {
-					dlPreviewRenderer.renderThumbnail(
-						fileVersion, request, response);
+				if (dlPreviewRendererProvider != null) {
+					Optional<DLPreviewRenderer> dlPreviewRendererOptional =
+						dlPreviewRendererProvider.getThumbnailRenderer(
+							fileVersion);
+
+					if (dlPreviewRendererOptional.isPresent()) {
+						DLPreviewRenderer dlPreviewRenderer =
+							dlPreviewRendererOptional.get();
+
+						dlPreviewRenderer.render(request, response);
+
+						return;
+					}
 				}
-				else {
-					parentDLViewFileVersionDisplayContext.renderCustomThumbnail(
-						request, response);
-				}
+
+				parentDLViewFileVersionDisplayContext.renderCustomThumbnail(
+					request, response);
 			}
 
 			@Override
@@ -205,17 +242,26 @@ public class DLPreviewDLDisplayContextFactory
 
 				String mimeType = fileVersion.getMimeType();
 
-				DLPreviewRenderer dlPreviewRenderer =
+				DLPreviewRendererProvider dlPreviewRendererProvider =
 					_serviceTrackerMap.getService(mimeType);
 
-				if (dlPreviewRenderer != null) {
-					dlPreviewRenderer.renderPreview(
-						fileVersion, request, response);
+				if (dlPreviewRendererProvider != null) {
+					Optional<DLPreviewRenderer> dlPreviewRendererOptional =
+						dlPreviewRendererProvider.getPreviewRenderer(
+							fileVersion);
+
+					if (dlPreviewRendererOptional.isPresent()) {
+						DLPreviewRenderer dlPreviewRenderer =
+							dlPreviewRendererOptional.get();
+
+						dlPreviewRenderer.render(request, response);
+
+						return;
+					}
 				}
-				else {
-					parentDLViewFileVersionDisplayContext.renderPreview(
-						request, response);
-				}
+
+				parentDLViewFileVersionDisplayContext.renderPreview(
+					request, response);
 			}
 
 		};
@@ -224,7 +270,7 @@ public class DLPreviewDLDisplayContextFactory
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, DLPreviewRenderer.class, "content.type");
+			bundleContext, DLPreviewRendererProvider.class, "content.type");
 	}
 
 	@Deactivate
@@ -232,6 +278,7 @@ public class DLPreviewDLDisplayContextFactory
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, DLPreviewRenderer> _serviceTrackerMap;
+	private ServiceTrackerMap<String, DLPreviewRendererProvider>
+		_serviceTrackerMap;
 
 }

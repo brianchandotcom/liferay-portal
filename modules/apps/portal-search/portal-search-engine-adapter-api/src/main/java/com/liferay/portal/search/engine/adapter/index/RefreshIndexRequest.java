@@ -44,6 +44,18 @@ public class RefreshIndexRequest implements IndexRequest<RefreshIndexResponse> {
 		return _indexNames;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), since 1.1.0.  This method should not be
+	 *             in the parent interface.  Only certain IndexRequests work
+	 *             with mappings
+	 * @return
+	 */
+	@Deprecated
+	@Override
+	public String getMappingName() {
+		throw new UnsupportedOperationException();
+	}
+
 	private final String[] _indexNames;
 
 }

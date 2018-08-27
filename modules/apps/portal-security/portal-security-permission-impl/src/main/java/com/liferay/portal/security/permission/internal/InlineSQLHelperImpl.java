@@ -470,9 +470,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			resourcePermissionSQL);
 	}
 
-	private String _appendPermissionSQL(
-		String className, String classPKField, String userIdField,
-		String groupIdField, long[] groupIds, String permissionSQL) {
+	private void _appendPermissionSQL(
+		StringBundler sb, String className, String classPKField,
+		String userIdField, String groupIdField, long[] groupIds,
+		String permissionSQL) {
 
 		String permissionSQLContributorsSQL = null;
 
@@ -501,8 +502,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				permissionSQLContributorsSQLSB.toString();
 		}
 
-		StringBundler sb = new StringBundler(8);
-
 		if (Validator.isNotNull(permissionSQLContributorsSQL)) {
 			sb.append("(");
 		}
@@ -517,8 +516,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			sb.append(permissionSQLContributorsSQL);
 			sb.append(") ");
 		}
-
-		return sb.toString();
 	}
 
 	private String _getResourcePermissionSQL(
@@ -590,7 +587,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		String sql, String className, String classPKField, String userIdField,
 		String groupIdField, long[] groupIds, String permissionSQL) {
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(11);
 
 		int pos = sql.indexOf(_WHERE_CLAUSE);
 
@@ -610,10 +607,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			sb.append(_WHERE_CLAUSE);
 
-			sb.append(
-				_appendPermissionSQL(
-					className, classPKField, userIdField, groupIdField,
-					groupIds, permissionSQL));
+			_appendPermissionSQL(
+				sb, className, classPKField, userIdField, groupIdField,
+				groupIds, permissionSQL);
 
 			if (pos != -1) {
 				sb.append(sql.substring(pos));
@@ -624,10 +620,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			sb.append(sql.substring(0, pos));
 
-			sb.append(
-				_appendPermissionSQL(
-					className, classPKField, userIdField, groupIdField,
-					groupIds, permissionSQL));
+			_appendPermissionSQL(
+				sb, className, classPKField, userIdField, groupIdField,
+				groupIds, permissionSQL);
 
 			sb.append("AND ");
 

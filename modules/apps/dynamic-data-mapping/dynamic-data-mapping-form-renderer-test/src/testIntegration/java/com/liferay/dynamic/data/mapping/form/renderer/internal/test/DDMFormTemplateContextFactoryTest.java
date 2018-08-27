@@ -12,97 +12,58 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.renderer.internal;
+package com.liferay.dynamic.data.mapping.form.renderer.internal.test;
 
-import com.google.template.soy.data.SanitizedContent;
-import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
-
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorContext;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
-import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializer;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
-import com.liferay.portal.util.PortalImpl;
-import com.liferay.portal.util.PropsImpl;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Marcellus Tavares
  */
-@RunWith(PowerMockRunner.class)
-public class DDMFormTemplateContextFactoryTest extends PowerMockito {
+@RunWith(Arquillian.class)
+public class DDMFormTemplateContextFactoryTest {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		PropsUtil.setProps(new PropsImpl());
-	}
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormTemplateContextFactory();
+		_request = new MockHttpServletRequest();
 
-		setUpDDM();
-		setUpDDMFormContextProviderServlet();
-		setUpDDMFormEvaluator();
-		setUpDDMFormFieldTypeServicesTracker();
-		setUpDDMFormFieldTypesJSONSerializer();
-		setUpDDMFormJSONSerializer();
-		setUpDDMFormLayoutJSONSerializer();
+		_originalSiteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 
-		setUpJSONFactory();
-		setUpLanguageUtil();
-		setUpLocaleThreadLocal();
-		setUpPortal();
-		setUpPortalClassLoaderUtil();
-
-		setUpDDMFormTemplateContextFactoryUtil();
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
 	}
 
 	@After
@@ -121,6 +82,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 
 		ddmFormRenderingContext.setContainerId(containerId);
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 
 		Map<String, Object> templateContext =
@@ -137,6 +99,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 
 		Map<String, Object> templateContext =
@@ -153,17 +116,16 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 
 		Map<String, Object> templateContext =
 			_ddmFormTemplateContextFactory.create(
 				ddmForm, ddmFormRenderingContext);
 
-		String expectedEvaluatorURL =
-			"CONTEXT_PATH/dynamic-data-mapping-form-context-provider/";
-
 		Assert.assertEquals(
-			expectedEvaluatorURL, templateContext.get("evaluatorURL"));
+			"/o/dynamic-data-mapping-form-context-provider/",
+			templateContext.get("evaluatorURL"));
 	}
 
 	@Test
@@ -173,6 +135,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 		ddmFormRenderingContext.setPortletNamespace("_PORTLET_NAMESPACE_");
 
@@ -191,6 +154,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 		ddmFormRenderingContext.setReadOnly(true);
 
@@ -203,23 +167,12 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 
 	@Test
 	public void testRequiredFieldsWarningHTML() throws Exception {
-
-		// Mock language
-
-		when(
-			_language.format(
-				Matchers.any(ResourceBundle.class),
-				Matchers.eq("all-fields-marked-with-x-are-required"),
-				Matchers.anyString(), Matchers.eq(false))
-		).thenReturn(
-			"All fields marked with '*' are required."
-		);
-
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 		ddmFormRenderingContext.setReadOnly(true);
 
@@ -227,16 +180,22 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 			_ddmFormTemplateContextFactory.create(
 				ddmForm, ddmFormRenderingContext);
 
-		String expectedRequiredFieldsWarningHTML =
-			"<label class=\"required-warning\">All fields marked with '*' " +
-				"are required.</label>";
+		Object sanitizedContent = templateContext.get(
+			"requiredFieldsWarningMessageHTML");
 
-		SanitizedContent sanitizedContent =
-			(SanitizedContent)templateContext.get(
-				"requiredFieldsWarningMessageHTML");
+		Class<?> clazz = sanitizedContent.getClass();
 
-		Assert.assertEquals(
-			expectedRequiredFieldsWarningHTML, sanitizedContent.getContent());
+		Method method = clazz.getMethod("getContent");
+
+		method.setAccessible(true);
+
+		String value = (String)method.invoke(sanitizedContent);
+
+		Assert.assertTrue(
+			value,
+			value.startsWith(
+				"<label class=\"required-warning\">All fields marked with "));
+		Assert.assertTrue(value, value.endsWith(" are required.</label>"));
 	}
 
 	@Test
@@ -246,6 +205,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(false);
 
@@ -264,6 +224,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 		ddmFormRenderingContext.setShowSubmitButton(true);
 
@@ -281,6 +242,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 		ddmFormRenderingContext.setShowSubmitButton(true);
 		ddmFormRenderingContext.setReadOnly(true);
@@ -294,23 +256,10 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 
 	@Test
 	public void testStrings() throws Exception {
-		when(
-			_language.get(
-				Matchers.any(ResourceBundle.class), Matchers.eq("next"))
-		).thenReturn(
-			"Next"
-		);
-
-		when(
-			_language.get(
-				Matchers.any(ResourceBundle.class), Matchers.eq("previous"))
-		).thenReturn(
-			"Previous"
-		);
-
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 
 		Map<String, Object> templateContext =
@@ -332,6 +281,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 
 		String submitLabel = StringUtil.randomString();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 		ddmFormRenderingContext.setSubmitLabel(submitLabel);
 
@@ -341,16 +291,9 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 
 		Assert.assertEquals(submitLabel, templateContext.get("submitLabel"));
 
-		// Default value
-
-		when(
-			_language.get(Matchers.any(Locale.class), Matchers.eq("submit"))
-		).thenReturn(
-			"Submit"
-		);
-
 		ddmFormRenderingContext = new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 
 		templateContext = _ddmFormTemplateContextFactory.create(
@@ -371,6 +314,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 
 		Map<String, Object> templateContext =
@@ -423,193 +367,10 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 			"ddm.wizard_form", templateContext.get("templateNamespace"));
 	}
 
-	protected void setDeclaredField(
-			Object targetObject, String fieldName, Object fieldValue)
-		throws Exception {
+	@Inject
+	private static DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 
-		Field field = ReflectionUtil.getDeclaredField(
-			targetObject.getClass(), fieldName);
-
-		field.set(targetObject, fieldValue);
-	}
-
-	protected void setUpDDM() throws Exception {
-		setDeclaredField(_ddmFormTemplateContextFactory, "_ddm", new DDMImpl());
-	}
-
-	protected void setUpDDMFormContextProviderServlet() throws Exception {
-		Servlet ddmFormContextProviderServlet = mock(Servlet.class);
-
-		ServletConfig ddmFormContextProviderServletConfig = mock(
-			ServletConfig.class);
-
-		when(
-			ddmFormContextProviderServlet.getServletConfig()
-		).thenReturn(
-			ddmFormContextProviderServletConfig
-		);
-
-		ServletContext ddmFormContextProviderServletContext = mock(
-			ServletContext.class);
-
-		when(
-			ddmFormContextProviderServletConfig.getServletContext()
-		).thenReturn(
-			ddmFormContextProviderServletContext
-		);
-
-		when(
-			ddmFormContextProviderServletContext.getContextPath()
-		).thenReturn(
-			"CONTEXT_PATH"
-		);
-
-		setDeclaredField(
-			_ddmFormTemplateContextFactory, "_ddmFormContextProviderServlet",
-			ddmFormContextProviderServlet);
-	}
-
-	protected void setUpDDMFormEvaluator() throws Exception {
-		DDMFormEvaluator ddmFormEvaluator = mock(DDMFormEvaluator.class);
-
-		when(
-			ddmFormEvaluator.evaluate(
-				Matchers.any(DDMFormEvaluatorContext.class))
-		).thenReturn(
-			new DDMFormEvaluationResult()
-		);
-
-		setDeclaredField(
-			_ddmFormTemplateContextFactory, "_ddmFormEvaluator",
-			ddmFormEvaluator);
-	}
-
-	protected void setUpDDMFormFieldTypeServicesTracker() throws Exception {
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker = mock(
-			DDMFormFieldTypeServicesTracker.class);
-
-		setDeclaredField(
-			_ddmFormTemplateContextFactory, "_ddmFormFieldTypeServicesTracker",
-			ddmFormFieldTypeServicesTracker);
-	}
-
-	protected void setUpDDMFormFieldTypesJSONSerializer() throws Exception {
-		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer = mock(
-			DDMFormFieldTypesSerializer.class);
-
-		setDeclaredField(
-			_ddmFormTemplateContextFactory, "_ddmFormFieldTypesJSONSerializer",
-			ddmFormFieldTypesSerializer);
-	}
-
-	protected void setUpDDMFormJSONSerializer() throws Exception {
-		DDMFormJSONSerializer ddmFormJSONSerializer =
-			new DDMFormJSONSerializer();
-
-		setDeclaredField(
-			_ddmFormTemplateContextFactory, "_ddmFormJSONSerializer",
-			ddmFormJSONSerializer);
-
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker = mock(
-			DDMFormFieldTypeServicesTracker.class);
-
-		setDeclaredField(
-			ddmFormJSONSerializer, "_ddmFormFieldTypeServicesTracker",
-			ddmFormFieldTypeServicesTracker);
-
-		setDeclaredField(ddmFormJSONSerializer, "_jsonFactory", _jsonFactory);
-	}
-
-	protected void setUpDDMFormLayoutJSONSerializer() throws Exception {
-		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer =
-			new DDMFormLayoutJSONSerializer();
-
-		setDeclaredField(
-			_ddmFormTemplateContextFactory, "_ddmFormLayoutJSONSerializer",
-			ddmFormLayoutJSONSerializer);
-
-		setDeclaredField(
-			ddmFormLayoutJSONSerializer, "_jsonFactory", _jsonFactory);
-	}
-
-	protected void setUpDDMFormTemplateContextFactory() throws Exception {
-		_ddmFormTemplateContextFactory =
-			new DDMFormTemplateContextFactoryImpl();
-
-		DDMDataProviderInstanceService ddmDataProviderInstanceService = mock(
-			DDMDataProviderInstanceService.class);
-
-		field(
-			DDMFormTemplateContextFactoryImpl.class,
-			"_ddmFormTemplateContextFactoryHelper"
-		).set(
-			_ddmFormTemplateContextFactory,
-			new DDMFormTemplateContextFactoryHelper(
-				ddmDataProviderInstanceService)
-		);
-
-		field(
-			DDMFormTemplateContextFactoryImpl.class, "_soyHTMLSanitizer"
-		).set(
-			_ddmFormTemplateContextFactory,
-			new SoyHTMLSanitizer() {
-
-				@Override
-				public Object sanitize(String value) {
-					return UnsafeSanitizedContentOrdainer.ordainAsSafe(
-						value, SanitizedContent.ContentKind.HTML);
-				}
-
-			}
-		);
-	}
-
-	protected void setUpDDMFormTemplateContextFactoryUtil() {
-		_request = Mockito.mock(HttpServletRequest.class);
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setPathThemeImages(StringPool.BLANK);
-
-		Mockito.when(
-			(ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-	}
-
-	protected void setUpJSONFactory() throws Exception {
-		setDeclaredField(
-			_ddmFormTemplateContextFactory, "_jsonFactory", _jsonFactory);
-	}
-
-	protected void setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		_language = mock(Language.class);
-
-		languageUtil.setLanguage(_language);
-	}
-
-	protected void setUpLocaleThreadLocal() {
-		_originalSiteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
-
-		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
-	}
-
-	protected void setUpPortal() throws Exception {
-		setDeclaredField(_ddmFormTemplateContextFactory, "_portal", _portal);
-	}
-
-	protected void setUpPortalClassLoaderUtil() {
-		PortalClassLoaderUtil.setClassLoader(PortalImpl.class.getClassLoader());
-	}
-
-	private DDMFormTemplateContextFactoryImpl _ddmFormTemplateContextFactory;
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
-	private Language _language;
 	private Locale _originalSiteDefaultLocale;
-	private final Portal _portal = new PortalImpl();
 	private HttpServletRequest _request;
 
 }

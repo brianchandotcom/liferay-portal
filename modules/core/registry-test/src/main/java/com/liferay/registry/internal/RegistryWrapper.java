@@ -163,6 +163,11 @@ public class RegistryWrapper implements Registry {
 		return _registry.getServices(className, filterString);
 	}
 
+	@Override
+	public String getSymbolicName(ClassLoader classLoader) {
+		return _registry.getSymbolicName(classLoader);
+	}
+
 	public Registry getWrappedRegistry() {
 		return _registry;
 	}

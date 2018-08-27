@@ -91,6 +91,8 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws PortalException {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
 		setUpPortalUtil();
 		setUpServiceTrackerCollections();
 

@@ -32,72 +32,74 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 }
 %>
 
-<div class="site-pages-variation taglib-header">
-	<a class="icon-monospaced list-unstyled portlet-icon-back text-default" href="<%= HtmlUtil.escapeAttribute(redirect) %>" title="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(resourceBundle, "back")) %>">
-		<liferay-ui:icon
-			icon="angle-left"
-			markupView="lexicon"
-		/>
-	</a>
-
-	<h3 class="header-title">
-		<span>
-			<%= HtmlUtil.escape(LanguageUtil.get(resourceBundle, "merge-site-pages-variation")) %>
-		</span>
-	</h3>
-</div>
-
-<div id="<portlet:namespace />mergeLayoutSetBranch">
-	<portlet:actionURL name="mergeLayoutSetBranch" var="mergeLayoutSetBranchURL">
-		<portlet:param name="mvcRenderCommandName" value="viewLayoutSetBranches" />
-	</portlet:actionURL>
-
-	<aui:form action="<%= mergeLayoutSetBranchURL %>" enctype="multipart/form-data" method="post" name="fm4">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-		<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
-		<aui:input name="mergeLayoutSetBranchId" type="hidden" />
-
-		<liferay-ui:search-container
-			id="layoutSetBranchesSearchContainer"
-			total="<%= layoutSetBranches.size() %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= layoutSetBranches %>"
+<div class="container-fluid-1280">
+	<div class="site-pages-variation taglib-header">
+		<a class="icon-monospaced list-unstyled portlet-icon-back text-default" href="<%= HtmlUtil.escapeAttribute(redirect) %>" title="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(resourceBundle, "back")) %>">
+			<liferay-ui:icon
+				icon="angle-left"
+				markupView="lexicon"
 			/>
+		</a>
 
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.model.LayoutSetBranch"
-				escapedModel="<%= true %>"
-				keyProperty="layoutSetBranchId"
-				modelVar="curLayoutSetBranch"
+		<h3 class="header-title header-title-with-overflow">
+			<span>
+				<%= HtmlUtil.escape(LanguageUtil.get(resourceBundle, "merge-site-pages-variation")) %>
+			</span>
+		</h3>
+	</div>
+
+	<div id="<portlet:namespace />mergeLayoutSetBranch">
+		<portlet:actionURL name="mergeLayoutSetBranch" var="mergeLayoutSetBranchURL">
+			<portlet:param name="mvcRenderCommandName" value="viewLayoutSetBranches" />
+		</portlet:actionURL>
+
+		<aui:form action="<%= mergeLayoutSetBranchURL %>" enctype="multipart/form-data" method="post" name="fm4">
+			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+			<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
+			<aui:input name="mergeLayoutSetBranchId" type="hidden" />
+
+			<liferay-ui:search-container
+				id="layoutSetBranchesSearchContainer"
+				total="<%= layoutSetBranches.size() %>"
 			>
-
-				<%
-				long curLayoutSetBranchId = curLayoutSetBranch.getLayoutSetBranchId();
-
-				String layoutSetBranchDisplayName = layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(curLayoutSetBranch);
-				%>
-
-				<liferay-ui:search-container-column-text
-					name="branch"
-					value="<%= layoutSetBranchDisplayName %>"
+				<liferay-ui:search-container-results
+					results="<%= layoutSetBranches %>"
 				/>
 
-				<liferay-ui:search-container-column-text>
-					<a class="layout-set-branch" data-layoutSetBranchId="<%= curLayoutSetBranchId %>" data-layoutSetBranchMessage="<%= LanguageUtil.format(request, "are-you-sure-you-want-to-merge-changes-from-x", layoutSetBranchDisplayName, false) %>" data-layoutSetBranchName="<%= HtmlUtil.escapeAttribute(curLayoutSetBranch.getName()) %>" href="#" id="<portlet:namespace /><%= curLayoutSetBranchId %>" onClick="<portlet:namespace />selectLayoutSetBranch('<%= curLayoutSetBranchId %>');">
-						<liferay-ui:message key="select" />
-					</a>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-row>
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.kernel.model.LayoutSetBranch"
+					escapedModel="<%= true %>"
+					keyProperty="layoutSetBranchId"
+					modelVar="curLayoutSetBranch"
+				>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				paginate="<%= false %>"
-				searchContainer="<%= searchContainer %>"
-			/>
-		</liferay-ui:search-container>
-	</aui:form>
+					<%
+					long curLayoutSetBranchId = curLayoutSetBranch.getLayoutSetBranchId();
+
+					String layoutSetBranchDisplayName = layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(curLayoutSetBranch);
+					%>
+
+					<liferay-ui:search-container-column-text
+						name="branch"
+						value="<%= layoutSetBranchDisplayName %>"
+					/>
+
+					<liferay-ui:search-container-column-text>
+						<a class="layout-set-branch" data-layoutSetBranchId="<%= curLayoutSetBranchId %>" data-layoutSetBranchMessage="<%= LanguageUtil.format(request, "are-you-sure-you-want-to-merge-changes-from-x", layoutSetBranchDisplayName, false) %>" data-layoutSetBranchName="<%= HtmlUtil.escapeAttribute(curLayoutSetBranch.getName()) %>" href="#" id="<portlet:namespace /><%= curLayoutSetBranchId %>" onClick="<portlet:namespace />selectLayoutSetBranch('<%= curLayoutSetBranchId %>');">
+							<liferay-ui:message key="select" />
+						</a>
+					</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+					paginate="<%= false %>"
+					searchContainer="<%= searchContainer %>"
+				/>
+			</liferay-ui:search-container>
+		</aui:form>
+	</div>
 </div>
 
 <aui:script>

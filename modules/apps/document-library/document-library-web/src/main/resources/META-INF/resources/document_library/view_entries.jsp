@@ -183,6 +183,30 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								%>
 
 								<c:choose>
+									<c:when test="<%= dlViewFileVersionDisplayContext.hasCustomThumbnail() %>">
+										<liferay-util:buffer
+											var="customThumbnailHtml"
+										>
+
+											<%
+											dlViewFileVersionDisplayContext.renderCustomThumbnail(request, response);
+											%>
+
+										</liferay-util:buffer>
+
+										<liferay-frontend:html-vertical-card
+											actionJsp="/document_library/file_entry_action.jsp"
+											actionJspServletContext="<%= application %>"
+											cssClass="entry-display-style"
+											html="<%= customThumbnailHtml %>"
+											resultRow="<%= row %>"
+											rowChecker="<%= entriesChecker %>"
+											title="<%= latestFileVersion.getTitle() %>"
+											url="<%= (rowURL != null) ? rowURL.toString() : null %>"
+										>
+											<%@ include file="/document_library/file_entry_vertical_card.jspf" %>
+										</liferay-frontend:html-vertical-card>
+									</c:when>
 									<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
 										<liferay-frontend:icon-vertical-card
 											actionJsp="/document_library/file_entry_action.jsp"

@@ -100,6 +100,7 @@ when checking against older versions.
 ### Changed
 - [LPS-83067]: Only update the `packageinfo` file when the suggested version and
 the newer version do not match.
+- [LPS-83067]: Update the [Liferay Ant BND] dependency to version 2.0.54.
 
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

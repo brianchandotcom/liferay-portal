@@ -41,8 +41,8 @@ import java.util.stream.Stream;
  */
 public final class StructureRepresentorUtil {
 
-	public static Function<DDMFormField,
-		List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
+	public static Function
+		<DDMFormField, List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
 			Function<DDMFormField, DDMFormFieldOptions> function) {
 
 		return ddmFormField -> Try.fromFallible(
@@ -58,8 +58,9 @@ public final class StructureRepresentorUtil {
 		);
 	}
 
-	public static Function<DDMFormField,
-		List<Map.Entry<String, LocalizedValue>>> getFieldOptions(String key) {
+	public static Function
+		<DDMFormField, List<Map.Entry<String, LocalizedValue>>> getFieldOptions(
+			String key) {
 
 		return getFieldOptions(
 			ddmFormField -> (DDMFormFieldOptions)ddmFormField.getProperty(key));

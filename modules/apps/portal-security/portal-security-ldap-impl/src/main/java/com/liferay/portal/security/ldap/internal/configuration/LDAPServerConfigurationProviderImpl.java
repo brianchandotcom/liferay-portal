@@ -418,9 +418,10 @@ public class LDAPServerConfigurationProviderImpl
 		super.configurationAdmin = configurationAdmin;
 	}
 
-	private final Map<Long,
-		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>>
-			_configurations = new ConcurrentHashMap<>();
+	private final Map
+		<Long,
+			Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>>
+				_configurations = new ConcurrentHashMap<>();
 	private final LDAPServerConfiguration _defaultLDAPServerConfiguration =
 		ConfigurableUtil.createConfigurable(
 			LDAPServerConfiguration.class, Collections.emptyMap());

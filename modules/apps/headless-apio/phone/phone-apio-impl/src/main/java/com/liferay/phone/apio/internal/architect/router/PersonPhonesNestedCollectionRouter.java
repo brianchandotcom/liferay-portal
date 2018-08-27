@@ -43,8 +43,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class PersonPhonesNestedCollectionRouter
-	implements NestedCollectionRouter<Phone, Long, PhoneIdentifier, Long,
-		PersonIdentifier> {
+	implements NestedCollectionRouter
+		<Phone, Long, PhoneIdentifier, Long, PersonIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<Phone, Long, Long> collectionRoutes(

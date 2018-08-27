@@ -445,9 +445,8 @@ public class AMImageRequestHandlerTest {
 				AMQuery amQuery = amImageQueryBuilderFunction.apply(
 					amImageQueryBuilderImpl);
 
-				Map<AMAttribute<AMImageProcessor, ?>,
-					Object> amAttributes =
-						amImageQueryBuilderImpl.getAMAttributes();
+				Map<AMAttribute<AMImageProcessor, ?>, Object> amAttributes =
+					amImageQueryBuilderImpl.getAMAttributes();
 
 				Object queryBuilderWidth = amAttributes.get(
 					AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);

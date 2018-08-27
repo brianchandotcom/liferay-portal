@@ -161,8 +161,8 @@ public class ServerEndpointConfigWrapper implements ServerEndpointConfig {
 
 		};
 
-	private ConcurrentNavigableMap<ServiceReference<Endpoint>,
-		ServiceObjectsConfigurator> _endpoints;
+	private ConcurrentNavigableMap
+		<ServiceReference<Endpoint>, ServiceObjectsConfigurator> _endpoints;
 	private final LogService _logService;
 	private ServerEndpointConfig _serverEndpointConfig;
 

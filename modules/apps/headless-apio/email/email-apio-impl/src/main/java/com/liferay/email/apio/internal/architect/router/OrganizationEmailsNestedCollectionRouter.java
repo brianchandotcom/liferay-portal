@@ -42,8 +42,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class OrganizationEmailsNestedCollectionRouter
-	implements NestedCollectionRouter<EmailAddress, Long, EmailIdentifier, Long,
-		OrganizationIdentifier> {
+	implements NestedCollectionRouter
+		<EmailAddress, Long, EmailIdentifier, Long, OrganizationIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<EmailAddress, Long, Long> collectionRoutes(

@@ -167,8 +167,8 @@ public class WikiEngineRendererImpl implements WikiEngineRenderer {
 					_bundleContext.ungetService(serviceReference);
 				}
 			},
-			new ServiceTrackerMapListener<String, WikiEngine,
-				List<WikiEngine>>() {
+			new ServiceTrackerMapListener
+				<String, WikiEngine, List<WikiEngine>>() {
 
 				@Override
 				public void keyEmitted(

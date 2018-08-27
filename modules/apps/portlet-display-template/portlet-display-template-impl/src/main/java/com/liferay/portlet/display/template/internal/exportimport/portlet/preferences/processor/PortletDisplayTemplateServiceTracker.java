@@ -82,9 +82,9 @@ public class PortletDisplayTemplateServiceTracker {
 		return dictionary;
 	}
 
-	private ServiceTrackerCustomizer<PortletDisplayTemplateRegister,
-		ServiceRegistration<Capability>> _getServiceTrackerCustomizer(
-			BundleContext bundleContext) {
+	private ServiceTrackerCustomizer
+		<PortletDisplayTemplateRegister, ServiceRegistration<Capability>>
+			_getServiceTrackerCustomizer(BundleContext bundleContext) {
 
 		return new ServiceTrackerCustomizer
 			<PortletDisplayTemplateRegister,
@@ -178,7 +178,8 @@ public class PortletDisplayTemplateServiceTracker {
 	@Reference(unbind = "-")
 	private PortletLocalService _portletLocalService;
 
-	private ServiceTracker<PortletDisplayTemplateRegister,
-		ServiceRegistration<Capability>> _serviceTracker;
+	private ServiceTracker
+		<PortletDisplayTemplateRegister, ServiceRegistration<Capability>>
+			_serviceTracker;
 
 }

@@ -100,11 +100,17 @@ public class SortParserImpl implements SortParser {
 			return _DEFAULT_ASC;
 		}
 
-		if (_ORDER_BY_ASC.equals(orderBy.toLowerCase())) {
+		if (_ORDER_BY_ASC.equals(
+				com.liferay.portal.kernel.util.StringUtil.toLowerCase(
+					orderBy))) {
+
 			return true;
 		}
 
-		if (_ORDER_BY_DESC.equals(orderBy.toLowerCase())) {
+		if (_ORDER_BY_DESC.equals(
+				com.liferay.portal.kernel.util.StringUtil.toLowerCase(
+					orderBy))) {
+
 			return false;
 		}
 

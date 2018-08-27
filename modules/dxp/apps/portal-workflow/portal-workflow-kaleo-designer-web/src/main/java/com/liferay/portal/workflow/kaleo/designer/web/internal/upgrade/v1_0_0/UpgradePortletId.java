@@ -25,7 +25,7 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
+			{
 				"2_WAR_kaleodesignerportlet",
 				KaleoDesignerPortletKeys.KALEO_DESIGNER
 			}

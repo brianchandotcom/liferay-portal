@@ -25,11 +25,11 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
+			{
 				"1_WAR_reportsportlet",
 				ReportsEngineConsolePortletKeys.REPORTS_ADMIN
 			},
-			new String[] {
+			{
 				"2_WAR_reportsportlet",
 				ReportsEngineConsolePortletKeys.DISPLAY_REPORTS
 			}

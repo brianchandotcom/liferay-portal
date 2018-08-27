@@ -244,7 +244,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	@Test
-	public void testBuildDirectoriesNonMatchingEmailAddress() throws Exception {
+	public void testBuildDirectoriesNonmatchingEmailAddress() throws Exception {
 		when(
 			userLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
@@ -280,7 +280,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	@Test
-	public void testBuildDirectoriesNonMatchingScreenName() throws Exception {
+	public void testBuildDirectoriesNonmatchingScreenName() throws Exception {
 		when(
 			userLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),

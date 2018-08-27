@@ -61,7 +61,7 @@ public class CoalescedPipeTest {
 	}
 
 	@Test
-	public void testNonBlockingTake() throws InterruptedException {
+	public void testNonblockingTake() throws InterruptedException {
 		CoalescedPipe<String> coalescedPipe = new CoalescedPipe<>();
 
 		coalescedPipe.put("test2");

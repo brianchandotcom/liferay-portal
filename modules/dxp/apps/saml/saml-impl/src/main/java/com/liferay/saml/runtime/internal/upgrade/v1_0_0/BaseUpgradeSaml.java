@@ -50,45 +50,48 @@ public abstract class BaseUpgradeSaml extends UpgradeProcess {
 		return value;
 	}
 
-	private static final Map<String, String> _defaultValues = new HashMap<>();
-
-	static {
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_IDP_ASSERTION_LIFETIME, "1800");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_IDP_METADATA_NAME_ID_ATTRIBUTE,
-			"emailAddress");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_IDP_METADATA_NAME_ID_FORMAT,
-			"urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_IDP_SSO_SESSION_CHECK_INTERVAL, "60");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_IDP_SSO_SESSION_MAX_AGE, "86400000");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_KEYSTORE_MANAGER_IMPL,
-			"com.liferay.saml.credential.FileSystemKeyStoreManagerImpl");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_KEYSTORE_PASSWORD, "liferay");
-		_defaultValues.put(LegacySamlPropsKeys.SAML_KEYSTORE_TYPE, "jks");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_METADATA_MAX_REFRESH_DELAY, "14400000");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_METADATA_MIN_REFRESH_DELAY, "300000");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_METADATA_REFRESH_INTERVAL, "30");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_REPLAY_CACHE_DURATION, "3600000");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_SP_AUTH_REQUEST_CHECK_INTERVAL, "60");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_SP_AUTH_REQUEST_MAX_AGE, "86400000");
-		_defaultValues.put(LegacySamlPropsKeys.SAML_SP_CLOCK_SKEW, "3000");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_SP_MESSAGE_CHECK_INTERVAL, "60");
-		_defaultValues.put(
-			LegacySamlPropsKeys.SAML_SP_NAME_ID_FORMAT,
-			"urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress");
-	}
+	private static final Map<String, String> _defaultValues =
+		new HashMap<String, String>() {
+			{
+				put(LegacySamlPropsKeys.SAML_IDP_ASSERTION_LIFETIME, "1800");
+				put(
+					LegacySamlPropsKeys.SAML_IDP_METADATA_NAME_ID_ATTRIBUTE,
+					"emailAddress");
+				put(
+					LegacySamlPropsKeys.SAML_IDP_METADATA_NAME_ID_FORMAT,
+					"urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress");
+				put(
+					LegacySamlPropsKeys.SAML_IDP_SSO_SESSION_CHECK_INTERVAL,
+					"60");
+				put(
+					LegacySamlPropsKeys.SAML_IDP_SSO_SESSION_MAX_AGE,
+					"86400000");
+				put(
+					LegacySamlPropsKeys.SAML_KEYSTORE_MANAGER_IMPL,
+					"com.liferay.saml.credential." +
+						"FileSystemKeyStoreManagerImpl");
+				put(LegacySamlPropsKeys.SAML_KEYSTORE_PASSWORD, "liferay");
+				put(LegacySamlPropsKeys.SAML_KEYSTORE_TYPE, "jks");
+				put(
+					LegacySamlPropsKeys.SAML_METADATA_MAX_REFRESH_DELAY,
+					"14400000");
+				put(
+					LegacySamlPropsKeys.SAML_METADATA_MIN_REFRESH_DELAY,
+					"300000");
+				put(LegacySamlPropsKeys.SAML_METADATA_REFRESH_INTERVAL, "30");
+				put(LegacySamlPropsKeys.SAML_REPLAY_CACHE_DURATION, "3600000");
+				put(
+					LegacySamlPropsKeys.SAML_SP_AUTH_REQUEST_CHECK_INTERVAL,
+					"60");
+				put(
+					LegacySamlPropsKeys.SAML_SP_AUTH_REQUEST_MAX_AGE,
+					"86400000");
+				put(LegacySamlPropsKeys.SAML_SP_CLOCK_SKEW, "3000");
+				put(LegacySamlPropsKeys.SAML_SP_MESSAGE_CHECK_INTERVAL, "60");
+				put(
+					LegacySamlPropsKeys.SAML_SP_NAME_ID_FORMAT,
+					"urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress");
+			}
+		};
 
 }

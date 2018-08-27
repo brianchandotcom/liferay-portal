@@ -48,8 +48,7 @@ public class SAMLCommandImpl
 	}
 
 	private final Function
-		<SAMLMessageContext
-			<InboundMessageType, OutboundMessageType, NameID>, T>
-				_samlMessageContextFunction;
+		<SAMLMessageContext<InboundMessageType, OutboundMessageType, NameID>, T>
+			_samlMessageContextFunction;
 
 }

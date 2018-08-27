@@ -100,7 +100,7 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {
+			{
 				"2_WAR_kaleoformsportlet",
 				KaleoFormsPortletKeys.KALEO_FORMS_ADMIN
 			}

@@ -141,7 +141,23 @@ public abstract class DocumentumObject
 	}
 
 	private static final Map<ExtRepositoryPermission, Integer> _permits =
-		new HashMap<>();
+		new HashMap<ExtRepositoryPermission, Integer>() {
+			{
+				put(ExtRepositoryPermission.ACCESS, Constants.DF_PERMIT_BROWSE);
+				put(
+					ExtRepositoryPermission.ADD_DOCUMENT,
+					Constants.DF_PERMIT_WRITE);
+				put(
+					ExtRepositoryPermission.ADD_FOLDER,
+					Constants.DF_PERMIT_WRITE);
+				put(
+					ExtRepositoryPermission.ADD_SUBFOLDER,
+					Constants.DF_PERMIT_WRITE);
+				put(ExtRepositoryPermission.DELETE, Constants.DF_PERMIT_DELETE);
+				put(ExtRepositoryPermission.UPDATE, Constants.DF_PERMIT_WRITE);
+				put(ExtRepositoryPermission.VIEW, Constants.DF_PERMIT_READ);
+			}
+		};
 	private static final Set<ExtRepositoryPermission>
 		_unsupportedExtRepositoryPermissions = EnumSet.of(
 			ExtRepositoryPermission.ADD_DISCUSSION,
@@ -149,21 +165,6 @@ public abstract class DocumentumObject
 			ExtRepositoryPermission.DELETE_DISCUSSION,
 			ExtRepositoryPermission.PERMISSIONS,
 			ExtRepositoryPermission.UPDATE_DISCUSSION);
-
-	static {
-		_permits.put(
-			ExtRepositoryPermission.ACCESS, Constants.DF_PERMIT_BROWSE);
-		_permits.put(
-			ExtRepositoryPermission.ADD_DOCUMENT, Constants.DF_PERMIT_WRITE);
-		_permits.put(
-			ExtRepositoryPermission.ADD_FOLDER, Constants.DF_PERMIT_WRITE);
-		_permits.put(
-			ExtRepositoryPermission.ADD_SUBFOLDER, Constants.DF_PERMIT_WRITE);
-		_permits.put(
-			ExtRepositoryPermission.DELETE, Constants.DF_PERMIT_DELETE);
-		_permits.put(ExtRepositoryPermission.UPDATE, Constants.DF_PERMIT_WRITE);
-		_permits.put(ExtRepositoryPermission.VIEW, Constants.DF_PERMIT_READ);
-	}
 
 	private final IDfSysObject _idfSysObject;
 

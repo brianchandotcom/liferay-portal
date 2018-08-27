@@ -1068,16 +1068,16 @@ public class SharepointWSRepository
 		{{_LIBRARY_NAME, _LIBRARY_PATH, _SERVER_VERSION, _SITE_URL}};
 
 	private static final Map<ExtRepositoryObjectType<?>, ObjectTypeFilter>
-		_objectTypeFilters = new HashMap<>();
-
-	static {
-		_objectTypeFilters.put(
-			ExtRepositoryObjectType.FILE, ObjectTypeFilter.FILES);
-		_objectTypeFilters.put(
-			ExtRepositoryObjectType.FOLDER, ObjectTypeFilter.FOLDERS);
-		_objectTypeFilters.put(
-			ExtRepositoryObjectType.OBJECT, ObjectTypeFilter.ALL);
-	}
+		_objectTypeFilters =
+			new HashMap<ExtRepositoryObjectType<?>, ObjectTypeFilter>() {
+				{
+					put(ExtRepositoryObjectType.FILE, ObjectTypeFilter.FILES);
+					put(
+						ExtRepositoryObjectType.FOLDER,
+						ObjectTypeFilter.FOLDERS);
+					put(ExtRepositoryObjectType.OBJECT, ObjectTypeFilter.ALL);
+				}
+			};
 
 	private ConnectionCache<SharepointConnection> _connectionCache;
 	private CredentialsProvider _credentialsProvider;

@@ -88,7 +88,6 @@ public class KaleoFormsAdminDisplayContext {
 
 	public List<DropdownItem> getActionItemsDropdownItems() {
 		return new DropdownItemList() {
-
 			{
 				add(
 					dropdownItem -> {
@@ -101,7 +100,6 @@ public class KaleoFormsAdminDisplayContext {
 						dropdownItem.setQuickAction(true);
 					});
 			}
-
 		};
 	}
 

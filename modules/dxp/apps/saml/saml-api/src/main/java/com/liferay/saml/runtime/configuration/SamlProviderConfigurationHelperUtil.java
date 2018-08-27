@@ -64,8 +64,8 @@ public class SamlProviderConfigurationHelperUtil {
 		return samlProviderConfigurationHelper.isRoleSp();
 	}
 
-	private static final ServiceTracker<SamlProviderConfigurationHelper,
-		SamlProviderConfigurationHelper>
+	private static final ServiceTracker
+		<SamlProviderConfigurationHelper, SamlProviderConfigurationHelper>
 			_serviceTracker = ServiceTrackerFactory.open(
 				SamlProviderConfigurationHelper.class);
 

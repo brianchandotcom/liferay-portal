@@ -665,22 +665,21 @@ public class SharepointQueryBuilder {
 	private static final LiferayQueryExplainer _liferayQueryExplainer =
 		new LiferayQueryExplainer();
 	private static final Map<String, String> _sharepointFields =
-		new HashMap<>();
+		new HashMap<String, String>() {
+			{
+				put(Field.CREATE_DATE, SharepointField.CREATE_DATE);
+				put(Field.FOLDER_ID, SharepointField.FOLDER_PATH);
+				put(Field.MODIFIED_DATE, SharepointField.MODIFIED_DATE);
+				put(Field.NAME, SharepointField.NAME);
+				put(Field.TITLE, SharepointField.NAME);
+				put(Field.USER_ID, SharepointField.MODIFIED_BY);
+				put(Field.USER_NAME, SharepointField.MODIFIED_BY);
+			}
+		};
 	private static final Set<String> _supportedFields = new HashSet<>(
 		Arrays.asList(
 			Field.CREATE_DATE, Field.FOLDER_ID, Field.MODIFIED_DATE, Field.NAME,
 			Field.TITLE, Field.USER_ID, Field.USER_NAME));
-
-	static {
-		_sharepointFields.put(Field.CREATE_DATE, SharepointField.CREATE_DATE);
-		_sharepointFields.put(Field.FOLDER_ID, SharepointField.FOLDER_PATH);
-		_sharepointFields.put(
-			Field.MODIFIED_DATE, SharepointField.MODIFIED_DATE);
-		_sharepointFields.put(Field.NAME, SharepointField.NAME);
-		_sharepointFields.put(Field.TITLE, SharepointField.NAME);
-		_sharepointFields.put(Field.USER_ID, SharepointField.MODIFIED_BY);
-		_sharepointFields.put(Field.USER_NAME, SharepointField.MODIFIED_BY);
-	}
 
 	private final ExtRepositoryQueryMapper _extRepositoryQueryMapper;
 	private final com.liferay.sharepoint.connector.schema.query.Query _query;

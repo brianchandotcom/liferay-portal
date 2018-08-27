@@ -762,7 +762,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	}
 
 	@Test
-	public void testGetSearchBaseWithNonLiferayTop() throws Exception {
+	public void testGetSearchBaseWithNonliferayTop() throws Exception {
 		DirectoryTree directoryTree = new DirectoryTree();
 
 		Dn dn = new Dn("o=test");

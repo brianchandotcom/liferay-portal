@@ -100,7 +100,29 @@ public abstract class SharepointWSObject
 	protected SharepointObject sharepointObject;
 
 	private static final Map<ExtRepositoryPermission, Permission> _permissions =
-		new EnumMap<>(ExtRepositoryPermission.class);
+		new EnumMap<ExtRepositoryPermission, Permission>(
+			ExtRepositoryPermission.class) {
+
+			{
+				put(ExtRepositoryPermission.ACCESS, Permission.VIEW_LIST_ITEMS);
+				put(
+					ExtRepositoryPermission.ADD_DOCUMENT,
+					Permission.ADD_LIST_ITEMS);
+				put(
+					ExtRepositoryPermission.ADD_FOLDER,
+					Permission.ADD_LIST_ITEMS);
+				put(
+					ExtRepositoryPermission.ADD_SUBFOLDER,
+					Permission.ADD_LIST_ITEMS);
+				put(
+					ExtRepositoryPermission.DELETE,
+					Permission.DELETE_LIST_ITEMS);
+				put(ExtRepositoryPermission.UPDATE, Permission.EDIT_LIST_ITEMS);
+				put(ExtRepositoryPermission.VIEW, Permission.VIEW_LIST_ITEMS);
+			}
+
+		};
+
 	private static final Set<ExtRepositoryPermission>
 		_unsupportedExtRepositoryPermissions = EnumSet.of(
 			ExtRepositoryPermission.ADD_DISCUSSION,
@@ -108,22 +130,5 @@ public abstract class SharepointWSObject
 			ExtRepositoryPermission.DELETE_DISCUSSION,
 			ExtRepositoryPermission.PERMISSIONS,
 			ExtRepositoryPermission.UPDATE_DISCUSSION);
-
-	static {
-		_permissions.put(
-			ExtRepositoryPermission.ACCESS, Permission.VIEW_LIST_ITEMS);
-		_permissions.put(
-			ExtRepositoryPermission.ADD_DOCUMENT, Permission.ADD_LIST_ITEMS);
-		_permissions.put(
-			ExtRepositoryPermission.ADD_FOLDER, Permission.ADD_LIST_ITEMS);
-		_permissions.put(
-			ExtRepositoryPermission.ADD_SUBFOLDER, Permission.ADD_LIST_ITEMS);
-		_permissions.put(
-			ExtRepositoryPermission.DELETE, Permission.DELETE_LIST_ITEMS);
-		_permissions.put(
-			ExtRepositoryPermission.UPDATE, Permission.EDIT_LIST_ITEMS);
-		_permissions.put(
-			ExtRepositoryPermission.VIEW, Permission.VIEW_LIST_ITEMS);
-	}
 
 }

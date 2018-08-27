@@ -15,3 +15,38 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<aui:form cssClass="container-fluid-1280" name="fm">
+	<liferay-ui:search-container
+		id="assetListEntries"
+		searchContainer="<%= assetListDisplayContext.getAssetListEntriesSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.asset.list.model.AssetListEntry"
+			keyProperty="assetListEntryId"
+			modelVar="assetListEntry"
+		>
+			<liferay-ui:search-container-column-icon
+				icon="list"
+				toggleRowChecker="<%= false %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				colspan="<%= 2 %>"
+			>
+				<h5>
+					<%= assetListEntry.getTitle() %>
+				</h5>
+
+				<h6 class="text-default">
+					<strong><%= assetListDisplayContext.getAssetListEntryType(assetListEntry.getType()) %></strong>
+				</h6>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			displayStyle="descriptive"
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</aui:form>

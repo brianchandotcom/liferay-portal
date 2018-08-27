@@ -103,6 +103,11 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean hasCustomThumbnail() {
+		return parentDisplayContext.hasCustomThumbnail();
+	}
+
+	@Override
 	public boolean hasPreview() {
 		return parentDisplayContext.hasPreview();
 	}
@@ -115,6 +120,14 @@ public class BaseDLViewFileVersionDisplayContext
 	@Override
 	public boolean isVersionInfoVisible() throws PortalException {
 		return parentDisplayContext.isVersionInfoVisible();
+	}
+
+	@Override
+	public void renderCustomThumbnail(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		parentDisplayContext.renderCustomThumbnail(request, response);
 	}
 
 	@Override

@@ -30,11 +30,10 @@ public class PortalReleaseJob extends BasePortalReleaseJob {
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			getJenkinsGitWorkingDirectory();
 
-		jobProperties.putAll(
-			JenkinsResultsParserUtil.getProperties(
-				new File(
-					jenkinsGitWorkingDirectory.getWorkingDirectory(),
-					"commands/dependencies/test-portal-release.properties")));
+		jobPropertiesFiles.add(
+			new File(
+				jenkinsGitWorkingDirectory.getWorkingDirectory(),
+				"commands/dependencies/test-portal-release.properties"));
 	}
 
 	@Override
@@ -56,7 +55,7 @@ public class PortalReleaseJob extends BasePortalReleaseJob {
 		}
 
 		String testBatchNamesString = JenkinsResultsParserUtil.getProperty(
-			jobProperties,
+			getJobProperties(),
 			"test.batch.names.optional[" + _portalReleaseRef + "]");
 
 		return getSetFromString(testBatchNamesString);

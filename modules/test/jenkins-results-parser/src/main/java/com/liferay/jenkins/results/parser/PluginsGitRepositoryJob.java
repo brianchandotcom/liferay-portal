@@ -29,7 +29,7 @@ public class PluginsGitRepositoryJob
 	@Override
 	public Set<String> getBatchNames() {
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names");
+			getJobProperties(), "test.batch.names");
 
 		return getSetFromString(testBatchNames);
 	}
@@ -37,7 +37,7 @@ public class PluginsGitRepositoryJob
 	@Override
 	public Set<String> getDistTypes() {
 		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.dist.app.servers");
+			getJobProperties(), "test.batch.dist.app.servers");
 
 		return getSetFromString(testBatchDistAppServers);
 	}
@@ -69,6 +69,8 @@ public class PluginsGitRepositoryJob
 		String propertyName = JenkinsResultsParserUtil.combine(
 			"test.batch.run.property.query[", testBatchName, "]");
 
+		Properties jobProperties = getJobProperties();
+
 		if (jobProperties.containsKey(propertyName)) {
 			String propertyValue = JenkinsResultsParserUtil.getProperty(
 				jobProperties, propertyName);
@@ -99,9 +101,8 @@ public class PluginsGitRepositoryJob
 				JenkinsResultsParserUtil.combine(
 					"portal.dir[", portalBranchName, "]")));
 
-		jobProperties.putAll(
-			JenkinsResultsParserUtil.getProperties(
-				new File(portalGitRepositoryDir, "test.properties")));
+		jobPropertiesFiles.add(
+			new File(portalGitRepositoryDir, "test.properties"));
 
 		portalGitWorkingDirectory =
 			(PortalGitWorkingDirectory)

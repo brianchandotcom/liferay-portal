@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -37,6 +38,8 @@ public class PortalAcceptancePullRequestJob
 
 	@Override
 	public Set<String> getBatchNames() {
+		Properties jobProperties = getJobProperties();
+
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
 			jobProperties, "test.batch.names[" + _testSuiteName + "]");
 
@@ -73,6 +76,8 @@ public class PortalAcceptancePullRequestJob
 
 	@Override
 	public Set<String> getDistTypes() {
+		Properties jobProperties = getJobProperties();
+
 		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
 			jobProperties,
 			"test.batch.dist.app.servers[" + _testSuiteName + "]");
@@ -95,6 +100,8 @@ public class PortalAcceptancePullRequestJob
 			JenkinsResultsParserUtil.combine(
 				"test.batch.run.property.query[", testBatchName, "]")
 		};
+
+		Properties jobProperties = getJobProperties();
 
 		for (String propertyName : propertyNames) {
 			if (jobProperties.containsKey(propertyName)) {

@@ -39,9 +39,8 @@ public class AMPropertyDistanceComparator
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia1,
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia2) {
 
-		for (Map.Entry
-				<AMAttribute<AMImageProcessor, ?>, ?>
-					entry : _amAttributes.entrySet()) {
+		for (Map.Entry<AMAttribute<AMImageProcessor, ?>, ?> entry :
+				_amAttributes.entrySet()) {
 
 			AMAttribute<AMImageProcessor, Object> amAttribute =
 				(AMAttribute<AMImageProcessor, Object>)entry.getKey();

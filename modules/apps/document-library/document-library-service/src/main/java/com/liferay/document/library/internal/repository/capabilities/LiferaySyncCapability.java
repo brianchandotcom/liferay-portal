@@ -187,11 +187,10 @@ public class LiferaySyncCapability
 	private final RepositoryEventListener
 		<RepositoryEventType.Add, Folder> _addFolderEventListener =
 			new SyncFolderRepositoryEventListener<>(DLSyncConstants.EVENT_ADD);
-	private final RepositoryEventListener
-		<RepositoryEventType.Delete, FileEntry>
-			_deleteFileEntryEventListener =
-				new SyncFileEntryRepositoryEventListener<>(
-					DLSyncConstants.EVENT_DELETE);
+	private final RepositoryEventListener<RepositoryEventType.Delete, FileEntry>
+		_deleteFileEntryEventListener =
+			new SyncFileEntryRepositoryEventListener<>(
+				DLSyncConstants.EVENT_DELETE);
 	private final RepositoryEventListener
 		<RepositoryEventType.Delete, Folder> _deleteFolderEventListener =
 			new SyncFolderRepositoryEventListener<>(
@@ -224,11 +223,10 @@ public class LiferaySyncCapability
 		<TrashRepositoryEventType.EntryTrashed, Folder>
 			_trashFolderEventListener = new SyncFolderRepositoryEventListener<>(
 				DLSyncConstants.EVENT_TRASH);
-	private final RepositoryEventListener
-		<RepositoryEventType.Update, FileEntry>
-			_updateFileEntryEventListener =
-				new SyncFileEntryRepositoryEventListener<>(
-					DLSyncConstants.EVENT_UPDATE);
+	private final RepositoryEventListener<RepositoryEventType.Update, FileEntry>
+		_updateFileEntryEventListener =
+			new SyncFileEntryRepositoryEventListener<>(
+				DLSyncConstants.EVENT_UPDATE);
 	private final RepositoryEventListener
 		<RepositoryEventType.Update, Folder> _updateFolderEventListener =
 			new SyncFolderRepositoryEventListener<>(

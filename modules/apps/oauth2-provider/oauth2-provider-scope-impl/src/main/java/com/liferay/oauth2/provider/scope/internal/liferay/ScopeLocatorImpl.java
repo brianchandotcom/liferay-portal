@@ -333,9 +333,8 @@ public class ScopeLocatorImpl implements ScopeLocator {
 	}
 
 	protected void setScopeFinderByNameServiceTrackerMap(
-		ServiceTrackerMap
-			<String, ServiceReferenceServiceTuple<?, ScopeFinder>>
-				scopeFinderByNameServiceTrackerMap) {
+		ServiceTrackerMap<String, ServiceReferenceServiceTuple<?, ScopeFinder>>
+			scopeFinderByNameServiceTrackerMap) {
 
 		_scopeFinderByNameServiceTrackerMap =
 			scopeFinderByNameServiceTrackerMap;

@@ -60,8 +60,8 @@ public class DLPortletToolbarContributorRegistry {
 
 	private DLPortletToolbarContributor _dlPortletToolbarContributor;
 	private ServiceTrackerList
-		<DLPortletToolbarContributor,
-			DLPortletToolbarContributor> _serviceTrackerList;
+		<DLPortletToolbarContributor, DLPortletToolbarContributor>
+			_serviceTrackerList;
 
 	private class AggregateDLPortletToolbarContributor
 		implements DLPortletToolbarContributor {

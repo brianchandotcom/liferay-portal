@@ -46,9 +46,8 @@ public class AMAttributeDistanceComparator
 	}
 
 	public AMAttributeDistanceComparator(
-		Map
-			<AMAttribute<AMImageProcessor, ?>,
-				AMImageQueryBuilder.SortOrder> sortCriteria) {
+		Map<AMAttribute<AMImageProcessor, ?>, AMImageQueryBuilder.SortOrder>
+			sortCriteria) {
 
 		_sortCriteria = (Map)sortCriteria;
 	}

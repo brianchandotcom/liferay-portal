@@ -1198,8 +1198,8 @@ public class DefaultExportImportContentProcessorTest {
 		{LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN};
 	private static String _oldLayoutFriendlyURLPrivateUserServletMapping;
 	private static ServiceTracker
-		<ExportImportContentProcessor,
-			ExportImportContentProcessor> _serviceTracker;
+		<ExportImportContentProcessor, ExportImportContentProcessor>
+			_serviceTracker;
 
 	private Locale _defaultLocale;
 	private ExportImportContentProcessor<String> _exportImportContentProcessor;

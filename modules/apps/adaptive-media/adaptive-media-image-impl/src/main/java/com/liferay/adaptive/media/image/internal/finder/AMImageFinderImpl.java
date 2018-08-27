@@ -59,9 +59,8 @@ public class AMImageFinderImpl implements AMImageFinder {
 	@Override
 	public Stream<AdaptiveMedia<AMImageProcessor>> getAdaptiveMediaStream(
 			Function
-				<AMImageQueryBuilder,
-					AMQuery<FileVersion, AMImageProcessor>>
-						amImageQueryBuilderFunction)
+				<AMImageQueryBuilder, AMQuery<FileVersion, AMImageProcessor>>
+					amImageQueryBuilderFunction)
 		throws PortalException {
 
 		if (amImageQueryBuilderFunction == null) {

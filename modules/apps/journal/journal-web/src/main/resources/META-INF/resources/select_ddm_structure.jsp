@@ -19,7 +19,7 @@
 <%
 JournalSelectDDMStructureDisplayContext journalSelectDDMStructureDisplayContext = new JournalSelectDDMStructureDisplayContext(renderRequest, renderResponse);
 
-SearchContainer<DDMStructure> structureSearch = journalSelectDDMStructureDisplayContext.getStructureSearch();
+SearchContainer<DDMStructure> ddmStructureSearch = journalSelectDDMStructureDisplayContext.getDDMStructureSearch();
 %>
 
 <clay:management-toolbar
@@ -34,18 +34,18 @@ SearchContainer<DDMStructure> structureSearch = journalSelectDDMStructureDisplay
 	sortingURL="<%= journalSelectDDMStructureDisplayContext.getSortingURL() %>"
 />
 
-<aui:form cssClass="container-fluid-1280" method="post" name="selectStructureFm">
+<aui:form cssClass="container-fluid-1280" method="post" name="selectDDMStructureFm">
 	<liferay-ui:search-container
-		searchContainer="<%= structureSearch %>"
+		searchContainer="<%= ddmStructureSearch %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 			keyProperty="structureId"
-			modelVar="structure"
+			modelVar="ddmStructure"
 		>
 			<liferay-ui:search-container-column-text
 				name="id"
-				value="<%= String.valueOf(structure.getStructureId()) %>"
+				value="<%= String.valueOf(ddmStructure.getStructureId()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
@@ -53,22 +53,22 @@ SearchContainer<DDMStructure> structureSearch = journalSelectDDMStructureDisplay
 				name="name"
 			>
 				<c:choose>
-					<c:when test="<%= structure.getStructureId() != journalSelectDDMStructureDisplayContext.getClassPK() %>">
+					<c:when test="<%= ddmStructure.getStructureId() != journalSelectDDMStructureDisplayContext.getClassPK() %>">
 
 						<%
 						Map<String, Object> data = new HashMap<>();
 
-						data.put("ddmstructureid", structure.getStructureId());
-						data.put("ddmstructurekey", structure.getStructureKey());
-						data.put("name", structure.getName(locale));
+						data.put("ddmstructureid", ddmStructure.getStructureId());
+						data.put("ddmstructurekey", ddmStructure.getStructureKey());
+						data.put("name", ddmStructure.getName(locale));
 						%>
 
 						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= HtmlUtil.escape(structure.getUnambiguousName(structureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
+							<%= HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 						</aui:a>
 					</c:when>
 					<c:otherwise>
-						<%= HtmlUtil.escape(structure.getUnambiguousName(structureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
+						<%= HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>
@@ -77,12 +77,12 @@ SearchContainer<DDMStructure> structureSearch = journalSelectDDMStructureDisplay
 				cssClass="table-cell-content"
 				name="description"
 				truncate="<% true %>"
-				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
+				value="<%= HtmlUtil.escape(ddmStructure.getDescription(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
 				name="modified-date"
-				value="<%= structure.getModifiedDate() %>"
+				value="<%= ddmStructure.getModifiedDate() %>"
 			/>
 		</liferay-ui:search-container-row>
 
@@ -94,5 +94,5 @@ SearchContainer<DDMStructure> structureSearch = journalSelectDDMStructureDisplay
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectStructureFm', '<%= HtmlUtil.escapeJS(journalSelectDDMStructureDisplayContext.getEventName()) %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectDDMStructureFm', '<%= HtmlUtil.escapeJS(journalSelectDDMStructureDisplayContext.getEventName()) %>');
 </aui:script>

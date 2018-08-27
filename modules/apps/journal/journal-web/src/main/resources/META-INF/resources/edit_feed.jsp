@@ -197,9 +197,9 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 					<aui:input name="structure" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
 
-					<aui:button name="selectStructureButton" onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
+					<aui:button name="selectDDMStructureButton" onClick='<%= renderResponse.getNamespace() + "openDDMStructureSelector();" %>' value="select" />
 
-					<aui:button disabled="<%= Validator.isNull(ddmStructureKey) %>" name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
+					<aui:button disabled="<%= Validator.isNull(ddmStructureKey) %>" name="removeDDMStructureButton" onClick='<%= renderResponse.getNamespace() + "removeDDMStructure();" %>' value="remove" />
 				</div>
 
 				<c:choose>
@@ -340,16 +340,16 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 </liferay-frontend:edit-form>
 
 <aui:script>
-	function <portlet:namespace />openStructureSelector() {
+	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
 					constrain: true,
 					modal: true
 				},
-				eventName: '<portlet:namespace />selectStructure',
+				eventName: '<portlet:namespace />selectDDMStructure',
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /></portlet:renderURL>'
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
 			},
 			function(event) {
 				if (document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value != event.ddmstructurekey) {
@@ -366,7 +366,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		);
 	}
 
-	function <portlet:namespace />removeStructure() {
+	function <portlet:namespace />removeDDMStructure() {
 		document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value = '';
 		document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value = '';
 		document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value = '';

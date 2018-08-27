@@ -38,12 +38,12 @@ public class DDMTemplatePermission {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long templateId,
+			PermissionChecker permissionChecker, long ddmTemplateId,
 			String actionId)
 		throws PortalException {
 
 		return _ddmTemplateModelResourcePermission.contains(
-			permissionChecker, templateId, actionId);
+			permissionChecker, ddmTemplateId, actionId);
 	}
 
 	@Reference(

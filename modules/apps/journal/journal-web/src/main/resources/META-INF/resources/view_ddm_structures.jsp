@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalStructuresDisplayContext journalStructuresDisplayContext = new JournalStructuresDisplayContext(renderRequest, renderResponse);
+JournalDDMStructuresDisplayContext journalDDMStructuresDisplayContext = new JournalDDMStructuresDisplayContext(renderRequest, renderResponse);
 %>
 
 <liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
@@ -30,34 +30,34 @@ JournalStructuresDisplayContext journalStructuresDisplayContext = new JournalStr
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= journalStructuresDisplayContext.getActionItemsDropdownItems() %>"
-	clearResultsURL="<%= journalStructuresDisplayContext.getClearResultsURL() %>"
+	actionDropdownItems="<%= journalDDMStructuresDisplayContext.getActionItemsDropdownItems() %>"
+	clearResultsURL="<%= journalDDMStructuresDisplayContext.getClearResultsURL() %>"
 	componentId="ddmStructureManagementToolbar"
-	creationMenu="<%= journalStructuresDisplayContext.isShowAddButton() ? journalStructuresDisplayContext.getCreationMenu() : null %>"
-	disabled="<%= journalStructuresDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= journalStructuresDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= journalStructuresDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= journalStructuresDisplayContext.getSearchActionURL() %>"
+	creationMenu="<%= journalDDMStructuresDisplayContext.isShowAddButton() ? journalDDMStructuresDisplayContext.getCreationMenu() : null %>"
+	disabled="<%= journalDDMStructuresDisplayContext.isDisabledManagementBar() %>"
+	filterDropdownItems="<%= journalDDMStructuresDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= journalDDMStructuresDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= journalDDMStructuresDisplayContext.getSearchActionURL() %>"
 	searchContainerId="ddmStructures"
-	sortingOrder="<%= journalStructuresDisplayContext.getOrderByType() %>"
-	sortingURL="<%= journalStructuresDisplayContext.getSortingURL() %>"
+	sortingOrder="<%= journalDDMStructuresDisplayContext.getOrderByType() %>"
+	sortingURL="<%= journalDDMStructuresDisplayContext.getSortingURL() %>"
 />
 
-<portlet:actionURL name="deleteStructure" var="deleteStructureURL">
+<portlet:actionURL name="/journal/delete_ddm_structure" var="deleteDDMStructureURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= deleteDDMStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-ui:search-container
 		id="ddmStructures"
-		searchContainer="<%= journalStructuresDisplayContext.getStructureSearch() %>"
+		searchContainer="<%= journalDDMStructuresDisplayContext.getDDMStructureSearch() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 			keyProperty="structureId"
-			modelVar="structure"
+			modelVar="ddmStructure"
 		>
 			<liferay-ui:search-container-column-text
 				name="id"
@@ -67,13 +67,13 @@ JournalStructuresDisplayContext journalStructuresDisplayContext = new JournalStr
 			<%
 			String rowHREF = StringPool.BLANK;
 
-			if (DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE)) {
+			if (DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE)) {
 				PortletURL rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcPath", "/edit_structure.jsp");
+				rowURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
-				rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
+				rowURL.setParameter("classPK", String.valueOf(ddmStructure.getStructureId()));
 
 				rowHREF = rowURL.toString();
 			}
@@ -83,18 +83,18 @@ JournalStructuresDisplayContext journalStructuresDisplayContext = new JournalStr
 				cssClass="table-cell-content"
 				href="<%= rowHREF %>"
 				name="name"
-				value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
+				value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="description"
 				truncate="<%= true %>"
-				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
+				value="<%= HtmlUtil.escape(ddmStructure.getDescription(locale)) %>"
 			/>
 
 			<%
-			Group group = GroupLocalServiceUtil.getGroup(structure.getGroupId());
+			Group group = GroupLocalServiceUtil.getGroup(ddmStructure.getGroupId());
 			%>
 
 			<liferay-ui:search-container-column-text
@@ -104,11 +104,11 @@ JournalStructuresDisplayContext journalStructuresDisplayContext = new JournalStr
 
 			<liferay-ui:search-container-column-date
 				name="modified-date"
-				value="<%= structure.getModifiedDate() %>"
+				value="<%= ddmStructure.getModifiedDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				path="/structure_action.jsp"
+				path="/ddm_structure_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
@@ -120,14 +120,14 @@ JournalStructuresDisplayContext journalStructuresDisplayContext = new JournalStr
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	var deleteStructures = function() {
+	var deleteDDMStructures = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}
 	}
 
 	var ACTIONS = {
-		'deleteStructures': deleteStructures
+		'deleteDDMStructures': deleteDDMStructures
 	};
 
 	Liferay.componentReady('ddmStructureManagementToolbar').then(

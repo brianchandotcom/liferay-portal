@@ -19,32 +19,32 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-long structureId = ParamUtil.getLong(request, "structureId");
+long ddmStructureId = ParamUtil.getLong(request, "ddmStructureId");
 
-DDMStructure structure = DDMStructureLocalServiceUtil.fetchStructure(structureId);
+DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(ddmStructureId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(LanguageUtil.format(request, "copy-x", structure.getName(locale), false));
+renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmStructure.getName(locale), false));
 %>
 
-<portlet:actionURL name="/journal/copy_structure" var="copyStructureURL">
-	<portlet:param name="mvcPath" value="/copy_structure.jsp" />
+<portlet:actionURL name="/journal/copy_ddm_structure" var="copyDDMStructureURL">
+	<portlet:param name="mvcPath" value="/copy_ddm_structure.jsp" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form
-	action="<%= copyStructureURL %>"
+	action="<%= copyDDMStructureURL %>"
 	method="post"
 	name="fm"
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="structureId" type="hidden" value="<%= String.valueOf(structure.getStructureId()) %>" />
+	<aui:input name="ddmStructureId" type="hidden" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 
-		<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
+		<aui:model-context bean="<%= ddmStructure %>" model="<%= DDMStructure.class %>" />
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>

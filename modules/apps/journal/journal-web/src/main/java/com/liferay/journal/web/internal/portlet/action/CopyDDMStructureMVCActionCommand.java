@@ -44,18 +44,19 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/copy_structure"
+		"mvc.command.name=/journal/copy_ddm_structure"
 	},
 	service = MVCActionCommand.class
 )
-public class CopyStructureMVCActionCommand extends BaseMVCActionCommand {
+public class CopyDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
@@ -68,14 +69,14 @@ public class CopyStructureMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
-		DDMStructure structure = _ddmStructureService.copyStructure(
-			structureId, nameMap, descriptionMap, serviceContext);
+		DDMStructure ddmStructure = _ddmStructureService.copyStructure(
+			ddmStructureId, nameMap, descriptionMap, serviceContext);
 
 		if (copyTemplates) {
 			_ddmTemplateService.copyTemplates(
-				_portal.getClassNameId(DDMStructure.class), structureId,
+				_portal.getClassNameId(DDMStructure.class), ddmStructureId,
 				_portal.getClassNameId(JournalArticle.class),
-				structure.getStructureId(),
+				ddmStructure.getStructureId(),
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, serviceContext);
 		}
 	}

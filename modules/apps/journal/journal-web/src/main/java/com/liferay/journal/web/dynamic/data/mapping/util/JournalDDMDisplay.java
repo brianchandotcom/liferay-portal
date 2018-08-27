@@ -313,7 +313,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 					liferayPortletRequest, JournalPortletKeys.JOURNAL,
 					PortletRequest.RENDER_PHASE);
 
-				portletURL.setParameter("mvcPath", "/view_structures.jsp");
+				portletURL.setParameter("mvcPath", "/view_ddm_structures.jsp");
 
 				return portletURL.toString();
 			}

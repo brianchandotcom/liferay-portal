@@ -36,22 +36,24 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/get_structure"
+		"mvc.command.name=/journal/get_ddm_structure"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetStructureMVCResourceCommand extends BaseMVCResourceCommand {
+public class GetDDMStructureMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		long structureId = ParamUtil.getLong(resourceRequest, "structureId");
+		long ddmStructureId = ParamUtil.getLong(
+			resourceRequest, "ddmStructureId");
 
-		DDMStructure structure = _ddmStructureService.getStructure(structureId);
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			ddmStructureId);
 
-		String definition = structure.getDefinition();
+		String definition = ddmStructure.getDefinition();
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, null, definition.getBytes(),

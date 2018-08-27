@@ -15,11 +15,11 @@
 --%>
 
 <%
-boolean changeableDefaultLanguage = journalEditStructuresDisplayContext.changeableDefaultLanguage();
+boolean changeableDefaultLanguage = journalEditDDMStructuresDisplayContext.changeableDefaultLanguage();
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
-DDMForm ddmForm = journalEditStructuresDisplayContext.getDDMForm();
+DDMForm ddmForm = journalEditDDMStructuresDisplayContext.getDDMForm();
 
 if (ddmForm != null) {
 	String ddmFormDefaultLanguageId = LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
@@ -41,7 +41,7 @@ if (ddmForm != null) {
 >
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">
-			<aui:translation-manager availableLocales="<%= journalEditStructuresDisplayContext.getAvailableLocales() %>" changeableDefaultLanguage="<%= changeableDefaultLanguage %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" initialize="<%= false %>" readOnly="<%= false %>" />
+			<aui:translation-manager availableLocales="<%= journalEditDDMStructuresDisplayContext.getAvailableLocales() %>" changeableDefaultLanguage="<%= changeableDefaultLanguage %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" initialize="<%= false %>" readOnly="<%= false %>" />
 
 			<div class="diagram-builder form-builder" id="<portlet:namespace />formBuilder">
 				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">
@@ -199,7 +199,7 @@ if (ddmForm != null) {
 		}
 	};
 
-	var availableFields = A.Object.getValue(window, '<%= HtmlUtil.escapeJS(journalEditStructuresDisplayContext.getAvailableFields()) %>'.split('.'));
+	var availableFields = A.Object.getValue(window, '<%= HtmlUtil.escapeJS(journalEditDDMStructuresDisplayContext.getAvailableFields()) %>'.split('.'));
 
 	if (A.Lang.isFunction(availableFields)) {
 		availableFields = availableFields(A, Liferay.FormBuilder);
@@ -211,10 +211,10 @@ if (ddmForm != null) {
 			availableFields: availableFields,
 			boundingBox: '#<portlet:namespace />formBuilder',
 			enableEditing: false,
-			fieldNameEditionDisabled: <%= (structure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(structure.getStructureId()) > 0) %>,
+			fieldNameEditionDisabled: <%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(ddmStructure.getStructureId()) > 0) %>,
 
-			<c:if test="<%= Validator.isNotNull(journalEditStructuresDisplayContext.getFields()) %>">
-				fields: <%= journalEditStructuresDisplayContext.getFields() %>,
+			<c:if test="<%= Validator.isNotNull(journalEditDDMStructuresDisplayContext.getFields()) %>">
+				fields: <%= journalEditDDMStructuresDisplayContext.getFields() %>,
 			</c:if>
 
 			portletNamespace: '<portlet:namespace />',
@@ -223,14 +223,14 @@ if (ddmForm != null) {
 			srcNode: '#<portlet:namespace />formBuilderContent',
 			translationManager: {
 
-				<c:if test="<%= Validator.isNotNull(journalEditStructuresDisplayContext.getAvailableLocalesJSONArrayString()) %>">
-					availableLocales: <%= journalEditStructuresDisplayContext.getAvailableLocalesJSONArrayString() %>,
+				<c:if test="<%= Validator.isNotNull(journalEditDDMStructuresDisplayContext.getAvailableLocalesJSONArrayString()) %>">
+					availableLocales: <%= journalEditDDMStructuresDisplayContext.getAvailableLocalesJSONArrayString() %>,
 				</c:if>
 
 				boundingBox: '#<portlet:namespace />translationManager',
 				changeableDefaultLanguage: <%= changeableDefaultLanguage %>,
 				defaultLocale: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
-				localesMap: <%= journalEditStructuresDisplayContext.getLocalesMap() %>,
+				localesMap: <%= journalEditDDMStructuresDisplayContext.getLocalesMap() %>,
 				srcNode: '#<portlet:namespace />translationManager .lfr-translation-manager-content'
 			}
 		}

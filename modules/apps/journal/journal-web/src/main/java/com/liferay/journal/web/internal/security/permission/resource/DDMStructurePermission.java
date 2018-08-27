@@ -30,24 +30,24 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMStructurePermission {
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, DDMStructure structure,
+			PermissionChecker permissionChecker, DDMStructure ddmStructure,
 			String actionId)
 		throws PortalException {
 
 		return _ddmStructureModelResourcePermission.contains(
-			permissionChecker, structure, actionId);
+			permissionChecker, ddmStructure, actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long structureId,
+			PermissionChecker permissionChecker, long ddmStructureId,
 			String actionId)
 		throws PortalException {
 
 		return _ddmStructureModelResourcePermission.contains(
-			permissionChecker, structureId, actionId);
+			permissionChecker, ddmStructureId, actionId);
 	}
 
-	public static boolean containsAddStructurePermission(
+	public static boolean containsAddDDMStructurePermission(
 			PermissionChecker permissionChecker, long groupId, long classNameId)
 		throws PortalException {
 

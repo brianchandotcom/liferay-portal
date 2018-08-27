@@ -19,7 +19,7 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-DDMStructure structure = (DDMStructure)row.getObject();
+DDMStructure ddmStructure = (DDMStructure)row.getObject();
 %>
 
 <liferay-ui:icon-menu
@@ -29,41 +29,41 @@ DDMStructure structure = (DDMStructure)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="ediDDMStructuretURL">
+			<portlet:param name="mvcPath" value="/edit_ddm_structure.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
+			<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
 			message="edit"
-			url="<%= editURL %>"
+			url="<%= ediDDMStructuretURL %>"
 		/>
 	</c:if>
 
-	<portlet:renderURL var="editStructureDefaultValuesURL">
+	<portlet:renderURL var="editDDMStructureDefaultValuesURL">
 		<portlet:param name="mvcPath" value="/edit_article.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(structure.getGroupId()) %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(ddmStructure.getGroupId()) %>" />
 		<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
-		<portlet:param name="ddmStructureKey" value="<%= structure.getStructureKey() %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+		<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
 	</portlet:renderURL>
 
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE) %>">
 		<liferay-ui:icon
 			message="edit-default-values"
-			url="<%= editStructureDefaultValuesURL %>"
+			url="<%= editDDMStructureDefaultValuesURL %>"
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.VIEW) %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.VIEW) %>">
 		<liferay-portlet:renderURL portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING %>" var="manageViewURL">
 			<portlet:param name="mvcPath" value="/view_template.jsp" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
-			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(structure.getClassNameId()) %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(ddmStructure.getClassNameId()) %>" />
 			<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />
 			<portlet:param name="showHeader" value="<%= Boolean.TRUE.toString() %>" />
 		</liferay-portlet:renderURL>
@@ -74,11 +74,11 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
-			modelResource="<%= DDMStructurePermission.getStructureModelResourceName(structure.getClassNameId()) %>"
-			modelResourceDescription="<%= structure.getName(locale) %>"
-			resourcePrimKey="<%= String.valueOf(structure.getStructureId()) %>"
+			modelResource="<%= DDMStructurePermission.getStructureModelResourceName(ddmStructure.getClassNameId()) %>"
+			modelResourceDescription="<%= ddmStructure.getName(locale) %>"
+			resourcePrimKey="<%= String.valueOf(ddmStructure.getStructureId()) %>"
 			var="permissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
@@ -95,23 +95,23 @@ DDMStructure structure = (DDMStructure)row.getObject();
 	Group scopeGroup = themeDisplay.getScopeGroup();
 	%>
 
-	<c:if test="<%= (!scopeGroup.hasLocalOrRemoteStagingGroup() || scopeGroup.isStagingGroup()) && DDMStructurePermission.containsAddStructurePermission(permissionChecker, scopeGroupId, structure.getClassNameId()) %>">
-		<portlet:renderURL var="copyURL">
-			<portlet:param name="mvcPath" value="/copy_structure.jsp" />
+	<c:if test="<%= (!scopeGroup.hasLocalOrRemoteStagingGroup() || scopeGroup.isStagingGroup()) && DDMStructurePermission.containsAddDDMStructurePermission(permissionChecker, scopeGroupId, ddmStructure.getClassNameId()) %>">
+		<portlet:renderURL var="copyDDMStructureURL">
+			<portlet:param name="mvcPath" value="/copy_ddm_structure.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
+			<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
 			message="copy"
-			url="<%= copyURL %>"
+			url="<%= copyDDMStructureURL %>"
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="/journal/delete_structure" var="deleteURL">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="/journal/delete_ddm_structure" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
+			<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

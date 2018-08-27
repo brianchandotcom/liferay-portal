@@ -811,7 +811,7 @@ public class JournalDisplayContext {
 								currentItem.equals("structures"));
 							navigationItem.setHref(
 								_liferayPortletResponse.createRenderURL(),
-								"mvcPath", "/view_structures.jsp");
+								"mvcPath", "/view_ddm_structures.jsp");
 							navigationItem.setLabel(
 								LanguageUtil.get(_request, "structures"));
 						});
@@ -1692,7 +1692,7 @@ public class JournalDisplayContext {
 					dropdownItem -> {
 						dropdownItem.setActive(isNavigationStructure());
 						dropdownItem.putData(
-							"action", "openStructuresSelector");
+							"action", "openDDMStructuresSelector");
 						dropdownItem.setLabel(sb.toString());
 					});
 			}

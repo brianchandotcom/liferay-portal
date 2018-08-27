@@ -307,7 +307,7 @@ renderResponse.setTitle(title);
 								/>
 							</liferay-ui:search-container>
 
-							<aui:button id="selectStructure" value="choose-structure" />
+							<aui:button id="selectDMMStructure" value="choose-structure" />
 						</div>
 					</c:if>
 
@@ -399,7 +399,7 @@ renderResponse.setTitle(title);
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
 
-	$('#<portlet:namespace />selectStructure').on(
+	$('#<portlet:namespace />selectDDMStructure').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -408,9 +408,9 @@ renderResponse.setTitle(title);
 						constrain: true,
 						modal: true
 					},
-					eventName: '<portlet:namespace />selectStructure',
+					eventName: '<portlet:namespace />selectDDMStructure',
 					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /></portlet:renderURL>'
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
 				},
 				function(event) {
 					var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';

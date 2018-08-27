@@ -21,14 +21,12 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
 import java.util.Map;
@@ -46,22 +44,21 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/add_structure"
+		"mvc.command.name=/journal/update_ddm_structure"
 	},
 	service = MVCActionCommand.class
 )
-public class AddStructureMVCActionCommand extends BaseMVCActionCommand {
+public class UpdateDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String structureKey = ParamUtil.getString(
-			actionRequest, "structureKey");
-		long parentStructureId = ParamUtil.getLong(
-			actionRequest, "parentStructureId",
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
+		long parentDDMStructureId = ParamUtil.getLong(
+			actionRequest, "parentDDMStructureId",
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
@@ -72,16 +69,12 @@ public class AddStructureMVCActionCommand extends BaseMVCActionCommand {
 
 		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
-		String storageType = ParamUtil.getString(actionRequest, "storageType");
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
-		_ddmStructureService.addStructure(
-			groupId, parentStructureId,
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			structureKey, nameMap, descriptionMap, ddmForm, ddmFormLayout,
-			storageType, DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+		_ddmStructureService.updateStructure(
+			ddmStructureId, parentDDMStructureId, nameMap, descriptionMap,
+			ddmForm, ddmFormLayout, serviceContext);
 	}
 
 	@Reference
@@ -89,8 +82,5 @@ public class AddStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -34,31 +34,33 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/delete_structure"
+		"mvc.command.name=/journal/delete_ddm_structure"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteStructureMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteStructureIds = null;
+		long[] deleteDDMStructureIds = null;
 
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
 
-		if (structureId > 0) {
-			deleteStructureIds = new long[] {structureId};
+		if (ddmStructureId > 0) {
+			deleteDDMStructureIds = new long[] {ddmStructureId};
 		}
 		else {
-			deleteStructureIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteStructureIds"), 0L);
+			deleteDDMStructureIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteDDMStructureIds"),
+				0L);
 		}
 
-		for (long deleteStructureId : deleteStructureIds) {
-			_ddmStructureService.deleteStructure(deleteStructureId);
+		for (long deleteDDMStructureId : deleteDDMStructureIds) {
+			_ddmStructureService.deleteStructure(deleteDDMStructureId);
 		}
 	}
 

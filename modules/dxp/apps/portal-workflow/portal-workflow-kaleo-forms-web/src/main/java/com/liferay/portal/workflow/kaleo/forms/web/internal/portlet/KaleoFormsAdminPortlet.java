@@ -26,7 +26,10 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -615,7 +618,18 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	protected DDMForm getDDMForm(ActionRequest actionRequest) throws Exception {
 		String definition = ParamUtil.getString(actionRequest, "definition");
 
-		return _ddmFormJSONDeserializer.deserialize(definition);
+		DDMFormDeserializer ddmFormDeserializer =
+			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				definition);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
 	/**
@@ -1008,10 +1022,10 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormJSONDeserializer(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
+	protected void setDDMFormDeserializerTracker(
+		DDMFormDeserializerTracker ddmFormDeserializerTracker) {
 
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+		_ddmFormDeserializerTracker = ddmFormDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -1223,7 +1237,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	private DDLRecordService _ddlRecordService;
 	private DDM _ddm;
 	private DDMDisplayRegistry _ddmDisplayRegistry;
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 	private DDMFormValuesMerger _ddmFormValuesMerger;
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private KaleoDefinitionVersionLocalService

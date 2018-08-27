@@ -54,4 +54,6 @@ public interface AssetListEntry extends AssetListEntryModel, PersistedModel {
 				return AssetListEntry.class;
 			}
 		};
+
+	public String getTypeLabel();
 }

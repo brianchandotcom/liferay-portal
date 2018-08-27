@@ -19,27 +19,18 @@
 <%
 String randomNamespace = GetterUtil.getString(request.getAttribute("view_file_entry.jsp-randomNamespace"));
 
-boolean supportedAudio = GetterUtil.getBoolean((String)request.getAttribute("view_file_entry.jsp-supportedAudio"));
 boolean supportedVideo = GetterUtil.getBoolean((String)request.getAttribute("view_file_entry.jsp-supportedVideo"));
 
 String[] previewFileURLs = (String[])request.getAttribute("view_file_entry.jsp-previewFileURLs");
 String videoThumbnailURL = (String)request.getAttribute("view_file_entry.jsp-videoThumbnailURL");
 
-String mp3PreviewFileURL = null;
 String mp4PreviewFileURL = null;
-String oggPreviewFileURL = null;
 String ogvPreviewFileURL = null;
 
 for (String previewFileURL : previewFileURLs) {
 	if (Validator.isNotNull(previewFileURL)) {
-		if (previewFileURL.endsWith("mp3")) {
-			mp3PreviewFileURL = previewFileURL;
-		}
-		else if (previewFileURL.endsWith("mp4")) {
+		if (previewFileURL.endsWith("mp4")) {
 			mp4PreviewFileURL = previewFileURL;
-		}
-		else if (previewFileURL.endsWith("ogg")) {
-			oggPreviewFileURL = previewFileURL;
 		}
 		else if (previewFileURL.endsWith("ogv")) {
 			ogvPreviewFileURL = previewFileURL;
@@ -49,65 +40,6 @@ for (String previewFileURL : previewFileURLs) {
 %>
 
 <c:choose>
-	<c:when test="<%= supportedAudio %>">
-		<aui:script use="aui-audio">
-			var playing = false;
-
-			var audio = new A.Audio(
-				{
-					contentBox: '#<portlet:namespace /><%= randomNamespace %>previewFileContent',
-					fixedAttributes: {
-						allowfullscreen: 'true',
-						wmode: 'opaque'
-					}
-
-					<c:if test="<%= Validator.isNotNull(oggPreviewFileURL) %>">
-						, oggUrl: '<%= HtmlUtil.escapeJS(oggPreviewFileURL) %>'
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(mp3PreviewFileURL) %>">
-						, url: '<%= HtmlUtil.escapeJS(mp3PreviewFileURL) %>'
-					</c:if>
-				}
-			).render();
-
-			if (audio._audio) {
-				var audioNode = audio._audio.getDOMNode();
-
-				audioNode.addEventListener(
-					'pause',
-					function() {
-						playing = false;
-					}
-				);
-
-				audioNode.addEventListener(
-					'play',
-					function() {
-						window.parent.Liferay.fire('<portlet:namespace /><%= randomNamespace %>Audio:play');
-
-						playing = true;
-					}
-				);
-			}
-
-			window.parent.Liferay.on(
-				'<portlet:namespace /><%= randomNamespace %>ImageViewer:currentIndexChange',
-				function() {
-					if (playing) {
-						audio.pause();
-					}
-				}
-			);
-
-			window.parent.Liferay.on(
-				'<portlet:namespace /><%= randomNamespace %>ImageViewer:close',
-				function() {
-					audio.load();
-				}
-			);
-		</aui:script>
-	</c:when>
 	<c:when test="<%= supportedVideo %>">
 		<aui:script use="aui-base,aui-video">
 			var playing = false;

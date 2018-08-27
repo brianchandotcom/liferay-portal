@@ -16,6 +16,23 @@ const connect = function(component, store) {
 			}
 		)
 	);
+
+	component.on(
+		'stateChanged',
+		(data) => {
+			const nextState = Object.assign({}, store.getState());
+
+			Object.values(data.changes).forEach(
+				(change) => {
+					if (change.key in nextState) {
+						nextState[change.key] = change.newVal;
+					}
+				}
+			);
+
+			store._setInitialState(nextState);
+		}
+	);
 };
 
 /**

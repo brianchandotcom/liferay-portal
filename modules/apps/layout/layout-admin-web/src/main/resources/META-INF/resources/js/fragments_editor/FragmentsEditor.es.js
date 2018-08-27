@@ -53,12 +53,7 @@ class FragmentsEditor extends Component {
 
 	rendered(firstRender) {
 		if (firstRender) {
-			this._translationStatus = this._getTranslationStatus(
-				Object
-					.keys(this.availableLanguages)
-					.filter(languageId => languageId !== '_INJECTED_DATA_'),
-				this._getEditableValues()
-			);
+			this._store.dispatchAction(UPDATE_TRANSLATION_STATUS);
 		}
 	}
 
@@ -615,12 +610,9 @@ class FragmentsEditor extends Component {
 						Liferay.ThemeDisplay.getBCP47LanguageId()
 					);
 
-					this._translationStatus = this._getTranslationStatus(
-						Object.keys(this.availableLanguages).filter(languageId => languageId !== '_INJECTED_DATA_'),
-						this._getEditableValues()
-					);
-
 					this._dirty = false;
+
+					this._store.dispatchAction(UPDATE_TRANSLATION_STATUS);
 				}
 			);
 		}

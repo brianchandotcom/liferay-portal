@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Document Library Preview Audio
+Bundle-SymbolicName: com.liferay.document.library.preview.audio
+Bundle-Version: 1.0.0
+Web-ContextPath: /document-library-preview-audio

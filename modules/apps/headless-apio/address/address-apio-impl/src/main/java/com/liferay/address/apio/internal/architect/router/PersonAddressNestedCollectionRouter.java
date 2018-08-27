@@ -15,26 +15,12 @@
 package com.liferay.address.apio.internal.architect.router;
 
 import com.liferay.address.apio.architect.identifier.AddressIdentifier;
-import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.Pagination;
+import com.liferay.address.apio.internal.architect.router.base.BaseUserAccountAddressNestedCollectionRouter;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
-import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.AddressLocalService;
-import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.permission.CommonPermissionUtil;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
@@ -46,41 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(immediate = true)
-public class PersonAddressNestedCollectionRouter implements
-	NestedCollectionRouter<Address, Long, AddressIdentifier, Long,
-		PersonIdentifier> {
-
-	@Override
-	public NestedCollectionRoutes<Address, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Address, Long, Long> builder) {
-
-		return builder.addGetter(
-			this::_getPageItems, Credentials.class
-		).build();
-	}
-
-	private PageItems<Address> _getPageItems(
-			Pagination pagination, long personId, Credentials credentials)
-		throws PortalException {
-
-		User user = _userService.getUserById(personId);
-
-		String className = user.getModelClassName();
-
-		CommonPermissionUtil.check(
-			(PermissionChecker)credentials.get(), className, user.getUserId(),
-			ActionKeys.VIEW);
-
-		List<Address> addresses = _addressLocalService.getAddresses(
-			user.getCompanyId(), Contact.class.getName(), user.getContactId());
-
-		return new PageItems<>(addresses, addresses.size());
-	}
-
-	@Reference
-	private AddressLocalService _addressLocalService;
-
-	@Reference
-	private UserService _userService;
-
+public class PersonAddressNestedCollectionRouter extends
+	BaseUserAccountAddressNestedCollectionRouter<PersonIdentifier> implements
+		NestedCollectionRouter<Address, Long, AddressIdentifier, Long,
+			PersonIdentifier> {
 }

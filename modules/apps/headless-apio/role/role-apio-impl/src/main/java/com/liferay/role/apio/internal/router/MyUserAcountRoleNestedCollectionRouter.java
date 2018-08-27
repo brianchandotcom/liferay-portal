@@ -15,7 +15,7 @@
 package com.liferay.role.apio.internal.router;
 
 import com.liferay.apio.architect.router.NestedCollectionRouter;
-import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.person.apio.architect.identifier.MyUserAccountIdentifier;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.role.apio.identifier.RoleIdentifier;
 import com.liferay.role.apio.internal.router.base.BaseUserAccountRoleNestedCollectionRouter;
@@ -24,15 +24,15 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * Provides the information necessary to expose the Role resources contained
- * inside a Person through a web API. The resources are mapped from the internal
- * model {@link Role}.
+ * inside a MyUserAccount through a web API. The resources are mapped from the
+ * internal model {@link Role}.
  *
- * @author Javier Gamarra
+ * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class PersonRoleNestedCollectionRouter extends
-	BaseUserAccountRoleNestedCollectionRouter<PersonIdentifier> implements
-		NestedCollectionRouter<Role, Long, RoleIdentifier, Long,
-			PersonIdentifier> {
+public class MyUserAcountRoleNestedCollectionRouter extends
+	BaseUserAccountRoleNestedCollectionRouter<MyUserAccountIdentifier>
+	implements NestedCollectionRouter<Role, Long, RoleIdentifier, Long,
+		MyUserAccountIdentifier> {
 }

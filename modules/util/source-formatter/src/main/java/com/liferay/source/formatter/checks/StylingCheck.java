@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
@@ -54,6 +55,7 @@ public abstract class StylingCheck extends BaseFileCheck {
 		content = _fixBooleanStatement(content);
 
 		content = _fixRedundantArrayInitialization(content);
+		content = _fixRedundantArrayInitialization(content, "Arrays", "asList");
 
 		return content;
 	}
@@ -119,6 +121,39 @@ public abstract class StylingCheck extends BaseFileCheck {
 				return StringUtil.replaceFirst(
 					content, "new " + typeName + "[] {", "{", matcher.end());
 			}
+		}
+
+		return content;
+	}
+
+	private String _fixRedundantArrayInitialization(
+		String content, String className, String methodName) {
+
+		Pattern pattern = Pattern.compile(
+			StringBundler.concat(
+				"\\W", className, "\\.", methodName,
+				"\\(\\s*(new \\w+\\[\\] \\{)"));
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			List<String> parameterList = JavaSourceUtil.getParameterList(
+				content.substring(matcher.start()));
+
+			if (parameterList.size() > 1) {
+				continue;
+			}
+
+			int x = _getMatchingClosingCurlyBracePos(
+				content, matcher.end() - 1);
+
+			content = StringUtil.replaceFirst(
+				content, StringPool.CLOSE_CURLY_BRACE, StringPool.BLANK, x);
+
+			content = StringUtil.replaceFirst(
+				content, matcher.group(1), StringPool.BLANK, matcher.start());
+
+			return content;
 		}
 
 		return content;

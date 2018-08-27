@@ -337,9 +337,9 @@ public class ScopeLocatorImplTest extends PowerMockito {
 	}
 
 	protected final Set<String> scopedSet2 = new HashSet<>(
-		Arrays.asList(new String[] {"GET", "POST"}));
+		Arrays.asList("GET", "POST"));
 	protected final Set<String> scopesSet1 = new HashSet<>(
-		Arrays.asList(new String[] {"everything", "everything.readonly"}));
+		Arrays.asList("everything", "everything.readonly"));
 
 	private static void _set(Object object, String fieldName, Object value) {
 		Class<?> clazz = object.getClass();

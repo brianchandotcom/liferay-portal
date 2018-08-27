@@ -43,11 +43,9 @@ public class HypersonicServerTestRule extends BaseTestRule<Server, Object> {
 	public List<String> getJdbcProperties() {
 		if (_HYPERSONIC) {
 			return Arrays.asList(
-				new String[] {
-					"portal:jdbc.default.url=" + _DATABASE_URL,
-					"portal:jdbc.default.username=sa",
-					"portal:jdbc.default.password="
-				});
+				"portal:jdbc.default.url=" + _DATABASE_URL,
+				"portal:jdbc.default.username=sa",
+				"portal:jdbc.default.password=");
 		}
 
 		return Collections.emptyList();

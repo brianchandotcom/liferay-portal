@@ -238,7 +238,7 @@ public class SPIConfigurationTest {
 		Assert.assertEquals(
 			"/opt/jvm/bin/java", spiConfiguration.getJavaExecutable());
 		Assert.assertEquals(
-			Arrays.asList(new String[] {"-Xmx512m", "-XX:PermSize=128m"}),
+			Arrays.asList("-Xmx512m", "-XX:PermSize=128m"),
 			spiConfiguration.getJVMArguments());
 		Assert.assertEquals(
 			"spiAgentClassName", spiConfiguration.getSPIAgentClassName());

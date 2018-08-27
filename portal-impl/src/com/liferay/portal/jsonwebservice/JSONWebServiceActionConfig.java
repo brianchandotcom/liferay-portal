@@ -182,21 +182,8 @@ public class JSONWebServiceActionConfig
 			return new MethodParameter[0];
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Class<?> clazz = _realActionMethod.getDeclaringClass();
-
-		currentThread.setContextClassLoader(clazz.getClassLoader());
-
-		try {
-			return MethodParametersResolverUtil.resolveMethodParameters(
-				_realActionMethod);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
+		return MethodParametersResolverUtil.resolveMethodParameters(
+			_realActionMethod);
 	}
 
 	@Override

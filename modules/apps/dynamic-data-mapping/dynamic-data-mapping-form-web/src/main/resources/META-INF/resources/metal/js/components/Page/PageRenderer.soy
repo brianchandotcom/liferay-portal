@@ -2,83 +2,87 @@
 
 {template .render}
 	{@param spritemap: string}
+	{@param? _handlePageDescriptionChanged: any}
+	{@param? _handlePageTitleChanged: any}
+	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleOnClickResize: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
 	{@param? descriptionPlaceholder: string}
 	{@param? editable: bool}
+	{@param? empty: bool}
 	{@param? page: ?}
 	{@param? pageId: int}
 	{@param? titlePlaceholder: string}
-	{@param? _handleChangePageDescription: any}
-	{@param? _handleChangePageTitle: any}
-	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleDuplicateButtonClicked: any}
-	{@param? _handleFieldChanged: any}
-	{@param? _handleSelectFieldFocused: any}
-	{@param? _handleOnClickResize: any}
 
 	{delcall PageRenderer.container variant="$contentRenderer"}
+		{param _handlePageDescriptionChanged: $_handlePageDescriptionChanged /}
+		{param _handlePageTitleChanged: $_handlePageTitleChanged /}
+		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+		{param _handleFieldChanged: $_handleFieldChanged /}
+		{param _handleOnClickResize: $_handleOnClickResize /}
+		{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 		{param activePage: $activePage /}
 		{param contentRenderer: $contentRenderer /}
 		{param descriptionPlaceholder: $descriptionPlaceholder /}
 		{param editable: $editable /}
+		{param empty: $empty /}
 		{param page: $page /}
 		{param pageId: $pageId /}
 		{param spritemap: $spritemap /}
 		{param titlePlaceholder: $titlePlaceholder /}
-		{param _handleChangePageDescription: $_handleChangePageDescription /}
-		{param _handleChangePageTitle: $_handleChangePageTitle /}
-		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
-		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
-		{param _handleFieldChanged: $_handleFieldChanged /}
-		{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
-		{param _handleOnClickResize: $_handleOnClickResize /}
 	{/delcall}
 {/template}
 
 {deltemplate PageRenderer.container variant="'grid'"}
 	{@param spritemap: string}
+	{@param? _handlePageDescriptionChanged: any}
+	{@param? _handlePageTitleChanged: any}
+	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleOnClickResize: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
 	{@param? descriptionPlaceholder: string}
 	{@param? editable: bool}
+	{@param? empty: bool}
 	{@param? page: ?}
 	{@param? pageId: int}
 	{@param? titlePlaceholder: string}
-	{@param? _handleChangePageDescription: any}
-	{@param? _handleChangePageTitle: any}
-	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleDuplicateButtonClicked: any}
-	{@param? _handleFieldChanged: any}
-	{@param? _handleSelectFieldFocused: any}
-	{@param? _handleOnClickResize: any}
 
 	<div class="ddm-page-container-layout">
 		{if $activePage == $pageId}
-			<div class="dmm-form-page pl-3 pr-3">
+			<div class="ddm-form-page pl-3 pr-3">
 				{call .form}
+					{param _handlePageDescriptionChanged: $_handlePageDescriptionChanged /}
+					{param _handlePageTitleChanged: $_handlePageTitleChanged /}
 					{param contentRenderer: $contentRenderer /}
 					{param descriptionPlaceholder: $descriptionPlaceholder /}
 					{param editable: $editable /}
 					{param page: $page /}
 					{param pageId: $pageId /}
 					{param titlePlaceholder: $titlePlaceholder /}
-					{param _handleChangePageDescription: $_handleChangePageDescription /}
-					{param _handleChangePageTitle: $_handleChangePageTitle /}
 				{/call}
 
 				<div class="form-builder-layout">
 					{delcall PageRenderer.page variant="$contentRenderer"}
-						{param contentRenderer: $contentRenderer /}
-						{param editable: $editable /}
-						{param page: $page /}
-						{param pageId: $pageId /}
-						{param spritemap: $spritemap /}
 						{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 						{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 						{param _handleFieldChanged: $_handleFieldChanged /}
-						{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 						{param _handleOnClickResize: $_handleOnClickResize /}
+						{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
+						{param contentRenderer: $contentRenderer /}
+						{param editable: $editable /}
+						{param empty: $empty /}
+						{param page: $page /}
+						{param pageId: $pageId /}
+						{param spritemap: $spritemap /}
 					{/delcall}
 				</div>
 			</div>
@@ -113,29 +117,29 @@
 {/deltemplate}
 
 {template .form}
+	{@param? _handlePageDescriptionChanged: any}
+	{@param? _handlePageTitleChanged: any}
 	{@param? descriptionPlaceholder: string}
 	{@param? page: ?}
 	{@param? pageId: int}
 	{@param? titlePlaceholder: string}
-	{@param? _handleChangePageDescription: any}
-	{@param? _handleChangePageTitle: any}
 
 	{let $pageTitleAttributes kind="attributes"}
 		class="form-builder-page-header-title form-control"
-		data-onkeyup="{$_handleChangePageTitle}"
+		data-onkeyup="{$_handlePageTitleChanged}"
 		data-page-id="{$pageId}"
 		maxlength="120"
-		value="{$page.title}"
 		placeholder="{$titlePlaceholder}"
+		value="{$page.title}"
 	{/let}
 
 	{let $pageDescriptionAttributes kind="attributes"}
 		class="form-builder-page-header-description form-control"
-		data-onkeyup="{$_handleChangePageDescription}"
+		data-onkeyup="{$_handlePageDescriptionChanged}"
 		data-page-id="{$pageId}"
 		maxlength="120"
-		value="{$page.description}"
 		placeholder="{$descriptionPlaceholder}"
+		value="{$page.description}"
 	{/let}
 
 	<textarea {$pageTitleAttributes}></textarea>
@@ -144,109 +148,116 @@
 
 {deltemplate PageRenderer.page variant="'list'"}
 	{@param spritemap: string}
+	{@param? _handleDeleteButtonClicked: any}
+	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleOnClickResize: any}
+	{@param? _handleSelectFieldFocused: any}
 	{@param? contentRenderer: string}
 	{@param? editable: bool}
 	{@param? page: ?}
 	{@param? pageId: number}
-	{@param? _handleDeleteButtonClicked: any}
-	{@param? _handleDuplicateButtonClicked: any}
-	{@param? _handleFieldChanged: any}
-	{@param? _handleSelectFieldFocused: any}
-	{@param? _handleOnClickResize: any}
 
 	{for $row in $page.rows}
 		{delcall PageRenderer.row variant="'grid'"}
-			{param contentRenderer: $contentRenderer /}
-			{param editable: $editable /}
-			{param rowIndex: index($row) /}
-			{param pageId: $pageId /}
-			{param row: $row /}
-			{param spritemap: $spritemap /}
 			{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 			{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 			{param _handleFieldChanged: $_handleFieldChanged /}
-			{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 			{param _handleOnClickResize: $_handleOnClickResize /}
+			{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
+			{param contentRenderer: $contentRenderer /}
+			{param editable: $editable /}
+			{param pageId: $pageId /}
+			{param row: $row /}
+			{param rowIndex: index($row) /}
+			{param spritemap: $spritemap /}
 		{/delcall}
 	{/for}
 {/deltemplate}
 
 {deltemplate PageRenderer.page variant="'grid'"}
 	{@param spritemap: string}
-	{@param? contentRenderer: string}
-	{@param? editable: bool}
-	{@param? page: ?}
-	{@param? pageId: number}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
-	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
+	{@param? _handleSelectFieldFocused: any}
+	{@param? contentRenderer: string}
+	{@param? editable: bool}
+	{@param? empty: bool}
+	{@param? page: ?}
+	{@param? pageId: number}
 
 	<div class="layout-page">
-		{for $row in $page.rows}
-			{if isFirst($row) and $editable}
-				{call .fieldEmpty}
-					{param isRow: true /}
-					{param pageId: $pageId /}
-					{param row: 0 /}
-					{param size: 12 /}
-				{/call}
-			{/if}
+		{if $empty}
+			<div class="col col-empty col-md-12 last-col lfr-initial-col">
+				<div id="lfr-initial-col-message">{msg desc=""}drag-from-sidebar-and-drop-here{/msg}</div>
+			</div>
+		{else}
+			{for $row in $page.rows}
+				{if isFirst($row) and $editable}
+					{call .fieldEmpty}
+						{param isRow: true /}
+						{param pageId: $pageId /}
+						{param row: 0 /}
+						{param size: 12 /}
+					{/call}
+				{/if}
 
-			{delcall PageRenderer.row variant="$contentRenderer"}
-				{param contentRenderer: $contentRenderer /}
-				{param editable: $editable /}
-				{param rowIndex: index($row) /}
-				{param pageId: $pageId /}
-				{param row: $row /}
-				{param spritemap: $spritemap /}
-				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
-				{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
-				{param _handleFieldChanged: $_handleFieldChanged /}
-				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
-				{param _handleOnClickResize: $_handleOnClickResize /}
-			{/delcall}
-
-			{if $editable}
-				{call .fieldEmpty}
-					{param isRow: true /}
+				{delcall PageRenderer.row variant="$contentRenderer"}
+					{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
+					{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+					{param _handleFieldChanged: $_handleFieldChanged /}
+					{param _handleOnClickResize: $_handleOnClickResize /}
+					{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
+					{param contentRenderer: $contentRenderer /}
+					{param editable: $editable /}
 					{param pageId: $pageId /}
-					{param row: index($row) + 1 /}
-					{param size: 12 /}
-				{/call}
-			{/if}
-		{/for}
+					{param row: $row /}
+					{param rowIndex: index($row) /}
+					{param spritemap: $spritemap /}
+				{/delcall}
+
+				{if $editable}
+					{call .fieldEmpty}
+						{param isRow: true /}
+						{param pageId: $pageId /}
+						{param row: index($row) + 1 /}
+						{param size: 12 /}
+					{/call}
+				{/if}
+			{/for}
+		{/if}
 	</div>
 {/deltemplate}
 
 {deltemplate PageRenderer.row variant="'grid'"}
 	{@param spritemap: string}
-	{@param? contentRenderer: string}
-	{@param? editable: bool}
-	{@param? rowIndex: number}
-	{@param? pageId: number}
-	{@param? row: ?}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
-	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
+	{@param? _handleSelectFieldFocused: any}
+	{@param? contentRenderer: string}
+	{@param? editable: bool}
+	{@param? pageId: number}
+	{@param? row: ?}
+	{@param? rowIndex: number}
 
 	<div class="row">
 		{for $column in $row.columns}
 			{delcall PageRenderer.column variant="$contentRenderer"}
-				{param column: $column /}
-				{param editable: $editable /}
-				{param columnIndex: index($column) /}
-				{param rowIndex: $rowIndex /}
-				{param pageId: $pageId /}
-				{param spritemap: $spritemap /}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 				{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
-				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 				{param _handleOnClickResize: $_handleOnClickResize /}
+				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
+				{param column: $column /}
+				{param columnIndex: index($column) /}
+				{param editable: $editable /}
+				{param pageId: $pageId /}
+				{param rowIndex: $rowIndex /}
+				{param spritemap: $spritemap /}
 			{/delcall}
 		{/for}
 	</div>
@@ -254,12 +265,12 @@
 
 {deltemplate PageRenderer.column variant="'list'"}
 	{@param spritemap: string}
-	{@param? column: ?}
-	{@param? editable: bool}
-	{@param? columnIndex: number}
-	{@param? rowIndex: number}
-	{@param? pageId: number}
 	{@param? _handleFieldChanged: any}
+	{@param? column: ?}
+	{@param? columnIndex: number}
+	{@param? editable: bool}
+	{@param? pageId: number}
+	{@param? rowIndex: number}
 
 	{if length($column.fields) != 0}
 		{let $attributes kind="attributes"}
@@ -284,16 +295,16 @@
 
 {deltemplate PageRenderer.column variant="'grid'"}
 	{@param spritemap: string}
-	{@param? column: ?}
-	{@param? editable: bool}
-	{@param? columnIndex: number}
-	{@param? rowIndex: number}
-	{@param? pageId: number}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
 	{@param? _handleFieldChanged: any}
-	{@param? _handleSelectFieldFocused: any}
 	{@param? _handleOnClickResize: any}
+	{@param? _handleSelectFieldFocused: any}
+	{@param? column: ?}
+	{@param? columnIndex: number}
+	{@param? editable: bool}
+	{@param? pageId: number}
+	{@param? rowIndex: number}
 
 	{if length($column.fields) != 0}
 		{let $attributes kind="attributes"}
@@ -374,22 +385,22 @@
 			{param events: [
 				'click': $_handleDuplicateButtonClicked
 			] /}
-			{param style: 'secondary' /}
-			{param size: 'sm' /}
-			{param spritemap: $spritemap /}
 			{param icon: 'paste' /}
 			{param monospaced: true /}
+			{param size: 'sm' /}
+			{param spritemap: $spritemap /}
+			{param style: 'secondary' /}
 		{/call}
 
 		{call ClayButton.render}
 			{param events: [
 				'click': $_handleDeleteButtonClicked
 			] /}
-			{param size: 'sm' /}
-			{param style: 'secondary' /}
-			{param spritemap: $spritemap /}
 			{param icon: 'trash' /}
 			{param monospaced: true /}
+			{param size: 'sm' /}
+			{param spritemap: $spritemap /}
+			{param style: 'secondary' /}
 		{/call}
 	</div>
 {/template}

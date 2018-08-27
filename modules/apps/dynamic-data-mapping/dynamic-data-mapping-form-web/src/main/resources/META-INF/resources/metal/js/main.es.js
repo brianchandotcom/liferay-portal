@@ -5,6 +5,7 @@ import dom from 'metal-dom';
 import LayoutProvider from './components/LayoutProvider/index.es';
 import loader from './components/FieldsLoader/index.es';
 import withAppComposer from './hocs/withAppComposer/index.es';
+import {pageStructure} from './util/config.es';
 
 const STR_UNTITLED_FORM = Liferay.Language.get('untitled-form');
 
@@ -26,7 +27,12 @@ class Form extends Component {
 		 * @type {!array}
 		 */
 
-		context: Config.object().required(),
+		context: Config.shapeOf(
+			{
+				pages: Config.arrayOf(pageStructure),
+				rules: Config.array()
+			}
+		).required().setter('_setContext'),
 
 		/**
 		 * The context for rendering a layout that represents a form.
@@ -85,6 +91,23 @@ class Form extends Component {
 
 	_getFormContext(pages) {
 		return {...this.props.context, pages};
+	}
+
+	_setContext(context) {
+		if (!context.pages.length) {
+			return {
+				...context,
+				pages: [
+					{
+						description: '',
+						rows: [],
+						title: ''
+					}
+				]
+			};
+		}
+
+		return value;
 	}
 
 	_getLocalizedName() {

@@ -26,4 +26,9 @@ public class TopLevelPortalWorkspace
 		super(portalGitHubURL, portalUpstreamBranchName);
 	}
 
+	@Override
+	protected boolean synchronizeGitBranches() {
+		return true;
+	}
+
 }

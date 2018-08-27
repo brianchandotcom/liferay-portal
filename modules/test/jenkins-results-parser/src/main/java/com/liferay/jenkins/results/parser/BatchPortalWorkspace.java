@@ -26,4 +26,9 @@ public class BatchPortalWorkspace
 		super(portalGitHubURL, portalUpstreamBranchName);
 	}
 
+	@Override
+	protected boolean synchronizeGitBranches() {
+		return false;
+	}
+
 }

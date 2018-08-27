@@ -74,22 +74,6 @@ public abstract class BaseWorkspace implements Workspace {
 		writeGitRepositoryPropertiesFiles();
 	}
 
-	protected BaseWorkspace() {
-		boolean synchronizeGitBranches;
-
-		if (this instanceof BatchWorkspace) {
-			synchronizeGitBranches = false;
-		}
-		else if (this instanceof TopLevelWorkspace) {
-			synchronizeGitBranches = true;
-		}
-		else {
-			throw new RuntimeException("Invalid Workspace type");
-		}
-
-		_synchronizeGitBranches = synchronizeGitBranches;
-	}
-
 	protected void checkoutJenkinsLocalGitBranch() {
 		if (_jenkinsLocalGitBranch != null) {
 			checkoutLocalGitBranch(_jenkinsLocalGitBranch);
@@ -117,12 +101,9 @@ public abstract class BaseWorkspace implements Workspace {
 		gitWorkingDirectory.displayLog();
 	}
 
-	protected boolean synchronizeGitBranches() {
-		return _synchronizeGitBranches;
-	}
+	protected abstract boolean synchronizeGitBranches();
 
 	private String _jenkinsBranchName;
 	private LocalGitBranch _jenkinsLocalGitBranch;
-	private final boolean _synchronizeGitBranches;
 
 }

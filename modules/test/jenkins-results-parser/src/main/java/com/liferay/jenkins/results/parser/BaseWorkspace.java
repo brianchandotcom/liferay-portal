@@ -67,12 +67,6 @@ public abstract class BaseWorkspace implements Workspace {
 		return _jenkinsBranchName;
 	}
 
-	@Override
-	public abstract void setJobProperties(Job job);
-
-	@Override
-	public abstract void setupWorkspace();
-
 	protected BaseWorkspace() {
 		boolean synchronizeGitBranches;
 

@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class PortalWorkspace extends BaseWorkspace {
+public abstract class PortalWorkspace extends BaseWorkspace {
 
 	public static boolean isPortalGitHubURL(String gitHubURL) {
 		Matcher matcher = _portalGitHubURLPattern.matcher(gitHubURL);

@@ -57,6 +57,9 @@
 		else if (cmd.equals("copy_from_live")) {
 			scheduleCMD = "schedule_copy_from_live";
 		}
+		else {
+			scheduleCMD = cmd;
+		}
 		%>
 
 		form.fm('<%= Constants.CMD %>').val('<%= scheduleCMD %>');

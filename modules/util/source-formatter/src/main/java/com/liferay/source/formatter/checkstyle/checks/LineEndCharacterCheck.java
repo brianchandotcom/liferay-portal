@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -48,25 +50,13 @@ public class LineEndCharacterCheck extends BaseCheck {
 			}
 		}
 
-		if (_isAtLineEnd(detailAST)) {
+		if (DetailASTUtil.isAtLineEnd(
+				detailAST, getLine(detailAST.getLineNo() - 1))) {
+
 			log(
 				detailAST.getLineNo(), _MSG_INCORRECT_END_LINE_CHARACTER,
 				detailAST.getText());
 		}
-	}
-
-	private boolean _isAtLineEnd(DetailAST detailAST) {
-		String line = getLine(detailAST.getLineNo() - 1);
-
-		String text = detailAST.getText();
-
-		if (line.endsWith(text) &&
-			((detailAST.getColumnNo() + text.length()) == line.length())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final String _MSG_INCORRECT_END_LINE_CHARACTER =

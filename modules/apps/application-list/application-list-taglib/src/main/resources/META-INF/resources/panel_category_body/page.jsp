@@ -17,7 +17,7 @@
 <%@ include file="/panel_category_body/init.jsp" %>
 
 <c:if test="<%= !panelApps.isEmpty() %>">
-	<ul aria-labelledby="<%= id %>" class="nav nav-equal-height" role="menu">
+	<ul aria-labelledby="<%= id %>" class="nav nav-equal-height nav-stacked" role="menu">
 
 		<%
 		for (PanelApp panelApp : panelApps) {

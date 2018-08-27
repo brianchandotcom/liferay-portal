@@ -119,10 +119,11 @@ public class JournalSelectDDMTemplateDisplayContext {
 	public String getSearchActionURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/select_template.jsp");
-		portletURL.setParameter("templateId", String.valueOf(getTemplateId()));
+		portletURL.setParameter("mvcPath", "/select_ddm_template.jsp");
 		portletURL.setParameter(
-			"structureId", String.valueOf(_getStructureId()));
+			"ddmTemplateId", String.valueOf(getDDMTemplateId()));
+		portletURL.setParameter(
+			"ddmStructureId", String.valueOf(_getDDMStructureId()));
 		portletURL.setParameter("eventName", getEventName());
 
 		return portletURL.toString();
@@ -138,14 +139,14 @@ public class JournalSelectDDMTemplateDisplayContext {
 		return sortingURL.toString();
 	}
 
-	public long getTemplateId() {
-		if (_templateId != null) {
-			return _templateId;
+	public long getDDMTemplateId() {
+		if (_ddmTemplateId != null) {
+			return _ddmTemplateId;
 		}
 
-		_templateId = ParamUtil.getLong(_request, "templateId");
+		_ddmTemplateId = ParamUtil.getLong(_request, "ddmTemplateId");
 
-		return _templateId;
+		return _ddmTemplateId;
 	}
 
 	public SearchContainer getTemplateSearch() throws Exception {
@@ -184,7 +185,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 		int total = DDMTemplateServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), groupIds,
 			new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
-			new long[] {_getStructureId()},
+			new long[] {_getDDMStructureId()},
 			PortalUtil.getClassNameId(JournalArticle.class.getName()),
 			_getKeywords(), StringPool.BLANK, StringPool.BLANK,
 			WorkflowConstants.STATUS_ANY);
@@ -194,7 +195,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 		List<DDMTemplate> results = DDMTemplateServiceUtil.search(
 			themeDisplay.getCompanyId(), groupIds,
 			new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
-			new long[] {_getStructureId()},
+			new long[] {_getDDMStructureId()},
 			PortalUtil.getClassNameId(JournalArticle.class.getName()),
 			_getKeywords(), StringPool.BLANK, StringPool.BLANK,
 			WorkflowConstants.STATUS_ANY, templateSearch.getStart(),
@@ -286,18 +287,18 @@ public class JournalSelectDDMTemplateDisplayContext {
 	private PortletURL _getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/select_template.jsp");
+		portletURL.setParameter("mvcPath", "/select_ddm_template.jsp");
 
-		long templateId = getTemplateId();
+		long ddmTemplateId = getDDMTemplateId();
 
-		if (templateId != 0) {
-			portletURL.setParameter("templateId", String.valueOf(templateId));
+		if (ddmTemplateId != 0) {
+			portletURL.setParameter("ddmTemplateId", String.valueOf(ddmTemplateId));
 		}
 
-		long structureId = _getStructureId();
+		long ddmStructureId = _getDDMStructureId();
 
-		if (structureId != 0) {
-			portletURL.setParameter("structureId", String.valueOf(structureId));
+		if (ddmStructureId != 0) {
+			portletURL.setParameter("ddmStructureId", String.valueOf(ddmStructureId));
 		}
 
 		String keywords = _getKeywords();
@@ -321,14 +322,14 @@ public class JournalSelectDDMTemplateDisplayContext {
 		return portletURL;
 	}
 
-	private long _getStructureId() {
-		if (_structureId != null) {
-			return _structureId;
+	private long _getDDMStructureId() {
+		if (_ddmStructureId != null) {
+			return _ddmStructureId;
 		}
 
-		_structureId = ParamUtil.getLong(_renderRequest, "structureId");
+		_ddmStructureId = ParamUtil.getLong(_renderRequest, "ddmStructureId");
 
-		return _structureId;
+		return _ddmStructureId;
 	}
 
 	private final JournalWebConfiguration _journalWebConfiguration;
@@ -338,8 +339,8 @@ public class JournalSelectDDMTemplateDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private Long _structureId;
-	private Long _templateId;
+	private Long _ddmStructureId;
+	private Long _ddmTemplateId;
 	private SearchContainer _templateSearch;
 
 }

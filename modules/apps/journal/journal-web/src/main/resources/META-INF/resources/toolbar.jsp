@@ -76,16 +76,16 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 	</portlet:renderURL>
 
-	var openStructuresSelector = function() {
+	var openDDMStructuresSelector = function() {
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
 					constrain: true,
 					modal: true
 				},
-				eventName: '<portlet:namespace />selectStructure',
+				eventName: '<portlet:namespace />selectDDMStructure',
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /></portlet:renderURL>'
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
 			},
 			function(event) {
 				var uri = '<%= viewDDMStructureArticlesURL %>';
@@ -97,7 +97,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		);
 	}
 
-	var openViewMoreStructuresSelector = function() {
+	var openViewMoreDDMStructuresSelector = function() {
 		Liferay.Util.openWindow(
 			{
 				dialog: {
@@ -122,8 +122,8 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		'deleteEntries': deleteEntries,
 		'expireEntries': expireEntries,
 		'moveEntries': moveEntries,
-		'openStructuresSelector': openStructuresSelector,
-		'openViewMoreStructuresSelector': openViewMoreStructuresSelector
+		'openDDMStructuresSelector': openDDMStructuresSelector,
+		'openViewMoreDDMStructuresSelector': openViewMoreDDMStructuresSelector
 	};
 
 	Liferay.componentReady('journalWebManagementToolbar').then(
@@ -139,7 +139,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				}
 			);
 
-			managementToolbar.on('creationMenuMoreButtonClicked', openViewMoreStructuresSelector);
+			managementToolbar.on('creationMenuMoreButtonClicked', openViewMoreDDMStructuresSelector);
 		}
 	);
 </aui:script>

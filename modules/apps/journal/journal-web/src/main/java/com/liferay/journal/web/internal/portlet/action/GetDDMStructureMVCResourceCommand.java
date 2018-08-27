@@ -14,15 +14,17 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,41 +36,31 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/delete_structure"
+		"mvc.command.name=/journal/get_ddm_structure"
 	},
-	service = MVCActionCommand.class
+	service = MVCResourceCommand.class
 )
-public class DeleteStructureMVCActionCommand extends BaseMVCActionCommand {
+public class GetDDMStructureMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		long[] deleteStructureIds = null;
+		long ddmStructureId = ParamUtil.getLong(
+			resourceRequest, "ddmStructureId");
 
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			ddmStructureId);
 
-		if (structureId > 0) {
-			deleteStructureIds = new long[] {structureId};
-		}
-		else {
-			deleteStructureIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteStructureIds"), 0L);
-		}
+		String definition = ddmStructure.getDefinition();
 
-		for (long deleteStructureId : deleteStructureIds) {
-			_ddmStructureService.deleteStructure(deleteStructureId);
-		}
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse, null, definition.getBytes(),
+			ContentTypes.APPLICATION_JSON);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
+	@Reference
 	private DDMStructureService _ddmStructureService;
 
 }

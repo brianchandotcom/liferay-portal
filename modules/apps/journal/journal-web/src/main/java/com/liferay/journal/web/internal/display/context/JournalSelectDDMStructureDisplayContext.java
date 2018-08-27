@@ -79,7 +79,7 @@ public class JournalSelectDDMStructureDisplayContext {
 	}
 
 	public String getEventName() {
-		return _renderResponse.getNamespace() + "selectStructure";
+		return _renderResponse.getNamespace() + "selectDDMStructure";
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
@@ -129,7 +129,7 @@ public class JournalSelectDDMStructureDisplayContext {
 	public String getSearchActionURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/select_structure.jsp");
+		portletURL.setParameter("mvcPath", "/select_ddm_structure.jsp");
 		portletURL.setParameter("classPK", String.valueOf(getClassPK()));
 		portletURL.setParameter("eventName", getEventName());
 
@@ -146,19 +146,19 @@ public class JournalSelectDDMStructureDisplayContext {
 		return sortingURL.toString();
 	}
 
-	public SearchContainer getStructureSearch() throws Exception {
-		if (_structureSearch != null) {
-			return _structureSearch;
+	public SearchContainer getDDMStructureSearch() throws Exception {
+		if (_ddmStructureSearch != null) {
+			return _ddmStructureSearch;
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SearchContainer structureSearch = new SearchContainer(
+		SearchContainer ddmStructureSearch = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-structures");
 
 		if (Validator.isNotNull(_getKeywords())) {
-			structureSearch.setEmptyResultsMessage("no-structures-were-found");
+			ddmStructureSearch.setEmptyResultsMessage("no-structures-were-found");
 		}
 
 		String orderByCol = getOrderByCol();
@@ -168,9 +168,9 @@ public class JournalSelectDDMStructureDisplayContext {
 			DDMUtil.getStructureOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
-		structureSearch.setOrderByCol(orderByCol);
-		structureSearch.setOrderByComparator(orderByComparator);
-		structureSearch.setOrderByType(orderByType);
+		ddmStructureSearch.setOrderByCol(orderByCol);
+		ddmStructureSearch.setOrderByComparator(orderByComparator);
+		ddmStructureSearch.setOrderByType(orderByType);
 
 		long[] groupIds = {themeDisplay.getScopeGroupId()};
 
@@ -193,7 +193,7 @@ public class JournalSelectDDMStructureDisplayContext {
 				_getKeywords(), WorkflowConstants.STATUS_ANY);
 		}
 
-		structureSearch.setTotal(total);
+		ddmStructureSearch.setTotal(total);
 
 		List<DDMStructure> results = null;
 
@@ -201,27 +201,27 @@ public class JournalSelectDDMStructureDisplayContext {
 			results =
 				DDMStructureLinkLocalServiceUtil.getStructureLinkStructures(
 					_getSearchRestrictionClassNameId(),
-					_getSearchRestrictionClassPK(), structureSearch.getStart(),
-					structureSearch.getEnd());
+					_getSearchRestrictionClassPK(), ddmStructureSearch.getStart(),
+					ddmStructureSearch.getEnd());
 		}
 		else {
 			results = DDMStructureServiceUtil.search(
 				themeDisplay.getCompanyId(), groupIds,
 				PortalUtil.getClassNameId(JournalArticle.class.getName()),
 				_getKeywords(), WorkflowConstants.STATUS_ANY,
-				structureSearch.getStart(), structureSearch.getEnd(),
-				structureSearch.getOrderByComparator());
+				ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
+				ddmStructureSearch.getOrderByComparator());
 		}
 
-		structureSearch.setResults(results);
+		ddmStructureSearch.setResults(results);
 
-		_structureSearch = structureSearch;
+		_ddmStructureSearch = ddmStructureSearch;
 
-		return structureSearch;
+		return ddmStructureSearch;
 	}
 
 	public int getTotalItems() throws Exception {
-		SearchContainer<?> searchContainer = getStructureSearch();
+		SearchContainer<?> searchContainer = getDDMStructureSearch();
 
 		return searchContainer.getTotal();
 	}
@@ -299,7 +299,7 @@ public class JournalSelectDDMStructureDisplayContext {
 	private PortletURL _getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/select_structure.jsp");
+		portletURL.setParameter("mvcPath", "/select_ddm_structure.jsp");
 
 		long classPK = getClassPK();
 
@@ -372,6 +372,6 @@ public class JournalSelectDDMStructureDisplayContext {
 	private Boolean _searchRestriction;
 	private Long _searchRestrictionClassNameId;
 	private Long _searchRestrictionClassPK;
-	private SearchContainer _structureSearch;
+	private SearchContainer _ddmStructureSearch;
 
 }

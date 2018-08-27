@@ -32,18 +32,18 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 	sortingURL="<%= journalSelectDDMTemplateDisplayContext.getSortingURL() %>"
 />
 
-<aui:form cssClass="container-fluid-1280" method="post" name="selectTemplateFm">
+<aui:form cssClass="container-fluid-1280" method="post" name="selectDDMTemplateFm">
 	<liferay-ui:search-container
 		searchContainer="<%= journalSelectDDMTemplateDisplayContext.getTemplateSearch() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 			keyProperty="templateId"
-			modelVar="template"
+			modelVar="ddmTemplate"
 		>
 			<liferay-ui:search-container-column-text
 				name="id"
-				value="<%= String.valueOf(template.getTemplateId()) %>"
+				value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
@@ -51,24 +51,24 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 				name="name"
 			>
 				<c:choose>
-					<c:when test="<%= template.getTemplateId() != journalSelectDDMTemplateDisplayContext.getTemplateId() %>">
+					<c:when test="<%= ddmTemplate.getTemplateId() != journalSelectDDMTemplateDisplayContext.getDDMTemplateId() %>">
 
 						<%
 						Map<String, Object> data = new HashMap<>();
 
-						data.put("ddmtemplateid", template.getTemplateId());
-						data.put("ddmtemplatekey", template.getTemplateKey());
-						data.put("description", template.getDescription(locale));
-						data.put("imageurl", template.getTemplateImageURL(themeDisplay));
-						data.put("name", template.getName(locale));
+						data.put("ddmtemplateid", ddmTemplate.getTemplateId());
+						data.put("ddmtemplatekey", ddmTemplate.getTemplateKey());
+						data.put("description", ddmTemplate.getDescription(locale));
+						data.put("imageurl", ddmTemplate.getTemplateImageURL(themeDisplay));
+						data.put("name", ddmTemplate.getName(locale));
 						%>
 
 						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= HtmlUtil.escape(template.getName(locale)) %>
+							<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
 						</aui:a>
 					</c:when>
 					<c:otherwise>
-						<%= HtmlUtil.escape(template.getName(locale)) %>
+						<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>
@@ -76,12 +76,12 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="description"
-				value="<%= HtmlUtil.escape(template.getDescription(locale)) %>"
+				value="<%= HtmlUtil.escape(ddmTemplate.getDescription(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
 				name="modified-date"
-				value="<%= template.getModifiedDate() %>"
+				value="<%= ddmTemplate.getModifiedDate() %>"
 			/>
 		</liferay-ui:search-container-row>
 
@@ -93,5 +93,5 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectTemplateFm', '<%= HtmlUtil.escapeJS(journalSelectDDMTemplateDisplayContext.getEventName()) %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectDDMTemplateFm', '<%= HtmlUtil.escapeJS(journalSelectDDMTemplateDisplayContext.getEventName()) %>');
 </aui:script>

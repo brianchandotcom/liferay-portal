@@ -17,38 +17,38 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalEditStructuresDisplayContext journalEditStructuresDisplayContext = new JournalEditStructuresDisplayContext(request);
+JournalEditDDMStructuresDisplayContext journalEditDDMStructuresDisplayContext = new JournalEditDDMStructuresDisplayContext(request);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDMStructure structure = journalEditStructuresDisplayContext.getStructure();
+DDMStructure ddmStructure = journalEditDDMStructuresDisplayContext.getDDMStructure();
 
-long groupId = BeanParamUtil.getLong(structure, request, "groupId", scopeGroupId);
+long groupId = BeanParamUtil.getLong(ddmStructure, request, "groupId", scopeGroupId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(PortalUtil.escapeRedirect(redirect));
 
-renderResponse.setTitle((structure != null) ? LanguageUtil.format(request, "edit-x", structure.getName(locale), false) : LanguageUtil.get(request, "new-structure"));
+renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.get(request, "new-structure"));
 %>
 
-<portlet:actionURL name="/journal/add_structure" var="addStructureURL">
-	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+<portlet:actionURL name="/journal/add_ddm_structure" var="addDDMStructureURL">
+	<portlet:param name="mvcPath" value="/edit_ddm_structure.jsp" />
 </portlet:actionURL>
 
-<portlet:actionURL name="/journal/update_structure" var="updateStructureURL">
-	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+<portlet:actionURL name="/journal/update_ddm_structure" var="updateDDMStructureURL">
+	<portlet:param name="mvcPath" value="/edit_ddm_structure.jsp" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form
-	action="<%= (structure == null) ? addStructureURL : updateStructureURL %>"
+	action="<%= (ddmStructure == null) ? addDDMStructureURL : updateDDMStructureURL %>"
 	fluid="<%= true %>"
 	method="post"
 	name="fm"
-	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input name="structureId" type="hidden" value="<%= journalEditStructuresDisplayContext.getStructureId() %>" />
+	<aui:input name="ddmStructureId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getDDMStructureId() %>" />
 	<aui:input name="definition" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
@@ -109,25 +109,25 @@ renderResponse.setTitle((structure != null) ? LanguageUtil.format(request, "edit
 		<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
 		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 
-		<c:if test="<%= (structure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditStructuresDisplayContext.getStructureId()) > 0) %>">
+		<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
 			<div class="alert alert-warning">
 				<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
 			</div>
 		</c:if>
 
-		<c:if test="<%= (journalEditStructuresDisplayContext.getStructureId() > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(null, PortalUtil.getClassNameId(DDMStructure.class), journalEditStructuresDisplayContext.getStructureId()) > 0) %>">
+		<c:if test="<%= (journalEditDDMStructuresDisplayContext.getDDMStructureId() > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(null, PortalUtil.getClassNameId(DDMStructure.class), journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
 			<div class="alert alert-info">
 				<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
 			</div>
 		</c:if>
 
-		<c:if test="<%= (structure != null) && (groupId != scopeGroupId) %>">
+		<c:if test="<%= (ddmStructure != null) && (groupId != scopeGroupId) %>">
 			<div class="alert alert-warning">
 				<liferay-ui:message key="this-structure-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-structure" />
 			</div>
 		</c:if>
 
-		<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
+		<aui:model-context bean="<%= ddmStructure %>" model="<%= DDMStructure.class %>" />
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
@@ -136,48 +136,48 @@ renderResponse.setTitle((structure != null) ? LanguageUtil.format(request, "edit
 				<liferay-ui:panel-container
 					cssClass="lfr-structure-entry-details-container"
 					extended="<%= false %>"
-					id="structureDetailsPanelContainer"
+					id="ddmStructureDetailsPanelContainer"
 					persistState="<%= true %>"
 				>
 					<liferay-ui:panel
 						collapsible="<%= true %>"
 						defaultState="closed"
 						extended="<%= false %>"
-						id="structureDetailsSectionPanel"
+						id="ddmStructureDetailsSectionPanel"
 						markupView="lexicon"
 						persistState="<%= true %>"
 						title='<%= LanguageUtil.get(request, "details") %>'
 					>
-						<aui:input name="storageType" type="hidden" value="<%= journalEditStructuresDisplayContext.getStorageType() %>" />
+						<aui:input name="storageType" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getStorageType() %>" />
 
-						<c:if test="<%= !journalEditStructuresDisplayContext.autogenerateStructureKey() %>">
-							<aui:input disabled="<%= structure != null %>" name="structureKey" />
+						<c:if test="<%= !journalEditDDMStructuresDisplayContext.autogenerateDDMStructureKey() %>">
+							<aui:input disabled="<%= ddmStructure != null %>" name="ddmStructureKey" />
 						</c:if>
 
 						<aui:input name="description" />
 
 						<aui:field-wrapper label="parent-strucutre">
-							<aui:input name="parentStructureId" type="hidden" value="<%= journalEditStructuresDisplayContext.getParentStructureId() %>" />
+							<aui:input name="parentDDMStructureId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureId() %>" />
 
-							<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentStructureName" type="text" value="<%= journalEditStructuresDisplayContext.getParentStructureName() %>" />
+							<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentDDMStructureName" type="text" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureName() %>" />
 
-							<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
+							<aui:button onClick='<%= renderResponse.getNamespace() + "openParentDDMStructureSelector();" %>' value="select" />
 
-							<aui:button disabled="<%= Validator.isNull(journalEditStructuresDisplayContext.getParentStructureName()) %>" name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
+							<aui:button disabled="<%= Validator.isNull(journalEditDDMStructuresDisplayContext.getParentDDMStructureName()) %>" name="removeParentDDMStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentDDMStructure();" %>' value="remove" />
 						</aui:field-wrapper>
 
-						<c:if test="<%= structure != null %>">
-							<portlet:resourceURL id="/journal/get_structure" var="getStructureURL">
-								<portlet:param name="structureId" value="<%= String.valueOf(journalEditStructuresDisplayContext.getStructureId()) %>" />
+						<c:if test="<%= ddmStructure != null %>">
+							<portlet:resourceURL id="/journal/get_ddm_structure" var="getDDMStructureURL">
+								<portlet:param name="ddmStructureId" value="<%= String.valueOf(journalEditDDMStructuresDisplayContext.getDDMStructureId()) %>" />
 							</portlet:resourceURL>
 
-							<aui:input name="url" type="resource" value="<%= getStructureURL %>" />
+							<aui:input name="url" type="resource" value="<%= getDDMStructureURL %>" />
 
 							<%
 							Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
 							%>
 
-							<aui:input name="webDavURL" type="resource" value="<%= structure.getWebDavURL(themeDisplay, WebDAVUtil.getStorageToken(portlet)) %>" />
+							<aui:input name="webDavURL" type="resource" value="<%= ddmStructure.getWebDavURL(themeDisplay, WebDAVUtil.getStorageToken(portlet)) %>" />
 						</c:if>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>
@@ -195,40 +195,40 @@ renderResponse.setTitle((structure != null) ? LanguageUtil.format(request, "edit
 </liferay-frontend:edit-form>
 
 <aui:script>
-	function <portlet:namespace />openParentStructureSelector() {
+	function <portlet:namespace />openParentDDMStructureSelector() {
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
 					constrain: true,
 					modal: true
 				},
-				eventName: '<portlet:namespace />selectStructure',
-				id: '<portlet:namespace />selectStructure',
+				eventName: '<portlet:namespace />selectDDMStructure',
+				id: '<portlet:namespace />selectDDMStructure',
 				title: '<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /><portlet:param name="classPK" value="<%= String.valueOf(journalEditStructuresDisplayContext.getStructureId()) %>" /></portlet:renderURL>'
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /><portlet:param name="classPK" value="<%= String.valueOf(journalEditDDMStructuresDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>'
 			},
 			function(event) {
 				var form = AUI.$('#<portlet:namespace />fm');
 
-				form.fm('parentStructureId').val(event.ddmstructureid);
+				form.fm('parentDDMStructureId').val(event.ddmstructureid);
 
-				form.fm('parentStructureName').val(AUI._.unescape(event.name));
+				form.fm('parentDDMStructureName').val(AUI._.unescape(event.name));
 
-				form.fm('removeParentStructureButton').attr('disabled', false).removeClass('disabled');
+				form.fm('removeParentDDMStructureButton').attr('disabled', false).removeClass('disabled');
 			}
 		);
 	}
 
-	function <portlet:namespace />removeParentStructure() {
+	function <portlet:namespace />removeParentDDMStructure() {
 		var form = AUI.$('#<portlet:namespace />fm');
 
-		form.fm('parentStructureId').val('');
-		form.fm('parentStructureName').val('');
+		form.fm('parentDDMStructureId').val('');
+		form.fm('parentDDMStructureName').val('');
 
-		form.fm('removeParentStructureButton').attr('disabled', true).addClass('disabled');
+		form.fm('removeParentDDMStructureButton').attr('disabled', true).addClass('disabled');
 	}
 
-	function <portlet:namespace />saveStructure() {
+	function <portlet:namespace />saveDDMStructure() {
 		var form = AUI.$('#<portlet:namespace />fm');
 
 		form.fm('definition').val(<portlet:namespace />formBuilder.getContentValue());

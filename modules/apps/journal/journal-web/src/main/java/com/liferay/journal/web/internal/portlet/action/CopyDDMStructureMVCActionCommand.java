@@ -14,12 +14,10 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -46,49 +44,48 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/add_structure"
+		"mvc.command.name=/journal/copy_ddm_structure"
 	},
 	service = MVCActionCommand.class
 )
-public class AddStructureMVCActionCommand extends BaseMVCActionCommand {
+public class CopyDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String structureKey = ParamUtil.getString(
-			actionRequest, "structureKey");
-		long parentStructureId = ParamUtil.getLong(
-			actionRequest, "parentStructureId",
-			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
+
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		DDMForm ddmForm = _ddm.getDDMForm(actionRequest);
-
-		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
-
-		String storageType = ParamUtil.getString(actionRequest, "storageType");
+		boolean copyTemplates = ParamUtil.getBoolean(
+			actionRequest, "copyTemplates");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
-		_ddmStructureService.addStructure(
-			groupId, parentStructureId,
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			structureKey, nameMap, descriptionMap, ddmForm, ddmFormLayout,
-			storageType, DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+		DDMStructure ddmStructure = _ddmStructureService.copyStructure(
+			ddmStructureId, nameMap, descriptionMap, serviceContext);
+
+		if (copyTemplates) {
+			_ddmTemplateService.copyTemplates(
+				_portal.getClassNameId(DDMStructure.class), ddmStructureId,
+				_portal.getClassNameId(JournalArticle.class),
+				ddmStructure.getStructureId(),
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, serviceContext);
+		}
 	}
 
 	@Reference
-	private DDM _ddm;
+	private DDMStructureService _ddmStructureService;
 
 	@Reference
-	private DDMStructureService _ddmStructureService;
+	private DDMTemplateService _ddmTemplateService;
 
 	@Reference
 	private Portal _portal;

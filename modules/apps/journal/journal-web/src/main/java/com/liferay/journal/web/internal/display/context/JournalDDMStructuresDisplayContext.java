@@ -51,9 +51,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class JournalStructuresDisplayContext {
+public class JournalDDMStructuresDisplayContext {
 
-	public JournalStructuresDisplayContext(
+	public JournalDDMStructuresDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;
@@ -71,7 +71,7 @@ public class JournalStructuresDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.putData("action", "deleteStructures");
+						dropdownItem.putData("action", "deleteDDMStructures");
 						dropdownItem.setIcon("times");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
@@ -100,7 +100,7 @@ public class JournalStructuresDisplayContext {
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_structure.jsp", "redirect",
+							"/edit_ddm_structure.jsp", "redirect",
 							themeDisplay.getURLCurrent());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "add"));
@@ -169,19 +169,19 @@ public class JournalStructuresDisplayContext {
 		return sortingURL.toString();
 	}
 
-	public SearchContainer getStructureSearch() throws Exception {
-		if (_structureSearch != null) {
-			return _structureSearch;
+	public SearchContainer getDDMStructureSearch() throws Exception {
+		if (_ddmStructureSearch != null) {
+			return _ddmStructureSearch;
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SearchContainer structureSearch = new SearchContainer(
+		SearchContainer ddmStructureSearch = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-structures");
 
 		if (Validator.isNotNull(_getKeywords())) {
-			structureSearch.setEmptyResultsMessage("no-structures-were-found");
+			ddmStructureSearch.setEmptyResultsMessage("no-structures-were-found");
 		}
 
 		String orderByCol = getOrderByCol();
@@ -191,10 +191,10 @@ public class JournalStructuresDisplayContext {
 			DDMUtil.getStructureOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
-		structureSearch.setOrderByCol(orderByCol);
-		structureSearch.setOrderByComparator(orderByComparator);
-		structureSearch.setOrderByType(orderByType);
-		structureSearch.setRowChecker(
+		ddmStructureSearch.setOrderByCol(orderByCol);
+		ddmStructureSearch.setOrderByComparator(orderByComparator);
+		ddmStructureSearch.setOrderByType(orderByType);
+		ddmStructureSearch.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
 		long[] groupIds = {themeDisplay.getScopeGroupId()};
@@ -209,24 +209,24 @@ public class JournalStructuresDisplayContext {
 			PortalUtil.getClassNameId(JournalArticle.class.getName()),
 			_getKeywords(), WorkflowConstants.STATUS_ANY);
 
-		structureSearch.setTotal(total);
+		ddmStructureSearch.setTotal(total);
 
 		List<DDMStructure> results = DDMStructureServiceUtil.search(
 			themeDisplay.getCompanyId(), groupIds,
 			PortalUtil.getClassNameId(JournalArticle.class.getName()),
 			_getKeywords(), WorkflowConstants.STATUS_ANY,
-			structureSearch.getStart(), structureSearch.getEnd(),
-			structureSearch.getOrderByComparator());
+			ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
+			ddmStructureSearch.getOrderByComparator());
 
-		structureSearch.setResults(results);
+		ddmStructureSearch.setResults(results);
 
-		_structureSearch = structureSearch;
+		_ddmStructureSearch = ddmStructureSearch;
 
-		return structureSearch;
+		return ddmStructureSearch;
 	}
 
 	public int getTotalItems() throws Exception {
-		SearchContainer<?> searchContainer = getStructureSearch();
+		SearchContainer<?> searchContainer = getDDMStructureSearch();
 
 		return searchContainer.getTotal();
 	}
@@ -266,7 +266,7 @@ public class JournalStructuresDisplayContext {
 			return false;
 		}
 
-		if (DDMStructurePermission.containsAddStructurePermission(
+		if (DDMStructurePermission.containsAddDDMStructurePermission(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),
 				PortalUtil.getClassNameId(JournalArticle.class.getName()))) {
@@ -330,7 +330,7 @@ public class JournalStructuresDisplayContext {
 	private PortletURL _getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view_structures.jsp");
+		portletURL.setParameter("mvcPath", "/view_ddm_structures.jsp");
 
 		String keywords = _getKeywords();
 
@@ -360,6 +360,6 @@ public class JournalStructuresDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private SearchContainer _structureSearch;
+	private SearchContainer _ddmStructureSearch;
 
 }

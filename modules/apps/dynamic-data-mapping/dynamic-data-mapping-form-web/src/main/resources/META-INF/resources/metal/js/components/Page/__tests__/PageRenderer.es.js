@@ -42,6 +42,21 @@ describe(
 				expect(component).toMatchSnapshot();
 			}
 		);
+		
+		it(
+			'should display empty drag message when there are rows with no columns specified',
+			() => {
+				component = new PageRenderer(
+					{
+						...componentProps,
+						page: {
+							rows: [{}]
+						}
+					}
+				);
+				expect(component).toMatchSnapshot();
+			}
+		);
 
 		it(
 			'should change the page title',

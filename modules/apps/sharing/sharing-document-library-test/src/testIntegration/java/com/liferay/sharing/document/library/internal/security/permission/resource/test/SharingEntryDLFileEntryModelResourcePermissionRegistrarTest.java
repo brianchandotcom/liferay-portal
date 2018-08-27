@@ -99,6 +99,62 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 	}
 
 	@Test
+	public void testUserWithAddDiscussionAndViewSharingEntryActionKeyCanAddDiscussionPrivateFileEntry()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		_sharingEntryLocalService.addSharingEntry(
+			_user.getUserId(), _groupUser.getUserId(), _classNameId,
+			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
+			Arrays.asList(
+				SharingEntryActionKey.ADD_DISCUSSION,
+				SharingEntryActionKey.VIEW),
+			serviceContext);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_groupUser);
+
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(_groupUser, permissionChecker)) {
+
+			Assert.assertTrue(
+				_fileEntryModelResourcePermission.contains(
+					permissionChecker, _fileEntry, ActionKeys.ADD_DISCUSSION));
+		}
+	}
+
+	@Test
+	public void testUserWithAddDiscussionAndViewSharingEntryActionKeyCannotUpdatePrivateFileEntry()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		_sharingEntryLocalService.addSharingEntry(
+			_user.getUserId(), _groupUser.getUserId(), _classNameId,
+			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
+			Arrays.asList(
+				SharingEntryActionKey.ADD_DISCUSSION,
+				SharingEntryActionKey.VIEW),
+			serviceContext);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_groupUser);
+
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(_groupUser, permissionChecker)) {
+
+			Assert.assertFalse(
+				_fileEntryModelResourcePermission.contains(
+					permissionChecker, _fileEntry, ActionKeys.UPDATE));
+		}
+	}
+
+	@Test
 	public void testUserWithoutAddDiscussionSharingEntryActionKeyCannotAddDiscussionPrivateFileEntry()
 		throws Exception {
 
@@ -159,62 +215,6 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 			Assert.assertFalse(
 				_fileEntryModelResourcePermission.contains(
 					permissionChecker, _fileEntry, ActionKeys.VIEW));
-		}
-	}
-
-	@Test
-	public void testUserWithAddDiscussionAndViewSharingEntryActionKeyCanAddDiscussionPrivateFileEntry()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.VIEW),
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
-
-			Assert.assertTrue(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.ADD_DISCUSSION));
-		}
-	}
-
-	@Test
-	public void testUserWithAddDiscussionAndViewSharingEntryActionKeyCannotUpdatePrivateFileEntry()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.VIEW),
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
-
-			Assert.assertFalse(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.UPDATE));
 		}
 	}
 

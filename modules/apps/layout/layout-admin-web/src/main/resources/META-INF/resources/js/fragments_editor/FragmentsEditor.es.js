@@ -62,27 +62,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Gets all editable values in the current fragment
-	 * @returns Array<Object>
-	 * @private
-	 * @review
-	 */
-
-	_getEditableValues() {
-		return this.fragmentEntryLinks
-			.map(
-				fragmentEntryLink => {
-					const component = this._getFragmentEntryLinkComponent(
-						fragmentEntryLink.fragmentEntryLinkId
-					);
-
-					return component ? component.getEditableValues() : null;
-				}
-			)
-			.filter(editableValues => editableValues);
-	}
-
-	/**
 	 * Returns a FragmentEntryLink instance for a fragmentEntryLinkId
 	 * @param {string} fragmentEntryLinkId
 	 * @private
@@ -112,79 +91,6 @@ class FragmentsEditor extends Component {
 				)
 			)
 		);
-	}
-
-	/**
-	 * Gets a new FragmentEntryLink position.
-	 * @returns {number}
-	 * @private
-	 * @review
-	 */
-
-	_getNewFragmentEntryLinkPosition() {
-		const position = Math.max(
-			0,
-			...this.fragmentEntryLinks.map(
-				fragmentEntryLink => fragmentEntryLink.position
-			)
-		);
-
-		return position + 1;
-	}
-
-	/**
-	 * Gets the translation status for a given set of parameters
-	 * @param languageIds The set of languageIds to check
-	 * @param editableValues The current editable values state
-	 * @private
-	 * @returns {{
-	 * 	languageValues: {{
-	 * 		languageId: string
-	 * 		values: Array<string>
-	 *  }},
-	 *  translationKeys: Array<string>
-	 * }} A translation status object
-	 * @review
-	 */
-
-	_getTranslationStatus(languageIds, editableValues) {
-		const translationKeys = editableValues.map(
-			editableValue => {
-				return Object.keys(editableValue).map(
-					editableValueId => editableValue[editableValueId].defaultValue
-				);
-			}
-		).reduce(
-			(acc, val) => acc.concat(val),
-			[]
-		);
-
-		const languageValues = languageIds.map(
-			languageId => {
-				const values = editableValues.map(
-					editableValue => {
-						return Object.keys(editableValue).map(
-							editableValueId => editableValue[editableValueId][languageId]
-						);
-					}
-				).reduce(
-					(acc, val) => acc.concat(val),
-					[]
-				).filter(
-					localeValue => localeValue
-				);
-
-				return {
-					languageId,
-					values
-				};
-			}
-		);
-
-		return {
-			languageValues,
-			translationKeys
-		};
 	}
 
 	/**

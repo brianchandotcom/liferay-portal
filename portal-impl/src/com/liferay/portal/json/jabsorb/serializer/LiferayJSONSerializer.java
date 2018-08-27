@@ -20,9 +20,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.util.HashMap;
+
 import org.jabsorb.JSONSerializer;
-import org.jabsorb.serializer.ObjectMatch;
-import org.jabsorb.serializer.SerializerState;
+import org.jabsorb.serializer.Serializer;
 import org.jabsorb.serializer.UnmarshallException;
 
 import org.json.JSONObject;
@@ -33,29 +34,14 @@ import org.json.JSONObject;
 public class LiferayJSONSerializer extends JSONSerializer {
 
 	@Override
-	public ObjectMatch tryUnmarshall(
-			SerializerState serializerState,
-			@SuppressWarnings("rawtypes") Class clazz, Object jsonObj)
-		throws UnmarshallException {
-
-		if (!(serializerState instanceof LiferaySerializerState)) {
-			serializerState = new LiferaySerializerState();
+	public void registerSerializer(Serializer s) {
+		if (s != null) {
+			for (Class clazz : s.getSerializableClasses()) {
+				_liferayJSONDeserializationWhitelist.register(clazz.getName());
+			}
 		}
 
-		return super.tryUnmarshall(serializerState, clazz, jsonObj);
-	}
-
-	@Override
-	public Object unmarshall(
-			SerializerState serializerState,
-			@SuppressWarnings("rawtypes") Class clazz, Object jsonObj)
-		throws UnmarshallException {
-
-		if (!(serializerState instanceof LiferaySerializerState)) {
-			serializerState = new LiferaySerializerState();
-		}
-
-		return super.unmarshall(serializerState, clazz, jsonObj);
+		super.registerSerializer(s);
 	}
 
 	@Override
@@ -71,6 +57,22 @@ public class LiferayJSONSerializer extends JSONSerializer {
 				JSONObject jsonObject = (JSONObject)object;
 
 				className = jsonObject.getString("javaClass");
+
+				if (!_liferayJSONDeserializationWhitelist.isWhitelisted(
+						className)) {
+
+					if (jsonObject.has("serializable")) {
+						jsonObject.put(
+							"map", jsonObject.remove("serializable"));
+					}
+					else {
+						jsonObject.put("map", new JSONObject());
+					}
+
+					jsonObject.put("javaClass", "java.util.HashMap");
+
+					return HashMap.class;
+				}
 
 				if (jsonObject.has("contextName")) {
 					String contextName = jsonObject.getString("contextName");
@@ -101,5 +103,9 @@ public class LiferayJSONSerializer extends JSONSerializer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayJSONSerializer.class);
+
+	private final LiferayJSONDeserializationWhitelist
+		_liferayJSONDeserializationWhitelist =
+			new LiferayJSONDeserializationWhitelist();
 
 }

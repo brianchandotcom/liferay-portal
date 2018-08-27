@@ -252,6 +252,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl">
 		<priority value="WARN" />
 	</category>

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
+import com.liferay.portal.scheduler.quartz.internal.json.jabsorb.serializer.QuartzLiferayJSONDeserializationWhitelist;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -1012,6 +1013,11 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 	private Scheduler _persistedScheduler;
 	private Props _props;
+
+	@Reference
+	private QuartzLiferayJSONDeserializationWhitelist
+		_quartzLiferayJSONDeserializationWhitelist;
+
 	private volatile boolean _schedulerEngineEnabled;
 
 	@Reference(

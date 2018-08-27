@@ -21,8 +21,8 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public abstract class PortalRepositoryJob
-	extends RepositoryJob implements PortalTestClassJob {
+public abstract class PortalGitRepositoryJob
+	extends GitRepositoryJob implements PortalTestClassJob {
 
 	@Override
 	public Set<String> getBatchNames() {
@@ -67,20 +67,20 @@ public abstract class PortalRepositoryJob
 		return null;
 	}
 
-	protected PortalRepositoryJob(String jobName) {
+	protected PortalGitRepositoryJob(String jobName) {
 		super(jobName);
 
 		gitWorkingDirectory =
 			JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
 				getBranchName());
 
-		setRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
+		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 
-		checkRepositoryDir();
+		checkGitRepositoryDir();
 
 		jobProperties.putAll(
 			JenkinsResultsParserUtil.getProperties(
-				new File(repositoryDir, "test.properties")));
+				new File(gitRepositoryDir, "test.properties")));
 	}
 
 }

@@ -108,10 +108,10 @@ public class PullRequest {
 		GitHubRemoteGitRepository gitHubRemoteGitRepository =
 			getGitHubRemoteGitRepository();
 
-		Label repositoryLabel = gitHubRemoteGitRepository.getLabel(
+		Label gitRepositoryLabel = gitHubRemoteGitRepository.getLabel(
 			label.getName());
 
-		if (repositoryLabel == null) {
+		if (gitRepositoryLabel == null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Label ", label.getName(), " does not exist in ",
@@ -211,6 +211,10 @@ public class PullRequest {
 		return _gitHubRemoteGitRepositoryName;
 	}
 
+	public String getGitRepositoryName() {
+		return getGitHubRemoteGitRepositoryName();
+	}
+
 	public String getHtmlURL() {
 		return _jsonObject.getString("html_url");
 	}
@@ -237,7 +241,7 @@ public class PullRequest {
 		if (_liferayRemoteGitBranch == null) {
 			_liferayRemoteGitBranch = GitUtil.getRemoteGitBranch(
 				getUpstreamBranchName(), new File("."),
-				"git@github.com:liferay/" + getRepositoryName());
+				"git@github.com:liferay/" + getGitRepositoryName());
 		}
 
 		return _liferayRemoteGitBranch;
@@ -262,10 +266,6 @@ public class PullRequest {
 		JSONObject userJSONObject = baseJSONObject.getJSONObject("user");
 
 		return userJSONObject.getString("login");
-	}
-
-	public String getRepositoryName() {
-		return getGitHubRemoteGitRepositoryName();
 	}
 
 	public String getSenderBranchName() {

@@ -23,8 +23,8 @@ import java.util.Set;
 /**
  * @author Peter Yoo
  */
-public class PluginsRepositoryJob
-	extends RepositoryJob implements PortalTestClassJob {
+public class PluginsGitRepositoryJob
+	extends GitRepositoryJob implements PortalTestClassJob {
 
 	@Override
 	public Set<String> getBatchNames() {
@@ -81,32 +81,32 @@ public class PluginsRepositoryJob
 		return null;
 	}
 
-	protected PluginsRepositoryJob(String jobName) {
+	protected PluginsGitRepositoryJob(String jobName) {
 		super(jobName);
 
 		getGitWorkingDirectory();
 
-		setRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
+		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 
-		checkRepositoryDir();
+		checkGitRepositoryDir();
 
 		String portalBranchName = getBuildPropertyValue(
 			JenkinsResultsParserUtil.combine(
 				"plugins.portal.branch.name[", getBranchName(), "]"));
 
-		File portalRepositoryDir = new File(
+		File portalGitRepositoryDir = new File(
 			getBuildPropertyValue(
 				JenkinsResultsParserUtil.combine(
 					"portal.dir[", portalBranchName, "]")));
 
 		jobProperties.putAll(
 			JenkinsResultsParserUtil.getProperties(
-				new File(portalRepositoryDir, "test.properties")));
+				new File(portalGitRepositoryDir, "test.properties")));
 
 		portalGitWorkingDirectory =
 			(PortalGitWorkingDirectory)
 				GitWorkingDirectoryFactory.newGitWorkingDirectory(
-					portalBranchName, portalRepositoryDir.getPath());
+					portalBranchName, portalGitRepositoryDir.getPath());
 	}
 
 	protected String getBuildPropertyValue(String buildPropertyName) {

@@ -236,10 +236,10 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
 	protected PortalGitWorkingDirectory(
 			String upstreamBranchName, String workingDirectoryPath,
-			String repositoryName)
+			String gitRepositoryName)
 		throws IOException {
 
-		super(upstreamBranchName, workingDirectoryPath, repositoryName);
+		super(upstreamBranchName, workingDirectoryPath, gitRepositoryName);
 	}
 
 	@Override

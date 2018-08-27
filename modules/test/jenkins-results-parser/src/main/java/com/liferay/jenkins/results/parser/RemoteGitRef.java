@@ -59,7 +59,7 @@ public class RemoteGitRef
 		super(name, sha);
 
 		if (remoteGitRepository == null) {
-			throw new IllegalArgumentException("Remote repository is null");
+			throw new IllegalArgumentException("Remote Git repository is null");
 		}
 
 		_remoteGitRepository = remoteGitRepository;

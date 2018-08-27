@@ -70,7 +70,7 @@ public class PortalLocalGitRepository extends LocalGitRepository {
 			if (!name.endsWith("-ee")) {
 				throw new IllegalArgumentException(
 					JenkinsResultsParserUtil.combine(
-						"The local repository, ", name,
+						"The local Git repository, ", name,
 						" should not be used with upstream branch ",
 						upstreamBranchName, ". Use ", name, "-ee."));
 			}

@@ -45,7 +45,7 @@ public class JunitBatchPortalWorkspace
 			String.valueOf(otherPortalLocalGitBranch.getDirectory()));
 
 		PortalLocalGitRepository portalLocalGitRepository =
-			getPrimaryPortalRepository();
+			getPrimaryPortalGitRepository();
 
 		portalLocalGitRepository.setBuildProperties(properties);
 	}

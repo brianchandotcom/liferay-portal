@@ -207,8 +207,8 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getBaseRepositoryName() {
-		if (repositoryName == null) {
+	public String getBaseGitRepositoryName() {
+		if (gitRepositoryName == null) {
 			Properties buildProperties = null;
 
 			try {
@@ -221,31 +221,32 @@ public abstract class BaseBuild implements Build {
 
 			TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-			repositoryName = topLevelBuild.getParameterValue("REPOSITORY_NAME");
+			gitRepositoryName = topLevelBuild.getParameterValue(
+				"REPOSITORY_NAME");
 
-			if ((repositoryName != null) && !repositoryName.isEmpty()) {
-				return repositoryName;
+			if ((gitRepositoryName != null) && !gitRepositoryName.isEmpty()) {
+				return gitRepositoryName;
 			}
 
-			repositoryName = buildProperties.getProperty(
+			gitRepositoryName = buildProperties.getProperty(
 				JenkinsResultsParserUtil.combine(
 					"repository[", topLevelBuild.getJobName(), "]"));
 
-			if (repositoryName == null) {
+			if (gitRepositoryName == null) {
 				throw new RuntimeException(
-					"Unable to get repository name for job " +
+					"Unable to get Git repository name for job " +
 						topLevelBuild.getJobName());
 			}
 		}
 
-		return repositoryName;
+		return gitRepositoryName;
 	}
 
 	@Override
-	public String getBaseRepositorySHA(String repositoryName) {
+	public String getBaseGitRepositorySHA(String gitRepositoryName) {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		if (repositoryName.equals("liferay-jenkins-ee")) {
+		if (gitRepositoryName.equals("liferay-jenkins-ee")) {
 			Map<String, String> topLevelBuildStartPropertiesTempMap =
 				topLevelBuild.getStartPropertiesTempMap();
 
@@ -253,10 +254,10 @@ public abstract class BaseBuild implements Build {
 				"JENKINS_GITHUB_UPSTREAM_BRANCH_SHA");
 		}
 
-		Map<String, String> repositoryGitDetailsTempMap =
+		Map<String, String> gitRepositoryGitDetailsTempMap =
 			topLevelBuild.getBaseGitRepositoryDetailsTempMap();
 
-		return repositoryGitDetailsTempMap.get("github.upstream.branch.sha");
+		return gitRepositoryGitDetailsTempMap.get("github.upstream.branch.sha");
 	}
 
 	@Override
@@ -1566,9 +1567,9 @@ public abstract class BaseBuild implements Build {
 		return Collections.emptyList();
 	}
 
-	protected String getBaseRepositoryType() {
+	protected String getBaseGitRepositoryType() {
 		if (jobName.startsWith("test-subrepository-acceptance-pullrequest")) {
-			return getBaseRepositoryName();
+			return getBaseGitRepositoryName();
 		}
 
 		if (jobName.contains("portal")) {
@@ -2404,11 +2405,11 @@ public abstract class BaseBuild implements Build {
 	protected int consoleReadCursor;
 	protected List<Build> downstreamBuilds = new ArrayList<>();
 	protected boolean fromArchive;
+	protected String gitRepositoryName;
 	protected Long invokedTime;
 	protected String jobName;
 	protected List<ReinvokeRule> reinvokeRules =
 		ReinvokeRule.getReinvokeRules();
-	protected String repositoryName;
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
 	protected Long startTime;

@@ -20,10 +20,10 @@ package com.liferay.jenkins.results.parser;
 public class DefaultCommit extends BaseCommit {
 
 	protected DefaultCommit(
-		String gitHubUserName, String message, String repositoryName,
+		String gitHubUserName, String message, String gitRepositoryName,
 		String sha, Type type) {
 
-		super(gitHubUserName, message, repositoryName, sha, type);
+		super(gitHubUserName, message, gitRepositoryName, sha, type);
 	}
 
 }

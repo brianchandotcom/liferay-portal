@@ -27,12 +27,12 @@ import org.dom4j.Element;
 public class SourceFormatBuild extends TopLevelBuild {
 
 	@Override
-	public String getBaseRepositoryName() {
+	public String getBaseGitRepositoryName() {
 		return _pullRequest.getGitHubRemoteGitRepositoryName();
 	}
 
 	@Override
-	public String getBaseRepositorySHA(String repositoryName) {
+	public String getBaseGitRepositorySHA(String gitRepositoryName) {
 		return _pullRequest.getUpstreamBranchSHA();
 	}
 

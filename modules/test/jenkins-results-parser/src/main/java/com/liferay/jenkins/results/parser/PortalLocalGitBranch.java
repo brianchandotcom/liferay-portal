@@ -38,7 +38,7 @@ public class PortalLocalGitBranch extends LocalGitBranch {
 
 		if (!(localGitRepository instanceof PortalLocalGitRepository)) {
 			throw new IllegalArgumentException(
-				"Local Git repository is not a portal repository");
+				"Local Git repository is not a portal Git repository");
 		}
 	}
 

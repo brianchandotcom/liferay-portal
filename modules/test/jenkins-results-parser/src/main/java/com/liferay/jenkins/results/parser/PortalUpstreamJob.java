@@ -22,7 +22,7 @@ import java.util.Set;
  * @author Leslie Wong
  */
 public class PortalUpstreamJob
-	extends PortalRepositoryJob implements BatchDependentJob {
+	extends PortalGitRepositoryJob implements BatchDependentJob {
 
 	public PortalUpstreamJob(String jobName) {
 		super(jobName);

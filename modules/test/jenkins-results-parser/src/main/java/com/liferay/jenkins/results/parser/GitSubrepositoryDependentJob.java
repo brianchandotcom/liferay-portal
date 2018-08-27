@@ -14,13 +14,13 @@
 
 package com.liferay.jenkins.results.parser;
 
-/**
- * @author Michael Hashimoto
- */
-public class SubrepositoryAcceptancePullRequestJob extends SubrepositoryJob {
+import java.io.File;
 
-	public SubrepositoryAcceptancePullRequestJob(String jobName) {
-		super(jobName);
-	}
+/**
+ * @author Leslie Wong
+ */
+public interface GitSubrepositoryDependentJob extends Job {
+
+	public File getGitSubrepositoryWorkingDirectory();
 
 }

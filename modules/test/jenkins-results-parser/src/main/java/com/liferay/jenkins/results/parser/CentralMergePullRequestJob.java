@@ -25,21 +25,21 @@ import java.util.Properties;
  */
 public class CentralMergePullRequestJob
 	extends PortalAcceptancePullRequestJob
-	implements SubrepositoryDependentJob {
+	implements GitSubrepositoryDependentJob {
 
 	public CentralMergePullRequestJob(String url) {
 		super(url, "relevant");
 
-		_subrepositoryName = _getSubrepositoryName(gitWorkingDirectory);
+		_gitSubrepositoryName = _getGitSubrepositoryName(gitWorkingDirectory);
 
 		jobProperties.putAll(
 			JenkinsResultsParserUtil.getProperties(
 				new File(
-					getSubrepositoryWorkingDirectory(), "test.properties")));
+					getGitSubrepositoryWorkingDirectory(), "test.properties")));
 	}
 
 	@Override
-	public File getSubrepositoryWorkingDirectory() {
+	public File getGitSubrepositoryWorkingDirectory() {
 		Properties buildProperties = null;
 
 		try {
@@ -49,14 +49,14 @@ public class CentralMergePullRequestJob
 			throw new RuntimeException("Unable to get build properties", ioe);
 		}
 
-		String subrepositoryDir = JenkinsResultsParserUtil.combine(
+		String gitSubrepositoryDir = JenkinsResultsParserUtil.combine(
 			buildProperties.getProperty("base.repository.dir"), "/",
-			_subrepositoryName);
+			_gitSubrepositoryName);
 
-		return new File(subrepositoryDir);
+		return new File(gitSubrepositoryDir);
 	}
 
-	private static String _getSubrepositoryName(
+	private static String _getGitSubrepositoryName(
 		GitWorkingDirectory gitWorkingDirectory) {
 
 		List<File> currentBranchModifiedFiles =
@@ -71,18 +71,18 @@ public class CentralMergePullRequestJob
 		Properties properties = JenkinsResultsParserUtil.getProperties(
 			gitrepoFile);
 
-		String subrepositoryRemote = properties.getProperty("remote");
+		String gitSubrepositoryRemote = properties.getProperty("remote");
 
-		String subrepositoryName = subrepositoryRemote.replaceAll(
+		String gitSubrepositoryName = gitSubrepositoryRemote.replaceAll(
 			".*(com-liferay-[^\\.]+)\\.git", "$1");
 
-		if (!subrepositoryName.contains("-private")) {
-			subrepositoryName = subrepositoryName + "-private";
+		if (!gitSubrepositoryName.contains("-private")) {
+			gitSubrepositoryName = gitSubrepositoryName + "-private";
 		}
 
-		return subrepositoryName;
+		return gitSubrepositoryName;
 	}
 
-	private final String _subrepositoryName;
+	private final String _gitSubrepositoryName;
 
 }

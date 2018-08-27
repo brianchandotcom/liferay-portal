@@ -30,7 +30,7 @@ public class PluginsLocalGitRepository extends LocalGitRepository {
 			if (!name.endsWith("-ee")) {
 				throw new IllegalArgumentException(
 					JenkinsResultsParserUtil.combine(
-						"The local repository, ", name,
+						"The local Git repository, ", name,
 						" should not be used with upstream branch ",
 						upstreamBranchName, ". Use ", name, "-ee."));
 			}
@@ -43,7 +43,7 @@ public class PluginsLocalGitRepository extends LocalGitRepository {
 			throw new IllegalArgumentException(
 				JenkinsResultsParserUtil.combine(
 					"The upstream branch, ", upstreamBranchName,
-					" should not be used with repository ", name, "."));
+					" should not be used with Git repository ", name, "."));
 		}
 	}
 

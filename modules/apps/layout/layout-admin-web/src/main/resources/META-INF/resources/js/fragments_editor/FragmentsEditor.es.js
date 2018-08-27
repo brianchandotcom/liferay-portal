@@ -58,74 +58,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Sends message to delete a single fragment entry link to the server and,
-	 * if success, sets the _dirty property to false.
-	 * @param {!string} fragmentEntryLinkId
-	 * @private
-	 * @review
-	 */
-
-	_deleteFragmentEntryLink(fragmentEntryLinkId) {
-		if (!this._dirty) {
-			this._dirty = true;
-
-			const formData = new FormData();
-
-			formData.append(
-				`${this.portletNamespace}fragmentEntryLinkId`,
-				fragmentEntryLinkId
-			);
-
-			fetch(
-				this.deleteFragmentEntryLinkURL,
-				{
-					body: formData,
-					credentials: 'include',
-					method: 'POST'
-				}
-			).then(
-				() => {
-					this._lastSaveDate = new Date().toLocaleTimeString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
-					);
-
-					this._dirty = false;
-				}
-			);
-		}
-	}
-
-	/**
-	 * Fetches a FragmentEntryLink content from the fragment ID and
-	 * fragmentEntryLink ID, returns a promise that resolves into it's content.
-	 * @param {!string} fragmentEntryLinkId
-	 * @return {Promise<string>}
-	 * @review
-	 */
-
-	_fetchFragmentContent(fragmentEntryLinkId) {
-		const formData = new FormData();
-
-		formData.append(
-			`${this.portletNamespace}fragmentEntryLinkId`,
-			fragmentEntryLinkId
-		);
-
-		return fetch(
-			this.renderFragmentEntryURL,
-			{
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
-			}
-		).then(
-			response => response.json()
-		).then(
-			response => response.content
-		);
-	}
-
-	/**
 	 * Focus a fragmentEntryLink for a given ID
 	 * @param {string} fragmentEntryLinkId
 	 * @review
@@ -336,42 +268,6 @@ class FragmentsEditor extends Component {
 				index,
 				index + direction
 			);
-		}
-	}
-
-	/**
-	 * Removes a fragment from the fragment list. The fragment to
-	 * be removed should be specified inside the event as fragmentEntryLinkId
-	 * @param {!{
-	 *   fragmentEntryLinkId: !string
-	 * }} data
-	 * @private
-	 * @review
-	 */
-
-	_handleFragmentRemove(data) {
-		const index = this._getFragmentEntryLinkIndex(
-			data.fragmentEntryLinkId
-		);
-
-		if (index !== -1) {
-			this.fragmentEntryLinks = [
-				...this.fragmentEntryLinks.slice(0, index),
-				...this.fragmentEntryLinks.slice(index + 1)
-			];
-
-			if (this.fragmentEntryLinks.length === 0 && this.refs.sidebar) {
-				this.refs.sidebar.toggleAddedTab(false);
-			}
-
-			this._translationStatus = this._getTranslationStatus(
-				Object
-					.keys(this.availableLanguages)
-					.filter(languageId => languageId !== '_INJECTED_DATA_'),
-				this._getEditableValues()
-			);
-
-			this._deleteFragmentEntryLink(data.fragmentEntryLinkId);
 		}
 	}
 

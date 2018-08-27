@@ -3,6 +3,8 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarCard.es';
+import {REMOVE_FRAGMENT_ENTRY_LINK} from '../store/actionTypes.es';
+import MetalStore from '../store/MetalStore.es';
 import templates from './SidebarAddedFragments.soy';
 
 /**
@@ -20,11 +22,9 @@ class SidebarAddedFragments extends Component {
 	 */
 
 	_handleFragmentRemoveButtonClick(event) {
-		this.emit(
-			'fragmentRemoveButtonClick',
-			{
-				fragmentEntryLinkId: event.itemId
-			}
+		this.store.dispatchAction(
+			REMOVE_FRAGMENT_ENTRY_LINK,
+			{fragmentEntryLinkId: event.itemId}
 		);
 	}
 }
@@ -67,7 +67,18 @@ SidebarAddedFragments.STATE = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf SidebarAddedFragments
+	 * @review
+	 * @type {MetalStore}
+	 */
+
+	store: Config.instanceOf(MetalStore)
 };
 
 Soy.register(SidebarAddedFragments, templates);

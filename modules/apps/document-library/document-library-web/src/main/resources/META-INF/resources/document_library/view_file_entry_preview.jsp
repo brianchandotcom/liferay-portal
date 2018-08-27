@@ -25,7 +25,6 @@ FileEntry fileEntry = fileVersion.getFileEntry();
 
 boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
 boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
-boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
 boolean showImageContainer = true;
 %>

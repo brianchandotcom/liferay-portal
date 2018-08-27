@@ -16,13 +16,11 @@ package com.liferay.sharing.document.library.internal.security.permission.contri
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -35,9 +33,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
@@ -47,7 +45,7 @@ import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -71,12 +69,8 @@ public class DLFileEntrySharingPermissionSQLContributorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addCompanyAdminUser(_company);
-
 		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(),
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		_groupUser = UserTestUtil.addGroupUser(
@@ -84,13 +78,13 @@ public class DLFileEntrySharingPermissionSQLContributorTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
+				_group.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setAddGuestPermissions(false);
 		serviceContext.setAddGroupPermissions(false);
 
 		_fileEntry = _dlAppLocalService.addFileEntry(
-			_user.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), "text/plain", StringUtil.randomString(),
 			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
@@ -102,16 +96,16 @@ public class DLFileEntrySharingPermissionSQLContributorTest {
 		throws Exception {
 
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_user);
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				TestPropsValues.getUser(), permissionChecker)) {
 
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("1234 IN (SELECT SharingEntry.classPK FROM ");
 			sb.append("SharingEntry WHERE SharingEntry.toUserId = ");
-			sb.append(_user.getUserId());
+			sb.append(TestPropsValues.getUserId());
 			sb.append(" AND SharingEntry.classNameId = ");
 			sb.append(
 				_classNameLocalService.getClassNameId(
@@ -121,26 +115,7 @@ public class DLFileEntrySharingPermissionSQLContributorTest {
 			Assert.assertEquals(
 				sb.toString(),
 				_permissionSQLContributor.getPermissionSQL(
-					DLFileEntry.class.getName(), "1234", StringPool.BLANK,
-					StringPool.BLANK, new long[] {5678}));
-		}
-	}
-
-	@Test
-	public void testDLFolderClassNameReturnsBlankPermissionSQL()
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_user);
-
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_user, permissionChecker)) {
-
-			Assert.assertEquals(
-				StringPool.BLANK,
-				_permissionSQLContributor.getPermissionSQL(
-					DLFolder.class.getName(), "1234", StringPool.BLANK,
-					StringPool.BLANK, new long[] {5678}));
+					DLFileEntry.class.getName(), "1234", null, null, null));
 		}
 	}
 
@@ -165,9 +140,10 @@ public class DLFileEntrySharingPermissionSQLContributorTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 			_sharingEntryLocalService.addSharingEntry(
-				_user.getUserId(), _groupUser.getUserId(), classNameId,
-				_fileEntry.getFileEntryId(), _group.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+				TestPropsValues.getUserId(), _groupUser.getUserId(),
+				classNameId, _fileEntry.getFileEntryId(), _group.getGroupId(),
+				Collections.singletonList(SharingEntryActionKey.VIEW),
+				serviceContext);
 
 			Assert.assertEquals(
 				1,
@@ -178,30 +154,29 @@ public class DLFileEntrySharingPermissionSQLContributorTest {
 	}
 
 	@Inject
-	private ClassNameLocalService _classNameLocalService;
-
-	@DeleteAfterTestRun
-	private Company _company;
+	private static ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private DLAppLocalService _dlAppLocalService;
+	private static DLAppLocalService _dlAppLocalService;
 
 	@Inject
-	private DLAppService _dlAppService;
-
-	private FileEntry _fileEntry;
-	private Group _group;
-	private User _groupUser;
+	private static DLAppService _dlAppService;
 
 	@Inject(
-		filter = "component.name=*.DLFileEntrySharingPermissionSQLContributor",
+		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 		type = PermissionSQLContributor.class
 	)
-	private PermissionSQLContributor _permissionSQLContributor;
+	private static PermissionSQLContributor _permissionSQLContributor;
 
 	@Inject
-	private SharingEntryLocalService _sharingEntryLocalService;
+	private static SharingEntryLocalService _sharingEntryLocalService;
 
-	private User _user;
+	private FileEntry _fileEntry;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@DeleteAfterTestRun
+	private User _groupUser;
 
 }

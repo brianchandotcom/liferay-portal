@@ -252,11 +252,11 @@ public class LiferayConnectionProperties
 
 		wizardForm.addRow(endpoint);
 
+		wizardForm.addRow(anonymousLogin);
+
 		wizardForm.addRow(userId);
 
 		wizardForm.addRow(password);
-
-		wizardForm.addRow(anonymousLogin);
 
 		Widget testConnectionWidget = Widget.widget(testConnection);
 
@@ -283,11 +283,11 @@ public class LiferayConnectionProperties
 
 		mainForm.addRow(endpoint);
 
+		mainForm.addRow(anonymousLogin);
+
 		mainForm.addRow(userId);
 
 		mainForm.addRow(password);
-
-		mainForm.addRow(anonymousLogin);
 
 		mainForm.addRow(siteFilter);
 
@@ -326,11 +326,11 @@ public class LiferayConnectionProperties
 
 		referenceForm.addRow(endpoint);
 
+		referenceForm.addRow(anonymousLogin);
+
 		referenceForm.addRow(userId);
 
 		referenceForm.addRow(password);
-
-		referenceForm.addRow(anonymousLogin);
 
 		referenceForm.addRow(siteFilter);
 

@@ -25,13 +25,10 @@
 	String[] previewFileURLs = null;
 	String videoThumbnailURL = null;
 
-	if (hasAudio || hasImages || hasPDFImages || hasVideo) {
+	if (hasImages || hasPDFImages || hasVideo) {
 		String previewQueryString = null;
 
-		if (hasAudio) {
-			previewQueryString = "&audioPreview=1";
-		}
-		else if (hasImages) {
+		if (hasImages) {
 			previewQueryString = "&imagePreview=1";
 		}
 		else if (hasPDFImages) {
@@ -49,18 +46,6 @@
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			previewQueryString += "&status=" + status;
-		}
-
-		if (hasAudio) {
-			emptyPreview = true;
-			previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS.length];
-
-			for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS.length; i++) {
-				if (AudioProcessorUtil.getPreviewFileSize(fileVersion, PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS[i]) > 0) {
-					emptyPreview = false;
-					previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS[i]);
-				}
-			}
 		}
 		else if (hasVideo) {
 			emptyPreview = true;
@@ -98,7 +83,6 @@
 
 	request.setAttribute("view_file_entry.jsp-randomNamespace", randomNamespace);
 
-	request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(hasAudio));
 	request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(hasVideo));
 
 	request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs);
@@ -113,12 +97,12 @@
 		</c:when>
 		<c:when test="<%= previewFileCount == 0 %>">
 			<c:choose>
-				<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) && (AudioProcessorUtil.isAudioSupported(fileVersion.getMimeType()) || ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) || PDFProcessorUtil.isDocumentSupported(fileVersion.getMimeType()) || VideoProcessorUtil.isVideoSupported(fileVersion.getMimeType())) %>">
+				<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) && (ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) || PDFProcessorUtil.isDocumentSupported(fileVersion.getMimeType()) || VideoProcessorUtil.isVideoSupported(fileVersion.getMimeType())) %>">
 					<div class="alert alert-info">
 						<liferay-ui:message key="file-is-too-large-for-preview-or-thumbnail-generation" />
 					</div>
 				</c:when>
-				<c:when test="<%= AudioProcessorUtil.isAudioSupported(fileVersion) || ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
+				<c:when test="<%= ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
 					<div class="alert alert-info">
 						<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
 					</div>
@@ -127,13 +111,6 @@
 		</c:when>
 		<c:otherwise>
 			<c:choose>
-				<c:when test="<%= hasAudio %>">
-					<div class="lfr-preview-audio" id="<portlet:namespace /><%= randomNamespace %>previewFile">
-						<div class="lfr-preview-audio-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent"></div>
-					</div>
-
-					<liferay-util:include page="/document_library/player.jsp" servletContext="<%= application %>" />
-				</c:when>
 				<c:when test="<%= hasImages %>">
 					<c:choose>
 						<c:when test="<%= showImageContainer %>">

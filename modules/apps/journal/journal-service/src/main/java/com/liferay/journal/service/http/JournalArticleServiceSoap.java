@@ -480,8 +480,8 @@ public class JournalArticleServiceSoap {
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
 	* @return the matching web content articles
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#getArticles(long groupId, long folderId, Locale locale)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getArticles(long
+	groupId, long folderId, Locale locale)}
 	*/
 	@Deprecated
 	public static com.liferay.journal.model.JournalArticleSoap[] getArticles(
@@ -521,9 +521,9 @@ public class JournalArticleServiceSoap {
 	return (not inclusive)
 	* @param obc the comparator to order the web content articles
 	* @return the matching web content articles
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#getArticles(long groupId, long folderId, Locale locale,
-	int start, int end, OrderByComparator obc)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getArticles(long
+	groupId, long folderId, Locale locale, int start, int end,
+	OrderByComparator obc)}
 	*/
 	@Deprecated
 	public static com.liferay.journal.model.JournalArticleSoap[] getArticles(

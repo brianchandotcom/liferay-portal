@@ -40,7 +40,9 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	}
 
 	@Override
-	public void setupWorkspace() {
+	public void checkoutLocalGitBranches() {
+		checkoutJenkinsLocalGitBranch();
+
 		_checkoutPrimaryPortalLocalGitBranch();
 
 		_checkoutBasePortalLocalGitBranch();
@@ -50,7 +52,10 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		_checkoutOtherPortalLocalGitBranch();
 
 		_checkoutPluginsLocalGitBranch();
+	}
 
+	@Override
+	public void writeGitRepositoryPropertiesFiles() {
 		_primaryPortalLocalGitRepository.writeGitRepositoryPropertiesFiles();
 	}
 

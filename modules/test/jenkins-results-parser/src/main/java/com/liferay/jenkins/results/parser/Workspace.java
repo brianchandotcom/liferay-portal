@@ -21,10 +21,14 @@ public interface Workspace {
 
 	public void addJenkinsLocalGitBranch(String jenkinsGitHubURL);
 
+	public void checkoutLocalGitBranches();
+
 	public String getJenkinsBranchName();
 
 	public void setJobProperties(Job job);
 
 	public void setupWorkspace();
+
+	public void writeGitRepositoryPropertiesFiles();
 
 }

@@ -2,6 +2,8 @@ import core from 'metal';
 import dom from 'metal-dom';
 import Component from 'metal-component';
 
+import objectToFormData from './util/object_to_form_data.es';
+
 /**
  * PortletBase provides some helper functions that simplify querying the DOM
  * for elements related to a specific portlet.
@@ -74,15 +76,7 @@ class PortletBase extends Component {
 			requestBody = new FormData(body);
 		}
 		else if (typeof body === 'object') {
-			requestBody = new FormData();
-
-			Object
-				.entries(this.ns(body))
-				.forEach(
-					([key, value]) => {
-						requestBody.append(key, value);
-					}
-				);
+			requestBody = objectToFormData(this.ns(body));
 		}
 		else {
 			requestBody = body;

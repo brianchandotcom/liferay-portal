@@ -64,6 +64,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.springframework.beans.BeansException;
@@ -582,6 +583,20 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				}
 			}
 		}
+		else if (returnValue instanceof Map<?, ?>) {
+			Map<Object, Object> map = (Map<Object, Object>)returnValue;
+
+			if (map.isEmpty()) {
+				return returnValue;
+			}
+
+			for (Entry<Object, Object> entry : map.entrySet()) {
+				Object value = wrapReturnValue(
+					entry.getValue(), showIncomplete);
+
+				map.put(entry.getKey(), value);
+			}
+		}
 
 		return returnValue;
 	}
@@ -603,8 +618,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 	private static final Set<String>
 		_layoutLocalServiceStagingAdviceMethodNames = new HashSet<>(
 			Arrays.asList(
-				"createLayout", "deleteLayout", "getLayouts", "updateLayout",
-				"updateLookAndFeel", "updateName"));
+				"createLayout", "deleteLayout", "getLayouts",
+				"getLayoutChildLayouts", "updateLayout", "updateLookAndFeel",
+				"updateName"));
 
 	private BeanFactory _beanFactory;
 
